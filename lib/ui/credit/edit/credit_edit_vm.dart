@@ -170,6 +170,7 @@ class CreditEditVM extends AbstractInvoiceEditVM {
           List<MultipartFile> multipartFile, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveCreditDocumentRequest(
+            isPrivate: isPrivate,
             multipartFiles: multipartFile,
             credit: credit,
             completer: completer));

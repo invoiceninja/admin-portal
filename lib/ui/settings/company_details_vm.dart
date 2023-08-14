@@ -155,7 +155,9 @@ class CompanyDetailsVM {
           List<MultipartFile> multipartFile, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveCompanyDocumentRequest(
-            multipartFiles: multipartFile, completer: completer));
+            isPrivate: isPrivate,
+            multipartFiles: multipartFile,
+            completer: completer));
         completer.future.then((client) {
           showToast(AppLocalization.of(context).uploadedDocument);
         }).catchError((Object error) {

@@ -170,6 +170,7 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
           List<MultipartFile> multipartFiles, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SavePurchaseOrderDocumentRequest(
+            isPrivate: isPrivate,
             multipartFiles: multipartFiles,
             purchaseOrder: purchaseOrder,
             completer: completer));

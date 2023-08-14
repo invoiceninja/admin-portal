@@ -112,6 +112,7 @@ class VendorViewVM {
           List<MultipartFile> multipartFile, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveVendorDocumentRequest(
+            isPrivate: isPrivate,
             multipartFiles: multipartFile,
             vendor: vendor,
             completer: completer));

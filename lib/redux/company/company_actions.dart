@@ -142,10 +142,12 @@ class UpdateCompanyLanguage {
 
 class SaveCompanyDocumentRequest implements StartSaving {
   SaveCompanyDocumentRequest({
+    @required this.isPrivate,
     @required this.completer,
     @required this.multipartFiles,
   });
 
+  final bool isPrivate;
   final Completer completer;
   final List<MultipartFile> multipartFiles;
 }

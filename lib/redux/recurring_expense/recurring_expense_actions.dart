@@ -330,11 +330,13 @@ class StopRecurringExpensesFailure implements StopSaving {
 
 class SaveRecurringExpenseDocumentRequest implements StartSaving {
   SaveRecurringExpenseDocumentRequest({
+    @required this.isPrivate,
     @required this.completer,
     @required this.multipartFile,
     @required this.expense,
   });
 
+  final bool isPrivate;
   final Completer completer;
   final List<MultipartFile> multipartFile;
   final ExpenseEntity expense;

@@ -117,7 +117,10 @@ class QuoteViewVM extends AbstractInvoiceViewVM {
           List<MultipartFile> multipartFiles, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveQuoteDocumentRequest(
-            multipartFile: multipartFiles, quote: quote, completer: completer));
+            isPrivate: isPrivate,
+            multipartFile: multipartFiles,
+            quote: quote,
+            completer: completer));
         completer.future.then((client) {
           showToast(AppLocalization.of(context).uploadedDocument);
         }).catchError((Object error) {

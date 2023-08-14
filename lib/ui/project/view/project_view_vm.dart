@@ -112,6 +112,7 @@ class ProjectViewVM {
           List<MultipartFile> multipartFiles, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveProjectDocumentRequest(
+            isPrivate: isPrivate,
             multipartFile: multipartFiles,
             project: project,
             completer: completer));

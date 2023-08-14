@@ -169,7 +169,10 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
           List<MultipartFile> multipartFile, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveQuoteDocumentRequest(
-            multipartFile: multipartFile, quote: quote, completer: completer));
+            isPrivate: isPrivate,
+            multipartFile: multipartFile,
+            quote: quote,
+            completer: completer));
         completer.future.then((client) {
           showToast(AppLocalization.of(context).uploadedDocument);
         }).catchError((Object error) {

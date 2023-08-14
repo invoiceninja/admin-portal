@@ -413,11 +413,13 @@ class ClearProjectMultiselect {}
 
 class SaveProjectDocumentRequest implements StartSaving {
   SaveProjectDocumentRequest({
+    @required this.isPrivate,
     @required this.completer,
     @required this.multipartFile,
     @required this.project,
   });
 
+  final bool isPrivate;
   final Completer completer;
   final List<MultipartFile> multipartFile;
   final ProjectEntity project;

@@ -153,6 +153,7 @@ class InvoiceViewVM extends AbstractInvoiceViewVM {
           List<MultipartFile> multipartFile, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveInvoiceDocumentRequest(
+            isPrivate: isPrivate,
             multipartFiles: multipartFile,
             invoice: invoice,
             completer: completer));

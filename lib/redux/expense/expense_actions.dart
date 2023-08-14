@@ -426,11 +426,13 @@ class ClearExpenseMultiselect {}
 
 class SaveExpenseDocumentRequest implements StartSaving {
   SaveExpenseDocumentRequest({
+    @required this.isPrivate,
     @required this.completer,
     @required this.multipartFiles,
     @required this.expense,
   });
 
+  final bool isPrivate;
   final Completer completer;
   final List<MultipartFile> multipartFiles;
   final ExpenseEntity expense;

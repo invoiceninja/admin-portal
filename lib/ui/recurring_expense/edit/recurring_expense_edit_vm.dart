@@ -190,6 +190,7 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
           List<MultipartFile> multipartFiles, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveRecurringExpenseDocumentRequest(
+            isPrivate: isPrivate,
             multipartFile: multipartFiles,
             expense: recurringExpense,
             completer: completer));

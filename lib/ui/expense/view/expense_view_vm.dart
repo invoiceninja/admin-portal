@@ -125,6 +125,7 @@ class ExpenseViewVM extends AbstractExpenseViewVM {
           List<MultipartFile> multipartFiles, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveExpenseDocumentRequest(
+            isPrivate: isPrivate,
             multipartFiles: multipartFiles,
             expense: expense,
             completer: completer));

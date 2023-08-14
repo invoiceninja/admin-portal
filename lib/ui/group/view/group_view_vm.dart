@@ -102,7 +102,10 @@ class GroupViewVM {
           List<MultipartFile> multipartFile, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveGroupDocumentRequest(
-            multipartFiles: multipartFile, group: group, completer: completer));
+            isPrivate: isPrivate,
+            multipartFiles: multipartFile,
+            group: group,
+            completer: completer));
         completer.future.then((client) {
           showToast(AppLocalization.of(context).uploadedDocument);
         }).catchError((Object error) {

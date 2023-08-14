@@ -121,7 +121,10 @@ class TaskViewVM {
           List<MultipartFile> multipartFiles, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveTaskDocumentRequest(
-            multipartFiles: multipartFiles, task: task, completer: completer));
+            isPrivate: isPrivate,
+            multipartFiles: multipartFiles,
+            task: task,
+            completer: completer));
         completer.future.then((client) {
           showToast(AppLocalization.of(context).uploadedDocument);
         }).catchError((Object error) {
