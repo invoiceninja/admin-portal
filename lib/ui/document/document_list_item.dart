@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DocumentListItem extends StatelessWidget {
@@ -111,9 +112,12 @@ class DocumentListItem extends StatelessWidget {
                             ),
                             Text(
                               formatDate(
-                                  convertTimestampToDateString(
-                                      document.createdAt),
-                                  context),
+                                      convertTimestampToDateString(
+                                          document.createdAt),
+                                      context) +
+                                  (!document.isPublic
+                                      ? ' • ${AppLocalization.of(context).private}'
+                                      : ''),
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ],
@@ -157,9 +161,12 @@ class DocumentListItem extends StatelessWidget {
                             ),
                             Text(
                               formatDate(
-                                  convertTimestampToDateString(
-                                      document.createdAt),
-                                  context),
+                                      convertTimestampToDateString(
+                                          document.createdAt),
+                                      context) +
+                                  (!document.isPublic
+                                      ? ' • ${AppLocalization.of(context).private}'
+                                      : ''),
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ],
