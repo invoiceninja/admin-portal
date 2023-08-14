@@ -57,61 +57,104 @@ class _DocumentGridState extends State<DocumentGrid> {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
 
+    final privateSwitch = Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SwitchListTile(
+        title: Row(
+          children: [
+            Icon(Icons.lock),
+            SizedBox(width: 16),
+            Text(localization.private),
+          ],
+        ),
+        value: false,
+        onChanged: (value) {
+          //
+        },
+      ),
+    );
+
     return ScrollableListView(
       children: [
         if (state.isEnterprisePlan) ...[
           if (kIsWeb || isDesktopOS())
-            InkWell(
-              onTap: () async {
-                final files = await pickFiles(
-                  allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
-                );
-                if (files != null && files.isNotEmpty) {
-                  widget.onUploadDocument(files);
-                }
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: DropTarget(
-                  onDragDone: (detail) async {
-                    final List<MultipartFile> multipartFiles = [];
-                    for (var index = 0; index < detail.files.length; index++) {
-                      final file = detail.files[index];
-                      final bytes = await file.readAsBytes();
-                      final multipartFile = MultipartFile.fromBytes(
-                          'documents[$index]', bytes,
-                          filename: file.name);
-                      multipartFiles.add(multipartFile);
-                    }
+            LayoutBuilder(builder: (context, constraints) {
+              final child = InkWell(
+                onTap: () async {
+                  final files = await pickFiles(
+                    allowedExtensions: DocumentEntity.ALLOWED_EXTENSIONS,
+                  );
+                  if (files != null && files.isNotEmpty) {
+                    widget.onUploadDocument(files);
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: DropTarget(
+                    onDragDone: (detail) async {
+                      final List<MultipartFile> multipartFiles = [];
+                      for (var index = 0;
+                          index < detail.files.length;
+                          index++) {
+                        final file = detail.files[index];
+                        final bytes = await file.readAsBytes();
+                        final multipartFile = MultipartFile.fromBytes(
+                            'documents[$index]', bytes,
+                            filename: file.name);
+                        multipartFiles.add(multipartFile);
+                      }
 
-                    widget.onUploadDocument(multipartFiles);
-                  },
-                  onDragEntered: (detail) {
-                    setState(() => _dragging = true);
-                  },
-                  onDragExited: (detail) {
-                    setState(() => _dragging = false);
-                  },
-                  child: Stack(
-                    children: [
-                      Container(
-                        height: 75,
-                        width: double.infinity,
-                        child: Center(
-                          child: Text(localization.clickOrDropFilesHere),
+                      widget.onUploadDocument(multipartFiles);
+                    },
+                    onDragEntered: (detail) {
+                      setState(() => _dragging = true);
+                    },
+                    onDragExited: (detail) {
+                      setState(() => _dragging = false);
+                    },
+                    child: Stack(
+                      children: [
+                        Container(
+                          height: 75,
+                          width: double.infinity,
+                          child: Center(
+                            child: Text(localization.clickOrDropFilesHere),
+                          ),
+                          color: _dragging
+                              ? Colors.blue.withOpacity(0.4)
+                              : Theme.of(context).scaffoldBackgroundColor,
                         ),
-                        color: _dragging
-                            ? Colors.blue.withOpacity(0.4)
-                            : Theme.of(context).scaffoldBackgroundColor,
-                      ),
-                      DashedRect(
-                        color: Colors.grey,
-                      ),
-                    ],
+                        DashedRect(
+                          color: Colors.grey,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ),
+              );
+
+              if (constraints.maxWidth > 500) {
+                return Row(
+                  children: [
+                    Expanded(
+                      child: child,
+                      flex: 3,
+                    ),
+                    Expanded(
+                      child: privateSwitch,
+                      flex: 2,
+                    )
+                  ],
+                );
+              } else {
+                return Column(
+                  children: [
+                    privateSwitch,
+                    child,
+                  ],
+                );
+              }
+            }),
           if (isMobileOS())
             Padding(
               padding: const EdgeInsets.only(left: 16, bottom: 16, right: 16),
