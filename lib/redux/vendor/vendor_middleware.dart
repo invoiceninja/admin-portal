@@ -274,7 +274,11 @@ Middleware<AppState> _saveDocument(VendorRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
-              store.state.credentials, action.vendor, action.multipartFiles)
+        store.state.credentials,
+        action.vendor,
+        action.multipartFiles,
+        action.isPrivate,
+      )
           .then((vendor) {
         store.dispatch(SaveVendorSuccess(vendor));
 

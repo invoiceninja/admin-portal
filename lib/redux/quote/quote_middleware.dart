@@ -496,7 +496,11 @@ Middleware<AppState> _saveDocument(QuoteRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
-              store.state.credentials, action.quote, action.multipartFile)
+        store.state.credentials,
+        action.quote,
+        action.multipartFile,
+        action.isPrivate,
+      )
           .then((quote) {
         store.dispatch(SaveQuoteSuccess(quote));
 

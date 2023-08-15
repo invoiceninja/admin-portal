@@ -453,7 +453,11 @@ Middleware<AppState> _saveDocument(RecurringInvoiceRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
-              store.state.credentials, action.invoice, action.multipartFiles)
+        store.state.credentials,
+        action.invoice,
+        action.multipartFiles,
+        action.isPrivate,
+      )
           .then((invoice) {
         store.dispatch(SaveRecurringInvoiceSuccess(invoice));
 

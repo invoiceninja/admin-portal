@@ -332,7 +332,11 @@ Middleware<AppState> _saveDocument(TaskRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
-              store.state.credentials, action.task, action.multipartFiles)
+        store.state.credentials,
+        action.task,
+        action.multipartFiles,
+        action.isPrivate,
+      )
           .then((task) {
         store.dispatch(SaveTaskSuccess(task));
 

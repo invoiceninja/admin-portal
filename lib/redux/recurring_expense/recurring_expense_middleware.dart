@@ -331,7 +331,11 @@ Middleware<AppState> _saveDocument(RecurringExpenseRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
-              store.state.credentials, action.expense, action.multipartFile)
+        store.state.credentials,
+        action.expense,
+        action.multipartFile,
+        action.isPrivate,
+      )
           .then((expense) {
         store.dispatch(SaveRecurringExpenseSuccess(expense));
 

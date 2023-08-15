@@ -581,8 +581,12 @@ Middleware<AppState> _saveDocument(PurchaseOrderRepository repository) {
     final action = dynamicAction as SavePurchaseOrderDocumentRequest;
     if (store.state.isEnterprisePlan) {
       repository
-          .uploadDocument(store.state.credentials, action.purchaseOrder,
-              action.multipartFiles)
+          .uploadDocument(
+        store.state.credentials,
+        action.purchaseOrder,
+        action.multipartFiles,
+        action.isPrivate,
+      )
           .then((purchaseOrder) {
         store.dispatch(SavePurchaseOrderSuccess(purchaseOrder));
 

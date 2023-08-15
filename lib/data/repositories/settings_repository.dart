@@ -231,8 +231,11 @@ class SettingsRepository {
     }
   }
 
-  Future<CompanyEntity> uploadDocument(Credentials credentials,
-      CompanyEntity company, List<MultipartFile> multipartFiles) async {
+  Future<CompanyEntity> uploadDocument(
+      Credentials credentials,
+      CompanyEntity company,
+      List<MultipartFile> multipartFiles,
+      bool isPrivate) async {
     final fields = <String, String>{
       '_method': 'put',
     };

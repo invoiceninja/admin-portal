@@ -310,7 +310,11 @@ Middleware<AppState> _saveDocument(ProductRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
-              store.state.credentials, action.product, action.multipartFiles)
+        store.state.credentials,
+        action.product,
+        action.multipartFiles,
+        action.isPrivate,
+      )
           .then((product) {
         store.dispatch(SaveProductSuccess(product));
 

@@ -448,11 +448,13 @@ class SaveProductDocumentRequest implements StartSaving {
     @required this.completer,
     @required this.multipartFiles,
     @required this.product,
+    @required this.isPrivate,
   });
 
   final Completer completer;
   final List<MultipartFile> multipartFiles;
   final ProductEntity product;
+  final bool isPrivate;
 }
 
 class SaveProductDocumentSuccess implements StopSaving, PersistData, PersistUI {

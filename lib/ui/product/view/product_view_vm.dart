@@ -90,9 +90,11 @@ class ProductViewVM {
           List<MultipartFile> multipartFile, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveProductDocumentRequest(
-            multipartFiles: multipartFile,
-            product: product,
-            completer: completer));
+          isPrivate: isPrivate,
+          multipartFiles: multipartFile,
+          product: product,
+          completer: completer,
+        ));
         completer.future.then((client) {
           showToast(AppLocalization.of(context).uploadedDocument);
         }).catchError((Object error) {

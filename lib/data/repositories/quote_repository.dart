@@ -149,8 +149,11 @@ class QuoteRepository {
     return invoiceResponse.data;
   }
 
-  Future<InvoiceEntity> uploadDocument(Credentials credentials,
-      BaseEntity entity, List<MultipartFile> multipartFiles) async {
+  Future<InvoiceEntity> uploadDocument(
+      Credentials credentials,
+      BaseEntity entity,
+      List<MultipartFile> multipartFiles,
+      bool isPrivate) async {
     final fields = <String, String>{
       '_method': 'put',
     };
