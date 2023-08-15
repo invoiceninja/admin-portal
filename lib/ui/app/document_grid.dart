@@ -34,14 +34,12 @@ class DocumentGrid extends StatefulWidget {
   const DocumentGrid({
     @required this.documents,
     @required this.onUploadDocument,
-    @required this.onDeleteDocument,
     @required this.onRenamedDocument,
     this.onViewExpense,
   });
 
   final List<DocumentEntity> documents;
   final Function(List<MultipartFile>, bool) onUploadDocument;
-  final Function(DocumentEntity, String, String) onDeleteDocument;
   final Function(DocumentEntity) onViewExpense;
   final Function onRenamedDocument;
 
@@ -255,7 +253,6 @@ class _DocumentGridState extends State<DocumentGrid> {
             children: widget.documents
                 .map((document) => DocumentTile(
                       documentId: document.id,
-                      onDeleteDocument: widget.onDeleteDocument,
                       onViewExpense: widget.onViewExpense,
                       onRenamedDocument: widget.onRenamedDocument,
                       isFromExpense: false,
@@ -271,14 +268,12 @@ class _DocumentGridState extends State<DocumentGrid> {
 class DocumentTile extends StatelessWidget {
   const DocumentTile({
     @required this.documentId,
-    @required this.onDeleteDocument,
     @required this.onViewExpense,
     @required this.isFromExpense,
     @required this.onRenamedDocument,
   });
 
   final String documentId;
-  final Function(DocumentEntity, String, String) onDeleteDocument;
   final Function(DocumentEntity) onViewExpense;
   final bool isFromExpense;
   final Function onRenamedDocument;
@@ -361,16 +356,8 @@ class DocumentTile extends StatelessWidget {
                                 handleDocumentAction(
                                     context, [document], EntityAction.download);
                               } else if (value == localization.delete) {
-                                confirmCallback(
-                                    context: context,
-                                    callback: (_) {
-                                      passwordCallback(
-                                          context: context,
-                                          callback: (password, idToken) {
-                                            onDeleteDocument(
-                                                document, password, idToken);
-                                          });
-                                    });
+                                handleDocumentAction(
+                                    context, [document], EntityAction.delete);
                               } else if (value == localization.viewExpense) {
                                 onViewExpense(document);
                               } else if (value == localization.rename) {

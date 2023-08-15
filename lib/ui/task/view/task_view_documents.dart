@@ -23,8 +23,6 @@ class TaskViewDocuments extends StatelessWidget {
       documents: task.documents.toList(),
       onUploadDocument: (path, isPrivate) =>
           viewModel.onUploadDocuments(context, path, isPrivate),
-      onDeleteDocument: (document, password, idToken) =>
-          viewModel.onDeleteDocument(context, document, password, idToken),
       onRenamedDocument: () => store.dispatch(LoadTask(taskId: task.id)),
     );
   }

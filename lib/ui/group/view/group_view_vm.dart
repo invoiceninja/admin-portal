@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -62,7 +61,6 @@ class GroupViewVM {
     @required this.isLoading,
     @required this.isDirty,
     @required this.onUploadDocuments,
-    @required this.onDeleteDocument,
   });
 
   factory GroupViewVM.fromStore(Store<AppState> store) {
@@ -116,19 +114,6 @@ class GroupViewVM {
               });
         });
       },
-      onDeleteDocument: (BuildContext context, DocumentEntity document,
-          String password, String idToken) {
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).deletedDocument);
-        completer.future.then<Null>(
-            (value) => store.dispatch(LoadGroup(groupId: group.id)));
-        store.dispatch(DeleteDocumentRequest(
-          completer: completer,
-          documentIds: [document.id],
-          password: password,
-          idToken: idToken,
-        ));
-      },
     );
   }
 
@@ -140,7 +125,6 @@ class GroupViewVM {
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;
-  final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;

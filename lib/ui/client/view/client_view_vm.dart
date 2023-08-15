@@ -15,7 +15,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
@@ -62,7 +61,6 @@ class ClientViewVM {
     @required this.isDirty,
     @required this.onRefreshed,
     @required this.onUploadDocuments,
-    @required this.onDeleteDocument,
   });
 
   factory ClientViewVM.fromStore(Store<AppState> store) {
@@ -108,19 +106,6 @@ class ClientViewVM {
               });
         });
       },
-      onDeleteDocument: (BuildContext context, DocumentEntity document,
-          String password, String idToken) {
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).deletedDocument);
-        completer.future.then<Null>(
-            (value) => store.dispatch(LoadClient(clientId: client.id)));
-        store.dispatch(DeleteDocumentRequest(
-          completer: completer,
-          documentIds: [document.id],
-          password: password,
-          idToken: idToken,
-        ));
-      },
     );
   }
 
@@ -130,7 +115,6 @@ class ClientViewVM {
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;
-  final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;

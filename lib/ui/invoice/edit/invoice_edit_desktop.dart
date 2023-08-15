@@ -955,14 +955,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                           widget.entityViewModel
                                               .onUploadDocuments(
                                                   context, path, isPrivate),
-                                      onDeleteDocument:
-                                          (document, password, idToken) =>
-                                              widget.entityViewModel
-                                                  .onDeleteDocument(
-                                                      context,
-                                                      document,
-                                                      password,
-                                                      idToken),
                                       onRenamedDocument: () => store.dispatch(
                                           LoadInvoice(invoiceId: invoice.id)),
                                     )

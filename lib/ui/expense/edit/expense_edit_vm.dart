@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
@@ -55,7 +54,6 @@ abstract class AbstractExpenseEditVM {
     @required this.onAddClientPressed,
     @required this.onAddVendorPressed,
     @required this.onUploadDocument,
-    @required this.onDeleteDocument,
   });
 
   final ExpenseEntity expense;
@@ -69,7 +67,6 @@ abstract class AbstractExpenseEditVM {
   final Function(BuildContext context, Completer<SelectableEntity> completer)
       onAddVendorPressed;
   final Function(BuildContext, List<MultipartFile>, bool) onUploadDocument;
-  final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
 }
 
 class ExpenseEditVM extends AbstractExpenseEditVM {
@@ -87,7 +84,6 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
     Function(BuildContext context, Completer<SelectableEntity> completer)
         onAddVendorPressed,
     Function(BuildContext, List<MultipartFile>, bool) onUploadDocument,
-    Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
   }) : super(
           state: state,
           expense: expense,
@@ -98,7 +94,6 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
           onAddClientPressed: onAddClientPressed,
           onAddVendorPressed: onAddVendorPressed,
           onUploadDocument: onUploadDocument,
-          onDeleteDocument: onDeleteDocument,
         );
 
   factory ExpenseEditVM.fromStore(Store<AppState> store) {
@@ -220,19 +215,6 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
                 return ErrorDialog(error);
               });
         });
-      },
-      onDeleteDocument: (BuildContext context, DocumentEntity document,
-          String password, String idToken) {
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).deletedDocument);
-        completer.future.then<Null>(
-            (value) => store.dispatch(LoadExpense(expenseId: expense.id)));
-        store.dispatch(DeleteDocumentRequest(
-          completer: completer,
-          documentIds: [document.id],
-          password: password,
-          idToken: idToken,
-        ));
       },
     );
   }

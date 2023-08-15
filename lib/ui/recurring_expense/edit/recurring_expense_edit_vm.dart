@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -59,7 +58,6 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
     Function(BuildContext context, Completer<SelectableEntity> completer)
         onAddVendorPressed,
     Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
-    Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
   }) : super(
           state: state,
           expense: expense,
@@ -70,7 +68,6 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
           onAddClientPressed: onAddClientPressed,
           onAddVendorPressed: onAddVendorPressed,
           onUploadDocument: onUploadDocuments,
-          onDeleteDocument: onDeleteDocument,
         );
 
   factory RecurringExpenseEditVM.fromStore(Store<AppState> store) {
@@ -203,19 +200,6 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
                 return ErrorDialog(error);
               });
         });
-      },
-      onDeleteDocument: (BuildContext context, DocumentEntity document,
-          String password, String idToken) {
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).deletedDocument);
-        completer.future.then<Null>((value) => store.dispatch(
-            LoadRecurringExpense(recurringExpenseId: recurringExpense.id)));
-        store.dispatch(DeleteDocumentRequest(
-          completer: completer,
-          documentIds: [document.id],
-          password: password,
-          idToken: idToken,
-        ));
       },
     );
   }

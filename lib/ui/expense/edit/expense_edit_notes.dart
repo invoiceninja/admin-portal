@@ -127,9 +127,6 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
                   documents: expense.documents.toList(),
                   onUploadDocument: (path, isPrivate) => widget.viewModel
                       .onUploadDocument(context, path, isPrivate),
-                  onDeleteDocument: (document, password, idToken) => widget
-                      .viewModel
-                      .onDeleteDocument(context, document, password, idToken),
                   onRenamedDocument: () =>
                       store.dispatch(LoadExpense(expenseId: expense.id)),
                 )

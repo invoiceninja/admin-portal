@@ -18,11 +18,9 @@ import 'package:invoiceninja_flutter/data/models/document_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/settings_model.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/company/company_actions.dart';
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -60,7 +58,6 @@ class CompanyDetailsVM {
     @required this.onDeleteLogo,
     @required this.onConfigurePaymentTermsPressed,
     @required this.onUploadDocuments,
-    @required this.onDeleteDocument,
   });
 
   static CompanyDetailsVM fromStore(Store<AppState> store) {
@@ -168,18 +165,6 @@ class CompanyDetailsVM {
               });
         });
       },
-      onDeleteDocument: (BuildContext context, DocumentEntity document,
-          String password, String idToken) {
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).deletedDocument);
-        completer.future.then<Null>((value) => store.dispatch(RefreshData()));
-        store.dispatch(DeleteDocumentRequest(
-          completer: completer,
-          documentIds: [document.id],
-          password: password,
-          idToken: idToken,
-        ));
-      },
     );
   }
 
@@ -193,5 +178,4 @@ class CompanyDetailsVM {
   final Function(BuildContext) onDeleteLogo;
   final Function(BuildContext) onConfigurePaymentTermsPressed;
   final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;
-  final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
 }

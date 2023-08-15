@@ -25,8 +25,6 @@ class InvoiceViewDocuments extends StatelessWidget {
       documents: invoice.documents.toList(),
       onUploadDocument: (path, isPrivate) =>
           viewModel.onUploadDocuments(context, path, isPrivate),
-      onDeleteDocument: (document, password, idToken) =>
-          viewModel.onDeleteDocument(context, document, password, idToken),
       onViewExpense: (document) => viewModel.onViewExpense(context, document),
       onRenamedDocument: () =>
           store.dispatch(LoadInvoice(invoiceId: invoice.id)),

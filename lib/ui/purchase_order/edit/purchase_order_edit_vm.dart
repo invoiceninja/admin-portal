@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/view/purchase_order_view_vm.dart';
@@ -58,7 +57,6 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
     bool isSaving,
     Function(BuildContext) onCancelPressed,
     Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
-    Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
   }) : super(
           state: state,
           company: company,
@@ -70,7 +68,6 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
           isSaving: isSaving,
           onCancelPressed: onCancelPressed,
           onUploadDocuments: onUploadDocuments,
-          onDeleteDocument: onDeleteDocument,
         );
 
   factory PurchaseOrderEditVM.fromStore(Store<AppState> store) {
@@ -183,19 +180,6 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
                 return ErrorDialog(error);
               });
         });
-      },
-      onDeleteDocument: (BuildContext context, DocumentEntity document,
-          String password, String idToken) {
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).deletedDocument);
-        completer.future.then<Null>((value) => store
-            .dispatch(LoadPurchaseOrder(purchaseOrderId: purchaseOrder.id)));
-        store.dispatch(DeleteDocumentRequest(
-          completer: completer,
-          documentIds: [document.id],
-          password: password,
-          idToken: idToken,
-        ));
       },
     );
   }

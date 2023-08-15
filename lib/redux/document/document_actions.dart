@@ -17,8 +17,11 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:path_provider/path_provider.dart';
@@ -217,7 +220,8 @@ class DeleteDocumentRequest implements StartSaving {
   final String idToken;
 }
 
-class DeleteDocumentSuccess implements StopSaving, PersistData {
+class DeleteDocumentSuccess
+    implements StopSaving, PersistData, UserVerifiedPassword {
   DeleteDocumentSuccess({this.documentId});
 
   final String documentId;
@@ -455,6 +459,39 @@ void handleDocumentAction(
       } else {
         downloadDocument();
       }
+      break;
+    case EntityAction.delete:
+      confirmCallback(
+          context: context,
+          callback: (_) {
+            passwordCallback(
+                context: context,
+                callback: (password, idToken) {
+                  final completer = snackBarCompleter<Null>(
+                      context, AppLocalization.of(context).deletedDocument);
+                  switch (document.parentType) {
+                    case EntityType.client:
+                      completer.future.then<Null>((value) => store
+                          .dispatch(LoadClient(clientId: document.parentId)));
+                      break;
+                    default:
+                      print(
+                          '## Error: missing delete for ${document.parentType}');
+                  }
+
+                  completer.future
+                      .then<Null>((value) => store.dispatch(RefreshData()));
+                  store.dispatch(DeleteDocumentRequest(
+                    completer: completer,
+                    documentIds: [document.id],
+                    password: password,
+                    idToken: idToken,
+                  ));
+                });
+          });
+      break;
+    default:
+      print('## ERROR: unhandled action $action in document_actions');
       break;
   }
 }

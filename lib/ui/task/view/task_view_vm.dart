@@ -14,7 +14,6 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/task/view/task_view.dart';
@@ -61,7 +60,6 @@ class TaskViewVM {
     @required this.isLoading,
     @required this.isDirty,
     @required this.onUploadDocuments,
-    @required this.onDeleteDocument,
   });
 
   factory TaskViewVM.fromStore(Store<AppState> store) {
@@ -135,19 +133,6 @@ class TaskViewVM {
               });
         });
       },
-      onDeleteDocument: (BuildContext context, DocumentEntity document,
-          String password, String idToken) {
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).deletedDocument);
-        completer.future
-            .then<Null>((value) => store.dispatch(LoadTask(taskId: task.id)));
-        store.dispatch(DeleteDocumentRequest(
-          completer: completer,
-          documentIds: [document.id],
-          password: password,
-          idToken: idToken,
-        ));
-      },
     );
   }
 
@@ -164,5 +149,4 @@ class TaskViewVM {
   final bool isLoading;
   final bool isDirty;
   final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;
-  final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
 }

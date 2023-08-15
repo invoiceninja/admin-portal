@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
@@ -58,7 +57,6 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
     bool isSaving,
     Function(BuildContext) onCancelPressed,
     Function(BuildContext, List<MultipartFile>, bool) onUploadDocument,
-    Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
   }) : super(
           state: state,
           company: company,
@@ -70,7 +68,6 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
           isSaving: isSaving,
           onCancelPressed: onCancelPressed,
           onUploadDocuments: onUploadDocument,
-          onDeleteDocument: onDeleteDocument,
         );
 
   factory QuoteEditVM.fromStore(Store<AppState> store) {
@@ -182,19 +179,6 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
                 return ErrorDialog(error);
               });
         });
-      },
-      onDeleteDocument: (BuildContext context, DocumentEntity document,
-          String password, String idToken) {
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).deletedDocument);
-        completer.future.then<Null>(
-            (value) => store.dispatch(LoadQuote(quoteId: quote.id)));
-        store.dispatch(DeleteDocumentRequest(
-          completer: completer,
-          documentIds: [document.id],
-          password: password,
-          idToken: idToken,
-        ));
       },
     );
   }

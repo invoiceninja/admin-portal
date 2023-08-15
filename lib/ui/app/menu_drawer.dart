@@ -1151,6 +1151,9 @@ class SidebarFooter extends StatelessWidget {
                   }
                 } else if (uiState.mainRoute == kDashboard) {
                   url += '/user-guide';
+                  // TODO remove this once docs are added
+                } else if (uiState.mainRoute == '${EntityType.document}') {
+                  url += '/user-guide';
                 } else if (uiState.mainRoute == kReports) {
                   url += '/$kReports';
                 } else {

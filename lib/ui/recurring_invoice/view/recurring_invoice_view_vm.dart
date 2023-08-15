@@ -14,7 +14,6 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
@@ -61,7 +60,6 @@ class RecurringInvoiceViewVM extends AbstractInvoiceViewVM {
     Function(BuildContext, PaymentEntity) onPaymentPressed,
     Function(BuildContext) onRefreshed,
     Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
-    Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
     Function(BuildContext, DocumentEntity) onViewExpense,
     Function(BuildContext, InvoiceEntity, [String]) onViewPdf,
   }) : super(
@@ -76,7 +74,6 @@ class RecurringInvoiceViewVM extends AbstractInvoiceViewVM {
           onPaymentsPressed: onPaymentsPressed,
           onRefreshed: onRefreshed,
           onUploadDocuments: onUploadDocuments,
-          onDeleteDocument: onDeleteDocument,
           onViewExpense: onViewExpense,
           onViewPdf: onViewPdf,
         );
@@ -131,19 +128,6 @@ class RecurringInvoiceViewVM extends AbstractInvoiceViewVM {
                 return ErrorDialog(error);
               });
         });
-      },
-      onDeleteDocument: (BuildContext context, DocumentEntity document,
-          String password, String idToken) {
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).deletedDocument);
-        completer.future.then<Null>((value) => store
-            .dispatch(LoadRecurringInvoice(recurringInvoiceId: invoice.id)));
-        store.dispatch(DeleteDocumentRequest(
-          completer: completer,
-          documentIds: [document.id],
-          password: password,
-          idToken: idToken,
-        ));
       },
       onViewPdf: (context, invoice, [activityId]) {
         store.dispatch(ShowPdfRecurringInvoice(
