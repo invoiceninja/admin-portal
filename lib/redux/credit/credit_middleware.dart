@@ -443,7 +443,11 @@ Middleware<AppState> _saveDocument(CreditRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocuments(
-              store.state.credentials, action.credit, action.multipartFiles)
+        store.state.credentials,
+        action.credit,
+        action.multipartFiles,
+        action.isPrivate,
+      )
           .then((credit) {
         store.dispatch(SaveCreditSuccess(credit));
 

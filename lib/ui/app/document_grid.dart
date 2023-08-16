@@ -248,7 +248,6 @@ class _DocumentGridState extends State<DocumentGrid> {
             padding: EdgeInsets.all(6),
             childAspectRatio: ((constraints.maxWidth / 2) - 8) / 200,
             shrinkWrap: true,
-            primary: true,
             crossAxisCount: 2,
             children: widget.documents
                 .map((document) => DocumentTile(

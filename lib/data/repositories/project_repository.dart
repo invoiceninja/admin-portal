@@ -91,8 +91,11 @@ class ProjectRepository {
     return projectResponse.data;
   }
 
-  Future<ProjectEntity> uploadDocuments(Credentials credentials,
-      BaseEntity entity, List<MultipartFile> multipartFiles) async {
+  Future<ProjectEntity> uploadDocuments(
+      Credentials credentials,
+      BaseEntity entity,
+      List<MultipartFile> multipartFiles,
+      bool isPrivate) async {
     final fields = <String, String>{
       '_method': 'put',
     };

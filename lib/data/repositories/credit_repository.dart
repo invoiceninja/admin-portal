@@ -140,8 +140,11 @@ class CreditRepository {
     return invoiceResponse.data;
   }
 
-  Future<InvoiceEntity> uploadDocuments(Credentials credentials,
-      BaseEntity entity, List<MultipartFile> multipartFiles) async {
+  Future<InvoiceEntity> uploadDocuments(
+      Credentials credentials,
+      BaseEntity entity,
+      List<MultipartFile> multipartFiles,
+      bool isPrivate) async {
     final fields = <String, String>{
       '_method': 'put',
     };

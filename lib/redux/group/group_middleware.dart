@@ -259,7 +259,11 @@ Middleware<AppState> _saveDocument(GroupRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocuments(
-              store.state.credentials, action.group, action.multipartFiles)
+        store.state.credentials,
+        action.group,
+        action.multipartFiles,
+        action.isPrivate,
+      )
           .then((group) {
         store.dispatch(SaveGroupSuccess(group));
 

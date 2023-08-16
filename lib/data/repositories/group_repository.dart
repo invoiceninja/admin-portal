@@ -80,8 +80,11 @@ class GroupRepository {
     return groupResponse.data;
   }
 
-  Future<GroupEntity> uploadDocuments(Credentials credentials,
-      BaseEntity entity, List<MultipartFile> multipartFiles) async {
+  Future<GroupEntity> uploadDocuments(
+      Credentials credentials,
+      BaseEntity entity,
+      List<MultipartFile> multipartFiles,
+      bool isPrivate) async {
     final fields = <String, String>{
       '_method': 'put',
     };
