@@ -159,7 +159,7 @@ class InvoiceRepository {
       bool isPrivate) async {
     final fields = <String, String>{
       '_method': 'put',
-      'is_public': '0',
+      'is_public': isPrivate ? '0' : '1',
     };
 
     final dynamic response = await webClient.post(
