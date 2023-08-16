@@ -29,6 +29,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:version/version.dart';
 
 class DocumentGrid extends StatefulWidget {
   const DocumentGrid({
@@ -134,7 +135,10 @@ class _DocumentGridState extends State<DocumentGrid> {
                 ),
               );
 
-              if (constraints.maxWidth > 500) {
+              if (Version.parse(state.account.currentVersion) <
+                  Version.parse('5.6.30')) {
+                return child;
+              } else if (constraints.maxWidth > 500) {
                 return Row(
                   children: [
                     Expanded(
