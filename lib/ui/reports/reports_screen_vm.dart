@@ -147,13 +147,7 @@ class ReportsScreenVM {
         reportResult = memoizedDocumentReport(
           state.userCompany,
           state.uiState.reportsUIState,
-          state.clientState.map,
-          state.productState.map,
-          state.invoiceState.map,
-          state.quoteState.map,
-          state.expenseState.map,
-          state.projectState.map,
-          state.vendorState.map,
+          state.documentState.map,
           state.userState.map,
         );
         break;
