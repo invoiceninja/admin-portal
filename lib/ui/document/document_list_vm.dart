@@ -33,8 +33,7 @@ class DocumentListBuilder extends StatelessWidget {
         final localization = AppLocalization.of(context);
 
         // TODO remove this widget
-        if (viewModel.documentList.length <=
-            viewModel.state.company.documents.length) {
+        if (viewModel.state.documentState.list.isEmpty) {
           return Center(
             child: OutlinedButton(
               child: Padding(

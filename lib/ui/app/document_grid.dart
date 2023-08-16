@@ -136,7 +136,7 @@ class _DocumentGridState extends State<DocumentGrid> {
               );
 
               if (Version.parse(state.account.currentVersion) <
-                  Version.parse('5.6.30')) {
+                  Version.parse('5.6.31')) {
                 return child;
               } else if (constraints.maxWidth > 500) {
                 return Row(

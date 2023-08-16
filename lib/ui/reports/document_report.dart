@@ -22,6 +22,7 @@ enum DocumentReportFields {
   created_at,
   created_by,
   updated_at,
+  private,
 }
 
 var memoizedDocumentReport = memo4((
@@ -62,6 +63,7 @@ ReportResult documentReport(
     DocumentReportFields.size,
     DocumentReportFields.width,
     DocumentReportFields.height,
+    DocumentReportFields.private,
   ];
 
   if (documentReportSettings.columns.isNotEmpty) {
@@ -107,6 +109,9 @@ ReportResult documentReport(
           break;
         case DocumentReportFields.height:
           value = document.height;
+          break;
+        case DocumentReportFields.private:
+          value = !document.isPublic;
           break;
       }
 
