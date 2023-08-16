@@ -19,6 +19,18 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -474,9 +486,60 @@ void handleDocumentAction(
                       completer.future.then<Null>((value) => store
                           .dispatch(LoadClient(clientId: document.parentId)));
                       break;
+                    case EntityType.credit:
+                      completer.future.then<Null>((value) => store
+                          .dispatch(LoadCredit(creditId: document.parentId)));
+                      break;
+                    case EntityType.expense:
+                      completer.future.then<Null>((value) => store
+                          .dispatch(LoadExpense(expenseId: document.parentId)));
+                      break;
+                    case EntityType.group:
+                      completer.future.then<Null>((value) => store
+                          .dispatch(LoadGroup(groupId: document.parentId)));
+                      break;
+                    case EntityType.invoice:
+                      completer.future.then<Null>((value) => store
+                          .dispatch(LoadInvoice(invoiceId: document.parentId)));
+                      break;
+                    case EntityType.product:
+                      completer.future.then<Null>((value) => store
+                          .dispatch(LoadProduct(productId: document.parentId)));
+                      break;
+                    case EntityType.project:
+                      completer.future.then<Null>((value) => store
+                          .dispatch(LoadProject(projectId: document.parentId)));
+                      break;
+                    case EntityType.purchaseOrder:
+                      completer.future.then<Null>((value) => store.dispatch(
+                          LoadPurchaseOrder(
+                              purchaseOrderId: document.parentId)));
+                      break;
+                    case EntityType.quote:
+                      completer.future.then<Null>((value) => store
+                          .dispatch(LoadQuote(quoteId: document.parentId)));
+                      break;
+                    case EntityType.recurringExpense:
+                      completer.future.then<Null>((value) => store.dispatch(
+                          LoadRecurringExpense(
+                              recurringExpenseId: document.parentId)));
+                      break;
+                    case EntityType.recurringInvoice:
+                      completer.future.then<Null>((value) => store.dispatch(
+                          LoadRecurringInvoice(
+                              recurringInvoiceId: document.parentId)));
+                      break;
+                    case EntityType.task:
+                      completer.future.then<Null>((value) =>
+                          store.dispatch(LoadTask(taskId: document.parentId)));
+                      break;
+                    case EntityType.vendor:
+                      completer.future.then<Null>((value) => store
+                          .dispatch(LoadVendor(vendorId: document.parentId)));
+                      break;
                     default:
-                      print(
-                          '## Error: missing delete for ${document.parentType}');
+                      completer.future
+                          .then<Null>((value) => store.dispatch(RefreshData()));
                   }
 
                   completer.future
