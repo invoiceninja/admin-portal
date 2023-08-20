@@ -456,7 +456,8 @@ class DocumentPreview extends StatelessWidget {
             width: double.infinity,
             fit: BoxFit.cover,
             key: ValueKey(document.preview),
-            imageUrl: document.url,
+            imageUrl:
+                '${cleanApiUrl(state.credentials.url)}/documents/${document.hash}',
             imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
             httpHeaders: {'X-API-TOKEN': state.credentials.token},
             placeholder: (context, url) => Container(

@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class DocumentRepository {
   const DocumentRepository({
@@ -33,8 +34,9 @@ class DocumentRepository {
 
   Future<Uint8List> loadData(
       Credentials credentials, DocumentEntity document) async {
-    final dynamic response = await WebClient()
-        .get(document.url, credentials.token, rawResponse: true);
+    final url = '${cleanApiUrl(credentials.url)}/documents/${document.hash}';
+    final dynamic response =
+        await WebClient().get(url, credentials.token, rawResponse: true);
 
     return response.bodyBytes;
   }
