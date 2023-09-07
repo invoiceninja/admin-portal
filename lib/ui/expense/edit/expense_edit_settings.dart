@@ -108,11 +108,14 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
             fromCurrencyId: expense.currencyId, toCurrencyId: currency.id);
 
     viewModel.onChanged(expense.rebuild((b) => b
-      ..invoiceCurrencyId = currency?.id ?? expense.invoiceCurrencyId
+      ..invoiceCurrencyId = currency?.id ?? ''
       ..exchangeRate = exchangeRate));
+
     WidgetsBinding.instance.addPostFrameCallback((duration) {
+      _exchangeRateController.removeListener(_onChanged);
       _exchangeRateController.text = formatNumber(exchangeRate, context,
           formatNumberType: FormatNumberType.inputAmount);
+      _exchangeRateController.addListener(_onChanged);
     });
   }
 
@@ -242,56 +245,50 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                 }
               },
             ),
-            _showConvertCurrencyFields
-                ? Column(
-                    children: <Widget>[
-                      SizedBox(height: 8),
-                      EntityDropdown(
-                        entityType: EntityType.currency,
-                        entityList:
-                            memoizedCurrencyList(staticState.currencyMap),
-                        labelText: localization.currency,
-                        entityId: expense.invoiceCurrencyId,
-                        onSelected: (SelectableEntity currency) =>
-                            _setCurrency(currency),
-                      ),
-                      DecoratedFormField(
-                        key: ValueKey('__rate_${expense.invoiceCurrencyId}__'),
-                        controller: _exchangeRateController,
-                        keyboardType: TextInputType.numberWithOptions(
-                            decimal: true, signed: true),
-                        label: localization.exchangeRate,
-                        isPercent: true,
-                      ),
-                      Focus(
-                        onFocusChange: (hasFocus) => _calculateExchangeRate(),
-                        child: DecoratedFormField(
-                          key: ValueKey(
-                              '__expense_amount_${expense.grossAmount}_${expense.exchangeRate}__'),
-                          initialValue: expense.exchangeRate != 1 &&
-                                  expense.exchangeRate != 0
-                              ? formatNumber(
-                                  expense.grossAmount * expense.exchangeRate,
-                                  context,
-                                  formatNumberType: FormatNumberType.inputMoney)
-                              : '',
-                          label: localization.convertedAmount,
-                          keyboardType: TextInputType.numberWithOptions(
-                              decimal: true, signed: true),
-                          isMoney: true,
-                          onChanged: (value) {
-                            _convertedAmount = parseDouble(value);
-                          },
-                          onSavePressed: (context) {
-                            _calculateExchangeRate();
-                            viewModel.onSavePressed(context);
-                          },
-                        ),
-                      ),
-                      SizedBox(height: 16),
-                    ],
-                  )
-                : SizedBox(),
+            if (_showConvertCurrencyFields) ...[
+              SizedBox(height: 8),
+              EntityDropdown(
+                entityType: EntityType.currency,
+                entityList: memoizedCurrencyList(staticState.currencyMap),
+                labelText: localization.currency,
+                entityId: expense.invoiceCurrencyId,
+                onSelected: (SelectableEntity currency) =>
+                    _setCurrency(currency),
+              ),
+              DecoratedFormField(
+                key: ValueKey('__rate_${expense.invoiceCurrencyId}__'),
+                controller: _exchangeRateController,
+                keyboardType: TextInputType.numberWithOptions(
+                    decimal: true, signed: true),
+                label: localization.exchangeRate,
+                isPercent: true,
+              ),
+              Focus(
+                onFocusChange: (hasFocus) => _calculateExchangeRate(),
+                child: DecoratedFormField(
+                  key: ValueKey(
+                      '__expense_amount_${expense.grossAmount}_${expense.exchangeRate}__'),
+                  initialValue: expense.exchangeRate != 1 &&
+                          expense.exchangeRate != 0
+                      ? formatNumber(
+                          expense.grossAmount * expense.exchangeRate, context,
+                          formatNumberType: FormatNumberType.inputMoney)
+                      : '',
+                  label: localization.convertedAmount,
+                  keyboardType: TextInputType.numberWithOptions(
+                      decimal: true, signed: true),
+                  isMoney: true,
+                  onChanged: (value) {
+                    _convertedAmount = parseDouble(value);
+                  },
+                  onSavePressed: (context) {
+                    _calculateExchangeRate();
+                    viewModel.onSavePressed(context);
+                  },
+                ),
+              ),
+              SizedBox(height: 16),
+            ],
             SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.addDocumentsToInvoice),
