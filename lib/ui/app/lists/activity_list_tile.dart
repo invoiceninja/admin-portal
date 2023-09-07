@@ -142,7 +142,7 @@ class ActivityListTile extends StatelessWidget {
                     ? localization.lookup(activity.notes).trim() + '\n'
                     : '') +
                 formatDate(
-                    convertTimestampToDateString(activity.updatedAt), context,
+                    convertTimestampToDateString(activity.createdAt), context,
                     showTime: true, showSeconds: false) +
                 ((activity.ip ?? '').isNotEmpty ? ' • ' + activity.ip : '')),
           ),

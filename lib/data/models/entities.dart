@@ -730,6 +730,9 @@ abstract class ActivityEntity
   @BuiltValueField(wireName: 'updated_at')
   int get updatedAt;
 
+  @BuiltValueField(wireName: 'created_at')
+  int get createdAt;
+
   @nullable
   @BuiltValueField(wireName: 'expense_id')
   String get expenseId;
@@ -969,6 +972,10 @@ abstract class ActivityEntity
 
     return activity;
   }
+
+  // ignore: unused_element
+  static void _initializeBuilder(ActivityEntityBuilder builder) =>
+      builder..createdAt = 0;
 
   static Serializer<ActivityEntity> get serializer =>
       _$activityEntitySerializer;

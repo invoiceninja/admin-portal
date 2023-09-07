@@ -529,6 +529,9 @@ class _$ActivityEntitySerializer
       'updated_at',
       serializers.serialize(object.updatedAt,
           specifiedType: const FullType(int)),
+      'created_at',
+      serializers.serialize(object.createdAt,
+          specifiedType: const FullType(int)),
     ];
     Object value;
     value = object.clientId;
@@ -722,6 +725,10 @@ class _$ActivityEntitySerializer
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'created_at':
+          result.createdAt = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
         case 'expense_id':
@@ -1094,6 +1101,8 @@ class _$ActivityEntity extends ActivityEntity {
   @override
   final int updatedAt;
   @override
+  final int createdAt;
+  @override
   final String expenseId;
   @override
   final bool isSystem;
@@ -1131,6 +1140,7 @@ class _$ActivityEntity extends ActivityEntity {
       this.paymentId,
       this.creditId,
       this.updatedAt,
+      this.createdAt,
       this.expenseId,
       this.isSystem,
       this.ip,
@@ -1149,6 +1159,8 @@ class _$ActivityEntity extends ActivityEntity {
     BuiltValueNullFieldError.checkNotNull(userId, r'ActivityEntity', 'userId');
     BuiltValueNullFieldError.checkNotNull(
         updatedAt, r'ActivityEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, r'ActivityEntity', 'createdAt');
   }
 
   @override
@@ -1176,6 +1188,7 @@ class _$ActivityEntity extends ActivityEntity {
         paymentId == other.paymentId &&
         creditId == other.creditId &&
         updatedAt == other.updatedAt &&
+        createdAt == other.createdAt &&
         expenseId == other.expenseId &&
         isSystem == other.isSystem &&
         ip == other.ip &&
@@ -1206,6 +1219,7 @@ class _$ActivityEntity extends ActivityEntity {
     _$hash = $jc(_$hash, paymentId.hashCode);
     _$hash = $jc(_$hash, creditId.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, expenseId.hashCode);
     _$hash = $jc(_$hash, isSystem.hashCode);
     _$hash = $jc(_$hash, ip.hashCode);
@@ -1236,6 +1250,7 @@ class _$ActivityEntity extends ActivityEntity {
           ..add('paymentId', paymentId)
           ..add('creditId', creditId)
           ..add('updatedAt', updatedAt)
+          ..add('createdAt', createdAt)
           ..add('expenseId', expenseId)
           ..add('isSystem', isSystem)
           ..add('ip', ip)
@@ -1310,6 +1325,10 @@ class ActivityEntityBuilder
   int get updatedAt => _$this._updatedAt;
   set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
 
+  int _createdAt;
+  int get createdAt => _$this._createdAt;
+  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+
   String _expenseId;
   String get expenseId => _$this._expenseId;
   set expenseId(String expenseId) => _$this._expenseId = expenseId;
@@ -1352,7 +1371,9 @@ class ActivityEntityBuilder
       _$this._history ??= new InvoiceHistoryEntityBuilder();
   set history(InvoiceHistoryEntityBuilder history) => _$this._history = history;
 
-  ActivityEntityBuilder();
+  ActivityEntityBuilder() {
+    ActivityEntity._initializeBuilder(this);
+  }
 
   ActivityEntityBuilder get _$this {
     final $v = _$v;
@@ -1370,6 +1391,7 @@ class ActivityEntityBuilder
       _paymentId = $v.paymentId;
       _creditId = $v.creditId;
       _updatedAt = $v.updatedAt;
+      _createdAt = $v.createdAt;
       _expenseId = $v.expenseId;
       _isSystem = $v.isSystem;
       _ip = $v.ip;
@@ -1422,6 +1444,8 @@ class ActivityEntityBuilder
               creditId: creditId,
               updatedAt: BuiltValueNullFieldError.checkNotNull(
                   updatedAt, r'ActivityEntity', 'updatedAt'),
+              createdAt: BuiltValueNullFieldError.checkNotNull(
+                  createdAt, r'ActivityEntity', 'createdAt'),
               expenseId: expenseId,
               isSystem: isSystem,
               ip: ip,
