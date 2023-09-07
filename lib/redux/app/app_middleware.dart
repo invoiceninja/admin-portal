@@ -38,7 +38,6 @@ import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
-import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
