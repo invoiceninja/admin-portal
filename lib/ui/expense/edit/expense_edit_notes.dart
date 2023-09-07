@@ -86,7 +86,11 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
     final state = viewModel.state;
     final expense = viewModel.expense;
     final isFullscreen = state.prefState.isEditorFullScreen(EntityType.expense);
-    final showDocuments = isDesktop(context) && state.isEnterprisePlan;
+    final company = state.company;
+
+    final showDocuments = isDesktop(context) &&
+        state.isEnterprisePlan &&
+        company.isModuleEnabled(EntityType.document);
 
     return ScrollableListView(
       children: <Widget>[
@@ -121,11 +125,8 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
                 SizedBox(height: 8),
                 DocumentGrid(
                   documents: expense.documents.toList(),
-                  onUploadDocument: (path) =>
-                      widget.viewModel.onUploadDocument(context, path),
-                  onDeleteDocument: (document, password, idToken) => widget
-                      .viewModel
-                      .onDeleteDocument(context, document, password, idToken),
+                  onUploadDocument: (path, isPrivate) => widget.viewModel
+                      .onUploadDocument(context, path, isPrivate),
                   onRenamedDocument: () =>
                       store.dispatch(LoadExpense(expenseId: expense.id)),
                 )

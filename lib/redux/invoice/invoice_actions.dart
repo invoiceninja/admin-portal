@@ -505,11 +505,13 @@ class ClearInvoiceMultiselect {}
 
 class SaveInvoiceDocumentRequest implements StartSaving {
   SaveInvoiceDocumentRequest({
+    @required this.isPrivate,
     @required this.completer,
     @required this.multipartFiles,
     @required this.invoice,
   });
 
+  final bool isPrivate;
   final Completer completer;
   final List<MultipartFile> multipartFiles;
   final InvoiceEntity invoice;

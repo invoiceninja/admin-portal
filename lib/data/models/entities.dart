@@ -107,7 +107,7 @@ class EntityType extends EnumClass {
           EntityType.project,
           EntityType.recurringInvoice,
           EntityType.recurringExpense,
-          //EntityType.document,
+          EntityType.document,
         ];
       case EntityType.invoice:
         return [
@@ -167,7 +167,7 @@ class EntityType extends EnumClass {
           EntityType.expense,
           EntityType.recurringExpense,
           EntityType.transaction,
-          //EntityType.document,
+          EntityType.document,
         ];
       case EntityType.task:
         return [
@@ -229,6 +229,9 @@ class EntityType extends EnumClass {
 
     return this;
   }
+
+  bool get hideCreate =>
+      this == EntityType.settings || this == EntityType.document;
 
   String get snakeCase => toSnakeCase(toString());
 
@@ -414,6 +417,8 @@ abstract class BaseEntity implements SelectableEntity {
 
   bool get isOld => !isNew;
 
+  bool get isDeletable => true;
+
   bool get isActive => !isArchived && !isDeleted;
 
   bool get isNotActive => isArchived || isDeleted;
@@ -480,7 +485,7 @@ abstract class BaseEntity implements SelectableEntity {
       ClientEntity client,
       bool includeEdit = false,
       bool multiselect = false}) {
-    if (isNew) {
+    if (isNew || entityType == EntityType.company) {
       return [];
     }
 
@@ -725,6 +730,9 @@ abstract class ActivityEntity
   @BuiltValueField(wireName: 'updated_at')
   int get updatedAt;
 
+  @BuiltValueField(wireName: 'created_at')
+  int get createdAt;
+
   @nullable
   @BuiltValueField(wireName: 'expense_id')
   String get expenseId;
@@ -964,6 +972,10 @@ abstract class ActivityEntity
 
     return activity;
   }
+
+  // ignore: unused_element
+  static void _initializeBuilder(ActivityEntityBuilder builder) =>
+      builder..createdAt = 0;
 
   static Serializer<ActivityEntity> get serializer =>
       _$activityEntitySerializer;

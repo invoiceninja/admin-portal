@@ -487,6 +487,9 @@ abstract class CompanyEntity extends Object
   String get displayName => settings.name ?? '';
 
   @override
+  bool get isActive => true;
+
+  @override
   bool matchesFilter(String filter) {
     for (final user in users) {
       if (user.matchesFilter(filter)) {
@@ -544,7 +547,7 @@ abstract class CompanyEntity extends Object
   FormatNumberType get listDisplayAmountType => null;
 
   @override
-  String get listDisplayName => null;
+  String get listDisplayName => settings?.name ?? '';
 
   bool hasCustomField(String field) => getCustomFieldLabel(field).isNotEmpty;
 
@@ -737,6 +740,9 @@ abstract class CompanyEntity extends Object
     } else if (entityType == EntityType.transaction &&
         enabledModules & kModuleTransactions == 0) {
       return false;
+    } else if (entityType == EntityType.document &&
+        enabledModules & kModuleDocuments == 0) {
+      return false;
     }
 
     return true;
@@ -747,10 +753,13 @@ abstract class CompanyEntity extends Object
 
   String get currencyId => settings.currencyId ?? kDefaultCurrencyId;
 
+  String get languageId => settings.languageId ?? kDefaultLanguageId;
+
   bool get supportsQrIban => settings.countryId == kCountrySwitzerland;
 
   // ignore: unused_element
   static void _initializeBuilder(CompanyEntityBuilder builder) => builder
+    ..entityType = EntityType.company
     ..calculateExpenseTaxByAmount = false
     ..enableProductDiscount = false
     ..defaultTaskIsDateBased = false

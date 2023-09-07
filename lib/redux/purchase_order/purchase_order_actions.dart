@@ -159,11 +159,13 @@ class LoadPurchaseOrdersSuccess implements StopLoading {
 
 class SavePurchaseOrderDocumentRequest implements StartSaving {
   SavePurchaseOrderDocumentRequest({
+    @required this.isPrivate,
     @required this.completer,
     @required this.multipartFiles,
     @required this.purchaseOrder,
   });
 
+  final bool isPrivate;
   final Completer completer;
   final List<MultipartFile> multipartFiles;
   final InvoiceEntity purchaseOrder;

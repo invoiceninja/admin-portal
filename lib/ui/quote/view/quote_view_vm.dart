@@ -14,7 +14,6 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
@@ -61,8 +60,7 @@ class QuoteViewVM extends AbstractInvoiceViewVM {
     Function(BuildContext) onPaymentsPressed,
     Function(BuildContext, PaymentEntity) onPaymentPressed,
     Function(BuildContext) onRefreshed,
-    Function(BuildContext, List<MultipartFile>) onUploadDocuments,
-    Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
+    Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
     Function(BuildContext, DocumentEntity) onViewExpense,
     Function(BuildContext, InvoiceEntity, [String]) onViewPdf,
   }) : super(
@@ -77,7 +75,6 @@ class QuoteViewVM extends AbstractInvoiceViewVM {
           onPaymentsPressed: onPaymentsPressed,
           onRefreshed: onRefreshed,
           onUploadDocuments: onUploadDocuments,
-          onDeleteDocument: onDeleteDocument,
           onViewExpense: onViewExpense,
           onViewPdf: onViewPdf,
         );
@@ -113,11 +110,14 @@ class QuoteViewVM extends AbstractInvoiceViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([quote], action, autoPop: true),
-      onUploadDocuments:
-          (BuildContext context, List<MultipartFile> multipartFiles) {
+      onUploadDocuments: (BuildContext context,
+          List<MultipartFile> multipartFiles, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveQuoteDocumentRequest(
-            multipartFile: multipartFiles, quote: quote, completer: completer));
+            isPrivate: isPrivate,
+            multipartFile: multipartFiles,
+            quote: quote,
+            completer: completer));
         completer.future.then((client) {
           showToast(AppLocalization.of(context).uploadedDocument);
         }).catchError((Object error) {
@@ -127,19 +127,6 @@ class QuoteViewVM extends AbstractInvoiceViewVM {
                 return ErrorDialog(error);
               });
         });
-      },
-      onDeleteDocument: (BuildContext context, DocumentEntity document,
-          String password, String idToken) {
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).deletedDocument);
-        completer.future.then<Null>(
-            (value) => store.dispatch(LoadQuote(quoteId: quote.id)));
-        store.dispatch(DeleteDocumentRequest(
-          completer: completer,
-          documentIds: [document.id],
-          password: password,
-          idToken: idToken,
-        ));
       },
       onViewPdf: (context, quote, [activityId]) {
         store.dispatch(ShowPdfQuote(

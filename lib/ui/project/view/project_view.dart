@@ -76,49 +76,61 @@ class _ProjectViewState extends State<ProjectView>
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final project = viewModel.project;
+    final state = viewModel.state;
+    final company = state.company;
     final localization = AppLocalization.of(context);
     final documents = project.documents;
 
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: project,
-      appBarBottom: TabBar(
-        controller: _controller,
-        isScrollable: false,
-        tabs: [
-          Tab(
-            text: localization.overview,
-          ),
-          Tab(
-            text: documents.isEmpty
-                ? localization.documents
-                : '${localization.documents} (${documents.length})',
-          ),
-        ],
-      ),
+      appBarBottom: company.isModuleEnabled(EntityType.document)
+          ? TabBar(
+              controller: _controller,
+              isScrollable: false,
+              tabs: [
+                Tab(
+                  text: localization.overview,
+                ),
+                Tab(
+                  text: documents.isEmpty
+                      ? localization.documents
+                      : '${localization.documents} (${documents.length})',
+                ),
+              ],
+            )
+          : null,
       body: Builder(builder: (context) {
         return Column(
           children: <Widget>[
             Expanded(
-              child: TabBarView(
-                controller: _controller,
-                children: <Widget>[
-                  RefreshIndicator(
-                    onRefresh: () => viewModel.onRefreshed(context),
-                    child: ProjectOverview(
-                      viewModel: viewModel,
-                      isFilter: widget.isFilter,
+              child: company.isModuleEnabled(EntityType.document)
+                  ? TabBarView(
+                      controller: _controller,
+                      children: <Widget>[
+                        RefreshIndicator(
+                          onRefresh: () => viewModel.onRefreshed(context),
+                          child: ProjectOverview(
+                            viewModel: viewModel,
+                            isFilter: widget.isFilter,
+                          ),
+                        ),
+                        RefreshIndicator(
+                          onRefresh: () => viewModel.onRefreshed(context),
+                          child: ProjectViewDocuments(
+                            viewModel: viewModel,
+                            key: ValueKey(viewModel.project.id),
+                          ),
+                        ),
+                      ],
+                    )
+                  : RefreshIndicator(
+                      onRefresh: () => viewModel.onRefreshed(context),
+                      child: ProjectOverview(
+                        viewModel: viewModel,
+                        isFilter: widget.isFilter,
+                      ),
                     ),
-                  ),
-                  RefreshIndicator(
-                    onRefresh: () => viewModel.onRefreshed(context),
-                    child: ProjectViewDocuments(
-                      viewModel: viewModel,
-                      key: ValueKey(viewModel.project.id),
-                    ),
-                  ),
-                ],
-              ),
             ),
             BottomButtons(
               entity: project,

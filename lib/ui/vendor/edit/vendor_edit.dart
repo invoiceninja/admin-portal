@@ -11,9 +11,9 @@ import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_desktop.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_details.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_footer.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_notes.dart';
+import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_settings.dart';
 import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class VendorEdit extends StatefulWidget {
   const VendorEdit({
@@ -36,7 +36,7 @@ class _VendorEditState extends State<VendorEdit>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 4);
+    _controller = TabController(vsync: this, length: 5);
   }
 
   @override
@@ -76,7 +76,7 @@ class _VendorEditState extends State<VendorEdit>
       },
       appBarBottom: TabBar(
         controller: _controller,
-        isScrollable: isMobile(context),
+        isScrollable: true,
         tabs: [
           Tab(
             text: localization.details,
@@ -86,6 +86,9 @@ class _VendorEditState extends State<VendorEdit>
           ),
           Tab(
             text: localization.notes,
+          ),
+          Tab(
+            text: localization.settings,
           ),
           Tab(
             text: localization.address,
@@ -118,6 +121,11 @@ class _VendorEditState extends State<VendorEdit>
                       VendorEditNotes(
                         viewModel: widget.viewModel,
                       ),
+                    ],
+                  ),
+                  ScrollableListView(
+                    children: [
+                      VendorEditSettings(viewModel: viewModel),
                     ],
                   ),
                   ScrollableListView(

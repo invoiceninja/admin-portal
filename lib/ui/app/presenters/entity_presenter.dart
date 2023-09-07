@@ -33,12 +33,14 @@ class EntityPresenter {
     }
 
     if ([
+          EntityType.company,
           EntityType.client,
           EntityType.vendor,
           EntityType.project,
           EntityType.user,
           EntityType.product,
           EntityType.transaction,
+          EntityType.document,
         ].contains(entity.entityType) ||
         isNarrow) {
       return name;

@@ -111,6 +111,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     super.initState();
 
     final invoice = widget.viewModel.invoice;
+    final state = widget.viewModel.state;
+    final company = state.company;
+
     _selectTasksTable = invoice.hasTasks && !invoice.hasProducts;
     _showSaveDefault = invoice.isInvoice ||
         invoice.isQuote ||
@@ -118,7 +121,9 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
         invoice.isPurchaseOrder;
 
     _focusNode = FocusScopeNode();
-    _optionTabController = TabController(vsync: this, length: 6);
+    _optionTabController = TabController(
+        vsync: this,
+        length: company.isModuleEnabled(EntityType.document) ? 6 : 5);
     _tableTabController = TabController(
         vsync: this, length: 2, initialIndex: _selectTasksTable ? 1 : 0);
   }
@@ -678,11 +683,12 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               Tab(text: localization.publicNotes),
                               Tab(text: localization.privateNotes),
                               Tab(text: localization.settings),
-                              Tab(
-                                  text: localization.documents +
-                                      (invoice.documents.isNotEmpty
-                                          ? ' (${invoice.documents.length})'
-                                          : '')),
+                              if (company.isModuleEnabled(EntityType.document))
+                                Tab(
+                                    text: localization.documents +
+                                        (invoice.documents.isNotEmpty
+                                            ? ' (${invoice.documents.length})'
+                                            : '')),
                             ],
                           ),
                           SizedBox(
@@ -937,25 +943,21 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                     ],
                                   );
                                 }),
-                                if (invoice.isNew || state.hasChanges())
-                                  HelpText(localization.saveToUploadDocuments)
-                                else
-                                  DocumentGrid(
-                                    documents:
-                                        originalInvoice.documents.toList(),
-                                    onUploadDocument: (path) => widget
-                                        .entityViewModel
-                                        .onUploadDocuments(context, path),
-                                    onDeleteDocument: (document, password,
-                                            idToken) =>
-                                        widget.entityViewModel.onDeleteDocument(
-                                            context,
-                                            document,
-                                            password,
-                                            idToken),
-                                    onRenamedDocument: () => store.dispatch(
-                                        LoadInvoice(invoiceId: invoice.id)),
-                                  )
+                                if (company
+                                    .isModuleEnabled(EntityType.document))
+                                  if (invoice.isNew || state.hasChanges())
+                                    HelpText(localization.saveToUploadDocuments)
+                                  else
+                                    DocumentGrid(
+                                      documents:
+                                          originalInvoice.documents.toList(),
+                                      onUploadDocument: (path, isPrivate) =>
+                                          widget.entityViewModel
+                                              .onUploadDocuments(
+                                                  context, path, isPrivate),
+                                      onRenamedDocument: () => store.dispatch(
+                                          LoadInvoice(invoiceId: invoice.id)),
+                                    )
                               ],
                             ),
                           ),

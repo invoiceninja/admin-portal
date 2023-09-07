@@ -19,47 +19,29 @@ enum DocumentReportFields {
   height,
   file_type,
   record_type,
-  record_name,
   created_at,
   created_by,
   updated_at,
+  private,
 }
 
-var memoizedDocumentReport = memo10((
+var memoizedDocumentReport = memo4((
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, ProductEntity> productMap,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, InvoiceEntity> quoteMap,
-  BuiltMap<String, ExpenseEntity> expenseMap,
-  BuiltMap<String, ProjectEntity> projectMap,
-  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, DocumentEntity> documentMap,
   BuiltMap<String, UserEntity> userMap,
 ) =>
     documentReport(
       userCompany,
       reportsUIState,
-      clientMap,
-      productMap,
-      invoiceMap,
-      quoteMap,
-      expenseMap,
-      projectMap,
-      vendorMap,
+      documentMap,
       userMap,
     ));
 
 ReportResult documentReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, ProductEntity> productMap,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, InvoiceEntity> quoteMap,
-  BuiltMap<String, ExpenseEntity> expenseMap,
-  BuiltMap<String, ProjectEntity> projectMap,
-  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, DocumentEntity> documentMap,
   BuiltMap<String, UserEntity> userMap,
 ) {
   final List<List<ReportElement>> data = [];
@@ -76,9 +58,12 @@ ReportResult documentReport(
 
   final defaultColumns = [
     DocumentReportFields.record_type,
-    DocumentReportFields.record_name,
     DocumentReportFields.name,
     DocumentReportFields.file_type,
+    DocumentReportFields.size,
+    DocumentReportFields.width,
+    DocumentReportFields.height,
+    DocumentReportFields.private,
   ];
 
   if (documentReportSettings.columns.isNotEmpty) {
@@ -90,7 +75,7 @@ ReportResult documentReport(
     columns = BuiltList(defaultColumns);
   }
 
-  List<ReportElement> _getRow(BaseEntity entity, DocumentEntity document) {
+  documentMap.values.forEach((document) {
     bool skip = false;
     final List<ReportElement> row = [];
 
@@ -110,11 +95,8 @@ ReportResult documentReport(
         case DocumentReportFields.created_by:
           value = userMap[document.createdUserId]?.listDisplayName ?? '';
           break;
-        case DocumentReportFields.record_name:
-          value = entity.listDisplayName;
-          break;
         case DocumentReportFields.record_type:
-          value = entity.entityType;
+          value = document.parentType;
           break;
         case DocumentReportFields.updated_at:
           value = convertTimestampToDateString(document.updatedAt);
@@ -127,6 +109,9 @@ ReportResult documentReport(
           break;
         case DocumentReportFields.height:
           value = document.height;
+          break;
+        case DocumentReportFields.private:
+          value = !document.isPublic;
           break;
       }
 
@@ -141,59 +126,25 @@ ReportResult documentReport(
       }
 
       if (value.runtimeType == bool) {
-        row.add(entity.getReportBool(value: value));
+        row.add(document.getReportBool(value: value));
       } else if (value.runtimeType == int) {
-        row.add(entity.getReportInt(value: value));
+        row.add(document.getReportInt(value: value));
       } else if (value.runtimeType == double) {
-        row.add(entity.getReportDouble(value: value));
+        row.add(document.getReportDouble(value: value));
       } else if (value.runtimeType == EntityType) {
-        row.add(entity.getReportEntityType());
+        row.add(ReportEntityTypeValue(
+            entityId: document.parentId,
+            entityType: document.parentType,
+            value: document.parentType));
       } else {
-        row.add(entity.getReportString(value: value));
+        row.add(document.getReportString(value: value));
       }
     }
 
-    return skip ? null : row;
-  }
-
-  clientMap.forEach((clientId, client) {
-    client.documents.forEach((document) {
-      final row = _getRow(client, document);
-      if (row != null) {
-        data.add(row);
-        entities.add(document);
-      }
-    });
-  });
-
-  productMap.forEach((productId, product) {
-    product.documents.forEach((document) {
-      final row = _getRow(product, document);
-      if (row != null) {
-        data.add(row);
-        entities.add(document);
-      }
-    });
-  });
-
-  invoiceMap.forEach((invoiceId, invoice) {
-    invoice.documents.forEach((document) {
-      final row = _getRow(invoice, document);
-      if (row != null) {
-        data.add(row);
-        entities.add(document);
-      }
-    });
-  });
-
-  quoteMap.forEach((quoteId, quote) {
-    quote.documents.forEach((document) {
-      final row = _getRow(quote, document);
-      if (row != null) {
-        data.add(row);
-        entities.add(document);
-      }
-    });
+    if (!skip) {
+      data.add(row);
+      entities.add(document);
+    }
   });
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();

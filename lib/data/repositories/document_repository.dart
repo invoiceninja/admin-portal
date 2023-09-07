@@ -1,6 +1,7 @@
 // Dart imports:
 import 'dart:convert';
 import 'dart:core';
+import 'dart:typed_data';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
@@ -11,6 +12,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class DocumentRepository {
   const DocumentRepository({
@@ -28,6 +30,15 @@ class DocumentRepository {
         serializers.deserializeWith(DocumentItemResponse.serializer, response);
 
     return documentResponse.data;
+  }
+
+  Future<Uint8List> loadData(
+      Credentials credentials, DocumentEntity document) async {
+    final url = '${cleanApiUrl(credentials.url)}/documents/${document.hash}';
+    final dynamic response =
+        await WebClient().get(url, credentials.token, rawResponse: true);
+
+    return response.bodyBytes;
   }
 
   Future<BuiltList<DocumentEntity>> loadList(Credentials credentials) async {

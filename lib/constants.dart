@@ -4,7 +4,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.123';
+const String kClientVersion = '5.0.124';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -339,6 +339,12 @@ const kPurchaseOrderStatuses = {
   kPurchaseOrderStatusCancelled: 'cancelled',
   kPurchaseOrderStatusViewed: 'viewed',
 };
+
+const String kDocumentStatusPublic = '-1';
+const String kDocumentStatusPrivate = '-2';
+const String kDocumentStatusImage = '-3';
+const String kDocumentStatusPDF = '-4';
+const String kDocumentStatusOther = '-5';
 
 const String kGatewayTypeCreditCard = '1';
 const String kGatewayTypeBankTransfer = '2';
@@ -694,6 +700,7 @@ const kTransactionStatuses = {
 };
 
 const String kDefaultCurrencyId = '1';
+const String kDefaultLanguageId = '1';
 const String kDefaultDateFormat = '5';
 const String kDefaultAccentColor = '#2F7DC3';
 const String kDefaultDarkSelectedColorMenu = '#1E252F';
@@ -719,7 +726,7 @@ const int kModuleTasks = 8;
 const int kModuleExpenses = 16;
 const int kModuleProjects = 32;
 const int kModuleVendors = 64;
-const int kModuleTickets = 128;
+const int kModuleDocuments = 128;
 const int kModuleTransactions = 256;
 const int kModuleRecurringExpenses = 512;
 const int kModuleRecurringTasks = 1024;
@@ -740,7 +747,7 @@ const Map<int, String> kModules = {
   kModuleExpenses: 'expenses',
   kModuleRecurringExpenses: 'recurring_expenses',
   kModuleTransactions: 'transactions',
-  //kModuleTickets: 'tickets',
+  kModuleDocuments: 'documents',
   //kModuleRecurringTasks: 'recurring_tasks',
   //kModuleRecurringQuotes: 'recurring_quotes',
 };
@@ -765,6 +772,7 @@ const List<String> kLanguages = [
   'fi',
   'fr',
   'fr_CA',
+  'fr_CH',
   'hu',
   'hr',
   'it',

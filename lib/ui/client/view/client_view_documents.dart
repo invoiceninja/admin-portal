@@ -21,9 +21,8 @@ class ClientViewDocuments extends StatelessWidget {
 
     return DocumentGrid(
       documents: client.documents.toList(),
-      onUploadDocument: (path) => viewModel.onUploadDocuments(context, path),
-      onDeleteDocument: (document, password, idToken) =>
-          viewModel.onDeleteDocument(context, document, password, idToken),
+      onUploadDocument: (path, isPrivate) =>
+          viewModel.onUploadDocuments(context, path, isPrivate),
       onRenamedDocument: () => store.dispatch(LoadClient(clientId: client.id)),
     );
   }

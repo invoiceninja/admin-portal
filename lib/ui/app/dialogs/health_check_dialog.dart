@@ -96,8 +96,15 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
     });
   }
 
-  String _parseVersion(String version) =>
-      RegExp(r'(\d+\.\d+.\d+)').stringMatch(version);
+  String _parseVersion(String version) {
+    final parsed = RegExp(r'(\d+\.\d+.\d+)').stringMatch(version);
+
+    if (parsed == null) {
+      return version;
+    }
+
+    return 'v$parsed';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +150,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                   isValid: _response.phpVersion.isOkay &&
                       webPhpVersion.startsWith('8') &&
                       cliPhpVersion.startsWith('8'),
-                  subtitle: 'Web: v$webPhpVersion\nCLI: v$cliPhpVersion' +
+                  subtitle: 'Web: $webPhpVersion\nCLI: $cliPhpVersion' +
                       (phpMemoryLimit.isNotEmpty
                           ? '\nMemory Limit: $phpMemoryLimit'
                           : ''),

@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -298,6 +299,17 @@ Middleware<AppState> _loadClients(ClientRepository repository) {
     store.dispatch(LoadClientsRequest());
     repository.loadList(state.credentials, action.page).then((data) {
       store.dispatch(LoadClientsSuccess(data));
+
+      final documents = <DocumentEntity>[];
+      data.forEach((client) {
+        client.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = client.id
+            ..parentType = EntityType.client));
+        });
+      });
+      store.dispatch(LoadDocumentsSuccess(documents));
+
       if (data.length == kMaxRecordsPerPage) {
         store.dispatch(LoadClients(
           completer: action.completer,
@@ -327,9 +339,22 @@ Middleware<AppState> _saveDocument(ClientRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
-              store.state.credentials, action.client, action.multipartFile)
+        store.state.credentials,
+        action.client,
+        action.multipartFile,
+        action.isPrivate,
+      )
           .then((client) {
         store.dispatch(SaveClientSuccess(client));
+
+        final documents = <DocumentEntity>[];
+        client.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = client.id
+            ..parentType = EntityType.client));
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+
         action.completer.complete(null);
       }).catchError((Object error) {
         print(error);

@@ -15,7 +15,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view.dart';
@@ -56,7 +55,6 @@ class AbstractExpenseViewVM {
     @required this.onEntityAction,
     @required this.onRefreshed,
     @required this.onUploadDocuments,
-    @required this.onDeleteDocument,
     @required this.isSaving,
     @required this.isLoading,
     @required this.isDirty,
@@ -67,8 +65,7 @@ class AbstractExpenseViewVM {
   final CompanyEntity company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, List<MultipartFile>) onUploadDocuments;
-  final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
+  final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;
@@ -81,8 +78,7 @@ class ExpenseViewVM extends AbstractExpenseViewVM {
     CompanyEntity company,
     Function(BuildContext, EntityAction) onEntityAction,
     Function(BuildContext) onRefreshed,
-    Function(BuildContext, List<MultipartFile>) onUploadDocuments,
-    Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
+    Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
     bool isSaving,
     bool isLoading,
     bool isDirty,
@@ -93,7 +89,6 @@ class ExpenseViewVM extends AbstractExpenseViewVM {
           onEntityAction: onEntityAction,
           onRefreshed: onRefreshed,
           onUploadDocuments: onUploadDocuments,
-          onDeleteDocument: onDeleteDocument,
           isSaving: isSaving,
           isLoading: isLoading,
           isDirty: isDirty,
@@ -121,10 +116,11 @@ class ExpenseViewVM extends AbstractExpenseViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([expense], action, autoPop: true),
-      onUploadDocuments:
-          (BuildContext context, List<MultipartFile> multipartFiles) {
+      onUploadDocuments: (BuildContext context,
+          List<MultipartFile> multipartFiles, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveExpenseDocumentRequest(
+            isPrivate: isPrivate,
             multipartFiles: multipartFiles,
             expense: expense,
             completer: completer));
@@ -137,19 +133,6 @@ class ExpenseViewVM extends AbstractExpenseViewVM {
                 return ErrorDialog(error);
               });
         });
-      },
-      onDeleteDocument: (BuildContext context, DocumentEntity document,
-          String password, String idToken) {
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).deletedDocument);
-        completer.future.then<Null>(
-            (value) => store.dispatch(LoadExpense(expenseId: expense.id)));
-        store.dispatch(DeleteDocumentRequest(
-          completer: completer,
-          documentIds: [document.id],
-          password: password,
-          idToken: idToken,
-        ));
       },
     );
   }

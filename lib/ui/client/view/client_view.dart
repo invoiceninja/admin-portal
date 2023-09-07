@@ -51,7 +51,7 @@ class _ClientViewState extends State<ClientView>
     final state = widget.viewModel.state;
     _controller = TabController(
         vsync: this,
-        length: 6,
+        length: state.company.isModuleEnabled(EntityType.document) ? 6 : 5,
         initialIndex: widget.isFilter ? 0 : state.clientUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
@@ -85,6 +85,7 @@ class _ClientViewState extends State<ClientView>
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final company = viewModel.state.company;
     final client = viewModel.client;
     final documents = client.documents;
 
@@ -122,11 +123,12 @@ class _ClientViewState extends State<ClientView>
           Tab(
             text: localization.details,
           ),
-          Tab(
-            text: documents.isEmpty
-                ? localization.documents
-                : '${localization.documents} (${documents.length})',
-          ),
+          if (company.isModuleEnabled(EntityType.document))
+            Tab(
+              text: documents.isEmpty
+                  ? localization.documents
+                  : '${localization.documents} (${documents.length})',
+            ),
           Tab(
             text: localization.ledger,
           ),

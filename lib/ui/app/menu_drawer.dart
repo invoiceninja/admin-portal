@@ -686,6 +686,12 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                   icon: getEntityIcon(EntityType.transaction),
                                   title: localization.transactions,
                                 ),
+                                DrawerTile(
+                                  company: company,
+                                  entityType: EntityType.document,
+                                  icon: getEntityIcon(EntityType.document),
+                                  title: localization.documents,
+                                ),
                                 if (state.isProPlan &&
                                     state.userCompany.canViewReports)
                                   DrawerTile(
@@ -1144,6 +1150,9 @@ class SidebarFooter extends StatelessWidget {
                     url += '/basic-settings/#$subRoute';
                   }
                 } else if (uiState.mainRoute == kDashboard) {
+                  url += '/user-guide';
+                  // TODO remove this once docs are added
+                } else if (uiState.mainRoute == '${EntityType.document}') {
                   url += '/user-guide';
                 } else if (uiState.mainRoute == kReports) {
                   url += '/$kReports';

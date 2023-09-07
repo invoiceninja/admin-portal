@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/edit/purchase_order_edit.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/view/purchase_order_view_vm.dart';
@@ -57,8 +56,7 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
     Function(List<InvoiceItemEntity>, String, String) onItemsAdded,
     bool isSaving,
     Function(BuildContext) onCancelPressed,
-    Function(BuildContext, List<MultipartFile>) onUploadDocuments,
-    Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
+    Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
   }) : super(
           state: state,
           company: company,
@@ -70,7 +68,6 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
           isSaving: isSaving,
           onCancelPressed: onCancelPressed,
           onUploadDocuments: onUploadDocuments,
-          onDeleteDocument: onDeleteDocument,
         );
 
   factory PurchaseOrderEditVM.fromStore(Store<AppState> store) {
@@ -166,10 +163,11 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
       },
-      onUploadDocuments:
-          (BuildContext context, List<MultipartFile> multipartFiles) {
+      onUploadDocuments: (BuildContext context,
+          List<MultipartFile> multipartFiles, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SavePurchaseOrderDocumentRequest(
+            isPrivate: isPrivate,
             multipartFiles: multipartFiles,
             purchaseOrder: purchaseOrder,
             completer: completer));
@@ -182,19 +180,6 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
                 return ErrorDialog(error);
               });
         });
-      },
-      onDeleteDocument: (BuildContext context, DocumentEntity document,
-          String password, String idToken) {
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).deletedDocument);
-        completer.future.then<Null>((value) => store
-            .dispatch(LoadPurchaseOrder(purchaseOrderId: purchaseOrder.id)));
-        store.dispatch(DeleteDocumentRequest(
-          completer: completer,
-          documentIds: [document.id],
-          password: password,
-          idToken: idToken,
-        ));
       },
     );
   }

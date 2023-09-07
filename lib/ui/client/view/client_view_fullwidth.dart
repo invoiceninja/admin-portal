@@ -186,7 +186,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                       ),
                     ),
                   if ((client.languageId ?? '').isNotEmpty &&
-                      client.languageId != state.company.settings.languageId)
+                      client.languageId != state.company.languageId)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 1),
                       child: Text(
@@ -429,7 +429,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                     bottom: kMobileDialogPadding,
                     left: kMobileDialogPadding / 2),
                 child: DefaultTabController(
-                  length: 5,
+                  length: company.isModuleEnabled(EntityType.document) ? 5 : 4,
                   child: SizedBox(
                     height: minHeight,
                     child: Column(
@@ -446,11 +446,12 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                                 text:
                                     '${localization.paymentMethods} (${tokenMap.keys.length})',
                               ),
-                            Tab(
-                              text: documents.isEmpty
-                                  ? localization.documents
-                                  : '${localization.documents} (${documents.length})',
-                            ),
+                            if (company.isModuleEnabled(EntityType.document))
+                              Tab(
+                                text: documents.isEmpty
+                                    ? localization.documents
+                                    : '${localization.documents} (${documents.length})',
+                              ),
                             Tab(
                               text: localization.ledger,
                             ),
@@ -498,13 +499,15 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                                     tokenMap: tokenMap,
                                   ),
                                 ),
-                              RefreshIndicator(
-                                onRefresh: () => viewModel.onRefreshed(context),
-                                child: ClientViewDocuments(
-                                  viewModel: viewModel,
-                                  key: ValueKey(viewModel.client.id),
+                              if (company.isModuleEnabled(EntityType.document))
+                                RefreshIndicator(
+                                  onRefresh: () =>
+                                      viewModel.onRefreshed(context),
+                                  child: ClientViewDocuments(
+                                    viewModel: viewModel,
+                                    key: ValueKey(viewModel.client.id),
+                                  ),
                                 ),
-                              ),
                               RefreshIndicator(
                                 onRefresh: () => viewModel.onRefreshed(context),
                                 child: ClientViewLedger(

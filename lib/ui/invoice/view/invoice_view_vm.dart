@@ -14,7 +14,6 @@ import 'package:redux/redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view.dart';
@@ -56,7 +55,6 @@ class AbstractInvoiceViewVM {
     @required this.isDirty,
     @required this.onActionSelected,
     @required this.onUploadDocuments,
-    @required this.onDeleteDocument,
     @required this.onEditPressed,
     @required this.onPaymentsPressed,
     @required this.onRefreshed,
@@ -74,8 +72,7 @@ class AbstractInvoiceViewVM {
   final Function(BuildContext, [int]) onEditPressed;
   final Function(BuildContext) onPaymentsPressed;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, List<MultipartFile>) onUploadDocuments;
-  final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
+  final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;
   final Function(BuildContext, DocumentEntity) onViewExpense;
   final Function(BuildContext, InvoiceEntity, [String]) onViewPdf;
 }
@@ -95,8 +92,7 @@ class InvoiceViewVM extends AbstractInvoiceViewVM {
       Function(BuildContext, PaymentEntity, [bool]) onPaymentPressed,
       Function(BuildContext) onPaymentsPressed,
       Function(BuildContext) onRefreshed,
-      Function(BuildContext, List<MultipartFile>) onUploadDocuments,
-      Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
+      Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
       Function(BuildContext, DocumentEntity) onViewExpense,
       Function(BuildContext, InvoiceEntity, [String]) onViewPdf})
       : super(
@@ -111,7 +107,6 @@ class InvoiceViewVM extends AbstractInvoiceViewVM {
           onPaymentsPressed: onPaymentsPressed,
           onRefreshed: onRefreshed,
           onUploadDocuments: onUploadDocuments,
-          onDeleteDocument: onDeleteDocument,
           onViewExpense: onViewExpense,
           onViewPdf: onViewPdf,
         );
@@ -149,10 +144,11 @@ class InvoiceViewVM extends AbstractInvoiceViewVM {
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([invoice], action, autoPop: true),
-      onUploadDocuments:
-          (BuildContext context, List<MultipartFile> multipartFile) {
+      onUploadDocuments: (BuildContext context,
+          List<MultipartFile> multipartFile, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveInvoiceDocumentRequest(
+            isPrivate: isPrivate,
             multipartFiles: multipartFile,
             invoice: invoice,
             completer: completer));
@@ -165,19 +161,6 @@ class InvoiceViewVM extends AbstractInvoiceViewVM {
                 return ErrorDialog(error);
               });
         });
-      },
-      onDeleteDocument: (BuildContext context, DocumentEntity document,
-          String password, String idToken) {
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).deletedDocument);
-        completer.future.then<Null>(
-            (value) => store.dispatch(LoadInvoice(invoiceId: invoice.id)));
-        store.dispatch(DeleteDocumentRequest(
-          completer: completer,
-          documentIds: [document.id],
-          password: password,
-          idToken: idToken,
-        ));
       },
       onViewExpense: (BuildContext context, DocumentEntity document) {
         /*

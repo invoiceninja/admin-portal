@@ -15,7 +15,6 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view.dart';
@@ -55,8 +54,7 @@ class RecurringExpenseViewVM extends AbstractExpenseViewVM {
     CompanyEntity company,
     Function(BuildContext, EntityAction) onEntityAction,
     Function(BuildContext) onRefreshed,
-    Function(BuildContext, List<MultipartFile>) onUploadDocuments,
-    Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
+    Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
     bool isSaving,
     bool isLoading,
     bool isDirty,
@@ -67,7 +65,6 @@ class RecurringExpenseViewVM extends AbstractExpenseViewVM {
           onEntityAction: onEntityAction,
           onRefreshed: onRefreshed,
           onUploadDocuments: onUploadDocuments,
-          onDeleteDocument: onDeleteDocument,
           isSaving: isSaving,
           isLoading: isLoading,
           isDirty: isDirty,
@@ -97,10 +94,11 @@ class RecurringExpenseViewVM extends AbstractExpenseViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([recurringExpense], action, autoPop: true),
-      onUploadDocuments:
-          (BuildContext context, List<MultipartFile> multipartFiles) {
+      onUploadDocuments: (BuildContext context,
+          List<MultipartFile> multipartFiles, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveRecurringExpenseDocumentRequest(
+            isPrivate: isPrivate,
             multipartFile: multipartFiles,
             expense: recurringExpense,
             completer: completer));
@@ -113,19 +111,6 @@ class RecurringExpenseViewVM extends AbstractExpenseViewVM {
                 return ErrorDialog(error);
               });
         });
-      },
-      onDeleteDocument: (BuildContext context, DocumentEntity document,
-          String password, String idToken) {
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).deletedDocument);
-        completer.future.then<Null>((value) => store.dispatch(
-            LoadRecurringExpense(recurringExpenseId: recurringExpense.id)));
-        store.dispatch(DeleteDocumentRequest(
-          completer: completer,
-          documentIds: [document.id],
-          password: password,
-          idToken: idToken,
-        ));
       },
     );
   }

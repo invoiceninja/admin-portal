@@ -446,11 +446,13 @@ class FilterCreditsByCustom4 implements PersistUI {
 
 class SaveCreditDocumentRequest implements StartSaving {
   SaveCreditDocumentRequest({
+    @required this.isPrivate,
     @required this.completer,
     @required this.multipartFiles,
     @required this.credit,
   });
 
+  final bool isPrivate;
   final Completer completer;
   final List<MultipartFile> multipartFiles;
   final InvoiceEntity credit;

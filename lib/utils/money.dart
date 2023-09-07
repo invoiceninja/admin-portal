@@ -15,6 +15,16 @@ double getExchangeRate(BuiltMap<String, CurrencyEntity> currencyMap,
   // TODO replace with data from server
   final baseCurrency = currencyMap[kCurrencyUSDollar];
 
+  if (fromCurrencyId == null) {
+    print('## Error currency $fromCurrencyId not found');
+    return 1;
+  }
+
+  if (toCurrencyId == null) {
+    print('## Error currency $toCurrencyId not found');
+    return 1;
+  }
+
   if (fromCurrency == baseCurrency) {
     return toCurrency.exchangeRate;
   }

@@ -744,6 +744,15 @@ void viewEntityById({
               force: force,
             ));
             break;
+          case EntityType.document:
+            store.dispatch(ViewDocument(
+              documentId: entityId,
+              force: force,
+            ));
+            break;
+          default:
+            print('## viewEntity not implemented for $entityType');
+            break;
         }
       });
 }
@@ -1469,6 +1478,12 @@ void editEntity({
           case EntityType.bankAccount:
             store.dispatch(EditBankAccount(
               bankAccount: entity,
+              completer: completer,
+            ));
+            break;
+          case EntityType.document:
+            store.dispatch(EditDocument(
+              document: entity,
               completer: completer,
             ));
             break;

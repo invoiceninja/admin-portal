@@ -19,6 +19,7 @@ enum VendorReportFields {
   name,
   website,
   currency,
+  language,
   private_notes,
   public_notes,
   address1,
@@ -50,6 +51,7 @@ enum VendorReportFields {
   created_at,
   updated_at,
   documents,
+  last_login,
   /*
   contact_last_login,
   shipping_address1,
@@ -146,6 +148,10 @@ ReportResult vendorReport(
         case VendorReportFields.currency:
           value =
               staticState.currencyMap[vendor.currencyId]?.listDisplayName ?? '';
+          break;
+        case VendorReportFields.language:
+          value =
+              staticState.languageMap[vendor.languageId]?.listDisplayName ?? '';
           break;
         /*
         case VendorReportFields.language:
@@ -289,6 +295,9 @@ ReportResult vendorReport(
             customFieldType: CustomFieldType.vendorContact4,
             company: userCompany.company,
           );
+          break;
+        case VendorReportFields.last_login:
+          value = convertTimestampToDateString(vendor.lastLogin);
           break;
         /*
         case VendorReportFields.contact_last_login:

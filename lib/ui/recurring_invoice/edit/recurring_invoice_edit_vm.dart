@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
@@ -57,8 +56,7 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
     Function(List<InvoiceItemEntity>, String, String) onItemsAdded,
     bool isSaving,
     Function(BuildContext) onCancelPressed,
-    Function(BuildContext, List<MultipartFile>) onUploadDocuments,
-    Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
+    Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
   }) : super(
           state: state,
           company: company,
@@ -70,7 +68,6 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
           isSaving: isSaving,
           onCancelPressed: onCancelPressed,
           onUploadDocuments: onUploadDocuments,
-          onDeleteDocument: onDeleteDocument,
         );
 
   factory RecurringInvoiceEditVM.fromStore(Store<AppState> store) {
@@ -168,10 +165,11 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
       },
-      onUploadDocuments:
-          (BuildContext context, List<MultipartFile> multipartFile) {
+      onUploadDocuments: (BuildContext context,
+          List<MultipartFile> multipartFile, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveRecurringInvoiceDocumentRequest(
+            isPrivate: isPrivate,
             multipartFiles: multipartFile,
             invoice: recurringInvoice,
             completer: completer));
@@ -184,19 +182,6 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
                 return ErrorDialog(error);
               });
         });
-      },
-      onDeleteDocument: (BuildContext context, DocumentEntity document,
-          String password, String idToken) {
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).deletedDocument);
-        completer.future.then<Null>((value) => store.dispatch(
-            LoadRecurringInvoice(recurringInvoiceId: recurringInvoice.id)));
-        store.dispatch(DeleteDocumentRequest(
-          completer: completer,
-          documentIds: [document.id],
-          password: password,
-          idToken: idToken,
-        ));
       },
     );
   }

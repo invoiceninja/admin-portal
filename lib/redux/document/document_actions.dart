@@ -1,25 +1,57 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:io' as file;
+import 'dart:io';
 
 // Flutter imports:
-import 'package:flutter/widgets.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/auth/auth_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pinch_zoom/pinch_zoom.dart';
+import 'package:printing/printing.dart';
+
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ViewDocumentList implements PersistUI {
-  ViewDocumentList({this.force = false});
+  ViewDocumentList({
+    this.force = false,
+    this.page = 0,
+  });
 
   final bool force;
+  final int page;
 }
 
 class ViewDocument implements PersistUI {
@@ -47,6 +79,13 @@ class UpdateDocument implements PersistUI {
 
 class LoadDocument {
   LoadDocument({this.completer, this.documentId});
+
+  final Completer completer;
+  final String documentId;
+}
+
+class LoadDocumentData {
+  LoadDocumentData({this.completer, this.documentId});
 
   final Completer completer;
   final String documentId;
@@ -89,6 +128,8 @@ class LoadDocumentSuccess implements StopLoading, PersistData {
   }
 }
 
+class LoadDocumentDataRequest implements StartLoading {}
+
 class LoadDocumentsRequest implements StartLoading {}
 
 class LoadDocumentsFailure implements StopLoading {
@@ -105,7 +146,7 @@ class LoadDocumentsFailure implements StopLoading {
 class LoadDocumentsSuccess implements StopLoading {
   LoadDocumentsSuccess(this.documents);
 
-  final BuiltList<DocumentEntity> documents;
+  final List<DocumentEntity> documents;
 
   @override
   String toString() {
@@ -116,11 +157,11 @@ class LoadDocumentsSuccess implements StopLoading {
 class SaveDocumentRequest implements StartSaving {
   SaveDocumentRequest({
     @required this.completer,
-    @required this.entity,
+    @required this.document,
   });
 
   final Completer completer;
-  final DocumentEntity entity;
+  final DocumentEntity document;
 }
 
 class SaveDocumentSuccess implements StopSaving, PersistData, PersistUI {
@@ -129,7 +170,13 @@ class SaveDocumentSuccess implements StopSaving, PersistData, PersistUI {
   final DocumentEntity document;
 }
 
-class AddDocumentSuccess implements StopSaving, PersistData, PersistUI {}
+class AddDocumentSuccess implements StopSaving, PersistData, PersistUI {
+  AddDocumentSuccess(this.documents, this.parentType, this.parentId);
+
+  final BuiltList<DocumentEntity> documents;
+  final EntityType parentType;
+  final String parentId;
+}
 
 class SaveDocumentFailure implements StopSaving {
   SaveDocumentFailure(this.error);
@@ -185,7 +232,8 @@ class DeleteDocumentRequest implements StartSaving {
   final String idToken;
 }
 
-class DeleteDocumentSuccess implements StopSaving, PersistData {
+class DeleteDocumentSuccess
+    implements StopSaving, PersistData, UserVerifiedPassword {
   DeleteDocumentSuccess({this.documentId});
 
   final String documentId;
@@ -222,6 +270,12 @@ class FilterDocuments implements PersistUI {
   FilterDocuments(this.filter);
 
   final String filter;
+}
+
+class FilterDocumentsByStatus implements PersistUI {
+  FilterDocumentsByStatus(this.status);
+
+  final EntityStatus status;
 }
 
 class SortDocuments implements PersistUI, PersistPrefs {
@@ -268,8 +322,8 @@ void handleDocumentAction(
 
   final store = StoreProvider.of<AppState>(context);
   final localization = AppLocalization.of(context);
-  final document = documents.first;
   final documentIds = documents.map((document) => document.id).toList();
+  final document = store.state.documentState.map[documentIds.first];
 
   switch (action) {
     case EntityAction.edit:
@@ -327,7 +381,7 @@ void handleDocumentAction(
         entities: [document],
       );
       break;
-    case EntityAction.documents:
+    case EntityAction.bulkDownload:
       store.dispatch(
         DownloadDocumentsRequest(
           documentIds: documentIds,
@@ -337,6 +391,170 @@ void handleDocumentAction(
           ),
         ),
       );
+      break;
+    case EntityAction.viewDocument:
+      void showDocument() {
+        showDialog<void>(
+            context: navigatorKey.currentContext,
+            builder: (context) {
+              final DocumentEntity document =
+                  store.state.documentState.map[documentIds.first];
+              return AlertDialog(
+                actions: [
+                  TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text(localization.close.toUpperCase())),
+                ],
+                content: document.isImage
+                    ? PinchZoom(
+                        child: Image.memory(document.data),
+                      )
+                    : SizedBox(
+                        width: 600,
+                        child: PdfPreview(
+                          build: (format) => document.data,
+                          canChangeOrientation: false,
+                          canChangePageFormat: false,
+                          allowPrinting: false,
+                          allowSharing: false,
+                          canDebug: false,
+                        ),
+                      ),
+              );
+            });
+      }
+      if (document.data == null) {
+        store.dispatch(LoadDocumentData(
+            documentId: document.id,
+            completer: Completer<void>()
+              ..future.then((value) => showDocument())));
+      } else {
+        showDocument();
+      }
+      break;
+    case EntityAction.download:
+      void downloadDocument() async {
+        final DocumentEntity document =
+            store.state.documentState.map[documentIds.first];
+        if (kIsWeb) {
+          WebUtils.downloadBinaryFile(document.name, document.data);
+        } else {
+          final directory = await (isDesktopOS()
+              ? getDownloadsDirectory()
+              : getApplicationDocumentsDirectory());
+
+          String filePath =
+              '${directory.path}${file.Platform.pathSeparator}${document.name}';
+
+          if (file.File(filePath).existsSync()) {
+            final extension = document.name.split('.').last;
+            final timestamp = DateTime.now().millisecondsSinceEpoch;
+            filePath =
+                filePath.replaceFirst('.$extension', '_$timestamp.$extension');
+          }
+
+          await File(filePath).writeAsBytes(document.data);
+
+          if (isDesktopOS()) {
+            showToast(localization.fileSavedInPath
+                .replaceFirst(':path', directory.path));
+          } else {
+            await Share.shareXFiles([XFile(filePath)]);
+          }
+        }
+      }
+      if (document.data == null) {
+        store.dispatch(LoadDocumentData(
+            documentId: document.id,
+            completer: Completer<void>()
+              ..future.then((value) => downloadDocument())));
+      } else {
+        downloadDocument();
+      }
+      break;
+    case EntityAction.delete:
+      confirmCallback(
+          context: context,
+          callback: (_) {
+            passwordCallback(
+                context: context,
+                callback: (password, idToken) {
+                  final completer = snackBarCompleter<Null>(
+                      context, AppLocalization.of(context).deletedDocument);
+                  switch (document.parentType) {
+                    case EntityType.client:
+                      completer.future.then<Null>((value) => store
+                          .dispatch(LoadClient(clientId: document.parentId)));
+                      break;
+                    case EntityType.credit:
+                      completer.future.then<Null>((value) => store
+                          .dispatch(LoadCredit(creditId: document.parentId)));
+                      break;
+                    case EntityType.expense:
+                      completer.future.then<Null>((value) => store
+                          .dispatch(LoadExpense(expenseId: document.parentId)));
+                      break;
+                    case EntityType.group:
+                      completer.future.then<Null>((value) => store
+                          .dispatch(LoadGroup(groupId: document.parentId)));
+                      break;
+                    case EntityType.invoice:
+                      completer.future.then<Null>((value) => store
+                          .dispatch(LoadInvoice(invoiceId: document.parentId)));
+                      break;
+                    case EntityType.product:
+                      completer.future.then<Null>((value) => store
+                          .dispatch(LoadProduct(productId: document.parentId)));
+                      break;
+                    case EntityType.project:
+                      completer.future.then<Null>((value) => store
+                          .dispatch(LoadProject(projectId: document.parentId)));
+                      break;
+                    case EntityType.purchaseOrder:
+                      completer.future.then<Null>((value) => store.dispatch(
+                          LoadPurchaseOrder(
+                              purchaseOrderId: document.parentId)));
+                      break;
+                    case EntityType.quote:
+                      completer.future.then<Null>((value) => store
+                          .dispatch(LoadQuote(quoteId: document.parentId)));
+                      break;
+                    case EntityType.recurringExpense:
+                      completer.future.then<Null>((value) => store.dispatch(
+                          LoadRecurringExpense(
+                              recurringExpenseId: document.parentId)));
+                      break;
+                    case EntityType.recurringInvoice:
+                      completer.future.then<Null>((value) => store.dispatch(
+                          LoadRecurringInvoice(
+                              recurringInvoiceId: document.parentId)));
+                      break;
+                    case EntityType.task:
+                      completer.future.then<Null>((value) =>
+                          store.dispatch(LoadTask(taskId: document.parentId)));
+                      break;
+                    case EntityType.vendor:
+                      completer.future.then<Null>((value) => store
+                          .dispatch(LoadVendor(vendorId: document.parentId)));
+                      break;
+                    default:
+                      completer.future
+                          .then<Null>((value) => store.dispatch(RefreshData()));
+                  }
+
+                  completer.future
+                      .then<Null>((value) => store.dispatch(RefreshData()));
+                  store.dispatch(DeleteDocumentRequest(
+                    completer: completer,
+                    documentIds: [document.id],
+                    password: password,
+                    idToken: idToken,
+                  ));
+                });
+          });
+      break;
+    default:
+      print('## ERROR: unhandled action $action in document_actions');
       break;
   }
 }

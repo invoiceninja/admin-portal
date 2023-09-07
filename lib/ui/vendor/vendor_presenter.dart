@@ -7,7 +7,10 @@ import 'package:flutter_redux/flutter_redux.dart';
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class VendorPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
@@ -17,7 +20,8 @@ class VendorPresenter extends EntityPresenter {
       VendorFields.city,
       VendorFields.phone,
       EntityFields.state,
-      EntityFields.createdAt,
+      VendorFields.contactEmail,
+      VendorFields.lastLoginAt,
     ];
   }
 
@@ -25,6 +29,7 @@ class VendorPresenter extends EntityPresenter {
     return [
       ...getDefaultTableFields(userCompany),
       ...EntityPresenter.getBaseFields(),
+      EntityFields.createdAt,
       VendorFields.address1,
       VendorFields.address2,
       VendorFields.postalCode,
@@ -35,6 +40,7 @@ class VendorPresenter extends EntityPresenter {
       VendorFields.vatNumber,
       VendorFields.idNumber,
       VendorFields.currencyId,
+      VendorFields.languageId,
       VendorFields.customValue1,
       VendorFields.customValue2,
       VendorFields.customValue3,
@@ -84,6 +90,9 @@ class VendorPresenter extends EntityPresenter {
       case VendorFields.currencyId:
         return Text(
             state.staticState.currencyMap[vendor.currencyId]?.name ?? '');
+      case VendorFields.languageId:
+        return Text(
+            state.staticState.languageMap[vendor.languageId]?.name ?? '');
       case VendorFields.customValue1:
         return Text(presentCustomField(context, vendor.customValue1));
       case VendorFields.customValue2:
@@ -100,6 +109,18 @@ class VendorPresenter extends EntityPresenter {
           maxLines: 3,
           overflow: TextOverflow.ellipsis,
         );
+      case VendorFields.contactEmail:
+        return CopyToClipboard(
+          value: vendor.primaryContact.email,
+          showBorder: true,
+          onLongPress: () =>
+              launchUrl(Uri.parse('mailto:${vendor.primaryContact.email}')),
+        );
+      case VendorFields.lastLoginAt:
+        return Text(vendor.lastLogin == 0
+            ? ''
+            : formatDate(
+                convertTimestampToDateString(vendor.lastLogin), context));
     }
 
     return super.getField(field: field, context: context);

@@ -137,6 +137,17 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
+                if ((vendor.languageId ?? '').isNotEmpty &&
+                    vendor.languageId != state.company.languageId)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 1),
+                    child: Text(
+                      state.staticState.languageMap[vendor.languageId]?.name ??
+                          '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 if (vendor.customValue1.isNotEmpty)
                   Text(company.formatCustomFieldValue(
                       CustomFieldType.vendor1, vendor.customValue1)),
@@ -324,7 +335,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                     bottom: kMobileDialogPadding,
                     left: kMobileDialogPadding / 2),
                 child: DefaultTabController(
-                  length: 3,
+                  length: company.isModuleEnabled(EntityType.document) ? 3 : 2,
                   child: SizedBox(
                     height: minHeight,
                     child: Column(
@@ -336,11 +347,12 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                             Tab(
                               child: Text(localization.standing),
                             ),
-                            Tab(
-                              text: documents.isEmpty
-                                  ? localization.documents
-                                  : '${localization.documents} (${documents.length})',
-                            ),
+                            if (company.isModuleEnabled(EntityType.document))
+                              Tab(
+                                text: documents.isEmpty
+                                    ? localization.documents
+                                    : '${localization.documents} (${documents.length})',
+                              ),
                             Tab(
                               child: Text(localization.activity),
                             ),
@@ -372,13 +384,15 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                                     )
                                 ],
                               ),
-                              RefreshIndicator(
-                                onRefresh: () => viewModel.onRefreshed(context),
-                                child: VendorViewDocuments(
-                                  viewModel: viewModel,
-                                  key: ValueKey(viewModel.vendor.id),
+                              if (company.isModuleEnabled(EntityType.document))
+                                RefreshIndicator(
+                                  onRefresh: () =>
+                                      viewModel.onRefreshed(context),
+                                  child: VendorViewDocuments(
+                                    viewModel: viewModel,
+                                    key: ValueKey(viewModel.vendor.id),
+                                  ),
                                 ),
-                              ),
                               RefreshIndicator(
                                 onRefresh: () => viewModel.onRefreshed(context),
                                 child: VendorViewActivity(

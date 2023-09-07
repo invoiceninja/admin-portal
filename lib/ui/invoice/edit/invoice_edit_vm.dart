@@ -9,7 +9,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
-import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:redux/redux.dart';
 
@@ -58,7 +57,6 @@ abstract class AbstractInvoiceEditVM {
     @required this.isSaving,
     @required this.onCancelPressed,
     @required this.onUploadDocuments,
-    @required this.onDeleteDocument,
   });
 
   final AppState state;
@@ -70,8 +68,7 @@ abstract class AbstractInvoiceEditVM {
   final Function(List<InvoiceItemEntity>, String, String) onItemsAdded;
   final bool isSaving;
   final Function(BuildContext) onCancelPressed;
-  final Function(BuildContext, List<MultipartFile>) onUploadDocuments;
-  final Function(BuildContext, DocumentEntity, String, String) onDeleteDocument;
+  final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;
 }
 
 class InvoiceEditVM extends AbstractInvoiceEditVM {
@@ -85,8 +82,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
     Function(List<InvoiceItemEntity>, String, String) onItemsAdded,
     bool isSaving,
     Function(BuildContext) onCancelPressed,
-    Function(BuildContext, List<MultipartFile>) onUploadDocuments,
-    Function(BuildContext, DocumentEntity, String, String) onDeleteDocument,
+    Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
   }) : super(
           state: state,
           company: company,
@@ -98,7 +94,6 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           isSaving: isSaving,
           onCancelPressed: onCancelPressed,
           onUploadDocuments: onUploadDocuments,
-          onDeleteDocument: onDeleteDocument,
         );
 
   factory InvoiceEditVM.fromStore(Store<AppState> store) {
@@ -231,10 +226,11 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
       },
-      onUploadDocuments:
-          (BuildContext context, List<MultipartFile> multipartFiles) {
+      onUploadDocuments: (BuildContext context,
+          List<MultipartFile> multipartFiles, bool isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveInvoiceDocumentRequest(
+            isPrivate: isPrivate,
             multipartFiles: multipartFiles,
             invoice: invoice,
             completer: completer));
@@ -247,19 +243,6 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
                 return ErrorDialog(error);
               });
         });
-      },
-      onDeleteDocument: (BuildContext context, DocumentEntity document,
-          String password, String idToken) {
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).deletedDocument);
-        completer.future.then<Null>(
-            (value) => store.dispatch(LoadInvoice(invoiceId: invoice.id)));
-        store.dispatch(DeleteDocumentRequest(
-          completer: completer,
-          documentIds: [document.id],
-          password: password,
-          idToken: idToken,
-        ));
       },
     );
   }

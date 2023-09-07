@@ -1,5 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/data/models/document_model.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/utils/widgets.dart';
 
 // Package imports:
@@ -377,9 +379,22 @@ Middleware<AppState> _saveDocument(SettingsRepository repository) {
     if (state.isEnterprisePlan) {
       repository
           .uploadDocument(
-              store.state.credentials, state.company, action.multipartFiles)
+        store.state.credentials,
+        state.company,
+        action.multipartFiles,
+        action.isPrivate,
+      )
           .then((company) {
         store.dispatch(SaveCompanySuccess(company));
+
+        final documents = <DocumentEntity>[];
+        company.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = company.id
+            ..parentType = EntityType.company));
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+
         action.completer.complete(null);
       }).catchError((Object error) {
         print(error);

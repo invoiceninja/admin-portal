@@ -90,16 +90,19 @@ class _EntityListState extends State<EntityList> {
     final entityUIState = state.getUIState(entityType);
     final rowsPerPage = state.prefState.rowsPerPage;
 
-    if ((entityUIState.selectedId ?? '').isNotEmpty) {
-      final selectedIndex = widget.entityList.indexOf(entityUIState.selectedId);
+    if (widget.entityList.isNotEmpty) {
+      if ((entityUIState.selectedId ?? '').isNotEmpty) {
+        final selectedIndex =
+            widget.entityList.indexOf(entityUIState.selectedId);
 
-      if (selectedIndex >= 0) {
-        _firstRowIndex = (selectedIndex / rowsPerPage).floor() * rowsPerPage;
-      }
-    } else {
-      final history = state.historyList.first;
-      if (history.page != null) {
-        _firstRowIndex = history.page * rowsPerPage;
+        if (selectedIndex >= 0) {
+          _firstRowIndex = (selectedIndex / rowsPerPage).floor() * rowsPerPage;
+        }
+      } else {
+        final history = state.historyList.first;
+        if (history.page != null) {
+          _firstRowIndex = history.page * rowsPerPage;
+        }
       }
     }
   }

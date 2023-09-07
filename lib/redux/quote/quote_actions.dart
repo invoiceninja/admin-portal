@@ -489,11 +489,13 @@ class ApproveQuoteFailure implements StopSaving {
 
 class SaveQuoteDocumentRequest implements StartSaving {
   SaveQuoteDocumentRequest({
+    @required this.isPrivate,
     @required this.completer,
     @required this.multipartFile,
     @required this.quote,
   });
 
+  final bool isPrivate;
   final Completer completer;
   final List<MultipartFile> multipartFile;
   final InvoiceEntity quote;

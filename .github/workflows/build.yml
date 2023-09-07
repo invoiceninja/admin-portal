@@ -39,37 +39,6 @@ jobs:
           echo "const FLUTTER_VERSION = const <String, String>" > lib/flutter_version.dart
           flutter --version --machine >> lib/flutter_version.dart
           echo ";" >> lib/flutter_version.dart
-      - name: Build Hosted App
-        run: |
-          #export SENTRY_RELEASE=$(sentry-cli releases propose-version)
-          #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} new $SENTRY_RELEASE --project ${{secrets.sentry_project}}
-          #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} set-commits --auto $SENTRY_RELEASE
-
-          flutter build web --dart-define=SENTRY_RELEASE=$SENTRY_RELEASE --source-maps
-
-          sed -i '/index.html/d' build/web/flutter_service_worker.js
-
-          git config --global user.email ${{secrets.commit_email}}
-          git config --global user.name ${{secrets.commit_name}}
-
-          git clone https://${{secrets.commit_secret}}@github.com/invoiceninja/invoiceninja.git
-          cd invoiceninja
-
-          git checkout v5-develop
-          cp -r ../build/web/* ./public/
-          rm ./public/index.html
-          git add .
-          git commit -m 'Admin Portal - Hosted'
-          git push
-          cd ..
-
-          #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --project ${{secrets.sentry_project}} --org ${{secrets.sentry_org}} files $SENTRY_RELEASE upload-sourcemaps . --ext dart --rewrite
-          cd ./build/web
-          #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --project ${{secrets.sentry_project}} --org ${{secrets.sentry_org}} files $SENTRY_RELEASE upload-sourcemaps . --ext map --ext js --rewrite
-          cd ../..
-
-          #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} finalize $SENTRY_RELEASE
-          #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} deploys $SENTRY_RELEASE new -e production          
       - name: Build Profile App
         run: |
           flutter build web --profile

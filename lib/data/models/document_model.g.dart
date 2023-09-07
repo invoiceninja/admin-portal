@@ -139,6 +139,9 @@ class _$DocumentEntitySerializer
       'is_default',
       serializers.serialize(object.isDefault,
           specifiedType: const FullType(bool)),
+      'is_public',
+      serializers.serialize(object.isPublic,
+          specifiedType: const FullType(bool)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -152,6 +155,20 @@ class _$DocumentEntitySerializer
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
     Object value;
+    value = object.parentId;
+    if (value != null) {
+      result
+        ..add('parent_id')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.parentType;
+    if (value != null) {
+      result
+        ..add('parent_type')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(EntityType)));
+    }
     value = object.isChanged;
     if (value != null) {
       result
@@ -230,6 +247,18 @@ class _$DocumentEntitySerializer
         case 'is_default':
           result.isDefault = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'is_public':
+          result.isPublic = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
+        case 'parent_id':
+          result.parentId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'parent_type':
+          result.parentType = serializers.deserialize(value,
+              specifiedType: const FullType(EntityType)) as EntityType;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -488,7 +517,15 @@ class _$DocumentEntity extends DocumentEntity {
   @override
   final String preview;
   @override
+  final Uint8List data;
+  @override
   final bool isDefault;
+  @override
+  final bool isPublic;
+  @override
+  final String parentId;
+  @override
+  final EntityType parentType;
   @override
   final bool isChanged;
   @override
@@ -518,7 +555,11 @@ class _$DocumentEntity extends DocumentEntity {
       this.height,
       this.size,
       this.preview,
+      this.data,
       this.isDefault,
+      this.isPublic,
+      this.parentId,
+      this.parentType,
       this.isChanged,
       this.createdAt,
       this.updatedAt,
@@ -539,6 +580,8 @@ class _$DocumentEntity extends DocumentEntity {
         preview, r'DocumentEntity', 'preview');
     BuiltValueNullFieldError.checkNotNull(
         isDefault, r'DocumentEntity', 'isDefault');
+    BuiltValueNullFieldError.checkNotNull(
+        isPublic, r'DocumentEntity', 'isPublic');
     BuiltValueNullFieldError.checkNotNull(
         createdAt, r'DocumentEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
@@ -568,7 +611,11 @@ class _$DocumentEntity extends DocumentEntity {
         height == other.height &&
         size == other.size &&
         preview == other.preview &&
+        data == other.data &&
         isDefault == other.isDefault &&
+        isPublic == other.isPublic &&
+        parentId == other.parentId &&
+        parentType == other.parentType &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -592,7 +639,11 @@ class _$DocumentEntity extends DocumentEntity {
     _$hash = $jc(_$hash, height.hashCode);
     _$hash = $jc(_$hash, size.hashCode);
     _$hash = $jc(_$hash, preview.hashCode);
+    _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jc(_$hash, isDefault.hashCode);
+    _$hash = $jc(_$hash, isPublic.hashCode);
+    _$hash = $jc(_$hash, parentId.hashCode);
+    _$hash = $jc(_$hash, parentType.hashCode);
     _$hash = $jc(_$hash, isChanged.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
@@ -616,7 +667,11 @@ class _$DocumentEntity extends DocumentEntity {
           ..add('height', height)
           ..add('size', size)
           ..add('preview', preview)
+          ..add('data', data)
           ..add('isDefault', isDefault)
+          ..add('isPublic', isPublic)
+          ..add('parentId', parentId)
+          ..add('parentType', parentType)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -665,9 +720,25 @@ class DocumentEntityBuilder
   String get preview => _$this._preview;
   set preview(String preview) => _$this._preview = preview;
 
+  Uint8List _data;
+  Uint8List get data => _$this._data;
+  set data(Uint8List data) => _$this._data = data;
+
   bool _isDefault;
   bool get isDefault => _$this._isDefault;
   set isDefault(bool isDefault) => _$this._isDefault = isDefault;
+
+  bool _isPublic;
+  bool get isPublic => _$this._isPublic;
+  set isPublic(bool isPublic) => _$this._isPublic = isPublic;
+
+  String _parentId;
+  String get parentId => _$this._parentId;
+  set parentId(String parentId) => _$this._parentId = parentId;
+
+  EntityType _parentType;
+  EntityType get parentType => _$this._parentType;
+  set parentType(EntityType parentType) => _$this._parentType = parentType;
 
   bool _isChanged;
   bool get isChanged => _$this._isChanged;
@@ -703,7 +774,9 @@ class DocumentEntityBuilder
   String get id => _$this._id;
   set id(String id) => _$this._id = id;
 
-  DocumentEntityBuilder();
+  DocumentEntityBuilder() {
+    DocumentEntity._initializeBuilder(this);
+  }
 
   DocumentEntityBuilder get _$this {
     final $v = _$v;
@@ -716,7 +789,11 @@ class DocumentEntityBuilder
       _height = $v.height;
       _size = $v.size;
       _preview = $v.preview;
+      _data = $v.data;
       _isDefault = $v.isDefault;
+      _isPublic = $v.isPublic;
+      _parentId = $v.parentId;
+      _parentType = $v.parentType;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -763,15 +840,19 @@ class DocumentEntityBuilder
                 size, r'DocumentEntity', 'size'),
             preview: BuiltValueNullFieldError.checkNotNull(
                 preview, r'DocumentEntity', 'preview'),
+            data: data,
             isDefault: BuiltValueNullFieldError.checkNotNull(
                 isDefault, r'DocumentEntity', 'isDefault'),
+            isPublic: BuiltValueNullFieldError.checkNotNull(
+                isPublic, r'DocumentEntity', 'isPublic'),
+            parentId: parentId,
+            parentType: parentType,
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(
                 createdAt, r'DocumentEntity', 'createdAt'),
-            updatedAt: BuiltValueNullFieldError.checkNotNull(
-                updatedAt, r'DocumentEntity', 'updatedAt'),
-            archivedAt:
-                BuiltValueNullFieldError.checkNotNull(archivedAt, r'DocumentEntity', 'archivedAt'),
+            updatedAt:
+                BuiltValueNullFieldError.checkNotNull(updatedAt, r'DocumentEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'DocumentEntity', 'archivedAt'),
             isDeleted: isDeleted,
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,

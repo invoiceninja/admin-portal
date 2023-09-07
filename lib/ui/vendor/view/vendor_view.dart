@@ -49,7 +49,7 @@ class _VendorViewState extends State<VendorView>
     final state = widget.viewModel.state;
     _controller = TabController(
         vsync: this,
-        length: 4,
+        length: state.company.isModuleEnabled(EntityType.document) ? 4 : 3,
         initialIndex: widget.isFilter ? 0 : state.vendorUIState.tabIndex);
     _controller.addListener(_onTabChanged);
   }
@@ -83,6 +83,7 @@ class _VendorViewState extends State<VendorView>
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final company = viewModel.state.company;
     final vendor = viewModel.vendor;
     final documents = vendor.documents;
 
@@ -120,11 +121,12 @@ class _VendorViewState extends State<VendorView>
           Tab(
             text: localization.details,
           ),
-          Tab(
-            text: documents.isEmpty
-                ? localization.documents
-                : '${localization.documents} (${documents.length})',
-          ),
+          if (company.isModuleEnabled(EntityType.document))
+            Tab(
+              text: documents.isEmpty
+                  ? localization.documents
+                  : '${localization.documents} (${documents.length})',
+            ),
           Tab(
             text: localization.activity,
           ),
@@ -148,12 +150,13 @@ class _VendorViewState extends State<VendorView>
                     onRefresh: () => viewModel.onRefreshed(context),
                     child: VendorViewDetails(vendor: viewModel.vendor),
                   ),
-                  RefreshIndicator(
-                    onRefresh: () => viewModel.onRefreshed(context),
-                    child: VendorViewDocuments(
-                      viewModel: viewModel,
+                  if (company.isModuleEnabled(EntityType.document))
+                    RefreshIndicator(
+                      onRefresh: () => viewModel.onRefreshed(context),
+                      child: VendorViewDocuments(
+                        viewModel: viewModel,
+                      ),
                     ),
-                  ),
                   RefreshIndicator(
                     onRefresh: () => viewModel.onRefreshed(context),
                     child: VendorViewActivity(

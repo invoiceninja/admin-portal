@@ -7,6 +7,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/utils/widgets.dart';
 
 // Package imports:
@@ -37,7 +38,6 @@ import 'package:invoiceninja_flutter/redux/ui/ui_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
 import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
 import 'package:invoiceninja_flutter/ui/auth/login_vm.dart';
-import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -563,7 +563,9 @@ Middleware<AppState> _createViewMainScreen() {
     final action = dynamicAction as ViewMainScreen;
 
     if (store.state.uiState.currentRoute == LoginScreen.route) {
-      store.dispatch(UpdateCurrentRoute(DashboardScreenBuilder.route));
+      store.dispatch(UpdateCurrentRoute(store.state.userCompany.canViewDashboard
+          ? DashboardScreenBuilder.route
+          : ClientScreen.route));
     }
 
     while (navigatorKey.currentState.canPop()) {

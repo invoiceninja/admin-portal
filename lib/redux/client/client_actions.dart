@@ -572,11 +572,13 @@ class ClearClientMultiselect {}
 
 class SaveClientDocumentRequest implements StartSaving {
   SaveClientDocumentRequest({
+    @required this.isPrivate,
     @required this.completer,
     @required this.multipartFile,
     @required this.client,
   });
 
+  final bool isPrivate;
   final Completer completer;
   final List<MultipartFile> multipartFile;
   final ClientEntity client;

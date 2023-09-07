@@ -251,9 +251,9 @@ class _CompanyDetailsState extends State<CompanyDetails>
           ),
           if (!state.settingsUIState.isFiltered)
             Tab(
-              text: company.documents.isEmpty
+              text: state.company.documents.isEmpty
                   ? localization.documents
-                  : '${localization.documents} (${company.documents.length})',
+                  : '${localization.documents} (${state.company.documents.length})',
             ),
         ],
       ),
@@ -700,11 +700,9 @@ class _CompanyDetailsState extends State<CompanyDetails>
           ),
           if (!state.settingsUIState.isFiltered)
             DocumentGrid(
-              documents: company.documents.toList(),
-              onUploadDocument: (path) =>
-                  viewModel.onUploadDocuments(context, path),
-              onDeleteDocument: (document, password, idToken) => viewModel
-                  .onDeleteDocument(context, document, password, idToken),
+              documents: state.company.documents.toList(),
+              onUploadDocument: (path, isPrivate) =>
+                  viewModel.onUploadDocuments(context, path, isPrivate),
               onRenamedDocument: () => store.dispatch(RefreshData()),
             ),
         ],

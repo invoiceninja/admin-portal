@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -34,26 +35,45 @@ List<String> dropdownDocumentsSelector(
   return list;
 }
 
-var memoizedFilteredDocumentList = memo3((BuiltMap<String, DocumentEntity>
-            documentMap,
-        BuiltList<String> documentList,
-        ListUIState documentListState) =>
-    filteredDocumentsSelector(documentMap, documentList, documentListState));
+var memoizedFilteredDocumentList = memo4((
+  SelectionState selectionState,
+  BuiltMap<String, DocumentEntity> documentMap,
+  BuiltList<String> documentList,
+  ListUIState documentListState,
+) =>
+    filteredDocumentsSelector(
+      selectionState,
+      documentMap,
+      documentList,
+      documentListState,
+    ));
 
 List<String> filteredDocumentsSelector(
-    BuiltMap<String, DocumentEntity> documentMap,
-    BuiltList<String> documentList,
-    ListUIState documentListState) {
+  SelectionState selectionState,
+  BuiltMap<String, DocumentEntity> documentMap,
+  BuiltList<String> documentList,
+  ListUIState documentListState,
+) {
+  final filterEntityId = selectionState.filterEntityId;
+  final filterEntityType = selectionState.filterEntityType;
+
   final list = documentList.where((documentId) {
     final document = documentMap[documentId];
-    /*
-    if (documentListState.filterEntityId != null &&
-        document.id != documentListState.filterEntityId) {
-      return false;
-    } else {}
-    */
+
+    if (filterEntityType != null) {
+      if (filterEntityType == EntityType.document &&
+          document.id != filterEntityId) {
+        return false;
+      } else if (document.parentType != filterEntityType ||
+          document.parentId != filterEntityId) {
+        return false;
+      }
+    }
 
     if (!document.matchesStates(documentListState.stateFilters)) {
+      return false;
+    }
+    if (!document.matchesStatuses(documentListState.statusFilters)) {
       return false;
     }
     return document.matchesFilter(documentListState.filter);

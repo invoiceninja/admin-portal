@@ -3,6 +3,7 @@ import 'dart:math';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -870,6 +871,19 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
   TypedReducer<BuiltList<HistoryRecord>, EditCredit>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.credit.id, entityType: EntityType.credit))),
+  TypedReducer<BuiltList<HistoryRecord>, ViewDocument>((historyList, action) =>
+      _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.documentId, entityType: EntityType.document))),
+  TypedReducer<BuiltList<HistoryRecord>, ViewDocumentList>(
+      (historyList, action) => _addToHistory(historyList,
+          HistoryRecord(entityType: EntityType.document, page: action.page))),
+  TypedReducer<BuiltList<HistoryRecord>, EditDocument>((historyList, action) =>
+      _addToHistory(
+          historyList,
+          HistoryRecord(
+              id: action.document.id, entityType: EntityType.document))),
   TypedReducer<BuiltList<HistoryRecord>, FilterByEntity>((historyList, action) {
     if (action.clearSelection) {
       return historyList;

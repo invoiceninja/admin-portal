@@ -76,51 +76,64 @@ class _ProductViewState extends State<ProductView>
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
+    final state = viewModel.state;
+    final company = state.company;
     final product = viewModel.product;
     final documents = product.documents;
 
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: product,
-      appBarBottom: TabBar(
-        controller: _controller,
-        isScrollable: false,
-        tabs: [
-          Tab(
-            text: localization.overview,
-          ),
-          Tab(
-            text: documents.isEmpty
-                ? localization.documents
-                : '${localization.documents} (${documents.length})',
-          ),
-        ],
-      ),
+      appBarBottom: company.isModuleEnabled(EntityType.document)
+          ? TabBar(
+              controller: _controller,
+              isScrollable: false,
+              tabs: [
+                Tab(
+                  text: localization.overview,
+                ),
+                Tab(
+                  text: documents.isEmpty
+                      ? localization.documents
+                      : '${localization.documents} (${documents.length})',
+                ),
+              ],
+            )
+          : null,
       body: Builder(builder: (context) {
         return Column(
           children: <Widget>[
             Expanded(
-              child: TabBarView(
-                controller: _controller,
-                children: <Widget>[
-                  RefreshIndicator(
-                    onRefresh: () => viewModel.onRefreshed(context),
-                    child: ProductOverview(
-                      viewModel: viewModel,
-                      key: ValueKey(viewModel.product.id),
-                      //isFilter: widget.isFilter,
+              child: company.isModuleEnabled(EntityType.document)
+                  ? TabBarView(
+                      controller: _controller,
+                      children: <Widget>[
+                        RefreshIndicator(
+                          onRefresh: () => viewModel.onRefreshed(context),
+                          child: ProductOverview(
+                            viewModel: viewModel,
+                            key: ValueKey(viewModel.product.id),
+                            //isFilter: widget.isFilter,
+                          ),
+                        ),
+                        RefreshIndicator(
+                          onRefresh: () => viewModel.onRefreshed(context),
+                          child: ProductViewDocuments(
+                            viewModel: viewModel,
+                            key: ValueKey(viewModel.product.id),
+                            //client: viewModel.client,
+                          ),
+                        ),
+                      ],
+                    )
+                  : RefreshIndicator(
+                      onRefresh: () => viewModel.onRefreshed(context),
+                      child: ProductOverview(
+                        viewModel: viewModel,
+                        key: ValueKey(viewModel.product.id),
+                        //isFilter: widget.isFilter,
+                      ),
                     ),
-                  ),
-                  RefreshIndicator(
-                    onRefresh: () => viewModel.onRefreshed(context),
-                    child: ProductViewDocuments(
-                      viewModel: viewModel,
-                      key: ValueKey(viewModel.product.id),
-                      //client: viewModel.client,
-                    ),
-                  ),
-                ],
-              ),
             ),
             BottomButtons(
               entity: product,

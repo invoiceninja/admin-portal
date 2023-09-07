@@ -97,6 +97,7 @@ class EntityAction extends EnumClass {
   static const EntityAction refundPayment = _$refundPayment;
   static const EntityAction viewPdf = _$viewPdf;
   static const EntityAction viewStatement = _$viewStatement;
+  static const EntityAction viewDocument = _$viewDocument;
   static const EntityAction more = _$more;
   static const EntityAction printPdf = _$printPdf;
   static const EntityAction start = _$start;
@@ -139,6 +140,8 @@ class EntityAction extends EnumClass {
   String toString() {
     if (this == EntityAction.addToInvoice) {
       return 'action_add_to_invoice';
+    } else if (this == EntityAction.viewDocument) {
+      return 'view';
     }
 
     return toSnakeCase(super.toString());

@@ -22,9 +22,8 @@ class ExpenseViewDocuments extends StatelessWidget {
 
     return DocumentGrid(
       documents: expense.documents.toList(),
-      onUploadDocument: (path) => viewModel.onUploadDocuments(context, path),
-      onDeleteDocument: (document, password, idToken) =>
-          viewModel.onDeleteDocument(context, document, password, idToken),
+      onUploadDocument: (path, isPrivate) =>
+          viewModel.onUploadDocuments(context, path, isPrivate),
       onRenamedDocument: () =>
           store.dispatch(LoadExpense(expenseId: expense.id)),
       onViewExpense: null,

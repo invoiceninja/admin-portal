@@ -94,10 +94,14 @@ class RecurringExpenseRepository {
     return recurringExpenseResponse.data;
   }
 
-  Future<ExpenseEntity> uploadDocument(Credentials credentials,
-      BaseEntity entity, List<MultipartFile> multipartFiles) async {
+  Future<ExpenseEntity> uploadDocument(
+      Credentials credentials,
+      BaseEntity entity,
+      List<MultipartFile> multipartFiles,
+      bool isPrivate) async {
     final fields = <String, String>{
       '_method': 'put',
+      'is_public': isPrivate ? '0' : '1',
     };
 
     final dynamic response = await webClient.post(

@@ -73,7 +73,7 @@ class ListScaffold extends StatelessWidget {
         ),
       );
     } else if (entityType != null &&
-        entityType != EntityType.settings &&
+        !entityType.hideCreate &&
         state.userCompany.canCreate(entityType)) {
       leading = Padding(
         padding: const EdgeInsets.only(left: 16, right: 14),
@@ -98,6 +98,8 @@ class ListScaffold extends StatelessWidget {
       leadingWidth = isDesktop(context) && !state.prefState.isMenuFloated
           ? 0
           : kMinInteractiveDimension;
+    } else if (entityType == EntityType.document) {
+      leadingWidth = kMinInteractiveDimension;
     } else {
       leadingWidth = (isDesktop(context) ? 100 : 10) +
           (kMinInteractiveDimension - 4) *

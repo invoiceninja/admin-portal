@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -235,6 +236,16 @@ Middleware<AppState> _loadExpenses(ExpenseRepository repository) {
         .then((data) {
       store.dispatch(LoadExpensesSuccess(data));
 
+      final documents = <DocumentEntity>[];
+      data.forEach((expense) {
+        expense.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = expense.id
+            ..parentType = EntityType.expense));
+        });
+      });
+      store.dispatch(LoadDocumentsSuccess(documents));
+
       if (data.length == kMaxRecordsPerPage) {
         store.dispatch(LoadExpenses(
           completer: action.completer,
@@ -264,9 +275,22 @@ Middleware<AppState> _saveDocument(ExpenseRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocuments(
-              store.state.credentials, action.expense, action.multipartFiles)
+        store.state.credentials,
+        action.expense,
+        action.multipartFiles,
+        action.isPrivate,
+      )
           .then((expense) {
         store.dispatch(SaveExpenseSuccess(expense));
+
+        final documents = <DocumentEntity>[];
+        expense.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = expense.id
+            ..parentType = EntityType.expense));
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+
         action.completer.complete(null);
       }).catchError((Object error) {
         print(error);

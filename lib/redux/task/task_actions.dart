@@ -570,11 +570,13 @@ class ClearTaskMultiselect {}
 
 class SaveTaskDocumentRequest implements StartSaving {
   SaveTaskDocumentRequest({
+    @required this.isPrivate,
     @required this.completer,
     @required this.multipartFiles,
     @required this.task,
   });
 
+  final bool isPrivate;
   final Completer completer;
   final List<MultipartFile> multipartFiles;
   final TaskEntity task;

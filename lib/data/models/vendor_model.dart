@@ -59,6 +59,7 @@ class VendorFields {
   static const String state = 'state';
   static const String postalCode = 'postal_code';
   static const String countryId = 'country_id';
+  static const String languageId = 'language_id';
   static const String country = 'country';
   static const String phone = 'phone';
   static const String privateNotes = 'private_notes';
@@ -79,6 +80,8 @@ class VendorFields {
   static const String cityStatePostal = 'city_state_postal';
   static const String postalCityState = 'postal_city_state';
   static const String postalCity = 'postal_city';
+  static const String lastLoginAt = 'last_login_at';
+  static const String contactEmail = 'contact_email';
 }
 
 abstract class VendorEntity extends Object
@@ -96,6 +99,7 @@ abstract class VendorEntity extends Object
       state: '',
       postalCode: '',
       countryId: '',
+      languageId: '',
       phone: '',
       privateNotes: '',
       publicNotes: '',
@@ -119,6 +123,7 @@ abstract class VendorEntity extends Object
       assignedUserId: user?.id ?? '',
       createdUserId: '',
       createdAt: 0,
+      lastLogin: 0,
       documents: BuiltList<DocumentEntity>(),
     );
   }
@@ -172,6 +177,9 @@ abstract class VendorEntity extends Object
   @BuiltValueField(wireName: 'country_id')
   String get countryId;
 
+  @BuiltValueField(wireName: 'language_id')
+  String get languageId;
+
   @BuiltValueField(wireName: 'phone')
   String get phone;
 
@@ -205,6 +213,9 @@ abstract class VendorEntity extends Object
 
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
+
+  @BuiltValueField(wireName: 'last_login')
+  int get lastLogin;
 
   BuiltList<VendorContactEntity> get contacts;
 
@@ -323,6 +334,9 @@ abstract class VendorEntity extends Object
         break;
       case VendorFields.countryId:
         response = vendorA.countryId.compareTo(vendorB.countryId);
+        break;
+      case VendorFields.languageId:
+        response = vendorA.languageId.compareTo(vendorB.languageId);
         break;
       case VendorFields.privateNotes:
         response = vendorA.privateNotes.compareTo(vendorB.privateNotes);
@@ -478,6 +492,8 @@ abstract class VendorEntity extends Object
 
   bool get hasCurrency => currencyId != null && currencyId.isNotEmpty;
 
+  bool get hasLanguage => languageId != null && languageId.isNotEmpty;
+
   bool get hasUser => assignedUserId != null && assignedUserId.isNotEmpty;
 
   bool get hasEmailAddress =>
@@ -493,8 +509,10 @@ abstract class VendorEntity extends Object
   VendorContactEntity getContact(String contactId) => contacts
       .firstWhere((contact) => contact.id == contactId, orElse: () => null);
 
-  static void _initializeBuilder(VendorEntityBuilder builder) =>
-      builder..activities.replace(BuiltList<ActivityEntity>());
+  static void _initializeBuilder(VendorEntityBuilder builder) => builder
+    ..activities.replace(BuiltList<ActivityEntity>())
+    ..lastLogin = 0
+    ..languageId = '';
 
   static Serializer<VendorEntity> get serializer => _$vendorEntitySerializer;
 }

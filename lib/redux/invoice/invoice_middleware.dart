@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
 
 // Package imports:
@@ -482,6 +483,16 @@ Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
         .then((data) {
       store.dispatch(LoadInvoicesSuccess(data));
 
+      final documents = <DocumentEntity>[];
+      data.forEach((invoice) {
+        invoice.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = invoice.id
+            ..parentType = EntityType.invoice));
+        });
+      });
+      store.dispatch(LoadDocumentsSuccess(documents));
+
       if (data.length == kMaxRecordsPerPage) {
         store.dispatch(LoadInvoices(
           completer: action.completer,
@@ -511,9 +522,22 @@ Middleware<AppState> _saveDocument(InvoiceRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocuments(
-              store.state.credentials, action.invoice, action.multipartFiles)
+        store.state.credentials,
+        action.invoice,
+        action.multipartFiles,
+        action.isPrivate,
+      )
           .then((invoice) {
         store.dispatch(SaveInvoiceSuccess(invoice));
+
+        final documents = <DocumentEntity>[];
+        invoice.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = invoice.id
+            ..parentType = EntityType.invoice));
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+
         action.completer.complete(null);
       }).catchError((Object error) {
         print(error);

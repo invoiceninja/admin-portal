@@ -293,22 +293,16 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       // STARTER: states switch map - do not remove comment
       case EntityType.schedule:
         return scheduleState.map;
-
       case EntityType.transactionRule:
         return transactionRuleState.map;
-
       case EntityType.transaction:
         return transactionState.map;
-
       case EntityType.bankAccount:
         return bankAccountState.map;
-
       case EntityType.purchaseOrder:
         return purchaseOrderState.map;
-
       case EntityType.recurringExpense:
         return recurringExpenseState.map;
-
       case EntityType.subscription:
         return subscriptionState.map;
       case EntityType.taskStatus:
@@ -367,6 +361,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return staticState.dateFormatMap;
       case EntityType.timezone:
         return staticState.timezoneMap;
+      case EntityType.company:
+        return BuiltMap(Map<String, SelectableEntity>.fromIterable(
+          companies,
+          key: (dynamic item) => item.id,
+          value: (dynamic item) => item,
+        ));
       case EntityType.dashboard:
       case EntityType.reports:
       case EntityType.settings:
@@ -777,6 +777,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return paymentTermUIState.editing.isChanged == true;
       case DesignEditScreen.route:
         return designUIState.editing.isChanged == true;
+      case DocumentEditScreen.route:
+        return documentUIState.editing.isChanged == true;
     }
 
     if (uiState.isInSettings) {

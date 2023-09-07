@@ -1,8 +1,17 @@
 // Flutter imports:
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
+import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/document/view/document_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -40,6 +49,7 @@ class DocumentEditVM {
     @required this.isSaving,
     @required this.origDocument,
     @required this.onSavePressed,
+    @required this.onCancelPressed,
     @required this.isLoading,
   });
 
@@ -54,12 +64,15 @@ class DocumentEditVM {
       origDocument: state.documentState.map[document.id],
       document: document,
       company: state.company,
+      onCancelPressed: (BuildContext context) {
+        createEntity(context: context, entity: DocumentEntity(), force: true);
+        store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
+      },
       onChanged: (DocumentEntity document) {
         store.dispatch(UpdateDocument(document));
       },
       onSavePressed: (BuildContext context) {
-        /*
-Debouncer.runOnComplete(() {
+        Debouncer.runOnComplete(() {
           final document = store.state.documentUIState.editing;
           final localization = navigatorKey.localization;
           final navigator = navigatorKey.currentState;
@@ -68,14 +81,11 @@ Debouncer.runOnComplete(() {
           store.dispatch(
               SaveDocumentRequest(completer: completer, document: document));
           return completer.future.then((savedDocument) {
-              showToast(client.isNew
-                  ? localization.createdClient
-                  : localization.updatedClient);
+            showToast(localization.updatedDocument);
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(DocumentViewScreen.route));
               if (document.isNew) {
-                navigator
-                    .pushReplacementNamed(DocumentViewScreen.route);
+                navigator.pushReplacementNamed(DocumentViewScreen.route);
               } else {
                 navigator.pop(savedDocument);
               }
@@ -92,7 +102,7 @@ Debouncer.runOnComplete(() {
                   return ErrorDialog(error);
                 });
           });
-        });*/
+        });
       },
     );
   }
@@ -101,6 +111,7 @@ Debouncer.runOnComplete(() {
   final CompanyEntity company;
   final Function(DocumentEntity) onChanged;
   final Function(BuildContext) onSavePressed;
+  final Function(BuildContext) onCancelPressed;
   final bool isLoading;
   final bool isSaving;
   final DocumentEntity origDocument;

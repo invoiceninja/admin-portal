@@ -20,6 +20,8 @@ import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_pdf_
 import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/view/recurring_invoice_view_vm.dart';
 
+import '../document/document_actions.dart';
+
 List<Middleware<AppState>> createStoreRecurringInvoicesMiddleware([
   RecurringInvoiceRepository repository = const RecurringInvoiceRepository(),
 ]) {
@@ -412,6 +414,16 @@ Middleware<AppState> _loadRecurringInvoices(
         .then((data) {
       store.dispatch(LoadRecurringInvoicesSuccess(data));
 
+      final documents = <DocumentEntity>[];
+      data.forEach((client) {
+        client.documents.forEach((invoice) {
+          documents.add(invoice.rebuild((b) => b
+            ..parentId = client.id
+            ..parentType = EntityType.recurringInvoice));
+        });
+      });
+      store.dispatch(LoadDocumentsSuccess(documents));
+
       if (data.length == kMaxRecordsPerPage) {
         store.dispatch(LoadRecurringInvoices(
           completer: action.completer,
@@ -441,9 +453,22 @@ Middleware<AppState> _saveDocument(RecurringInvoiceRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
-              store.state.credentials, action.invoice, action.multipartFiles)
+        store.state.credentials,
+        action.invoice,
+        action.multipartFiles,
+        action.isPrivate,
+      )
           .then((invoice) {
         store.dispatch(SaveRecurringInvoiceSuccess(invoice));
+
+        final documents = <DocumentEntity>[];
+        invoice.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = invoice.id
+            ..parentType = EntityType.recurringInvoice));
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+
         action.completer.complete(null);
       }).catchError((Object error) {
         print(error);

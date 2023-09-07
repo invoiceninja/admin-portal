@@ -23,8 +23,9 @@ List<Middleware<AppState>> createStoreDocumentsMiddleware([
   final viewDocumentList = _viewDocumentList();
   final viewDocument = _viewDocument();
   final editDocument = _editDocument();
-  final loadDocuments = _loadDocuments(repository);
+  //final loadDocuments = _loadDocuments(repository);
   final loadDocument = _loadDocument(repository);
+  final loadDocumentData = _loadDocumentData(repository);
   final saveDocument = _saveDocument(repository);
   final archiveDocument = _archiveDocument(repository);
   final deleteDocument = _deleteDocument(repository);
@@ -35,8 +36,9 @@ List<Middleware<AppState>> createStoreDocumentsMiddleware([
     TypedMiddleware<AppState, ViewDocumentList>(viewDocumentList),
     TypedMiddleware<AppState, ViewDocument>(viewDocument),
     TypedMiddleware<AppState, EditDocument>(editDocument),
-    TypedMiddleware<AppState, LoadDocuments>(loadDocuments),
+    //TypedMiddleware<AppState, LoadDocuments>(loadDocuments),
     TypedMiddleware<AppState, LoadDocument>(loadDocument),
+    TypedMiddleware<AppState, LoadDocumentData>(loadDocumentData),
     TypedMiddleware<AppState, SaveDocumentRequest>(saveDocument),
     TypedMiddleware<AppState, ArchiveDocumentRequest>(archiveDocument),
     TypedMiddleware<AppState, DeleteDocumentRequest>(deleteDocument),
@@ -64,10 +66,19 @@ Middleware<AppState> _viewDocument() {
       NextDispatcher next) async {
     final action = dynamicAction as ViewDocument;
 
+    final state = store.state;
+    final document = state.documentState.map[action.documentId];
+    if (document.data == null) {
+      store.dispatch(LoadDocumentData(documentId: document.id));
+    }
+
     next(action);
 
     store.dispatch(UpdateCurrentRoute(DocumentViewScreen.route));
-    navigatorKey.currentState.pushNamed(DocumentViewScreen.route);
+
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamed(DocumentViewScreen.route);
+    }
   };
 }
 
@@ -83,8 +94,10 @@ Middleware<AppState> _viewDocumentList() {
 
     store.dispatch(UpdateCurrentRoute(DocumentScreen.route));
 
-    navigatorKey.currentState.pushNamedAndRemoveUntil(
-        DocumentScreen.route, (Route<dynamic> route) => false);
+    if (store.state.prefState.isMobile) {
+      navigatorKey.currentState.pushNamedAndRemoveUntil(
+          DocumentScreen.route, (Route<dynamic> route) => false);
+    }
   };
 }
 
@@ -92,11 +105,16 @@ Middleware<AppState> _saveDocument(DocumentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveDocumentRequest;
     repository
-        .saveData(store.state.credentials, action.entity)
+        .saveData(store.state.credentials, action.document)
         .then((DocumentEntity document) {
+      document = document.rebuild((b) => b
+        ..parentId = action.document.parentId
+        ..parentType = action.document.parentType);
+
       store.dispatch(SaveDocumentSuccess(document));
+
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer.complete(document);
       }
     }).catchError((Object error) {
       print(error);
@@ -163,12 +181,13 @@ Middleware<AppState> _downloadDocuments(DocumentRepository repository) {
 Middleware<AppState> _deleteDocument(DocumentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteDocumentRequest;
+    final documentId = action.documentIds.first;
 
     repository
-        .delete(store.state.credentials, action.documentIds.first,
-            action.password, action.idToken)
+        .delete(store.state.credentials, documentId, action.password,
+            action.idToken)
         .then((value) {
-      store.dispatch(DeleteDocumentSuccess());
+      store.dispatch(DeleteDocumentSuccess(documentId: documentId));
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -236,6 +255,37 @@ Middleware<AppState> _loadDocument(DocumentRepository repository) {
   };
 }
 
+Middleware<AppState> _loadDocumentData(DocumentRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as LoadDocumentData;
+
+    final state = store.state;
+    final document = state.documentState.map[action.documentId];
+
+    store.dispatch(LoadDocumentRequest());
+    repository.loadData(store.state.credentials, document).then((bodyBytes) {
+      store.dispatch(
+        LoadDocumentSuccess(
+          document.rebuild((b) => b..data = bodyBytes),
+        ),
+      );
+
+      if (action.completer != null) {
+        action.completer.complete(null);
+      }
+    }).catchError((Object error) {
+      print(error);
+      store.dispatch(LoadDocumentFailure(error));
+      if (action.completer != null) {
+        action.completer.completeError(error);
+      }
+    });
+
+    next(action);
+  };
+}
+
+/*
 Middleware<AppState> _loadDocuments(DocumentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as LoadDocuments;
@@ -257,3 +307,4 @@ Middleware<AppState> _loadDocuments(DocumentRepository repository) {
     next(action);
   };
 }
+*/

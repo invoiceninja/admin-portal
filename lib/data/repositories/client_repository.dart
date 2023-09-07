@@ -128,15 +128,21 @@ class ClientRepository {
     return clientResponse.data;
   }
 
-  Future<ClientEntity> uploadDocument(Credentials credentials,
-      BaseEntity entity, List<MultipartFile> multipartFile) async {
+  Future<ClientEntity> uploadDocument(
+      Credentials credentials,
+      BaseEntity entity,
+      List<MultipartFile> multipartFile,
+      bool isPrivate) async {
     final fields = <String, String>{
       '_method': 'put',
+      'is_public': isPrivate ? '0' : '1',
     };
 
     final dynamic response = await webClient.post(
-        '${credentials.url}/clients/${entity.id}/upload', credentials.token,
-        data: fields, multipartFiles: multipartFile);
+        '${credentials.url}/clients/${entity.id}/upload?is_public=false',
+        credentials.token,
+        data: fields,
+        multipartFiles: multipartFile);
 
     final ClientItemResponse clientResponse =
         serializers.deserializeWith(ClientItemResponse.serializer, response);

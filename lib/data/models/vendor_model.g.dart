@@ -131,6 +131,9 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'country_id',
       serializers.serialize(object.countryId,
           specifiedType: const FullType(String)),
+      'language_id',
+      serializers.serialize(object.languageId,
+          specifiedType: const FullType(String)),
       'phone',
       serializers.serialize(object.phone,
           specifiedType: const FullType(String)),
@@ -167,6 +170,9 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'custom_value4',
       serializers.serialize(object.customValue4,
           specifiedType: const FullType(String)),
+      'last_login',
+      serializers.serialize(object.lastLogin,
+          specifiedType: const FullType(int)),
       'contacts',
       serializers.serialize(object.contacts,
           specifiedType: const FullType(
@@ -272,6 +278,10 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           result.countryId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'language_id':
+          result.languageId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
         case 'phone':
           result.phone = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -319,6 +329,10 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'last_login':
+          result.lastLogin = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
         case 'contacts':
           result.contacts.replace(serializers.deserialize(value,
@@ -778,6 +792,8 @@ class _$VendorEntity extends VendorEntity {
   @override
   final String countryId;
   @override
+  final String languageId;
+  @override
   final String phone;
   @override
   final String privateNotes;
@@ -801,6 +817,8 @@ class _$VendorEntity extends VendorEntity {
   final String customValue3;
   @override
   final String customValue4;
+  @override
+  final int lastLogin;
   @override
   final BuiltList<VendorContactEntity> contacts;
   @override
@@ -836,6 +854,7 @@ class _$VendorEntity extends VendorEntity {
       this.state,
       this.postalCode,
       this.countryId,
+      this.languageId,
       this.phone,
       this.privateNotes,
       this.publicNotes,
@@ -848,6 +867,7 @@ class _$VendorEntity extends VendorEntity {
       this.customValue2,
       this.customValue3,
       this.customValue4,
+      this.lastLogin,
       this.contacts,
       this.activities,
       this.documents,
@@ -871,6 +891,8 @@ class _$VendorEntity extends VendorEntity {
         postalCode, r'VendorEntity', 'postalCode');
     BuiltValueNullFieldError.checkNotNull(
         countryId, r'VendorEntity', 'countryId');
+    BuiltValueNullFieldError.checkNotNull(
+        languageId, r'VendorEntity', 'languageId');
     BuiltValueNullFieldError.checkNotNull(phone, r'VendorEntity', 'phone');
     BuiltValueNullFieldError.checkNotNull(
         privateNotes, r'VendorEntity', 'privateNotes');
@@ -892,6 +914,8 @@ class _$VendorEntity extends VendorEntity {
         customValue3, r'VendorEntity', 'customValue3');
     BuiltValueNullFieldError.checkNotNull(
         customValue4, r'VendorEntity', 'customValue4');
+    BuiltValueNullFieldError.checkNotNull(
+        lastLogin, r'VendorEntity', 'lastLogin');
     BuiltValueNullFieldError.checkNotNull(
         contacts, r'VendorEntity', 'contacts');
     BuiltValueNullFieldError.checkNotNull(
@@ -925,6 +949,7 @@ class _$VendorEntity extends VendorEntity {
         state == other.state &&
         postalCode == other.postalCode &&
         countryId == other.countryId &&
+        languageId == other.languageId &&
         phone == other.phone &&
         privateNotes == other.privateNotes &&
         publicNotes == other.publicNotes &&
@@ -937,6 +962,7 @@ class _$VendorEntity extends VendorEntity {
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
+        lastLogin == other.lastLogin &&
         contacts == other.contacts &&
         activities == other.activities &&
         documents == other.documents &&
@@ -962,6 +988,7 @@ class _$VendorEntity extends VendorEntity {
     _$hash = $jc(_$hash, state.hashCode);
     _$hash = $jc(_$hash, postalCode.hashCode);
     _$hash = $jc(_$hash, countryId.hashCode);
+    _$hash = $jc(_$hash, languageId.hashCode);
     _$hash = $jc(_$hash, phone.hashCode);
     _$hash = $jc(_$hash, privateNotes.hashCode);
     _$hash = $jc(_$hash, publicNotes.hashCode);
@@ -974,6 +1001,7 @@ class _$VendorEntity extends VendorEntity {
     _$hash = $jc(_$hash, customValue2.hashCode);
     _$hash = $jc(_$hash, customValue3.hashCode);
     _$hash = $jc(_$hash, customValue4.hashCode);
+    _$hash = $jc(_$hash, lastLogin.hashCode);
     _$hash = $jc(_$hash, contacts.hashCode);
     _$hash = $jc(_$hash, activities.hashCode);
     _$hash = $jc(_$hash, documents.hashCode);
@@ -1000,6 +1028,7 @@ class _$VendorEntity extends VendorEntity {
           ..add('state', state)
           ..add('postalCode', postalCode)
           ..add('countryId', countryId)
+          ..add('languageId', languageId)
           ..add('phone', phone)
           ..add('privateNotes', privateNotes)
           ..add('publicNotes', publicNotes)
@@ -1012,6 +1041,7 @@ class _$VendorEntity extends VendorEntity {
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
+          ..add('lastLogin', lastLogin)
           ..add('contacts', contacts)
           ..add('activities', activities)
           ..add('documents', documents)
@@ -1063,6 +1093,10 @@ class VendorEntityBuilder
   String get countryId => _$this._countryId;
   set countryId(String countryId) => _$this._countryId = countryId;
 
+  String _languageId;
+  String get languageId => _$this._languageId;
+  set languageId(String languageId) => _$this._languageId = languageId;
+
   String _phone;
   String get phone => _$this._phone;
   set phone(String phone) => _$this._phone = phone;
@@ -1110,6 +1144,10 @@ class VendorEntityBuilder
   String _customValue4;
   String get customValue4 => _$this._customValue4;
   set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+
+  int _lastLogin;
+  int get lastLogin => _$this._lastLogin;
+  set lastLogin(int lastLogin) => _$this._lastLogin = lastLogin;
 
   ListBuilder<VendorContactEntity> _contacts;
   ListBuilder<VendorContactEntity> get contacts =>
@@ -1178,6 +1216,7 @@ class VendorEntityBuilder
       _state = $v.state;
       _postalCode = $v.postalCode;
       _countryId = $v.countryId;
+      _languageId = $v.languageId;
       _phone = $v.phone;
       _privateNotes = $v.privateNotes;
       _publicNotes = $v.publicNotes;
@@ -1190,6 +1229,7 @@ class VendorEntityBuilder
       _customValue2 = $v.customValue2;
       _customValue3 = $v.customValue3;
       _customValue4 = $v.customValue4;
+      _lastLogin = $v.lastLogin;
       _contacts = $v.contacts.toBuilder();
       _activities = $v.activities.toBuilder();
       _documents = $v.documents.toBuilder();
@@ -1240,12 +1280,13 @@ class VendorEntityBuilder
                   postalCode, r'VendorEntity', 'postalCode'),
               countryId: BuiltValueNullFieldError.checkNotNull(
                   countryId, r'VendorEntity', 'countryId'),
+              languageId: BuiltValueNullFieldError.checkNotNull(
+                  languageId, r'VendorEntity', 'languageId'),
               phone: BuiltValueNullFieldError.checkNotNull(
                   phone, r'VendorEntity', 'phone'),
-              privateNotes: BuiltValueNullFieldError.checkNotNull(
-                  privateNotes, r'VendorEntity', 'privateNotes'),
-              publicNotes:
-                  BuiltValueNullFieldError.checkNotNull(publicNotes, r'VendorEntity', 'publicNotes'),
+              privateNotes:
+                  BuiltValueNullFieldError.checkNotNull(privateNotes, r'VendorEntity', 'privateNotes'),
+              publicNotes: BuiltValueNullFieldError.checkNotNull(publicNotes, r'VendorEntity', 'publicNotes'),
               website: BuiltValueNullFieldError.checkNotNull(website, r'VendorEntity', 'website'),
               number: BuiltValueNullFieldError.checkNotNull(number, r'VendorEntity', 'number'),
               vatNumber: BuiltValueNullFieldError.checkNotNull(vatNumber, r'VendorEntity', 'vatNumber'),
@@ -1255,6 +1296,7 @@ class VendorEntityBuilder
               customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, r'VendorEntity', 'customValue2'),
               customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'VendorEntity', 'customValue3'),
               customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'VendorEntity', 'customValue4'),
+              lastLogin: BuiltValueNullFieldError.checkNotNull(lastLogin, r'VendorEntity', 'lastLogin'),
               contacts: contacts.build(),
               activities: activities.build(),
               documents: documents.build(),

@@ -48,6 +48,11 @@ class VendorOverview extends StatelessWidget {
           statics.currencyMap[vendor.currencyId].name;
     }
 
+    if (vendor.hasLanguage && vendor.languageId != company.languageId) {
+      fields[VendorFields.languageId] =
+          statics.languageMap[vendor.currencyId].name;
+    }
+
     if (company.hasCustomField(CustomFieldType.vendor1) &&
         vendor.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.vendor1);

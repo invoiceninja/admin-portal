@@ -47,8 +47,12 @@ class DocumentScreenVM {
 
     return DocumentScreenVM(
       documentMap: state.documentState.map,
-      documentList: memoizedFilteredDocumentList(state.documentState.map,
-          state.documentState.list, state.documentListState),
+      documentList: memoizedFilteredDocumentList(
+        state.getUISelection(EntityType.document),
+        state.documentState.map,
+        state.documentState.list,
+        state.documentListState,
+      ),
       userCompany: state.userCompany,
       isInMultiselect: state.documentListState.isInMultiselect(),
     );

@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -227,6 +228,16 @@ Middleware<AppState> _loadGroups(GroupRepository repository) {
     repository.loadList(state.credentials).then((data) {
       store.dispatch(LoadGroupsSuccess(data));
 
+      final documents = <DocumentEntity>[];
+      data.forEach((group) {
+        group.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = group.id
+            ..parentType = EntityType.group));
+        });
+      });
+      store.dispatch(LoadDocumentsSuccess(documents));
+
       if (action.completer != null) {
         action.completer.complete(null);
       }
@@ -248,9 +259,22 @@ Middleware<AppState> _saveDocument(GroupRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocuments(
-              store.state.credentials, action.group, action.multipartFiles)
+        store.state.credentials,
+        action.group,
+        action.multipartFiles,
+        action.isPrivate,
+      )
           .then((group) {
         store.dispatch(SaveGroupSuccess(group));
+
+        final documents = <DocumentEntity>[];
+        group.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = group.id
+            ..parentType = EntityType.group));
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+
         action.completer.complete(null);
       }).catchError((Object error) {
         print(error);

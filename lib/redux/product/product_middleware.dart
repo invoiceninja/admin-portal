@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 
 // Package imports:
 import 'package:redux/redux.dart';
@@ -269,6 +270,17 @@ Middleware<AppState> _loadProducts(ProductRepository repository) {
     store.dispatch(LoadProductsRequest());
     repository.loadList(state.credentials, action.page).then((data) {
       store.dispatch(LoadProductsSuccess(data));
+
+      final documents = <DocumentEntity>[];
+      data.forEach((product) {
+        product.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = product.id
+            ..parentType = EntityType.product));
+        });
+      });
+      store.dispatch(LoadDocumentsSuccess(documents));
+
       if (data.length == kMaxRecordsPerPage) {
         store.dispatch(LoadProducts(
           completer: action.completer,
@@ -298,9 +310,22 @@ Middleware<AppState> _saveDocument(ProductRepository repository) {
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
-              store.state.credentials, action.product, action.multipartFiles)
+        store.state.credentials,
+        action.product,
+        action.multipartFiles,
+        action.isPrivate,
+      )
           .then((product) {
         store.dispatch(SaveProductSuccess(product));
+
+        final documents = <DocumentEntity>[];
+        product.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = product.id
+            ..parentType = EntityType.product));
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+
         action.completer.complete(null);
       }).catchError((Object error) {
         print(error);
