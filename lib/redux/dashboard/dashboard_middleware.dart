@@ -25,25 +25,24 @@ Middleware<AppState> _createViewDashboard() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ViewDashboard;
 
-    if (!store.state.userCompany.canViewDashboard) {
-      store.dispatch(ViewClientList());
-      next(action);
-      return;
-    }
-
     checkForChanges(
         store: store,
         force: action.force,
         callback: () {
-          if (store.state.isStale) {
-            store.dispatch(RefreshData());
-          }
+          if (!store.state.userCompany.canViewDashboard) {
+            store.dispatch(ViewClientList());
+          } else {
+            if (store.state.isStale) {
+              store.dispatch(RefreshData());
+            }
 
-          store.dispatch(UpdateCurrentRoute(DashboardScreenBuilder.route));
+            store.dispatch(UpdateCurrentRoute(DashboardScreenBuilder.route));
+          }
 
           next(action);
 
-          if (store.state.prefState.isMobile) {
+          if (store.state.prefState.isMobile &&
+              store.state.userCompany.canViewDashboard) {
             navigatorKey.currentState.pushNamedAndRemoveUntil(
                 DashboardScreenBuilder.route, (Route<dynamic> route) => false);
           }
