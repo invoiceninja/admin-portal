@@ -106,6 +106,7 @@ abstract class DocumentEntity extends Object
     'xlsx',
     'pdf',
     'xml',
+    'zip',
   ];
 
   @override
