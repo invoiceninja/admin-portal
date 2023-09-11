@@ -646,6 +646,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                 else if (entityType == EntityType.quote)
                   QuoteEditItemsScreen(
                     viewModel: widget.entityViewModel,
+                    isTasks: _selectTasksTable,
                   )
                 else if (entityType == EntityType.invoice)
                   InvoiceEditItemsScreen(
