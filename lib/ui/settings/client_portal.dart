@@ -189,26 +189,68 @@ class _ClientPortalState extends State<ClientPortal>
 
   void _onChanged() {
     _debouncer.run(() {
+      final portalDomain = _portalDomainController.text.trim();
+      final subdomain = _subdomainController.text.trim();
+      final customMessageDashboard = _customMessageDashboard.text.trim();
+      final customMessageUnpaidInvoice =
+          _customMessageUnpaidInvoice.text.trim();
+      final customMessagePaidInvoice = _customMessagePaidInvoice.text.trim();
+      final customMessageUnapprovedQuote =
+          _customMessageUnapprovedQuote.text.trim();
+      final clientPortalTerms = _termsController.text.trim();
+      final clientPortalPrivacy = _privacyController.text.trim();
+      final clientPortalCustomJs = _customJavaScriptController.text.trim();
+      final clientPortalCustomCss = _customCssController.text.trim();
+      final clientPortalCustomHeader = _customHeaderController.text.trim();
+      final clientPortalCustomFooter = _customFooterController.text.trim();
+
+      final viewModel = widget.viewModel;
+      final isFiltered = viewModel.state.settingsUIState.isFiltered;
+
       final company = widget.viewModel.company.rebuild((b) => b
-        ..portalDomain = _portalDomainController.text.trim()
-        ..subdomain = _subdomainController.text.trim());
+        ..portalDomain =
+            isFiltered && portalDomain.isEmpty ? null : portalDomain
+        ..subdomain = isFiltered && subdomain.isEmpty ? null : subdomain);
 
       if (company != widget.viewModel.company) {
         widget.viewModel.onCompanyChanged(company);
       }
 
       final settings = widget.viewModel.settings.rebuild((b) => b
-        ..customMessageDashboard = _customMessageDashboard.text.trim()
-        ..customMessageUnpaidInvoice = _customMessageUnpaidInvoice.text.trim()
-        ..customMessagePaidInvoice = _customMessagePaidInvoice.text.trim()
+        ..customMessageDashboard = isFiltered && customMessageDashboard.isEmpty
+            ? null
+            : customMessageDashboard
+        ..customMessageUnpaidInvoice =
+            isFiltered && customMessageUnpaidInvoice.isEmpty
+                ? null
+                : customMessageUnpaidInvoice
+        ..customMessagePaidInvoice =
+            isFiltered && customMessagePaidInvoice.isEmpty
+                ? null
+                : customMessagePaidInvoice
         ..customMessageUnapprovedQuote =
-            _customMessageUnapprovedQuote.text.trim()
-        ..clientPortalTerms = _termsController.text.trim()
-        ..clientPortalPrivacy = _privacyController.text.trim()
-        ..clientPortalCustomJs = _customJavaScriptController.text.trim()
-        ..clientPortalCustomCss = _customCssController.text.trim()
-        ..clientPortalCustomHeader = _customHeaderController.text.trim()
-        ..clientPortalCustomFooter = _customFooterController.text.trim());
+            isFiltered && customMessageUnapprovedQuote.isEmpty
+                ? null
+                : customMessageUnapprovedQuote
+        ..clientPortalTerms =
+            isFiltered && clientPortalTerms.isEmpty ? null : clientPortalTerms
+        ..clientPortalPrivacy = isFiltered && clientPortalPrivacy.isEmpty
+            ? null
+            : clientPortalPrivacy
+        ..clientPortalCustomJs = isFiltered && clientPortalCustomJs.isEmpty
+            ? null
+            : clientPortalCustomJs
+        ..clientPortalCustomCss = isFiltered && clientPortalCustomCss.isEmpty
+            ? null
+            : clientPortalCustomCss
+        ..clientPortalCustomHeader =
+            isFiltered && clientPortalCustomHeader.isEmpty
+                ? null
+                : clientPortalCustomHeader
+        ..clientPortalCustomFooter =
+            isFiltered && clientPortalCustomFooter.isEmpty
+                ? null
+                : clientPortalCustomFooter);
       if (settings != widget.viewModel.settings) {
         widget.viewModel.onSettingsChanged(settings);
       }
