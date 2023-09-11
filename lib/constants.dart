@@ -214,6 +214,14 @@ const kTaxCategories = {
   kTaxCategoryReverseTax: 'reverse_tax',
 };
 
+const String kTaxClassificationIndividual = 'individual';
+const String kTaxClassificationCompany = 'company';
+const String kTaxClassificationPartnership = 'partnership';
+const String kTaxClassificationTrust = 'trust';
+const String kTaxClassificationCharity = 'charity';
+const String kTaxClassificationGovernment = 'government';
+const String kTaxClassificationOther = 'other';
+
 const String kEInvoiceTypeEN16931 = 'EN16931';
 const String kEInvoiceTypeXInvoice_2_2 = 'XInvoice_2_2';
 const String kEInvoiceTypeXInvoice_2_1 = 'XInvoice_2_1';

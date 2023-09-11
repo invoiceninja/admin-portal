@@ -173,6 +173,9 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'last_login',
       serializers.serialize(object.lastLogin,
           specifiedType: const FullType(int)),
+      'classification',
+      serializers.serialize(object.classification,
+          specifiedType: const FullType(String)),
       'contacts',
       serializers.serialize(object.contacts,
           specifiedType: const FullType(
@@ -333,6 +336,10 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
         case 'last_login':
           result.lastLogin = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
+          break;
+        case 'classification':
+          result.classification = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
           break;
         case 'contacts':
           result.contacts.replace(serializers.deserialize(value,
@@ -820,6 +827,8 @@ class _$VendorEntity extends VendorEntity {
   @override
   final int lastLogin;
   @override
+  final String classification;
+  @override
   final BuiltList<VendorContactEntity> contacts;
   @override
   final BuiltList<ActivityEntity> activities;
@@ -868,6 +877,7 @@ class _$VendorEntity extends VendorEntity {
       this.customValue3,
       this.customValue4,
       this.lastLogin,
+      this.classification,
       this.contacts,
       this.activities,
       this.documents,
@@ -917,6 +927,8 @@ class _$VendorEntity extends VendorEntity {
     BuiltValueNullFieldError.checkNotNull(
         lastLogin, r'VendorEntity', 'lastLogin');
     BuiltValueNullFieldError.checkNotNull(
+        classification, r'VendorEntity', 'classification');
+    BuiltValueNullFieldError.checkNotNull(
         contacts, r'VendorEntity', 'contacts');
     BuiltValueNullFieldError.checkNotNull(
         activities, r'VendorEntity', 'activities');
@@ -963,6 +975,7 @@ class _$VendorEntity extends VendorEntity {
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
         lastLogin == other.lastLogin &&
+        classification == other.classification &&
         contacts == other.contacts &&
         activities == other.activities &&
         documents == other.documents &&
@@ -1002,6 +1015,7 @@ class _$VendorEntity extends VendorEntity {
     _$hash = $jc(_$hash, customValue3.hashCode);
     _$hash = $jc(_$hash, customValue4.hashCode);
     _$hash = $jc(_$hash, lastLogin.hashCode);
+    _$hash = $jc(_$hash, classification.hashCode);
     _$hash = $jc(_$hash, contacts.hashCode);
     _$hash = $jc(_$hash, activities.hashCode);
     _$hash = $jc(_$hash, documents.hashCode);
@@ -1042,6 +1056,7 @@ class _$VendorEntity extends VendorEntity {
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
           ..add('lastLogin', lastLogin)
+          ..add('classification', classification)
           ..add('contacts', contacts)
           ..add('activities', activities)
           ..add('documents', documents)
@@ -1149,6 +1164,11 @@ class VendorEntityBuilder
   int get lastLogin => _$this._lastLogin;
   set lastLogin(int lastLogin) => _$this._lastLogin = lastLogin;
 
+  String _classification;
+  String get classification => _$this._classification;
+  set classification(String classification) =>
+      _$this._classification = classification;
+
   ListBuilder<VendorContactEntity> _contacts;
   ListBuilder<VendorContactEntity> get contacts =>
       _$this._contacts ??= new ListBuilder<VendorContactEntity>();
@@ -1230,6 +1250,7 @@ class VendorEntityBuilder
       _customValue3 = $v.customValue3;
       _customValue4 = $v.customValue4;
       _lastLogin = $v.lastLogin;
+      _classification = $v.classification;
       _contacts = $v.contacts.toBuilder();
       _activities = $v.activities.toBuilder();
       _documents = $v.documents.toBuilder();
@@ -1297,6 +1318,7 @@ class VendorEntityBuilder
               customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'VendorEntity', 'customValue3'),
               customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'VendorEntity', 'customValue4'),
               lastLogin: BuiltValueNullFieldError.checkNotNull(lastLogin, r'VendorEntity', 'lastLogin'),
+              classification: BuiltValueNullFieldError.checkNotNull(classification, r'VendorEntity', 'classification'),
               contacts: contacts.build(),
               activities: activities.build(),
               documents: documents.build(),

@@ -1000,6 +1000,9 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'default_expense_payment_type_id')
   String get defaultExpensePaymentTypeId;
 
+  @nullable
+  String get classification;
+
   bool get hasAddress => address1 != null && address1.isNotEmpty;
 
   bool get hasLogo => companyLogo != null && companyLogo.isNotEmpty;

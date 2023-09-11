@@ -107,6 +107,7 @@ class ClientFields {
   static const String group = 'group';
   static const String routingId = 'routing_id';
   static const String isTaxExempt = 'tax_exempt';
+  static const String classification = 'classification';
 }
 
 abstract class ClientEntity extends Object
@@ -157,6 +158,7 @@ abstract class ClientEntity extends Object
       customValue4: '',
       routingId: '',
       isTaxExempt: false,
+      classification: '',
       taxData: TaxDataEntity(),
       contacts: BuiltList<ClientContactEntity>(
         <ClientContactEntity>[
@@ -317,6 +319,8 @@ abstract class ClientEntity extends Object
 
   @BuiltValueField(wireName: 'tax_info')
   TaxDataEntity get taxData;
+
+  String get classification;
 
   BuiltList<ClientContactEntity> get contacts;
 
@@ -781,7 +785,8 @@ abstract class ClientEntity extends Object
     ..routingId = ''
     ..isTaxExempt = false
     ..taxData.replace(TaxDataEntity())
-    ..paymentBalance = 0;
+    ..paymentBalance = 0
+    ..classification = kTaxClassificationCompany;
 
   static Serializer<ClientEntity> get serializer => _$clientEntitySerializer;
 }
