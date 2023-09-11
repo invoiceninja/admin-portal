@@ -18,7 +18,8 @@ class PurchaseOrderRepository {
   Future<InvoiceEntity> loadItem(
       Credentials credentials, String entityId) async {
     final dynamic response = await webClient.get(
-        '${credentials.url}/purchase_orders/$entityId', credentials.token);
+        '${credentials.url}/purchase_orders/$entityId?include=activities.history',
+        credentials.token);
 
     final InvoiceItemResponse purchaseOrderResponse =
         serializers.deserializeWith(InvoiceItemResponse.serializer, response);
@@ -86,10 +87,10 @@ class PurchaseOrderRepository {
     dynamic response;
 
     if (purchaseOrder.isNew) {
-      url = credentials.url + '/purchase_orders?include=activities';
+      url = credentials.url + '/purchase_orders?include=activities.history';
     } else {
       url =
-          '${credentials.url}/purchase_orders/${purchaseOrder.id}?include=activities';
+          '${credentials.url}/purchase_orders/${purchaseOrder.id}?include=activities.history';
     }
 
     if (action == EntityAction.markSent) {
