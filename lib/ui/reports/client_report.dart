@@ -1,7 +1,9 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -74,6 +76,7 @@ enum ClientReportFields {
   documents,
   routing_id,
   tax_exempt,
+  classification,
 }
 
 var memoizedClientReport = memo6((
@@ -358,6 +361,10 @@ ReportResult clientReport(
           break;
         case ClientReportFields.tax_exempt:
           value = client.isTaxExempt;
+          break;
+        case ClientReportFields.classification:
+          value = AppLocalization.of(navigatorKey.currentContext)
+              .lookup(client.classification);
           break;
       }
 

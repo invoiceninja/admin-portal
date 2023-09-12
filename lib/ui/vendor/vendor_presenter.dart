@@ -50,7 +50,9 @@ class VendorPresenter extends EntityPresenter {
       VendorFields.archivedAt,
       VendorFields.documents,
       VendorFields.contacts,
-      if (userCompany.company.calculateTaxes) VendorFields.classification,
+      if (userCompany.company.calculateTaxes) ...[
+        VendorFields.classification,
+      ],
     ];
   }
 

@@ -1,7 +1,9 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -52,6 +54,7 @@ enum VendorReportFields {
   updated_at,
   documents,
   last_login,
+  classification,
   /*
   contact_last_login,
   shipping_address1,
@@ -315,6 +318,11 @@ ReportResult vendorReport(
           break;
         case VendorReportFields.documents:
           value = vendor.documents.length;
+          break;
+        case VendorReportFields.classification:
+          value = AppLocalization.of(navigatorKey.currentContext)
+              .lookup(vendor.classification);
+          break;
       }
 
       if (!ReportResult.matchField(
