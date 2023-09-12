@@ -375,6 +375,9 @@ abstract class VendorEntity extends Object
       case VendorFields.customValue4:
         response = vendorA.customValue4.compareTo(vendorB.customValue4);
         break;
+      case VendorFields.classification:
+        response = vendorA.classification.compareTo(vendorB.classification);
+        break;
       default:
         print('## ERROR: sort by vendor.$sortField is not implemented');
         break;

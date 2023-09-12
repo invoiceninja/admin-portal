@@ -556,6 +556,9 @@ abstract class ClientEntity extends Object
       case ClientFields.group:
         response = clientA.groupId.compareTo(clientB.groupId);
         break;
+      case ClientFields.classification:
+        response = clientA.classification.compareTo(clientB.classification);
+        break;
       default:
         print('## ERROR: sort by client.$sortField not implemented');
         break;
