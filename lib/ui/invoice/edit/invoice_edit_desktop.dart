@@ -250,7 +250,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
         .length;
 
     final showTasksTable =
-        invoice.hasTasks || (company.showTasksTable ?? false);
+        (invoice.hasTasks || (company.showTasksTable ?? false)) &&
+            (invoice.isInvoice || invoice.isQuote);
 
     final settings = getClientSettings(state, client);
     final terms = entityType == EntityType.quote
@@ -601,7 +602,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                     ),
                   ],
                 ),
-                if (invoice.isInvoice && showTasksTable)
+                if (showTasksTable)
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 18),
                     child: AppTabBar(
@@ -640,16 +641,17 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                 if (entityType == EntityType.credit)
                   CreditEditItemsScreen(
                     viewModel: widget.entityViewModel,
-                    isTasks: _selectTasksTable && showTasksTable,
+                    isTasks: _selectTasksTable,
                   )
                 else if (entityType == EntityType.quote)
                   QuoteEditItemsScreen(
                     viewModel: widget.entityViewModel,
+                    isTasks: _selectTasksTable,
                   )
                 else if (entityType == EntityType.invoice)
                   InvoiceEditItemsScreen(
                     viewModel: widget.entityViewModel,
-                    isTasks: _selectTasksTable && showTasksTable,
+                    isTasks: _selectTasksTable,
                   )
                 else if (entityType == EntityType.recurringInvoice)
                   RecurringInvoiceEditItemsScreen(

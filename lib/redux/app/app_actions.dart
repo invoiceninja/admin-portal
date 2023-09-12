@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/bank_account_screen.dart';
 import 'package:invoiceninja_flutter/ui/schedule/schedule_screen.dart';
 import 'package:invoiceninja_flutter/ui/transaction_rule/transaction_rule_screen.dart';
@@ -373,6 +374,7 @@ void viewEntitiesByType({
               company: store.state.company,
               user: store.state.user,
               clearFilter: true,
+              section: kSettingsCompanyDetails,
             );
             break;
           case EntityType.client:

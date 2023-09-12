@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class VendorPresenter extends EntityPresenter {
@@ -49,12 +50,16 @@ class VendorPresenter extends EntityPresenter {
       VendorFields.archivedAt,
       VendorFields.documents,
       VendorFields.contacts,
+      if (userCompany.company.calculateTaxes) ...[
+        VendorFields.classification,
+      ],
     ];
   }
 
   @override
   Widget getField({String field, BuildContext context}) {
     final vendor = entity as VendorEntity;
+    final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
@@ -121,6 +126,8 @@ class VendorPresenter extends EntityPresenter {
             ? ''
             : formatDate(
                 convertTimestampToDateString(vendor.lastLogin), context));
+      case VendorFields.classification:
+        return Text(localization.lookup(vendor.classification));
     }
 
     return super.getField(field: field, context: context);

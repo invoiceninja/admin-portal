@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
@@ -183,32 +184,74 @@ class _CompanyDetailsState extends State<CompanyDetails>
   }
 
   void _onSettingsChanged() {
-    final settings = widget.viewModel.settings.rebuild((b) => b
-      ..name = _nameController.text.trim()
-      ..idNumber = _idNumberController.text.trim()
-      ..vatNumber = _vatNumberController.text.trim()
-      ..phone = _phoneController.text.trim()
-      ..email = _emailController.text.trim()
-      ..website = _websiteController.text.trim()
-      ..address1 = _address1Controller.text.trim()
-      ..address2 = _address2Controller.text.trim()
-      ..city = _cityController.text.trim()
-      ..state = _stateController.text.trim()
-      ..postalCode = _postalCodeController.text.trim()
-      ..customValue1 = _custom1Controller.text.trim()
-      ..customValue2 = _custom2Controller.text.trim()
-      ..customValue3 = _custom3Controller.text.trim()
-      ..customValue4 = _custom4Controller.text.trim()
-      ..defaultInvoiceFooter = _invoiceFooterController.text.trim()
-      ..defaultInvoiceTerms = _invoiceTermsController.text.trim()
-      ..defaultQuoteFooter = _quoteFooterController.text.trim()
-      ..defaultQuoteTerms = _quoteTermsController.text.trim()
-      ..defaultCreditFooter = _creditFooterController.text.trim()
-      ..defaultCreditTerms = _creditTermsController.text.trim()
-      ..defaultPurchaseOrderFooter = _purchaseOrderFooterController.text.trim()
-      ..defaultPurchaseOrderTerms = _purchaseOrderTermsController.text.trim()
-      ..qrIban = _qrIbanController.text.trim()
-      ..besrId = _besrIdController.text.trim());
+    final name = _nameController.text.trim();
+    final idNumber = _idNumberController.text.trim();
+    final vatNumber = _vatNumberController.text.trim();
+    final phone = _phoneController.text.trim();
+    final email = _emailController.text.trim();
+    final website = _websiteController.text.trim();
+    final address1 = _address1Controller.text.trim();
+    final address2 = _address2Controller.text.trim();
+    final city = _cityController.text.trim();
+    final state = _stateController.text.trim();
+    final postalCode = _postalCodeController.text.trim();
+    final customValue1 = _custom1Controller.text.trim();
+    final customValue2 = _custom2Controller.text.trim();
+    final customValue3 = _custom3Controller.text.trim();
+    final customValue4 = _custom4Controller.text.trim();
+    final defaultInvoiceFooter = _invoiceFooterController.text.trim();
+    final defaultInvoiceTerms = _invoiceTermsController.text.trim();
+    final defaultQuoteFooter = _quoteFooterController.text.trim();
+    final defaultQuoteTerms = _quoteTermsController.text.trim();
+    final defaultCreditFooter = _creditFooterController.text.trim();
+    final defaultCreditTerms = _creditTermsController.text.trim();
+    final defaultPurchaseOrderFooter =
+        _purchaseOrderFooterController.text.trim();
+    final defaultPurchaseOrderTerms = _purchaseOrderTermsController.text.trim();
+    final qrIban = _qrIbanController.text.trim();
+    final besrId = _besrIdController.text.trim();
+
+    final viewModel = widget.viewModel;
+    final isFiltered = viewModel.state.settingsUIState.isFiltered;
+    final settings = viewModel.settings.rebuild((b) => b
+      ..name = isFiltered && name.isEmpty ? null : name
+      ..idNumber = isFiltered && idNumber.isEmpty ? null : idNumber
+      ..vatNumber = isFiltered && vatNumber.isEmpty ? null : vatNumber
+      ..phone = isFiltered && phone.isEmpty ? null : phone
+      ..email = isFiltered && email.isEmpty ? null : email
+      ..website = isFiltered && website.isEmpty ? null : website
+      ..address1 = isFiltered && address1.isEmpty ? null : address1
+      ..address2 = isFiltered && address2.isEmpty ? null : address2
+      ..city = isFiltered && city.isEmpty ? null : city
+      ..state = isFiltered && state.isEmpty ? null : state
+      ..postalCode = isFiltered && postalCode.isEmpty ? null : postalCode
+      ..customValue1 = isFiltered && customValue1.isEmpty ? null : customValue1
+      ..customValue2 = isFiltered && customValue2.isEmpty ? null : customValue2
+      ..customValue3 = isFiltered && customValue3.isEmpty ? null : customValue3
+      ..customValue4 = isFiltered && customValue4.isEmpty ? null : customValue4
+      ..defaultInvoiceFooter = isFiltered && defaultInvoiceFooter.isEmpty
+          ? null
+          : defaultInvoiceFooter
+      ..defaultInvoiceTerms =
+          isFiltered && defaultInvoiceTerms.isEmpty ? null : defaultInvoiceTerms
+      ..defaultQuoteFooter =
+          isFiltered && defaultQuoteFooter.isEmpty ? null : defaultQuoteFooter
+      ..defaultQuoteTerms =
+          isFiltered && defaultQuoteTerms.isEmpty ? null : defaultQuoteTerms
+      ..defaultCreditFooter =
+          isFiltered && defaultCreditFooter.isEmpty ? null : defaultCreditFooter
+      ..defaultCreditTerms =
+          isFiltered && defaultCreditTerms.isEmpty ? null : defaultCreditTerms
+      ..defaultPurchaseOrderFooter =
+          isFiltered && defaultPurchaseOrderFooter.isEmpty
+              ? null
+              : defaultPurchaseOrderFooter
+      ..defaultPurchaseOrderTerms =
+          isFiltered && defaultPurchaseOrderTerms.isEmpty
+              ? null
+              : defaultPurchaseOrderTerms
+      ..qrIban = isFiltered && qrIban.isEmpty ? null : qrIban
+      ..besrId = isFiltered && besrId.isEmpty ? null : besrId);
     if (settings != widget.viewModel.settings) {
       _debouncer.run(() {
         widget.viewModel.onSettingsChanged(settings);
@@ -336,6 +379,22 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   ),
                 ],
               ),
+              if (state.company.calculateTaxes)
+                AppDropdownButton<String>(
+                  labelText: localization.classification,
+                  showBlank: true,
+                  value: settings.classification,
+                  onChanged: (dynamic value) {
+                    viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..classification = value));
+                  },
+                  items: kTaxClassifications
+                      .map((classification) => DropdownMenuItem(
+                            child: Text(localization.lookup(classification)),
+                            value: classification,
+                          ))
+                      .toList(),
+                ),
               if (company.supportsQrIban)
                 FormCard(
                   children: [
@@ -515,7 +574,11 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       child: CachedImage(
                         width: double.infinity,
-                        url: settings.companyLogo,
+                        url: state.credentials.url +
+                            '/companies/' +
+                            company.id +
+                            '/logo',
+                        apiToken: state.userCompany.token.token,
                       )),
               ],
             ),

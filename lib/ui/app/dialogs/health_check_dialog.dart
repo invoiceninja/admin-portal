@@ -148,8 +148,8 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                   title: 'PHP Info',
                   // TODO move this logic to the backend
                   isValid: _response.phpVersion.isOkay &&
-                      webPhpVersion.startsWith('8') &&
-                      cliPhpVersion.startsWith('8'),
+                      webPhpVersion.startsWith('v8') &&
+                      cliPhpVersion.startsWith('v8'),
                   subtitle: 'Web: $webPhpVersion\nCLI: $cliPhpVersion' +
                       (phpMemoryLimit.isNotEmpty
                           ? '\nMemory Limit: $phpMemoryLimit'

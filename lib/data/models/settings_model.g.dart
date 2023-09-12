@@ -1534,6 +1534,13 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.classification;
+    if (value != null) {
+      result
+        ..add('classification')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -2426,6 +2433,10 @@ class _$SettingsEntitySerializer
           result.defaultExpensePaymentTypeId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'classification':
+          result.classification = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
       }
     }
 
@@ -2940,6 +2951,8 @@ class _$SettingsEntity extends SettingsEntity {
   final String eInvoiceType;
   @override
   final String defaultExpensePaymentTypeId;
+  @override
+  final String classification;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder) updates]) =>
       (new SettingsEntityBuilder()..update(updates))._build();
@@ -3162,7 +3175,8 @@ class _$SettingsEntity extends SettingsEntity {
       this.showTaskItemDescription,
       this.enableEInvoice,
       this.eInvoiceType,
-      this.defaultExpensePaymentTypeId})
+      this.defaultExpensePaymentTypeId,
+      this.classification})
       : super._();
 
   @override
@@ -3399,7 +3413,8 @@ class _$SettingsEntity extends SettingsEntity {
         showTaskItemDescription == other.showTaskItemDescription &&
         enableEInvoice == other.enableEInvoice &&
         eInvoiceType == other.eInvoiceType &&
-        defaultExpensePaymentTypeId == other.defaultExpensePaymentTypeId;
+        defaultExpensePaymentTypeId == other.defaultExpensePaymentTypeId &&
+        classification == other.classification;
   }
 
   int __hashCode;
@@ -3625,6 +3640,7 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, enableEInvoice.hashCode);
     _$hash = $jc(_$hash, eInvoiceType.hashCode);
     _$hash = $jc(_$hash, defaultExpensePaymentTypeId.hashCode);
+    _$hash = $jc(_$hash, classification.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -3854,7 +3870,8 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('showTaskItemDescription', showTaskItemDescription)
           ..add('enableEInvoice', enableEInvoice)
           ..add('eInvoiceType', eInvoiceType)
-          ..add('defaultExpensePaymentTypeId', defaultExpensePaymentTypeId))
+          ..add('defaultExpensePaymentTypeId', defaultExpensePaymentTypeId)
+          ..add('classification', classification))
         .toString();
   }
 }
@@ -4933,6 +4950,11 @@ class SettingsEntityBuilder
   set defaultExpensePaymentTypeId(String defaultExpensePaymentTypeId) =>
       _$this._defaultExpensePaymentTypeId = defaultExpensePaymentTypeId;
 
+  String _classification;
+  String get classification => _$this._classification;
+  set classification(String classification) =>
+      _$this._classification = classification;
+
   SettingsEntityBuilder();
 
   SettingsEntityBuilder get _$this {
@@ -5156,6 +5178,7 @@ class SettingsEntityBuilder
       _enableEInvoice = $v.enableEInvoice;
       _eInvoiceType = $v.eInvoiceType;
       _defaultExpensePaymentTypeId = $v.defaultExpensePaymentTypeId;
+      _classification = $v.classification;
       _$v = null;
     }
     return this;
@@ -5398,7 +5421,8 @@ class SettingsEntityBuilder
               showTaskItemDescription: showTaskItemDescription,
               enableEInvoice: enableEInvoice,
               eInvoiceType: eInvoiceType,
-              defaultExpensePaymentTypeId: defaultExpensePaymentTypeId);
+              defaultExpensePaymentTypeId: defaultExpensePaymentTypeId,
+              classification: classification);
     } catch (_) {
       String _$failedField;
       try {

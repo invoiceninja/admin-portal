@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
@@ -295,6 +296,21 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
               onSavePressed: _onSavePressed,
             ),
           if (state.company.calculateTaxes) ...[
+            AppDropdownButton<String>(
+              labelText: localization.classification,
+              showBlank: true,
+              value: client.classification,
+              onChanged: (dynamic value) {
+                viewModel.onChanged(
+                    client.rebuild((b) => b..classification = value));
+              },
+              items: kTaxClassifications
+                  .map((classification) => DropdownMenuItem(
+                        child: Text(localization.lookup(classification)),
+                        value: classification,
+                      ))
+                  .toList(),
+            ),
             SizedBox(height: 20),
             SwitchListTile(
               title: Text(localization.isTaxExempt),

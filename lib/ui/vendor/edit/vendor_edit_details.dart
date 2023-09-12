@@ -12,6 +12,7 @@ import 'package:contacts_service/contacts_service.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
@@ -273,6 +274,22 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
             value: vendor.customValue4,
             onSavePressed: _onSavePressed,
           ),
+          if (state.company.calculateTaxes)
+            AppDropdownButton<String>(
+              labelText: localization.classification,
+              showBlank: true,
+              value: vendor.classification,
+              onChanged: (dynamic value) {
+                viewModel.onChanged(
+                    vendor.rebuild((b) => b..classification = value));
+              },
+              items: kTaxClassifications
+                  .map((classification) => DropdownMenuItem(
+                        child: Text(localization.lookup(classification)),
+                        value: classification,
+                      ))
+                  .toList(),
+            ),
         ],
       ),
     );

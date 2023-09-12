@@ -54,8 +54,13 @@ class ClientPresenter extends EntityPresenter {
       ClientFields.group,
       ClientFields.contactPhone,
       ClientFields.contacts,
-      ClientFields.routingId,
-      ClientFields.isTaxExempt,
+      if (userCompany.company.settings.enableEInvoice) ...[
+        ClientFields.routingId,
+      ],
+      if (userCompany.company.calculateTaxes) ...[
+        ClientFields.isTaxExempt,
+        ClientFields.classification,
+      ]
     ];
   }
 
@@ -157,6 +162,8 @@ class ClientPresenter extends EntityPresenter {
         final contacts =
             client.contacts.map((contact) => contact.fullName).join('\n');
         return TableTooltip(message: contacts);
+      case ClientFields.classification:
+        return Text(localization.lookup(client.classification));
     }
 
     return super.getField(field: field, context: context);

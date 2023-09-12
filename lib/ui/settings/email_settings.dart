@@ -116,25 +116,48 @@ class _EmailSettingsState extends State<EmailSettings> {
   }
 
   void _onChanged() {
+    final emailFromName = _fromNameController.text.trim();
+    final replyToEmail = _replyToEmailController.text.trim();
+    final replyToName = _replyToNameController.text.trim();
+    final bccEmail = _bccEmailController.text.trim();
+    final emailStyleCustom = _emailStyleCustomController.text.trim();
+    final emailSignature = _emailSignatureController.text.trim();
+    final postmarkSecret = _postmarkSecretController.text.trim();
+    final mailgunSecret = _mailgunSecretController.text.trim();
+    final mailgunDomain = _mailgunDomainController.text.trim();
+    final customSendingEmail = _customSendingEmailController.text.trim();
+    final eInvoiceCertificatePassphrase =
+        _eInvoiceCertificatePassphraseController.text.trim();
+
     final viewModel = widget.viewModel;
+    final isFiltered = viewModel.state.settingsUIState.isFiltered;
     final settings = viewModel.settings.rebuild((b) => b
-      ..emailFromName = _fromNameController.text.trim()
-      ..replyToEmail = _replyToEmailController.text.trim()
-      ..replyToName = _replyToNameController.text.trim()
-      ..bccEmail = _bccEmailController.text.trim()
-      ..emailStyleCustom = _emailStyleCustomController.text.trim()
-      ..emailSignature = _emailSignatureController.text.trim()
-      ..postmarkSecret = _postmarkSecretController.text.trim()
-      ..mailgunSecret = _mailgunSecretController.text.trim()
-      ..mailgunDomain = _mailgunDomainController.text.trim()
-      ..customSendingEmail = _customSendingEmailController.text.trim());
+      ..emailFromName =
+          isFiltered && emailFromName.isEmpty ? null : emailFromName
+      ..replyToEmail = isFiltered && replyToEmail.isEmpty ? null : replyToEmail
+      ..replyToName = isFiltered && replyToName.isEmpty ? null : replyToName
+      ..bccEmail = isFiltered && bccEmail.isEmpty ? null : bccEmail
+      ..emailStyleCustom =
+          isFiltered && emailStyleCustom.isEmpty ? null : emailStyleCustom
+      ..emailSignature =
+          isFiltered && emailSignature.isEmpty ? null : emailSignature
+      ..postmarkSecret =
+          isFiltered && postmarkSecret.isEmpty ? null : postmarkSecret
+      ..mailgunSecret =
+          isFiltered && mailgunSecret.isEmpty ? null : mailgunSecret
+      ..mailgunDomain =
+          isFiltered && mailgunDomain.isEmpty ? null : mailgunDomain
+      ..customSendingEmail =
+          isFiltered && customSendingEmail.isEmpty ? null : customSendingEmail);
     if (settings != viewModel.settings) {
       viewModel.onSettingsChanged(settings);
     }
 
     final company = viewModel.company.rebuild((b) => b
       ..eInvoiceCertificatePassphrase =
-          _eInvoiceCertificatePassphraseController.text.trim());
+          isFiltered && eInvoiceCertificatePassphrase.isEmpty
+              ? null
+              : eInvoiceCertificatePassphrase);
     if (company != viewModel.company) {
       viewModel.onCompanyChanged(company);
     }
