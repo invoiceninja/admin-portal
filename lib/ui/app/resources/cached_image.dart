@@ -15,14 +15,14 @@ class CachedImage extends StatelessWidget {
     this.width,
     this.height,
     this.showNinjaOnError = true,
-    this.sendApiToken = false,
+    this.apiToken,
   });
 
   final String url;
   final bool showNinjaOnError;
   final double width;
   final double height;
-  final bool sendApiToken;
+  final String apiToken;
 
   @override
   Widget build(BuildContext context) {
@@ -43,22 +43,21 @@ class CachedImage extends StatelessWidget {
         url,
         width: width,
         height: height,
-        key: ValueKey(url),
+        key: ValueKey(url + (apiToken != null ? apiToken.substring(0, 8) : '')),
         fit: BoxFit.contain,
-        headers: sendApiToken ? {'X-API-TOKEN': state.credentials.token} : null,
+        headers: apiToken != null ? {'X-API-TOKEN': apiToken} : null,
       );
     }
 
     return CachedNetworkImage(
       width: width,
       height: height,
-      key: ValueKey(url),
+      key: ValueKey(url + (apiToken != null ? apiToken.substring(0, 8) : '')),
       imageUrl: url,
       placeholder: (context, url) => Center(child: CircularProgressIndicator()),
       errorWidget: (context, url, Object error) =>
           Image.asset('assets/images/icon.png', width: 32, height: 30),
-      httpHeaders:
-          sendApiToken ? {'X-API-TOKEN': state.credentials.token} : null,
+      httpHeaders: apiToken != null ? {'X-API-TOKEN': apiToken} : null,
     );
   }
 }

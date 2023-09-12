@@ -87,9 +87,12 @@ class _MenuDrawerState extends State<MenuDrawer> {
             company.settings.companyLogo.isNotEmpty
         ? CachedImage(
             width: MenuDrawer.LOGO_WIDTH,
-            //url: state.credentials.url + '/companies/' + company.id + '/logo',
-            url: company.settings.companyLogo,
-            sendApiToken: true,
+            url: state.credentials.url + '/companies/' + company.id + '/logo',
+            apiToken: state.userCompanyStates
+                .firstWhere((userCompanyState) =>
+                    userCompanyState.company.id == company.id)
+                .token
+                .token,
           )
         : Image.asset('assets/images/icon.png', width: MenuDrawer.LOGO_WIDTH);
 

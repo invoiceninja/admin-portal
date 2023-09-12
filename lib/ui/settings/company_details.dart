@@ -574,9 +574,11 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       child: CachedImage(
                         width: double.infinity,
-                        //url: state.credentials.url + '/companies/' + company.id + '/logo',
-                        url: settings.companyLogo,
-                        sendApiToken: true,
+                        url: state.credentials.url +
+                            '/companies/' +
+                            company.id +
+                            '/logo',
+                        apiToken: state.userCompany.token.token,
                       )),
               ],
             ),
