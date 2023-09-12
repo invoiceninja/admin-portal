@@ -517,7 +517,7 @@ abstract class VendorEntity extends Object
     ..activities.replace(BuiltList<ActivityEntity>())
     ..lastLogin = 0
     ..languageId = ''
-    ..classification = kTaxClassificationCompany;
+    ..classification = '';
 
   static Serializer<VendorEntity> get serializer => _$vendorEntitySerializer;
 }

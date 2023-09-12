@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
@@ -378,6 +379,22 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   ),
                 ],
               ),
+              if (state.company.calculateTaxes)
+                AppDropdownButton<String>(
+                  labelText: localization.classification,
+                  showBlank: true,
+                  value: settings.classification,
+                  onChanged: (dynamic value) {
+                    viewModel.onSettingsChanged(
+                        settings.rebuild((b) => b..classification = value));
+                  },
+                  items: kTaxClassifications
+                      .map((classification) => DropdownMenuItem(
+                            child: Text(localization.lookup(classification)),
+                            value: classification,
+                          ))
+                      .toList(),
+                ),
               if (company.supportsQrIban)
                 FormCard(
                   children: [

@@ -786,7 +786,7 @@ abstract class ClientEntity extends Object
     ..isTaxExempt = false
     ..taxData.replace(TaxDataEntity())
     ..paymentBalance = 0
-    ..classification = kTaxClassificationCompany;
+    ..classification = '';
 
   static Serializer<ClientEntity> get serializer => _$clientEntitySerializer;
 }

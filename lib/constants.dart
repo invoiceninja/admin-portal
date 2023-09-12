@@ -222,6 +222,16 @@ const String kTaxClassificationCharity = 'charity';
 const String kTaxClassificationGovernment = 'government';
 const String kTaxClassificationOther = 'other';
 
+const kTaxClassifications = [
+  kTaxClassificationIndividual,
+  kTaxClassificationCompany,
+  kTaxClassificationPartnership,
+  kTaxClassificationTrust,
+  kTaxClassificationCharity,
+  kTaxClassificationGovernment,
+  kTaxClassificationOther,
+];
+
 const String kEInvoiceTypeEN16931 = 'EN16931';
 const String kEInvoiceTypeXInvoice_2_2 = 'XInvoice_2_2';
 const String kEInvoiceTypeXInvoice_2_1 = 'XInvoice_2_1';
