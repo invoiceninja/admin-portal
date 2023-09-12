@@ -10,13 +10,19 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class CachedImage extends StatelessWidget {
-  const CachedImage(
-      {this.url, this.width, this.height, this.showNinjaOnError = true});
+  const CachedImage({
+    this.url,
+    this.width,
+    this.height,
+    this.showNinjaOnError = true,
+    this.sendApiToken = false,
+  });
 
   final String url;
   final bool showNinjaOnError;
   final double width;
   final double height;
+  final bool sendApiToken;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +45,7 @@ class CachedImage extends StatelessWidget {
         height: height,
         key: ValueKey(url),
         fit: BoxFit.contain,
+        headers: sendApiToken ? {'X-API-TOKEN': state.credentials.token} : null,
       );
     }
 
@@ -50,6 +57,8 @@ class CachedImage extends StatelessWidget {
       placeholder: (context, url) => Center(child: CircularProgressIndicator()),
       errorWidget: (context, url, Object error) =>
           Image.asset('assets/images/icon.png', width: 32, height: 30),
+      httpHeaders:
+          sendApiToken ? {'X-API-TOKEN': state.credentials.token} : null,
     );
   }
 }
