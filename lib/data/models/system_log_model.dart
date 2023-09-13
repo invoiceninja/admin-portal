@@ -27,6 +27,7 @@ abstract class SystemLogEntity
   static const CATEGORY_WEBHOOK = 3;
   static const CATEGORY_PDF = 4;
   static const CATEGORY_SECURITY = 5;
+  static const CATEGORY_LOG = 6;
 
   @override
   @memoized
@@ -69,6 +70,8 @@ abstract class SystemLogEntity
         return 'security';
       case CATEGORY_WEBHOOK:
         return 'webhook';
+      case CATEGORY_LOG:
+        return 'log';
     }
 
     return '';
