@@ -228,6 +228,11 @@ abstract class PaymentEntity extends Object
 
   BuiltList<PaymentableEntity> get credits;
 
+  bool get canBeAppliedOrRefunded => [
+        kPaymentStatusCompleted,
+        kPaymentStatusPartiallyRefunded,
+      ].contains(statusId);
+
   String get calculatedStatusId {
     if (applied < amount) {
       return applied == 0
@@ -426,11 +431,11 @@ abstract class PaymentEntity extends Object
             actions.add(EntityAction.edit);
           }
 
-          if (applied < amount) {
+          if (applied < amount && canBeAppliedOrRefunded) {
             actions.add(EntityAction.applyPayment);
           }
 
-          if (completedAmount > 0) {
+          if (completedAmount > 0 && canBeAppliedOrRefunded) {
             actions.add(EntityAction.refundPayment);
           }
         }
