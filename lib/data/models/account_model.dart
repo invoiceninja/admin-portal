@@ -36,6 +36,7 @@ abstract class AccountEntity
       trialDaysLeft: 0,
       hasIapPlan: false,
       paymentId: '',
+      taxApiEnabled: false,
     );
   }
 
@@ -111,6 +112,9 @@ abstract class AccountEntity
   @BuiltValueField(wireName: 'payment_id')
   String get paymentId;
 
+  @BuiltValueField(wireName: 'tax_api_enabled')
+  bool get taxApiEnabled;
+
   bool get canMakeIAP => !hasIapPlan && paymentId.isEmpty;
 
   bool get isUpdateAvailable {
@@ -148,7 +152,8 @@ abstract class AccountEntity
     ..hostedCompanyCount = 1
     ..accountSmsVerified = true
     ..setReactAsDefaultAP = false
-    ..paymentId = '';
+    ..paymentId = ''
+    ..taxApiEnabled = false;
 
   static Serializer<AccountEntity> get serializer => _$accountEntitySerializer;
 }
