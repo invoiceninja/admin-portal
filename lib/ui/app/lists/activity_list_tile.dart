@@ -54,6 +54,7 @@ class ActivityListTile extends StatelessWidget {
     title = activity.getDescription(
       title,
       localization.system,
+      localization.recurring,
       user: user,
       client: client,
       invoice: invoice,

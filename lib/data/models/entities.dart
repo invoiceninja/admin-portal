@@ -907,7 +907,8 @@ abstract class ActivityEntity
 
   String getDescription(
     String activity,
-    String systemString, {
+    String systemString,
+    String recurringString, {
     UserEntity user,
     ClientEntity client,
     InvoiceEntity invoice,
@@ -932,8 +933,18 @@ abstract class ActivityEntity
       vendorContact = vendor.getContact(vendorContactId);
     }
 
-    activity =
-        activity.replaceFirst(':user', user?.listDisplayName ?? systemString);
+    if ((recurringInvoice?.isOld ?? false) && (invoice?.isOld ?? false)) {
+      activity = activity.replaceFirst(
+          ':user', '$recurringString ${recurringInvoice.number}');
+    } else if ((recurringExpense?.isOld ?? false) &&
+        (expense?.isOld ?? false)) {
+      activity = activity.replaceFirst(
+          ':user', '$recurringString ${recurringExpense.number}');
+    } else {
+      activity =
+          activity.replaceFirst(':user', user?.listDisplayName ?? systemString);
+    }
+
     activity = activity.replaceFirst(':client', client?.displayName ?? '');
     activity = activity.replaceFirst(':invoice', invoice?.number ?? '');
     activity = activity.replaceFirst(
