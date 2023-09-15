@@ -60,7 +60,7 @@ jobs:
           rm ./public/index.html
           git add .
           git commit -m 'Admin Portal - Hosted'
-          git push
+          #git push
           cd ..
 
           #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --project ${{secrets.sentry_project}} --org ${{secrets.sentry_org}} files $SENTRY_RELEASE upload-sourcemaps . --ext dart --rewrite
