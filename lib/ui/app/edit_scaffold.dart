@@ -1,16 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
-import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
-import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
-import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
-import 'package:invoiceninja_flutter/ui/transaction/edit/transaction_edit_vm.dart';
-import 'package:overflow_view/overflow_view.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -18,12 +10,19 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_status_chip.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
+import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
+import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/ui/settings/account_management_vm.dart';
+import 'package:invoiceninja_flutter/ui/transaction/edit/transaction_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:overflow_view/overflow_view.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EditScaffold extends StatelessWidget {
   const EditScaffold({
@@ -172,29 +171,35 @@ class EditScaffold extends StatelessWidget {
                     ],
                   ),
             drawer: isDesktop(context) ? MenuDrawerBuilder() : null,
-            appBar: AppBar(
-              centerTitle: false,
-              automaticallyImplyLeading: isMobile(context),
-              title: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  if (showOverflow)
-                    Text(title)
-                  else
-                    Flexible(child: Text(title)),
-                  SizedBox(width: 16),
-                  if (isDesktop(context) &&
-                      isFullscreen &&
-                      entity != null &&
-                      entity.isOld) ...[
-                    EntityStatusChip(
-                        entity: state.getEntity(entity.entityType, entity.id)),
-                    SizedBox(width: 8),
-                  ],
-                  if (showOverflow)
-                    Expanded(
-                      child: Align(
+            appBar: (isMobile(context) &&
+                    MediaQuery.of(context).orientation ==
+                        Orientation.landscape &&
+                    MediaQuery.of(context).viewInsets.bottom > 0.0)
+                ? null
+                : AppBar(
+                    centerTitle: false,
+                    automaticallyImplyLeading: isMobile(context),
+                    title: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        if (showOverflow)
+                          Text(title)
+                        else
+                          Flexible(child: Text(title)),
+                        SizedBox(width: 16),
+                        if (isDesktop(context) &&
+                            isFullscreen &&
+                            entity != null &&
+                            entity.isOld) ...[
+                          EntityStatusChip(
+                              entity: state.getEntity(
+                                  entity.entityType, entity.id)),
+                          SizedBox(width: 8),
+                        ],
+                        if (showOverflow)
+                          Expanded(
+                            child: Align(
                         alignment: Alignment.centerRight,
                         child: FocusTraversalGroup(
                           // TODO this is needed as a workaround to prevent
