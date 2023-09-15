@@ -9,7 +9,7 @@ const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
 const String kSiteUrl = 'https://invoiceninja.com';
-const String kAppProductionUrl = 'https://invoicing.co';
+const String kAppProductionUrl = 'https://demo.invoiceninja.com';
 const String kAppStagingUrl = 'https://staging.invoicing.co';
 const String kAppStagingNetUrl = 'https://invoiceninja.net';
 const String kAppLargeTestUrl = 'https://testv5.invoicing.co';
