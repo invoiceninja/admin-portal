@@ -85,6 +85,9 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
       'payment_id',
       serializers.serialize(object.paymentId,
           specifiedType: const FullType(String)),
+      'tax_api_enabled',
+      serializers.serialize(object.taxApiEnabled,
+          specifiedType: const FullType(bool)),
     ];
 
     return result;
@@ -194,6 +197,10 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
           result.paymentId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'tax_api_enabled':
+          result.taxApiEnabled = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool;
+          break;
       }
     }
 
@@ -248,6 +255,8 @@ class _$AccountEntity extends AccountEntity {
   final bool hasIapPlan;
   @override
   final String paymentId;
+  @override
+  final bool taxApiEnabled;
 
   factory _$AccountEntity([void Function(AccountEntityBuilder) updates]) =>
       (new AccountEntityBuilder()..update(updates))._build();
@@ -275,7 +284,8 @@ class _$AccountEntity extends AccountEntity {
       this.accountSmsVerified,
       this.trialDaysLeft,
       this.hasIapPlan,
-      this.paymentId})
+      this.paymentId,
+      this.taxApiEnabled})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'AccountEntity', 'id');
     BuiltValueNullFieldError.checkNotNull(key, r'AccountEntity', 'key');
@@ -320,6 +330,8 @@ class _$AccountEntity extends AccountEntity {
         hasIapPlan, r'AccountEntity', 'hasIapPlan');
     BuiltValueNullFieldError.checkNotNull(
         paymentId, r'AccountEntity', 'paymentId');
+    BuiltValueNullFieldError.checkNotNull(
+        taxApiEnabled, r'AccountEntity', 'taxApiEnabled');
   }
 
   @override
@@ -355,7 +367,8 @@ class _$AccountEntity extends AccountEntity {
         accountSmsVerified == other.accountSmsVerified &&
         trialDaysLeft == other.trialDaysLeft &&
         hasIapPlan == other.hasIapPlan &&
-        paymentId == other.paymentId;
+        paymentId == other.paymentId &&
+        taxApiEnabled == other.taxApiEnabled;
   }
 
   int __hashCode;
@@ -386,6 +399,7 @@ class _$AccountEntity extends AccountEntity {
     _$hash = $jc(_$hash, trialDaysLeft.hashCode);
     _$hash = $jc(_$hash, hasIapPlan.hashCode);
     _$hash = $jc(_$hash, paymentId.hashCode);
+    _$hash = $jc(_$hash, taxApiEnabled.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -415,7 +429,8 @@ class _$AccountEntity extends AccountEntity {
           ..add('accountSmsVerified', accountSmsVerified)
           ..add('trialDaysLeft', trialDaysLeft)
           ..add('hasIapPlan', hasIapPlan)
-          ..add('paymentId', paymentId))
+          ..add('paymentId', paymentId)
+          ..add('taxApiEnabled', taxApiEnabled))
         .toString();
   }
 }
@@ -525,6 +540,11 @@ class AccountEntityBuilder
   String get paymentId => _$this._paymentId;
   set paymentId(String paymentId) => _$this._paymentId = paymentId;
 
+  bool _taxApiEnabled;
+  bool get taxApiEnabled => _$this._taxApiEnabled;
+  set taxApiEnabled(bool taxApiEnabled) =>
+      _$this._taxApiEnabled = taxApiEnabled;
+
   AccountEntityBuilder() {
     AccountEntity._initializeBuilder(this);
   }
@@ -555,6 +575,7 @@ class AccountEntityBuilder
       _trialDaysLeft = $v.trialDaysLeft;
       _hasIapPlan = $v.hasIapPlan;
       _paymentId = $v.paymentId;
+      _taxApiEnabled = $v.taxApiEnabled;
       _$v = null;
     }
     return this;
@@ -609,7 +630,8 @@ class AccountEntityBuilder
             accountSmsVerified: BuiltValueNullFieldError.checkNotNull(accountSmsVerified, r'AccountEntity', 'accountSmsVerified'),
             trialDaysLeft: BuiltValueNullFieldError.checkNotNull(trialDaysLeft, r'AccountEntity', 'trialDaysLeft'),
             hasIapPlan: BuiltValueNullFieldError.checkNotNull(hasIapPlan, r'AccountEntity', 'hasIapPlan'),
-            paymentId: BuiltValueNullFieldError.checkNotNull(paymentId, r'AccountEntity', 'paymentId'));
+            paymentId: BuiltValueNullFieldError.checkNotNull(paymentId, r'AccountEntity', 'paymentId'),
+            taxApiEnabled: BuiltValueNullFieldError.checkNotNull(taxApiEnabled, r'AccountEntity', 'taxApiEnabled'));
     replace(_$result);
     return _$result;
   }

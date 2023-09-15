@@ -299,7 +299,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                     ),
                   ],
                   SwitchListTile(
-                    title: Text(localization.persistData),
+                    title: Text(localization.cacheData),
                     subtitle: Text(localization.persistDataHelp),
                     value: prefState.persistData,
                     onChanged: (value) =>

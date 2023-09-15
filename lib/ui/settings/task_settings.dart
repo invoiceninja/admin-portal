@@ -218,34 +218,35 @@ class _TaskSettingsState extends State<TaskSettings> {
               ],
             ],
           ),
-          FormCard(
-            children: [
-              SwitchListTile(
-                activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.showTasksTable),
-                value: company.showTasksTable,
-                subtitle: Text(localization.showTasksTableHelp),
-                onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..showTasksTable = value)),
-              ),
-              SwitchListTile(
-                activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.lockInvoicedTasks),
-                value: company.invoiceTaskLock ?? false,
-                subtitle: Text(localization.lockInvoicedTasksHelp),
-                onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..invoiceTaskLock = value)),
-              ),
-              SwitchListTile(
-                activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.addDocumentsToInvoice),
-                value: company.invoiceTaskDocuments ?? false,
-                subtitle: Text(localization.addDocumentsToInvoiceHelp),
-                onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..invoiceTaskDocuments = value)),
-              ),
-            ],
-          ),
+          if (!viewModel.state.settingsUIState.isFiltered)
+            FormCard(
+              children: [
+                SwitchListTile(
+                  activeColor: Theme.of(context).colorScheme.secondary,
+                  title: Text(localization.showTasksTable),
+                  value: company.showTasksTable,
+                  subtitle: Text(localization.showTasksTableHelp),
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild((b) => b..showTasksTable = value)),
+                ),
+                SwitchListTile(
+                  activeColor: Theme.of(context).colorScheme.secondary,
+                  title: Text(localization.lockInvoicedTasks),
+                  value: company.invoiceTaskLock ?? false,
+                  subtitle: Text(localization.lockInvoicedTasksHelp),
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild((b) => b..invoiceTaskLock = value)),
+                ),
+                SwitchListTile(
+                  activeColor: Theme.of(context).colorScheme.secondary,
+                  title: Text(localization.addDocumentsToInvoice),
+                  value: company.invoiceTaskDocuments ?? false,
+                  subtitle: Text(localization.addDocumentsToInvoiceHelp),
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild((b) => b..invoiceTaskDocuments = value)),
+                ),
+              ],
+            ),
           FormCard(
             isLast: true,
             children: [

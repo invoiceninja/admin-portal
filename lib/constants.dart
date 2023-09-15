@@ -4,7 +4,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.124';
+const String kClientVersion = '5.0.125';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -22,6 +22,7 @@ const String kBankingURL = 'https://invoiceninja.com/banking';
 const String kTransifexURL =
     'https://www.transifex.com/invoice-ninja/invoice-ninja';
 const String kWebhookSiteURL = 'https://requestcatcher.com';
+const String kZipTaxURL = 'https://zip-tax.com';
 const String kSourceCodeBackend =
     'https://github.com/invoiceninja/invoiceninja/tree/v5-stable';
 const String kSourceCodeFrontend =

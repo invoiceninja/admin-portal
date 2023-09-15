@@ -27,6 +27,7 @@ abstract class SystemLogEntity
   static const CATEGORY_WEBHOOK = 3;
   static const CATEGORY_PDF = 4;
   static const CATEGORY_SECURITY = 5;
+  static const CATEGORY_LOG = 6;
 
   @override
   @memoized
@@ -69,6 +70,8 @@ abstract class SystemLogEntity
         return 'security';
       case CATEGORY_WEBHOOK:
         return 'webhook';
+      case CATEGORY_LOG:
+        return 'log';
     }
 
     return '';
@@ -98,11 +101,15 @@ abstract class SystemLogEntity
       case 33:
         return 'email_spam_complaint';
       case 34:
-        return 'email_delivery';
+        return 'email_delivered';
+      case 35:
+        return 'email_opened';
       case 40:
         return 'webhook_response';
       case 41:
         return 'webhook_success';
+      case 42:
+        return 'webhook_failure';
       case 50:
         return 'pdf_response';
       case 60:
@@ -146,6 +153,10 @@ abstract class SystemLogEntity
         return 'Forte';
       case 320:
         return 'Square';
+      case 321:
+        return 'GoCardless';
+      case 322:
+        return 'Razorpay';
       case 400:
         return 'quota_exceeded';
       case 401:
@@ -164,6 +175,8 @@ abstract class SystemLogEntity
         return 'login_success';
       case 801:
         return 'login_failure';
+      case 900:
+        return 'unknown';
     }
 
     return 'Unknown $typeId';

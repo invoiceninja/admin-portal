@@ -4,6 +4,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/tax_model.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/learn_more.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 // Package imports:
@@ -172,6 +173,16 @@ class _TaxSettingsState extends State<TaxSettings> {
                       company.rebuild((b) => b..calculateTaxes = value)),
                   helpLabel: localization.calculateTaxesHelp,
                 ),
+                if (state.isSelfHosted &&
+                    !state.account.taxApiEnabled &&
+                    state.company.settings.countryId == kCountryUnitedStates)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: LearnMoreUrl(
+                      child: Text(localization.ziptaxHelp),
+                      url: kZipTaxURL,
+                    ),
+                  ),
                 if (company.calculateTaxes) ...[
                   /*
                 DecoratedFormField(
