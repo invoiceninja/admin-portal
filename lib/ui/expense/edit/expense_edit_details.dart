@@ -246,7 +246,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                 TaxRateDropdown(
                   onSelected: (taxRate) =>
                       viewModel.onChanged!(expense.rebuild((b) => b
-                        ..taxRate1 = taxRate.rate
+                        ..taxRate1 = taxRate!.rate
                         ..taxName1 = taxRate.name)),
                   labelText: localization.tax,
                   initialTaxName: expense.taxName1,
@@ -267,7 +267,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                 TaxRateDropdown(
                   onSelected: (taxRate) =>
                       viewModel.onChanged!(expense.rebuild((b) => b
-                        ..taxRate2 = taxRate.rate
+                        ..taxRate2 = taxRate!.rate
                         ..taxName2 = taxRate.name)),
                   labelText: localization.tax,
                   initialTaxName: expense.taxName2,
@@ -288,7 +288,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                 TaxRateDropdown(
                   onSelected: (taxRate) =>
                       viewModel.onChanged!(expense.rebuild((b) => b
-                        ..taxRate3 = taxRate.rate
+                        ..taxRate3 = taxRate!.rate
                         ..taxName3 = taxRate.name)),
                   labelText: localization.tax,
                   initialTaxName: expense.taxName3,

@@ -95,9 +95,8 @@ class InvoiceListVM extends EntityListVM {
     required String? filter,
     required bool isLoading,
     required Function(BuildContext) onRefreshed,
-    required
-        Function(BuildContext, List<InvoiceEntity>, EntityAction)
-            onEntityAction,
+    required Function(BuildContext, List<InvoiceEntity>, EntityAction)
+        onEntityAction,
     required List<String> tableColumns,
     required EntityType entityType,
     required Function(String) onSortColumn,
@@ -119,7 +118,7 @@ class InvoiceListVM extends EntityListVM {
   static InvoiceListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
       if (store.state.isLoading) {
-        return Future<Null>(null);
+        return Future<Null>.value();
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context)!.refreshComplete);

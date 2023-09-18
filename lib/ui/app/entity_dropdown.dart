@@ -100,7 +100,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
     }
 
     if (entity.isDeleted!) {
-      value += ' - ' + AppLocalization.of(context)!.deleted;
+      value = value + ' - ' + AppLocalization.of(context)!.deleted;
     }
 
     return value;
@@ -202,7 +202,8 @@ class _EntityDropdownState extends State<EntityDropdown> {
               }
             },
             onAddPressed: widget.onAddPressed != null
-                ? (context, completer) => widget.onAddPressed!(completer as Completer<SelectableEntity>)
+                ? (context, completer) => widget
+                    .onAddPressed!(completer as Completer<SelectableEntity>)
                 : null,
             overrideSuggestedAmount: widget.overrideSuggestedAmount,
             overrideSuggestedLabel: widget.overrideSuggestedLabel,
@@ -594,7 +595,8 @@ class EntityAutocompleteListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String? subtitle = this.subtitle ?? entity!.matchesFilterValue(filter);
+    final String? subtitle =
+        this.subtitle ?? entity!.matchesFilterValue(filter);
     final String label = overrideSuggestedLabel == null
         ? entity!.listDisplayName!
         : overrideSuggestedLabel!(entity);

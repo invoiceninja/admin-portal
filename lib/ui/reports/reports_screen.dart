@@ -209,7 +209,7 @@ class ReportsScreen extends StatelessWidget {
         ].contains(getReportColumnType(column, context)));
     final dateField = filterColumns.isNotEmpty ? filterColumns.first : null;
     final dateRange = (reportState.filters[dateField] ?? '').isNotEmpty
-        ? DateRange.valueOf(reportState.filters[dateField])
+        ? DateRange.valueOf(reportState.filters[dateField]!)
         : null;
 
     final dateChildren = [
@@ -363,7 +363,7 @@ class ReportsScreen extends StatelessWidget {
                               viewModel.onReportColumnsChanged(
                                   context, selected);
                             },
-                            options: reportResult.allColumns,
+                            options: reportResult.allColumns ?? [],
                             selected: reportResult.columns.toList(),
                             defaultSelected: reportResult.defaultColumns,
                           );
@@ -848,11 +848,11 @@ class ReportResult {
     this.showTotals = true,
   });
 
-  final List<String?> columns;
-  final List<String?> allColumns;
-  final List<String?> defaultColumns;
+  final List<String> columns;
+  final List<String> allColumns;
+  final List<String> defaultColumns;
   final List<List<ReportElement>> data;
-  final List<BaseEntity?>? entities;
+  final List<BaseEntity>? entities;
   final bool showTotals;
 
   static bool? matchField({
@@ -1007,7 +1007,8 @@ class ReportResult {
         }
       }
     } else {
-      if (!(startDate!.compareTo(value) <= 0 && endDate!.compareTo(value) >= 0)) {
+      if (!(startDate!.compareTo(value) <= 0 &&
+          endDate!.compareTo(value) >= 0)) {
         return false;
       }
     }

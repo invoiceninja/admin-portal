@@ -13,10 +13,10 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 void multiselectDialog({
   required BuildContext context,
-  List<String?>? options,
-  List<String?>? selected,
-  List<String?>? defaultSelected,
-  Function(List<String>)? onSelected,
+  required Function(List<String>) onSelected,
+  required List<String> options,
+  required List<String> selected,
+  required List<String> defaultSelected,
   EntityType? entityType,
 }) {
   showDialog<AlertDialog>(
@@ -29,7 +29,7 @@ void multiselectDialog({
         selected: selected,
         addTitle: localization.addColumn,
         defaultSelected: defaultSelected,
-        onSelected: (values) => onSelected!(values),
+        onSelected: (values) => onSelected(values),
         isDialog: true,
         entityType: entityType,
       );
@@ -50,11 +50,11 @@ class MultiSelectList extends StatefulWidget {
     this.entityType,
   });
 
-  final List<String?>? options;
-  final List<String?>? selected;
-  final List<String?>? defaultSelected;
+  final List<String> options;
+  final List<String> selected;
+  final List<String> defaultSelected;
   final String addTitle;
-  final Function(List<String?>?) onSelected;
+  final Function(List<String>) onSelected;
   final bool liveChanges;
   final String? prefix;
   final bool isDialog;
@@ -65,7 +65,7 @@ class MultiSelectList extends StatefulWidget {
 }
 
 class MultiSelectListState extends State<MultiSelectList> {
-  List<String?>? selected;
+  late List<String> selected;
 
   // TODO remove this https://github.com/flutter/flutter/issues/71946
   ScrollController? _controller;

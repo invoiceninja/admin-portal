@@ -74,7 +74,7 @@ class RecurringInvoiceListVM {
   static RecurringInvoiceListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
       if (store.state.isLoading) {
-        return Future<Null>(null);
+        return Future<Null>.value();
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context)!.refreshComplete);

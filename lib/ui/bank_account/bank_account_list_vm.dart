@@ -72,7 +72,7 @@ class BankAccountListVM {
   static BankAccountListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
       if (store.state.isLoading) {
-        return Future<Null>(null);
+        return Future<Null>.value();
       }
       final completer = snackBarCompleter<Null>(
           context, AppLocalization.of(context)!.refreshComplete);
@@ -98,9 +98,9 @@ class BankAccountListVM {
               EntityAction action) =>
           handleBankAccountAction(context, bankAccounts, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns:
-          state.userCompany!.settings?.getTableColumns(EntityType.bankAccount) ??
-              BankAccountPresenter.getDefaultTableFields(state.userCompany),
+      tableColumns: state.userCompany!.settings
+              ?.getTableColumns(EntityType.bankAccount) ??
+          BankAccountPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortBankAccounts(field)),
       onClearMultielsect: () => store.dispatch(ClearBankAccountMultiselect()),
     );

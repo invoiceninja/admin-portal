@@ -157,7 +157,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
                     return CheckboxListTile(
                       key: ValueKey('state_' +
                           AppLocalization.of(context)!.lookup('$state')!),
-                      title: Text(AppLocalization.of(context)!.lookup('$state')!),
+                      title:
+                          Text(AppLocalization.of(context)!.lookup('$state')!),
                       controlAffinity: ListTileControlAffinity.leading,
                       value: stateFilters.contains(state),
                       activeColor: Theme.of(context).colorScheme.secondary,
@@ -197,8 +198,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   children: widget.statuses.map((status) {
                     return CheckboxListTile(
                       key: Key(status.toString()),
-                      title:
-                          Text(AppLocalization.of(context)!.lookup(status.name)!),
+                      title: Text(
+                          AppLocalization.of(context)!.lookup(status.name)!),
                       controlAffinity: ListTileControlAffinity.leading,
                       value: statusFilters.contains(status),
                       activeColor: Theme.of(context).colorScheme.secondary,
@@ -377,8 +378,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
             final settings = state.userCompany!.settings!.rebuild((b) => b
               ..tableColumns['${widget.entityType}'] =
                   BuiltList<String>(selected));
-            final userCompany =
-                state.userCompany!.rebuild((b) => b..settings.replace(settings));
+            final userCompany = state.userCompany!
+                .rebuild((b) => b..settings.replace(settings));
             final user =
                 state.user!.rebuild((b) => b..userCompany.replace(userCompany));
             final completer = snackBarCompleter<Null>(
@@ -390,11 +391,12 @@ class _AppBottomBarState extends State<AppBottomBar> {
               ),
             );
           },
-          options: widget.tableColumns,
-          defaultSelected: widget.defaultTableColumns,
+          options: widget.tableColumns ?? [],
+          defaultSelected: widget.defaultTableColumns ?? [],
           selected: state
-              .userCompany!.settings!.tableColumns['${widget.entityType}']
-              ?.toList(),
+                  .userCompany!.settings!.tableColumns['${widget.entityType}']
+                  ?.toList() ??
+              [],
         );
       }
 

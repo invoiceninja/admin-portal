@@ -408,16 +408,18 @@ ReportResult clientReport(
     }
   }
 
-  final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
+  final selectedColumns =
+      columns.map((item) => EnumUtils.parse(item)!).toList();
   data.sort((rowA, rowB) =>
       sortReportTableRows(rowA, rowB, clientReportSettings, selectedColumns)!);
 
   return ReportResult(
-    allColumns:
-        ClientReportFields.values.map((item) => EnumUtils.parse(item)).toList(),
+    allColumns: ClientReportFields.values
+        .map((item) => EnumUtils.parse(item)!)
+        .toList(),
     columns: selectedColumns,
     defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
+        defaultColumns.map((item) => EnumUtils.parse(item)!).toList(),
     data: data,
     entities: entities,
   );

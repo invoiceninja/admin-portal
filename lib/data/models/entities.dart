@@ -359,7 +359,7 @@ abstract class SelectableEntity {
 
   String? matchesFilterValue(String? filter) => null;
 
-  String? get listDisplayName => 'Error: listDisplayName not set';
+  String get listDisplayName => 'Error: listDisplayName not set';
 
   double? get listDisplayAmount => null;
 
