@@ -563,9 +563,10 @@ Middleware<AppState> _createViewMainScreen() {
     final action = dynamicAction as ViewMainScreen;
 
     if (store.state.uiState.currentRoute == LoginScreen.route) {
-      store.dispatch(UpdateCurrentRoute(store.state.userCompany.canViewDashboard
-          ? DashboardScreenBuilder.route
-          : ClientScreen.route));
+      store.dispatch(UpdateCurrentRoute(
+          store.state.userCompany.canViewDashboard || store.state.isDemo
+              ? DashboardScreenBuilder.route
+              : ClientScreen.route));
     }
 
     while (navigatorKey.currentState.canPop()) {
