@@ -11,7 +11,7 @@ import 'package:redux/redux.dart';
 import 'purchase_order_screen.dart';
 
 class PurchaseOrderScreenBuilder extends StatelessWidget {
-  const PurchaseOrderScreenBuilder({Key key}) : super(key: key);
+  const PurchaseOrderScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,18 +28,18 @@ class PurchaseOrderScreenBuilder extends StatelessWidget {
 
 class PurchaseOrderScreenVM {
   PurchaseOrderScreenVM({
-    @required this.isInMultiselect,
-    @required this.purchaseOrderList,
-    @required this.userCompany,
-    @required this.onEntityAction,
-    @required this.purchaseOrderMap,
+    required this.isInMultiselect,
+    required this.purchaseOrderList,
+    required this.userCompany,
+    required this.onEntityAction,
+    required this.purchaseOrderMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> purchaseOrderList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final BuiltMap<String, InvoiceEntity> purchaseOrderMap;
+  final BuiltMap<String?, InvoiceEntity?> purchaseOrderMap;
 
   static PurchaseOrderScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/redux/expense_category/expense_category_sel
 import 'expense_category_screen.dart';
 
 class ExpenseCategoryScreenBuilder extends StatelessWidget {
-  const ExpenseCategoryScreenBuilder({Key key}) : super(key: key);
+  const ExpenseCategoryScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,18 +32,18 @@ class ExpenseCategoryScreenBuilder extends StatelessWidget {
 
 class ExpenseCategoryScreenVM {
   ExpenseCategoryScreenVM({
-    @required this.isInMultiselect,
-    @required this.expenseCategoryList,
-    @required this.userCompany,
-    @required this.onEntityAction,
-    @required this.expenseCategoryMap,
+    required this.isInMultiselect,
+    required this.expenseCategoryList,
+    required this.userCompany,
+    required this.onEntityAction,
+    required this.expenseCategoryMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> expenseCategoryList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap;
+  final BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap;
 
   static ExpenseCategoryScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

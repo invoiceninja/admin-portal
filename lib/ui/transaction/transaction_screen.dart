@@ -18,8 +18,8 @@ import 'transaction_screen_vm.dart';
 
 class TransactionScreen extends StatelessWidget {
   const TransactionScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/transaction';
@@ -37,27 +37,27 @@ class TransactionScreen extends StatelessWidget {
       TransactionStatusEntity().rebuild(
         (b) => b
           ..id = kTransactionStatusDeposit
-          ..name = localization.deposits,
+          ..name = localization!.deposits,
       ),
       TransactionStatusEntity().rebuild(
         (b) => b
           ..id = kTransactionStatusWithdrawal
-          ..name = localization.withdrawals,
+          ..name = localization!.withdrawals,
       ),
       TransactionStatusEntity().rebuild(
         (b) => b
           ..id = kTransactionStatusUnmatched
-          ..name = localization.unmatched,
+          ..name = localization!.unmatched,
       ),
       TransactionStatusEntity().rebuild(
         (b) => b
           ..id = kTransactionStatusMatched
-          ..name = localization.matched,
+          ..name = localization!.matched,
       ),
       TransactionStatusEntity().rebuild(
         (b) => b
           ..id = kTransactionStatusConverted
-          ..name = localization.converted,
+          ..name = localization!.converted,
       ),
     ];
 
@@ -77,7 +77,7 @@ class TransactionScreen extends StatelessWidget {
           store.dispatch(FilterTransactionsByState(state));
         },
         onSelectedStatus: (EntityStatus status, value) {
-          store.dispatch(FilterTransactionsByStatus(status));
+          store.dispatch(FilterTransactionsByStatus(status as TransactionStatusEntity));
         },
         statuses: statuses,
       ),
@@ -133,7 +133,7 @@ class TransactionScreen extends StatelessWidget {
         statuses: statuses,
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany.canCreate(EntityType.transaction)
+              userCompany!.canCreate(EntityType.transaction)
           ? FloatingActionButton(
               heroTag: 'transaction_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
@@ -145,7 +145,7 @@ class TransactionScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newTransaction,
+              tooltip: localization!.newTransaction,
             )
           : null,
     );

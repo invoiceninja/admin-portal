@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/redux/user/user_selectors.dart';
 import 'user_screen.dart';
 
 class UserScreenBuilder extends StatelessWidget {
-  const UserScreenBuilder({Key key}) : super(key: key);
+  const UserScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,16 +31,16 @@ class UserScreenBuilder extends StatelessWidget {
 
 class UserScreenVM {
   UserScreenVM({
-    @required this.isInMultiselect,
-    @required this.userList,
-    @required this.userCompany,
-    @required this.userMap,
+    required this.isInMultiselect,
+    required this.userList,
+    required this.userCompany,
+    required this.userMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> userList;
-  final BuiltMap<String, UserEntity> userMap;
+  final BuiltMap<String?, UserEntity?> userMap;
 
   static UserScreenVM fromStore(Store<AppState> store) {
     final state = store.state;
@@ -52,7 +52,7 @@ class UserScreenVM {
           state.userState.map,
           state.userState.list,
           state.userListState,
-          state.user.id),
+          state.user!.id),
       userCompany: state.userCompany,
       isInMultiselect: state.userListState.isInMultiselect(),
     );

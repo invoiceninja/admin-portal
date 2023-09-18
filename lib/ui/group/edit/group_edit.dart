@@ -12,8 +12,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class GroupEdit extends StatefulWidget {
   const GroupEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final GroupEditVM viewModel;
@@ -72,7 +72,7 @@ class _GroupEditState extends State<GroupEdit> {
   }
 
   void _onSavePressed() {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -90,7 +90,7 @@ class _GroupEditState extends State<GroupEdit> {
     return EditScaffold(
       entity: group,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
-      title: group.isNew ? localization.newGroup : localization.editGroup,
+      title: group.isNew ? localization!.newGroup : localization!.editGroup,
       onSavePressed: (_) => _onSavePressed(),
       body: Form(
         key: _formKey,

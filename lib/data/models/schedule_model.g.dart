@@ -26,10 +26,10 @@ class _$ScheduleListResponseSerializer
   final String wireName = 'ScheduleListResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, ScheduleListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(
@@ -41,21 +41,21 @@ class _$ScheduleListResponseSerializer
 
   @override
   ScheduleListResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ScheduleListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(ScheduleEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(ScheduleEntity)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -75,10 +75,10 @@ class _$ScheduleItemResponseSerializer
   final String wireName = 'ScheduleItemResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, ScheduleItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(ScheduleEntity)),
@@ -89,19 +89,20 @@ class _$ScheduleItemResponseSerializer
 
   @override
   ScheduleItemResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ScheduleItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ScheduleEntity)) as ScheduleEntity);
+                  specifiedType: const FullType(ScheduleEntity))!
+              as ScheduleEntity);
           break;
       }
     }
@@ -118,9 +119,9 @@ class _$ScheduleEntitySerializer
   final String wireName = 'ScheduleEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, ScheduleEntity object,
+  Iterable<Object?> serialize(Serializers serializers, ScheduleEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'frequency_id',
       serializers.serialize(object.frequencyId,
           specifiedType: const FullType(String)),
@@ -151,7 +152,7 @@ class _$ScheduleEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.isChanged;
     if (value != null) {
       result
@@ -185,72 +186,72 @@ class _$ScheduleEntitySerializer
 
   @override
   ScheduleEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ScheduleEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'frequency_id':
           result.frequencyId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'next_run':
           result.nextRun = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'template':
           result.template = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'is_paused':
           result.isPaused = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'remaining_cycles':
           result.remainingCycles = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'parameters':
           result.parameters.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(ScheduleParameters))
+                  specifiedType: const FullType(ScheduleParameters))!
               as ScheduleParameters);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'archived_at':
           result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'user_id':
           result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -267,10 +268,11 @@ class _$ScheduleParametersSerializer
   final String wireName = 'ScheduleParameters';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, ScheduleParameters object,
+  Iterable<Object?> serialize(
+      Serializers serializers, ScheduleParameters object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[];
-    Object value;
+    final result = <Object?>[];
+    Object? value;
     value = object.dateRange;
     if (value != null) {
       result
@@ -340,53 +342,53 @@ class _$ScheduleParametersSerializer
 
   @override
   ScheduleParameters deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ScheduleParametersBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'date_range':
           result.dateRange = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'show_payments_table':
           result.showPaymentsTable = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'show_credits_table':
           result.showCreditsTable = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'show_aging_table':
           result.showAgingTable = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'only_clients_with_invoices':
           result.onlyClientsWithInvoices = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'status':
           result.status = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'clients':
           result.clients.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList<Object>);
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
           break;
         case 'entity':
           result.entityType = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'entity_id':
           result.entityId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
       }
     }
@@ -400,10 +402,10 @@ class _$ScheduleListResponse extends ScheduleListResponse {
   final BuiltList<ScheduleEntity> data;
 
   factory _$ScheduleListResponse(
-          [void Function(ScheduleListResponseBuilder) updates]) =>
+          [void Function(ScheduleListResponseBuilder)? updates]) =>
       (new ScheduleListResponseBuilder()..update(updates))._build();
 
-  _$ScheduleListResponse._({this.data}) : super._() {
+  _$ScheduleListResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
         data, r'ScheduleListResponse', 'data');
   }
@@ -423,10 +425,10 @@ class _$ScheduleListResponse extends ScheduleListResponse {
     return other is ScheduleListResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -443,12 +445,12 @@ class _$ScheduleListResponse extends ScheduleListResponse {
 
 class ScheduleListResponseBuilder
     implements Builder<ScheduleListResponse, ScheduleListResponseBuilder> {
-  _$ScheduleListResponse _$v;
+  _$ScheduleListResponse? _$v;
 
-  ListBuilder<ScheduleEntity> _data;
+  ListBuilder<ScheduleEntity>? _data;
   ListBuilder<ScheduleEntity> get data =>
       _$this._data ??= new ListBuilder<ScheduleEntity>();
-  set data(ListBuilder<ScheduleEntity> data) => _$this._data = data;
+  set data(ListBuilder<ScheduleEntity>? data) => _$this._data = data;
 
   ScheduleListResponseBuilder();
 
@@ -468,7 +470,7 @@ class ScheduleListResponseBuilder
   }
 
   @override
-  void update(void Function(ScheduleListResponseBuilder) updates) {
+  void update(void Function(ScheduleListResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -480,7 +482,7 @@ class ScheduleListResponseBuilder
     try {
       _$result = _$v ?? new _$ScheduleListResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -500,10 +502,10 @@ class _$ScheduleItemResponse extends ScheduleItemResponse {
   final ScheduleEntity data;
 
   factory _$ScheduleItemResponse(
-          [void Function(ScheduleItemResponseBuilder) updates]) =>
+          [void Function(ScheduleItemResponseBuilder)? updates]) =>
       (new ScheduleItemResponseBuilder()..update(updates))._build();
 
-  _$ScheduleItemResponse._({this.data}) : super._() {
+  _$ScheduleItemResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
         data, r'ScheduleItemResponse', 'data');
   }
@@ -523,10 +525,10 @@ class _$ScheduleItemResponse extends ScheduleItemResponse {
     return other is ScheduleItemResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -543,12 +545,12 @@ class _$ScheduleItemResponse extends ScheduleItemResponse {
 
 class ScheduleItemResponseBuilder
     implements Builder<ScheduleItemResponse, ScheduleItemResponseBuilder> {
-  _$ScheduleItemResponse _$v;
+  _$ScheduleItemResponse? _$v;
 
-  ScheduleEntityBuilder _data;
+  ScheduleEntityBuilder? _data;
   ScheduleEntityBuilder get data =>
       _$this._data ??= new ScheduleEntityBuilder();
-  set data(ScheduleEntityBuilder data) => _$this._data = data;
+  set data(ScheduleEntityBuilder? data) => _$this._data = data;
 
   ScheduleItemResponseBuilder();
 
@@ -568,7 +570,7 @@ class ScheduleItemResponseBuilder
   }
 
   @override
-  void update(void Function(ScheduleItemResponseBuilder) updates) {
+  void update(void Function(ScheduleItemResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -580,7 +582,7 @@ class ScheduleItemResponseBuilder
     try {
       _$result = _$v ?? new _$ScheduleItemResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -609,7 +611,7 @@ class _$ScheduleEntity extends ScheduleEntity {
   @override
   final ScheduleParameters parameters;
   @override
-  final bool isChanged;
+  final bool? isChanged;
   @override
   final int createdAt;
   @override
@@ -617,32 +619,32 @@ class _$ScheduleEntity extends ScheduleEntity {
   @override
   final int archivedAt;
   @override
-  final bool isDeleted;
+  final bool? isDeleted;
   @override
-  final String createdUserId;
+  final String? createdUserId;
   @override
-  final String assignedUserId;
+  final String? assignedUserId;
   @override
   final String id;
 
-  factory _$ScheduleEntity([void Function(ScheduleEntityBuilder) updates]) =>
+  factory _$ScheduleEntity([void Function(ScheduleEntityBuilder)? updates]) =>
       (new ScheduleEntityBuilder()..update(updates))._build();
 
   _$ScheduleEntity._(
-      {this.frequencyId,
-      this.nextRun,
-      this.template,
-      this.isPaused,
-      this.remainingCycles,
-      this.parameters,
+      {required this.frequencyId,
+      required this.nextRun,
+      required this.template,
+      required this.isPaused,
+      required this.remainingCycles,
+      required this.parameters,
       this.isChanged,
-      this.createdAt,
-      this.updatedAt,
-      this.archivedAt,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.archivedAt,
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.id})
+      required this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         frequencyId, r'ScheduleEntity', 'frequencyId');
@@ -693,10 +695,10 @@ class _$ScheduleEntity extends ScheduleEntity {
         id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, frequencyId.hashCode);
     _$hash = $jc(_$hash, nextRun.hashCode);
@@ -739,68 +741,68 @@ class _$ScheduleEntity extends ScheduleEntity {
 
 class ScheduleEntityBuilder
     implements Builder<ScheduleEntity, ScheduleEntityBuilder> {
-  _$ScheduleEntity _$v;
+  _$ScheduleEntity? _$v;
 
-  String _frequencyId;
-  String get frequencyId => _$this._frequencyId;
-  set frequencyId(String frequencyId) => _$this._frequencyId = frequencyId;
+  String? _frequencyId;
+  String? get frequencyId => _$this._frequencyId;
+  set frequencyId(String? frequencyId) => _$this._frequencyId = frequencyId;
 
-  String _nextRun;
-  String get nextRun => _$this._nextRun;
-  set nextRun(String nextRun) => _$this._nextRun = nextRun;
+  String? _nextRun;
+  String? get nextRun => _$this._nextRun;
+  set nextRun(String? nextRun) => _$this._nextRun = nextRun;
 
-  String _template;
-  String get template => _$this._template;
-  set template(String template) => _$this._template = template;
+  String? _template;
+  String? get template => _$this._template;
+  set template(String? template) => _$this._template = template;
 
-  bool _isPaused;
-  bool get isPaused => _$this._isPaused;
-  set isPaused(bool isPaused) => _$this._isPaused = isPaused;
+  bool? _isPaused;
+  bool? get isPaused => _$this._isPaused;
+  set isPaused(bool? isPaused) => _$this._isPaused = isPaused;
 
-  int _remainingCycles;
-  int get remainingCycles => _$this._remainingCycles;
-  set remainingCycles(int remainingCycles) =>
+  int? _remainingCycles;
+  int? get remainingCycles => _$this._remainingCycles;
+  set remainingCycles(int? remainingCycles) =>
       _$this._remainingCycles = remainingCycles;
 
-  ScheduleParametersBuilder _parameters;
+  ScheduleParametersBuilder? _parameters;
   ScheduleParametersBuilder get parameters =>
       _$this._parameters ??= new ScheduleParametersBuilder();
-  set parameters(ScheduleParametersBuilder parameters) =>
+  set parameters(ScheduleParametersBuilder? parameters) =>
       _$this._parameters = parameters;
 
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+  bool? _isChanged;
+  bool? get isChanged => _$this._isChanged;
+  set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
 
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+  int? _archivedAt;
+  int? get archivedAt => _$this._archivedAt;
+  set archivedAt(int? archivedAt) => _$this._archivedAt = archivedAt;
 
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+  bool? _isDeleted;
+  bool? get isDeleted => _$this._isDeleted;
+  set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
 
-  String _createdUserId;
-  String get createdUserId => _$this._createdUserId;
-  set createdUserId(String createdUserId) =>
+  String? _createdUserId;
+  String? get createdUserId => _$this._createdUserId;
+  set createdUserId(String? createdUserId) =>
       _$this._createdUserId = createdUserId;
 
-  String _assignedUserId;
-  String get assignedUserId => _$this._assignedUserId;
-  set assignedUserId(String assignedUserId) =>
+  String? _assignedUserId;
+  String? get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String? assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   ScheduleEntityBuilder();
 
@@ -833,7 +835,7 @@ class ScheduleEntityBuilder
   }
 
   @override
-  void update(void Function(ScheduleEntityBuilder) updates) {
+  void update(void Function(ScheduleEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -868,7 +870,7 @@ class ScheduleEntityBuilder
               assignedUserId: assignedUserId,
               id: BuiltValueNullFieldError.checkNotNull(id, r'ScheduleEntity', 'id'));
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'parameters';
         parameters.build();
@@ -885,26 +887,26 @@ class ScheduleEntityBuilder
 
 class _$ScheduleParameters extends ScheduleParameters {
   @override
-  final String dateRange;
+  final String? dateRange;
   @override
-  final bool showPaymentsTable;
+  final bool? showPaymentsTable;
   @override
-  final bool showCreditsTable;
+  final bool? showCreditsTable;
   @override
-  final bool showAgingTable;
+  final bool? showAgingTable;
   @override
-  final bool onlyClientsWithInvoices;
+  final bool? onlyClientsWithInvoices;
   @override
-  final String status;
+  final String? status;
   @override
-  final BuiltList<String> clients;
+  final BuiltList<String>? clients;
   @override
-  final String entityType;
+  final String? entityType;
   @override
-  final String entityId;
+  final String? entityId;
 
   factory _$ScheduleParameters(
-          [void Function(ScheduleParametersBuilder) updates]) =>
+          [void Function(ScheduleParametersBuilder)? updates]) =>
       (new ScheduleParametersBuilder()..update(updates))._build();
 
   _$ScheduleParameters._(
@@ -943,10 +945,10 @@ class _$ScheduleParameters extends ScheduleParameters {
         entityId == other.entityId;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, dateRange.hashCode);
     _$hash = $jc(_$hash, showPaymentsTable.hashCode);
@@ -979,48 +981,48 @@ class _$ScheduleParameters extends ScheduleParameters {
 
 class ScheduleParametersBuilder
     implements Builder<ScheduleParameters, ScheduleParametersBuilder> {
-  _$ScheduleParameters _$v;
+  _$ScheduleParameters? _$v;
 
-  String _dateRange;
-  String get dateRange => _$this._dateRange;
-  set dateRange(String dateRange) => _$this._dateRange = dateRange;
+  String? _dateRange;
+  String? get dateRange => _$this._dateRange;
+  set dateRange(String? dateRange) => _$this._dateRange = dateRange;
 
-  bool _showPaymentsTable;
-  bool get showPaymentsTable => _$this._showPaymentsTable;
-  set showPaymentsTable(bool showPaymentsTable) =>
+  bool? _showPaymentsTable;
+  bool? get showPaymentsTable => _$this._showPaymentsTable;
+  set showPaymentsTable(bool? showPaymentsTable) =>
       _$this._showPaymentsTable = showPaymentsTable;
 
-  bool _showCreditsTable;
-  bool get showCreditsTable => _$this._showCreditsTable;
-  set showCreditsTable(bool showCreditsTable) =>
+  bool? _showCreditsTable;
+  bool? get showCreditsTable => _$this._showCreditsTable;
+  set showCreditsTable(bool? showCreditsTable) =>
       _$this._showCreditsTable = showCreditsTable;
 
-  bool _showAgingTable;
-  bool get showAgingTable => _$this._showAgingTable;
-  set showAgingTable(bool showAgingTable) =>
+  bool? _showAgingTable;
+  bool? get showAgingTable => _$this._showAgingTable;
+  set showAgingTable(bool? showAgingTable) =>
       _$this._showAgingTable = showAgingTable;
 
-  bool _onlyClientsWithInvoices;
-  bool get onlyClientsWithInvoices => _$this._onlyClientsWithInvoices;
-  set onlyClientsWithInvoices(bool onlyClientsWithInvoices) =>
+  bool? _onlyClientsWithInvoices;
+  bool? get onlyClientsWithInvoices => _$this._onlyClientsWithInvoices;
+  set onlyClientsWithInvoices(bool? onlyClientsWithInvoices) =>
       _$this._onlyClientsWithInvoices = onlyClientsWithInvoices;
 
-  String _status;
-  String get status => _$this._status;
-  set status(String status) => _$this._status = status;
+  String? _status;
+  String? get status => _$this._status;
+  set status(String? status) => _$this._status = status;
 
-  ListBuilder<String> _clients;
+  ListBuilder<String>? _clients;
   ListBuilder<String> get clients =>
       _$this._clients ??= new ListBuilder<String>();
-  set clients(ListBuilder<String> clients) => _$this._clients = clients;
+  set clients(ListBuilder<String>? clients) => _$this._clients = clients;
 
-  String _entityType;
-  String get entityType => _$this._entityType;
-  set entityType(String entityType) => _$this._entityType = entityType;
+  String? _entityType;
+  String? get entityType => _$this._entityType;
+  set entityType(String? entityType) => _$this._entityType = entityType;
 
-  String _entityId;
-  String get entityId => _$this._entityId;
-  set entityId(String entityId) => _$this._entityId = entityId;
+  String? _entityId;
+  String? get entityId => _$this._entityId;
+  set entityId(String? entityId) => _$this._entityId = entityId;
 
   ScheduleParametersBuilder();
 
@@ -1048,7 +1050,7 @@ class ScheduleParametersBuilder
   }
 
   @override
-  void update(void Function(ScheduleParametersBuilder) updates) {
+  void update(void Function(ScheduleParametersBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -1070,7 +1072,7 @@ class ScheduleParametersBuilder
               entityType: entityType,
               entityId: entityId);
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'clients';
         _clients?.build();

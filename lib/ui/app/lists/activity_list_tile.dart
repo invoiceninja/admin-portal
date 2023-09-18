@@ -16,9 +16,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ActivityListTile extends StatelessWidget {
   const ActivityListTile({
-    Key key,
+    Key? key,
     this.enableNavigation = true,
-    @required this.activity,
+    required this.activity,
   }) : super(key: key);
 
   final ActivityEntity activity;
@@ -26,7 +26,7 @@ class ActivityListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
@@ -48,9 +48,9 @@ class ActivityListTile extends StatelessWidget {
 
     String key = 'activity_${activity.activityTypeId}';
     if (activity.activityTypeId == kActivityCreatePayment) {
-      key += payment.isOnline ? '_online' : '_manual';
+      key += payment!.isOnline ? '_online' : '_manual';
     }
-    String title = localization.lookup(key);
+    String? title = localization.lookup(key);
     title = activity.getDescription(
       title,
       localization.system,
@@ -140,12 +140,12 @@ class ActivityListTile extends StatelessWidget {
         children: <Widget>[
           Flexible(
             child: Text(((activity.notes ?? '').isNotEmpty
-                    ? localization.lookup(activity.notes).trim() + '\n'
+                    ? localization.lookup(activity.notes)!.trim() + '\n'
                     : '') +
                 formatDate(
                     convertTimestampToDateString(activity.createdAt), context,
                     showTime: true, showSeconds: false) +
-                ((activity.ip ?? '').isNotEmpty ? ' • ' + activity.ip : '')),
+                ((activity.ip ?? '').isNotEmpty ? ' • ' + activity.ip! : '')),
           ),
         ],
       ),

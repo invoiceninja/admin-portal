@@ -22,7 +22,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskViewScreen extends StatelessWidget {
   const TaskViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
   final bool isFilter;
@@ -47,30 +47,30 @@ class TaskViewScreen extends StatelessWidget {
 
 class TaskViewVM {
   TaskViewVM({
-    @required this.onFabPressed,
-    @required this.task,
-    @required this.client,
-    @required this.project,
-    @required this.company,
-    @required this.state,
-    @required this.onEntityAction,
-    @required this.onEditPressed,
-    @required this.onRefreshed,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.isDirty,
-    @required this.onUploadDocuments,
+    required this.onFabPressed,
+    required this.task,
+    required this.client,
+    required this.project,
+    required this.company,
+    required this.state,
+    required this.onEntityAction,
+    required this.onEditPressed,
+    required this.onRefreshed,
+    required this.isSaving,
+    required this.isLoading,
+    required this.isDirty,
+    required this.onUploadDocuments,
   });
 
   factory TaskViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final task = state.taskState.get(state.taskUIState.selectedId);
+    final task = state.taskState.get(state.taskUIState.selectedId!)!;
     final client = state.clientState.map[task.clientId];
     final project = state.projectState.map[task.projectId];
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadTask(completer: completer, taskId: task.id));
       return completer.future;
     }
@@ -83,9 +83,9 @@ class TaskViewVM {
       completer.future.then((savedTask) {
         showToast(savedTask.isRunning
             ? (savedTask.calculateDuration().inSeconds > 0
-                ? localization.resumedTask
-                : localization.startedTask)
-            : localization.stoppedTask);
+                ? localization!.resumedTask
+                : localization!.startedTask)
+            : localization!.stoppedTask);
       }).catchError((Object error) {
         showDialog<ErrorDialog>(
             context: context,
@@ -105,12 +105,12 @@ class TaskViewVM {
       client: client,
       project: project,
       onFabPressed: (BuildContext context) => _toggleTask(context),
-      onEditPressed: (BuildContext context, [TaskTime taskTime]) {
+      onEditPressed: (BuildContext context, [TaskTime? taskTime]) {
         editEntity(
             entity: task,
             subIndex: task.getTaskTimes().indexOf(taskTime),
             completer: snackBarCompleter<ClientEntity>(
-                context, AppLocalization.of(context).updatedTask));
+                context, AppLocalization.of(context)!.updatedTask));
       },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
@@ -124,7 +124,7 @@ class TaskViewVM {
             task: task,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context).uploadedDocument);
+          showToast(AppLocalization.of(context)!.uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,
@@ -138,15 +138,15 @@ class TaskViewVM {
 
   final AppState state;
   final TaskEntity task;
-  final ClientEntity client;
-  final ProjectEntity project;
-  final CompanyEntity company;
+  final ClientEntity? client;
+  final ProjectEntity? project;
+  final CompanyEntity? company;
   final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext, [TaskTime]) onEditPressed;
+  final Function(BuildContext, [TaskTime?]) onEditPressed;
   final Function(BuildContext) onFabPressed;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;
-  final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;
+  final Function(BuildContext, List<MultipartFile>, bool?) onUploadDocuments;
 }

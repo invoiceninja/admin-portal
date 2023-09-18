@@ -264,7 +264,7 @@ class MainScreen extends StatelessWidget {
           final historyList = state.historyList;
           final isEditing = state.uiState.isEditing;
           final index = isEditing ? 0 : 1;
-          HistoryRecord history;
+          HistoryRecord? history;
 
           if (state.uiState.isPreviewing) {
             store.dispatch(PopPreviewStack());
@@ -284,7 +284,7 @@ class MainScreen extends StatelessWidget {
               history = item;
             } else {
               final entity =
-                  state.getEntityMap(item.entityType)[item.id] as BaseEntity;
+                  state.getEntityMap(item.entityType)![item.id] as BaseEntity?;
               if (entity == null || !entity.isActive) {
                 continue;
               }
@@ -367,12 +367,12 @@ class MainScreen extends StatelessWidget {
 
 class EntityScreens extends StatelessWidget {
   const EntityScreens({
-    @required this.entityType,
+    required this.entityType,
     this.editingFilterEntity,
   });
 
   final EntityType entityType;
-  final bool editingFilterEntity;
+  final bool? editingFilterEntity;
 
   @override
   Widget build(BuildContext context) {
@@ -392,7 +392,7 @@ class EntityScreens extends StatelessWidget {
       isPreviewShown = true;
     } else if (mainRoute == '/task' &&
         prefState.showKanban &&
-        state.taskUIState.selectedId.isEmpty) {
+        state.taskUIState.selectedId!.isEmpty) {
       isPreviewShown = false;
     }
 
@@ -405,7 +405,7 @@ class EntityScreens extends StatelessWidget {
       listFlex += 1;
     }
 
-    Widget child;
+    Widget? child;
 
     // TODO rmeove this once full width project editor is
     if (state.uiState.isEditing &&
@@ -474,7 +474,7 @@ class EntityScreens extends StatelessWidget {
       }
     } else if (subRoute == 'edit') {
       final editEntityType =
-          editingFilterEntity ? uiState.filterEntityType : entityType;
+          editingFilterEntity! ? uiState.filterEntityType : entityType;
       switch (editEntityType) {
         case EntityType.client:
           child = ClientEditScreen();
@@ -529,12 +529,12 @@ class EntityScreens extends StatelessWidget {
       final previewStack = uiState.previewStack;
       final previewEntityType =
           previewStack.isEmpty ? entityType : previewStack.last;
-      final entityUIState = state.getUIState(previewEntityType);
+      final entityUIState = state.getUIState(previewEntityType)!;
 
       if ((entityUIState.selectedId ?? '').isEmpty ||
           !state
-              .getEntityMap(previewEntityType)
-              .containsKey(entityUIState.selectedId)) {
+              .getEntityMap(previewEntityType)!
+              .containsKey(entityUIState.selectedId!)) {
         child = BlankScreen();
       } else {
         switch (previewEntityType) {
@@ -613,7 +613,7 @@ class EntityScreens extends StatelessWidget {
       }
     }
 
-    Widget leftFilterChild;
+    Widget? leftFilterChild;
     Widget topFilterChild;
 
     if (uiState.filterEntityType != null) {
@@ -693,7 +693,7 @@ class EntityScreens extends StatelessWidget {
       show: uiState.filterEntityType != null,
     );
 
-    Widget listWidget;
+    Widget? listWidget;
     if (!isFullScreen) {
       switch (entityType) {
         case EntityType.client:

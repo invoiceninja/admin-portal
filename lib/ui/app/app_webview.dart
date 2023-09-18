@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
 class AppWebView extends StatelessWidget {
   const AppWebView({this.html});
 
-  final String html;
+  final String? html;
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +25,12 @@ class AppWebView extends StatelessWidget {
 class _WebWebView extends StatelessWidget {
   const _WebWebView({this.html});
 
-  final String html;
+  final String? html;
 
   @override
   Widget build(BuildContext context) {
     final encodedHtml =
-        'data:text/html;charset=utf-8,' + Uri.encodeComponent(html);
+        'data:text/html;charset=utf-8,' + Uri.encodeComponent(html!);
     WebUtils.registerWebView(encodedHtml);
     return AbsorbPointer(
       child: HtmlElementView(viewType: encodedHtml),
@@ -39,9 +39,9 @@ class _WebWebView extends StatelessWidget {
 }
 
 class _MobileWebView extends StatefulWidget {
-  const _MobileWebView({Key key, this.html}) : super(key: key);
+  const _MobileWebView({Key? key, this.html}) : super(key: key);
 
-  final String html;
+  final String? html;
 
   @override
   _MobileWebViewState createState() => _MobileWebViewState();
@@ -49,7 +49,7 @@ class _MobileWebView extends StatefulWidget {
 
 class _MobileWebViewState extends State<_MobileWebView>
     with AutomaticKeepAliveClientMixin<_MobileWebView> {
-  WebViewController _webViewController;
+  late WebViewController _webViewController;
 
   @override
   bool get wantKeepAlive => true;
@@ -59,7 +59,7 @@ class _MobileWebViewState extends State<_MobileWebView>
     super.didUpdateWidget(oldWidget);
 
     if (widget.html != oldWidget.html) {
-      _webViewController.loadUrl(Uri.dataFromString(widget.html,
+      _webViewController.loadUrl(Uri.dataFromString(widget.html!,
               mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
           .toString());
     }
@@ -70,7 +70,7 @@ class _MobileWebViewState extends State<_MobileWebView>
     super.build(context);
 
     return WebView(
-      initialUrl: Uri.dataFromString(widget.html,
+      initialUrl: Uri.dataFromString(widget.html!,
               mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
           .toString(),
       onWebViewCreated: (WebViewController webViewController) {

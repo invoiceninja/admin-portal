@@ -7,13 +7,13 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 // Sample entity classes
 class ClientEntity {
   ClientEntity({this.name, this.contacts});
-  String name;
-  List<ContactEntity> contacts;
+  String? name;
+  List<ContactEntity>? contacts;
 }
 
 class ContactEntity {
   ContactEntity({this.email});
-  String email;
+  String? email;
 }
 
 void main() => runApp(MyApp());
@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   static final GlobalKey<ContactsPageState> _contactsKey =
       GlobalKey<ContactsPageState>();
 
-  TabController _controller;
+  TabController? _controller;
 
   @override
   void initState() {
@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
@@ -63,11 +63,11 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
             IconButton(
               icon: Icon(Icons.cloud_upload),
               onPressed: () {
-                if (!_formKey.currentState.validate()) {
+                if (!_formKey.currentState!.validate()) {
                   return;
                 }
 
-                _formKey.currentState.save();
+                _formKey.currentState!.save();
 
                 final clientState = _clientKey.currentState;
                 final contactsState = _contactsKey.currentState;
@@ -114,8 +114,8 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
 // Display the client's details, currently just their name
 class ClientPage extends StatefulWidget {
   const ClientPage({
-    Key key,
-    @required this.client,
+    Key? key,
+    required this.client,
   }) : super(key: key);
 
   final ClientEntity client;
@@ -127,12 +127,12 @@ class ClientPage extends StatefulWidget {
 class ClientPageState extends State<ClientPage>
     with AutomaticKeepAliveClientMixin {
   ClientPageState({this.client});
-  final ClientEntity client;
+  final ClientEntity? client;
 
   @override
   bool get wantKeepAlive => true;
 
-  String name;
+  String? name;
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +141,7 @@ class ClientPageState extends State<ClientPage>
       children: <Widget>[
         TextFormField(
           initialValue: widget.client.name,
-          onSaved: (value) => name = value.trim(),
+          onSaved: (value) => name = value!.trim(),
           decoration: InputDecoration(
             labelText: 'Name',
           ),
@@ -154,8 +154,8 @@ class ClientPageState extends State<ClientPage>
 // Displays the list of contacts with a button to add more
 class ContactsPage extends StatefulWidget {
   const ContactsPage({
-    Key key,
-    @required this.client,
+    Key? key,
+    required this.client,
   }) : super(key: key);
 
   final ClientEntity client;
@@ -169,15 +169,15 @@ class ContactsPageState extends State<ContactsPage>
   @override
   bool get wantKeepAlive => true;
 
-  List<ContactEntity> _contacts;
-  List<GlobalKey<ContactFormState>> _contactKeys;
+  late List<ContactEntity> _contacts;
+  late List<GlobalKey<ContactFormState>> _contactKeys;
 
   @override
   void initState() {
     super.initState();
     final client = widget.client;
-    _contacts = client.contacts.toList();
-    _contactKeys = client.contacts
+    _contacts = client.contacts!.toList();
+    _contactKeys = client.contacts!
         .map((contact) => GlobalKey<ContactFormState>())
         .toList();
   }
@@ -185,7 +185,7 @@ class ContactsPageState extends State<ContactsPage>
   List<ContactEntity> getContacts() {
     final List<ContactEntity> contacts = [];
     _contactKeys.forEach((contactKey) {
-      contacts.add(contactKey.currentState.getContact());
+      contacts.add(contactKey.currentState!.getContact());
     });
     return contacts;
   }
@@ -237,20 +237,20 @@ class ContactsPageState extends State<ContactsPage>
 // Displays an individual contact
 class ContactForm extends StatefulWidget {
   const ContactForm({
-    Key key,
-    @required this.contact,
-    @required this.onRemovePressed,
+    Key? key,
+    required this.contact,
+    required this.onRemovePressed,
   }) : super(key: key);
 
   final ContactEntity contact;
-  final Function(GlobalKey<ContactFormState>) onRemovePressed;
+  final Function(GlobalKey<ContactFormState>?) onRemovePressed;
 
   @override
   ContactFormState createState() => ContactFormState();
 }
 
 class ContactFormState extends State<ContactForm> {
-  String _email;
+  String? _email;
 
   ContactEntity getContact() {
     return ContactEntity(email: _email);
@@ -262,7 +262,7 @@ class ContactFormState extends State<ContactForm> {
       children: <Widget>[
         TextFormField(
           initialValue: widget.contact.email,
-          onSaved: (value) => _email = value.trim(),
+          onSaved: (value) => _email = value!.trim(),
           decoration: InputDecoration(
             labelText: 'Email',
           ),
@@ -274,7 +274,7 @@ class ContactFormState extends State<ContactForm> {
             Padding(
               padding: const EdgeInsets.only(top: 12.0),
               child: TextButton(
-                onPressed: () => widget.onRemovePressed(widget.key),
+                onPressed: () => widget.onRemovePressed(widget.key as GlobalKey<ContactFormState>?),
                 child: Text(
                   'Delete',
                   style: TextStyle(
@@ -293,7 +293,7 @@ class ContactFormState extends State<ContactForm> {
 // Helper widget to make the form look a bit nicer
 class FormCard extends StatelessWidget {
   const FormCard({this.children});
-  final List<Widget> children;
+  final List<Widget>? children;
 
   @override
   Widget build(BuildContext context) {
@@ -305,7 +305,7 @@ class FormCard extends StatelessWidget {
           padding: const EdgeInsets.only(
               left: 12.0, right: 12.0, top: 12.0, bottom: 18.0),
           child: Column(
-            children: children,
+            children: children!,
           ),
         ),
       ),

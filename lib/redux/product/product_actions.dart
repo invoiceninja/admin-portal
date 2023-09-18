@@ -29,21 +29,21 @@ class ViewProductList implements PersistUI {
   });
 
   final bool force;
-  final int page;
+  final int? page;
 }
 
 class ViewProduct implements PersistUI, PersistPrefs {
-  ViewProduct({@required this.productId, this.force = false});
+  ViewProduct({required this.productId, this.force = false});
 
-  final String productId;
+  final String? productId;
   final bool force;
 }
 
 class EditProduct implements PersistUI, PersistPrefs {
-  EditProduct({@required this.product, this.completer, this.force = false});
+  EditProduct({required this.product, this.completer, this.force = false});
 
   final ProductEntity product;
-  final Completer completer;
+  final Completer? completer;
   final bool force;
 }
 
@@ -58,8 +58,8 @@ class LoadProductRequest implements StartLoading {}
 class LoadProduct {
   LoadProduct({this.completer, this.productId});
 
-  final Completer completer;
-  final String productId;
+  final Completer? completer;
+  final String? productId;
 }
 
 class LoadProductSuccess implements StopLoading, PersistData {
@@ -87,7 +87,7 @@ class LoadProductFailure implements StopLoading {
 class LoadProducts {
   LoadProducts({this.completer, this.page = 1});
 
-  final Completer completer;
+  final Completer? completer;
   final int page;
 }
 
@@ -118,8 +118,8 @@ class LoadProductsSuccess implements StopLoading {
 class SaveProductRequest implements StartSaving {
   SaveProductRequest({this.product, this.completer});
 
-  final Completer completer;
-  final ProductEntity product;
+  final Completer? completer;
+  final ProductEntity? product;
 }
 
 class SaveProductSuccess implements StopSaving, PersistData, PersistUI {
@@ -156,7 +156,7 @@ class ArchiveProductsSuccess implements StopSaving, PersistData {
 class ArchiveProductsFailure implements StopSaving {
   ArchiveProductsFailure(this.products);
 
-  final List<ProductEntity> products;
+  final List<ProductEntity?> products;
 }
 
 class DeleteProductsRequest implements StartSaving {
@@ -175,7 +175,7 @@ class DeleteProductsSuccess implements StopSaving, PersistData {
 class DeleteProductsFailure implements StopSaving {
   DeleteProductsFailure(this.products);
 
-  final List<ProductEntity> products;
+  final List<ProductEntity?> products;
 }
 
 class RestoreProductsRequest implements StartSaving {
@@ -194,16 +194,16 @@ class RestoreProductsSuccess implements StopSaving, PersistData {
 class RestoreProductsFailure implements StopSaving {
   RestoreProductsFailure(this.products);
 
-  final List<ProductEntity> products;
+  final List<ProductEntity?> products;
 }
 
 class SetTaxCategoryProductsRequest implements StartSaving {
   SetTaxCategoryProductsRequest(
       {this.completer, this.productIds, this.taxCategoryId});
 
-  final Completer completer;
-  final List<String> productIds;
-  final String taxCategoryId;
+  final Completer? completer;
+  final List<String>? productIds;
+  final String? taxCategoryId;
 }
 
 class SetTaxCategoryProductsSuccess implements StopSaving, PersistData {
@@ -267,15 +267,15 @@ class FilterProductDropdown {
 }
 
 void handleProductAction(
-    BuildContext context, List<BaseEntity> products, EntityAction action) {
+    BuildContext? context, List<BaseEntity?> products, EntityAction? action) {
   if (products.isEmpty) {
     return;
   }
 
-  final store = StoreProvider.of<AppState>(context);
+  final store = StoreProvider.of<AppState>(context!);
   final state = store.state;
   final localization = AppLocalization.of(context);
-  final productIds = products.map((product) => product.id).toList();
+  final productIds = products.map((product) => product!.id).toList();
   final product = products.first;
 
   switch (action) {
@@ -288,7 +288,7 @@ void handleProductAction(
             ..lineItems.addAll(
               productIds.map(
                 (productId) => convertProductToInvoiceItem(
-                  company: state.company,
+                  company: state.company!,
                   invoice: invoice,
                   product: state.productState.map[productId],
                   currencyMap: state.staticState.currencyMap,
@@ -308,7 +308,7 @@ void handleProductAction(
             ..lineItems.addAll(
               productIds.map(
                 (productId) => convertProductToInvoiceItem(
-                  company: state.company,
+                  company: state.company!,
                   invoice: invoice,
                   product: state.productState.map[productId],
                   currencyMap: state.staticState.currencyMap,
@@ -319,35 +319,35 @@ void handleProductAction(
       );
       break;
     case EntityAction.edit:
-      editEntity(entity: product);
+      editEntity(entity: product!);
       break;
     case EntityAction.clone:
       createEntity(context: context, entity: (product as ProductEntity).clone);
       break;
     case EntityAction.restore:
       final message = productIds.length > 1
-          ? localization.restoredProducts
+          ? localization!.restoredProducts
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', productIds.length.toString())
-          : localization.restoredProduct;
+          : localization!.restoredProduct;
       store.dispatch(RestoreProductsRequest(
           snackBarCompleter<Null>(context, message), productIds));
       break;
     case EntityAction.archive:
       final message = productIds.length > 1
-          ? localization.archivedProducts
+          ? localization!.archivedProducts
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', productIds.length.toString())
-          : localization.archivedProduct;
+          : localization!.archivedProduct;
       store.dispatch(ArchiveProductsRequest(
           snackBarCompleter<Null>(context, message), productIds));
       break;
     case EntityAction.delete:
       final message = productIds.length > 1
-          ? localization.deletedProducts
+          ? localization!.deletedProducts
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', productIds.length.toString())
-          : localization.deletedProduct;
+          : localization!.deletedProduct;
       store.dispatch(DeleteProductsRequest(
           snackBarCompleter<Null>(context, message), productIds));
       break;
@@ -361,7 +361,7 @@ void handleProductAction(
       }
 
       for (final product in products) {
-        if (!store.state.productListState.isSelected(product.id)) {
+        if (!store.state.productListState.isSelected(product!.id)) {
           store.dispatch(AddToProductMultiselect(entity: product));
         } else {
           store.dispatch(RemoveFromProductMultiselect(entity: product));
@@ -382,14 +382,14 @@ void handleProductAction(
       }
       if (documentIds.isEmpty) {
         showMessageDialog(
-            context: context, message: localization.noDocumentsToDownload);
+            context: context, message: localization!.noDocumentsToDownload);
       } else {
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
             completer: snackBarCompleter<Null>(
               context,
-              localization.exportedData,
+              localization!.exportedData,
             ),
           ),
         );
@@ -400,11 +400,11 @@ void handleProductAction(
           context: context,
           builder: (context) {
             return SimpleDialog(
-              title: Text(localization.setTaxCategory),
+              title: Text(localization!.setTaxCategory!),
               children: kTaxCategories.keys.map((taxCategoryId) {
                 final taxCategory = kTaxCategories[taxCategoryId];
                 return SimpleDialogOption(
-                  child: Text(localization.lookup(taxCategory)),
+                  child: Text(localization.lookup(taxCategory)!),
                   onPressed: () {
                     Navigator.of(context).pop();
                     store.dispatch(SetTaxCategoryProductsRequest(
@@ -430,25 +430,25 @@ void handleProductAction(
 class StartProductMultiselect {}
 
 class AddToProductMultiselect {
-  AddToProductMultiselect({@required this.entity});
+  AddToProductMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromProductMultiselect {
-  RemoveFromProductMultiselect({@required this.entity});
+  RemoveFromProductMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearProductMultiselect {}
 
 class SaveProductDocumentRequest implements StartSaving {
   SaveProductDocumentRequest({
-    @required this.completer,
-    @required this.multipartFiles,
-    @required this.product,
-    @required this.isPrivate,
+    required this.completer,
+    required this.multipartFiles,
+    required this.product,
+    required this.isPrivate,
   });
 
   final Completer completer;
@@ -472,11 +472,11 @@ class SaveProductDocumentFailure implements StopSaving {
 class UpdateProductTab implements PersistUI {
   UpdateProductTab({this.tabIndex});
 
-  final int tabIndex;
+  final int? tabIndex;
 }
 
 class UpdateClientTab implements PersistUI {
   UpdateClientTab({this.tabIndex});
 
-  final int tabIndex;
+  final int? tabIndex;
 }

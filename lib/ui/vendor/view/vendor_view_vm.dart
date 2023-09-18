@@ -22,7 +22,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorViewScreen extends StatelessWidget {
   const VendorViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
     this.isTopFilter = false,
   }) : super(key: key);
@@ -51,17 +51,17 @@ class VendorViewScreen extends StatelessWidget {
 
 class VendorViewVM {
   VendorViewVM({
-    @required this.state,
-    @required this.vendor,
-    @required this.company,
-    @required this.onAddExpensePressed,
-    @required this.onEntityAction,
-    @required this.onEntityPressed,
-    @required this.onRefreshed,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.isDirty,
-    @required this.onUploadDocuments,
+    required this.state,
+    required this.vendor,
+    required this.company,
+    required this.onAddExpensePressed,
+    required this.onEntityAction,
+    required this.onEntityPressed,
+    required this.onRefreshed,
+    required this.isSaving,
+    required this.isLoading,
+    required this.isDirty,
+    required this.onUploadDocuments,
   });
 
   factory VendorViewVM.fromStore(Store<AppState> store) {
@@ -71,7 +71,7 @@ class VendorViewVM {
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadVendor(completer: completer, vendorId: vendor.id));
       return completer.future;
     }
@@ -115,7 +115,7 @@ class VendorViewVM {
             vendor: vendor,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context).uploadedDocument);
+          showToast(AppLocalization.of(context)!.uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,
@@ -129,7 +129,7 @@ class VendorViewVM {
 
   final AppState state;
   final VendorEntity vendor;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext, EntityType, [bool]) onEntityPressed;
   final Function(BuildContext) onRefreshed;
@@ -137,5 +137,5 @@ class VendorViewVM {
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;
-  final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;
+  final Function(BuildContext, List<MultipartFile>, bool?) onUploadDocuments;
 }

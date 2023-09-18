@@ -14,56 +14,56 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 EntityUIState documentUIReducer(DocumentUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(documentListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
+    ..editing.replace(editingReducer(state.editing, action)!)
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
 
-final forceSelectedReducer = combineReducers<bool>([
-  TypedReducer<bool, ViewDocument>((completer, action) => true),
-  TypedReducer<bool, ViewDocumentList>((completer, action) => false),
-  TypedReducer<bool, FilterDocumentsByState>((completer, action) => false),
-  TypedReducer<bool, FilterDocumentsByStatus>((completer, action) => false),
-  TypedReducer<bool, FilterDocuments>((completer, action) => false),
-  TypedReducer<bool, FilterDocumentsByCustom1>((completer, action) => false),
-  TypedReducer<bool, FilterDocumentsByCustom2>((completer, action) => false),
-  TypedReducer<bool, FilterDocumentsByCustom3>((completer, action) => false),
-  TypedReducer<bool, FilterDocumentsByCustom4>((completer, action) => false),
+final forceSelectedReducer = combineReducers<bool?>([
+  TypedReducer<bool?, ViewDocument>((completer, action) => true),
+  TypedReducer<bool?, ViewDocumentList>((completer, action) => false),
+  TypedReducer<bool?, FilterDocumentsByState>((completer, action) => false),
+  TypedReducer<bool?, FilterDocumentsByStatus>((completer, action) => false),
+  TypedReducer<bool?, FilterDocuments>((completer, action) => false),
+  TypedReducer<bool?, FilterDocumentsByCustom1>((completer, action) => false),
+  TypedReducer<bool?, FilterDocumentsByCustom2>((completer, action) => false),
+  TypedReducer<bool?, FilterDocumentsByCustom3>((completer, action) => false),
+  TypedReducer<bool?, FilterDocumentsByCustom4>((completer, action) => false),
 ]);
 
-Reducer<String> selectedIdReducer = combineReducers([
-  TypedReducer<String, ArchiveDocumentSuccess>((completer, action) => ''),
-  TypedReducer<String, DeleteDocumentSuccess>((completer, action) => ''),
-  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+Reducer<String?> selectedIdReducer = combineReducers([
+  TypedReducer<String?, ArchiveDocumentSuccess>((completer, action) => ''),
+  TypedReducer<String?, DeleteDocumentSuccess>((completer, action) => ''),
+  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.document ? action.entityId : selectedId),
-  TypedReducer<String, ViewDocument>((selectedId, action) => action.documentId),
+  TypedReducer<String?, ViewDocument>((selectedId, action) => action.documentId),
   //TypedReducer<String, AddDocumentSuccess>((selectedId, action) => action.document.id),
-  TypedReducer<String, SelectCompany>(
+  TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, SortDocuments>((selectedId, action) => ''),
-  TypedReducer<String, FilterDocuments>((selectedId, action) => ''),
-  TypedReducer<String, FilterDocumentsByState>((selectedId, action) => ''),
-  TypedReducer<String, FilterDocumentsByStatus>((selectedId, action) => ''),
-  TypedReducer<String, FilterDocumentsByCustom1>((selectedId, action) => ''),
-  TypedReducer<String, FilterDocumentsByCustom2>((selectedId, action) => ''),
-  TypedReducer<String, FilterDocumentsByCustom3>((selectedId, action) => ''),
-  TypedReducer<String, FilterDocumentsByCustom4>((selectedId, action) => ''),
+  TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String?, SortDocuments>((selectedId, action) => ''),
+  TypedReducer<String?, FilterDocuments>((selectedId, action) => ''),
+  TypedReducer<String?, FilterDocumentsByState>((selectedId, action) => ''),
+  TypedReducer<String?, FilterDocumentsByStatus>((selectedId, action) => ''),
+  TypedReducer<String?, FilterDocumentsByCustom1>((selectedId, action) => ''),
+  TypedReducer<String?, FilterDocumentsByCustom2>((selectedId, action) => ''),
+  TypedReducer<String?, FilterDocumentsByCustom3>((selectedId, action) => ''),
+  TypedReducer<String?, FilterDocumentsByCustom4>((selectedId, action) => ''),
 ]);
 
-final editingReducer = combineReducers<DocumentEntity>([
-  TypedReducer<DocumentEntity, SaveDocumentSuccess>(_updateEditing),
+final editingReducer = combineReducers<DocumentEntity?>([
+  TypedReducer<DocumentEntity?, SaveDocumentSuccess>(_updateEditing),
   //TypedReducer<DocumentEntity, AddDocumentSuccess>(_updateEditing),
-  TypedReducer<DocumentEntity, RestoreDocumentSuccess>(_updateEditing),
-  TypedReducer<DocumentEntity, ArchiveDocumentSuccess>(_updateEditing),
+  TypedReducer<DocumentEntity?, RestoreDocumentSuccess>(_updateEditing),
+  TypedReducer<DocumentEntity?, ArchiveDocumentSuccess>(_updateEditing),
   //TypedReducer<DocumentEntity, DeleteDocumentSuccess>(_updateEditing),
-  TypedReducer<DocumentEntity, EditDocument>(_updateEditing),
-  TypedReducer<DocumentEntity, UpdateDocument>((document, action) {
+  TypedReducer<DocumentEntity?, EditDocument>(_updateEditing),
+  TypedReducer<DocumentEntity?, UpdateDocument>((document, action) {
     return action.document.rebuild((b) => b..isChanged = true);
   }),
 ]);
 
-DocumentEntity _updateEditing(DocumentEntity document, dynamic action) {
+DocumentEntity? _updateEditing(DocumentEntity? document, dynamic action) {
   return action.document;
 }
 
@@ -151,7 +151,7 @@ ListUIState _filterDocuments(
 ListUIState _sortDocuments(
     ListUIState documentListState, SortDocuments action) {
   return documentListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortAscending = b.sortField != action.field || !b.sortAscending!
     ..sortField = action.field);
 }
 
@@ -162,13 +162,13 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState documentListState, AddToDocumentMultiselect action) {
-  return documentListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+  return documentListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState documentListState, RemoveFromDocumentMultiselect action) {
   return documentListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(
@@ -250,7 +250,7 @@ DocumentState _setLoadedDocuments(
 
 DocumentState _setLoadedCompany(
     DocumentState documentState, LoadCompanySuccess action) {
-  final company = action.userCompany.company;
+  final company = action.userCompany.company!;
   final documents = <DocumentEntity>[];
   company.documents.forEach((document) {
     documents.add(document.rebuild((b) => b

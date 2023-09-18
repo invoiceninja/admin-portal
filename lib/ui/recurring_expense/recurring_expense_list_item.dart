@@ -18,7 +18,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class RecurringExpenseListItem extends StatelessWidget {
   const RecurringExpenseListItem({
-    @required this.expense,
+    required this.expense,
     this.filter,
     this.onTap,
     this.onCheckboxChanged,
@@ -27,10 +27,10 @@ class RecurringExpenseListItem extends StatelessWidget {
     this.isChecked = false,
   });
 
-  final Function(bool) onCheckboxChanged;
-  final GestureTapCallback onTap;
-  final ExpenseEntity expense;
-  final String filter;
+  final Function(bool?)? onCheckboxChanged;
+  final GestureTapCallback? onTap;
+  final ExpenseEntity? expense;
+  final String? filter;
   final bool showCheckbox;
   final bool isDismissible;
   final bool isChecked;
@@ -41,29 +41,29 @@ class RecurringExpenseListItem extends StatelessWidget {
     final state = store.state;
     final uiState = state.uiState;
     final expenseUIState = uiState.recurringExpenseUIState;
-    final client = state.clientState.get(expense.clientId);
-    final vendor = state.vendorState.get(expense.vendorId);
-    final category = state.expenseCategoryState.get(expense.categoryId);
-    final filterMatch = filter != null && filter.isNotEmpty
-        ? (expense.matchesFilterValue(filter) ??
-            client.matchesFilterValue(filter))
+    final client = state.clientState.get(expense!.clientId!);
+    final vendor = state.vendorState.get(expense!.vendorId!);
+    final category = state.expenseCategoryState.get(expense!.categoryId);
+    final filterMatch = filter != null && filter!.isNotEmpty
+        ? (expense!.matchesFilterValue(filter) ??
+            client!.matchesFilterValue(filter))
         : null;
     final listUIState = expenseUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
     final isChecked = isDismissible
-        ? (isInMultiselect && listUIState.isSelected(expense.id))
+        ? (isInMultiselect && listUIState.isSelected(expense!.id))
         : this.isChecked;
     final textStyle = TextStyle(fontSize: 16);
-    final textColor = Theme.of(context).textTheme.bodyLarge.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
     String subtitle = '';
     if (filterMatch != null) {
       subtitle = filterMatch;
     } else if (client != null || vendor != null || category != null) {
       final parts = <String>[];
-      if (expense.nextSendDate.isNotEmpty) {
-        parts.add(formatDate(expense.nextSendDate, context));
+      if (expense!.nextSendDate.isNotEmpty) {
+        parts.add(formatDate(expense!.nextSendDate, context));
       }
       if (category != null && category.isOld) {
         parts.add(category.name);
@@ -81,9 +81,9 @@ class RecurringExpenseListItem extends StatelessWidget {
       showMultiselect: this.showCheckbox,
       isDismissible: isDismissible,
       isSelected: isDesktop(context) &&
-          expense.id ==
+          expense!.id ==
               (uiState.isEditing
-                  ? expenseUIState.editing.id
+                  ? expenseUIState.editing!.id
                   : expenseUIState.selectedId),
       userCompany: store.state.userCompany,
       entity: expense,
@@ -92,9 +92,9 @@ class RecurringExpenseListItem extends StatelessWidget {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: expense),
+                    onTap != null ? onTap!() : selectEntity(entity: expense!),
                 onLongPress: () =>
-                    selectEntity(entity: expense, longPress: true),
+                    selectEntity(entity: expense!, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 10,
@@ -116,14 +116,14 @@ class RecurringExpenseListItem extends StatelessWidget {
                                     materialTapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
                                     onChanged: (value) =>
-                                        onCheckboxChanged(value),
+                                        onCheckboxChanged!(value),
                                     activeColor:
                                         Theme.of(context).colorScheme.secondary,
                                   ),
                                 ),
                               )
                             : ActionMenuButton(
-                                entityActions: expense.getActions(
+                                entityActions: expense!.getActions(
                                   userCompany: state.userCompany,
                                   includeEdit: true,
                                 ),
@@ -139,11 +139,11 @@ class RecurringExpenseListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              expense.number,
+                              expense!.number,
                               style: textStyle,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            if (!expense.isActive) EntityStateLabel(expense)
+                            if (!expense!.isActive) EntityStateLabel(expense)
                           ],
                         ),
                       ),
@@ -153,19 +153,19 @@ class RecurringExpenseListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              (expense.publicNotes ?? '') +
-                                  (expense.documents.isNotEmpty ? '  📎' : ''),
+                              (expense!.publicNotes ?? '') +
+                                  (expense!.documents.isNotEmpty ? '  📎' : ''),
                               style: textStyle,
                               maxLines: 1,
                             ),
-                            Text(subtitle ?? filterMatch,
+                            Text(subtitle ?? filterMatch!,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .titleSmall
+                                    .titleSmall!
                                     .copyWith(
-                                      color: textColor
+                                      color: textColor!
                                           .withOpacity(kLighterOpacity),
                                     )),
                           ],
@@ -173,8 +173,8 @@ class RecurringExpenseListItem extends StatelessWidget {
                       ),
                       SizedBox(width: 8),
                       Text(
-                        formatNumber(expense.convertedAmount, context,
-                            currencyId: expense.currencyId),
+                        formatNumber(expense!.convertedAmount, context,
+                            currencyId: expense!.currencyId)!,
                         style: textStyle,
                         textAlign: TextAlign.end,
                       ),
@@ -186,9 +186,9 @@ class RecurringExpenseListItem extends StatelessWidget {
               )
             : ListTile(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: expense),
+                    onTap != null ? onTap!() : selectEntity(entity: expense!),
                 onLongPress: () =>
-                    selectEntity(entity: expense, longPress: true),
+                    selectEntity(entity: expense!, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
                         ignoring: listUIState.isInMultiselect(),
@@ -196,7 +196,7 @@ class RecurringExpenseListItem extends StatelessWidget {
                           value: isChecked,
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => onCheckboxChanged(value),
+                          onChanged: (value) => onCheckboxChanged!(value),
                           activeColor: Theme.of(context).colorScheme.secondary,
                         ),
                       )
@@ -207,17 +207,17 @@ class RecurringExpenseListItem extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          (expense.publicNotes.isEmpty
-                                  ? expense.number
-                                  : expense.publicNotes) +
-                              (expense.documents.isNotEmpty ? '  📎' : ''),
+                          (expense!.publicNotes.isEmpty
+                                  ? expense!.number
+                                  : expense!.publicNotes) +
+                              (expense!.documents.isNotEmpty ? '  📎' : ''),
                           style: Theme.of(context).textTheme.titleMedium,
                           maxLines: 1,
                         ),
                       ),
                       Text(
-                          formatNumber(expense.convertedAmount, context,
-                              currencyId: expense.currencyId),
+                          formatNumber(expense!.convertedAmount, context,
+                              currencyId: expense!.currencyId)!,
                           style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),
@@ -228,8 +228,8 @@ class RecurringExpenseListItem extends StatelessWidget {
                     Text(filterMatch == null ? subtitle : filterMatch,
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.titleSmall.copyWith(
-                              color: textColor.withOpacity(kLighterOpacity),
+                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                              color: textColor!.withOpacity(kLighterOpacity),
                             )),
                     EntityStateLabel(expense),
                   ],

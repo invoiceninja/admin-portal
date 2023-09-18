@@ -17,8 +17,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProductListItem extends StatelessWidget {
   const ProductListItem({
-    @required this.product,
-    @required this.filter,
+    required this.product,
+    required this.filter,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
@@ -27,21 +27,21 @@ class ProductListItem extends StatelessWidget {
     this.showCost = false,
   });
 
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
-  final Function(bool) onCheckboxChanged;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onLongPress;
+  final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
   final bool isDismissible;
-  final ProductEntity product;
-  final String filter;
+  final ProductEntity? product;
+  final String? filter;
   final bool showCost;
 
   @override
   Widget build(BuildContext context) {
-    final filterMatch = filter != null && filter.isNotEmpty
-        ? product.matchesFilterValue(filter)
+    final filterMatch = filter != null && filter!.isNotEmpty
+        ? product!.matchesFilterValue(filter)
         : null;
-    final subtitle = filterMatch ?? product.notes;
+    final subtitle = filterMatch ?? product!.notes;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final uiState = store.state.uiState;
@@ -54,9 +54,9 @@ class ProductListItem extends StatelessWidget {
     return DismissibleEntity(
       isDismissible: isDismissible,
       isSelected: isDesktop(context) &&
-          product.id ==
+          product!.id ==
               (uiState.isEditing
-                  ? productUIState.editing.id
+                  ? productUIState.editing!.id
                   : productUIState.selectedId),
       userCompany: state.userCompany,
       entity: product,
@@ -65,10 +65,10 @@ class ProductListItem extends StatelessWidget {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: product),
+                    onTap != null ? onTap!() : selectEntity(entity: product!),
                 onLongPress: () => onLongPress != null
-                    ? onLongPress()
-                    : selectEntity(entity: product, longPress: true),
+                    ? onLongPress!()
+                    : selectEntity(entity: product!, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 10,
@@ -88,13 +88,13 @@ class ProductListItem extends StatelessWidget {
                                     materialTapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
                                     onChanged: (value) =>
-                                        onCheckboxChanged(value),
+                                        onCheckboxChanged!(value),
                                     activeColor:
                                         Theme.of(context).colorScheme.secondary,
                                   ),
                                 )
                               : ActionMenuButton(
-                                  entityActions: product.getActions(
+                                  entityActions: product!.getActions(
                                     userCompany: state.userCompany,
                                     includeEdit: true,
                                   ),
@@ -109,12 +109,12 @@ class ProductListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              product.productKey +
-                                  (product.documents.isNotEmpty ? '  📎' : ''),
+                              product!.productKey +
+                                  (product!.documents.isNotEmpty ? '  📎' : ''),
                               style: textStyle,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            if (!product.isActive) EntityStateLabel(product)
+                            if (!product!.isActive) EntityStateLabel(product)
                           ],
                         ),
                       ),
@@ -124,7 +124,7 @@ class ProductListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              product.notes,
+                              product!.notes,
                               style: textStyle,
                               maxLines: 6,
                             ),
@@ -141,8 +141,8 @@ class ProductListItem extends StatelessWidget {
                       SizedBox(width: 10),
                       Text(
                         formatNumber(
-                            showCost ? product.cost : product.price, context,
-                            roundToPrecision: false),
+                            showCost ? product!.cost : product!.price, context,
+                            roundToPrecision: false)!,
                         style: textStyle,
                         textAlign: TextAlign.end,
                       ),
@@ -152,10 +152,10 @@ class ProductListItem extends StatelessWidget {
               )
             : ListTile(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: product),
+                    onTap != null ? onTap!() : selectEntity(entity: product!),
                 onLongPress: () => onLongPress != null
-                    ? onLongPress()
-                    : selectEntity(entity: product, longPress: true),
+                    ? onLongPress!()
+                    : selectEntity(entity: product!, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
                         ignoring: listUIState.isInMultiselect(),
@@ -163,7 +163,7 @@ class ProductListItem extends StatelessWidget {
                           value: isChecked,
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => onCheckboxChanged(value),
+                          onChanged: (value) => onCheckboxChanged!(value),
                           activeColor: Theme.of(context).colorScheme.secondary,
                         ),
                       )
@@ -174,15 +174,15 @@ class ProductListItem extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          product.productKey +
-                              (product.documents.isNotEmpty ? '  📎' : ''),
+                          product!.productKey +
+                              (product!.documents.isNotEmpty ? '  📎' : ''),
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
                       Text(
                           formatNumber(
-                              showCost ? product.cost : product.price, context,
-                              roundToPrecision: false),
+                              showCost ? product!.cost : product!.price, context,
+                              roundToPrecision: false)!,
                           style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),

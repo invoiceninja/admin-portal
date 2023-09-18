@@ -16,7 +16,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentViewScreen extends StatelessWidget {
   const PaymentViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
   final bool isFilter;
@@ -40,14 +40,14 @@ class PaymentViewScreen extends StatelessWidget {
 
 class PaymentViewVM {
   PaymentViewVM({
-    @required this.state,
-    @required this.payment,
-    @required this.company,
-    @required this.onEntityAction,
-    @required this.onRefreshed,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.isDirty,
+    required this.state,
+    required this.payment,
+    required this.company,
+    required this.onEntityAction,
+    required this.onRefreshed,
+    required this.isSaving,
+    required this.isLoading,
+    required this.isDirty,
   });
 
   factory PaymentViewVM.fromStore(Store<AppState> store) {
@@ -57,7 +57,7 @@ class PaymentViewVM {
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadPayment(
         completer: completer,
         paymentId: payment.id,
@@ -80,7 +80,7 @@ class PaymentViewVM {
 
   final AppState state;
   final PaymentEntity payment;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;

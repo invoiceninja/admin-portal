@@ -7,26 +7,26 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-ClientContactEntity creditContactSelector(
+ClientContactEntity? creditContactSelector(
     InvoiceEntity credit, ClientEntity client) {
   var contactIds = credit.invitations
       .map((invitation) => invitation.clientContactId)
       .toList();
-  if (contactIds.contains(client.primaryContact.id)) {
-    contactIds = [client.primaryContact.id];
+  if (contactIds.contains(client.primaryContact!.id)) {
+    contactIds = [client.primaryContact!.id];
   }
   return client.contacts
-      .firstWhere((contact) => contactIds.contains(contact.id), orElse: null);
+      .firstWhere((contact) => contactIds.contains(contact!.id), orElse: null);
 }
 
 var memoizedDropdownCreditList = memo7(
-    (BuiltMap<String, InvoiceEntity> creditMap,
-            BuiltMap<String, ClientEntity> clientMap,
-            BuiltMap<String, VendorEntity> vendorMap,
+    (BuiltMap<String?, InvoiceEntity?> creditMap,
+            BuiltMap<String?, ClientEntity?> clientMap,
+            BuiltMap<String?, VendorEntity?> vendorMap,
             BuiltList<String> creditList,
             String clientId,
-            BuiltMap<String, UserEntity> userMap,
-            List<String> excludedIds) =>
+            BuiltMap<String?, UserEntity?> userMap,
+            List<String?> excludedIds) =>
         dropdownCreditSelector(
           creditMap,
           clientMap,
@@ -38,13 +38,13 @@ var memoizedDropdownCreditList = memo7(
         ));
 
 List<String> dropdownCreditSelector(
-    BuiltMap<String, InvoiceEntity> creditMap,
-    BuiltMap<String, ClientEntity> clientMap,
-    BuiltMap<String, VendorEntity> vendorMap,
+    BuiltMap<String?, InvoiceEntity?> creditMap,
+    BuiltMap<String?, ClientEntity?> clientMap,
+    BuiltMap<String?, VendorEntity?> vendorMap,
     BuiltList<String> creditList,
     String clientId,
-    BuiltMap<String, UserEntity> userMap,
-    List<String> excludedIds) {
+    BuiltMap<String?, UserEntity?> userMap,
+    List<String?> excludedIds) {
   final list = creditList.where((creditId) {
     final credit = creditMap[creditId];
     if (excludedIds.contains(creditId)) {
@@ -52,11 +52,11 @@ List<String> dropdownCreditSelector(
     }
     if (clientId != null &&
         clientId.isNotEmpty &&
-        credit.clientId != clientId) {
+        credit!.clientId != clientId) {
       return false;
     }
-    if (!clientMap.containsKey(credit.clientId) ||
-        !clientMap[credit.clientId].isActive) {
+    if (!clientMap.containsKey(credit!.clientId) ||
+        !clientMap[credit.clientId]!.isActive) {
       return false;
     }
     if (credit.balanceOrAmount == 0) {
@@ -66,7 +66,7 @@ List<String> dropdownCreditSelector(
   }).toList();
 
   list.sort((creditAId, creditBId) {
-    final creditA = creditMap[creditAId];
+    final creditA = creditMap[creditAId]!;
     final creditB = creditMap[creditBId];
     return creditA.compareTo(
         invoice: creditB,
@@ -80,38 +80,38 @@ List<String> dropdownCreditSelector(
   return list;
 }
 
-ClientEntity creditClientSelector(
+ClientEntity? creditClientSelector(
     InvoiceEntity credit, BuiltMap<String, ClientEntity> clientMap) {
   return clientMap[credit.clientId];
 }
 
 var memoizedFilteredCreditList = memo8((SelectionState selectionState,
-        BuiltMap<String, InvoiceEntity> creditMap,
+        BuiltMap<String?, InvoiceEntity?> creditMap,
         BuiltList<String> creditList,
-        BuiltMap<String, ClientEntity> clientMap,
-        BuiltMap<String, VendorEntity> vendorMap,
-        BuiltMap<String, PaymentEntity> paymentMap,
+        BuiltMap<String?, ClientEntity?> clientMap,
+        BuiltMap<String?, VendorEntity?> vendorMap,
+        BuiltMap<String?, PaymentEntity?> paymentMap,
         ListUIState creditListState,
-        BuiltMap<String, UserEntity> userMap) =>
+        BuiltMap<String?, UserEntity?> userMap) =>
     filteredCreditsSelector(selectionState, creditMap, creditList, clientMap,
         vendorMap, paymentMap, creditListState, userMap));
 
 List<String> filteredCreditsSelector(
     SelectionState selectionState,
-    BuiltMap<String, InvoiceEntity> creditMap,
+    BuiltMap<String?, InvoiceEntity?> creditMap,
     BuiltList<String> creditList,
-    BuiltMap<String, ClientEntity> clientMap,
-    BuiltMap<String, VendorEntity> vendorMap,
-    BuiltMap<String, PaymentEntity> paymentMap,
+    BuiltMap<String?, ClientEntity?> clientMap,
+    BuiltMap<String?, VendorEntity?> vendorMap,
+    BuiltMap<String?, PaymentEntity?> paymentMap,
     ListUIState creditListState,
-    BuiltMap<String, UserEntity> userMap) {
+    BuiltMap<String?, UserEntity?> userMap) {
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;
 
-  final Map<String, List<String>> creditPaymentMap = {};
+  final Map<String?, List<String>> creditPaymentMap = {};
   if (filterEntityType == EntityType.payment) {
     paymentMap.forEach((paymentId, payment) {
-      payment.creditPaymentables.forEach((creditPaymentable) {
+      payment!.creditPaymentables.forEach((creditPaymentable) {
         final List<String> paymentIds =
             creditPaymentMap[creditPaymentable.creditId] ?? [];
         paymentIds.add(payment.id);
@@ -121,7 +121,7 @@ List<String> filteredCreditsSelector(
   }
 
   final list = creditList.where((creditId) {
-    final credit = creditMap[creditId];
+    final credit = creditMap[creditId]!;
     final client =
         clientMap[credit.clientId] ?? ClientEntity(id: credit.clientId);
 
@@ -190,7 +190,7 @@ List<String> filteredCreditsSelector(
   }).toList();
 
   list.sort((creditAId, creditBId) {
-    return creditMap[creditAId].compareTo(
+    return creditMap[creditAId]!.compareTo(
         invoice: creditMap[creditBId],
         sortField: creditListState.sortField,
         sortAscending: creditListState.sortAscending,
@@ -203,15 +203,15 @@ List<String> filteredCreditsSelector(
 }
 
 var memoizedCreditStatsForDesign = memo2(
-    (String designId, BuiltMap<String, InvoiceEntity> creditMap) =>
+    (String designId, BuiltMap<String?, InvoiceEntity?> creditMap) =>
         creditStatsForDesign(designId, creditMap));
 
 EntityStats creditStatsForDesign(
-    String designId, BuiltMap<String, InvoiceEntity> creditMap) {
+    String designId, BuiltMap<String?, InvoiceEntity?> creditMap) {
   int countActive = 0;
   int countArchived = 0;
   creditMap.forEach((creditId, credit) {
-    if (credit.designId == designId) {
+    if (credit!.designId == designId) {
       if (credit.isActive) {
         countActive++;
       } else if (credit.isArchived) {
@@ -224,15 +224,15 @@ EntityStats creditStatsForDesign(
 }
 
 var memoizedCreditStatsForClient = memo2(
-    (String clientId, BuiltMap<String, InvoiceEntity> creditMap) =>
+    (String clientId, BuiltMap<String?, InvoiceEntity?> creditMap) =>
         creditStatsForClient(clientId, creditMap));
 
 EntityStats creditStatsForClient(
-    String clientId, BuiltMap<String, InvoiceEntity> creditMap) {
+    String clientId, BuiltMap<String?, InvoiceEntity?> creditMap) {
   int countActive = 0;
   int countArchived = 0;
   creditMap.forEach((creditId, credit) {
-    if (credit.clientId == clientId) {
+    if (credit!.clientId == clientId) {
       if (credit.isActive) {
         countActive++;
       } else if (credit.isArchived) {
@@ -245,17 +245,17 @@ EntityStats creditStatsForClient(
 }
 
 var memoizedCreditStatsForUser = memo2(
-    (String userId, BuiltMap<String, InvoiceEntity> creditMap) =>
+    (String userId, BuiltMap<String?, InvoiceEntity?> creditMap) =>
         creditStatsForUser(userId, creditMap));
 
 EntityStats creditStatsForUser(
   String userId,
-  BuiltMap<String, InvoiceEntity> creditMap,
+  BuiltMap<String?, InvoiceEntity?> creditMap,
 ) {
   int countActive = 0;
   int countArchived = 0;
   creditMap.forEach((creditId, credit) {
-    if (credit.assignedUserId == userId) {
+    if (credit!.assignedUserId == userId) {
       if (credit.isActive) {
         countActive++;
       } else if (credit.isArchived) {

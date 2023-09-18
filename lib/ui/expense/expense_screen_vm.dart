@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/redux/expense/expense_selectors.dart';
 import 'expense_screen.dart';
 
 class ExpenseScreenBuilder extends StatelessWidget {
-  const ExpenseScreenBuilder({Key key}) : super(key: key);
+  const ExpenseScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,16 +31,16 @@ class ExpenseScreenBuilder extends StatelessWidget {
 
 class ExpenseScreenVM {
   ExpenseScreenVM({
-    @required this.isInMultiselect,
-    @required this.expenseList,
-    @required this.userCompany,
-    @required this.expenseMap,
+    required this.isInMultiselect,
+    required this.expenseList,
+    required this.userCompany,
+    required this.expenseMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
-  final List<String> expenseList;
-  final BuiltMap<String, ExpenseEntity> expenseMap;
+  final UserCompanyEntity? userCompany;
+  final List<String?> expenseList;
+  final BuiltMap<String?, ExpenseEntity?> expenseMap;
 
   static ExpenseScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

@@ -17,8 +17,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class WebhookEdit extends StatefulWidget {
   const WebhookEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final WebhookEditVM viewModel;
@@ -77,7 +77,7 @@ class _WebhookEditState extends State<WebhookEdit> {
   }
 
   void _onSavePressed(BuildContext context) {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -97,7 +97,7 @@ class _WebhookEditState extends State<WebhookEdit> {
 
     return EditScaffold(
       entity: webhook,
-      title: webhook.isNew ? localization.newWebhook : localization.editWebhook,
+      title: webhook.isNew ? localization!.newWebhook : localization!.editWebhook,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: _onSavePressed,
       body: Form(
@@ -129,7 +129,7 @@ class _WebhookEditState extends State<WebhookEdit> {
                       items: WebhookEntity.EVENT_MAP.keys
                           .map((eventId) => DropdownMenuItem(
                                 child: Text(localization
-                                    .lookup(WebhookEntity.EVENT_MAP[eventId])),
+                                    .lookup(WebhookEntity.EVENT_MAP[eventId])!),
                                 value: eventId,
                               ))
                           .toList(),
@@ -214,7 +214,7 @@ class _WebhookEditState extends State<WebhookEdit> {
                               ),
                               SizedBox(width: kTableColumnGap),
                               Expanded(
-                                child: Text(webhook.headers[key]),
+                                child: Text(webhook.headers[key]!),
                               )
                             ],
                           ),

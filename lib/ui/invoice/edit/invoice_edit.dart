@@ -17,8 +17,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceEdit extends StatefulWidget {
   const InvoiceEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final AbstractInvoiceEditVM viewModel;
@@ -29,7 +29,7 @@ class InvoiceEdit extends StatefulWidget {
 
 class _InvoiceEditState extends State<InvoiceEdit>
     with SingleTickerProviderStateMixin {
-  TabController _controller;
+  TabController? _controller;
 
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_invoiceEdit');
@@ -57,18 +57,18 @@ class _InvoiceEditState extends State<InvoiceEdit>
     super.didUpdateWidget(oldWidget);
 
     if (widget.viewModel.invoiceItemIndex != null) {
-      _controller.animateTo(kItemScreen);
+      _controller!.animateTo(kItemScreen);
     }
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
-  void _onSavePressed(BuildContext context, [EntityAction action]) {
-    final bool isValid = _formKey.currentState.validate();
+  void _onSavePressed(BuildContext context, [EntityAction? action]) {
+    final bool isValid = _formKey.currentState!.validate();
 
     /*
         setState(() {
@@ -86,21 +86,21 @@ class _InvoiceEditState extends State<InvoiceEdit>
     ].contains(action)) {
       confirmCallback(
           context: context,
-          message: AppLocalization.of(context).lookup(action.toString()),
+          message: AppLocalization.of(context)!.lookup(action.toString()),
           callback: (_) {
-            widget.viewModel.onSavePressed(context, action);
+            widget.viewModel.onSavePressed!(context, action);
           });
     } else {
-      widget.viewModel.onSavePressed(context, action);
+      widget.viewModel.onSavePressed!(context, action);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
-    final invoice = viewModel.invoice;
-    final state = viewModel.state;
+    final invoice = viewModel.invoice!;
+    final state = viewModel.state!;
     final client = state.clientState.get(invoice.clientId);
     final prefState = state.prefState;
     final isFullscreen = prefState.isEditorFullScreen(EntityType.invoice);
@@ -109,7 +109,7 @@ class _InvoiceEditState extends State<InvoiceEdit>
       isFullscreen: isFullscreen,
       entity: invoice,
       title: invoice.isNew ? localization.newInvoice : localization.editInvoice,
-      onCancelPressed: (context) => viewModel.onCancelPressed(context),
+      onCancelPressed: (context) => viewModel.onCancelPressed!(context),
       onSavePressed: (context) => _onSavePressed(context),
       actions: invoice.getActions(
         userCompany: state.userCompany,
@@ -173,16 +173,16 @@ class _InvoiceEditState extends State<InvoiceEdit>
                   invoice: invoice,
                   showTasksAndExpenses: true,
                   excluded: invoice.lineItems
-                      .where((item) => item.isTask || item.isExpense)
-                      .map((item) => item.isTask
-                          ? viewModel.state.taskState.map[item.taskId]
-                          : viewModel.state.expenseState.map[item.expenseId])
+                      .where((item) => item!.isTask || item.isExpense)
+                      .map((item) => item!.isTask
+                          ? viewModel.state!.taskState.map[item.taskId]
+                          : viewModel.state!.expenseState.map[item.expenseId])
                       .toList(),
                   clientId: invoice.clientId,
                   onItemsSelected: (items, [clientId, projectId]) {
-                    viewModel.onItemsAdded(items, clientId, projectId);
+                    viewModel.onItemsAdded!(items, clientId, projectId);
                     if (!isFullscreen) {
-                      _controller.animateTo(kItemScreen);
+                      _controller!.animateTo(kItemScreen);
                     }
                   },
                 );

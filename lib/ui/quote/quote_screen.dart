@@ -21,8 +21,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class QuoteScreen extends StatelessWidget {
   const QuoteScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/quote';
@@ -33,39 +33,39 @@ class QuoteScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final company = store.state.company;
+    final company = store.state.company!;
     final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
     final statuses = [
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kQuoteStatusDraft
-          ..name = localization.draft,
+          ..name = localization!.draft,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kQuoteStatusSent
-          ..name = localization.sent,
+          ..name = localization!.sent,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kQuoteStatusViewed
-          ..name = localization.viewed,
+          ..name = localization!.viewed,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kQuoteStatusApproved
-          ..name = localization.approved,
+          ..name = localization!.approved,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kQuoteStatusConverted
-          ..name = localization.converted,
+          ..name = localization!.converted,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kQuoteStatusExpired
-          ..name = localization.expired,
+          ..name = localization!.expired,
       ),
     ];
 
@@ -139,7 +139,7 @@ class QuoteScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany.canCreate(EntityType.quote)
+              userCompany!.canCreate(EntityType.quote)
           ? FloatingActionButton(
               heroTag: 'quote_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
@@ -151,7 +151,7 @@ class QuoteScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newQuote,
+              tooltip: localization!.newQuote,
             )
           : null,
     );

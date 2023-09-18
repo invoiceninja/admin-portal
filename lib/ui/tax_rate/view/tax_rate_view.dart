@@ -11,9 +11,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaxRateView extends StatefulWidget {
   const TaxRateView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final TaxRateViewVM viewModel;
@@ -28,7 +28,7 @@ class _TaxRateViewState extends State<TaxRateView> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final taxRate = viewModel.taxRate;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     return ViewScaffold(
       isFilter: widget.isFilter,

@@ -13,11 +13,11 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ClientViewPaymentMethods extends StatelessWidget {
   const ClientViewPaymentMethods({
-    Key key,
-    @required this.viewModel,
-    @required this.tokenMap,
-    @required this.gatewayMap,
-    @required this.linkMap,
+    Key? key,
+    required this.viewModel,
+    required this.tokenMap,
+    required this.gatewayMap,
+    required this.linkMap,
   }) : super(key: key);
 
   final ClientViewVM viewModel;
@@ -38,17 +38,17 @@ class ClientViewPaymentMethods extends StatelessWidget {
           final customerReference = customerReferences[index];
           return ListTile(
             title: Text(
-                '${localization.gateway}  ›  ${gatewayMap[customerReference].label}'),
+                '${localization!.gateway}  ›  ${gatewayMap[customerReference]!.label}'),
             subtitle: Column(
               mainAxisSize: MainAxisSize.min,
-              children: tokenMap[customerReference]
+              children: tokenMap[customerReference]!
                   .map((token) => TokenMeta(
                         meta: token.meta,
                       ))
                   .toList(),
             ),
             onTap: linkMap.containsKey(customerReference)
-                ? () => launchUrl(Uri.parse(linkMap[customerReference]))
+                ? () => launchUrl(Uri.parse(linkMap[customerReference]!))
                 : null,
             leading: IgnorePointer(
               child: IconButton(

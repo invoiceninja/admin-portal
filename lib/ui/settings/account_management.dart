@@ -39,8 +39,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class AccountManagement extends StatefulWidget {
   const AccountManagement({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final AccountManagementVM viewModel;
@@ -53,8 +53,8 @@ class _AccountManagementState extends State<AccountManagement>
     with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_accountManagement');
-  FocusScopeNode _focusNode;
-  TabController _controller;
+  FocusScopeNode? _focusNode;
+  TabController? _controller;
 
   final _debouncer = Debouncer();
   final _trackingIdController = TextEditingController();
@@ -71,12 +71,12 @@ class _AccountManagementState extends State<AccountManagement>
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
         vsync: this, length: 4, initialIndex: settingsUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller!.index));
   }
 
   @override
@@ -121,15 +121,15 @@ class _AccountManagementState extends State<AccountManagement>
       controller.removeListener(_onChanged);
       controller.dispose();
     });
-    _focusNode.dispose();
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
+    _focusNode!.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final company = viewModel.company;
@@ -205,12 +205,12 @@ class _AccountManagementState extends State<AccountManagement>
                   children: kModules.keys.map((module) {
                 return CheckboxListTile(
                   controlAffinity: ListTileControlAffinity.leading,
-                  title: Text(localization.lookup(kModules[module])),
+                  title: Text(localization.lookup(kModules[module])!),
                   value: company.enabledModules & module != 0,
                   activeColor: Theme.of(context).colorScheme.secondary,
                   onChanged: (value) {
                     int enabledModules = company.enabledModules;
-                    if (value) {
+                    if (value!) {
                       enabledModules = enabledModules | module;
                     } else {
                       enabledModules = enabledModules ^ module;
@@ -289,8 +289,8 @@ class _AccountManagementState extends State<AccountManagement>
 
 class _AccountOverview extends StatelessWidget {
   const _AccountOverview({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final AccountManagementVM viewModel;
@@ -298,9 +298,9 @@ class _AccountOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final state = viewModel.state;
-    final account = state.account;
+    final account = state.account!;
     final company = viewModel.company;
     final companies = state.companies;
 
@@ -312,26 +312,26 @@ class _AccountOverview extends StatelessWidget {
       if (state.clientState.list.isNotEmpty) {
         final count = state.clientState.list.length;
         stats += '\n- $count ' +
-            (count == 1 ? localization.client : localization.clients);
+            (count == 1 ? localization!.client : localization!.clients);
       }
 
       if (state.productState.list.isNotEmpty) {
         final count = state.productState.list.length;
         stats += '\n- $count ' +
-            (count == 1 ? localization.product : localization.products);
+            (count == 1 ? localization!.product : localization!.products);
       }
 
-      if (state.invoiceState.list.isNotEmpty && !state.company.isLarge) {
+      if (state.invoiceState.list.isNotEmpty && !state.company!.isLarge) {
         final count = state.invoiceState.list.length;
         stats += '\n- $count ' +
-            (count == 1 ? localization.invoice : localization.invoices);
+            (count == 1 ? localization!.invoice : localization!.invoices);
       }
 
       return stats;
     }
 
-    String secondValue;
-    String secondLabel;
+    String? secondValue;
+    String? secondLabel;
 
     if (state.isHosted && (account.plan.isEmpty || account.isTrial)) {
       final clientLimit = account.hostedClientCount;
@@ -355,12 +355,12 @@ class _AccountOverview extends StatelessWidget {
           secondLabel: secondLabel,
           secondValue: secondValue,
         ),
-        if (state.company.id != state.account.defaultCompanyId)
+        if (state.company!.id != state.account!.defaultCompanyId)
           Padding(
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
             child: AppButton(
               iconData: Icons.business,
-              label: localization.setDefaultCompany.toUpperCase(),
+              label: localization.setDefaultCompany!.toUpperCase(),
               onPressed: () => viewModel.onSetPrimaryCompany(context),
             ),
           ),
@@ -369,7 +369,7 @@ class _AccountOverview extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(20),
               child: Text(
-                localization.useMobileToManagePlan,
+                localization.useMobileToManagePlan!,
                 textAlign: TextAlign.center,
               ),
             )
@@ -384,7 +384,7 @@ class _AccountOverview extends StatelessWidget {
                       text: (account.isEligibleForTrial &&
                                   !supportsInAppPurchase()
                               ? localization.startFreeTrial
-                              : localization.changePlan)
+                              : localization.changePlan)!
                           .toUpperCase(),
                     ),
                   ),
@@ -395,7 +395,7 @@ class _AccountOverview extends StatelessWidget {
                         builder: (context) => UpgradeDialog(),
                       );
                     } else {
-                      launchUrl(Uri.parse(state.userCompany.ninjaPortalUrl));
+                      launchUrl(Uri.parse(state.userCompany!.ninjaPortalUrl));
                     }
                   }),
             ),
@@ -417,8 +417,8 @@ class _AccountOverview extends StatelessWidget {
               viewModel.onCompanyChanged(
                   company.rebuild((b) => b..markdownEnabled = value));
             },
-            title: Text(localization.enablePdfMarkdown),
-            subtitle: Text(localization.enableMarkdownHelp),
+            title: Text(localization.enablePdfMarkdown!),
+            subtitle: Text(localization.enableMarkdownHelp!),
             activeColor: Theme.of(context).colorScheme.secondary,
           ),
           SwitchListTile(
@@ -427,8 +427,8 @@ class _AccountOverview extends StatelessWidget {
               viewModel.onCompanyChanged(
                   company.rebuild((b) => b..markdownEmailEnabled = value));
             },
-            title: Text(localization.enableEmailMarkdown),
-            subtitle: Text(localization.enableEmailMarkdownHelp),
+            title: Text(localization.enableEmailMarkdown!),
+            subtitle: Text(localization.enableEmailMarkdownHelp!),
             activeColor: Theme.of(context).colorScheme.secondary,
           ),
         ]),
@@ -440,8 +440,8 @@ class _AccountOverview extends StatelessWidget {
                 viewModel.onCompanyChanged(
                     company.rebuild((b) => b..reportIncludeDrafts = value));
               },
-              title: Text(localization.includeDrafts),
-              subtitle: Text(localization.includeDraftsHelp),
+              title: Text(localization.includeDrafts!),
+              subtitle: Text(localization.includeDraftsHelp!),
               activeColor: Theme.of(context).colorScheme.secondary,
             ),
             SwitchListTile(
@@ -450,8 +450,8 @@ class _AccountOverview extends StatelessWidget {
                 viewModel.onCompanyChanged(
                     company.rebuild((b) => b..reportIncludeDeleted = value));
               },
-              title: Text(localization.includeDeleted),
-              subtitle: Text(localization.includeDeletedHelp),
+              title: Text(localization.includeDeleted!),
+              subtitle: Text(localization.includeDeletedHelp!),
               activeColor: Theme.of(context).colorScheme.secondary,
             ),
           ],
@@ -573,7 +573,7 @@ class _AccountOverview extends StatelessWidget {
                 ),
               ),
             ])),
-        if (state.userCompany.isOwner && !state.isDemo) ...[
+        if (state.userCompany!.isOwner && !state.isDemo) ...[
           Padding(
             padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
             child: ListDivider(),
@@ -630,9 +630,9 @@ class _AccountOverview extends StatelessWidget {
                           message: message,
                           typeToConfirm: localization.delete.toLowerCase(),
                           askForReason: true,
-                          callback: (String reason) async {
-                            if (state.user.isConnectedToApple &&
-                                !state.user.hasPassword) {
+                          callback: (String? reason) async {
+                            if (state.user!.isConnectedToApple &&
+                                !state.user!.hasPassword) {
                               final credentials =
                                   await SignInWithApple.getAppleIDCredential(
                                 scopes: [

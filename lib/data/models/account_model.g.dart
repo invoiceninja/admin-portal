@@ -16,9 +16,9 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
   final String wireName = 'AccountEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, AccountEntity object,
+  Iterable<Object?> serialize(Serializers serializers, AccountEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
       'key',
@@ -95,111 +95,111 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
 
   @override
   AccountEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new AccountEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'key':
           result.key = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'trial_started':
           result.trialStarted = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'default_url':
           result.defaultUrl = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'report_errors':
           result.reportErrors = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'plan':
           result.plan = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'plan_expires':
           result.planExpires = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'latest_version':
           result.latestVersion = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'current_version':
           result.currentVersion = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'debug_enabled':
           result.debugEnabled = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'is_docker':
           result.isDocker = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'is_migrated':
           result.isMigrated = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'is_hosted':
           result.isHosted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'is_scheduler_running':
           result.isSchedulerRunning = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'disable_auto_update':
           result.disableAutoUpdate = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'default_company_id':
           result.defaultCompanyId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'hosted_client_count':
           result.hostedClientCount = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'hosted_company_count':
           result.hostedCompanyCount = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'set_react_as_default_ap':
           result.setReactAsDefaultAP = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'account_sms_verified':
           result.accountSmsVerified = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'trial_days_left':
           result.trialDaysLeft = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'has_iap_plan':
           result.hasIapPlan = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'payment_id':
           result.paymentId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'tax_api_enabled':
           result.taxApiEnabled = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
       }
     }
@@ -258,34 +258,34 @@ class _$AccountEntity extends AccountEntity {
   @override
   final bool taxApiEnabled;
 
-  factory _$AccountEntity([void Function(AccountEntityBuilder) updates]) =>
+  factory _$AccountEntity([void Function(AccountEntityBuilder)? updates]) =>
       (new AccountEntityBuilder()..update(updates))._build();
 
   _$AccountEntity._(
-      {this.id,
-      this.key,
-      this.trialStarted,
-      this.defaultUrl,
-      this.reportErrors,
-      this.plan,
-      this.planExpires,
-      this.latestVersion,
-      this.currentVersion,
-      this.debugEnabled,
-      this.isDocker,
-      this.isMigrated,
-      this.isHosted,
-      this.isSchedulerRunning,
-      this.disableAutoUpdate,
-      this.defaultCompanyId,
-      this.hostedClientCount,
-      this.hostedCompanyCount,
-      this.setReactAsDefaultAP,
-      this.accountSmsVerified,
-      this.trialDaysLeft,
-      this.hasIapPlan,
-      this.paymentId,
-      this.taxApiEnabled})
+      {required this.id,
+      required this.key,
+      required this.trialStarted,
+      required this.defaultUrl,
+      required this.reportErrors,
+      required this.plan,
+      required this.planExpires,
+      required this.latestVersion,
+      required this.currentVersion,
+      required this.debugEnabled,
+      required this.isDocker,
+      required this.isMigrated,
+      required this.isHosted,
+      required this.isSchedulerRunning,
+      required this.disableAutoUpdate,
+      required this.defaultCompanyId,
+      required this.hostedClientCount,
+      required this.hostedCompanyCount,
+      required this.setReactAsDefaultAP,
+      required this.accountSmsVerified,
+      required this.trialDaysLeft,
+      required this.hasIapPlan,
+      required this.paymentId,
+      required this.taxApiEnabled})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'AccountEntity', 'id');
     BuiltValueNullFieldError.checkNotNull(key, r'AccountEntity', 'key');
@@ -371,10 +371,10 @@ class _$AccountEntity extends AccountEntity {
         taxApiEnabled == other.taxApiEnabled;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, key.hashCode);
@@ -437,112 +437,113 @@ class _$AccountEntity extends AccountEntity {
 
 class AccountEntityBuilder
     implements Builder<AccountEntity, AccountEntityBuilder> {
-  _$AccountEntity _$v;
+  _$AccountEntity? _$v;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
-  String _key;
-  String get key => _$this._key;
-  set key(String key) => _$this._key = key;
+  String? _key;
+  String? get key => _$this._key;
+  set key(String? key) => _$this._key = key;
 
-  String _trialStarted;
-  String get trialStarted => _$this._trialStarted;
-  set trialStarted(String trialStarted) => _$this._trialStarted = trialStarted;
+  String? _trialStarted;
+  String? get trialStarted => _$this._trialStarted;
+  set trialStarted(String? trialStarted) => _$this._trialStarted = trialStarted;
 
-  String _defaultUrl;
-  String get defaultUrl => _$this._defaultUrl;
-  set defaultUrl(String defaultUrl) => _$this._defaultUrl = defaultUrl;
+  String? _defaultUrl;
+  String? get defaultUrl => _$this._defaultUrl;
+  set defaultUrl(String? defaultUrl) => _$this._defaultUrl = defaultUrl;
 
-  bool _reportErrors;
-  bool get reportErrors => _$this._reportErrors;
-  set reportErrors(bool reportErrors) => _$this._reportErrors = reportErrors;
+  bool? _reportErrors;
+  bool? get reportErrors => _$this._reportErrors;
+  set reportErrors(bool? reportErrors) => _$this._reportErrors = reportErrors;
 
-  String _plan;
-  String get plan => _$this._plan;
-  set plan(String plan) => _$this._plan = plan;
+  String? _plan;
+  String? get plan => _$this._plan;
+  set plan(String? plan) => _$this._plan = plan;
 
-  String _planExpires;
-  String get planExpires => _$this._planExpires;
-  set planExpires(String planExpires) => _$this._planExpires = planExpires;
+  String? _planExpires;
+  String? get planExpires => _$this._planExpires;
+  set planExpires(String? planExpires) => _$this._planExpires = planExpires;
 
-  String _latestVersion;
-  String get latestVersion => _$this._latestVersion;
-  set latestVersion(String latestVersion) =>
+  String? _latestVersion;
+  String? get latestVersion => _$this._latestVersion;
+  set latestVersion(String? latestVersion) =>
       _$this._latestVersion = latestVersion;
 
-  String _currentVersion;
-  String get currentVersion => _$this._currentVersion;
-  set currentVersion(String currentVersion) =>
+  String? _currentVersion;
+  String? get currentVersion => _$this._currentVersion;
+  set currentVersion(String? currentVersion) =>
       _$this._currentVersion = currentVersion;
 
-  bool _debugEnabled;
-  bool get debugEnabled => _$this._debugEnabled;
-  set debugEnabled(bool debugEnabled) => _$this._debugEnabled = debugEnabled;
+  bool? _debugEnabled;
+  bool? get debugEnabled => _$this._debugEnabled;
+  set debugEnabled(bool? debugEnabled) => _$this._debugEnabled = debugEnabled;
 
-  bool _isDocker;
-  bool get isDocker => _$this._isDocker;
-  set isDocker(bool isDocker) => _$this._isDocker = isDocker;
+  bool? _isDocker;
+  bool? get isDocker => _$this._isDocker;
+  set isDocker(bool? isDocker) => _$this._isDocker = isDocker;
 
-  bool _isMigrated;
-  bool get isMigrated => _$this._isMigrated;
-  set isMigrated(bool isMigrated) => _$this._isMigrated = isMigrated;
+  bool? _isMigrated;
+  bool? get isMigrated => _$this._isMigrated;
+  set isMigrated(bool? isMigrated) => _$this._isMigrated = isMigrated;
 
-  bool _isHosted;
-  bool get isHosted => _$this._isHosted;
-  set isHosted(bool isHosted) => _$this._isHosted = isHosted;
+  bool? _isHosted;
+  bool? get isHosted => _$this._isHosted;
+  set isHosted(bool? isHosted) => _$this._isHosted = isHosted;
 
-  bool _isSchedulerRunning;
-  bool get isSchedulerRunning => _$this._isSchedulerRunning;
-  set isSchedulerRunning(bool isSchedulerRunning) =>
+  bool? _isSchedulerRunning;
+  bool? get isSchedulerRunning => _$this._isSchedulerRunning;
+  set isSchedulerRunning(bool? isSchedulerRunning) =>
       _$this._isSchedulerRunning = isSchedulerRunning;
 
-  bool _disableAutoUpdate;
-  bool get disableAutoUpdate => _$this._disableAutoUpdate;
-  set disableAutoUpdate(bool disableAutoUpdate) =>
+  bool? _disableAutoUpdate;
+  bool? get disableAutoUpdate => _$this._disableAutoUpdate;
+  set disableAutoUpdate(bool? disableAutoUpdate) =>
       _$this._disableAutoUpdate = disableAutoUpdate;
 
-  String _defaultCompanyId;
-  String get defaultCompanyId => _$this._defaultCompanyId;
-  set defaultCompanyId(String defaultCompanyId) =>
+  String? _defaultCompanyId;
+  String? get defaultCompanyId => _$this._defaultCompanyId;
+  set defaultCompanyId(String? defaultCompanyId) =>
       _$this._defaultCompanyId = defaultCompanyId;
 
-  int _hostedClientCount;
-  int get hostedClientCount => _$this._hostedClientCount;
-  set hostedClientCount(int hostedClientCount) =>
+  int? _hostedClientCount;
+  int? get hostedClientCount => _$this._hostedClientCount;
+  set hostedClientCount(int? hostedClientCount) =>
       _$this._hostedClientCount = hostedClientCount;
 
-  int _hostedCompanyCount;
-  int get hostedCompanyCount => _$this._hostedCompanyCount;
-  set hostedCompanyCount(int hostedCompanyCount) =>
+  int? _hostedCompanyCount;
+  int? get hostedCompanyCount => _$this._hostedCompanyCount;
+  set hostedCompanyCount(int? hostedCompanyCount) =>
       _$this._hostedCompanyCount = hostedCompanyCount;
 
-  bool _setReactAsDefaultAP;
-  bool get setReactAsDefaultAP => _$this._setReactAsDefaultAP;
-  set setReactAsDefaultAP(bool setReactAsDefaultAP) =>
+  bool? _setReactAsDefaultAP;
+  bool? get setReactAsDefaultAP => _$this._setReactAsDefaultAP;
+  set setReactAsDefaultAP(bool? setReactAsDefaultAP) =>
       _$this._setReactAsDefaultAP = setReactAsDefaultAP;
 
-  bool _accountSmsVerified;
-  bool get accountSmsVerified => _$this._accountSmsVerified;
-  set accountSmsVerified(bool accountSmsVerified) =>
+  bool? _accountSmsVerified;
+  bool? get accountSmsVerified => _$this._accountSmsVerified;
+  set accountSmsVerified(bool? accountSmsVerified) =>
       _$this._accountSmsVerified = accountSmsVerified;
 
-  int _trialDaysLeft;
-  int get trialDaysLeft => _$this._trialDaysLeft;
-  set trialDaysLeft(int trialDaysLeft) => _$this._trialDaysLeft = trialDaysLeft;
+  int? _trialDaysLeft;
+  int? get trialDaysLeft => _$this._trialDaysLeft;
+  set trialDaysLeft(int? trialDaysLeft) =>
+      _$this._trialDaysLeft = trialDaysLeft;
 
-  bool _hasIapPlan;
-  bool get hasIapPlan => _$this._hasIapPlan;
-  set hasIapPlan(bool hasIapPlan) => _$this._hasIapPlan = hasIapPlan;
+  bool? _hasIapPlan;
+  bool? get hasIapPlan => _$this._hasIapPlan;
+  set hasIapPlan(bool? hasIapPlan) => _$this._hasIapPlan = hasIapPlan;
 
-  String _paymentId;
-  String get paymentId => _$this._paymentId;
-  set paymentId(String paymentId) => _$this._paymentId = paymentId;
+  String? _paymentId;
+  String? get paymentId => _$this._paymentId;
+  set paymentId(String? paymentId) => _$this._paymentId = paymentId;
 
-  bool _taxApiEnabled;
-  bool get taxApiEnabled => _$this._taxApiEnabled;
-  set taxApiEnabled(bool taxApiEnabled) =>
+  bool? _taxApiEnabled;
+  bool? get taxApiEnabled => _$this._taxApiEnabled;
+  set taxApiEnabled(bool? taxApiEnabled) =>
       _$this._taxApiEnabled = taxApiEnabled;
 
   AccountEntityBuilder() {
@@ -588,7 +589,7 @@ class AccountEntityBuilder
   }
 
   @override
-  void update(void Function(AccountEntityBuilder) updates) {
+  void update(void Function(AccountEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

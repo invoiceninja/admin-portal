@@ -20,23 +20,23 @@ class DesignRepository {
   final WebClient webClient;
 
   Future<DesignEntity> loadItem(
-      Credentials credentials, String entityId) async {
+      Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/designs/$entityId', credentials.token);
 
     final DesignItemResponse designResponse =
-        serializers.deserializeWith(DesignItemResponse.serializer, response);
+        serializers.deserializeWith(DesignItemResponse.serializer, response)!;
 
     return designResponse.data;
   }
 
   Future<BuiltList<DesignEntity>> loadList(Credentials credentials) async {
-    final url = credentials.url + '/designs?';
+    final url = credentials.url! + '/designs?';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
     final DesignListResponse designResponse =
-        serializers.deserializeWith(DesignListResponse.serializer, response);
+        serializers.deserializeWith(DesignListResponse.serializer, response)!;
 
     return designResponse.data;
   }
@@ -48,12 +48,12 @@ class DesignRepository {
     }
 
     final url =
-        credentials.url + '/designs/bulk?per_page=$kMaxEntitiesPerBulkAction';
+        credentials.url! + '/designs/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final DesignListResponse designResponse =
-        serializers.deserializeWith(DesignListResponse.serializer, response);
+        serializers.deserializeWith(DesignListResponse.serializer, response)!;
 
     return designResponse.data.toList();
   }
@@ -65,16 +65,16 @@ class DesignRepository {
 
     if (design.isNew) {
       response = await webClient.post(
-          credentials.url + '/designs', credentials.token,
+          credentials.url! + '/designs', credentials.token,
           data: json.encode(data));
     } else {
-      final url = credentials.url + '/designs/${design.id}';
+      final url = credentials.url! + '/designs/${design.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }
 
     final DesignItemResponse designResponse =
-        serializers.deserializeWith(DesignItemResponse.serializer, response);
+        serializers.deserializeWith(DesignItemResponse.serializer, response)!;
 
     return designResponse.data;
   }

@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/redux/payment/payment_selectors.dart';
 import 'payment_screen.dart';
 
 class PaymentScreenBuilder extends StatelessWidget {
-  const PaymentScreenBuilder({Key key}) : super(key: key);
+  const PaymentScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,16 +31,16 @@ class PaymentScreenBuilder extends StatelessWidget {
 
 class PaymentScreenVM {
   PaymentScreenVM({
-    @required this.isInMultiselect,
-    @required this.paymentList,
-    @required this.userCompany,
-    @required this.paymentMap,
+    required this.isInMultiselect,
+    required this.paymentList,
+    required this.userCompany,
+    required this.paymentMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> paymentList;
-  final BuiltMap<String, PaymentEntity> paymentMap;
+  final BuiltMap<String?, PaymentEntity?> paymentMap;
 
   static PaymentScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

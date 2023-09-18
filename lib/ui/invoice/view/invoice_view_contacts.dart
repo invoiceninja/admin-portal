@@ -12,14 +12,14 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceViewContacts extends StatelessWidget {
-  const InvoiceViewContacts({Key key, @required this.viewModel})
+  const InvoiceViewContacts({Key? key, required this.viewModel})
       : super(key: key);
 
   final AbstractInvoiceViewVM viewModel;
 
   @override
   Widget build(BuildContext context) {
-    final invoice = viewModel.invoice;
+    final invoice = viewModel.invoice!;
 
     return ScrollableListView(
       padding: const EdgeInsets.all(8),
@@ -35,7 +35,7 @@ class InvoiceViewContacts extends StatelessWidget {
 
 class _InvitationListTile extends StatelessWidget {
   const _InvitationListTile(
-      {@required this.invitation, @required this.viewModel});
+      {required this.invitation, required this.viewModel});
 
   final InvitationEntity invitation;
   final AbstractInvoiceViewVM viewModel;
@@ -43,16 +43,16 @@ class _InvitationListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final state = viewModel.state;
-    final client = state.clientState.get(viewModel.invoice.clientId);
-    final vendor = state.vendorState.get(viewModel.invoice.vendorId);
+    final state = viewModel.state!;
+    final client = state.clientState.get(viewModel.invoice!.clientId);
+    final vendor = state.vendorState.get(viewModel.invoice!.vendorId);
 
     String contactName = '';
 
-    if (viewModel.invoice.isPurchaseOrder) {
-      final contact = vendor.contacts.firstWhere(
-          (contact) => contact.id == invitation.vendorContactId,
-          orElse: () => VendorContactEntity());
+    if (viewModel.invoice!.isPurchaseOrder) {
+      final contact = vendor!.contacts.firstWhere(
+          (contact) => contact!.id == invitation.vendorContactId,
+          orElse: () => VendorContactEntity())!;
       if (contact.isNew) {
         return SizedBox();
       }
@@ -61,9 +61,9 @@ class _InvitationListTile extends StatelessWidget {
         contactName = vendor.name;
       }
     } else {
-      final contact = client.contacts.firstWhere(
-          (contact) => contact.id == invitation.clientContactId,
-          orElse: () => ClientContactEntity());
+      final contact = client!.contacts.firstWhere(
+          (contact) => contact!.id == invitation.clientContactId,
+          orElse: () => ClientContactEntity())!;
       if (contact.isNew) {
         return SizedBox();
       }
@@ -78,19 +78,19 @@ class _InvitationListTile extends StatelessWidget {
       case InvitationEntity.EMAIL_STATUS_DELIVERED:
         icon = Tooltip(
           child: Icon(Icons.check_circle),
-          message: localization.delivered,
+          message: localization!.delivered,
         );
         break;
       case InvitationEntity.EMAIL_STATUS_BOUNCED:
         icon = Tooltip(
           child: Icon(Icons.error),
-          message: localization.bounced,
+          message: localization!.bounced,
         );
         break;
       case InvitationEntity.EMAIL_STATUS_SPAM:
         icon = Tooltip(
           child: Icon(Icons.error),
-          message: localization.spam,
+          message: localization!.spam,
         );
         break;
     }
@@ -106,7 +106,7 @@ class _InvitationListTile extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 4),
               child: Text(
-                '${localization.sent}: ' +
+                '${localization!.sent}: ' +
                     formatDate(invitation.sentDate, context, showTime: true),
               ),
             ),
@@ -114,7 +114,7 @@ class _InvitationListTile extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 4),
               child: Text(
-                '${localization.opened}: ' +
+                '${localization!.opened}: ' +
                     formatDate(invitation.openedDate, context, showTime: true),
               ),
             ),
@@ -122,7 +122,7 @@ class _InvitationListTile extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 4),
               child: Text(
-                '${localization.viewed}: ' +
+                '${localization!.viewed}: ' +
                     formatDate(invitation.viewedDate, context, showTime: true),
               ),
             ),

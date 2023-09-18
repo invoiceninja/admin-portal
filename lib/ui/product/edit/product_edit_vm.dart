@@ -22,7 +22,7 @@ import 'package:invoiceninja_flutter/ui/product/view/product_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class ProductEditScreen extends StatelessWidget {
-  const ProductEditScreen({Key key}) : super(key: key);
+  const ProductEditScreen({Key? key}) : super(key: key);
 
   static const String route = '/product/edit';
 
@@ -44,21 +44,21 @@ class ProductEditScreen extends StatelessWidget {
 
 class ProductEditVM {
   ProductEditVM({
-    @required this.state,
-    @required this.company,
-    @required this.product,
-    @required this.origProduct,
-    @required this.onChanged,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
-    @required this.onEntityAction,
-    @required this.isSaving,
-    @required this.isDirty,
+    required this.state,
+    required this.company,
+    required this.product,
+    required this.origProduct,
+    required this.onChanged,
+    required this.onSavePressed,
+    required this.onCancelPressed,
+    required this.onEntityAction,
+    required this.isSaving,
+    required this.isDirty,
   });
 
   factory ProductEditVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final product = state.productUIState.editing;
+    final product = state.productUIState.editing!;
 
     return ProductEditVM(
       state: state,
@@ -84,23 +84,23 @@ class ProductEditVM {
           store.dispatch(
               SaveProductRequest(completer: completer, product: product));
           return completer.future.then((savedProduct) {
-            showToast(product.isNew
-                ? localization.createdProduct
-                : localization.updatedProduct);
+            showToast(product!.isNew
+                ? localization!.createdProduct
+                : localization!.updatedProduct);
 
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
               if (product.isNew) {
-                navigator.pushReplacementNamed(ProductViewScreen.route);
+                navigator!.pushReplacementNamed(ProductViewScreen.route);
               } else {
-                navigator.pop(savedProduct);
+                navigator!.pop(savedProduct);
               }
             } else {
               viewEntity(entity: savedProduct);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
                   return ErrorDialog(error);
                 });
@@ -123,9 +123,9 @@ class ProductEditVM {
   }
 
   final AppState state;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final ProductEntity product;
-  final ProductEntity origProduct;
+  final ProductEntity? origProduct;
   final Function(ProductEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;

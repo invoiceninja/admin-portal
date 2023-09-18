@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class WebhookListBuilder extends StatelessWidget {
-  const WebhookListBuilder({Key key}) : super(key: key);
+  const WebhookListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class WebhookListBuilder extends StatelessWidget {
                 user: viewModel.state.user,
                 filter: viewModel.filter,
                 webhook: webhook,
-                isChecked: isInMultiselect && listState.isSelected(webhook.id),
+                isChecked: isInMultiselect && listState.isSelected(webhook!.id),
               );
             });
       },
@@ -61,18 +61,18 @@ class WebhookListBuilder extends StatelessWidget {
 
 class WebhookListVM {
   WebhookListVM({
-    @required this.state,
-    @required this.userCompany,
-    @required this.webhookList,
-    @required this.webhookMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.onEntityAction,
-    @required this.tableColumns,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.userCompany,
+    required this.webhookList,
+    required this.webhookMap,
+    required this.filter,
+    required this.isLoading,
+    required this.listState,
+    required this.onRefreshed,
+    required this.onEntityAction,
+    required this.tableColumns,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
   });
 
   static WebhookListVM fromStore(Store<AppState> store) {
@@ -81,7 +81,7 @@ class WebhookListVM {
         return Future<Null>(null);
       }
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -105,7 +105,7 @@ class WebhookListVM {
           handleWebhookAction(context, webhooks, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
-          state.userCompany.settings?.getTableColumns(EntityType.webhook) ??
+          state.userCompany!.settings?.getTableColumns(EntityType.webhook) ??
               WebhookPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortWebhooks(field)),
       onClearMultielsect: () => store.dispatch(ClearWebhookMultiselect()),
@@ -113,11 +113,11 @@ class WebhookListVM {
   }
 
   final AppState state;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> webhookList;
-  final BuiltMap<String, WebhookEntity> webhookMap;
+  final BuiltMap<String?, WebhookEntity?> webhookMap;
   final ListUIState listState;
-  final String filter;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;

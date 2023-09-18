@@ -38,8 +38,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CompanyDetails extends StatefulWidget {
   const CompanyDetails({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final CompanyDetailsVM viewModel;
@@ -54,7 +54,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
       GlobalKey<FormState>(debugLabel: '_companyDetails');
 
   final FocusScopeNode _focusNode = FocusScopeNode();
-  TabController _controller;
+  TabController? _controller;
   final _debouncer = Debouncer();
 
   final _nameController = TextEditingController();
@@ -96,12 +96,12 @@ class _CompanyDetailsState extends State<CompanyDetails>
         vsync: this,
         length: state.settingsUIState.isFiltered ? 4 : 5,
         initialIndex: settingsUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller!.index));
   }
 
   @override
@@ -140,31 +140,31 @@ class _CompanyDetailsState extends State<CompanyDetails>
     final viewModel = widget.viewModel;
     final settings = viewModel.settings;
 
-    _nameController.text = settings.name;
-    _idNumberController.text = settings.idNumber;
-    _vatNumberController.text = settings.vatNumber;
-    _emailController.text = settings.email;
-    _websiteController.text = settings.website;
-    _phoneController.text = settings.phone;
-    _address1Controller.text = settings.address1;
-    _address2Controller.text = settings.address2;
-    _cityController.text = settings.city;
-    _stateController.text = settings.state;
-    _postalCodeController.text = settings.postalCode;
-    _custom1Controller.text = settings.customValue1;
-    _custom2Controller.text = settings.customValue2;
-    _custom3Controller.text = settings.customValue3;
-    _custom4Controller.text = settings.customValue4;
-    _invoiceTermsController.text = settings.defaultInvoiceTerms;
-    _invoiceFooterController.text = settings.defaultInvoiceFooter;
-    _quoteTermsController.text = settings.defaultQuoteTerms;
-    _quoteFooterController.text = settings.defaultQuoteFooter;
-    _creditFooterController.text = settings.defaultCreditFooter;
-    _creditTermsController.text = settings.defaultCreditTerms;
-    _purchaseOrderFooterController.text = settings.defaultPurchaseOrderFooter;
-    _purchaseOrderTermsController.text = settings.defaultPurchaseOrderTerms;
-    _qrIbanController.text = settings.qrIban;
-    _besrIdController.text = settings.besrId;
+    _nameController.text = settings.name!;
+    _idNumberController.text = settings.idNumber!;
+    _vatNumberController.text = settings.vatNumber!;
+    _emailController.text = settings.email!;
+    _websiteController.text = settings.website!;
+    _phoneController.text = settings.phone!;
+    _address1Controller.text = settings.address1!;
+    _address2Controller.text = settings.address2!;
+    _cityController.text = settings.city!;
+    _stateController.text = settings.state!;
+    _postalCodeController.text = settings.postalCode!;
+    _custom1Controller.text = settings.customValue1!;
+    _custom2Controller.text = settings.customValue2!;
+    _custom3Controller.text = settings.customValue3!;
+    _custom4Controller.text = settings.customValue4!;
+    _invoiceTermsController.text = settings.defaultInvoiceTerms!;
+    _invoiceFooterController.text = settings.defaultInvoiceFooter!;
+    _quoteTermsController.text = settings.defaultQuoteTerms!;
+    _quoteFooterController.text = settings.defaultQuoteFooter!;
+    _creditFooterController.text = settings.defaultCreditFooter!;
+    _creditTermsController.text = settings.defaultCreditTerms!;
+    _purchaseOrderFooterController.text = settings.defaultPurchaseOrderFooter!;
+    _purchaseOrderTermsController.text = settings.defaultPurchaseOrderTerms!;
+    _qrIbanController.text = settings.qrIban!;
+    _besrIdController.text = settings.besrId!;
 
     _controllers.forEach(
         (dynamic controller) => controller.addListener(_onSettingsChanged));
@@ -175,8 +175,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
   @override
   void dispose() {
     _focusNode.dispose();
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onSettingsChanged);
       controller.dispose();
@@ -269,12 +269,12 @@ class _CompanyDetailsState extends State<CompanyDetails>
     final company = viewModel.company;
     final settings = viewModel.settings;
 
-    if (!state.userCompany.isAdmin) {
+    if (!state.userCompany!.isAdmin) {
       return BlankScreen();
     }
 
     return EditScaffold(
-      title: localization.companyDetails,
+      title: localization!.companyDetails,
       onSavePressed: viewModel.onSavePressed,
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
@@ -295,9 +295,9 @@ class _CompanyDetailsState extends State<CompanyDetails>
           ),
           if (!state.settingsUIState.isFiltered)
             Tab(
-              text: state.company.documents.isEmpty
+              text: state.company!.documents.isEmpty
                   ? localization.documents
-                  : '${localization.documents} (${state.company.documents.length})',
+                  : '${localization.documents} (${state.company!.documents.length})',
             ),
         ],
       ),
@@ -380,7 +380,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   ),
                 ],
               ),
-              if (state.company.calculateTaxes)
+              if (state.company!.calculateTaxes)
                 AppDropdownButton<String>(
                   labelText: localization.classification,
                   showBlank: true,
@@ -391,7 +391,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   },
                   items: kTaxClassifications
                       .map((classification) => DropdownMenuItem(
-                            child: Text(localization.lookup(classification)),
+                            child: Text(localization.lookup(classification)!),
                             value: classification,
                           ))
                       .toList(),
@@ -423,7 +423,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       items: memoizedSizeList(state.staticState.sizeMap)
                           .map((sizeId) => DropdownMenuItem(
                                 child: Text(
-                                    state.staticState.sizeMap[sizeId].name),
+                                    state.staticState.sizeMap[sizeId]!.name),
                                 value: sizeId,
                               ))
                           .toList(),
@@ -577,11 +577,11 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       child: (state.isHosted && kIsWeb)
                           ? CachedImage(
                               width: double.infinity,
-                              url: state.credentials.url +
+                              url: state.credentials.url! +
                                   '/companies/' +
                                   company.id +
                                   '/logo',
-                              apiToken: state.userCompany.token.token,
+                              apiToken: state.userCompany!.token!.token,
                             )
                           : CachedImage(
                               width: double.infinity,
@@ -605,10 +605,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
                               state.paymentTermState.list)
                           .map((paymentTermId) {
                         final paymentTerm =
-                            state.paymentTermState.map[paymentTermId];
+                            state.paymentTermState.map[paymentTermId]!;
                         return DropdownMenuItem<String>(
                           child: Text(paymentTerm.numDays == 0
-                              ? localization.dueOnReceipt
+                              ? localization.dueOnReceipt!
                               : paymentTerm.name),
                           value: paymentTerm.numDays.toString(),
                         );
@@ -629,10 +629,10 @@ class _CompanyDetailsState extends State<CompanyDetails>
                               state.paymentTermState.list)
                           .map((paymentTermId) {
                         final paymentTerm =
-                            state.paymentTermState.map[paymentTermId];
+                            state.paymentTermState.map[paymentTermId]!;
                         return DropdownMenuItem<String>(
                           child: Text(paymentTerm.numDays == 0
-                              ? localization.dueOnReceipt
+                              ? localization.dueOnReceipt!
                               : paymentTerm.name),
                           value: paymentTerm.numDays.toString(),
                         );
@@ -770,7 +770,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
           ),
           if (!state.settingsUIState.isFiltered)
             DocumentGrid(
-              documents: state.company.documents.toList(),
+              documents: state.company!.documents.toList(),
               onUploadDocument: (path, isPrivate) =>
                   viewModel.onUploadDocuments(context, path, isPrivate),
               onRenamedDocument: () => store.dispatch(RefreshData()),

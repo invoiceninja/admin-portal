@@ -28,11 +28,11 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
   @memoized
   int get hashCode;
 
-  BuiltMap<String, ClientEntity> get map;
+  BuiltMap<String?, ClientEntity?> get map;
 
   BuiltList<String> get list;
 
-  ClientEntity get(String clientId) {
+  ClientEntity? get(String clientId) {
     if (map.containsKey(clientId)) {
       return map[clientId];
     } else {
@@ -41,7 +41,7 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
   }
 
   ClientState loadClients(BuiltList<ClientEntity> clients) {
-    final map = Map<String, ClientEntity>.fromIterable(
+    final map = Map<String?, ClientEntity?>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
@@ -58,7 +58,7 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
 abstract class ClientUIState extends Object
     with EntityUIState
     implements Built<ClientUIState, ClientUIStateBuilder> {
-  factory ClientUIState(PrefStateSortField sortField) {
+  factory ClientUIState(PrefStateSortField? sortField) {
     return _$ClientUIState._(
       listUIState: ListUIState(sortField?.field ?? ClientFields.name,
           sortAscending: sortField?.ascending),
@@ -75,17 +75,15 @@ abstract class ClientUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  ClientEntity get editing;
+  ClientEntity? get editing;
 
-  @nullable
-  ClientContactEntity get editingContact;
+  ClientContactEntity? get editingContact;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<ClientUIState> get serializer => _$clientUIStateSerializer;
 }

@@ -8,14 +8,14 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class LockScreen extends StatelessWidget {
-  const LockScreen({@required this.onAuthenticatePressed});
+  const LockScreen({required this.onAuthenticatePressed});
 
   final Function onAuthenticatePressed;
 
   @override
   Widget build(BuildContext context) {
     //final localization = AppLocalization(Locale(Intl.defaultLocale));
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     return Material(
       color: Colors.grey,
@@ -43,7 +43,7 @@ class LockScreen extends StatelessWidget {
             ],
           ),
           ElevatedButton(
-            onPressed: onAuthenticatePressed,
+            onPressed: onAuthenticatePressed as void Function()?,
             child: Text(localization.authenticate),
           )
         ],

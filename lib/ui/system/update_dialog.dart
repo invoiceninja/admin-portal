@@ -36,33 +36,33 @@ enum UpdateState {
 
 class _UpdateDialogState extends State<UpdateDialog> {
   UpdateState updateState = UpdateState.initial;
-  String updateResponse;
+  String? updateResponse;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final account = state.userCompany.account;
+    final account = state.userCompany!.account!;
     const dockerCommand =
         'docker-compose down\ndocker-compose pull\ndocker-compose up';
 
-    var message = '';
+    String? message = '';
     if (updateState == UpdateState.done) {
       message = updateResponse;
-      if (message.isEmpty) {
-        message = localization.appUpdated;
+      if (message!.isEmpty) {
+        message = localization!.appUpdated;
       } else if (message.contains('failed')) {
-        message += '\n\n${localization.updateFailHelp}\n\ngit checkout .';
+        message += '\n\n${localization!.updateFailHelp}\n\ngit checkout .';
       }
     }
 
     return AlertDialog(
       title: Text(account.isUpdateAvailable
-          ? localization.updateAvailable
-          : localization.forceUpdate),
+          ? localization!.updateAvailable
+          : localization!.forceUpdate),
       content: updateState == UpdateState.done
-          ? SelectableText(message)
+          ? SelectableText(message!)
           : updateState == UpdateState.loading
               ? Padding(
                   padding: const EdgeInsets.only(top: 10),
@@ -115,7 +115,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
           ),
           if (account.isUpdateAvailable)
             TextButton(
-              child: Text(localization.releaseNotes.toUpperCase()),
+              child: Text(localization.releaseNotes!.toUpperCase()),
               onPressed: () => launchUrl(Uri.parse(kReleaseNotesUrl)),
             )
           else
@@ -168,7 +168,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
               updateResponse = jsonDecode(response.body)['message'];
             });
 
-            if (updateResponse.contains('failed')) {
+            if (updateResponse!.contains('failed')) {
               // do nothing
             } else {
               if (kIsWeb) {

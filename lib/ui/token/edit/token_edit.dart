@@ -12,8 +12,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TokenEdit extends StatefulWidget {
   const TokenEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final TokenEditVM viewModel;
@@ -68,7 +68,7 @@ class _TokenEditState extends State<TokenEdit> {
   }
 
   void _onSavePressed(BuildContext context) {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -85,7 +85,7 @@ class _TokenEditState extends State<TokenEdit> {
 
     return EditScaffold(
       entity: token,
-      title: token.isNew ? localization.newToken : localization.editToken,
+      title: token.isNew ? localization!.newToken : localization!.editToken,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: _onSavePressed,
       body: Form(

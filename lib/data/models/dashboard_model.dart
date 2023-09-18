@@ -49,13 +49,13 @@ class DateRangeComparison extends EnumClass {
 }
 
 class DashboardSettings {
-  DateRange dateRange;
-  String startDate;
-  String endDate;
-  bool enableComparison;
-  DateRangeComparison compareDateRange;
-  String compareStartDate;
-  String compareEndDate;
+  DateRange? dateRange;
+  String? startDate;
+  String? endDate;
+  bool? enableComparison;
+  DateRangeComparison? compareDateRange;
+  String? compareStartDate;
+  String? compareEndDate;
 
   static DashboardSettings fromState(DashboardUIState state) {
     final settings = state.settings;

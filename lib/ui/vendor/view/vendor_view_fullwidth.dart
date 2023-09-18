@@ -21,8 +21,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class VendorViewFullwidth extends StatefulWidget {
   const VendorViewFullwidth({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final VendorViewVM viewModel;
@@ -33,9 +33,9 @@ class VendorViewFullwidth extends StatefulWidget {
 
 class _VendorViewFullwidthState extends State<VendorViewFullwidth>
     with TickerProviderStateMixin {
-  ScrollController _scrollController1;
-  ScrollController _scrollController2;
-  ScrollController _scrollController3;
+  ScrollController? _scrollController1;
+  ScrollController? _scrollController2;
+  ScrollController? _scrollController3;
 
   @override
   void initState() {
@@ -48,9 +48,9 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
 
   @override
   void dispose() {
-    _scrollController1.dispose();
-    _scrollController2.dispose();
-    _scrollController3.dispose();
+    _scrollController1!.dispose();
+    _scrollController2!.dispose();
+    _scrollController3!.dispose();
     super.dispose();
   }
 
@@ -60,7 +60,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final company = state.company;
-    final vendor = state.vendorState.get(state.uiState.filterEntityId);
+    final vendor = state.vendorState.get(state.uiState.filterEntityId!)!;
     final documents = vendor.documents;
     final viewModel = widget.viewModel;
     final billingAddress = formatAddress(state, object: vendor);
@@ -88,7 +88,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                   left: kMobileDialogPadding),
               child: ListView(controller: _scrollController1, children: [
                 Text(
-                  localization.details,
+                  localization!.details,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 SizedBox(height: 8),
@@ -127,7 +127,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                     ),
                   ),
                 SizedBox(height: 4),
-                if (vendor.currencyId != state.company.currencyId)
+                if (vendor.currencyId != state.company!.currencyId)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 1),
                     child: Text(
@@ -138,7 +138,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                     ),
                   ),
                 if ((vendor.languageId ?? '').isNotEmpty &&
-                    vendor.languageId != state.company.languageId)
+                    vendor.languageId != state.company!.languageId)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 1),
                     child: Text(
@@ -149,16 +149,16 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                     ),
                   ),
                 if (vendor.customValue1.isNotEmpty)
-                  Text(company.formatCustomFieldValue(
+                  Text(company!.formatCustomFieldValue(
                       CustomFieldType.vendor1, vendor.customValue1)),
                 if (vendor.customValue2.isNotEmpty)
-                  Text(company.formatCustomFieldValue(
+                  Text(company!.formatCustomFieldValue(
                       CustomFieldType.vendor2, vendor.customValue2)),
                 if (vendor.customValue3.isNotEmpty)
-                  Text(company.formatCustomFieldValue(
+                  Text(company!.formatCustomFieldValue(
                       CustomFieldType.vendor3, vendor.customValue3)),
                 if (vendor.customValue4.isNotEmpty)
-                  Text(company.formatCustomFieldValue(
+                  Text(company!.formatCustomFieldValue(
                       CustomFieldType.vendor4, vendor.customValue4)),
               ]),
             ),
@@ -254,7 +254,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                contact.fullName,
+                                contact!.fullName,
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               if (contact.email.isNotEmpty)
@@ -278,19 +278,19 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                                   ),
                                 ),
                               if (contact.customValue1.isNotEmpty)
-                                Text(company.formatCustomFieldValue(
+                                Text(company!.formatCustomFieldValue(
                                     CustomFieldType.vendorContact1,
                                     contact.customValue1)),
                               if (contact.customValue2.isNotEmpty)
-                                Text(company.formatCustomFieldValue(
+                                Text(company!.formatCustomFieldValue(
                                     CustomFieldType.vendorContact2,
                                     contact.customValue2)),
                               if (contact.customValue3.isNotEmpty)
-                                Text(company.formatCustomFieldValue(
+                                Text(company!.formatCustomFieldValue(
                                     CustomFieldType.vendorContact3,
                                     contact.customValue3)),
                               if (contact.customValue4.isNotEmpty)
-                                Text(company.formatCustomFieldValue(
+                                Text(company!.formatCustomFieldValue(
                                     CustomFieldType.vendorContact4,
                                     contact.customValue4)),
                               SizedBox(height: 8),
@@ -335,7 +335,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                     bottom: kMobileDialogPadding,
                     left: kMobileDialogPadding / 2),
                 child: DefaultTabController(
-                  length: company.isModuleEnabled(EntityType.document) ? 3 : 2,
+                  length: company!.isModuleEnabled(EntityType.document) ? 3 : 2,
                   child: SizedBox(
                     height: minHeight,
                     child: Column(
@@ -345,7 +345,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                           isScrollable: true,
                           tabs: [
                             Tab(
-                              child: Text(localization.standing),
+                              child: Text(localization.standing!),
                             ),
                             if (company.isModuleEnabled(EntityType.document))
                               Tab(
@@ -374,7 +374,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                                             state.expenseState.list),
                                         context,
                                         currencyId: vendor.currencyId ??
-                                            state.company.currencyId),
+                                            state.company!.currencyId),
                                   ),
                                   if (vendor.privateNotes.isNotEmpty)
                                     IconText(

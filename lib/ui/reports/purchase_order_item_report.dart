@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:memoize/memoize.dart';
@@ -40,24 +41,24 @@ enum PurchaseOrderItemReportFields {
 }
 
 var memoizedPurchaseOrderItemReport = memo7((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, ProductEntity> productMap,
-  BuiltMap<String, InvoiceEntity> purchaseOrderMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String?, ProductEntity?> productMap,
+  BuiltMap<String?, InvoiceEntity?> purchaseOrderMap,
+  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String?, VendorEntity?> vendorMap,
   StaticState staticState,
 ) =>
-    lineItemReport(userCompany, reportsUIState, productMap, purchaseOrderMap,
+    lineItemReport(userCompany!, reportsUIState, productMap, purchaseOrderMap,
         clientMap, vendorMap, staticState));
 
 ReportResult lineItemReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, ProductEntity> productMap,
-  BuiltMap<String, InvoiceEntity> purchaseOrderMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String?, ProductEntity?> productMap,
+  BuiltMap<String?, InvoiceEntity?> purchaseOrderMap,
+  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String?, VendorEntity?> vendorMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -66,7 +67,7 @@ ReportResult lineItemReport(
   final reportSettings = userCompany.settings?.reportSettings;
   final lineItemReportSettings = reportSettings != null &&
           reportSettings.containsKey(kReportPurchaseOrderItem)
-      ? reportSettings[kReportPurchaseOrderItem]
+      ? reportSettings[kReportPurchaseOrderItem]!
       : ReportSettingsEntity();
 
   final defaultColumns = [
@@ -81,7 +82,7 @@ ReportResult lineItemReport(
     columns = BuiltList(lineItemReportSettings.columns
         .map((e) =>
             EnumUtils.fromString(PurchaseOrderItemReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
@@ -89,22 +90,22 @@ ReportResult lineItemReport(
 
   final productKeyMap = <String, String>{};
   for (var entry in productMap.entries) {
-    productKeyMap[entry.value.productKey] = entry.value.id;
+    productKeyMap[entry.value!.productKey] = entry.value!.id;
   }
 
   for (var entry in purchaseOrderMap.entries) {
-    final invoice = entry.value;
+    final invoice = entry.value!;
     final client = clientMap[invoice.clientId] ?? ClientEntity();
     final vendor = vendorMap[invoice.vendorId] ?? VendorEntity();
     final precision =
         staticState.currencyMap[client.currencyId]?.precision ?? 2;
 
-    if ((invoice.isDeleted && !userCompany.company.reportIncludeDeleted) ||
-        client.isDeleted) {
+    if ((invoice.isDeleted! && !userCompany.company!.reportIncludeDeleted) ||
+        client.isDeleted!) {
       continue;
     }
 
-    if (!userCompany.company.reportIncludeDrafts && invoice.isDraft) {
+    if (!userCompany.company!.reportIncludeDrafts && invoice.isDraft) {
       continue;
     }
 
@@ -114,7 +115,7 @@ ReportResult lineItemReport(
 
       for (var column in columns) {
         dynamic value = '';
-        final productId = productKeyMap[lineItem.productKey];
+        final productId = productKeyMap[lineItem!.productKey];
 
         switch (column) {
           case PurchaseOrderItemReportFields.price:
@@ -127,12 +128,12 @@ ReportResult lineItemReport(
             if (lineItem.productCost != 0) {
               value = lineItem.productCost;
             } else {
-              value = productId == null ? 0.0 : productMap[productId].cost;
+              value = productId == null ? 0.0 : productMap[productId]!.cost;
             }
             break;
           case PurchaseOrderItemReportFields.profit:
             value = lineItem.netTotal(invoice, precision) -
-                (productId == null ? 0.0 : productMap[productId].cost);
+                (productId == null ? 0.0 : productMap[productId]!.cost);
             break;
           case PurchaseOrderItemReportFields.custom1:
             value = lineItem.customValue1;
@@ -168,13 +169,13 @@ ReportResult lineItemReport(
             value = client.displayName;
             break;
           case PurchaseOrderItemReportFields.clientEmail:
-            value = client.primaryContact.email;
+            value = client.primaryContact!.email;
             break;
           case PurchaseOrderItemReportFields.vendor:
             value = vendor.name;
             break;
           case PurchaseOrderItemReportFields.vendorEmail:
-            value = vendor.primaryContact.email;
+            value = vendor.primaryContact!.email;
             break;
           case PurchaseOrderItemReportFields.dueDate:
             value = invoice.dueDate;
@@ -208,8 +209,8 @@ ReportResult lineItemReport(
           value: value,
           userCompany: userCompany,
           reportsUIState: reportsUIState,
-          column: EnumUtils.parse(column),
-        )) {
+          column: EnumUtils.parse(column)!,
+        )!) {
           skip = true;
         }
 
@@ -234,13 +235,13 @@ ReportResult lineItemReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, lineItemReportSettings, selectedColumns));
+      sortReportTableRows(rowA, rowB, lineItemReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns: PurchaseOrderItemReportFields.values
         .where((field) =>
             field != PurchaseOrderItemReportFields.discount ||
-            userCompany.company.enableProductDiscount)
+            userCompany.company!.enableProductDiscount)
         .map((e) => EnumUtils.parse(e))
         .toList(),
     columns: selectedColumns,

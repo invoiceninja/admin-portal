@@ -26,7 +26,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/oauth.dart';
 
 class AccountManagementScreen extends StatelessWidget {
-  const AccountManagementScreen({Key key}) : super(key: key);
+  const AccountManagementScreen({Key? key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsAccountManagement';
 
   @override
@@ -45,14 +45,14 @@ class AccountManagementScreen extends StatelessWidget {
 
 class AccountManagementVM {
   AccountManagementVM({
-    @required this.state,
-    @required this.company,
-    @required this.onCompanyChanged,
-    @required this.onSetPrimaryCompany,
-    @required this.onSavePressed,
-    @required this.onCompanyDelete,
-    @required this.onPurgeData,
-    @required this.onAppliedLicense,
+    required this.state,
+    required this.company,
+    required this.onCompanyChanged,
+    required this.onSetPrimaryCompany,
+    required this.onSavePressed,
+    required this.onCompanyDelete,
+    required this.onPurgeData,
+    required this.onAppliedLicense,
   });
 
   static AccountManagementVM fromStore(Store<AppState> store) {
@@ -78,7 +78,7 @@ class AccountManagementVM {
               final state = store.state;
               if (companyLength == 1) {
                 store.dispatch(UserLogout());
-                if (state.user.isConnectedToGoogle) {
+                if (state.user!.isConnectedToGoogle) {
                   GoogleOAuth.disconnect();
                 }
               } else {
@@ -89,22 +89,22 @@ class AccountManagementVM {
                   ..future.then((value) {
                     store.dispatch(SelectCompany(companyIndex: 0));
                     store.dispatch(ViewDashboard());
-                    AppBuilder.of(navigatorKey.currentContext).rebuild();
+                    AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
 
-                    if (Navigator.of(context).canPop()) {
+                    if (Navigator.of(context!).canPop()) {
                       Navigator.of(context).pop();
                     }
-                  });
+                  } as FutureOr<_> Function(Null));
                 store.dispatch(
                     RefreshData(clearData: true, completer: refreshCompleter));
               }
-            }).catchError((Object error) {
-              if (Navigator.of(navigatorKey.currentContext).canPop()) {
-                Navigator.of(navigatorKey.currentContext).pop();
+            } as FutureOr<_> Function(Null)).catchError((Object error) {
+              if (Navigator.of(navigatorKey.currentContext!).canPop()) {
+                Navigator.of(navigatorKey.currentContext!).pop();
               }
 
               showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext,
+                  context: navigatorKey.currentContext!,
                   builder: (BuildContext context) {
                     return ErrorDialog(error);
                   });
@@ -120,14 +120,14 @@ class AccountManagementVM {
           Debouncer.runOnComplete(() {
             final settingsUIState = store.state.uiState.settingsUIState;
             final completer = snackBarCompleter<Null>(
-                context, AppLocalization.of(context).savedSettings);
+                context, AppLocalization.of(context)!.savedSettings);
             store.dispatch(SaveCompanyRequest(
                 completer: completer, company: settingsUIState.company));
           });
         },
         onPurgeData: (context, password, idToken) {
           final completer = snackBarCompleter<Null>(
-              context, AppLocalization.of(context).purgeSuccessful);
+              context, AppLocalization.of(context)!.purgeSuccessful);
           store.dispatch(PurgeDataRequest(
             completer: completer,
             password: password,
@@ -139,7 +139,7 @@ class AccountManagementVM {
         },
         onSetPrimaryCompany: (context) {
           final completer = snackBarCompleter<Null>(
-              context, AppLocalization.of(context).updatedCompany);
+              context, AppLocalization.of(context)!.updatedCompany);
           store.dispatch(SetDefaultCompanyRequest(completer: completer));
         });
   }
@@ -149,7 +149,7 @@ class AccountManagementVM {
   final CompanyEntity company;
   final Function(BuildContext) onSetPrimaryCompany;
   final Function(CompanyEntity) onCompanyChanged;
-  final Function(BuildContext, String, String, String) onCompanyDelete;
-  final Function(BuildContext, String, String) onPurgeData;
+  final Function(BuildContext?, String?, String?, String?) onCompanyDelete;
+  final Function(BuildContext, String?, String?) onPurgeData;
   final Function onAppliedLicense;
 }

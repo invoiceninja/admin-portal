@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class TransactionRuleViewScreen extends StatelessWidget {
   const TransactionRuleViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
 
@@ -41,15 +41,15 @@ class TransactionRuleViewScreen extends StatelessWidget {
 
 class TransactionRuleViewVM {
   TransactionRuleViewVM({
-    @required this.state,
-    @required this.transactionRule,
-    @required this.company,
-    @required this.onEntityAction,
-    @required this.onRefreshed,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.isDirty,
-    @required this.onBackPressed,
+    required this.state,
+    required this.transactionRule,
+    required this.company,
+    required this.onEntityAction,
+    required this.onRefreshed,
+    required this.isSaving,
+    required this.isLoading,
+    required this.isDirty,
+    required this.onBackPressed,
   });
 
   factory TransactionRuleViewVM.fromStore(Store<AppState> store) {
@@ -60,7 +60,7 @@ class TransactionRuleViewVM {
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadTransactionRule(
           completer: completer, transactionRuleId: transactionRule.id));
       return completer.future;
@@ -84,7 +84,7 @@ class TransactionRuleViewVM {
 
   final AppState state;
   final TransactionRuleEntity transactionRule;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;

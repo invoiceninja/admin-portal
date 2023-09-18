@@ -29,8 +29,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class LocalizationSettings extends StatefulWidget {
   const LocalizationSettings({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final LocalizationSettingsVM viewModel;
@@ -47,8 +47,8 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
   bool autoValidate = false;
 
   final _firstNameController = TextEditingController();
-  TabController _controller;
-  FocusScopeNode _focusNode;
+  TabController? _controller;
+  FocusScopeNode? _focusNode;
 
   List<TextEditingController> _controllers = [];
 
@@ -62,19 +62,19 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
         length: 2,
         initialIndex:
             settingsUIState.isFiltered ? 0 : settingsUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller!.index));
   }
 
   @override
   void dispose() {
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
-    _focusNode.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
+    _focusNode!.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -104,7 +104,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final settings = viewModel.settings;
@@ -113,7 +113,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
     final customLabels =
         kCustomLabels.where((key) => !translations.keys.contains(key)).toList();
     customLabels.sort(
-        (a, b) => localization.lookup(a).compareTo(localization.lookup(b)));
+        (a, b) => localization.lookup(a)!.compareTo(localization.lookup(b)!));
 
     return EditScaffold(
       title: localization.localization,
@@ -159,11 +159,11 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                     enabledLabel: '${localization.code}: ' +
                         formatNumber(1000, context,
                             showCurrencyCode: true,
-                            currencyId: settings.currencyId),
+                            currencyId: settings.currencyId)!,
                     disabledLabel: '${localization.symbol}: ' +
                         formatNumber(1000, context,
                             showCurrencyCode: false,
-                            currencyId: settings.currencyId),
+                            currencyId: settings.currencyId)!,
                   ),
                   if (!state.isDemo)
                     LearnMoreUrl(
@@ -215,8 +215,8 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                         viewModel.onCompanyChanged(company
                             .rebuild((b) => b..useCommaAsDecimalPlace = value));
                       },
-                      title: Text(localization.decimalComma),
-                      subtitle: Text(localization.useCommaAsDecimalPlace),
+                      title: Text(localization.decimalComma!),
+                      subtitle: Text(localization.useCommaAsDecimalPlace!),
                       activeColor: Theme.of(context).colorScheme.secondary,
                       secondary: isDesktop(context)
                           ? Icon(MdiIcons.commaCircle)
@@ -257,7 +257,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                                 MapEntry<String, DropdownMenuItem<String>>(
                                     id,
                                     DropdownMenuItem<String>(
-                                      child: Text(localization.lookup(month)),
+                                      child: Text(localization.lookup(month)!),
                                       value: id,
                                     )))
                             .values
@@ -280,7 +280,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                         child: DropdownButton<String>(
                           items: customLabels
                               .map((key) => DropdownMenuItem(
-                                    child: Text(localization.lookup(key)),
+                                    child: Text(localization.lookup(key)!),
                                     value: key,
                                   ))
                               .toList(),
@@ -320,20 +320,20 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                             ),
                             TextButton(
                               onPressed: () async {
-                                final countryId = await showDialog<String>(
+                                final countryId = (await showDialog<String>(
                                     context: context,
                                     builder: (BuildContext context) {
                                       return _AddCompanyDialog();
-                                    });
+                                    }))!;
                                 if (countryId.isNotEmpty) {
                                   final key = 'country_' +
-                                      state.staticState.countryMap[countryId]
+                                      state.staticState.countryMap[countryId]!
                                           .name;
                                   viewModel.onSettingsChanged(settings.rebuild(
                                       (b) => b..translations[key] = ''));
                                 }
                               },
-                              child: Text(localization.addCountry),
+                              child: Text(localization.addCountry!),
                             )
                           ],
                         ),
@@ -346,9 +346,9 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                       children: [
                         Expanded(
                             child: Text(
-                          key.startsWith('country_')
+                          key!.startsWith('country_')
                               ? key.split('_')[1]
-                              : localization.lookup(key),
+                              : localization.lookup(key)!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         )),
@@ -382,23 +382,23 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
 }
 
 class _AddCompanyDialog extends StatefulWidget {
-  const _AddCompanyDialog({Key key}) : super(key: key);
+  const _AddCompanyDialog({Key? key}) : super(key: key);
 
   @override
   State<_AddCompanyDialog> createState() => _AddCompanyDialogState();
 }
 
 class _AddCompanyDialogState extends State<_AddCompanyDialog> {
-  String _countryId;
+  String? _countryId;
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
     return AlertDialog(
-      title: Text(localization.addCountry),
+      title: Text(localization.addCountry!),
       actions: [
         TextButton(
           onPressed: () {

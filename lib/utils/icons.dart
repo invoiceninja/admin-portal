@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/system_log_model.dart';
 
-IconData getEntityActionIcon(EntityAction entityAction) {
+IconData? getEntityActionIcon(EntityAction? entityAction) {
   switch (entityAction) {
     case EntityAction.edit:
       return MdiIcons.circleEditOutline;
@@ -134,7 +134,7 @@ IconData getEntityActionIcon(EntityAction entityAction) {
   }
 }
 
-IconData getEntityIcon(EntityType entityType) {
+IconData getEntityIcon(EntityType? entityType) {
   switch (entityType) {
     case EntityType.dashboard:
       return MdiIcons.viewDashboard;
@@ -204,7 +204,7 @@ IconData getEntityIcon(EntityType entityType) {
   }
 }
 
-IconData getFileTypeIcon(String type) {
+IconData? getFileTypeIcon(String type) {
   switch (type) {
     case 'pdf':
       return MdiIcons.filePdfBox;
@@ -226,7 +226,7 @@ IconData getFileTypeIcon(String type) {
   }
 }
 
-IconData getSettingIcon(String section) {
+IconData? getSettingIcon(String section) {
   switch (section) {
     case kSettingsCompanyDetails:
       return Icons.business;

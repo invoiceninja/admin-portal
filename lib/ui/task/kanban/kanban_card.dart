@@ -24,16 +24,16 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class KanbanTaskCard extends StatefulWidget {
   const KanbanTaskCard({
-    @required this.task,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
-    @required this.isDragging,
-    @required this.isSaving,
+    required this.task,
+    required this.onSavePressed,
+    required this.onCancelPressed,
+    required this.isDragging,
+    required this.isSaving,
     this.isCorrectOrder = true,
     this.isSelected = false,
   });
 
-  final TaskEntity task;
+  final TaskEntity? task;
   final Function(Completer<TaskEntity>, String) onSavePressed;
   final Function() onCancelPressed;
   final bool isCorrectOrder;
@@ -54,7 +54,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
   void initState() {
     super.initState();
 
-    final task = widget.task;
+    final task = widget.task!;
     _description = task.description;
     _isEditing = task.isNew;
   }
@@ -64,19 +64,19 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final task = widget.task;
+    final task = widget.task!;
     final project = state.projectState.get(task.projectId);
     final client = state.clientState.get(task.clientId);
-    final textColor = Theme.of(context).textTheme.bodyLarge.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
     var color = Colors.grey;
     if (task.projectId.isNotEmpty) {
       final projectIndex = state.projectState.list.indexOf(task.projectId);
-      color = getColorByIndex(projectIndex);
+      color = getColorByIndex(projectIndex) as MaterialColor;
     }
 
     final isDragging =
-        context.findAncestorStateOfType<KanbanViewState>().isDragging;
+        context.findAncestorStateOfType<KanbanViewState>()!.isDragging;
 
     if (_isEditing && !isDragging) {
       return Card(
@@ -105,7 +105,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                         }
                       });
                     },
-                    label: localization.cancel,
+                    label: localization!.cancel,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 8),
@@ -135,10 +135,10 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
     }
 
     final startLabel = task.isRunning
-        ? localization.stop
+        ? localization!.stop
         : task.getTaskTimes().isEmpty
-            ? localization.start
-            : localization.resume;
+            ? localization!.start
+            : localization!.resume;
 
     return MouseRegion(
       onHover: (event) {
@@ -155,7 +155,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
             shape: RoundedRectangleBorder(
               side: BorderSide(
                   color: widget.isSelected && state.prefState.isDesktop
-                      ? state.accentColor
+                      ? state.accentColor!
                       : Colors.transparent,
                   width: 1),
               borderRadius: BorderRadius.circular(kBorderRadius),
@@ -269,14 +269,14 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                           child: LiveText(
                             () {
                               return formatDuration(task.calculateDuration()) +
-                                  (client.isOld
+                                  (client!.isOld
                                       ? ' • ' + client.displayName
                                       : '') +
-                                  (project.isOld ? ' • ' + project.name : '');
+                                  (project!.isOld ? ' • ' + project.name : '');
                             },
                             style: TextStyle(
                               fontSize: 12,
-                              color: textColor.withOpacity(kLighterOpacity),
+                              color: textColor!.withOpacity(kLighterOpacity),
                             ),
                           ),
                         ),
@@ -297,7 +297,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                                 startLabel,
                               ]
                                   .map((value) => PopupMenuItem<String>(
-                                        child: Text(localization.lookup(value)),
+                                        child: Text(localization.lookup(value)!),
                                         value: value,
                                       ))
                                   .toList();

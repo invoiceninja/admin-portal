@@ -1,4 +1,5 @@
 // Dart imports:
+import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 
@@ -25,20 +26,21 @@ class ExpenseRepository {
   final WebClient webClient;
 
   Future<ExpenseEntity> loadItem(
-      Credentials credentials, String entityId) async {
+      Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/expenses/$entityId', credentials.token);
 
-    final ExpenseItemResponse expenseResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.deserializeWith,
-        <dynamic>[ExpenseItemResponse.serializer, response]);
+    final ExpenseItemResponse expenseResponse =
+        await (compute<dynamic, dynamic>(SerializationUtils.deserializeWith,
+                <dynamic>[ExpenseItemResponse.serializer, response])
+            as FutureOr<ExpenseItemResponse>);
 
     return expenseResponse.data;
   }
 
   Future<BuiltList<ExpenseEntity>> loadList(Credentials credentials, int page,
       int createdAt, bool filterDeleted) async {
-    final url = credentials.url +
+    final url = credentials.url! +
         '/expenses?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
 
     /* Server is incorrect if client isn't set
@@ -49,9 +51,10 @@ class ExpenseRepository {
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final ExpenseListResponse expenseResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.deserializeWith,
-        <dynamic>[ExpenseListResponse.serializer, response]);
+    final ExpenseListResponse expenseResponse =
+        await (compute<dynamic, dynamic>(SerializationUtils.deserializeWith,
+                <dynamic>[ExpenseListResponse.serializer, response])
+            as FutureOr<ExpenseListResponse>);
 
     return expenseResponse.data;
   }
@@ -63,12 +66,12 @@ class ExpenseRepository {
     }
 
     final url =
-        credentials.url + '/expenses/bulk?per_page=$kMaxEntitiesPerBulkAction';
+        credentials.url! + '/expenses/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final ExpenseListResponse expenseResponse =
-        serializers.deserializeWith(ExpenseListResponse.serializer, response);
+        serializers.deserializeWith(ExpenseListResponse.serializer, response)!;
 
     return expenseResponse.data.toList();
   }
@@ -80,16 +83,16 @@ class ExpenseRepository {
 
     if (expense.isNew) {
       response = await webClient.post(
-          credentials.url + '/expenses', credentials.token,
+          credentials.url! + '/expenses', credentials.token,
           data: json.encode(data));
     } else {
-      final url = credentials.url + '/expenses/${expense.id}';
+      final url = credentials.url! + '/expenses/${expense.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }
 
     final ExpenseItemResponse expenseResponse =
-        serializers.deserializeWith(ExpenseItemResponse.serializer, response);
+        serializers.deserializeWith(ExpenseItemResponse.serializer, response)!;
 
     return expenseResponse.data;
   }
@@ -109,7 +112,7 @@ class ExpenseRepository {
         data: fields, multipartFiles: multipartFiles);
 
     final ExpenseItemResponse expenseResponse =
-        serializers.deserializeWith(ExpenseItemResponse.serializer, response);
+        serializers.deserializeWith(ExpenseItemResponse.serializer, response)!;
 
     return expenseResponse.data;
   }

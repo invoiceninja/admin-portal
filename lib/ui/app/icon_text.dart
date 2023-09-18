@@ -11,10 +11,10 @@ class IconText extends StatelessWidget {
     this.copyToClipboard = false,
   });
 
-  final String text;
-  final IconData icon;
-  final TextStyle style;
-  final MainAxisAlignment alignment;
+  final String? text;
+  final IconData? icon;
+  final TextStyle? style;
+  final MainAxisAlignment? alignment;
   final bool copyToClipboard;
 
   @override

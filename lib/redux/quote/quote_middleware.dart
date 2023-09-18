@@ -70,21 +70,21 @@ List<Middleware<AppState>> createStoreQuotesMiddleware([
 Middleware<AppState> _viewQuote() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ViewQuote;
+    final action = dynamicAction as ViewQuote?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      await navigatorKey.currentState.pushNamed(QuoteViewScreen.route);
+      await navigatorKey.currentState!.pushNamed(QuoteViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewQuoteList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewQuoteList;
+    final action = dynamicAction as ViewQuoteList?;
 
     next(action);
 
@@ -95,7 +95,7 @@ Middleware<AppState> _viewQuoteList() {
     store.dispatch(UpdateCurrentRoute(QuoteScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           QuoteScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -103,14 +103,14 @@ Middleware<AppState> _viewQuoteList() {
 
 Middleware<AppState> _editQuote() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditQuote;
+    final action = dynamicAction as EditQuote?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(QuoteEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(QuoteEditScreen.route);
+      navigatorKey.currentState!.pushNamed(QuoteEditScreen.route);
     }
   };
 }
@@ -118,7 +118,7 @@ Middleware<AppState> _editQuote() {
 Middleware<AppState> _showEmailQuote() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ShowEmailQuote;
+    final action = dynamicAction as ShowEmailQuote?;
 
     next(action);
 
@@ -126,10 +126,10 @@ Middleware<AppState> _showEmailQuote() {
 
     if (store.state.prefState.isMobile) {
       final emailWasSent =
-          await navigatorKey.currentState.pushNamed(QuoteEmailScreen.route);
+          await navigatorKey.currentState!.pushNamed(QuoteEmailScreen.route);
 
-      if (action.completer != null && emailWasSent != null && emailWasSent) {
-        action.completer.complete(null);
+      if (action!.completer != null && emailWasSent != null && emailWasSent as bool) {
+        action.completer!.complete(null);
       }
     }
   };
@@ -138,14 +138,14 @@ Middleware<AppState> _showEmailQuote() {
 Middleware<AppState> _showPdfQuote() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ShowPdfQuote;
+    final action = dynamicAction as ShowPdfQuote?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(QuotePdfScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(QuotePdfScreen.route);
+      navigatorKey.currentState!.pushNamed(QuotePdfScreen.route);
     }
   };
 }
@@ -313,7 +313,7 @@ Middleware<AppState> _markSentQuote(QuoteRepository repository) {
 Middleware<AppState> _emailQuote(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EmailQuoteRequest;
-    final origQuote = store.state.quoteState.map[action.quoteId];
+    final origQuote = store.state.quoteState.map[action.quoteId]!;
     repository
         .emailQuote(
       store.state.credentials,
@@ -347,7 +347,7 @@ Middleware<AppState> _saveQuote(QuoteRepository repository) {
     // remove any empty line items
     final updatedQuote = action.quote.rebuild((b) => b
       ..lineItems
-          .replace(action.quote.lineItems.where((item) => !item.isEmpty)));
+          .replace(action.quote.lineItems.where((item) => !item!.isEmpty)));
 
     repository
         .saveData(store.state.credentials, updatedQuote, action.action)
@@ -380,13 +380,13 @@ Middleware<AppState> _loadQuote(QuoteRepository repository) {
       store.dispatch(LoadQuoteSuccess(quote));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadQuoteFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -423,17 +423,17 @@ Middleware<AppState> _bulkEmailQuotes(QuoteRepository repository) {
 
     repository
         .bulkAction(
-            store.state.credentials, action.quoteIds, EntityAction.sendEmail)
+            store.state.credentials, action.quoteIds!, EntityAction.sendEmail)
         .then((List<InvoiceEntity> quotes) {
       store.dispatch(BulkEmailQuotesSuccess(quotes));
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(BulkEmailQuotesFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -474,7 +474,7 @@ Middleware<AppState> _loadQuotes(QuoteRepository repository) {
         ));
       } else {
         if (action.completer != null) {
-          action.completer.complete(null);
+          action.completer!.complete(null);
         }
         store.dispatch(LoadCredits());
       }
@@ -482,7 +482,7 @@ Middleware<AppState> _loadQuotes(QuoteRepository repository) {
       print(error);
       store.dispatch(LoadQuotesFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -492,14 +492,14 @@ Middleware<AppState> _loadQuotes(QuoteRepository repository) {
 
 Middleware<AppState> _saveDocument(QuoteRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as SaveQuoteDocumentRequest;
+    final action = dynamicAction as SaveQuoteDocumentRequest?;
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
         store.state.credentials,
-        action.quote,
+        action!.quote,
         action.multipartFile,
-        action.isPrivate,
+        action.isPrivate!,
       )
           .then((quote) {
         store.dispatch(SaveQuoteSuccess(quote));
@@ -521,7 +521,7 @@ Middleware<AppState> _saveDocument(QuoteRepository repository) {
     } else {
       const error = 'Uploading documents requires an enterprise plan';
       store.dispatch(SaveQuoteDocumentFailure(error));
-      action.completer.completeError(error);
+      action!.completer.completeError(error);
     }
 
     next(action);

@@ -29,12 +29,12 @@ abstract class WebhookState
   @memoized
   int get hashCode;
 
-  BuiltMap<String, WebhookEntity> get map;
+  BuiltMap<String?, WebhookEntity?> get map;
 
   BuiltList<String> get list;
 
   WebhookState loadWebhooks(BuiltList<WebhookEntity> clients) {
-    final map = Map<String, WebhookEntity>.fromIterable(
+    final map = Map<String?, WebhookEntity?>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
@@ -51,7 +51,7 @@ abstract class WebhookState
 abstract class WebhookUIState extends Object
     with EntityUIState
     implements Built<WebhookUIState, WebhookUIStateBuilder> {
-  factory WebhookUIState(PrefStateSortField sortField) {
+  factory WebhookUIState(PrefStateSortField? sortField) {
     return _$WebhookUIState._(
       listUIState: ListUIState(sortField?.field ?? WebhookFields.targetUrl,
           sortAscending: sortField?.ascending),
@@ -67,14 +67,13 @@ abstract class WebhookUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  WebhookEntity get editing;
+  WebhookEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<WebhookUIState> get serializer =>
       _$webhookUIStateSerializer;

@@ -20,8 +20,8 @@ import 'subscription_screen_vm.dart';
 
 class SubscriptionScreen extends StatelessWidget {
   const SubscriptionScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsPaymentLinks';
@@ -92,7 +92,7 @@ class SubscriptionScreen extends StatelessWidget {
             store.dispatch(FilterSubscriptionsByCustom4(value)),
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany.canCreate(EntityType.subscription)
+              userCompany!.canCreate(EntityType.subscription)
           ? FloatingActionButton(
               heroTag: 'subscription_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
@@ -104,7 +104,7 @@ class SubscriptionScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newPaymentLink,
+              tooltip: localization!.newPaymentLink,
             )
           : null,
     );

@@ -26,24 +26,24 @@ class ViewDesignList implements PersistUI {
 
 class ViewDesign implements PersistUI, PersistPrefs {
   ViewDesign({
-    @required this.designId,
+    required this.designId,
     this.force = false,
   });
 
-  final String designId;
+  final String? designId;
   final bool force;
 }
 
 class EditDesign implements PersistUI, PersistPrefs {
   EditDesign(
-      {@required this.design,
+      {required this.design,
       this.completer,
       this.cancelCompleter,
       this.force = false});
 
   final DesignEntity design;
-  final Completer completer;
-  final Completer cancelCompleter;
+  final Completer? completer;
+  final Completer? cancelCompleter;
   final bool force;
 }
 
@@ -56,21 +56,21 @@ class UpdateDesign implements PersistUI {
 class LoadDesign {
   LoadDesign({this.completer, this.designId});
 
-  final Completer completer;
-  final String designId;
+  final Completer? completer;
+  final String? designId;
 }
 
 class LoadDesignActivity {
   LoadDesignActivity({this.completer, this.designId});
 
-  final Completer completer;
-  final String designId;
+  final Completer? completer;
+  final String? designId;
 }
 
 class LoadDesigns {
   LoadDesigns({this.completer});
 
-  final Completer completer;
+  final Completer? completer;
 }
 
 class LoadDesignRequest implements StartLoading {}
@@ -124,8 +124,8 @@ class LoadDesignsSuccess implements StopLoading {
 class SaveDesignRequest implements StartSaving {
   SaveDesignRequest({this.completer, this.design});
 
-  final Completer completer;
-  final DesignEntity design;
+  final Completer? completer;
+  final DesignEntity? design;
 }
 
 class SaveDesignSuccess implements StopSaving, PersistData, PersistUI {
@@ -162,7 +162,7 @@ class ArchiveDesignsSuccess implements StopSaving, PersistData {
 class ArchiveDesignsFailure implements StopSaving {
   ArchiveDesignsFailure(this.designs);
 
-  final List<DesignEntity> designs;
+  final List<DesignEntity?> designs;
 }
 
 class DeleteDesignsRequest implements StartSaving {
@@ -181,7 +181,7 @@ class DeleteDesignsSuccess implements StopSaving, PersistData {
 class DeleteDesignsFailure implements StopSaving {
   DeleteDesignsFailure(this.designs);
 
-  final List<DesignEntity> designs;
+  final List<DesignEntity?> designs;
 }
 
 class RestoreDesignsRequest implements StartSaving {
@@ -200,7 +200,7 @@ class RestoreDesignsSuccess implements StopSaving, PersistData {
 class RestoreDesignsFailure implements StopSaving {
   RestoreDesignsFailure(this.designs);
 
-  final List<DesignEntity> designs;
+  final List<DesignEntity?> designs;
 }
 
 class FilterDesigns implements PersistUI {
@@ -246,36 +246,36 @@ class FilterDesignsByCustom4 implements PersistUI {
 }
 
 void handleDesignAction(
-    BuildContext context, List<BaseEntity> designs, EntityAction action) {
+    BuildContext? context, List<BaseEntity?> designs, EntityAction? action) {
   if (designs.isEmpty) {
     return;
   }
 
-  final store = StoreProvider.of<AppState>(context);
+  final store = StoreProvider.of<AppState>(context!);
   final state = store.state;
   final localization = AppLocalization.of(context);
-  final design = designs.first as DesignEntity;
-  final designIds = designs.map((design) => design.id).toList();
+  final design = designs.first as DesignEntity?;
+  final designIds = designs.map((design) => design!.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: design);
+      editEntity(entity: design!);
       break;
     case EntityAction.clone:
-      createEntity(context: context, entity: design.clone);
+      createEntity(context: context, entity: design!.clone);
       break;
     case EntityAction.newInvoice:
       createEntity(
           context: context,
           entity: InvoiceEntity(state: state)
-              .rebuild((b) => b.designId = design.id));
+              .rebuild((b) => b.designId = design!.id));
       break;
     case EntityAction.newRecurringInvoice:
       createEntity(
           context: context,
           entity: InvoiceEntity(
                   state: state, entityType: EntityType.recurringInvoice)
-              .rebuild((b) => b.designId = design.id));
+              .rebuild((b) => b.designId = design!.id));
       break;
     case EntityAction.newQuote:
       createEntity(
@@ -283,7 +283,7 @@ void handleDesignAction(
           entity: InvoiceEntity(
             state: state,
             entityType: EntityType.quote,
-          ).rebuild((b) => b.designId = design.id));
+          ).rebuild((b) => b.designId = design!.id));
       break;
     case EntityAction.newCredit:
       createEntity(
@@ -291,32 +291,32 @@ void handleDesignAction(
           entity: InvoiceEntity(
             state: state,
             entityType: EntityType.credit,
-          ).rebuild((b) => b.designId = design.id));
+          ).rebuild((b) => b.designId = design!.id));
       break;
     case EntityAction.restore:
       final message = designIds.length > 1
-          ? localization.restoredDesigns
+          ? localization!.restoredDesigns
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', designIds.length.toString())
-          : localization.restoredDesign;
+          : localization!.restoredDesign;
       store.dispatch(RestoreDesignsRequest(
           snackBarCompleter<Null>(context, message), designIds));
       break;
     case EntityAction.archive:
       final message = designIds.length > 1
-          ? localization.archivedDesigns
+          ? localization!.archivedDesigns
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', designIds.length.toString())
-          : localization.archivedDesign;
+          : localization!.archivedDesign;
       store.dispatch(ArchiveDesignsRequest(
           snackBarCompleter<Null>(context, message), designIds));
       break;
     case EntityAction.delete:
       final message = designIds.length > 1
-          ? localization.deletedDesigns
+          ? localization!.deletedDesigns
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', designIds.length.toString())
-          : localization.deletedDesign;
+          : localization!.deletedDesign;
       store.dispatch(DeleteDesignsRequest(
           snackBarCompleter<Null>(context, message), designIds));
       break;
@@ -330,7 +330,7 @@ void handleDesignAction(
       }
 
       for (final design in designs) {
-        if (!store.state.designListState.isSelected(design.id)) {
+        if (!store.state.designListState.isSelected(design!.id)) {
           store.dispatch(AddToDesignMultiselect(entity: design));
         } else {
           store.dispatch(RemoveFromDesignMultiselect(entity: design));
@@ -350,15 +350,15 @@ class StartDesignMultiselect {
 }
 
 class AddToDesignMultiselect {
-  AddToDesignMultiselect({@required this.entity});
+  AddToDesignMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromDesignMultiselect {
-  RemoveFromDesignMultiselect({@required this.entity});
+  RemoveFromDesignMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearDesignMultiselect {

@@ -228,7 +228,7 @@ Future<AppState> _initialState(bool isTesting) async {
     //url = kAppDemoUrl;
   }
 
-  var prefState = PrefState();
+  PrefState? prefState = PrefState();
   if (prefString != null) {
     try {
       prefState = serializers.deserializeWith(
@@ -237,14 +237,14 @@ Future<AppState> _initialState(bool isTesting) async {
       print('## Error: Failed to load prefs: $e');
     }
   }
-  prefState = prefState.rebuild((b) => b
+  prefState = prefState!.rebuild((b) => b
     ..enableDarkModeSystem =
         WidgetsBinding.instance.window.platformBrightness == Brightness.dark);
 
-  String browserRoute;
+  String? browserRoute;
   if (kIsWeb && prefState.isDesktop) {
     browserRoute = WebUtils.browserRoute;
-    if (browserRoute.isNotEmpty && browserRoute.length > 4) {
+    if (browserRoute!.isNotEmpty && browserRoute.length > 4) {
       if (browserRoute == '/kanban') {
         browserRoute = '/task';
         prefState = prefState.rebuild((b) => b
@@ -258,7 +258,7 @@ Future<AppState> _initialState(bool isTesting) async {
 
   bool reportErrors = false;
   bool whiteLabeled = false;
-  String referralCode = '';
+  String? referralCode = '';
 
   if (kIsWeb) {
     reportErrors = WebUtils.getHtmlValue('report-errors') == '1';

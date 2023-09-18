@@ -11,7 +11,7 @@ import 'package:redux/redux.dart';
 import 'transaction_screen.dart';
 
 class TransactionScreenBuilder extends StatelessWidget {
-  const TransactionScreenBuilder({Key key}) : super(key: key);
+  const TransactionScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,18 +28,18 @@ class TransactionScreenBuilder extends StatelessWidget {
 
 class TransactionScreenVM {
   TransactionScreenVM({
-    @required this.isInMultiselect,
-    @required this.transactionList,
-    @required this.userCompany,
-    @required this.onEntityAction,
-    @required this.transactionMap,
+    required this.isInMultiselect,
+    required this.transactionList,
+    required this.userCompany,
+    required this.onEntityAction,
+    required this.transactionMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> transactionList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final BuiltMap<String, TransactionEntity> transactionMap;
+  final BuiltMap<String?, TransactionEntity?> transactionMap;
 
   static TransactionScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

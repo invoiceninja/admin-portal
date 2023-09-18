@@ -23,10 +23,10 @@ abstract class TransactionState
   @memoized
   int get hashCode;
 
-  BuiltMap<String, TransactionEntity> get map;
+  BuiltMap<String?, TransactionEntity?> get map;
   BuiltList<String> get list;
 
-  TransactionEntity get(String transactionId) {
+  TransactionEntity? get(String transactionId) {
     if (map.containsKey(transactionId)) {
       return map[transactionId];
     } else {
@@ -35,7 +35,7 @@ abstract class TransactionState
   }
 
   TransactionState loadTransactions(BuiltList<TransactionEntity> transactions) {
-    final map = Map<String, TransactionEntity>.fromIterable(
+    final map = Map<String?, TransactionEntity?>.fromIterable(
       transactions,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
@@ -53,7 +53,7 @@ abstract class TransactionState
 abstract class TransactionUIState extends Object
     with EntityUIState
     implements Built<TransactionUIState, TransactionUIStateBuilder> {
-  factory TransactionUIState(PrefStateSortField sortField) {
+  factory TransactionUIState(PrefStateSortField? sortField) {
     return _$TransactionUIState._(
       listUIState: ListUIState(
         sortField?.field ?? TransactionFields.date,
@@ -70,14 +70,13 @@ abstract class TransactionUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  TransactionEntity get editing;
+  TransactionEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<TransactionUIState> get serializer =>
       _$transactionUIStateSerializer;

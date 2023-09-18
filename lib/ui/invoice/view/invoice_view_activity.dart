@@ -9,9 +9,9 @@ import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 
 class InvoiceViewActivity extends StatefulWidget {
-  const InvoiceViewActivity({Key key, this.viewModel}) : super(key: key);
+  const InvoiceViewActivity({Key? key, this.viewModel}) : super(key: key);
 
-  final AbstractInvoiceViewVM viewModel;
+  final AbstractInvoiceViewVM? viewModel;
 
   @override
   _InvoiceViewActivityState createState() => _InvoiceViewActivityState();
@@ -20,15 +20,15 @@ class InvoiceViewActivity extends StatefulWidget {
 class _InvoiceViewActivityState extends State<InvoiceViewActivity> {
   @override
   void didChangeDependencies() {
-    if (widget.viewModel.invoice.isStale) {
-      widget.viewModel.onRefreshed(context);
+    if (widget.viewModel!.invoice!.isStale) {
+      widget.viewModel!.onRefreshed!(context);
     }
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    final invoice = widget.viewModel.invoice;
+    final invoice = widget.viewModel!.invoice!;
     final activities = invoice.activities;
 
     if (!invoice.isLoaded) {

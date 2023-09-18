@@ -17,10 +17,10 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskView extends StatefulWidget {
   const TaskView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
-    @required this.tabIndex,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
+    required this.tabIndex,
   }) : super(key: key);
 
   final TaskViewVM viewModel;
@@ -33,7 +33,7 @@ class TaskView extends StatefulWidget {
 
 class _TaskViewState extends State<TaskView>
     with SingleTickerProviderStateMixin {
-  TabController _controller;
+  TabController? _controller;
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _TaskViewState extends State<TaskView>
         vsync: this,
         length: 2,
         initialIndex: widget.isFilter ? 0 : state.taskUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
@@ -53,7 +53,7 @@ class _TaskViewState extends State<TaskView>
     }
 
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateTaskTab(tabIndex: _controller.index));
+    store.dispatch(UpdateTaskTab(tabIndex: _controller!.index));
   }
 
   @override
@@ -61,14 +61,14 @@ class _TaskViewState extends State<TaskView>
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.tabIndex != widget.tabIndex) {
-      _controller.index = widget.tabIndex;
+      _controller!.index = widget.tabIndex;
     }
   }
 
   @override
   void dispose() {
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
     super.dispose();
   }
 
@@ -79,19 +79,19 @@ class _TaskViewState extends State<TaskView>
     final localization = AppLocalization.of(context);
     final documents = task.documents;
     final state = viewModel.state;
-    final company = state.company;
+    final company = state.company!;
 
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: task,
-      isEditable: !state.company.invoiceTaskLock || !task.isInvoiced,
+      isEditable: !state.company!.invoiceTaskLock || !task.isInvoiced,
       appBarBottom: company.isModuleEnabled(EntityType.document)
           ? TabBar(
               controller: _controller,
               isScrollable: false,
               tabs: [
                 Tab(
-                  text: localization.overview,
+                  text: localization!.overview,
                 ),
                 Tab(
                   text: documents.isEmpty

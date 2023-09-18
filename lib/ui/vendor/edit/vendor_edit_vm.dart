@@ -22,7 +22,7 @@ import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class VendorEditScreen extends StatelessWidget {
-  const VendorEditScreen({Key key}) : super(key: key);
+  const VendorEditScreen({Key? key}) : super(key: key);
   static const String route = '/vendor/edit';
 
   @override
@@ -43,19 +43,19 @@ class VendorEditScreen extends StatelessWidget {
 
 class VendorEditVM {
   VendorEditVM({
-    @required this.state,
-    @required this.vendor,
-    @required this.company,
-    @required this.onChanged,
-    @required this.isSaving,
-    @required this.origVendor,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
-    @required this.isLoading,
+    required this.state,
+    required this.vendor,
+    required this.company,
+    required this.onChanged,
+    required this.isSaving,
+    required this.origVendor,
+    required this.onSavePressed,
+    required this.onCancelPressed,
+    required this.isLoading,
   });
 
   factory VendorEditVM.fromStore(Store<AppState> store) {
-    final vendor = store.state.vendorUIState.editing;
+    final vendor = store.state.vendorUIState.editing!;
     final state = store.state;
 
     return VendorEditVM(
@@ -71,21 +71,21 @@ class VendorEditVM {
       onCancelPressed: (BuildContext context) {
         createEntity(context: context, entity: VendorEntity(), force: true);
         if (state.vendorUIState.cancelCompleter != null) {
-          state.vendorUIState.cancelCompleter.complete();
+          state.vendorUIState.cancelCompleter!.complete();
         } else {
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
       },
       onSavePressed: (BuildContext context) {
         Debouncer.runOnComplete(() {
-          final vendor = store.state.vendorUIState.editing;
+          final vendor = store.state.vendorUIState.editing!;
           final localization = navigatorKey.localization;
           final navigator = navigatorKey.currentState;
           if (!vendor.hasNameSet) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
-                  return ErrorDialog(localization.pleaseEnterAName);
+                  return ErrorDialog(localization!.pleaseEnterAName);
                 });
             return null;
           }
@@ -95,15 +95,15 @@ class VendorEditVM {
               SaveVendorRequest(completer: completer, vendor: vendor));
           return completer.future.then((savedVendor) {
             showToast(vendor.isNew
-                ? localization.createdVendor
-                : localization.updatedVendor);
+                ? localization!.createdVendor
+                : localization!.updatedVendor);
 
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
               if (vendor.isNew && state.vendorUIState.saveCompleter == null) {
-                navigator.pushReplacementNamed(VendorViewScreen.route);
+                navigator!.pushReplacementNamed(VendorViewScreen.route);
               } else {
-                navigator.pop(savedVendor);
+                navigator!.pop(savedVendor);
               }
             } else if (state.vendorUIState.saveCompleter == null) {
               if (!state.prefState.isPreviewVisible) {
@@ -113,7 +113,7 @@ class VendorEditVM {
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
                   return ErrorDialog(error);
                 });
@@ -124,12 +124,12 @@ class VendorEditVM {
   }
 
   final VendorEntity vendor;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(VendorEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final bool isLoading;
   final bool isSaving;
-  final VendorEntity origVendor;
+  final VendorEntity? origVendor;
   final AppState state;
 }

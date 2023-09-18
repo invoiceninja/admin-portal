@@ -23,10 +23,10 @@ abstract class BankAccountState
   @memoized
   int get hashCode;
 
-  BuiltMap<String, BankAccountEntity> get map;
+  BuiltMap<String?, BankAccountEntity?> get map;
   BuiltList<String> get list;
 
-  BankAccountEntity get(String bankAccountId) {
+  BankAccountEntity? get(String bankAccountId) {
     if (map.containsKey(bankAccountId)) {
       return map[bankAccountId];
     } else {
@@ -35,7 +35,7 @@ abstract class BankAccountState
   }
 
   BankAccountState loadBankAccounts(BuiltList<BankAccountEntity> clients) {
-    final map = Map<String, BankAccountEntity>.fromIterable(
+    final map = Map<String?, BankAccountEntity?>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
@@ -53,7 +53,7 @@ abstract class BankAccountState
 abstract class BankAccountUIState extends Object
     with EntityUIState
     implements Built<BankAccountUIState, BankAccountUIStateBuilder> {
-  factory BankAccountUIState(PrefStateSortField sortField) {
+  factory BankAccountUIState(PrefStateSortField? sortField) {
     return _$BankAccountUIState._(
       listUIState: ListUIState(sortField?.field ?? BankAccountFields.name,
           sortAscending: sortField?.ascending),
@@ -68,14 +68,13 @@ abstract class BankAccountUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  BankAccountEntity get editing;
+  BankAccountEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<BankAccountUIState> get serializer =>
       _$bankAccountUIStateSerializer;

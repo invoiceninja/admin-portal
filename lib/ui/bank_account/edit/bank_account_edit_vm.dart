@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/ui/bank_account/view/bank_account_view_vm.d
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class BankAccountEditScreen extends StatelessWidget {
-  const BankAccountEditScreen({Key key}) : super(key: key);
+  const BankAccountEditScreen({Key? key}) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsBankAccountsEdit';
 
@@ -45,21 +45,21 @@ class BankAccountEditScreen extends StatelessWidget {
 
 class BankAccountEditVM {
   BankAccountEditVM({
-    @required this.state,
-    @required this.company,
-    @required this.bankAccount,
-    @required this.origBankAccount,
-    @required this.onChanged,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
-    @required this.onEntityAction,
-    @required this.isSaving,
-    @required this.isDirty,
+    required this.state,
+    required this.company,
+    required this.bankAccount,
+    required this.origBankAccount,
+    required this.onChanged,
+    required this.onSavePressed,
+    required this.onCancelPressed,
+    required this.onEntityAction,
+    required this.isSaving,
+    required this.isDirty,
   });
 
   factory BankAccountEditVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final bankAccount = state.bankAccountUIState.editing;
+    final bankAccount = state.bankAccountUIState.editing!;
 
     return BankAccountEditVM(
       state: state,
@@ -86,23 +86,23 @@ class BankAccountEditVM {
           store.dispatch(SaveBankAccountRequest(
               completer: completer, bankAccount: bankAccount));
           return completer.future.then((savedBankAccount) {
-            showToast(bankAccount.isNew
-                ? localization.createdBankAccount
-                : localization.updatedBankAccount);
+            showToast(bankAccount!.isNew
+                ? localization!.createdBankAccount
+                : localization!.updatedBankAccount);
 
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(BankAccountViewScreen.route));
               if (bankAccount.isNew) {
-                navigator.pushReplacementNamed(BankAccountViewScreen.route);
+                navigator!.pushReplacementNamed(BankAccountViewScreen.route);
               } else {
-                navigator.pop(savedBankAccount);
+                navigator!.pop(savedBankAccount);
               }
             } else {
               viewEntity(entity: savedBankAccount);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
                   return ErrorDialog(error);
                 });
@@ -125,9 +125,9 @@ class BankAccountEditVM {
   }
 
   final AppState state;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final BankAccountEntity bankAccount;
-  final BankAccountEntity origBankAccount;
+  final BankAccountEntity? origBankAccount;
   final Function(BankAccountEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;

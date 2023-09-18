@@ -39,8 +39,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final DashboardVM viewModel;
@@ -51,9 +51,9 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen>
     with TickerProviderStateMixin {
-  TabController _mainTabController;
-  TabController _sideTabController;
-  ScrollController _scrollController;
+  TabController? _mainTabController;
+  TabController? _sideTabController;
+  ScrollController? _scrollController;
   final List<EntityType> _tabs = [];
 
   @override
@@ -71,7 +71,7 @@ class _DashboardScreenState extends State<DashboardScreen>
       EntityType.task,
       EntityType.expense,
     ].forEach((entityType) {
-      if (company.isModuleEnabled(entityType)) {
+      if (company!.isModuleEnabled(entityType)) {
         _tabs.add(entityType);
       }
     });
@@ -93,11 +93,11 @@ class _DashboardScreenState extends State<DashboardScreen>
         )
       ..addListener(onScrollListener);
 
-    final companyName = state.company.settings.name ?? '';
+    final companyName = state.company!.settings.name ?? '';
     if (!state.isDemo &&
-        state.userCompany.isAdmin &&
+        state.userCompany!.isAdmin &&
         (companyName.isEmpty || companyName == 'Untitled Company') &&
-        state.company.isOld) {
+        state.company!.isOld) {
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         showDialog<void>(
             context: context,
@@ -160,7 +160,7 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   @override
   void dispose() {
-    _mainTabController.dispose();
+    _mainTabController!.dispose();
     _sideTabController
       ..removeListener(onTabListener)
       ..dispose();
@@ -176,13 +176,13 @@ class _DashboardScreenState extends State<DashboardScreen>
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final company = state.company;
-    Widget leading;
+    Widget? leading;
 
     if (isMobile(context) || state.prefState.isMenuFloated) {
       leading = Builder(
         builder: (context) => InkWell(
           child: IconButton(
-            tooltip: localization.menuSidebar,
+            tooltip: localization!.menuSidebar,
             icon: Icon(Icons.menu),
             onPressed: () {
               Scaffold.of(context).openDrawer();
@@ -215,7 +215,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     isScrollable: true,
                     tabs: [
                       Tab(
-                        text: localization.overview,
+                        text: localization!.overview,
                       ),
                       Tab(
                         text: localization.activity,
@@ -243,7 +243,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           ],
         ),
         actions: [
-          if (state.userCompany.isOwner &&
+          if (state.userCompany!.isOwner &&
               state.isSelfHosted &&
               !state.isDemo &&
               !isPaidAccount(context) &&
@@ -252,7 +252,7 @@ class _DashboardScreenState extends State<DashboardScreen>
               padding: const EdgeInsets.only(right: 10),
               child: IconButton(
                   tooltip: state.prefState.enableTooltips
-                      ? localization.upgrade
+                      ? localization!.upgrade
                       : null,
                   onPressed: () => launchUrl(Uri.parse(kWhiteLabelUrl)),
                   icon: Icon(Icons.rocket_launch)),
@@ -260,15 +260,15 @@ class _DashboardScreenState extends State<DashboardScreen>
           if (!kReleaseMode ||
               (kIsWeb &&
                   state.isSelfHosted &&
-                  state.userCompany.isAdmin &&
+                  state.userCompany!.isAdmin &&
                   !state.isDemo))
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: IconButton(
-                tooltip: localization.enableReactApp,
+                tooltip: localization!.enableReactApp,
                 onPressed: () async {
                   final credentials = state.credentials;
-                  final account = state.account
+                  final account = state.account!
                       .rebuild((b) => b..setReactAsDefaultAP = true);
                   final url = '${credentials.url}/accounts/${account.id}';
                   final data = serializers.serializeWith(
@@ -286,7 +286,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     WebUtils.reloadBrowser();
                   }).catchError((Object error) {
                     store.dispatch(StopSaving());
-                    showErrorDialog(message: error);
+                    showErrorDialog(message: error as String?);
                   });
                 },
                 icon: Icon(MdiIcons.react),
@@ -297,7 +297,7 @@ class _DashboardScreenState extends State<DashboardScreen>
               builder: (context) => IconButton(
                 padding: const EdgeInsets.only(left: 4, right: 24),
                 tooltip: state.prefState.enableTooltips
-                    ? localization.history
+                    ? localization!.history
                     : null,
                 icon: Icon(Icons.history),
                 onPressed: () {
@@ -317,7 +317,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                 isScrollable: isMobile(context),
                 tabs: [
                   Tab(
-                    text: localization.overview,
+                    text: localization!.overview,
                   ),
                   Tab(
                     text: localization.activity,
@@ -326,27 +326,27 @@ class _DashboardScreenState extends State<DashboardScreen>
                     text: localization.systemLogs,
                   ),
                   if (isMobile(context) &&
-                      company.isModuleEnabled(EntityType.invoice))
+                      company!.isModuleEnabled(EntityType.invoice))
                     Tab(
                       text: localization.invoices,
                     ),
                   if (isMobile(context) &&
-                      company.isModuleEnabled(EntityType.payment))
+                      company!.isModuleEnabled(EntityType.payment))
                     Tab(
                       text: localization.payments,
                     ),
                   if (isMobile(context) &&
-                      company.isModuleEnabled(EntityType.quote))
+                      company!.isModuleEnabled(EntityType.quote))
                     Tab(
                       text: localization.quotes,
                     ),
                   if (isMobile(context) &&
-                      company.isModuleEnabled(EntityType.task))
+                      company!.isModuleEnabled(EntityType.task))
                     Tab(
                       text: localization.tasks,
                     ),
                   if (isMobile(context) &&
-                      company.isModuleEnabled(EntityType.expense))
+                      company!.isModuleEnabled(EntityType.expense))
                     Tab(
                       text: localization.expense,
                     ),
@@ -390,16 +390,16 @@ class _DashboardScreenState extends State<DashboardScreen>
 
 class _CustomTabBarView extends StatelessWidget {
   const _CustomTabBarView({
-    @required this.viewModel,
-    @required this.mainTabController,
-    @required this.sideTabController,
-    @required this.scrollController,
+    required this.viewModel,
+    required this.mainTabController,
+    required this.sideTabController,
+    required this.scrollController,
   });
 
   final DashboardVM viewModel;
-  final TabController mainTabController;
-  final TabController sideTabController;
-  final ScrollController scrollController;
+  final TabController? mainTabController;
+  final TabController? sideTabController;
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -410,16 +410,16 @@ class _CustomTabBarView extends StatelessWidget {
           itemCount: viewModel.filteredList.length,
           itemBuilder: (BuildContext context, index) {
             final localization = AppLocalization.of(context);
-            final entity = viewModel.filteredList[index];
+            final entity = viewModel.filteredList[index]!;
             final subtitle = entity.matchesFilterValue(viewModel.filter);
 
             return ListTile(
-              title: Text(entity.listDisplayName),
+              title: Text(entity.listDisplayName!),
               leading: Icon(getEntityIcon(entity.entityType)),
               trailing: Icon(Icons.navigate_next),
               subtitle: Text(subtitle != null
                   ? subtitle
-                  : localization.lookup('${entity.entityType}')),
+                  : localization!.lookup('${entity.entityType}')!),
               onTap: () => viewEntity(entity: entity),
             );
           });
@@ -444,15 +444,15 @@ class _CustomTabBarView extends StatelessWidget {
           onRefresh: () => viewModel.onRefreshed(context),
           child: DashboardSystemLogs(viewModel: viewModel),
         ),
-        if (isMobile(context) && company.isModuleEnabled(EntityType.invoice))
+        if (isMobile(context) && company!.isModuleEnabled(EntityType.invoice))
           InvoiceSidebar(),
-        if (isMobile(context) && company.isModuleEnabled(EntityType.payment))
+        if (isMobile(context) && company!.isModuleEnabled(EntityType.payment))
           PaymentSidebar(),
-        if (isMobile(context) && company.isModuleEnabled(EntityType.quote))
+        if (isMobile(context) && company!.isModuleEnabled(EntityType.quote))
           QuoteSidebar(),
-        if (isMobile(context) && company.isModuleEnabled(EntityType.task))
+        if (isMobile(context) && company!.isModuleEnabled(EntityType.task))
           TaskSidebar(),
-        if (isMobile(context) && company.isModuleEnabled(EntityType.expense))
+        if (isMobile(context) && company!.isModuleEnabled(EntityType.expense))
           ExpenseSidbar(),
       ],
     );

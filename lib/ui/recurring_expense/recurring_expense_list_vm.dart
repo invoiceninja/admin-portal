@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class RecurringExpenseListBuilder extends StatelessWidget {
-  const RecurringExpenseListBuilder({Key key}) : super(key: key);
+  const RecurringExpenseListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class RecurringExpenseListBuilder extends StatelessWidget {
                 filter: viewModel.filter,
                 expense: recurringExpense,
                 isChecked: isInMultiselect &&
-                    listState.isSelected(recurringExpense.id),
+                    listState.isSelected(recurringExpense!.id),
               );
             });
       },
@@ -62,18 +62,18 @@ class RecurringExpenseListBuilder extends StatelessWidget {
 
 class RecurringExpenseListVM {
   RecurringExpenseListVM({
-    @required this.state,
-    @required this.userCompany,
-    @required this.recurringExpenseList,
-    @required this.recurringExpenseMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.onEntityAction,
-    @required this.tableColumns,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.userCompany,
+    required this.recurringExpenseList,
+    required this.recurringExpenseMap,
+    required this.filter,
+    required this.isLoading,
+    required this.listState,
+    required this.onRefreshed,
+    required this.onEntityAction,
+    required this.tableColumns,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
   });
 
   static RecurringExpenseListVM fromStore(Store<AppState> store) {
@@ -82,7 +82,7 @@ class RecurringExpenseListVM {
         return Future<Null>(null);
       }
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -110,7 +110,7 @@ class RecurringExpenseListVM {
               EntityAction action) =>
           handleRecurringExpenseAction(context, recurringExpenses, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: state.userCompany.settings
+      tableColumns: state.userCompany!.settings
               ?.getTableColumns(EntityType.recurringExpense) ??
           RecurringExpensePresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortRecurringExpenses(field)),
@@ -120,11 +120,11 @@ class RecurringExpenseListVM {
   }
 
   final AppState state;
-  final UserCompanyEntity userCompany;
-  final List<String> recurringExpenseList;
-  final BuiltMap<String, ExpenseEntity> recurringExpenseMap;
+  final UserCompanyEntity? userCompany;
+  final List<String?> recurringExpenseList;
+  final BuiltMap<String?, ExpenseEntity?> recurringExpenseMap;
   final ListUIState listState;
-  final String filter;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;

@@ -27,7 +27,7 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class UserDetailsScreen extends StatelessWidget {
-  const UserDetailsScreen({Key key}) : super(key: key);
+  const UserDetailsScreen({Key? key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsUserDetails';
 
   @override
@@ -38,7 +38,7 @@ class UserDetailsScreen extends StatelessWidget {
         final state = viewModel.state;
         return UserDetails(
             key: ValueKey(
-                state.settingsUIState.updatedAt + state.user.updatedAt),
+                state.settingsUIState.updatedAt + state.user!.updatedAt),
             viewModel: viewModel);
       },
     );
@@ -47,19 +47,19 @@ class UserDetailsScreen extends StatelessWidget {
 
 class UserDetailsVM {
   UserDetailsVM({
-    @required this.user,
-    @required this.state,
-    @required this.onChanged,
-    @required this.onSavePressed,
-    @required this.onConnectGooglePressed,
-    @required this.onDisconnectGooglePressed,
-    @required this.onConnectGmailPressed,
-    @required this.onDisconnectGmailPressed,
-    @required this.onDisableTwoFactorPressed,
-    @required this.onConnectMicrosoftPressed,
-    @required this.onDisconnectMicrosoftPressed,
-    @required this.onDisconnectMicrosoftEmailPressed,
-    @required this.onDisconnectApplePressed,
+    required this.user,
+    required this.state,
+    required this.onChanged,
+    required this.onSavePressed,
+    required this.onConnectGooglePressed,
+    required this.onDisconnectGooglePressed,
+    required this.onConnectGmailPressed,
+    required this.onDisconnectGmailPressed,
+    required this.onDisableTwoFactorPressed,
+    required this.onConnectMicrosoftPressed,
+    required this.onDisconnectMicrosoftPressed,
+    required this.onDisconnectMicrosoftEmailPressed,
+    required this.onDisconnectApplePressed,
   });
 
   static UserDetailsVM fromStore(Store<AppState> store) {
@@ -110,7 +110,7 @@ class UserDetailsVM {
                   context: context,
                   callback: (password, idToken) {
                     final completer = snackBarCompleter<Null>(
-                        context, AppLocalization.of(context).disconnectedEmail);
+                        context, AppLocalization.of(context)!.disconnectedEmail);
                     store.dispatch(
                       DisconnectOAuthMailerRequest(
                           user: state.user,
@@ -129,7 +129,7 @@ class UserDetailsVM {
                   context: context,
                   callback: (password, idToken) {
                     final completer = snackBarCompleter<Null>(
-                        context, AppLocalization.of(context).disconnectedGmail);
+                        context, AppLocalization.of(context)!.disconnectedGmail);
                     store.dispatch(
                       DisconnectOAuthMailerRequest(
                           user: state.user,
@@ -142,7 +142,7 @@ class UserDetailsVM {
       },
       onDisableTwoFactorPressed: (context) {
         final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).disabledTwoFactor);
+            context, AppLocalization.of(context)!.disabledTwoFactor);
 
         confirmCallback(
             context: context,
@@ -161,9 +161,9 @@ class UserDetailsVM {
             });
       },
       onDisconnectGooglePressed: (context) {
-        if (!state.user.hasPassword) {
+        if (!state.user!.hasPassword) {
           showErrorDialog(
-              message: AppLocalization.of(context).pleaseFirstSetAPassword);
+              message: AppLocalization.of(context)!.pleaseFirstSetAPassword);
           return;
         }
 
@@ -175,10 +175,10 @@ class UserDetailsVM {
                   skipOAuth: true,
                   callback: (password, idToken) {
                     final completer = snackBarCompleter<Null>(context,
-                        AppLocalization.of(context).disconnectedGoogle);
+                        AppLocalization.of(context)!.disconnectedGoogle);
                     completer.future.then((value) {
                       GoogleOAuth.disconnect();
-                    });
+                    } as FutureOr<_> Function(Null));
                     store.dispatch(
                       DisconnecOAuthUserRequest(
                         user: state.user,
@@ -192,7 +192,7 @@ class UserDetailsVM {
       },
       onConnectGooglePressed: (context) {
         final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).connectedGoogle);
+            context, AppLocalization.of(context)!.connectedGoogle);
 
         passwordCallback(
             context: context,
@@ -203,7 +203,7 @@ class UserDetailsVM {
                   if (idToken.isEmpty || accessToken.isEmpty) {
                     GoogleOAuth.signOut();
                     showErrorDialog(
-                        message: AppLocalization.of(context)
+                        message: AppLocalization.of(context)!
                             .anErrorOccurredTryAgain);
                   } else {
                     store.dispatch(
@@ -219,7 +219,7 @@ class UserDetailsVM {
                 });
                 if (!signedIn) {
                   showErrorDialog(
-                      message: AppLocalization.of(navigatorKey.currentContext)
+                      message: AppLocalization.of(navigatorKey.currentContext!)!
                           .anErrorOccurredTryAgain);
                 }
               } catch (error) {
@@ -228,9 +228,9 @@ class UserDetailsVM {
             });
       },
       onDisconnectMicrosoftPressed: (context) {
-        if (!state.user.hasPassword) {
+        if (!state.user!.hasPassword) {
           showErrorDialog(
-              message: AppLocalization.of(context).pleaseFirstSetAPassword);
+              message: AppLocalization.of(context)!.pleaseFirstSetAPassword);
           return;
         }
 
@@ -242,7 +242,7 @@ class UserDetailsVM {
                   context: context,
                   callback: (password, idToken) {
                     final completer = snackBarCompleter<Null>(context,
-                        AppLocalization.of(context).disconnectedMicrosoft);
+                        AppLocalization.of(context)!.disconnectedMicrosoft);
                     store.dispatch(
                       DisconnecOAuthUserRequest(
                         user: state.user,
@@ -255,9 +255,9 @@ class UserDetailsVM {
             });
       },
       onDisconnectApplePressed: (context) {
-        if (!state.user.hasPassword) {
+        if (!state.user!.hasPassword) {
           showErrorDialog(
-              message: AppLocalization.of(context).pleaseFirstSetAPassword);
+              message: AppLocalization.of(context)!.pleaseFirstSetAPassword);
           return;
         }
 
@@ -269,7 +269,7 @@ class UserDetailsVM {
                   skipOAuth: true,
                   callback: (password, idToken) {
                     final completer = snackBarCompleter<Null>(
-                        context, AppLocalization.of(context).disconnectedApple);
+                        context, AppLocalization.of(context)!.disconnectedApple);
                     store.dispatch(
                       DisconnecOAuthUserRequest(
                         user: state.user,
@@ -283,7 +283,7 @@ class UserDetailsVM {
       },
       onConnectMicrosoftPressed: (context) {
         final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).connectedMicrosoft);
+            context, AppLocalization.of(context)!.connectedMicrosoft);
 
         passwordCallback(
             context: context,
@@ -309,43 +309,43 @@ class UserDetailsVM {
       },
       onSavePressed: (context) {
         Debouncer.runOnComplete(() {
-          final localization = AppLocalization.of(context);
+          final localization = AppLocalization.of(context)!;
           final completer =
               snackBarCompleter<Null>(context, localization.updatedUser);
           final appBuilder = AppBuilder.of(context);
-          final origUserSettings = state.userCompany.settings;
+          final origUserSettings = state.userCompany!.settings;
 
           completer.future.then((_) async {
-            final newUserSettings = store.state.userCompany.settings;
-            if (origUserSettings.includeDeletedClients !=
+            final newUserSettings = store.state.userCompany!.settings!;
+            if (origUserSettings!.includeDeletedClients !=
                     newUserSettings.includeDeletedClients ||
                 origUserSettings.numberYearsActive !=
                     newUserSettings.numberYearsActive) {
               store.dispatch(RefreshData(
                 completer: snackBarCompleter<Null>(
-                    navigatorKey.currentContext, localization.refreshComplete,
+                    navigatorKey.currentContext!, localization.refreshComplete,
                     shouldPop: true),
                 clearData: true,
                 includeStatic: true,
               ));
 
               await showDialog<AlertDialog>(
-                  context: navigatorKey.currentContext,
+                  context: navigatorKey.currentContext!,
                   barrierDismissible: false,
                   builder: (BuildContext context) => SimpleDialog(
                         children: <Widget>[LoadingDialog()],
                       ));
             }
 
-            appBuilder.rebuild();
-          });
+            appBuilder!.rebuild();
+          } as FutureOr<_> Function(Null));
 
           confirmCallback(
               context: context,
               message: localization.changingPhoneDisablesTwoFactor,
-              skip: state.user.phone ==
+              skip: state.user!.phone ==
                       state.uiState.settingsUIState.user.phone ||
-                  !state.user.isTwoFactorEnabled,
+                  !state.user!.isTwoFactorEnabled,
               callback: (_) {
                 passwordCallback(
                     context: context,

@@ -14,8 +14,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class BankAccountEdit extends StatefulWidget {
   const BankAccountEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final BankAccountEditVM viewModel;
@@ -74,7 +74,7 @@ class _BankAccountEditState extends State<BankAccountEdit> {
   }
 
   void _onSavePressed() {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -85,7 +85,7 @@ class _BankAccountEditState extends State<BankAccountEdit> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final bankAccount = viewModel.bankAccount;
 
@@ -127,7 +127,7 @@ class _BankAccountEditState extends State<BankAccountEdit> {
                   SizedBox(height: 16),
                   SwitchListTile(
                     activeColor: Theme.of(context).colorScheme.secondary,
-                    title: Text(localization.autoSync),
+                    title: Text(localization.autoSync!),
                     value: bankAccount.autoSync,
                     onChanged: (value) => viewModel.onChanged(
                         bankAccount.rebuild((b) => b..autoSync = value)),

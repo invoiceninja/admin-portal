@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/utils/strings.dart';
 import 'package:memoize/memoize.dart';
 
@@ -33,19 +34,19 @@ enum TransactionReportFields {
 }
 
 var memoizedTransactionReport = memo10((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, TransactionEntity> transactionMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, ExpenseEntity> expenseMap,
-  BuiltMap<String, ExpenseCategoryEntity> categoryMap,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, BankAccountEntity> bankAccountMap,
-  BuiltMap<String, PaymentEntity> paymentMap,
+  BuiltMap<String?, TransactionEntity?> transactionMap,
+  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String?, ExpenseEntity?> expenseMap,
+  BuiltMap<String?, ExpenseCategoryEntity?> categoryMap,
+  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String?, BankAccountEntity?> bankAccountMap,
+  BuiltMap<String?, PaymentEntity?> paymentMap,
   StaticState staticState,
 ) =>
     transactionReport(
-      userCompany,
+      userCompany!,
       reportsUIState,
       transactionMap,
       vendorMap,
@@ -60,13 +61,13 @@ var memoizedTransactionReport = memo10((
 ReportResult transactionReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, TransactionEntity> transactionMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, ExpenseEntity> expenseMap,
-  BuiltMap<String, ExpenseCategoryEntity> categoryMap,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, BankAccountEntity> bankAccountMap,
-  BuiltMap<String, PaymentEntity> paymentMap,
+  BuiltMap<String?, TransactionEntity?> transactionMap,
+  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String?, ExpenseEntity?> expenseMap,
+  BuiltMap<String?, ExpenseCategoryEntity?> categoryMap,
+  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String?, BankAccountEntity?> bankAccountMap,
+  BuiltMap<String?, PaymentEntity?> paymentMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -76,7 +77,7 @@ ReportResult transactionReport(
   final reportSettings = userCompany.settings?.reportSettings;
   final transactionReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportTransaction)
-          ? reportSettings[kReportTransaction]
+          ? reportSettings[kReportTransaction]!
           : ReportSettingsEntity();
 
   final defaultColumns = [
@@ -92,16 +93,16 @@ ReportResult transactionReport(
   if (transactionReportSettings.columns.isNotEmpty) {
     columns = BuiltList(transactionReportSettings.columns
         .map((e) => EnumUtils.fromString(TransactionReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
   }
 
   for (var transactionId in transactionMap.keys) {
-    final transaction = transactionMap[transactionId];
+    final transaction = transactionMap[transactionId]!;
 
-    if (transaction.isDeleted && !userCompany.company.reportIncludeDeleted) {
+    if (transaction.isDeleted! && !userCompany.company!.reportIncludeDeleted) {
       continue;
     }
 
@@ -177,8 +178,8 @@ ReportResult transactionReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column),
-      )) {
+        column: EnumUtils.parse(column)!,
+      )!) {
         skip = true;
       }
 
@@ -200,7 +201,7 @@ ReportResult transactionReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) => sortReportTableRows(
-      rowA, rowB, transactionReportSettings, selectedColumns));
+      rowA, rowB, transactionReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns:

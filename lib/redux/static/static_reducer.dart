@@ -14,7 +14,7 @@ StaticState staticLoadedReducer(
   final data = action.data;
   return StaticState().rebuild((b) => b
     ..updatedAt = DateTime.now().millisecondsSinceEpoch
-    ..templateMap.replace(data.templates)
+    ..templateMap.replace(data!.templates)
     ..currencyMap.addAll(Map.fromIterable(
       data.currencies,
       key: (dynamic item) => item.id,

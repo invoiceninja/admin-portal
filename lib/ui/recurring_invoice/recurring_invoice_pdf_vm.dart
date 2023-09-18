@@ -12,7 +12,7 @@ import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
 
 class RecurringInvoicePdfScreen extends StatelessWidget {
-  const RecurringInvoicePdfScreen({Key key, this.showAppBar = true})
+  const RecurringInvoicePdfScreen({Key? key, this.showAppBar = true})
       : super(key: key);
 
   final bool showAppBar;
@@ -27,7 +27,7 @@ class RecurringInvoicePdfScreen extends StatelessWidget {
       },
       builder: (context, vm) {
         return InvoicePdfView(
-          key: ValueKey('__recurring_invoice_pdf_${vm.invoice.id}__'),
+          key: ValueKey('__recurring_invoice_pdf_${vm.invoice!.id}__'),
           viewModel: vm,
           showAppBar: showAppBar,
         );
@@ -38,9 +38,9 @@ class RecurringInvoicePdfScreen extends StatelessWidget {
 
 class RecurringInvoicePdfVM extends EntityPdfVM {
   RecurringInvoicePdfVM({
-    AppState state,
-    InvoiceEntity invoice,
-    String activityId,
+    AppState? state,
+    InvoiceEntity? invoice,
+    String? activityId,
   }) : super(
           state: state,
           invoice: invoice,
@@ -50,7 +50,7 @@ class RecurringInvoicePdfVM extends EntityPdfVM {
   factory RecurringInvoicePdfVM.fromStore(Store<AppState> store) {
     final state = store.state;
     final recurringInvoiceUIState = state.uiState.recurringInvoiceUIState;
-    final invoiceId = recurringInvoiceUIState.selectedId;
+    final invoiceId = recurringInvoiceUIState.selectedId!;
     final invoice = state.recurringInvoiceState.get(invoiceId);
 
     return RecurringInvoicePdfVM(

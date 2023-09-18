@@ -7,6 +7,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
 // Project imports:
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
@@ -28,22 +29,21 @@ abstract class DesignState implements Built<DesignState, DesignStateBuilder> {
   @memoized
   int get hashCode;
 
-  BuiltMap<String, DesignEntity> get map;
+  BuiltMap<String?, DesignEntity?> get map;
 
   BuiltList<String> get list;
 
   DesignEntity get cleanDesign =>
-      map[list.firstWhere((id) => !map[id].isCustom && map[id].name == 'Clean',
-          orElse: () => null)] ??
+      map[list.firstWhereOrNull((id) => !map[id]!.isCustom && map[id]!.name == 'Clean')] ??
       DesignEntity();
 
-  List<DesignEntity> get customDesigns => list
-      .where((designId) => map[designId].isCustom)
+  List<DesignEntity?> get customDesigns => list
+      .where((designId) => map[designId]!.isCustom)
       .map((designId) => map[designId])
       .toList();
 
   DesignState loadDesigns(BuiltList<DesignEntity> clients) {
-    final map = Map<String, DesignEntity>.fromIterable(
+    final map = Map<String?, DesignEntity?>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
@@ -60,7 +60,7 @@ abstract class DesignState implements Built<DesignState, DesignStateBuilder> {
 abstract class DesignUIState extends Object
     with EntityUIState
     implements Built<DesignUIState, DesignUIStateBuilder> {
-  factory DesignUIState(PrefStateSortField sortField) {
+  factory DesignUIState(PrefStateSortField? sortField) {
     return _$DesignUIState._(
       listUIState: ListUIState(sortField?.field ?? DesignFields.name,
           sortAscending: sortField?.ascending),
@@ -76,14 +76,13 @@ abstract class DesignUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  DesignEntity get editing;
+  DesignEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<DesignUIState> get serializer => _$designUIStateSerializer;
 }

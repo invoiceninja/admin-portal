@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'client_screen.dart';
 
 class ClientScreenBuilder extends StatelessWidget {
-  const ClientScreenBuilder({Key key}) : super(key: key);
+  const ClientScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,16 +31,16 @@ class ClientScreenBuilder extends StatelessWidget {
 
 class ClientScreenVM {
   ClientScreenVM({
-    @required this.isInMultiselect,
-    @required this.clientList,
-    @required this.userCompany,
-    @required this.clientMap,
+    required this.isInMultiselect,
+    required this.clientList,
+    required this.userCompany,
+    required this.clientMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> clientList;
-  final BuiltMap<String, ClientEntity> clientMap;
+  final BuiltMap<String?, ClientEntity?> clientMap;
 
   static ClientScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

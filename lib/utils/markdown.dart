@@ -61,7 +61,7 @@ String serializeDocumentToMarkdown(Document doc) {
         buffer.writeln('');
       }
     } else if (node is ParagraphNode) {
-      final Attribution blockType = node.getMetadataValue('blockType');
+      final Attribution? blockType = node.getMetadataValue('blockType');
 
       if (blockType == header1Attribution) {
         buffer.write('# ${node.text.toMarkdown()}');
@@ -145,8 +145,8 @@ class _MarkdownToDocument implements md.NodeVisitor {
         if (inlineVisitor.isImage) {
           _addImage(
             // TODO: handle null image URL
-            imageUrl: inlineVisitor.imageUrl,
-            altText: inlineVisitor.imageAltText,
+            imageUrl: inlineVisitor.imageUrl!,
+            altText: inlineVisitor.imageAltText!,
           );
         } else {
           _addParagraph(inlineVisitor.attributedText);
@@ -205,8 +205,8 @@ class _MarkdownToDocument implements md.NodeVisitor {
     // no-op: this visitor is block-level only
   }
 
-  void _addHeader(md.Element element, {int level}) {
-    Attribution headerAttribution;
+  void _addHeader(md.Element element, {int? level}) {
+    Attribution? headerAttribution;
     switch (level) {
       case 1:
         headerAttribution = header1Attribution;
@@ -283,8 +283,8 @@ class _MarkdownToDocument implements md.NodeVisitor {
   }
 
   void _addImage({
-    String imageUrl,
-    String altText,
+    required String imageUrl,
+    required String altText,
   }) {
     _content.add(
       ImageNode(
@@ -303,8 +303,8 @@ class _MarkdownToDocument implements md.NodeVisitor {
 
   void _addListItem(
     md.Element element, {
-    ListItemType listItemType,
-    int indent,
+    required ListItemType listItemType,
+    required int indent,
   }) {
     _content.add(
       ListItemNode(
@@ -353,11 +353,11 @@ class _InlineMarkdownToDocument implements md.NodeVisitor {
   // and we ignore the image.
   bool get isImage => _imageUrl != null && attributedText.text.isEmpty;
 
-  String _imageUrl;
-  String get imageUrl => _imageUrl;
+  String? _imageUrl;
+  String? get imageUrl => _imageUrl;
 
-  String _imageAltText;
-  String get imageAltText => _imageAltText;
+  String? _imageAltText;
+  String? get imageAltText => _imageAltText;
 
   AttributedText get attributedText => _textStack.first;
 
@@ -408,7 +408,7 @@ class _InlineMarkdownToDocument implements md.NodeVisitor {
       );
     } else if (element.tag == 'a') {
       styledText.addAttribution(
-        LinkAttribution(url: Uri.parse(element.attributes['href'])),
+        LinkAttribution(url: Uri.parse(element.attributes['href']!)),
         SpanRange(
           start: 0,
           end: styledText.text.length - 1,
@@ -434,9 +434,9 @@ extension Markdown on AttributedText {
 
 /// Serializes an [AttributedText] into markdown format
 class AttributedTextMarkdownSerializer extends AttributionVisitor {
-  String _fullText;
-  StringBuffer _buffer;
-  int _bufferCursor;
+  late String _fullText;
+  StringBuffer? _buffer;
+  late int _bufferCursor;
 
   String serialize(AttributedText attributedText) {
     _fullText = attributedText.text;
@@ -454,7 +454,7 @@ class AttributedTextMarkdownSerializer extends AttributionVisitor {
     Set<Attribution> endingAttributions,
   ) {
     // Write out the text between the end of the last markers, and these new markers.
-    _buffer.write(
+    _buffer!.write(
       fullText.text.substring(_bufferCursor, index),
     );
 
@@ -473,7 +473,7 @@ class AttributedTextMarkdownSerializer extends AttributionVisitor {
     }
 
     // Write out the character at this index.
-    _buffer.write(_fullText[index]);
+    _buffer!.write(_fullText[index]);
     _bufferCursor = index + 1;
 
     // Add end markers.
@@ -497,7 +497,7 @@ class AttributedTextMarkdownSerializer extends AttributionVisitor {
   void onVisitEnd() {
     // When the last span has no attributions, we still have text that wasn't added to the buffer yet.
     if (_bufferCursor <= _fullText.length - 1) {
-      _buffer.write(_fullText.substring(_bufferCursor));
+      _buffer!.write(_fullText.substring(_bufferCursor));
     }
   }
 
@@ -570,7 +570,7 @@ class _EmptyParagraphSyntax extends md.BlockSyntax {
   RegExp get pattern => _emptyParagraphPattern;
 
   @override
-  md.Node parse(md.BlockParser parser) {
+  md.Node? parse(md.BlockParser parser) {
     parser.encounteredBlankLine = true;
     parser.advance();
 

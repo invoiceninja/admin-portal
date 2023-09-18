@@ -18,8 +18,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientEdit extends StatefulWidget {
   const ClientEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final ClientEditVM viewModel;
@@ -30,7 +30,7 @@ class ClientEdit extends StatefulWidget {
 
 class _ClientEditState extends State<ClientEdit>
     with SingleTickerProviderStateMixin {
-  TabController _controller;
+  TabController? _controller;
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_clientEdit');
 
@@ -42,13 +42,13 @@ class _ClientEditState extends State<ClientEdit>
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final client = viewModel.client;
     final state = viewModel.state;
@@ -61,7 +61,7 @@ class _ClientEditState extends State<ClientEdit>
       title: client.isNew ? localization.newClient : localization.editClient,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
+        final bool isValid = _formKey.currentState!.validate();
         setState(() {
           //autoValidate = !isValid;
         });

@@ -49,9 +49,9 @@ abstract class DesignItemResponse
 abstract class DesignPreviewRequest
     implements Built<DesignPreviewRequest, DesignPreviewRequestBuilder> {
   factory DesignPreviewRequest({
-    EntityType entityType,
-    String entityId,
-    DesignEntity design,
+    EntityType? entityType,
+    String? entityId,
+    required DesignEntity design,
   }) {
     return _$DesignPreviewRequest._(
       entityType: entityType ?? EntityType.invoice,
@@ -87,10 +87,10 @@ abstract class DesignEntity extends Object
     with BaseEntity
     implements Built<DesignEntity, DesignEntityBuilder> {
   factory DesignEntity(
-      {String id, AppState state, BuiltMap<String, String> design}) {
+      {String? id, AppState? state, BuiltMap<String, String>? design}) {
     if (design == null && state != null) {
       final designMap = state.designState.map;
-      design = designMap[state.company.settings.defaultInvoiceDesignId]?.design;
+      design = designMap[state.company!.settings.defaultInvoiceDesignId]?.design;
     }
 
     return _$DesignEntity._(
@@ -141,23 +141,23 @@ abstract class DesignEntity extends Object
 
   String get displayName => name;
 
-  String getSection(String section) => design[section];
+  String? getSection(String section) => design[section];
 
   @override
-  List<EntityAction> getActions(
-      {UserCompanyEntity userCompany,
-      ClientEntity client,
+  List<EntityAction?> getActions(
+      {UserCompanyEntity? userCompany,
+      ClientEntity? client,
       bool includeEdit = false,
       bool includePreview = false,
       bool multiselect = false}) {
-    final actions = <EntityAction>[];
+    final actions = <EntityAction?>[];
 
-    if (!isDeleted && !multiselect) {
-      if (includeEdit && userCompany.canEditEntity(this)) {
+    if (!isDeleted! && !multiselect) {
+      if (includeEdit && userCompany!.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
 
-      if (userCompany.canCreate(EntityType.invoice)) {
+      if (userCompany!.canCreate(EntityType.invoice)) {
         actions.add(EntityAction.newInvoice);
       }
       if (userCompany.canCreate(EntityType.quote)) {
@@ -171,7 +171,7 @@ abstract class DesignEntity extends Object
       }
     }
 
-    if (userCompany.canCreate(EntityType.design) && !multiselect) {
+    if (userCompany!.canCreate(EntityType.design) && !multiselect) {
       actions.add(EntityAction.clone);
     }
 
@@ -182,25 +182,25 @@ abstract class DesignEntity extends Object
     return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
-  int compareTo(DesignEntity design, String sortField, bool sortAscending) {
+  int compareTo(DesignEntity? design, String sortField, bool sortAscending) {
     int response = 0;
     final designA = sortAscending ? this : design;
     final designB = sortAscending ? design : this;
 
     switch (sortField) {
       case DesignFields.updatedAt:
-        response = designA.updatedAt.compareTo(designB.updatedAt);
+        response = designA!.updatedAt.compareTo(designB!.updatedAt);
     }
 
     if (response == 0) {
-      return designA.name.toLowerCase().compareTo(designB.name.toLowerCase());
+      return designA!.name.toLowerCase().compareTo(designB!.name.toLowerCase());
     } else {
       return response;
     }
   }
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     return matchesStrings(
       haystacks: [name],
       needle: filter,
@@ -208,7 +208,7 @@ abstract class DesignEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     return matchesStringsValue(
       haystacks: [name],
       needle: filter,
@@ -219,10 +219,10 @@ abstract class DesignEntity extends Object
   String get listDisplayName => name;
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
   @override
-  FormatNumberType get listDisplayAmountType => null;
+  FormatNumberType? get listDisplayAmountType => null;
 
   // ignore: unused_element
   static void _initializeBuilder(DesignEntityBuilder builder) =>

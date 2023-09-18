@@ -24,8 +24,8 @@ import 'task_status_screen_vm.dart';
 
 class TaskStatusScreen extends StatelessWidget {
   const TaskStatusScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsTaskStatuses';
@@ -69,8 +69,8 @@ class TaskStatusScreen extends StatelessWidget {
           AppTextButton(
             isInHeader: true,
             onPressed: () async {
-              final taskStatusIds = listUIState.selectedIds
-                  .map<TaskStatusEntity>(
+              final taskStatusIds = listUIState.selectedIds!
+                  .map<TaskStatusEntity?>(
                       (taskStatusId) => viewModel.taskStatusMap[taskStatusId])
                   .toList();
 
@@ -79,10 +79,10 @@ class TaskStatusScreen extends StatelessWidget {
                 multiselect: true,
                 completer: Completer<Null>()
                   ..future.then<dynamic>(
-                      (_) => store.dispatch(ClearTaskStatusMultiselect())),
+                      ((_) => store.dispatch(ClearTaskStatusMultiselect())) as FutureOr<dynamic> Function(Null)),
               );
             },
-            label: localization.actions,
+            label: localization!.actions,
           ),
       ],
       body: TaskStatusListBuilder(),
@@ -115,7 +115,7 @@ class TaskStatusScreen extends StatelessWidget {
             store.dispatch(FilterTaskStatusesByCustom4(value)),
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany.canCreate(EntityType.taskStatus)
+              userCompany!.canCreate(EntityType.taskStatus)
           ? FloatingActionButton(
               heroTag: 'task_status_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
@@ -127,7 +127,7 @@ class TaskStatusScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newTaskStatus,
+              tooltip: localization!.newTaskStatus,
             )
           : null,
     );

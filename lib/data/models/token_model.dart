@@ -57,7 +57,7 @@ class TokenFields {
 abstract class TokenEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<TokenEntity, TokenEntityBuilder> {
-  factory TokenEntity({String id, AppState state}) {
+  factory TokenEntity({String? id, AppState? state}) {
     return _$TokenEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
@@ -97,7 +97,7 @@ abstract class TokenEntity extends Object
 
   static String obscureToken(String value) => base64Encode(utf8.encode(value));
 
-  static String unobscureToken(String value) {
+  static String? unobscureToken(String? value) {
     if (value == null || value.isEmpty) {
       return null;
     }
@@ -110,15 +110,15 @@ abstract class TokenEntity extends Object
     return name;
   }
 
-  int compareTo(TokenEntity token, String sortField, bool sortAscending) {
+  int compareTo(TokenEntity? token, String sortField, bool sortAscending) {
     int response = 0;
-    final TokenEntity tokenA = sortAscending ? this : token;
-    final TokenEntity tokenB = sortAscending ? token : this;
+    final TokenEntity? tokenA = sortAscending ? this : token;
+    final TokenEntity? tokenB = sortAscending ? token : this;
 
     switch (sortField) {
       case TokenFields.name:
         response =
-            tokenA.name.toLowerCase().compareTo(tokenB.name.toLowerCase());
+            tokenA!.name.toLowerCase().compareTo(tokenB!.name.toLowerCase());
         break;
       default:
         print('## ERROR: sort by token.$sortField is not implemented');
@@ -129,7 +129,7 @@ abstract class TokenEntity extends Object
   }
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     return matchesStrings(
       haystacks: [
         name,
@@ -139,7 +139,7 @@ abstract class TokenEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     return matchesStringsValue(
       haystacks: [],
       needle: filter,
@@ -147,20 +147,20 @@ abstract class TokenEntity extends Object
   }
 
   @override
-  List<EntityAction> getActions(
-      {UserCompanyEntity userCompany,
-      ClientEntity client,
+  List<EntityAction?> getActions(
+      {UserCompanyEntity? userCompany,
+      ClientEntity? client,
       bool includeEdit = false,
       bool includePreview = false,
       bool multiselect = false}) {
-    final actions = <EntityAction>[];
+    final actions = <EntityAction?>[];
 
     if (!isMasked && !multiselect) {
       actions.add(EntityAction.copy);
     }
 
-    if (!isDeleted && !multiselect) {
-      if (includeEdit && userCompany.canEditEntity(this)) {
+    if (!isDeleted! && !multiselect) {
+      if (includeEdit && userCompany!.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
     }
@@ -173,10 +173,10 @@ abstract class TokenEntity extends Object
   }
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
   @override
-  FormatNumberType get listDisplayAmountType => null;
+  FormatNumberType? get listDisplayAmountType => null;
 
   static Serializer<TokenEntity> get serializer => _$tokenEntitySerializer;
 }

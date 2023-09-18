@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:memoize/memoize.dart';
@@ -34,22 +35,22 @@ enum ProductReportFields {
 }
 
 var memoizedProductReport = memo6((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, ProductEntity> productMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String?, ProductEntity?> productMap,
+  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String?, UserEntity?> userMap,
   StaticState staticState,
 ) =>
-    productReport(userCompany, reportsUIState, productMap, vendorMap, userMap,
+    productReport(userCompany!, reportsUIState, productMap, vendorMap, userMap,
         staticState));
 
 ReportResult productReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, ProductEntity> productMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String?, ProductEntity?> productMap,
+  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String?, UserEntity?> userMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -59,7 +60,7 @@ ReportResult productReport(
   final reportSettings = userCompany.settings?.reportSettings;
   final productReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportProduct)
-          ? reportSettings[kReportProduct]
+          ? reportSettings[kReportProduct]!
           : ReportSettingsEntity();
 
   final defaultColumns = [
@@ -73,16 +74,16 @@ ReportResult productReport(
   if (productReportSettings.columns.isNotEmpty) {
     columns = BuiltList(productReportSettings.columns
         .map((e) => EnumUtils.fromString(ProductReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
   }
 
   for (var productId in productMap.keys) {
-    final product = productMap[productId];
+    final product = productMap[productId]!;
 
-    if (product.isDeleted && !userCompany.company.reportIncludeDeleted) {
+    if (product.isDeleted! && !userCompany.company!.reportIncludeDeleted) {
       continue;
     }
 
@@ -124,28 +125,28 @@ ReportResult productReport(
           value = presentCustomField(
             value: product.customValue1,
             customFieldType: CustomFieldType.product1,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case ProductReportFields.product2:
           value = presentCustomField(
             value: product.customValue2,
             customFieldType: CustomFieldType.product2,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case ProductReportFields.product3:
           value = presentCustomField(
             value: product.customValue3,
             customFieldType: CustomFieldType.product3,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case ProductReportFields.product4:
           value = presentCustomField(
             value: product.customValue4,
             customFieldType: CustomFieldType.product4,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case ProductReportFields.stock_quantity:
@@ -167,8 +168,8 @@ ReportResult productReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column),
-      )) {
+        column: EnumUtils.parse(column)!,
+      )!) {
         skip = true;
       }
 
@@ -180,7 +181,7 @@ ReportResult productReport(
       ].contains(column)) {
         row.add(product.getReportDouble(
           value: value,
-          currencyId: userCompany.company.currencyId,
+          currencyId: userCompany.company!.currencyId,
           formatNumberType: FormatNumberType.double,
         ));
       } else if (column == ProductReportFields.notification_threshold) {
@@ -189,7 +190,7 @@ ReportResult productReport(
         ));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(product.getReportDouble(
-            value: value, currencyId: userCompany.company.currencyId));
+            value: value, currencyId: userCompany.company!.currencyId));
       } else {
         row.add(product.getReportString(value: value));
       }
@@ -203,7 +204,7 @@ ReportResult productReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, productReportSettings, selectedColumns));
+      sortReportTableRows(rowA, rowB, productReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns:

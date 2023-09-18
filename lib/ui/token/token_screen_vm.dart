@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/redux/token/token_selectors.dart';
 import 'token_screen.dart';
 
 class TokenScreenBuilder extends StatelessWidget {
-  const TokenScreenBuilder({Key key}) : super(key: key);
+  const TokenScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,18 +32,18 @@ class TokenScreenBuilder extends StatelessWidget {
 
 class TokenScreenVM {
   TokenScreenVM({
-    @required this.isInMultiselect,
-    @required this.tokenList,
-    @required this.userCompany,
-    @required this.onEntityAction,
-    @required this.tokenMap,
+    required this.isInMultiselect,
+    required this.tokenList,
+    required this.userCompany,
+    required this.onEntityAction,
+    required this.tokenMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> tokenList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final BuiltMap<String, TokenEntity> tokenMap;
+  final BuiltMap<String?, TokenEntity?> tokenMap;
 
   static TokenScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

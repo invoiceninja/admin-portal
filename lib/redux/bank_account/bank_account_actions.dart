@@ -17,23 +17,23 @@ class ViewBankAccountList implements PersistUI {
 
 class ViewBankAccount implements PersistUI, PersistPrefs {
   ViewBankAccount({
-    @required this.bankAccountId,
+    required this.bankAccountId,
     this.force = false,
   });
 
-  final String bankAccountId;
+  final String? bankAccountId;
   final bool force;
 }
 
 class EditBankAccount implements PersistUI, PersistPrefs {
   EditBankAccount({
-    @required this.bankAccount,
+    required this.bankAccount,
     this.completer,
     this.force = false,
   });
 
   final BankAccountEntity bankAccount;
-  final Completer completer;
+  final Completer? completer;
   final bool force;
 }
 
@@ -46,21 +46,21 @@ class UpdateBankAccount implements PersistUI {
 class LoadBankAccount {
   LoadBankAccount({this.completer, this.bankAccountId});
 
-  final Completer completer;
-  final String bankAccountId;
+  final Completer? completer;
+  final String? bankAccountId;
 }
 
 class LoadBankAccountActivity {
   LoadBankAccountActivity({this.completer, this.bankAccountId});
 
-  final Completer completer;
-  final String bankAccountId;
+  final Completer? completer;
+  final String? bankAccountId;
 }
 
 class LoadBankAccounts {
   LoadBankAccounts({this.completer});
 
-  final Completer completer;
+  final Completer? completer;
 }
 
 class LoadBankAccountRequest implements StartLoading {}
@@ -114,8 +114,8 @@ class LoadBankAccountsSuccess implements StopLoading {
 class SaveBankAccountRequest implements StartSaving {
   SaveBankAccountRequest({this.completer, this.bankAccount});
 
-  final Completer completer;
-  final BankAccountEntity bankAccount;
+  final Completer? completer;
+  final BankAccountEntity? bankAccount;
 }
 
 class SaveBankAccountSuccess implements StopSaving, PersistData, PersistUI {
@@ -152,7 +152,7 @@ class ArchiveBankAccountsSuccess implements StopSaving, PersistData {
 class ArchiveBankAccountsFailure implements StopSaving {
   ArchiveBankAccountsFailure(this.bankAccounts);
 
-  final List<BankAccountEntity> bankAccounts;
+  final List<BankAccountEntity?> bankAccounts;
 }
 
 class DeleteBankAccountsRequest implements StartSaving {
@@ -171,7 +171,7 @@ class DeleteBankAccountsSuccess implements StopSaving, PersistData {
 class DeleteBankAccountsFailure implements StopSaving {
   DeleteBankAccountsFailure(this.bankAccounts);
 
-  final List<BankAccountEntity> bankAccounts;
+  final List<BankAccountEntity?> bankAccounts;
 }
 
 class RestoreBankAccountsRequest implements StartSaving {
@@ -190,7 +190,7 @@ class RestoreBankAccountsSuccess implements StopSaving, PersistData {
 class RestoreBankAccountsFailure implements StopSaving {
   RestoreBankAccountsFailure(this.bankAccounts);
 
-  final List<BankAccountEntity> bankAccounts;
+  final List<BankAccountEntity?> bankAccounts;
 }
 
 class FilterBankAccounts implements PersistUI {
@@ -240,15 +240,15 @@ class StartBankAccountMultiselect {
 }
 
 class AddToBankAccountMultiselect {
-  AddToBankAccountMultiselect({@required this.entity});
+  AddToBankAccountMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromBankAccountMultiselect {
-  RemoveFromBankAccountMultiselect({@required this.entity});
+  RemoveFromBankAccountMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearBankAccountMultiselect {
@@ -258,46 +258,46 @@ class ClearBankAccountMultiselect {
 class UpdateBankAccountTab implements PersistUI {
   UpdateBankAccountTab({this.tabIndex});
 
-  final int tabIndex;
+  final int? tabIndex;
 }
 
 void handleBankAccountAction(
-    BuildContext context, List<BaseEntity> bankAccounts, EntityAction action) {
+    BuildContext? context, List<BaseEntity?> bankAccounts, EntityAction? action) {
   if (bankAccounts.isEmpty) {
     return;
   }
 
-  final store = StoreProvider.of<AppState>(context);
+  final store = StoreProvider.of<AppState>(context!);
   final state = store.state;
   final localization = AppLocalization.of(context);
-  final bankAccount = bankAccounts.first as BankAccountEntity;
+  final bankAccount = bankAccounts.first as BankAccountEntity?;
   final bankAccountIds =
-      bankAccounts.map((bankAccount) => bankAccount.id).toList();
+      bankAccounts.map((bankAccount) => bankAccount!.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: bankAccount);
+      editEntity(entity: bankAccount!);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreBankAccountsRequest(
-          snackBarCompleter<Null>(context, localization.restoredBankAccount),
+          snackBarCompleter<Null>(context, localization!.restoredBankAccount),
           bankAccountIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveBankAccountsRequest(
-          snackBarCompleter<Null>(context, localization.archivedBankAccount),
+          snackBarCompleter<Null>(context, localization!.archivedBankAccount),
           bankAccountIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteBankAccountsRequest(
-          snackBarCompleter<Null>(context, localization.deletedBankAccount),
+          snackBarCompleter<Null>(context, localization!.deletedBankAccount),
           bankAccountIds));
       break;
     case EntityAction.newTransaction:
       createEntity(
           context: context,
           entity: TransactionEntity(state: state)
-              .rebuild((b) => b..bankAccountId = bankAccount.id));
+              .rebuild((b) => b..bankAccountId = bankAccount!.id));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.bankAccountListState.isInMultiselect()) {
@@ -309,7 +309,7 @@ void handleBankAccountAction(
       }
 
       for (final bankAccount in bankAccounts) {
-        if (!store.state.bankAccountListState.isSelected(bankAccount.id)) {
+        if (!store.state.bankAccountListState.isSelected(bankAccount!.id)) {
           store.dispatch(AddToBankAccountMultiselect(entity: bankAccount));
         } else {
           store.dispatch(RemoveFromBankAccountMultiselect(entity: bankAccount));

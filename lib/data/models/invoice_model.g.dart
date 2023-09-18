@@ -32,10 +32,10 @@ class _$InvoiceListResponseSerializer
   final String wireName = 'InvoiceListResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, InvoiceListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType:
@@ -47,21 +47,21 @@ class _$InvoiceListResponseSerializer
 
   @override
   InvoiceListResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new InvoiceListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(InvoiceEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(InvoiceEntity)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -81,10 +81,10 @@ class _$InvoiceItemResponseSerializer
   final String wireName = 'InvoiceItemResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, InvoiceItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(InvoiceEntity)),
@@ -95,19 +95,19 @@ class _$InvoiceItemResponseSerializer
 
   @override
   InvoiceItemResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new InvoiceItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(InvoiceEntity)) as InvoiceEntity);
+              specifiedType: const FullType(InvoiceEntity))! as InvoiceEntity);
           break;
       }
     }
@@ -123,9 +123,9 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
   final String wireName = 'InvoiceEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, InvoiceEntity object,
+  Iterable<Object?> serialize(Serializers serializers, InvoiceEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'amount',
       serializers.serialize(object.amount,
           specifiedType: const FullType(double)),
@@ -269,7 +269,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'line_items',
       serializers.serialize(object.lineItems,
           specifiedType: const FullType(
-              BuiltList, const [const FullType(InvoiceItemEntity)])),
+              BuiltList, const [const FullType.nullable(InvoiceItemEntity)])),
       'invitations',
       serializers.serialize(object.invitations,
           specifiedType: const FullType(
@@ -297,7 +297,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.idempotencyKey;
     if (value != null) {
       result
@@ -435,325 +435,325 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
 
   @override
   InvoiceEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new InvoiceEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'idempotency_key':
           result.idempotencyKey = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'amount':
           result.amount = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'balance':
           result.balance = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'paid_to_date':
           result.paidToDate = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'client_id':
           result.clientId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'project_id':
           result.projectId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'expense_id':
           result.expenseId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'vendor_id':
           result.vendorId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'subscription_id':
           result.subscriptionId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'status_id':
           result.statusId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'number':
           result.number = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'discount':
           result.discount = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'po_number':
           result.poNumber = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'date':
           result.date = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'due_date':
           result.dueDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'public_notes':
           result.publicNotes = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'private_notes':
           result.privateNotes = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'terms':
           result.terms = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'footer':
           result.footer = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'design_id':
           result.designId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'uses_inclusive_taxes':
           result.usesInclusiveTaxes = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'tax_name1':
           result.taxName1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'tax_rate1':
           result.taxRate1 = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'tax_name2':
           result.taxName2 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'tax_rate2':
           result.taxRate2 = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'tax_name3':
           result.taxName3 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'tax_rate3':
           result.taxRate3 = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'is_amount_discount':
           result.isAmountDiscount = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'partial':
           result.partial = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'total_taxes':
           result.taxAmount = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'partial_due_date':
           result.partialDueDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'auto_bill':
           result.autoBill = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value3':
           result.customValue3 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_surcharge1':
           result.customSurcharge1 = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'custom_surcharge2':
           result.customSurcharge2 = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'custom_surcharge3':
           result.customSurcharge3 = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'custom_surcharge4':
           result.customSurcharge4 = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'custom_surcharge_tax1':
           result.customTaxes1 = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'custom_surcharge_tax2':
           result.customTaxes2 = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'custom_surcharge_tax3':
           result.customTaxes3 = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'custom_surcharge_tax4':
           result.customTaxes4 = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'exchange_rate':
           result.exchangeRate = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'reminder1_sent':
           result.reminder1Sent = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'reminder2_sent':
           result.reminder2Sent = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'reminder3_sent':
           result.reminder3Sent = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'reminder_last_sent':
           result.reminderLastSent = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'frequency_id':
           result.frequencyId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'last_sent_date':
           result.lastSentDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'next_send_date':
           result.nextSendDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'next_send_datetime':
           result.nextSendDatetime = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'remaining_cycles':
           result.remainingCycles = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'due_date_days':
           result.dueDateDays = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'recurring_id':
           result.recurringId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'auto_bill_enabled':
           result.autoBillEnabled = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'filename':
           result.filename = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'recurring_dates':
           result.recurringDates.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(InvoiceScheduleEntity)]))
-              as BuiltList<Object>);
+              specifiedType: const FullType(BuiltList, const [
+                const FullType(InvoiceScheduleEntity)
+              ]))! as BuiltList<Object?>);
           break;
         case 'line_items':
           result.lineItems.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(InvoiceItemEntity)]))
-              as BuiltList<Object>);
+              specifiedType: const FullType(BuiltList, const [
+                const FullType.nullable(InvoiceItemEntity)
+              ]))! as BuiltList<Object?>);
           break;
         case 'invitations':
           result.invitations.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(InvitationEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(InvitationEntity)]))!
+              as BuiltList<Object?>);
           break;
         case 'documents':
           result.documents.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(DocumentEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(DocumentEntity)]))!
+              as BuiltList<Object?>);
           break;
         case 'activities':
           result.activities.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(ActivityEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(ActivityEntity)]))!
+              as BuiltList<Object?>);
           break;
         case 'tax_info':
           result.taxData.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TaxDataEntity)) as TaxDataEntity);
+              specifiedType: const FullType(TaxDataEntity))! as TaxDataEntity);
           break;
         case 'loadedAt':
           result.loadedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'archived_at':
           result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'user_id':
           result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'entity_type':
           result.entityType = serializers.deserialize(value,
-              specifiedType: const FullType(EntityType)) as EntityType;
+              specifiedType: const FullType(EntityType)) as EntityType?;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -770,9 +770,9 @@ class _$InvoiceItemEntitySerializer
   final String wireName = 'InvoiceItemEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, InvoiceItemEntity object,
+  Iterable<Object?> serialize(Serializers serializers, InvoiceItemEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'product_key',
       serializers.serialize(object.productKey,
           specifiedType: const FullType(String)),
@@ -824,7 +824,7 @@ class _$InvoiceItemEntitySerializer
       serializers.serialize(object.taxCategoryId,
           specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.typeId;
     if (value != null) {
       result
@@ -857,99 +857,99 @@ class _$InvoiceItemEntitySerializer
 
   @override
   InvoiceItemEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new InvoiceItemEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'product_key':
           result.productKey = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'notes':
           result.notes = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'cost':
           result.cost = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'product_cost':
           result.productCost = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'quantity':
           result.quantity = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'tax_name1':
           result.taxName1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'tax_rate1':
           result.taxRate1 = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'tax_name2':
           result.taxName2 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'tax_rate2':
           result.taxRate2 = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'tax_name3':
           result.taxName3 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'tax_rate3':
           result.taxRate3 = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'type_id':
           result.typeId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value3':
           result.customValue3 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'discount':
           result.discount = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'task_id':
           result.taskId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'expense_id':
           result.expenseId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'createdAt':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'tax_id':
           result.taxCategoryId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -966,9 +966,9 @@ class _$InvitationEntitySerializer
   final String wireName = 'InvitationEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, InvitationEntity object,
+  Iterable<Object?> serialize(Serializers serializers, InvitationEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'key',
       serializers.serialize(object.key, specifiedType: const FullType(String)),
       'link',
@@ -1000,7 +1000,7 @@ class _$InvitationEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.emailStatus;
     if (value != null) {
       result
@@ -1048,83 +1048,83 @@ class _$InvitationEntitySerializer
 
   @override
   InvitationEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new InvitationEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'key':
           result.key = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'link':
           result.link = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'client_contact_id':
           result.clientContactId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'vendor_contact_id':
           result.vendorContactId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'sent_date':
           result.sentDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'viewed_date':
           result.viewedDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'opened_date':
           result.openedDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'email_status':
           result.emailStatus = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'archived_at':
           result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'user_id':
           result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'entity_type':
           result.entityType = serializers.deserialize(value,
-              specifiedType: const FullType(EntityType)) as EntityType;
+              specifiedType: const FullType(EntityType)) as EntityType?;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -1144,10 +1144,10 @@ class _$InvoiceScheduleEntitySerializer
   final String wireName = 'InvoiceScheduleEntity';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, InvoiceScheduleEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'send_date',
       serializers.serialize(object.sendDate,
           specifiedType: const FullType(String)),
@@ -1161,23 +1161,23 @@ class _$InvoiceScheduleEntitySerializer
 
   @override
   InvoiceScheduleEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new InvoiceScheduleEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'send_date':
           result.sendDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'due_date':
           result.dueDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -1197,10 +1197,10 @@ class _$InvoiceHistoryEntitySerializer
   final String wireName = 'InvoiceHistoryEntity';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, InvoiceHistoryEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
       'activity_id',
@@ -1219,31 +1219,31 @@ class _$InvoiceHistoryEntitySerializer
 
   @override
   InvoiceHistoryEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new InvoiceHistoryEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'activity_id':
           result.activityId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'amount':
           result.amount = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
       }
     }
@@ -1257,10 +1257,10 @@ class _$InvoiceListResponse extends InvoiceListResponse {
   final BuiltList<InvoiceEntity> data;
 
   factory _$InvoiceListResponse(
-          [void Function(InvoiceListResponseBuilder) updates]) =>
+          [void Function(InvoiceListResponseBuilder)? updates]) =>
       (new InvoiceListResponseBuilder()..update(updates))._build();
 
-  _$InvoiceListResponse._({this.data}) : super._() {
+  _$InvoiceListResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'InvoiceListResponse', 'data');
   }
 
@@ -1279,10 +1279,10 @@ class _$InvoiceListResponse extends InvoiceListResponse {
     return other is InvoiceListResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -1299,12 +1299,12 @@ class _$InvoiceListResponse extends InvoiceListResponse {
 
 class InvoiceListResponseBuilder
     implements Builder<InvoiceListResponse, InvoiceListResponseBuilder> {
-  _$InvoiceListResponse _$v;
+  _$InvoiceListResponse? _$v;
 
-  ListBuilder<InvoiceEntity> _data;
+  ListBuilder<InvoiceEntity>? _data;
   ListBuilder<InvoiceEntity> get data =>
       _$this._data ??= new ListBuilder<InvoiceEntity>();
-  set data(ListBuilder<InvoiceEntity> data) => _$this._data = data;
+  set data(ListBuilder<InvoiceEntity>? data) => _$this._data = data;
 
   InvoiceListResponseBuilder();
 
@@ -1324,7 +1324,7 @@ class InvoiceListResponseBuilder
   }
 
   @override
-  void update(void Function(InvoiceListResponseBuilder) updates) {
+  void update(void Function(InvoiceListResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -1336,7 +1336,7 @@ class InvoiceListResponseBuilder
     try {
       _$result = _$v ?? new _$InvoiceListResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -1356,10 +1356,10 @@ class _$InvoiceItemResponse extends InvoiceItemResponse {
   final InvoiceEntity data;
 
   factory _$InvoiceItemResponse(
-          [void Function(InvoiceItemResponseBuilder) updates]) =>
+          [void Function(InvoiceItemResponseBuilder)? updates]) =>
       (new InvoiceItemResponseBuilder()..update(updates))._build();
 
-  _$InvoiceItemResponse._({this.data}) : super._() {
+  _$InvoiceItemResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'InvoiceItemResponse', 'data');
   }
 
@@ -1378,10 +1378,10 @@ class _$InvoiceItemResponse extends InvoiceItemResponse {
     return other is InvoiceItemResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -1398,11 +1398,11 @@ class _$InvoiceItemResponse extends InvoiceItemResponse {
 
 class InvoiceItemResponseBuilder
     implements Builder<InvoiceItemResponse, InvoiceItemResponseBuilder> {
-  _$InvoiceItemResponse _$v;
+  _$InvoiceItemResponse? _$v;
 
-  InvoiceEntityBuilder _data;
+  InvoiceEntityBuilder? _data;
   InvoiceEntityBuilder get data => _$this._data ??= new InvoiceEntityBuilder();
-  set data(InvoiceEntityBuilder data) => _$this._data = data;
+  set data(InvoiceEntityBuilder? data) => _$this._data = data;
 
   InvoiceItemResponseBuilder();
 
@@ -1422,7 +1422,7 @@ class InvoiceItemResponseBuilder
   }
 
   @override
-  void update(void Function(InvoiceItemResponseBuilder) updates) {
+  void update(void Function(InvoiceItemResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -1434,7 +1434,7 @@ class InvoiceItemResponseBuilder
     try {
       _$result = _$v ?? new _$InvoiceItemResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -1451,7 +1451,7 @@ class InvoiceItemResponseBuilder
 
 class _$InvoiceEntity extends InvoiceEntity {
   @override
-  final String idempotencyKey;
+  final String? idempotencyKey;
   @override
   final double amount;
   @override
@@ -1513,7 +1513,7 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String partialDueDate;
   @override
-  final String autoBill;
+  final String? autoBill;
   @override
   final String customValue1;
   @override
@@ -1541,15 +1541,15 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final double exchangeRate;
   @override
-  final String reminder1Sent;
+  final String? reminder1Sent;
   @override
-  final String reminder2Sent;
+  final String? reminder2Sent;
   @override
-  final String reminder3Sent;
+  final String? reminder3Sent;
   @override
-  final String reminderLastSent;
+  final String? reminderLastSent;
   @override
-  final String frequencyId;
+  final String? frequencyId;
   @override
   final String lastSentDate;
   @override
@@ -1557,21 +1557,21 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final String nextSendDatetime;
   @override
-  final int remainingCycles;
+  final int? remainingCycles;
   @override
-  final String dueDateDays;
+  final String? dueDateDays;
   @override
-  final String invoiceId;
+  final String? invoiceId;
   @override
-  final String recurringId;
+  final String? recurringId;
   @override
   final bool autoBillEnabled;
   @override
-  final String filename;
+  final String? filename;
   @override
-  final BuiltList<InvoiceScheduleEntity> recurringDates;
+  final BuiltList<InvoiceScheduleEntity>? recurringDates;
   @override
-  final BuiltList<InvoiceItemEntity> lineItems;
+  final BuiltList<InvoiceItemEntity?> lineItems;
   @override
   final BuiltList<InvitationEntity> invitations;
   @override
@@ -1585,9 +1585,9 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final TaxDataEntity taxData;
   @override
-  final int loadedAt;
+  final int? loadedAt;
   @override
-  final bool isChanged;
+  final bool? isChanged;
   @override
   final int createdAt;
   @override
@@ -1595,97 +1595,97 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final int archivedAt;
   @override
-  final bool isDeleted;
+  final bool? isDeleted;
   @override
-  final String createdUserId;
+  final String? createdUserId;
   @override
-  final String assignedUserId;
+  final String? assignedUserId;
   @override
-  final EntityType entityType;
+  final EntityType? entityType;
   @override
   final String id;
 
-  factory _$InvoiceEntity([void Function(InvoiceEntityBuilder) updates]) =>
+  factory _$InvoiceEntity([void Function(InvoiceEntityBuilder)? updates]) =>
       (new InvoiceEntityBuilder()..update(updates))._build();
 
   _$InvoiceEntity._(
       {this.idempotencyKey,
-      this.amount,
-      this.balance,
-      this.paidToDate,
-      this.clientId,
-      this.projectId,
-      this.expenseId,
-      this.vendorId,
-      this.subscriptionId,
-      this.statusId,
-      this.number,
-      this.discount,
-      this.poNumber,
-      this.date,
-      this.dueDate,
-      this.publicNotes,
-      this.privateNotes,
-      this.terms,
-      this.footer,
-      this.designId,
-      this.usesInclusiveTaxes,
-      this.taxName1,
-      this.taxRate1,
-      this.taxName2,
-      this.taxRate2,
-      this.taxName3,
-      this.taxRate3,
-      this.isAmountDiscount,
-      this.partial,
-      this.taxAmount,
-      this.partialDueDate,
+      required this.amount,
+      required this.balance,
+      required this.paidToDate,
+      required this.clientId,
+      required this.projectId,
+      required this.expenseId,
+      required this.vendorId,
+      required this.subscriptionId,
+      required this.statusId,
+      required this.number,
+      required this.discount,
+      required this.poNumber,
+      required this.date,
+      required this.dueDate,
+      required this.publicNotes,
+      required this.privateNotes,
+      required this.terms,
+      required this.footer,
+      required this.designId,
+      required this.usesInclusiveTaxes,
+      required this.taxName1,
+      required this.taxRate1,
+      required this.taxName2,
+      required this.taxRate2,
+      required this.taxName3,
+      required this.taxRate3,
+      required this.isAmountDiscount,
+      required this.partial,
+      required this.taxAmount,
+      required this.partialDueDate,
       this.autoBill,
-      this.customValue1,
-      this.customValue2,
-      this.customValue3,
-      this.customValue4,
-      this.customSurcharge1,
-      this.customSurcharge2,
-      this.customSurcharge3,
-      this.customSurcharge4,
-      this.customTaxes1,
-      this.customTaxes2,
-      this.customTaxes3,
-      this.customTaxes4,
-      this.exchangeRate,
+      required this.customValue1,
+      required this.customValue2,
+      required this.customValue3,
+      required this.customValue4,
+      required this.customSurcharge1,
+      required this.customSurcharge2,
+      required this.customSurcharge3,
+      required this.customSurcharge4,
+      required this.customTaxes1,
+      required this.customTaxes2,
+      required this.customTaxes3,
+      required this.customTaxes4,
+      required this.exchangeRate,
       this.reminder1Sent,
       this.reminder2Sent,
       this.reminder3Sent,
       this.reminderLastSent,
       this.frequencyId,
-      this.lastSentDate,
-      this.nextSendDate,
-      this.nextSendDatetime,
+      required this.lastSentDate,
+      required this.nextSendDate,
+      required this.nextSendDatetime,
       this.remainingCycles,
       this.dueDateDays,
       this.invoiceId,
       this.recurringId,
-      this.autoBillEnabled,
+      required this.autoBillEnabled,
       this.filename,
       this.recurringDates,
-      this.lineItems,
-      this.invitations,
-      this.documents,
-      this.activities,
-      this.saveDefaultTerms,
-      this.saveDefaultFooter,
-      this.taxData,
+      required this.lineItems,
+      required this.invitations,
+      required this.documents,
+      required this.activities,
+      required this.saveDefaultTerms,
+      required this.saveDefaultFooter,
+      required this.taxData,
       this.loadedAt,
       this.isChanged,
-      this.createdAt,
-      this.updatedAt,
-      this.archivedAt,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.archivedAt,
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
       this.entityType,
-      this.id})
+      required this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(amount, r'InvoiceEntity', 'amount');
     BuiltValueNullFieldError.checkNotNull(balance, r'InvoiceEntity', 'balance');
@@ -1883,10 +1883,10 @@ class _$InvoiceEntity extends InvoiceEntity {
         id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, idempotencyKey.hashCode);
     _$hash = $jc(_$hash, amount.hashCode);
@@ -2053,346 +2053,346 @@ class _$InvoiceEntity extends InvoiceEntity {
 
 class InvoiceEntityBuilder
     implements Builder<InvoiceEntity, InvoiceEntityBuilder> {
-  _$InvoiceEntity _$v;
+  _$InvoiceEntity? _$v;
 
-  String _idempotencyKey;
-  String get idempotencyKey => _$this._idempotencyKey;
-  set idempotencyKey(String idempotencyKey) =>
+  String? _idempotencyKey;
+  String? get idempotencyKey => _$this._idempotencyKey;
+  set idempotencyKey(String? idempotencyKey) =>
       _$this._idempotencyKey = idempotencyKey;
 
-  double _amount;
-  double get amount => _$this._amount;
-  set amount(double amount) => _$this._amount = amount;
+  double? _amount;
+  double? get amount => _$this._amount;
+  set amount(double? amount) => _$this._amount = amount;
 
-  double _balance;
-  double get balance => _$this._balance;
-  set balance(double balance) => _$this._balance = balance;
+  double? _balance;
+  double? get balance => _$this._balance;
+  set balance(double? balance) => _$this._balance = balance;
 
-  double _paidToDate;
-  double get paidToDate => _$this._paidToDate;
-  set paidToDate(double paidToDate) => _$this._paidToDate = paidToDate;
+  double? _paidToDate;
+  double? get paidToDate => _$this._paidToDate;
+  set paidToDate(double? paidToDate) => _$this._paidToDate = paidToDate;
 
-  String _clientId;
-  String get clientId => _$this._clientId;
-  set clientId(String clientId) => _$this._clientId = clientId;
+  String? _clientId;
+  String? get clientId => _$this._clientId;
+  set clientId(String? clientId) => _$this._clientId = clientId;
 
-  String _projectId;
-  String get projectId => _$this._projectId;
-  set projectId(String projectId) => _$this._projectId = projectId;
+  String? _projectId;
+  String? get projectId => _$this._projectId;
+  set projectId(String? projectId) => _$this._projectId = projectId;
 
-  String _expenseId;
-  String get expenseId => _$this._expenseId;
-  set expenseId(String expenseId) => _$this._expenseId = expenseId;
+  String? _expenseId;
+  String? get expenseId => _$this._expenseId;
+  set expenseId(String? expenseId) => _$this._expenseId = expenseId;
 
-  String _vendorId;
-  String get vendorId => _$this._vendorId;
-  set vendorId(String vendorId) => _$this._vendorId = vendorId;
+  String? _vendorId;
+  String? get vendorId => _$this._vendorId;
+  set vendorId(String? vendorId) => _$this._vendorId = vendorId;
 
-  String _subscriptionId;
-  String get subscriptionId => _$this._subscriptionId;
-  set subscriptionId(String subscriptionId) =>
+  String? _subscriptionId;
+  String? get subscriptionId => _$this._subscriptionId;
+  set subscriptionId(String? subscriptionId) =>
       _$this._subscriptionId = subscriptionId;
 
-  String _statusId;
-  String get statusId => _$this._statusId;
-  set statusId(String statusId) => _$this._statusId = statusId;
+  String? _statusId;
+  String? get statusId => _$this._statusId;
+  set statusId(String? statusId) => _$this._statusId = statusId;
 
-  String _number;
-  String get number => _$this._number;
-  set number(String number) => _$this._number = number;
+  String? _number;
+  String? get number => _$this._number;
+  set number(String? number) => _$this._number = number;
 
-  double _discount;
-  double get discount => _$this._discount;
-  set discount(double discount) => _$this._discount = discount;
+  double? _discount;
+  double? get discount => _$this._discount;
+  set discount(double? discount) => _$this._discount = discount;
 
-  String _poNumber;
-  String get poNumber => _$this._poNumber;
-  set poNumber(String poNumber) => _$this._poNumber = poNumber;
+  String? _poNumber;
+  String? get poNumber => _$this._poNumber;
+  set poNumber(String? poNumber) => _$this._poNumber = poNumber;
 
-  String _date;
-  String get date => _$this._date;
-  set date(String date) => _$this._date = date;
+  String? _date;
+  String? get date => _$this._date;
+  set date(String? date) => _$this._date = date;
 
-  String _dueDate;
-  String get dueDate => _$this._dueDate;
-  set dueDate(String dueDate) => _$this._dueDate = dueDate;
+  String? _dueDate;
+  String? get dueDate => _$this._dueDate;
+  set dueDate(String? dueDate) => _$this._dueDate = dueDate;
 
-  String _publicNotes;
-  String get publicNotes => _$this._publicNotes;
-  set publicNotes(String publicNotes) => _$this._publicNotes = publicNotes;
+  String? _publicNotes;
+  String? get publicNotes => _$this._publicNotes;
+  set publicNotes(String? publicNotes) => _$this._publicNotes = publicNotes;
 
-  String _privateNotes;
-  String get privateNotes => _$this._privateNotes;
-  set privateNotes(String privateNotes) => _$this._privateNotes = privateNotes;
+  String? _privateNotes;
+  String? get privateNotes => _$this._privateNotes;
+  set privateNotes(String? privateNotes) => _$this._privateNotes = privateNotes;
 
-  String _terms;
-  String get terms => _$this._terms;
-  set terms(String terms) => _$this._terms = terms;
+  String? _terms;
+  String? get terms => _$this._terms;
+  set terms(String? terms) => _$this._terms = terms;
 
-  String _footer;
-  String get footer => _$this._footer;
-  set footer(String footer) => _$this._footer = footer;
+  String? _footer;
+  String? get footer => _$this._footer;
+  set footer(String? footer) => _$this._footer = footer;
 
-  String _designId;
-  String get designId => _$this._designId;
-  set designId(String designId) => _$this._designId = designId;
+  String? _designId;
+  String? get designId => _$this._designId;
+  set designId(String? designId) => _$this._designId = designId;
 
-  bool _usesInclusiveTaxes;
-  bool get usesInclusiveTaxes => _$this._usesInclusiveTaxes;
-  set usesInclusiveTaxes(bool usesInclusiveTaxes) =>
+  bool? _usesInclusiveTaxes;
+  bool? get usesInclusiveTaxes => _$this._usesInclusiveTaxes;
+  set usesInclusiveTaxes(bool? usesInclusiveTaxes) =>
       _$this._usesInclusiveTaxes = usesInclusiveTaxes;
 
-  String _taxName1;
-  String get taxName1 => _$this._taxName1;
-  set taxName1(String taxName1) => _$this._taxName1 = taxName1;
+  String? _taxName1;
+  String? get taxName1 => _$this._taxName1;
+  set taxName1(String? taxName1) => _$this._taxName1 = taxName1;
 
-  double _taxRate1;
-  double get taxRate1 => _$this._taxRate1;
-  set taxRate1(double taxRate1) => _$this._taxRate1 = taxRate1;
+  double? _taxRate1;
+  double? get taxRate1 => _$this._taxRate1;
+  set taxRate1(double? taxRate1) => _$this._taxRate1 = taxRate1;
 
-  String _taxName2;
-  String get taxName2 => _$this._taxName2;
-  set taxName2(String taxName2) => _$this._taxName2 = taxName2;
+  String? _taxName2;
+  String? get taxName2 => _$this._taxName2;
+  set taxName2(String? taxName2) => _$this._taxName2 = taxName2;
 
-  double _taxRate2;
-  double get taxRate2 => _$this._taxRate2;
-  set taxRate2(double taxRate2) => _$this._taxRate2 = taxRate2;
+  double? _taxRate2;
+  double? get taxRate2 => _$this._taxRate2;
+  set taxRate2(double? taxRate2) => _$this._taxRate2 = taxRate2;
 
-  String _taxName3;
-  String get taxName3 => _$this._taxName3;
-  set taxName3(String taxName3) => _$this._taxName3 = taxName3;
+  String? _taxName3;
+  String? get taxName3 => _$this._taxName3;
+  set taxName3(String? taxName3) => _$this._taxName3 = taxName3;
 
-  double _taxRate3;
-  double get taxRate3 => _$this._taxRate3;
-  set taxRate3(double taxRate3) => _$this._taxRate3 = taxRate3;
+  double? _taxRate3;
+  double? get taxRate3 => _$this._taxRate3;
+  set taxRate3(double? taxRate3) => _$this._taxRate3 = taxRate3;
 
-  bool _isAmountDiscount;
-  bool get isAmountDiscount => _$this._isAmountDiscount;
-  set isAmountDiscount(bool isAmountDiscount) =>
+  bool? _isAmountDiscount;
+  bool? get isAmountDiscount => _$this._isAmountDiscount;
+  set isAmountDiscount(bool? isAmountDiscount) =>
       _$this._isAmountDiscount = isAmountDiscount;
 
-  double _partial;
-  double get partial => _$this._partial;
-  set partial(double partial) => _$this._partial = partial;
+  double? _partial;
+  double? get partial => _$this._partial;
+  set partial(double? partial) => _$this._partial = partial;
 
-  double _taxAmount;
-  double get taxAmount => _$this._taxAmount;
-  set taxAmount(double taxAmount) => _$this._taxAmount = taxAmount;
+  double? _taxAmount;
+  double? get taxAmount => _$this._taxAmount;
+  set taxAmount(double? taxAmount) => _$this._taxAmount = taxAmount;
 
-  String _partialDueDate;
-  String get partialDueDate => _$this._partialDueDate;
-  set partialDueDate(String partialDueDate) =>
+  String? _partialDueDate;
+  String? get partialDueDate => _$this._partialDueDate;
+  set partialDueDate(String? partialDueDate) =>
       _$this._partialDueDate = partialDueDate;
 
-  String _autoBill;
-  String get autoBill => _$this._autoBill;
-  set autoBill(String autoBill) => _$this._autoBill = autoBill;
+  String? _autoBill;
+  String? get autoBill => _$this._autoBill;
+  set autoBill(String? autoBill) => _$this._autoBill = autoBill;
 
-  String _customValue1;
-  String get customValue1 => _$this._customValue1;
-  set customValue1(String customValue1) => _$this._customValue1 = customValue1;
+  String? _customValue1;
+  String? get customValue1 => _$this._customValue1;
+  set customValue1(String? customValue1) => _$this._customValue1 = customValue1;
 
-  String _customValue2;
-  String get customValue2 => _$this._customValue2;
-  set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+  String? _customValue2;
+  String? get customValue2 => _$this._customValue2;
+  set customValue2(String? customValue2) => _$this._customValue2 = customValue2;
 
-  String _customValue3;
-  String get customValue3 => _$this._customValue3;
-  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+  String? _customValue3;
+  String? get customValue3 => _$this._customValue3;
+  set customValue3(String? customValue3) => _$this._customValue3 = customValue3;
 
-  String _customValue4;
-  String get customValue4 => _$this._customValue4;
-  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+  String? _customValue4;
+  String? get customValue4 => _$this._customValue4;
+  set customValue4(String? customValue4) => _$this._customValue4 = customValue4;
 
-  double _customSurcharge1;
-  double get customSurcharge1 => _$this._customSurcharge1;
-  set customSurcharge1(double customSurcharge1) =>
+  double? _customSurcharge1;
+  double? get customSurcharge1 => _$this._customSurcharge1;
+  set customSurcharge1(double? customSurcharge1) =>
       _$this._customSurcharge1 = customSurcharge1;
 
-  double _customSurcharge2;
-  double get customSurcharge2 => _$this._customSurcharge2;
-  set customSurcharge2(double customSurcharge2) =>
+  double? _customSurcharge2;
+  double? get customSurcharge2 => _$this._customSurcharge2;
+  set customSurcharge2(double? customSurcharge2) =>
       _$this._customSurcharge2 = customSurcharge2;
 
-  double _customSurcharge3;
-  double get customSurcharge3 => _$this._customSurcharge3;
-  set customSurcharge3(double customSurcharge3) =>
+  double? _customSurcharge3;
+  double? get customSurcharge3 => _$this._customSurcharge3;
+  set customSurcharge3(double? customSurcharge3) =>
       _$this._customSurcharge3 = customSurcharge3;
 
-  double _customSurcharge4;
-  double get customSurcharge4 => _$this._customSurcharge4;
-  set customSurcharge4(double customSurcharge4) =>
+  double? _customSurcharge4;
+  double? get customSurcharge4 => _$this._customSurcharge4;
+  set customSurcharge4(double? customSurcharge4) =>
       _$this._customSurcharge4 = customSurcharge4;
 
-  bool _customTaxes1;
-  bool get customTaxes1 => _$this._customTaxes1;
-  set customTaxes1(bool customTaxes1) => _$this._customTaxes1 = customTaxes1;
+  bool? _customTaxes1;
+  bool? get customTaxes1 => _$this._customTaxes1;
+  set customTaxes1(bool? customTaxes1) => _$this._customTaxes1 = customTaxes1;
 
-  bool _customTaxes2;
-  bool get customTaxes2 => _$this._customTaxes2;
-  set customTaxes2(bool customTaxes2) => _$this._customTaxes2 = customTaxes2;
+  bool? _customTaxes2;
+  bool? get customTaxes2 => _$this._customTaxes2;
+  set customTaxes2(bool? customTaxes2) => _$this._customTaxes2 = customTaxes2;
 
-  bool _customTaxes3;
-  bool get customTaxes3 => _$this._customTaxes3;
-  set customTaxes3(bool customTaxes3) => _$this._customTaxes3 = customTaxes3;
+  bool? _customTaxes3;
+  bool? get customTaxes3 => _$this._customTaxes3;
+  set customTaxes3(bool? customTaxes3) => _$this._customTaxes3 = customTaxes3;
 
-  bool _customTaxes4;
-  bool get customTaxes4 => _$this._customTaxes4;
-  set customTaxes4(bool customTaxes4) => _$this._customTaxes4 = customTaxes4;
+  bool? _customTaxes4;
+  bool? get customTaxes4 => _$this._customTaxes4;
+  set customTaxes4(bool? customTaxes4) => _$this._customTaxes4 = customTaxes4;
 
-  double _exchangeRate;
-  double get exchangeRate => _$this._exchangeRate;
-  set exchangeRate(double exchangeRate) => _$this._exchangeRate = exchangeRate;
+  double? _exchangeRate;
+  double? get exchangeRate => _$this._exchangeRate;
+  set exchangeRate(double? exchangeRate) => _$this._exchangeRate = exchangeRate;
 
-  String _reminder1Sent;
-  String get reminder1Sent => _$this._reminder1Sent;
-  set reminder1Sent(String reminder1Sent) =>
+  String? _reminder1Sent;
+  String? get reminder1Sent => _$this._reminder1Sent;
+  set reminder1Sent(String? reminder1Sent) =>
       _$this._reminder1Sent = reminder1Sent;
 
-  String _reminder2Sent;
-  String get reminder2Sent => _$this._reminder2Sent;
-  set reminder2Sent(String reminder2Sent) =>
+  String? _reminder2Sent;
+  String? get reminder2Sent => _$this._reminder2Sent;
+  set reminder2Sent(String? reminder2Sent) =>
       _$this._reminder2Sent = reminder2Sent;
 
-  String _reminder3Sent;
-  String get reminder3Sent => _$this._reminder3Sent;
-  set reminder3Sent(String reminder3Sent) =>
+  String? _reminder3Sent;
+  String? get reminder3Sent => _$this._reminder3Sent;
+  set reminder3Sent(String? reminder3Sent) =>
       _$this._reminder3Sent = reminder3Sent;
 
-  String _reminderLastSent;
-  String get reminderLastSent => _$this._reminderLastSent;
-  set reminderLastSent(String reminderLastSent) =>
+  String? _reminderLastSent;
+  String? get reminderLastSent => _$this._reminderLastSent;
+  set reminderLastSent(String? reminderLastSent) =>
       _$this._reminderLastSent = reminderLastSent;
 
-  String _frequencyId;
-  String get frequencyId => _$this._frequencyId;
-  set frequencyId(String frequencyId) => _$this._frequencyId = frequencyId;
+  String? _frequencyId;
+  String? get frequencyId => _$this._frequencyId;
+  set frequencyId(String? frequencyId) => _$this._frequencyId = frequencyId;
 
-  String _lastSentDate;
-  String get lastSentDate => _$this._lastSentDate;
-  set lastSentDate(String lastSentDate) => _$this._lastSentDate = lastSentDate;
+  String? _lastSentDate;
+  String? get lastSentDate => _$this._lastSentDate;
+  set lastSentDate(String? lastSentDate) => _$this._lastSentDate = lastSentDate;
 
-  String _nextSendDate;
-  String get nextSendDate => _$this._nextSendDate;
-  set nextSendDate(String nextSendDate) => _$this._nextSendDate = nextSendDate;
+  String? _nextSendDate;
+  String? get nextSendDate => _$this._nextSendDate;
+  set nextSendDate(String? nextSendDate) => _$this._nextSendDate = nextSendDate;
 
-  String _nextSendDatetime;
-  String get nextSendDatetime => _$this._nextSendDatetime;
-  set nextSendDatetime(String nextSendDatetime) =>
+  String? _nextSendDatetime;
+  String? get nextSendDatetime => _$this._nextSendDatetime;
+  set nextSendDatetime(String? nextSendDatetime) =>
       _$this._nextSendDatetime = nextSendDatetime;
 
-  int _remainingCycles;
-  int get remainingCycles => _$this._remainingCycles;
-  set remainingCycles(int remainingCycles) =>
+  int? _remainingCycles;
+  int? get remainingCycles => _$this._remainingCycles;
+  set remainingCycles(int? remainingCycles) =>
       _$this._remainingCycles = remainingCycles;
 
-  String _dueDateDays;
-  String get dueDateDays => _$this._dueDateDays;
-  set dueDateDays(String dueDateDays) => _$this._dueDateDays = dueDateDays;
+  String? _dueDateDays;
+  String? get dueDateDays => _$this._dueDateDays;
+  set dueDateDays(String? dueDateDays) => _$this._dueDateDays = dueDateDays;
 
-  String _invoiceId;
-  String get invoiceId => _$this._invoiceId;
-  set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
+  String? _invoiceId;
+  String? get invoiceId => _$this._invoiceId;
+  set invoiceId(String? invoiceId) => _$this._invoiceId = invoiceId;
 
-  String _recurringId;
-  String get recurringId => _$this._recurringId;
-  set recurringId(String recurringId) => _$this._recurringId = recurringId;
+  String? _recurringId;
+  String? get recurringId => _$this._recurringId;
+  set recurringId(String? recurringId) => _$this._recurringId = recurringId;
 
-  bool _autoBillEnabled;
-  bool get autoBillEnabled => _$this._autoBillEnabled;
-  set autoBillEnabled(bool autoBillEnabled) =>
+  bool? _autoBillEnabled;
+  bool? get autoBillEnabled => _$this._autoBillEnabled;
+  set autoBillEnabled(bool? autoBillEnabled) =>
       _$this._autoBillEnabled = autoBillEnabled;
 
-  String _filename;
-  String get filename => _$this._filename;
-  set filename(String filename) => _$this._filename = filename;
+  String? _filename;
+  String? get filename => _$this._filename;
+  set filename(String? filename) => _$this._filename = filename;
 
-  ListBuilder<InvoiceScheduleEntity> _recurringDates;
+  ListBuilder<InvoiceScheduleEntity>? _recurringDates;
   ListBuilder<InvoiceScheduleEntity> get recurringDates =>
       _$this._recurringDates ??= new ListBuilder<InvoiceScheduleEntity>();
-  set recurringDates(ListBuilder<InvoiceScheduleEntity> recurringDates) =>
+  set recurringDates(ListBuilder<InvoiceScheduleEntity>? recurringDates) =>
       _$this._recurringDates = recurringDates;
 
-  ListBuilder<InvoiceItemEntity> _lineItems;
-  ListBuilder<InvoiceItemEntity> get lineItems =>
-      _$this._lineItems ??= new ListBuilder<InvoiceItemEntity>();
-  set lineItems(ListBuilder<InvoiceItemEntity> lineItems) =>
+  ListBuilder<InvoiceItemEntity?>? _lineItems;
+  ListBuilder<InvoiceItemEntity?> get lineItems =>
+      _$this._lineItems ??= new ListBuilder<InvoiceItemEntity?>();
+  set lineItems(ListBuilder<InvoiceItemEntity?>? lineItems) =>
       _$this._lineItems = lineItems;
 
-  ListBuilder<InvitationEntity> _invitations;
+  ListBuilder<InvitationEntity>? _invitations;
   ListBuilder<InvitationEntity> get invitations =>
       _$this._invitations ??= new ListBuilder<InvitationEntity>();
-  set invitations(ListBuilder<InvitationEntity> invitations) =>
+  set invitations(ListBuilder<InvitationEntity>? invitations) =>
       _$this._invitations = invitations;
 
-  ListBuilder<DocumentEntity> _documents;
+  ListBuilder<DocumentEntity>? _documents;
   ListBuilder<DocumentEntity> get documents =>
       _$this._documents ??= new ListBuilder<DocumentEntity>();
-  set documents(ListBuilder<DocumentEntity> documents) =>
+  set documents(ListBuilder<DocumentEntity>? documents) =>
       _$this._documents = documents;
 
-  ListBuilder<ActivityEntity> _activities;
+  ListBuilder<ActivityEntity>? _activities;
   ListBuilder<ActivityEntity> get activities =>
       _$this._activities ??= new ListBuilder<ActivityEntity>();
-  set activities(ListBuilder<ActivityEntity> activities) =>
+  set activities(ListBuilder<ActivityEntity>? activities) =>
       _$this._activities = activities;
 
-  bool _saveDefaultTerms;
-  bool get saveDefaultTerms => _$this._saveDefaultTerms;
-  set saveDefaultTerms(bool saveDefaultTerms) =>
+  bool? _saveDefaultTerms;
+  bool? get saveDefaultTerms => _$this._saveDefaultTerms;
+  set saveDefaultTerms(bool? saveDefaultTerms) =>
       _$this._saveDefaultTerms = saveDefaultTerms;
 
-  bool _saveDefaultFooter;
-  bool get saveDefaultFooter => _$this._saveDefaultFooter;
-  set saveDefaultFooter(bool saveDefaultFooter) =>
+  bool? _saveDefaultFooter;
+  bool? get saveDefaultFooter => _$this._saveDefaultFooter;
+  set saveDefaultFooter(bool? saveDefaultFooter) =>
       _$this._saveDefaultFooter = saveDefaultFooter;
 
-  TaxDataEntityBuilder _taxData;
+  TaxDataEntityBuilder? _taxData;
   TaxDataEntityBuilder get taxData =>
       _$this._taxData ??= new TaxDataEntityBuilder();
-  set taxData(TaxDataEntityBuilder taxData) => _$this._taxData = taxData;
+  set taxData(TaxDataEntityBuilder? taxData) => _$this._taxData = taxData;
 
-  int _loadedAt;
-  int get loadedAt => _$this._loadedAt;
-  set loadedAt(int loadedAt) => _$this._loadedAt = loadedAt;
+  int? _loadedAt;
+  int? get loadedAt => _$this._loadedAt;
+  set loadedAt(int? loadedAt) => _$this._loadedAt = loadedAt;
 
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+  bool? _isChanged;
+  bool? get isChanged => _$this._isChanged;
+  set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
 
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+  int? _archivedAt;
+  int? get archivedAt => _$this._archivedAt;
+  set archivedAt(int? archivedAt) => _$this._archivedAt = archivedAt;
 
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+  bool? _isDeleted;
+  bool? get isDeleted => _$this._isDeleted;
+  set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
 
-  String _createdUserId;
-  String get createdUserId => _$this._createdUserId;
-  set createdUserId(String createdUserId) =>
+  String? _createdUserId;
+  String? get createdUserId => _$this._createdUserId;
+  set createdUserId(String? createdUserId) =>
       _$this._createdUserId = createdUserId;
 
-  String _assignedUserId;
-  String get assignedUserId => _$this._assignedUserId;
-  set assignedUserId(String assignedUserId) =>
+  String? _assignedUserId;
+  String? get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String? assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  EntityType _entityType;
-  EntityType get entityType => _$this._entityType;
-  set entityType(EntityType entityType) => _$this._entityType = entityType;
+  EntityType? _entityType;
+  EntityType? get entityType => _$this._entityType;
+  set entityType(EntityType? entityType) => _$this._entityType = entityType;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   InvoiceEntityBuilder() {
     InvoiceEntity._initializeBuilder(this);
@@ -2490,7 +2490,7 @@ class InvoiceEntityBuilder
   }
 
   @override
-  void update(void Function(InvoiceEntityBuilder) updates) {
+  void update(void Function(InvoiceEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -2588,7 +2588,7 @@ class InvoiceEntityBuilder
               entityType: entityType,
               id: BuiltValueNullFieldError.checkNotNull(id, r'InvoiceEntity', 'id'));
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'recurringDates';
         _recurringDates?.build();
@@ -2638,7 +2638,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
   @override
   final double taxRate3;
   @override
-  final String typeId;
+  final String? typeId;
   @override
   final String customValue1;
   @override
@@ -2650,40 +2650,40 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
   @override
   final double discount;
   @override
-  final String taskId;
+  final String? taskId;
   @override
-  final String expenseId;
+  final String? expenseId;
   @override
-  final int createdAt;
+  final int? createdAt;
   @override
   final String taxCategoryId;
 
   factory _$InvoiceItemEntity(
-          [void Function(InvoiceItemEntityBuilder) updates]) =>
+          [void Function(InvoiceItemEntityBuilder)? updates]) =>
       (new InvoiceItemEntityBuilder()..update(updates))._build();
 
   _$InvoiceItemEntity._(
-      {this.productKey,
-      this.notes,
-      this.cost,
-      this.productCost,
-      this.quantity,
-      this.taxName1,
-      this.taxRate1,
-      this.taxName2,
-      this.taxRate2,
-      this.taxName3,
-      this.taxRate3,
+      {required this.productKey,
+      required this.notes,
+      required this.cost,
+      required this.productCost,
+      required this.quantity,
+      required this.taxName1,
+      required this.taxRate1,
+      required this.taxName2,
+      required this.taxRate2,
+      required this.taxName3,
+      required this.taxRate3,
       this.typeId,
-      this.customValue1,
-      this.customValue2,
-      this.customValue3,
-      this.customValue4,
-      this.discount,
+      required this.customValue1,
+      required this.customValue2,
+      required this.customValue3,
+      required this.customValue4,
+      required this.discount,
       this.taskId,
       this.expenseId,
       this.createdAt,
-      this.taxCategoryId})
+      required this.taxCategoryId})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         productKey, r'InvoiceItemEntity', 'productKey');
@@ -2754,10 +2754,10 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
         taxCategoryId == other.taxCategoryId;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, productKey.hashCode);
     _$hash = $jc(_$hash, notes.hashCode);
@@ -2814,91 +2814,91 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
 
 class InvoiceItemEntityBuilder
     implements Builder<InvoiceItemEntity, InvoiceItemEntityBuilder> {
-  _$InvoiceItemEntity _$v;
+  _$InvoiceItemEntity? _$v;
 
-  String _productKey;
-  String get productKey => _$this._productKey;
-  set productKey(String productKey) => _$this._productKey = productKey;
+  String? _productKey;
+  String? get productKey => _$this._productKey;
+  set productKey(String? productKey) => _$this._productKey = productKey;
 
-  String _notes;
-  String get notes => _$this._notes;
-  set notes(String notes) => _$this._notes = notes;
+  String? _notes;
+  String? get notes => _$this._notes;
+  set notes(String? notes) => _$this._notes = notes;
 
-  double _cost;
-  double get cost => _$this._cost;
-  set cost(double cost) => _$this._cost = cost;
+  double? _cost;
+  double? get cost => _$this._cost;
+  set cost(double? cost) => _$this._cost = cost;
 
-  double _productCost;
-  double get productCost => _$this._productCost;
-  set productCost(double productCost) => _$this._productCost = productCost;
+  double? _productCost;
+  double? get productCost => _$this._productCost;
+  set productCost(double? productCost) => _$this._productCost = productCost;
 
-  double _quantity;
-  double get quantity => _$this._quantity;
-  set quantity(double quantity) => _$this._quantity = quantity;
+  double? _quantity;
+  double? get quantity => _$this._quantity;
+  set quantity(double? quantity) => _$this._quantity = quantity;
 
-  String _taxName1;
-  String get taxName1 => _$this._taxName1;
-  set taxName1(String taxName1) => _$this._taxName1 = taxName1;
+  String? _taxName1;
+  String? get taxName1 => _$this._taxName1;
+  set taxName1(String? taxName1) => _$this._taxName1 = taxName1;
 
-  double _taxRate1;
-  double get taxRate1 => _$this._taxRate1;
-  set taxRate1(double taxRate1) => _$this._taxRate1 = taxRate1;
+  double? _taxRate1;
+  double? get taxRate1 => _$this._taxRate1;
+  set taxRate1(double? taxRate1) => _$this._taxRate1 = taxRate1;
 
-  String _taxName2;
-  String get taxName2 => _$this._taxName2;
-  set taxName2(String taxName2) => _$this._taxName2 = taxName2;
+  String? _taxName2;
+  String? get taxName2 => _$this._taxName2;
+  set taxName2(String? taxName2) => _$this._taxName2 = taxName2;
 
-  double _taxRate2;
-  double get taxRate2 => _$this._taxRate2;
-  set taxRate2(double taxRate2) => _$this._taxRate2 = taxRate2;
+  double? _taxRate2;
+  double? get taxRate2 => _$this._taxRate2;
+  set taxRate2(double? taxRate2) => _$this._taxRate2 = taxRate2;
 
-  String _taxName3;
-  String get taxName3 => _$this._taxName3;
-  set taxName3(String taxName3) => _$this._taxName3 = taxName3;
+  String? _taxName3;
+  String? get taxName3 => _$this._taxName3;
+  set taxName3(String? taxName3) => _$this._taxName3 = taxName3;
 
-  double _taxRate3;
-  double get taxRate3 => _$this._taxRate3;
-  set taxRate3(double taxRate3) => _$this._taxRate3 = taxRate3;
+  double? _taxRate3;
+  double? get taxRate3 => _$this._taxRate3;
+  set taxRate3(double? taxRate3) => _$this._taxRate3 = taxRate3;
 
-  String _typeId;
-  String get typeId => _$this._typeId;
-  set typeId(String typeId) => _$this._typeId = typeId;
+  String? _typeId;
+  String? get typeId => _$this._typeId;
+  set typeId(String? typeId) => _$this._typeId = typeId;
 
-  String _customValue1;
-  String get customValue1 => _$this._customValue1;
-  set customValue1(String customValue1) => _$this._customValue1 = customValue1;
+  String? _customValue1;
+  String? get customValue1 => _$this._customValue1;
+  set customValue1(String? customValue1) => _$this._customValue1 = customValue1;
 
-  String _customValue2;
-  String get customValue2 => _$this._customValue2;
-  set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+  String? _customValue2;
+  String? get customValue2 => _$this._customValue2;
+  set customValue2(String? customValue2) => _$this._customValue2 = customValue2;
 
-  String _customValue3;
-  String get customValue3 => _$this._customValue3;
-  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+  String? _customValue3;
+  String? get customValue3 => _$this._customValue3;
+  set customValue3(String? customValue3) => _$this._customValue3 = customValue3;
 
-  String _customValue4;
-  String get customValue4 => _$this._customValue4;
-  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+  String? _customValue4;
+  String? get customValue4 => _$this._customValue4;
+  set customValue4(String? customValue4) => _$this._customValue4 = customValue4;
 
-  double _discount;
-  double get discount => _$this._discount;
-  set discount(double discount) => _$this._discount = discount;
+  double? _discount;
+  double? get discount => _$this._discount;
+  set discount(double? discount) => _$this._discount = discount;
 
-  String _taskId;
-  String get taskId => _$this._taskId;
-  set taskId(String taskId) => _$this._taskId = taskId;
+  String? _taskId;
+  String? get taskId => _$this._taskId;
+  set taskId(String? taskId) => _$this._taskId = taskId;
 
-  String _expenseId;
-  String get expenseId => _$this._expenseId;
-  set expenseId(String expenseId) => _$this._expenseId = expenseId;
+  String? _expenseId;
+  String? get expenseId => _$this._expenseId;
+  set expenseId(String? expenseId) => _$this._expenseId = expenseId;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  String _taxCategoryId;
-  String get taxCategoryId => _$this._taxCategoryId;
-  set taxCategoryId(String taxCategoryId) =>
+  String? _taxCategoryId;
+  String? get taxCategoryId => _$this._taxCategoryId;
+  set taxCategoryId(String? taxCategoryId) =>
       _$this._taxCategoryId = taxCategoryId;
 
   InvoiceItemEntityBuilder() {
@@ -2941,7 +2941,7 @@ class InvoiceItemEntityBuilder
   }
 
   @override
-  void update(void Function(InvoiceItemEntityBuilder) updates) {
+  void update(void Function(InvoiceItemEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -3002,9 +3002,9 @@ class _$InvitationEntity extends InvitationEntity {
   @override
   final String openedDate;
   @override
-  final String emailStatus;
+  final String? emailStatus;
   @override
-  final bool isChanged;
+  final bool? isChanged;
   @override
   final int createdAt;
   @override
@@ -3012,38 +3012,38 @@ class _$InvitationEntity extends InvitationEntity {
   @override
   final int archivedAt;
   @override
-  final bool isDeleted;
+  final bool? isDeleted;
   @override
-  final String createdUserId;
+  final String? createdUserId;
   @override
-  final String assignedUserId;
+  final String? assignedUserId;
   @override
-  final EntityType entityType;
+  final EntityType? entityType;
   @override
   final String id;
 
   factory _$InvitationEntity(
-          [void Function(InvitationEntityBuilder) updates]) =>
+          [void Function(InvitationEntityBuilder)? updates]) =>
       (new InvitationEntityBuilder()..update(updates))._build();
 
   _$InvitationEntity._(
-      {this.key,
-      this.link,
-      this.clientContactId,
-      this.vendorContactId,
-      this.sentDate,
-      this.viewedDate,
-      this.openedDate,
+      {required this.key,
+      required this.link,
+      required this.clientContactId,
+      required this.vendorContactId,
+      required this.sentDate,
+      required this.viewedDate,
+      required this.openedDate,
       this.emailStatus,
       this.isChanged,
-      this.createdAt,
-      this.updatedAt,
-      this.archivedAt,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.archivedAt,
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
       this.entityType,
-      this.id})
+      required this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(key, r'InvitationEntity', 'key');
     BuiltValueNullFieldError.checkNotNull(link, r'InvitationEntity', 'link');
@@ -3093,10 +3093,10 @@ class _$InvitationEntity extends InvitationEntity {
         id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, key.hashCode);
     _$hash = $jc(_$hash, link.hashCode);
@@ -3141,79 +3141,79 @@ class _$InvitationEntity extends InvitationEntity {
 
 class InvitationEntityBuilder
     implements Builder<InvitationEntity, InvitationEntityBuilder> {
-  _$InvitationEntity _$v;
+  _$InvitationEntity? _$v;
 
-  String _key;
-  String get key => _$this._key;
-  set key(String key) => _$this._key = key;
+  String? _key;
+  String? get key => _$this._key;
+  set key(String? key) => _$this._key = key;
 
-  String _link;
-  String get link => _$this._link;
-  set link(String link) => _$this._link = link;
+  String? _link;
+  String? get link => _$this._link;
+  set link(String? link) => _$this._link = link;
 
-  String _clientContactId;
-  String get clientContactId => _$this._clientContactId;
-  set clientContactId(String clientContactId) =>
+  String? _clientContactId;
+  String? get clientContactId => _$this._clientContactId;
+  set clientContactId(String? clientContactId) =>
       _$this._clientContactId = clientContactId;
 
-  String _vendorContactId;
-  String get vendorContactId => _$this._vendorContactId;
-  set vendorContactId(String vendorContactId) =>
+  String? _vendorContactId;
+  String? get vendorContactId => _$this._vendorContactId;
+  set vendorContactId(String? vendorContactId) =>
       _$this._vendorContactId = vendorContactId;
 
-  String _sentDate;
-  String get sentDate => _$this._sentDate;
-  set sentDate(String sentDate) => _$this._sentDate = sentDate;
+  String? _sentDate;
+  String? get sentDate => _$this._sentDate;
+  set sentDate(String? sentDate) => _$this._sentDate = sentDate;
 
-  String _viewedDate;
-  String get viewedDate => _$this._viewedDate;
-  set viewedDate(String viewedDate) => _$this._viewedDate = viewedDate;
+  String? _viewedDate;
+  String? get viewedDate => _$this._viewedDate;
+  set viewedDate(String? viewedDate) => _$this._viewedDate = viewedDate;
 
-  String _openedDate;
-  String get openedDate => _$this._openedDate;
-  set openedDate(String openedDate) => _$this._openedDate = openedDate;
+  String? _openedDate;
+  String? get openedDate => _$this._openedDate;
+  set openedDate(String? openedDate) => _$this._openedDate = openedDate;
 
-  String _emailStatus;
-  String get emailStatus => _$this._emailStatus;
-  set emailStatus(String emailStatus) => _$this._emailStatus = emailStatus;
+  String? _emailStatus;
+  String? get emailStatus => _$this._emailStatus;
+  set emailStatus(String? emailStatus) => _$this._emailStatus = emailStatus;
 
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+  bool? _isChanged;
+  bool? get isChanged => _$this._isChanged;
+  set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
 
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+  int? _archivedAt;
+  int? get archivedAt => _$this._archivedAt;
+  set archivedAt(int? archivedAt) => _$this._archivedAt = archivedAt;
 
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+  bool? _isDeleted;
+  bool? get isDeleted => _$this._isDeleted;
+  set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
 
-  String _createdUserId;
-  String get createdUserId => _$this._createdUserId;
-  set createdUserId(String createdUserId) =>
+  String? _createdUserId;
+  String? get createdUserId => _$this._createdUserId;
+  set createdUserId(String? createdUserId) =>
       _$this._createdUserId = createdUserId;
 
-  String _assignedUserId;
-  String get assignedUserId => _$this._assignedUserId;
-  set assignedUserId(String assignedUserId) =>
+  String? _assignedUserId;
+  String? get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String? assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  EntityType _entityType;
-  EntityType get entityType => _$this._entityType;
-  set entityType(EntityType entityType) => _$this._entityType = entityType;
+  EntityType? _entityType;
+  EntityType? get entityType => _$this._entityType;
+  set entityType(EntityType? entityType) => _$this._entityType = entityType;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   InvitationEntityBuilder() {
     InvitationEntity._initializeBuilder(this);
@@ -3251,7 +3251,7 @@ class InvitationEntityBuilder
   }
 
   @override
-  void update(void Function(InvitationEntityBuilder) updates) {
+  void update(void Function(InvitationEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -3299,10 +3299,11 @@ class _$InvoiceScheduleEntity extends InvoiceScheduleEntity {
   final String dueDate;
 
   factory _$InvoiceScheduleEntity(
-          [void Function(InvoiceScheduleEntityBuilder) updates]) =>
+          [void Function(InvoiceScheduleEntityBuilder)? updates]) =>
       (new InvoiceScheduleEntityBuilder()..update(updates))._build();
 
-  _$InvoiceScheduleEntity._({this.sendDate, this.dueDate}) : super._() {
+  _$InvoiceScheduleEntity._({required this.sendDate, required this.dueDate})
+      : super._() {
     BuiltValueNullFieldError.checkNotNull(
         sendDate, r'InvoiceScheduleEntity', 'sendDate');
     BuiltValueNullFieldError.checkNotNull(
@@ -3326,10 +3327,10 @@ class _$InvoiceScheduleEntity extends InvoiceScheduleEntity {
         dueDate == other.dueDate;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, sendDate.hashCode);
     _$hash = $jc(_$hash, dueDate.hashCode);
@@ -3348,15 +3349,15 @@ class _$InvoiceScheduleEntity extends InvoiceScheduleEntity {
 
 class InvoiceScheduleEntityBuilder
     implements Builder<InvoiceScheduleEntity, InvoiceScheduleEntityBuilder> {
-  _$InvoiceScheduleEntity _$v;
+  _$InvoiceScheduleEntity? _$v;
 
-  String _sendDate;
-  String get sendDate => _$this._sendDate;
-  set sendDate(String sendDate) => _$this._sendDate = sendDate;
+  String? _sendDate;
+  String? get sendDate => _$this._sendDate;
+  set sendDate(String? sendDate) => _$this._sendDate = sendDate;
 
-  String _dueDate;
-  String get dueDate => _$this._dueDate;
-  set dueDate(String dueDate) => _$this._dueDate = dueDate;
+  String? _dueDate;
+  String? get dueDate => _$this._dueDate;
+  set dueDate(String? dueDate) => _$this._dueDate = dueDate;
 
   InvoiceScheduleEntityBuilder();
 
@@ -3377,7 +3378,7 @@ class InvoiceScheduleEntityBuilder
   }
 
   @override
-  void update(void Function(InvoiceScheduleEntityBuilder) updates) {
+  void update(void Function(InvoiceScheduleEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -3407,11 +3408,14 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
   final double amount;
 
   factory _$InvoiceHistoryEntity(
-          [void Function(InvoiceHistoryEntityBuilder) updates]) =>
+          [void Function(InvoiceHistoryEntityBuilder)? updates]) =>
       (new InvoiceHistoryEntityBuilder()..update(updates))._build();
 
   _$InvoiceHistoryEntity._(
-      {this.id, this.activityId, this.createdAt, this.amount})
+      {required this.id,
+      required this.activityId,
+      required this.createdAt,
+      required this.amount})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'InvoiceHistoryEntity', 'id');
     BuiltValueNullFieldError.checkNotNull(
@@ -3441,10 +3445,10 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
         amount == other.amount;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, activityId.hashCode);
@@ -3467,23 +3471,23 @@ class _$InvoiceHistoryEntity extends InvoiceHistoryEntity {
 
 class InvoiceHistoryEntityBuilder
     implements Builder<InvoiceHistoryEntity, InvoiceHistoryEntityBuilder> {
-  _$InvoiceHistoryEntity _$v;
+  _$InvoiceHistoryEntity? _$v;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
-  String _activityId;
-  String get activityId => _$this._activityId;
-  set activityId(String activityId) => _$this._activityId = activityId;
+  String? _activityId;
+  String? get activityId => _$this._activityId;
+  set activityId(String? activityId) => _$this._activityId = activityId;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  double _amount;
-  double get amount => _$this._amount;
-  set amount(double amount) => _$this._amount = amount;
+  double? _amount;
+  double? get amount => _$this._amount;
+  set amount(double? amount) => _$this._amount = amount;
 
   InvoiceHistoryEntityBuilder();
 
@@ -3506,7 +3510,7 @@ class InvoiceHistoryEntityBuilder
   }
 
   @override
-  void update(void Function(InvoiceHistoryEntityBuilder) updates) {
+  void update(void Function(InvoiceHistoryEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

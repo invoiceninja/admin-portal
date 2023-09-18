@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DesignListBuilder extends StatelessWidget {
-  const DesignListBuilder({Key key}) : super(key: key);
+  const DesignListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class DesignListBuilder extends StatelessWidget {
               return DesignListItem(
                 filter: viewModel.filter,
                 design: design,
-                isChecked: isInMultiselect && listState.isSelected(design.id),
+                isChecked: isInMultiselect && listState.isSelected(design!.id),
               );
             });
       },
@@ -60,18 +60,18 @@ class DesignListBuilder extends StatelessWidget {
 
 class DesignListVM {
   DesignListVM({
-    @required this.state,
-    @required this.userCompany,
-    @required this.designList,
-    @required this.designMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.onEntityAction,
-    @required this.tableColumns,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.userCompany,
+    required this.designList,
+    required this.designMap,
+    required this.filter,
+    required this.isLoading,
+    required this.listState,
+    required this.onRefreshed,
+    required this.onEntityAction,
+    required this.tableColumns,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
   });
 
   static DesignListVM fromStore(Store<AppState> store) {
@@ -80,7 +80,7 @@ class DesignListVM {
         return Future<Null>(null);
       }
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -107,11 +107,11 @@ class DesignListVM {
   }
 
   final AppState state;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> designList;
-  final BuiltMap<String, DesignEntity> designMap;
+  final BuiltMap<String?, DesignEntity?> designMap;
   final ListUIState listState;
-  final String filter;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;

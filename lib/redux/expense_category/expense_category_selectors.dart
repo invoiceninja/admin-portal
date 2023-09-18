@@ -9,22 +9,22 @@ import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedDropdownExpenseCategoryList = memo5(
-    (BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+    (BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
             BuiltList<String> expenseCategoryList,
             StaticState staticState,
-            BuiltMap<String, UserEntity> userMap,
+            BuiltMap<String?, UserEntity?> userMap,
             String categoryId) =>
         dropdownExpenseCategoriesSelector(expenseCategoryMap,
             expenseCategoryList, staticState, userMap, categoryId));
 
 List<String> dropdownExpenseCategoriesSelector(
-    BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+    BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
     BuiltList<String> expenseCategoryList,
     StaticState staticState,
-    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String?, UserEntity?> userMap,
     String clientId) {
   final list = expenseCategoryList.where((expenseCategoryId) {
-    final expenseCategory = expenseCategoryMap[expenseCategoryId];
+    final expenseCategory = expenseCategoryMap[expenseCategoryId]!;
     /*
     if (clientId != null && clientId > 0 && expenseCategory.clientId != clientId) {
       return false;
@@ -34,7 +34,7 @@ List<String> dropdownExpenseCategoriesSelector(
   }).toList();
 
   list.sort((expenseCategoryAId, expenseCategoryBId) {
-    final expenseCategoryA = expenseCategoryMap[expenseCategoryAId];
+    final expenseCategoryA = expenseCategoryMap[expenseCategoryAId]!;
     final expenseCategoryB = expenseCategoryMap[expenseCategoryBId];
     return expenseCategoryA.compareTo(
         expenseCategory: expenseCategoryB,
@@ -46,7 +46,7 @@ List<String> dropdownExpenseCategoriesSelector(
 }
 
 var memoizedFilteredExpenseCategoryList = memo4((SelectionState selectionState,
-        BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+        BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
         BuiltList<String> expenseCategoryList,
         ListUIState expenseCategoryListState) =>
     filteredExpenseCategoriesSelector(selectionState, expenseCategoryMap,
@@ -54,11 +54,11 @@ var memoizedFilteredExpenseCategoryList = memo4((SelectionState selectionState,
 
 List<String> filteredExpenseCategoriesSelector(
     SelectionState selectionState,
-    BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+    BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
     BuiltList<String> expenseCategoryList,
     ListUIState expenseCategoryListState) {
   final list = expenseCategoryList.where((expenseCategoryId) {
-    final expenseCategory = expenseCategoryMap[expenseCategoryId];
+    final expenseCategory = expenseCategoryMap[expenseCategoryId]!;
 
     if (expenseCategory.id == selectionState.selectedId) {
       return true;
@@ -71,7 +71,7 @@ List<String> filteredExpenseCategoriesSelector(
   }).toList();
 
   list.sort((expenseCategoryAId, expenseCategoryBId) {
-    return expenseCategoryMap[expenseCategoryAId].compareTo(
+    return expenseCategoryMap[expenseCategoryAId]!.compareTo(
       expenseCategory: expenseCategoryMap[expenseCategoryBId],
       sortField: expenseCategoryListState.sortField,
       sortAscending: expenseCategoryListState.sortAscending,
@@ -82,18 +82,18 @@ List<String> filteredExpenseCategoriesSelector(
 }
 
 var memoizedCalculateExpenseCategoryAmount = memo2(
-    (String categoryId, BuiltMap<String, ExpenseEntity> expenseMap) =>
+    (String categoryId, BuiltMap<String?, ExpenseEntity?> expenseMap) =>
         calculateExpenseCategoryAmount(
             categoryId: categoryId, expenseMap: expenseMap));
 
 double calculateExpenseCategoryAmount({
-  String categoryId,
-  BuiltMap<String, ExpenseEntity> expenseMap,
+  String? categoryId,
+  required BuiltMap<String?, ExpenseEntity?> expenseMap,
 }) {
   double total = 0;
 
   expenseMap.forEach((expenseId, expense) {
-    if (expense.categoryId == categoryId) {
+    if (expense!.categoryId == categoryId) {
       total += expense.grossAmount;
     }
   });
@@ -102,17 +102,17 @@ double calculateExpenseCategoryAmount({
 }
 
 var memoizedExpenseStatsForExpenseCategory = memo2(
-    (String companyGatewayId, BuiltMap<String, ExpenseEntity> expenseMap) =>
+    (String companyGatewayId, BuiltMap<String?, ExpenseEntity?> expenseMap) =>
         expenseStatsForExpenseCategory(companyGatewayId, expenseMap));
 
 EntityStats expenseStatsForExpenseCategory(
   String categoryId,
-  BuiltMap<String, ExpenseEntity> expenseMap,
+  BuiltMap<String?, ExpenseEntity?> expenseMap,
 ) {
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {
-    if (expense.categoryId == categoryId) {
+    if (expense!.categoryId == categoryId) {
       if (expense.isActive) {
         countActive++;
       } else if (expense.isArchived) {
@@ -125,17 +125,17 @@ EntityStats expenseStatsForExpenseCategory(
 }
 
 var memoizedTransactionStatsForExpenseCategory = memo2((String companyGatewayId,
-        BuiltMap<String, TransactionEntity> transactionMap) =>
+        BuiltMap<String?, TransactionEntity?> transactionMap) =>
     transactionStatsForExpenseCategory(companyGatewayId, transactionMap));
 
 EntityStats transactionStatsForExpenseCategory(
   String categoryId,
-  BuiltMap<String, TransactionEntity> transactionMap,
+  BuiltMap<String?, TransactionEntity?> transactionMap,
 ) {
   int countActive = 0;
   int countArchived = 0;
   transactionMap.forEach((transactionId, transaction) {
-    if (transaction.categoryId == categoryId) {
+    if (transaction!.categoryId == categoryId) {
       if (transaction.isActive) {
         countActive++;
       } else if (transaction.isArchived) {

@@ -28,7 +28,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class LocalizationScreen extends StatelessWidget {
-  const LocalizationScreen({Key key}) : super(key: key);
+  const LocalizationScreen({Key? key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsLocalization';
 
   @override
@@ -47,12 +47,12 @@ class LocalizationScreen extends StatelessWidget {
 
 class LocalizationSettingsVM {
   LocalizationSettingsVM({
-    @required this.state,
-    @required this.company,
-    @required this.settings,
-    @required this.onSettingsChanged,
-    @required this.onCompanyChanged,
-    @required this.onSavePressed,
+    required this.state,
+    required this.company,
+    required this.settings,
+    required this.onSettingsChanged,
+    required this.onCompanyChanged,
+    required this.onSavePressed,
   });
 
   static LocalizationSettingsVM fromStore(Store<AppState> store) {
@@ -74,27 +74,27 @@ class LocalizationSettingsVM {
               case EntityType.company:
                 final appBuilder = AppBuilder.of(context);
                 final completer = snackBarCompleter<Null>(
-                    context, AppLocalization.of(context).savedSettings)
+                    context, AppLocalization.of(context)!.savedSettings)
                   ..future.then<dynamic>((value) {
-                    appBuilder.rebuild();
+                    appBuilder!.rebuild();
                     store.dispatch(RefreshData(
                         includeStatic: true,
                         completer: Completer<dynamic>()
                           ..future
                               .then((dynamic value) => appBuilder.rebuild())));
-                  });
+                  } as FutureOr<dynamic> Function(Null));
                 store.dispatch(SaveCompanyRequest(
                     completer: completer, company: settingsUIState.company));
                 break;
               case EntityType.group:
                 final completer = snackBarCompleter<GroupEntity>(
-                    context, AppLocalization.of(context).savedSettings);
+                    context, AppLocalization.of(context)!.savedSettings);
                 store.dispatch(SaveGroupRequest(
                     completer: completer, group: settingsUIState.group));
                 break;
               case EntityType.client:
                 final completer = snackBarCompleter<ClientEntity>(
-                    context, AppLocalization.of(context).savedSettings);
+                    context, AppLocalization.of(context)!.savedSettings);
                 store.dispatch(SaveClientRequest(
                     completer: completer, client: settingsUIState.client));
                 break;

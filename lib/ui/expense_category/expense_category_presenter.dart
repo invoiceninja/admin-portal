@@ -6,11 +6,11 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 
 class ExpenseCategoryPresenter extends EntityPresenter {
-  static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
+  static List<String> getDefaultTableFields(UserCompanyEntity? userCompany) {
     return [];
   }
 
-  static List<String> getAllTableFields(UserCompanyEntity userCompany) {
+  static List<String> getAllTableFields(UserCompanyEntity? userCompany) {
     return [
       ...getDefaultTableFields(userCompany),
       ...EntityPresenter.getBaseFields(),
@@ -18,7 +18,7 @@ class ExpenseCategoryPresenter extends EntityPresenter {
   }
 
   @override
-  Widget getField({String field, BuildContext context}) {
+  Widget getField({String? field, required BuildContext context}) {
     //final state = StoreProvider.of<AppState>(context).state;
     //final expenseCategory = entity as InvoiceEntity;
 

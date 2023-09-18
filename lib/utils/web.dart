@@ -32,8 +32,8 @@ class WebUtils {
 
   static String get browserRoute => window.location.hash.replaceFirst('#', '');
 
-  static String getHtmlValue(String field) =>
-      window.document.documentElement.dataset[field];
+  static String? getHtmlValue(String field) =>
+      window.document.documentElement!.dataset[field];
 
   static void downloadTextFile(String filename, String data) {
     final encodedFileContents = Uri.encodeComponent(data);

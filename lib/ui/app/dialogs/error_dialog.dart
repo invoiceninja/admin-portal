@@ -18,12 +18,12 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class ErrorDialog extends StatelessWidget {
   const ErrorDialog(this.error, {this.clearErrorOnDismiss = false});
 
-  final Object error;
+  final Object? error;
   final bool clearErrorOnDismiss;
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     String errorStr = '$error'.trim();
 

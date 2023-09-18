@@ -14,9 +14,9 @@ import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 
 Completer<T> snackBarCompleter<T>(
   BuildContext context,
-  String message, {
+  String? message, {
   bool shouldPop = false,
-  VoidCallback callback,
+  VoidCallback? callback,
 }) {
   final Completer<T> completer = Completer<T>();
   final navigator = Navigator.of(context);
@@ -34,7 +34,7 @@ Completer<T> snackBarCompleter<T>(
       navigator.pop();
     }
     showDialog<ErrorDialog>(
-        context: navigatorKey.currentContext,
+        context: navigatorKey.currentContext!,
         builder: (BuildContext context) {
           return ErrorDialog(error);
         });
@@ -48,9 +48,9 @@ Completer<Null> popCompleter(BuildContext context, dynamic result) {
 
   completer.future.then((_) {
     Navigator.of(context).pop<dynamic>(result);
-  }).catchError((Object error) {
+  } as FutureOr<_> Function(Null)).catchError((Object error) {
     showDialog<ErrorDialog>(
-        context: navigatorKey.currentContext,
+        context: navigatorKey.currentContext!,
         builder: (BuildContext context) {
           return ErrorDialog(error);
         });
@@ -64,7 +64,7 @@ Completer<Null> errorCompleter(BuildContext context) {
 
   completer.future.catchError((Object error) {
     showDialog<ErrorDialog>(
-        context: navigatorKey.currentContext,
+        context: navigatorKey.currentContext!,
         builder: (BuildContext context) {
           return ErrorDialog(error);
         });
@@ -81,8 +81,8 @@ class Debouncer {
 
   final int milliseconds;
 
-  static VoidCallback action;
-  static Timer timer;
+  static VoidCallback? action;
+  static Timer? timer;
 
   void run(VoidCallback action) {
     if (milliseconds == null) {
@@ -91,7 +91,7 @@ class Debouncer {
     }
 
     if (timer != null) {
-      timer.cancel();
+      timer!.cancel();
     }
 
     Debouncer.action = action;
@@ -107,7 +107,7 @@ class Debouncer {
 
   static void complete() {
     if (action != null) {
-      action();
+      action!();
       action = null;
     }
   }
@@ -125,11 +125,11 @@ class SimpleDebouncer {
 
   final int milliseconds;
 
-  static Timer timer;
+  static Timer? timer;
 
   void run(VoidCallback action) {
     if (timer != null) {
-      timer.cancel();
+      timer!.cancel();
     }
 
     timer = Timer(Duration(milliseconds: milliseconds), () {
@@ -147,11 +147,11 @@ class PersistDebouncer {
 
   final int milliseconds;
 
-  static Timer timer;
+  static Timer? timer;
 
   void run(VoidCallback action) {
     if (timer != null) {
-      timer.cancel();
+      timer!.cancel();
     }
 
     timer = Timer(Duration(milliseconds: milliseconds), () {

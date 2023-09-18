@@ -10,8 +10,8 @@ import 'package:invoiceninja_flutter/ui/expense/edit/expense_edit_vm.dart';
 
 class ExpenseEditDesktop extends StatelessWidget {
   const ExpenseEditDesktop({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final AbstractExpenseEditVM viewModel;

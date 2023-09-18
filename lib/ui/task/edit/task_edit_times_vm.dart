@@ -12,7 +12,7 @@ import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_times.dart';
 
 class TaskEditTimesScreen extends StatelessWidget {
-  const TaskEditTimesScreen({Key key}) : super(key: key);
+  const TaskEditTimesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +31,13 @@ class TaskEditTimesScreen extends StatelessWidget {
 
 class TaskEditTimesVM {
   TaskEditTimesVM({
-    @required this.company,
-    @required this.task,
-    @required this.taskTimeIndex,
-    @required this.onRemoveTaskTimePressed,
-    @required this.onDoneTaskTimePressed,
-    @required this.onUpdatedTaskTime,
-    @required this.clearSelectedTaskTime,
+    required this.company,
+    required this.task,
+    required this.taskTimeIndex,
+    required this.onRemoveTaskTimePressed,
+    required this.onDoneTaskTimePressed,
+    required this.onUpdatedTaskTime,
+    required this.clearSelectedTaskTime,
   });
 
   factory TaskEditTimesVM.fromStore(Store<AppState> store) {
@@ -59,11 +59,11 @@ class TaskEditTimesVM {
     );
   }
 
-  final CompanyEntity company;
-  final TaskEntity task;
-  final int taskTimeIndex;
+  final CompanyEntity? company;
+  final TaskEntity? task;
+  final int? taskTimeIndex;
   final Function(int) onRemoveTaskTimePressed;
   final Function onDoneTaskTimePressed;
-  final Function(TaskTime, int) onUpdatedTaskTime;
+  final Function(TaskTime?, int) onUpdatedTaskTime;
   final Function clearSelectedTaskTime;
 }

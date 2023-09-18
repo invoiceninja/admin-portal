@@ -21,7 +21,7 @@ List<String> dropdownTransactionRulesSelector(
     BuiltMap<String, UserEntity> userMap,
     String clientId) {
   final list = transactionRuleList.where((transactionRuleId) {
-    final transactionRule = transactionRuleMap[transactionRuleId];
+    final transactionRule = transactionRuleMap[transactionRuleId]!;
     /*
     if (clientId != null && clientId > 0 && transactionRule.clientId != clientId) {
       return false;
@@ -31,7 +31,7 @@ List<String> dropdownTransactionRulesSelector(
   }).toList();
 
   list.sort((transactionRuleAId, transactionRuleBId) {
-    final transactionRuleA = transactionRuleMap[transactionRuleAId];
+    final transactionRuleA = transactionRuleMap[transactionRuleAId]!;
     final transactionRuleB = transactionRuleMap[transactionRuleBId];
     return transactionRuleA.compareTo(
         transactionRuleB, TransactionRuleFields.name, true);
@@ -41,7 +41,7 @@ List<String> dropdownTransactionRulesSelector(
 }
 
 var memoizedFilteredTransactionRuleList = memo4((SelectionState selectionState,
-        BuiltMap<String, TransactionRuleEntity> transactionRuleMap,
+        BuiltMap<String?, TransactionRuleEntity?> transactionRuleMap,
         BuiltList<String> transactionRuleList,
         ListUIState transactionRuleListState) =>
     filteredTransactionRulesSelector(selectionState, transactionRuleMap,
@@ -49,7 +49,7 @@ var memoizedFilteredTransactionRuleList = memo4((SelectionState selectionState,
 
 List<String> filteredTransactionRulesSelector(
     SelectionState selectionState,
-    BuiltMap<String, TransactionRuleEntity> transactionRuleMap,
+    BuiltMap<String?, TransactionRuleEntity?> transactionRuleMap,
     BuiltList<String> transactionRuleList,
     ListUIState transactionRuleListState) {
   final filterEntityId = selectionState.filterEntityId;
@@ -57,11 +57,11 @@ List<String> filteredTransactionRulesSelector(
 
   final list = transactionRuleList.where((transactionRuleId) {
     final transactionRule = transactionRuleMap[transactionRuleId];
-    if (filterEntityId != null && transactionRule.id != filterEntityId) {
+    if (filterEntityId != null && transactionRule!.id != filterEntityId) {
       return false;
     } else {}
 
-    if (!transactionRule.matchesStates(transactionRuleListState.stateFilters)) {
+    if (!transactionRule!.matchesStates(transactionRuleListState.stateFilters)) {
       return false;
     }
 
@@ -69,7 +69,7 @@ List<String> filteredTransactionRulesSelector(
   }).toList();
 
   list.sort((transactionRuleAId, transactionRuleBId) {
-    final transactionRuleA = transactionRuleMap[transactionRuleAId];
+    final transactionRuleA = transactionRuleMap[transactionRuleAId]!;
     final transactionRuleB = transactionRuleMap[transactionRuleBId];
     return transactionRuleA.compareTo(
         transactionRuleB,
@@ -81,23 +81,23 @@ List<String> filteredTransactionRulesSelector(
 }
 
 var memoizedTransactionStatsForTransactionRule = memo2(
-    (String userId, BuiltMap<String, TransactionEntity> transactionMap) =>
+    (String userId, BuiltMap<String?, TransactionEntity?> transactionMap) =>
         transactionStatsForTransactionRule(userId, transactionMap));
 
 EntityStats transactionStatsForTransactionRule(
   String transactionRuleId,
-  BuiltMap<String, TransactionEntity> transactionMap,
+  BuiltMap<String?, TransactionEntity?> transactionMap,
 ) {
   int countActive = 0;
   int countArchived = 0;
   double total = 0;
-  String currencyId;
+  String? currencyId;
 
   transactionMap.forEach((transactionId, transaction) {
-    if (transaction.transactionRuleId == transactionRuleId) {
+    if (transaction!.transactionRuleId == transactionRuleId) {
       if (transaction.isActive) {
         countActive++;
-      } else if (transaction.isDeleted) {
+      } else if (transaction.isDeleted!) {
         countArchived++;
       }
 

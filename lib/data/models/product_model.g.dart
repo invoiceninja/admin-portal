@@ -24,10 +24,10 @@ class _$ProductListResponseSerializer
   final String wireName = 'ProductListResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, ProductListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType:
@@ -39,21 +39,21 @@ class _$ProductListResponseSerializer
 
   @override
   ProductListResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ProductListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(ProductEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(ProductEntity)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -73,10 +73,10 @@ class _$ProductItemResponseSerializer
   final String wireName = 'ProductItemResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, ProductItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(ProductEntity)),
@@ -87,19 +87,19 @@ class _$ProductItemResponseSerializer
 
   @override
   ProductItemResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ProductItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ProductEntity)) as ProductEntity);
+              specifiedType: const FullType(ProductEntity))! as ProductEntity);
           break;
       }
     }
@@ -115,9 +115,9 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
   final String wireName = 'ProductEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, ProductEntity object,
+  Iterable<Object?> serialize(Serializers serializers, ProductEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'product_key',
       serializers.serialize(object.productKey,
           specifiedType: const FullType(String)),
@@ -196,7 +196,7 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.isChanged;
     if (value != null) {
       result
@@ -230,137 +230,137 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
 
   @override
   ProductEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ProductEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'product_key':
           result.productKey = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'notes':
           result.notes = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'cost':
           result.cost = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'price':
           result.price = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'quantity':
           result.quantity = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'tax_name1':
           result.taxName1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'tax_rate1':
           result.taxRate1 = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'tax_name2':
           result.taxName2 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'tax_rate2':
           result.taxRate2 = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'tax_name3':
           result.taxName3 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'tax_rate3':
           result.taxRate3 = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value3':
           result.customValue3 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'in_stock_quantity':
           result.stockQuantity = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'stock_notification_threshold':
           result.stockNotificationThreshold = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'stock_notification':
           result.stockNotification = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'product_image':
           result.imageUrl = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'max_quantity':
           result.maxQuantity = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'tax_id':
           result.taxCategoryId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'documents':
           result.documents.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(DocumentEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(DocumentEntity)]))!
+              as BuiltList<Object?>);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'archived_at':
           result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'user_id':
           result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -374,10 +374,10 @@ class _$ProductListResponse extends ProductListResponse {
   final BuiltList<ProductEntity> data;
 
   factory _$ProductListResponse(
-          [void Function(ProductListResponseBuilder) updates]) =>
+          [void Function(ProductListResponseBuilder)? updates]) =>
       (new ProductListResponseBuilder()..update(updates))._build();
 
-  _$ProductListResponse._({this.data}) : super._() {
+  _$ProductListResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'ProductListResponse', 'data');
   }
 
@@ -396,10 +396,10 @@ class _$ProductListResponse extends ProductListResponse {
     return other is ProductListResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -416,12 +416,12 @@ class _$ProductListResponse extends ProductListResponse {
 
 class ProductListResponseBuilder
     implements Builder<ProductListResponse, ProductListResponseBuilder> {
-  _$ProductListResponse _$v;
+  _$ProductListResponse? _$v;
 
-  ListBuilder<ProductEntity> _data;
+  ListBuilder<ProductEntity>? _data;
   ListBuilder<ProductEntity> get data =>
       _$this._data ??= new ListBuilder<ProductEntity>();
-  set data(ListBuilder<ProductEntity> data) => _$this._data = data;
+  set data(ListBuilder<ProductEntity>? data) => _$this._data = data;
 
   ProductListResponseBuilder();
 
@@ -441,7 +441,7 @@ class ProductListResponseBuilder
   }
 
   @override
-  void update(void Function(ProductListResponseBuilder) updates) {
+  void update(void Function(ProductListResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -453,7 +453,7 @@ class ProductListResponseBuilder
     try {
       _$result = _$v ?? new _$ProductListResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -473,10 +473,10 @@ class _$ProductItemResponse extends ProductItemResponse {
   final ProductEntity data;
 
   factory _$ProductItemResponse(
-          [void Function(ProductItemResponseBuilder) updates]) =>
+          [void Function(ProductItemResponseBuilder)? updates]) =>
       (new ProductItemResponseBuilder()..update(updates))._build();
 
-  _$ProductItemResponse._({this.data}) : super._() {
+  _$ProductItemResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'ProductItemResponse', 'data');
   }
 
@@ -495,10 +495,10 @@ class _$ProductItemResponse extends ProductItemResponse {
     return other is ProductItemResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -515,11 +515,11 @@ class _$ProductItemResponse extends ProductItemResponse {
 
 class ProductItemResponseBuilder
     implements Builder<ProductItemResponse, ProductItemResponseBuilder> {
-  _$ProductItemResponse _$v;
+  _$ProductItemResponse? _$v;
 
-  ProductEntityBuilder _data;
+  ProductEntityBuilder? _data;
   ProductEntityBuilder get data => _$this._data ??= new ProductEntityBuilder();
-  set data(ProductEntityBuilder data) => _$this._data = data;
+  set data(ProductEntityBuilder? data) => _$this._data = data;
 
   ProductItemResponseBuilder();
 
@@ -539,7 +539,7 @@ class ProductItemResponseBuilder
   }
 
   @override
-  void update(void Function(ProductItemResponseBuilder) updates) {
+  void update(void Function(ProductItemResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -551,7 +551,7 @@ class ProductItemResponseBuilder
     try {
       _$result = _$v ?? new _$ProductItemResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -612,7 +612,7 @@ class _$ProductEntity extends ProductEntity {
   @override
   final BuiltList<DocumentEntity> documents;
   @override
-  final bool isChanged;
+  final bool? isChanged;
   @override
   final int createdAt;
   @override
@@ -620,48 +620,48 @@ class _$ProductEntity extends ProductEntity {
   @override
   final int archivedAt;
   @override
-  final bool isDeleted;
+  final bool? isDeleted;
   @override
-  final String createdUserId;
+  final String? createdUserId;
   @override
-  final String assignedUserId;
+  final String? assignedUserId;
   @override
   final String id;
 
-  factory _$ProductEntity([void Function(ProductEntityBuilder) updates]) =>
+  factory _$ProductEntity([void Function(ProductEntityBuilder)? updates]) =>
       (new ProductEntityBuilder()..update(updates))._build();
 
   _$ProductEntity._(
-      {this.productKey,
-      this.notes,
-      this.cost,
-      this.price,
-      this.quantity,
-      this.taxName1,
-      this.taxRate1,
-      this.taxName2,
-      this.taxRate2,
-      this.taxName3,
-      this.taxRate3,
-      this.customValue1,
-      this.customValue2,
-      this.customValue3,
-      this.customValue4,
-      this.stockQuantity,
-      this.stockNotificationThreshold,
-      this.stockNotification,
-      this.imageUrl,
-      this.maxQuantity,
-      this.taxCategoryId,
-      this.documents,
+      {required this.productKey,
+      required this.notes,
+      required this.cost,
+      required this.price,
+      required this.quantity,
+      required this.taxName1,
+      required this.taxRate1,
+      required this.taxName2,
+      required this.taxRate2,
+      required this.taxName3,
+      required this.taxRate3,
+      required this.customValue1,
+      required this.customValue2,
+      required this.customValue3,
+      required this.customValue4,
+      required this.stockQuantity,
+      required this.stockNotificationThreshold,
+      required this.stockNotification,
+      required this.imageUrl,
+      required this.maxQuantity,
+      required this.taxCategoryId,
+      required this.documents,
       this.isChanged,
-      this.createdAt,
-      this.updatedAt,
-      this.archivedAt,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.archivedAt,
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.id})
+      required this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         productKey, r'ProductEntity', 'productKey');
@@ -756,10 +756,10 @@ class _$ProductEntity extends ProductEntity {
         id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, productKey.hashCode);
     _$hash = $jc(_$hash, notes.hashCode);
@@ -834,134 +834,135 @@ class _$ProductEntity extends ProductEntity {
 
 class ProductEntityBuilder
     implements Builder<ProductEntity, ProductEntityBuilder> {
-  _$ProductEntity _$v;
+  _$ProductEntity? _$v;
 
-  String _productKey;
-  String get productKey => _$this._productKey;
-  set productKey(String productKey) => _$this._productKey = productKey;
+  String? _productKey;
+  String? get productKey => _$this._productKey;
+  set productKey(String? productKey) => _$this._productKey = productKey;
 
-  String _notes;
-  String get notes => _$this._notes;
-  set notes(String notes) => _$this._notes = notes;
+  String? _notes;
+  String? get notes => _$this._notes;
+  set notes(String? notes) => _$this._notes = notes;
 
-  double _cost;
-  double get cost => _$this._cost;
-  set cost(double cost) => _$this._cost = cost;
+  double? _cost;
+  double? get cost => _$this._cost;
+  set cost(double? cost) => _$this._cost = cost;
 
-  double _price;
-  double get price => _$this._price;
-  set price(double price) => _$this._price = price;
+  double? _price;
+  double? get price => _$this._price;
+  set price(double? price) => _$this._price = price;
 
-  double _quantity;
-  double get quantity => _$this._quantity;
-  set quantity(double quantity) => _$this._quantity = quantity;
+  double? _quantity;
+  double? get quantity => _$this._quantity;
+  set quantity(double? quantity) => _$this._quantity = quantity;
 
-  String _taxName1;
-  String get taxName1 => _$this._taxName1;
-  set taxName1(String taxName1) => _$this._taxName1 = taxName1;
+  String? _taxName1;
+  String? get taxName1 => _$this._taxName1;
+  set taxName1(String? taxName1) => _$this._taxName1 = taxName1;
 
-  double _taxRate1;
-  double get taxRate1 => _$this._taxRate1;
-  set taxRate1(double taxRate1) => _$this._taxRate1 = taxRate1;
+  double? _taxRate1;
+  double? get taxRate1 => _$this._taxRate1;
+  set taxRate1(double? taxRate1) => _$this._taxRate1 = taxRate1;
 
-  String _taxName2;
-  String get taxName2 => _$this._taxName2;
-  set taxName2(String taxName2) => _$this._taxName2 = taxName2;
+  String? _taxName2;
+  String? get taxName2 => _$this._taxName2;
+  set taxName2(String? taxName2) => _$this._taxName2 = taxName2;
 
-  double _taxRate2;
-  double get taxRate2 => _$this._taxRate2;
-  set taxRate2(double taxRate2) => _$this._taxRate2 = taxRate2;
+  double? _taxRate2;
+  double? get taxRate2 => _$this._taxRate2;
+  set taxRate2(double? taxRate2) => _$this._taxRate2 = taxRate2;
 
-  String _taxName3;
-  String get taxName3 => _$this._taxName3;
-  set taxName3(String taxName3) => _$this._taxName3 = taxName3;
+  String? _taxName3;
+  String? get taxName3 => _$this._taxName3;
+  set taxName3(String? taxName3) => _$this._taxName3 = taxName3;
 
-  double _taxRate3;
-  double get taxRate3 => _$this._taxRate3;
-  set taxRate3(double taxRate3) => _$this._taxRate3 = taxRate3;
+  double? _taxRate3;
+  double? get taxRate3 => _$this._taxRate3;
+  set taxRate3(double? taxRate3) => _$this._taxRate3 = taxRate3;
 
-  String _customValue1;
-  String get customValue1 => _$this._customValue1;
-  set customValue1(String customValue1) => _$this._customValue1 = customValue1;
+  String? _customValue1;
+  String? get customValue1 => _$this._customValue1;
+  set customValue1(String? customValue1) => _$this._customValue1 = customValue1;
 
-  String _customValue2;
-  String get customValue2 => _$this._customValue2;
-  set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+  String? _customValue2;
+  String? get customValue2 => _$this._customValue2;
+  set customValue2(String? customValue2) => _$this._customValue2 = customValue2;
 
-  String _customValue3;
-  String get customValue3 => _$this._customValue3;
-  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+  String? _customValue3;
+  String? get customValue3 => _$this._customValue3;
+  set customValue3(String? customValue3) => _$this._customValue3 = customValue3;
 
-  String _customValue4;
-  String get customValue4 => _$this._customValue4;
-  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+  String? _customValue4;
+  String? get customValue4 => _$this._customValue4;
+  set customValue4(String? customValue4) => _$this._customValue4 = customValue4;
 
-  int _stockQuantity;
-  int get stockQuantity => _$this._stockQuantity;
-  set stockQuantity(int stockQuantity) => _$this._stockQuantity = stockQuantity;
+  int? _stockQuantity;
+  int? get stockQuantity => _$this._stockQuantity;
+  set stockQuantity(int? stockQuantity) =>
+      _$this._stockQuantity = stockQuantity;
 
-  int _stockNotificationThreshold;
-  int get stockNotificationThreshold => _$this._stockNotificationThreshold;
-  set stockNotificationThreshold(int stockNotificationThreshold) =>
+  int? _stockNotificationThreshold;
+  int? get stockNotificationThreshold => _$this._stockNotificationThreshold;
+  set stockNotificationThreshold(int? stockNotificationThreshold) =>
       _$this._stockNotificationThreshold = stockNotificationThreshold;
 
-  bool _stockNotification;
-  bool get stockNotification => _$this._stockNotification;
-  set stockNotification(bool stockNotification) =>
+  bool? _stockNotification;
+  bool? get stockNotification => _$this._stockNotification;
+  set stockNotification(bool? stockNotification) =>
       _$this._stockNotification = stockNotification;
 
-  String _imageUrl;
-  String get imageUrl => _$this._imageUrl;
-  set imageUrl(String imageUrl) => _$this._imageUrl = imageUrl;
+  String? _imageUrl;
+  String? get imageUrl => _$this._imageUrl;
+  set imageUrl(String? imageUrl) => _$this._imageUrl = imageUrl;
 
-  int _maxQuantity;
-  int get maxQuantity => _$this._maxQuantity;
-  set maxQuantity(int maxQuantity) => _$this._maxQuantity = maxQuantity;
+  int? _maxQuantity;
+  int? get maxQuantity => _$this._maxQuantity;
+  set maxQuantity(int? maxQuantity) => _$this._maxQuantity = maxQuantity;
 
-  String _taxCategoryId;
-  String get taxCategoryId => _$this._taxCategoryId;
-  set taxCategoryId(String taxCategoryId) =>
+  String? _taxCategoryId;
+  String? get taxCategoryId => _$this._taxCategoryId;
+  set taxCategoryId(String? taxCategoryId) =>
       _$this._taxCategoryId = taxCategoryId;
 
-  ListBuilder<DocumentEntity> _documents;
+  ListBuilder<DocumentEntity>? _documents;
   ListBuilder<DocumentEntity> get documents =>
       _$this._documents ??= new ListBuilder<DocumentEntity>();
-  set documents(ListBuilder<DocumentEntity> documents) =>
+  set documents(ListBuilder<DocumentEntity>? documents) =>
       _$this._documents = documents;
 
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+  bool? _isChanged;
+  bool? get isChanged => _$this._isChanged;
+  set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
 
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+  int? _archivedAt;
+  int? get archivedAt => _$this._archivedAt;
+  set archivedAt(int? archivedAt) => _$this._archivedAt = archivedAt;
 
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+  bool? _isDeleted;
+  bool? get isDeleted => _$this._isDeleted;
+  set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
 
-  String _createdUserId;
-  String get createdUserId => _$this._createdUserId;
-  set createdUserId(String createdUserId) =>
+  String? _createdUserId;
+  String? get createdUserId => _$this._createdUserId;
+  set createdUserId(String? createdUserId) =>
       _$this._createdUserId = createdUserId;
 
-  String _assignedUserId;
-  String get assignedUserId => _$this._assignedUserId;
-  set assignedUserId(String assignedUserId) =>
+  String? _assignedUserId;
+  String? get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String? assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   ProductEntityBuilder() {
     ProductEntity._initializeBuilder(this);
@@ -1012,7 +1013,7 @@ class ProductEntityBuilder
   }
 
   @override
-  void update(void Function(ProductEntityBuilder) updates) {
+  void update(void Function(ProductEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -1064,7 +1065,7 @@ class ProductEntityBuilder
               assignedUserId: assignedUserId,
               id: BuiltValueNullFieldError.checkNotNull(id, r'ProductEntity', 'id'));
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'documents';
         documents.build();

@@ -23,8 +23,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class SettingsList extends StatefulWidget {
   const SettingsList({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final SettingsListVM viewModel;
@@ -34,7 +34,7 @@ class SettingsList extends StatefulWidget {
 }
 
 class _SettingsListState extends State<SettingsList> {
-  ScrollController _scrollController;
+  ScrollController? _scrollController;
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _SettingsListState extends State<SettingsList> {
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    _scrollController!.dispose();
     super.dispose();
   }
 
@@ -55,11 +55,11 @@ class _SettingsListState extends State<SettingsList> {
     final settingsUIState = state.uiState.settingsUIState;
     final showAll = settingsUIState.entityType == EntityType.company;
 
-    if (state.credentials.token.isEmpty) {
+    if (state.credentials.token!.isEmpty) {
       return SizedBox();
     }
 
-    if (!state.userCompany.isAdmin)
+    if (!state.userCompany!.isAdmin)
       return Stack(
         children: [
           ScrollableListView(
@@ -107,7 +107,7 @@ class _SettingsListState extends State<SettingsList> {
               color: Theme.of(context).colorScheme.background,
               padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
               child: Text(
-                localization.basicSettings,
+                localization!.basicSettings,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
             ),
@@ -137,12 +137,12 @@ class _SettingsListState extends State<SettingsList> {
                 section: kSettingsProducts,
                 viewModel: widget.viewModel,
               ),
-            if (state.company.isModuleEnabled(EntityType.task))
+            if (state.company!.isModuleEnabled(EntityType.task))
               SettingsListTile(
                 section: kSettingsTasks,
                 viewModel: widget.viewModel,
               ),
-            if (showAll && state.company.isModuleEnabled(EntityType.expense))
+            if (showAll && state.company!.isModuleEnabled(EntityType.expense))
               SettingsListTile(
                 section: kSettingsExpenses,
                 viewModel: widget.viewModel,
@@ -169,7 +169,7 @@ class _SettingsListState extends State<SettingsList> {
                 section: kSettingsDeviceSettings,
                 viewModel: widget.viewModel,
               ),
-            if (showAll && state.userCompany.isAdmin)
+            if (showAll && state.userCompany!.isAdmin)
               SettingsListTile(
                 section: kSettingsAccountManagement,
                 viewModel: widget.viewModel,
@@ -260,8 +260,8 @@ class _SettingsListState extends State<SettingsList> {
 
 class SettingsListTile extends StatefulWidget {
   const SettingsListTile({
-    @required this.section,
-    @required this.viewModel,
+    required this.section,
+    required this.viewModel,
   });
 
   final String section;
@@ -276,11 +276,11 @@ class _SettingsListTileState extends State<SettingsListTile> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
-    IconData icon;
+    IconData? icon;
     if (widget.section == kSettingsDeviceSettings) {
       icon = isMobile(context) ? Icons.phone_android : MdiIcons.desktopClassic;
     } else {
@@ -310,9 +310,9 @@ class _SettingsListTileState extends State<SettingsListTile> {
               child: Icon(icon ?? icon, size: 22),
             ),
             title: Text(
-              localization.lookup(widget.section),
+              localization.lookup(widget.section)!,
               style:
-                  Theme.of(context).textTheme.bodyLarge.copyWith(fontSize: 14),
+                  Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 14),
             ),
             onTap: () =>
                 widget.viewModel.loadSection(context, widget.section, 0),
@@ -326,14 +326,14 @@ class _SettingsListTileState extends State<SettingsListTile> {
 class SettingsSearch extends StatelessWidget {
   const SettingsSearch({this.filter, this.viewModel});
 
-  final SettingsListVM viewModel;
-  final String filter;
+  final SettingsListVM? viewModel;
+  final String? filter;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
-    final company = store.state.company;
+    final company = store.state.company!;
 
     final map = {
       kSettingsCompanyDetails: [
@@ -669,8 +669,8 @@ class SettingsSearch extends StatelessWidget {
     if (store.state.settingsUIState.showNewSettings) {
       final sections = <String>[];
       for (var section in map.keys) {
-        for (var tab = 0; tab < map[section].length; tab++) {
-          final fields = map[section][tab];
+        for (var tab = 0; tab < map[section]!.length; tab++) {
+          final fields = map[section]![tab];
           for (var field in fields) {
             final List<String> parts = field.split('#');
             final dateAdded =
@@ -696,10 +696,10 @@ class SettingsSearch extends StatelessWidget {
         for (var parts
             in sections.map((section) => section.split('#').toList()))
           if ((filter ?? '').trim().isEmpty ||
-              localization
-                  .lookup(parts[1])
+              localization!
+                  .lookup(parts[1])!
                   .toLowerCase()
-                  .contains(filter.toLowerCase()))
+                  .contains(filter!.toLowerCase()))
             ListTile(
               title: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -708,9 +708,9 @@ class SettingsSearch extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(localization.lookup(parts[1])),
+                        Text(localization!.lookup(parts[1])!),
                         Text(
-                          localization.lookup(parts[2]),
+                          localization.lookup(parts[2])!,
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ],
@@ -730,27 +730,27 @@ class SettingsSearch extends StatelessWidget {
                 child: Icon(getSettingIcon(parts[2]), size: 22),
               ),
               onTap: () =>
-                  viewModel.loadSection(context, parts[2], parseInt(parts[3])),
+                  viewModel!.loadSection(context, parts[2], parseInt(parts[3])),
             ),
       ]);
     } else {
       return ScrollableListView(
         children: [
           for (var section in map.keys)
-            for (int i = 0; i < map[section].length; i++)
-              for (var field in map[section][i])
-                if (localization
-                    .lookup(field.split('#')[0])
+            for (int i = 0; i < map[section]!.length; i++)
+              for (var field in map[section]![i])
+                if (localization!
+                    .lookup(field.split('#')[0])!
                     .toLowerCase()
-                    .contains(filter.toLowerCase()))
+                    .contains(filter!.toLowerCase()))
                   ListTile(
-                    title: Text(localization.lookup(field.split('#')[0])),
+                    title: Text(localization.lookup(field.split('#')[0])!),
                     leading: Padding(
                       padding: const EdgeInsets.only(left: 6, top: 10),
                       child: Icon(getSettingIcon(section), size: 22),
                     ),
-                    subtitle: Text(localization.lookup(section)),
-                    onTap: () => viewModel.loadSection(context, section, i),
+                    subtitle: Text(localization.lookup(section)!),
+                    onTap: () => viewModel!.loadSection(context, section, i),
                   ),
         ],
       );

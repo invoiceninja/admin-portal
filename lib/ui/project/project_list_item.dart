@@ -17,21 +17,21 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProjectListItem extends StatelessWidget {
   const ProjectListItem({
-    @required this.user,
-    @required this.project,
-    @required this.filter,
+    required this.user,
+    required this.project,
+    required this.filter,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
 
-  final UserEntity user;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
-  final ProjectEntity project;
-  final String filter;
-  final Function(bool) onCheckboxChanged;
+  final UserEntity? user;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onLongPress;
+  final ProjectEntity? project;
+  final String? filter;
+  final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
 
   @override
@@ -40,9 +40,9 @@ class ProjectListItem extends StatelessWidget {
     final state = store.state;
     final uiState = state.uiState;
     final projectUIState = uiState.projectUIState;
-    final client = state.clientState.get(project.clientId);
-    final filterMatch = filter != null && filter.isNotEmpty
-        ? (project.matchesFilterValue(filter) ??
+    final client = state.clientState.get(project!.clientId)!;
+    final filterMatch = filter != null && filter!.isNotEmpty
+        ? (project!.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))
         : null;
     final listUIState = projectUIState.listUIState;
@@ -50,13 +50,13 @@ class ProjectListItem extends StatelessWidget {
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
     final textStyle = TextStyle(fontSize: 16);
     final subtitle = client.displayName;
-    final textColor = Theme.of(context).textTheme.bodyLarge.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
     return DismissibleEntity(
       isSelected: isDesktop(context) &&
-          project.id ==
+          project!.id ==
               (uiState.isEditing
-                  ? projectUIState.editing.id
+                  ? projectUIState.editing!.id
                   : projectUIState.selectedId),
       userCompany: store.state.userCompany,
       entity: project,
@@ -65,10 +65,10 @@ class ProjectListItem extends StatelessWidget {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: project),
+                    onTap != null ? onTap!() : selectEntity(entity: project!),
                 onLongPress: () => onLongPress != null
-                    ? onLongPress()
-                    : selectEntity(entity: project, longPress: true),
+                    ? onLongPress!()
+                    : selectEntity(entity: project!, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 10,
@@ -90,14 +90,14 @@ class ProjectListItem extends StatelessWidget {
                                     materialTapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
                                     onChanged: (value) =>
-                                        onCheckboxChanged(value),
+                                        onCheckboxChanged!(value),
                                     activeColor:
                                         Theme.of(context).colorScheme.secondary,
                                   ),
                                 ),
                               )
                             : ActionMenuButton(
-                                entityActions: project.getActions(
+                                entityActions: project!.getActions(
                                   userCompany: state.userCompany,
                                   client: client,
                                   includeEdit: true,
@@ -114,11 +114,11 @@ class ProjectListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              project.number ?? '',
+                              project!.number ?? '',
                               style: textStyle,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            if (!project.isActive) EntityStateLabel(project)
+                            if (!project!.isActive) EntityStateLabel(project)
                           ],
                         ),
                       ),
@@ -128,19 +128,19 @@ class ProjectListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                                project.name +
-                                    (project.documents.isNotEmpty
+                                project!.name +
+                                    (project!.documents.isNotEmpty
                                         ? '  📎'
                                         : ''),
                                 style: textStyle),
-                            Text(subtitle ?? filterMatch,
+                            Text(subtitle ?? filterMatch!,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .titleSmall
+                                    .titleSmall!
                                     .copyWith(
-                                      color: textColor
+                                      color: textColor!
                                           .withOpacity(kLighterOpacity),
                                     )),
                           ],
@@ -150,7 +150,7 @@ class ProjectListItem extends StatelessWidget {
                       Text(
                         formatDuration(
                             Duration(
-                                minutes: (project.budgetedHours * 60).toInt()),
+                                minutes: (project!.budgetedHours * 60).toInt()),
                             showSeconds: false),
                         style: textStyle,
                         textAlign: TextAlign.end,
@@ -161,10 +161,10 @@ class ProjectListItem extends StatelessWidget {
               )
             : ListTile(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: project),
+                    onTap != null ? onTap!() : selectEntity(entity: project!),
                 onLongPress: () => onLongPress != null
-                    ? onLongPress()
-                    : selectEntity(entity: project, longPress: true),
+                    ? onLongPress!()
+                    : selectEntity(entity: project!, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
                         ignoring: listUIState.isInMultiselect(),
@@ -172,7 +172,7 @@ class ProjectListItem extends StatelessWidget {
                           value: isChecked,
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => onCheckboxChanged(value),
+                          onChanged: (value) => onCheckboxChanged!(value),
                           activeColor: Theme.of(context).colorScheme.secondary,
                         ),
                       )
@@ -183,8 +183,8 @@ class ProjectListItem extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          project.name +
-                              (project.documents.isNotEmpty ? '  📎' : ''),
+                          project!.name +
+                              (project!.documents.isNotEmpty ? '  📎' : ''),
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),
@@ -192,7 +192,7 @@ class ProjectListItem extends StatelessWidget {
                           formatDuration(
                               Duration(
                                   minutes:
-                                      (project.budgetedHours * 60).toInt()),
+                                      (project!.budgetedHours * 60).toInt()),
                               showSeconds: false),
                           style: Theme.of(context).textTheme.titleMedium),
                     ],
@@ -203,7 +203,7 @@ class ProjectListItem extends StatelessWidget {
                   children: <Widget>[
                     Text(
                         filterMatch == null
-                            ? project.number + ' • ' + client.displayName
+                            ? project!.number + ' • ' + client.displayName
                             : filterMatch,
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis),

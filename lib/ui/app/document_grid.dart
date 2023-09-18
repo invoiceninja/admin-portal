@@ -33,15 +33,15 @@ import 'package:version/version.dart';
 
 class DocumentGrid extends StatefulWidget {
   const DocumentGrid({
-    @required this.documents,
-    @required this.onUploadDocument,
-    @required this.onRenamedDocument,
+    required this.documents,
+    required this.onUploadDocument,
+    required this.onRenamedDocument,
     this.onViewExpense,
   });
 
   final List<DocumentEntity> documents;
   final Function(List<MultipartFile>, bool) onUploadDocument;
-  final Function(DocumentEntity) onViewExpense;
+  final Function(DocumentEntity)? onViewExpense;
   final Function onRenamedDocument;
 
   @override
@@ -54,7 +54,7 @@ class _DocumentGridState extends State<DocumentGrid> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final state = StoreProvider.of<AppState>(context).state;
 
     final privateSwitch = Padding(
@@ -64,7 +64,7 @@ class _DocumentGridState extends State<DocumentGrid> {
           children: [
             Icon(Icons.lock),
             SizedBox(width: 16),
-            Text(localization.private),
+            Text(localization.private!),
           ],
         ),
         value: _isPrivate,
@@ -120,7 +120,7 @@ class _DocumentGridState extends State<DocumentGrid> {
                           height: 75,
                           width: double.infinity,
                           child: Center(
-                            child: Text(localization.clickOrDropFilesHere),
+                            child: Text(localization.clickOrDropFilesHere!),
                           ),
                           color: _dragging
                               ? Colors.blue.withOpacity(0.4)
@@ -135,7 +135,7 @@ class _DocumentGridState extends State<DocumentGrid> {
                 ),
               );
 
-              if (Version.parse(state.account.currentVersion) <
+              if (Version.parse(state.account!.currentVersion) <
                       Version.parse('5.6.32') &&
                   kReleaseMode) {
                 return child;
@@ -180,8 +180,8 @@ class _DocumentGridState extends State<DocumentGrid> {
                           for (var index = 0; index < images.length; index++) {
                             final image = images[index];
                             if (image != null && image.path != null) {
-                              final croppedFile = await ImageCropper()
-                                  .cropImage(sourcePath: image.path);
+                              final croppedFile = (await ImageCropper()
+                                  .cropImage(sourcePath: image.path))!;
                               final bytes = await croppedFile.readAsBytes();
                               final multipartFile = MultipartFile.fromBytes(
                                   'documents[$index]', bytes,
@@ -271,14 +271,14 @@ class _DocumentGridState extends State<DocumentGrid> {
 
 class DocumentTile extends StatelessWidget {
   const DocumentTile({
-    @required this.documentId,
-    @required this.onViewExpense,
-    @required this.isFromExpense,
-    @required this.onRenamedDocument,
+    required this.documentId,
+    required this.onViewExpense,
+    required this.isFromExpense,
+    required this.onRenamedDocument,
   });
 
   final String documentId;
-  final Function(DocumentEntity) onViewExpense;
+  final Function(DocumentEntity)? onViewExpense;
   final bool isFromExpense;
   final Function onRenamedDocument;
 
@@ -353,7 +353,7 @@ class DocumentTile extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 22),
                           child: PopupMenuButton<String>(
                             onSelected: (value) async {
-                              if (value == localization.view) {
+                              if (value == localization!.view) {
                                 handleDocumentAction(context, [document],
                                     EntityAction.viewDocument);
                               } else if (value == localization.download) {
@@ -363,7 +363,7 @@ class DocumentTile extends StatelessWidget {
                                 handleDocumentAction(
                                     context, [document], EntityAction.delete);
                               } else if (value == localization.viewExpense) {
-                                onViewExpense(document);
+                                onViewExpense!(document);
                               } else if (value == localization.rename) {
                                 fieldCallback(
                                   context: context,
@@ -393,14 +393,14 @@ class DocumentTile extends StatelessWidget {
                                 if (document.isImage || document.isPdf)
                                   PopupMenuItem<String>(
                                     child: IconText(
-                                      text: localization.view,
+                                      text: localization!.view,
                                       icon: Icons.open_in_browser,
                                     ),
                                     value: localization.view,
                                   ),
                                 PopupMenuItem<String>(
                                   child: IconText(
-                                    text: localization.download,
+                                    text: localization!.download,
                                     icon: Icons.download,
                                   ),
                                   value: localization.download,
@@ -440,7 +440,7 @@ class DocumentPreview extends StatelessWidget {
   const DocumentPreview(this.document, {this.height});
 
   final DocumentEntity document;
-  final double height;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -448,8 +448,8 @@ class DocumentPreview extends StatelessWidget {
     final repoDocument = state.documentState.map[document.id];
 
     if (document.isImage) {
-      if (repoDocument.data != null) {
-        return Image.memory(repoDocument.data);
+      if (repoDocument!.data != null) {
+        return Image.memory(repoDocument.data!);
       } else {
         return CachedNetworkImage(
             height: height,
@@ -459,14 +459,14 @@ class DocumentPreview extends StatelessWidget {
             imageUrl:
                 '${cleanApiUrl(state.credentials.url)}/documents/${document.hash}',
             imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
-            httpHeaders: {'X-API-TOKEN': state.credentials.token},
+            httpHeaders: {'X-API-TOKEN': state.credentials.token!},
             placeholder: (context, url) => Container(
                   height: height,
                   child: Center(
                     child: CircularProgressIndicator(),
                   ),
                 ),
-            errorWidget: (context, url, Object error) => Text(
+            errorWidget: (context, url, Object? error) => Text(
                   '$error: $url',
                   maxLines: 6,
                   overflow: TextOverflow.ellipsis,

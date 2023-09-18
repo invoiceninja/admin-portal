@@ -7,22 +7,22 @@ import 'decorated_form_field.dart';
 
 class DiscountField extends StatelessWidget {
   const DiscountField({
-    @required this.controller,
-    @required this.value,
-    @required this.isAmountDiscount,
-    @required this.onTypeChanged,
+    required this.controller,
+    required this.value,
+    required this.isAmountDiscount,
+    required this.onTypeChanged,
     this.label,
   });
 
   final TextEditingController controller;
   final double value;
   final bool isAmountDiscount;
-  final Function(bool value) onTypeChanged;
-  final String label;
+  final Function(bool? value) onTypeChanged;
+  final String? label;
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     return Row(
       mainAxisSize: MainAxisSize.min,

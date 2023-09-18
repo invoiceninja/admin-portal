@@ -27,10 +27,10 @@ bool supportsInlineBrowser() {
   }
 
   if (kIsWeb) {
-    final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
+    final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
     final state = store.state;
 
-    if (state.isHosted && !state.account.accountSmsVerified) {
+    if (state.isHosted && !state.account!.accountSmsVerified) {
       return false;
     }
   }
@@ -48,7 +48,7 @@ bool supportsAppleOAuth() => kIsWeb || isApple();
 bool supportsMicrosoftOAuth() => kIsWeb;
 
 bool supportsLatestFeatures(String version) {
-  final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
+  final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
   final state = store.state;
 
   if (!kReleaseMode || state.isStaging) {
@@ -63,11 +63,11 @@ bool supportsLatestFeatures(String version) {
     return false;
   }
 
-  return Version.parse(state.account.currentVersion) >= Version.parse(version);
+  return Version.parse(state.account!.currentVersion) >= Version.parse(version);
 }
 
 bool supportsInAppPurchase() {
-  final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
+  final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
   if (store.state.isSelfHosted) {
     return false;
   }
@@ -139,7 +139,7 @@ String getPdfRequirements(BuildContext context) {
   final localization = AppLocalization.of(context);
   if (isMobile(context)) {
     final version = isAndroid() ? 'Android 5.0+' : 'iOS 11.0+';
-    return localization.pdfMinRequirements.replaceFirst(':version', version);
+    return localization!.pdfMinRequirements.replaceFirst(':version', version);
   } else {
     return '';
   }
@@ -227,7 +227,7 @@ String getNativeAppUrl(String platform) {
   return '';
 }
 
-IconData getNativeAppIcon(String platform) {
+IconData? getNativeAppIcon(String platform) {
   switch (platform) {
     case kPlatformAndroid:
       return Icons.android;

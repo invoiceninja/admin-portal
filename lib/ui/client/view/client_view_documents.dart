@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/document_grid.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 
 class ClientViewDocuments extends StatelessWidget {
-  const ClientViewDocuments({Key key, @required this.viewModel})
+  const ClientViewDocuments({Key? key, required this.viewModel})
       : super(key: key);
 
   final ClientViewVM viewModel;

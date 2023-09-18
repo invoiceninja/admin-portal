@@ -25,7 +25,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class CreditEditScreen extends StatelessWidget {
-  const CreditEditScreen({Key key}) : super(key: key);
+  const CreditEditScreen({Key? key}) : super(key: key);
 
   static const String route = '/credit/edit';
 
@@ -38,7 +38,7 @@ class CreditEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return CreditEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.invoice.updatedAt),
+          key: ValueKey(viewModel.invoice!.updatedAt),
         );
       },
     );
@@ -47,16 +47,16 @@ class CreditEditScreen extends StatelessWidget {
 
 class CreditEditVM extends AbstractInvoiceEditVM {
   CreditEditVM({
-    AppState state,
-    CompanyEntity company,
-    InvoiceEntity invoice,
-    int invoiceItemIndex,
-    InvoiceEntity origInvoice,
-    Function(BuildContext, [EntityAction]) onSavePressed,
-    Function(List<InvoiceItemEntity>, String, String) onItemsAdded,
-    bool isSaving,
-    Function(BuildContext) onCancelPressed,
-    Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
+    AppState? state,
+    CompanyEntity? company,
+    InvoiceEntity? invoice,
+    int? invoiceItemIndex,
+    InvoiceEntity? origInvoice,
+    Function(BuildContext, [EntityAction])? onSavePressed,
+    Function(List<InvoiceItemEntity>, String, String)? onItemsAdded,
+    bool? isSaving,
+    Function(BuildContext)? onCancelPressed,
+    Function(BuildContext, List<MultipartFile>, bool?)? onUploadDocuments,
   }) : super(
           state: state,
           company: company,
@@ -72,7 +72,7 @@ class CreditEditVM extends AbstractInvoiceEditVM {
 
   factory CreditEditVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
-    final credit = state.creditUIState.editing;
+    final credit = state.creditUIState.editing!;
 
     return CreditEditVM(
       state: state,
@@ -81,16 +81,16 @@ class CreditEditVM extends AbstractInvoiceEditVM {
       invoice: credit,
       invoiceItemIndex: state.creditUIState.editingItemIndex,
       origInvoice: store.state.creditState.map[credit.id],
-      onSavePressed: (BuildContext context, [EntityAction action]) {
+      onSavePressed: (BuildContext context, [EntityAction? action]) {
         Debouncer.runOnComplete(() {
-          final credit = store.state.creditUIState.editing;
+          final credit = store.state.creditUIState.editing!;
           final localization = navigatorKey.localization;
           final navigator = navigatorKey.currentState;
           if (credit.clientId.isEmpty) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
-                  return ErrorDialog(localization.pleaseSelectAClient);
+                  return ErrorDialog(localization!.pleaseSelectAClient);
                 });
             return null;
           }
@@ -110,15 +110,15 @@ class CreditEditVM extends AbstractInvoiceEditVM {
             ));
             return completer.future.then((savedCredit) {
               showToast(credit.isNew
-                  ? localization.createdCredit
-                  : localization.updatedCredit);
+                  ? localization!.createdCredit
+                  : localization!.updatedCredit);
 
               if (state.prefState.isMobile) {
                 store.dispatch(UpdateCurrentRoute(CreditViewScreen.route));
                 if (credit.isNew) {
-                  navigator.pushReplacementNamed(CreditViewScreen.route);
+                  navigator!.pushReplacementNamed(CreditViewScreen.route);
                 } else {
-                  navigator.pop(savedCredit);
+                  navigator!.pop(savedCredit);
                 }
               } else {
                 if (!state.prefState.isPreviewVisible) {
@@ -141,7 +141,7 @@ class CreditEditVM extends AbstractInvoiceEditVM {
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext,
+                  context: navigatorKey.currentContext!,
                   builder: (BuildContext context) {
                     return ErrorDialog(error);
                   });
@@ -164,7 +164,7 @@ class CreditEditVM extends AbstractInvoiceEditVM {
         }
       },
       onUploadDocuments: (BuildContext context,
-          List<MultipartFile> multipartFile, bool isPrivate) {
+          List<MultipartFile> multipartFile, bool? isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveCreditDocumentRequest(
             isPrivate: isPrivate,
@@ -172,7 +172,7 @@ class CreditEditVM extends AbstractInvoiceEditVM {
             credit: credit,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context).uploadedDocument);
+          showToast(AppLocalization.of(context)!.uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,

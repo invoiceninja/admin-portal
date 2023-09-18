@@ -15,55 +15,69 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
   final String wireName = 'StaticState';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, StaticState object,
+  Iterable<Object?> serialize(Serializers serializers, StaticState object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'currencyMap',
       serializers.serialize(object.currencyMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(CurrencyEntity)])),
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType.nullable(String),
+            const FullType.nullable(CurrencyEntity)
+          ])),
       'sizeMap',
       serializers.serialize(object.sizeMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(SizeEntity)])),
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType.nullable(String),
+            const FullType.nullable(SizeEntity)
+          ])),
       'gatewayMap',
       serializers.serialize(object.gatewayMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(GatewayEntity)])),
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType.nullable(String),
+            const FullType.nullable(GatewayEntity)
+          ])),
       'industryMap',
       serializers.serialize(object.industryMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(IndustryEntity)])),
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType.nullable(String),
+            const FullType.nullable(IndustryEntity)
+          ])),
       'timezoneMap',
       serializers.serialize(object.timezoneMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(TimezoneEntity)])),
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType.nullable(String),
+            const FullType.nullable(TimezoneEntity)
+          ])),
       'dateFormatMap',
       serializers.serialize(object.dateFormatMap,
           specifiedType: const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(DateFormatEntity)
+            const FullType.nullable(String),
+            const FullType.nullable(DateFormatEntity)
           ])),
       'languageMap',
       serializers.serialize(object.languageMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(LanguageEntity)])),
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType.nullable(String),
+            const FullType.nullable(LanguageEntity)
+          ])),
       'paymentTypeMap',
       serializers.serialize(object.paymentTypeMap,
           specifiedType: const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(PaymentTypeEntity)
+            const FullType.nullable(String),
+            const FullType.nullable(PaymentTypeEntity)
           ])),
       'countryMap',
       serializers.serialize(object.countryMap,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(CountryEntity)])),
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType.nullable(String),
+            const FullType.nullable(CountryEntity)
+          ])),
       'templateMap',
       serializers.serialize(object.templateMap,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(String), const FullType(TemplateEntity)])),
     ];
-    Object value;
+    Object? value;
     value = object.updatedAt;
     if (value != null) {
       result
@@ -74,87 +88,89 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
   }
 
   @override
-  StaticState deserialize(Serializers serializers, Iterable<Object> serialized,
+  StaticState deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new StaticStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'updatedAt':
           result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'currencyMap':
           result.currencyMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(CurrencyEntity)
-              ])));
+                const FullType.nullable(String),
+                const FullType.nullable(CurrencyEntity)
+              ]))!);
           break;
         case 'sizeMap':
           result.sizeMap.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap,
-                  const [const FullType(String), const FullType(SizeEntity)])));
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType.nullable(String),
+                const FullType.nullable(SizeEntity)
+              ]))!);
           break;
         case 'gatewayMap':
           result.gatewayMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(GatewayEntity)
-              ])));
+                const FullType.nullable(String),
+                const FullType.nullable(GatewayEntity)
+              ]))!);
           break;
         case 'industryMap':
           result.industryMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(IndustryEntity)
-              ])));
+                const FullType.nullable(String),
+                const FullType.nullable(IndustryEntity)
+              ]))!);
           break;
         case 'timezoneMap':
           result.timezoneMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(TimezoneEntity)
-              ])));
+                const FullType.nullable(String),
+                const FullType.nullable(TimezoneEntity)
+              ]))!);
           break;
         case 'dateFormatMap':
           result.dateFormatMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(DateFormatEntity)
-              ])));
+                const FullType.nullable(String),
+                const FullType.nullable(DateFormatEntity)
+              ]))!);
           break;
         case 'languageMap':
           result.languageMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(LanguageEntity)
-              ])));
+                const FullType.nullable(String),
+                const FullType.nullable(LanguageEntity)
+              ]))!);
           break;
         case 'paymentTypeMap':
           result.paymentTypeMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(PaymentTypeEntity)
-              ])));
+                const FullType.nullable(String),
+                const FullType.nullable(PaymentTypeEntity)
+              ]))!);
           break;
         case 'countryMap':
           result.countryMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(CountryEntity)
-              ])));
+                const FullType.nullable(String),
+                const FullType.nullable(CountryEntity)
+              ]))!);
           break;
         case 'templateMap':
           result.templateMap.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(TemplateEntity)
-              ])));
+              ]))!);
           break;
       }
     }
@@ -165,43 +181,43 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
 
 class _$StaticState extends StaticState {
   @override
-  final int updatedAt;
+  final int? updatedAt;
   @override
-  final BuiltMap<String, CurrencyEntity> currencyMap;
+  final BuiltMap<String?, CurrencyEntity?> currencyMap;
   @override
-  final BuiltMap<String, SizeEntity> sizeMap;
+  final BuiltMap<String?, SizeEntity?> sizeMap;
   @override
-  final BuiltMap<String, GatewayEntity> gatewayMap;
+  final BuiltMap<String?, GatewayEntity?> gatewayMap;
   @override
-  final BuiltMap<String, IndustryEntity> industryMap;
+  final BuiltMap<String?, IndustryEntity?> industryMap;
   @override
-  final BuiltMap<String, TimezoneEntity> timezoneMap;
+  final BuiltMap<String?, TimezoneEntity?> timezoneMap;
   @override
-  final BuiltMap<String, DateFormatEntity> dateFormatMap;
+  final BuiltMap<String?, DateFormatEntity?> dateFormatMap;
   @override
-  final BuiltMap<String, LanguageEntity> languageMap;
+  final BuiltMap<String?, LanguageEntity?> languageMap;
   @override
-  final BuiltMap<String, PaymentTypeEntity> paymentTypeMap;
+  final BuiltMap<String?, PaymentTypeEntity?> paymentTypeMap;
   @override
-  final BuiltMap<String, CountryEntity> countryMap;
+  final BuiltMap<String?, CountryEntity?> countryMap;
   @override
   final BuiltMap<String, TemplateEntity> templateMap;
 
-  factory _$StaticState([void Function(StaticStateBuilder) updates]) =>
+  factory _$StaticState([void Function(StaticStateBuilder)? updates]) =>
       (new StaticStateBuilder()..update(updates))._build();
 
   _$StaticState._(
       {this.updatedAt,
-      this.currencyMap,
-      this.sizeMap,
-      this.gatewayMap,
-      this.industryMap,
-      this.timezoneMap,
-      this.dateFormatMap,
-      this.languageMap,
-      this.paymentTypeMap,
-      this.countryMap,
-      this.templateMap})
+      required this.currencyMap,
+      required this.sizeMap,
+      required this.gatewayMap,
+      required this.industryMap,
+      required this.timezoneMap,
+      required this.dateFormatMap,
+      required this.languageMap,
+      required this.paymentTypeMap,
+      required this.countryMap,
+      required this.templateMap})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         currencyMap, r'StaticState', 'currencyMap');
@@ -248,10 +264,10 @@ class _$StaticState extends StaticState {
         templateMap == other.templateMap;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, updatedAt.hashCode);
     _$hash = $jc(_$hash, currencyMap.hashCode);
@@ -287,70 +303,70 @@ class _$StaticState extends StaticState {
 }
 
 class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
-  _$StaticState _$v;
+  _$StaticState? _$v;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
 
-  MapBuilder<String, CurrencyEntity> _currencyMap;
-  MapBuilder<String, CurrencyEntity> get currencyMap =>
-      _$this._currencyMap ??= new MapBuilder<String, CurrencyEntity>();
-  set currencyMap(MapBuilder<String, CurrencyEntity> currencyMap) =>
+  MapBuilder<String?, CurrencyEntity?>? _currencyMap;
+  MapBuilder<String?, CurrencyEntity?> get currencyMap =>
+      _$this._currencyMap ??= new MapBuilder<String?, CurrencyEntity?>();
+  set currencyMap(MapBuilder<String?, CurrencyEntity?>? currencyMap) =>
       _$this._currencyMap = currencyMap;
 
-  MapBuilder<String, SizeEntity> _sizeMap;
-  MapBuilder<String, SizeEntity> get sizeMap =>
-      _$this._sizeMap ??= new MapBuilder<String, SizeEntity>();
-  set sizeMap(MapBuilder<String, SizeEntity> sizeMap) =>
+  MapBuilder<String?, SizeEntity?>? _sizeMap;
+  MapBuilder<String?, SizeEntity?> get sizeMap =>
+      _$this._sizeMap ??= new MapBuilder<String?, SizeEntity?>();
+  set sizeMap(MapBuilder<String?, SizeEntity?>? sizeMap) =>
       _$this._sizeMap = sizeMap;
 
-  MapBuilder<String, GatewayEntity> _gatewayMap;
-  MapBuilder<String, GatewayEntity> get gatewayMap =>
-      _$this._gatewayMap ??= new MapBuilder<String, GatewayEntity>();
-  set gatewayMap(MapBuilder<String, GatewayEntity> gatewayMap) =>
+  MapBuilder<String?, GatewayEntity?>? _gatewayMap;
+  MapBuilder<String?, GatewayEntity?> get gatewayMap =>
+      _$this._gatewayMap ??= new MapBuilder<String?, GatewayEntity?>();
+  set gatewayMap(MapBuilder<String?, GatewayEntity?>? gatewayMap) =>
       _$this._gatewayMap = gatewayMap;
 
-  MapBuilder<String, IndustryEntity> _industryMap;
-  MapBuilder<String, IndustryEntity> get industryMap =>
-      _$this._industryMap ??= new MapBuilder<String, IndustryEntity>();
-  set industryMap(MapBuilder<String, IndustryEntity> industryMap) =>
+  MapBuilder<String?, IndustryEntity?>? _industryMap;
+  MapBuilder<String?, IndustryEntity?> get industryMap =>
+      _$this._industryMap ??= new MapBuilder<String?, IndustryEntity?>();
+  set industryMap(MapBuilder<String?, IndustryEntity?>? industryMap) =>
       _$this._industryMap = industryMap;
 
-  MapBuilder<String, TimezoneEntity> _timezoneMap;
-  MapBuilder<String, TimezoneEntity> get timezoneMap =>
-      _$this._timezoneMap ??= new MapBuilder<String, TimezoneEntity>();
-  set timezoneMap(MapBuilder<String, TimezoneEntity> timezoneMap) =>
+  MapBuilder<String?, TimezoneEntity?>? _timezoneMap;
+  MapBuilder<String?, TimezoneEntity?> get timezoneMap =>
+      _$this._timezoneMap ??= new MapBuilder<String?, TimezoneEntity?>();
+  set timezoneMap(MapBuilder<String?, TimezoneEntity?>? timezoneMap) =>
       _$this._timezoneMap = timezoneMap;
 
-  MapBuilder<String, DateFormatEntity> _dateFormatMap;
-  MapBuilder<String, DateFormatEntity> get dateFormatMap =>
-      _$this._dateFormatMap ??= new MapBuilder<String, DateFormatEntity>();
-  set dateFormatMap(MapBuilder<String, DateFormatEntity> dateFormatMap) =>
+  MapBuilder<String?, DateFormatEntity?>? _dateFormatMap;
+  MapBuilder<String?, DateFormatEntity?> get dateFormatMap =>
+      _$this._dateFormatMap ??= new MapBuilder<String?, DateFormatEntity?>();
+  set dateFormatMap(MapBuilder<String?, DateFormatEntity?>? dateFormatMap) =>
       _$this._dateFormatMap = dateFormatMap;
 
-  MapBuilder<String, LanguageEntity> _languageMap;
-  MapBuilder<String, LanguageEntity> get languageMap =>
-      _$this._languageMap ??= new MapBuilder<String, LanguageEntity>();
-  set languageMap(MapBuilder<String, LanguageEntity> languageMap) =>
+  MapBuilder<String?, LanguageEntity?>? _languageMap;
+  MapBuilder<String?, LanguageEntity?> get languageMap =>
+      _$this._languageMap ??= new MapBuilder<String?, LanguageEntity?>();
+  set languageMap(MapBuilder<String?, LanguageEntity?>? languageMap) =>
       _$this._languageMap = languageMap;
 
-  MapBuilder<String, PaymentTypeEntity> _paymentTypeMap;
-  MapBuilder<String, PaymentTypeEntity> get paymentTypeMap =>
-      _$this._paymentTypeMap ??= new MapBuilder<String, PaymentTypeEntity>();
-  set paymentTypeMap(MapBuilder<String, PaymentTypeEntity> paymentTypeMap) =>
+  MapBuilder<String?, PaymentTypeEntity?>? _paymentTypeMap;
+  MapBuilder<String?, PaymentTypeEntity?> get paymentTypeMap =>
+      _$this._paymentTypeMap ??= new MapBuilder<String?, PaymentTypeEntity?>();
+  set paymentTypeMap(MapBuilder<String?, PaymentTypeEntity?>? paymentTypeMap) =>
       _$this._paymentTypeMap = paymentTypeMap;
 
-  MapBuilder<String, CountryEntity> _countryMap;
-  MapBuilder<String, CountryEntity> get countryMap =>
-      _$this._countryMap ??= new MapBuilder<String, CountryEntity>();
-  set countryMap(MapBuilder<String, CountryEntity> countryMap) =>
+  MapBuilder<String?, CountryEntity?>? _countryMap;
+  MapBuilder<String?, CountryEntity?> get countryMap =>
+      _$this._countryMap ??= new MapBuilder<String?, CountryEntity?>();
+  set countryMap(MapBuilder<String?, CountryEntity?>? countryMap) =>
       _$this._countryMap = countryMap;
 
-  MapBuilder<String, TemplateEntity> _templateMap;
+  MapBuilder<String, TemplateEntity>? _templateMap;
   MapBuilder<String, TemplateEntity> get templateMap =>
       _$this._templateMap ??= new MapBuilder<String, TemplateEntity>();
-  set templateMap(MapBuilder<String, TemplateEntity> templateMap) =>
+  set templateMap(MapBuilder<String, TemplateEntity>? templateMap) =>
       _$this._templateMap = templateMap;
 
   StaticStateBuilder();
@@ -381,7 +397,7 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
   }
 
   @override
-  void update(void Function(StaticStateBuilder) updates) {
+  void update(void Function(StaticStateBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -405,7 +421,7 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
               countryMap: countryMap.build(),
               templateMap: templateMap.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'currencyMap';
         currencyMap.build();

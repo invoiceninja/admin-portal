@@ -17,24 +17,24 @@ class ViewTransactionRuleList implements PersistUI {
 
 class ViewTransactionRule implements PersistUI, PersistPrefs {
   ViewTransactionRule({
-    @required this.transactionRuleId,
+    required this.transactionRuleId,
     this.force = false,
   });
 
-  final String transactionRuleId;
+  final String? transactionRuleId;
   final bool force;
 }
 
 class EditTransactionRule implements PersistUI, PersistPrefs {
   EditTransactionRule(
-      {@required this.transactionRule,
+      {required this.transactionRule,
       this.completer,
       this.cancelCompleter,
       this.force = false});
 
   final TransactionRuleEntity transactionRule;
-  final Completer completer;
-  final Completer cancelCompleter;
+  final Completer? completer;
+  final Completer? cancelCompleter;
   final bool force;
 }
 
@@ -47,21 +47,21 @@ class UpdateTransactionRule implements PersistUI {
 class LoadTransactionRule {
   LoadTransactionRule({this.completer, this.transactionRuleId});
 
-  final Completer completer;
-  final String transactionRuleId;
+  final Completer? completer;
+  final String? transactionRuleId;
 }
 
 class LoadTransactionRuleActivity {
   LoadTransactionRuleActivity({this.completer, this.transactionRuleId});
 
-  final Completer completer;
-  final String transactionRuleId;
+  final Completer? completer;
+  final String? transactionRuleId;
 }
 
 class LoadTransactionRules {
   LoadTransactionRules({this.completer});
 
-  final Completer completer;
+  final Completer? completer;
 }
 
 class LoadTransactionRuleRequest implements StartLoading {}
@@ -115,8 +115,8 @@ class LoadTransactionRulesSuccess implements StopLoading {
 class SaveTransactionRuleRequest implements StartSaving {
   SaveTransactionRuleRequest({this.completer, this.transactionRule});
 
-  final Completer completer;
-  final TransactionRuleEntity transactionRule;
+  final Completer? completer;
+  final TransactionRuleEntity? transactionRule;
 }
 
 class SaveTransactionRuleSuccess implements StopSaving, PersistData, PersistUI {
@@ -153,7 +153,7 @@ class ArchiveTransactionRulesSuccess implements StopSaving, PersistData {
 class ArchiveTransactionRulesFailure implements StopSaving {
   ArchiveTransactionRulesFailure(this.transactionRules);
 
-  final List<TransactionRuleEntity> transactionRules;
+  final List<TransactionRuleEntity?> transactionRules;
 }
 
 class DeleteTransactionRulesRequest implements StartSaving {
@@ -172,7 +172,7 @@ class DeleteTransactionRulesSuccess implements StopSaving, PersistData {
 class DeleteTransactionRulesFailure implements StopSaving {
   DeleteTransactionRulesFailure(this.transactionRules);
 
-  final List<TransactionRuleEntity> transactionRules;
+  final List<TransactionRuleEntity?> transactionRules;
 }
 
 class RestoreTransactionRulesRequest implements StartSaving {
@@ -191,7 +191,7 @@ class RestoreTransactionRulesSuccess implements StopSaving, PersistData {
 class RestoreTransactionRulesFailure implements StopSaving {
   RestoreTransactionRulesFailure(this.transactionRules);
 
-  final List<TransactionRuleEntity> transactionRules;
+  final List<TransactionRuleEntity?> transactionRules;
 }
 
 class FilterTransactionRules implements PersistUI {
@@ -241,15 +241,15 @@ class StartTransactionRuleMultiselect {
 }
 
 class AddToTransactionRuleMultiselect {
-  AddToTransactionRuleMultiselect({@required this.entity});
+  AddToTransactionRuleMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromTransactionRuleMultiselect {
-  RemoveFromTransactionRuleMultiselect({@required this.entity});
+  RemoveFromTransactionRuleMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearTransactionRuleMultiselect {
@@ -259,40 +259,40 @@ class ClearTransactionRuleMultiselect {
 class UpdateTransactionRuleTab implements PersistUI {
   UpdateTransactionRuleTab({this.tabIndex});
 
-  final int tabIndex;
+  final int? tabIndex;
 }
 
-void handleTransactionRuleAction(BuildContext context,
-    List<BaseEntity> transactionRules, EntityAction action) {
+void handleTransactionRuleAction(BuildContext? context,
+    List<BaseEntity?> transactionRules, EntityAction? action) {
   if (transactionRules.isEmpty) {
     return;
   }
 
-  final store = StoreProvider.of<AppState>(context);
+  final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
-  final transactionRule = transactionRules.first as TransactionRuleEntity;
+  final transactionRule = transactionRules.first as TransactionRuleEntity?;
   final transactionRuleIds =
-      transactionRules.map((transactionRule) => transactionRule.id).toList();
+      transactionRules.map((transactionRule) => transactionRule!.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: transactionRule);
+      editEntity(entity: transactionRule!);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreTransactionRulesRequest(
           snackBarCompleter<Null>(
-              context, localization.restoredTransactionRule),
+              context, localization!.restoredTransactionRule),
           transactionRuleIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveTransactionRulesRequest(
           snackBarCompleter<Null>(
-              context, localization.archivedTransactionRule),
+              context, localization!.archivedTransactionRule),
           transactionRuleIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteTransactionRulesRequest(
-          snackBarCompleter<Null>(context, localization.deletedTransactionRule),
+          snackBarCompleter<Null>(context, localization!.deletedTransactionRule),
           transactionRuleIds));
       break;
     case EntityAction.toggleMultiselect:
@@ -306,7 +306,7 @@ void handleTransactionRuleAction(BuildContext context,
 
       for (final transactionRule in transactionRules) {
         if (!store.state.transactionRuleListState
-            .isSelected(transactionRule.id)) {
+            .isSelected(transactionRule!.id)) {
           store.dispatch(
               AddToTransactionRuleMultiselect(entity: transactionRule));
         } else {

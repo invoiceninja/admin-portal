@@ -19,8 +19,8 @@ import 'design_screen_vm.dart';
 
 class DesignScreen extends StatelessWidget {
   const DesignScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsCustomDesigns';
@@ -86,7 +86,7 @@ class DesignScreen extends StatelessWidget {
         onSelectedCustom4: (value) =>
             store.dispatch(FilterDesignsByCustom4(value)),
       ),
-      floatingActionButton: state.prefState.isMobile && userCompany.isAdmin
+      floatingActionButton: state.prefState.isMobile && userCompany!.isAdmin
           ? FloatingActionButton(
               heroTag: 'design_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
@@ -101,7 +101,7 @@ class DesignScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newDesign,
+              tooltip: localization!.newDesign,
             )
           : null,
     );

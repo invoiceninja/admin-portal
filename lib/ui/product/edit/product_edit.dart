@@ -20,8 +20,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProductEdit extends StatefulWidget {
   const ProductEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final ProductEditVM viewModel;
@@ -77,11 +77,11 @@ class _ProductEditState extends State<ProductEdit> {
     _productKeyController.text = product.productKey;
     _notesController.text = product.notes;
     _priceController.text = formatNumber(product.price, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
     _quantityController.text = formatNumber(product.quantity, context,
-        formatNumberType: FormatNumberType.inputAmount);
+        formatNumberType: FormatNumberType.inputAmount)!;
     _costController.text = formatNumber(product.cost, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
     _custom1Controller.text = product.customValue1;
     _custom2Controller.text = product.customValue2;
     _custom3Controller.text = product.customValue3;
@@ -90,12 +90,12 @@ class _ProductEditState extends State<ProductEdit> {
       product.stockQuantity.toDouble(),
       context,
       formatNumberType: FormatNumberType.int,
-    );
+    )!;
     _maxQuantityController.text = formatNumber(
       product.maxQuantity.toDouble(),
       context,
       formatNumberType: FormatNumberType.int,
-    );
+    )!;
     _imageUrlController.text = product.imageUrl;
     _notificationThresholdController.text =
         product.stockNotificationThreshold == 0
@@ -104,7 +104,7 @@ class _ProductEditState extends State<ProductEdit> {
                 product.stockNotificationThreshold.toDouble(),
                 context,
                 formatNumberType: FormatNumberType.int,
-              );
+              )!;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -148,7 +148,7 @@ class _ProductEditState extends State<ProductEdit> {
   }
 
   void _onSavePressed(BuildContext context) {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -159,10 +159,10 @@ class _ProductEditState extends State<ProductEdit> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final product = viewModel.product;
-    final company = viewModel.company;
+    final company = viewModel.company!;
 
     return EditScaffold(
       entity: product,
@@ -229,7 +229,7 @@ class _ProductEditState extends State<ProductEdit> {
                       items: kTaxCategories.keys
                           .map((key) => DropdownMenuItem<String>(
                                 child: Text(
-                                    localization.lookup(kTaxCategories[key])),
+                                    localization.lookup(kTaxCategories[key])!),
                                 value: key,
                               ))
                           .toList()),
@@ -305,7 +305,7 @@ class _ProductEditState extends State<ProductEdit> {
                     SizedBox(height: 16),
                     SwitchListTile(
                       activeColor: Theme.of(context).colorScheme.secondary,
-                      title: Text(localization.stockNotifications),
+                      title: Text(localization.stockNotifications!),
                       value: product.stockNotification,
                       onChanged: (value) => viewModel.onChanged(
                           product.rebuild((b) => b..stockNotification = value)),
@@ -314,7 +314,7 @@ class _ProductEditState extends State<ProductEdit> {
                       DecoratedFormField(
                         keyboardType: TextInputType.number,
                         controller: _notificationThresholdController,
-                        label: localization.notificationThreshold +
+                        label: localization.notificationThreshold! +
                             ((company.stockNotification &&
                                     company.stockNotificationThreshold != 0)
                                 ? ' • ${localization.defaultWord} ${company.stockNotificationThreshold}'

@@ -23,8 +23,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorEditDetails extends StatefulWidget {
   const VendorEditDetails({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final VendorEditVM viewModel;
@@ -48,7 +48,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_vendorEditDetails');
   final _debouncer = Debouncer();
-  List<TextEditingController> _controllers;
+  late List<TextEditingController> _controllers;
 
   @override
   void didChangeDependencies() {
@@ -121,15 +121,15 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
     final vendor = viewModel.vendor;
 
     final contactEmail =
-        contact.emails.isNotEmpty ? contact.emails.first : null;
+        contact.emails!.isNotEmpty ? contact.emails!.first : null;
     final contactPhone =
-        contact.phones.isNotEmpty ? contact.phones.first : null;
-    final contactAddress = contact.postalAddresses.isNotEmpty
-        ? contact.postalAddresses.first
+        contact.phones!.isNotEmpty ? contact.phones!.first : null;
+    final contactAddress = contact.postalAddresses!.isNotEmpty
+        ? contact.postalAddresses!.first
         : null;
 
     final countryMap = viewModel.state.staticState.countryMap;
-    String countryId;
+    String? countryId;
 
     countryMap.keys.forEach((countryId) {
       final country = countryMap[countryId] ?? CountryEntity();
@@ -146,7 +146,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
       ..state = (contactAddress?.region ?? '').trim()
       ..postalCode = (contactAddress?.postcode ?? '').trim()
       ..countryId = countryId ?? ''
-      ..contacts[0] = vendor.contacts[0].rebuild((b) => b
+      ..contacts[0] = vendor.contacts[0]!.rebuild((b) => b
         ..firstName = (contact?.givenName ?? '').trim()
         ..lastName = (contact?.familyName ?? '').trim()
         ..email = (contactEmail?.value ?? '').trim()
@@ -155,7 +155,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
   }
 
   void _onSavePressed(BuildContext context) {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -166,7 +166,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final vendor = viewModel.vendor;
     final state = viewModel.state;
@@ -188,7 +188,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
             autofocus: true,
             controller: _nameController,
             validator: (String val) => val.trim().isEmpty
-                ? AppLocalization.of(context).pleaseEnterAName
+                ? AppLocalization.of(context)!.pleaseEnterAName
                 : null,
             onSavePressed: _onSavePressed,
             label: localization.name,
@@ -274,7 +274,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
             value: vendor.customValue4,
             onSavePressed: _onSavePressed,
           ),
-          if (state.company.calculateTaxes)
+          if (state.company!.calculateTaxes)
             AppDropdownButton<String>(
               labelText: localization.classification,
               showBlank: true,
@@ -285,7 +285,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
               },
               items: kTaxClassifications
                   .map((classification) => DropdownMenuItem(
-                        child: Text(localization.lookup(classification)),
+                        child: Text(localization.lookup(classification)!),
                         value: classification,
                       ))
                   .toList(),

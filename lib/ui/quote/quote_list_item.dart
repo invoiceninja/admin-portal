@@ -19,47 +19,47 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class QuoteListItem extends StatelessWidget {
   const QuoteListItem({
-    @required this.quote,
+    required this.quote,
     this.filter,
     this.showCheckbox = true,
   });
 
-  final InvoiceEntity quote;
-  final String filter;
+  final InvoiceEntity? quote;
+  final String? filter;
   final bool showCheckbox;
 
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
-    final client = state.clientState.get(quote.clientId);
+    final client = state.clientState.get(quote!.clientId);
     final uiState = state.uiState;
     final quoteUIState = uiState.quoteUIState;
-    final listUIState = state.getUIState(quote.entityType).listUIState;
+    final listUIState = state.getUIState(quote!.entityType)!.listUIState;
     final isInMultiselect = showCheckbox && listUIState.isInMultiselect();
-    final isChecked = isInMultiselect && listUIState.isSelected(quote.id);
+    final isChecked = isInMultiselect && listUIState.isSelected(quote!.id);
     final textStyle = TextStyle(fontSize: 16);
     final localization = AppLocalization.of(context);
-    final textColor = Theme.of(context).textTheme.bodyLarge.color;
-    final filterMatch = filter != null && filter.isNotEmpty
-        ? (quote.matchesFilterValue(filter) ??
-            client.matchesFilterValue(filter))
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color;
+    final filterMatch = filter != null && filter!.isNotEmpty
+        ? (quote!.matchesFilterValue(filter) ??
+            client!.matchesFilterValue(filter))
         : null;
 
     String subtitle = '';
-    if (quote.date.isNotEmpty) {
-      subtitle = formatDate(quote.date, context);
+    if (quote!.date.isNotEmpty) {
+      subtitle = formatDate(quote!.date, context);
     }
-    if (quote.dueDate.isNotEmpty) {
+    if (quote!.dueDate.isNotEmpty) {
       if (subtitle.isNotEmpty) {
         subtitle += ' • ';
       }
-      subtitle += formatDate(quote.dueDate, context);
+      subtitle += formatDate(quote!.dueDate, context);
     }
 
     return DismissibleEntity(
-        isSelected: quote.id ==
+        isSelected: quote!.id ==
             (uiState.isEditing
-                ? quoteUIState.editing.id
+                ? quoteUIState.editing!.id
                 : quoteUIState.selectedId),
         userCompany: state.userCompany,
         showMultiselect: showCheckbox,
@@ -69,9 +69,9 @@ class QuoteListItem extends StatelessWidget {
           return constraints.maxWidth > kTableListWidthCutoff
               ? InkWell(
                   onTap: () =>
-                      selectEntity(entity: quote, forceView: !showCheckbox),
+                      selectEntity(entity: quote!, forceView: !showCheckbox),
                   onLongPress: () =>
-                      selectEntity(entity: quote, longPress: true),
+                      selectEntity(entity: quote!, longPress: true),
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 10,
@@ -97,7 +97,7 @@ class QuoteListItem extends StatelessWidget {
                                     ),
                                   )
                                 : ActionMenuButton(
-                                    entityActions: quote.getActions(
+                                    entityActions: quote!.getActions(
                                       userCompany: state.userCompany,
                                       client: client,
                                       includeEdit: true,
@@ -113,13 +113,13 @@ class QuoteListItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                (quote.number ?? '').isEmpty
-                                    ? localization.pending
-                                    : quote.number,
+                                (quote!.number ?? '').isEmpty
+                                    ? localization!.pending
+                                    : quote!.number,
                                 style: textStyle,
                                 overflow: TextOverflow.ellipsis,
                               ),
-                              if (!quote.isActive) EntityStateLabel(quote)
+                              if (!quote!.isActive) EntityStateLabel(quote)
                             ],
                           ),
                         ),
@@ -129,8 +129,8 @@ class QuoteListItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                  client.displayName +
-                                      (quote.documents.isNotEmpty
+                                  client!.displayName +
+                                      (quote!.documents.isNotEmpty
                                           ? '  📎'
                                           : ''),
                                   style: textStyle),
@@ -140,9 +140,9 @@ class QuoteListItem extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .titleSmall
+                                    .titleSmall!
                                     .copyWith(
-                                      color: textColor
+                                      color: textColor!
                                           .withOpacity(kLighterOpacity),
                                     ),
                               ),
@@ -151,8 +151,8 @@ class QuoteListItem extends StatelessWidget {
                         ),
                         SizedBox(width: 10),
                         Text(
-                          formatNumber(quote.amount, context,
-                              clientId: client.id),
+                          formatNumber(quote!.amount, context,
+                              clientId: client.id)!,
                           style: textStyle,
                           textAlign: TextAlign.end,
                         ),
@@ -164,9 +164,9 @@ class QuoteListItem extends StatelessWidget {
                 )
               : ListTile(
                   onTap: () =>
-                      selectEntity(entity: quote, forceView: !showCheckbox),
+                      selectEntity(entity: quote!, forceView: !showCheckbox),
                   onLongPress: () =>
-                      selectEntity(entity: quote, longPress: true),
+                      selectEntity(entity: quote!, longPress: true),
                   leading: isInMultiselect
                       ? IgnorePointer(
                           ignoring: listUIState.isInMultiselect(),
@@ -186,15 +186,15 @@ class QuoteListItem extends StatelessWidget {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            client.displayName,
+                            client!.displayName,
                             style: Theme.of(context).textTheme.titleMedium,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         SizedBox(width: 4),
                         Text(
-                            formatNumber(quote.amount, context,
-                                clientId: quote.clientId),
+                            formatNumber(quote!.amount, context,
+                                clientId: quote!.clientId)!,
                             style: Theme.of(context).textTheme.titleMedium),
                       ],
                     ),
@@ -206,16 +206,16 @@ class QuoteListItem extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: filterMatch == null
-                                ? Text((((quote.number ?? '').isEmpty
-                                            ? localization.pending
-                                            : quote.number) +
+                                ? Text((((quote!.number ?? '').isEmpty
+                                            ? localization!.pending
+                                            : quote!.number) +
                                         ' • ' +
                                         formatDate(
-                                            quote.dueDate.isNotEmpty
-                                                ? quote.dueDate
-                                                : quote.date,
+                                            quote!.dueDate.isNotEmpty
+                                                ? quote!.dueDate
+                                                : quote!.date,
                                             context) +
-                                        (quote.documents.isNotEmpty
+                                        (quote!.documents.isNotEmpty
                                             ? '  📎'
                                             : ''))
                                     .trim())
@@ -226,14 +226,14 @@ class QuoteListItem extends StatelessWidget {
                                   ),
                           ),
                           Text(
-                              localization.lookup(
-                                  kQuoteStatuses[quote.calculatedStatusId]),
+                              localization!.lookup(
+                                  kQuoteStatuses[quote!.calculatedStatusId])!,
                               style: TextStyle(
-                                color: !quote.isSent
+                                color: !quote!.isSent
                                     ? textColor
                                     : QuoteStatusColors(
                                             state.prefState.colorThemeModel)
-                                        .colors[quote.calculatedStatusId],
+                                        .colors[quote!.calculatedStatusId],
                               )),
                         ],
                       ),

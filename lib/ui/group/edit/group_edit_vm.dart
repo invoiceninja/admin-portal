@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/ui/group/view/group_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class GroupEditScreen extends StatelessWidget {
-  const GroupEditScreen({Key key}) : super(key: key);
+  const GroupEditScreen({Key? key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsGroupSettingsEdit';
 
   @override
@@ -45,19 +45,19 @@ class GroupEditScreen extends StatelessWidget {
 
 class GroupEditVM {
   GroupEditVM({
-    @required this.state,
-    @required this.group,
-    @required this.company,
-    @required this.onChanged,
-    @required this.isSaving,
-    @required this.origGroup,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
-    @required this.isLoading,
+    required this.state,
+    required this.group,
+    required this.company,
+    required this.onChanged,
+    required this.isSaving,
+    required this.origGroup,
+    required this.onSavePressed,
+    required this.onCancelPressed,
+    required this.isLoading,
   });
 
   factory GroupEditVM.fromStore(Store<AppState> store) {
-    final group = store.state.groupUIState.editing;
+    final group = store.state.groupUIState.editing!;
     final state = store.state;
 
     return GroupEditVM(
@@ -86,23 +86,23 @@ class GroupEditVM {
           final Completer<GroupEntity> completer = Completer<GroupEntity>();
           store.dispatch(SaveGroupRequest(completer: completer, group: group));
           return completer.future.then((savedGroup) {
-            showToast(group.isNew
-                ? localization.createdGroup
-                : localization.updatedGroup);
+            showToast(group!.isNew
+                ? localization!.createdGroup
+                : localization!.updatedGroup);
 
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(GroupViewScreen.route));
               if (group.isNew) {
-                navigator.pushReplacementNamed(GroupViewScreen.route);
+                navigator!.pushReplacementNamed(GroupViewScreen.route);
               } else {
-                navigator.pop(savedGroup);
+                navigator!.pop(savedGroup);
               }
             } else {
               viewEntity(entity: savedGroup, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
                   return ErrorDialog(error);
                 });
@@ -113,12 +113,12 @@ class GroupEditVM {
   }
 
   final GroupEntity group;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(GroupEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final bool isLoading;
   final bool isSaving;
-  final GroupEntity origGroup;
+  final GroupEntity? origGroup;
   final AppState state;
 }

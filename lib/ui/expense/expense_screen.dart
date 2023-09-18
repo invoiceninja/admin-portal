@@ -22,8 +22,8 @@ import 'expense_screen_vm.dart';
 
 class ExpenseScreen extends StatelessWidget {
   const ExpenseScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/expense';
@@ -34,33 +34,33 @@ class ExpenseScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final company = state.company;
+    final company = state.company!;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
 
     final statuses = [
       ExpenseStatusEntity().rebuild((b) => b
         ..id = kExpenseStatusLogged
-        ..name = localization.logged),
+        ..name = localization!.logged),
       ExpenseStatusEntity().rebuild(
         (b) => b
           ..id = kExpenseStatusPending
-          ..name = localization.pending,
+          ..name = localization!.pending,
       ),
       ExpenseStatusEntity().rebuild(
         (b) => b
           ..id = kExpenseStatusInvoiced
-          ..name = localization.invoiced,
+          ..name = localization!.invoiced,
       ),
       ExpenseStatusEntity().rebuild(
         (b) => b
           ..id = kExpenseStatusPaid
-          ..name = localization.paid,
+          ..name = localization!.paid,
       ),
       ExpenseStatusEntity().rebuild(
         (b) => b
           ..id = kExpenseStatusUnpaid
-          ..name = localization.unpaid,
+          ..name = localization!.unpaid,
       ),
     ];
 
@@ -80,7 +80,7 @@ class ExpenseScreen extends StatelessWidget {
           store.dispatch(FilterExpensesByState(state));
         },
         onSelectedStatus: (EntityStatus status, value) {
-          store.dispatch(FilterExpensesByStatus(status));
+          store.dispatch(FilterExpensesByStatus(status as ExpenseStatusEntity));
         },
       ),
       onCheckboxPressed: () {
@@ -133,7 +133,7 @@ class ExpenseScreen extends StatelessWidget {
         },
         statuses: statuses,
         onSelectedStatus: (EntityStatus status, value) {
-          store.dispatch(FilterExpensesByStatus(status));
+          store.dispatch(FilterExpensesByStatus(status as ExpenseStatusEntity));
         },
         onCheckboxPressed: () {
           if (store.state.expenseListState.isInMultiselect()) {
@@ -144,7 +144,7 @@ class ExpenseScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany.canCreate(EntityType.expense)
+              userCompany!.canCreate(EntityType.expense)
           ? FloatingActionButton(
               heroTag: 'expense_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
@@ -156,7 +156,7 @@ class ExpenseScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newExpense,
+              tooltip: localization!.newExpense,
             )
           : null,
     );

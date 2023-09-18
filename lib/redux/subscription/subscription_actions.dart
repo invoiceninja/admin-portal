@@ -26,24 +26,24 @@ class ViewSubscriptionList implements PersistUI {
 
 class ViewSubscription implements PersistUI, PersistPrefs {
   ViewSubscription({
-    @required this.subscriptionId,
+    required this.subscriptionId,
     this.force = false,
   });
 
-  final String subscriptionId;
+  final String? subscriptionId;
   final bool force;
 }
 
 class EditSubscription implements PersistUI, PersistPrefs {
   EditSubscription(
-      {@required this.subscription,
+      {required this.subscription,
       this.completer,
       this.cancelCompleter,
       this.force = false});
 
   final SubscriptionEntity subscription;
-  final Completer completer;
-  final Completer cancelCompleter;
+  final Completer? completer;
+  final Completer? cancelCompleter;
   final bool force;
 }
 
@@ -56,21 +56,21 @@ class UpdateSubscription implements PersistUI {
 class LoadSubscription {
   LoadSubscription({this.completer, this.subscriptionId});
 
-  final Completer completer;
-  final String subscriptionId;
+  final Completer? completer;
+  final String? subscriptionId;
 }
 
 class LoadSubscriptionActivity {
   LoadSubscriptionActivity({this.completer, this.subscriptionId});
 
-  final Completer completer;
-  final String subscriptionId;
+  final Completer? completer;
+  final String? subscriptionId;
 }
 
 class LoadSubscriptions {
   LoadSubscriptions({this.completer});
 
-  final Completer completer;
+  final Completer? completer;
 }
 
 class LoadSubscriptionRequest implements StartLoading {}
@@ -124,8 +124,8 @@ class LoadSubscriptionsSuccess implements StopLoading {
 class SaveSubscriptionRequest implements StartSaving {
   SaveSubscriptionRequest({this.completer, this.subscription});
 
-  final Completer completer;
-  final SubscriptionEntity subscription;
+  final Completer? completer;
+  final SubscriptionEntity? subscription;
 }
 
 class SaveSubscriptionSuccess implements StopSaving, PersistData, PersistUI {
@@ -162,7 +162,7 @@ class ArchiveSubscriptionsSuccess implements StopSaving, PersistData {
 class ArchiveSubscriptionsFailure implements StopSaving {
   ArchiveSubscriptionsFailure(this.subscriptions);
 
-  final List<SubscriptionEntity> subscriptions;
+  final List<SubscriptionEntity?> subscriptions;
 }
 
 class DeleteSubscriptionsRequest implements StartSaving {
@@ -181,7 +181,7 @@ class DeleteSubscriptionsSuccess implements StopSaving, PersistData {
 class DeleteSubscriptionsFailure implements StopSaving {
   DeleteSubscriptionsFailure(this.subscriptions);
 
-  final List<SubscriptionEntity> subscriptions;
+  final List<SubscriptionEntity?> subscriptions;
 }
 
 class RestoreSubscriptionsRequest implements StartSaving {
@@ -200,7 +200,7 @@ class RestoreSubscriptionsSuccess implements StopSaving, PersistData {
 class RestoreSubscriptionsFailure implements StopSaving {
   RestoreSubscriptionsFailure(this.subscriptions);
 
-  final List<SubscriptionEntity> subscriptions;
+  final List<SubscriptionEntity?> subscriptions;
 }
 
 class FilterSubscriptions implements PersistUI {
@@ -250,15 +250,15 @@ class StartSubscriptionMultiselect {
 }
 
 class AddToSubscriptionMultiselect {
-  AddToSubscriptionMultiselect({@required this.entity});
+  AddToSubscriptionMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromSubscriptionMultiselect {
-  RemoveFromSubscriptionMultiselect({@required this.entity});
+  RemoveFromSubscriptionMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearSubscriptionMultiselect {
@@ -268,38 +268,38 @@ class ClearSubscriptionMultiselect {
 class UpdateSubscriptionTab implements PersistUI {
   UpdateSubscriptionTab({this.tabIndex});
 
-  final int tabIndex;
+  final int? tabIndex;
 }
 
 void handleSubscriptionAction(
-    BuildContext context, List<BaseEntity> subscriptions, EntityAction action) {
+    BuildContext? context, List<BaseEntity?> subscriptions, EntityAction? action) {
   if (subscriptions.isEmpty) {
     return;
   }
 
-  final store = StoreProvider.of<AppState>(context);
+  final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
-  final subscription = subscriptions.first as SubscriptionEntity;
+  final subscription = subscriptions.first as SubscriptionEntity?;
   final subscriptionIds =
-      subscriptions.map((subscription) => subscription.id).toList();
+      subscriptions.map((subscription) => subscription!.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: subscription);
+      editEntity(entity: subscription!);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreSubscriptionsRequest(
-          snackBarCompleter<Null>(context, localization.restoredPaymentLink),
+          snackBarCompleter<Null>(context, localization!.restoredPaymentLink),
           subscriptionIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveSubscriptionsRequest(
-          snackBarCompleter<Null>(context, localization.archivedPaymentLink),
+          snackBarCompleter<Null>(context, localization!.archivedPaymentLink),
           subscriptionIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteSubscriptionsRequest(
-          snackBarCompleter<Null>(context, localization.deletedPaymentLink),
+          snackBarCompleter<Null>(context, localization!.deletedPaymentLink),
           subscriptionIds));
       break;
     case EntityAction.toggleMultiselect:
@@ -312,7 +312,7 @@ void handleSubscriptionAction(
       }
 
       for (final subscription in subscriptions) {
-        if (!store.state.subscriptionListState.isSelected(subscription.id)) {
+        if (!store.state.subscriptionListState.isSelected(subscription!.id)) {
           store.dispatch(AddToSubscriptionMultiselect(entity: subscription));
         } else {
           store.dispatch(

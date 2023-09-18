@@ -18,8 +18,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskSettings extends StatefulWidget {
   const TaskSettings({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final TaskSettingsVM viewModel;
@@ -31,9 +31,9 @@ class TaskSettings extends StatefulWidget {
 class _TaskSettingsState extends State<TaskSettings> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_taskSettings');
-  FocusScopeNode _focusNode;
+  FocusScopeNode? _focusNode;
   final _taskRateController = TextEditingController();
-  List<TextEditingController> _controllers;
+  late List<TextEditingController> _controllers;
 
   @override
   void initState() {
@@ -52,7 +52,7 @@ class _TaskSettingsState extends State<TaskSettings> {
 
     _taskRateController.text = formatNumber(
         widget.viewModel.settings.defaultTaskRate, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -66,7 +66,7 @@ class _TaskSettingsState extends State<TaskSettings> {
       controller.removeListener(_onChanged);
       controller.dispose();
     });
-    _focusNode.dispose();
+    _focusNode!.dispose();
     super.dispose();
   }
 
@@ -84,7 +84,7 @@ class _TaskSettingsState extends State<TaskSettings> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final company = viewModel.company;
     final settings = viewModel.settings;
@@ -117,25 +117,25 @@ class _TaskSettingsState extends State<TaskSettings> {
               ),
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.showTaskEndDate),
+                title: Text(localization.showTaskEndDate!),
                 value: company.showTaskEndDate,
-                subtitle: Text(localization.showTaskEndDateHelp),
+                subtitle: Text(localization.showTaskEndDateHelp!),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..showTaskEndDate = value)),
               ),
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.showTaskItemDescription),
-                value: settings.showTaskItemDescription,
-                subtitle: Text(localization.showTaskItemDescriptionHelp),
+                title: Text(localization.showTaskItemDescription!),
+                value: settings.showTaskItemDescription!,
+                subtitle: Text(localization.showTaskItemDescriptionHelp!),
                 onChanged: (value) => viewModel.onSettingsChanged(settings
                     .rebuild((b) => b..showTaskItemDescription = value)),
               ),
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.showTaskBillable),
-                value: settings.allowBillableTaskItems,
-                subtitle: Text(localization.allowBillableTaskItemsHelp),
+                title: Text(localization.showTaskBillable!),
+                value: settings.allowBillableTaskItems!,
+                subtitle: Text(localization.allowBillableTaskItemsHelp!),
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..allowBillableTaskItems = value)),
               ),
@@ -172,26 +172,26 @@ class _TaskSettingsState extends State<TaskSettings> {
                 ),
                 SwitchListTile(
                   activeColor: Theme.of(context).colorScheme.secondary,
-                  title: Text(localization.invoiceTaskHours),
+                  title: Text(localization.invoiceTaskHours!),
                   value: company.invoiceTaskHours,
-                  subtitle: Text(localization.invoiceTaskHoursHelp),
+                  subtitle: Text(localization.invoiceTaskHoursHelp!),
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..invoiceTaskHours = value)),
                 ),
                 if (settings.showTaskItemDescription == true)
                   SwitchListTile(
                     activeColor: Theme.of(context).colorScheme.secondary,
-                    title: Text(localization.invoiceTaskItemDescription),
+                    title: Text(localization.invoiceTaskItemDescription!),
                     value: company.invoiceTaskItemDescription,
-                    subtitle: Text(localization.invoiceTaskItemDescriptionHelp),
+                    subtitle: Text(localization.invoiceTaskItemDescriptionHelp!),
                     onChanged: (value) => viewModel.onCompanyChanged(company
                         .rebuild((b) => b..invoiceTaskItemDescription = value)),
                   ),
                 SwitchListTile(
                   activeColor: Theme.of(context).colorScheme.secondary,
-                  title: Text(localization.invoiceTaskProject),
+                  title: Text(localization.invoiceTaskProject!),
                   value: company.invoiceTaskProject,
-                  subtitle: Text(localization.invoiceTaskProjectHelp),
+                  subtitle: Text(localization.invoiceTaskProjectHelp!),
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..invoiceTaskProject = value)),
                 ),
@@ -231,9 +231,9 @@ class _TaskSettingsState extends State<TaskSettings> {
                 ),
                 SwitchListTile(
                   activeColor: Theme.of(context).colorScheme.secondary,
-                  title: Text(localization.lockInvoicedTasks),
+                  title: Text(localization.lockInvoicedTasks!),
                   value: company.invoiceTaskLock ?? false,
-                  subtitle: Text(localization.lockInvoicedTasksHelp),
+                  subtitle: Text(localization.lockInvoicedTasksHelp!),
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..invoiceTaskLock = value)),
                 ),
@@ -273,7 +273,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                   SettingsEntity.PORTAL_TASKS_ALL,
                 ]
                     .map((value) => DropdownMenuItem(
-                          child: Text(localization.lookup(value)),
+                          child: Text(localization.lookup(value)!),
                           value: value,
                         ))
                     .toList(),

@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/redux/subscription/subscription_selectors.d
 import 'subscription_screen.dart';
 
 class SubscriptionScreenBuilder extends StatelessWidget {
-  const SubscriptionScreenBuilder({Key key}) : super(key: key);
+  const SubscriptionScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,18 +32,18 @@ class SubscriptionScreenBuilder extends StatelessWidget {
 
 class SubscriptionScreenVM {
   SubscriptionScreenVM({
-    @required this.isInMultiselect,
-    @required this.subscriptionList,
-    @required this.userCompany,
-    @required this.onEntityAction,
-    @required this.subscriptionMap,
+    required this.isInMultiselect,
+    required this.subscriptionList,
+    required this.userCompany,
+    required this.onEntityAction,
+    required this.subscriptionMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> subscriptionList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final BuiltMap<String, SubscriptionEntity> subscriptionMap;
+  final BuiltMap<String?, SubscriptionEntity?> subscriptionMap;
 
   static SubscriptionScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

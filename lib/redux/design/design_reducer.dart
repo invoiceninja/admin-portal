@@ -14,67 +14,67 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 EntityUIState designUIReducer(DesignUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(designListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
+    ..editing.replace(editingReducer(state.editing, action)!)
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
 
-final forceSelectedReducer = combineReducers<bool>([
-  TypedReducer<bool, ViewDesign>((completer, action) => true),
-  TypedReducer<bool, ViewDesignList>((completer, action) => false),
-  TypedReducer<bool, FilterDesignsByState>((completer, action) => false),
-  TypedReducer<bool, FilterDesigns>((completer, action) => false),
-  TypedReducer<bool, FilterDesignsByCustom1>((completer, action) => false),
-  TypedReducer<bool, FilterDesignsByCustom2>((completer, action) => false),
-  TypedReducer<bool, FilterDesignsByCustom3>((completer, action) => false),
-  TypedReducer<bool, FilterDesignsByCustom4>((completer, action) => false),
+final forceSelectedReducer = combineReducers<bool?>([
+  TypedReducer<bool?, ViewDesign>((completer, action) => true),
+  TypedReducer<bool?, ViewDesignList>((completer, action) => false),
+  TypedReducer<bool?, FilterDesignsByState>((completer, action) => false),
+  TypedReducer<bool?, FilterDesigns>((completer, action) => false),
+  TypedReducer<bool?, FilterDesignsByCustom1>((completer, action) => false),
+  TypedReducer<bool?, FilterDesignsByCustom2>((completer, action) => false),
+  TypedReducer<bool?, FilterDesignsByCustom3>((completer, action) => false),
+  TypedReducer<bool?, FilterDesignsByCustom4>((completer, action) => false),
 ]);
 
-Reducer<String> selectedIdReducer = combineReducers([
-  TypedReducer<String, ArchiveDesignsSuccess>((completer, action) => ''),
-  TypedReducer<String, DeleteDesignsSuccess>((completer, action) => ''),
-  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+Reducer<String?> selectedIdReducer = combineReducers([
+  TypedReducer<String?, ArchiveDesignsSuccess>((completer, action) => ''),
+  TypedReducer<String?, DeleteDesignsSuccess>((completer, action) => ''),
+  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.design ? action.entityId : selectedId),
-  TypedReducer<String, ViewDesign>(
-      (String selectedId, dynamic action) => action.designId),
-  TypedReducer<String, AddDesignSuccess>(
-      (String selectedId, dynamic action) => action.design.id),
-  TypedReducer<String, SelectCompany>(
+  TypedReducer<String?, ViewDesign>(
+      (String? selectedId, dynamic action) => action.designId),
+  TypedReducer<String?, AddDesignSuccess>(
+      (String? selectedId, dynamic action) => action.design.id),
+  TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, SortDesigns>((selectedId, action) => ''),
-  TypedReducer<String, FilterDesigns>((selectedId, action) => ''),
-  TypedReducer<String, FilterDesignsByState>((selectedId, action) => ''),
-  TypedReducer<String, FilterDesignsByCustom1>((selectedId, action) => ''),
-  TypedReducer<String, FilterDesignsByCustom2>((selectedId, action) => ''),
-  TypedReducer<String, FilterDesignsByCustom3>((selectedId, action) => ''),
-  TypedReducer<String, FilterDesignsByCustom4>((selectedId, action) => ''),
+  TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String?, SortDesigns>((selectedId, action) => ''),
+  TypedReducer<String?, FilterDesigns>((selectedId, action) => ''),
+  TypedReducer<String?, FilterDesignsByState>((selectedId, action) => ''),
+  TypedReducer<String?, FilterDesignsByCustom1>((selectedId, action) => ''),
+  TypedReducer<String?, FilterDesignsByCustom2>((selectedId, action) => ''),
+  TypedReducer<String?, FilterDesignsByCustom3>((selectedId, action) => ''),
+  TypedReducer<String?, FilterDesignsByCustom4>((selectedId, action) => ''),
 ]);
 
-final editingReducer = combineReducers<DesignEntity>([
-  TypedReducer<DesignEntity, SaveDesignSuccess>(_updateEditing),
-  TypedReducer<DesignEntity, AddDesignSuccess>(_updateEditing),
-  TypedReducer<DesignEntity, RestoreDesignsSuccess>((designs, action) {
+final editingReducer = combineReducers<DesignEntity?>([
+  TypedReducer<DesignEntity?, SaveDesignSuccess>(_updateEditing),
+  TypedReducer<DesignEntity?, AddDesignSuccess>(_updateEditing),
+  TypedReducer<DesignEntity?, RestoreDesignsSuccess>((designs, action) {
     return action.designs[0];
   }),
-  TypedReducer<DesignEntity, ArchiveDesignsSuccess>((designs, action) {
+  TypedReducer<DesignEntity?, ArchiveDesignsSuccess>((designs, action) {
     return action.designs[0];
   }),
-  TypedReducer<DesignEntity, DeleteDesignsSuccess>((designs, action) {
+  TypedReducer<DesignEntity?, DeleteDesignsSuccess>((designs, action) {
     return action.designs[0];
   }),
-  TypedReducer<DesignEntity, EditDesign>(_updateEditing),
-  TypedReducer<DesignEntity, UpdateDesign>((design, action) {
+  TypedReducer<DesignEntity?, EditDesign>(_updateEditing),
+  TypedReducer<DesignEntity?, UpdateDesign>((design, action) {
     return action.design.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<DesignEntity, DiscardChanges>(_clearEditing),
+  TypedReducer<DesignEntity?, DiscardChanges>(_clearEditing),
 ]);
 
-DesignEntity _clearEditing(DesignEntity design, dynamic action) {
+DesignEntity _clearEditing(DesignEntity? design, dynamic action) {
   return DesignEntity();
 }
 
-DesignEntity _updateEditing(DesignEntity design, dynamic action) {
+DesignEntity? _updateEditing(DesignEntity? design, dynamic action) {
   return action.design;
 }
 
@@ -143,7 +143,7 @@ ListUIState _filterDesigns(ListUIState designListState, FilterDesigns action) {
 
 ListUIState _sortDesigns(ListUIState designListState, SortDesigns action) {
   return designListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortAscending = b.sortField != action.field || !b.sortAscending!
     ..sortField = action.field);
 }
 
@@ -154,13 +154,13 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState productListState, AddToDesignMultiselect action) {
-  return productListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+  return productListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState productListState, RemoveFromDesignMultiselect action) {
   return productListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(
@@ -227,7 +227,7 @@ DesignState _setLoadedDesigns(
 
 DesignState _setLoadedCompany(
     DesignState designState, LoadCompanySuccess action) {
-  final company = action.userCompany.company;
+  final company = action.userCompany.company!;
 
   return designState.loadDesigns(company.designs);
 }

@@ -17,8 +17,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class NotificationSettings extends StatelessWidget {
   const NotificationSettings({
-    @required this.user,
-    @required this.onChanged,
+    required this.user,
+    required this.onChanged,
   });
 
   final UserEntity user;
@@ -31,12 +31,12 @@ class NotificationSettings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final notifications =
-        user.userCompany.notifications ?? BuiltMap<String, BuiltList<String>>();
+        user.userCompany!.notifications ?? BuiltMap<String, BuiltList<String>>();
     final BuiltList<String> emailNotifications =
         notifications.containsKey(kNotificationChannelEmail)
-            ? notifications[kNotificationChannelEmail]
+            ? notifications[kNotificationChannelEmail]!
             : BuiltList<String>();
     final hasMultipleUsers = state.userState.list.length > 1 || user.isNew;
 
@@ -87,14 +87,14 @@ class NotificationSettings extends StatelessWidget {
                           kNotificationsQuoteApproved,
                           kNotificationsQuoteExpired,
                         ].contains(eventType) &&
-                        !state.company.isModuleEnabled(EntityType.quote)) {
+                        !state.company!.isModuleEnabled(EntityType.quote)) {
                       return false;
                     } else if ([
                           kNotificationsCreditCreated,
                           kNotificationsCreditSent,
                           kNotificationsCreditViewed,
                         ].contains(eventType) &&
-                        !state.company.isModuleEnabled(EntityType.credit)) {
+                        !state.company!.isModuleEnabled(EntityType.credit)) {
                       return false;
                     } else if ([
                           kNotificationsPurchaseOrderCreated,
@@ -102,13 +102,13 @@ class NotificationSettings extends StatelessWidget {
                           kNotificationsPurchaseOrderViewed,
                           kNotificationsPurchaseOrderAccepted,
                         ].contains(eventType) &&
-                        !state.company
+                        !state.company!
                             .isModuleEnabled(EntityType.purchaseOrder)) {
                       return false;
                     } else if ([
                           kNotificationsInventoryThreshold,
                         ].contains(eventType) &&
-                        !state.company.stockNotification) {
+                        !state.company!.stockNotification) {
                       return false;
                     }
 
@@ -135,8 +135,8 @@ class NotificationSettings extends StatelessWidget {
                     return DataRow(cells: [
                       // workaround for mistake in translations
                       DataCell(Text(eventType == kNotificationsInvoiceSent
-                          ? localization.invoiceSentNotificationLabel
-                          : localization.lookup(eventType))),
+                          ? localization.invoiceSentNotificationLabel!
+                          : localization.lookup(eventType)!)),
                       DataCell(isAllEnabled
                           ? value == NOTIFY_ALL
                               ? IconText(
@@ -179,13 +179,13 @@ class NotificationSettings extends StatelessWidget {
 
 class _NotificationSelector extends StatelessWidget {
   const _NotificationSelector({
-    @required this.value,
-    @required this.onChanged,
-    @required this.hasMultipleUsers,
+    required this.value,
+    required this.onChanged,
+    required this.hasMultipleUsers,
     this.showNoneAsCustom = false,
   });
 
-  final String value;
+  final String? value;
   final Function(String) onChanged;
   final bool hasMultipleUsers;
   final bool showNoneAsCustom;
@@ -207,8 +207,8 @@ class _NotificationSelector extends StatelessWidget {
           value: NotificationSettings.NOTIFY_ALL,
           child: IconText(
             text: hasMultipleUsers
-                ? localization.allRecords
-                : localization.enabled,
+                ? localization!.allRecords
+                : localization!.enabled,
             icon: hasMultipleUsers
                 ? Icons.supervised_user_circle
                 : Icons.check_circle,

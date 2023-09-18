@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
@@ -69,22 +70,22 @@ enum VendorReportFields {
 }
 
 var memoizedVendorReport = memo6((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, UserEntity> userMap,
-  BuiltMap<String, GroupEntity> groupMap,
+  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String?, GroupEntity?> groupMap,
   StaticState staticState,
 ) =>
-    vendorReport(userCompany, reportsUIState, vendorMap, userMap, groupMap,
+    vendorReport(userCompany!, reportsUIState, vendorMap, userMap, groupMap,
         staticState));
 
 ReportResult vendorReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, UserEntity> userMap,
-  BuiltMap<String, GroupEntity> groupMap,
+  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String?, GroupEntity?> groupMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -94,7 +95,7 @@ ReportResult vendorReport(
   final reportSettings = userCompany.settings?.reportSettings;
   final vendorReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportVendor)
-          ? reportSettings[kReportVendor]
+          ? reportSettings[kReportVendor]!
           : ReportSettingsEntity();
 
   final defaultColumns = [
@@ -110,16 +111,16 @@ ReportResult vendorReport(
   if (vendorReportSettings.columns.isNotEmpty) {
     columns = BuiltList(vendorReportSettings.columns
         .map((e) => EnumUtils.fromString(VendorReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
   }
 
   for (var vendorId in vendorMap.keys) {
-    final vendor = vendorMap[vendorId];
+    final vendor = vendorMap[vendorId]!;
     final contact = vendor.primaryContact;
-    if (vendor.isDeleted && !userCompany.company.reportIncludeDeleted) {
+    if (vendor.isDeleted! && !userCompany.company!.reportIncludeDeleted) {
       continue;
     }
 
@@ -128,7 +129,7 @@ ReportResult vendorReport(
 
     final exchangeRate = getExchangeRate(staticState.currencyMap,
         fromCurrencyId: vendor.currencyId,
-        toCurrencyId: userCompany.company.currencyId);
+        toCurrencyId: userCompany.company!.currencyId);
 
     for (var column in columns) {
       dynamic value = '';
@@ -172,28 +173,28 @@ ReportResult vendorReport(
           value = presentCustomField(
             value: vendor.customValue1,
             customFieldType: CustomFieldType.vendor1,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case VendorReportFields.vendor2:
           value = presentCustomField(
             value: vendor.customValue2,
             customFieldType: CustomFieldType.vendor2,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case VendorReportFields.vendor3:
           value = presentCustomField(
             value: vendor.customValue3,
             customFieldType: CustomFieldType.vendor3,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case VendorReportFields.vendor4:
           value = presentCustomField(
             value: vendor.customValue4,
             customFieldType: CustomFieldType.vendor4,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case VendorReportFields.address1:
@@ -256,47 +257,47 @@ ReportResult vendorReport(
           value = userMap[vendor.createdUserId]?.listDisplayName ?? '';
           break;
         case VendorReportFields.contact_full_name:
-          value = contact.fullName;
+          value = contact!.fullName;
           break;
         case VendorReportFields.contact_first_name:
-          value = contact.firstName;
+          value = contact!.firstName;
           break;
         case VendorReportFields.contact_last_name:
-          value = contact.lastName;
+          value = contact!.lastName;
           break;
         case VendorReportFields.contact_email:
-          value = contact.email;
+          value = contact!.email;
           break;
         case VendorReportFields.contact_phone:
-          value = contact.phone;
+          value = contact!.phone;
           break;
 
         case VendorReportFields.contact1:
           value = presentCustomField(
-            value: contact.customValue1,
+            value: contact!.customValue1,
             customFieldType: CustomFieldType.vendorContact1,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case VendorReportFields.contact2:
           value = presentCustomField(
-            value: contact.customValue2,
+            value: contact!.customValue2,
             customFieldType: CustomFieldType.vendorContact2,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case VendorReportFields.contact3:
           value = presentCustomField(
-            value: contact.customValue3,
+            value: contact!.customValue3,
             customFieldType: CustomFieldType.vendorContact3,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case VendorReportFields.contact4:
           value = presentCustomField(
-            value: contact.customValue4,
+            value: contact!.customValue4,
             customFieldType: CustomFieldType.vendorContact4,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case VendorReportFields.last_login:
@@ -320,7 +321,7 @@ ReportResult vendorReport(
           value = vendor.documents.length;
           break;
         case VendorReportFields.classification:
-          value = AppLocalization.of(navigatorKey.currentContext)
+          value = AppLocalization.of(navigatorKey.currentContext!)!
               .lookup(vendor.classification);
           break;
       }
@@ -329,8 +330,8 @@ ReportResult vendorReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column),
-      )) {
+        column: EnumUtils.parse(column)!,
+      )!) {
         skip = true;
       }
 
@@ -357,7 +358,7 @@ ReportResult vendorReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, vendorReportSettings, selectedColumns));
+      sortReportTableRows(rowA, rowB, vendorReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns:

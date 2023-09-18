@@ -57,10 +57,10 @@ class AppPaginatedDataTable extends StatefulWidget {
   /// The [rowsPerPage] and [availableRowsPerPage] must not be null (they
   /// both have defaults, though, so don't have to be specified).
   AppPaginatedDataTable({
-    Key key,
+    Key? key,
     this.header,
     this.actions,
-    @required this.columns,
+    required this.columns,
     this.sortColumnIndex,
     this.sortAscending = true,
     this.onSelectAll,
@@ -82,7 +82,7 @@ class AppPaginatedDataTable extends StatefulWidget {
     ],
     this.onRowsPerPageChanged,
     this.dragStartBehavior = DragStartBehavior.start,
-    @required this.source,
+    required this.source,
   })  : assert(columns != null),
         assert(dragStartBehavior != null),
         assert(columns.isNotEmpty),
@@ -113,7 +113,7 @@ class AppPaginatedDataTable extends StatefulWidget {
   ///
   /// If items in the table are selectable, then, when the selection is not
   /// empty, the header is replaced by a count of the selected items.
-  final Widget header;
+  final Widget? header;
 
   /// Icon buttons to show at the top right of the table.
   ///
@@ -121,7 +121,7 @@ class AppPaginatedDataTable extends StatefulWidget {
   /// whether any rows are selected or not.
   ///
   /// These should be size 24.0 with default padding (8.0).
-  final List<Widget> actions;
+  final List<Widget>? actions;
 
   /// The configuration and labels for the columns in the table.
   final List<DataColumn> columns;
@@ -129,7 +129,7 @@ class AppPaginatedDataTable extends StatefulWidget {
   /// The current primary sort key's column.
   ///
   /// See [DataTable.sortColumnIndex].
-  final int sortColumnIndex;
+  final int? sortColumnIndex;
 
   /// Whether the column mentioned in [sortColumnIndex], if any, is sorted
   /// in ascending order.
@@ -141,7 +141,7 @@ class AppPaginatedDataTable extends StatefulWidget {
   /// checkbox in the heading row.
   ///
   /// See [DataTable.onSelectAll].
-  final ValueSetter<bool> onSelectAll;
+  final ValueSetter<bool>? onSelectAll;
 
   /// The height of each row (excluding the row that contains column headings).
   ///
@@ -177,7 +177,7 @@ class AppPaginatedDataTable extends StatefulWidget {
   /// Invoked when the user switches to another page.
   ///
   /// The value is the index of the first row on the currently displayed page.
-  final ValueChanged<int> onPageChanged;
+  final ValueChanged<int?>? onPageChanged;
 
   /// The number of rows to show on each page.
   ///
@@ -204,7 +204,7 @@ class AppPaginatedDataTable extends StatefulWidget {
   ///
   /// If this is null, then the value given by [rowsPerPage] will be used
   /// and no affordance will be provided to change the value.
-  final ValueChanged<int> onRowsPerPageChanged;
+  final ValueChanged<int?>? onRowsPerPageChanged;
 
   /// The data source which provides data to show in each row. Must be non-null.
   ///
@@ -227,17 +227,17 @@ class AppPaginatedDataTable extends StatefulWidget {
 ///
 /// The table can be programmatically paged using the [pageTo] method.
 class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
-  int _firstRowIndex;
-  int _rowCount;
-  bool _rowCountApproximate;
-  ScrollController _controller;
+  int? _firstRowIndex;
+  late int _rowCount;
+  late bool _rowCountApproximate;
+  ScrollController? _controller;
   final Map<int, DataRow> _rows = <int, DataRow>{};
 
   @override
   void initState() {
     super.initState();
     _controller = ScrollController();
-    _firstRowIndex = PageStorage.of(context)?.readState(context) as int ??
+    _firstRowIndex = PageStorage.of(context).readState(context) as int? ??
         widget.initialFirstRowIndex ??
         0;
     widget.source.addListener(_handleDataSourceChanged);
@@ -256,7 +256,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     widget.source.removeListener(_handleDataSourceChanged);
     super.dispose();
   }
@@ -271,13 +271,13 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
 
   /// Ensures that the given row is visible.
   void pageTo(int rowIndex) {
-    final int oldFirstRowIndex = _firstRowIndex;
+    final int? oldFirstRowIndex = _firstRowIndex;
     setState(() {
       final int rowsPerPage = widget.rowsPerPage;
       _firstRowIndex = (rowIndex ~/ rowsPerPage) * rowsPerPage;
     });
     if ((widget.onPageChanged != null) && (oldFirstRowIndex != _firstRowIndex))
-      widget.onPageChanged(_firstRowIndex);
+      widget.onPageChanged!(_firstRowIndex);
   }
 
   DataRow _getProgressIndicatorRowFor(int index) {
@@ -305,7 +305,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
     final int nextPageFirstRowIndex = firstRowIndex + rowsPerPage;
     bool haveProgressIndicator = false;
     for (int index = firstRowIndex; index < nextPageFirstRowIndex; index += 1) {
-      DataRow row;
+      DataRow? row;
       if (index < _rowCount || _rowCountApproximate) {
         row = _rows.putIfAbsent(index, () => widget.source.getRow(index));
         if (row == null && !haveProgressIndicator) {
@@ -321,11 +321,11 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
   }
 
   void _handlePrevious() {
-    pageTo(math.max(_firstRowIndex - widget.rowsPerPage, 0));
+    pageTo(math.max(_firstRowIndex! - widget.rowsPerPage, 0));
   }
 
   void _handleNext() {
-    pageTo(_firstRowIndex + widget.rowsPerPage);
+    pageTo(_firstRowIndex! + widget.rowsPerPage);
   }
 
   final GlobalKey _tableKey = GlobalKey();
@@ -368,7 +368,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
      */
 
     // FOOTER
-    final TextStyle footerTextStyle = themeData.textTheme.bodySmall;
+    final TextStyle? footerTextStyle = themeData.textTheme.bodySmall;
     final List<Widget> footerWidgets = <Widget>[];
     final realRowCount =
         widget.subtractOneFromCount ? _rowCount - 1 : _rowCount;
@@ -408,8 +408,8 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
       Container(width: 32.0),
       Text(
         localizations.pageRowsInfoTitle(
-          realRowCount > 0 ? _firstRowIndex + 1 : 0,
-          _firstRowIndex + math.min(widget.rowsPerPage, realRowCount),
+          realRowCount > 0 ? _firstRowIndex! + 1 : 0,
+          _firstRowIndex! + math.min(widget.rowsPerPage, realRowCount),
           realRowCount,
           _rowCountApproximate,
         ),
@@ -419,7 +419,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
         icon: const Icon(Icons.chevron_left),
         padding: EdgeInsets.zero,
         tooltip: localizations.previousPageTooltip,
-        onPressed: _firstRowIndex <= 0 ? null : _handlePrevious,
+        onPressed: _firstRowIndex! <= 0 ? null : _handlePrevious,
       ),
       Container(width: 24.0),
       IconButton(
@@ -427,7 +427,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
         padding: EdgeInsets.zero,
         tooltip: localizations.nextPageTooltip,
         onPressed: (!_rowCountApproximate &&
-                (_firstRowIndex + widget.rowsPerPage >= _rowCount))
+                (_firstRowIndex! + widget.rowsPerPage >= _rowCount))
             ? null
             : _handleNext,
       ),
@@ -494,14 +494,14 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
                       horizontalMargin: widget.horizontalMargin,
                       columnSpacing: widget.columnSpacing,
                       showCheckboxColumn: widget.showCheckboxColumn,
-                      rows: _getRows(_firstRowIndex, widget.rowsPerPage),
+                      rows: _getRows(_firstRowIndex!, widget.rowsPerPage),
                       hasActionsColumn: widget.hasActionsColumn,
                     ),
                   ),
                 ),
               ),
               DefaultTextStyle(
-                style: footerTextStyle,
+                style: footerTextStyle!,
                 child: IconTheme.merge(
                   data: const IconThemeData(opacity: 0.54),
                   child: Container(

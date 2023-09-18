@@ -8,8 +8,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CreditCardsAndBanks extends StatefulWidget {
   const CreditCardsAndBanks({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final CreditCardsAndBanksVM viewModel;
@@ -22,7 +22,7 @@ class _CreditCardsAndBanksState extends State<CreditCardsAndBanks>
     with SingleTickerProviderStateMixin {
   //static final GlobalKey<FormState> _formKey = GlobalKey<FormState>(debugLabel: '_creditCardsAndBanks);
 
-  TabController _controller;
+  late TabController _controller;
 
   bool autoValidate = false;
 
@@ -68,7 +68,7 @@ class _CreditCardsAndBanksState extends State<CreditCardsAndBanks>
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     //final viewModel = widget.viewModel;
 
     return EditScaffold(

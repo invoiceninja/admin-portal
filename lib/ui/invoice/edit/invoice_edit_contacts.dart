@@ -15,8 +15,8 @@ import '../../../redux/app/app_state.dart';
 
 class InvoiceEditContacts extends StatelessWidget {
   const InvoiceEditContacts({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final EntityEditContactsVM viewModel;
@@ -24,17 +24,17 @@ class InvoiceEditContacts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final invoice = viewModel.invoice;
+    final invoice = viewModel.invoice!;
     final client = viewModel.client;
     final vendor = viewModel.vendor;
 
     if (invoice.isPurchaseOrder) {
-      List<VendorContactEntity> vendorContacts;
+      List<VendorContactEntity?> vendorContacts;
       if (vendor == null) {
         if (viewModel.state.prefState.isDesktop) {
           vendorContacts = [];
         } else {
-          return HelpText(localization.noClientSelected);
+          return HelpText(localization!.noClientSelected);
         }
       } else {
         vendorContacts = vendor.contacts.toList()
@@ -48,9 +48,9 @@ class InvoiceEditContacts extends StatelessWidget {
                   .compareTo(contactB.fullName.toLowerCase());
             }
             */
-            return contactA.fullName
+            return contactA!.fullName
                 .toLowerCase()
-                .compareTo(contactB.fullName.toLowerCase());
+                .compareTo(contactB!.fullName.toLowerCase());
           });
       }
 
@@ -68,17 +68,17 @@ class InvoiceEditContacts extends StatelessWidget {
         }).toList(),
       );
     } else {
-      List<ClientContactEntity> clientContacts;
+      List<ClientContactEntity?> clientContacts;
       if (client == null) {
         if (viewModel.state.prefState.isDesktop) {
           clientContacts = [];
         } else {
-          return HelpText(localization.noClientSelected);
+          return HelpText(localization!.noClientSelected);
         }
       } else {
         clientContacts = client.contacts.toList()
           ..sort((contactA, contactB) {
-            if (contactA.sendEmail != contactB.sendEmail) {
+            if (contactA!.sendEmail != contactB!.sendEmail) {
               return contactA.sendEmail ? 1 : -1;
             } else {
               return contactA.fullName
@@ -114,10 +114,10 @@ class _ClientContactListTile extends StatelessWidget {
     this.onTap,
   });
 
-  final InvoiceEntity invoice;
-  final ClientContactEntity clientContact;
-  final InvitationEntity invitation;
-  final Function onTap;
+  final InvoiceEntity? invoice;
+  final ClientContactEntity? clientContact;
+  final InvitationEntity? invitation;
+  final Function? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -125,12 +125,12 @@ class _ClientContactListTile extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final invitationButton = (invitation?.link ?? '').isNotEmpty
         ? IconButton(
-            tooltip: localization.copyLink,
+            tooltip: localization!.copyLink,
             icon: Icon(Icons.copy),
             onPressed: () {
-              Clipboard.setData(ClipboardData(text: invitation.link));
+              Clipboard.setData(ClipboardData(text: invitation!.link));
               showToast(localization.copiedToClipboard.replaceFirst(
-                  ':value', invitation.link.substring(0, 40) + '...'));
+                  ':value', invitation!.link.substring(0, 40) + '...'));
             },
           )
         : SizedBox();
@@ -145,7 +145,7 @@ class _ClientContactListTile extends StatelessWidget {
               Checkbox(
                 activeColor: Theme.of(context).colorScheme.secondary,
                 value: invitation != null,
-                onChanged: (value) => onTap(),
+                onChanged: (value) => onTap!(),
               ),
               if (store.state.prefState.showPdfPreviewSideBySide)
                 invitationButton,
@@ -157,14 +157,14 @@ class _ClientContactListTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  clientContact.fullName.isNotEmpty
-                      ? clientContact.fullName
-                      : AppLocalization.of(context).blankContact,
+                  clientContact!.fullName.isNotEmpty
+                      ? clientContact!.fullName
+                      : AppLocalization.of(context)!.blankContact,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                if (clientContact.email != null)
+                if (clientContact!.email != null)
                   Text(
-                    clientContact.email,
+                    clientContact!.email,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
               ],
@@ -185,10 +185,10 @@ class _VendorContactListTile extends StatelessWidget {
     this.onTap,
   });
 
-  final InvoiceEntity invoice;
-  final VendorContactEntity vendorContact;
-  final InvitationEntity invitation;
-  final Function onTap;
+  final InvoiceEntity? invoice;
+  final VendorContactEntity? vendorContact;
+  final InvitationEntity? invitation;
+  final Function? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -196,12 +196,12 @@ class _VendorContactListTile extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final invitationButton = (invitation?.link ?? '').isNotEmpty
         ? IconButton(
-            tooltip: localization.copyLink,
+            tooltip: localization!.copyLink,
             icon: Icon(Icons.copy),
             onPressed: () {
-              Clipboard.setData(ClipboardData(text: invitation.link));
+              Clipboard.setData(ClipboardData(text: invitation!.link));
               showToast(localization.copiedToClipboard.replaceFirst(
-                  ':value', invitation.link.substring(0, 40) + '...'));
+                  ':value', invitation!.link.substring(0, 40) + '...'));
             },
           )
         : SizedBox();
@@ -216,7 +216,7 @@ class _VendorContactListTile extends StatelessWidget {
               Checkbox(
                 activeColor: Theme.of(context).colorScheme.secondary,
                 value: invitation != null,
-                onChanged: (value) => onTap(),
+                onChanged: (value) => onTap!(),
               ),
               if (store.state.prefState.showPdfPreviewSideBySide)
                 invitationButton,
@@ -228,14 +228,14 @@ class _VendorContactListTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  vendorContact.fullName.isNotEmpty
-                      ? vendorContact.fullName
-                      : AppLocalization.of(context).blankContact,
+                  vendorContact!.fullName.isNotEmpty
+                      ? vendorContact!.fullName
+                      : AppLocalization.of(context)!.blankContact,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                if (vendorContact.email != null)
+                if (vendorContact!.email != null)
                   Text(
-                    vendorContact.email,
+                    vendorContact!.email,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
               ],

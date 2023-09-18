@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_selectors.dart';
 import 'vendor_screen.dart';
 
 class VendorScreenBuilder extends StatelessWidget {
-  const VendorScreenBuilder({Key key}) : super(key: key);
+  const VendorScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,16 +31,16 @@ class VendorScreenBuilder extends StatelessWidget {
 
 class VendorScreenVM {
   VendorScreenVM({
-    @required this.isInMultiselect,
-    @required this.vendorList,
-    @required this.userCompany,
-    @required this.vendorMap,
+    required this.isInMultiselect,
+    required this.vendorList,
+    required this.userCompany,
+    required this.vendorMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> vendorList;
-  final BuiltMap<String, VendorEntity> vendorMap;
+  final BuiltMap<String?, VendorEntity?> vendorMap;
 
   static VendorScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

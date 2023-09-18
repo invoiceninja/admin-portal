@@ -13,9 +13,9 @@ import 'package:timeago/timeago.dart' as timeago;
 
 class ScheduleView extends StatefulWidget {
   const ScheduleView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final ScheduleViewVM viewModel;
@@ -32,12 +32,12 @@ class _ScheduleViewState extends State<ScheduleView> {
     final state = viewModel.state;
     final schedule = viewModel.schedule;
     final parameters = schedule.parameters;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
-    BaseEntity entity;
+    BaseEntity? entity;
     if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_RECORD) {
       final entityType = EntityType.valueOf(schedule.parameters.entityType);
-      entity = state.getEntityMap(entityType)[schedule.parameters.entityId];
+      entity = state.getEntityMap(entityType)![schedule.parameters.entityId] as BaseEntity?;
     }
 
     return ViewScaffold(
@@ -60,7 +60,7 @@ class _ScheduleViewState extends State<ScheduleView> {
           if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_RECORD)
             FieldGrid({
               localization.lookup(schedule.parameters.entityType):
-                  entity.listDisplayName
+                  entity!.listDisplayName
             })
           else
             FieldGrid({
@@ -72,21 +72,21 @@ class _ScheduleViewState extends State<ScheduleView> {
             }),
           if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT)
             FieldGrid({
-              localization.clients: parameters.clients.isEmpty
+              localization.clients: parameters.clients!.isEmpty
                   ? localization.allClients
-                  : parameters.clients.length == 1
+                  : parameters.clients!.length == 1
                       ? state.clientState
-                          .get(parameters.clients.first)
+                          .get(parameters.clients!.first)!
                           .displayName
-                      : '${parameters.clients.length} ${localization.clients}',
+                      : '${parameters.clients!.length} ${localization.clients}',
               localization.dateRange: localization.lookup(parameters.dateRange),
-              localization.showAgingTable: parameters.showAgingTable
+              localization.showAgingTable: parameters.showAgingTable!
                   ? localization.yes
                   : localization.no,
-              localization.showPaymentsTable: parameters.showPaymentsTable
+              localization.showPaymentsTable: parameters.showPaymentsTable!
                   ? localization.yes
                   : localization.no,
-              localization.onlyClientsWithInvoices: (parameters.onlyClientsWithInvoices != null && parameters.onlyClientsWithInvoices)
+              localization.onlyClientsWithInvoices: (parameters.onlyClientsWithInvoices != null && parameters.onlyClientsWithInvoices!)
                   ? localization.yes
                   : localization.no,
               localization.status: localization.lookup(parameters.status),

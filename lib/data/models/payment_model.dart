@@ -4,6 +4,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
 // Project imports:
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -76,7 +77,7 @@ class PaymentFields {
 abstract class PaymentEntity extends Object
     with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<PaymentEntity, PaymentEntityBuilder> {
-  factory PaymentEntity({String id, AppState state, ClientEntity client}) {
+  factory PaymentEntity({String? id, AppState? state, ClientEntity? client}) {
     final settings = getClientSettings(state, client);
 
     return _$PaymentEntity._(
@@ -141,9 +142,8 @@ abstract class PaymentEntity extends Object
 
   String get number;
 
-  @nullable
   @BuiltValueField(wireName: 'idempotency_key')
-  String get idempotencyKey;
+  String? get idempotencyKey;
 
   @override
   @BuiltValueField(wireName: 'client_id')
@@ -208,14 +208,11 @@ abstract class PaymentEntity extends Object
   @BuiltValueField(wireName: 'gateway_type_id')
   String get gatewayTypeId;
 
-  @nullable
-  bool get isApplying;
+  bool? get isApplying;
 
-  @nullable
-  bool get sendEmail;
+  bool? get sendEmail;
 
-  @nullable
-  bool get gatewayRefund;
+  bool? get gatewayRefund;
 
   bool get hasExchangeRate => exchangeRate != 1 && exchangeRate != 0;
 
@@ -244,115 +241,115 @@ abstract class PaymentEntity extends Object
   }
 
   int compareTo({
-    PaymentEntity payment,
-    String sortField,
-    bool sortAscending,
-    BuiltMap<String, InvoiceEntity> invoiceMap,
-    BuiltMap<String, ClientEntity> clientMap,
-    BuiltMap<String, UserEntity> userMap,
-    BuiltMap<String, PaymentTypeEntity> paymentTypeMap,
+    PaymentEntity? payment,
+    String? sortField,
+    required bool sortAscending,
+    BuiltMap<String?, InvoiceEntity?>? invoiceMap,
+    BuiltMap<String?, ClientEntity?>? clientMap,
+    BuiltMap<String?, UserEntity?>? userMap,
+    BuiltMap<String?, PaymentTypeEntity?>? paymentTypeMap,
   }) {
     int response = 0;
-    final PaymentEntity paymentA = sortAscending ? this : payment;
-    final PaymentEntity paymentB = sortAscending ? payment : this;
+    final PaymentEntity? paymentA = sortAscending ? this : payment;
+    final PaymentEntity? paymentB = sortAscending ? payment : this;
 
     switch (sortField) {
       case PaymentFields.amount:
-        response = paymentA.amount.compareTo(paymentB.amount);
+        response = paymentA!.amount.compareTo(paymentB!.amount);
         break;
       case PaymentFields.exchangeRate:
-        response = paymentA.exchangeRate.compareTo(paymentB.exchangeRate);
+        response = paymentA!.exchangeRate.compareTo(paymentB!.exchangeRate);
         break;
       case PaymentFields.refunded:
-        response = paymentA.refunded.compareTo(paymentB.refunded);
+        response = paymentA!.refunded.compareTo(paymentB!.refunded);
         break;
       case PaymentFields.number:
-        response = paymentA.number
+        response = paymentA!.number
             .toLowerCase()
-            .compareTo(paymentB.number.toLowerCase());
+            .compareTo(paymentB!.number.toLowerCase());
         break;
       case PaymentFields.transactionReference:
-        response = paymentA.transactionReference
-            .compareTo(paymentB.transactionReference);
+        response = paymentA!.transactionReference
+            .compareTo(paymentB!.transactionReference);
         break;
       case PaymentFields.date:
-        response = paymentA.date.compareTo(paymentB.date);
+        response = paymentA!.date.compareTo(paymentB!.date);
         break;
       case PaymentFields.privateNotes:
-        response = paymentA.privateNotes
+        response = paymentA!.privateNotes
             .toLowerCase()
-            .compareTo(paymentB.date.toLowerCase());
+            .compareTo(paymentB!.date.toLowerCase());
         break;
       case EntityFields.updatedAt:
-        response = paymentA.updatedAt.compareTo(paymentB.updatedAt);
+        response = paymentA!.updatedAt.compareTo(paymentB!.updatedAt);
         break;
       case EntityFields.createdAt:
-        response = paymentA.createdAt.compareTo(paymentB.createdAt);
+        response = paymentA!.createdAt.compareTo(paymentB!.createdAt);
         break;
       case EntityFields.archivedAt:
-        response = paymentA.archivedAt.compareTo(paymentB.archivedAt);
+        response = paymentA!.archivedAt.compareTo(paymentB!.archivedAt);
         break;
       case PaymentFields.status:
-        response = paymentA.statusId.compareTo(paymentB.statusId);
+        response = paymentA!.statusId.compareTo(paymentB!.statusId);
         break;
       case PaymentFields.customValue1:
-        response = paymentA.customValue1
+        response = paymentA!.customValue1
             .toLowerCase()
-            .compareTo(paymentB.customValue1.toLowerCase());
+            .compareTo(paymentB!.customValue1.toLowerCase());
         break;
       case PaymentFields.customValue2:
-        response = paymentA.customValue2
+        response = paymentA!.customValue2
             .toLowerCase()
-            .compareTo(paymentB.customValue2.toLowerCase());
+            .compareTo(paymentB!.customValue2.toLowerCase());
         break;
       case PaymentFields.customValue3:
-        response = paymentA.customValue3
+        response = paymentA!.customValue3
             .toLowerCase()
-            .compareTo(paymentB.customValue3.toLowerCase());
+            .compareTo(paymentB!.customValue3.toLowerCase());
         break;
       case PaymentFields.customValue4:
-        response = paymentA.customValue4
+        response = paymentA!.customValue4
             .toLowerCase()
-            .compareTo(paymentB.customValue4.toLowerCase());
+            .compareTo(paymentB!.customValue4.toLowerCase());
         break;
       case PaymentFields.invoiceNumber:
-        final invoiceA = invoiceMap[paymentA.invoiceId] ?? InvoiceEntity();
-        final invoiceB = invoiceMap[paymentB.invoiceId] ?? InvoiceEntity();
+        final invoiceA = invoiceMap![paymentA!.invoiceId] ?? InvoiceEntity();
+        final invoiceB = invoiceMap[paymentB!.invoiceId] ?? InvoiceEntity();
         response = invoiceA.number
             .toLowerCase()
             .compareTo(invoiceB.number.toLowerCase());
         break;
       case PaymentFields.client:
-        final clientA = clientMap[paymentA.clientId] ?? ClientEntity();
-        final clientB = clientMap[paymentB.clientId] ?? ClientEntity();
+        final clientA = clientMap![paymentA!.clientId] ?? ClientEntity();
+        final clientB = clientMap[paymentB!.clientId] ?? ClientEntity();
         response = clientA.displayName
             .toLowerCase()
             .compareTo(clientB.displayName.toLowerCase());
         break;
       case PaymentFields.type:
-        final typeA = paymentTypeMap[paymentA.typeId] ?? PaymentTypeEntity();
-        final typeB = paymentTypeMap[paymentB.typeId] ?? PaymentTypeEntity();
+        final typeA = paymentTypeMap![paymentA!.typeId] ?? PaymentTypeEntity();
+        final typeB = paymentTypeMap[paymentB!.typeId] ?? PaymentTypeEntity();
         return typeA.name.toLowerCase().compareTo(typeB.name.toLowerCase());
         break;
       case EntityFields.assignedTo:
-        final userA = userMap[paymentA.assignedUserId] ?? UserEntity();
-        final userB = userMap[paymentB.assignedUserId] ?? UserEntity();
+        final userA = userMap![paymentA!.assignedUserId] ?? UserEntity();
+        final userB = userMap[paymentB!.assignedUserId] ?? UserEntity();
         response = userA.listDisplayName
             .toLowerCase()
             .compareTo(userB.listDisplayName.toLowerCase());
         break;
       case EntityFields.createdBy:
-        final userA = userMap[paymentA.createdUserId] ?? UserEntity();
-        final userB = userMap[paymentB.createdUserId] ?? UserEntity();
+        final userA = userMap![paymentA!.createdUserId] ?? UserEntity();
+        final userB = userMap[paymentB!.createdUserId] ?? UserEntity();
         response = userA.listDisplayName
             .toLowerCase()
             .compareTo(userB.listDisplayName.toLowerCase());
         break;
       case EntityFields.state:
         final stateA =
-            EntityState.valueOf(paymentA.entityState) ?? EntityState.active;
+            EntityState.valueOf(paymentA!.entityState) ?? EntityState.active;
         final stateB =
-            EntityState.valueOf(paymentB.entityState) ?? EntityState.active;
+            EntityState.valueOf(paymentB!.entityState) ?? EntityState.active;
         response =
             stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
         break;
@@ -362,7 +359,7 @@ abstract class PaymentEntity extends Object
     }
 
     if (response == 0) {
-      response = payment.number.toLowerCase().compareTo(number.toLowerCase());
+      response = payment!.number.toLowerCase().compareTo(number.toLowerCase());
     }
 
     return response;
@@ -384,7 +381,7 @@ abstract class PaymentEntity extends Object
   }
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     return matchesStrings(
       haystacks: [
         number,
@@ -400,7 +397,7 @@ abstract class PaymentEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     return matchesStringsValue(
       haystacks: [
         number,
@@ -416,16 +413,16 @@ abstract class PaymentEntity extends Object
   }
 
   @override
-  List<EntityAction> getActions(
-      {UserCompanyEntity userCompany,
-      ClientEntity client,
+  List<EntityAction?> getActions(
+      {UserCompanyEntity? userCompany,
+      ClientEntity? client,
       bool includeEdit = false,
       bool includePreview = false,
       bool multiselect = false}) {
-    final actions = <EntityAction>[];
+    final actions = <EntityAction?>[];
 
-    if (!isDeleted) {
-      if (userCompany.canEditEntity(this)) {
+    if (!isDeleted!) {
+      if (userCompany!.canEditEntity(this)) {
         if (!multiselect) {
           if (includeEdit) {
             actions.add(EntityAction.edit);
@@ -452,7 +449,7 @@ abstract class PaymentEntity extends Object
 
     // We're overriding the default behavior to
     // prevent users from restoring deleted payments
-    if (userCompany.canEditEntity(this) && isArchived) {
+    if (userCompany!.canEditEntity(this) && isArchived) {
       actions.add(EntityAction.restore);
     }
 
@@ -479,10 +476,9 @@ abstract class PaymentEntity extends Object
   List<PaymentableEntity> get creditPaymentables =>
       paymentables.where((p) => p.entityType == EntityType.credit).toList();
 
-  String get invoiceId {
-    final invoicePaymentables = paymentables.firstWhere(
-        (p) => p.entityType == EntityType.invoice,
-        orElse: () => null);
+  String? get invoiceId {
+    final invoicePaymentables = paymentables.firstWhereOrNull(
+        (p) => p.entityType == EntityType.invoice);
 
     if (invoicePaymentables == null) {
       return null;
@@ -491,8 +487,8 @@ abstract class PaymentEntity extends Object
     return invoicePaymentables.isEmpty ? null : invoicePaymentables.invoiceId;
   }
 
-  bool isBetween(String startDate, String endDate) {
-    return startDate.compareTo(date) <= 0 && endDate.compareTo(date) >= 0;
+  bool isBetween(String startDate, String? endDate) {
+    return startDate.compareTo(date) <= 0 && endDate!.compareTo(date) >= 0;
   }
 
   bool get isOnline => (companyGatewayId ?? '').isNotEmpty;
@@ -509,7 +505,7 @@ abstract class PaymentEntity extends Object
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
 
   double get completedAmount {
-    if (isDeleted) {
+    if (isDeleted!) {
       return 0;
     }
 
@@ -532,7 +528,7 @@ abstract class PaymentableEntity extends Object
     with SelectableEntity
     implements Built<PaymentableEntity, PaymentableEntityBuilder> {
   factory PaymentableEntity(
-      {String id, String invoiceId, String creditId, double amount}) {
+      {String? id, String? invoiceId, String? creditId, double? amount}) {
     return _$PaymentableEntity._(
       id: id ?? BaseEntity.nextId,
       invoiceId: invoiceId ?? '',
@@ -561,21 +557,17 @@ abstract class PaymentableEntity extends Object
   @memoized
   int get hashCode;
 
-  @nullable
   @BuiltValueField(wireName: 'created_at')
-  int get createdAt;
+  int? get createdAt;
 
-  @nullable
   @BuiltValueField(wireName: 'updated_at')
-  int get updatedAt;
+  int? get updatedAt;
 
-  @nullable
   @BuiltValueField(wireName: 'invoice_id')
-  String get invoiceId;
+  String? get invoiceId;
 
-  @nullable
   @BuiltValueField(wireName: 'credit_id')
-  String get creditId;
+  String? get creditId;
 
   double get amount;
 

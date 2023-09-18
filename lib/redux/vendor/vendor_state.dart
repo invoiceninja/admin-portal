@@ -29,9 +29,9 @@ abstract class VendorState implements Built<VendorState, VendorStateBuilder> {
   @memoized
   int get hashCode;
 
-  BuiltMap<String, VendorEntity> get map;
+  BuiltMap<String?, VendorEntity?> get map;
 
-  VendorEntity get(String vendorId) {
+  VendorEntity? get(String vendorId) {
     if (map.containsKey(vendorId)) {
       return map[vendorId];
     } else {
@@ -42,7 +42,7 @@ abstract class VendorState implements Built<VendorState, VendorStateBuilder> {
   BuiltList<String> get list;
 
   VendorState loadVendors(BuiltList<VendorEntity> clients) {
-    final map = Map<String, VendorEntity>.fromIterable(
+    final map = Map<String?, VendorEntity?>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
@@ -59,7 +59,7 @@ abstract class VendorState implements Built<VendorState, VendorStateBuilder> {
 abstract class VendorUIState extends Object
     with EntityUIState
     implements Built<VendorUIState, VendorUIStateBuilder> {
-  factory VendorUIState(PrefStateSortField sortField) {
+  factory VendorUIState(PrefStateSortField? sortField) {
     return _$VendorUIState._(
       listUIState: ListUIState(sortField?.field ?? VendorFields.name,
           sortAscending: sortField?.ascending),
@@ -76,17 +76,15 @@ abstract class VendorUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  VendorEntity get editing;
+  VendorEntity? get editing;
 
-  @nullable
-  VendorContactEntity get editingContact;
+  VendorContactEntity? get editingContact;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<VendorUIState> get serializer => _$vendorUIStateSerializer;
 }

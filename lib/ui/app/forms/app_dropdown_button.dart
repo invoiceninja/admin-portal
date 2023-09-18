@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 class AppDropdownButton<T> extends StatelessWidget {
   const AppDropdownButton({
-    Key key,
-    @required this.value,
-    @required this.onChanged,
-    @required this.items,
+    Key? key,
+    required this.value,
+    required this.onChanged,
+    required this.items,
     this.selectedItemBuilder,
     this.labelText,
     this.showBlank = false,
@@ -15,15 +15,15 @@ class AppDropdownButton<T> extends StatelessWidget {
     this.enabled = true,
   }) : super(key: key);
 
-  final String labelText;
+  final String? labelText;
   final dynamic value;
-  final Function(dynamic) onChanged;
+  final Function(dynamic)? onChanged;
   final List<DropdownMenuItem<T>> items;
   final bool showBlank;
   final bool enabled;
   final dynamic blankValue;
-  final String blankLabel;
-  final DropdownButtonBuilder selectedItemBuilder;
+  final String? blankLabel;
+  final DropdownButtonBuilder? selectedItemBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class AppDropdownButton<T> extends StatelessWidget {
           if (showBlank || isEmpty)
             DropdownMenuItem<T>(
               value: blankValue,
-              child: blankLabel == null ? SizedBox() : Text(blankLabel),
+              child: blankLabel == null ? SizedBox() : Text(blankLabel!),
             ),
           ...items
         ],
@@ -55,7 +55,7 @@ class AppDropdownButton<T> extends StatelessWidget {
     if (labelText != null) {
       dropDownButton = InputDecorator(
           decoration: InputDecoration(
-            labelText: labelText.isEmpty ? null : labelText,
+            labelText: labelText!.isEmpty ? null : labelText,
           ),
           isEmpty: isEmpty && blankLabel == null,
           child: dropDownButton);

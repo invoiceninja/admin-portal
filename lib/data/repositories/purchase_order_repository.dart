@@ -16,13 +16,13 @@ class PurchaseOrderRepository {
   final WebClient webClient;
 
   Future<InvoiceEntity> loadItem(
-      Credentials credentials, String entityId) async {
+      Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/purchase_orders/$entityId?include=activities.history',
         credentials.token);
 
     final InvoiceItemResponse purchaseOrderResponse =
-        serializers.deserializeWith(InvoiceItemResponse.serializer, response);
+        serializers.deserializeWith(InvoiceItemResponse.serializer, response)!;
 
     return purchaseOrderResponse.data;
   }
@@ -33,7 +33,7 @@ class PurchaseOrderRepository {
     int createdAt,
     //bool filterDeleted,
   ) async {
-    final url = credentials.url +
+    final url = credentials.url! +
         '/purchase_orders?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
 
     /*
@@ -45,19 +45,19 @@ class PurchaseOrderRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final InvoiceListResponse purchaseOrderResponse =
-        serializers.deserializeWith(InvoiceListResponse.serializer, response);
+        serializers.deserializeWith(InvoiceListResponse.serializer, response)!;
 
     return purchaseOrderResponse.data;
   }
 
   Future<List<InvoiceEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action,
-      {EmailTemplate template}) async {
+      {EmailTemplate? template}) async {
     if (ids.length > kMaxEntitiesPerBulkAction && action.applyMaxLimit) {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url +
+    final url = credentials.url! +
         '/purchase_orders/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({
@@ -70,7 +70,7 @@ class PurchaseOrderRepository {
         '## DATA: ${json.encode({'ids': ids, 'action': action.toApiParam()})}');
 
     final InvoiceListResponse purchaseOrderResponse =
-        serializers.deserializeWith(InvoiceListResponse.serializer, response);
+        serializers.deserializeWith(InvoiceListResponse.serializer, response)!;
 
     return purchaseOrderResponse.data.toList();
   }
@@ -78,7 +78,7 @@ class PurchaseOrderRepository {
   Future<InvoiceEntity> saveData(
     Credentials credentials,
     InvoiceEntity purchaseOrder,
-    EntityAction action,
+    EntityAction? action,
   ) async {
     purchaseOrder = purchaseOrder.rebuild((b) => b..documents.clear());
     final data =
@@ -87,7 +87,7 @@ class PurchaseOrderRepository {
     dynamic response;
 
     if (purchaseOrder.isNew) {
-      url = credentials.url + '/purchase_orders?include=activities.history';
+      url = credentials.url! + '/purchase_orders?include=activities.history';
     } else {
       url =
           '${credentials.url}/purchase_orders/${purchaseOrder.id}?include=activities.history';
@@ -115,7 +115,7 @@ class PurchaseOrderRepository {
     }
 
     final InvoiceItemResponse purchaseOrderResponse =
-        serializers.deserializeWith(InvoiceItemResponse.serializer, response);
+        serializers.deserializeWith(InvoiceItemResponse.serializer, response)!;
 
     return purchaseOrderResponse.data;
   }
@@ -138,11 +138,11 @@ class PurchaseOrderRepository {
     };
 
     final dynamic response = await webClient.post(
-        credentials.url + '/emails', credentials.token,
+        credentials.url! + '/emails', credentials.token,
         data: json.encode(data));
 
     final InvoiceItemResponse invoiceResponse =
-        serializers.deserializeWith(InvoiceItemResponse.serializer, response);
+        serializers.deserializeWith(InvoiceItemResponse.serializer, response)!;
 
     return invoiceResponse.data;
   }
@@ -164,7 +164,7 @@ class PurchaseOrderRepository {
         multipartFiles: multipartFiles);
 
     final InvoiceItemResponse invoiceResponse =
-        serializers.deserializeWith(InvoiceItemResponse.serializer, response);
+        serializers.deserializeWith(InvoiceItemResponse.serializer, response)!;
 
     return invoiceResponse.data;
   }

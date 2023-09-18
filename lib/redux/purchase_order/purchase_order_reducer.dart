@@ -15,7 +15,7 @@ EntityUIState purchaseOrderUIReducer(
     PurchaseOrderUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(purchaseOrderListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
+    ..editing.replace(editingReducer(state.editing, action)!)
     ..editingItemIndex = editingItemReducer(state.editingItemIndex, action)
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..forceSelected = forceSelectedReducer(state.forceSelected, action)
@@ -24,41 +24,41 @@ EntityUIState purchaseOrderUIReducer(
         historyActivityIdReducer(state.historyActivityId, action));
 }
 
-final forceSelectedReducer = combineReducers<bool>([
-  TypedReducer<bool, ViewPurchaseOrder>((completer, action) => true),
-  TypedReducer<bool, ViewPurchaseOrderList>((completer, action) => false),
-  TypedReducer<bool, FilterPurchaseOrdersByState>((completer, action) => false),
-  TypedReducer<bool, FilterPurchaseOrdersByStatus>(
+final forceSelectedReducer = combineReducers<bool?>([
+  TypedReducer<bool?, ViewPurchaseOrder>((completer, action) => true),
+  TypedReducer<bool?, ViewPurchaseOrderList>((completer, action) => false),
+  TypedReducer<bool?, FilterPurchaseOrdersByState>((completer, action) => false),
+  TypedReducer<bool?, FilterPurchaseOrdersByStatus>(
       (completer, action) => false),
-  TypedReducer<bool, FilterPurchaseOrders>((completer, action) => false),
-  TypedReducer<bool, FilterPurchaseOrdersByCustom1>(
+  TypedReducer<bool?, FilterPurchaseOrders>((completer, action) => false),
+  TypedReducer<bool?, FilterPurchaseOrdersByCustom1>(
       (completer, action) => false),
-  TypedReducer<bool, FilterPurchaseOrdersByCustom2>(
+  TypedReducer<bool?, FilterPurchaseOrdersByCustom2>(
       (completer, action) => false),
-  TypedReducer<bool, FilterPurchaseOrdersByCustom3>(
+  TypedReducer<bool?, FilterPurchaseOrdersByCustom3>(
       (completer, action) => false),
-  TypedReducer<bool, FilterPurchaseOrdersByCustom4>(
+  TypedReducer<bool?, FilterPurchaseOrdersByCustom4>(
       (completer, action) => false),
 ]);
 
-final tabIndexReducer = combineReducers<int>([
-  TypedReducer<int, UpdatePurchaseOrderTab>((completer, action) {
+final int? Function(int, dynamic) tabIndexReducer = combineReducers<int?>([
+  TypedReducer<int?, UpdatePurchaseOrderTab>((completer, action) {
     return action.tabIndex;
   }),
-  TypedReducer<int, PreviewEntity>((completer, action) {
+  TypedReducer<int?, PreviewEntity>((completer, action) {
     return 0;
   }),
 ]);
 
-final historyActivityIdReducer = combineReducers<String>([
-  TypedReducer<String, ShowPdfPurchaseOrder>(
+final historyActivityIdReducer = combineReducers<String?>([
+  TypedReducer<String?, ShowPdfPurchaseOrder>(
       (index, action) => action.activityId),
 ]);
 
-final editingItemReducer = combineReducers<int>([
-  TypedReducer<int, EditPurchaseOrder>(
+final editingItemReducer = combineReducers<int?>([
+  TypedReducer<int?, EditPurchaseOrder>(
       (index, action) => action.purchaseOrderItemIndex),
-  TypedReducer<int, EditPurchaseOrderItem>((index, action) => action.itemIndex),
+  TypedReducer<int?, EditPurchaseOrderItem>((index, action) => action.itemIndex),
 ]);
 
 Reducer<String> dropdownFilterReducer = combineReducers([
@@ -71,40 +71,40 @@ String filterpurchaseOrderDropdownReducer(
   return action.filter;
 }
 
-Reducer<String> selectedIdReducer = combineReducers([
-  TypedReducer<String, ArchivePurchaseOrdersSuccess>((completer, action) => ''),
-  TypedReducer<String, DeletePurchaseOrdersSuccess>((completer, action) => ''),
-  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+Reducer<String?> selectedIdReducer = combineReducers([
+  TypedReducer<String?, ArchivePurchaseOrdersSuccess>((completer, action) => ''),
+  TypedReducer<String?, DeletePurchaseOrdersSuccess>((completer, action) => ''),
+  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.purchaseOrder
           ? action.entityId
           : selectedId),
-  TypedReducer<String, ViewPurchaseOrder>(
+  TypedReducer<String?, ViewPurchaseOrder>(
       (selectedId, action) => action.purchaseOrderId),
-  TypedReducer<String, AddPurchaseOrderSuccess>(
+  TypedReducer<String?, AddPurchaseOrderSuccess>(
       (selectedId, action) => action.purchaseOrder.id),
-  TypedReducer<String, ShowEmailPurchaseOrder>(
-      (selectedId, action) => action.purchaseOrder.id),
-  TypedReducer<String, ShowPdfPurchaseOrder>(
-      (selectedId, action) => action.purchaseOrder.id),
-  TypedReducer<String, SelectCompany>(
+  TypedReducer<String?, ShowEmailPurchaseOrder>(
+      (selectedId, action) => action.purchaseOrder!.id),
+  TypedReducer<String?, ShowPdfPurchaseOrder>(
+      (selectedId, action) => action.purchaseOrder!.id),
+  TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, SortPurchaseOrders>((selectedId, action) => ''),
-  TypedReducer<String, FilterPurchaseOrders>((selectedId, action) => ''),
-  TypedReducer<String, FilterPurchaseOrdersByState>((selectedId, action) => ''),
-  TypedReducer<String, FilterPurchaseOrdersByStatus>(
+  TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String?, SortPurchaseOrders>((selectedId, action) => ''),
+  TypedReducer<String?, FilterPurchaseOrders>((selectedId, action) => ''),
+  TypedReducer<String?, FilterPurchaseOrdersByState>((selectedId, action) => ''),
+  TypedReducer<String?, FilterPurchaseOrdersByStatus>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterPurchaseOrdersByCustom1>(
+  TypedReducer<String?, FilterPurchaseOrdersByCustom1>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterPurchaseOrdersByCustom2>(
+  TypedReducer<String?, FilterPurchaseOrdersByCustom2>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterPurchaseOrdersByCustom3>(
+  TypedReducer<String?, FilterPurchaseOrdersByCustom3>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterPurchaseOrdersByCustom4>(
+  TypedReducer<String?, FilterPurchaseOrdersByCustom4>(
       (selectedId, action) => ''),
-  TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
+  TypedReducer<String?, ClearEntitySelection>((selectedId, action) =>
       action.entityType == EntityType.purchaseOrder ? '' : selectedId),
-  TypedReducer<String, FilterByEntity>(
+  TypedReducer<String?, FilterByEntity>(
       (selectedId, action) => action.clearSelection
           ? ''
           : action.entityType == EntityType.purchaseOrder
@@ -112,99 +112,99 @@ Reducer<String> selectedIdReducer = combineReducers([
               : selectedId),
 ]);
 
-final editingReducer = combineReducers<InvoiceEntity>([
-  TypedReducer<InvoiceEntity, LoadPurchaseOrderSuccess>(_updateEditing),
-  TypedReducer<InvoiceEntity, SavePurchaseOrderSuccess>(_updateEditing),
-  TypedReducer<InvoiceEntity, AddPurchaseOrderSuccess>(_updateEditing),
-  TypedReducer<InvoiceEntity, EditPurchaseOrder>(_updateEditing),
-  TypedReducer<InvoiceEntity, UpdatePurchaseOrder>((purchaseOrder, action) {
+final editingReducer = combineReducers<InvoiceEntity?>([
+  TypedReducer<InvoiceEntity?, LoadPurchaseOrderSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity?, SavePurchaseOrderSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity?, AddPurchaseOrderSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity?, EditPurchaseOrder>(_updateEditing),
+  TypedReducer<InvoiceEntity?, UpdatePurchaseOrder>((purchaseOrder, action) {
     return action.purchaseOrder.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<InvoiceEntity, AddPurchaseOrderItem>((invoice, action) {
-    return invoice.rebuild((b) => b..isChanged = true);
+  TypedReducer<InvoiceEntity?, AddPurchaseOrderItem>((invoice, action) {
+    return invoice!.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<InvoiceEntity, MovePurchaseOrderItem>((invoice, action) {
-    return invoice.moveLineItem(action.oldIndex, action.newIndex);
+  TypedReducer<InvoiceEntity?, MovePurchaseOrderItem>((invoice, action) {
+    return invoice!.moveLineItem(action.oldIndex!, action.newIndex);
   }),
-  TypedReducer<InvoiceEntity, DeletePurchaseOrderItem>((invoice, action) {
-    return invoice.rebuild((b) => b..isChanged = true);
+  TypedReducer<InvoiceEntity?, DeletePurchaseOrderItem>((invoice, action) {
+    return invoice!.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<InvoiceEntity, UpdatePurchaseOrderItem>((invoice, action) {
-    return invoice.rebuild((b) => b..isChanged = true);
+  TypedReducer<InvoiceEntity?, UpdatePurchaseOrderItem>((invoice, action) {
+    return invoice!.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<InvoiceEntity, UpdatePurchaseOrderVendor>(
+  TypedReducer<InvoiceEntity?, UpdatePurchaseOrderVendor>(
       (purchaseOrder, action) {
     final vendor = action.vendor;
-    return purchaseOrder.rebuild((b) => b
+    return purchaseOrder!.rebuild((b) => b
       ..isChanged = true
       ..vendorId = vendor?.id ?? ''
       ..invitations.replace((vendor?.emailContacts ?? <VendorContactEntity>[])
-          .map((contact) => InvitationEntity(vendorContactId: contact.id))
+          .map((contact) => InvitationEntity(vendorContactId: contact!.id))
           .toList()));
   }),
-  TypedReducer<InvoiceEntity, RestorePurchaseOrdersSuccess>(
+  TypedReducer<InvoiceEntity?, RestorePurchaseOrdersSuccess>(
       (purchaseOrders, action) {
     return action.purchaseOrders[0];
   }),
-  TypedReducer<InvoiceEntity, ArchivePurchaseOrdersSuccess>(
+  TypedReducer<InvoiceEntity?, ArchivePurchaseOrdersSuccess>(
       (purchaseOrders, action) {
     return action.purchaseOrders[0];
   }),
-  TypedReducer<InvoiceEntity, DeletePurchaseOrdersSuccess>(
+  TypedReducer<InvoiceEntity?, DeletePurchaseOrdersSuccess>(
       (purchaseOrders, action) {
     return action.purchaseOrders[0];
   }),
-  TypedReducer<InvoiceEntity, AddPurchaseOrderItem>(_addPurchaseOrderItem),
-  TypedReducer<InvoiceEntity, AddPurchaseOrderItems>(_addPurchaseOrderItems),
-  TypedReducer<InvoiceEntity, DeletePurchaseOrderItem>(
+  TypedReducer<InvoiceEntity?, AddPurchaseOrderItem>(_addPurchaseOrderItem),
+  TypedReducer<InvoiceEntity?, AddPurchaseOrderItems>(_addPurchaseOrderItems),
+  TypedReducer<InvoiceEntity?, DeletePurchaseOrderItem>(
       _removePurchaseOrderItem),
-  TypedReducer<InvoiceEntity, UpdatePurchaseOrderItem>(
+  TypedReducer<InvoiceEntity?, UpdatePurchaseOrderItem>(
       _updatePurchaseOrderItem),
-  TypedReducer<InvoiceEntity, DiscardChanges>(_clearEditing),
-  TypedReducer<InvoiceEntity, AddPurchaseOrderContact>((invoice, action) {
-    return invoice.rebuild((b) => b
+  TypedReducer<InvoiceEntity?, DiscardChanges>(_clearEditing),
+  TypedReducer<InvoiceEntity?, AddPurchaseOrderContact>((invoice, action) {
+    return invoice!.rebuild((b) => b
       ..invitations.add(action.invitation ??
-          InvitationEntity(vendorContactId: action.contact.id)));
+          InvitationEntity(vendorContactId: action.contact!.id)));
   }),
-  TypedReducer<InvoiceEntity, RemovePurchaseOrderContact>((invoice, action) {
-    return invoice.rebuild((b) => b..invitations.remove(action.invitation));
+  TypedReducer<InvoiceEntity?, RemovePurchaseOrderContact>((invoice, action) {
+    return invoice!.rebuild((b) => b..invitations.remove(action.invitation));
   }),
 ]);
 
-InvoiceEntity _clearEditing(InvoiceEntity purchaseOrder, dynamic action) {
+InvoiceEntity _clearEditing(InvoiceEntity? purchaseOrder, dynamic action) {
   return InvoiceEntity();
 }
 
-InvoiceEntity _updateEditing(InvoiceEntity purchaseOrder, dynamic action) {
+InvoiceEntity? _updateEditing(InvoiceEntity? purchaseOrder, dynamic action) {
   return action.purchaseOrder;
 }
 
 InvoiceEntity _addPurchaseOrderItem(
-    InvoiceEntity purchaseOrder, AddPurchaseOrderItem action) {
-  return purchaseOrder.rebuild(
+    InvoiceEntity? purchaseOrder, AddPurchaseOrderItem action) {
+  return purchaseOrder!.rebuild(
       (b) => b..lineItems.add(action.purchaseOrderItem ?? InvoiceItemEntity()));
 }
 
 InvoiceEntity _addPurchaseOrderItems(
-    InvoiceEntity purchaseOrder, AddPurchaseOrderItems action) {
-  return purchaseOrder.rebuild((b) => b..lineItems.addAll(action.lineItems));
+    InvoiceEntity? purchaseOrder, AddPurchaseOrderItems action) {
+  return purchaseOrder!.rebuild((b) => b..lineItems.addAll(action.lineItems));
 }
 
-InvoiceEntity _removePurchaseOrderItem(
-    InvoiceEntity purchaseOrder, DeletePurchaseOrderItem action) {
-  if (purchaseOrder.lineItems.length <= action.index) {
+InvoiceEntity? _removePurchaseOrderItem(
+    InvoiceEntity? purchaseOrder, DeletePurchaseOrderItem action) {
+  if (purchaseOrder!.lineItems.length <= action.index) {
     return purchaseOrder;
   }
   return purchaseOrder.rebuild((b) => b..lineItems.removeAt(action.index));
 }
 
-InvoiceEntity _updatePurchaseOrderItem(
-    InvoiceEntity purchaseOrder, UpdatePurchaseOrderItem action) {
-  if (purchaseOrder.lineItems.length <= action.index) {
+InvoiceEntity? _updatePurchaseOrderItem(
+    InvoiceEntity? purchaseOrder, UpdatePurchaseOrderItem action) {
+  if (purchaseOrder!.lineItems.length <= action.index!) {
     return purchaseOrder;
   }
   return purchaseOrder
-      .rebuild((b) => b..lineItems[action.index] = action.purchaseOrderItem);
+      .rebuild((b) => b..lineItems[action.index!] = action.purchaseOrderItem);
 }
 
 final purchaseOrderListReducer = combineReducers<ListUIState>([
@@ -323,7 +323,7 @@ ListUIState _filterPurchaseOrders(
 ListUIState _sortPurchaseOrders(
     ListUIState purchaseOrderListState, SortPurchaseOrders action) {
   return purchaseOrderListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortAscending = b.sortField != action.field || !b.sortAscending!
     ..sortField = action.field);
 }
 
@@ -335,13 +335,13 @@ ListUIState _startListMultiselect(
 ListUIState _addToListMultiselect(
     ListUIState purchaseOrderListState, AddToPurchaseOrderMultiselect action) {
   return purchaseOrderListState
-      .rebuild((b) => b..selectedIds.add(action.entity.id));
+      .rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(ListUIState purchaseOrderListState,
     RemoveFromPurchaseOrderMultiselect action) {
   return purchaseOrderListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(
@@ -383,7 +383,7 @@ final purchaseOrdersReducer = combineReducers<PurchaseOrderState>([
 PurchaseOrderState _markSentPurchaseOrderSuccess(
     PurchaseOrderState purchaseOrderState,
     MarkPurchaseOrderSentSuccess action) {
-  final purchaseOrderMap = Map<String, InvoiceEntity>.fromIterable(
+  final purchaseOrderMap = Map<String?, InvoiceEntity?>.fromIterable(
     action.purchaseOrders,
     key: (dynamic item) => item.id,
     value: (dynamic item) => item,
@@ -394,7 +394,7 @@ PurchaseOrderState _markSentPurchaseOrderSuccess(
 PurchaseOrderState _convertPurchaseOrdersToExpenses(
     PurchaseOrderState purchaseOrderState,
     ConvertPurchaseOrdersToExpensesSuccess action) {
-  final purchaseOrderMap = Map<String, InvoiceEntity>.fromIterable(
+  final purchaseOrderMap = Map<String?, InvoiceEntity?>.fromIterable(
     action.purchaseOrders,
     key: (dynamic item) => item.id,
     value: (dynamic item) => item,
@@ -405,7 +405,7 @@ PurchaseOrderState _convertPurchaseOrdersToExpenses(
 PurchaseOrderState _addPurchaseOrdersToInventorySuccess(
     PurchaseOrderState purchaseOrderState,
     AddPurchaseOrdersToInventorySuccess action) {
-  final purchaseOrderMap = Map<String, InvoiceEntity>.fromIterable(
+  final purchaseOrderMap = Map<String?, InvoiceEntity?>.fromIterable(
     action.purchaseOrders,
     key: (dynamic item) => item.id,
     value: (dynamic item) => item,
@@ -415,7 +415,7 @@ PurchaseOrderState _addPurchaseOrdersToInventorySuccess(
 
 PurchaseOrderState _acceptPurchaseOrderSuccess(
     PurchaseOrderState purchaseOrderState, AcceptPurchaseOrderSuccess action) {
-  final purchaseOrderMap = Map<String, InvoiceEntity>.fromIterable(
+  final purchaseOrderMap = Map<String?, InvoiceEntity?>.fromIterable(
     action.purchaseOrders,
     key: (dynamic item) => item.id,
     value: (dynamic item) => item,
@@ -425,7 +425,7 @@ PurchaseOrderState _acceptPurchaseOrderSuccess(
 
 PurchaseOrderState _cancelPurchaseOrderSuccess(
     PurchaseOrderState purchaseOrderState, CancelPurchaseOrderSuccess action) {
-  final purchaseOrderMap = Map<String, InvoiceEntity>.fromIterable(
+  final purchaseOrderMap = Map<String?, InvoiceEntity?>.fromIterable(
     action.purchaseOrders,
     key: (dynamic item) => item.id,
     value: (dynamic item) => item,
@@ -470,8 +470,8 @@ PurchaseOrderState _emailPurchaseOrderSuccess(
 
 PurchaseOrderState _approvePurchaseOrderSuccess(
     PurchaseOrderState purchaseOrderState, ApprovePurchaseOrderSuccess action) {
-  final purchaseOrderMap = Map<String, InvoiceEntity>.fromIterable(
-    action.purchaseOrders,
+  final purchaseOrderMap = Map<String?, InvoiceEntity?>.fromIterable(
+    action.purchaseOrders!,
     key: (dynamic item) => item.id,
     value: (dynamic item) => item,
   );
@@ -488,9 +488,9 @@ PurchaseOrderState _addPurchaseOrder(
 
 PurchaseOrderState _updatePurchaseOrder(
     PurchaseOrderState invoiceState, dynamic action) {
-  final InvoiceEntity purchaseOrder = action.purchaseOrder;
+  final InvoiceEntity? purchaseOrder = action.purchaseOrder;
   return invoiceState.rebuild((b) => b
-    ..map[purchaseOrder.id] = purchaseOrder
+    ..map[purchaseOrder!.id] = purchaseOrder
         .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch));
 }
 
@@ -501,6 +501,6 @@ PurchaseOrderState _setLoadedPurchaseOrders(
 
 PurchaseOrderState _setLoadedCompany(
     PurchaseOrderState purchaseOrderState, LoadCompanySuccess action) {
-  final company = action.userCompany.company;
+  final company = action.userCompany.company!;
   return purchaseOrderState.loadPurchaseOrders(company.purchaseOrders);
 }

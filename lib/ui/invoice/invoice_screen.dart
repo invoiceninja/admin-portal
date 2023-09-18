@@ -20,8 +20,8 @@ import 'invoice_screen_vm.dart';
 
 class InvoiceScreen extends StatelessWidget {
   const InvoiceScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/invoice';
@@ -32,7 +32,7 @@ class InvoiceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final company = state.company;
+    final company = state.company!;
     final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
 
@@ -40,42 +40,42 @@ class InvoiceScreen extends StatelessWidget {
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kInvoiceStatusDraft
-          ..name = localization.draft,
+          ..name = localization!.draft,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kInvoiceStatusSent
-          ..name = localization.sent,
+          ..name = localization!.sent,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kInvoiceStatusViewed
-          ..name = localization.viewed,
+          ..name = localization!.viewed,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kInvoiceStatusPartial
-          ..name = localization.partial,
+          ..name = localization!.partial,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kInvoiceStatusPaid
-          ..name = localization.paid,
+          ..name = localization!.paid,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kInvoiceStatusUnpaid
-          ..name = localization.unpaid,
+          ..name = localization!.unpaid,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kInvoiceStatusPastDue
-          ..name = localization.pastDue,
+          ..name = localization!.pastDue,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kInvoiceStatusCancelled
-          ..name = localization.cancelled,
+          ..name = localization!.cancelled,
       ),
     ];
 
@@ -152,7 +152,7 @@ class InvoiceScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany.canCreate(EntityType.invoice)
+              userCompany!.canCreate(EntityType.invoice)
           ? FloatingActionButton(
               heroTag: 'invoice_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
@@ -161,7 +161,7 @@ class InvoiceScreen extends StatelessWidget {
                     context: context, entityType: EntityType.invoice);
               },
               child: Icon(Icons.add, color: Colors.white),
-              tooltip: localization.newInvoice,
+              tooltip: localization!.newInvoice,
             )
           : null,
     );

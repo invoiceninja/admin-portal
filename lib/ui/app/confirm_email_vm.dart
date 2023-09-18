@@ -16,7 +16,7 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ConfirmEmailBuilder extends StatelessWidget {
-  const ConfirmEmailBuilder({Key key}) : super(key: key);
+  const ConfirmEmailBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +39,12 @@ class ConfirmEmailVM {
     this.onChangeEmail,
   });
 
-  final AppState state;
-  final Function onResendPressed;
-  final Function onRefreshPressed;
-  final Function onLogoutPressed;
-  final Function(BuildContext, String, String, String) onChangeEmail;
-  final Function(BuildContext) onUseLastPressed;
+  final AppState? state;
+  final Function? onResendPressed;
+  final Function? onRefreshPressed;
+  final Function? onLogoutPressed;
+  final Function(BuildContext, String, String?, String?)? onChangeEmail;
+  final Function(BuildContext)? onUseLastPressed;
 
   static ConfirmEmailVM fromStore(Store<AppState> store) {
     final AppState state = store.state;
@@ -61,9 +61,9 @@ class ConfirmEmailVM {
         store.dispatch(ResendConfirmation());
       },
       onChangeEmail: (context, email, password, idToken) {
-        final user = store.state.user.rebuild((b) => b..email = email);
+        final user = store.state.user!.rebuild((b) => b..email = email);
         final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).savedSettings);
+            context, AppLocalization.of(context)!.savedSettings);
         store.dispatch(SaveAuthUserRequest(
           user: user,
           password: password,
@@ -78,7 +78,7 @@ class ConfirmEmailVM {
             callback: (password, idToken) {
               store.dispatch(
                 SaveAuthUserRequest(
-                  user: user.rebuild((b) => b..email = user.lastEmailAddress),
+                  user: user!.rebuild((b) => b..email = user.lastEmailAddress),
                   password: password,
                   idToken: idToken,
                 ),

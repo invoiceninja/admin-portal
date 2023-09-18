@@ -29,7 +29,7 @@ abstract class TaskState implements Built<TaskState, TaskStateBuilder> {
   @memoized
   int get hashCode;
 
-  TaskEntity get(String taskId) {
+  TaskEntity? get(String taskId) {
     if (map.containsKey(taskId)) {
       return map[taskId];
     } else {
@@ -37,12 +37,12 @@ abstract class TaskState implements Built<TaskState, TaskStateBuilder> {
     }
   }
 
-  BuiltMap<String, TaskEntity> get map;
+  BuiltMap<String?, TaskEntity?> get map;
 
   BuiltList<String> get list;
 
   TaskState loadTasks(BuiltList<TaskEntity> clients) {
-    final map = Map<String, TaskEntity>.fromIterable(
+    final map = Map<String?, TaskEntity?>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
@@ -59,7 +59,7 @@ abstract class TaskState implements Built<TaskState, TaskStateBuilder> {
 abstract class TaskUIState extends Object
     with EntityUIState
     implements Built<TaskUIState, TaskUIStateBuilder> {
-  factory TaskUIState(PrefStateSortField sortField) {
+  factory TaskUIState(PrefStateSortField? sortField) {
     return _$TaskUIState._(
       listUIState: ListUIState(sortField?.field ?? TaskFields.number,
           sortAscending: sortField?.ascending ?? false),
@@ -76,21 +76,18 @@ abstract class TaskUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  TaskEntity get editing;
+  TaskEntity? get editing;
 
-  @nullable
   @BuiltValueField(serialize: false)
-  int get editingTimeIndex;
+  int? get editingTimeIndex;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
-  @nullable
-  int get kanbanLastUpdated;
+  int? get kanbanLastUpdated;
 
   static Serializer<TaskUIState> get serializer => _$taskUIStateSerializer;
 }

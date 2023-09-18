@@ -20,8 +20,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CustomFields extends StatefulWidget {
   const CustomFields({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final CustomFieldsVM viewModel;
@@ -35,8 +35,8 @@ class _CustomFieldsState extends State<CustomFields>
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_customFields');
 
-  FocusScopeNode _focusNode;
-  TabController _controller;
+  FocusScopeNode? _focusNode;
+  TabController? _controller;
 
   @override
   void initState() {
@@ -54,7 +54,7 @@ class _CustomFieldsState extends State<CustomFields>
       EntityType.expense,
       EntityType.project,
     ].forEach((entityType) {
-      if (state.company.isModuleEnabled(entityType)) {
+      if (state.company!.isModuleEnabled(entityType)) {
         tabs++;
       }
     });
@@ -62,28 +62,28 @@ class _CustomFieldsState extends State<CustomFields>
     final settingsUIState = state.settingsUIState;
     _controller = TabController(
         vsync: this, length: tabs, initialIndex: settingsUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller!.index));
   }
 
   @override
   void dispose() {
-    _focusNode.dispose();
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
+    _focusNode!.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final company = state.company;
+    final company = state.company!;
 
     return EditScaffold(
       title: localization.customFields,
@@ -227,8 +227,8 @@ class _CustomFieldsState extends State<CustomFields>
 
 class CustomFieldsSettings extends StatelessWidget {
   const CustomFieldsSettings({
-    @required this.fieldType,
-    @required this.viewModel,
+    required this.fieldType,
+    required this.viewModel,
     this.showChargeTaxes = false,
   });
 
@@ -238,7 +238,7 @@ class CustomFieldsSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final company = viewModel.company;
     var labelKey = '${fieldType}_field';
     if (labelKey == 'vendor_contact_field') {
@@ -294,20 +294,20 @@ class CustomFieldsSettings extends StatelessWidget {
 
 class CustomFormField extends StatefulWidget {
   const CustomFormField({
-    @required this.label,
-    @required this.onChanged,
-    @required this.value,
+    required this.label,
+    required this.onChanged,
+    required this.value,
     this.showTaxes = false,
     this.taxesEnabled,
     this.onTaxesChanged,
   });
 
-  final String label;
-  final String value;
+  final String? label;
+  final String? value;
   final bool showTaxes;
-  final bool taxesEnabled;
+  final bool? taxesEnabled;
   final Function(String) onChanged;
-  final Function(bool) onTaxesChanged;
+  final Function(bool)? onTaxesChanged;
 
   @override
   _CustomFormFieldState createState() => _CustomFormFieldState();
@@ -341,8 +341,8 @@ class _CustomFormFieldState extends State<CustomFormField> {
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     if ('${widget.value ?? ''}'.isNotEmpty) {
-      if (widget.value.contains('|')) {
-        final parts = widget.value.split('|');
+      if (widget.value!.contains('|')) {
+        final parts = widget.value!.split('|');
         _customFieldController.text = parts[0];
         switch (parts[1]) {
           case kFieldTypeSingleLineText:
@@ -361,10 +361,10 @@ class _CustomFormFieldState extends State<CustomFormField> {
         }
       } else {
         _fieldType = kFieldTypeMultiLineText;
-        _customFieldController.text = widget.value;
+        _customFieldController.text = widget.value!;
       }
     } else {
-      _customFieldController.text = widget.value;
+      _customFieldController.text = widget.value!;
     }
 
     _controllers
@@ -427,17 +427,17 @@ class _CustomFormFieldState extends State<CustomFormField> {
                         onChanged: (value) => null,
                       ),
                     ),
-                    Text(localization.chargeTaxes),
+                    Text(localization!.chargeTaxes),
                     SizedBox(width: 16),
                   ],
                 ),
-                onTap: () => widget.onTaxesChanged(!widget.taxesEnabled),
+                onTap: () => widget.onTaxesChanged!(!widget.taxesEnabled!),
               )
             ] else ...[
               SizedBox(width: 16),
               Flexible(
                 child: AppDropdownButton(
-                  labelText: localization.fieldType,
+                  labelText: localization!.fieldType,
                   value: _fieldType,
                   onChanged: (dynamic value) {
                     setState(() {

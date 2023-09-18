@@ -31,37 +31,36 @@ abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
   @memoized
   int get hashCode;
 
-  @nullable
-  int get updatedAt;
+  int? get updatedAt;
 
-  bool get isLoaded => updatedAt != null && updatedAt > 0;
+  bool get isLoaded => updatedAt != null && updatedAt! > 0;
 
   bool get isStale {
     if (!isLoaded) {
       return true;
     }
 
-    return DateTime.now().millisecondsSinceEpoch - updatedAt >
+    return DateTime.now().millisecondsSinceEpoch - updatedAt! >
         kMillisecondsToRefreshStaticData;
   }
 
-  BuiltMap<String, CurrencyEntity> get currencyMap;
+  BuiltMap<String?, CurrencyEntity?> get currencyMap;
 
-  BuiltMap<String, SizeEntity> get sizeMap;
+  BuiltMap<String?, SizeEntity?> get sizeMap;
 
-  BuiltMap<String, GatewayEntity> get gatewayMap;
+  BuiltMap<String?, GatewayEntity?> get gatewayMap;
 
-  BuiltMap<String, IndustryEntity> get industryMap;
+  BuiltMap<String?, IndustryEntity?> get industryMap;
 
-  BuiltMap<String, TimezoneEntity> get timezoneMap;
+  BuiltMap<String?, TimezoneEntity?> get timezoneMap;
 
-  BuiltMap<String, DateFormatEntity> get dateFormatMap;
+  BuiltMap<String?, DateFormatEntity?> get dateFormatMap;
 
-  BuiltMap<String, LanguageEntity> get languageMap;
+  BuiltMap<String?, LanguageEntity?> get languageMap;
 
-  BuiltMap<String, PaymentTypeEntity> get paymentTypeMap;
+  BuiltMap<String?, PaymentTypeEntity?> get paymentTypeMap;
 
-  BuiltMap<String, CountryEntity> get countryMap;
+  BuiltMap<String?, CountryEntity?> get countryMap;
 
   BuiltMap<String, TemplateEntity> get templateMap;
 

@@ -21,14 +21,14 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 class ClientViewDetails extends StatefulWidget {
   const ClientViewDetails({this.client});
 
-  final ClientEntity client;
+  final ClientEntity? client;
 
   @override
   _ClientViewDetailsState createState() => _ClientViewDetailsState();
 }
 
 class _ClientViewDetailsState extends State<ClientViewDetails> {
-  Future<Null> _launched;
+  Future<Null>? _launched;
 
   Future<Null> _launchURL(BuildContext context, String url) async {
     await launchUrl(Uri.parse(url));
@@ -37,7 +37,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
   Widget _launchStatus(BuildContext context, AsyncSnapshot<Null> snapshot) {
     final localization = AppLocalization.of(context);
     if (snapshot.hasError) {
-      return Text('${localization.error}: ${snapshot.error}');
+      return Text('${localization!.error}: ${snapshot.error}');
     } else {
       return const Text('');
     }
@@ -52,14 +52,14 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
 
     List<Widget> _buildDetailsList() {
       final listTiles = <Widget>[];
-      final contacts = client.contacts;
+      final contacts = client!.contacts;
 
       contacts.forEach((contact) {
         final subtitleParts = <String>[];
-        if (contact.email.isNotEmpty) {
+        if (contact!.email.isNotEmpty) {
           subtitleParts.add(contact.email);
         }
-        if (company.hasCustomField(CustomFieldType.contact1) &&
+        if (company!.hasCustomField(CustomFieldType.contact1) &&
             contact.customValue1.isNotEmpty) {
           subtitleParts.add(company.formatCustomFieldValue(
               CustomFieldType.contact1, contact.customValue1));
@@ -88,7 +88,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
           ),
           icon: Icons.email,
           title: contact.fullName.isEmpty
-              ? localization.blankContact
+              ? localization!.blankContact
               : contact.fullName,
           subtitle: subtitleParts.join('\n'),
           copyValue: contact.email,
@@ -105,12 +105,12 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
           listTiles.add(AppListTile(
             icon: Icons.phone,
             title: (contact.fullName.isEmpty
-                    ? localization.blankContact
+                    ? localization!.blankContact
                     : contact.fullName) +
                 '\n' +
                 contact.phone,
             copyValue: contact.phone,
-            subtitle: localization.phone,
+            subtitle: localization!.phone,
             /*
             trailing: isApple() || isAndroid()
                 ? IconButton(
@@ -138,7 +138,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         listTiles.add(AppListTile(
           icon: Icons.link,
           title: client.website,
-          subtitle: localization.website,
+          subtitle: localization!.website,
           onLongPress: () => setState(() {
             _launched = _launchURL(context, formatURL(client.website));
           }),
@@ -149,7 +149,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         listTiles.add(AppListTile(
           icon: Icons.phone,
           title: client.phone,
-          subtitle: localization.phone,
+          subtitle: localization!.phone,
           /*
           trailing: isApple() || isAndroid()
               ? IconButton(
@@ -187,7 +187,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         listTiles.add(AppListTile(
           icon: Icons.location_city,
           title: client.vatNumber,
-          subtitle: localization.vatNumber,
+          subtitle: localization!.vatNumber,
         ));
       }
 
@@ -195,7 +195,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         listTiles.add(AppListTile(
           icon: Icons.business,
           title: client.idNumber,
-          subtitle: localization.idNumber,
+          subtitle: localization!.idNumber,
         ));
       }
 
@@ -209,7 +209,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         listTiles.add(AppListTile(
             icon: Icons.pin_drop,
             title: billingAddress,
-            subtitle: localization.billingAddress,
+            subtitle: localization!.billingAddress,
             onLongPress: () {
               _launched = _launchURL(
                   context,
@@ -223,7 +223,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         listTiles.add(AppListTile(
             icon: Icons.pin_drop,
             title: shippingAddress,
-            subtitle: localization.shippingAddress,
+            subtitle: localization!.shippingAddress,
             onLongPress: () {
               _launched = _launchURL(
                   context,

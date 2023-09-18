@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class PaymentEditScreen extends StatelessWidget {
-  const PaymentEditScreen({Key key}) : super(key: key);
+  const PaymentEditScreen({Key? key}) : super(key: key);
 
   static const String route = '/payment/edit';
 
@@ -46,21 +46,21 @@ class PaymentEditScreen extends StatelessWidget {
 
 class PaymentEditVM {
   PaymentEditVM({
-    @required this.state,
-    @required this.payment,
-    @required this.origPayment,
-    @required this.onChanged,
-    @required this.onSavePressed,
-    @required this.prefState,
-    @required this.staticState,
-    @required this.onCancelPressed,
-    @required this.isSaving,
-    @required this.isDirty,
+    required this.state,
+    required this.payment,
+    required this.origPayment,
+    required this.onChanged,
+    required this.onSavePressed,
+    required this.prefState,
+    required this.staticState,
+    required this.onCancelPressed,
+    required this.isSaving,
+    required this.isDirty,
   });
 
   factory PaymentEditVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final payment = state.paymentUIState.editing;
+    final payment = state.paymentUIState.editing!;
 
     return PaymentEditVM(
       state: state,
@@ -79,7 +79,7 @@ class PaymentEditVM {
       },
       onSavePressed: (BuildContext context) {
         Debouncer.runOnComplete(() {
-          final payment = store.state.paymentUIState.editing;
+          final payment = store.state.paymentUIState.editing!;
           final localization = navigatorKey.localization;
           final navigator = navigatorKey.currentState;
           double amount = 0;
@@ -87,9 +87,9 @@ class PaymentEditVM {
           payment.credits.forEach((credit) => amount -= credit.amount);
           if (amount < 0) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
-                  return ErrorDialog(localization.creditPaymentError);
+                  return ErrorDialog(localization!.creditPaymentError);
                 });
             return null;
           }
@@ -98,25 +98,25 @@ class PaymentEditVM {
               SavePaymentRequest(completer: completer, payment: payment));
           return completer.future.then((savedPayment) {
             showToast(payment.isNew
-                ? localization.createdPayment
-                : localization.updatedPayment);
+                ? localization!.createdPayment
+                : localization!.updatedPayment);
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));
               if (payment.isNew) {
-                navigator.pushReplacementNamed(PaymentViewScreen.route);
+                navigator!.pushReplacementNamed(PaymentViewScreen.route);
               } else {
-                navigator.pop(savedPayment);
+                navigator!.pop(savedPayment);
               }
             } else {
               if (payment.isApplying == true) {
-                navigator.pop();
+                navigator!.pop();
               } else {
                 viewEntity(entity: savedPayment);
               }
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
                   return ErrorDialog(error);
                 });
@@ -128,7 +128,7 @@ class PaymentEditVM {
 
   final AppState state;
   final PaymentEntity payment;
-  final PaymentEntity origPayment;
+  final PaymentEntity? origPayment;
   final Function(PaymentEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;

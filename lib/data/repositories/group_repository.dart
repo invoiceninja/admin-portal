@@ -21,23 +21,23 @@ class GroupRepository {
 
   final WebClient webClient;
 
-  Future<GroupEntity> loadItem(Credentials credentials, String entityId) async {
+  Future<GroupEntity> loadItem(Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/group_settings/$entityId', credentials.token);
 
     final GroupItemResponse groupResponse =
-        serializers.deserializeWith(GroupItemResponse.serializer, response);
+        serializers.deserializeWith(GroupItemResponse.serializer, response)!;
 
     return groupResponse.data;
   }
 
   Future<BuiltList<GroupEntity>> loadList(Credentials credentials) async {
-    final url = credentials.url + '/group_settings?';
+    final url = credentials.url! + '/group_settings?';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
     final GroupListResponse groupResponse =
-        serializers.deserializeWith(GroupListResponse.serializer, response);
+        serializers.deserializeWith(GroupListResponse.serializer, response)!;
 
     return groupResponse.data;
   }
@@ -48,13 +48,13 @@ class GroupRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url +
+    final url = credentials.url! +
         '/group_settings/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final GroupListResponse groupResponse =
-        serializers.deserializeWith(GroupListResponse.serializer, response);
+        serializers.deserializeWith(GroupListResponse.serializer, response)!;
 
     return groupResponse.data.toList();
   }
@@ -66,16 +66,16 @@ class GroupRepository {
 
     if (group.isNew) {
       response = await webClient.post(
-          credentials.url + '/group_settings', credentials.token,
+          credentials.url! + '/group_settings', credentials.token,
           data: json.encode(data));
     } else {
-      final url = credentials.url + '/group_settings/${group.id}';
+      final url = credentials.url! + '/group_settings/${group.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }
 
     final GroupItemResponse groupResponse =
-        serializers.deserializeWith(GroupItemResponse.serializer, response);
+        serializers.deserializeWith(GroupItemResponse.serializer, response)!;
 
     return groupResponse.data;
   }
@@ -97,7 +97,7 @@ class GroupRepository {
         multipartFiles: multipartFiles);
 
     final GroupItemResponse groupResponse =
-        serializers.deserializeWith(GroupItemResponse.serializer, response);
+        serializers.deserializeWith(GroupItemResponse.serializer, response)!;
 
     return groupResponse.data;
   }

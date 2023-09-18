@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TaskListItem extends StatelessWidget {
   const TaskListItem({
-    @required this.task,
+    required this.task,
     this.filter,
     this.onTap,
     this.onCheckboxChanged,
@@ -32,10 +32,10 @@ class TaskListItem extends StatelessWidget {
     this.isChecked = false,
   });
 
-  final Function(bool) onCheckboxChanged;
-  final GestureTapCallback onTap;
-  final TaskEntity task;
-  final String filter;
+  final Function(bool?)? onCheckboxChanged;
+  final GestureTapCallback? onTap;
+  final TaskEntity? task;
+  final String? filter;
   final bool showCheckbox;
   final bool isDismissible;
   final bool isChecked;
@@ -46,62 +46,62 @@ class TaskListItem extends StatelessWidget {
     final state = store.state;
     final uiState = state.uiState;
     final taskUIState = uiState.taskUIState;
-    final client = state.clientState.get(task.clientId);
-    final filterMatch = filter != null && filter.isNotEmpty
-        ? (task.matchesFilterValue(filter) ?? client.matchesFilterValue(filter))
+    final client = state.clientState.get(task!.clientId)!;
+    final filterMatch = filter != null && filter!.isNotEmpty
+        ? (task!.matchesFilterValue(filter) ?? client.matchesFilterValue(filter))
         : null;
     final listUIState = taskUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
     final isChecked = isDismissible
-        ? (isInMultiselect && listUIState.isSelected(task.id))
+        ? (isInMultiselect && listUIState.isSelected(task!.id))
         : this.isChecked;
     final textStyle = TextStyle(fontSize: 16);
-    final textColor = Theme.of(context).textTheme.bodyLarge.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color;
     final localization = AppLocalization.of(context);
 
-    final status = state.taskStatusState.get(task.statusId);
-    final statusLabel = task.isInvoiced
-        ? localization.invoiced
-        : task.isRunning
-            ? localization.running
-            : status.name.isNotEmpty
+    final status = state.taskStatusState.get(task!.statusId);
+    final statusLabel = task!.isInvoiced
+        ? localization!.invoiced
+        : task!.isRunning
+            ? localization!.running
+            : status!.name.isNotEmpty
                 ? status.name
-                : localization.logged;
-    final statusColor = task.isInvoiced
-        ? state.prefState.colorThemeModel.colorSuccess
-        : task.isRunning
-            ? state.prefState.colorThemeModel.colorInfo
-            : status.color.isNotEmpty && status.color != '#fff'
+                : localization!.logged;
+    final statusColor = task!.isInvoiced
+        ? state.prefState.colorThemeModel!.colorSuccess
+        : task!.isRunning
+            ? state.prefState.colorThemeModel!.colorInfo
+            : status!.color.isNotEmpty && status.color != '#fff'
                 ? convertHexStringToColor(status.color)
                 : TaskStatusColors(state.prefState.colorThemeModel)
-                    .colors[task.calculateStatusId];
+                    .colors[task!.calculateStatusId];
 
     String subtitle = client.displayName;
-    if (task.projectId.isNotEmpty) {
+    if (task!.projectId.isNotEmpty) {
       subtitle +=
-          ' • ' + state.projectState.get(task.projectId).listDisplayName;
+          ' • ' + state.projectState.get(task!.projectId)!.listDisplayName;
     }
 
     final duration = LiveText(() {
-      return formatNumber(task.listDisplayAmount, context,
+      return formatNumber(task!.listDisplayAmount, context,
           formatNumberType: FormatNumberType.duration);
     }, style: textStyle);
 
     final startStopButton = !isDismissible
         ? SizedBox()
         : IconButton(
-            icon: task.isInvoiced
+            icon: task!.isInvoiced
                 ? SizedBox()
                 : Icon(
-                    getEntityActionIcon(task.isRunning
+                    getEntityActionIcon(task!.isRunning
                         ? EntityAction.stop
                         : EntityAction.start),
                   ),
-            onPressed: task.isInvoiced
+            onPressed: task!.isInvoiced
                 ? null
                 : () => handleEntityAction(task,
-                    task.isRunning ? EntityAction.stop : EntityAction.start),
+                    task!.isRunning ? EntityAction.stop : EntityAction.start),
             visualDensity: VisualDensity.compact,
           );
 
@@ -109,9 +109,9 @@ class TaskListItem extends StatelessWidget {
       showMultiselect: this.showCheckbox,
       isDismissible: isDismissible,
       isSelected: isDesktop(context) &&
-          task.id ==
+          task!.id ==
               (uiState.isEditing
-                  ? taskUIState.editing.id
+                  ? taskUIState.editing!.id
                   : taskUIState.selectedId),
       userCompany: store.state.userCompany,
       entity: task,
@@ -120,9 +120,9 @@ class TaskListItem extends StatelessWidget {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: task),
+                    onTap != null ? onTap!() : selectEntity(entity: task!),
                 onLongPress: () => selectEntity(
-                  entity: task,
+                  entity: task!,
                   longPress: true,
                 ),
                 child: Padding(
@@ -146,14 +146,14 @@ class TaskListItem extends StatelessWidget {
                                     materialTapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
                                     onChanged: (value) =>
-                                        onCheckboxChanged(value),
+                                        onCheckboxChanged!(value),
                                     activeColor:
                                         Theme.of(context).colorScheme.secondary,
                                   ),
                                 ),
                               )
                             : ActionMenuButton(
-                                entityActions: task.getActions(
+                                entityActions: task!.getActions(
                                   userCompany: state.userCompany,
                                   includeEdit: true,
                                 ),
@@ -169,11 +169,11 @@ class TaskListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              task.number,
+                              task!.number,
                               style: textStyle,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            if (!task.isActive) EntityStateLabel(task)
+                            if (!task!.isActive) EntityStateLabel(task)
                           ],
                         ),
                       ),
@@ -183,21 +183,21 @@ class TaskListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                                task.description +
-                                    (task.documents.isNotEmpty ? '  📎' : ''),
+                                task!.description +
+                                    (task!.documents.isNotEmpty ? '  📎' : ''),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: textStyle),
                             Text(
-                              subtitle ?? filterMatch,
+                              subtitle ?? filterMatch!,
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
                                   .textTheme
-                                  .titleSmall
+                                  .titleSmall!
                                   .copyWith(
                                     color:
-                                        textColor.withOpacity(kLighterOpacity),
+                                        textColor!.withOpacity(kLighterOpacity),
                                   ),
                             ),
                           ],
@@ -215,8 +215,8 @@ class TaskListItem extends StatelessWidget {
               )
             : ListTile(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: task),
-                onLongPress: () => selectEntity(entity: task, longPress: true),
+                    onTap != null ? onTap!() : selectEntity(entity: task!),
+                onLongPress: () => selectEntity(entity: task!, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
                         ignoring: listUIState.isInMultiselect(),
@@ -224,7 +224,7 @@ class TaskListItem extends StatelessWidget {
                           value: isChecked,
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => onCheckboxChanged(value),
+                          onChanged: (value) => onCheckboxChanged!(value),
                           activeColor: Theme.of(context).colorScheme.secondary,
                         ),
                       )
@@ -236,10 +236,10 @@ class TaskListItem extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          (task.description.isEmpty
-                                  ? task.number
-                                  : task.description) +
-                              (task.documents.isNotEmpty ? '  📎' : ''),
+                          (task!.description.isEmpty
+                                  ? task!.number
+                                  : task!.description) +
+                              (task!.documents.isNotEmpty ? '  📎' : ''),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.titleMedium,

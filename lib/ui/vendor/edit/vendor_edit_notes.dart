@@ -12,8 +12,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorEditNotes extends StatefulWidget {
   const VendorEditNotes({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final VendorEditVM viewModel;
@@ -26,7 +26,7 @@ class VendorEditNotesState extends State<VendorEditNotes> {
   final _publicNotesController = TextEditingController();
   final _privateNotesController = TextEditingController();
 
-  List<TextEditingController> _controllers;
+  late List<TextEditingController> _controllers;
   final _debouncer = Debouncer();
 
   @override
@@ -73,7 +73,7 @@ class VendorEditNotesState extends State<VendorEditNotes> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final isFullscreen = state.prefState.isEditorFullScreen(EntityType.vendor);

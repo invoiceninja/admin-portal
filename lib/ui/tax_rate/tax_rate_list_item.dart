@@ -14,21 +14,21 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class TaxRateListItem extends StatelessWidget {
   const TaxRateListItem({
-    @required this.user,
-    @required this.taxRate,
-    @required this.filter,
+    required this.user,
+    required this.taxRate,
+    required this.filter,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
 
-  final UserEntity user;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
-  final TaxRateEntity taxRate;
-  final String filter;
-  final Function(bool) onCheckboxChanged;
+  final UserEntity? user;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onLongPress;
+  final TaxRateEntity? taxRate;
+  final String? filter;
+  final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
 
   @override
@@ -41,8 +41,8 @@ class TaxRateListItem extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
-    final filterMatch = filter != null && filter.isNotEmpty
-        ? taxRate.matchesFilterValue(filter)
+    final filterMatch = filter != null && filter!.isNotEmpty
+        ? taxRate!.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch;
 
@@ -51,17 +51,17 @@ class TaxRateListItem extends StatelessWidget {
       entity: taxRate,
       isSelected: false,
       child: ListTile(
-        onTap: () => onTap != null ? onTap() : selectEntity(entity: taxRate),
+        onTap: () => onTap != null ? onTap!() : selectEntity(entity: taxRate!),
         onLongPress: () => onLongPress != null
-            ? onLongPress()
-            : selectEntity(entity: taxRate, longPress: true),
+            ? onLongPress!()
+            : selectEntity(entity: taxRate!, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),
                 child: Checkbox(
                   value: isChecked,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  onChanged: (value) => onCheckboxChanged(value),
+                  onChanged: (value) => onCheckboxChanged!(value),
                   activeColor: Theme.of(context).colorScheme.secondary,
                 ),
               )
@@ -72,11 +72,11 @@ class TaxRateListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  '${taxRate.name} • ${formatNumber(taxRate.rate, context, formatNumberType: FormatNumberType.percent)}',
+                  '${taxRate!.name} • ${formatNumber(taxRate!.rate, context, formatNumberType: FormatNumberType.percent)}',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Text(formatNumber(taxRate.listDisplayAmount, context),
+              Text(formatNumber(taxRate!.listDisplayAmount, context)!,
                   style: Theme.of(context).textTheme.titleMedium),
             ],
           ),

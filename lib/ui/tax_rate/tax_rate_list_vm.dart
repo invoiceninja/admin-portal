@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaxRateListBuilder extends StatelessWidget {
-  const TaxRateListBuilder({Key key}) : super(key: key);
+  const TaxRateListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +47,10 @@ class TaxRateListBuilder extends StatelessWidget {
               final isInMultiselect = listState.isInMultiselect();
 
               return TaxRateListItem(
-                user: viewModel.userCompany.user,
+                user: viewModel.userCompany!.user,
                 filter: viewModel.filter,
                 taxRate: taxRate,
-                isChecked: isInMultiselect && listState.isSelected(taxRate.id),
+                isChecked: isInMultiselect && listState.isSelected(taxRate!.id),
               );
             });
       },
@@ -60,16 +60,16 @@ class TaxRateListBuilder extends StatelessWidget {
 
 class TaxRateListVM {
   TaxRateListVM({
-    @required this.state,
-    @required this.userCompany,
-    @required this.taxRateList,
-    @required this.taxRateMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.userCompany,
+    required this.taxRateList,
+    required this.taxRateMap,
+    required this.filter,
+    required this.isLoading,
+    required this.listState,
+    required this.onRefreshed,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
   });
 
   static TaxRateListVM fromStore(Store<AppState> store) {
@@ -78,7 +78,7 @@ class TaxRateListVM {
         return Future<Null>(null);
       }
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -104,11 +104,11 @@ class TaxRateListVM {
   }
 
   final AppState state;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> taxRateList;
-  final BuiltMap<String, TaxRateEntity> taxRateMap;
+  final BuiltMap<String?, TaxRateEntity?> taxRateMap;
   final ListUIState listState;
-  final String filter;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(String) onSortColumn;

@@ -15,8 +15,8 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 
 class InvoiceEditItemsScreen extends StatelessWidget {
   const InvoiceEditItemsScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
     this.isTasks = false,
   }) : super(key: key);
 
@@ -30,7 +30,7 @@ class InvoiceEditItemsScreen extends StatelessWidget {
         return InvoiceEditItemsVM.fromStore(store, isTasks);
       },
       builder: (context, viewModel) {
-        if (viewModel.state.prefState.isEditorFullScreen(EntityType.invoice)) {
+        if (viewModel.state!.prefState.isEditorFullScreen(EntityType.invoice)) {
           return InvoiceEditItemsDesktop(
             viewModel: viewModel,
             entityViewModel: this.viewModel,
@@ -49,42 +49,42 @@ class InvoiceEditItemsScreen extends StatelessWidget {
 
 class EntityEditItemsVM {
   EntityEditItemsVM({
-    @required this.state,
-    @required this.company,
-    @required this.invoice,
-    @required this.addLineItem,
-    @required this.deleteLineItem,
-    @required this.invoiceItemIndex,
-    @required this.onRemoveInvoiceItemPressed,
-    @required this.clearSelectedInvoiceItem,
-    @required this.onChangedInvoiceItem,
-    @required this.onMovedInvoiceItem,
+    required this.state,
+    required this.company,
+    required this.invoice,
+    required this.addLineItem,
+    required this.deleteLineItem,
+    required this.invoiceItemIndex,
+    required this.onRemoveInvoiceItemPressed,
+    required this.clearSelectedInvoiceItem,
+    required this.onChangedInvoiceItem,
+    required this.onMovedInvoiceItem,
   });
 
-  final AppState state;
-  final CompanyEntity company;
-  final InvoiceEntity invoice;
-  final int invoiceItemIndex;
-  final Function addLineItem;
-  final Function deleteLineItem;
-  final Function(int) onRemoveInvoiceItemPressed;
-  final Function clearSelectedInvoiceItem;
-  final Function(InvoiceItemEntity, int) onChangedInvoiceItem;
-  final Function(int, int) onMovedInvoiceItem;
+  final AppState? state;
+  final CompanyEntity? company;
+  final InvoiceEntity? invoice;
+  final int? invoiceItemIndex;
+  final Function? addLineItem;
+  final Function? deleteLineItem;
+  final Function(int?)? onRemoveInvoiceItemPressed;
+  final Function? clearSelectedInvoiceItem;
+  final Function(InvoiceItemEntity, int?)? onChangedInvoiceItem;
+  final Function(int, int)? onMovedInvoiceItem;
 }
 
 class InvoiceEditItemsVM extends EntityEditItemsVM {
   InvoiceEditItemsVM({
-    AppState state,
-    CompanyEntity company,
-    InvoiceEntity invoice,
-    int invoiceItemIndex,
-    Function addLineItem,
-    Function(int) deleteLineItem,
-    Function(int) onRemoveInvoiceItemPressed,
-    Function clearSelectedInvoiceItem,
-    Function(InvoiceItemEntity, int) onChangedInvoiceItem,
-    Function(int, int) onMovedInvoiceItem,
+    AppState? state,
+    CompanyEntity? company,
+    InvoiceEntity? invoice,
+    int? invoiceItemIndex,
+    Function? addLineItem,
+    Function(int)? deleteLineItem,
+    Function(int)? onRemoveInvoiceItemPressed,
+    Function? clearSelectedInvoiceItem,
+    Function(InvoiceItemEntity, int)? onChangedInvoiceItem,
+    Function(int, int)? onMovedInvoiceItem,
   }) : super(
           state: state,
           company: company,
@@ -116,7 +116,7 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
       },
       clearSelectedInvoiceItem: () => store.dispatch(EditInvoiceItem()),
       onChangedInvoiceItem: (invoiceItem, index) {
-        final invoice = store.state.invoiceUIState.editing;
+        final invoice = store.state.invoiceUIState.editing!;
         if (index == invoice.lineItems.length) {
           store.dispatch(AddInvoiceItem(
               invoiceItem: invoiceItem.rebuild((b) => b

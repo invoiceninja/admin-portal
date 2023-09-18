@@ -15,9 +15,9 @@ class _$FontEntitySerializer implements StructuredSerializer<FontEntity> {
   final String wireName = 'FontEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, FontEntity object,
+  Iterable<Object?> serialize(Serializers serializers, FontEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'id',
@@ -28,23 +28,23 @@ class _$FontEntitySerializer implements StructuredSerializer<FontEntity> {
   }
 
   @override
-  FontEntity deserialize(Serializers serializers, Iterable<Object> serialized,
+  FontEntity deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new FontEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -59,10 +59,10 @@ class _$FontEntity extends FontEntity {
   @override
   final String id;
 
-  factory _$FontEntity([void Function(FontEntityBuilder) updates]) =>
+  factory _$FontEntity([void Function(FontEntityBuilder)? updates]) =>
       (new FontEntityBuilder()..update(updates))._build();
 
-  _$FontEntity._({this.name, this.id}) : super._() {
+  _$FontEntity._({required this.name, required this.id}) : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'FontEntity', 'name');
     BuiltValueNullFieldError.checkNotNull(id, r'FontEntity', 'id');
   }
@@ -80,10 +80,10 @@ class _$FontEntity extends FontEntity {
     return other is FontEntity && name == other.name && id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, id.hashCode);
@@ -101,15 +101,15 @@ class _$FontEntity extends FontEntity {
 }
 
 class FontEntityBuilder implements Builder<FontEntity, FontEntityBuilder> {
-  _$FontEntity _$v;
+  _$FontEntity? _$v;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   FontEntityBuilder();
 
@@ -130,7 +130,7 @@ class FontEntityBuilder implements Builder<FontEntity, FontEntityBuilder> {
   }
 
   @override
-  void update(void Function(FontEntityBuilder) updates) {
+  void update(void Function(FontEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

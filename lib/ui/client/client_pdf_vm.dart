@@ -11,7 +11,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/client/client_pdf.dart';
 
 class ClientPdfScreen extends StatelessWidget {
-  const ClientPdfScreen({Key key, this.showAppBar = true}) : super(key: key);
+  const ClientPdfScreen({Key? key, this.showAppBar = true}) : super(key: key);
 
   final bool showAppBar;
 
@@ -25,7 +25,7 @@ class ClientPdfScreen extends StatelessWidget {
       },
       builder: (context, vm) {
         return ClientPdfView(
-          key: ValueKey('__client_pdf_${vm.client.id}__'),
+          key: ValueKey('__client_pdf_${vm.client!.id}__'),
           viewModel: vm,
           showAppBar: showAppBar,
         );
@@ -36,14 +36,14 @@ class ClientPdfScreen extends StatelessWidget {
 
 class ClientPdfVM {
   ClientPdfVM({
-    @required this.state,
-    @required this.client,
+    required this.state,
+    required this.client,
   });
 
   factory ClientPdfVM.fromStore(Store<AppState> store) {
     final state = store.state;
     final clientUIState = state.uiState.clientUIState;
-    final clientId = clientUIState.selectedId;
+    final clientId = clientUIState.selectedId!;
     final client = state.clientState.get(clientId);
 
     return ClientPdfVM(
@@ -53,5 +53,5 @@ class ClientPdfVM {
   }
 
   final AppState state;
-  final ClientEntity client;
+  final ClientEntity? client;
 }

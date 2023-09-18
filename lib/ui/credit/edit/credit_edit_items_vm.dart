@@ -16,8 +16,8 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 
 class CreditEditItemsScreen extends StatelessWidget {
   const CreditEditItemsScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
     this.isTasks = false,
   }) : super(key: key);
 
@@ -31,7 +31,7 @@ class CreditEditItemsScreen extends StatelessWidget {
         return CreditEditItemsVM.fromStore(store, isTasks);
       },
       builder: (context, viewModel) {
-        if (viewModel.state.prefState.isEditorFullScreen(EntityType.invoice)) {
+        if (viewModel.state!.prefState.isEditorFullScreen(EntityType.invoice)) {
           return InvoiceEditItemsDesktop(
             viewModel: viewModel,
             entityViewModel: this.viewModel,
@@ -50,16 +50,16 @@ class CreditEditItemsScreen extends StatelessWidget {
 
 class CreditEditItemsVM extends EntityEditItemsVM {
   CreditEditItemsVM({
-    AppState state,
-    CompanyEntity company,
-    InvoiceEntity invoice,
-    int invoiceItemIndex,
-    Function addLineItem,
-    Function deleteLineItem,
-    Function(int) onRemoveInvoiceItemPressed,
-    Function onDoneInvoiceItemPressed,
-    Function(InvoiceItemEntity, int) onChangedInvoiceItem,
-    Function(int, int) onMovedInvoiceItem,
+    AppState? state,
+    CompanyEntity? company,
+    InvoiceEntity? invoice,
+    int? invoiceItemIndex,
+    Function? addLineItem,
+    Function? deleteLineItem,
+    Function(int)? onRemoveInvoiceItemPressed,
+    Function? onDoneInvoiceItemPressed,
+    Function(InvoiceItemEntity, int)? onChangedInvoiceItem,
+    Function(int, int)? onMovedInvoiceItem,
   }) : super(
           state: state,
           company: company,
@@ -86,7 +86,7 @@ class CreditEditItemsVM extends EntityEditItemsVM {
         store.dispatch(EditCreditItem());
       },
       onChangedInvoiceItem: (creditItem, index) {
-        final credit = store.state.creditUIState.editing;
+        final credit = store.state.creditUIState.editing!;
         if (index == credit.lineItems.length) {
           store.dispatch(AddCreditItem(
               creditItem: creditItem.rebuild((b) => b

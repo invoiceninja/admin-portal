@@ -16,8 +16,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class RecurringInvoiceEdit extends StatefulWidget {
   const RecurringInvoiceEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final AbstractInvoiceEditVM viewModel;
@@ -30,7 +30,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
     with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_recurringInvoiceEdit');
-  TabController _controller;
+  TabController? _controller;
 
   static const kDetailsScreen = 0;
   static const kItemScreen = 2;
@@ -53,18 +53,18 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
     super.didUpdateWidget(oldWidget);
 
     if (widget.viewModel.invoiceItemIndex != null) {
-      _controller.animateTo(kItemScreen);
+      _controller!.animateTo(kItemScreen);
     }
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
-  void _onSavePressed(BuildContext context, [EntityAction action]) {
-    final bool isValid = _formKey.currentState.validate();
+  void _onSavePressed(BuildContext context, [EntityAction? action]) {
+    final bool isValid = _formKey.currentState!.validate();
 
     /*
         setState(() {
@@ -76,16 +76,16 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
       return;
     }
 
-    widget.viewModel.onSavePressed(context, action);
+    widget.viewModel.onSavePressed!(context, action);
   }
 
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
-    final localization = AppLocalization.of(context);
-    final recurringInvoice = viewModel.invoice;
-    final state = viewModel.state;
-    final invoice = viewModel.invoice;
+    final localization = AppLocalization.of(context)!;
+    final recurringInvoice = viewModel.invoice!;
+    final state = viewModel.state!;
+    final invoice = viewModel.invoice!;
     final prefState = state.prefState;
     final client = state.clientState.get(invoice.clientId);
     final isFullscreen = prefState.isEditorFullScreen(EntityType.invoice);
@@ -96,7 +96,7 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
       title: recurringInvoice.isNew
           ? localization.newRecurringInvoice
           : localization.editRecurringInvoice,
-      onCancelPressed: (context) => viewModel.onCancelPressed(context),
+      onCancelPressed: (context) => viewModel.onCancelPressed!(context),
       onSavePressed: (context) => _onSavePressed(context),
       actions: invoice.getActions(
         userCompany: state.userCompany,
@@ -161,16 +161,16 @@ class _RecurringInvoiceEditState extends State<RecurringInvoiceEdit>
                   invoice: invoice,
                   showTasksAndExpenses: false,
                   excluded: invoice.lineItems
-                      .where((item) => item.isTask || item.isExpense)
-                      .map((item) => item.isTask
-                          ? viewModel.state.taskState.map[item.taskId]
-                          : viewModel.state.expenseState.map[item.expenseId])
+                      .where((item) => item!.isTask || item.isExpense)
+                      .map((item) => item!.isTask
+                          ? viewModel.state!.taskState.map[item.taskId]
+                          : viewModel.state!.expenseState.map[item.expenseId])
                       .toList(),
                   clientId: invoice.clientId,
                   onItemsSelected: (items, [clientId, projectId]) {
-                    viewModel.onItemsAdded(items, clientId, projectId);
+                    viewModel.onItemsAdded!(items, clientId, projectId);
                     if (!isFullscreen) {
-                      _controller.animateTo(kItemScreen);
+                      _controller!.animateTo(kItemScreen);
                     }
                   },
                 );

@@ -26,7 +26,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CompanyGatewayViewScreen extends StatelessWidget {
   const CompanyGatewayViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
   final bool isFilter;
@@ -51,17 +51,17 @@ class CompanyGatewayViewScreen extends StatelessWidget {
 
 class CompanyGatewayViewVM {
   CompanyGatewayViewVM({
-    @required this.state,
-    @required this.companyGateway,
-    @required this.company,
-    @required this.onEntityAction,
-    @required this.onBackPressed,
-    @required this.onRefreshed,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.isDirty,
-    @required this.onStripeImportPressed,
-    @required this.onStripeVerifyPressed,
+    required this.state,
+    required this.companyGateway,
+    required this.company,
+    required this.onEntityAction,
+    required this.onBackPressed,
+    required this.onRefreshed,
+    required this.isSaving,
+    required this.isLoading,
+    required this.isDirty,
+    required this.onStripeImportPressed,
+    required this.onStripeVerifyPressed,
   });
 
   factory CompanyGatewayViewVM.fromStore(Store<AppState> store) {
@@ -72,7 +72,7 @@ class CompanyGatewayViewVM {
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadCompanyGateway(
           completer: completer, companyGatewayId: companyGateway.id));
       return completer.future;
@@ -108,10 +108,10 @@ class CompanyGatewayViewVM {
                 store.dispatch(StopSaving());
 
                 showDialog<void>(
-                    context: navigatorKey.currentContext,
+                    context: navigatorKey.currentContext!,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text(localization.customerCount),
+                        title: Text(localization!.customerCount!),
                         actions: [
                           TextButton(
                               onPressed: () => Navigator.of(context).pop(),
@@ -169,7 +169,7 @@ class CompanyGatewayViewVM {
                   .then((dynamic response) {
                 store.dispatch(StopSaving());
                 showMessageDialog(
-                    context: context, message: localization.importedCustomers);
+                    context: context, message: localization!.importedCustomers);
               }).catchError((dynamic error) {
                 store.dispatch(StopSaving());
                 showErrorDialog(message: error);
@@ -181,7 +181,7 @@ class CompanyGatewayViewVM {
 
   final AppState state;
   final CompanyGatewayEntity companyGateway;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;

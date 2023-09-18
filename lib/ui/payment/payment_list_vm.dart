@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentListBuilder extends StatelessWidget {
-  const PaymentListBuilder({Key key}) : super(key: key);
+  const PaymentListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class PaymentListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final paymentId = viewModel.paymentList[index];
-              final payment = state.paymentState.map[paymentId];
+              final payment = state.paymentState.map[paymentId]!;
               final paymentListState = viewModel.state.paymentListState;
 
               return PaymentListItem(
@@ -60,18 +60,18 @@ class PaymentListBuilder extends StatelessWidget {
 
 class PaymentListVM {
   PaymentListVM({
-    @required this.state,
-    @required this.user,
-    @required this.paymentList,
-    @required this.paymentMap,
-    @required this.clientMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.onRefreshed,
-    @required this.listState,
-    @required this.tableColumns,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.user,
+    required this.paymentList,
+    required this.paymentMap,
+    required this.clientMap,
+    required this.filter,
+    required this.isLoading,
+    required this.onRefreshed,
+    required this.listState,
+    required this.tableColumns,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
   });
 
   static PaymentListVM fromStore(Store<AppState> store) {
@@ -80,7 +80,7 @@ class PaymentListVM {
         return Future<Null>(null);
       }
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -106,7 +106,7 @@ class PaymentListVM {
       listState: state.paymentListState,
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
-          state.userCompany.settings?.getTableColumns(EntityType.payment) ??
+          state.userCompany!.settings?.getTableColumns(EntityType.payment) ??
               PaymentPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortPayments(field)),
       onClearMultielsect: () => store.dispatch(ClearPaymentMultiselect()),
@@ -114,12 +114,12 @@ class PaymentListVM {
   }
 
   final AppState state;
-  final UserEntity user;
+  final UserEntity? user;
   final ListUIState listState;
   final List<String> paymentList;
-  final BuiltMap<String, PaymentEntity> paymentMap;
-  final BuiltMap<String, ClientEntity> clientMap;
-  final String filter;
+  final BuiltMap<String?, PaymentEntity?> paymentMap;
+  final BuiltMap<String?, ClientEntity?> clientMap;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final List<String> tableColumns;

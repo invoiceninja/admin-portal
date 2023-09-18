@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/redux/project/project_selectors.dart';
 import 'project_screen.dart';
 
 class ProjectScreenBuilder extends StatelessWidget {
-  const ProjectScreenBuilder({Key key}) : super(key: key);
+  const ProjectScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,16 +31,16 @@ class ProjectScreenBuilder extends StatelessWidget {
 
 class ProjectScreenVM {
   ProjectScreenVM({
-    @required this.isInMultiselect,
-    @required this.projectList,
-    @required this.userCompany,
-    @required this.projectMap,
+    required this.isInMultiselect,
+    required this.projectList,
+    required this.userCompany,
+    required this.projectMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> projectList;
-  final BuiltMap<String, ProjectEntity> projectMap;
+  final BuiltMap<String?, ProjectEntity?> projectMap;
 
   static ProjectScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

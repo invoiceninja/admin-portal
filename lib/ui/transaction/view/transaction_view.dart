@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -31,9 +32,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TransactionView extends StatefulWidget {
   const TransactionView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final TransactionViewVM viewModel;
@@ -62,7 +63,7 @@ class _TransactionViewState extends State<TransactionView> {
       isFilter: widget.isFilter,
       entity: transaction,
       title: transactions.length > 1
-          ? '${transactions.length} ${localization.selected}'
+          ? '${transactions.length} ${localization!.selected}'
           : null,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,8 +74,8 @@ class _TransactionViewState extends State<TransactionView> {
                   EntityHeader(
                     entity: transaction,
                     label: transaction.isDeposit
-                        ? localization.deposit
-                        : localization.withdrawal,
+                        ? localization!.deposit
+                        : localization!.withdrawal,
                     value: formatNumber(transaction.amount, context,
                         currencyId: transaction.currencyId),
                     secondLabel: localization.date,
@@ -145,9 +146,9 @@ class _TransactionViewState extends State<TransactionView> {
 
 class _MatchDeposits extends StatefulWidget {
   const _MatchDeposits({
-    Key key,
+    Key? key,
     // ignore: unused_element
-    @required this.viewModel,
+    required this.viewModel,
   }) : super(key: key);
 
   final TransactionViewVM viewModel;
@@ -159,13 +160,13 @@ class _MatchDeposits extends StatefulWidget {
 class _MatchDepositsState extends State<_MatchDeposits> {
   final _invoiceScrollController = ScrollController();
   final _paymentScrollController = ScrollController();
-  TextEditingController _invoiceFilterController;
-  TextEditingController _paymentFilterController;
-  FocusNode _focusNode;
-  List<InvoiceEntity> _invoices;
-  List<InvoiceEntity> _selectedInvoices;
-  List<PaymentEntity> _payments;
-  PaymentEntity _selectedPayment;
+  TextEditingController? _invoiceFilterController;
+  TextEditingController? _paymentFilterController;
+  FocusNode? _focusNode;
+  late List<InvoiceEntity?> _invoices;
+  late List<InvoiceEntity?> _selectedInvoices;
+  late List<PaymentEntity?> _payments;
+  PaymentEntity? _selectedPayment;
 
   bool _matchExisting = false;
   bool _showFilter = false;
@@ -188,7 +189,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       _selectedInvoices = transactions.first.invoiceIds
           .split(',')
           .map((invoiceId) => state.invoiceState.map[invoiceId])
-          .where((invoice) => invoice != null)
+          .whereNotNull()
           .toList();
     }
 
@@ -203,40 +204,40 @@ class _MatchDepositsState extends State<_MatchDeposits> {
 
     _invoices = invoiceState.map.values.where((invoice) {
       if (_selectedInvoices.isNotEmpty) {
-        if (invoice.clientId != _selectedInvoices.first.clientId) {
+        if (invoice!.clientId != _selectedInvoices.first!.clientId) {
           return false;
         }
       }
 
       if (transactions.isNotEmpty &&
-          state.clientState.get(invoice.clientId).currencyId !=
+          state.clientState.get(invoice!.clientId)!.currencyId !=
               transactions.first.currencyId) {
         return false;
       }
 
-      if (invoice.isPaid || invoice.isDeleted) {
+      if (invoice!.isPaid || invoice.isDeleted!) {
         return false;
       }
 
-      final filter = _invoiceFilterController.text;
+      final filter = _invoiceFilterController!.text;
 
       if (filter.isNotEmpty) {
         final client = state.clientState.get(invoice.clientId);
         if (!invoice.matchesFilter(filter) &&
-            !client.matchesNameOrEmail(filter)) {
+            !client!.matchesNameOrEmail(filter)) {
           return false;
         }
       }
 
       if (_showFilter) {
         if (_minAmount.isNotEmpty) {
-          if (invoice.balanceOrAmount < parseDouble(_minAmount)) {
+          if (invoice.balanceOrAmount < parseDouble(_minAmount)!) {
             return false;
           }
         }
 
         if (_maxAmount.isNotEmpty) {
-          if (invoice.balanceOrAmount > parseDouble(_maxAmount)) {
+          if (invoice.balanceOrAmount > parseDouble(_maxAmount)!) {
             return false;
           }
         }
@@ -257,7 +258,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       return true;
     }).toList();
     _invoices.sort((invoiceA, invoiceB) {
-      return invoiceB.date.compareTo(invoiceA.date);
+      return invoiceB!.date.compareTo(invoiceA!.date);
     });
   }
 
@@ -268,40 +269,40 @@ class _MatchDepositsState extends State<_MatchDeposits> {
 
     _payments = paymentState.map.values.where((payment) {
       if (_selectedPayment != null) {
-        if (payment.id != _selectedPayment.id) {
+        if (payment!.id != _selectedPayment!.id) {
           return false;
         }
       }
 
-      if (payment.transactionId.isNotEmpty || payment.isDeleted) {
+      if (payment!.transactionId.isNotEmpty || payment.isDeleted!) {
         return false;
       }
 
       if (transactions.isNotEmpty &&
-          state.clientState.get(payment.clientId).currencyId !=
+          state.clientState.get(payment.clientId)!.currencyId !=
               transactions.first.currencyId) {
         return false;
       }
 
-      final filter = _paymentFilterController.text;
+      final filter = _paymentFilterController!.text;
 
       if (filter.isNotEmpty) {
         final client = state.clientState.get(payment.clientId);
         if (!payment.matchesFilter(filter) &&
-            !client.matchesNameOrEmail(filter)) {
+            !client!.matchesNameOrEmail(filter)) {
           return false;
         }
       }
 
       if (_showFilter) {
         if (_minAmount.isNotEmpty) {
-          if (payment.amount < parseDouble(_minAmount)) {
+          if (payment.amount < parseDouble(_minAmount)!) {
             return false;
           }
         }
 
         if (_maxAmount.isNotEmpty) {
-          if (payment.amount > parseDouble(_maxAmount)) {
+          if (payment.amount > parseDouble(_maxAmount)!) {
             return false;
           }
         }
@@ -322,7 +323,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       return true;
     }).toList();
     _payments.sort((paymentA, paymentB) {
-      return paymentB.date.compareTo(paymentA.date);
+      return paymentB!.date.compareTo(paymentA!.date);
     });
   }
 
@@ -342,27 +343,27 @@ class _MatchDepositsState extends State<_MatchDeposits> {
   void dispose() {
     _invoiceScrollController.dispose();
     _paymentScrollController.dispose();
-    _invoiceFilterController.dispose();
-    _paymentFilterController.dispose();
-    _focusNode.dispose();
+    _invoiceFilterController!.dispose();
+    _paymentFilterController!.dispose();
+    _focusNode!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
 
-    String currencyId;
+    String? currencyId;
     if (_selectedInvoices.isNotEmpty) {
       currencyId =
-          state.clientState.get(_selectedInvoices.first.clientId).currencyId;
+          state.clientState.get(_selectedInvoices.first!.clientId)!.currencyId;
     }
 
     double totalSelected = 0;
     _selectedInvoices.forEach((invoice) {
-      totalSelected += invoice.balanceOrAmount;
+      totalSelected += invoice!.balanceOrAmount;
     });
 
     return Column(
@@ -404,7 +405,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                     },
                     onCleared: () {
                       setState(() {
-                        _paymentFilterController.text = '';
+                        _paymentFilterController!.text = '';
                         updatePaymentList();
                       });
                     },
@@ -442,7 +443,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                     },
                     onCleared: () {
                       setState(() {
-                        _invoiceFilterController.text = '';
+                        _invoiceFilterController!.text = '';
                         updateInvoiceList();
                       });
                     },
@@ -551,7 +552,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                 separatorBuilder: (context, index) => ListDivider(),
                 itemCount: _payments.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final payment = _payments[index];
+                  final payment = _payments[index]!;
                   return PaymentListItem(
                     payment: payment,
                     showCheckbox: true,
@@ -626,7 +627,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                               final viewModel = widget.viewModel;
                               viewModel.onLinkToPayment(
                                 context,
-                                _selectedPayment.id,
+                                _selectedPayment!.id,
                               );
                             },
                   iconData: Icons.link,
@@ -641,7 +642,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                               viewModel.onConvertToPayment(
                                 context,
                                 _selectedInvoices
-                                    .map((invoice) => invoice.id)
+                                    .map((invoice) => invoice!.id)
                                     .toList(),
                               );
                             },
@@ -655,8 +656,8 @@ class _MatchDepositsState extends State<_MatchDeposits> {
 
 class _MatchWithdrawals extends StatefulWidget {
   const _MatchWithdrawals({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final TransactionViewVM viewModel;
@@ -677,18 +678,18 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
   String _startDate = '';
   String _endDate = '';
 
-  TextEditingController _vendorFilterController;
-  TextEditingController _categoryFilterController;
-  TextEditingController _expenseFilterController;
-  FocusNode _vendorFocusNode;
-  FocusNode _categoryFocusNode;
-  FocusNode _expenseFocusNode;
-  List<VendorEntity> _vendors;
-  List<ExpenseCategoryEntity> _categories;
-  List<ExpenseEntity> _expenses;
-  VendorEntity _selectedVendor;
-  ExpenseCategoryEntity _selectedCategory;
-  List<ExpenseEntity> _selectedExpenses;
+  TextEditingController? _vendorFilterController;
+  TextEditingController? _categoryFilterController;
+  TextEditingController? _expenseFilterController;
+  FocusNode? _vendorFocusNode;
+  FocusNode? _categoryFocusNode;
+  FocusNode? _expenseFocusNode;
+  late List<VendorEntity?> _vendors;
+  late List<ExpenseCategoryEntity?> _categories;
+  late List<ExpenseEntity?> _expenses;
+  VendorEntity? _selectedVendor;
+  ExpenseCategoryEntity? _selectedCategory;
+  late List<ExpenseEntity?> _selectedExpenses;
 
   @override
   void initState() {
@@ -709,14 +710,14 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
       final transaction = transactions.first;
       if ((transaction.pendingCategoryId ?? '').isNotEmpty) {
         _selectedCategory =
-            state.expenseCategoryState.get(transaction.pendingCategoryId);
+            state.expenseCategoryState.get(transaction.pendingCategoryId!);
       } else if ((transaction.categoryId ?? '').isNotEmpty) {
         _selectedCategory =
             state.expenseCategoryState.get(transaction.categoryId);
       }
 
       if ((transaction.pendingVendorId ?? '').isNotEmpty) {
-        _selectedVendor = state.vendorState.get(transaction.pendingVendorId);
+        _selectedVendor = state.vendorState.get(transaction.pendingVendorId!);
       } else if ((transaction.vendorId ?? '').isNotEmpty) {
         _selectedVendor = state.vendorState.get(transaction.vendorId);
       }
@@ -733,16 +734,16 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
 
     _categories = categoryState.map.values.where((category) {
       if (_selectedCategory != null) {
-        if (category.id != _selectedCategory?.id) {
+        if (category!.id != _selectedCategory?.id) {
           return false;
         }
       }
 
-      if (category.isDeleted) {
+      if (category!.isDeleted!) {
         return false;
       }
 
-      final filter = _categoryFilterController.text;
+      final filter = _categoryFilterController!.text;
 
       if (filter.isNotEmpty) {
         if (!category.matchesFilter(filter)) {
@@ -753,9 +754,9 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
       return true;
     }).toList();
     _categories.sort((categoryA, categoryB) {
-      return categoryA.name
+      return categoryA!.name
           .toLowerCase()
-          .compareTo(categoryB.name.toLowerCase());
+          .compareTo(categoryB!.name.toLowerCase());
     });
   }
 
@@ -765,16 +766,16 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
 
     _vendors = vendorState.map.values.where((vendor) {
       if (_selectedVendor != null) {
-        if (vendor.id != _selectedVendor?.id) {
+        if (vendor!.id != _selectedVendor?.id) {
           return false;
         }
       }
 
-      if (vendor.isDeleted) {
+      if (vendor!.isDeleted!) {
         return false;
       }
 
-      final filter = _vendorFilterController.text;
+      final filter = _vendorFilterController!.text;
 
       if (filter.isNotEmpty) {
         if (!vendor.matchesFilter(filter)) {
@@ -785,7 +786,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
       return true;
     }).toList();
     _vendors.sort((vendorA, vendorB) {
-      return vendorA.name.toLowerCase().compareTo(vendorB.name.toLowerCase());
+      return vendorA!.name.toLowerCase().compareTo(vendorB!.name.toLowerCase());
     });
   }
 
@@ -795,7 +796,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
     final transactions = widget.viewModel.transactions;
 
     _expenses = expenseState.map.values.where((expense) {
-      if (expense.transactionId.isNotEmpty || expense.isDeleted) {
+      if (expense!.transactionId.isNotEmpty || expense.isDeleted!) {
         return false;
       }
 
@@ -804,39 +805,39 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
         return false;
       }
 
-      final filter = _expenseFilterController.text;
+      final filter = _expenseFilterController!.text;
 
       if (filter.isNotEmpty) {
-        final client = state.clientState.get(expense.clientId);
-        final vendor = state.vendorState.get(expense.vendorId);
+        final client = state.clientState.get(expense.clientId!);
+        final vendor = state.vendorState.get(expense.vendorId!);
         if (!expense.matchesFilter(filter) &&
-            !client.matchesNameOrEmail(filter) &&
-            !vendor.matchesNameOrEmail(filter)) {
+            !client!.matchesNameOrEmail(filter) &&
+            !vendor!.matchesNameOrEmail(filter)) {
           return false;
         }
       }
 
       if (_showFilter) {
         if (_minAmount.isNotEmpty) {
-          if (expense.amount < parseDouble(_minAmount)) {
+          if (expense.amount < parseDouble(_minAmount)!) {
             return false;
           }
         }
 
         if (_maxAmount.isNotEmpty) {
-          if (expense.amount > parseDouble(_maxAmount)) {
+          if (expense.amount > parseDouble(_maxAmount)!) {
             return false;
           }
         }
 
         if (_startDate.isNotEmpty) {
-          if (expense.date.compareTo(_startDate) == -1) {
+          if (expense.date!.compareTo(_startDate) == -1) {
             return false;
           }
         }
 
         if (_endDate.isNotEmpty) {
-          if (expense.date.compareTo(_endDate) == 1) {
+          if (expense.date!.compareTo(_endDate) == 1) {
             return false;
           }
         }
@@ -845,7 +846,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
       return true;
     }).toList();
     _expenses.sort((expenseA, expenseB) {
-      return expenseB.date.compareTo(expenseA.date);
+      return expenseB!.date!.compareTo(expenseA!.date!);
     });
   }
 
@@ -863,13 +864,13 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
 
   @override
   void dispose() {
-    _vendorFilterController.dispose();
-    _categoryFilterController.dispose();
-    _expenseFilterController.dispose();
+    _vendorFilterController!.dispose();
+    _categoryFilterController!.dispose();
+    _expenseFilterController!.dispose();
 
-    _vendorFocusNode.dispose();
-    _categoryFocusNode.dispose();
-    _expenseFocusNode.dispose();
+    _vendorFocusNode!.dispose();
+    _categoryFocusNode!.dispose();
+    _expenseFocusNode!.dispose();
 
     _vendorScrollController.dispose();
     _categoryScrollController.dispose();
@@ -888,15 +889,15 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
     final transaction =
         transactions.isNotEmpty ? transactions.first : TransactionEntity();
 
-    String currencyId;
+    String? currencyId;
     if (_selectedExpenses.isNotEmpty) {
       currencyId =
-          state.clientState.get(_selectedExpenses.first.clientId).currencyId;
+          state.clientState.get(_selectedExpenses.first!.clientId!)!.currencyId;
     }
 
     double totalSelected = 0;
     _selectedExpenses.forEach((expense) {
-      totalSelected += expense.grossAmount;
+      totalSelected += expense!.grossAmount;
     });
 
     return Column(
@@ -913,7 +914,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                     setState(() => _matchExisting = value == 1),
                 selectedIndex: _matchExisting ? 1 : 0,
                 tabLabels: [
-                  localization.createExpense,
+                  localization!.createExpense,
                   localization.linkExpense,
                 ],
               ),
@@ -938,12 +939,12 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                     },
                     onCleared: () {
                       setState(() {
-                        _expenseFilterController.text = '';
+                        _expenseFilterController!.text = '';
                         updateExpenseList();
                       });
                     },
                     placeholder:
-                        localization.searchExpenses.replaceFirst(':count ', ''),
+                        localization!.searchExpenses.replaceFirst(':count ', ''),
                   ),
                 ),
               ),
@@ -1062,7 +1063,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                       store.dispatch(SaveTransactionSuccess(transaction.rebuild(
                           (b) => b
                             ..pendingExpenseId = _selectedExpenses
-                                .map((expense) => expense.id)
+                                .map((expense) => expense!.id)
                                 .join(','))));
                     }),
                   );
@@ -1090,11 +1091,11 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                             },
                             onCleared: () {
                               setState(() {
-                                _vendorFilterController.text = '';
+                                _vendorFilterController!.text = '';
                                 updateVendorList();
                               });
                             },
-                            placeholder: localization.searchVendors
+                            placeholder: localization!.searchVendors
                                 .replaceFirst(':count ', '')),
                       ),
                     ),
@@ -1111,7 +1112,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                               ..future.then((_) {
                                 store.dispatch(UpdateCurrentRoute(
                                     TransactionScreen.route));
-                              }));
+                              } as FutureOr<_> Function(Null)));
                         completer.future.then((SelectableEntity vendor) {
                           store.dispatch(SaveTransactionSuccess(transaction
                               .rebuild((b) => b..pendingVendorId = vendor.id)));
@@ -1134,7 +1135,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                       separatorBuilder: (context, index) => ListDivider(),
                       itemCount: _vendors.length,
                       itemBuilder: (BuildContext context, int index) {
-                        final vendor = _vendors[index];
+                        final vendor = _vendors[index]!;
                         return VendorListItem(
                           vendor: vendor,
                           showCheck: true,
@@ -1172,11 +1173,11 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                             },
                             onCleared: () {
                               setState(() {
-                                _categoryFilterController.text = '';
+                                _categoryFilterController!.text = '';
                                 updateCategoryList();
                               });
                             },
-                            placeholder: localization.searchCategories
+                            placeholder: localization.searchCategories!
                                 .replaceFirst(':count ', '')),
                       ),
                     ),
@@ -1195,7 +1196,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                               ..future.then((_) {
                                 store.dispatch(UpdateCurrentRoute(
                                     TransactionScreen.route));
-                              }));
+                              } as FutureOr<_> Function(Null)));
                         completer.future.then((SelectableEntity category) {
                           store.dispatch(SaveTransactionSuccess(
                               transaction.rebuild(
@@ -1219,7 +1220,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                       separatorBuilder: (context, index) => ListDivider(),
                       itemCount: _categories.length,
                       itemBuilder: (BuildContext context, int index) {
-                        final category = _categories[index];
+                        final category = _categories[index]!;
                         return ExpenseCategoryListItem(
                           expenseCategory: category,
                           showCheck: true,
@@ -1284,7 +1285,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                               viewModel.onLinkToExpense(
                                 context,
                                 _selectedExpenses
-                                    .map((expense) => expense.id)
+                                    .map((expense) => expense!.id)
                                     .join(','),
                               );
                             },

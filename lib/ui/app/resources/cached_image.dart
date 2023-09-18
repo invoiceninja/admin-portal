@@ -18,11 +18,11 @@ class CachedImage extends StatelessWidget {
     this.apiToken,
   });
 
-  final String url;
+  final String? url;
   final bool showNinjaOnError;
-  final double width;
-  final double height;
-  final String apiToken;
+  final double? width;
+  final double? height;
+  final String? apiToken;
 
   @override
   Widget build(BuildContext context) {
@@ -40,24 +40,24 @@ class CachedImage extends StatelessWidget {
     // TODO remove this
     if (kIsWeb) {
       return Image.network(
-        url,
+        url!,
         width: width,
         height: height,
-        key: ValueKey(url + (apiToken != null ? apiToken.substring(0, 8) : '')),
+        key: ValueKey(url! + (apiToken != null ? apiToken!.substring(0, 8) : '')),
         fit: BoxFit.contain,
-        headers: apiToken != null ? {'X-API-TOKEN': apiToken} : null,
+        headers: apiToken != null ? {'X-API-TOKEN': apiToken!} : null,
       );
     }
 
     return CachedNetworkImage(
       width: width,
       height: height,
-      key: ValueKey(url + (apiToken != null ? apiToken.substring(0, 8) : '')),
-      imageUrl: url,
+      key: ValueKey(url! + (apiToken != null ? apiToken!.substring(0, 8) : '')),
+      imageUrl: url!,
       placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-      errorWidget: (context, url, Object error) =>
+      errorWidget: (context, url, Object? error) =>
           Image.asset('assets/images/icon.png', width: 32, height: 30),
-      httpHeaders: apiToken != null ? {'X-API-TOKEN': apiToken} : null,
+      httpHeaders: apiToken != null ? {'X-API-TOKEN': apiToken!} : null,
     );
   }
 }

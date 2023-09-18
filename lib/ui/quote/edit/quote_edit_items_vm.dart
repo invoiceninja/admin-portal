@@ -16,8 +16,8 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 
 class QuoteEditItemsScreen extends StatelessWidget {
   const QuoteEditItemsScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
     this.isTasks = false,
   }) : super(key: key);
 
@@ -31,7 +31,7 @@ class QuoteEditItemsScreen extends StatelessWidget {
         return QuoteEditItemsVM.fromStore(store, isTasks);
       },
       builder: (context, viewModel) {
-        if (viewModel.state.prefState.isEditorFullScreen(EntityType.invoice)) {
+        if (viewModel.state!.prefState.isEditorFullScreen(EntityType.invoice)) {
           return InvoiceEditItemsDesktop(
             viewModel: viewModel,
             entityViewModel: this.viewModel,
@@ -50,16 +50,16 @@ class QuoteEditItemsScreen extends StatelessWidget {
 
 class QuoteEditItemsVM extends EntityEditItemsVM {
   QuoteEditItemsVM({
-    AppState state,
-    CompanyEntity company,
-    InvoiceEntity invoice,
-    int invoiceItemIndex,
-    Function addLineItem,
-    Function deleteLineItem,
-    Function(int) onRemoveInvoiceItemPressed,
-    Function onDoneInvoiceItemPressed,
-    Function(InvoiceItemEntity, int) onChangedInvoiceItem,
-    Function(int, int) onMovedInvoiceItem,
+    AppState? state,
+    CompanyEntity? company,
+    InvoiceEntity? invoice,
+    int? invoiceItemIndex,
+    Function? addLineItem,
+    Function? deleteLineItem,
+    Function(int)? onRemoveInvoiceItemPressed,
+    Function? onDoneInvoiceItemPressed,
+    Function(InvoiceItemEntity, int)? onChangedInvoiceItem,
+    Function(int, int)? onMovedInvoiceItem,
   }) : super(
           state: state,
           company: company,
@@ -89,7 +89,7 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
         store.dispatch(EditQuoteItem());
       },
       onChangedInvoiceItem: (quoteItem, index) {
-        final quote = store.state.quoteUIState.editing;
+        final quote = store.state.quoteUIState.editing!;
         if (index == quote.lineItems.length) {
           store.dispatch(AddQuoteItem(
               quoteItem: quoteItem.rebuild((b) => b

@@ -1,4 +1,5 @@
 // Dart imports:
+import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 
@@ -24,21 +25,22 @@ class PaymentRepository {
   final WebClient webClient;
 
   Future<PaymentEntity> loadItem(
-      Credentials credentials, String entityId) async {
+      Credentials credentials, String? entityId) async {
     final String url = '${credentials.url}/payments/$entityId';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final PaymentItemResponse paymentResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.deserializeWith,
-        <dynamic>[PaymentItemResponse.serializer, response]);
+    final PaymentItemResponse paymentResponse =
+        await (compute<dynamic, dynamic>(SerializationUtils.deserializeWith,
+                <dynamic>[PaymentItemResponse.serializer, response])
+            as FutureOr<PaymentItemResponse>);
 
     return paymentResponse.data;
   }
 
   Future<BuiltList<PaymentEntity>> loadList(Credentials credentials, int page,
       int createdAt, bool filterDeleted) async {
-    String url = credentials.url +
+    String url = credentials.url! +
         '/payments?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
 
     if (filterDeleted) {
@@ -47,9 +49,10 @@ class PaymentRepository {
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final PaymentListResponse paymentResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.deserializeWith,
-        <dynamic>[PaymentListResponse.serializer, response]);
+    final PaymentListResponse paymentResponse =
+        await (compute<dynamic, dynamic>(SerializationUtils.deserializeWith,
+                <dynamic>[PaymentListResponse.serializer, response])
+            as FutureOr<PaymentListResponse>);
 
     return paymentResponse.data;
   }
@@ -61,18 +64,18 @@ class PaymentRepository {
     }
 
     final url =
-        credentials.url + '/payments/bulk?per_page=$kMaxEntitiesPerBulkAction';
+        credentials.url! + '/payments/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final PaymentListResponse paymentResponse =
-        serializers.deserializeWith(PaymentListResponse.serializer, response);
+        serializers.deserializeWith(PaymentListResponse.serializer, response)!;
 
     return paymentResponse.data.toList();
   }
 
   Future<PaymentEntity> saveData(Credentials credentials, PaymentEntity payment,
-      {bool sendEmail = false}) async {
+      {bool? sendEmail = false}) async {
     final data = serializers.serializeWith(PaymentEntity.serializer, payment);
     dynamic response;
 
@@ -82,7 +85,7 @@ class PaymentRepository {
           await webClient.post(url, credentials.token, data: json.encode(data));
     } else {
       var url = '${credentials.url}/payments/${payment.id}?';
-      if (sendEmail) {
+      if (sendEmail!) {
         url += '&email_receipt=true';
       }
       response =
@@ -90,7 +93,7 @@ class PaymentRepository {
     }
 
     final PaymentItemResponse paymentResponse =
-        serializers.deserializeWith(PaymentItemResponse.serializer, response);
+        serializers.deserializeWith(PaymentItemResponse.serializer, response)!;
 
     return paymentResponse.data;
   }
@@ -100,7 +103,7 @@ class PaymentRepository {
     final data = serializers.serializeWith(PaymentEntity.serializer, payment);
     dynamic response;
 
-    var url = credentials.url + '/payments/refund?';
+    var url = credentials.url! + '/payments/refund?';
     if (payment.sendEmail == true) {
       url += '&email_receipt=true';
     }
@@ -111,7 +114,7 @@ class PaymentRepository {
         await webClient.post(url, credentials.token, data: json.encode(data));
 
     final PaymentItemResponse paymentResponse =
-        serializers.deserializeWith(PaymentItemResponse.serializer, response);
+        serializers.deserializeWith(PaymentItemResponse.serializer, response)!;
 
     return paymentResponse.data;
   }

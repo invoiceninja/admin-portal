@@ -60,12 +60,12 @@ DateTime addMonths(DateTime dateTime, int offset) {
   }
 }
 
-String calculateStartDate({
-  CompanyEntity company,
-  DateRange dateRange,
+String? calculateStartDate({
+  required CompanyEntity company,
+  DateRange? dateRange,
   int offset = 0,
-  String customStartDate,
-  String customEndDate,
+  String? customStartDate,
+  String? customEndDate,
 }) {
   final today = DateTime.now();
   final firstDayOfMonth = DateTime.utc(today.year, today.month, 1);
@@ -118,12 +118,12 @@ String calculateStartDate({
   }
 }
 
-String calculateEndDate({
-  CompanyEntity company,
-  DateRange dateRange,
+String? calculateEndDate({
+  required CompanyEntity company,
+  DateRange? dateRange,
   int offset = 0,
-  String customStartDate,
-  String customEndDate,
+  String? customStartDate,
+  String? customEndDate,
 }) {
   final today = DateTime.now();
   final firstDayOfMonth = DateTime.utc(today.year, today.month, 1);

@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:memoize/memoize.dart';
 
@@ -95,18 +96,18 @@ enum InvoiceReportFields {
 }
 
 var memoizedInvoiceReport = memo9((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, UserEntity> userMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, ProjectEntity> projectMap,
-  BuiltMap<String, PaymentEntity> paymentMap,
+  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String?, ProjectEntity?> projectMap,
+  BuiltMap<String?, PaymentEntity?> paymentMap,
   StaticState staticState,
 ) =>
     invoiceReport(
-      userCompany,
+      userCompany!,
       reportsUIState,
       invoiceMap,
       clientMap,
@@ -120,12 +121,12 @@ var memoizedInvoiceReport = memo9((
 ReportResult invoiceReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, UserEntity> userMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, ProjectEntity> projectMap,
-  BuiltMap<String, PaymentEntity> paymentMap,
+  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String?, ProjectEntity?> projectMap,
+  BuiltMap<String?, PaymentEntity?> paymentMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -135,7 +136,7 @@ ReportResult invoiceReport(
   final reportSettings = userCompany.settings?.reportSettings;
   final invoiceReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportInvoice)
-          ? reportSettings[kReportInvoice]
+          ? reportSettings[kReportInvoice]!
           : ReportSettingsEntity();
 
   final defaultColumns = [
@@ -151,24 +152,24 @@ ReportResult invoiceReport(
   if (invoiceReportSettings.columns.isNotEmpty) {
     columns = BuiltList(invoiceReportSettings.columns
         .map((e) => EnumUtils.fromString(InvoiceReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
   }
 
   // Get the last payment for each invoice
-  final lastPaymentMap = <String, PaymentEntity>{};
+  final lastPaymentMap = <String?, PaymentEntity?>{};
   if (columns.contains(InvoiceReportFields.paid_date)) {
     // Loop through each payment and add to the map if it is the last payment for the invoice
     paymentMap.forEach((paymentId, payment) {
-      if (payment.paymentables != null && payment.paymentables.isNotEmpty) {
+      if (payment!.paymentables != null && payment.paymentables.isNotEmpty) {
         // Loop through each invoice on the payment
         payment.paymentables.forEach((paymentable) {
           final invoiceId = paymentable.invoiceId;
           // If the invoice is in the invoice map and the payment is the last payment for the invoice
           if (lastPaymentMap.containsKey(invoiceId)) {
-            if (payment.date.compareTo(lastPaymentMap[invoiceId].date) == 1) {
+            if (payment.date.compareTo(lastPaymentMap[invoiceId]!.date) == 1) {
               lastPaymentMap[invoiceId] = payment;
             }
           } else {
@@ -180,7 +181,7 @@ ReportResult invoiceReport(
   }
 
   for (var invoiceId in invoiceMap.keys) {
-    final invoice = invoiceMap[invoiceId];
+    final invoice = invoiceMap[invoiceId]!;
     final client = clientMap[invoice.clientId] ?? ClientEntity();
 
     if (invoice.invitations.isEmpty) {
@@ -190,12 +191,12 @@ ReportResult invoiceReport(
     final contact =
         client.getContact(invoice.invitations.first.clientContactId);
 
-    if ((invoice.isDeleted && !userCompany.company.reportIncludeDeleted) ||
-        client.isDeleted) {
+    if ((invoice.isDeleted! && !userCompany.company!.reportIncludeDeleted) ||
+        client.isDeleted!) {
       continue;
     }
 
-    if (!userCompany.company.reportIncludeDrafts && invoice.isDraft) {
+    if (!userCompany.company!.reportIncludeDrafts && invoice.isDraft) {
       continue;
     }
 
@@ -290,28 +291,28 @@ ReportResult invoiceReport(
           value = presentCustomField(
             value: invoice.customValue1,
             customFieldType: CustomFieldType.invoice1,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case InvoiceReportFields.invoice2:
           value = presentCustomField(
             value: invoice.customValue2,
             customFieldType: CustomFieldType.invoice2,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case InvoiceReportFields.invoice3:
           value = presentCustomField(
             value: invoice.customValue3,
             customFieldType: CustomFieldType.invoice3,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case InvoiceReportFields.invoice4:
           value = presentCustomField(
             value: invoice.customValue4,
             customFieldType: CustomFieldType.invoice4,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case InvoiceReportFields.has_expenses:
@@ -474,8 +475,8 @@ ReportResult invoiceReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column),
-      )) {
+        column: EnumUtils.parse(column)!,
+      )!) {
         skip = true;
       }
 
@@ -485,12 +486,12 @@ ReportResult invoiceReport(
         row.add(
             invoice.getReportAge(value: value, currencyId: client.currencyId));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        String currencyId = client.currencyId;
+        String? currencyId = client.currencyId;
         if ([
           InvoiceReportFields.converted_amount,
           InvoiceReportFields.converted_balance
         ].contains(column)) {
-          currencyId = userCompany.company.currencyId;
+          currencyId = userCompany.company!.currencyId;
         }
         row.add(invoice.getReportDouble(
           value: value,
@@ -510,7 +511,7 @@ ReportResult invoiceReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, invoiceReportSettings, selectedColumns));
+      sortReportTableRows(rowA, rowB, invoiceReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns:

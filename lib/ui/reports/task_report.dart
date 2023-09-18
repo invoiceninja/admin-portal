@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:memoize/memoize.dart';
 
@@ -45,19 +46,19 @@ enum TaskReportFields {
 }
 
 var memoizedTaskReport = memo10((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, TaskEntity> taskMap,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, GroupEntity> groupMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, TaskStatusEntity> taskStatusMap,
-  BuiltMap<String, UserEntity> userMap,
-  BuiltMap<String, ProjectEntity> projectMap,
+  BuiltMap<String?, TaskEntity?> taskMap,
+  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String?, GroupEntity?> groupMap,
+  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String?, TaskStatusEntity?> taskStatusMap,
+  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String?, ProjectEntity?> projectMap,
   StaticState staticState,
 ) =>
     taskReport(
-      userCompany,
+      userCompany!,
       reportsUIState,
       taskMap,
       invoiceMap,
@@ -72,13 +73,13 @@ var memoizedTaskReport = memo10((
 ReportResult taskReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, TaskEntity> taskMap,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, GroupEntity> groupMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, TaskStatusEntity> taskStatusMap,
-  BuiltMap<String, UserEntity> userMap,
-  BuiltMap<String, ProjectEntity> projectMap,
+  BuiltMap<String?, TaskEntity?> taskMap,
+  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String?, GroupEntity?> groupMap,
+  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String?, TaskStatusEntity?> taskStatusMap,
+  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String?, ProjectEntity?> projectMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -88,7 +89,7 @@ ReportResult taskReport(
   final reportSettings = userCompany.settings?.reportSettings;
   final taskReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportTask)
-          ? reportSettings[kReportTask]
+          ? reportSettings[kReportTask]!
           : ReportSettingsEntity();
 
   final defaultColumns = [
@@ -105,21 +106,21 @@ ReportResult taskReport(
   if (taskReportSettings.columns.isNotEmpty) {
     columns = BuiltList(taskReportSettings.columns
         .map((e) => EnumUtils.fromString(TaskReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
   }
 
   for (var taskId in taskMap.keys) {
-    final task = taskMap[taskId];
+    final task = taskMap[taskId]!;
     final client = clientMap[task.clientId] ?? ClientEntity();
     final invoice = invoiceMap[task.invoiceId] ?? InvoiceEntity();
     final project = projectMap[task.projectId] ?? ProjectEntity();
     final group = groupMap[client.groupId] ?? GroupEntity();
 
-    if ((task.isDeleted && !userCompany.company.reportIncludeDeleted) ||
-        client.isDeleted) {
+    if ((task.isDeleted! && !userCompany.company!.reportIncludeDeleted) ||
+        client.isDeleted!) {
       continue;
     }
 
@@ -203,28 +204,28 @@ ReportResult taskReport(
           value = presentCustomField(
             value: task.customValue1,
             customFieldType: CustomFieldType.task1,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case TaskReportFields.task2:
           value = presentCustomField(
             value: task.customValue2,
             customFieldType: CustomFieldType.task2,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case TaskReportFields.task3:
           value = presentCustomField(
             value: task.customValue3,
             customFieldType: CustomFieldType.task3,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case TaskReportFields.task4:
           value = presentCustomField(
             value: task.customValue4,
             customFieldType: CustomFieldType.task4,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case TaskReportFields.status:
@@ -244,7 +245,7 @@ ReportResult taskReport(
               client: client,
               task: task,
               group: group,
-            ),
+            )!,
           );
           break;
       }
@@ -253,8 +254,8 @@ ReportResult taskReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column),
-      )) {
+        column: EnumUtils.parse(column)!,
+      )!) {
         skip = true;
       }
 
@@ -279,7 +280,7 @@ ReportResult taskReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, taskReportSettings, selectedColumns));
+      sortReportTableRows(rowA, rowB, taskReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns: TaskReportFields.values.map((e) => EnumUtils.parse(e)).toList(),

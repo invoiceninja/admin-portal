@@ -16,17 +16,17 @@ enum PortalLinkStyle {
 
 class PortalLinks extends StatelessWidget {
   const PortalLinks({
-    Key key,
-    @required this.viewLink,
-    @required this.copyLink,
-    @required this.client,
+    Key? key,
+    required this.viewLink,
+    required this.copyLink,
+    required this.client,
     this.style,
   }) : super(key: key);
 
   final String viewLink;
   final String copyLink;
-  final ClientEntity client;
-  final PortalLinkStyle style;
+  final ClientEntity? client;
+  final PortalLinkStyle? style;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class PortalLinks extends StatelessWidget {
       viewLinkWithHash += '?';
     }
     if (client != null) {
-      viewLinkWithHash += '&client_hash=${client.clientHash}';
+      viewLinkWithHash += '&client_hash=${client!.clientHash}';
     }
 
     var copyLinkWithHash = copyLink;
@@ -48,13 +48,13 @@ class PortalLinks extends StatelessWidget {
       copyLinkWithHash += '?';
     }
     if (client != null) {
-      copyLinkWithHash += '&client_hash=${client.clientHash}';
+      copyLinkWithHash += '&client_hash=${client!.clientHash}';
     }
 
     final viewLinkPressed = () => launchUrl(Uri.parse(viewLinkWithHash));
     final copyLinkPressed = () {
       Clipboard.setData(ClipboardData(text: copyLinkWithHash));
-      showToast(localization.copiedToClipboard.replaceFirst(':value ', ''));
+      showToast(localization!.copiedToClipboard.replaceFirst(':value ', ''));
     };
 
     if (style == PortalLinkStyle.icons) {
@@ -64,12 +64,12 @@ class PortalLinks extends StatelessWidget {
           IconButton(
             onPressed: viewLinkPressed,
             icon: Icon(Icons.open_in_new),
-            tooltip: prefState.enableTooltips ? localization.viewPortal : '',
+            tooltip: prefState.enableTooltips ? localization!.viewPortal : '',
           ),
           IconButton(
             onPressed: copyLinkPressed,
             icon: Icon(Icons.copy),
-            tooltip: prefState.enableTooltips ? localization.copyLink : '',
+            tooltip: prefState.enableTooltips ? localization!.copyLink : '',
           ),
         ],
       );
@@ -78,7 +78,7 @@ class PortalLinks extends StatelessWidget {
         itemBuilder: (BuildContext context) => [
           PopupMenuItem(
             child: IconText(
-                text: localization.viewPortal, icon: Icons.open_in_new),
+                text: localization!.viewPortal, icon: Icons.open_in_new),
             value: localization.viewPortal,
           ),
           PopupMenuItem(
@@ -87,7 +87,7 @@ class PortalLinks extends StatelessWidget {
           ),
         ],
         onSelected: (value) {
-          if (value == localization.viewPortal) {
+          if (value == localization!.viewPortal) {
             viewLinkPressed();
           } else {
             copyLinkPressed();
@@ -101,7 +101,7 @@ class PortalLinks extends StatelessWidget {
             child: OutlinedButton(
                 onPressed: viewLinkPressed,
                 child: Text(
-                  localization.viewPortal,
+                  localization!.viewPortal,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,

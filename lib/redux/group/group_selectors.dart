@@ -16,7 +16,7 @@ var memoizedDropdownGroupList = memo3((BuiltMap<String, GroupEntity> groupMap,
 List<String> dropdownGroupsSelector(BuiltMap<String, GroupEntity> groupMap,
     BuiltList<String> groupList, String clientId) {
   final list = groupList.where((groupId) {
-    final group = groupMap[groupId];
+    final group = groupMap[groupId]!;
     /*
     if (clientId != null && clientId > 0 && group.clientId != clientId) {
       return false;
@@ -26,7 +26,7 @@ List<String> dropdownGroupsSelector(BuiltMap<String, GroupEntity> groupMap,
   }).toList();
 
   list.sort((groupAId, groupBId) {
-    final groupA = groupMap[groupAId];
+    final groupA = groupMap[groupAId]!;
     final groupB = groupMap[groupBId];
     return groupA.compareTo(groupB, GroupFields.name, true);
   });
@@ -35,7 +35,7 @@ List<String> dropdownGroupsSelector(BuiltMap<String, GroupEntity> groupMap,
 }
 
 var memoizedFilteredGroupList = memo4((SelectionState selectionState,
-        BuiltMap<String, GroupEntity> groupMap,
+        BuiltMap<String?, GroupEntity?> groupMap,
         BuiltList<String> groupList,
         ListUIState groupListState) =>
     filteredGroupsSelector(
@@ -43,11 +43,11 @@ var memoizedFilteredGroupList = memo4((SelectionState selectionState,
 
 List<String> filteredGroupsSelector(
     SelectionState selectionState,
-    BuiltMap<String, GroupEntity> groupMap,
+    BuiltMap<String?, GroupEntity?> groupMap,
     BuiltList<String> groupList,
     ListUIState groupListState) {
   final list = groupList.where((groupId) {
-    final group = groupMap[groupId];
+    final group = groupMap[groupId]!;
 
     if (group.id == selectionState.selectedId) {
       return true;
@@ -60,7 +60,7 @@ List<String> filteredGroupsSelector(
   }).toList();
 
   list.sort((groupAId, groupBId) {
-    final groupA = groupMap[groupAId];
+    final groupA = groupMap[groupAId]!;
     final groupB = groupMap[groupBId];
     return groupA.compareTo(
         groupB, groupListState.sortField, groupListState.sortAscending);
@@ -70,15 +70,15 @@ List<String> filteredGroupsSelector(
 }
 
 var memoizedClientStatsForGroup = memo2(
-    (BuiltMap<String, ClientEntity> clientMap, String groupId) =>
+    (BuiltMap<String?, ClientEntity?> clientMap, String groupId) =>
         clientStatsForGroup(clientMap, groupId));
 
 EntityStats clientStatsForGroup(
-    BuiltMap<String, ClientEntity> clientMap, String groupId) {
+    BuiltMap<String?, ClientEntity?> clientMap, String groupId) {
   int countActive = 0;
   int countArchived = 0;
   clientMap.forEach((clientId, client) {
-    if (client.groupId == groupId) {
+    if (client!.groupId == groupId) {
       if (client.isActive) {
         countActive++;
       } else if (client.isArchived) {

@@ -19,13 +19,16 @@ class _$PurchaseOrderStateSerializer
   final String wireName = 'PurchaseOrderState';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, PurchaseOrderState object,
+  Iterable<Object?> serialize(
+      Serializers serializers, PurchaseOrderState object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'map',
       serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(InvoiceEntity)])),
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType.nullable(String),
+            const FullType.nullable(InvoiceEntity)
+          ])),
       'list',
       serializers.serialize(object.list,
           specifiedType:
@@ -37,28 +40,28 @@ class _$PurchaseOrderStateSerializer
 
   @override
   PurchaseOrderState deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new PurchaseOrderStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType(String),
-                const FullType(InvoiceEntity)
-              ])));
+                const FullType.nullable(String),
+                const FullType.nullable(InvoiceEntity)
+              ]))!);
           break;
         case 'list':
           result.list.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList<Object>);
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -78,10 +81,10 @@ class _$PurchaseOrderUIStateSerializer
   final String wireName = 'PurchaseOrderUIState';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, PurchaseOrderUIState object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'listUIState',
       serializers.serialize(object.listUIState,
           specifiedType: const FullType(ListUIState)),
@@ -89,7 +92,7 @@ class _$PurchaseOrderUIStateSerializer
       serializers.serialize(object.tabIndex,
           specifiedType: const FullType(int)),
     ];
-    Object value;
+    Object? value;
     value = object.editing;
     if (value != null) {
       result
@@ -116,35 +119,35 @@ class _$PurchaseOrderUIStateSerializer
 
   @override
   PurchaseOrderUIState deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new PurchaseOrderUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'editing':
           result.editing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(InvoiceEntity)) as InvoiceEntity);
+              specifiedType: const FullType(InvoiceEntity))! as InvoiceEntity);
           break;
         case 'listUIState':
           result.listUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ListUIState)) as ListUIState);
+              specifiedType: const FullType(ListUIState))! as ListUIState);
           break;
         case 'selectedId':
           result.selectedId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'forceSelected':
           result.forceSelected = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'tabIndex':
           result.tabIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
       }
     }
@@ -155,15 +158,15 @@ class _$PurchaseOrderUIStateSerializer
 
 class _$PurchaseOrderState extends PurchaseOrderState {
   @override
-  final BuiltMap<String, InvoiceEntity> map;
+  final BuiltMap<String?, InvoiceEntity?> map;
   @override
   final BuiltList<String> list;
 
   factory _$PurchaseOrderState(
-          [void Function(PurchaseOrderStateBuilder) updates]) =>
+          [void Function(PurchaseOrderStateBuilder)? updates]) =>
       (new PurchaseOrderStateBuilder()..update(updates))._build();
 
-  _$PurchaseOrderState._({this.map, this.list}) : super._() {
+  _$PurchaseOrderState._({required this.map, required this.list}) : super._() {
     BuiltValueNullFieldError.checkNotNull(map, r'PurchaseOrderState', 'map');
     BuiltValueNullFieldError.checkNotNull(list, r'PurchaseOrderState', 'list');
   }
@@ -185,10 +188,10 @@ class _$PurchaseOrderState extends PurchaseOrderState {
         list == other.list;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, map.hashCode);
     _$hash = $jc(_$hash, list.hashCode);
@@ -207,16 +210,16 @@ class _$PurchaseOrderState extends PurchaseOrderState {
 
 class PurchaseOrderStateBuilder
     implements Builder<PurchaseOrderState, PurchaseOrderStateBuilder> {
-  _$PurchaseOrderState _$v;
+  _$PurchaseOrderState? _$v;
 
-  MapBuilder<String, InvoiceEntity> _map;
-  MapBuilder<String, InvoiceEntity> get map =>
-      _$this._map ??= new MapBuilder<String, InvoiceEntity>();
-  set map(MapBuilder<String, InvoiceEntity> map) => _$this._map = map;
+  MapBuilder<String?, InvoiceEntity?>? _map;
+  MapBuilder<String?, InvoiceEntity?> get map =>
+      _$this._map ??= new MapBuilder<String?, InvoiceEntity?>();
+  set map(MapBuilder<String?, InvoiceEntity?>? map) => _$this._map = map;
 
-  ListBuilder<String> _list;
+  ListBuilder<String>? _list;
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
-  set list(ListBuilder<String> list) => _$this._list = list;
+  set list(ListBuilder<String>? list) => _$this._list = list;
 
   PurchaseOrderStateBuilder();
 
@@ -237,7 +240,7 @@ class PurchaseOrderStateBuilder
   }
 
   @override
-  void update(void Function(PurchaseOrderStateBuilder) updates) {
+  void update(void Function(PurchaseOrderStateBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -250,7 +253,7 @@ class PurchaseOrderStateBuilder
       _$result = _$v ??
           new _$PurchaseOrderState._(map: map.build(), list: list.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'map';
         map.build();
@@ -269,36 +272,36 @@ class PurchaseOrderStateBuilder
 
 class _$PurchaseOrderUIState extends PurchaseOrderUIState {
   @override
-  final InvoiceEntity editing;
+  final InvoiceEntity? editing;
   @override
-  final int editingItemIndex;
+  final int? editingItemIndex;
   @override
-  final String historyActivityId;
+  final String? historyActivityId;
   @override
   final ListUIState listUIState;
   @override
-  final String selectedId;
+  final String? selectedId;
   @override
-  final bool forceSelected;
+  final bool? forceSelected;
   @override
   final int tabIndex;
   @override
-  final Completer<SelectableEntity> saveCompleter;
+  final Completer<SelectableEntity>? saveCompleter;
   @override
-  final Completer<Null> cancelCompleter;
+  final Completer<Null>? cancelCompleter;
 
   factory _$PurchaseOrderUIState(
-          [void Function(PurchaseOrderUIStateBuilder) updates]) =>
+          [void Function(PurchaseOrderUIStateBuilder)? updates]) =>
       (new PurchaseOrderUIStateBuilder()..update(updates))._build();
 
   _$PurchaseOrderUIState._(
       {this.editing,
       this.editingItemIndex,
       this.historyActivityId,
-      this.listUIState,
+      required this.listUIState,
       this.selectedId,
       this.forceSelected,
-      this.tabIndex,
+      required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
       : super._() {
@@ -332,10 +335,10 @@ class _$PurchaseOrderUIState extends PurchaseOrderUIState {
         cancelCompleter == other.cancelCompleter;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, editing.hashCode);
     _$hash = $jc(_$hash, editingItemIndex.hashCode);
@@ -368,50 +371,50 @@ class _$PurchaseOrderUIState extends PurchaseOrderUIState {
 
 class PurchaseOrderUIStateBuilder
     implements Builder<PurchaseOrderUIState, PurchaseOrderUIStateBuilder> {
-  _$PurchaseOrderUIState _$v;
+  _$PurchaseOrderUIState? _$v;
 
-  InvoiceEntityBuilder _editing;
+  InvoiceEntityBuilder? _editing;
   InvoiceEntityBuilder get editing =>
       _$this._editing ??= new InvoiceEntityBuilder();
-  set editing(InvoiceEntityBuilder editing) => _$this._editing = editing;
+  set editing(InvoiceEntityBuilder? editing) => _$this._editing = editing;
 
-  int _editingItemIndex;
-  int get editingItemIndex => _$this._editingItemIndex;
-  set editingItemIndex(int editingItemIndex) =>
+  int? _editingItemIndex;
+  int? get editingItemIndex => _$this._editingItemIndex;
+  set editingItemIndex(int? editingItemIndex) =>
       _$this._editingItemIndex = editingItemIndex;
 
-  String _historyActivityId;
-  String get historyActivityId => _$this._historyActivityId;
-  set historyActivityId(String historyActivityId) =>
+  String? _historyActivityId;
+  String? get historyActivityId => _$this._historyActivityId;
+  set historyActivityId(String? historyActivityId) =>
       _$this._historyActivityId = historyActivityId;
 
-  ListUIStateBuilder _listUIState;
+  ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
       _$this._listUIState ??= new ListUIStateBuilder();
-  set listUIState(ListUIStateBuilder listUIState) =>
+  set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
-  String _selectedId;
-  String get selectedId => _$this._selectedId;
-  set selectedId(String selectedId) => _$this._selectedId = selectedId;
+  String? _selectedId;
+  String? get selectedId => _$this._selectedId;
+  set selectedId(String? selectedId) => _$this._selectedId = selectedId;
 
-  bool _forceSelected;
-  bool get forceSelected => _$this._forceSelected;
-  set forceSelected(bool forceSelected) =>
+  bool? _forceSelected;
+  bool? get forceSelected => _$this._forceSelected;
+  set forceSelected(bool? forceSelected) =>
       _$this._forceSelected = forceSelected;
 
-  int _tabIndex;
-  int get tabIndex => _$this._tabIndex;
-  set tabIndex(int tabIndex) => _$this._tabIndex = tabIndex;
+  int? _tabIndex;
+  int? get tabIndex => _$this._tabIndex;
+  set tabIndex(int? tabIndex) => _$this._tabIndex = tabIndex;
 
-  Completer<SelectableEntity> _saveCompleter;
-  Completer<SelectableEntity> get saveCompleter => _$this._saveCompleter;
-  set saveCompleter(Completer<SelectableEntity> saveCompleter) =>
+  Completer<SelectableEntity>? _saveCompleter;
+  Completer<SelectableEntity>? get saveCompleter => _$this._saveCompleter;
+  set saveCompleter(Completer<SelectableEntity>? saveCompleter) =>
       _$this._saveCompleter = saveCompleter;
 
-  Completer<Null> _cancelCompleter;
-  Completer<Null> get cancelCompleter => _$this._cancelCompleter;
-  set cancelCompleter(Completer<Null> cancelCompleter) =>
+  Completer<Null>? _cancelCompleter;
+  Completer<Null>? get cancelCompleter => _$this._cancelCompleter;
+  set cancelCompleter(Completer<Null>? cancelCompleter) =>
       _$this._cancelCompleter = cancelCompleter;
 
   PurchaseOrderUIStateBuilder();
@@ -440,7 +443,7 @@ class PurchaseOrderUIStateBuilder
   }
 
   @override
-  void update(void Function(PurchaseOrderUIStateBuilder) updates) {
+  void update(void Function(PurchaseOrderUIStateBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -463,7 +466,7 @@ class PurchaseOrderUIStateBuilder
               saveCompleter: saveCompleter,
               cancelCompleter: cancelCompleter);
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'editing';
         _editing?.build();

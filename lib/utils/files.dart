@@ -16,10 +16,10 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
-Future<List<MultipartFile>> pickFiles({
-  String fileIndex,
-  FileType fileType,
-  List<String> allowedExtensions,
+Future<List<MultipartFile>?> pickFiles({
+  String? fileIndex,
+  FileType? fileType,
+  List<String>? allowedExtensions,
   bool allowMultiple = true,
 }) async {
   if (kIsWeb || isDesktopOS()) {
@@ -48,11 +48,11 @@ Future<List<MultipartFile>> pickFiles({
   }
 }
 
-Future<List<MultipartFile>> _pickFiles({
-  String fileIndex,
-  FileType fileType,
-  List<String> allowedExtensions,
-  bool allowMultiple,
+Future<List<MultipartFile>?> _pickFiles({
+  String? fileIndex,
+  FileType? fileType,
+  List<String>? allowedExtensions,
+  required bool allowMultiple,
 }) async {
   final result = await FilePicker.platform.pickFiles(
     type: fileType ?? FileType.custom,
@@ -68,7 +68,7 @@ Future<List<MultipartFile>> _pickFiles({
     for (var index = 0; index < result.files.length; index++) {
       final file = result.files[index];
       multipartFiles.add(MultipartFile.fromBytes(
-          allowMultiple ? 'documents[$index]' : fileIndex, file.bytes,
+          allowMultiple ? 'documents[$index]' : fileIndex!, file.bytes!,
           filename: file.name));
     }
 

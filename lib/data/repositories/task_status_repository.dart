@@ -20,22 +20,22 @@ class TaskStatusRepository {
   final WebClient webClient;
 
   Future<TaskStatusEntity> loadItem(
-      Credentials credentials, String entityId) async {
+      Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/task_statuses/$entityId', credentials.token);
 
     final TaskStatusItemResponse taskStatusResponse = serializers
-        .deserializeWith(TaskStatusItemResponse.serializer, response);
+        .deserializeWith(TaskStatusItemResponse.serializer, response)!;
 
     return taskStatusResponse.data;
   }
 
   Future<BuiltList<TaskStatusEntity>> loadList(Credentials credentials) async {
-    final String url = credentials.url + '/task_statuses?';
+    final String url = credentials.url! + '/task_statuses?';
     final dynamic response = await webClient.get(url, credentials.token);
 
     final TaskStatusListResponse taskStatusResponse = serializers
-        .deserializeWith(TaskStatusListResponse.serializer, response);
+        .deserializeWith(TaskStatusListResponse.serializer, response)!;
 
     return taskStatusResponse.data;
   }
@@ -46,13 +46,13 @@ class TaskStatusRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url +
+    final url = credentials.url! +
         '/task_statuses/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final TaskStatusListResponse taskStatusResponse = serializers
-        .deserializeWith(TaskStatusListResponse.serializer, response);
+        .deserializeWith(TaskStatusListResponse.serializer, response)!;
 
     return taskStatusResponse.data.toList();
   }
@@ -65,7 +65,7 @@ class TaskStatusRepository {
 
     if (taskStatus.isNew) {
       response = await webClient.post(
-          credentials.url + '/task_statuses', credentials.token,
+          credentials.url! + '/task_statuses', credentials.token,
           data: json.encode(data));
     } else {
       final url = '${credentials.url}/task_statuses/${taskStatus.id}';
@@ -74,7 +74,7 @@ class TaskStatusRepository {
     }
 
     final TaskStatusItemResponse taskStatusResponse = serializers
-        .deserializeWith(TaskStatusItemResponse.serializer, response);
+        .deserializeWith(TaskStatusItemResponse.serializer, response)!;
 
     return taskStatusResponse.data;
   }

@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_s
 import 'recurring_invoice_screen.dart';
 
 class RecurringInvoiceScreenBuilder extends StatelessWidget {
-  const RecurringInvoiceScreenBuilder({Key key}) : super(key: key);
+  const RecurringInvoiceScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,18 +32,18 @@ class RecurringInvoiceScreenBuilder extends StatelessWidget {
 
 class RecurringInvoiceScreenVM {
   RecurringInvoiceScreenVM({
-    @required this.isInMultiselect,
-    @required this.recurringInvoiceList,
-    @required this.userCompany,
-    @required this.onEntityAction,
-    @required this.recurringInvoiceMap,
+    required this.isInMultiselect,
+    required this.recurringInvoiceList,
+    required this.userCompany,
+    required this.onEntityAction,
+    required this.recurringInvoiceMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> recurringInvoiceList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final BuiltMap<String, InvoiceEntity> recurringInvoiceMap;
+  final BuiltMap<String?, InvoiceEntity?> recurringInvoiceMap;
 
   static RecurringInvoiceScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

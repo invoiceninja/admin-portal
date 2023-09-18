@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentTermListBuilder extends StatelessWidget {
-  const PaymentTermListBuilder({Key key}) : super(key: key);
+  const PaymentTermListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class PaymentTermListBuilder extends StatelessWidget {
                 filter: viewModel.filter,
                 paymentTerm: paymentTerm,
                 isChecked:
-                    isInMultiselect && listState.isSelected(paymentTerm.id),
+                    isInMultiselect && listState.isSelected(paymentTerm!.id),
               );
             });
       },
@@ -61,17 +61,17 @@ class PaymentTermListBuilder extends StatelessWidget {
 
 class PaymentTermListVM {
   PaymentTermListVM({
-    @required this.state,
-    @required this.userCompany,
-    @required this.paymentTermList,
-    @required this.paymentTermMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.onEntityAction,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.userCompany,
+    required this.paymentTermList,
+    required this.paymentTermMap,
+    required this.filter,
+    required this.isLoading,
+    required this.listState,
+    required this.onRefreshed,
+    required this.onEntityAction,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
     this.tableColumns,
   });
 
@@ -81,7 +81,7 @@ class PaymentTermListVM {
         return Future<Null>(null);
       }
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -110,15 +110,15 @@ class PaymentTermListVM {
   }
 
   final AppState state;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> paymentTermList;
-  final BuiltMap<String, PaymentTermEntity> paymentTermMap;
+  final BuiltMap<String?, PaymentTermEntity?> paymentTermMap;
   final ListUIState listState;
-  final String filter;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final List<String> tableColumns;
+  final List<String>? tableColumns;
   final Function(String) onSortColumn;
   final Function onClearMultielsect;
 }

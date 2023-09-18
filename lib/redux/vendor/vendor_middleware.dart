@@ -50,14 +50,14 @@ List<Middleware<AppState>> createStoreVendorsMiddleware([
 
 Middleware<AppState> _editVendor() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditVendor;
+    final action = dynamicAction as EditVendor?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(VendorEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(VendorEditScreen.route);
+      navigatorKey.currentState!.pushNamed(VendorEditScreen.route);
     }
   };
 }
@@ -65,21 +65,21 @@ Middleware<AppState> _editVendor() {
 Middleware<AppState> _viewVendor() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ViewVendor;
+    final action = dynamicAction as ViewVendor?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(VendorViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(VendorViewScreen.route);
+      navigatorKey.currentState!.pushNamed(VendorViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewVendorList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewVendorList;
+    final action = dynamicAction as ViewVendorList?;
 
     next(action);
 
@@ -90,7 +90,7 @@ Middleware<AppState> _viewVendorList() {
     store.dispatch(UpdateCurrentRoute(VendorScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           VendorScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -178,24 +178,24 @@ Middleware<AppState> _saveVendor(VendorRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveVendorRequest;
     repository
-        .saveData(store.state.credentials, action.vendor)
+        .saveData(store.state.credentials, action.vendor!)
         .then((VendorEntity vendor) {
-      if (action.vendor.isNew) {
+      if (action.vendor!.isNew) {
         store.dispatch(AddVendorSuccess(vendor));
       } else {
         store.dispatch(SaveVendorSuccess(vendor));
       }
 
-      action.completer.complete(vendor);
+      action.completer!.complete(vendor);
 
       final vendorUIState = store.state.vendorUIState;
       if (vendorUIState.saveCompleter != null) {
-        vendorUIState.saveCompleter.complete(vendor);
+        vendorUIState.saveCompleter!.complete(vendor);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveVendorFailure(error));
-      action.completer.completeError(error);
+      action.completer!.completeError(error);
     });
 
     next(action);
@@ -213,13 +213,13 @@ Middleware<AppState> _loadVendor(VendorRepository repository) {
       store.dispatch(LoadVendorSuccess(vendor));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadVendorFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -252,7 +252,7 @@ Middleware<AppState> _loadVendors(VendorRepository repository) {
         ));
       } else {
         if (action.completer != null) {
-          action.completer.complete(null);
+          action.completer!.complete(null);
         }
         store.dispatch(LoadPurchaseOrders());
       }
@@ -260,7 +260,7 @@ Middleware<AppState> _loadVendors(VendorRepository repository) {
       print(error);
       store.dispatch(LoadVendorsFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -270,12 +270,12 @@ Middleware<AppState> _loadVendors(VendorRepository repository) {
 
 Middleware<AppState> _saveDocument(VendorRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as SaveVendorDocumentRequest;
+    final action = dynamicAction as SaveVendorDocumentRequest?;
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
         store.state.credentials,
-        action.vendor,
+        action!.vendor,
         action.multipartFiles,
         action.isPrivate,
       )
@@ -299,7 +299,7 @@ Middleware<AppState> _saveDocument(VendorRepository repository) {
     } else {
       const error = 'Uploading documents requires an enterprise plan';
       store.dispatch(SaveVendorDocumentFailure(error));
-      action.completer.completeError(error);
+      action!.completer.completeError(error);
     }
 
     next(action);

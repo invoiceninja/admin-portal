@@ -9,9 +9,9 @@ import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
 
 class VendorViewActivity extends StatefulWidget {
-  const VendorViewActivity({Key key, this.viewModel}) : super(key: key);
+  const VendorViewActivity({Key? key, this.viewModel}) : super(key: key);
 
-  final VendorViewVM viewModel;
+  final VendorViewVM? viewModel;
 
   @override
   _VendorViewActivityState createState() => _VendorViewActivityState();
@@ -20,15 +20,15 @@ class VendorViewActivity extends StatefulWidget {
 class _VendorViewActivityState extends State<VendorViewActivity> {
   @override
   void didChangeDependencies() {
-    if (widget.viewModel.vendor.isStale) {
-      widget.viewModel.onRefreshed(context);
+    if (widget.viewModel!.vendor.isStale) {
+      widget.viewModel!.onRefreshed(context);
     }
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    final vendor = widget.viewModel.vendor;
+    final vendor = widget.viewModel!.vendor;
     final activities = vendor.activities;
 
     if (!vendor.isLoaded) {

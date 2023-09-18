@@ -26,10 +26,10 @@ class _$PaymentListResponseSerializer
   final String wireName = 'PaymentListResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, PaymentListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType:
@@ -41,21 +41,21 @@ class _$PaymentListResponseSerializer
 
   @override
   PaymentListResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new PaymentListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(PaymentEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(PaymentEntity)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -75,10 +75,10 @@ class _$PaymentItemResponseSerializer
   final String wireName = 'PaymentItemResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, PaymentItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(PaymentEntity)),
@@ -89,19 +89,19 @@ class _$PaymentItemResponseSerializer
 
   @override
   PaymentItemResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new PaymentItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(PaymentEntity)) as PaymentEntity);
+              specifiedType: const FullType(PaymentEntity))! as PaymentEntity);
           break;
       }
     }
@@ -117,9 +117,9 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
   final String wireName = 'PaymentEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, PaymentEntity object,
+  Iterable<Object?> serialize(Serializers serializers, PaymentEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'amount',
       serializers.serialize(object.amount,
           specifiedType: const FullType(double)),
@@ -218,7 +218,7 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.idempotencyKey;
     if (value != null) {
       result
@@ -280,181 +280,181 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
 
   @override
   PaymentEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new PaymentEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'amount':
           result.amount = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'applied':
           result.applied = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'refunded':
           result.refunded = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'number':
           result.number = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'idempotency_key':
           result.idempotencyKey = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'client_id':
           result.clientId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'status_id':
           result.statusId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'transaction_reference':
           result.transactionReference = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'date':
           result.date = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'type_id':
           result.typeId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'private_notes':
           result.privateNotes = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value3':
           result.customValue3 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'exchange_rate':
           result.exchangeRate = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'exchange_currency_id':
           result.exchangeCurrencyId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'is_manual':
           result.isManual = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'project_id':
           result.projectId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'vendor_id':
           result.vendorId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'invitation_id':
           result.invitationId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'transaction_id':
           result.transactionId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'client_contact_id':
           result.clientContactId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'company_gateway_id':
           result.companyGatewayId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'currency_id':
           result.currencyId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'gateway_type_id':
           result.gatewayTypeId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'isApplying':
           result.isApplying = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'sendEmail':
           result.sendEmail = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'gatewayRefund':
           result.gatewayRefund = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'paymentables':
           result.paymentables.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(PaymentableEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(PaymentableEntity)]))!
+              as BuiltList<Object?>);
           break;
         case 'invoices':
           result.invoices.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(PaymentableEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(PaymentableEntity)]))!
+              as BuiltList<Object?>);
           break;
         case 'credits':
           result.credits.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(PaymentableEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(PaymentableEntity)]))!
+              as BuiltList<Object?>);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'archived_at':
           result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'user_id':
           result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -471,16 +471,16 @@ class _$PaymentableEntitySerializer
   final String wireName = 'PaymentableEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, PaymentableEntity object,
+  Iterable<Object?> serialize(Serializers serializers, PaymentableEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'amount',
       serializers.serialize(object.amount,
           specifiedType: const FullType(double)),
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.createdAt;
     if (value != null) {
       result
@@ -512,39 +512,39 @@ class _$PaymentableEntitySerializer
 
   @override
   PaymentableEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new PaymentableEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'credit_id':
           result.creditId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'amount':
           result.amount = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -558,10 +558,10 @@ class _$PaymentListResponse extends PaymentListResponse {
   final BuiltList<PaymentEntity> data;
 
   factory _$PaymentListResponse(
-          [void Function(PaymentListResponseBuilder) updates]) =>
+          [void Function(PaymentListResponseBuilder)? updates]) =>
       (new PaymentListResponseBuilder()..update(updates))._build();
 
-  _$PaymentListResponse._({this.data}) : super._() {
+  _$PaymentListResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'PaymentListResponse', 'data');
   }
 
@@ -580,10 +580,10 @@ class _$PaymentListResponse extends PaymentListResponse {
     return other is PaymentListResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -600,12 +600,12 @@ class _$PaymentListResponse extends PaymentListResponse {
 
 class PaymentListResponseBuilder
     implements Builder<PaymentListResponse, PaymentListResponseBuilder> {
-  _$PaymentListResponse _$v;
+  _$PaymentListResponse? _$v;
 
-  ListBuilder<PaymentEntity> _data;
+  ListBuilder<PaymentEntity>? _data;
   ListBuilder<PaymentEntity> get data =>
       _$this._data ??= new ListBuilder<PaymentEntity>();
-  set data(ListBuilder<PaymentEntity> data) => _$this._data = data;
+  set data(ListBuilder<PaymentEntity>? data) => _$this._data = data;
 
   PaymentListResponseBuilder();
 
@@ -625,7 +625,7 @@ class PaymentListResponseBuilder
   }
 
   @override
-  void update(void Function(PaymentListResponseBuilder) updates) {
+  void update(void Function(PaymentListResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -637,7 +637,7 @@ class PaymentListResponseBuilder
     try {
       _$result = _$v ?? new _$PaymentListResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -657,10 +657,10 @@ class _$PaymentItemResponse extends PaymentItemResponse {
   final PaymentEntity data;
 
   factory _$PaymentItemResponse(
-          [void Function(PaymentItemResponseBuilder) updates]) =>
+          [void Function(PaymentItemResponseBuilder)? updates]) =>
       (new PaymentItemResponseBuilder()..update(updates))._build();
 
-  _$PaymentItemResponse._({this.data}) : super._() {
+  _$PaymentItemResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'PaymentItemResponse', 'data');
   }
 
@@ -679,10 +679,10 @@ class _$PaymentItemResponse extends PaymentItemResponse {
     return other is PaymentItemResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -699,11 +699,11 @@ class _$PaymentItemResponse extends PaymentItemResponse {
 
 class PaymentItemResponseBuilder
     implements Builder<PaymentItemResponse, PaymentItemResponseBuilder> {
-  _$PaymentItemResponse _$v;
+  _$PaymentItemResponse? _$v;
 
-  PaymentEntityBuilder _data;
+  PaymentEntityBuilder? _data;
   PaymentEntityBuilder get data => _$this._data ??= new PaymentEntityBuilder();
-  set data(PaymentEntityBuilder data) => _$this._data = data;
+  set data(PaymentEntityBuilder? data) => _$this._data = data;
 
   PaymentItemResponseBuilder();
 
@@ -723,7 +723,7 @@ class PaymentItemResponseBuilder
   }
 
   @override
-  void update(void Function(PaymentItemResponseBuilder) updates) {
+  void update(void Function(PaymentItemResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -735,7 +735,7 @@ class PaymentItemResponseBuilder
     try {
       _$result = _$v ?? new _$PaymentItemResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -760,7 +760,7 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final String number;
   @override
-  final String idempotencyKey;
+  final String? idempotencyKey;
   @override
   final String clientId;
   @override
@@ -804,11 +804,11 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final String gatewayTypeId;
   @override
-  final bool isApplying;
+  final bool? isApplying;
   @override
-  final bool sendEmail;
+  final bool? sendEmail;
   @override
-  final bool gatewayRefund;
+  final bool? gatewayRefund;
   @override
   final BuiltList<PaymentableEntity> paymentables;
   @override
@@ -816,7 +816,7 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final BuiltList<PaymentableEntity> credits;
   @override
-  final bool isChanged;
+  final bool? isChanged;
   @override
   final int createdAt;
   @override
@@ -824,58 +824,58 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final int archivedAt;
   @override
-  final bool isDeleted;
+  final bool? isDeleted;
   @override
-  final String createdUserId;
+  final String? createdUserId;
   @override
-  final String assignedUserId;
+  final String? assignedUserId;
   @override
   final String id;
 
-  factory _$PaymentEntity([void Function(PaymentEntityBuilder) updates]) =>
+  factory _$PaymentEntity([void Function(PaymentEntityBuilder)? updates]) =>
       (new PaymentEntityBuilder()..update(updates))._build();
 
   _$PaymentEntity._(
-      {this.amount,
-      this.applied,
-      this.refunded,
-      this.number,
+      {required this.amount,
+      required this.applied,
+      required this.refunded,
+      required this.number,
       this.idempotencyKey,
-      this.clientId,
-      this.statusId,
-      this.transactionReference,
-      this.date,
-      this.typeId,
-      this.privateNotes,
-      this.customValue1,
-      this.customValue2,
-      this.customValue3,
-      this.customValue4,
-      this.exchangeRate,
-      this.exchangeCurrencyId,
-      this.isManual,
-      this.projectId,
-      this.vendorId,
-      this.invitationId,
-      this.transactionId,
-      this.clientContactId,
-      this.companyGatewayId,
-      this.currencyId,
-      this.gatewayTypeId,
+      required this.clientId,
+      required this.statusId,
+      required this.transactionReference,
+      required this.date,
+      required this.typeId,
+      required this.privateNotes,
+      required this.customValue1,
+      required this.customValue2,
+      required this.customValue3,
+      required this.customValue4,
+      required this.exchangeRate,
+      required this.exchangeCurrencyId,
+      required this.isManual,
+      required this.projectId,
+      required this.vendorId,
+      required this.invitationId,
+      required this.transactionId,
+      required this.clientContactId,
+      required this.companyGatewayId,
+      required this.currencyId,
+      required this.gatewayTypeId,
       this.isApplying,
       this.sendEmail,
       this.gatewayRefund,
-      this.paymentables,
-      this.invoices,
-      this.credits,
+      required this.paymentables,
+      required this.invoices,
+      required this.credits,
       this.isChanged,
-      this.createdAt,
-      this.updatedAt,
-      this.archivedAt,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.archivedAt,
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.id})
+      required this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(amount, r'PaymentEntity', 'amount');
     BuiltValueNullFieldError.checkNotNull(applied, r'PaymentEntity', 'applied');
@@ -989,10 +989,10 @@ class _$PaymentEntity extends PaymentEntity {
         id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, amount.hashCode);
     _$hash = $jc(_$hash, applied.hashCode);
@@ -1087,183 +1087,183 @@ class _$PaymentEntity extends PaymentEntity {
 
 class PaymentEntityBuilder
     implements Builder<PaymentEntity, PaymentEntityBuilder> {
-  _$PaymentEntity _$v;
+  _$PaymentEntity? _$v;
 
-  double _amount;
-  double get amount => _$this._amount;
-  set amount(double amount) => _$this._amount = amount;
+  double? _amount;
+  double? get amount => _$this._amount;
+  set amount(double? amount) => _$this._amount = amount;
 
-  double _applied;
-  double get applied => _$this._applied;
-  set applied(double applied) => _$this._applied = applied;
+  double? _applied;
+  double? get applied => _$this._applied;
+  set applied(double? applied) => _$this._applied = applied;
 
-  double _refunded;
-  double get refunded => _$this._refunded;
-  set refunded(double refunded) => _$this._refunded = refunded;
+  double? _refunded;
+  double? get refunded => _$this._refunded;
+  set refunded(double? refunded) => _$this._refunded = refunded;
 
-  String _number;
-  String get number => _$this._number;
-  set number(String number) => _$this._number = number;
+  String? _number;
+  String? get number => _$this._number;
+  set number(String? number) => _$this._number = number;
 
-  String _idempotencyKey;
-  String get idempotencyKey => _$this._idempotencyKey;
-  set idempotencyKey(String idempotencyKey) =>
+  String? _idempotencyKey;
+  String? get idempotencyKey => _$this._idempotencyKey;
+  set idempotencyKey(String? idempotencyKey) =>
       _$this._idempotencyKey = idempotencyKey;
 
-  String _clientId;
-  String get clientId => _$this._clientId;
-  set clientId(String clientId) => _$this._clientId = clientId;
+  String? _clientId;
+  String? get clientId => _$this._clientId;
+  set clientId(String? clientId) => _$this._clientId = clientId;
 
-  String _statusId;
-  String get statusId => _$this._statusId;
-  set statusId(String statusId) => _$this._statusId = statusId;
+  String? _statusId;
+  String? get statusId => _$this._statusId;
+  set statusId(String? statusId) => _$this._statusId = statusId;
 
-  String _transactionReference;
-  String get transactionReference => _$this._transactionReference;
-  set transactionReference(String transactionReference) =>
+  String? _transactionReference;
+  String? get transactionReference => _$this._transactionReference;
+  set transactionReference(String? transactionReference) =>
       _$this._transactionReference = transactionReference;
 
-  String _date;
-  String get date => _$this._date;
-  set date(String date) => _$this._date = date;
+  String? _date;
+  String? get date => _$this._date;
+  set date(String? date) => _$this._date = date;
 
-  String _typeId;
-  String get typeId => _$this._typeId;
-  set typeId(String typeId) => _$this._typeId = typeId;
+  String? _typeId;
+  String? get typeId => _$this._typeId;
+  set typeId(String? typeId) => _$this._typeId = typeId;
 
-  String _privateNotes;
-  String get privateNotes => _$this._privateNotes;
-  set privateNotes(String privateNotes) => _$this._privateNotes = privateNotes;
+  String? _privateNotes;
+  String? get privateNotes => _$this._privateNotes;
+  set privateNotes(String? privateNotes) => _$this._privateNotes = privateNotes;
 
-  String _customValue1;
-  String get customValue1 => _$this._customValue1;
-  set customValue1(String customValue1) => _$this._customValue1 = customValue1;
+  String? _customValue1;
+  String? get customValue1 => _$this._customValue1;
+  set customValue1(String? customValue1) => _$this._customValue1 = customValue1;
 
-  String _customValue2;
-  String get customValue2 => _$this._customValue2;
-  set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+  String? _customValue2;
+  String? get customValue2 => _$this._customValue2;
+  set customValue2(String? customValue2) => _$this._customValue2 = customValue2;
 
-  String _customValue3;
-  String get customValue3 => _$this._customValue3;
-  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+  String? _customValue3;
+  String? get customValue3 => _$this._customValue3;
+  set customValue3(String? customValue3) => _$this._customValue3 = customValue3;
 
-  String _customValue4;
-  String get customValue4 => _$this._customValue4;
-  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+  String? _customValue4;
+  String? get customValue4 => _$this._customValue4;
+  set customValue4(String? customValue4) => _$this._customValue4 = customValue4;
 
-  double _exchangeRate;
-  double get exchangeRate => _$this._exchangeRate;
-  set exchangeRate(double exchangeRate) => _$this._exchangeRate = exchangeRate;
+  double? _exchangeRate;
+  double? get exchangeRate => _$this._exchangeRate;
+  set exchangeRate(double? exchangeRate) => _$this._exchangeRate = exchangeRate;
 
-  String _exchangeCurrencyId;
-  String get exchangeCurrencyId => _$this._exchangeCurrencyId;
-  set exchangeCurrencyId(String exchangeCurrencyId) =>
+  String? _exchangeCurrencyId;
+  String? get exchangeCurrencyId => _$this._exchangeCurrencyId;
+  set exchangeCurrencyId(String? exchangeCurrencyId) =>
       _$this._exchangeCurrencyId = exchangeCurrencyId;
 
-  bool _isManual;
-  bool get isManual => _$this._isManual;
-  set isManual(bool isManual) => _$this._isManual = isManual;
+  bool? _isManual;
+  bool? get isManual => _$this._isManual;
+  set isManual(bool? isManual) => _$this._isManual = isManual;
 
-  String _projectId;
-  String get projectId => _$this._projectId;
-  set projectId(String projectId) => _$this._projectId = projectId;
+  String? _projectId;
+  String? get projectId => _$this._projectId;
+  set projectId(String? projectId) => _$this._projectId = projectId;
 
-  String _vendorId;
-  String get vendorId => _$this._vendorId;
-  set vendorId(String vendorId) => _$this._vendorId = vendorId;
+  String? _vendorId;
+  String? get vendorId => _$this._vendorId;
+  set vendorId(String? vendorId) => _$this._vendorId = vendorId;
 
-  String _invitationId;
-  String get invitationId => _$this._invitationId;
-  set invitationId(String invitationId) => _$this._invitationId = invitationId;
+  String? _invitationId;
+  String? get invitationId => _$this._invitationId;
+  set invitationId(String? invitationId) => _$this._invitationId = invitationId;
 
-  String _transactionId;
-  String get transactionId => _$this._transactionId;
-  set transactionId(String transactionId) =>
+  String? _transactionId;
+  String? get transactionId => _$this._transactionId;
+  set transactionId(String? transactionId) =>
       _$this._transactionId = transactionId;
 
-  String _clientContactId;
-  String get clientContactId => _$this._clientContactId;
-  set clientContactId(String clientContactId) =>
+  String? _clientContactId;
+  String? get clientContactId => _$this._clientContactId;
+  set clientContactId(String? clientContactId) =>
       _$this._clientContactId = clientContactId;
 
-  String _companyGatewayId;
-  String get companyGatewayId => _$this._companyGatewayId;
-  set companyGatewayId(String companyGatewayId) =>
+  String? _companyGatewayId;
+  String? get companyGatewayId => _$this._companyGatewayId;
+  set companyGatewayId(String? companyGatewayId) =>
       _$this._companyGatewayId = companyGatewayId;
 
-  String _currencyId;
-  String get currencyId => _$this._currencyId;
-  set currencyId(String currencyId) => _$this._currencyId = currencyId;
+  String? _currencyId;
+  String? get currencyId => _$this._currencyId;
+  set currencyId(String? currencyId) => _$this._currencyId = currencyId;
 
-  String _gatewayTypeId;
-  String get gatewayTypeId => _$this._gatewayTypeId;
-  set gatewayTypeId(String gatewayTypeId) =>
+  String? _gatewayTypeId;
+  String? get gatewayTypeId => _$this._gatewayTypeId;
+  set gatewayTypeId(String? gatewayTypeId) =>
       _$this._gatewayTypeId = gatewayTypeId;
 
-  bool _isApplying;
-  bool get isApplying => _$this._isApplying;
-  set isApplying(bool isApplying) => _$this._isApplying = isApplying;
+  bool? _isApplying;
+  bool? get isApplying => _$this._isApplying;
+  set isApplying(bool? isApplying) => _$this._isApplying = isApplying;
 
-  bool _sendEmail;
-  bool get sendEmail => _$this._sendEmail;
-  set sendEmail(bool sendEmail) => _$this._sendEmail = sendEmail;
+  bool? _sendEmail;
+  bool? get sendEmail => _$this._sendEmail;
+  set sendEmail(bool? sendEmail) => _$this._sendEmail = sendEmail;
 
-  bool _gatewayRefund;
-  bool get gatewayRefund => _$this._gatewayRefund;
-  set gatewayRefund(bool gatewayRefund) =>
+  bool? _gatewayRefund;
+  bool? get gatewayRefund => _$this._gatewayRefund;
+  set gatewayRefund(bool? gatewayRefund) =>
       _$this._gatewayRefund = gatewayRefund;
 
-  ListBuilder<PaymentableEntity> _paymentables;
+  ListBuilder<PaymentableEntity>? _paymentables;
   ListBuilder<PaymentableEntity> get paymentables =>
       _$this._paymentables ??= new ListBuilder<PaymentableEntity>();
-  set paymentables(ListBuilder<PaymentableEntity> paymentables) =>
+  set paymentables(ListBuilder<PaymentableEntity>? paymentables) =>
       _$this._paymentables = paymentables;
 
-  ListBuilder<PaymentableEntity> _invoices;
+  ListBuilder<PaymentableEntity>? _invoices;
   ListBuilder<PaymentableEntity> get invoices =>
       _$this._invoices ??= new ListBuilder<PaymentableEntity>();
-  set invoices(ListBuilder<PaymentableEntity> invoices) =>
+  set invoices(ListBuilder<PaymentableEntity>? invoices) =>
       _$this._invoices = invoices;
 
-  ListBuilder<PaymentableEntity> _credits;
+  ListBuilder<PaymentableEntity>? _credits;
   ListBuilder<PaymentableEntity> get credits =>
       _$this._credits ??= new ListBuilder<PaymentableEntity>();
-  set credits(ListBuilder<PaymentableEntity> credits) =>
+  set credits(ListBuilder<PaymentableEntity>? credits) =>
       _$this._credits = credits;
 
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+  bool? _isChanged;
+  bool? get isChanged => _$this._isChanged;
+  set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
 
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+  int? _archivedAt;
+  int? get archivedAt => _$this._archivedAt;
+  set archivedAt(int? archivedAt) => _$this._archivedAt = archivedAt;
 
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+  bool? _isDeleted;
+  bool? get isDeleted => _$this._isDeleted;
+  set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
 
-  String _createdUserId;
-  String get createdUserId => _$this._createdUserId;
-  set createdUserId(String createdUserId) =>
+  String? _createdUserId;
+  String? get createdUserId => _$this._createdUserId;
+  set createdUserId(String? createdUserId) =>
       _$this._createdUserId = createdUserId;
 
-  String _assignedUserId;
-  String get assignedUserId => _$this._assignedUserId;
-  set assignedUserId(String assignedUserId) =>
+  String? _assignedUserId;
+  String? get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String? assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   PaymentEntityBuilder() {
     PaymentEntity._initializeBuilder(this);
@@ -1324,7 +1324,7 @@ class PaymentEntityBuilder
   }
 
   @override
-  void update(void Function(PaymentEntityBuilder) updates) {
+  void update(void Function(PaymentEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -1386,7 +1386,7 @@ class PaymentEntityBuilder
               assignedUserId: assignedUserId,
               id: BuiltValueNullFieldError.checkNotNull(id, r'PaymentEntity', 'id'));
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'paymentables';
         paymentables.build();
@@ -1407,20 +1407,20 @@ class PaymentEntityBuilder
 
 class _$PaymentableEntity extends PaymentableEntity {
   @override
-  final int createdAt;
+  final int? createdAt;
   @override
-  final int updatedAt;
+  final int? updatedAt;
   @override
-  final String invoiceId;
+  final String? invoiceId;
   @override
-  final String creditId;
+  final String? creditId;
   @override
   final double amount;
   @override
   final String id;
 
   factory _$PaymentableEntity(
-          [void Function(PaymentableEntityBuilder) updates]) =>
+          [void Function(PaymentableEntityBuilder)? updates]) =>
       (new PaymentableEntityBuilder()..update(updates))._build();
 
   _$PaymentableEntity._(
@@ -1428,8 +1428,8 @@ class _$PaymentableEntity extends PaymentableEntity {
       this.updatedAt,
       this.invoiceId,
       this.creditId,
-      this.amount,
-      this.id})
+      required this.amount,
+      required this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         amount, r'PaymentableEntity', 'amount');
@@ -1456,10 +1456,10 @@ class _$PaymentableEntity extends PaymentableEntity {
         id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
@@ -1486,31 +1486,31 @@ class _$PaymentableEntity extends PaymentableEntity {
 
 class PaymentableEntityBuilder
     implements Builder<PaymentableEntity, PaymentableEntityBuilder> {
-  _$PaymentableEntity _$v;
+  _$PaymentableEntity? _$v;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
 
-  String _invoiceId;
-  String get invoiceId => _$this._invoiceId;
-  set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
+  String? _invoiceId;
+  String? get invoiceId => _$this._invoiceId;
+  set invoiceId(String? invoiceId) => _$this._invoiceId = invoiceId;
 
-  String _creditId;
-  String get creditId => _$this._creditId;
-  set creditId(String creditId) => _$this._creditId = creditId;
+  String? _creditId;
+  String? get creditId => _$this._creditId;
+  set creditId(String? creditId) => _$this._creditId = creditId;
 
-  double _amount;
-  double get amount => _$this._amount;
-  set amount(double amount) => _$this._amount = amount;
+  double? _amount;
+  double? get amount => _$this._amount;
+  set amount(double? amount) => _$this._amount = amount;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   PaymentableEntityBuilder();
 
@@ -1535,7 +1535,7 @@ class PaymentableEntityBuilder
   }
 
   @override
-  void update(void Function(PaymentableEntityBuilder) updates) {
+  void update(void Function(PaymentableEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

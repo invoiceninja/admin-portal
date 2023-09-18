@@ -15,8 +15,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseSettings extends StatefulWidget {
   const ExpenseSettings({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final ExpenseSettingsVM viewModel;
@@ -28,7 +28,7 @@ class ExpenseSettings extends StatefulWidget {
 class _ExpenseSettingsState extends State<ExpenseSettings> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_expenseSettings');
-  FocusScopeNode _focusNode;
+  FocusScopeNode? _focusNode;
 
   @override
   void initState() {
@@ -38,13 +38,13 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
 
   @override
   void dispose() {
-    _focusNode.dispose();
+    _focusNode!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final company = viewModel.company;
@@ -93,7 +93,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                 activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.convertCurrency),
                 value: company.convertExpenseCurrency ?? false,
-                subtitle: Text(localization.convertExpenseCurrencyHelp),
+                subtitle: Text(localization.convertExpenseCurrencyHelp!),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..convertExpenseCurrency = value)),
               ),
@@ -110,9 +110,9 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
           FormCard(children: <Widget>[
             SwitchListTile(
               activeColor: Theme.of(context).colorScheme.secondary,
-              title: Text(localization.notifyVendorWhenPaid),
+              title: Text(localization.notifyVendorWhenPaid!),
               value: company.notifyVendorWhenPaid ?? false,
-              subtitle: Text(localization.notifyVendorWhenPaidHelp),
+              subtitle: Text(localization.notifyVendorWhenPaidHelp!),
               onChanged: (value) => viewModel.onCompanyChanged(
                   company.rebuild((b) => b..notifyVendorWhenPaid = value)),
             ),

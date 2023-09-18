@@ -29,7 +29,7 @@ abstract class GroupState implements Built<GroupState, GroupStateBuilder> {
   @memoized
   int get hashCode;
 
-  GroupEntity get(String groupId) {
+  GroupEntity? get(String groupId) {
     if (map.containsKey(groupId)) {
       return map[groupId];
     } else {
@@ -37,7 +37,7 @@ abstract class GroupState implements Built<GroupState, GroupStateBuilder> {
     }
   }
 
-  BuiltMap<String, GroupEntity> get map;
+  BuiltMap<String?, GroupEntity?> get map;
 
   BuiltList<String> get list;
 
@@ -47,7 +47,7 @@ abstract class GroupState implements Built<GroupState, GroupStateBuilder> {
 abstract class GroupUIState extends Object
     with EntityUIState
     implements Built<GroupUIState, GroupUIStateBuilder> {
-  factory GroupUIState(PrefStateSortField sortField) {
+  factory GroupUIState(PrefStateSortField? sortField) {
     return _$GroupUIState._(
       listUIState: ListUIState(sortField?.field ?? GroupFields.name,
           sortAscending: sortField?.ascending),
@@ -63,14 +63,13 @@ abstract class GroupUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  GroupEntity get editing;
+  GroupEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<GroupUIState> get serializer => _$groupUIStateSerializer;
 }

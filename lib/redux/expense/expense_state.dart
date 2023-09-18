@@ -30,7 +30,7 @@ abstract class ExpenseState
   @memoized
   int get hashCode;
 
-  ExpenseEntity get(String expenseId) {
+  ExpenseEntity? get(String expenseId) {
     if (map.containsKey(expenseId)) {
       return map[expenseId];
     } else {
@@ -38,12 +38,12 @@ abstract class ExpenseState
     }
   }
 
-  BuiltMap<String, ExpenseEntity> get map;
+  BuiltMap<String?, ExpenseEntity?> get map;
 
   BuiltList<String> get list;
 
   ExpenseState loadExpenses(BuiltList<ExpenseEntity> clients) {
-    final map = Map<String, ExpenseEntity>.fromIterable(
+    final map = Map<String?, ExpenseEntity?>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
@@ -60,7 +60,7 @@ abstract class ExpenseState
 abstract class ExpenseUIState extends Object
     with EntityUIState
     implements Built<ExpenseUIState, ExpenseUIStateBuilder> {
-  factory ExpenseUIState(PrefStateSortField sortField) {
+  factory ExpenseUIState(PrefStateSortField? sortField) {
     return _$ExpenseUIState._(
       listUIState: ListUIState(sortField?.field ?? ExpenseFields.number,
           sortAscending: sortField?.ascending ?? false),
@@ -76,14 +76,13 @@ abstract class ExpenseUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  ExpenseEntity get editing;
+  ExpenseEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<ExpenseUIState> get serializer =>
       _$expenseUIStateSerializer;

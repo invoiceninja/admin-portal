@@ -22,25 +22,25 @@ class CompanyGatewayRepository {
 
   // TODO remove includes in this file
   Future<CompanyGatewayEntity> loadItem(
-      Credentials credentials, String entityId) async {
+      Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/company_gateways/$entityId?include=system_logs',
         credentials.token);
 
     final CompanyGatewayItemResponse companyGatewayResponse = serializers
-        .deserializeWith(CompanyGatewayItemResponse.serializer, response);
+        .deserializeWith(CompanyGatewayItemResponse.serializer, response)!;
 
     return companyGatewayResponse.data;
   }
 
   Future<BuiltList<CompanyGatewayEntity>> loadList(
       Credentials credentials) async {
-    final url = credentials.url + '/company_gateways';
+    final url = credentials.url! + '/company_gateways';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
     final CompanyGatewayListResponse companyGatewayResponse = serializers
-        .deserializeWith(CompanyGatewayListResponse.serializer, response);
+        .deserializeWith(CompanyGatewayListResponse.serializer, response)!;
 
     return companyGatewayResponse.data;
   }
@@ -51,20 +51,20 @@ class CompanyGatewayRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url +
+    final url = credentials.url! +
         '/company_gateways/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final CompanyGatewayListResponse companyGatewayResponse = serializers
-        .deserializeWith(CompanyGatewayListResponse.serializer, response);
+        .deserializeWith(CompanyGatewayListResponse.serializer, response)!;
 
     return companyGatewayResponse.data.toList();
   }
 
-  Future<void> disconnect(Credentials credentials, String id, String password,
-      String idToken) async {
-    final url = credentials.url + '/stripe/disconnect/$id';
+  Future<void> disconnect(Credentials credentials, String id, String? password,
+      String? idToken) async {
+    final url = credentials.url! + '/stripe/disconnect/$id';
     await webClient.post(
       url,
       credentials.token,
@@ -81,16 +81,16 @@ class CompanyGatewayRepository {
 
     if (companyGateway.isNew) {
       response = await webClient.post(
-          credentials.url + '/company_gateways', credentials.token,
+          credentials.url! + '/company_gateways', credentials.token,
           data: json.encode(data));
     } else {
-      final url = credentials.url + '/company_gateways/${companyGateway.id}';
+      final url = credentials.url! + '/company_gateways/${companyGateway.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }
 
     final CompanyGatewayItemResponse companyGatewayResponse = serializers
-        .deserializeWith(CompanyGatewayItemResponse.serializer, response);
+        .deserializeWith(CompanyGatewayItemResponse.serializer, response)!;
 
     return companyGatewayResponse.data;
   }

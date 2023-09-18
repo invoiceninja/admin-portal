@@ -26,8 +26,8 @@ import 'company_gateway_screen_vm.dart';
 
 class CompanyGatewayScreen extends StatelessWidget {
   const CompanyGatewayScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsCompanyGateways';
@@ -38,7 +38,7 @@ class CompanyGatewayScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final listUIState = state.uiState.companyGatewayUIState.listUIState;
     final settingsUIState = state.uiState.settingsUIState;
 
@@ -60,11 +60,11 @@ class CompanyGatewayScreen extends StatelessWidget {
           SaveCancelButtons(
             isHeader: true,
             saveLabel: localization.actions,
-            onSavePressed: listUIState.selectedIds.isEmpty
+            onSavePressed: listUIState.selectedIds!.isEmpty
                 ? null
                 : (context) async {
-                    final companyGateways = listUIState.selectedIds
-                        .map<CompanyGatewayEntity>((companyGatewayId) =>
+                    final companyGateways = listUIState.selectedIds!
+                        .map<CompanyGatewayEntity?>((companyGatewayId) =>
                             viewModel.companyGatewayMap[companyGatewayId])
                         .toList();
 
@@ -72,8 +72,8 @@ class CompanyGatewayScreen extends StatelessWidget {
                       entities: companyGateways,
                       multiselect: true,
                       completer: Completer<Null>()
-                        ..future.then<dynamic>((_) =>
-                            store.dispatch(ClearCompanyGatewayMultiselect())),
+                        ..future.then<dynamic>(((_) =>
+                            store.dispatch(ClearCompanyGatewayMultiselect())) as FutureOr<dynamic> Function(Null)),
                     );
                   },
             onCancelPressed: (context) =>
@@ -133,7 +133,7 @@ class CompanyGatewayScreen extends StatelessWidget {
         },
       ),
       floatingActionButton:
-          state.prefState.isMobile && state.userCompany.isAdmin
+          state.prefState.isMobile && state.userCompany!.isAdmin
               ? FloatingActionButton(
                   heroTag: 'company_gateway_fab',
                   backgroundColor: Theme.of(context).primaryColorDark,

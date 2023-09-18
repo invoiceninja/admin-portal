@@ -2,7 +2,7 @@
 import 'package:contacts_service/contacts_service.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-Future<Contact> getDeviceContact() async {
+Future<Contact?> getDeviceContact() async {
   try {
     final permissionStatus = await Permission.contacts.request();
     if (permissionStatus == PermissionStatus.granted) {

@@ -18,7 +18,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PurchaseOrderPresenter extends EntityPresenter {
-  static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
+  static List<String> getDefaultTableFields(UserCompanyEntity? userCompany) {
     return [
       PurchaseOrderFields.status,
       PurchaseOrderFields.number,
@@ -30,7 +30,7 @@ class PurchaseOrderPresenter extends EntityPresenter {
     ];
   }
 
-  static List<String> getAllTableFields(UserCompanyEntity userCompany) {
+  static List<String> getAllTableFields(UserCompanyEntity? userCompany) {
     return [
       ...getDefaultTableFields(userCompany),
       ...EntityPresenter.getBaseFields(),
@@ -61,7 +61,7 @@ class PurchaseOrderPresenter extends EntityPresenter {
   }
 
   @override
-  Widget getField({String field, BuildContext context}) {
+  Widget getField({String? field, required BuildContext context}) {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final purchaseOrder = entity as InvoiceEntity;
@@ -74,7 +74,7 @@ class PurchaseOrderPresenter extends EntityPresenter {
         return EntityStatusChip(entity: purchaseOrder, showState: true);
       case PurchaseOrderFields.number:
         return Text((purchaseOrder.number ?? '').isEmpty
-            ? localization.pending
+            ? localization!.pending
             : purchaseOrder.number);
       case PurchaseOrderFields.client:
         return LinkTextRelatedEntity(entity: client, relation: purchaseOrder);
@@ -86,18 +86,18 @@ class PurchaseOrderPresenter extends EntityPresenter {
         return Align(
           alignment: Alignment.centerRight,
           child: Text(formatNumber(purchaseOrder.amount, context,
-              vendorId: purchaseOrder.vendorId)),
+              vendorId: purchaseOrder.vendorId)!),
         );
       case PurchaseOrderFields.dueDate:
         return Text(formatDate(purchaseOrder.dueDate, context));
       case PurchaseOrderFields.customValue1:
-        return Text(presentCustomField(context, purchaseOrder.customValue1));
+        return Text(presentCustomField(context, purchaseOrder.customValue1)!);
       case PurchaseOrderFields.customValue2:
-        return Text(presentCustomField(context, purchaseOrder.customValue2));
+        return Text(presentCustomField(context, purchaseOrder.customValue2)!);
       case PurchaseOrderFields.customValue3:
-        return Text(presentCustomField(context, purchaseOrder.customValue3));
+        return Text(presentCustomField(context, purchaseOrder.customValue3)!);
       case PurchaseOrderFields.customValue4:
-        return Text(presentCustomField(context, purchaseOrder.customValue4));
+        return Text(presentCustomField(context, purchaseOrder.customValue4)!);
       case PurchaseOrderFields.publicNotes:
         return TableTooltip(message: purchaseOrder.publicNotes);
       case PurchaseOrderFields.privateNotes:
@@ -106,22 +106,22 @@ class PurchaseOrderPresenter extends EntityPresenter {
         return Text(purchaseOrder.isAmountDiscount
             ? formatNumber(purchaseOrder.discount, context,
                 formatNumberType: FormatNumberType.money,
-                vendorId: purchaseOrder.vendorId)
+                vendorId: purchaseOrder.vendorId)!
             : formatNumber(purchaseOrder.discount, context,
-                formatNumberType: FormatNumberType.percent));
+                formatNumberType: FormatNumberType.percent)!);
       case PurchaseOrderFields.poNumber:
         return Text(purchaseOrder.poNumber);
       case PurchaseOrderFields.documents:
         return Text('${purchaseOrder.documents.length}');
       case PurchaseOrderFields.taxAmount:
         return Text(formatNumber(purchaseOrder.taxAmount, context,
-            vendorId: purchaseOrder.vendorId));
+            vendorId: purchaseOrder.vendorId)!);
       case PurchaseOrderFields.exchangeRate:
         return Text(formatNumber(purchaseOrder.exchangeRate, context,
-            formatNumberType: FormatNumberType.double));
+            formatNumberType: FormatNumberType.double)!);
       case PurchaseOrderFields.isViewed:
         return Text(
-            purchaseOrder.isViewed ? localization.yes : localization.no);
+            purchaseOrder.isViewed ? localization!.yes : localization!.no);
       case PurchaseOrderFields.project:
         final project = state.projectState.get(purchaseOrder.projectId);
         return LinkTextRelatedEntity(entity: project, relation: purchaseOrder);
@@ -129,17 +129,17 @@ class PurchaseOrderPresenter extends EntityPresenter {
         final vendor = state.vendorState.get(purchaseOrder.vendorId);
         return LinkTextRelatedEntity(entity: vendor, relation: purchaseOrder);
       case PurchaseOrderFields.vendorState:
-        return Text(vendor.state);
+        return Text(vendor!.state);
       case PurchaseOrderFields.vendorCity:
-        return Text(vendor.city);
+        return Text(vendor!.city);
       case PurchaseOrderFields.vendorPostalCode:
-        return Text(vendor.postalCode);
+        return Text(vendor!.postalCode);
       case PurchaseOrderFields.vendorCountry:
-        return Text(state.staticState.countryMap[client.countryId]?.name ?? '');
+        return Text(state.staticState.countryMap[client!.countryId]?.name ?? '');
       case PurchaseOrderFields.contactName:
       case PurchaseOrderFields.contactEmail:
         final contact = purchaseOrderContactSelector(
-            purchaseOrder, state.vendorState.get(purchaseOrder.vendorId));
+            purchaseOrder, state.vendorState.get(purchaseOrder.vendorId)!);
         if (contact == null) {
           return SizedBox();
         }
@@ -153,7 +153,7 @@ class PurchaseOrderPresenter extends EntityPresenter {
         );
       case PurchaseOrderFields.partial:
         return Text(formatNumber(purchaseOrder.partial, context,
-            vendorId: purchaseOrder.vendorId));
+            vendorId: purchaseOrder.vendorId)!);
       case PurchaseOrderFields.partialDueDate:
         return Text(formatDate(purchaseOrder.partialDueDate, context));
       case PurchaseOrderFields.expense:

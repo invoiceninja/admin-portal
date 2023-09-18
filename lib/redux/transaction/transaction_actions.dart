@@ -16,29 +16,29 @@ class ViewTransactionList implements PersistUI {
   });
 
   final bool force;
-  final int page;
+  final int? page;
 }
 
 class ViewTransaction implements PersistUI, PersistPrefs {
   ViewTransaction({
-    @required this.transactionId,
+    required this.transactionId,
     this.force = false,
   });
 
-  final String transactionId;
+  final String? transactionId;
   final bool force;
 }
 
 class EditTransaction implements PersistUI, PersistPrefs {
   EditTransaction(
-      {@required this.transaction,
+      {required this.transaction,
       this.completer,
       this.cancelCompleter,
       this.force = false});
 
   final TransactionEntity transaction;
-  final Completer completer;
-  final Completer cancelCompleter;
+  final Completer? completer;
+  final Completer? cancelCompleter;
   final bool force;
 }
 
@@ -51,21 +51,21 @@ class UpdateTransaction implements PersistUI {
 class LoadTransaction {
   LoadTransaction({this.completer, this.transactionId});
 
-  final Completer completer;
-  final String transactionId;
+  final Completer? completer;
+  final String? transactionId;
 }
 
 class LoadTransactionActivity {
   LoadTransactionActivity({this.completer, this.transactionId});
 
-  final Completer completer;
-  final String transactionId;
+  final Completer? completer;
+  final String? transactionId;
 }
 
 class LoadTransactions {
   LoadTransactions({this.completer, this.page = 1});
 
-  final Completer completer;
+  final Completer? completer;
   final int page;
 }
 
@@ -120,8 +120,8 @@ class LoadTransactionsSuccess implements StopLoading {
 class SaveTransactionRequest implements StartSaving {
   SaveTransactionRequest({this.completer, this.transaction});
 
-  final Completer completer;
-  final TransactionEntity transaction;
+  final Completer? completer;
+  final TransactionEntity? transaction;
 }
 
 class SaveTransactionSuccess implements StopSaving, PersistData, PersistUI {
@@ -158,7 +158,7 @@ class ArchiveTransactionsSuccess implements StopSaving, PersistData {
 class ArchiveTransactionsFailure implements StopSaving {
   ArchiveTransactionsFailure(this.transactions);
 
-  final List<TransactionEntity> transactions;
+  final List<TransactionEntity?> transactions;
 }
 
 class DeleteTransactionsRequest implements StartSaving {
@@ -177,7 +177,7 @@ class DeleteTransactionsSuccess implements StopSaving, PersistData {
 class DeleteTransactionsFailure implements StopSaving {
   DeleteTransactionsFailure(this.transactions);
 
-  final List<TransactionEntity> transactions;
+  final List<TransactionEntity?> transactions;
 }
 
 class RestoreTransactionsRequest implements StartSaving {
@@ -196,7 +196,7 @@ class RestoreTransactionsSuccess implements StopSaving, PersistData {
 class RestoreTransactionsFailure implements StopSaving {
   RestoreTransactionsFailure(this.transactions);
 
-  final List<TransactionEntity> transactions;
+  final List<TransactionEntity?> transactions;
 }
 
 class ConvertTransactionToPaymentRequest implements StartSaving {
@@ -207,7 +207,7 @@ class ConvertTransactionToPaymentRequest implements StartSaving {
   );
 
   final Completer completer;
-  final String transactionId;
+  final String? transactionId;
   final List<String> invoiceIds;
 }
 
@@ -231,7 +231,7 @@ class LinkTransactionToPaymentRequest implements StartSaving {
   );
 
   final Completer completer;
-  final String transactionId;
+  final String? transactionId;
   final String paymentId;
 }
 
@@ -277,7 +277,7 @@ class LinkTransactionToExpenseRequest implements StartSaving {
   );
 
   final Completer completer;
-  final String transactionId;
+  final String? transactionId;
   final String expenseId;
 }
 
@@ -302,7 +302,7 @@ class ConvertTransactionsToExpensesRequest implements StartSaving {
   );
 
   final Completer completer;
-  final List<String> transactionIds;
+  final List<String?> transactionIds;
   final String vendorId;
   final String categoryId;
 }
@@ -391,15 +391,15 @@ class StartTransactionMultiselect {
 }
 
 class AddToTransactionMultiselect {
-  AddToTransactionMultiselect({@required this.entity});
+  AddToTransactionMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromTransactionMultiselect {
-  RemoveFromTransactionMultiselect({@required this.entity});
+  RemoveFromTransactionMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearTransactionMultiselect {
@@ -409,43 +409,43 @@ class ClearTransactionMultiselect {
 class UpdateTransactionTab implements PersistUI {
   UpdateTransactionTab({this.tabIndex});
 
-  final int tabIndex;
+  final int? tabIndex;
 }
 
 void handleTransactionAction(
-    BuildContext context, List<BaseEntity> transactions, EntityAction action) {
+    BuildContext? context, List<BaseEntity?> transactions, EntityAction? action) {
   if (transactions.isEmpty) {
     return;
   }
 
-  final store = StoreProvider.of<AppState>(context);
+  final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
-  final transaction = transactions.first as TransactionEntity;
+  final transaction = transactions.first as TransactionEntity?;
   final transactionIds =
-      transactions.map((transaction) => transaction.id).toList();
+      transactions.map((transaction) => transaction!.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: transaction);
+      editEntity(entity: transaction!);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreTransactionsRequest(
-          snackBarCompleter<Null>(context, localization.restoredTransaction),
+          snackBarCompleter<Null>(context, localization!.restoredTransaction),
           transactionIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveTransactionsRequest(
-          snackBarCompleter<Null>(context, localization.archivedTransaction),
+          snackBarCompleter<Null>(context, localization!.archivedTransaction),
           transactionIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteTransactionsRequest(
-          snackBarCompleter<Null>(context, localization.deletedTransaction),
+          snackBarCompleter<Null>(context, localization!.deletedTransaction),
           transactionIds));
       break;
     case EntityAction.convertMatched:
       store.dispatch(ConvertTransactionsRequest(
-          snackBarCompleter<Null>(context, localization.convertedTransactions),
+          snackBarCompleter<Null>(context, localization!.convertedTransactions),
           transactionIds));
       break;
     case EntityAction.unlink:
@@ -453,8 +453,8 @@ void handleTransactionAction(
           snackBarCompleter<Null>(
               context,
               transactionIds.length == 1
-                  ? localization.unlinkedTransaction
-                  : localization.unlinkedTransactions
+                  ? localization!.unlinkedTransaction
+                  : localization!.unlinkedTransactions!
                       .replaceFirst(':count', '${transactionIds.length}')),
           transactionIds));
       break;
@@ -468,7 +468,7 @@ void handleTransactionAction(
       }
 
       for (final transaction in transactions) {
-        if (!store.state.transactionListState.isSelected(transaction.id)) {
+        if (!store.state.transactionListState.isSelected(transaction!.id)) {
           store.dispatch(AddToTransactionMultiselect(entity: transaction));
         } else {
           store.dispatch(RemoveFromTransactionMultiselect(entity: transaction));

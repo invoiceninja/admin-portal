@@ -13,8 +13,8 @@ void main() {
 
 void runTestSuite({bool batchMode = false}) {
   group('Vendor Tests', () {
-    TestLocalization localization;
-    FlutterDriver driver;
+    late TestLocalization localization;
+    FlutterDriver? driver;
 
     final name = makeUnique(faker.company.name());
 
@@ -25,72 +25,72 @@ void runTestSuite({bool batchMode = false}) {
       driver = await FlutterDriver.connect();
 
       print('Login to app');
-      await login(driver, retype: batchMode);
+      await login(driver!, retype: batchMode);
 
       print('View vendors');
-      await viewSection(driver: driver, name: localization.vendors);
+      await viewSection(driver: driver!, name: localization.vendors);
     });
 
     tearDownAll(() async {
-      await logout(driver, localization);
+      await logout(driver!, localization);
 
       if (driver != null) {
-        driver.close();
+        driver!.close();
       }
     });
 
     // Create an empty vendor
     test('Try to add an empty vendor', () async {
       print('Tap new vendor');
-      await driver.tap(find.byTooltip(localization.newVendor));
+      await driver!.tap(find.byTooltip(localization.newVendor));
 
       print('Tap save');
-      await driver.tap(find.text(localization.save));
+      await driver!.tap(find.text(localization.save));
 
       print('Check for error');
-      await driver.waitFor(find.text(localization.pleaseEnterAName));
+      await driver!.waitFor(find.text(localization.pleaseEnterAName));
 
-      if (await isMobile(driver)) {
+      if (await isMobile(driver!)) {
         print('Click back');
-        await driver.tap(find.pageBack());
-        await driver.waitFor(find.byTooltip(localization.newVendor));
+        await driver!.tap(find.pageBack());
+        await driver!.waitFor(find.byTooltip(localization.newVendor));
       } else {
         print('Click cancel');
-        await driver.tap(find.text(localization.cancel));
+        await driver!.tap(find.text(localization.cancel));
       }
     });
 
     // Create a new vendor
     test('Add a new vendor', () async {
       print('Tap new vendor');
-      await driver.tap(find.byTooltip(localization.newVendor));
+      await driver!.tap(find.byTooltip(localization.newVendor));
 
       print('Fill form: $name');
-      await fillAndSaveForm(driver, <String, dynamic>{
+      await fillAndSaveForm(driver!, <String, dynamic>{
         localization.name: name,
       });
 
-      if (await isMobile(driver)) {
+      if (await isMobile(driver!)) {
         print('Click back');
-        await driver.tap(find.pageBack());
-        await driver.waitFor(find.byTooltip(localization.newVendor));
+        await driver!.tap(find.pageBack());
+        await driver!.waitFor(find.byTooltip(localization.newVendor));
       }
     });
 
     // Edit the newly created vendor
     test('Edit an existing vendor', () async {
-      if (await isMobile(driver)) {
+      if (await isMobile(driver!)) {
         print('Select vendor: $name');
-        await driver.scrollUntilVisible(
+        await driver!.scrollUntilVisible(
             find.byType('ListView'), find.text(name),
             dyScroll: -300);
-        await driver.tap(find.text(name));
+        await driver!.tap(find.text(name));
       }
 
       print('Tap edit');
-      await driver.tap(find.text(localization.edit));
+      await driver!.tap(find.text(localization.edit));
 
-      await fillAndSaveForm(driver, <String, String>{
+      await fillAndSaveForm(driver!, <String, String>{
         localization.name: updatedName,
       });
     });
@@ -98,14 +98,14 @@ void runTestSuite({bool batchMode = false}) {
     // Archive the edited vendor
     test('Archieve/delete vendor test', () async {
       await testArchiveAndDelete(
-          driver: driver,
+          driver: driver!,
           rowText: updatedName,
           archivedMessage: localization.archivedVendor,
           deletedMessage: localization.deletedVendor,
           restoredMessage: localization.restoredVendor);
 
-      if (await isMobile(driver)) {
-        await driver.tap(find.pageBack());
+      if (await isMobile(driver!)) {
+        await driver!.tap(find.pageBack());
       }
     });
   });

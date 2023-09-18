@@ -20,8 +20,8 @@ import 'token_screen_vm.dart';
 
 class TokenScreen extends StatelessWidget {
   const TokenScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsTokens';
@@ -90,7 +90,7 @@ class TokenScreen extends StatelessWidget {
             store.dispatch(FilterTokensByCustom4(value)),
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany.canCreate(EntityType.token)
+              userCompany!.canCreate(EntityType.token)
           ? FloatingActionButton(
               heroTag: 'token_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
@@ -102,7 +102,7 @@ class TokenScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newToken,
+              tooltip: localization!.newToken,
             )
           : null,
     );

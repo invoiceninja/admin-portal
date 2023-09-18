@@ -14,9 +14,9 @@ import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class BankAccountView extends StatefulWidget {
   const BankAccountView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final BankAccountViewVM viewModel;
@@ -29,7 +29,7 @@ class BankAccountView extends StatefulWidget {
 class _BankAccountViewState extends State<BankAccountView> {
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final bankAccount = viewModel.bankAccount;
     final state = viewModel.state;

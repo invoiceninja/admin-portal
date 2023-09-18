@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseCategoryListBuilder extends StatelessWidget {
-  const ExpenseCategoryListBuilder({Key key}) : super(key: key);
+  const ExpenseCategoryListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class ExpenseCategoryListBuilder extends StatelessWidget {
                 filter: viewModel.filter,
                 expenseCategory: expenseCategory,
                 isChecked:
-                    isInMultiselect && listState.isSelected(expenseCategory.id),
+                    isInMultiselect && listState.isSelected(expenseCategory!.id),
               );
             });
       },
@@ -62,18 +62,18 @@ class ExpenseCategoryListBuilder extends StatelessWidget {
 
 class ExpenseCategoryListVM {
   ExpenseCategoryListVM({
-    @required this.state,
-    @required this.userCompany,
-    @required this.expenseCategoryList,
-    @required this.expenseCategoryMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.onEntityAction,
-    @required this.tableColumns,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.userCompany,
+    required this.expenseCategoryList,
+    required this.expenseCategoryMap,
+    required this.filter,
+    required this.isLoading,
+    required this.listState,
+    required this.onRefreshed,
+    required this.onEntityAction,
+    required this.tableColumns,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
   });
 
   static ExpenseCategoryListVM fromStore(Store<AppState> store) {
@@ -82,7 +82,7 @@ class ExpenseCategoryListVM {
         return Future<Null>(null);
       }
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -105,7 +105,7 @@ class ExpenseCategoryListVM {
               EntityAction action) =>
           handleExpenseCategoryAction(context, expenseCategories, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: state.userCompany.settings
+      tableColumns: state.userCompany!.settings
               ?.getTableColumns(EntityType.expenseCategory) ??
           ExpenseCategoryPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortExpenseCategories(field)),
@@ -115,11 +115,11 @@ class ExpenseCategoryListVM {
   }
 
   final AppState state;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> expenseCategoryList;
-  final BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap;
+  final BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap;
   final ListUIState listState;
-  final String filter;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;

@@ -12,12 +12,12 @@ import 'package:super_editor/super_editor.dart';
 /// application [Overlay]. Any other [Stack] should work, too.
 class EditorToolbar extends StatefulWidget {
   const EditorToolbar({
-    Key key,
-    @required this.anchor,
-    @required this.editorFocusNode,
-    @required this.editor,
-    @required this.composer,
-    @required this.closeToolbar,
+    Key? key,
+    required this.anchor,
+    required this.editorFocusNode,
+    required this.editor,
+    required this.composer,
+    required this.closeToolbar,
   }) : super(key: key);
 
   /// [EditorToolbar] displays itself horizontally centered and
@@ -25,21 +25,21 @@ class EditorToolbar extends StatefulWidget {
   ///
   /// [anchor] is a [ValueNotifier] so that [EditorToolbar] can
   /// reposition itself as the [Offset] value changes.
-  final ValueNotifier<Offset> anchor;
+  final ValueNotifier<Offset?> anchor;
 
   /// The [FocusNode] attached to the editor to which this toolbar applies.
-  final FocusNode editorFocusNode;
+  final FocusNode? editorFocusNode;
 
   /// The [editor] is used to alter document content, such as
   /// when the user selects a different block format for a
   /// text blob, e.g., paragraph, header, blockquote, or
   /// to apply styles to text.
-  final DocumentEditor editor;
+  final DocumentEditor? editor;
 
   /// The [composer] provides access to the user's current
   /// selection within the document, which dictates the
   /// content that is altered by the toolbar's options.
-  final DocumentComposer composer;
+  final DocumentComposer? composer;
 
   /// Delegate that instructs the owner of this [EditorToolbar]
   /// to close the toolbar, such as after submitting a URL
@@ -52,8 +52,8 @@ class EditorToolbar extends StatefulWidget {
 
 class _EditorToolbarState extends State<EditorToolbar> {
   bool _showUrlField = false;
-  FocusNode _urlFocusNode;
-  AttributedTextEditingController _urlController;
+  FocusNode? _urlFocusNode;
+  AttributedTextEditingController? _urlController;
 
   @override
   void initState() {
@@ -64,8 +64,8 @@ class _EditorToolbarState extends State<EditorToolbar> {
 
   @override
   void dispose() {
-    _urlFocusNode.dispose();
-    _urlController.dispose();
+    _urlFocusNode!.dispose();
+    _urlController!.dispose();
     super.dispose();
   }
 
@@ -232,9 +232,9 @@ class _EditorToolbarState extends State<EditorToolbar> {
 
   /// Toggles bold styling for the current selected text.
   void _toggleBold() {
-    widget.editor.executeCommand(
+    widget.editor!.executeCommand(
       ToggleTextAttributionsCommand(
-        documentSelection: widget.composer.selection,
+        documentSelection: widget.composer!.selection!,
         attributions: {boldAttribution},
       ),
     );
@@ -242,9 +242,9 @@ class _EditorToolbarState extends State<EditorToolbar> {
 
   /// Toggles italic styling for the current selected text.
   void _toggleItalics() {
-    widget.editor.executeCommand(
+    widget.editor!.executeCommand(
       ToggleTextAttributionsCommand(
-        documentSelection: widget.composer.selection,
+        documentSelection: widget.composer!.selection!,
         attributions: {italicsAttribution},
       ),
     );
@@ -252,9 +252,9 @@ class _EditorToolbarState extends State<EditorToolbar> {
 
   /// Toggles strikethrough styling for the current selected text.
   void _toggleStrikethrough() {
-    widget.editor.executeCommand(
+    widget.editor!.executeCommand(
       ToggleTextAttributionsCommand(
-        documentSelection: widget.composer.selection,
+        documentSelection: widget.composer!.selection!,
         attributions: {strikethroughAttribution},
       ),
     );
@@ -276,7 +276,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
   /// Returns any link-based [AttributionSpan]s that appear partially
   /// or wholly within the current text selection.
   Set<AttributionSpan> _getSelectedLinkSpans() {
-    final selection = widget.composer.selection;
+    final selection = widget.composer!.selection!;
     final baseOffset = (selection.base.nodePosition as TextPosition).offset;
     final extentOffset = (selection.extent.nodePosition as TextPosition).offset;
     final selectionStart = min(baseOffset, extentOffset);
@@ -285,7 +285,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
         SpanRange(start: selectionStart, end: selectionEnd - 1);
 
     final textNode =
-        widget.editor.document.getNodeById(selection.extent.nodeId) as TextNode;
+        widget.editor!.document.getNodeById(selection.extent.nodeId) as TextNode;
     final text = textNode.text;
 
     final overlappingLinkAttributions = text.getAttributionSpansInRange(
@@ -300,7 +300,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
   /// Takes appropriate action when the toolbar's link button is
   /// pressed.
   void _onLinkPressed() {
-    final selection = widget.composer.selection;
+    final selection = widget.composer!.selection!;
     final baseOffset = (selection.base.nodePosition as TextPosition).offset;
     final extentOffset = (selection.extent.nodePosition as TextPosition).offset;
     final selectionStart = min(baseOffset, extentOffset);
@@ -309,7 +309,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
         SpanRange(start: selectionStart, end: selectionEnd - 1);
 
     final textNode =
-        widget.editor.document.getNodeById(selection.extent.nodeId) as TextNode;
+        widget.editor!.document.getNodeById(selection.extent.nodeId) as TextNode;
     final text = textNode.text;
 
     final overlappingLinkAttributions = text.getAttributionSpansInRange(
@@ -349,7 +349,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
       // There are no other links in the selection. Show the URL text field.
       setState(() {
         _showUrlField = true;
-        _urlFocusNode.requestFocus();
+        _urlFocusNode!.requestFocus();
       });
     }
   }
@@ -357,9 +357,9 @@ class _EditorToolbarState extends State<EditorToolbar> {
   /// Takes the text from the [urlController] and applies it as a link
   /// attribution to the currently selected text.
   void _applyLink() {
-    final url = _urlController.text.text;
+    final url = _urlController!.text.text;
 
-    final selection = widget.composer.selection;
+    final selection = widget.composer!.selection!;
     final baseOffset = (selection.base.nodePosition as TextPosition).offset;
     final extentOffset = (selection.extent.nodePosition as TextPosition).offset;
     final selectionStart = min(baseOffset, extentOffset);
@@ -368,7 +368,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
         TextRange(start: selectionStart, end: selectionEnd - 1);
 
     final textNode =
-        widget.editor.document.getNodeById(selection.extent.nodeId) as TextNode;
+        widget.editor!.document.getNodeById(selection.extent.nodeId) as TextNode;
     final text = textNode.text;
 
     final trimmedRange = _trimTextRangeWhitespace(text, selectionRange);
@@ -380,10 +380,10 @@ class _EditorToolbarState extends State<EditorToolbar> {
     );
 
     // Clear the field and hide the URL bar
-    _urlController.clear();
+    _urlController!.clear();
     setState(() {
       _showUrlField = false;
-      _urlFocusNode.unfocus(
+      _urlFocusNode!.unfocus(
           disposition: UnfocusDisposition.previouslyFocusedChild);
       widget.closeToolbar();
     });
@@ -468,8 +468,8 @@ class _EditorToolbarState extends State<EditorToolbar> {
         // the standard toolbar.
         if (_showUrlField)
           Positioned(
-            left: widget.anchor.value.dx,
-            top: widget.anchor.value.dy,
+            left: widget.anchor.value!.dx,
+            top: widget.anchor.value!.dy,
             child: FractionalTranslation(
               translation: const Offset(-0.5, 0.0),
               child: _buildUrlField(),
@@ -478,8 +478,8 @@ class _EditorToolbarState extends State<EditorToolbar> {
         _PositionedToolbar(
           anchor: widget.anchor,
           composer: widget.composer,
-          child: ValueListenableBuilder<DocumentSelection>(
-            valueListenable: widget.composer.selectionNotifier,
+          child: ValueListenableBuilder<DocumentSelection?>(
+            valueListenable: widget.composer!.selectionNotifier,
             builder: (context, selection, child) {
               if (selection == null) {
                 return const SizedBox();
@@ -682,9 +682,9 @@ class _EditorToolbarState extends State<EditorToolbar> {
               padding: EdgeInsets.zero,
               onPressed: () {
                 setState(() {
-                  _urlFocusNode.unfocus();
+                  _urlFocusNode!.unfocus();
                   _showUrlField = false;
-                  _urlController.clear();
+                  _urlController!.clear();
                 });
               },
             ),
@@ -743,11 +743,11 @@ enum _TextType {
 /// application [Overlay]. Any other [Stack] should work, too.
 class ImageFormatToolbar extends StatefulWidget {
   const ImageFormatToolbar({
-    Key key,
-    @required this.anchor,
-    @required this.composer,
-    @required this.setWidth,
-    @required this.closeToolbar,
+    Key? key,
+    required this.anchor,
+    required this.composer,
+    required this.setWidth,
+    required this.closeToolbar,
   }) : super(key: key);
 
   /// [ImageFormatToolbar] displays itself horizontally centered and
@@ -755,16 +755,16 @@ class ImageFormatToolbar extends StatefulWidget {
   ///
   /// [anchor] is a [ValueNotifier] so that [ImageFormatToolbar] can
   /// reposition itself as the [Offset] value changes.
-  final ValueNotifier<Offset> anchor;
+  final ValueNotifier<Offset?> anchor;
 
   /// The [composer] provides access to the user's current
   /// selection within the document, which dictates the
   /// content that is altered by the toolbar's options.
-  final DocumentComposer composer;
+  final DocumentComposer? composer;
 
   /// Callback that should update the width of the component with
   /// the given [nodeId] to match the given [width].
-  final void Function(String nodeId, double width) setWidth;
+  final void Function(String nodeId, double? width) setWidth;
 
   /// Delegate that instructs the owner of this [ImageFormatToolbar]
   /// to close the toolbar.
@@ -776,11 +776,11 @@ class ImageFormatToolbar extends StatefulWidget {
 
 class _ImageFormatToolbarState extends State<ImageFormatToolbar> {
   void _makeImageConfined() {
-    widget.setWidth(widget.composer.selection.extent.nodeId, null);
+    widget.setWidth(widget.composer!.selection!.extent.nodeId, null);
   }
 
   void _makeImageFullBleed() {
-    widget.setWidth(widget.composer.selection.extent.nodeId, double.infinity);
+    widget.setWidth(widget.composer!.selection!.extent.nodeId, double.infinity);
   }
 
   @override
@@ -788,8 +788,8 @@ class _ImageFormatToolbarState extends State<ImageFormatToolbar> {
     return _PositionedToolbar(
       anchor: widget.anchor,
       composer: widget.composer,
-      child: ValueListenableBuilder<DocumentSelection>(
-        valueListenable: widget.composer.selectionNotifier,
+      child: ValueListenableBuilder<DocumentSelection?>(
+        valueListenable: widget.composer!.selectionNotifier,
         builder: (context, selection, child) {
           if (selection == null) {
             return const SizedBox();
@@ -846,22 +846,22 @@ class _ImageFormatToolbarState extends State<ImageFormatToolbar> {
 
 class _PositionedToolbar extends StatelessWidget {
   const _PositionedToolbar({
-    Key key,
-    @required this.anchor,
-    @required this.composer,
-    @required this.child,
+    Key? key,
+    required this.anchor,
+    required this.composer,
+    required this.child,
   }) : super(key: key);
 
-  final ValueNotifier<Offset> anchor;
-  final DocumentComposer composer;
+  final ValueNotifier<Offset?> anchor;
+  final DocumentComposer? composer;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<Offset>(
+    return ValueListenableBuilder<Offset?>(
       valueListenable: anchor,
       builder: (context, offset, _) {
-        if (offset == null || composer.selection == null) {
+        if (offset == null || composer!.selection == null) {
           // When no anchor position is available, or the user hasn't
           // selected any text, show nothing.
           return const SizedBox();

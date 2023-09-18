@@ -24,10 +24,10 @@ class _$ProjectListResponseSerializer
   final String wireName = 'ProjectListResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, ProjectListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType:
@@ -39,21 +39,21 @@ class _$ProjectListResponseSerializer
 
   @override
   ProjectListResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ProjectListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(ProjectEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(ProjectEntity)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -73,10 +73,10 @@ class _$ProjectItemResponseSerializer
   final String wireName = 'ProjectItemResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, ProjectItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(ProjectEntity)),
@@ -87,19 +87,19 @@ class _$ProjectItemResponseSerializer
 
   @override
   ProjectItemResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ProjectItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ProjectEntity)) as ProjectEntity);
+              specifiedType: const FullType(ProjectEntity))! as ProjectEntity);
           break;
       }
     }
@@ -115,9 +115,9 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
   final String wireName = 'ProjectEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, ProjectEntity object,
+  Iterable<Object?> serialize(Serializers serializers, ProjectEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'color',
@@ -175,7 +175,7 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.isChanged;
     if (value != null) {
       result
@@ -209,109 +209,109 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
 
   @override
   ProjectEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ProjectEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'color':
           result.color = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'client_id':
           result.clientId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'task_rate':
           result.taskRate = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'due_date':
           result.dueDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'private_notes':
           result.privateNotes = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'public_notes':
           result.publicNotes = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'budgeted_hours':
           result.budgetedHours = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value3':
           result.customValue3 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'number':
           result.number = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'current_hours':
           result.totalHours = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'documents':
           result.documents.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(DocumentEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(DocumentEntity)]))!
+              as BuiltList<Object?>);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'archived_at':
           result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'user_id':
           result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -325,10 +325,10 @@ class _$ProjectListResponse extends ProjectListResponse {
   final BuiltList<ProjectEntity> data;
 
   factory _$ProjectListResponse(
-          [void Function(ProjectListResponseBuilder) updates]) =>
+          [void Function(ProjectListResponseBuilder)? updates]) =>
       (new ProjectListResponseBuilder()..update(updates))._build();
 
-  _$ProjectListResponse._({this.data}) : super._() {
+  _$ProjectListResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'ProjectListResponse', 'data');
   }
 
@@ -347,10 +347,10 @@ class _$ProjectListResponse extends ProjectListResponse {
     return other is ProjectListResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -367,12 +367,12 @@ class _$ProjectListResponse extends ProjectListResponse {
 
 class ProjectListResponseBuilder
     implements Builder<ProjectListResponse, ProjectListResponseBuilder> {
-  _$ProjectListResponse _$v;
+  _$ProjectListResponse? _$v;
 
-  ListBuilder<ProjectEntity> _data;
+  ListBuilder<ProjectEntity>? _data;
   ListBuilder<ProjectEntity> get data =>
       _$this._data ??= new ListBuilder<ProjectEntity>();
-  set data(ListBuilder<ProjectEntity> data) => _$this._data = data;
+  set data(ListBuilder<ProjectEntity>? data) => _$this._data = data;
 
   ProjectListResponseBuilder();
 
@@ -392,7 +392,7 @@ class ProjectListResponseBuilder
   }
 
   @override
-  void update(void Function(ProjectListResponseBuilder) updates) {
+  void update(void Function(ProjectListResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -404,7 +404,7 @@ class ProjectListResponseBuilder
     try {
       _$result = _$v ?? new _$ProjectListResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -424,10 +424,10 @@ class _$ProjectItemResponse extends ProjectItemResponse {
   final ProjectEntity data;
 
   factory _$ProjectItemResponse(
-          [void Function(ProjectItemResponseBuilder) updates]) =>
+          [void Function(ProjectItemResponseBuilder)? updates]) =>
       (new ProjectItemResponseBuilder()..update(updates))._build();
 
-  _$ProjectItemResponse._({this.data}) : super._() {
+  _$ProjectItemResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'ProjectItemResponse', 'data');
   }
 
@@ -446,10 +446,10 @@ class _$ProjectItemResponse extends ProjectItemResponse {
     return other is ProjectItemResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -466,11 +466,11 @@ class _$ProjectItemResponse extends ProjectItemResponse {
 
 class ProjectItemResponseBuilder
     implements Builder<ProjectItemResponse, ProjectItemResponseBuilder> {
-  _$ProjectItemResponse _$v;
+  _$ProjectItemResponse? _$v;
 
-  ProjectEntityBuilder _data;
+  ProjectEntityBuilder? _data;
   ProjectEntityBuilder get data => _$this._data ??= new ProjectEntityBuilder();
-  set data(ProjectEntityBuilder data) => _$this._data = data;
+  set data(ProjectEntityBuilder? data) => _$this._data = data;
 
   ProjectItemResponseBuilder();
 
@@ -490,7 +490,7 @@ class ProjectItemResponseBuilder
   }
 
   @override
-  void update(void Function(ProjectItemResponseBuilder) updates) {
+  void update(void Function(ProjectItemResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -502,7 +502,7 @@ class ProjectItemResponseBuilder
     try {
       _$result = _$v ?? new _$ProjectItemResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -549,7 +549,7 @@ class _$ProjectEntity extends ProjectEntity {
   @override
   final BuiltList<DocumentEntity> documents;
   @override
-  final bool isChanged;
+  final bool? isChanged;
   @override
   final int createdAt;
   @override
@@ -557,41 +557,41 @@ class _$ProjectEntity extends ProjectEntity {
   @override
   final int archivedAt;
   @override
-  final bool isDeleted;
+  final bool? isDeleted;
   @override
-  final String createdUserId;
+  final String? createdUserId;
   @override
-  final String assignedUserId;
+  final String? assignedUserId;
   @override
   final String id;
 
-  factory _$ProjectEntity([void Function(ProjectEntityBuilder) updates]) =>
+  factory _$ProjectEntity([void Function(ProjectEntityBuilder)? updates]) =>
       (new ProjectEntityBuilder()..update(updates))._build();
 
   _$ProjectEntity._(
-      {this.name,
-      this.color,
-      this.clientId,
-      this.taskRate,
-      this.dueDate,
-      this.privateNotes,
-      this.publicNotes,
-      this.budgetedHours,
-      this.customValue1,
-      this.customValue2,
-      this.customValue3,
-      this.customValue4,
-      this.number,
-      this.totalHours,
-      this.documents,
+      {required this.name,
+      required this.color,
+      required this.clientId,
+      required this.taskRate,
+      required this.dueDate,
+      required this.privateNotes,
+      required this.publicNotes,
+      required this.budgetedHours,
+      required this.customValue1,
+      required this.customValue2,
+      required this.customValue3,
+      required this.customValue4,
+      required this.number,
+      required this.totalHours,
+      required this.documents,
       this.isChanged,
-      this.createdAt,
-      this.updatedAt,
-      this.archivedAt,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.archivedAt,
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.id})
+      required this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'ProjectEntity', 'name');
     BuiltValueNullFieldError.checkNotNull(color, r'ProjectEntity', 'color');
@@ -664,10 +664,10 @@ class _$ProjectEntity extends ProjectEntity {
         id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, color.hashCode);
@@ -728,104 +728,104 @@ class _$ProjectEntity extends ProjectEntity {
 
 class ProjectEntityBuilder
     implements Builder<ProjectEntity, ProjectEntityBuilder> {
-  _$ProjectEntity _$v;
+  _$ProjectEntity? _$v;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
 
-  String _color;
-  String get color => _$this._color;
-  set color(String color) => _$this._color = color;
+  String? _color;
+  String? get color => _$this._color;
+  set color(String? color) => _$this._color = color;
 
-  String _clientId;
-  String get clientId => _$this._clientId;
-  set clientId(String clientId) => _$this._clientId = clientId;
+  String? _clientId;
+  String? get clientId => _$this._clientId;
+  set clientId(String? clientId) => _$this._clientId = clientId;
 
-  double _taskRate;
-  double get taskRate => _$this._taskRate;
-  set taskRate(double taskRate) => _$this._taskRate = taskRate;
+  double? _taskRate;
+  double? get taskRate => _$this._taskRate;
+  set taskRate(double? taskRate) => _$this._taskRate = taskRate;
 
-  String _dueDate;
-  String get dueDate => _$this._dueDate;
-  set dueDate(String dueDate) => _$this._dueDate = dueDate;
+  String? _dueDate;
+  String? get dueDate => _$this._dueDate;
+  set dueDate(String? dueDate) => _$this._dueDate = dueDate;
 
-  String _privateNotes;
-  String get privateNotes => _$this._privateNotes;
-  set privateNotes(String privateNotes) => _$this._privateNotes = privateNotes;
+  String? _privateNotes;
+  String? get privateNotes => _$this._privateNotes;
+  set privateNotes(String? privateNotes) => _$this._privateNotes = privateNotes;
 
-  String _publicNotes;
-  String get publicNotes => _$this._publicNotes;
-  set publicNotes(String publicNotes) => _$this._publicNotes = publicNotes;
+  String? _publicNotes;
+  String? get publicNotes => _$this._publicNotes;
+  set publicNotes(String? publicNotes) => _$this._publicNotes = publicNotes;
 
-  double _budgetedHours;
-  double get budgetedHours => _$this._budgetedHours;
-  set budgetedHours(double budgetedHours) =>
+  double? _budgetedHours;
+  double? get budgetedHours => _$this._budgetedHours;
+  set budgetedHours(double? budgetedHours) =>
       _$this._budgetedHours = budgetedHours;
 
-  String _customValue1;
-  String get customValue1 => _$this._customValue1;
-  set customValue1(String customValue1) => _$this._customValue1 = customValue1;
+  String? _customValue1;
+  String? get customValue1 => _$this._customValue1;
+  set customValue1(String? customValue1) => _$this._customValue1 = customValue1;
 
-  String _customValue2;
-  String get customValue2 => _$this._customValue2;
-  set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+  String? _customValue2;
+  String? get customValue2 => _$this._customValue2;
+  set customValue2(String? customValue2) => _$this._customValue2 = customValue2;
 
-  String _customValue3;
-  String get customValue3 => _$this._customValue3;
-  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+  String? _customValue3;
+  String? get customValue3 => _$this._customValue3;
+  set customValue3(String? customValue3) => _$this._customValue3 = customValue3;
 
-  String _customValue4;
-  String get customValue4 => _$this._customValue4;
-  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+  String? _customValue4;
+  String? get customValue4 => _$this._customValue4;
+  set customValue4(String? customValue4) => _$this._customValue4 = customValue4;
 
-  String _number;
-  String get number => _$this._number;
-  set number(String number) => _$this._number = number;
+  String? _number;
+  String? get number => _$this._number;
+  set number(String? number) => _$this._number = number;
 
-  double _totalHours;
-  double get totalHours => _$this._totalHours;
-  set totalHours(double totalHours) => _$this._totalHours = totalHours;
+  double? _totalHours;
+  double? get totalHours => _$this._totalHours;
+  set totalHours(double? totalHours) => _$this._totalHours = totalHours;
 
-  ListBuilder<DocumentEntity> _documents;
+  ListBuilder<DocumentEntity>? _documents;
   ListBuilder<DocumentEntity> get documents =>
       _$this._documents ??= new ListBuilder<DocumentEntity>();
-  set documents(ListBuilder<DocumentEntity> documents) =>
+  set documents(ListBuilder<DocumentEntity>? documents) =>
       _$this._documents = documents;
 
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+  bool? _isChanged;
+  bool? get isChanged => _$this._isChanged;
+  set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
 
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+  int? _archivedAt;
+  int? get archivedAt => _$this._archivedAt;
+  set archivedAt(int? archivedAt) => _$this._archivedAt = archivedAt;
 
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+  bool? _isDeleted;
+  bool? get isDeleted => _$this._isDeleted;
+  set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
 
-  String _createdUserId;
-  String get createdUserId => _$this._createdUserId;
-  set createdUserId(String createdUserId) =>
+  String? _createdUserId;
+  String? get createdUserId => _$this._createdUserId;
+  set createdUserId(String? createdUserId) =>
       _$this._createdUserId = createdUserId;
 
-  String _assignedUserId;
-  String get assignedUserId => _$this._assignedUserId;
-  set assignedUserId(String assignedUserId) =>
+  String? _assignedUserId;
+  String? get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String? assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   ProjectEntityBuilder() {
     ProjectEntity._initializeBuilder(this);
@@ -869,7 +869,7 @@ class ProjectEntityBuilder
   }
 
   @override
-  void update(void Function(ProjectEntityBuilder) updates) {
+  void update(void Function(ProjectEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -914,7 +914,7 @@ class ProjectEntityBuilder
               assignedUserId: assignedUserId,
               id: BuiltValueNullFieldError.checkNotNull(id, r'ProjectEntity', 'id'));
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'documents';
         documents.build();

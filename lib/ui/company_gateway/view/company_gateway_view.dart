@@ -26,9 +26,9 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class CompanyGatewayView extends StatefulWidget {
   const CompanyGatewayView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final CompanyGatewayViewVM viewModel;
@@ -40,7 +40,7 @@ class CompanyGatewayView extends StatefulWidget {
 
 class _CompanyGatewayViewState extends State<CompanyGatewayView>
     with SingleTickerProviderStateMixin {
-  TabController _controller;
+  TabController? _controller;
 
   @override
   void initState() {
@@ -50,13 +50,13 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView>
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final companyGateway = viewModel.companyGateway;
 
@@ -94,9 +94,9 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView>
 
 class _CompanyGatewayOverview extends StatelessWidget {
   const _CompanyGatewayOverview({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final bool isFilter;
@@ -106,16 +106,16 @@ class _CompanyGatewayOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = viewModel.state;
     final companyGateway = viewModel.companyGateway;
-    final gateway = state.staticState.gatewayMap[companyGateway.gatewayId];
-    final localization = AppLocalization.of(context);
+    final gateway = state.staticState.gatewayMap[companyGateway.gatewayId]!;
+    final localization = AppLocalization.of(context)!;
     final processed = memoizedCalculateCompanyGatewayProcessed(
         companyGateway.id, viewModel.state.paymentState.map);
     final webhookUrl =
-        '${state.account.defaultUrl}/payment_webhook/${state.company.companyKey}/${companyGateway.id}';
+        '${state.account!.defaultUrl}/payment_webhook/${state.company!.companyKey}/${companyGateway.id}';
 
-    final allFields = <String, Map<String, String>>{};
+    final Map<String, Map<String, String?>> allFields = <String, Map<String, String>>{};
     for (var gatewayTypeId in kGatewayTypes.keys) {
-      final Map<String, String> fields = {};
+      final Map<String, String?> fields = {};
       if (companyGateway.feesAndLimitsMap.containsKey(gatewayTypeId)) {
         final settings =
             companyGateway.getSettingsForGatewayTypeId(gatewayTypeId);
@@ -160,7 +160,7 @@ class _CompanyGatewayOverview extends StatelessWidget {
                 child: AppButton(
                   iconData:
                       isDesktop(context) ? MdiIcons.checkCircleOutline : null,
-                  label: localization.verifyCustomers.toUpperCase(),
+                  label: localization.verifyCustomers!.toUpperCase(),
                   onPressed: () => viewModel.onStripeVerifyPressed(context),
                 ),
               ),
@@ -168,7 +168,7 @@ class _CompanyGatewayOverview extends StatelessWidget {
               Expanded(
                 child: AppButton(
                   iconData: isDesktop(context) ? MdiIcons.import : null,
-                  label: localization.importCustomers.toUpperCase(),
+                  label: localization.importCustomers!.toUpperCase(),
                   onPressed: () => viewModel.onStripeImportPressed(context),
                 ),
               ),
@@ -230,7 +230,7 @@ class _CompanyGatewayOverview extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 20, left: 20),
           child: Text(
-            localization.lookup(kGatewayTypes[entry.key]),
+            localization.lookup(kGatewayTypes[entry.key])!,
             style: Theme.of(context).textTheme.titleLarge,
           ),
         ),
@@ -242,8 +242,8 @@ class _CompanyGatewayOverview extends StatelessWidget {
 
 class _CompanyGatewaySystemLog extends StatefulWidget {
   const _CompanyGatewaySystemLog({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final CompanyGatewayViewVM viewModel;

@@ -26,9 +26,9 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class EntityDropdown extends StatefulWidget {
   const EntityDropdown({
-    @required this.entityType,
-    @required this.labelText,
-    @required this.onSelected,
+    required this.entityType,
+    required this.labelText,
+    required this.onSelected,
     this.entityMap,
     this.entityList,
     this.allowClearing = true,
@@ -44,21 +44,21 @@ class EntityDropdown extends StatefulWidget {
     this.excludeIds = const [],
   });
 
-  final EntityType entityType;
-  final List<String> entityList;
-  final String labelText;
-  final String entityId;
-  final bool autofocus;
-  final BuiltMap<String, SelectableEntity> entityMap;
-  final Function(SelectableEntity) onSelected;
-  final Function validator;
+  final EntityType? entityType;
+  final List<String?>? entityList;
+  final String? labelText;
+  final String? entityId;
+  final bool? autofocus;
+  final BuiltMap<String?, SelectableEntity?>? entityMap;
+  final Function(SelectableEntity?) onSelected;
+  final Function? validator;
   final bool autoValidate;
   final bool allowClearing;
-  final Function(String) onFieldSubmitted;
-  final Function(Completer<SelectableEntity> completer) onAddPressed;
-  final Function(SelectableEntity) overrideSuggestedAmount;
-  final Function(SelectableEntity) overrideSuggestedLabel;
-  final Function(Completer<SelectableEntity> completer, String) onCreateNew;
+  final Function(String?)? onFieldSubmitted;
+  final Function(Completer<SelectableEntity> completer)? onAddPressed;
+  final Function(SelectableEntity)? overrideSuggestedAmount;
+  final Function(SelectableEntity?)? overrideSuggestedLabel;
+  final Function(Completer<SelectableEntity> completer, String)? onCreateNew;
   final List<String> excludeIds;
 
   @override
@@ -69,7 +69,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
   final _textController = TextEditingController();
   final _focusNode = FocusNode();
   String _filter = '';
-  BuiltMap<String, SelectableEntity> _entityMap;
+  BuiltMap<String?, SelectableEntity?>? _entityMap;
   final _scrollController = ScrollController();
 
   @override
@@ -88,7 +88,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
     }
   }
 
-  String _getEntityLabel(SelectableEntity entity) {
+  String? _getEntityLabel(SelectableEntity? entity) {
     if (entity == null) {
       return '';
     }
@@ -99,8 +99,8 @@ class _EntityDropdownState extends State<EntityDropdown> {
       return value;
     }
 
-    if ((entity as BaseEntity).isDeleted) {
-      value += ' - ' + AppLocalization.of(context).deleted;
+    if (entity.isDeleted!) {
+      value += ' - ' + AppLocalization.of(context)!.deleted;
     }
 
     return value;
@@ -113,7 +113,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
     if (widget.entityId != oldWidget.entityId) {
       final state = StoreProvider.of<AppState>(context).state;
       _entityMap = widget.entityMap ?? state.getEntityMap(widget.entityType);
-      _textController.text = _getEntityLabel(_entityMap[widget.entityId]);
+      _textController.text = _getEntityLabel(_entityMap![widget.entityId])!;
     }
   }
 
@@ -125,13 +125,13 @@ class _EntityDropdownState extends State<EntityDropdown> {
     if (_entityMap == null) {
       print('## ERROR: ENTITY MAP IS NULL: ${widget.entityType}');
     } else {
-      final entity = _entityMap[widget.entityId];
+      final entity = _entityMap![widget.entityId];
       if (widget.overrideSuggestedLabel != null) {
-        _textController.text = widget.overrideSuggestedLabel(entity);
+        _textController.text = widget.overrideSuggestedLabel!(entity);
       } else if (entity == null) {
         // do nothing
       } else {
-        _textController.text = _getEntityLabel(entity);
+        _textController.text = _getEntityLabel(entity)!;
       }
     }
 
@@ -179,7 +179,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
         builder: (BuildContext context) {
           return EntityDropdownDialog(
             entityMap: _entityMap,
-            entityList: (widget.entityList ?? _entityMap.keys)
+            entityList: (widget.entityList ?? _entityMap!.keys)
                 .where((elementId) => !widget.excludeIds.contains(elementId))
                 .toList(),
             onSelected: (entity, [update = true]) {
@@ -189,20 +189,20 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
               widget.onSelected(entity);
 
-              final String label = widget.overrideSuggestedLabel != null
-                  ? widget.overrideSuggestedLabel(entity)
+              final String? label = widget.overrideSuggestedLabel != null
+                  ? widget.overrideSuggestedLabel!(entity)
                   : entity.listDisplayName;
 
               if (update) {
-                _textController.text = label;
+                _textController.text = label!;
               }
 
               if (widget.onFieldSubmitted != null) {
-                widget.onFieldSubmitted(label);
+                widget.onFieldSubmitted!(label);
               }
             },
             onAddPressed: widget.onAddPressed != null
-                ? (context, completer) => widget.onAddPressed(completer)
+                ? (context, completer) => widget.onAddPressed!(completer as Completer<SelectableEntity>)
                 : null,
             overrideSuggestedAmount: widget.overrideSuggestedAmount,
             overrideSuggestedLabel: widget.overrideSuggestedLabel,
@@ -213,14 +213,14 @@ class _EntityDropdownState extends State<EntityDropdown> {
   bool get hasValue =>
       widget.entityId != null &&
       widget.entityId != '0' &&
-      widget.entityId.isNotEmpty;
+      widget.entityId!.isNotEmpty;
 
   bool get showClear => widget.allowClearing && hasValue;
 
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
-    if (!state.company.isModuleEnabled(widget.entityType)) {
+    if (!state.company!.isModuleEnabled(widget.entityType)) {
       return SizedBox();
     }
 
@@ -236,11 +236,11 @@ class _EntityDropdownState extends State<EntityDropdown> {
         : widget.onAddPressed != null
             ? IconButton(
                 icon: Icon(Icons.add_circle_outline),
-                tooltip: AppLocalization.of(context).createNew,
+                tooltip: AppLocalization.of(context)!.createNew,
                 onPressed: () {
                   final Completer<SelectableEntity> completer =
                       Completer<SelectableEntity>();
-                  widget.onAddPressed(completer);
+                  widget.onAddPressed!(completer);
                   completer.future.then(
                     (entity) {
                       widget.onSelected(entity);
@@ -256,14 +256,14 @@ class _EntityDropdownState extends State<EntityDropdown> {
         focusNode: _focusNode,
         textEditingController: _textController,
         optionsBuilder: (TextEditingValue textEditingValue) {
-          final options = (widget.entityList ?? widget.entityMap.keys.toList())
-              .map((entityId) => _entityMap[entityId])
+          final options = (widget.entityList ?? widget.entityMap!.keys.toList())
+              .map((entityId) => _entityMap![entityId])
               .where((entity) =>
                   entity?.matchesFilter(textEditingValue.text) ?? false)
-              .where((element) => !widget.excludeIds.contains(element.id))
+              .where((element) => !widget.excludeIds.contains(element!.id))
               .toList();
 
-          if (options.length == 1 && options[0].id == widget.entityId) {
+          if (options.length == 1 && options[0]!.id == widget.entityId) {
             return <SelectableEntity>[];
           }
 
@@ -271,13 +271,13 @@ class _EntityDropdownState extends State<EntityDropdown> {
               options.isEmpty &&
               _filter.trim().isNotEmpty &&
               textEditingValue.text.trim().isNotEmpty &&
-              state.userCompany.canCreate(widget.entityType)) {
+              state.userCompany!.canCreate(widget.entityType)) {
             options.add(_AutocompleteEntity(name: textEditingValue.text));
           }
 
-          return options;
-        },
-        displayStringForOption: (entity) => entity.listDisplayName,
+          return options as FutureOr<Iterable<SelectableEntity>>;
+        } as FutureOr<Iterable<SelectableEntity>> Function(TextEditingValue),
+        displayStringForOption: (entity) => entity.listDisplayName!,
         onSelected: (entity) {
           _filter = '';
           /*
@@ -301,7 +301,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
           }
 
           if (entity?.id == _AutocompleteEntity.KEY) {
-            final name = (entity as _AutocompleteEntity).name.trim();
+            final name = (entity as _AutocompleteEntity).name!.trim();
             _textController.text = name;
 
             _focusNode.removeListener(_onFocusChanged);
@@ -313,14 +313,14 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
             final completer = Completer<SelectableEntity>();
             completer.future.then((value) {
-              showToast(AppLocalization.of(navigatorKey.currentContext)
+              showToast(AppLocalization.of(navigatorKey.currentContext!)!
                   .createdRecord);
               _wrapUp(value);
               _focusNode.addListener(_onFocusChanged);
             }).catchError((dynamic error) {
               _focusNode.addListener(_onFocusChanged);
             });
-            widget.onCreateNew(completer, name);
+            widget.onCreateNew!(completer, name);
           } else {
             _wrapUp(entity);
           }
@@ -330,7 +330,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
             FocusNode focusNode,
             VoidCallback onFieldSubmitted) {
           return DecoratedFormField(
-            validator: widget.validator,
+            validator: widget.validator as dynamic Function(String)?,
             showClear: showClear,
             label: widget.labelText,
             autofocus:
@@ -423,7 +423,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
             child: TextFormField(
               focusNode: _focusNode,
               readOnly: true,
-              validator: widget.validator,
+              validator: widget.validator as String? Function(String?)?,
               autovalidateMode: widget.autoValidate
                   ? AutovalidateMode.always
                   : AutovalidateMode.onUserInteraction,
@@ -450,21 +450,21 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
 class EntityDropdownDialog extends StatefulWidget {
   const EntityDropdownDialog({
-    @required this.entityMap,
-    @required this.entityList,
-    @required this.onSelected,
-    @required this.overrideSuggestedLabel,
-    @required this.overrideSuggestedAmount,
+    required this.entityMap,
+    required this.entityList,
+    required this.onSelected,
+    required this.overrideSuggestedLabel,
+    required this.overrideSuggestedAmount,
     this.onAddPressed,
     this.excludeIds = const [],
   });
 
-  final BuiltMap<String, SelectableEntity> entityMap;
-  final List<String> entityList;
+  final BuiltMap<String?, SelectableEntity?>? entityMap;
+  final List<String?> entityList;
   final Function(SelectableEntity, [bool]) onSelected;
-  final Function(BuildContext context, Completer completer) onAddPressed;
-  final Function(SelectableEntity) overrideSuggestedAmount;
-  final Function(SelectableEntity) overrideSuggestedLabel;
+  final Function(BuildContext context, Completer completer)? onAddPressed;
+  final Function(SelectableEntity)? overrideSuggestedAmount;
+  final Function(SelectableEntity)? overrideSuggestedLabel;
   final List<String> excludeIds;
 
   @override
@@ -472,7 +472,7 @@ class EntityDropdownDialog extends StatefulWidget {
 }
 
 class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
-  String _filter;
+  String? _filter;
 
   @override
   Widget build(BuildContext context) {
@@ -511,7 +511,7 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
               autofocus: true,
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: localization.filter,
+                hintText: localization!.filter,
               ),
             ),
           ),
@@ -527,7 +527,7 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
                     Navigator.pop(context);
                     final Completer<SelectableEntity> completer =
                         Completer<SelectableEntity>();
-                    widget.onAddPressed(context, completer);
+                    widget.onAddPressed!(context, completer);
                     completer.future.then((entity) {
                       widget.onSelected(entity, false);
                     });
@@ -541,7 +541,7 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
     Widget _createList() {
       final matches = widget.entityList
           .where((entityId) =>
-              widget.entityMap[entityId]?.matchesFilter(_filter) ?? false)
+              widget.entityMap![entityId]?.matchesFilter(_filter) ?? false)
           .where((entityId) => !widget.excludeIds.contains(entityId))
           .toList();
 
@@ -549,7 +549,7 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
         itemCount: matches.length,
         itemBuilder: (BuildContext context, int index) {
           final entityId = matches[index];
-          final entity = widget.entityMap[entityId];
+          final entity = widget.entityMap![entityId];
           return EntityAutocompleteListTile(
             entity: entity,
             filter: _filter,
@@ -578,36 +578,36 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
 
 class EntityAutocompleteListTile extends StatelessWidget {
   const EntityAutocompleteListTile(
-      {@required this.entity,
+      {required this.entity,
       this.filter,
       this.overrideSuggestedLabel,
       this.overrideSuggestedAmount,
       this.onTap,
       this.subtitle});
 
-  final SelectableEntity entity;
-  final Function(SelectableEntity entity) onTap;
-  final String filter;
-  final String subtitle;
-  final Function(SelectableEntity) overrideSuggestedAmount;
-  final Function(SelectableEntity) overrideSuggestedLabel;
+  final SelectableEntity? entity;
+  final Function(SelectableEntity? entity)? onTap;
+  final String? filter;
+  final String? subtitle;
+  final Function(SelectableEntity?)? overrideSuggestedAmount;
+  final Function(SelectableEntity?)? overrideSuggestedLabel;
 
   @override
   Widget build(BuildContext context) {
-    final String subtitle = this.subtitle ?? entity.matchesFilterValue(filter);
+    final String? subtitle = this.subtitle ?? entity!.matchesFilterValue(filter);
     final String label = overrideSuggestedLabel == null
-        ? entity.listDisplayName
-        : overrideSuggestedLabel(entity);
-    final String amount = overrideSuggestedAmount == null
-        ? formatNumber(entity.listDisplayAmount, context,
-            formatNumberType: entity.listDisplayAmountType)
-        : overrideSuggestedAmount(entity);
+        ? entity!.listDisplayName!
+        : overrideSuggestedLabel!(entity);
+    final String? amount = overrideSuggestedAmount == null
+        ? formatNumber(entity!.listDisplayAmount, context,
+            formatNumberType: entity!.listDisplayAmountType)
+        : overrideSuggestedAmount!(entity);
 
     return ListTile(
       title: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          if (entity.id == _AutocompleteEntity.KEY)
+          if (entity!.id == _AutocompleteEntity.KEY)
             Padding(
               padding: const EdgeInsets.only(right: 8, top: 4),
               child: Icon(
@@ -618,14 +618,14 @@ class EntityAutocompleteListTile extends StatelessWidget {
           Expanded(
             child: Text(label, style: Theme.of(context).textTheme.titleMedium),
           ),
-          entity.listDisplayAmount != null
-              ? Text(amount, style: Theme.of(context).textTheme.titleMedium)
+          entity!.listDisplayAmount != null
+              ? Text(amount!, style: Theme.of(context).textTheme.titleMedium)
               : Container(),
         ],
       ),
       subtitle:
-          (subtitle ?? '').isNotEmpty ? Text(subtitle, maxLines: 2) : null,
-      onTap: onTap != null ? () => onTap(entity) : null,
+          (subtitle ?? '').isNotEmpty ? Text(subtitle!, maxLines: 2) : null,
+      onTap: onTap != null ? () => onTap!(entity) : null,
     );
   }
 }
@@ -635,23 +635,23 @@ class _AutocompleteEntity extends Object with SelectableEntity {
 
   static const KEY = '__new__';
 
-  final String name;
+  final String? name;
 
   @override
   String get id => KEY;
 
   @override
-  bool matchesFilter(String filter) => true;
+  bool matchesFilter(String? filter) => true;
 
   @override
-  String matchesFilterValue(String filter) => null;
+  String? matchesFilterValue(String? filter) => null;
 
   @override
   String get listDisplayName {
-    final localization = AppLocalization.of(navigatorKey.currentContext);
+    final localization = AppLocalization.of(navigatorKey.currentContext!)!;
     return '${localization.create}: $name';
   }
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 }

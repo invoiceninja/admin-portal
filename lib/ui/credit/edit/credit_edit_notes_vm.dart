@@ -13,7 +13,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_notes.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_notes_vm.dart';
 
 class CreditEditNotesScreen extends StatelessWidget {
-  const CreditEditNotesScreen({Key key}) : super(key: key);
+  const CreditEditNotesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +32,10 @@ class CreditEditNotesScreen extends StatelessWidget {
 
 class CreditEditNotesVM extends EntityEditNotesVM {
   CreditEditNotesVM({
-    CompanyEntity company,
-    InvoiceEntity invoice,
-    Function(InvoiceEntity) onChanged,
-    AppState state,
+    CompanyEntity? company,
+    InvoiceEntity? invoice,
+    Function(InvoiceEntity)? onChanged,
+    AppState? state,
   }) : super(
           company: company,
           invoice: invoice,

@@ -19,8 +19,8 @@ import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 
 class TransactionEdit extends StatefulWidget {
   const TransactionEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final TransactionEditVM viewModel;
@@ -50,7 +50,7 @@ class _TransactionEditState extends State<TransactionEdit> {
 
     final transaction = widget.viewModel.transaction;
     _amountController.text = formatNumber(transaction.amount, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
     _descriptionController.text = transaction.description;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
@@ -80,7 +80,7 @@ class _TransactionEditState extends State<TransactionEdit> {
   }
 
   void _onSavePressed() {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -99,8 +99,8 @@ class _TransactionEditState extends State<TransactionEdit> {
 
     return EditScaffold(
       title: transaction.isNew
-          ? localization.newTransaction
-          : localization.editTransaction,
+          ? localization!.newTransaction
+          : localization!.editTransaction,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) => _onSavePressed(),
       body: Form(
@@ -119,11 +119,11 @@ class _TransactionEditState extends State<TransactionEdit> {
                         },
                         items: [
                           DropdownMenuItem(
-                            child: Text(localization.withdrawal),
+                            child: Text(localization.withdrawal!),
                             value: TransactionEntity.TYPE_WITHDRAWL,
                           ),
                           DropdownMenuItem(
-                            child: Text(localization.deposit),
+                            child: Text(localization.deposit!),
                             value: TransactionEntity.TYPE_DEPOSIT,
                           ),
                         ]),

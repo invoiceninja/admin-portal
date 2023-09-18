@@ -25,7 +25,7 @@ import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class InvoiceEditScreen extends StatelessWidget {
-  const InvoiceEditScreen({Key key}) : super(key: key);
+  const InvoiceEditScreen({Key? key}) : super(key: key);
 
   static const String route = '/invoice/edit';
 
@@ -38,7 +38,7 @@ class InvoiceEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return InvoiceEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.invoice.updatedAt),
+          key: ValueKey(viewModel.invoice!.updatedAt),
         );
       },
     );
@@ -47,42 +47,42 @@ class InvoiceEditScreen extends StatelessWidget {
 
 abstract class AbstractInvoiceEditVM {
   AbstractInvoiceEditVM({
-    @required this.state,
-    @required this.company,
-    @required this.invoice,
-    @required this.invoiceItemIndex,
-    @required this.origInvoice,
-    @required this.onSavePressed,
-    @required this.onItemsAdded,
-    @required this.isSaving,
-    @required this.onCancelPressed,
-    @required this.onUploadDocuments,
+    required this.state,
+    required this.company,
+    required this.invoice,
+    required this.invoiceItemIndex,
+    required this.origInvoice,
+    required this.onSavePressed,
+    required this.onItemsAdded,
+    required this.isSaving,
+    required this.onCancelPressed,
+    required this.onUploadDocuments,
   });
 
-  final AppState state;
-  final CompanyEntity company;
-  final InvoiceEntity invoice;
-  final int invoiceItemIndex;
-  final InvoiceEntity origInvoice;
-  final Function(BuildContext, [EntityAction]) onSavePressed;
-  final Function(List<InvoiceItemEntity>, String, String) onItemsAdded;
-  final bool isSaving;
-  final Function(BuildContext) onCancelPressed;
-  final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;
+  final AppState? state;
+  final CompanyEntity? company;
+  final InvoiceEntity? invoice;
+  final int? invoiceItemIndex;
+  final InvoiceEntity? origInvoice;
+  final Function(BuildContext, [EntityAction?])? onSavePressed;
+  final Function(List<InvoiceItemEntity>, String?, String?)? onItemsAdded;
+  final bool? isSaving;
+  final Function(BuildContext)? onCancelPressed;
+  final Function(BuildContext, List<MultipartFile>, bool)? onUploadDocuments;
 }
 
 class InvoiceEditVM extends AbstractInvoiceEditVM {
   InvoiceEditVM({
-    AppState state,
-    CompanyEntity company,
-    InvoiceEntity invoice,
-    int invoiceItemIndex,
-    InvoiceEntity origInvoice,
-    Function(BuildContext, [EntityAction]) onSavePressed,
-    Function(List<InvoiceItemEntity>, String, String) onItemsAdded,
-    bool isSaving,
-    Function(BuildContext) onCancelPressed,
-    Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
+    AppState? state,
+    CompanyEntity? company,
+    InvoiceEntity? invoice,
+    int? invoiceItemIndex,
+    InvoiceEntity? origInvoice,
+    Function(BuildContext, [EntityAction])? onSavePressed,
+    Function(List<InvoiceItemEntity>, String, String)? onItemsAdded,
+    bool? isSaving,
+    Function(BuildContext)? onCancelPressed,
+    Function(BuildContext, List<MultipartFile>, bool?)? onUploadDocuments,
   }) : super(
           state: state,
           company: company,
@@ -98,7 +98,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
 
   factory InvoiceEditVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final invoice = state.invoiceUIState.editing;
+    final invoice = state.invoiceUIState.editing!;
 
     return InvoiceEditVM(
       state: state,
@@ -107,16 +107,16 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
       invoice: invoice,
       invoiceItemIndex: state.invoiceUIState.editingItemIndex,
       origInvoice: store.state.invoiceState.map[invoice.id],
-      onSavePressed: (BuildContext context, [EntityAction action]) {
+      onSavePressed: (BuildContext context, [EntityAction? action]) {
         Debouncer.runOnComplete(() {
-          final invoice = store.state.invoiceUIState.editing;
+          final invoice = store.state.invoiceUIState.editing!;
           final localization = navigatorKey.localization;
           final navigator = navigatorKey.currentState;
           if (invoice.clientId.isEmpty) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
-                  return ErrorDialog(localization.pleaseSelectAClient);
+                  return ErrorDialog(localization!.pleaseSelectAClient);
                 });
             return null;
           }
@@ -124,23 +124,23 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           final state = store.state;
           final clientId = invoice.clientId;
           for (int i = 0; i < invoice.lineItems.length; i++) {
-            final lineItem = invoice.lineItems[i];
-            final task = state.taskState.get(lineItem.taskId);
+            final lineItem = invoice.lineItems[i]!;
+            final task = state.taskState.get(lineItem.taskId!)!;
             if ((task.clientId ?? '').isNotEmpty && task.clientId != clientId) {
               showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext,
+                  context: navigatorKey.currentContext!,
                   builder: (BuildContext context) {
-                    return ErrorDialog(localization.errorCrossClientTasks);
+                    return ErrorDialog(localization!.errorCrossClientTasks);
                   });
               return null;
             }
-            final expense = state.expenseState.get(lineItem.expenseId);
+            final expense = state.expenseState.get(lineItem.expenseId!)!;
             if ((expense.clientId ?? '').isNotEmpty &&
                 expense.clientId != clientId) {
               showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext,
+                  context: navigatorKey.currentContext!,
                   builder: (BuildContext context) {
-                    return ErrorDialog(localization.errorCrossClientExpenses);
+                    return ErrorDialog(localization!.errorCrossClientExpenses);
                   });
               return null;
             }
@@ -161,15 +161,15 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
             ));
             return completer.future.then((savedInvoice) {
               showToast(invoice.isNew
-                  ? localization.createdInvoice
-                  : localization.updatedInvoice);
+                  ? localization!.createdInvoice
+                  : localization!.updatedInvoice);
 
               if (state.prefState.isMobile) {
                 store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
                 if (invoice.isNew) {
-                  navigator.pushReplacementNamed(InvoiceViewScreen.route);
+                  navigator!.pushReplacementNamed(InvoiceViewScreen.route);
                 } else {
-                  navigator.pop(savedInvoice);
+                  navigator!.pop(savedInvoice);
                 }
               } else {
                 if (!state.prefState.isPreviewVisible) {
@@ -192,7 +192,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext,
+                  context: navigatorKey.currentContext!,
                   builder: (BuildContext context) {
                     return ErrorDialog(error);
                   });
@@ -206,9 +206,9 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           store.dispatch(UpdateInvoice(invoice.rebuild((b) => b
             ..clientId = clientId ?? ''
             ..projectId = projectId ?? ''
-            ..invitations.replace(BuiltList<InvitationEntity>(client
+            ..invitations.replace(BuiltList<InvitationEntity>(client!
                 .emailContacts
-                .map((contact) => InvitationEntity(clientContactId: contact.id))
+                .map((contact) => InvitationEntity(clientContactId: contact!.id))
                 .toList())))));
         }
         store.dispatch(AddInvoiceItems(items));
@@ -227,7 +227,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
         }
       },
       onUploadDocuments: (BuildContext context,
-          List<MultipartFile> multipartFiles, bool isPrivate) {
+          List<MultipartFile> multipartFiles, bool? isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveInvoiceDocumentRequest(
             isPrivate: isPrivate,
@@ -235,7 +235,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
             invoice: invoice,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context).uploadedDocument);
+          showToast(AppLocalization.of(context)!.uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,

@@ -12,8 +12,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorEditSettings extends StatefulWidget {
   const VendorEditSettings({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final VendorEditVM viewModel;
@@ -25,7 +25,7 @@ class VendorEditSettings extends StatefulWidget {
 class VendorEditSettingsState extends State<VendorEditSettings> {
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final vendor = viewModel.vendor;

@@ -18,7 +18,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class PurchaseOrderEmailScreen extends StatelessWidget {
-  const PurchaseOrderEmailScreen({Key key}) : super(key: key);
+  const PurchaseOrderEmailScreen({Key? key}) : super(key: key);
 
   static const String route = '/purchase_order/email';
 
@@ -28,8 +28,8 @@ class PurchaseOrderEmailScreen extends StatelessWidget {
       onInit: (Store<AppState> store) {
         final state = store.state;
         final purchaseOrderId = state.uiState.purchaseOrderUIState.selectedId;
-        final purchaseOrder = state.purchaseOrderState.map[purchaseOrderId];
-        final vendor = state.vendorState.map[purchaseOrder.vendorId];
+        final purchaseOrder = state.purchaseOrderState.map[purchaseOrderId]!;
+        final vendor = state.vendorState.map[purchaseOrder.vendorId]!;
         if (vendor.isStale) {
           store.dispatch(LoadVendor(vendorId: vendor.id));
         }
@@ -37,7 +37,7 @@ class PurchaseOrderEmailScreen extends StatelessWidget {
       converter: (Store<AppState> store) {
         final state = store.state;
         final purchaseOrderId = state.uiState.purchaseOrderUIState.selectedId;
-        final purchaseOrder = state.purchaseOrderState.map[purchaseOrderId];
+        final purchaseOrder = state.purchaseOrderState.map[purchaseOrderId]!;
         return EmailPurchaseOrderVM.fromStore(store, purchaseOrder);
       },
       builder: (context, viewModel) {
@@ -51,14 +51,14 @@ class PurchaseOrderEmailScreen extends StatelessWidget {
 
 class EmailPurchaseOrderVM extends EmailEntityVM {
   EmailPurchaseOrderVM({
-    @required AppState state,
-    @required bool isLoading,
-    @required bool isSaving,
-    @required CompanyEntity company,
-    @required InvoiceEntity invoice,
-    @required ClientEntity client,
-    @required VendorEntity vendor,
-    @required
+    required AppState state,
+    required bool isLoading,
+    required bool isSaving,
+    required CompanyEntity? company,
+    required InvoiceEntity invoice,
+    required ClientEntity? client,
+    required VendorEntity? vendor,
+    required
         Function(BuildContext, EmailTemplate, String, String, String)
             onSendPressed,
   }) : super(
@@ -86,12 +86,12 @@ class EmailPurchaseOrderVM extends EmailEntityVM {
       vendor: state.vendorState.map[purchaseOrder.vendorId],
       onSendPressed: (context, template, subject, body, ccEmail) {
         final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).emailedPurchaseOrder,
+            context, AppLocalization.of(context)!.emailedPurchaseOrder,
             shouldPop: isMobile(context));
         if (!isMobile(context)) {
           completer.future.then((value) {
             viewEntity(entity: purchaseOrder);
-          });
+          } as FutureOr<_> Function(Null));
         }
         store.dispatch(EmailPurchaseOrderRequest(
           completer: completer,

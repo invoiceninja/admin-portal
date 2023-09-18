@@ -18,14 +18,14 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 class DesktopSessionTimeout extends StatefulWidget {
   const DesktopSessionTimeout({this.child});
 
-  final Widget child;
+  final Widget? child;
 
   @override
   _DesktopSessionTimeoutState createState() => _DesktopSessionTimeoutState();
 }
 
 class _DesktopSessionTimeoutState extends State<DesktopSessionTimeout> {
-  Timer _timer;
+  Timer? _timer;
   bool _isWarned = false;
 
   @override
@@ -41,7 +41,7 @@ class _DesktopSessionTimeoutState extends State<DesktopSessionTimeout> {
       (Timer timer) {
         final store = StoreProvider.of<AppState>(context);
         final state = store.state;
-        final sessionTimeout = state.company.sessionTimeout;
+        final sessionTimeout = state.company!.sessionTimeout;
 
         if (sessionTimeout == 0 || isMobile(context)) {
           return;
@@ -83,7 +83,7 @@ class _DesktopSessionTimeoutState extends State<DesktopSessionTimeout> {
                 children: [
                   Expanded(
                       child: Text(
-                    localization.sessionAboutToExpire,
+                    localization!.sessionAboutToExpire,
                     style: TextStyle(color: Colors.white),
                   )),
                   TextButton(
@@ -94,7 +94,7 @@ class _DesktopSessionTimeoutState extends State<DesktopSessionTimeout> {
                           setState(() {
                             _isWarned = false;
                           });
-                        });
+                        } as FutureOr<_> Function(Null));
                         store.dispatch(RefreshData(completer: completer));
                       },
                       child: Text(
@@ -104,12 +104,12 @@ class _DesktopSessionTimeoutState extends State<DesktopSessionTimeout> {
                 ],
               ),
             ),
-            Expanded(child: widget.child),
+            Expanded(child: widget.child!),
           ],
         ),
       );
     }
 
-    return widget.child;
+    return widget.child!;
   }
 }

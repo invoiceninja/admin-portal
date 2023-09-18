@@ -15,73 +15,73 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 EntityUIState paymentTermUIReducer(PaymentTermUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(paymentTermListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
+    ..editing.replace(editingReducer(state.editing, action)!)
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
 
-final forceSelectedReducer = combineReducers<bool>([
-  TypedReducer<bool, ViewPaymentTerm>((completer, action) => true),
-  TypedReducer<bool, ViewPaymentTermList>((completer, action) => false),
-  TypedReducer<bool, FilterPaymentTermsByState>((completer, action) => false),
-  TypedReducer<bool, FilterPaymentTerms>((completer, action) => false),
-  TypedReducer<bool, FilterPaymentTermsByCustom1>((completer, action) => false),
-  TypedReducer<bool, FilterPaymentTermsByCustom2>((completer, action) => false),
-  TypedReducer<bool, FilterPaymentTermsByCustom3>((completer, action) => false),
-  TypedReducer<bool, FilterPaymentTermsByCustom4>((completer, action) => false),
+final forceSelectedReducer = combineReducers<bool?>([
+  TypedReducer<bool?, ViewPaymentTerm>((completer, action) => true),
+  TypedReducer<bool?, ViewPaymentTermList>((completer, action) => false),
+  TypedReducer<bool?, FilterPaymentTermsByState>((completer, action) => false),
+  TypedReducer<bool?, FilterPaymentTerms>((completer, action) => false),
+  TypedReducer<bool?, FilterPaymentTermsByCustom1>((completer, action) => false),
+  TypedReducer<bool?, FilterPaymentTermsByCustom2>((completer, action) => false),
+  TypedReducer<bool?, FilterPaymentTermsByCustom3>((completer, action) => false),
+  TypedReducer<bool?, FilterPaymentTermsByCustom4>((completer, action) => false),
 ]);
 
-Reducer<String> selectedIdReducer = combineReducers([
-  TypedReducer<String, ArchivePaymentTermsSuccess>((completer, action) => ''),
-  TypedReducer<String, DeletePaymentTermsSuccess>((completer, action) => ''),
-  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+Reducer<String?> selectedIdReducer = combineReducers([
+  TypedReducer<String?, ArchivePaymentTermsSuccess>((completer, action) => ''),
+  TypedReducer<String?, DeletePaymentTermsSuccess>((completer, action) => ''),
+  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.paymentTerm
           ? action.entityId
           : selectedId),
-  TypedReducer<String, ViewPaymentTerm>(
-      (String selectedId, dynamic action) => action.paymentTermId),
-  TypedReducer<String, AddPaymentTermSuccess>(
-      (String selectedId, dynamic action) => action.paymentTerm.id),
-  TypedReducer<String, SelectCompany>(
+  TypedReducer<String?, ViewPaymentTerm>(
+      (String? selectedId, dynamic action) => action.paymentTermId),
+  TypedReducer<String?, AddPaymentTermSuccess>(
+      (String? selectedId, dynamic action) => action.paymentTerm.id),
+  TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, SortPaymentTerms>((selectedId, action) => ''),
-  TypedReducer<String, FilterPaymentTerms>((selectedId, action) => ''),
-  TypedReducer<String, FilterPaymentTermsByState>((selectedId, action) => ''),
-  TypedReducer<String, FilterPaymentTermsByCustom1>((selectedId, action) => ''),
-  TypedReducer<String, FilterPaymentTermsByCustom2>((selectedId, action) => ''),
-  TypedReducer<String, FilterPaymentTermsByCustom3>((selectedId, action) => ''),
-  TypedReducer<String, FilterPaymentTermsByCustom4>((selectedId, action) => ''),
+  TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String?, SortPaymentTerms>((selectedId, action) => ''),
+  TypedReducer<String?, FilterPaymentTerms>((selectedId, action) => ''),
+  TypedReducer<String?, FilterPaymentTermsByState>((selectedId, action) => ''),
+  TypedReducer<String?, FilterPaymentTermsByCustom1>((selectedId, action) => ''),
+  TypedReducer<String?, FilterPaymentTermsByCustom2>((selectedId, action) => ''),
+  TypedReducer<String?, FilterPaymentTermsByCustom3>((selectedId, action) => ''),
+  TypedReducer<String?, FilterPaymentTermsByCustom4>((selectedId, action) => ''),
 ]);
 
-final editingReducer = combineReducers<PaymentTermEntity>([
-  TypedReducer<PaymentTermEntity, SavePaymentTermSuccess>(_updateEditing),
-  TypedReducer<PaymentTermEntity, AddPaymentTermSuccess>(_updateEditing),
-  TypedReducer<PaymentTermEntity, RestorePaymentTermsSuccess>(
+final editingReducer = combineReducers<PaymentTermEntity?>([
+  TypedReducer<PaymentTermEntity?, SavePaymentTermSuccess>(_updateEditing),
+  TypedReducer<PaymentTermEntity?, AddPaymentTermSuccess>(_updateEditing),
+  TypedReducer<PaymentTermEntity?, RestorePaymentTermsSuccess>(
       (paymentTerms, action) {
     return action.paymentTerms[0];
   }),
-  TypedReducer<PaymentTermEntity, ArchivePaymentTermsSuccess>(
+  TypedReducer<PaymentTermEntity?, ArchivePaymentTermsSuccess>(
       (paymentTerms, action) {
     return action.paymentTerms[0];
   }),
-  TypedReducer<PaymentTermEntity, DeletePaymentTermsSuccess>(
+  TypedReducer<PaymentTermEntity?, DeletePaymentTermsSuccess>(
       (paymentTerms, action) {
     return action.paymentTerms[0];
   }),
-  TypedReducer<PaymentTermEntity, EditPaymentTerm>(_updateEditing),
-  TypedReducer<PaymentTermEntity, UpdatePaymentTerm>((paymentTerm, action) {
+  TypedReducer<PaymentTermEntity?, EditPaymentTerm>(_updateEditing),
+  TypedReducer<PaymentTermEntity?, UpdatePaymentTerm>((paymentTerm, action) {
     return action.paymentTerm.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<PaymentTermEntity, DiscardChanges>(_clearEditing),
+  TypedReducer<PaymentTermEntity?, DiscardChanges>(_clearEditing),
 ]);
 
-PaymentTermEntity _clearEditing(PaymentTermEntity paymentTerm, dynamic action) {
+PaymentTermEntity _clearEditing(PaymentTermEntity? paymentTerm, dynamic action) {
   return PaymentTermEntity();
 }
 
-PaymentTermEntity _updateEditing(
-    PaymentTermEntity paymentTerm, dynamic action) {
+PaymentTermEntity? _updateEditing(
+    PaymentTermEntity? paymentTerm, dynamic action) {
   return action.paymentTerm;
 }
 
@@ -159,7 +159,7 @@ ListUIState _filterPaymentTerms(
 ListUIState _sortPaymentTerms(
     ListUIState paymentTermListState, SortPaymentTerms action) {
   return paymentTermListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortAscending = b.sortField != action.field || !b.sortAscending!
     ..sortField = action.field);
 }
 
@@ -170,13 +170,13 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState productListState, AddToPaymentTermMultiselect action) {
-  return productListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+  return productListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState productListState, RemoveFromPaymentTermMultiselect action) {
   return productListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(
@@ -253,7 +253,7 @@ PaymentTermState _setLoadedCompany(
     PaymentTermState paymentTermState, LoadCompanySuccess action) {
   final state = paymentTermState.rebuild((b) => b
     ..map.addAll(Map.fromIterable(
-      action.userCompany.company.paymentTerms,
+      action.userCompany.company!.paymentTerms,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     )));

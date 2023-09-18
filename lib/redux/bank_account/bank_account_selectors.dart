@@ -6,22 +6,22 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedDropdownBankAccountList = memo5(
-    (BuiltMap<String, BankAccountEntity> bankAccountMap,
+    (BuiltMap<String?, BankAccountEntity?> bankAccountMap,
             BuiltList<String> bankAccountList,
             StaticState staticState,
-            BuiltMap<String, UserEntity> userMap,
-            String bankAccountId) =>
+            BuiltMap<String?, UserEntity?> userMap,
+            String? bankAccountId) =>
         dropdownBankAccountsSelector(bankAccountMap, bankAccountList,
             staticState, userMap, bankAccountId));
 
 List<String> dropdownBankAccountsSelector(
-    BuiltMap<String, BankAccountEntity> bankAccountMap,
+    BuiltMap<String?, BankAccountEntity?> bankAccountMap,
     BuiltList<String> bankAccountList,
     StaticState staticState,
-    BuiltMap<String, UserEntity> userMap,
-    String bankAccountId) {
+    BuiltMap<String?, UserEntity?> userMap,
+    String? bankAccountId) {
   final list = bankAccountList.where((bankAccountId) {
-    final bankAccount = bankAccountMap[bankAccountId];
+    final bankAccount = bankAccountMap[bankAccountId]!;
     /*
     if (clientId != null && clientId > 0 && bankAccount.clientId != clientId) {
       return false;
@@ -31,7 +31,7 @@ List<String> dropdownBankAccountsSelector(
   }).toList();
 
   list.sort((bankAccountAId, bankAccountBId) {
-    final bankAccountA = bankAccountMap[bankAccountAId];
+    final bankAccountA = bankAccountMap[bankAccountAId]!;
     final bankAccountB = bankAccountMap[bankAccountBId];
     return bankAccountA.compareTo(bankAccountB, BankAccountFields.name, true);
   });
@@ -40,7 +40,7 @@ List<String> dropdownBankAccountsSelector(
 }
 
 var memoizedFilteredBankAccountList = memo4((SelectionState selectionState,
-        BuiltMap<String, BankAccountEntity> bankAccountMap,
+        BuiltMap<String?, BankAccountEntity?> bankAccountMap,
         BuiltList<String> bankAccountList,
         ListUIState bankAccountListState) =>
     filteredBankAccountsSelector(
@@ -48,7 +48,7 @@ var memoizedFilteredBankAccountList = memo4((SelectionState selectionState,
 
 List<String> filteredBankAccountsSelector(
     SelectionState selectionState,
-    BuiltMap<String, BankAccountEntity> bankAccountMap,
+    BuiltMap<String?, BankAccountEntity?> bankAccountMap,
     BuiltList<String> bankAccountList,
     ListUIState bankAccountListState) {
   final filterEntityId = selectionState.filterEntityId;
@@ -56,11 +56,11 @@ List<String> filteredBankAccountsSelector(
 
   final list = bankAccountList.where((bankAccountId) {
     final bankAccount = bankAccountMap[bankAccountId];
-    if (filterEntityId != null && bankAccount.id != filterEntityId) {
+    if (filterEntityId != null && bankAccount!.id != filterEntityId) {
       return false;
     } else {}
 
-    if (!bankAccount.matchesStates(bankAccountListState.stateFilters)) {
+    if (!bankAccount!.matchesStates(bankAccountListState.stateFilters)) {
       return false;
     }
 
@@ -68,7 +68,7 @@ List<String> filteredBankAccountsSelector(
   }).toList();
 
   list.sort((bankAccountAId, bankAccountBId) {
-    final bankAccountA = bankAccountMap[bankAccountAId];
+    final bankAccountA = bankAccountMap[bankAccountAId]!;
     final bankAccountB = bankAccountMap[bankAccountBId];
     return bankAccountA.compareTo(bankAccountB, bankAccountListState.sortField,
         bankAccountListState.sortAscending);
@@ -77,7 +77,7 @@ List<String> filteredBankAccountsSelector(
   return list;
 }
 
-bool hasBankAccountChanges(BankAccountEntity bankAccount,
+bool? hasBankAccountChanges(BankAccountEntity bankAccount,
         BuiltMap<String, BankAccountEntity> bankAccountMap) =>
     bankAccount.isNew
         ? bankAccount.isChanged

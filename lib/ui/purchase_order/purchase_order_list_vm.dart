@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PurchaseOrderListBuilder extends StatelessWidget {
-  const PurchaseOrderListBuilder({Key key}) : super(key: key);
+  const PurchaseOrderListBuilder({Key? key}) : super(key: key);
 
   static const String route = '/purchase_orders/edit';
 
@@ -45,7 +45,7 @@ class PurchaseOrderListBuilder extends StatelessWidget {
               itemBuilder: (BuildContext context, index) {
                 final state = viewModel.state;
                 final invoiceId = viewModel.invoiceList[index];
-                final invoice = viewModel.invoiceMap[invoiceId];
+                final invoice = viewModel.invoiceMap[invoiceId]!;
                 final listUIState =
                     state.getListState(EntityType.purchaseOrder);
                 final isInMultiselect = listUIState.isInMultiselect();
@@ -65,20 +65,20 @@ class PurchaseOrderListBuilder extends StatelessWidget {
 
 class PurchaseOrderListVM extends EntityListVM {
   PurchaseOrderListVM({
-    @required AppState state,
-    @required List<String> invoiceList,
-    @required BuiltMap<String, InvoiceEntity> invoiceMap,
-    @required BuiltMap<String, ClientEntity> clientMap,
-    @required String filter,
-    @required bool isLoading,
-    @required Function(BuildContext) onRefreshed,
-    @required
+    required AppState state,
+    required List<String> invoiceList,
+    required BuiltMap<String?, InvoiceEntity?> invoiceMap,
+    required BuiltMap<String?, ClientEntity?> clientMap,
+    required String? filter,
+    required bool isLoading,
+    required Function(BuildContext) onRefreshed,
+    required
         Function(BuildContext, List<InvoiceEntity>, EntityAction)
             onEntityAction,
-    @required List<String> tableColumns,
-    @required EntityType entityType,
-    @required Function(String) onSortColumn,
-    @required Function onClearMultiselect,
+    required List<String> tableColumns,
+    required EntityType entityType,
+    required Function(String) onSortColumn,
+    required Function onClearMultiselect,
   }) : super(
           state: state,
           invoiceList: invoiceList,
@@ -99,7 +99,7 @@ class PurchaseOrderListVM extends EntityListVM {
         return Future<Null>(null);
       }
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -124,7 +124,7 @@ class PurchaseOrderListVM extends EntityListVM {
       onEntityAction: (BuildContext context, List<BaseEntity> purchaseOrders,
               EntityAction action) =>
           handlePurchaseOrderAction(context, purchaseOrders, action),
-      tableColumns: state.userCompany.settings
+      tableColumns: state.userCompany!.settings
               ?.getTableColumns(EntityType.purchaseOrder) ??
           PurchaseOrderPresenter.getDefaultTableFields(state.userCompany),
       entityType: EntityType.purchaseOrder,

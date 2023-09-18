@@ -29,7 +29,7 @@ abstract class TaxRateState
   @memoized
   int get hashCode;
 
-  BuiltMap<String, TaxRateEntity> get map;
+  BuiltMap<String?, TaxRateEntity?> get map;
 
   BuiltList<String> get list;
 
@@ -39,7 +39,7 @@ abstract class TaxRateState
 abstract class TaxRateUIState extends Object
     with EntityUIState
     implements Built<TaxRateUIState, TaxRateUIStateBuilder> {
-  factory TaxRateUIState(PrefStateSortField sortField) {
+  factory TaxRateUIState(PrefStateSortField? sortField) {
     return _$TaxRateUIState._(
       listUIState: ListUIState(sortField?.field ?? TaxRateFields.name,
           sortAscending: sortField?.ascending),
@@ -55,14 +55,13 @@ abstract class TaxRateUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  TaxRateEntity get editing;
+  TaxRateEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<TaxRateUIState> get serializer =>
       _$taxRateUIStateSerializer;

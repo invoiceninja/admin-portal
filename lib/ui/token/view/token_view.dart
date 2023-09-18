@@ -14,9 +14,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TokenView extends StatefulWidget {
   const TokenView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final TokenViewVM viewModel;
@@ -29,10 +29,10 @@ class TokenView extends StatefulWidget {
 class _TokenViewState extends State<TokenView> {
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final token = viewModel.token;
-    final user = viewModel.state.userState.get(token.createdUserId);
+    final user = viewModel.state.userState.get(token.createdUserId!)!;
 
     return ViewScaffold(
       isFilter: widget.isFilter,

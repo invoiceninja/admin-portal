@@ -22,10 +22,10 @@ class _$HealthCheckResponseSerializer
   final String wireName = 'HealthCheckResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, HealthCheckResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'system_health',
       serializers.serialize(object.systemHealth,
           specifiedType: const FullType(bool)),
@@ -78,76 +78,76 @@ class _$HealthCheckResponseSerializer
 
   @override
   HealthCheckResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new HealthCheckResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'system_health':
           result.systemHealth = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'php_version':
           result.phpVersion.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(HealthCheckPHPResponse))
+                  specifiedType: const FullType(HealthCheckPHPResponse))!
               as HealthCheckPHPResponse);
           break;
         case 'env_writable':
           result.envWritable = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'simple_db_check':
           result.dbCheck = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'cache_enabled':
           result.cacheEnabled = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'phantom_enabled':
           result.phantomEnabled = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'open_basedir':
           result.openBasedir = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'file_permissions':
           result.filePermissions = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'exec':
           result.execEnabled = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'mail_mailer':
           result.emailDriver = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'jobs_pending':
           result.pendingJobs = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'pdf_engine':
           result.pdfEngine = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'trailing_slash':
           result.trailingSlash = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'exchange_rate_api_not_configured':
           result.exchangeRateApiNotConfigured = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'queue':
           result.queue = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -167,10 +167,10 @@ class _$HealthCheckPHPResponseSerializer
   final String wireName = 'HealthCheckPHPResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, HealthCheckPHPResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'minimum_php_version',
       serializers.serialize(object.minimumPHPVersion,
           specifiedType: const FullType(String)),
@@ -192,35 +192,35 @@ class _$HealthCheckPHPResponseSerializer
 
   @override
   HealthCheckPHPResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new HealthCheckPHPResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'minimum_php_version':
           result.minimumPHPVersion = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'current_php_version':
           result.currentPHPVersion = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'current_php_cli_version':
           result.currentPHPCLIVersion = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'is_okay':
           result.isOkay = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'memory_limit':
           result.memoryLimit = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -262,25 +262,25 @@ class _$HealthCheckResponse extends HealthCheckResponse {
   final String queue;
 
   factory _$HealthCheckResponse(
-          [void Function(HealthCheckResponseBuilder) updates]) =>
+          [void Function(HealthCheckResponseBuilder)? updates]) =>
       (new HealthCheckResponseBuilder()..update(updates))._build();
 
   _$HealthCheckResponse._(
-      {this.systemHealth,
-      this.phpVersion,
-      this.envWritable,
-      this.dbCheck,
-      this.cacheEnabled,
-      this.phantomEnabled,
-      this.openBasedir,
-      this.filePermissions,
-      this.execEnabled,
-      this.emailDriver,
-      this.pendingJobs,
-      this.pdfEngine,
-      this.trailingSlash,
-      this.exchangeRateApiNotConfigured,
-      this.queue})
+      {required this.systemHealth,
+      required this.phpVersion,
+      required this.envWritable,
+      required this.dbCheck,
+      required this.cacheEnabled,
+      required this.phantomEnabled,
+      required this.openBasedir,
+      required this.filePermissions,
+      required this.execEnabled,
+      required this.emailDriver,
+      required this.pendingJobs,
+      required this.pdfEngine,
+      required this.trailingSlash,
+      required this.exchangeRateApiNotConfigured,
+      required this.queue})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         systemHealth, r'HealthCheckResponse', 'systemHealth');
@@ -344,10 +344,10 @@ class _$HealthCheckResponse extends HealthCheckResponse {
         queue == other.queue;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, systemHealth.hashCode);
     _$hash = $jc(_$hash, phpVersion.hashCode);
@@ -392,73 +392,74 @@ class _$HealthCheckResponse extends HealthCheckResponse {
 
 class HealthCheckResponseBuilder
     implements Builder<HealthCheckResponse, HealthCheckResponseBuilder> {
-  _$HealthCheckResponse _$v;
+  _$HealthCheckResponse? _$v;
 
-  bool _systemHealth;
-  bool get systemHealth => _$this._systemHealth;
-  set systemHealth(bool systemHealth) => _$this._systemHealth = systemHealth;
+  bool? _systemHealth;
+  bool? get systemHealth => _$this._systemHealth;
+  set systemHealth(bool? systemHealth) => _$this._systemHealth = systemHealth;
 
-  HealthCheckPHPResponseBuilder _phpVersion;
+  HealthCheckPHPResponseBuilder? _phpVersion;
   HealthCheckPHPResponseBuilder get phpVersion =>
       _$this._phpVersion ??= new HealthCheckPHPResponseBuilder();
-  set phpVersion(HealthCheckPHPResponseBuilder phpVersion) =>
+  set phpVersion(HealthCheckPHPResponseBuilder? phpVersion) =>
       _$this._phpVersion = phpVersion;
 
-  bool _envWritable;
-  bool get envWritable => _$this._envWritable;
-  set envWritable(bool envWritable) => _$this._envWritable = envWritable;
+  bool? _envWritable;
+  bool? get envWritable => _$this._envWritable;
+  set envWritable(bool? envWritable) => _$this._envWritable = envWritable;
 
-  bool _dbCheck;
-  bool get dbCheck => _$this._dbCheck;
-  set dbCheck(bool dbCheck) => _$this._dbCheck = dbCheck;
+  bool? _dbCheck;
+  bool? get dbCheck => _$this._dbCheck;
+  set dbCheck(bool? dbCheck) => _$this._dbCheck = dbCheck;
 
-  bool _cacheEnabled;
-  bool get cacheEnabled => _$this._cacheEnabled;
-  set cacheEnabled(bool cacheEnabled) => _$this._cacheEnabled = cacheEnabled;
+  bool? _cacheEnabled;
+  bool? get cacheEnabled => _$this._cacheEnabled;
+  set cacheEnabled(bool? cacheEnabled) => _$this._cacheEnabled = cacheEnabled;
 
-  bool _phantomEnabled;
-  bool get phantomEnabled => _$this._phantomEnabled;
-  set phantomEnabled(bool phantomEnabled) =>
+  bool? _phantomEnabled;
+  bool? get phantomEnabled => _$this._phantomEnabled;
+  set phantomEnabled(bool? phantomEnabled) =>
       _$this._phantomEnabled = phantomEnabled;
 
-  bool _openBasedir;
-  bool get openBasedir => _$this._openBasedir;
-  set openBasedir(bool openBasedir) => _$this._openBasedir = openBasedir;
+  bool? _openBasedir;
+  bool? get openBasedir => _$this._openBasedir;
+  set openBasedir(bool? openBasedir) => _$this._openBasedir = openBasedir;
 
-  String _filePermissions;
-  String get filePermissions => _$this._filePermissions;
-  set filePermissions(String filePermissions) =>
+  String? _filePermissions;
+  String? get filePermissions => _$this._filePermissions;
+  set filePermissions(String? filePermissions) =>
       _$this._filePermissions = filePermissions;
 
-  bool _execEnabled;
-  bool get execEnabled => _$this._execEnabled;
-  set execEnabled(bool execEnabled) => _$this._execEnabled = execEnabled;
+  bool? _execEnabled;
+  bool? get execEnabled => _$this._execEnabled;
+  set execEnabled(bool? execEnabled) => _$this._execEnabled = execEnabled;
 
-  String _emailDriver;
-  String get emailDriver => _$this._emailDriver;
-  set emailDriver(String emailDriver) => _$this._emailDriver = emailDriver;
+  String? _emailDriver;
+  String? get emailDriver => _$this._emailDriver;
+  set emailDriver(String? emailDriver) => _$this._emailDriver = emailDriver;
 
-  int _pendingJobs;
-  int get pendingJobs => _$this._pendingJobs;
-  set pendingJobs(int pendingJobs) => _$this._pendingJobs = pendingJobs;
+  int? _pendingJobs;
+  int? get pendingJobs => _$this._pendingJobs;
+  set pendingJobs(int? pendingJobs) => _$this._pendingJobs = pendingJobs;
 
-  String _pdfEngine;
-  String get pdfEngine => _$this._pdfEngine;
-  set pdfEngine(String pdfEngine) => _$this._pdfEngine = pdfEngine;
+  String? _pdfEngine;
+  String? get pdfEngine => _$this._pdfEngine;
+  set pdfEngine(String? pdfEngine) => _$this._pdfEngine = pdfEngine;
 
-  bool _trailingSlash;
-  bool get trailingSlash => _$this._trailingSlash;
-  set trailingSlash(bool trailingSlash) =>
+  bool? _trailingSlash;
+  bool? get trailingSlash => _$this._trailingSlash;
+  set trailingSlash(bool? trailingSlash) =>
       _$this._trailingSlash = trailingSlash;
 
-  bool _exchangeRateApiNotConfigured;
-  bool get exchangeRateApiNotConfigured => _$this._exchangeRateApiNotConfigured;
-  set exchangeRateApiNotConfigured(bool exchangeRateApiNotConfigured) =>
+  bool? _exchangeRateApiNotConfigured;
+  bool? get exchangeRateApiNotConfigured =>
+      _$this._exchangeRateApiNotConfigured;
+  set exchangeRateApiNotConfigured(bool? exchangeRateApiNotConfigured) =>
       _$this._exchangeRateApiNotConfigured = exchangeRateApiNotConfigured;
 
-  String _queue;
-  String get queue => _$this._queue;
-  set queue(String queue) => _$this._queue = queue;
+  String? _queue;
+  String? get queue => _$this._queue;
+  set queue(String? queue) => _$this._queue = queue;
 
   HealthCheckResponseBuilder() {
     HealthCheckResponse._initializeBuilder(this);
@@ -494,7 +495,7 @@ class HealthCheckResponseBuilder
   }
 
   @override
-  void update(void Function(HealthCheckResponseBuilder) updates) {
+  void update(void Function(HealthCheckResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -530,7 +531,7 @@ class HealthCheckResponseBuilder
               exchangeRateApiNotConfigured: BuiltValueNullFieldError.checkNotNull(exchangeRateApiNotConfigured, r'HealthCheckResponse', 'exchangeRateApiNotConfigured'),
               queue: BuiltValueNullFieldError.checkNotNull(queue, r'HealthCheckResponse', 'queue'));
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'phpVersion';
         phpVersion.build();
@@ -558,15 +559,15 @@ class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
   final String memoryLimit;
 
   factory _$HealthCheckPHPResponse(
-          [void Function(HealthCheckPHPResponseBuilder) updates]) =>
+          [void Function(HealthCheckPHPResponseBuilder)? updates]) =>
       (new HealthCheckPHPResponseBuilder()..update(updates))._build();
 
   _$HealthCheckPHPResponse._(
-      {this.minimumPHPVersion,
-      this.currentPHPVersion,
-      this.currentPHPCLIVersion,
-      this.isOkay,
-      this.memoryLimit})
+      {required this.minimumPHPVersion,
+      required this.currentPHPVersion,
+      required this.currentPHPCLIVersion,
+      required this.isOkay,
+      required this.memoryLimit})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         minimumPHPVersion, r'HealthCheckPHPResponse', 'minimumPHPVersion');
@@ -600,10 +601,10 @@ class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
         memoryLimit == other.memoryLimit;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, minimumPHPVersion.hashCode);
     _$hash = $jc(_$hash, currentPHPVersion.hashCode);
@@ -628,30 +629,30 @@ class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
 
 class HealthCheckPHPResponseBuilder
     implements Builder<HealthCheckPHPResponse, HealthCheckPHPResponseBuilder> {
-  _$HealthCheckPHPResponse _$v;
+  _$HealthCheckPHPResponse? _$v;
 
-  String _minimumPHPVersion;
-  String get minimumPHPVersion => _$this._minimumPHPVersion;
-  set minimumPHPVersion(String minimumPHPVersion) =>
+  String? _minimumPHPVersion;
+  String? get minimumPHPVersion => _$this._minimumPHPVersion;
+  set minimumPHPVersion(String? minimumPHPVersion) =>
       _$this._minimumPHPVersion = minimumPHPVersion;
 
-  String _currentPHPVersion;
-  String get currentPHPVersion => _$this._currentPHPVersion;
-  set currentPHPVersion(String currentPHPVersion) =>
+  String? _currentPHPVersion;
+  String? get currentPHPVersion => _$this._currentPHPVersion;
+  set currentPHPVersion(String? currentPHPVersion) =>
       _$this._currentPHPVersion = currentPHPVersion;
 
-  String _currentPHPCLIVersion;
-  String get currentPHPCLIVersion => _$this._currentPHPCLIVersion;
-  set currentPHPCLIVersion(String currentPHPCLIVersion) =>
+  String? _currentPHPCLIVersion;
+  String? get currentPHPCLIVersion => _$this._currentPHPCLIVersion;
+  set currentPHPCLIVersion(String? currentPHPCLIVersion) =>
       _$this._currentPHPCLIVersion = currentPHPCLIVersion;
 
-  bool _isOkay;
-  bool get isOkay => _$this._isOkay;
-  set isOkay(bool isOkay) => _$this._isOkay = isOkay;
+  bool? _isOkay;
+  bool? get isOkay => _$this._isOkay;
+  set isOkay(bool? isOkay) => _$this._isOkay = isOkay;
 
-  String _memoryLimit;
-  String get memoryLimit => _$this._memoryLimit;
-  set memoryLimit(String memoryLimit) => _$this._memoryLimit = memoryLimit;
+  String? _memoryLimit;
+  String? get memoryLimit => _$this._memoryLimit;
+  set memoryLimit(String? memoryLimit) => _$this._memoryLimit = memoryLimit;
 
   HealthCheckPHPResponseBuilder() {
     HealthCheckPHPResponse._initializeBuilder(this);
@@ -677,7 +678,7 @@ class HealthCheckPHPResponseBuilder
   }
 
   @override
-  void update(void Function(HealthCheckPHPResponseBuilder) updates) {
+  void update(void Function(HealthCheckPHPResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

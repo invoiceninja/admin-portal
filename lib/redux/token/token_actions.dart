@@ -30,24 +30,24 @@ class ViewTokenList implements PersistUI {
 
 class ViewToken implements PersistUI, PersistPrefs {
   ViewToken({
-    @required this.tokenId,
+    required this.tokenId,
     this.force = false,
   });
 
-  final String tokenId;
+  final String? tokenId;
   final bool force;
 }
 
 class EditToken implements PersistUI, PersistPrefs {
   EditToken(
-      {@required this.token,
+      {required this.token,
       this.completer,
       this.cancelCompleter,
       this.force = false});
 
   final TokenEntity token;
-  final Completer completer;
-  final Completer cancelCompleter;
+  final Completer? completer;
+  final Completer? cancelCompleter;
   final bool force;
 }
 
@@ -60,21 +60,21 @@ class UpdateToken implements PersistUI {
 class LoadToken {
   LoadToken({this.completer, this.tokenId});
 
-  final Completer completer;
-  final String tokenId;
+  final Completer? completer;
+  final String? tokenId;
 }
 
 class LoadTokenActivity {
   LoadTokenActivity({this.completer, this.tokenId});
 
-  final Completer completer;
-  final String tokenId;
+  final Completer? completer;
+  final String? tokenId;
 }
 
 class LoadTokens {
   LoadTokens({this.completer});
 
-  final Completer completer;
+  final Completer? completer;
 }
 
 class LoadTokenRequest implements StartLoading {}
@@ -127,16 +127,16 @@ class LoadTokensSuccess implements StopLoading {
 
 class SaveTokenRequest implements StartSaving {
   SaveTokenRequest({
-    @required this.completer,
-    @required this.token,
-    @required this.password,
-    @required this.idToken,
+    required this.completer,
+    required this.token,
+    required this.password,
+    required this.idToken,
   });
 
   final Completer completer;
-  final TokenEntity token;
-  final String password;
-  final String idToken;
+  final TokenEntity? token;
+  final String? password;
+  final String? idToken;
 }
 
 class SaveTokenSuccess
@@ -175,7 +175,7 @@ class ArchiveTokensSuccess implements StopSaving, PersistData {
 class ArchiveTokensFailure implements StopSaving {
   ArchiveTokensFailure(this.tokens);
 
-  final List<TokenEntity> tokens;
+  final List<TokenEntity?> tokens;
 }
 
 class DeleteTokensRequest implements StartSaving {
@@ -194,7 +194,7 @@ class DeleteTokensSuccess implements StopSaving, PersistData {
 class DeleteTokensFailure implements StopSaving {
   DeleteTokensFailure(this.tokens);
 
-  final List<TokenEntity> tokens;
+  final List<TokenEntity?> tokens;
 }
 
 class RestoreTokensRequest implements StartSaving {
@@ -213,7 +213,7 @@ class RestoreTokensSuccess implements StopSaving, PersistData {
 class RestoreTokensFailure implements StopSaving {
   RestoreTokensFailure(this.tokens);
 
-  final List<TokenEntity> tokens;
+  final List<TokenEntity?> tokens;
 }
 
 class FilterTokens implements PersistUI {
@@ -259,48 +259,48 @@ class FilterTokensByCustom4 implements PersistUI {
 }
 
 void handleTokenAction(
-    BuildContext context, List<BaseEntity> tokens, EntityAction action) {
+    BuildContext? context, List<BaseEntity?> tokens, EntityAction? action) {
   if (tokens.isEmpty) {
     return;
   }
 
-  final store = StoreProvider.of<AppState>(context);
+  final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
-  final token = tokens.first as TokenEntity;
-  final tokenIds = tokens.map((token) => token.id).toList();
+  final token = tokens.first as TokenEntity?;
+  final tokenIds = tokens.map((token) => token!.id).toList();
 
   switch (action) {
     case EntityAction.copy:
-      Clipboard.setData(ClipboardData(text: token.token));
-      showToast(localization.copiedToClipboard.replaceFirst(':value ', ''));
+      Clipboard.setData(ClipboardData(text: token!.token));
+      showToast(localization!.copiedToClipboard.replaceFirst(':value ', ''));
       break;
     case EntityAction.edit:
-      editEntity(entity: token);
+      editEntity(entity: token!);
       break;
     case EntityAction.restore:
       final message = tokenIds.length > 1
-          ? localization.restoredTokens
+          ? localization!.restoredTokens
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', tokenIds.length.toString())
-          : localization.restoredToken;
+          : localization!.restoredToken;
       store.dispatch(RestoreTokensRequest(
           snackBarCompleter<Null>(context, message), tokenIds));
       break;
     case EntityAction.archive:
       final message = tokenIds.length > 1
-          ? localization.archivedTokens
+          ? localization!.archivedTokens
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', tokenIds.length.toString())
-          : localization.archivedToken;
+          : localization!.archivedToken;
       store.dispatch(ArchiveTokensRequest(
           snackBarCompleter<Null>(context, message), tokenIds));
       break;
     case EntityAction.delete:
       final message = tokenIds.length > 1
-          ? localization.deletedTokens
+          ? localization!.deletedTokens
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', tokenIds.length.toString())
-          : localization.deletedToken;
+          : localization!.deletedToken;
       store.dispatch(DeleteTokensRequest(
           snackBarCompleter<Null>(context, message), tokenIds));
       break;
@@ -314,7 +314,7 @@ void handleTokenAction(
       }
 
       for (final token in tokens) {
-        if (!store.state.tokenListState.isSelected(token.id)) {
+        if (!store.state.tokenListState.isSelected(token!.id)) {
           store.dispatch(AddToTokenMultiselect(entity: token));
         } else {
           store.dispatch(RemoveFromTokenMultiselect(entity: token));
@@ -334,15 +334,15 @@ class StartTokenMultiselect {
 }
 
 class AddToTokenMultiselect {
-  AddToTokenMultiselect({@required this.entity});
+  AddToTokenMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromTokenMultiselect {
-  RemoveFromTokenMultiselect({@required this.entity});
+  RemoveFromTokenMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearTokenMultiselect {

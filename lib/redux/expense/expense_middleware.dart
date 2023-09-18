@@ -50,14 +50,14 @@ List<Middleware<AppState>> createStoreExpensesMiddleware([
 
 Middleware<AppState> _editExpense() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditExpense;
+    final action = dynamicAction as EditExpense?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(ExpenseEditScreen.route);
+      navigatorKey.currentState!.pushNamed(ExpenseEditScreen.route);
     }
   };
 }
@@ -65,21 +65,21 @@ Middleware<AppState> _editExpense() {
 Middleware<AppState> _viewExpense() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ViewExpense;
+    final action = dynamicAction as ViewExpense?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(ExpenseViewScreen.route);
+      navigatorKey.currentState!.pushNamed(ExpenseViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewExpenseList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewExpenseList;
+    final action = dynamicAction as ViewExpenseList?;
 
     next(action);
 
@@ -90,7 +90,7 @@ Middleware<AppState> _viewExpenseList() {
     store.dispatch(UpdateCurrentRoute(ExpenseScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           ExpenseScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -181,18 +181,18 @@ Middleware<AppState> _saveExpense(ExpenseRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveExpenseRequest;
     repository
-        .saveData(store.state.credentials, action.expense)
+        .saveData(store.state.credentials, action.expense!)
         .then((ExpenseEntity expense) {
-      if (action.expense.isNew) {
+      if (action.expense!.isNew) {
         store.dispatch(AddExpenseSuccess(expense));
       } else {
         store.dispatch(SaveExpenseSuccess(expense));
       }
-      action.completer.complete(expense);
+      action.completer!.complete(expense);
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveExpenseFailure(error));
-      action.completer.completeError(error);
+      action.completer!.completeError(error);
     });
 
     next(action);
@@ -210,13 +210,13 @@ Middleware<AppState> _loadExpense(ExpenseRepository repository) {
       store.dispatch(LoadExpenseSuccess(expense));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadExpenseFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -253,7 +253,7 @@ Middleware<AppState> _loadExpenses(ExpenseRepository repository) {
         ));
       } else {
         if (action.completer != null) {
-          action.completer.complete(null);
+          action.completer!.complete(null);
         }
         store.dispatch(LoadRecurringExpenses());
       }
@@ -261,7 +261,7 @@ Middleware<AppState> _loadExpenses(ExpenseRepository repository) {
       print(error);
       store.dispatch(LoadExpensesFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -271,14 +271,14 @@ Middleware<AppState> _loadExpenses(ExpenseRepository repository) {
 
 Middleware<AppState> _saveDocument(ExpenseRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as SaveExpenseDocumentRequest;
+    final action = dynamicAction as SaveExpenseDocumentRequest?;
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocuments(
         store.state.credentials,
-        action.expense,
+        action!.expense,
         action.multipartFiles,
-        action.isPrivate,
+        action.isPrivate!,
       )
           .then((expense) {
         store.dispatch(SaveExpenseSuccess(expense));
@@ -300,7 +300,7 @@ Middleware<AppState> _saveDocument(ExpenseRepository repository) {
     } else {
       const error = 'Uploading documents requires an enterprise plan';
       store.dispatch(SaveExpenseDocumentFailure(error));
-      action.completer.completeError(error);
+      action!.completer.completeError(error);
     }
 
     next(action);

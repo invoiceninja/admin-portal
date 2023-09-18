@@ -69,7 +69,7 @@ abstract class DateFormatEntity extends Object
   String get format;
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     if (filter == null || filter.isEmpty) {
       return true;
     }
@@ -84,7 +84,7 @@ abstract class DateFormatEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     if (filter == null || filter.isEmpty) {
       return null;
     }
@@ -109,7 +109,7 @@ abstract class DateFormatEntity extends Object
   String get listDisplayName => preview;
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
   static Serializer<DateFormatEntity> get serializer =>
       _$dateFormatEntitySerializer;

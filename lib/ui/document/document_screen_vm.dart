@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/redux/document/document_selectors.dart';
 import 'document_screen.dart';
 
 class DocumentScreenBuilder extends StatelessWidget {
-  const DocumentScreenBuilder({Key key}) : super(key: key);
+  const DocumentScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,16 +31,16 @@ class DocumentScreenBuilder extends StatelessWidget {
 
 class DocumentScreenVM {
   DocumentScreenVM({
-    @required this.isInMultiselect,
-    @required this.documentList,
-    @required this.userCompany,
-    @required this.documentMap,
+    required this.isInMultiselect,
+    required this.documentList,
+    required this.userCompany,
+    required this.documentMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> documentList;
-  final BuiltMap<String, DocumentEntity> documentMap;
+  final BuiltMap<String?, DocumentEntity?> documentMap;
 
   static DocumentScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

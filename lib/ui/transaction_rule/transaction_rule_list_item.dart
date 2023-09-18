@@ -9,21 +9,21 @@ import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 
 class TransactionRuleListItem extends StatelessWidget {
   const TransactionRuleListItem({
-    @required this.user,
-    @required this.transactionRule,
-    @required this.filter,
+    required this.user,
+    required this.transactionRule,
+    required this.filter,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
 
-  final UserEntity user;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
-  final TransactionRuleEntity transactionRule;
-  final String filter;
-  final Function(bool) onCheckboxChanged;
+  final UserEntity? user;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onLongPress;
+  final TransactionRuleEntity? transactionRule;
+  final String? filter;
+  final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
 
   @override
@@ -36,8 +36,8 @@ class TransactionRuleListItem extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
-    final filterMatch = filter != null && filter.isNotEmpty
-        ? transactionRule.matchesFilterValue(filter)
+    final filterMatch = filter != null && filter!.isNotEmpty
+        ? transactionRule!.matchesFilterValue(filter)
         : null;
 
     var subtitle = '';
@@ -45,9 +45,9 @@ class TransactionRuleListItem extends StatelessWidget {
     if (filterMatch != null) {
       subtitle = filterMatch;
     } else {
-      final vendor = state.vendorState.map[transactionRule.vendorId];
+      final vendor = state.vendorState.map[transactionRule!.vendorId];
       final category =
-          state.expenseCategoryState.map[transactionRule.categoryId];
+          state.expenseCategoryState.map[transactionRule!.categoryId];
 
       if (vendor != null) {
         subtitle += vendor.name;
@@ -65,23 +65,23 @@ class TransactionRuleListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: transactionRule,
-      isSelected: transactionRule.id ==
+      isSelected: transactionRule!.id ==
           (uiState.isEditing
-              ? transactionRuleUIState.editing.id
+              ? transactionRuleUIState.editing!.id
               : transactionRuleUIState.selectedId),
       child: ListTile(
         onTap: () =>
-            onTap != null ? onTap() : selectEntity(entity: transactionRule),
+            onTap != null ? onTap!() : selectEntity(entity: transactionRule!),
         onLongPress: () => onLongPress != null
-            ? onLongPress()
-            : selectEntity(entity: transactionRule, longPress: true),
+            ? onLongPress!()
+            : selectEntity(entity: transactionRule!, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),
                 child: Checkbox(
                   value: isChecked,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  onChanged: (value) => onCheckboxChanged(value),
+                  onChanged: (value) => onCheckboxChanged!(value),
                   activeColor: Theme.of(context).colorScheme.secondary,
                 ),
               )
@@ -92,11 +92,11 @@ class TransactionRuleListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  transactionRule.name,
+                  transactionRule!.name,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Text(formatNumber(transactionRule.listDisplayAmount, context),
+              Text(formatNumber(transactionRule!.listDisplayAmount, context)!,
                   style: Theme.of(context).textTheme.titleMedium),
             ],
           ),

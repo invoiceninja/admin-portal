@@ -20,10 +20,10 @@ class _$PaymentStatusEntitySerializer
   final String wireName = 'PaymentStatusEntity';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, PaymentStatusEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
       'name',
@@ -35,23 +35,23 @@ class _$PaymentStatusEntitySerializer
 
   @override
   PaymentStatusEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new PaymentStatusEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'name':
           result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -67,10 +67,10 @@ class _$PaymentStatusEntity extends PaymentStatusEntity {
   final String name;
 
   factory _$PaymentStatusEntity(
-          [void Function(PaymentStatusEntityBuilder) updates]) =>
+          [void Function(PaymentStatusEntityBuilder)? updates]) =>
       (new PaymentStatusEntityBuilder()..update(updates))._build();
 
-  _$PaymentStatusEntity._({this.id, this.name}) : super._() {
+  _$PaymentStatusEntity._({required this.id, required this.name}) : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'PaymentStatusEntity', 'id');
     BuiltValueNullFieldError.checkNotNull(name, r'PaymentStatusEntity', 'name');
   }
@@ -90,10 +90,10 @@ class _$PaymentStatusEntity extends PaymentStatusEntity {
     return other is PaymentStatusEntity && id == other.id && name == other.name;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, name.hashCode);
@@ -112,15 +112,15 @@ class _$PaymentStatusEntity extends PaymentStatusEntity {
 
 class PaymentStatusEntityBuilder
     implements Builder<PaymentStatusEntity, PaymentStatusEntityBuilder> {
-  _$PaymentStatusEntity _$v;
+  _$PaymentStatusEntity? _$v;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
 
   PaymentStatusEntityBuilder();
 
@@ -141,7 +141,7 @@ class PaymentStatusEntityBuilder
   }
 
   @override
-  void update(void Function(PaymentStatusEntityBuilder) updates) {
+  void update(void Function(PaymentStatusEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

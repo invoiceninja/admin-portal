@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProjectListBuilder extends StatelessWidget {
-  const ProjectListBuilder({Key key}) : super(key: key);
+  const ProjectListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class ProjectListBuilder extends StatelessWidget {
                 user: state.user,
                 filter: viewModel.filter,
                 project: project,
-                isChecked: isInMultiselect && listState.isSelected(project.id),
+                isChecked: isInMultiselect && listState.isSelected(project!.id),
               );
             });
       },
@@ -61,17 +61,17 @@ class ProjectListBuilder extends StatelessWidget {
 
 class ProjectListVM {
   ProjectListVM({
-    @required this.state,
-    @required this.projectList,
-    @required this.projectMap,
-    @required this.clientMap,
-    @required this.listState,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.onRefreshed,
-    @required this.tableColumns,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.projectList,
+    required this.projectMap,
+    required this.clientMap,
+    required this.listState,
+    required this.filter,
+    required this.isLoading,
+    required this.onRefreshed,
+    required this.tableColumns,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
   });
 
   static ProjectListVM fromStore(Store<AppState> store) {
@@ -80,7 +80,7 @@ class ProjectListVM {
         return Future<Null>(null);
       }
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -104,7 +104,7 @@ class ProjectListVM {
       filter: state.projectUIState.listUIState.filter,
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
-          state.userCompany.settings?.getTableColumns(EntityType.project) ??
+          state.userCompany!.settings?.getTableColumns(EntityType.project) ??
               ProjectPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortProjects(field)),
       onClearMultielsect: () => store.dispatch(ClearProjectMultiselect()),
@@ -113,10 +113,10 @@ class ProjectListVM {
 
   final AppState state;
   final List<String> projectList;
-  final BuiltMap<String, ProjectEntity> projectMap;
-  final BuiltMap<String, ClientEntity> clientMap;
+  final BuiltMap<String?, ProjectEntity?> projectMap;
+  final BuiltMap<String?, ClientEntity?> clientMap;
   final ListUIState listState;
-  final String filter;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final List<String> tableColumns;

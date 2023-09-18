@@ -12,7 +12,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/settings/credit_cards_and_banks.dart';
 
 class CreditCardsAndBanksScreen extends StatelessWidget {
-  const CreditCardsAndBanksScreen({Key key}) : super(key: key);
+  const CreditCardsAndBanksScreen({Key? key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsCreditCardsAndBanks';
 
   @override
@@ -28,9 +28,9 @@ class CreditCardsAndBanksScreen extends StatelessWidget {
 
 class CreditCardsAndBanksVM {
   CreditCardsAndBanksVM({
-    @required this.state,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
+    required this.state,
+    required this.onSavePressed,
+    required this.onCancelPressed,
   });
 
   static CreditCardsAndBanksVM fromStore(Store<AppState> store) {
@@ -44,6 +44,6 @@ class CreditCardsAndBanksVM {
   }
 
   final AppState state;
-  final Function(BuildContext) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
+  final Function(BuildContext)? onSavePressed;
+  final Function(BuildContext)? onCancelPressed;
 }

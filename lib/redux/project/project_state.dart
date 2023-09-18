@@ -30,9 +30,9 @@ abstract class ProjectState
   @memoized
   int get hashCode;
 
-  BuiltMap<String, ProjectEntity> get map;
+  BuiltMap<String?, ProjectEntity?> get map;
 
-  ProjectEntity get(String projectId) {
+  ProjectEntity? get(String projectId) {
     if (map.containsKey(projectId)) {
       return map[projectId];
     } else {
@@ -43,7 +43,7 @@ abstract class ProjectState
   BuiltList<String> get list;
 
   ProjectState loadProjects(BuiltList<ProjectEntity> clients) {
-    final map = Map<String, ProjectEntity>.fromIterable(
+    final map = Map<String?, ProjectEntity?>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
@@ -60,7 +60,7 @@ abstract class ProjectState
 abstract class ProjectUIState extends Object
     with EntityUIState
     implements Built<ProjectUIState, ProjectUIStateBuilder> {
-  factory ProjectUIState(PrefStateSortField sortField) {
+  factory ProjectUIState(PrefStateSortField? sortField) {
     return _$ProjectUIState._(
       listUIState: ListUIState(sortField?.field ?? ProjectFields.number,
           sortAscending: sortField?.ascending ?? false),
@@ -76,14 +76,13 @@ abstract class ProjectUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  ProjectEntity get editing;
+  ProjectEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<ProjectUIState> get serializer =>
       _$projectUIStateSerializer;

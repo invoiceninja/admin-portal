@@ -35,7 +35,7 @@ class ViewQuoteList implements PersistUI {
   });
 
   final bool force;
-  final int page;
+  final int? page;
 }
 
 class ViewQuote implements PersistUI, PersistPrefs {
@@ -44,7 +44,7 @@ class ViewQuote implements PersistUI, PersistPrefs {
     this.force = false,
   });
 
-  final String quoteId;
+  final String? quoteId;
   final bool force;
 }
 
@@ -52,32 +52,32 @@ class EditQuote implements PersistUI, PersistPrefs {
   EditQuote(
       {this.quote, this.quoteItemIndex, this.completer, this.force = false});
 
-  final InvoiceEntity quote;
-  final int quoteItemIndex;
-  final Completer completer;
+  final InvoiceEntity? quote;
+  final int? quoteItemIndex;
+  final Completer? completer;
   final bool force;
 }
 
 class ShowEmailQuote {
   ShowEmailQuote({this.quote, this.context, this.completer});
 
-  final InvoiceEntity quote;
-  final BuildContext context;
-  final Completer completer;
+  final InvoiceEntity? quote;
+  final BuildContext? context;
+  final Completer? completer;
 }
 
 class ShowPdfQuote {
   ShowPdfQuote({this.quote, this.context, this.activityId});
 
-  final InvoiceEntity quote;
-  final BuildContext context;
-  final String activityId;
+  final InvoiceEntity? quote;
+  final BuildContext? context;
+  final String? activityId;
 }
 
 class EditQuoteItem implements PersistUI {
   EditQuoteItem([this.quoteItemIndex]);
 
-  final int quoteItemIndex;
+  final int? quoteItemIndex;
 }
 
 class UpdateQuote implements PersistUI {
@@ -89,20 +89,20 @@ class UpdateQuote implements PersistUI {
 class UpdateQuoteClient implements PersistUI {
   UpdateQuoteClient({this.client});
 
-  final ClientEntity client;
+  final ClientEntity? client;
 }
 
 class LoadQuote {
   LoadQuote({this.completer, this.quoteId});
 
-  final Completer completer;
-  final String quoteId;
+  final Completer? completer;
+  final String? quoteId;
 }
 
 class LoadQuotes {
   LoadQuotes({this.completer, this.page = 1});
 
-  final Completer completer;
+  final Completer? completer;
   final int page;
 }
 
@@ -157,20 +157,20 @@ class LoadQuotesSuccess implements StopLoading {
 class AddQuoteContact implements PersistUI {
   AddQuoteContact({this.contact, this.invitation});
 
-  final ClientContactEntity contact;
-  final InvitationEntity invitation;
+  final ClientContactEntity? contact;
+  final InvitationEntity? invitation;
 }
 
 class RemoveQuoteContact implements PersistUI {
   RemoveQuoteContact({this.invitation});
 
-  final InvitationEntity invitation;
+  final InvitationEntity? invitation;
 }
 
 class AddQuoteItem implements PersistUI {
   AddQuoteItem({this.quoteItem});
 
-  final InvoiceItemEntity quoteItem;
+  final InvoiceItemEntity? quoteItem;
 }
 
 class MoveQuoteItem implements PersistUI {
@@ -179,8 +179,8 @@ class MoveQuoteItem implements PersistUI {
     this.newIndex,
   });
 
-  final int oldIndex;
-  final int newIndex;
+  final int? oldIndex;
+  final int? newIndex;
 }
 
 class AddQuoteItems implements PersistUI {
@@ -192,8 +192,8 @@ class AddQuoteItems implements PersistUI {
 class UpdateQuoteItem implements PersistUI {
   UpdateQuoteItem({this.index, this.quoteItem});
 
-  final int index;
-  final InvoiceItemEntity quoteItem;
+  final int? index;
+  final InvoiceItemEntity? quoteItem;
 }
 
 class DeleteQuoteItem implements PersistUI {
@@ -204,14 +204,14 @@ class DeleteQuoteItem implements PersistUI {
 
 class SaveQuoteRequest implements StartSaving {
   SaveQuoteRequest({
-    @required this.completer,
-    @required this.quote,
-    @required this.action,
+    required this.completer,
+    required this.quote,
+    required this.action,
   });
 
   final Completer completer;
   final InvoiceEntity quote;
-  final EntityAction action;
+  final EntityAction? action;
 }
 
 class SaveQuoteSuccess implements StopSaving, PersistData, PersistUI {
@@ -234,12 +234,12 @@ class SaveQuoteFailure implements StopSaving {
 
 class EmailQuoteRequest implements StartSaving {
   EmailQuoteRequest({
-    @required this.completer,
-    @required this.quoteId,
-    @required this.template,
-    @required this.subject,
-    @required this.body,
-    @required this.ccEmail,
+    required this.completer,
+    required this.quoteId,
+    required this.template,
+    required this.subject,
+    required this.body,
+    required this.ccEmail,
   });
 
   final Completer completer;
@@ -284,9 +284,9 @@ class MarkSentQuoteFailure implements StopSaving {
 class BulkEmailQuotesRequest implements StartSaving {
   BulkEmailQuotesRequest({this.completer, this.quoteIds, this.template});
 
-  final Completer completer;
-  final List<String> quoteIds;
-  final EmailTemplate template;
+  final Completer? completer;
+  final List<String>? quoteIds;
+  final EmailTemplate? template;
 }
 
 class BulkEmailQuotesSuccess implements StopSaving, PersistData {
@@ -318,7 +318,7 @@ class ArchiveQuotesSuccess implements StopSaving, PersistData {
 class ArchiveQuotesFailure implements StopSaving {
   ArchiveQuotesFailure(this.quotes);
 
-  final List<InvoiceEntity> quotes;
+  final List<InvoiceEntity?> quotes;
 }
 
 class DeleteQuotesRequest implements StartSaving {
@@ -338,7 +338,7 @@ class DeleteQuotesSuccess implements StopSaving, PersistData {
 class DeleteQuotesFailure implements StopSaving {
   DeleteQuotesFailure(this.quotes);
 
-  final List<InvoiceEntity> quotes;
+  final List<InvoiceEntity?> quotes;
 }
 
 class DownloadQuotesRequest implements StartSaving {
@@ -373,7 +373,7 @@ class RestoreQuotesSuccess implements StopSaving, PersistData {
 class RestoreQuotesFailure implements StopSaving {
   RestoreQuotesFailure(this.quotes);
 
-  final List<InvoiceEntity> quotes;
+  final List<InvoiceEntity?> quotes;
 }
 
 class FilterQuotes implements PersistUI {
@@ -440,7 +440,7 @@ class ConvertQuotesToInvoices implements StartSaving {
 class ConvertQuotesToInvoicesSuccess implements StopSaving {
   ConvertQuotesToInvoicesSuccess({this.quotes});
 
-  final List<InvoiceEntity> quotes;
+  final List<InvoiceEntity>? quotes;
 }
 
 class ConvertQuotesToInvoicesFailure implements StopSaving {
@@ -459,7 +459,7 @@ class ConvertQuotesToProjects implements StartSaving {
 class ConvertQuotesToProjectsSuccess implements StopSaving {
   ConvertQuotesToProjectsSuccess({this.quotes});
 
-  final List<InvoiceEntity> quotes;
+  final List<InvoiceEntity>? quotes;
 }
 
 class ConvertQuotesToProjectsFailure implements StopSaving {
@@ -478,7 +478,7 @@ class ApproveQuotes implements StartSaving {
 class ApproveQuoteSuccess implements StopSaving {
   ApproveQuoteSuccess({this.quotes});
 
-  final List<InvoiceEntity> quotes;
+  final List<InvoiceEntity>? quotes;
 }
 
 class ApproveQuoteFailure implements StopSaving {
@@ -489,13 +489,13 @@ class ApproveQuoteFailure implements StopSaving {
 
 class SaveQuoteDocumentRequest implements StartSaving {
   SaveQuoteDocumentRequest({
-    @required this.isPrivate,
-    @required this.completer,
-    @required this.multipartFile,
-    @required this.quote,
+    required this.isPrivate,
+    required this.completer,
+    required this.multipartFile,
+    required this.quote,
   });
 
-  final bool isPrivate;
+  final bool? isPrivate;
   final Completer completer;
   final List<MultipartFile> multipartFile;
   final InvoiceEntity quote;
@@ -514,27 +514,27 @@ class SaveQuoteDocumentFailure implements StopSaving {
 }
 
 Future handleQuoteAction(
-    BuildContext context, List<BaseEntity> quotes, EntityAction action) async {
+    BuildContext context, List<BaseEntity?> quotes, EntityAction? action) async {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
-  final quote = quotes.first as InvoiceEntity;
-  final quoteIds = quotes.map((quote) => quote.id).toList();
+  final quote = quotes.first as InvoiceEntity?;
+  final quoteIds = quotes.map((quote) => quote!.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: quote);
+      editEntity(entity: quote!);
       break;
     case EntityAction.viewPdf:
       store.dispatch(ShowPdfQuote(quote: quote, context: context));
       break;
     case EntityAction.clientPortal:
-      launchUrl(Uri.parse(quote.invitationSilentLink));
+      launchUrl(Uri.parse(quote!.invitationSilentLink));
       break;
     case EntityAction.convertToInvoice:
       confirmCallback(
           context: context,
-          message: localization.convertToInvoice,
+          message: localization!.convertToInvoice,
           callback: (_) {
             store.dispatch(ConvertQuotesToInvoices(
                 snackBarCompleter<Null>(context, localization.convertedQuote),
@@ -544,7 +544,7 @@ Future handleQuoteAction(
     case EntityAction.convertToProject:
       confirmCallback(
           context: context,
-          message: localization.convertToProject,
+          message: localization!.convertToProject,
           callback: (_) {
             store.dispatch(ConvertQuotesToProjects(
                 snackBarCompleter<Null>(context, localization.convertedQuote),
@@ -553,19 +553,19 @@ Future handleQuoteAction(
       break;
     case EntityAction.approve:
       final message = quoteIds.length > 1
-          ? localization.approvedQuotes
+          ? localization!.approvedQuotes!
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', quoteIds.length.toString())
-          : localization.approveQuote;
+          : localization!.approveQuote;
       store.dispatch(
           ApproveQuotes(snackBarCompleter<Null>(context, message), quoteIds));
       break;
     case EntityAction.viewInvoice:
-      viewEntityById(entityId: quote.invoiceId, entityType: EntityType.invoice);
+      viewEntityById(entityId: quote!.invoiceId, entityType: EntityType.invoice);
       break;
     case EntityAction.markSent:
       store.dispatch(MarkSentQuotesRequest(
-          snackBarCompleter<Null>(context, localization.markedQuoteAsSent),
+          snackBarCompleter<Null>(context, localization!.markedQuoteAsSent),
           quoteIds));
       break;
     case EntityAction.sendEmail:
@@ -575,7 +575,7 @@ Future handleQuoteAction(
       quotes.forEach((quote) {
         final client = state.clientState.get(
           (quote as InvoiceEntity).clientId,
-        );
+        )!;
         if (!client.hasEmailAddress) {
           emailValid = false;
         }
@@ -583,12 +583,12 @@ Future handleQuoteAction(
       if (!emailValid) {
         showMessageDialog(
             context: context,
-            message: localization.clientEmailNotSet,
+            message: localization!.clientEmailNotSet,
             secondaryActions: [
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    editEntity(entity: state.clientState.get(quote.clientId));
+                    editEntity(entity: state.clientState.get(quote!.clientId)!);
                   },
                   child: Text(localization.editClient.toUpperCase()))
             ]);
@@ -597,14 +597,14 @@ Future handleQuoteAction(
       if (action == EntityAction.sendEmail) {
         store.dispatch(ShowEmailQuote(
             completer:
-                snackBarCompleter<Null>(context, localization.emailedQuote),
+                snackBarCompleter<Null>(context, localization!.emailedQuote),
             quote: quote,
             context: context));
       } else if (action == EntityAction.schedule) {
         if (!state.isProPlan) {
           showMessageDialog(
               context: context,
-              message: localization.upgradeToPaidPlanToSchedule,
+              message: localization!.upgradeToPaidPlanToSchedule,
               secondaryActions: [
                 TextButton(
                     onPressed: () {
@@ -622,11 +622,11 @@ Future handleQuoteAction(
             entity: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_RECORD)
                 .rebuild((b) => b
                   ..parameters.entityType = EntityType.quote.apiValue
-                  ..parameters.entityId = quote.id));
+                  ..parameters.entityId = quote!.id));
       } else {
         confirmCallback(
             context: context,
-            message: localization.bulkEmailQuotes,
+            message: localization!.bulkEmailQuotes,
             callback: (_) {
               store.dispatch(BulkEmailQuotesRequest(
                   completer: snackBarCompleter<Null>(
@@ -641,7 +641,7 @@ Future handleQuoteAction(
     case EntityAction.cloneToPurchaseOrder:
       final designId = getDesignIdForVendorByEntity(
           state: state,
-          vendorId: quote.vendorId,
+          vendorId: quote!.vendorId,
           entityType: EntityType.purchaseOrder);
       createEntity(
           context: context,
@@ -655,7 +655,7 @@ Future handleQuoteAction(
     case EntityAction.cloneToInvoice:
       final designId = getDesignIdForClientByEntity(
           state: state,
-          clientId: quote.clientId,
+          clientId: quote!.clientId,
           entityType: EntityType.invoice);
       createEntity(
           context: context,
@@ -665,12 +665,12 @@ Future handleQuoteAction(
       break;
     case EntityAction.clone:
     case EntityAction.cloneToQuote:
-      createEntity(context: context, entity: quote.clone);
+      createEntity(context: context, entity: quote!.clone);
       break;
     case EntityAction.cloneToCredit:
       final designId = getDesignIdForClientByEntity(
           state: state,
-          clientId: quote.clientId,
+          clientId: quote!.clientId,
           entityType: EntityType.credit);
       createEntity(
           context: context,
@@ -681,7 +681,7 @@ Future handleQuoteAction(
     case EntityAction.cloneToRecurring:
       final designId = getDesignIdForClientByEntity(
           state: state,
-          clientId: quote.clientId,
+          clientId: quote!.clientId,
           entityType: EntityType.invoice);
       createEntity(
           context: context,
@@ -690,37 +690,37 @@ Future handleQuoteAction(
             ..designId = designId));
       break;
     case EntityAction.download:
-      launchUrl(Uri.parse(quote.invitationDownloadLink));
+      launchUrl(Uri.parse(quote!.invitationDownloadLink));
       break;
     case EntityAction.bulkDownload:
       store.dispatch(DownloadQuotesRequest(
-          snackBarCompleter<Null>(context, localization.exportedData),
+          snackBarCompleter<Null>(context, localization!.exportedData),
           quoteIds));
       break;
     case EntityAction.restore:
       final message = quoteIds.length > 1
-          ? localization.restoredQuotes
+          ? localization!.restoredQuotes
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', quoteIds.length.toString())
-          : localization.restoredQuote;
+          : localization!.restoredQuote;
       store.dispatch(RestoreQuotesRequest(
           snackBarCompleter<Null>(context, message), quoteIds));
       break;
     case EntityAction.archive:
       final message = quoteIds.length > 1
-          ? localization.archivedQuotes
+          ? localization!.archivedQuotes
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', quoteIds.length.toString())
-          : localization.archivedQuote;
+          : localization!.archivedQuote;
       store.dispatch(ArchiveQuotesRequest(
           snackBarCompleter<Null>(context, message), quoteIds));
       break;
     case EntityAction.delete:
       final message = quoteIds.length > 1
-          ? localization.deletedQuotes
+          ? localization!.deletedQuotes
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', quoteIds.length.toString())
-          : localization.deletedQuote;
+          : localization!.deletedQuote;
       store.dispatch(DeleteQuotesRequest(
           snackBarCompleter<Null>(context, message), quoteIds));
       break;
@@ -729,7 +729,7 @@ Future handleQuoteAction(
         store.dispatch(StartQuoteMultiselect());
       }
       for (final quote in quotes) {
-        if (!store.state.quoteListState.isSelected(quote.id)) {
+        if (!store.state.quoteListState.isSelected(quote!.id)) {
           store.dispatch(AddToQuoteMultiselect(entity: quote));
         } else {
           store.dispatch(RemoveFromQuoteMultiselect(entity: quote));
@@ -737,23 +737,23 @@ Future handleQuoteAction(
       }
       break;
     case EntityAction.printPdf:
-      final invitation = quote.invitations.first;
+      final invitation = quote!.invitations.first;
       final url = invitation.downloadLink;
       store.dispatch(StartSaving());
-      final http.Response response =
-          await WebClient().get(url, '', rawResponse: true);
+      final http.Response? response =
+          await (WebClient().get(url, '', rawResponse: true) as FutureOr<Response?>);
       store.dispatch(StopSaving());
-      await Printing.layoutPdf(onLayout: (_) => response.bodyBytes);
+      await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;
     case EntityAction.bulkPrint:
       store.dispatch(StartSaving());
-      final url = state.credentials.url + '/quotes/bulk';
+      final url = state.credentials.url! + '/quotes/bulk';
       final data = json.encode(
           {'ids': quoteIds, 'action': EntityAction.bulkPrint.toApiParam()});
-      final http.Response response = await WebClient()
-          .post(url, state.credentials.token, data: data, rawResponse: true);
+      final http.Response? response = await (WebClient()
+          .post(url, state.credentials.token, data: data, rawResponse: true) as FutureOr<Response?>);
       store.dispatch(StopSaving());
-      await Printing.layoutPdf(onLayout: (_) => response.bodyBytes);
+      await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;
     case EntityAction.more:
       showEntityActionsDialog(
@@ -769,14 +769,14 @@ Future handleQuoteAction(
       }
       if (documentIds.isEmpty) {
         showMessageDialog(
-            context: context, message: localization.noDocumentsToDownload);
+            context: context, message: localization!.noDocumentsToDownload);
       } else {
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
             completer: snackBarCompleter<Null>(
               context,
-              localization.exportedData,
+              localization!.exportedData,
             ),
           ),
         );
@@ -791,15 +791,15 @@ Future handleQuoteAction(
 class StartQuoteMultiselect {}
 
 class AddToQuoteMultiselect {
-  AddToQuoteMultiselect({@required this.entity});
+  AddToQuoteMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromQuoteMultiselect {
-  RemoveFromQuoteMultiselect({@required this.entity});
+  RemoveFromQuoteMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearQuoteMultiselect {}
@@ -807,5 +807,5 @@ class ClearQuoteMultiselect {}
 class UpdateQuoteTab implements PersistUI {
   UpdateQuoteTab({this.tabIndex});
 
-  final int tabIndex;
+  final int? tabIndex;
 }

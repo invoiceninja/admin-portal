@@ -18,25 +18,25 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DocumentListItem extends StatelessWidget {
   const DocumentListItem({
-    @required this.userCompany,
+    required this.userCompany,
     //@required this.onCheckboxChanged,
-    @required this.document,
-    @required this.filter,
+    required this.document,
+    required this.filter,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
 
-  final UserCompanyEntity userCompany;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
-  final Function(bool) onCheckboxChanged;
+  final UserCompanyEntity? userCompany;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onLongPress;
+  final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
 
   //final ValueChanged<bool> onCheckboxChanged;
-  final DocumentEntity document;
-  final String filter;
+  final DocumentEntity? document;
+  final String? filter;
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +44,8 @@ class DocumentListItem extends StatelessWidget {
     final state = store.state;
     final uiState = state.uiState;
     final documentUIState = uiState.documentUIState;
-    final filterMatch = filter != null && filter.isNotEmpty
-        ? document.matchesFilterValue(filter)
+    final filterMatch = filter != null && filter!.isNotEmpty
+        ? document!.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch;
     final listUIState = documentUIState.listUIState;
@@ -54,9 +54,9 @@ class DocumentListItem extends StatelessWidget {
 
     return DismissibleEntity(
       isSelected: isDesktop(context) &&
-          document.id ==
+          document!.id ==
               (uiState.isEditing
-                  ? documentUIState.editing.id
+                  ? documentUIState.editing!.id
                   : documentUIState.selectedId),
       userCompany: userCompany,
       entity: document,
@@ -64,10 +64,10 @@ class DocumentListItem extends StatelessWidget {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: document),
+                    onTap != null ? onTap!() : selectEntity(entity: document!),
                 onLongPress: () => onLongPress != null
-                    ? onLongPress()
-                    : selectEntity(entity: document, longPress: true),
+                    ? onLongPress!()
+                    : selectEntity(entity: document!, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 10,
@@ -87,13 +87,13 @@ class DocumentListItem extends StatelessWidget {
                                     materialTapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
                                     onChanged: (value) =>
-                                        onCheckboxChanged(value),
+                                        onCheckboxChanged!(value),
                                     activeColor:
                                         Theme.of(context).colorScheme.secondary,
                                   ),
                                 )
                               : ActionMenuButton(
-                                  entityActions: document.getActions(
+                                  entityActions: document!.getActions(
                                     userCompany: state.userCompany,
                                     includeEdit: true,
                                   ),
@@ -107,23 +107,23 @@ class DocumentListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              document.name,
+                              document!.name,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             Text(
                               formatDate(
                                       convertTimestampToDateString(
-                                          document.createdAt),
+                                          document!.createdAt),
                                       context) +
-                                  (!document.isPublic
-                                      ? ' • ${AppLocalization.of(context).private}'
+                                  (!document!.isPublic
+                                      ? ' • ${AppLocalization.of(context)!.private}'
                                       : ''),
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ],
                         ),
                       ),
-                      Text(document.prettySize,
+                      Text(document!.prettySize,
                           style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),
@@ -131,10 +131,10 @@ class DocumentListItem extends StatelessWidget {
               )
             : ListTile(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: document),
+                    onTap != null ? onTap!() : selectEntity(entity: document!),
                 onLongPress: () => onLongPress != null
-                    ? onLongPress()
-                    : selectEntity(entity: document, longPress: true),
+                    ? onLongPress!()
+                    : selectEntity(entity: document!, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
                         ignoring: listUIState.isInMultiselect(),
@@ -142,7 +142,7 @@ class DocumentListItem extends StatelessWidget {
                           value: isChecked,
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => onCheckboxChanged(value),
+                          onChanged: (value) => onCheckboxChanged!(value),
                           activeColor: Theme.of(context).colorScheme.secondary,
                         ),
                       )
@@ -156,23 +156,23 @@ class DocumentListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              document.name,
+                              document!.name,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             Text(
                               formatDate(
                                       convertTimestampToDateString(
-                                          document.createdAt),
+                                          document!.createdAt),
                                       context) +
-                                  (!document.isPublic
-                                      ? ' • ${AppLocalization.of(context).private}'
+                                  (!document!.isPublic
+                                      ? ' • ${AppLocalization.of(context)!.private}'
                                       : ''),
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ],
                         ),
                       ),
-                      Text(document.prettySize,
+                      Text(document!.prettySize,
                           style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),

@@ -12,7 +12,7 @@ import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
 
 class QuotePdfScreen extends StatelessWidget {
-  const QuotePdfScreen({Key key, this.showAppBar = true}) : super(key: key);
+  const QuotePdfScreen({Key? key, this.showAppBar = true}) : super(key: key);
 
   final bool showAppBar;
 
@@ -26,7 +26,7 @@ class QuotePdfScreen extends StatelessWidget {
       },
       builder: (context, vm) {
         return InvoicePdfView(
-          key: ValueKey('__quote_pdf_${vm.invoice.id}__'),
+          key: ValueKey('__quote_pdf_${vm.invoice!.id}__'),
           viewModel: vm,
           showAppBar: showAppBar,
         );
@@ -37,9 +37,9 @@ class QuotePdfScreen extends StatelessWidget {
 
 class QuotePdfVM extends EntityPdfVM {
   QuotePdfVM({
-    AppState state,
-    InvoiceEntity invoice,
-    String activityId,
+    AppState? state,
+    InvoiceEntity? invoice,
+    String? activityId,
   }) : super(
           state: state,
           invoice: invoice,
@@ -49,7 +49,7 @@ class QuotePdfVM extends EntityPdfVM {
   factory QuotePdfVM.fromStore(Store<AppState> store) {
     final state = store.state;
     final quoteUIState = state.uiState.quoteUIState;
-    final invoiceId = quoteUIState.selectedId;
+    final invoiceId = quoteUIState.selectedId!;
     final invoice = state.quoteState.get(invoiceId);
 
     return QuotePdfVM(

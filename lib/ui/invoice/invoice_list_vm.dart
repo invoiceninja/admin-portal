@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceListBuilder extends StatelessWidget {
-  const InvoiceListBuilder({Key key}) : super(key: key);
+  const InvoiceListBuilder({Key? key}) : super(key: key);
 
   static const String route = '/invoices/edit';
 
@@ -43,7 +43,7 @@ class InvoiceListBuilder extends StatelessWidget {
             onSortColumn: viewModel.onSortColumn,
             itemBuilder: (BuildContext context, index) {
               final invoiceId = viewModel.invoiceList[index];
-              final invoice = viewModel.invoiceMap[invoiceId];
+              final invoice = viewModel.invoiceMap[invoiceId]!;
               final invoiceListState = viewModel.state.invoiceListState;
 
               return InvoiceListItem(
@@ -60,25 +60,25 @@ class InvoiceListBuilder extends StatelessWidget {
 
 class EntityListVM {
   EntityListVM({
-    @required this.state,
-    @required this.entityType,
-    @required this.invoiceList,
-    @required this.invoiceMap,
-    @required this.clientMap,
-    @required this.isLoading,
-    @required this.filter,
-    @required this.onRefreshed,
-    @required this.tableColumns,
-    @required this.onSortColumn,
-    @required this.onClearMultiselect,
+    required this.state,
+    required this.entityType,
+    required this.invoiceList,
+    required this.invoiceMap,
+    required this.clientMap,
+    required this.isLoading,
+    required this.filter,
+    required this.onRefreshed,
+    required this.tableColumns,
+    required this.onSortColumn,
+    required this.onClearMultiselect,
   });
 
   final AppState state;
   final EntityType entityType;
   final List<String> invoiceList;
-  final BuiltMap<String, InvoiceEntity> invoiceMap;
-  final BuiltMap<String, ClientEntity> clientMap;
-  final String filter;
+  final BuiltMap<String?, InvoiceEntity?> invoiceMap;
+  final BuiltMap<String?, ClientEntity?> clientMap;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final List<String> tableColumns;
@@ -88,20 +88,20 @@ class EntityListVM {
 
 class InvoiceListVM extends EntityListVM {
   InvoiceListVM({
-    @required AppState state,
-    @required List<String> invoiceList,
-    @required BuiltMap<String, InvoiceEntity> invoiceMap,
-    @required BuiltMap<String, ClientEntity> clientMap,
-    @required String filter,
-    @required bool isLoading,
-    @required Function(BuildContext) onRefreshed,
-    @required
+    required AppState state,
+    required List<String> invoiceList,
+    required BuiltMap<String?, InvoiceEntity?> invoiceMap,
+    required BuiltMap<String?, ClientEntity?> clientMap,
+    required String? filter,
+    required bool isLoading,
+    required Function(BuildContext) onRefreshed,
+    required
         Function(BuildContext, List<InvoiceEntity>, EntityAction)
             onEntityAction,
-    @required List<String> tableColumns,
-    @required EntityType entityType,
-    @required Function(String) onSortColumn,
-    @required Function onClearMultiselect,
+    required List<String> tableColumns,
+    required EntityType entityType,
+    required Function(String) onSortColumn,
+    required Function onClearMultiselect,
   }) : super(
           state: state,
           invoiceList: invoiceList,
@@ -122,7 +122,7 @@ class InvoiceListVM extends EntityListVM {
         return Future<Null>(null);
       }
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -140,7 +140,7 @@ class InvoiceListVM extends EntityListVM {
         state.paymentState.map,
         state.invoiceListState,
         state.userState.map,
-        state.company.settings.recurringNumberPrefix,
+        state.company!.settings.recurringNumberPrefix,
       ),
       invoiceMap: state.invoiceState.map,
       clientMap: state.clientState.map,
@@ -151,7 +151,7 @@ class InvoiceListVM extends EntityListVM {
               EntityAction action) =>
           handleInvoiceAction(context, invoices, action),
       tableColumns:
-          state.userCompany.settings?.getTableColumns(EntityType.invoice) ??
+          state.userCompany!.settings?.getTableColumns(EntityType.invoice) ??
               InvoicePresenter.getDefaultTableFields(state.userCompany),
       entityType: EntityType.invoice,
       onSortColumn: (field) => store.dispatch(SortInvoices(field)),

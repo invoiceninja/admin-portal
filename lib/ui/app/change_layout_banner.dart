@@ -18,10 +18,10 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ChangeLayoutBanner extends StatefulWidget {
   const ChangeLayoutBanner({
-    Key key,
-    @required this.child,
-    @required this.appLayout,
-    @required this.suggestedLayout,
+    Key? key,
+    required this.child,
+    required this.appLayout,
+    required this.suggestedLayout,
   }) : super(key: key);
 
   final Widget child;
@@ -38,10 +38,10 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     final calculatedLayout = calculateLayout(context);
-    String message;
+    String? message;
 
     if (!_dismissedChange) {
       if (widget.appLayout == AppLayout.mobile &&
@@ -94,7 +94,7 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
                                 : AppLayout.desktop;
                         store
                             .dispatch(UpdateUserPreferences(appLayout: layout));
-                        AppBuilder.of(context).rebuild();
+                        AppBuilder.of(context)!.rebuild();
                         WidgetsBinding.instance
                             .addPostFrameCallback((duration) {
                           if (layout == AppLayout.mobile) {

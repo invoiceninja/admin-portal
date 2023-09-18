@@ -24,10 +24,10 @@ class _$TaxRateListResponseSerializer
   final String wireName = 'TaxRateListResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, TaxRateListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType:
@@ -39,21 +39,21 @@ class _$TaxRateListResponseSerializer
 
   @override
   TaxRateListResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TaxRateListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(TaxRateEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(TaxRateEntity)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -73,10 +73,10 @@ class _$TaxRateItemResponseSerializer
   final String wireName = 'TaxRateItemResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, TaxRateItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(TaxRateEntity)),
@@ -87,19 +87,19 @@ class _$TaxRateItemResponseSerializer
 
   @override
   TaxRateItemResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TaxRateItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TaxRateEntity)) as TaxRateEntity);
+              specifiedType: const FullType(TaxRateEntity))! as TaxRateEntity);
           break;
       }
     }
@@ -115,9 +115,9 @@ class _$TaxRateEntitySerializer implements StructuredSerializer<TaxRateEntity> {
   final String wireName = 'TaxRateEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, TaxRateEntity object,
+  Iterable<Object?> serialize(Serializers serializers, TaxRateEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'rate',
@@ -134,7 +134,7 @@ class _$TaxRateEntitySerializer implements StructuredSerializer<TaxRateEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.isChanged;
     if (value != null) {
       result
@@ -168,55 +168,55 @@ class _$TaxRateEntitySerializer implements StructuredSerializer<TaxRateEntity> {
 
   @override
   TaxRateEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TaxRateEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'rate':
           result.rate = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'archived_at':
           result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'user_id':
           result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -230,10 +230,10 @@ class _$TaxRateListResponse extends TaxRateListResponse {
   final BuiltList<TaxRateEntity> data;
 
   factory _$TaxRateListResponse(
-          [void Function(TaxRateListResponseBuilder) updates]) =>
+          [void Function(TaxRateListResponseBuilder)? updates]) =>
       (new TaxRateListResponseBuilder()..update(updates))._build();
 
-  _$TaxRateListResponse._({this.data}) : super._() {
+  _$TaxRateListResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'TaxRateListResponse', 'data');
   }
 
@@ -252,10 +252,10 @@ class _$TaxRateListResponse extends TaxRateListResponse {
     return other is TaxRateListResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -272,12 +272,12 @@ class _$TaxRateListResponse extends TaxRateListResponse {
 
 class TaxRateListResponseBuilder
     implements Builder<TaxRateListResponse, TaxRateListResponseBuilder> {
-  _$TaxRateListResponse _$v;
+  _$TaxRateListResponse? _$v;
 
-  ListBuilder<TaxRateEntity> _data;
+  ListBuilder<TaxRateEntity>? _data;
   ListBuilder<TaxRateEntity> get data =>
       _$this._data ??= new ListBuilder<TaxRateEntity>();
-  set data(ListBuilder<TaxRateEntity> data) => _$this._data = data;
+  set data(ListBuilder<TaxRateEntity>? data) => _$this._data = data;
 
   TaxRateListResponseBuilder();
 
@@ -297,7 +297,7 @@ class TaxRateListResponseBuilder
   }
 
   @override
-  void update(void Function(TaxRateListResponseBuilder) updates) {
+  void update(void Function(TaxRateListResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -309,7 +309,7 @@ class TaxRateListResponseBuilder
     try {
       _$result = _$v ?? new _$TaxRateListResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -329,10 +329,10 @@ class _$TaxRateItemResponse extends TaxRateItemResponse {
   final TaxRateEntity data;
 
   factory _$TaxRateItemResponse(
-          [void Function(TaxRateItemResponseBuilder) updates]) =>
+          [void Function(TaxRateItemResponseBuilder)? updates]) =>
       (new TaxRateItemResponseBuilder()..update(updates))._build();
 
-  _$TaxRateItemResponse._({this.data}) : super._() {
+  _$TaxRateItemResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'TaxRateItemResponse', 'data');
   }
 
@@ -351,10 +351,10 @@ class _$TaxRateItemResponse extends TaxRateItemResponse {
     return other is TaxRateItemResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -371,11 +371,11 @@ class _$TaxRateItemResponse extends TaxRateItemResponse {
 
 class TaxRateItemResponseBuilder
     implements Builder<TaxRateItemResponse, TaxRateItemResponseBuilder> {
-  _$TaxRateItemResponse _$v;
+  _$TaxRateItemResponse? _$v;
 
-  TaxRateEntityBuilder _data;
+  TaxRateEntityBuilder? _data;
   TaxRateEntityBuilder get data => _$this._data ??= new TaxRateEntityBuilder();
-  set data(TaxRateEntityBuilder data) => _$this._data = data;
+  set data(TaxRateEntityBuilder? data) => _$this._data = data;
 
   TaxRateItemResponseBuilder();
 
@@ -395,7 +395,7 @@ class TaxRateItemResponseBuilder
   }
 
   @override
-  void update(void Function(TaxRateItemResponseBuilder) updates) {
+  void update(void Function(TaxRateItemResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -407,7 +407,7 @@ class TaxRateItemResponseBuilder
     try {
       _$result = _$v ?? new _$TaxRateItemResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -428,7 +428,7 @@ class _$TaxRateEntity extends TaxRateEntity {
   @override
   final double rate;
   @override
-  final bool isChanged;
+  final bool? isChanged;
   @override
   final int createdAt;
   @override
@@ -436,28 +436,28 @@ class _$TaxRateEntity extends TaxRateEntity {
   @override
   final int archivedAt;
   @override
-  final bool isDeleted;
+  final bool? isDeleted;
   @override
-  final String createdUserId;
+  final String? createdUserId;
   @override
-  final String assignedUserId;
+  final String? assignedUserId;
   @override
   final String id;
 
-  factory _$TaxRateEntity([void Function(TaxRateEntityBuilder) updates]) =>
+  factory _$TaxRateEntity([void Function(TaxRateEntityBuilder)? updates]) =>
       (new TaxRateEntityBuilder()..update(updates))._build();
 
   _$TaxRateEntity._(
-      {this.name,
-      this.rate,
+      {required this.name,
+      required this.rate,
       this.isChanged,
-      this.createdAt,
-      this.updatedAt,
-      this.archivedAt,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.archivedAt,
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.id})
+      required this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'TaxRateEntity', 'name');
     BuiltValueNullFieldError.checkNotNull(rate, r'TaxRateEntity', 'rate');
@@ -493,10 +493,10 @@ class _$TaxRateEntity extends TaxRateEntity {
         id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, rate.hashCode);
@@ -531,49 +531,49 @@ class _$TaxRateEntity extends TaxRateEntity {
 
 class TaxRateEntityBuilder
     implements Builder<TaxRateEntity, TaxRateEntityBuilder> {
-  _$TaxRateEntity _$v;
+  _$TaxRateEntity? _$v;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
 
-  double _rate;
-  double get rate => _$this._rate;
-  set rate(double rate) => _$this._rate = rate;
+  double? _rate;
+  double? get rate => _$this._rate;
+  set rate(double? rate) => _$this._rate = rate;
 
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+  bool? _isChanged;
+  bool? get isChanged => _$this._isChanged;
+  set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
 
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+  int? _archivedAt;
+  int? get archivedAt => _$this._archivedAt;
+  set archivedAt(int? archivedAt) => _$this._archivedAt = archivedAt;
 
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+  bool? _isDeleted;
+  bool? get isDeleted => _$this._isDeleted;
+  set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
 
-  String _createdUserId;
-  String get createdUserId => _$this._createdUserId;
-  set createdUserId(String createdUserId) =>
+  String? _createdUserId;
+  String? get createdUserId => _$this._createdUserId;
+  set createdUserId(String? createdUserId) =>
       _$this._createdUserId = createdUserId;
 
-  String _assignedUserId;
-  String get assignedUserId => _$this._assignedUserId;
-  set assignedUserId(String assignedUserId) =>
+  String? _assignedUserId;
+  String? get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String? assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   TaxRateEntityBuilder();
 
@@ -602,7 +602,7 @@ class TaxRateEntityBuilder
   }
 
   @override
-  void update(void Function(TaxRateEntityBuilder) updates) {
+  void update(void Function(TaxRateEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

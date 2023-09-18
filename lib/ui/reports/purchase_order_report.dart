@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
@@ -78,24 +79,24 @@ enum PurchaseOrderReportFields {
 }
 
 var memoizedPurchaseOrderReport = memo7((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, InvoiceEntity> purchaseOrderMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String?, InvoiceEntity?> purchaseOrderMap,
+  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String?, UserEntity?> userMap,
   StaticState staticState,
 ) =>
-    purchaseOrderReport(userCompany, reportsUIState, purchaseOrderMap,
+    purchaseOrderReport(userCompany!, reportsUIState, purchaseOrderMap,
         clientMap, vendorMap, userMap, staticState));
 
 ReportResult purchaseOrderReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, InvoiceEntity> purchaseOrderMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String?, InvoiceEntity?> purchaseOrderMap,
+  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String?, UserEntity?> userMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -105,7 +106,7 @@ ReportResult purchaseOrderReport(
   final reportSettings = userCompany.settings?.reportSettings;
   final purchaseOrderReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportPurchaseOrder)
-          ? reportSettings[kReportPurchaseOrder]
+          ? reportSettings[kReportPurchaseOrder]!
           : ReportSettingsEntity();
 
   final defaultColumns = [
@@ -119,14 +120,14 @@ ReportResult purchaseOrderReport(
   if (purchaseOrderReportSettings.columns.isNotEmpty) {
     columns = BuiltList(purchaseOrderReportSettings.columns
         .map((e) => EnumUtils.fromString(PurchaseOrderReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
   }
 
   for (var purchaseOrderId in purchaseOrderMap.keys) {
-    final purchaseOrder = purchaseOrderMap[purchaseOrderId];
+    final purchaseOrder = purchaseOrderMap[purchaseOrderId]!;
     final vendor = vendorMap[purchaseOrder.vendorId] ?? VendorEntity();
 
     if (purchaseOrder.invitations.isEmpty) {
@@ -137,13 +138,13 @@ ReportResult purchaseOrderReport(
         vendor.getContact(purchaseOrder.invitations.first.vendorContactId);
     //final vendor = vendorMap[purchaseOrder.vendorId];
 
-    if ((purchaseOrder.isDeleted &&
-            !userCompany.company.reportIncludeDeleted) ||
-        vendor.isDeleted) {
+    if ((purchaseOrder.isDeleted! &&
+            !userCompany.company!.reportIncludeDeleted) ||
+        vendor.isDeleted!) {
       continue;
     }
 
-    if (!userCompany.company.reportIncludeDrafts && purchaseOrder.isDraft) {
+    if (!userCompany.company!.reportIncludeDrafts && purchaseOrder.isDraft) {
       continue;
     }
 
@@ -208,28 +209,28 @@ ReportResult purchaseOrderReport(
           value = presentCustomField(
             value: purchaseOrder.customValue1,
             customFieldType: CustomFieldType.invoice1,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case PurchaseOrderReportFields.invoice2:
           value = presentCustomField(
             value: purchaseOrder.customValue2,
             customFieldType: CustomFieldType.invoice2,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case PurchaseOrderReportFields.invoice3:
           value = presentCustomField(
             value: purchaseOrder.customValue3,
             customFieldType: CustomFieldType.invoice3,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case PurchaseOrderReportFields.invoice4:
           value = presentCustomField(
             value: purchaseOrder.customValue4,
             customFieldType: CustomFieldType.invoice4,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case PurchaseOrderReportFields.surcharge1:
@@ -302,7 +303,7 @@ ReportResult purchaseOrderReport(
           value = vendor.city;
           break;
         case PurchaseOrderReportFields.currency:
-          value = staticState.currencyMap[userCompany.company.currencyId]
+          value = staticState.currencyMap[userCompany.company!.currencyId]
                   ?.listDisplayName ??
               '';
           break;
@@ -362,8 +363,8 @@ ReportResult purchaseOrderReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column),
-      )) {
+        column: EnumUtils.parse(column)!,
+      )!) {
         skip = true;
       }
 
@@ -374,7 +375,7 @@ ReportResult purchaseOrderReport(
         if ([
           PurchaseOrderReportFields.converted_amount,
         ].contains(column)) {
-          currencyId = userCompany.company.currencyId;
+          currencyId = userCompany.company!.currencyId;
         }
         row.add(purchaseOrder.getReportDouble(
           value: value,
@@ -394,7 +395,7 @@ ReportResult purchaseOrderReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) => sortReportTableRows(
-      rowA, rowB, purchaseOrderReportSettings, selectedColumns));
+      rowA, rowB, purchaseOrderReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns: PurchaseOrderReportFields.values

@@ -26,9 +26,9 @@ class _$UserListResponseSerializer
   final String wireName = 'UserListResponse';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, UserListResponse object,
+  Iterable<Object?> serialize(Serializers serializers, UserListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType:
@@ -40,21 +40,21 @@ class _$UserListResponseSerializer
 
   @override
   UserListResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new UserListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(UserEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(UserEntity)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -71,9 +71,9 @@ class _$UserItemResponseSerializer
   final String wireName = 'UserItemResponse';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, UserItemResponse object,
+  Iterable<Object?> serialize(Serializers serializers, UserItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(UserEntity)),
@@ -84,19 +84,19 @@ class _$UserItemResponseSerializer
 
   @override
   UserItemResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new UserItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(UserEntity)) as UserEntity);
+              specifiedType: const FullType(UserEntity))! as UserEntity);
           break;
       }
     }
@@ -116,10 +116,10 @@ class _$UserTwoFactorResponseSerializer
   final String wireName = 'UserTwoFactorResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, UserTwoFactorResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(UserTwoFactorData)),
@@ -130,19 +130,19 @@ class _$UserTwoFactorResponseSerializer
 
   @override
   UserTwoFactorResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new UserTwoFactorResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(UserTwoFactorData))
+                  specifiedType: const FullType(UserTwoFactorData))!
               as UserTwoFactorData);
           break;
       }
@@ -160,9 +160,9 @@ class _$UserTwoFactorDataSerializer
   final String wireName = 'UserTwoFactorData';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, UserTwoFactorData object,
+  Iterable<Object?> serialize(Serializers serializers, UserTwoFactorData object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'secret',
       serializers.serialize(object.secret,
           specifiedType: const FullType(String)),
@@ -176,23 +176,23 @@ class _$UserTwoFactorDataSerializer
 
   @override
   UserTwoFactorData deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new UserTwoFactorDataBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'secret':
           result.secret = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'qrCode':
           result.qrCode = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -212,10 +212,10 @@ class _$UserCompanyItemResponseSerializer
   final String wireName = 'UserCompanyItemResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, UserCompanyItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(UserCompanyEntity)),
@@ -226,19 +226,19 @@ class _$UserCompanyItemResponseSerializer
 
   @override
   UserCompanyItemResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new UserCompanyItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(UserCompanyEntity))
+                  specifiedType: const FullType(UserCompanyEntity))!
               as UserCompanyEntity);
           break;
       }
@@ -255,9 +255,9 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
   final String wireName = 'UserEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, UserEntity object,
+  Iterable<Object?> serialize(Serializers serializers, UserEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'first_name',
       serializers.serialize(object.firstName,
           specifiedType: const FullType(String)),
@@ -315,7 +315,7 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.emailVerifiedAt;
     if (value != null) {
       result
@@ -361,116 +361,116 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
   }
 
   @override
-  UserEntity deserialize(Serializers serializers, Iterable<Object> serialized,
+  UserEntity deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new UserEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'first_name':
           result.firstName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'last_name':
           result.lastName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'email':
           result.email = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'phone':
           result.phone = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'password':
           result.password = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'email_verified_at':
           result.emailVerifiedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'verified_phone_number':
           result.phoneVerified = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value3':
           result.customValue3 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'google_2fa_secret':
           result.isTwoFactorEnabled = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'has_password':
           result.hasPassword = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'last_confirmed_email_address':
           result.lastEmailAddress = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'oauth_user_token':
           result.oauthUserToken = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'company_user':
           result.userCompany.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(UserCompanyEntity))
+                  specifiedType: const FullType(UserCompanyEntity))!
               as UserCompanyEntity);
           break;
         case 'oauth_provider_id':
           result.oauthProvider = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'archived_at':
           result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'user_id':
           result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -484,10 +484,10 @@ class _$UserListResponse extends UserListResponse {
   final BuiltList<UserEntity> data;
 
   factory _$UserListResponse(
-          [void Function(UserListResponseBuilder) updates]) =>
+          [void Function(UserListResponseBuilder)? updates]) =>
       (new UserListResponseBuilder()..update(updates))._build();
 
-  _$UserListResponse._({this.data}) : super._() {
+  _$UserListResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'UserListResponse', 'data');
   }
 
@@ -505,10 +505,10 @@ class _$UserListResponse extends UserListResponse {
     return other is UserListResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -524,12 +524,12 @@ class _$UserListResponse extends UserListResponse {
 
 class UserListResponseBuilder
     implements Builder<UserListResponse, UserListResponseBuilder> {
-  _$UserListResponse _$v;
+  _$UserListResponse? _$v;
 
-  ListBuilder<UserEntity> _data;
+  ListBuilder<UserEntity>? _data;
   ListBuilder<UserEntity> get data =>
       _$this._data ??= new ListBuilder<UserEntity>();
-  set data(ListBuilder<UserEntity> data) => _$this._data = data;
+  set data(ListBuilder<UserEntity>? data) => _$this._data = data;
 
   UserListResponseBuilder();
 
@@ -549,7 +549,7 @@ class UserListResponseBuilder
   }
 
   @override
-  void update(void Function(UserListResponseBuilder) updates) {
+  void update(void Function(UserListResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -561,7 +561,7 @@ class UserListResponseBuilder
     try {
       _$result = _$v ?? new _$UserListResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -581,10 +581,10 @@ class _$UserItemResponse extends UserItemResponse {
   final UserEntity data;
 
   factory _$UserItemResponse(
-          [void Function(UserItemResponseBuilder) updates]) =>
+          [void Function(UserItemResponseBuilder)? updates]) =>
       (new UserItemResponseBuilder()..update(updates))._build();
 
-  _$UserItemResponse._({this.data}) : super._() {
+  _$UserItemResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'UserItemResponse', 'data');
   }
 
@@ -602,10 +602,10 @@ class _$UserItemResponse extends UserItemResponse {
     return other is UserItemResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -621,11 +621,11 @@ class _$UserItemResponse extends UserItemResponse {
 
 class UserItemResponseBuilder
     implements Builder<UserItemResponse, UserItemResponseBuilder> {
-  _$UserItemResponse _$v;
+  _$UserItemResponse? _$v;
 
-  UserEntityBuilder _data;
+  UserEntityBuilder? _data;
   UserEntityBuilder get data => _$this._data ??= new UserEntityBuilder();
-  set data(UserEntityBuilder data) => _$this._data = data;
+  set data(UserEntityBuilder? data) => _$this._data = data;
 
   UserItemResponseBuilder();
 
@@ -645,7 +645,7 @@ class UserItemResponseBuilder
   }
 
   @override
-  void update(void Function(UserItemResponseBuilder) updates) {
+  void update(void Function(UserItemResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -657,7 +657,7 @@ class UserItemResponseBuilder
     try {
       _$result = _$v ?? new _$UserItemResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -677,10 +677,10 @@ class _$UserTwoFactorResponse extends UserTwoFactorResponse {
   final UserTwoFactorData data;
 
   factory _$UserTwoFactorResponse(
-          [void Function(UserTwoFactorResponseBuilder) updates]) =>
+          [void Function(UserTwoFactorResponseBuilder)? updates]) =>
       (new UserTwoFactorResponseBuilder()..update(updates))._build();
 
-  _$UserTwoFactorResponse._({this.data}) : super._() {
+  _$UserTwoFactorResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
         data, r'UserTwoFactorResponse', 'data');
   }
@@ -700,10 +700,10 @@ class _$UserTwoFactorResponse extends UserTwoFactorResponse {
     return other is UserTwoFactorResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -720,12 +720,12 @@ class _$UserTwoFactorResponse extends UserTwoFactorResponse {
 
 class UserTwoFactorResponseBuilder
     implements Builder<UserTwoFactorResponse, UserTwoFactorResponseBuilder> {
-  _$UserTwoFactorResponse _$v;
+  _$UserTwoFactorResponse? _$v;
 
-  UserTwoFactorDataBuilder _data;
+  UserTwoFactorDataBuilder? _data;
   UserTwoFactorDataBuilder get data =>
       _$this._data ??= new UserTwoFactorDataBuilder();
-  set data(UserTwoFactorDataBuilder data) => _$this._data = data;
+  set data(UserTwoFactorDataBuilder? data) => _$this._data = data;
 
   UserTwoFactorResponseBuilder();
 
@@ -745,7 +745,7 @@ class UserTwoFactorResponseBuilder
   }
 
   @override
-  void update(void Function(UserTwoFactorResponseBuilder) updates) {
+  void update(void Function(UserTwoFactorResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -757,7 +757,7 @@ class UserTwoFactorResponseBuilder
     try {
       _$result = _$v ?? new _$UserTwoFactorResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -779,10 +779,11 @@ class _$UserTwoFactorData extends UserTwoFactorData {
   final String qrCode;
 
   factory _$UserTwoFactorData(
-          [void Function(UserTwoFactorDataBuilder) updates]) =>
+          [void Function(UserTwoFactorDataBuilder)? updates]) =>
       (new UserTwoFactorDataBuilder()..update(updates))._build();
 
-  _$UserTwoFactorData._({this.secret, this.qrCode}) : super._() {
+  _$UserTwoFactorData._({required this.secret, required this.qrCode})
+      : super._() {
     BuiltValueNullFieldError.checkNotNull(
         secret, r'UserTwoFactorData', 'secret');
     BuiltValueNullFieldError.checkNotNull(
@@ -805,10 +806,10 @@ class _$UserTwoFactorData extends UserTwoFactorData {
         qrCode == other.qrCode;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, secret.hashCode);
     _$hash = $jc(_$hash, qrCode.hashCode);
@@ -827,15 +828,15 @@ class _$UserTwoFactorData extends UserTwoFactorData {
 
 class UserTwoFactorDataBuilder
     implements Builder<UserTwoFactorData, UserTwoFactorDataBuilder> {
-  _$UserTwoFactorData _$v;
+  _$UserTwoFactorData? _$v;
 
-  String _secret;
-  String get secret => _$this._secret;
-  set secret(String secret) => _$this._secret = secret;
+  String? _secret;
+  String? get secret => _$this._secret;
+  set secret(String? secret) => _$this._secret = secret;
 
-  String _qrCode;
-  String get qrCode => _$this._qrCode;
-  set qrCode(String qrCode) => _$this._qrCode = qrCode;
+  String? _qrCode;
+  String? get qrCode => _$this._qrCode;
+  set qrCode(String? qrCode) => _$this._qrCode = qrCode;
 
   UserTwoFactorDataBuilder();
 
@@ -856,7 +857,7 @@ class UserTwoFactorDataBuilder
   }
 
   @override
-  void update(void Function(UserTwoFactorDataBuilder) updates) {
+  void update(void Function(UserTwoFactorDataBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -880,10 +881,10 @@ class _$UserCompanyItemResponse extends UserCompanyItemResponse {
   final UserCompanyEntity data;
 
   factory _$UserCompanyItemResponse(
-          [void Function(UserCompanyItemResponseBuilder) updates]) =>
+          [void Function(UserCompanyItemResponseBuilder)? updates]) =>
       (new UserCompanyItemResponseBuilder()..update(updates))._build();
 
-  _$UserCompanyItemResponse._({this.data}) : super._() {
+  _$UserCompanyItemResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
         data, r'UserCompanyItemResponse', 'data');
   }
@@ -903,10 +904,10 @@ class _$UserCompanyItemResponse extends UserCompanyItemResponse {
     return other is UserCompanyItemResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -924,12 +925,12 @@ class _$UserCompanyItemResponse extends UserCompanyItemResponse {
 class UserCompanyItemResponseBuilder
     implements
         Builder<UserCompanyItemResponse, UserCompanyItemResponseBuilder> {
-  _$UserCompanyItemResponse _$v;
+  _$UserCompanyItemResponse? _$v;
 
-  UserCompanyEntityBuilder _data;
+  UserCompanyEntityBuilder? _data;
   UserCompanyEntityBuilder get data =>
       _$this._data ??= new UserCompanyEntityBuilder();
-  set data(UserCompanyEntityBuilder data) => _$this._data = data;
+  set data(UserCompanyEntityBuilder? data) => _$this._data = data;
 
   UserCompanyItemResponseBuilder();
 
@@ -949,7 +950,7 @@ class UserCompanyItemResponseBuilder
   }
 
   @override
-  void update(void Function(UserCompanyItemResponseBuilder) updates) {
+  void update(void Function(UserCompanyItemResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -961,7 +962,7 @@ class UserCompanyItemResponseBuilder
     try {
       _$result = _$v ?? new _$UserCompanyItemResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -988,7 +989,7 @@ class _$UserEntity extends UserEntity {
   @override
   final String password;
   @override
-  final int emailVerifiedAt;
+  final int? emailVerifiedAt;
   @override
   final bool phoneVerified;
   @override
@@ -1008,11 +1009,11 @@ class _$UserEntity extends UserEntity {
   @override
   final String oauthUserToken;
   @override
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   @override
   final String oauthProvider;
   @override
-  final bool isChanged;
+  final bool? isChanged;
   @override
   final int createdAt;
   @override
@@ -1020,43 +1021,43 @@ class _$UserEntity extends UserEntity {
   @override
   final int archivedAt;
   @override
-  final bool isDeleted;
+  final bool? isDeleted;
   @override
-  final String createdUserId;
+  final String? createdUserId;
   @override
-  final String assignedUserId;
+  final String? assignedUserId;
   @override
   final String id;
 
-  factory _$UserEntity([void Function(UserEntityBuilder) updates]) =>
+  factory _$UserEntity([void Function(UserEntityBuilder)? updates]) =>
       (new UserEntityBuilder()..update(updates))._build();
 
   _$UserEntity._(
-      {this.firstName,
-      this.lastName,
-      this.email,
-      this.phone,
-      this.password,
+      {required this.firstName,
+      required this.lastName,
+      required this.email,
+      required this.phone,
+      required this.password,
       this.emailVerifiedAt,
-      this.phoneVerified,
-      this.customValue1,
-      this.customValue2,
-      this.customValue3,
-      this.customValue4,
-      this.isTwoFactorEnabled,
-      this.hasPassword,
-      this.lastEmailAddress,
-      this.oauthUserToken,
+      required this.phoneVerified,
+      required this.customValue1,
+      required this.customValue2,
+      required this.customValue3,
+      required this.customValue4,
+      required this.isTwoFactorEnabled,
+      required this.hasPassword,
+      required this.lastEmailAddress,
+      required this.oauthUserToken,
       this.userCompany,
-      this.oauthProvider,
+      required this.oauthProvider,
       this.isChanged,
-      this.createdAt,
-      this.updatedAt,
-      this.archivedAt,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.archivedAt,
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.id})
+      required this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         firstName, r'UserEntity', 'firstName');
@@ -1131,10 +1132,10 @@ class _$UserEntity extends UserEntity {
         id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, firstName.hashCode);
     _$hash = $jc(_$hash, lastName.hashCode);
@@ -1198,117 +1199,117 @@ class _$UserEntity extends UserEntity {
 }
 
 class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
-  _$UserEntity _$v;
+  _$UserEntity? _$v;
 
-  String _firstName;
-  String get firstName => _$this._firstName;
-  set firstName(String firstName) => _$this._firstName = firstName;
+  String? _firstName;
+  String? get firstName => _$this._firstName;
+  set firstName(String? firstName) => _$this._firstName = firstName;
 
-  String _lastName;
-  String get lastName => _$this._lastName;
-  set lastName(String lastName) => _$this._lastName = lastName;
+  String? _lastName;
+  String? get lastName => _$this._lastName;
+  set lastName(String? lastName) => _$this._lastName = lastName;
 
-  String _email;
-  String get email => _$this._email;
-  set email(String email) => _$this._email = email;
+  String? _email;
+  String? get email => _$this._email;
+  set email(String? email) => _$this._email = email;
 
-  String _phone;
-  String get phone => _$this._phone;
-  set phone(String phone) => _$this._phone = phone;
+  String? _phone;
+  String? get phone => _$this._phone;
+  set phone(String? phone) => _$this._phone = phone;
 
-  String _password;
-  String get password => _$this._password;
-  set password(String password) => _$this._password = password;
+  String? _password;
+  String? get password => _$this._password;
+  set password(String? password) => _$this._password = password;
 
-  int _emailVerifiedAt;
-  int get emailVerifiedAt => _$this._emailVerifiedAt;
-  set emailVerifiedAt(int emailVerifiedAt) =>
+  int? _emailVerifiedAt;
+  int? get emailVerifiedAt => _$this._emailVerifiedAt;
+  set emailVerifiedAt(int? emailVerifiedAt) =>
       _$this._emailVerifiedAt = emailVerifiedAt;
 
-  bool _phoneVerified;
-  bool get phoneVerified => _$this._phoneVerified;
-  set phoneVerified(bool phoneVerified) =>
+  bool? _phoneVerified;
+  bool? get phoneVerified => _$this._phoneVerified;
+  set phoneVerified(bool? phoneVerified) =>
       _$this._phoneVerified = phoneVerified;
 
-  String _customValue1;
-  String get customValue1 => _$this._customValue1;
-  set customValue1(String customValue1) => _$this._customValue1 = customValue1;
+  String? _customValue1;
+  String? get customValue1 => _$this._customValue1;
+  set customValue1(String? customValue1) => _$this._customValue1 = customValue1;
 
-  String _customValue2;
-  String get customValue2 => _$this._customValue2;
-  set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+  String? _customValue2;
+  String? get customValue2 => _$this._customValue2;
+  set customValue2(String? customValue2) => _$this._customValue2 = customValue2;
 
-  String _customValue3;
-  String get customValue3 => _$this._customValue3;
-  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+  String? _customValue3;
+  String? get customValue3 => _$this._customValue3;
+  set customValue3(String? customValue3) => _$this._customValue3 = customValue3;
 
-  String _customValue4;
-  String get customValue4 => _$this._customValue4;
-  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+  String? _customValue4;
+  String? get customValue4 => _$this._customValue4;
+  set customValue4(String? customValue4) => _$this._customValue4 = customValue4;
 
-  bool _isTwoFactorEnabled;
-  bool get isTwoFactorEnabled => _$this._isTwoFactorEnabled;
-  set isTwoFactorEnabled(bool isTwoFactorEnabled) =>
+  bool? _isTwoFactorEnabled;
+  bool? get isTwoFactorEnabled => _$this._isTwoFactorEnabled;
+  set isTwoFactorEnabled(bool? isTwoFactorEnabled) =>
       _$this._isTwoFactorEnabled = isTwoFactorEnabled;
 
-  bool _hasPassword;
-  bool get hasPassword => _$this._hasPassword;
-  set hasPassword(bool hasPassword) => _$this._hasPassword = hasPassword;
+  bool? _hasPassword;
+  bool? get hasPassword => _$this._hasPassword;
+  set hasPassword(bool? hasPassword) => _$this._hasPassword = hasPassword;
 
-  String _lastEmailAddress;
-  String get lastEmailAddress => _$this._lastEmailAddress;
-  set lastEmailAddress(String lastEmailAddress) =>
+  String? _lastEmailAddress;
+  String? get lastEmailAddress => _$this._lastEmailAddress;
+  set lastEmailAddress(String? lastEmailAddress) =>
       _$this._lastEmailAddress = lastEmailAddress;
 
-  String _oauthUserToken;
-  String get oauthUserToken => _$this._oauthUserToken;
-  set oauthUserToken(String oauthUserToken) =>
+  String? _oauthUserToken;
+  String? get oauthUserToken => _$this._oauthUserToken;
+  set oauthUserToken(String? oauthUserToken) =>
       _$this._oauthUserToken = oauthUserToken;
 
-  UserCompanyEntityBuilder _userCompany;
+  UserCompanyEntityBuilder? _userCompany;
   UserCompanyEntityBuilder get userCompany =>
       _$this._userCompany ??= new UserCompanyEntityBuilder();
-  set userCompany(UserCompanyEntityBuilder userCompany) =>
+  set userCompany(UserCompanyEntityBuilder? userCompany) =>
       _$this._userCompany = userCompany;
 
-  String _oauthProvider;
-  String get oauthProvider => _$this._oauthProvider;
-  set oauthProvider(String oauthProvider) =>
+  String? _oauthProvider;
+  String? get oauthProvider => _$this._oauthProvider;
+  set oauthProvider(String? oauthProvider) =>
       _$this._oauthProvider = oauthProvider;
 
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+  bool? _isChanged;
+  bool? get isChanged => _$this._isChanged;
+  set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
 
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+  int? _archivedAt;
+  int? get archivedAt => _$this._archivedAt;
+  set archivedAt(int? archivedAt) => _$this._archivedAt = archivedAt;
 
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+  bool? _isDeleted;
+  bool? get isDeleted => _$this._isDeleted;
+  set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
 
-  String _createdUserId;
-  String get createdUserId => _$this._createdUserId;
-  set createdUserId(String createdUserId) =>
+  String? _createdUserId;
+  String? get createdUserId => _$this._createdUserId;
+  set createdUserId(String? createdUserId) =>
       _$this._createdUserId = createdUserId;
 
-  String _assignedUserId;
-  String get assignedUserId => _$this._assignedUserId;
-  set assignedUserId(String assignedUserId) =>
+  String? _assignedUserId;
+  String? get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String? assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   UserEntityBuilder() {
     UserEntity._initializeBuilder(this);
@@ -1354,7 +1355,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   }
 
   @override
-  void update(void Function(UserEntityBuilder) updates) {
+  void update(void Function(UserEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -1402,7 +1403,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
               assignedUserId: assignedUserId,
               id: BuiltValueNullFieldError.checkNotNull(id, r'UserEntity', 'id'));
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'userCompany';
         _userCompany?.build();

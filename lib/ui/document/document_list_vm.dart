@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DocumentListBuilder extends StatelessWidget {
-  const DocumentListBuilder({Key key}) : super(key: key);
+  const DocumentListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class DocumentListBuilder extends StatelessWidget {
             child: OutlinedButton(
               child: Padding(
                 padding: const EdgeInsets.all(12),
-                child: Text(localization.refreshData),
+                child: Text(localization!.refreshData),
               ),
               onPressed: () => viewModel.onRefreshed(context, true),
             ),
@@ -65,7 +65,7 @@ class DocumentListBuilder extends StatelessWidget {
                 userCompany: state.userCompany,
                 filter: viewModel.filter,
                 document: document,
-                isChecked: isInMultiselect && listState.isSelected(document.id),
+                isChecked: isInMultiselect && listState.isSelected(document!.id),
               );
             });
       },
@@ -75,17 +75,17 @@ class DocumentListBuilder extends StatelessWidget {
 
 class DocumentListVM {
   DocumentListVM({
-    @required this.state,
-    @required this.documentList,
-    @required this.documentMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.onEntityAction,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
-    @required this.tableColumns,
+    required this.state,
+    required this.documentList,
+    required this.documentMap,
+    required this.filter,
+    required this.isLoading,
+    required this.listState,
+    required this.onRefreshed,
+    required this.onEntityAction,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
+    required this.tableColumns,
   });
 
   static DocumentListVM fromStore(Store<AppState> store) {
@@ -94,7 +94,7 @@ class DocumentListVM {
         return Future<Null>(null);
       }
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer, clearData: clearData));
       return completer.future;
     }
@@ -120,17 +120,17 @@ class DocumentListVM {
       onSortColumn: (field) => store.dispatch(SortDocuments(field)),
       onClearMultielsect: () => store.dispatch(ClearDocumentMultiselect()),
       tableColumns:
-          state.userCompany.settings?.getTableColumns(EntityType.document) ??
+          state.userCompany!.settings?.getTableColumns(EntityType.document) ??
               DocumentPresenter.getDefaultTableFields(state.userCompany),
     );
   }
 
   final AppState state;
   final List<String> documentList;
-  final BuiltMap<String, DocumentEntity> documentMap;
+  final BuiltMap<String?, DocumentEntity?> documentMap;
   final ListUIState listState;
   final List<String> tableColumns;
-  final String filter;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext, bool) onRefreshed;
   final Function(BuildContext, List<DocumentEntity>, EntityAction)

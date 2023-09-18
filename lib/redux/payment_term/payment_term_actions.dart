@@ -27,24 +27,24 @@ class ViewPaymentTermList implements PersistUI {
 
 class ViewPaymentTerm implements PersistUI, PersistPrefs {
   ViewPaymentTerm({
-    @required this.paymentTermId,
+    required this.paymentTermId,
     this.force = false,
   });
 
-  final String paymentTermId;
+  final String? paymentTermId;
   final bool force;
 }
 
 class EditPaymentTerm implements PersistUI, PersistPrefs {
   EditPaymentTerm(
-      {@required this.paymentTerm,
+      {required this.paymentTerm,
       this.completer,
       this.cancelCompleter,
       this.force = false});
 
   final PaymentTermEntity paymentTerm;
-  final Completer completer;
-  final Completer cancelCompleter;
+  final Completer? completer;
+  final Completer? cancelCompleter;
   final bool force;
 }
 
@@ -57,21 +57,21 @@ class UpdatePaymentTerm implements PersistUI {
 class LoadPaymentTerm {
   LoadPaymentTerm({this.completer, this.paymentTermId});
 
-  final Completer completer;
-  final String paymentTermId;
+  final Completer? completer;
+  final String? paymentTermId;
 }
 
 class LoadPaymentTermActivity {
   LoadPaymentTermActivity({this.completer, this.paymentTermId});
 
-  final Completer completer;
-  final String paymentTermId;
+  final Completer? completer;
+  final String? paymentTermId;
 }
 
 class LoadPaymentTerms {
   LoadPaymentTerms({this.completer});
 
-  final Completer completer;
+  final Completer? completer;
 }
 
 class LoadPaymentTermRequest implements StartLoading {}
@@ -125,8 +125,8 @@ class LoadPaymentTermsSuccess implements StopLoading {
 class SavePaymentTermRequest implements StartSaving {
   SavePaymentTermRequest({this.completer, this.paymentTerm});
 
-  final Completer completer;
-  final PaymentTermEntity paymentTerm;
+  final Completer? completer;
+  final PaymentTermEntity? paymentTerm;
 }
 
 class SavePaymentTermSuccess implements StopSaving, PersistData, PersistUI {
@@ -163,7 +163,7 @@ class ArchivePaymentTermsSuccess implements StopSaving, PersistData {
 class ArchivePaymentTermsFailure implements StopSaving {
   ArchivePaymentTermsFailure(this.paymentTerms);
 
-  final List<PaymentTermEntity> paymentTerms;
+  final List<PaymentTermEntity?> paymentTerms;
 }
 
 class DeletePaymentTermsRequest implements StartSaving {
@@ -182,7 +182,7 @@ class DeletePaymentTermsSuccess implements StopSaving, PersistData {
 class DeletePaymentTermsFailure implements StopSaving {
   DeletePaymentTermsFailure(this.paymentTerms);
 
-  final List<PaymentTermEntity> paymentTerms;
+  final List<PaymentTermEntity?> paymentTerms;
 }
 
 class RestorePaymentTermsRequest implements StartSaving {
@@ -201,7 +201,7 @@ class RestorePaymentTermsSuccess implements StopSaving, PersistData {
 class RestorePaymentTermsFailure implements StopSaving {
   RestorePaymentTermsFailure(this.paymentTerms);
 
-  final List<PaymentTermEntity> paymentTerms;
+  final List<PaymentTermEntity?> paymentTerms;
 }
 
 class FilterPaymentTerms implements PersistUI {
@@ -247,47 +247,47 @@ class FilterPaymentTermsByCustom4 implements PersistUI {
 }
 
 void handlePaymentTermAction(
-    BuildContext context, List<BaseEntity> paymentTerms, EntityAction action) {
+    BuildContext? context, List<BaseEntity?> paymentTerms, EntityAction? action) {
   if (paymentTerms.isEmpty) {
     return;
   }
 
-  final store = StoreProvider.of<AppState>(context);
+  final store = StoreProvider.of<AppState>(context!);
   //final state = store.state;
   //final CompanyEntity company = state.company;
   final localization = AppLocalization.of(context);
-  final paymentTerm = paymentTerms.first as PaymentTermEntity;
+  final paymentTerm = paymentTerms.first as PaymentTermEntity?;
   final paymentTermIds =
-      paymentTerms.map((paymentTerm) => paymentTerm.id).toList();
+      paymentTerms.map((paymentTerm) => paymentTerm!.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: paymentTerm);
+      editEntity(entity: paymentTerm!);
       break;
     case EntityAction.restore:
       final message = paymentTermIds.length > 1
-          ? localization.restoredPaymentTerms
+          ? localization!.restoredPaymentTerms
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', paymentTermIds.length.toString())
-          : localization.restoredPaymentTerm;
+          : localization!.restoredPaymentTerm;
       store.dispatch(RestorePaymentTermsRequest(
           snackBarCompleter<Null>(context, message), paymentTermIds));
       break;
     case EntityAction.archive:
       final message = paymentTermIds.length > 1
-          ? localization.archivedPaymentTerms
+          ? localization!.archivedPaymentTerms
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', paymentTermIds.length.toString())
-          : localization.archivedPaymentTerm;
+          : localization!.archivedPaymentTerm;
       store.dispatch(ArchivePaymentTermsRequest(
           snackBarCompleter<Null>(context, message), paymentTermIds));
       break;
     case EntityAction.delete:
       final message = paymentTermIds.length > 1
-          ? localization.deletedPaymentTerms
+          ? localization!.deletedPaymentTerms
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', paymentTermIds.length.toString())
-          : localization.deletedPaymentTerm;
+          : localization!.deletedPaymentTerm;
       store.dispatch(DeletePaymentTermsRequest(
           snackBarCompleter<Null>(context, message), paymentTermIds));
       break;
@@ -301,7 +301,7 @@ void handlePaymentTermAction(
       }
 
       for (final paymentTerm in paymentTerms) {
-        if (!store.state.paymentTermListState.isSelected(paymentTerm.id)) {
+        if (!store.state.paymentTermListState.isSelected(paymentTerm!.id)) {
           store.dispatch(AddToPaymentTermMultiselect(entity: paymentTerm));
         } else {
           store.dispatch(RemoveFromPaymentTermMultiselect(entity: paymentTerm));
@@ -321,15 +321,15 @@ class StartPaymentTermMultiselect {
 }
 
 class AddToPaymentTermMultiselect {
-  AddToPaymentTermMultiselect({@required this.entity});
+  AddToPaymentTermMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromPaymentTermMultiselect {
-  RemoveFromPaymentTermMultiselect({@required this.entity});
+  RemoveFromPaymentTermMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearPaymentTermMultiselect {

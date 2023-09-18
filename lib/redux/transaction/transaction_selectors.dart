@@ -40,7 +40,7 @@ List<String> dropdownTransactionsSelector(
     BuiltMap<String, BankAccountEntity> bankAccountMap,
     String clientId) {
   final list = transactionList.where((transactionId) {
-    final transaction = transactionMap[transactionId];
+    final transaction = transactionMap[transactionId]!;
     /*
     if (clientId != null && clientId > 0 && transaction.clientId != clientId) {
       return false;
@@ -50,7 +50,7 @@ List<String> dropdownTransactionsSelector(
   }).toList();
 
   list.sort((transactionAId, transactionBId) {
-    final transactionA = transactionMap[transactionAId];
+    final transactionA = transactionMap[transactionAId]!;
     final transactionB = transactionMap[transactionBId];
     return transactionA.compareTo(transactionB, TransactionFields.date, true,
         vendorMap, invoiceMap, expenseMap, expenseCategoryMap, bankAccountMap);
@@ -60,13 +60,13 @@ List<String> dropdownTransactionsSelector(
 }
 
 var memoizedFilteredTransactionList = memo9((SelectionState selectionState,
-        BuiltMap<String, TransactionEntity> transactionMap,
+        BuiltMap<String?, TransactionEntity?> transactionMap,
         BuiltList<String> transactionList,
-        BuiltMap<String, InvoiceEntity> invoiceMap,
-        BuiltMap<String, VendorEntity> vendorMap,
-        BuiltMap<String, ExpenseEntity> expenseMap,
-        BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
-        BuiltMap<String, BankAccountEntity> bankAccountMap,
+        BuiltMap<String?, InvoiceEntity?> invoiceMap,
+        BuiltMap<String?, VendorEntity?> vendorMap,
+        BuiltMap<String?, ExpenseEntity?> expenseMap,
+        BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
+        BuiltMap<String?, BankAccountEntity?> bankAccountMap,
         ListUIState transactionListState) =>
     filteredTransactionsSelector(
         selectionState,
@@ -81,19 +81,19 @@ var memoizedFilteredTransactionList = memo9((SelectionState selectionState,
 
 List<String> filteredTransactionsSelector(
     SelectionState selectionState,
-    BuiltMap<String, TransactionEntity> transactionMap,
+    BuiltMap<String?, TransactionEntity?> transactionMap,
     BuiltList<String> transactionList,
-    BuiltMap<String, InvoiceEntity> invoiceMap,
-    BuiltMap<String, VendorEntity> vendorMap,
-    BuiltMap<String, ExpenseEntity> expenseMap,
-    BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
-    BuiltMap<String, BankAccountEntity> bankAccountMap,
+    BuiltMap<String?, InvoiceEntity?> invoiceMap,
+    BuiltMap<String?, VendorEntity?> vendorMap,
+    BuiltMap<String?, ExpenseEntity?> expenseMap,
+    BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
+    BuiltMap<String?, BankAccountEntity?> bankAccountMap,
     ListUIState transactionListState) {
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;
 
   final list = transactionList.where((transactionId) {
-    final transaction = transactionMap[transactionId];
+    final transaction = transactionMap[transactionId]!;
 
     if (transaction.id == selectionState.selectedId) {
       return true;
@@ -136,7 +136,7 @@ List<String> filteredTransactionsSelector(
   }).toList();
 
   list.sort((transactionAId, transactionBId) {
-    final transactionA = transactionMap[transactionAId];
+    final transactionA = transactionMap[transactionAId]!;
     final transactionB = transactionMap[transactionBId];
     return transactionA.compareTo(
         transactionB,
@@ -153,15 +153,15 @@ List<String> filteredTransactionsSelector(
 }
 
 var memoizedTransactionStatsForBankAccount = memo2((String bankAccountId,
-        BuiltMap<String, TransactionEntity> transactionMap) =>
+        BuiltMap<String?, TransactionEntity?> transactionMap) =>
     transactionStatsForBankAccount(bankAccountId, transactionMap));
 
 EntityStats transactionStatsForBankAccount(
-    String bankAccountId, BuiltMap<String, TransactionEntity> transactionMap) {
+    String bankAccountId, BuiltMap<String?, TransactionEntity?> transactionMap) {
   int countActive = 0;
   int countArchived = 0;
   transactionMap.forEach((transactionId, transaction) {
-    if (transaction.bankAccountId == bankAccountId) {
+    if (transaction!.bankAccountId == bankAccountId) {
       if (transaction.isActive) {
         countActive++;
       } else if (transaction.isArchived) {

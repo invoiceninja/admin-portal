@@ -15,8 +15,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientEditNotes extends StatefulWidget {
   const ClientEditNotes({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final ClientEditVM viewModel;
@@ -29,7 +29,7 @@ class ClientEditNotesState extends State<ClientEditNotes> {
   final _publicNotesController = TextEditingController();
   final _privateNotesController = TextEditingController();
 
-  List<TextEditingController> _controllers;
+  late List<TextEditingController> _controllers;
   final _debouncer = Debouncer();
 
   @override
@@ -76,7 +76,7 @@ class ClientEditNotesState extends State<ClientEditNotes> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final client = viewModel.client;
@@ -109,7 +109,7 @@ class ClientEditNotesState extends State<ClientEditNotes> {
           labelText: localization.size,
           items: memoizedSizeList(state.staticState.sizeMap)
               .map((sizeId) => DropdownMenuItem(
-                    child: Text(state.staticState.sizeMap[sizeId].name),
+                    child: Text(state.staticState.sizeMap[sizeId]!.name),
                     value: sizeId,
                   ))
               .toList(),

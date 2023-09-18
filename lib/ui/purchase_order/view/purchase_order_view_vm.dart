@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PurchaseOrderViewScreen extends StatelessWidget {
   const PurchaseOrderViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
 
@@ -41,7 +41,7 @@ class PurchaseOrderViewScreen extends StatelessWidget {
         return InvoiceView(
           viewModel: viewModel,
           isFilter: isFilter,
-          tabIndex: viewModel.state.purchaseOrderUIState.tabIndex,
+          tabIndex: viewModel.state!.purchaseOrderUIState.tabIndex,
         );
       },
     );
@@ -50,20 +50,20 @@ class PurchaseOrderViewScreen extends StatelessWidget {
 
 class PurchaseOrderViewVM extends AbstractInvoiceViewVM {
   PurchaseOrderViewVM({
-    AppState state,
-    CompanyEntity company,
-    InvoiceEntity invoice,
-    ClientEntity client,
-    bool isSaving,
-    bool isDirty,
-    Function(BuildContext, EntityAction) onEntityAction,
-    Function(BuildContext, [int]) onEditPressed,
-    Function(BuildContext) onPaymentsPressed,
-    Function(BuildContext, PaymentEntity) onPaymentPressed,
-    Function(BuildContext) onRefreshed,
-    Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
-    Function(BuildContext, DocumentEntity) onViewExpense,
-    Function(BuildContext, InvoiceEntity, [String]) onViewPdf,
+    AppState? state,
+    CompanyEntity? company,
+    InvoiceEntity? invoice,
+    ClientEntity? client,
+    bool? isSaving,
+    bool? isDirty,
+    Function(BuildContext, EntityAction)? onEntityAction,
+    Function(BuildContext, [int])? onEditPressed,
+    Function(BuildContext)? onPaymentsPressed,
+    Function(BuildContext, PaymentEntity)? onPaymentPressed,
+    Function(BuildContext)? onRefreshed,
+    Function(BuildContext, List<MultipartFile>, bool)? onUploadDocuments,
+    Function(BuildContext, DocumentEntity)? onViewExpense,
+    Function(BuildContext, InvoiceEntity, [String?])? onViewPdf,
   }) : super(
           state: state,
           company: company,
@@ -90,7 +90,7 @@ class PurchaseOrderViewVM extends AbstractInvoiceViewVM {
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadPurchaseOrder(
           completer: completer, purchaseOrderId: purchaseOrder.id));
       return completer.future;
@@ -103,12 +103,12 @@ class PurchaseOrderViewVM extends AbstractInvoiceViewVM {
       isDirty: purchaseOrder.isNew,
       invoice: purchaseOrder,
       client: client,
-      onEditPressed: (BuildContext context, [int index]) {
+      onEditPressed: (BuildContext context, [int? index]) {
         editEntity(
             entity: purchaseOrder,
             subIndex: index,
             completer: snackBarCompleter<ClientEntity>(
-                context, AppLocalization.of(context).updatedPurchaseOrder));
+                context, AppLocalization.of(context)!.updatedPurchaseOrder));
       },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
@@ -122,7 +122,7 @@ class PurchaseOrderViewVM extends AbstractInvoiceViewVM {
             purchaseOrder: purchaseOrder,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context).uploadedDocument);
+          showToast(AppLocalization.of(context)!.uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,

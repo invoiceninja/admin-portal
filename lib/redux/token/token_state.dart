@@ -28,12 +28,12 @@ abstract class TokenState implements Built<TokenState, TokenStateBuilder> {
   @memoized
   int get hashCode;
 
-  BuiltMap<String, TokenEntity> get map;
+  BuiltMap<String?, TokenEntity?> get map;
 
   BuiltList<String> get list;
 
   TokenState loadTokens(BuiltList<TokenEntity> clients) {
-    final map = Map<String, TokenEntity>.fromIterable(
+    final map = Map<String?, TokenEntity?>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
@@ -50,7 +50,7 @@ abstract class TokenState implements Built<TokenState, TokenStateBuilder> {
 abstract class TokenUIState extends Object
     with EntityUIState
     implements Built<TokenUIState, TokenUIStateBuilder> {
-  factory TokenUIState(PrefStateSortField sortField) {
+  factory TokenUIState(PrefStateSortField? sortField) {
     return _$TokenUIState._(
       listUIState: ListUIState(sortField?.field ?? TokenFields.name,
           sortAscending: sortField?.ascending),
@@ -66,14 +66,13 @@ abstract class TokenUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  TokenEntity get editing;
+  TokenEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<TokenUIState> get serializer => _$tokenUIStateSerializer;
 }

@@ -20,8 +20,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProjectEdit extends StatefulWidget {
   const ProjectEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final ProjectEditVM viewModel;
@@ -72,9 +72,9 @@ class _ProjectEditState extends State<ProjectEdit> {
     _nameController.text = project.name;
     _dueDateController.text = project.dueDate;
     _hoursController.text = formatNumber(project.budgetedHours, context,
-        formatNumberType: FormatNumberType.inputAmount);
+        formatNumberType: FormatNumberType.inputAmount)!;
     _taskRateController.text = formatNumber(project.taskRate, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
     _privateNotesController.text = project.privateNotes;
     _publicNotesController.text = project.publicNotes;
     _custom1Controller.text = project.customValue1;
@@ -117,7 +117,7 @@ class _ProjectEditState extends State<ProjectEdit> {
   }
 
   void _onSavePressed(BuildContext context) {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -135,7 +135,7 @@ class _ProjectEditState extends State<ProjectEdit> {
 
     return EditScaffold(
       entity: project,
-      title: project.isNew ? localization.newProject : localization.editProject,
+      title: project.isNew ? localization!.newProject : localization!.editProject,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: _onSavePressed,
       body: Form(

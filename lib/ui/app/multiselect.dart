@@ -9,10 +9,10 @@ var _theState = RM.inject(() => _TheState());
 
 class _SelectRow extends StatelessWidget {
   const _SelectRow({
-    Key key,
-    @required this.onChange,
-    @required this.selected,
-    @required this.child,
+    Key? key,
+    required this.onChange,
+    required this.selected,
+    required this.child,
   }) : super(key: key);
 
   final Function(bool) onChange;
@@ -55,11 +55,11 @@ class _SelectRow extends StatelessWidget {
 ///
 class DropDownMultiSelect extends StatefulWidget {
   const DropDownMultiSelect({
-    Key key,
-    @required this.options,
-    @required this.selectedValues,
-    @required this.onChanged,
-    @required this.whenEmpty,
+    Key? key,
+    required this.options,
+    required this.selectedValues,
+    required this.onChanged,
+    required this.whenEmpty,
     this.childBuilder,
     this.menuItembuilder,
     this.isDense = false,
@@ -72,7 +72,7 @@ class DropDownMultiSelect extends StatefulWidget {
   }) : super(key: key);
 
   /// The options form which a user can select
-  final List options;
+  final List? options;
 
   /// Selected Values
   final List selectedValues;
@@ -87,33 +87,33 @@ class DropDownMultiSelect extends StatefulWidget {
   final bool enabled;
 
   /// Input decoration
-  final InputDecoration decoration;
+  final InputDecoration? decoration;
 
   /// this text is shown when there is no selection
   final String whenEmpty;
 
   /// a function to build custom childern
-  final Widget Function(List selectedValues) childBuilder;
+  final Widget Function(List selectedValues)? childBuilder;
 
   /// a function to build custom menu items
-  final Widget Function(dynamic option) menuItembuilder;
+  final Widget Function(dynamic option)? menuItembuilder;
 
   /// a function to validate
-  final String Function(dynamic selectedOptions) validator;
+  final String Function(dynamic selectedOptions)? validator;
 
   /// defines whether the widget is read-only
   final bool readOnly;
 
   final double height;
 
-  final Color fadeoutColor;
+  final Color? fadeoutColor;
 
   @override
   _DropDownMultiSelectState createState() => _DropDownMultiSelectState();
 }
 
 class _DropDownMultiSelectState extends State<DropDownMultiSelect> {
-  Color fadeoutColor = Colors.white;
+  Color? fadeoutColor = Colors.white;
 
   @override
   void initState() {
@@ -139,7 +139,7 @@ class _DropDownMultiSelectState extends State<DropDownMultiSelect> {
             children: [
               _theState.rebuild(
                 () => widget.childBuilder != null
-                    ? widget.childBuilder(widget.selectedValues)
+                    ? widget.childBuilder!(widget.selectedValues)
                     : Align(
                         child: Padding(
                           padding:
@@ -160,12 +160,12 @@ class _DropDownMultiSelectState extends State<DropDownMultiSelect> {
                                           return Row(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              widget.menuItembuilder(e),
+                                              widget.menuItembuilder!(e),
                                               Text(',')
                                             ],
                                           );
                                         }
-                                        return widget.menuItembuilder(e);
+                                        return widget.menuItembuilder!(e);
                                       }).toList(),
                                     ),
                                   ),
@@ -199,19 +199,19 @@ class _DropDownMultiSelectState extends State<DropDownMultiSelect> {
                       ? widget.selectedValues[0]
                       : null,
                   selectedItemBuilder: (context) {
-                    return widget.options
+                    return widget.options!
                         .map((dynamic e) => DropdownMenuItem<dynamic>(
                               child: Container(),
                             ))
                         .toList();
                   },
-                  items: widget.options
+                  items: widget.options!
                       .map((dynamic x) => DropdownMenuItem<dynamic>(
                             child: _theState.rebuild(() {
                               return _SelectRow(
                                 selected: widget.selectedValues.contains(x),
                                 child: widget.menuItembuilder != null
-                                    ? widget.menuItembuilder(x)
+                                    ? widget.menuItembuilder!(x)
                                     : Text(
                                         x.toString(),
                                         overflow: TextOverflow.ellipsis,

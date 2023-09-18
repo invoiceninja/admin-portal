@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 part 'list_ui_state.g.dart';
 
 abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
-  factory ListUIState(String sortField, {bool sortAscending}) {
+  factory ListUIState(String sortField, {bool? sortAscending}) {
     return _$ListUIState._(
         filterClearedAt: 0,
         sortField: sortField,
@@ -43,8 +43,7 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
       sortAscending.hashCode ^
       sortField.hashCode;
 
-  @nullable
-  String get filter;
+  String? get filter;
 
   int get filterClearedAt;
 
@@ -56,7 +55,7 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
 
   BuiltList<EntityStatus> get statusFilters;
 
-  BuiltList<String> getCustomFilters(int fieldNumber) {
+  BuiltList<String>? getCustomFilters(int fieldNumber) {
     switch (fieldNumber) {
       case 1:
         return custom1Filters;
@@ -92,15 +91,14 @@ abstract class ListUIState implements Built<ListUIState, ListUIStateBuilder> {
 
   bool get hasCustom4Filters => custom4Filters.isNotEmpty;
 
-  @nullable
-  BuiltList<String> get selectedIds;
+  BuiltList<String>? get selectedIds;
 
   bool isInMultiselect() {
     return selectedIds != null;
   }
 
   bool isSelected(String id) {
-    return selectedIds != null && selectedIds.contains(id);
+    return selectedIds != null && selectedIds!.contains(id);
   }
 
   //factory EntityUIState([void updates(EntityUIStateBuilder b)]) = _$listUIState;

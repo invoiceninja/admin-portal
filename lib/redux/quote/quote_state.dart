@@ -30,11 +30,11 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
   @memoized
   int get hashCode;
 
-  BuiltMap<String, InvoiceEntity> get map;
+  BuiltMap<String?, InvoiceEntity?> get map;
 
   BuiltList<String> get list;
 
-  InvoiceEntity get(String quoteId) {
+  InvoiceEntity? get(String quoteId) {
     if (map.containsKey(quoteId)) {
       return map[quoteId];
     } else {
@@ -43,7 +43,7 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
   }
 
   QuoteState loadQuotes(BuiltList<InvoiceEntity> quotes) {
-    final map = Map<String, InvoiceEntity>.fromIterable(
+    final map = Map<String?, InvoiceEntity?>.fromIterable(
       quotes,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
@@ -60,7 +60,7 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
 abstract class QuoteUIState extends Object
     with EntityUIState
     implements Built<QuoteUIState, QuoteUIStateBuilder> {
-  factory QuoteUIState(PrefStateSortField sortField) {
+  factory QuoteUIState(PrefStateSortField? sortField) {
     return _$QuoteUIState._(
       listUIState: ListUIState(sortField?.field ?? QuoteFields.number,
           sortAscending: sortField?.ascending ?? false),
@@ -76,22 +76,19 @@ abstract class QuoteUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  InvoiceEntity get editing;
+  InvoiceEntity? get editing;
 
-  @nullable
   @BuiltValueField(serialize: false)
-  int get editingItemIndex;
+  int? get editingItemIndex;
 
-  @nullable
   @BuiltValueField(serialize: false)
-  String get historyActivityId;
+  String? get historyActivityId;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<QuoteUIState> get serializer => _$quoteUIStateSerializer;
 }

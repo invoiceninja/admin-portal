@@ -17,8 +17,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientEditSettings extends StatefulWidget {
   const ClientEditSettings({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final ClientEditVM viewModel;
@@ -30,7 +30,7 @@ class ClientEditSettings extends StatefulWidget {
 class ClientEditSettingsState extends State<ClientEditSettings> {
   final _taskRateController = TextEditingController();
 
-  List<TextEditingController> _controllers;
+  late List<TextEditingController> _controllers;
   final _debouncer = Debouncer();
 
   @override
@@ -45,7 +45,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
     final client = widget.viewModel.client;
     _taskRateController.text = formatNumber(
         client.settings.defaultTaskRate, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -77,10 +77,10 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final company = state.company;
+    final company = state.company!;
     final client = viewModel.client;
     final isFullscreen = state.prefState.isEditorFullScreen(EntityType.client);
 
@@ -117,10 +117,10 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
             items: memoizedDropdownPaymentTermList(
                     state.paymentTermState.map, state.paymentTermState.list)
                 .map((paymentTermId) {
-              final paymentTerm = state.paymentTermState.map[paymentTermId];
+              final paymentTerm = state.paymentTermState.map[paymentTermId]!;
               return DropdownMenuItem<String>(
                 child: Text(paymentTerm.numDays == 0
-                    ? localization.dueOnReceipt
+                    ? localization.dueOnReceipt!
                     : paymentTerm.name),
                 value: paymentTerm.numDays.toString(),
               );
@@ -139,10 +139,10 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
             items: memoizedDropdownPaymentTermList(
                     state.paymentTermState.map, state.paymentTermState.list)
                 .map((paymentTermId) {
-              final paymentTerm = state.paymentTermState.map[paymentTermId];
+              final paymentTerm = state.paymentTermState.map[paymentTermId]!;
               return DropdownMenuItem<String>(
                 child: Text(paymentTerm.numDays == 0
-                    ? localization.dueOnReceipt
+                    ? localization.dueOnReceipt!
                     : paymentTerm.name),
                 value: paymentTerm.numDays.toString(),
               );

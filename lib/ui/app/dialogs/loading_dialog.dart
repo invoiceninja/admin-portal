@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class LoadingDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

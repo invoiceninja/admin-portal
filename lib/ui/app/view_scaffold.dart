@@ -20,8 +20,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ViewScaffold extends StatelessWidget {
   const ViewScaffold({
-    @required this.body,
-    @required this.entity,
+    required this.body,
+    required this.entity,
     this.appBarBottom,
     this.isFilter = false,
     this.onBackPressed,
@@ -30,11 +30,11 @@ class ViewScaffold extends StatelessWidget {
   });
 
   final bool isFilter;
-  final BaseEntity entity;
+  final BaseEntity? entity;
   final Widget body;
-  final Function onBackPressed;
-  final Widget appBarBottom;
-  final String title;
+  final Function? onBackPressed;
+  final Widget? appBarBottom;
+  final String? title;
   final bool isEditable;
 
   @override
@@ -43,22 +43,22 @@ class ViewScaffold extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final userCompany = state.userCompany;
-    final isSettings = entity.entityType.isSetting;
+    final isSettings = entity!.entityType!.isSetting;
 
-    String appBarTitle;
+    String? appBarTitle;
     if (title != null) {
       appBarTitle = title;
-    } else if (entity.isNew) {
+    } else if (entity!.isNew) {
       appBarTitle = '';
     } else {
       final presenter = EntityPresenter().initialize(entity, context);
       appBarTitle = presenter.title(isNarrow: isMobile(context));
     }
 
-    Widget leading;
+    Widget? leading;
     if (isDesktop(context)) {
       if (isFilter == true &&
-          entity.entityType == state.uiState.filterEntityType) {
+          entity!.entityType == state.uiState.filterEntityType) {
         if (state.uiState.filterStack.length > 1 && !isFilter) {
           leading = IconButton(
             icon: Icon(Icons.arrow_back),
@@ -74,11 +74,11 @@ class ViewScaffold extends StatelessWidget {
         }
       } else if (state.uiState.previewStack.isNotEmpty) {
         leading = IconButton(
-            tooltip: localization.back,
+            tooltip: localization!.back,
             icon: Icon(Icons.arrow_back),
             onPressed: () => store.dispatch(PopPreviewStack()));
       } else if (isDesktop(context) &&
-          !entity.entityType.isSetting &&
+          !entity!.entityType!.isSetting &&
           state.prefState.isModuleTable) {
         leading = IconButton(
           icon: Icon(Icons.close),
@@ -102,37 +102,37 @@ class ViewScaffold extends StatelessWidget {
             automaticallyImplyLeading: isMobile(context),
             title: CopyToClipboard(
               value: appBarTitle,
-              child: Text(appBarTitle),
+              child: Text(appBarTitle!),
             ),
-            bottom: appBarBottom,
-            actions: entity.isNew
+            bottom: appBarBottom as PreferredSizeWidget?,
+            actions: entity!.isNew
                 ? []
                 : [
                     if (isSettings && isDesktop(context) && !isFilter)
                       TextButton(
                           onPressed: () {
                             onBackPressed != null
-                                ? onBackPressed()
+                                ? onBackPressed!()
                                 : store.dispatch(UpdateCurrentRoute(
                                     state.uiState.previousRoute));
                           },
                           child: Text(
-                            localization.back,
+                            localization!.back,
                             style: TextStyle(color: state.headerTextColor),
                           )),
-                    if (isEditable && userCompany.canEditEntity(entity))
+                    if (isEditable && userCompany!.canEditEntity(entity))
                       Builder(builder: (context) {
                         final isDisabled = state.uiState.isEditing &&
                             state.uiState.mainRoute ==
                                 state.uiState.filterEntityType.toString();
 
                         return AppTextButton(
-                          label: localization.edit,
+                          label: localization!.edit,
                           isInHeader: true,
                           onPressed: isDisabled
                               ? null
                               : () {
-                                  editEntity(entity: entity);
+                                  editEntity(entity: entity!);
                                 },
                         );
                       }),
@@ -141,7 +141,7 @@ class ViewScaffold extends StatelessWidget {
                       entity: entity,
                       onSelected: (context, action) =>
                           handleEntityAction(entity, action, autoPop: true),
-                      entityActions: entity.getActions(
+                      entityActions: entity!.getActions(
                         userCompany: userCompany,
                         client: entity is BelongsToClient
                             ? state.clientState
@@ -152,8 +152,8 @@ class ViewScaffold extends StatelessWidget {
                   ],
           ),
           body: SafeArea(
-            child: entity.isNew
-                ? BlankScreen(localization.noRecordSelected)
+            child: entity!.isNew
+                ? BlankScreen(localization!.noRecordSelected)
                 : body,
           ),
         ),

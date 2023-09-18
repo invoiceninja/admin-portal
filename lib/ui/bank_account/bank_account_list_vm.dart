@@ -17,7 +17,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dart';
 
 class BankAccountListBuilder extends StatelessWidget {
-  const BankAccountListBuilder({Key key}) : super(key: key);
+  const BankAccountListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class BankAccountListBuilder extends StatelessWidget {
                 filter: viewModel.filter,
                 bankAccount: bankAccount,
                 isChecked:
-                    isInMultiselect && listState.isSelected(bankAccount.id),
+                    isInMultiselect && listState.isSelected(bankAccount!.id),
               );
             });
       },
@@ -55,18 +55,18 @@ class BankAccountListBuilder extends StatelessWidget {
 
 class BankAccountListVM {
   BankAccountListVM({
-    @required this.state,
-    @required this.userCompany,
-    @required this.bankAccountList,
-    @required this.bankAccountMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.onEntityAction,
-    @required this.tableColumns,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.userCompany,
+    required this.bankAccountList,
+    required this.bankAccountMap,
+    required this.filter,
+    required this.isLoading,
+    required this.listState,
+    required this.onRefreshed,
+    required this.onEntityAction,
+    required this.tableColumns,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
   });
 
   static BankAccountListVM fromStore(Store<AppState> store) {
@@ -75,7 +75,7 @@ class BankAccountListVM {
         return Future<Null>(null);
       }
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -99,7 +99,7 @@ class BankAccountListVM {
           handleBankAccountAction(context, bankAccounts, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
-          state.userCompany.settings?.getTableColumns(EntityType.bankAccount) ??
+          state.userCompany!.settings?.getTableColumns(EntityType.bankAccount) ??
               BankAccountPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortBankAccounts(field)),
       onClearMultielsect: () => store.dispatch(ClearBankAccountMultiselect()),
@@ -107,11 +107,11 @@ class BankAccountListVM {
   }
 
   final AppState state;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> bankAccountList;
-  final BuiltMap<String, BankAccountEntity> bankAccountMap;
+  final BuiltMap<String?, BankAccountEntity?> bankAccountMap;
   final ListUIState listState;
-  final String filter;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;

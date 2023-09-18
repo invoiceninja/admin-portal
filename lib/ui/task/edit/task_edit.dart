@@ -22,8 +22,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TaskEdit extends StatefulWidget {
   const TaskEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final TaskEditVM viewModel;
@@ -34,7 +34,7 @@ class TaskEdit extends StatefulWidget {
 
 class _TaskEditState extends State<TaskEdit>
     with SingleTickerProviderStateMixin {
-  TabController _controller;
+  TabController? _controller;
   int _updatedAt = 0;
 
   static final GlobalKey<FormState> _formKey =
@@ -58,18 +58,18 @@ class _TaskEditState extends State<TaskEdit>
     super.didUpdateWidget(oldWidget);
 
     if (widget.viewModel.taskTimeIndex != null) {
-      _controller.animateTo(kTimesScreen);
+      _controller!.animateTo(kTimesScreen);
     }
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
-  void _onSavePressed(BuildContext context, [EntityAction action]) {
-    final bool isValid = _formKey.currentState.validate();
+  void _onSavePressed(BuildContext context, [EntityAction? action]) {
+    final bool isValid = _formKey.currentState!.validate();
 
     /*
         setState(() {
@@ -87,7 +87,7 @@ class _TaskEditState extends State<TaskEdit>
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final task = viewModel.task;
     final state = viewModel.state;
@@ -99,7 +99,7 @@ class _TaskEditState extends State<TaskEdit>
       entity: task,
       title: task.isNew ? localization.newTask : localization.editTask,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
-      onSavePressed: (context, [EntityAction action]) =>
+      onSavePressed: (context, [EntityAction? action]) =>
           _onSavePressed(context, action),
       actions: task.getActions(
         userCompany: state.userCompany,
@@ -135,7 +135,7 @@ class _TaskEditState extends State<TaskEdit>
       bottomNavigationBar: _BottomBar(
         task: task,
       ),
-      floatingActionButton: task.isInvoiced || task.isDeleted
+      floatingActionButton: task.isInvoiced || task.isDeleted!
           ? SizedBox()
           : FloatingActionButton(
               heroTag: 'task_edit_fab',
@@ -158,8 +158,8 @@ class _TaskEditState extends State<TaskEdit>
 
 class _BottomBar extends StatelessWidget {
   const _BottomBar({
-    Key key,
-    @required this.task,
+    Key? key,
+    required this.task,
   }) : super(key: key);
 
   final TaskEntity task;
@@ -186,8 +186,8 @@ class _BottomBar extends StatelessWidget {
               if (isDesktop(context))
                 Tooltip(
                   message: useSidebarEditor
-                      ? localization.fullscreenEditor
-                      : localization.sidebarEditor,
+                      ? localization!.fullscreenEditor
+                      : localization!.sidebarEditor,
                   child: InkWell(
                     onTap: () =>
                         store.dispatch(ToggleEditorLayout(EntityType.task)),
@@ -207,12 +207,12 @@ class _BottomBar extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: LiveText(() {
                       var title = (isDesktop(context) && !useSidebarEditor
-                              ? (localization.duration + ' ')
+                              ? (localization!.duration + ' ')
                               : '') +
                           formatNumber(
                               task.calculateDuration().inSeconds.toDouble(),
                               context,
-                              formatNumberType: FormatNumberType.duration);
+                              formatNumberType: FormatNumberType.duration)!;
 
                       final duration = task.calculateDuration();
                       if (duration.inSeconds > 0) {
@@ -226,11 +226,11 @@ class _BottomBar extends StatelessWidget {
                                   client: state.clientState.get(task.clientId),
                                   task: task,
                                   group: null,
-                                ),
+                                )!,
                               ),
                               context,
-                              clientId: state.clientState.get(task.clientId).id,
-                            );
+                              clientId: state.clientState.get(task.clientId)!.id,
+                            )!;
                       }
 
                       if (task.number.isNotEmpty) {

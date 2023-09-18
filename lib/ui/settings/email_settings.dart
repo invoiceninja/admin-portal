@@ -26,8 +26,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class EmailSettings extends StatefulWidget {
   const EmailSettings({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final EmailSettingsVM viewModel;
@@ -40,7 +40,7 @@ class _EmailSettingsState extends State<EmailSettings> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_emailSettings');
 
-  FocusScopeNode _focusNode;
+  FocusScopeNode? _focusNode;
 
   final _fromNameController = TextEditingController();
   final _replyToEmailController = TextEditingController();
@@ -65,7 +65,7 @@ class _EmailSettingsState extends State<EmailSettings> {
 
   @override
   void dispose() {
-    _focusNode.dispose();
+    _focusNode!.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -96,16 +96,16 @@ class _EmailSettingsState extends State<EmailSettings> {
     final company = viewModel.company;
     final settings = viewModel.settings;
 
-    _fromNameController.text = settings.emailFromName;
-    _replyToEmailController.text = settings.replyToEmail;
-    _replyToNameController.text = settings.replyToName;
-    _bccEmailController.text = settings.bccEmail;
-    _emailStyleCustomController.text = settings.emailStyleCustom;
-    _emailSignatureController.text = settings.emailSignature;
-    _postmarkSecretController.text = settings.postmarkSecret;
-    _customSendingEmailController.text = settings.customSendingEmail;
-    _mailgunSecretController.text = settings.mailgunSecret;
-    _mailgunDomainController.text = settings.mailgunDomain;
+    _fromNameController.text = settings.emailFromName!;
+    _replyToEmailController.text = settings.replyToEmail!;
+    _replyToNameController.text = settings.replyToName!;
+    _bccEmailController.text = settings.bccEmail!;
+    _emailStyleCustomController.text = settings.emailStyleCustom!;
+    _emailSignatureController.text = settings.emailSignature!;
+    _postmarkSecretController.text = settings.postmarkSecret!;
+    _customSendingEmailController.text = settings.customSendingEmail!;
+    _mailgunSecretController.text = settings.mailgunSecret!;
+    _mailgunDomainController.text = settings.mailgunDomain!;
     _eInvoiceCertificatePassphraseController.text =
         company.eInvoiceCertificatePassphrase;
 
@@ -164,7 +164,7 @@ class _EmailSettingsState extends State<EmailSettings> {
   }
 
   void _onSavePressed(BuildContext context) {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -175,7 +175,7 @@ class _EmailSettingsState extends State<EmailSettings> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final company = viewModel.state.company;
@@ -212,7 +212,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                 },
                 items: [
                   DropdownMenuItem(
-                      child: Text(localization.defaultWord),
+                      child: Text(localization.defaultWord!),
                       value: SettingsEntity.EMAIL_SENDING_METHOD_DEFAULT),
                   if (viewModel.state.isHosted) ...[
                     DropdownMenuItem(
@@ -236,7 +236,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                   SizedBox(height: 20),
                   if (isApple() || isDesktopOS())
                     Text(
-                      localization.useWebAppToConnectGmail,
+                      localization.useWebAppToConnectGmail!,
                       textAlign: TextAlign.center,
                     )
                   else
@@ -272,12 +272,12 @@ class _EmailSettingsState extends State<EmailSettings> {
                   SizedBox(height: 20),
                   if (isApple() || !kIsWeb)
                     Text(
-                      localization.useWebAppToConnectMicrosoft,
+                      localization.useWebAppToConnectMicrosoft!,
                       textAlign: TextAlign.center,
                     )
                   else
                     OutlinedButton(
-                      child: Text(localization.connectMicrosoft.toUpperCase()),
+                      child: Text(localization.connectMicrosoft!.toUpperCase()),
                       onPressed: () {
                         final store = StoreProvider.of<AppState>(context);
                         store.dispatch(ViewSettings(
@@ -399,7 +399,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                   items: List<int>.generate(24, (i) => i).map((value) {
                     final hour = value + 1;
                     String timeLabel;
-                    if (viewModel.state.company.settings.enableMilitaryTime) {
+                    if (viewModel.state.company!.settings.enableMilitaryTime!) {
                       timeLabel = '$hour:00';
                     } else {
                       if (hour > 12) {
@@ -466,15 +466,15 @@ class _EmailSettingsState extends State<EmailSettings> {
                     settings.rebuild((b) => b..emailAlignment = value)),
                 items: [
                   DropdownMenuItem(
-                    child: Text(localization.left),
+                    child: Text(localization.left!),
                     value: SettingsEntity.EMAIL_ALIGNMENT_LEFT,
                   ),
                   DropdownMenuItem(
-                    child: Text(localization.center),
+                    child: Text(localization.center!),
                     value: SettingsEntity.EMAIL_ALIGNMENT_CENTER,
                   ),
                   DropdownMenuItem(
-                    child: Text(localization.right),
+                    child: Text(localization.right!),
                     value: SettingsEntity.EMAIL_ALIGNMENT_RIGHT,
                   ),
                 ],
@@ -594,7 +594,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                           child: Padding(
                             padding: const EdgeInsets.all(8),
                             child: Text(
-                                localization.uploadCertificate.toUpperCase()),
+                                localization.uploadCertificate!.toUpperCase()),
                           ),
                         ),
                       ),
@@ -603,7 +603,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                         child: Row(
                           children: [
                             Icon(
-                              company.hasEInvoiceCertificate
+                              company!.hasEInvoiceCertificate
                                   ? Icons.check_circle_outline
                                   : Icons.circle_outlined,
                               size: 16,
@@ -615,8 +615,8 @@ class _EmailSettingsState extends State<EmailSettings> {
                             Flexible(
                               child: Text(
                                 company.hasEInvoiceCertificate
-                                    ? localization.certificateSet
-                                    : localization.certificateNotSet,
+                                    ? localization.certificateSet!
+                                    : localization.certificateNotSet!,
                                 maxLines: 2,
                               ),
                             ),
@@ -652,8 +652,8 @@ class _EmailSettingsState extends State<EmailSettings> {
                           Flexible(
                             child: Text(
                               company.hasEInvoiceCertificatePassphrase
-                                  ? localization.passphraseSet
-                                  : localization.passphraseNotSet,
+                                  ? localization.passphraseSet!
+                                  : localization.passphraseNotSet!,
                               maxLines: 2,
                             ),
                           ),

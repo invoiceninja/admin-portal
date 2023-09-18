@@ -16,8 +16,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CreditEdit extends StatefulWidget {
   const CreditEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final AbstractInvoiceEditVM viewModel;
@@ -28,7 +28,7 @@ class CreditEdit extends StatefulWidget {
 
 class _CreditEditState extends State<CreditEdit>
     with SingleTickerProviderStateMixin {
-  TabController _controller;
+  TabController? _controller;
 
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_creditEdit');
@@ -54,18 +54,18 @@ class _CreditEditState extends State<CreditEdit>
     super.didUpdateWidget(oldWidget);
 
     if (widget.viewModel.invoiceItemIndex != null) {
-      _controller.animateTo(kItemScreen);
+      _controller!.animateTo(kItemScreen);
     }
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
-  void _onSavePressed(BuildContext context, [EntityAction action]) {
-    final bool isValid = _formKey.currentState.validate();
+  void _onSavePressed(BuildContext context, [EntityAction? action]) {
+    final bool isValid = _formKey.currentState!.validate();
 
     /*
         setState(() {
@@ -77,15 +77,15 @@ class _CreditEditState extends State<CreditEdit>
       return;
     }
 
-    widget.viewModel.onSavePressed(context, action);
+    widget.viewModel.onSavePressed!(context, action);
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
-    final invoice = viewModel.invoice;
-    final state = viewModel.state;
+    final invoice = viewModel.invoice!;
+    final state = viewModel.state!;
     final prefState = state.prefState;
     final isFullscreen = prefState.isEditorFullScreen(EntityType.invoice);
     final client = state.clientState.get(invoice.clientId);
@@ -94,7 +94,7 @@ class _CreditEditState extends State<CreditEdit>
       isFullscreen: isFullscreen,
       entity: invoice,
       title: invoice.isNew ? localization.newCredit : localization.editCredit,
-      onCancelPressed: (context) => viewModel.onCancelPressed(context),
+      onCancelPressed: (context) => viewModel.onCancelPressed!(context),
       onSavePressed: (context) => _onSavePressed(context),
       actions: invoice.getActions(
         userCompany: state.userCompany,
@@ -158,16 +158,16 @@ class _CreditEditState extends State<CreditEdit>
                   invoice: invoice,
                   showTasksAndExpenses: false,
                   excluded: invoice.lineItems
-                      .where((item) => item.isTask || item.isExpense)
-                      .map((item) => item.isTask
-                          ? viewModel.state.taskState.map[item.taskId]
-                          : viewModel.state.expenseState.map[item.expenseId])
+                      .where((item) => item!.isTask || item.isExpense)
+                      .map((item) => item!.isTask
+                          ? viewModel.state!.taskState.map[item.taskId]
+                          : viewModel.state!.expenseState.map[item.expenseId])
                       .toList(),
                   clientId: invoice.clientId,
                   onItemsSelected: (items, [clientId, projectId]) {
-                    viewModel.onItemsAdded(items, clientId, projectId);
+                    viewModel.onItemsAdded!(items, clientId, projectId);
                     if (!isFullscreen) {
-                      _controller.animateTo(kItemScreen);
+                      _controller!.animateTo(kItemScreen);
                     }
                   },
                 );

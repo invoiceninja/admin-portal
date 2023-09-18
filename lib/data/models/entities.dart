@@ -329,23 +329,23 @@ class EntityStats {
     this.currencyId,
   });
 
-  final int countActive;
+  final int? countActive;
 
-  final int countArchived;
+  final int? countArchived;
 
-  final double total;
+  final double? total;
 
-  final String currencyId;
+  final String? currencyId;
 
   String present(String activeLabel, String archivedLabel) {
     String str = '';
-    if (countActive > 0) {
+    if (countActive! > 0) {
       str = '$countActive $activeLabel';
-      if (countArchived > 0) {
+      if (countArchived! > 0) {
         str += ' • ';
       }
     }
-    if (countArchived > 0) {
+    if (countArchived! > 0) {
       str += '$countArchived $archivedLabel';
     }
     return str;
@@ -355,15 +355,15 @@ class EntityStats {
 abstract class SelectableEntity {
   String get id;
 
-  bool matchesFilter(String filter) => true;
+  bool matchesFilter(String? filter) => true;
 
-  String matchesFilterValue(String filter) => null;
+  String? matchesFilterValue(String? filter) => null;
 
-  String get listDisplayName => 'Error: listDisplayName not set';
+  String? get listDisplayName => 'Error: listDisplayName not set';
 
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
-  FormatNumberType get listDisplayAmountType => FormatNumberType.money;
+  FormatNumberType? get listDisplayAmountType => FormatNumberType.money;
 }
 
 class EntityFields {
@@ -383,8 +383,7 @@ abstract class BaseEntity implements SelectableEntity {
 
   static String get nextIdempotencyKey => getRandomString();
 
-  @nullable
-  bool get isChanged;
+  bool? get isChanged;
 
   @BuiltValueField(wireName: 'created_at')
   int get createdAt;
@@ -395,37 +394,33 @@ abstract class BaseEntity implements SelectableEntity {
   @BuiltValueField(wireName: 'archived_at')
   int get archivedAt;
 
-  @nullable
   @BuiltValueField(wireName: 'is_deleted')
-  bool get isDeleted;
+  bool? get isDeleted;
 
-  @nullable
   @BuiltValueField(wireName: 'user_id')
-  String get createdUserId;
+  String? get createdUserId;
 
-  @nullable
   @BuiltValueField(wireName: 'assigned_user_id')
-  String get assignedUserId;
+  String? get assignedUserId;
 
-  @nullable
   @BuiltValueField(wireName: 'entity_type')
-  EntityType get entityType;
+  EntityType? get entityType;
 
   String get entityKey => '__${entityType}__${id}__';
 
-  bool get isNew => (id ?? '').isEmpty || (int.tryParse(id) ?? 0) < 0;
+  bool get isNew => id.isEmpty || (int.tryParse(id) ?? 0) < 0;
 
   bool get isOld => !isNew;
 
   bool get isDeletable => true;
 
-  bool get isActive => !isArchived && !isDeleted;
+  bool get isActive => !isArchived && !isDeleted!;
 
-  bool get isNotActive => isArchived || isDeleted;
+  bool get isNotActive => isArchived || isDeleted!;
 
-  bool get isArchived => archivedAt != null && archivedAt > 0 && !isDeleted;
+  bool get isArchived => archivedAt != null && archivedAt > 0 && !isDeleted!;
 
-  bool get isEditable => !isDeleted;
+  bool get isEditable => !isDeleted!;
 
   bool get isRestorable => true;
 
@@ -436,22 +431,23 @@ abstract class BaseEntity implements SelectableEntity {
       ? kEntityStateActive
       : (isArchived ? kEntityStateArchived : kEntityStateDeleted);
 
-  ReportStringValue getReportString({String value}) =>
+  ReportStringValue getReportString({String? value}) =>
       ReportStringValue(entityId: id, entityType: entityType, value: value);
 
   ReportEntityTypeValue getReportEntityType() => ReportEntityTypeValue(
       entityId: id, entityType: entityType, value: entityType);
 
-  ReportBoolValue getReportBool({bool value}) =>
+  ReportBoolValue getReportBool({bool? value}) =>
       ReportBoolValue(entityId: id, entityType: entityType, value: value);
 
-  ReportAgeValue getReportAge({int value, String currencyId}) => ReportAgeValue(
-      entityType: entityType,
-      entityId: id,
-      value: value,
-      currencyId: currencyId);
+  ReportAgeValue getReportAge({int? value, String? currencyId}) =>
+      ReportAgeValue(
+          entityType: entityType,
+          entityId: id,
+          value: value,
+          currencyId: currencyId);
 
-  ReportDurationValue getReportDuration({int value, String currencyId}) =>
+  ReportDurationValue getReportDuration({int? value, String? currencyId}) =>
       ReportDurationValue(
         entityType: entityType,
         entityId: id,
@@ -460,10 +456,10 @@ abstract class BaseEntity implements SelectableEntity {
       );
 
   ReportNumberValue getReportDouble(
-          {double value,
-          String currencyId,
-          double exchangeRate,
-          FormatNumberType formatNumberType}) =>
+          {double? value,
+          String? currencyId,
+          double? exchangeRate,
+          FormatNumberType? formatNumberType}) =>
       ReportNumberValue(
           entityId: id,
           entityType: entityType,
@@ -473,16 +469,18 @@ abstract class BaseEntity implements SelectableEntity {
           formatNumberType: formatNumberType);
 
   ReportIntValue getReportInt(
-          {int value, String currencyId, FormatNumberType formatNumberType}) =>
+          {int? value,
+          String? currencyId,
+          FormatNumberType? formatNumberType}) =>
       ReportIntValue(
         entityId: id,
         entityType: entityType,
         value: value,
       );
 
-  List<EntityAction> getActions(
-      {UserCompanyEntity userCompany,
-      ClientEntity client,
+  List<EntityAction?> getActions(
+      {UserCompanyEntity? userCompany,
+      ClientEntity? client,
       bool includeEdit = false,
       bool multiselect = false}) {
     if (isNew || entityType == EntityType.company) {
@@ -491,7 +489,7 @@ abstract class BaseEntity implements SelectableEntity {
 
     final actions = <EntityAction>[];
 
-    if (userCompany.canEditEntity(this) && (isArchived || isDeleted)) {
+    if (userCompany!.canEditEntity(this) && (isArchived || isDeleted!)) {
       actions.add(EntityAction.restore);
     }
 
@@ -506,7 +504,8 @@ abstract class BaseEntity implements SelectableEntity {
     return actions;
   }
 
-  bool matchesEntityFilter(EntityType filterEntityType, String filterEntityId) {
+  bool matchesEntityFilter(
+      EntityType? filterEntityType, String? filterEntityId) {
     return id == filterEntityId && entityType == filterEntityType;
   }
 
@@ -527,7 +526,7 @@ abstract class BaseEntity implements SelectableEntity {
       return true;
     }
 
-    if (states.contains(EntityState.deleted) && isDeleted) {
+    if (states.contains(EntityState.deleted) && isDeleted!) {
       return true;
     }
 
@@ -538,7 +537,7 @@ abstract class BaseEntity implements SelectableEntity {
 abstract class HasActivities {
   BuiltList<ActivityEntity> get activities;
 
-  Iterable<ActivityEntity> getActivities({String invoiceId, String typeId}) {
+  Iterable<ActivityEntity> getActivities({String? invoiceId, String? typeId}) {
     return activities.where((activity) {
       if (invoiceId != null && activity.invoiceId != invoiceId) {
         return false;
@@ -552,7 +551,7 @@ abstract class HasActivities {
 }
 
 abstract class BelongsToClient {
-  String get clientId;
+  String? get clientId;
 }
 
 abstract class BelongsToVendor {
@@ -692,40 +691,32 @@ abstract class ActivityEntity
   @BuiltValueField(wireName: 'activity_type_id')
   String get activityTypeId;
 
-  @nullable
   @BuiltValueField(wireName: 'client_id')
-  String get clientId;
+  String? get clientId;
 
   @BuiltValueField(wireName: 'user_id')
   String get userId;
 
-  @nullable
   @BuiltValueField(wireName: 'invoice_id')
-  String get invoiceId;
+  String? get invoiceId;
 
-  @nullable
   @BuiltValueField(wireName: 'recurring_invoice_id')
-  String get recurringInvoiceId;
+  String? get recurringInvoiceId;
 
-  @nullable
   @BuiltValueField(wireName: 'recurring_expense_id')
-  String get recurringExpenseId;
+  String? get recurringExpenseId;
 
-  @nullable
   @BuiltValueField(wireName: 'purchase_order_id')
-  String get purchaseOrderId;
+  String? get purchaseOrderId;
 
-  @nullable
   @BuiltValueField(wireName: 'quote_id')
-  String get quoteId;
+  String? get quoteId;
 
-  @nullable
   @BuiltValueField(wireName: 'payment_id')
-  String get paymentId;
+  String? get paymentId;
 
-  @nullable
   @BuiltValueField(wireName: 'credit_id')
-  String get creditId;
+  String? get creditId;
 
   @BuiltValueField(wireName: 'updated_at')
   int get updatedAt;
@@ -733,45 +724,35 @@ abstract class ActivityEntity
   @BuiltValueField(wireName: 'created_at')
   int get createdAt;
 
-  @nullable
   @BuiltValueField(wireName: 'expense_id')
-  String get expenseId;
+  String? get expenseId;
 
-  @nullable
   @BuiltValueField(wireName: 'is_system')
-  bool get isSystem;
+  bool? get isSystem;
 
-  @nullable
-  String get ip;
+  String? get ip;
 
-  @nullable
   @BuiltValueField(wireName: 'contact_id')
-  String get contactId;
+  String? get contactId;
 
-  @nullable
   @BuiltValueField(wireName: 'task_id')
-  String get taskId;
+  String? get taskId;
 
-  @nullable
   @BuiltValueField(wireName: 'project_id')
-  String get projectId;
+  String? get projectId;
 
-  @nullable
   @BuiltValueField(wireName: 'vendor_id')
-  String get vendorId;
+  String? get vendorId;
 
-  @nullable
   @BuiltValueField(wireName: 'vendor_contact_id')
-  String get vendorContactId;
+  String? get vendorContactId;
 
-  @nullable
   @BuiltValueField(wireName: 'token_id')
-  String get tokenId;
+  String? get tokenId;
 
-  @nullable
-  InvoiceHistoryEntity get history;
+  InvoiceHistoryEntity? get history;
 
-  EntityType get entityType {
+  EntityType? get entityType {
     if ([
       kActivityCreateClient,
       kActivityUpdateClient,
@@ -906,43 +887,43 @@ abstract class ActivityEntity
   }
 
   String getDescription(
-    String activity,
-    String systemString,
-    String recurringString, {
-    UserEntity user,
-    ClientEntity client,
-    InvoiceEntity invoice,
-    PaymentEntity payment,
-    InvoiceEntity credit,
-    InvoiceEntity quote,
-    TaskEntity task,
-    ExpenseEntity expense,
-    VendorEntity vendor,
-    InvoiceEntity recurringInvoice,
-    ExpenseEntity recurringExpense,
-    InvoiceEntity purchaseOrder,
+    String? activity,
+    String? systemString,
+    String? recurringString, {
+    UserEntity? user,
+    ClientEntity? client,
+    InvoiceEntity? invoice,
+    PaymentEntity? payment,
+    InvoiceEntity? credit,
+    InvoiceEntity? quote,
+    TaskEntity? task,
+    ExpenseEntity? expense,
+    VendorEntity? vendor,
+    InvoiceEntity? recurringInvoice,
+    ExpenseEntity? recurringExpense,
+    InvoiceEntity? purchaseOrder,
   }) {
-    ClientContactEntity clientContact;
-    VendorContactEntity vendorContact;
-    if (client != null && contactId != null && contactId.isNotEmpty) {
+    ClientContactEntity? clientContact;
+    VendorContactEntity? vendorContact;
+    if (client != null && contactId != null && contactId!.isNotEmpty) {
       clientContact = client.getContact(contactId);
     }
     if (vendor != null &&
         vendorContactId != null &&
-        vendorContactId.isNotEmpty) {
+        vendorContactId!.isNotEmpty) {
       vendorContact = vendor.getContact(vendorContactId);
     }
 
     if ((recurringInvoice?.isOld ?? false) && (invoice?.isOld ?? false)) {
-      activity = activity.replaceFirst(
-          ':user', '$recurringString ${recurringInvoice.number}');
+      activity = activity!.replaceFirst(
+          ':user', '$recurringString ${recurringInvoice!.number}');
     } else if ((recurringExpense?.isOld ?? false) &&
         (expense?.isOld ?? false)) {
-      activity = activity.replaceFirst(
-          ':user', '$recurringString ${recurringExpense.number}');
+      activity = activity!.replaceFirst(
+          ':user', '$recurringString ${recurringExpense!.number}');
     } else {
-      activity =
-          activity.replaceFirst(':user', user?.listDisplayName ?? systemString);
+      activity = activity!
+          .replaceFirst(':user', user?.listDisplayName ?? systemString!);
     }
 
     activity = activity.replaceFirst(':client', client?.displayName ?? '');
@@ -957,14 +938,14 @@ abstract class ActivityEntity
       kActivityAcceptPurchaseOrder,
     ].contains(activityTypeId)) {
       final name = (vendorContact?.fullName ?? '').isNotEmpty
-          ? (vendorContact.fullName + ' (' + (vendor?.name ?? '') + ')')
+          ? (vendorContact!.fullName + ' (' + (vendor?.name ?? '') + ')')
           : (vendor?.name ?? '');
       activity = activity.replaceFirst(':contact', name);
     } else {
       final name = (clientContact?.fullName ?? '').isNotEmpty
-          ? clientContact.fullName +
+          ? clientContact!.fullName +
               ((client?.name ?? '').isNotEmpty
-                  ? (' (' + client.name + ')')
+                  ? (' (' + client!.name + ')')
                   : '')
           : (client?.displayName ?? '');
       activity = activity.replaceFirst(':contact', name);
@@ -1011,17 +992,14 @@ abstract class LedgerEntity
   @BuiltValueField(wireName: 'created_at')
   int get createdAt;
 
-  @nullable
   @BuiltValueField(wireName: 'invoice_id')
-  String get invoiceId;
+  String? get invoiceId;
 
-  @nullable
   @BuiltValueField(wireName: 'credit_id')
-  String get creditId;
+  String? get creditId;
 
-  @nullable
   @BuiltValueField(wireName: 'payment_id')
-  String get paymentId;
+  String? get paymentId;
 
   EntityType get entityType {
     if (creditId != null) {
@@ -1033,7 +1011,7 @@ abstract class LedgerEntity
     }
   }
 
-  String get entityId {
+  String? get entityId {
     if (creditId != null) {
       return creditId;
     } else if (paymentId != null) {

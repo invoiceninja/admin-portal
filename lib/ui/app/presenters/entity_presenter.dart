@@ -12,20 +12,20 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EntityPresenter {
-  EntityPresenter initialize(BaseEntity entity, BuildContext context) {
+  EntityPresenter initialize(BaseEntity? entity, BuildContext context) {
     this.entity = entity;
     this.context = context;
 
     return this;
   }
 
-  BaseEntity entity;
-  BuildContext context;
+  BaseEntity? entity;
+  late BuildContext context;
 
-  String title({bool isNarrow = false}) {
-    final localization = AppLocalization.of(context);
-    final type = localization.lookup('${entity.entityType}');
-    var name = entity.listDisplayName;
+  String? title({bool isNarrow = false}) {
+    final localization = AppLocalization.of(context)!;
+    final type = localization.lookup('${entity!.entityType}');
+    var name = entity!.listDisplayName;
 
     // TODO replace with this: https://github.com/flutter/flutter/issues/45336
     if ((name ?? '').isEmpty) {
@@ -41,7 +41,7 @@ class EntityPresenter {
           EntityType.product,
           EntityType.transaction,
           EntityType.document,
-        ].contains(entity.entityType) ||
+        ].contains(entity!.entityType) ||
         isNarrow) {
       return name;
     } else {
@@ -61,7 +61,7 @@ class EntityPresenter {
     ];
   }
 
-  Widget getField({String field, BuildContext context}) {
+  Widget getField({String? field, required BuildContext context}) {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
@@ -69,44 +69,44 @@ class EntityPresenter {
     switch (field) {
       case EntityFields.createdAt:
         return Text(formatDate(
-            convertTimestampToDateString(entity.createdAt), context,
+            convertTimestampToDateString(entity!.createdAt), context,
             showTime: true));
       case EntityFields.updatedAt:
-        return Text(entity.updatedAt == 0
+        return Text(entity!.updatedAt == 0
             ? ''
             : formatDate(
-                convertTimestampToDateString(entity.updatedAt), context,
+                convertTimestampToDateString(entity!.updatedAt), context,
                 showTime: true));
       case EntityFields.archivedAt:
-        return Text(entity.archivedAt == 0
+        return Text(entity!.archivedAt == 0
             ? ''
             : formatDate(
-                convertTimestampToDateString(entity.archivedAt), context,
+                convertTimestampToDateString(entity!.archivedAt), context,
                 showTime: true));
       case EntityFields.state:
-        return Text(entity.isActive
-            ? localization.active
-            : entity.isArchived
-                ? localization.archived
-                : localization.deleted);
+        return Text(entity!.isActive
+            ? localization!.active
+            : entity!.isArchived
+                ? localization!.archived
+                : localization!.deleted);
       case EntityFields.createdBy:
-        final user = state.userState.get(entity.createdUserId);
+        final user = state.userState.get(entity!.createdUserId!);
         return LinkTextRelatedEntity(entity: user, relation: entity);
       case EntityFields.assignedTo:
-        final user = state.userState.get(entity.assignedUserId);
+        final user = state.userState.get(entity!.assignedUserId!);
         return LinkTextRelatedEntity(entity: user, relation: entity);
       case EntityFields.isDeleted:
-        return Text(entity.isDeleted ? localization.yes : localization.no);
+        return Text(entity!.isDeleted! ? localization!.yes : localization!.no);
     }
 
     return Text('Error: $field not found');
   }
 
-  static bool isFieldLocalized(String field) => [
+  static bool isFieldLocalized(String? field) => [
         'status',
       ].contains(field);
 
-  static bool isFieldAmount(String field) {
+  static bool isFieldAmount(String? field) {
     return [
       'quantity',
       'stock_quantity',
@@ -166,9 +166,9 @@ class EntityPresenter {
     return value;
   }
 
-  String presentCustomField(BuildContext context, String value) {
+  String? presentCustomField(BuildContext context, String value) {
     if (['yes', 'no'].contains(value)) {
-      final localization = AppLocalization.of(context);
+      final localization = AppLocalization.of(context)!;
       return localization.lookup(value);
     } else if (RegExp('^\\d{4}-\\d{2}-\\d{2}\$').hasMatch(value)) {
       return formatDate(value, context);
@@ -180,7 +180,7 @@ class EntityPresenter {
 
 class TableTooltip extends StatelessWidget {
   const TableTooltip({
-    @required this.message,
+    required this.message,
   });
 
   final String message;

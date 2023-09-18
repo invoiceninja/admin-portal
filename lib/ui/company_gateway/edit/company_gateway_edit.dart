@@ -35,8 +35,8 @@ import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class CompanyGatewayEdit extends StatefulWidget {
   const CompanyGatewayEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final CompanyGatewayEditVM viewModel;
@@ -51,7 +51,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
       GlobalKey<FormState>(debugLabel: '_companyGatewayEdit');
 
   final FocusScopeNode _focusNode = FocusScopeNode();
-  TabController _controller;
+  TabController? _controller;
 
   // ignore: unused_field
   String _gatewayTypeId = kGatewayTypeCreditCard;
@@ -84,7 +84,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     _focusNode.dispose();
     super.dispose();
   }
@@ -94,12 +94,12 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final company = state.company;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final companyGateway = viewModel.companyGateway;
     final origCompanyGateway = state.companyGatewayState.get(companyGateway.id);
     final gateway = state.staticState.gatewayMap[companyGateway.gatewayId];
     final accountId =
-        (companyGateway.parsedConfig['account_id'] ?? '').toString();
+        (companyGateway.parsedConfig!['account_id'] ?? '').toString();
 
     final connectGateways = [
       kGatewayStripeConnect,
@@ -118,7 +118,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
       entity: companyGateway,
       title: viewModel.companyGateway.isNew
           ? localization.newCompanyGateway
-          : origCompanyGateway.listDisplayName,
+          : origCompanyGateway!.listDisplayName,
       onSavePressed: disableSave ? null : viewModel.onSavePressed,
       onCancelPressed: viewModel.onCancelPressed,
       appBarBottom: TabBar(
@@ -174,7 +174,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         (companyGateway.gatewayId == kGatewayStripeConnect &&
                             accountId.isEmpty)) ...[
                       AppButton(
-                        label: localization.gatewaySetup.toUpperCase(),
+                        label: localization.gatewaySetup!.toUpperCase(),
                         onPressed: viewModel.state.isSaving
                             ? null
                             : () {
@@ -247,7 +247,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                                 SettingsEntity.AUTO_BILL_OFF,
                               ]
                                   .map(
-                                      (type) => Text(localization.lookup(type)))
+                                      (type) => Text(localization.lookup(type)!))
                                   .toList(),
                       onChanged: (dynamic value) => viewModel.onChanged(
                           companyGateway
@@ -270,7 +270,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     SwitchListTile(
                         title: Text(kGatewayTypes.containsKey(gatewayTypeId)
                             ? localization
-                                .lookup(kGatewayTypes[gatewayTypeId] ?? '')
+                                .lookup(kGatewayTypes[gatewayTypeId] ?? '')!
                             : '$gatewayTypeId'),
                         activeColor: Theme.of(context).colorScheme.secondary,
                         value: companyGateway
@@ -327,7 +327,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                           .rebuild((b) => b..requireContactEmail = value)),
                       controlAffinity: ListTileControlAffinity.leading,
                     ),
-                    if (company.hasCustomField(CustomFieldType.client1))
+                    if (company!.hasCustomField(CustomFieldType.client1))
                       CheckboxListTile(
                         activeColor: Theme.of(context).colorScheme.secondary,
                         title: Text(company
@@ -469,7 +469,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                       items: enabledGatewayIds
                           .map((gatewayTypeId) => DropdownMenuItem(
                                 child: Text(localization.lookup(
-                                    kGatewayTypes[gatewayTypeId] ?? '')),
+                                    kGatewayTypes[gatewayTypeId] ?? '')!),
                                 value: gatewayTypeId,
                               ))
                           .toList(),
@@ -506,21 +506,21 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
 class CardListTile extends StatelessWidget {
   const CardListTile({this.viewModel, this.paymentType, this.cardType});
 
-  final CompanyGatewayEditVM viewModel;
-  final String paymentType;
-  final int cardType;
+  final CompanyGatewayEditVM? viewModel;
+  final String? paymentType;
+  final int? cardType;
 
   @override
   Widget build(BuildContext context) {
-    final staticState = viewModel.state.staticState;
-    final companyGateway = viewModel.companyGateway;
+    final staticState = viewModel!.state.staticState;
+    final companyGateway = viewModel!.companyGateway;
 
     return CheckboxListTile(
       controlAffinity: ListTileControlAffinity.leading,
       activeColor: Theme.of(context).colorScheme.secondary,
       title: Text(staticState.paymentTypeMap[paymentType]?.name ?? ''),
-      value: companyGateway.supportsCard(cardType),
-      onChanged: (value) => viewModel.onChanged(value
+      value: companyGateway.supportsCard(cardType!),
+      onChanged: (value) => viewModel!.onChanged(value!
           ? companyGateway.addCard(cardType)
           : companyGateway.removeCard(cardType)),
     );
@@ -529,21 +529,21 @@ class CardListTile extends StatelessWidget {
 
 class GatewayConfigSettings extends StatelessWidget {
   const GatewayConfigSettings({
-    Key key,
+    Key? key,
     this.companyGateway,
     this.viewModel,
     this.disasbledFields = const <String>[],
   }) : super(key: key);
 
-  final CompanyGatewayEntity companyGateway;
-  final CompanyGatewayEditVM viewModel;
+  final CompanyGatewayEntity? companyGateway;
+  final CompanyGatewayEditVM? viewModel;
   final List<String> disasbledFields;
 
   @override
   Widget build(BuildContext context) {
-    final state = viewModel.state;
+    final state = viewModel!.state;
     final localization = AppLocalization.of(context);
-    final gateway = state.staticState.gatewayMap[companyGateway.gatewayId];
+    final gateway = state.staticState.gatewayMap[companyGateway!.gatewayId];
 
     if (gateway == null) {
       return SizedBox();
@@ -560,22 +560,22 @@ class GatewayConfigSettings extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: IconText(
                   icon: MdiIcons.openInNew,
-                  text: localization.learnMore.toUpperCase(),
+                  text: localization!.learnMore.toUpperCase(),
                 ),
               ),
               onPressed: () => launchUrl(Uri.parse(gateway.siteUrl)),
             ),
           ),
-        ...gateway.parsedFields.keys
+        ...gateway.parsedFields!.keys
             .map((field) => GatewayConfigField(
                   field: field,
-                  value: companyGateway.parsedConfig[field],
+                  value: companyGateway!.parsedConfig![field],
                   gateway: gateway,
-                  defaultValue: gateway.parsedFields[field],
+                  defaultValue: gateway.parsedFields![field],
                   enabled: !disasbledFields.contains(field),
                   onChanged: (dynamic value) {
-                    viewModel
-                        .onChanged(companyGateway.updateConfig(field, value));
+                    viewModel!
+                        .onChanged(companyGateway!.updateConfig(field, value));
                   },
                 ))
             .toList()
@@ -586,13 +586,13 @@ class GatewayConfigSettings extends StatelessWidget {
 
 class GatewayConfigField extends StatefulWidget {
   const GatewayConfigField({
-    Key key,
-    @required this.gateway,
-    @required this.field,
-    @required this.value,
-    @required this.defaultValue,
-    @required this.onChanged,
-    @required this.enabled,
+    Key? key,
+    required this.gateway,
+    required this.field,
+    required this.value,
+    required this.defaultValue,
+    required this.onChanged,
+    required this.enabled,
   }) : super(key: key);
 
   final GatewayEntity gateway;
@@ -608,7 +608,7 @@ class GatewayConfigField extends StatefulWidget {
 
 class _GatewayConfigFieldState extends State<GatewayConfigField> {
   bool autoValidate = false;
-  TextEditingController _textController;
+  TextEditingController? _textController;
 
   @override
   void initState() {
@@ -618,23 +618,23 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
 
   @override
   void dispose() {
-    _textController.dispose();
+    _textController!.dispose();
     super.dispose();
   }
 
   @override
   void didChangeDependencies() {
-    _textController.removeListener(_onChanged);
+    _textController!.removeListener(_onChanged);
 
-    _textController.text = (widget.value ?? widget.defaultValue).toString();
+    _textController!.text = (widget.value ?? widget.defaultValue).toString();
 
-    _textController.addListener(_onChanged);
+    _textController!.addListener(_onChanged);
 
     super.didChangeDependencies();
   }
 
   void _onChanged() {
-    widget.onChanged(_textController.text.trim());
+    widget.onChanged(_textController!.text.trim());
   }
 
   bool _obscureText(String field) {
@@ -716,12 +716,12 @@ class _GatewayConfigFieldState extends State<GatewayConfigField> {
 
 class LimitEditor extends StatefulWidget {
   const LimitEditor(
-      {Key key, this.companyGateway, this.viewModel, this.gatewayTypeId})
+      {Key? key, this.companyGateway, this.viewModel, this.gatewayTypeId})
       : super(key: key);
 
-  final CompanyGatewayEntity companyGateway;
-  final CompanyGatewayEditVM viewModel;
-  final String gatewayTypeId;
+  final CompanyGatewayEntity? companyGateway;
+  final CompanyGatewayEditVM? viewModel;
+  final String? gatewayTypeId;
 
   @override
   _LimitEditorState createState() => _LimitEditorState();
@@ -730,11 +730,11 @@ class LimitEditor extends StatefulWidget {
 class _LimitEditorState extends State<LimitEditor> {
   final _debouncer = Debouncer();
 
-  bool _enableMin = false;
-  bool _enableMax = false;
+  bool? _enableMin = false;
+  bool? _enableMax = false;
 
-  TextEditingController _minController;
-  TextEditingController _maxController;
+  TextEditingController? _minController;
+  TextEditingController? _maxController;
 
   @override
   void initState() {
@@ -745,17 +745,17 @@ class _LimitEditorState extends State<LimitEditor> {
 
   @override
   void dispose() {
-    _minController.dispose();
-    _maxController.dispose();
+    _minController!.dispose();
+    _maxController!.dispose();
     super.dispose();
   }
 
   @override
   void didChangeDependencies() {
-    _minController.removeListener(_onTextChange);
-    _maxController.removeListener(_onTextChange);
+    _minController!.removeListener(_onTextChange);
+    _maxController!.removeListener(_onTextChange);
 
-    final companyGateway = widget.companyGateway;
+    final companyGateway = widget.companyGateway!;
     final settings =
         companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
 
@@ -767,30 +767,30 @@ class _LimitEditorState extends State<LimitEditor> {
       _enableMax = true;
     }
 
-    _minController.text = settings.minLimit == -1
+    _minController!.text = settings.minLimit == -1
         ? ''
         : formatNumber((settings.minLimit ?? 0).toDouble(), context,
-            formatNumberType: FormatNumberType.inputMoney);
-    _maxController.text = settings.maxLimit == -1
+            formatNumberType: FormatNumberType.inputMoney)!;
+    _maxController!.text = settings.maxLimit == -1
         ? ''
         : formatNumber((settings.maxLimit ?? 0).toDouble(), context,
-            formatNumberType: FormatNumberType.inputMoney);
+            formatNumberType: FormatNumberType.inputMoney)!;
 
-    _minController.addListener(_onTextChange);
-    _maxController.addListener(_onTextChange);
+    _minController!.addListener(_onTextChange);
+    _maxController!.addListener(_onTextChange);
 
     super.didChangeDependencies();
   }
 
   void _onChanged() {
-    final viewModel = widget.viewModel;
+    final viewModel = widget.viewModel!;
     final companyGateway = viewModel.companyGateway;
     final settings =
         companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
 
     final updatedSettings = settings.rebuild((b) => b
-      ..minLimit = _enableMin ? parseDouble(_minController.text.trim()) : -1
-      ..maxLimit = _enableMax ? parseDouble(_maxController.text.trim()) : -1);
+      ..minLimit = _enableMin! ? parseDouble(_minController!.text.trim()) : -1
+      ..maxLimit = _enableMax! ? parseDouble(_maxController!.text.trim()) : -1);
 
     if (settings != updatedSettings) {
       viewModel.onChanged(companyGateway.rebuild(
@@ -806,7 +806,7 @@ class _LimitEditorState extends State<LimitEditor> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     return FormCard(
       children: <Widget>[
@@ -837,8 +837,8 @@ class _LimitEditorState extends State<LimitEditor> {
                       setState(() {
                         _enableMin = value;
                         _onChanged();
-                        if (!value) {
-                          _minController.text = '';
+                        if (!value!) {
+                          _minController!.text = '';
                         }
                       });
                     },
@@ -872,8 +872,8 @@ class _LimitEditorState extends State<LimitEditor> {
                       setState(() {
                         _enableMax = value;
                         _onChanged();
-                        if (!value) {
-                          _maxController.text = '';
+                        if (!value!) {
+                          _maxController!.text = '';
                         }
                       });
                     },
@@ -890,12 +890,12 @@ class _LimitEditorState extends State<LimitEditor> {
 
 class FeesEditor extends StatefulWidget {
   const FeesEditor(
-      {Key key, this.companyGateway, this.viewModel, this.gatewayTypeId})
+      {Key? key, this.companyGateway, this.viewModel, this.gatewayTypeId})
       : super(key: key);
 
-  final CompanyGatewayEntity companyGateway;
-  final CompanyGatewayEditVM viewModel;
-  final String gatewayTypeId;
+  final CompanyGatewayEntity? companyGateway;
+  final CompanyGatewayEditVM? viewModel;
+  final String? gatewayTypeId;
 
   @override
   _FeesEditorState createState() => _FeesEditorState();
@@ -906,7 +906,7 @@ class _FeesEditorState extends State<FeesEditor> {
   final _percentController = TextEditingController();
   final _capController = TextEditingController();
 
-  List<TextEditingController> _controllers;
+  late List<TextEditingController> _controllers;
   final _debouncer = Debouncer();
 
   @override
@@ -927,7 +927,7 @@ class _FeesEditorState extends State<FeesEditor> {
       _capController,
     ];
 
-    final companyGateway = widget.companyGateway;
+    final companyGateway = widget.companyGateway!;
     final settings =
         companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
 
@@ -935,11 +935,11 @@ class _FeesEditorState extends State<FeesEditor> {
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     _amountController.text = formatNumber(settings.feeAmount, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
     _percentController.text = formatNumber(settings.feePercent, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
     _capController.text = formatNumber(settings.feeCap, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -948,7 +948,7 @@ class _FeesEditorState extends State<FeesEditor> {
   }
 
   void _onChanged() {
-    final viewModel = widget.viewModel;
+    final viewModel = widget.viewModel!;
     final companyGateway = viewModel.companyGateway;
     final settings =
         companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
@@ -971,8 +971,8 @@ class _FeesEditorState extends State<FeesEditor> {
   }
 
   String _sampleFee() {
-    final localization = AppLocalization.of(context);
-    final viewModel = widget.viewModel;
+    final localization = AppLocalization.of(context)!;
+    final viewModel = widget.viewModel!;
     final companyGateway = viewModel.companyGateway;
     final settings =
         companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
@@ -980,17 +980,17 @@ class _FeesEditorState extends State<FeesEditor> {
     const double amount = 100;
     final fee = settings.calculateSampleFee(100);
 
-    return localization.feesSample
-        .replaceFirst(':amount', formatNumber(amount, context))
-        .replaceFirst(':total', formatNumber(fee, context));
+    return localization.feesSample!
+        .replaceFirst(':amount', formatNumber(amount, context)!)
+        .replaceFirst(':total', formatNumber(fee, context)!);
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
-    final viewModel = widget.viewModel;
+    final localization = AppLocalization.of(context)!;
+    final viewModel = widget.viewModel!;
     final companyGateway = viewModel.companyGateway;
-    final company = viewModel.state.company;
+    final company = viewModel.state.company!;
     final settings =
         companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
 

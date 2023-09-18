@@ -16,8 +16,8 @@ import 'schedule_screen_vm.dart';
 
 class ScheduleScreen extends StatelessWidget {
   const ScheduleScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsSchedules';
@@ -86,7 +86,7 @@ class ScheduleScreen extends StatelessWidget {
             store.dispatch(FilterSchedulesByCustom4(value)),
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany.canCreate(EntityType.schedule)
+              userCompany!.canCreate(EntityType.schedule)
           ? FloatingActionButton(
               heroTag: 'schedule_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
@@ -98,7 +98,7 @@ class ScheduleScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newSchedule,
+              tooltip: localization!.newSchedule,
             )
           : null,
     );

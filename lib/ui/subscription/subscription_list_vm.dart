@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class SubscriptionListBuilder extends StatelessWidget {
-  const SubscriptionListBuilder({Key key}) : super(key: key);
+  const SubscriptionListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class SubscriptionListBuilder extends StatelessWidget {
                 filter: viewModel.filter,
                 subscription: subscription,
                 isChecked:
-                    isInMultiselect && listState.isSelected(subscription.id),
+                    isInMultiselect && listState.isSelected(subscription!.id),
               );
             });
       },
@@ -62,18 +62,18 @@ class SubscriptionListBuilder extends StatelessWidget {
 
 class SubscriptionListVM {
   SubscriptionListVM({
-    @required this.state,
-    @required this.userCompany,
-    @required this.subscriptionList,
-    @required this.subscriptionMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.onEntityAction,
-    @required this.tableColumns,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.userCompany,
+    required this.subscriptionList,
+    required this.subscriptionMap,
+    required this.filter,
+    required this.isLoading,
+    required this.listState,
+    required this.onRefreshed,
+    required this.onEntityAction,
+    required this.tableColumns,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
   });
 
   static SubscriptionListVM fromStore(Store<AppState> store) {
@@ -82,7 +82,7 @@ class SubscriptionListVM {
         return Future<Null>(null);
       }
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -106,7 +106,7 @@ class SubscriptionListVM {
               EntityAction action) =>
           handleSubscriptionAction(context, subscriptions, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: state.userCompany.settings
+      tableColumns: state.userCompany!.settings
               ?.getTableColumns(EntityType.subscription) ??
           SubscriptionPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortSubscriptions(field)),
@@ -115,11 +115,11 @@ class SubscriptionListVM {
   }
 
   final AppState state;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> subscriptionList;
-  final BuiltMap<String, SubscriptionEntity> subscriptionMap;
+  final BuiltMap<String?, SubscriptionEntity?> subscriptionMap;
   final ListUIState listState;
-  final String filter;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;

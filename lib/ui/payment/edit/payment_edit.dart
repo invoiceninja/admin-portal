@@ -30,8 +30,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class PaymentEdit extends StatefulWidget {
   const PaymentEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final PaymentEditVM viewModel;
@@ -58,7 +58,7 @@ class _PaymentEditState extends State<PaymentEdit> {
   final _debouncer = Debouncer();
 
   bool _showConvertCurrency = false;
-  double _convertedAmount = 0;
+  double? _convertedAmount = 0;
 
   @override
   void didChangeDependencies() {
@@ -81,12 +81,12 @@ class _PaymentEditState extends State<PaymentEdit> {
     _showConvertCurrency =
         payment.exchangeRate != 1 && payment.exchangeRate != 0;
     final state = widget.viewModel.state;
-    if (state.company.convertExpenseCurrency) {
+    if (state.company!.convertExpenseCurrency) {
       _showConvertCurrency = true;
     }
 
     _amountController.text = formatNumber(payment.amount, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
     _numberController.text = payment.number;
     _transactionReferenceController.text = payment.transactionReference;
     _privateNotesController.text = payment.privateNotes;
@@ -95,7 +95,7 @@ class _PaymentEditState extends State<PaymentEdit> {
     _custom3Controller.text = payment.customValue3;
     _custom4Controller.text = payment.customValue4;
     _exchangeRateController.text = formatNumber(payment.exchangeRate, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -131,7 +131,7 @@ class _PaymentEditState extends State<PaymentEdit> {
   }
 
   void _onSavePressed(BuildContext context) {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -140,20 +140,20 @@ class _PaymentEditState extends State<PaymentEdit> {
     widget.viewModel.onSavePressed(context);
   }
 
-  void convertCurrency(SelectableEntity currency) {
+  void convertCurrency(SelectableEntity? currency) {
     final viewModel = widget.viewModel;
     final payment = viewModel.payment;
     final state = viewModel.state;
     double exchangeRate = 1;
     if (currency != null) {
-      final client = state.clientState.get(payment.clientId);
+      final client = state.clientState.get(payment.clientId)!;
       exchangeRate = getExchangeRate(state.staticState.currencyMap,
           fromCurrencyId: client.currencyId, toCurrencyId: currency.id);
     }
 
     _exchangeRateController.removeListener(_onChanged);
     _exchangeRateController.text = formatNumber(exchangeRate, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
     _exchangeRateController.addListener(_onChanged);
 
     viewModel.onChanged(payment.rebuild((b) => b
@@ -166,7 +166,7 @@ class _PaymentEditState extends State<PaymentEdit> {
     final viewModel = widget.viewModel;
     final payment = viewModel.payment;
     final state = viewModel.state;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     final invoicePaymentables = payment.invoices.toList();
     if (invoicePaymentables
@@ -191,7 +191,7 @@ class _PaymentEditState extends State<PaymentEdit> {
       creditTotal += credit.amount;
     });
 
-    double limit;
+    double? limit;
     if (payment.amount != 0) {
       limit = payment.amount - payment.applied - paymentTotal;
     } else if (creditTotal != 0) {
@@ -209,10 +209,10 @@ class _PaymentEditState extends State<PaymentEdit> {
                 EntityDropdown(
                   autofocus: true,
                   entityType: EntityType.client,
-                  labelText: AppLocalization.of(context).client,
+                  labelText: AppLocalization.of(context)!.client,
                   entityId: payment.clientId,
                   validator: (String val) => val.trim().isEmpty
-                      ? AppLocalization.of(context).pleaseSelectAClient
+                      ? AppLocalization.of(context)!.pleaseSelectAClient
                       : null,
                   onSelected: (client) {
                     viewModel.onChanged(payment.rebuild(
@@ -228,7 +228,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                       state.userState.map,
                       state.staticState),
                 ),
-                if (state.company.enableApplyingPayments)
+                if (state.company!.enableApplyingPayments)
                   DecoratedFormField(
                     controller: _amountController,
                     autocorrect: false,
@@ -261,7 +261,7 @@ class _PaymentEditState extends State<PaymentEdit> {
               if (payment.isApplying != true)
                 DatePicker(
                   validator: (String val) => val.trim().isEmpty
-                      ? AppLocalization.of(context).pleaseSelectADate
+                      ? AppLocalization.of(context)!.pleaseSelectADate
                       : null,
                   labelText: localization.paymentDate,
                   selectedDate: payment.date,
@@ -280,7 +280,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                       .rebuild((b) => b..typeId = paymentType?.id ?? '')),
                 ),
               if (payment.isNew || payment.isApplying == true)
-                if (state.company.isModuleEnabled(EntityType.credit))
+                if (state.company!.isModuleEnabled(EntityType.credit))
                   for (var index = 0;
                       index < creditPaymentables.length;
                       index++)
@@ -396,11 +396,11 @@ class _PaymentEditState extends State<PaymentEdit> {
                     final amount = payment.isNew
                         ? (paymentTotal - creditTotal)
                         : payment.amount;
-                    final exchangeRate = _convertedAmount / amount;
+                    final exchangeRate = _convertedAmount! / amount;
                     _exchangeRateController.removeListener(_onChanged);
                     _exchangeRateController.text = formatNumber(
                         exchangeRate, context,
-                        formatNumberType: FormatNumberType.inputMoney);
+                        formatNumberType: FormatNumberType.inputMoney)!;
                     _exchangeRateController.addListener(_onChanged);
 
                     viewModel.onChanged(
@@ -492,20 +492,20 @@ class _PaymentEditState extends State<PaymentEdit> {
 
 class PaymentableEditor extends StatefulWidget {
   const PaymentableEditor({
-    Key key,
-    @required this.viewModel,
-    @required this.paymentable,
-    @required this.index,
-    @required this.entityType,
-    @required this.limit,
-    @required this.onSavePressed,
+    Key? key,
+    required this.viewModel,
+    required this.paymentable,
+    required this.index,
+    required this.entityType,
+    required this.limit,
+    required this.onSavePressed,
   }) : super(key: key);
 
   final PaymentEditVM viewModel;
   final PaymentableEntity paymentable;
   final int index;
   final EntityType entityType;
-  final double limit;
+  final double? limit;
   final Function(BuildContext) onSavePressed;
 
   @override
@@ -514,8 +514,8 @@ class PaymentableEditor extends StatefulWidget {
 
 class _PaymentableEditorState extends State<PaymentableEditor> {
   final _amountController = TextEditingController();
-  String _invoiceId;
-  String _creditId;
+  String? _invoiceId;
+  String? _creditId;
   List<TextEditingController> _controllers = [];
 
   @override
@@ -551,7 +551,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
     super.dispose();
   }
 
-  void _onChanged([String clientId]) {
+  void _onChanged([String? clientId]) {
     PaymentableEntity paymentable;
     if (widget.entityType == EntityType.invoice) {
       paymentable = widget.paymentable.rebuild((b) => b
@@ -610,7 +610,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
       payment.clientId,
       state.userState.map,
       payment.invoices.map((p) => p.invoiceId).toList(),
-      state.company.settings.recurringNumberPrefix,
+      state.company!.settings.recurringNumberPrefix,
     );
 
     final creditList = memoizedDropdownCreditList(
@@ -642,15 +642,15 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
             child: EntityDropdown(
               allowClearing: false,
               entityType: EntityType.invoice,
-              labelText: AppLocalization.of(context).invoice,
+              labelText: AppLocalization.of(context)!.invoice,
               entityId: paymentable.invoiceId,
               entityList: paymentList,
               overrideSuggestedLabel: (entity) {
                 if (entity == null) {
                   return '';
                 } else {
-                  return entity.listDisplayName.isEmpty
-                      ? localization.pending
+                  return entity.listDisplayName!.isEmpty
+                      ? localization!.pending
                       : entity.listDisplayName;
                 }
               },
@@ -665,7 +665,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               onSelected: (selected) {
                 final invoice = selected as InvoiceEntity;
                 final amount = widget.limit != null
-                    ? min(widget.limit, invoice.balanceOrAmount)
+                    ? min(widget.limit!, invoice.balanceOrAmount)
                     : invoice.balanceOrAmount;
                 _amountController.text = formatNumber(amount, context,
                         formatNumberType: FormatNumberType.inputMoney) ??
@@ -680,15 +680,15 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
             child: EntityDropdown(
               allowClearing: false,
               entityType: EntityType.credit,
-              labelText: AppLocalization.of(context).credit,
+              labelText: AppLocalization.of(context)!.credit,
               entityId: paymentable.creditId,
               entityList: creditList,
               overrideSuggestedLabel: (entity) {
                 if (entity == null) {
                   return '';
                 } else {
-                  return entity.listDisplayName.isEmpty
-                      ? localization.pending
+                  return entity.listDisplayName!.isEmpty
+                      ? localization!.pending
                       : entity.listDisplayName;
                 }
               },
@@ -723,8 +723,8 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
                 keyboardType: TextInputType.numberWithOptions(
                     decimal: true, signed: true),
                 label: widget.entityType == EntityType.invoice
-                    ? localization.amount
-                    : localization.applied,
+                    ? localization!.amount
+                    : localization!.applied,
                 onSavePressed: widget.onSavePressed),
           ),
         ],
@@ -739,7 +739,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
           ),
           IconButton(
             icon: Icon(Icons.clear, color: Colors.grey),
-            tooltip: localization.remove,
+            tooltip: localization!.remove,
             onPressed: paymentable.isEmpty
                 ? null
                 : () {

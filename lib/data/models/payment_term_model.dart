@@ -54,7 +54,7 @@ class PaymentTermFields {
 abstract class PaymentTermEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<PaymentTermEntity, PaymentTermEntityBuilder> {
-  factory PaymentTermEntity({String id, AppState state}) {
+  factory PaymentTermEntity({String? id, AppState? state}) {
     return _$PaymentTermEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
@@ -101,7 +101,7 @@ abstract class PaymentTermEntity extends Object
       numDays.compareTo(paymentTerm.numDays);
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     return matchesStrings(
       haystacks: [
         '$numDays',
@@ -111,7 +111,7 @@ abstract class PaymentTermEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     return matchesStringsValue(
       haystacks: [
         //

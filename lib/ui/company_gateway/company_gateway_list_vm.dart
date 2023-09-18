@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CompanyGatewayListBuilder extends StatelessWidget {
-  const CompanyGatewayListBuilder({Key key}) : super(key: key);
+  const CompanyGatewayListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +41,15 @@ class CompanyGatewayListBuilder extends StatelessWidget {
 
 class CompanyGatewayListVM {
   CompanyGatewayListVM({
-    @required this.state,
-    @required this.companyGatewayList,
-    @required this.companyGatewayMap,
-    @required this.filter,
-    @required this.onCompanyGatewayTap,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.onSortChanged,
-    @required this.onRemovePressed,
+    required this.state,
+    required this.companyGatewayList,
+    required this.companyGatewayMap,
+    required this.filter,
+    required this.onCompanyGatewayTap,
+    required this.listState,
+    required this.onRefreshed,
+    required this.onSortChanged,
+    required this.onRemovePressed,
   });
 
   static CompanyGatewayListVM fromStore(Store<AppState> store) {
@@ -58,14 +58,14 @@ class CompanyGatewayListVM {
         return Future<Null>(null);
       }
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
 
     final state = store.state;
     final uiState = state.uiState.settingsUIState;
-    String companyGatewayIds =
+    String? companyGatewayIds =
         state.uiState.settingsUIState.settings.companyGatewayIds;
     if ((companyGatewayIds ?? '').isEmpty) {
       companyGatewayIds = state.companyGatewayState.list.join(',');
@@ -115,9 +115,9 @@ class CompanyGatewayListVM {
 
   final AppState state;
   final List<String> companyGatewayList;
-  final BuiltMap<String, CompanyGatewayEntity> companyGatewayMap;
+  final BuiltMap<String?, CompanyGatewayEntity?> companyGatewayMap;
   final ListUIState listState;
-  final String filter;
+  final String? filter;
   final Function(BuildContext, CompanyGatewayEntity) onCompanyGatewayTap;
   final Function(BuildContext) onRefreshed;
   final Function(int, int) onSortChanged;

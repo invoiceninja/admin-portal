@@ -19,13 +19,13 @@ class WidgetData {
     this.dashboardFields,
   });
 
-  WidgetData.fromState(AppState state, AppLocalization localization)
+  WidgetData.fromState(AppState state, AppLocalization? localization)
       : url = formatApiUrl(state.authState.url),
-        companyId = state.account.defaultCompanyId,
+        companyId = state.account!.defaultCompanyId,
         companies = {
           for (var userCompany in state.userCompanyStates
-              .where((state) => state.company.hasName))
-            userCompany.company.id: WidgetCompany.fromUserCompany(
+              .where((state) => state.company!.hasName))
+            userCompany.company!.id: WidgetCompany.fromUserCompany(
               userCompanyState: userCompany,
               staticState: state.staticState,
             )
@@ -36,11 +36,11 @@ class WidgetData {
           DashboardUISettings.FIELD_COMPLETED_PAYMENTS,
         ],
             key: (dynamic item) => item,
-            value: (dynamic item) => localization.lookup('$item')),
+            value: (dynamic item) => localization!.lookup('$item')),
         dateRanges = Map.fromIterable(
             DateRange.values.where((value) => value != DateRange.custom),
             key: (dynamic item) => toSnakeCase('$item'),
-            value: (dynamic item) => localization.lookup(toSnakeCase('$item')));
+            value: (dynamic item) => localization!.lookup(toSnakeCase('$item')));
 
   WidgetData.fromJson(Map<String, dynamic> json)
       : url = json['url'],
@@ -57,11 +57,11 @@ class WidgetData {
         'dashboard_fields': dashboardFields,
       };
 
-  final String url;
-  final String companyId;
-  final Map<String, WidgetCompany> companies;
-  final Map<String, String> dateRanges;
-  final Map<String, String> dashboardFields;
+  final String? url;
+  final String? companyId;
+  final Map<String, WidgetCompany>? companies;
+  final Map<String, String?>? dateRanges;
+  final Map<String?, String?>? dashboardFields;
 }
 
 class WidgetCompany {
@@ -75,23 +75,23 @@ class WidgetCompany {
       this.currencies});
 
   WidgetCompany.fromUserCompany(
-      {UserCompanyState userCompanyState, StaticState staticState})
-      : id = userCompanyState.userCompany.company.id,
-        name = userCompanyState.userCompany.company.displayName,
-        token = userCompanyState.userCompany.token.token,
+      {required UserCompanyState userCompanyState, StaticState? staticState})
+      : id = userCompanyState.userCompany!.company!.id,
+        name = userCompanyState.userCompany!.company!.displayName,
+        token = userCompanyState.userCompany!.token!.token,
         accentColor =
-            userCompanyState.userCompany.settings.validatedAccentColor,
+            userCompanyState.userCompany!.settings!.validatedAccentColor,
         firstMonthOfYear =
-            parseInt(userCompanyState.userCompany.company.firstMonthOfYear),
-        currencyId = userCompanyState.userCompany.company.currencyId,
+            parseInt(userCompanyState.userCompany!.company!.firstMonthOfYear),
+        currencyId = userCompanyState.userCompany!.company!.currencyId,
         currencies = {
           for (var currencyId in getCurrencyIds(
-            userCompanyState.userCompany.company,
+            userCompanyState.userCompany!.company!,
             userCompanyState.clientState.map,
             userCompanyState.groupState.map,
           ).where((currencyId) => currencyId != kCurrencyAll))
             currencyId: WidgetCurrency.fromCurrency(
-              staticState.currencyMap[currencyId],
+              staticState!.currencyMap[currencyId]!,
             )
         };
 
@@ -114,13 +114,13 @@ class WidgetCompany {
         'first_month_of_year': firstMonthOfYear,
       };
 
-  final String id;
-  final String name;
-  final String token;
-  final String accentColor;
-  final String currencyId;
-  final int firstMonthOfYear;
-  final Map<String, WidgetCurrency> currencies;
+  final String? id;
+  final String? name;
+  final String? token;
+  final String? accentColor;
+  final String? currencyId;
+  final int? firstMonthOfYear;
+  final Map<String, WidgetCurrency>? currencies;
 }
 
 class WidgetCurrency {
@@ -150,8 +150,8 @@ class WidgetCurrency {
         'exchange_rate': exchangeRate,
       };
 
-  final String id;
-  final String name;
-  final String code;
-  final double exchangeRate;
+  final String? id;
+  final String? name;
+  final String? code;
+  final double? exchangeRate;
 }

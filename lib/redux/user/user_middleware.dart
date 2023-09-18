@@ -50,14 +50,14 @@ List<Middleware<AppState>> createStoreUsersMiddleware([
 
 Middleware<AppState> _editUser() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditUser;
+    final action = dynamicAction as EditUser?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(UserEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(UserEditScreen.route);
+      navigatorKey.currentState!.pushNamed(UserEditScreen.route);
     }
   };
 }
@@ -65,21 +65,21 @@ Middleware<AppState> _editUser() {
 Middleware<AppState> _viewUser() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ViewUser;
+    final action = dynamicAction as ViewUser?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(UserViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(UserViewScreen.route);
+      navigatorKey.currentState!.pushNamed(UserViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewUserList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewUserList;
+    final action = dynamicAction as ViewUserList?;
 
     next(action);
 
@@ -90,7 +90,7 @@ Middleware<AppState> _viewUserList() {
     store.dispatch(UpdateCurrentRoute(UserScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           UserScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -100,15 +100,15 @@ Middleware<AppState> _archiveUser(UserRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as ArchiveUserRequest;
     final prevUsers =
-        action.userIds.map((id) => store.state.userState.map[id]).toList();
+        action.userIds!.map((id) => store.state.userState.map[id]).toList();
 
     repository
-        .bulkAction(store.state.credentials, action.userIds,
+        .bulkAction(store.state.credentials, action.userIds!,
             EntityAction.archive, action.password, action.idToken)
         .then((List<UserEntity> users) {
       store.dispatch(ArchiveUserSuccess(users));
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
@@ -117,7 +117,7 @@ Middleware<AppState> _archiveUser(UserRepository repository) {
         store.dispatch(UserUnverifiedPassword());
       }
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -129,15 +129,15 @@ Middleware<AppState> _deleteUser(UserRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as DeleteUserRequest;
     final prevUsers =
-        action.userIds.map((id) => store.state.userState.map[id]).toList();
+        action.userIds!.map((id) => store.state.userState.map[id]).toList();
 
     repository
-        .bulkAction(store.state.credentials, action.userIds,
+        .bulkAction(store.state.credentials, action.userIds!,
             EntityAction.delete, action.password, action.idToken)
         .then((List<UserEntity> users) {
       store.dispatch(DeleteUserSuccess(users));
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
@@ -146,7 +146,7 @@ Middleware<AppState> _deleteUser(UserRepository repository) {
         store.dispatch(UserUnverifiedPassword());
       }
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -158,15 +158,15 @@ Middleware<AppState> _restoreUser(UserRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as RestoreUserRequest;
     final prevUsers =
-        action.userIds.map((id) => store.state.userState.map[id]).toList();
+        action.userIds!.map((id) => store.state.userState.map[id]).toList();
 
     repository
-        .bulkAction(store.state.credentials, action.userIds,
+        .bulkAction(store.state.credentials, action.userIds!,
             EntityAction.restore, action.password, action.idToken)
         .then((List<UserEntity> users) {
       store.dispatch(RestoreUserSuccess(users));
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
@@ -175,7 +175,7 @@ Middleware<AppState> _restoreUser(UserRepository repository) {
         store.dispatch(UserUnverifiedPassword());
       }
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -197,13 +197,13 @@ Middleware<AppState> _removeUser(UserRepository repository) {
         .then((_) {
       store.dispatch(RemoveUserSuccess(action.userId));
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(RemoveUserFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -225,13 +225,13 @@ Middleware<AppState> _resendInvite(UserRepository repository) {
         .then((_) {
       store.dispatch(ResendInviteSuccess(action.userId));
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(ResendInviteFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -243,10 +243,10 @@ Middleware<AppState> _saveUser(UserRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveUserRequest;
     repository
-        .saveData(store.state.credentials, action.user, action.password,
+        .saveData(store.state.credentials, action.user!, action.password,
             action.idToken)
         .then((UserEntity user) {
-      if (action.user.isNew) {
+      if (action.user!.isNew) {
         store.dispatch(AddUserSuccess(user));
       } else {
         store.dispatch(SaveUserSuccess(user));
@@ -275,13 +275,13 @@ Middleware<AppState> _loadUser(UserRepository repository) {
       store.dispatch(LoadUserSuccess(user));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadUserFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -291,15 +291,15 @@ Middleware<AppState> _loadUser(UserRepository repository) {
 
 Middleware<AppState> _loadUsers(UserRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as LoadUsers;
+    final action = dynamicAction as LoadUsers?;
     final AppState state = store.state;
 
     store.dispatch(LoadUsersRequest());
     repository.loadList(state.credentials).then((data) {
       store.dispatch(LoadUsersSuccess(data));
 
-      if (action.completer != null) {
-        action.completer.complete(null);
+      if (action!.completer != null) {
+        action.completer!.complete(null);
       }
       /*
       if (state.userState.isStale) {
@@ -309,8 +309,8 @@ Middleware<AppState> _loadUsers(UserRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadUsersFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
+      if (action!.completer != null) {
+        action.completer!.completeError(error);
       }
     });
 

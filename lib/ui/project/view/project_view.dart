@@ -17,10 +17,10 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProjectView extends StatefulWidget {
   const ProjectView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
-    @required this.tabIndex,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
+    required this.tabIndex,
   }) : super(key: key);
 
   final ProjectViewVM viewModel;
@@ -33,7 +33,7 @@ class ProjectView extends StatefulWidget {
 
 class _ProjectViewState extends State<ProjectView>
     with SingleTickerProviderStateMixin {
-  TabController _controller;
+  TabController? _controller;
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _ProjectViewState extends State<ProjectView>
         vsync: this,
         length: 2,
         initialIndex: widget.isFilter ? 0 : state.projectUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
@@ -53,7 +53,7 @@ class _ProjectViewState extends State<ProjectView>
     }
 
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateProjectTab(tabIndex: _controller.index));
+    store.dispatch(UpdateProjectTab(tabIndex: _controller!.index));
   }
 
   @override
@@ -61,14 +61,14 @@ class _ProjectViewState extends State<ProjectView>
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.tabIndex != widget.tabIndex) {
-      _controller.index = widget.tabIndex;
+      _controller!.index = widget.tabIndex;
     }
   }
 
   @override
   void dispose() {
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
     super.dispose();
   }
 
@@ -77,7 +77,7 @@ class _ProjectViewState extends State<ProjectView>
     final viewModel = widget.viewModel;
     final project = viewModel.project;
     final state = viewModel.state;
-    final company = state.company;
+    final company = state.company!;
     final localization = AppLocalization.of(context);
     final documents = project.documents;
 
@@ -90,7 +90,7 @@ class _ProjectViewState extends State<ProjectView>
               isScrollable: false,
               tabs: [
                 Tab(
-                  text: localization.overview,
+                  text: localization!.overview,
                 ),
                 Tab(
                   text: documents.isEmpty

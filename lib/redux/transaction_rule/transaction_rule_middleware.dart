@@ -43,14 +43,14 @@ List<Middleware<AppState>> createStoreTransactionRulesMiddleware([
 
 Middleware<AppState> _editTransactionRule() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditTransactionRule;
+    final action = dynamicAction as EditTransactionRule?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TransactionRuleEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(TransactionRuleEditScreen.route);
+      navigatorKey.currentState!.pushNamed(TransactionRuleEditScreen.route);
     }
   };
 }
@@ -58,21 +58,21 @@ Middleware<AppState> _editTransactionRule() {
 Middleware<AppState> _viewTransactionRule() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ViewTransactionRule;
+    final action = dynamicAction as ViewTransactionRule?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TransactionRuleViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(TransactionRuleViewScreen.route);
+      navigatorKey.currentState!.pushNamed(TransactionRuleViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewTransactionRuleList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewTransactionRuleList;
+    final action = dynamicAction as ViewTransactionRuleList?;
 
     next(action);
 
@@ -83,7 +83,7 @@ Middleware<AppState> _viewTransactionRuleList() {
     store.dispatch(UpdateCurrentRoute(TransactionRuleScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           TransactionRuleScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -175,19 +175,19 @@ Middleware<AppState> _saveTransactionRule(
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveTransactionRuleRequest;
     repository
-        .saveData(store.state.credentials, action.transactionRule)
+        .saveData(store.state.credentials, action.transactionRule!)
         .then((TransactionRuleEntity transactionRule) {
-      if (action.transactionRule.isNew) {
+      if (action.transactionRule!.isNew) {
         store.dispatch(AddTransactionRuleSuccess(transactionRule));
       } else {
         store.dispatch(SaveTransactionRuleSuccess(transactionRule));
       }
 
-      action.completer.complete(transactionRule);
+      action.completer!.complete(transactionRule);
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveTransactionRuleFailure(error));
-      action.completer.completeError(error);
+      action.completer!.completeError(error);
     });
 
     next(action);
@@ -207,13 +207,13 @@ Middleware<AppState> _loadTransactionRule(
       store.dispatch(LoadTransactionRuleSuccess(transactionRule));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadTransactionRuleFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -224,21 +224,21 @@ Middleware<AppState> _loadTransactionRule(
 Middleware<AppState> _loadTransactionRules(
     TransactionRuleRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as LoadTransactionRules;
+    final action = dynamicAction as LoadTransactionRules?;
     final AppState state = store.state;
 
     store.dispatch(LoadTransactionRulesRequest());
     repository.loadList(state.credentials).then((data) {
       store.dispatch(LoadTransactionRulesSuccess(data));
 
-      if (action.completer != null) {
-        action.completer.complete(null);
+      if (action!.completer != null) {
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadTransactionRulesFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
+      if (action!.completer != null) {
+        action.completer!.completeError(error);
       }
     });
 

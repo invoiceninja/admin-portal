@@ -49,14 +49,14 @@ List<Middleware<AppState>> createStoreDocumentsMiddleware([
 
 Middleware<AppState> _editDocument() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditDocument;
+    final action = dynamicAction as EditDocument?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(DocumentEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(DocumentEditScreen.route);
+      navigatorKey.currentState!.pushNamed(DocumentEditScreen.route);
     }
   };
 }
@@ -67,7 +67,7 @@ Middleware<AppState> _viewDocument() {
     final action = dynamicAction as ViewDocument;
 
     final state = store.state;
-    final document = state.documentState.map[action.documentId];
+    final document = state.documentState.map[action.documentId]!;
     if (document.data == null) {
       store.dispatch(LoadDocumentData(documentId: document.id));
     }
@@ -77,14 +77,14 @@ Middleware<AppState> _viewDocument() {
     store.dispatch(UpdateCurrentRoute(DocumentViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(DocumentViewScreen.route);
+      navigatorKey.currentState!.pushNamed(DocumentViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewDocumentList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewDocumentList;
+    final action = dynamicAction as ViewDocumentList?;
 
     next(action);
 
@@ -95,7 +95,7 @@ Middleware<AppState> _viewDocumentList() {
     store.dispatch(UpdateCurrentRoute(DocumentScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           DocumentScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -105,11 +105,11 @@ Middleware<AppState> _saveDocument(DocumentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveDocumentRequest;
     repository
-        .saveData(store.state.credentials, action.document)
+        .saveData(store.state.credentials, action.document!)
         .then((DocumentEntity document) {
       document = document.rebuild((b) => b
-        ..parentId = action.document.parentId
-        ..parentType = action.document.parentType);
+        ..parentId = action.document!.parentId
+        ..parentType = action.document!.parentType);
 
       store.dispatch(SaveDocumentSuccess(document));
 
@@ -160,17 +160,17 @@ Middleware<AppState> _downloadDocuments(DocumentRepository repository) {
     final action = dynamicAction as DownloadDocumentsRequest;
     repository
         .bulkAction(
-            store.state.credentials, action.documentIds, EntityAction.download)
+            store.state.credentials, action.documentIds!, EntityAction.download)
         .then((List<DocumentEntity> documents) {
       store.dispatch(DownloadDocumentsSuccess());
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(DownloadDocumentsFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -241,13 +241,13 @@ Middleware<AppState> _loadDocument(DocumentRepository repository) {
       store.dispatch(LoadDocumentSuccess(document));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadDocumentFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -266,18 +266,18 @@ Middleware<AppState> _loadDocumentData(DocumentRepository repository) {
     repository.loadData(store.state.credentials, document).then((bodyBytes) {
       store.dispatch(
         LoadDocumentSuccess(
-          document.rebuild((b) => b..data = bodyBytes),
+          document!.rebuild((b) => b..data = bodyBytes),
         ),
       );
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadDocumentFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 

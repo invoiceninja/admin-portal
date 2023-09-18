@@ -13,9 +13,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TransactionRuleView extends StatefulWidget {
   const TransactionRuleView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final TransactionRuleViewVM viewModel;
@@ -30,10 +30,10 @@ class _TransactionRuleViewState extends State<TransactionRuleView> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final transactionRule = viewModel.transactionRule;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final state = viewModel.state;
 
-    final textColor = Theme.of(context).textTheme.bodyLarge.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color!;
     final textStyle = TextStyle(color: textColor.withOpacity(.65));
 
     final transactionStats = memoizedTransactionStatsForTransactionRule(
@@ -53,7 +53,7 @@ class _TransactionRuleViewState extends State<TransactionRuleView> {
                 currencyId: transactionStats.currencyId),
             secondLabel: localization.count,
             secondValue:
-                '${transactionStats.countActive + transactionStats.countArchived}',
+                '${transactionStats.countActive! + transactionStats.countArchived!}',
           ),
           ListDivider(),
           FieldGrid({
@@ -64,9 +64,9 @@ class _TransactionRuleViewState extends State<TransactionRuleView> {
                 ? localization.enabled
                 : localization.disabled,
             localization.vendor:
-                state.vendorState.get(transactionRule.vendorId).name,
+                state.vendorState.get(transactionRule.vendorId)!.name,
             localization.category:
-                state.expenseCategoryState.get(transactionRule.categoryId).name,
+                state.expenseCategoryState.get(transactionRule.categoryId)!.name,
           }),
           if (transactionRule.rules.isNotEmpty) ...[
             Padding(
@@ -76,18 +76,18 @@ class _TransactionRuleViewState extends State<TransactionRuleView> {
                 children: [
                   Expanded(
                       child: Text(
-                    localization.field,
+                    localization.field!,
                     style: textStyle,
                   )),
                   Expanded(
                     child: Text(
-                      localization.operator,
+                      localization.operator!,
                       style: textStyle,
                     ),
                   ),
                   Expanded(
                     child: Text(
-                      localization.value,
+                      localization.value!,
                       style: textStyle,
                     ),
                   ),
@@ -102,10 +102,10 @@ class _TransactionRuleViewState extends State<TransactionRuleView> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(localization.lookup(rule.searchKey)),
+                      child: Text(localization.lookup(rule!.searchKey)!),
                     ),
                     Expanded(
-                      child: Text(localization.lookup(rule.operator)),
+                      child: Text(localization.lookup(rule.operator)!),
                     ),
                     Expanded(
                       child: Text(rule.value),

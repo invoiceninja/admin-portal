@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class BankAccountViewScreen extends StatelessWidget {
   const BankAccountViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
 
@@ -41,15 +41,15 @@ class BankAccountViewScreen extends StatelessWidget {
 
 class BankAccountViewVM {
   BankAccountViewVM({
-    @required this.state,
-    @required this.bankAccount,
-    @required this.company,
-    @required this.onEntityAction,
-    @required this.onRefreshed,
-    @required this.onBackPressed,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.isDirty,
+    required this.state,
+    required this.bankAccount,
+    required this.company,
+    required this.onEntityAction,
+    required this.onRefreshed,
+    required this.onBackPressed,
+    required this.isSaving,
+    required this.isLoading,
+    required this.isDirty,
   });
 
   factory BankAccountViewVM.fromStore(Store<AppState> store) {
@@ -60,7 +60,7 @@ class BankAccountViewVM {
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(
           LoadBankAccount(completer: completer, bankAccountId: bankAccount.id));
       return completer.future;
@@ -84,7 +84,7 @@ class BankAccountViewVM {
 
   final AppState state;
   final BankAccountEntity bankAccount;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
   final Function onBackPressed;

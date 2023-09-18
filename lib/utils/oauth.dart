@@ -15,7 +15,7 @@ class GoogleOAuth {
 
   static Future<bool> signIn(Function(String, String) callback,
       {bool isSilent = false}) async {
-    GoogleSignInAccount account;
+    GoogleSignInAccount? account;
 
     if (isSilent) {
       account = await _googleSignIn.signInSilently();
@@ -79,11 +79,11 @@ class GoogleOAuth {
   }
   */
 
-  static Future<GoogleSignInAccount> signOut() async {
+  static Future<GoogleSignInAccount?> signOut() async {
     return await _googleSignIn.signOut();
   }
 
-  static Future<GoogleSignInAccount> disconnect() async {
+  static Future<GoogleSignInAccount?> disconnect() async {
     return await _googleSignIn.disconnect();
   }
 }

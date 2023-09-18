@@ -17,7 +17,7 @@ import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart'
 import 'package:invoiceninja_flutter/ui/task/kanban/kanban_view.dart';
 
 class KanbanViewBuilder extends StatefulWidget {
-  const KanbanViewBuilder({Key key}) : super(key: key);
+  const KanbanViewBuilder({Key? key}) : super(key: key);
 
   @override
   _KanbanViewBuilderState createState() => _KanbanViewBuilderState();
@@ -30,7 +30,7 @@ class _KanbanViewBuilderState extends State<KanbanViewBuilder> {
       converter: KanbanVM.fromStore,
       builder: (context, viewModel) {
         final state = viewModel.state;
-        final company = state.company;
+        final company = state.company!;
         return KanbanView(
           viewModel: viewModel,
           key: ValueKey(
@@ -43,12 +43,12 @@ class _KanbanViewBuilderState extends State<KanbanViewBuilder> {
 
 class KanbanVM {
   KanbanVM({
-    @required this.state,
-    @required this.taskList,
-    @required this.filteredTaskList,
-    @required this.onSaveTaskPressed,
-    @required this.onSaveStatusPressed,
-    @required this.onBoardChanged,
+    required this.state,
+    required this.taskList,
+    required this.filteredTaskList,
+    required this.onSaveTaskPressed,
+    required this.onSaveStatusPressed,
+    required this.onBoardChanged,
   });
 
   static KanbanVM fromStore(Store<AppState> store) {
@@ -84,7 +84,7 @@ class KanbanVM {
         ));
       },
       onSaveStatusPressed: (completer, statusId, name, statusOrder) {
-        TaskStatusEntity status = state.taskStatusState.get(statusId);
+        TaskStatusEntity status = state.taskStatusState.get(statusId)!;
         status = status.rebuild((b) => b
           ..name = name
           ..statusOrder = status.isNew ? statusOrder : status.statusOrder);
@@ -96,7 +96,7 @@ class KanbanVM {
       },
       onSaveTaskPressed:
           (completer, taskId, statusId, description, statusOrder) {
-        TaskEntity task = state.taskState.get(taskId);
+        TaskEntity task = state.taskState.get(taskId)!;
         task = task.rebuild((b) => b
           ..description = description
           ..statusOrder = task.isNew ? statusOrder : task.statusOrder
@@ -106,10 +106,10 @@ class KanbanVM {
           if (uiState.filterEntityType == EntityType.client) {
             task = task.rebuild((b) => b..clientId = uiState.filterEntityId);
           } else if (uiState.filterEntityType == EntityType.project) {
-            final project = state.projectState.get(uiState.filterEntityId);
+            final project = state.projectState.get(uiState.filterEntityId!);
             task = task.rebuild((b) => b
               ..projectId = uiState.filterEntityId
-              ..clientId = project.clientId);
+              ..clientId = project!.clientId);
           } else if (uiState.filterEntityType == EntityType.user) {
             task =
                 task.rebuild((b) => b..assignedUserId = uiState.filterEntityId);
@@ -128,7 +128,7 @@ class KanbanVM {
   final AppState state;
   final List<String> taskList;
   final List<String> filteredTaskList;
-  final Function(Completer<Null>, List<String>, Map<String, List<String>>)
+  final Function(Completer<Null>, List<String>?, Map<String, List<String>>?)
       onBoardChanged;
   final Function(Completer<TaskEntity>, String, String, String, int)
       onSaveTaskPressed;

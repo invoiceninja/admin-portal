@@ -13,15 +13,15 @@ import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 class UserPicker extends StatelessWidget {
   const UserPicker({this.userId, this.onChanged});
 
-  final String userId;
-  final Function(String) onChanged;
+  final String? userId;
+  final Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
     final userIds = memoizedUserList(state.userState.map);
 
-    if (!state.userCompany.isAdmin) {
+    if (!state.userCompany!.isAdmin) {
       return SizedBox();
     }
 

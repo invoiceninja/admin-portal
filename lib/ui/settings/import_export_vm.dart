@@ -12,7 +12,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/settings/import_export.dart';
 
 class ImportExportScreen extends StatelessWidget {
-  const ImportExportScreen({Key key}) : super(key: key);
+  const ImportExportScreen({Key? key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsImportExport';
 
   @override
@@ -28,7 +28,7 @@ class ImportExportScreen extends StatelessWidget {
 
 class ImportExportVM {
   ImportExportVM({
-    @required this.state,
+    required this.state,
   });
 
   static ImportExportVM fromStore(Store<AppState> store) {

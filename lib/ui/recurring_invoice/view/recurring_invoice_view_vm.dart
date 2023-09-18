@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class RecurringInvoiceViewScreen extends StatelessWidget {
   const RecurringInvoiceViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
   static const String route = '/recurring_invoice/view';
@@ -39,7 +39,7 @@ class RecurringInvoiceViewScreen extends StatelessWidget {
         return InvoiceView(
           viewModel: vm,
           isFilter: isFilter,
-          tabIndex: vm.state.recurringInvoiceUIState.tabIndex,
+          tabIndex: vm.state!.recurringInvoiceUIState.tabIndex,
         );
       },
     );
@@ -48,20 +48,20 @@ class RecurringInvoiceViewScreen extends StatelessWidget {
 
 class RecurringInvoiceViewVM extends AbstractInvoiceViewVM {
   RecurringInvoiceViewVM({
-    AppState state,
-    CompanyEntity company,
-    InvoiceEntity invoice,
-    ClientEntity client,
-    bool isSaving,
-    bool isDirty,
-    Function(BuildContext, EntityAction) onEntityAction,
-    Function(BuildContext, [int]) onEditPressed,
-    Function(BuildContext) onPaymentsPressed,
-    Function(BuildContext, PaymentEntity) onPaymentPressed,
-    Function(BuildContext) onRefreshed,
-    Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
-    Function(BuildContext, DocumentEntity) onViewExpense,
-    Function(BuildContext, InvoiceEntity, [String]) onViewPdf,
+    AppState? state,
+    CompanyEntity? company,
+    InvoiceEntity? invoice,
+    ClientEntity? client,
+    bool? isSaving,
+    bool? isDirty,
+    Function(BuildContext, EntityAction)? onEntityAction,
+    Function(BuildContext, [int])? onEditPressed,
+    Function(BuildContext)? onPaymentsPressed,
+    Function(BuildContext, PaymentEntity)? onPaymentPressed,
+    Function(BuildContext)? onRefreshed,
+    Function(BuildContext, List<MultipartFile>, bool)? onUploadDocuments,
+    Function(BuildContext, DocumentEntity)? onViewExpense,
+    Function(BuildContext, InvoiceEntity, [String?])? onViewPdf,
   }) : super(
           state: state,
           company: company,
@@ -88,7 +88,7 @@ class RecurringInvoiceViewVM extends AbstractInvoiceViewVM {
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadRecurringInvoice(
           completer: completer, recurringInvoiceId: invoice.id));
       return completer.future;
@@ -101,12 +101,12 @@ class RecurringInvoiceViewVM extends AbstractInvoiceViewVM {
       isDirty: invoice.isNew,
       invoice: invoice,
       client: client,
-      onEditPressed: (BuildContext context, [int index]) {
+      onEditPressed: (BuildContext context, [int? index]) {
         editEntity(
             entity: invoice,
             subIndex: index,
             completer: snackBarCompleter<ClientEntity>(
-                context, AppLocalization.of(context).updatedRecurringInvoice));
+                context, AppLocalization.of(context)!.updatedRecurringInvoice));
       },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
@@ -120,7 +120,7 @@ class RecurringInvoiceViewVM extends AbstractInvoiceViewVM {
             invoice: invoice,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context).uploadedDocument);
+          showToast(AppLocalization.of(context)!.uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,

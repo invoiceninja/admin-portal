@@ -22,7 +22,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class UserViewScreen extends StatelessWidget {
   const UserViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
   final bool isFilter;
@@ -46,15 +46,15 @@ class UserViewScreen extends StatelessWidget {
 
 class UserViewVM {
   UserViewVM({
-    @required this.state,
-    @required this.user,
-    @required this.company,
-    @required this.onEntityAction,
-    @required this.onBackPressed,
-    @required this.onRefreshed,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.isDirty,
+    required this.state,
+    required this.user,
+    required this.company,
+    required this.onEntityAction,
+    required this.onBackPressed,
+    required this.onRefreshed,
+    required this.isSaving,
+    required this.isLoading,
+    required this.isDirty,
   });
 
   factory UserViewVM.fromStore(Store<AppState> store) {
@@ -64,7 +64,7 @@ class UserViewVM {
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadUser(completer: completer, userId: user.id));
       return completer.future;
     }
@@ -87,7 +87,7 @@ class UserViewVM {
 
   final AppState state;
   final UserEntity user;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;

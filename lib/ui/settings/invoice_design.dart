@@ -42,8 +42,8 @@ import 'package:printing/printing.dart';
 
 class InvoiceDesign extends StatefulWidget {
   const InvoiceDesign({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final InvoiceDesignVM viewModel;
@@ -57,8 +57,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_invoiceDesign');
 
-  TabController _controller;
-  FocusScopeNode _focusNode;
+  TabController? _controller;
+  FocusScopeNode? _focusNode;
 
   final _logoSizeController = TextEditingController();
 
@@ -70,10 +70,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
   bool _wasCreditDesignChanged = false;
   bool _wasPurchaseOrderDesignChanged = false;
 
-  bool _updateAllInvoiceDesigns = false;
-  bool _updateAllQuoteDesigns = false;
-  bool _updateAllCreditDesigns = false;
-  bool _updateAllPurchaseOrderDesigns = false;
+  bool? _updateAllInvoiceDesigns = false;
+  bool? _updateAllQuoteDesigns = false;
+  bool? _updateAllCreditDesigns = false;
+  bool? _updateAllPurchaseOrderDesigns = false;
 
   @override
   void initState() {
@@ -101,14 +101,14 @@ class _InvoiceDesignState extends State<InvoiceDesign>
       EntityType.vendor,
       EntityType.purchaseOrder,
     ].forEach((entityType) {
-      if (state.company.isModuleEnabled(entityType)) {
+      if (state.company!.isModuleEnabled(entityType)) {
         tabs++;
       }
     });
 
     _controller = TabController(
         vsync: this, length: tabs, initialIndex: settingsUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   @override
@@ -123,7 +123,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
     final settings = widget.viewModel.settings;
     _logoSizeController.text = (settings.companyLogoSize ?? '').isEmpty
         ? ''
-        : parseInt(settings.companyLogoSize).toString();
+        : parseInt(settings.companyLogoSize!).toString();
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -133,7 +133,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
 
   void _onTabChanged() {
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller!.index));
   }
 
   void _onChanged() {
@@ -144,7 +144,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
       ..companyLogoSize = logoSize.isEmpty
           ? ''
           : logoSize +
-              (viewModel.settings.companyLogoSize.contains('px') ? 'px' : '%'));
+              (viewModel.settings.companyLogoSize!.contains('px') ? 'px' : '%'));
     if (settings != viewModel.settings) {
       _debouncer.run(() {
         viewModel.onSettingsChanged(settings);
@@ -158,16 +158,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
       controller.removeListener(_onChanged);
       controller.dispose();
     });
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
-    _focusNode.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
+    _focusNode!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final settings = viewModel.settings;
@@ -202,10 +202,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
       title: localization.invoiceDesign,
       onSavePressed: (context) {
         viewModel.onSavePressed(context, [
-          if (_updateAllInvoiceDesigns) EntityType.invoice,
-          if (_updateAllQuoteDesigns) EntityType.quote,
-          if (_updateAllCreditDesigns) EntityType.credit,
-          if (_updateAllPurchaseOrderDesigns) EntityType.purchaseOrder,
+          if (_updateAllInvoiceDesigns!) EntityType.invoice,
+          if (_updateAllQuoteDesigns!) EntityType.quote,
+          if (_updateAllCreditDesigns!) EntityType.credit,
+          if (_updateAllPurchaseOrderDesigns!) EntityType.purchaseOrder,
         ]);
       },
       appBarBottom: state.settingsUIState.isFiltered
@@ -216,7 +216,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               isScrollable: true,
               tabs: tabs
                   .map((tab) => Tab(
-                        child: Text(tab),
+                        child: Text(tab!),
                       ))
                   .toList(),
             ),
@@ -262,7 +262,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 child: Padding(
                               padding: const EdgeInsets.only(top: 18),
                               child: SwitchListTile(
-                                title: Text(localization.showPreview),
+                                title: Text(localization.showPreview!),
                                 value: state.settingsUIState.showPdfPreview,
                                 onChanged: (value) {
                                   final store =
@@ -296,13 +296,13 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                             ),
                             if (!isFiltered &&
                                 _wasInvoiceDesignChanged &&
-                                state.userCompany.isAdmin)
+                                state.userCompany!.isAdmin)
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 8),
                                 child: CheckboxListTile(
                                   activeColor:
                                       Theme.of(context).colorScheme.secondary,
-                                  title: Text(localization.updateAllRecords),
+                                  title: Text(localization.updateAllRecords!),
                                   value: _updateAllInvoiceDesigns,
                                   onChanged: (value) => setState(
                                     () => _updateAllInvoiceDesigns = value,
@@ -324,13 +324,13 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                             ),
                             if (!isFiltered &&
                                 _wasQuoteDesignChanged &&
-                                state.userCompany.isAdmin)
+                                state.userCompany!.isAdmin)
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 8),
                                 child: CheckboxListTile(
                                   activeColor:
                                       Theme.of(context).colorScheme.secondary,
-                                  title: Text(localization.updateAllRecords),
+                                  title: Text(localization.updateAllRecords!),
                                   value: _updateAllQuoteDesigns,
                                   onChanged: (value) => setState(
                                     () => _updateAllQuoteDesigns = value,
@@ -353,13 +353,13 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                             ),
                             if (!isFiltered &&
                                 _wasCreditDesignChanged &&
-                                state.userCompany.isAdmin)
+                                state.userCompany!.isAdmin)
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 8),
                                 child: CheckboxListTile(
                                   activeColor:
                                       Theme.of(context).colorScheme.secondary,
-                                  title: Text(localization.updateAllRecords),
+                                  title: Text(localization.updateAllRecords!),
                                   value: _updateAllCreditDesigns,
                                   onChanged: (value) => setState(
                                     () => _updateAllCreditDesigns = value,
@@ -385,13 +385,13 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                             ),
                             if (!isFiltered &&
                                 _wasPurchaseOrderDesignChanged &&
-                                state.userCompany.isAdmin)
+                                state.userCompany!.isAdmin)
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 8),
                                 child: CheckboxListTile(
                                   activeColor:
                                       Theme.of(context).colorScheme.secondary,
-                                  title: Text(localization.updateAllRecords),
+                                  title: Text(localization.updateAllRecords!),
                                   value: _updateAllPurchaseOrderDesigns,
                                   onChanged: (value) => setState(
                                     () =>
@@ -403,7 +403,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         ] else ...[
                           OutlinedButton(
                             child: Text(
-                                localization.setDefaultDesign.toUpperCase()),
+                                localization.setDefaultDesign!.toUpperCase()),
                             onPressed: () {
                               store.dispatch(ViewSettings(
                                 company: state.company,
@@ -424,7 +424,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                               .map((pageLayout) => DropdownMenuItem<String>(
                                     value: pageLayout,
                                     child:
-                                        Text(localization.lookup(pageLayout)),
+                                        Text(localization.lookup(pageLayout)!),
                                   ))
                               .toList(),
                         ),
@@ -437,7 +437,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           items: kPageSizes
                               .map((pageSize) => DropdownMenuItem<String>(
                                     value: pageSize,
-                                    child: Text(localization.lookup(pageSize)),
+                                    child: Text(localization.lookup(pageSize)!),
                                   ))
                               .toList(),
                         ),
@@ -493,7 +493,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                     value: localization.percent,
                                   ),
                                   DropdownMenuItem<String>(
-                                    child: Text(localization.pixels),
+                                    child: Text(localization.pixels!),
                                     value: localization.pixels,
                                   ),
                                 ],
@@ -595,15 +595,15 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                   (b) => b..pageNumberingAlignment = value)),
                           items: [
                             DropdownMenuItem<String>(
-                              child: Text(localization.left),
+                              child: Text(localization.left!),
                               value: SettingsEntity.PAGE_NUMBER_ALIGN_LEFT,
                             ),
                             DropdownMenuItem<String>(
-                              child: Text(localization.center),
+                              child: Text(localization.center!),
                               value: SettingsEntity.PAGE_NUMBER_ALIGN_CENTER,
                             ),
                             DropdownMenuItem<String>(
-                                child: Text(localization.right),
+                                child: Text(localization.right!),
                                 value: SettingsEntity.PAGE_NUMBER_ALIGN_RIGHT),
                           ],
                           /*
@@ -1074,7 +1074,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                     FormCard(
                       isLast: true,
                       child: SwitchListTile(
-                        title: Text(localization.shareInvoiceQuoteColumns),
+                        title: Text(localization.shareInvoiceQuoteColumns!),
                         value: settings.shareInvoiceQuoteColumns ?? true,
                         activeColor: Theme.of(context).colorScheme.secondary,
                         onChanged: (value) {
@@ -1224,14 +1224,14 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               child: _PdfPreview(
                 state: state,
                 settings: viewModel.settings,
-                entityType: tabs[_controller.index] ==
+                entityType: tabs[_controller!.index] ==
                             localization.vendorDetails ||
-                        tabs[_controller.index] ==
+                        tabs[_controller!.index] ==
                             localization.purchaseOrderDetails
                     ? EntityType.purchaseOrder
-                    : tabs[_controller.index] == localization.quoteDetails
+                    : tabs[_controller!.index] == localization.quoteDetails
                         ? EntityType.quote
-                        : tabs[_controller.index] == localization.creditDetails
+                        : tabs[_controller!.index] == localization.creditDetails
                             ? EntityType.credit
                             : EntityType.invoice,
               ),
@@ -1244,22 +1244,22 @@ class _InvoiceDesignState extends State<InvoiceDesign>
 
 class _PdfPreview extends StatefulWidget {
   const _PdfPreview({
-    Key key,
+    Key? key,
     this.state,
     this.settings,
     this.entityType = EntityType.invoice,
   }) : super(key: key);
 
-  final SettingsEntity settings;
+  final SettingsEntity? settings;
   final EntityType entityType;
-  final AppState state;
+  final AppState? state;
 
   @override
   State<_PdfPreview> createState() => _PdfPreviewState();
 }
 
 class _PdfPreviewState extends State<_PdfPreview> {
-  http.Response response;
+  http.Response? response;
   bool isLoading = false;
 
   @override
@@ -1279,21 +1279,21 @@ class _PdfPreviewState extends State<_PdfPreview> {
   }
 
   void _loadPdf() async {
-    final state = widget.state;
+    final state = widget.state!;
     final settingsUIState = state.settingsUIState;
-    final url = state.credentials.url + '/live_design';
+    final url = state.credentials.url! + '/live_design';
 
     final request = PdfPreviewRequest(
       entityType: widget.entityType.apiValue,
       settingsType: settingsUIState.entityType.apiValue,
-      settings: widget.settings,
+      settings: widget.settings!,
       groupId: settingsUIState.group.id ?? '',
       clientId: settingsUIState.client.id ?? '',
     );
 
     setState(() => isLoading = true);
 
-    response = await WebClient()
+    response = await (WebClient()
         .post(
       url,
       state.credentials.token,
@@ -1307,7 +1307,7 @@ class _PdfPreviewState extends State<_PdfPreview> {
     )
         .catchError((dynamic error) {
       print('## Error: $error');
-    });
+    }) as FutureOr<Response?>);
 
     setState(() => isLoading = false);
   }
@@ -1321,7 +1321,7 @@ class _PdfPreviewState extends State<_PdfPreview> {
     return Stack(
       children: [
         PdfPreview(
-          build: (format) => response.bodyBytes,
+          build: (format) => response!.bodyBytes,
           canChangeOrientation: false,
           canChangePageFormat: false,
           canDebug: false,

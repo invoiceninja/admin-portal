@@ -12,14 +12,14 @@ class AppForm extends StatelessWidget {
   const AppForm({
     this.children,
     this.child,
-    @required this.formKey,
-    @required this.focusNode,
+    required this.formKey,
+    required this.focusNode,
   });
 
   final GlobalKey<FormState> formKey;
-  final List<Widget> children;
-  final Widget child;
-  final FocusScopeNode focusNode;
+  final List<Widget>? children;
+  final Widget? child;
+  final FocusScopeNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
@@ -39,18 +39,18 @@ class AppForm extends StatelessWidget {
 
 class AppTabForm extends StatelessWidget {
   const AppTabForm({
-    @required this.children,
-    @required this.formKey,
-    @required this.focusNode,
-    @required this.tabController,
+    required this.children,
+    required this.formKey,
+    required this.focusNode,
+    required this.tabController,
     this.tabBarKey,
   });
 
-  final FocusScopeNode focusNode;
+  final FocusScopeNode? focusNode;
   final GlobalKey<FormState> formKey;
   final List<Widget> children;
-  final TabController tabController;
-  final Key tabBarKey;
+  final TabController? tabController;
+  final Key? tabBarKey;
 
   @override
   Widget build(BuildContext context) {

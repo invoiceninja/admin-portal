@@ -1,4 +1,5 @@
 // Dart imports:
+import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 
@@ -25,20 +26,21 @@ class ProjectRepository {
   final WebClient webClient;
 
   Future<ProjectEntity> loadItem(
-      Credentials credentials, String entityId) async {
+      Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/projects/$entityId', credentials.token);
 
-    final ProjectItemResponse projectResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.deserializeWith,
-        <dynamic>[ProjectItemResponse.serializer, response]);
+    final ProjectItemResponse projectResponse =
+        await (compute<dynamic, dynamic>(SerializationUtils.deserializeWith,
+                <dynamic>[ProjectItemResponse.serializer, response])
+            as FutureOr<ProjectItemResponse>);
 
     return projectResponse.data;
   }
 
   Future<BuiltList<ProjectEntity>> loadList(
       Credentials credentials, int createdAt, bool filterDeleted) async {
-    String url = credentials.url + '/projects?created_at=$createdAt';
+    String url = credentials.url! + '/projects?created_at=$createdAt';
 
     if (filterDeleted) {
       url += '&filter_deleted_clients=true';
@@ -46,9 +48,10 @@ class ProjectRepository {
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final ProjectListResponse projectResponse = await compute<dynamic, dynamic>(
-        SerializationUtils.deserializeWith,
-        <dynamic>[ProjectListResponse.serializer, response]);
+    final ProjectListResponse projectResponse =
+        await (compute<dynamic, dynamic>(SerializationUtils.deserializeWith,
+                <dynamic>[ProjectListResponse.serializer, response])
+            as FutureOr<ProjectListResponse>);
 
     return projectResponse.data;
   }
@@ -60,12 +63,12 @@ class ProjectRepository {
     }
 
     final url =
-        credentials.url + '/projects/bulk?per_page=$kMaxEntitiesPerBulkAction';
+        credentials.url! + '/projects/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final ProjectListResponse projectResponse =
-        serializers.deserializeWith(ProjectListResponse.serializer, response);
+        serializers.deserializeWith(ProjectListResponse.serializer, response)!;
 
     return projectResponse.data.toList();
   }
@@ -77,16 +80,16 @@ class ProjectRepository {
 
     if (project.isNew) {
       response = await webClient.post(
-          credentials.url + '/projects', credentials.token,
+          credentials.url! + '/projects', credentials.token,
           data: json.encode(data));
     } else {
-      final url = credentials.url + '/projects/${project.id}';
+      final url = credentials.url! + '/projects/${project.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }
 
     final ProjectItemResponse projectResponse =
-        serializers.deserializeWith(ProjectItemResponse.serializer, response);
+        serializers.deserializeWith(ProjectItemResponse.serializer, response)!;
 
     return projectResponse.data;
   }
@@ -106,7 +109,7 @@ class ProjectRepository {
         data: fields, multipartFiles: multipartFiles);
 
     final ProjectItemResponse projectResponse =
-        serializers.deserializeWith(ProjectItemResponse.serializer, response);
+        serializers.deserializeWith(ProjectItemResponse.serializer, response)!;
 
     return projectResponse.data;
   }

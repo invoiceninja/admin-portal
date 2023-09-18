@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'product_screen.dart';
 
 class ProductScreenBuilder extends StatelessWidget {
-  const ProductScreenBuilder({Key key}) : super(key: key);
+  const ProductScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,16 +31,16 @@ class ProductScreenBuilder extends StatelessWidget {
 
 class ProductScreenVM {
   ProductScreenVM({
-    @required this.isInMultiselect,
-    @required this.productList,
-    @required this.userCompany,
-    @required this.productMap,
+    required this.isInMultiselect,
+    required this.productList,
+    required this.userCompany,
+    required this.productMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> productList;
-  final BuiltMap<String, ProductEntity> productMap;
+  final BuiltMap<String?, ProductEntity?> productMap;
 
   static ProductScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

@@ -16,7 +16,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TransactionRuleEditScreen extends StatelessWidget {
-  const TransactionRuleEditScreen({Key key}) : super(key: key);
+  const TransactionRuleEditScreen({Key? key}) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsTransactionRulesEdit';
 
@@ -38,20 +38,20 @@ class TransactionRuleEditScreen extends StatelessWidget {
 
 class TransactionRuleEditVM {
   TransactionRuleEditVM({
-    @required this.state,
-    @required this.transactionRule,
-    @required this.company,
-    @required this.onChanged,
-    @required this.isSaving,
-    @required this.origTransactionRule,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
-    @required this.isLoading,
+    required this.state,
+    required this.transactionRule,
+    required this.company,
+    required this.onChanged,
+    required this.isSaving,
+    required this.origTransactionRule,
+    required this.onSavePressed,
+    required this.onCancelPressed,
+    required this.isLoading,
   });
 
   factory TransactionRuleEditVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final transactionRule = state.transactionRuleUIState.editing;
+    final transactionRule = state.transactionRuleUIState.editing!;
 
     return TransactionRuleEditVM(
       state: state,
@@ -67,7 +67,7 @@ class TransactionRuleEditVM {
         createEntity(
             context: context, entity: TransactionRuleEntity(), force: true);
         if (state.transactionRuleUIState.cancelCompleter != null) {
-          state.transactionRuleUIState.cancelCompleter.complete();
+          state.transactionRuleUIState.cancelCompleter!.complete();
         } else {
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
@@ -81,9 +81,9 @@ class TransactionRuleEditVM {
           store.dispatch(SaveTransactionRuleRequest(
               completer: completer, transactionRule: transactionRule));
           return completer.future.then((savedTransactionRule) {
-            showToast(transactionRule.isNew
-                ? localization.createdTransactionRule
-                : localization.updatedTransactionRule);
+            showToast(transactionRule!.isNew
+                ? localization!.createdTransactionRule
+                : localization!.updatedTransactionRule);
             if (state.prefState.isMobile) {
               store.dispatch(
                   UpdateCurrentRoute(TransactionRuleViewScreen.route));
@@ -109,12 +109,12 @@ class TransactionRuleEditVM {
   }
 
   final TransactionRuleEntity transactionRule;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(TransactionRuleEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final bool isLoading;
   final bool isSaving;
-  final TransactionRuleEntity origTransactionRule;
+  final TransactionRuleEntity? origTransactionRule;
   final AppState state;
 }

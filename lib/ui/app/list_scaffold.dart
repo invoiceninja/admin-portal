@@ -20,9 +20,9 @@ import 'menu_drawer_vm.dart';
 
 class ListScaffold extends StatelessWidget {
   const ListScaffold({
-    @required this.appBarTitle,
-    @required this.body,
-    @required this.entityType,
+    required this.appBarTitle,
+    required this.body,
+    required this.entityType,
     this.onCheckboxPressed,
     this.appBarActions,
     this.appBarLeadingActions = const [],
@@ -35,15 +35,15 @@ class ListScaffold extends StatelessWidget {
 
   final EntityType entityType;
   final Widget body;
-  final AppBottomBar bottomNavigationBar;
-  final FloatingActionButton floatingActionButton;
+  final AppBottomBar? bottomNavigationBar;
+  final FloatingActionButton? floatingActionButton;
   final Widget appBarTitle;
-  final List<Widget> appBarActions;
+  final List<Widget>? appBarActions;
   final List<Widget> appBarLeadingActions;
-  final Function onHamburgerLongPress;
-  final String onCancelSettingsSection;
+  final Function? onHamburgerLongPress;
+  final String? onCancelSettingsSection;
   final int onCancelSettingsIndex;
-  final Function onCheckboxPressed;
+  final Function? onCheckboxPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +62,9 @@ class ListScaffold extends StatelessWidget {
     } else if (isMobile(context) || state.prefState.isMenuFloated) {
       leading = Builder(
         builder: (context) => InkWell(
-          onLongPress: onHamburgerLongPress,
+          onLongPress: onHamburgerLongPress as void Function()?,
           child: IconButton(
-            tooltip: localization.menuSidebar,
+            tooltip: localization!.menuSidebar,
             icon: Icon(Icons.menu),
             onPressed: () {
               Scaffold.of(context).openDrawer();
@@ -74,18 +74,18 @@ class ListScaffold extends StatelessWidget {
       );
     } else if (entityType != null &&
         !entityType.hideCreate &&
-        state.userCompany.canCreate(entityType)) {
+        state.userCompany!.canCreate(entityType)) {
       leading = Padding(
         padding: const EdgeInsets.only(left: 16, right: 14),
         child: OutlinedButton(
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(
-                  state.prefState.colorThemeModel.colorSuccess)),
+                  state.prefState.colorThemeModel!.colorSuccess)),
           onPressed: () {
             createEntityByType(entityType: entityType, context: context);
           },
           child: IconText(
-            text: localization.create,
+            text: localization!.create,
             icon: Icons.add,
             style: TextStyle(color: Colors.white),
           ),
@@ -113,11 +113,11 @@ class ListScaffold extends StatelessWidget {
         if (isDesktop(context) && onCheckboxPressed != null)
           IconButton(
             icon: Icon(Icons.check_box),
-            tooltip: prefState.enableTooltips ? localization.multiselect : null,
+            tooltip: prefState.enableTooltips ? localization!.multiselect : null,
             onPressed: state.prefState.showKanban &&
                     state.uiState.mainRoute == '${EntityType.task}'
                 ? null
-                : () => onCheckboxPressed(),
+                : () => onCheckboxPressed!(),
           ),
         if (appBarLeadingActions.isNotEmpty) SizedBox(width: 4),
         ...appBarLeadingActions,
@@ -156,7 +156,7 @@ class ListScaffold extends StatelessWidget {
                           ));
                         },
                         child: Text(
-                          localization.back,
+                          localization!.back,
                           style: TextStyle(color: state.headerTextColor),
                         )),
                 ],

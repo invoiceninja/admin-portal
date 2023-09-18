@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DeviceSettingsScreen extends StatelessWidget {
-  const DeviceSettingsScreen({Key key}) : super(key: key);
+  const DeviceSettingsScreen({Key? key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsDeviceSettings';
 
   @override
@@ -39,28 +39,28 @@ class DeviceSettingsScreen extends StatelessWidget {
 
 class DeviceSettingsVM {
   DeviceSettingsVM({
-    @required this.state,
-    @required this.onRefreshTap,
-    @required this.onLogoutTap,
-    @required this.onDarkModeChanged,
-    @required this.onLayoutChanged,
-    @required this.onRequireAuthenticationChanged,
-    @required this.onLongPressSelectionIsDefault,
-    @required this.authenticationSupported,
-    @required this.onMenuModeChanged,
-    @required this.onHistoryModeChanged,
-    @required this.onColorThemeChanged,
-    @required this.onCustomColorsChanged,
-    @required this.onPersistDataChanged,
-    @required this.onShowPdfChanged,
-    @required this.onEnableNativeBrowserChanged,
-    @required this.onShowPdfSideBySideChanged,
-    @required this.onTapSelectedChanged,
-    @required this.onTextScaleFactorChanged,
-    @required this.onEditAfterSavingChanged,
-    @required this.onEnableTouchEventsChanged,
-    @required this.onEnableTooltipsChanged,
-    @required this.onEnableFlexibleSearchChanged,
+    required this.state,
+    required this.onRefreshTap,
+    required this.onLogoutTap,
+    required this.onDarkModeChanged,
+    required this.onLayoutChanged,
+    required this.onRequireAuthenticationChanged,
+    required this.onLongPressSelectionIsDefault,
+    required this.authenticationSupported,
+    required this.onMenuModeChanged,
+    required this.onHistoryModeChanged,
+    required this.onColorThemeChanged,
+    required this.onCustomColorsChanged,
+    required this.onPersistDataChanged,
+    required this.onShowPdfChanged,
+    required this.onEnableNativeBrowserChanged,
+    required this.onShowPdfSideBySideChanged,
+    required this.onTapSelectedChanged,
+    required this.onTextScaleFactorChanged,
+    required this.onEditAfterSavingChanged,
+    required this.onEnableTouchEventsChanged,
+    required this.onEnableTooltipsChanged,
+    required this.onEnableFlexibleSearchChanged,
   });
 
   static DeviceSettingsVM fromStore(Store<AppState> store) {
@@ -70,12 +70,12 @@ class DeviceSettingsVM {
           showRefreshDataDialog(context: context, includeStatic: true),
       onLogoutTap: (BuildContext context) {
         final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).endedAllSessions);
+            context, AppLocalization.of(context)!.endedAllSessions);
         store.dispatch(UserLogoutAll(completer: completer));
       },
       onDarkModeChanged: (BuildContext context, String value) async {
         store.dispatch(UpdateUserPreferences(darkModeType: value));
-        AppBuilder.of(context).rebuild();
+        AppBuilder.of(context)!.rebuild();
       },
       onLongPressSelectionIsDefault: (BuildContext context, bool value) async {
         store.dispatch(
@@ -101,7 +101,7 @@ class DeviceSettingsVM {
       onEnableTouchEventsChanged: (context, value) async {
         store.dispatch(UpdateUserPreferences(enableTouchEvents: value));
         store.dispatch(UpdatedSetting());
-        AppBuilder.of(context).rebuild();
+        AppBuilder.of(context)!.rebuild();
       },
       onShowPdfChanged: (context, value) {
         store.dispatch(UpdateUserPreferences(showPdfPreview: value));
@@ -141,7 +141,7 @@ class DeviceSettingsVM {
           return;
         }
         store.dispatch(UpdateUserPreferences(appLayout: value));
-        AppBuilder.of(context).rebuild();
+        AppBuilder.of(context)!.rebuild();
         WidgetsBinding.instance.addPostFrameCallback((duration) {
           if (value == AppLayout.mobile) {
             store.dispatch(ViewDashboard());
@@ -155,7 +155,7 @@ class DeviceSettingsVM {
         try {
           authenticated = await LocalAuthentication().authenticate(
               localizedReason:
-                  AppLocalization.of(context).authenticateToChangeSetting,
+                  AppLocalization.of(context)!.authenticateToChangeSetting,
               options: const AuthenticationOptions(
                   biometricOnly: true,
                   useErrorDialogs: true,

@@ -14,8 +14,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProductSettings extends StatefulWidget {
   const ProductSettings({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final ProductSettingsVM viewModel;
@@ -27,7 +27,7 @@ class ProductSettings extends StatefulWidget {
 class _ProductSettingsState extends State<ProductSettings> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_productSettings');
-  FocusScopeNode _focusNode;
+  FocusScopeNode? _focusNode;
   final _debouncer = Debouncer();
   final _stockThresholdController = TextEditingController();
   List<TextEditingController> _controllers = [];
@@ -46,7 +46,7 @@ class _ProductSettingsState extends State<ProductSettings> {
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final viewModel = widget.viewModel;
-    final company = viewModel.state.company;
+    final company = viewModel.state.company!;
 
     _stockThresholdController.text = company.stockNotificationThreshold == 0
         ? ''
@@ -54,7 +54,7 @@ class _ProductSettingsState extends State<ProductSettings> {
             company.stockNotificationThreshold.toDouble(),
             context,
             formatNumberType: FormatNumberType.int,
-          );
+          )!;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -64,7 +64,7 @@ class _ProductSettingsState extends State<ProductSettings> {
 
   @override
   void dispose() {
-    _focusNode.dispose();
+    _focusNode!.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -85,7 +85,7 @@ class _ProductSettingsState extends State<ProductSettings> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final company = viewModel.company;
 
@@ -100,17 +100,17 @@ class _ProductSettingsState extends State<ProductSettings> {
             children: [
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.trackInventory),
+                title: Text(localization.trackInventory!),
                 value: company.trackInventory,
-                subtitle: Text(localization.trackInventoryHelp),
+                subtitle: Text(localization.trackInventoryHelp!),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..trackInventory = value)),
               ),
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.stockNotifications),
+                title: Text(localization.stockNotifications!),
                 value: company.stockNotification,
-                subtitle: Text(localization.stockNotificationsHelp),
+                subtitle: Text(localization.stockNotificationsHelp!),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..stockNotification = value)),
               ),
@@ -163,9 +163,9 @@ class _ProductSettingsState extends State<ProductSettings> {
             children: <Widget>[
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.showProductDescription),
+                title: Text(localization.showProductDescription!),
                 value: company.showProductDetails,
-                subtitle: Text(localization.showProductDescriptionHelp),
+                subtitle: Text(localization.showProductDescriptionHelp!),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..showProductDetails = value)),
               ),

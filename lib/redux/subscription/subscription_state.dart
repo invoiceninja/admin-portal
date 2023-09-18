@@ -29,11 +29,11 @@ abstract class SubscriptionState
   @memoized
   int get hashCode;
 
-  BuiltMap<String, SubscriptionEntity> get map;
+  BuiltMap<String?, SubscriptionEntity?> get map;
 
   BuiltList<String> get list;
 
-  SubscriptionEntity get(String subscriptionId) {
+  SubscriptionEntity? get(String subscriptionId) {
     if (map.containsKey(subscriptionId)) {
       return map[subscriptionId];
     } else {
@@ -42,7 +42,7 @@ abstract class SubscriptionState
   }
 
   SubscriptionState loadSubscriptions(BuiltList<SubscriptionEntity> clients) {
-    final map = Map<String, SubscriptionEntity>.fromIterable(
+    final map = Map<String?, SubscriptionEntity?>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
@@ -60,7 +60,7 @@ abstract class SubscriptionState
 abstract class SubscriptionUIState extends Object
     with EntityUIState
     implements Built<SubscriptionUIState, SubscriptionUIStateBuilder> {
-  factory SubscriptionUIState(PrefStateSortField sortField) {
+  factory SubscriptionUIState(PrefStateSortField? sortField) {
     return _$SubscriptionUIState._(
       listUIState: ListUIState(sortField?.field ?? SubscriptionFields.createdAt,
           sortAscending: sortField?.ascending),
@@ -76,14 +76,13 @@ abstract class SubscriptionUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  SubscriptionEntity get editing;
+  SubscriptionEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<SubscriptionUIState> get serializer =>
       _$subscriptionUIStateSerializer;

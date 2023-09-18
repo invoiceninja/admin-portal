@@ -25,7 +25,7 @@ class WebClient {
 
   Future<dynamic> get(
     String url,
-    String token, {
+    String? token, {
     bool rawResponse = false,
   }) async {
     if (Config.DEMO_MODE) {
@@ -47,7 +47,7 @@ class WebClient {
     final client = http.Client();
     final http.Response response = await client.get(
       Uri.parse(url),
-      headers: _getHeaders(url, token),
+      headers: _getHeaders(url, token) as Map<String, String>?,
     );
     client.close();
 
@@ -66,12 +66,12 @@ class WebClient {
 
   Future<dynamic> post(
     String url,
-    String token, {
+    String? token, {
     dynamic data,
-    List<MultipartFile> multipartFiles,
-    String secret,
-    String password,
-    String idToken,
+    List<MultipartFile?>? multipartFiles,
+    String? secret,
+    String? password,
+    String? idToken,
     bool rawResponse = false,
   }) async {
     _preCheck();
@@ -103,7 +103,7 @@ class WebClient {
           .post(
             Uri.parse(url),
             body: data,
-            headers: headers,
+            headers: headers as Map<String, String>?,
           )
           .timeout(
             Duration(
@@ -124,11 +124,11 @@ class WebClient {
 
   Future<dynamic> put(
     String url,
-    String token, {
+    String? token, {
     dynamic data,
-    MultipartFile multipartFile,
-    String password,
-    String idToken,
+    MultipartFile? multipartFile,
+    String? password,
+    String? idToken,
   }) async {
     _preCheck();
 
@@ -155,7 +155,7 @@ class WebClient {
           token,
           password: password,
           idToken: idToken,
-        ),
+        ) as Map<String, String>?,
       );
       client.close();
     }
@@ -167,9 +167,9 @@ class WebClient {
 
   Future<dynamic> delete(
     String url,
-    String token, {
-    String password,
-    String idToken,
+    String? token, {
+    String? password,
+    String? idToken,
     dynamic data,
   }) async {
     _preCheck();
@@ -188,7 +188,7 @@ class WebClient {
         token,
         password: password,
         idToken: idToken,
-      ),
+      ) as Map<String, String>?,
       body: data,
     );
     client.close();
@@ -199,12 +199,12 @@ class WebClient {
   }
 }
 
-Map<String, String> _getHeaders(
+Map<String, String?> _getHeaders(
   String url,
-  String token, {
-  String secret,
-  String password,
-  String idToken,
+  String? token, {
+  String? secret,
+  String? password,
+  String? idToken,
 }) {
   if (url.startsWith(Constants.hostedApiUrl)) {
     secret = Config.API_SECRET;
@@ -226,7 +226,7 @@ Map<String, String> _getHeaders(
   }
 
   if ((password ?? '').isNotEmpty) {
-    headers['X-API-PASSWORD-BASE64'] = base64Encode(utf8.encode(password));
+    headers['X-API-PASSWORD-BASE64'] = base64Encode(utf8.encode(password!));
   }
 
   return headers;
@@ -255,7 +255,7 @@ void _checkResponse(String url, http.Response response) {
     throw _parseError(response.statusCode, response.body);
   } else if (serverVersion == null) {
     throw 'Error: please check that Invoice Ninja v5 is installed on the server\n\nURL: $url\n\nResponse: ${response.body.length > 200 ? response.body.substring(0, 200) : response.body}\n\nHeaders: ${response.headers}}';
-  } else if (Version.parse(kClientVersion) < Version.parse(minClientVersion)) {
+  } else if (Version.parse(kClientVersion) < Version.parse(minClientVersion!)) {
     throw 'Error: client not supported, please update to the latest version [Current v$kClientVersion < Minimum v$minClientVersion]';
   } else if (Version.parse(serverVersion) < Version.parse(kMinServerVersion)) {
     throw 'Error: server not supported, please update to the latest version [Current v$serverVersion < Minimum v$kMinServerVersion]';
@@ -309,12 +309,12 @@ String _parseError(int code, String response) {
 }
 
 Future<http.Response> _uploadFiles(
-    String url, String token, List<MultipartFile> multipartFiles,
+    String url, String? token, List<MultipartFile?> multipartFiles,
     {String method = 'POST', dynamic data}) async {
   final request = http.MultipartRequest(method, Uri.parse(url))
     ..fields.addAll(data ?? {})
-    ..headers.addAll(_getHeaders(url, token))
-    ..files.addAll(multipartFiles);
+    ..headers.addAll(_getHeaders(url, token) as Map<String, String>)
+    ..files.addAll(multipartFiles as Iterable<MultipartFile>);
 
   return await http.Response.fromStream(await request.send())
       .timeout(const Duration(minutes: 10));

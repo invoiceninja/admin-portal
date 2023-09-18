@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/redux/webhook/webhook_selectors.dart';
 import 'webhook_screen.dart';
 
 class WebhookScreenBuilder extends StatelessWidget {
-  const WebhookScreenBuilder({Key key}) : super(key: key);
+  const WebhookScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,18 +32,18 @@ class WebhookScreenBuilder extends StatelessWidget {
 
 class WebhookScreenVM {
   WebhookScreenVM({
-    @required this.isInMultiselect,
-    @required this.webhookList,
-    @required this.userCompany,
-    @required this.onEntityAction,
-    @required this.webhookMap,
+    required this.isInMultiselect,
+    required this.webhookList,
+    required this.userCompany,
+    required this.onEntityAction,
+    required this.webhookMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> webhookList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final BuiltMap<String, WebhookEntity> webhookMap;
+  final BuiltMap<String?, WebhookEntity?> webhookMap;
 
   static WebhookScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

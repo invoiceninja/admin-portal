@@ -20,10 +20,10 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ExpenseView extends StatefulWidget {
   const ExpenseView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
-    @required this.tabIndex,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
+    required this.tabIndex,
   }) : super(key: key);
 
   final AbstractExpenseViewVM viewModel;
@@ -36,23 +36,23 @@ class ExpenseView extends StatefulWidget {
 
 class _ExpenseViewState extends State<ExpenseView>
     with SingleTickerProviderStateMixin {
-  TabController _controller;
+  TabController? _controller;
 
   @override
   void initState() {
     super.initState();
 
     final viewModel = widget.viewModel;
-    final state = viewModel.state;
-    final company = state.company;
+    final state = viewModel.state!;
+    final company = state.company!;
 
     _controller = TabController(
         vsync: this,
         length: 1 +
-            (viewModel.expense.isRecurring ? 1 : 0) +
+            (viewModel.expense!.isRecurring ? 1 : 0) +
             (company.isModuleEnabled(EntityType.document) ? 1 : 0),
         initialIndex: widget.isFilter ? 0 : state.expenseUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
@@ -61,12 +61,12 @@ class _ExpenseViewState extends State<ExpenseView>
     }
 
     final store = StoreProvider.of<AppState>(context);
-    final expense = widget.viewModel.expense;
+    final expense = widget.viewModel.expense!;
 
     if (expense.isRecurring) {
-      store.dispatch(UpdateRecurringExpenseTab(tabIndex: _controller.index));
+      store.dispatch(UpdateRecurringExpenseTab(tabIndex: _controller!.index));
     } else {
-      store.dispatch(UpdateExpenseTab(tabIndex: _controller.index));
+      store.dispatch(UpdateExpenseTab(tabIndex: _controller!.index));
     }
   }
 
@@ -75,14 +75,14 @@ class _ExpenseViewState extends State<ExpenseView>
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.tabIndex != widget.tabIndex) {
-      _controller.index = widget.tabIndex;
+      _controller!.index = widget.tabIndex;
     }
   }
 
   @override
   void dispose() {
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
     super.dispose();
   }
 
@@ -91,27 +91,27 @@ class _ExpenseViewState extends State<ExpenseView>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final expense = viewModel.expense;
-    final company = viewModel.company;
+    final company = viewModel.company!;
 
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: expense,
       appBarBottom:
-          (company.isModuleEnabled(EntityType.document) || expense.isRecurring)
+          (company.isModuleEnabled(EntityType.document) || expense!.isRecurring)
               ? TabBar(
                   controller: _controller,
                   isScrollable: isMobile(context),
                   tabs: [
                     Tab(
-                      text: localization.overview,
+                      text: localization!.overview,
                     ),
                     if (company.isModuleEnabled(EntityType.document))
                       Tab(
-                        text: expense.documents.isEmpty
+                        text: expense!.documents.isEmpty
                             ? localization.documents
                             : '${localization.documents} (${expense.documents.length})',
                       ),
-                    if (expense.isRecurring)
+                    if (expense!.isRecurring)
                       Tab(
                         text: localization.schedule,
                       )
@@ -128,7 +128,7 @@ class _ExpenseViewState extends State<ExpenseView>
                       controller: _controller,
                       children: <Widget>[
                         RefreshIndicator(
-                          onRefresh: () => viewModel.onRefreshed(context),
+                          onRefresh: () => viewModel.onRefreshed!(context),
                           child: ExpenseOverview(
                             viewModel: viewModel,
                             isFilter: widget.isFilter,
@@ -136,20 +136,20 @@ class _ExpenseViewState extends State<ExpenseView>
                         ),
                         if (company.isModuleEnabled(EntityType.document))
                           RefreshIndicator(
-                            onRefresh: () => viewModel.onRefreshed(context),
+                            onRefresh: () => viewModel.onRefreshed!(context),
                             child: ExpenseViewDocuments(
                                 viewModel: viewModel,
                                 expense: viewModel.expense),
                           ),
                         if (expense.isRecurring)
                           RefreshIndicator(
-                            onRefresh: () => viewModel.onRefreshed(context),
+                            onRefresh: () => viewModel.onRefreshed!(context),
                             child: ExpenseViewSchedule(viewModel: viewModel),
                           ),
                       ],
                     )
                   : RefreshIndicator(
-                      onRefresh: () => viewModel.onRefreshed(context),
+                      onRefresh: () => viewModel.onRefreshed!(context),
                       child: ExpenseOverview(
                         viewModel: viewModel,
                         isFilter: widget.isFilter,

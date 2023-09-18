@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaxSettingsScreen extends StatelessWidget {
-  const TaxSettingsScreen({Key key}) : super(key: key);
+  const TaxSettingsScreen({Key? key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsTaxSettings';
 
   @override
@@ -42,13 +42,13 @@ class TaxSettingsScreen extends StatelessWidget {
 
 class TaxSettingsVM {
   TaxSettingsVM({
-    @required this.state,
-    @required this.company,
-    @required this.settings,
-    @required this.onSettingsChanged,
-    @required this.onCompanyChanged,
-    @required this.onSavePressed,
-    @required this.onConfigureRatesPressed,
+    required this.state,
+    required this.company,
+    required this.settings,
+    required this.onSettingsChanged,
+    required this.onCompanyChanged,
+    required this.onSavePressed,
+    required this.onConfigureRatesPressed,
   });
 
   static TaxSettingsVM fromStore(Store<AppState> store) {
@@ -70,19 +70,19 @@ class TaxSettingsVM {
           switch (settingsUIState.entityType) {
             case EntityType.company:
               final completer = snackBarCompleter<Null>(
-                  context, AppLocalization.of(context).savedSettings);
+                  context, AppLocalization.of(context)!.savedSettings);
               store.dispatch(SaveCompanyRequest(
                   completer: completer, company: settingsUIState.company));
               break;
             case EntityType.group:
               final completer = snackBarCompleter<GroupEntity>(
-                  context, AppLocalization.of(context).savedSettings);
+                  context, AppLocalization.of(context)!.savedSettings);
               store.dispatch(SaveGroupRequest(
                   completer: completer, group: settingsUIState.group));
               break;
             case EntityType.client:
               final completer = snackBarCompleter<ClientEntity>(
-                  context, AppLocalization.of(context).savedSettings);
+                  context, AppLocalization.of(context)!.savedSettings);
               store.dispatch(SaveClientRequest(
                   completer: completer, client: settingsUIState.client));
               break;

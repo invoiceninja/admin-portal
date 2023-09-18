@@ -8,7 +8,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 class ResponsivePadding extends StatelessWidget {
   const ResponsivePadding({this.child});
 
-  final Widget child;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {

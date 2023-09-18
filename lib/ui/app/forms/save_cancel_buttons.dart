@@ -18,11 +18,11 @@ class SaveCancelButtons extends StatelessWidget {
 
   final bool isEnabled;
   final bool isCancelEnabled;
-  final String saveLabel;
-  final String cancelLabel;
+  final String? saveLabel;
+  final String? cancelLabel;
   final bool isHeader;
-  final Function(BuildContext) onCancelPressed;
-  final Function(BuildContext) onSavePressed;
+  final Function(BuildContext)? onCancelPressed;
+  final Function(BuildContext)? onSavePressed;
 
   @override
   Widget build(BuildContext context) {
@@ -35,18 +35,18 @@ class SaveCancelButtons extends StatelessWidget {
         if (onCancelPressed != null)
           Builder(builder: (BuildContext context) {
             return AppTextButton(
-              label: cancelLabel ?? localization.cancel,
+              label: cancelLabel ?? localization!.cancel,
               isInHeader: isHeader && (isEnabled || isCancelEnabled),
               onPressed: isEnabled || isCancelEnabled
-                  ? () => onCancelPressed(context)
+                  ? () => onCancelPressed!(context)
                   : null,
             );
           }),
         Builder(builder: (BuildContext context) {
           return AppTextButton(
-            label: saveLabel ?? localization.save,
+            label: saveLabel ?? localization!.save,
             isInHeader: isHeader,
-            onPressed: isEnabled ? () => onSavePressed(context) : null,
+            onPressed: isEnabled ? () => onSavePressed!(context) : null,
           );
         }),
       ],

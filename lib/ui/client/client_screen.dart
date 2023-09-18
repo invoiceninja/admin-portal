@@ -19,8 +19,8 @@ import 'client_screen_vm.dart';
 
 class ClientScreen extends StatelessWidget {
   const ClientScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/client';
@@ -31,8 +31,8 @@ class ClientScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final company = state.company;
-    final userCompany = state.userCompany;
+    final company = state.company!;
+    final userCompany = state.userCompany!;
     final localization = AppLocalization.of(context);
 
     return ListScaffold(
@@ -111,7 +111,7 @@ class ClientScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newClient,
+              tooltip: localization!.newClient,
             )
           : null,
     );

@@ -46,14 +46,14 @@ List<Middleware<AppState>> createStoreTokensMiddleware([
 
 Middleware<AppState> _editToken() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditToken;
+    final action = dynamicAction as EditToken?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TokenEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(TokenEditScreen.route);
+      navigatorKey.currentState!.pushNamed(TokenEditScreen.route);
     }
   };
 }
@@ -61,21 +61,21 @@ Middleware<AppState> _editToken() {
 Middleware<AppState> _viewToken() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ViewToken;
+    final action = dynamicAction as ViewToken?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TokenViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(TokenViewScreen.route);
+      navigatorKey.currentState!.pushNamed(TokenViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewTokenList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewTokenList;
+    final action = dynamicAction as ViewTokenList?;
 
     next(action);
 
@@ -86,7 +86,7 @@ Middleware<AppState> _viewTokenList() {
     store.dispatch(UpdateCurrentRoute(TokenScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           TokenScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -171,10 +171,10 @@ Middleware<AppState> _saveToken(TokenRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveTokenRequest;
     repository
-        .saveData(store.state.credentials, action.token, action.password,
+        .saveData(store.state.credentials, action.token!, action.password,
             action.idToken)
         .then((TokenEntity token) {
-      if (action.token.isNew) {
+      if (action.token!.isNew) {
         store.dispatch(AddTokenSuccess(token));
       } else {
         store.dispatch(SaveTokenSuccess(token));
@@ -203,13 +203,13 @@ Middleware<AppState> _loadToken(TokenRepository repository) {
       store.dispatch(LoadTokenSuccess(token));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadTokenFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -219,15 +219,15 @@ Middleware<AppState> _loadToken(TokenRepository repository) {
 
 Middleware<AppState> _loadTokens(TokenRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as LoadTokens;
+    final action = dynamicAction as LoadTokens?;
     final AppState state = store.state;
 
     store.dispatch(LoadTokensRequest());
     repository.loadList(state.credentials).then((data) {
       store.dispatch(LoadTokensSuccess(data));
 
-      if (action.completer != null) {
-        action.completer.complete(null);
+      if (action!.completer != null) {
+        action.completer!.complete(null);
       }
       /*
       if (state.productState.isStale) {
@@ -237,8 +237,8 @@ Middleware<AppState> _loadTokens(TokenRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadTokensFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
+      if (action!.completer != null) {
+        action.completer!.completeError(error);
       }
     });
 

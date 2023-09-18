@@ -15,19 +15,15 @@ abstract class EntityUIState {
 
   ListUIState get listUIState;
 
-  @nullable
-  String get selectedId;
+  String? get selectedId;
 
-  @nullable
-  bool get forceSelected;
+  bool? get forceSelected;
 
   int get tabIndex;
 
-  @nullable
   @BuiltValueField(serialize: false)
-  Completer<SelectableEntity> get saveCompleter;
+  Completer<SelectableEntity>? get saveCompleter;
 
-  @nullable
   @BuiltValueField(serialize: false)
-  Completer<Null> get cancelCompleter;
+  Completer<Null>? get cancelCompleter;
 }

@@ -23,8 +23,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentScreen extends StatelessWidget {
   const PaymentScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final PaymentScreenVM viewModel;
@@ -33,7 +33,7 @@ class PaymentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final company = state.company;
+    final company = state.company!;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
 
@@ -41,42 +41,42 @@ class PaymentScreen extends StatelessWidget {
       PaymentStatusEntity().rebuild(
         (b) => b
           ..id = kPaymentStatusCompleted
-          ..name = localization.completed,
+          ..name = localization!.completed,
       ),
       PaymentStatusEntity().rebuild(
         (b) => b
           ..id = kPaymentStatusPending
-          ..name = localization.pending,
+          ..name = localization!.pending,
       ),
       PaymentStatusEntity().rebuild(
         (b) => b
           ..id = kPaymentStatusCancelled
-          ..name = localization.cancelled,
+          ..name = localization!.cancelled,
       ),
       PaymentStatusEntity().rebuild(
         (b) => b
           ..id = kPaymentStatusFailed
-          ..name = localization.failed,
+          ..name = localization!.failed,
       ),
       PaymentStatusEntity().rebuild(
         (b) => b
           ..id = kPaymentStatusPartiallyRefunded
-          ..name = localization.partiallyRefunded,
+          ..name = localization!.partiallyRefunded,
       ),
       PaymentStatusEntity().rebuild(
         (b) => b
           ..id = kPaymentStatusRefunded
-          ..name = localization.refunded,
+          ..name = localization!.refunded,
       ),
       PaymentStatusEntity().rebuild(
         (b) => b
           ..id = kPaymentStatusUnapplied
-          ..name = localization.unapplied,
+          ..name = localization!.unapplied,
       ),
       PaymentStatusEntity().rebuild(
         (b) => b
           ..id = kPaymentStatusPartiallyUnapplied
-          ..name = localization.partiallyUnapplied,
+          ..name = localization!.partiallyUnapplied,
       ),
     ];
 
@@ -161,7 +161,7 @@ class PaymentScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany.canCreate(EntityType.payment)
+              userCompany!.canCreate(EntityType.payment)
           ? FloatingActionButton(
               heroTag: 'payment_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
@@ -173,7 +173,7 @@ class PaymentScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.enterPayment,
+              tooltip: localization!.enterPayment,
             )
           : null,
     );

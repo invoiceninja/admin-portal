@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/ui/webhook/view/webhook_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class WebhookEditScreen extends StatelessWidget {
-  const WebhookEditScreen({Key key}) : super(key: key);
+  const WebhookEditScreen({Key? key}) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsWebhookEdit';
 
@@ -45,20 +45,20 @@ class WebhookEditScreen extends StatelessWidget {
 
 class WebhookEditVM {
   WebhookEditVM({
-    @required this.state,
-    @required this.webhook,
-    @required this.company,
-    @required this.onChanged,
-    @required this.isSaving,
-    @required this.origWebhook,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
-    @required this.isLoading,
+    required this.state,
+    required this.webhook,
+    required this.company,
+    required this.onChanged,
+    required this.isSaving,
+    required this.origWebhook,
+    required this.onSavePressed,
+    required this.onCancelPressed,
+    required this.isLoading,
   });
 
   factory WebhookEditVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final webhook = state.webhookUIState.editing;
+    final webhook = state.webhookUIState.editing!;
 
     return WebhookEditVM(
       state: state,
@@ -73,7 +73,7 @@ class WebhookEditVM {
       onCancelPressed: (BuildContext context) {
         createEntity(context: context, entity: WebhookEntity(), force: true);
         if (state.webhookUIState.cancelCompleter != null) {
-          state.webhookUIState.cancelCompleter.complete();
+          state.webhookUIState.cancelCompleter!.complete();
         } else {
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
@@ -88,16 +88,16 @@ class WebhookEditVM {
           store.dispatch(
               SaveWebhookRequest(completer: completer, webhook: webhook));
           return completer.future.then((savedWebhook) {
-            showToast(webhook.isNew
-                ? localization.createdWebhook
-                : localization.updatedWebhook);
+            showToast(webhook!.isNew
+                ? localization!.createdWebhook
+                : localization!.updatedWebhook);
 
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(WebhookViewScreen.route));
               if (webhook.isNew) {
-                navigator.pushReplacementNamed(WebhookViewScreen.route);
+                navigator!.pushReplacementNamed(WebhookViewScreen.route);
               } else {
-                navigator.pop(savedWebhook);
+                navigator!.pop(savedWebhook);
               }
             } else {
               viewEntity(
@@ -107,7 +107,7 @@ class WebhookEditVM {
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
                   return ErrorDialog(error);
                 });
@@ -118,12 +118,12 @@ class WebhookEditVM {
   }
 
   final WebhookEntity webhook;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(WebhookEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final bool isLoading;
   final bool isSaving;
-  final WebhookEntity origWebhook;
+  final WebhookEntity? origWebhook;
   final AppState state;
 }

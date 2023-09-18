@@ -14,8 +14,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProductOverview extends StatefulWidget {
   const ProductOverview({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final ProductViewVM viewModel;
@@ -27,27 +27,27 @@ class ProductOverview extends StatefulWidget {
 class _ProductOverviewState extends State<ProductOverview> {
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final product = viewModel.product;
-    final company = viewModel.company;
+    final company = viewModel.company!;
 
     String tax = '';
     if (product.taxName1.isNotEmpty) {
       tax += formatNumber(product.taxRate1, context,
-              formatNumberType: FormatNumberType.percent) +
+              formatNumberType: FormatNumberType.percent)! +
           ' ' +
           product.taxName1;
     }
     if (product.taxName2.isNotEmpty) {
       tax += ' ' +
           formatNumber(product.taxRate2, context,
-              formatNumberType: FormatNumberType.percent) +
+              formatNumberType: FormatNumberType.percent)! +
           ' ' +
           product.taxName2;
     }
 
-    final fields = <String, String>{
+    final fields = <String?, String?>{
       localization.tax: tax,
     };
 

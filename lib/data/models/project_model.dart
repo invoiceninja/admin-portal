@@ -73,10 +73,10 @@ abstract class ProjectEntity extends Object
     with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<ProjectEntity, ProjectEntityBuilder> {
   factory ProjectEntity({
-    String id,
-    AppState state,
-    ClientEntity client,
-    UserEntity user,
+    String? id,
+    AppState? state,
+    ClientEntity? client,
+    UserEntity? user,
   }) {
     return _$ProjectEntity._(
       id: id ?? BaseEntity.nextId,
@@ -166,21 +166,21 @@ abstract class ProjectEntity extends Object
   BuiltList<DocumentEntity> get documents;
 
   @override
-  List<EntityAction> getActions(
-      {UserCompanyEntity userCompany,
-      ClientEntity client,
+  List<EntityAction?> getActions(
+      {UserCompanyEntity? userCompany,
+      ClientEntity? client,
       bool includeEdit = false,
       bool includePreview = false,
       bool multiselect = false}) {
-    final actions = <EntityAction>[];
+    final actions = <EntityAction?>[];
 
-    if (!multiselect && !isDeleted) {
-      if (includeEdit && userCompany.canEditEntity(this)) {
+    if (!multiselect && !isDeleted!) {
+      if (includeEdit && userCompany!.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
 
       if (isActive) {
-        if (userCompany.canCreate(EntityType.task)) {
+        if (userCompany!.canCreate(EntityType.task)) {
           actions.add(EntityAction.newTask);
         }
         if (userCompany.canCreate(EntityType.expense)) {
@@ -189,7 +189,7 @@ abstract class ProjectEntity extends Object
       }
     }
 
-    if (userCompany.canCreate(EntityType.invoice) && !isDeleted) {
+    if (userCompany!.canCreate(EntityType.invoice) && !isDeleted!) {
       actions.add(EntityAction.invoiceProject);
     }
 
@@ -197,7 +197,7 @@ abstract class ProjectEntity extends Object
       actions.add(EntityAction.clone);
     }
 
-    if (!isDeleted && multiselect) {
+    if (!isDeleted! && multiselect) {
       actions.add(EntityAction.documents);
     }
 
@@ -209,108 +209,108 @@ abstract class ProjectEntity extends Object
   }
 
   int compareTo(
-      ProjectEntity project,
+      ProjectEntity? project,
       String sortField,
       bool sortAscending,
-      BuiltMap<String, UserEntity> userMap,
-      BuiltMap<String, ClientEntity> clientMap) {
+      BuiltMap<String?, UserEntity?> userMap,
+      BuiltMap<String?, ClientEntity?> clientMap) {
     int response = 0;
-    final ProjectEntity projectA = sortAscending ? this : project;
-    final ProjectEntity projectB = sortAscending ? project : this;
+    final ProjectEntity? projectA = sortAscending ? this : project;
+    final ProjectEntity? projectB = sortAscending ? project : this;
 
     switch (sortField) {
       case ProjectFields.name:
         response =
-            projectA.name.toLowerCase().compareTo(projectB.name.toLowerCase());
+            projectA!.name.toLowerCase().compareTo(projectB!.name.toLowerCase());
         break;
       case ProjectFields.taskRate:
-        response = projectA.taskRate.compareTo(projectB.taskRate);
+        response = projectA!.taskRate.compareTo(projectB!.taskRate);
         break;
       case ProjectFields.client:
-        final clientA = clientMap[projectA.clientId] ?? ClientEntity();
-        final clientB = clientMap[projectB.clientId] ?? ClientEntity();
+        final clientA = clientMap[projectA!.clientId] ?? ClientEntity();
+        final clientB = clientMap[projectB!.clientId] ?? ClientEntity();
         response = removeDiacritics(clientA.listDisplayName)
             .toLowerCase()
             .compareTo(removeDiacritics(clientB.listDisplayName).toLowerCase());
         break;
       case ProjectFields.clientNumber:
-        final clientA = clientMap[projectA.clientId] ?? ClientEntity();
-        final clientB = clientMap[projectB.clientId] ?? ClientEntity();
+        final clientA = clientMap[projectA!.clientId] ?? ClientEntity();
+        final clientB = clientMap[projectB!.clientId] ?? ClientEntity();
         response = clientA.number
             .toLowerCase()
             .compareTo(clientB.number.toLowerCase());
         break;
       case ProjectFields.clientIdNumber:
-        final clientA = clientMap[projectA.clientId] ?? ClientEntity();
-        final clientB = clientMap[projectB.clientId] ?? ClientEntity();
+        final clientA = clientMap[projectA!.clientId] ?? ClientEntity();
+        final clientB = clientMap[projectB!.clientId] ?? ClientEntity();
         response = clientA.idNumber
             .toLowerCase()
             .compareTo(clientB.idNumber.toLowerCase());
         break;
       case ProjectFields.dueDate:
-        response = projectA.dueDate.compareTo(projectB.dueDate);
+        response = projectA!.dueDate.compareTo(projectB!.dueDate);
         break;
       case ProjectFields.privateNotes:
-        response = projectA.privateNotes.compareTo(projectB.privateNotes);
+        response = projectA!.privateNotes.compareTo(projectB!.privateNotes);
         break;
       case ProjectFields.publicNotes:
-        response = projectA.publicNotes.compareTo(projectB.publicNotes);
+        response = projectA!.publicNotes.compareTo(projectB!.publicNotes);
         break;
       case ProjectFields.budgetedHours:
-        response = projectA.budgetedHours.compareTo(projectB.budgetedHours);
+        response = projectA!.budgetedHours.compareTo(projectB!.budgetedHours);
         break;
       case ProjectFields.totalHours:
-        response = projectA.totalHours.compareTo(projectB.totalHours);
+        response = projectA!.totalHours.compareTo(projectB!.totalHours);
         break;
       case EntityFields.state:
         final stateA =
-            EntityState.valueOf(projectA.entityState) ?? EntityState.active;
+            EntityState.valueOf(projectA!.entityState) ?? EntityState.active;
         final stateB =
-            EntityState.valueOf(projectB.entityState) ?? EntityState.active;
+            EntityState.valueOf(projectB!.entityState) ?? EntityState.active;
         response =
             stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
         break;
       case EntityFields.createdAt:
-        response = projectA.createdAt.compareTo(projectB.createdAt);
+        response = projectA!.createdAt.compareTo(projectB!.createdAt);
         break;
       case ProjectFields.archivedAt:
-        response = projectA.archivedAt.compareTo(projectB.archivedAt);
+        response = projectA!.archivedAt.compareTo(projectB!.archivedAt);
         break;
       case ProjectFields.updatedAt:
-        response = projectA.updatedAt.compareTo(projectB.updatedAt);
+        response = projectA!.updatedAt.compareTo(projectB!.updatedAt);
         break;
       case EntityFields.assignedTo:
-        final userA = userMap[projectA.assignedUserId] ?? UserEntity();
-        final userB = userMap[projectB.assignedUserId] ?? UserEntity();
+        final userA = userMap[projectA!.assignedUserId] ?? UserEntity();
+        final userB = userMap[projectB!.assignedUserId] ?? UserEntity();
         response = userA.listDisplayName
             .toLowerCase()
             .compareTo(userB.listDisplayName.toLowerCase());
         break;
       case EntityFields.createdBy:
-        final userA = userMap[projectA.createdUserId] ?? UserEntity();
-        final userB = userMap[projectB.createdUserId] ?? UserEntity();
+        final userA = userMap[projectA!.createdUserId] ?? UserEntity();
+        final userB = userMap[projectB!.createdUserId] ?? UserEntity();
         response = userA.listDisplayName
             .toLowerCase()
             .compareTo(userB.listDisplayName.toLowerCase());
         break;
       case ProjectFields.documents:
         response =
-            projectA.documents.length.compareTo(projectB.documents.length);
+            projectA!.documents.length.compareTo(projectB!.documents.length);
         break;
       case ProjectFields.number:
-        response = (projectA.number ?? '').compareTo(projectB.number ?? '');
+        response = (projectA!.number ?? '').compareTo(projectB!.number ?? '');
         break;
       case ProjectFields.customValue1:
-        response = projectA.customValue1.compareTo(projectB.customValue1);
+        response = projectA!.customValue1.compareTo(projectB!.customValue1);
         break;
       case ProjectFields.customValue2:
-        response = projectA.customValue2.compareTo(projectB.customValue2);
+        response = projectA!.customValue2.compareTo(projectB!.customValue2);
         break;
       case ProjectFields.customValue3:
-        response = projectA.customValue3.compareTo(projectB.customValue3);
+        response = projectA!.customValue3.compareTo(projectB!.customValue3);
         break;
       case ProjectFields.customValue4:
-        response = projectA.customValue4.compareTo(projectB.customValue4);
+        response = projectA!.customValue4.compareTo(projectB!.customValue4);
         break;
       default:
         print('## ERROR: sort by project.$sortField is not implemented');
@@ -318,7 +318,7 @@ abstract class ProjectEntity extends Object
     }
 
     if (response == 0) {
-      response = project.number.toLowerCase().compareTo(number.toLowerCase());
+      response = project!.number.toLowerCase().compareTo(number.toLowerCase());
     }
 
     return response;
@@ -328,7 +328,7 @@ abstract class ProjectEntity extends Object
       name.toLowerCase().contains(filter.toLowerCase());
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     return matchesStrings(
       haystacks: [
         name,
@@ -345,7 +345,7 @@ abstract class ProjectEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     return matchesStringsValue(
       haystacks: [
         name,
@@ -367,7 +367,7 @@ abstract class ProjectEntity extends Object
   }
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
   bool get hasClient => clientId != null && clientId.isNotEmpty;
 

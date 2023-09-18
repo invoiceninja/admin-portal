@@ -8,8 +8,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DataVisualizations extends StatefulWidget {
   const DataVisualizations({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final DataVisualizationsVM viewModel;
@@ -58,7 +58,7 @@ class _DataVisualizationsState extends State<DataVisualizations> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     //final viewModel = widget.viewModel;
 
     return EditScaffold(

@@ -26,24 +26,24 @@ class ViewTaskStatusList implements PersistUI {
 
 class ViewTaskStatus implements PersistUI, PersistPrefs {
   ViewTaskStatus({
-    @required this.taskStatusId,
+    required this.taskStatusId,
     this.force = false,
   });
 
-  final String taskStatusId;
+  final String? taskStatusId;
   final bool force;
 }
 
 class EditTaskStatus implements PersistUI, PersistPrefs {
   EditTaskStatus(
-      {@required this.taskStatus,
+      {required this.taskStatus,
       this.completer,
       this.cancelCompleter,
       this.force = false});
 
   final TaskStatusEntity taskStatus;
-  final Completer completer;
-  final Completer cancelCompleter;
+  final Completer? completer;
+  final Completer? cancelCompleter;
   final bool force;
 }
 
@@ -56,21 +56,21 @@ class UpdateTaskStatus implements PersistUI {
 class LoadTaskStatus {
   LoadTaskStatus({this.completer, this.taskStatusId});
 
-  final Completer completer;
-  final String taskStatusId;
+  final Completer? completer;
+  final String? taskStatusId;
 }
 
 class LoadTaskStatusActivity {
   LoadTaskStatusActivity({this.completer, this.taskStatusId});
 
-  final Completer completer;
-  final String taskStatusId;
+  final Completer? completer;
+  final String? taskStatusId;
 }
 
 class LoadTaskStatuses {
   LoadTaskStatuses({this.completer});
 
-  final Completer completer;
+  final Completer? completer;
 }
 
 class LoadTaskStatusRequest implements StartLoading {}
@@ -124,8 +124,8 @@ class LoadTaskStatusesSuccess implements StopLoading {
 class SaveTaskStatusRequest implements StartSaving {
   SaveTaskStatusRequest({this.completer, this.taskStatus});
 
-  final Completer completer;
-  final TaskStatusEntity taskStatus;
+  final Completer? completer;
+  final TaskStatusEntity? taskStatus;
 }
 
 class SaveTaskStatusSuccess implements StopSaving, PersistData, PersistUI {
@@ -162,7 +162,7 @@ class ArchiveTaskStatusesSuccess implements StopSaving, PersistData {
 class ArchiveTaskStatusesFailure implements StopSaving {
   ArchiveTaskStatusesFailure(this.taskStatuses);
 
-  final List<TaskStatusEntity> taskStatuses;
+  final List<TaskStatusEntity?> taskStatuses;
 }
 
 class DeleteTaskStatusesRequest implements StartSaving {
@@ -181,7 +181,7 @@ class DeleteTaskStatusesSuccess implements StopSaving, PersistData {
 class DeleteTaskStatusesFailure implements StopSaving {
   DeleteTaskStatusesFailure(this.taskStatuses);
 
-  final List<TaskStatusEntity> taskStatuses;
+  final List<TaskStatusEntity?> taskStatuses;
 }
 
 class RestoreTaskStatusesRequest implements StartSaving {
@@ -200,7 +200,7 @@ class RestoreTaskStatusesSuccess implements StopSaving, PersistData {
 class RestoreTaskStatusesFailure implements StopSaving {
   RestoreTaskStatusesFailure(this.taskStatuses);
 
-  final List<TaskStatusEntity> taskStatuses;
+  final List<TaskStatusEntity?> taskStatuses;
 }
 
 class FilterTaskStatuses implements PersistUI {
@@ -250,15 +250,15 @@ class StartTaskStatusMultiselect {
 }
 
 class AddToTaskStatusMultiselect {
-  AddToTaskStatusMultiselect({@required this.entity});
+  AddToTaskStatusMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromTaskStatusMultiselect {
-  RemoveFromTaskStatusMultiselect({@required this.entity});
+  RemoveFromTaskStatusMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearTaskStatusMultiselect {
@@ -266,46 +266,46 @@ class ClearTaskStatusMultiselect {
 }
 
 void handleTaskStatusAction(
-    BuildContext context, List<BaseEntity> taskStatuses, EntityAction action) {
+    BuildContext? context, List<BaseEntity?> taskStatuses, EntityAction? action) {
   if (taskStatuses.isEmpty) {
     return;
   }
 
-  final store = StoreProvider.of<AppState>(context);
+  final store = StoreProvider.of<AppState>(context!);
   final state = store.state;
   final localization = AppLocalization.of(context);
-  final taskStatus = taskStatuses.first as TaskStatusEntity;
+  final taskStatus = taskStatuses.first as TaskStatusEntity?;
   final taskStatusIds =
-      taskStatuses.map((taskStatus) => taskStatus.id).toList();
+      taskStatuses.map((taskStatus) => taskStatus!.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: taskStatus);
+      editEntity(entity: taskStatus!);
       break;
     case EntityAction.restore:
       final message = taskStatusIds.length > 1
-          ? localization.restoredTaskStatuses
+          ? localization!.restoredTaskStatuses
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', taskStatusIds.length.toString())
-          : localization.restoredTaskStatus;
+          : localization!.restoredTaskStatus;
       store.dispatch(RestoreTaskStatusesRequest(
           snackBarCompleter<Null>(context, message), taskStatusIds));
       break;
     case EntityAction.archive:
       final message = taskStatusIds.length > 1
-          ? localization.archivedTaskStatuses
+          ? localization!.archivedTaskStatuses
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', taskStatusIds.length.toString())
-          : localization.archivedTaskStatus;
+          : localization!.archivedTaskStatus;
       store.dispatch(ArchiveTaskStatusesRequest(
           snackBarCompleter<Null>(context, message), taskStatusIds));
       break;
     case EntityAction.delete:
       final message = taskStatusIds.length > 1
-          ? localization.deletedTaskStatuses
+          ? localization!.deletedTaskStatuses
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', taskStatusIds.length.toString())
-          : localization.deletedTaskStatus;
+          : localization!.deletedTaskStatus;
       store.dispatch(DeleteTaskStatusesRequest(
           snackBarCompleter<Null>(context, message), taskStatusIds));
       break;
@@ -313,7 +313,7 @@ void handleTaskStatusAction(
       createEntity(
           context: context,
           entity: TaskEntity(state: state)
-              .rebuild((b) => b..statusId = taskStatus.id));
+              .rebuild((b) => b..statusId = taskStatus!.id));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.taskStatusListState.isInMultiselect()) {
@@ -325,7 +325,7 @@ void handleTaskStatusAction(
       }
 
       for (final taskStatus in taskStatuses) {
-        if (!store.state.taskStatusListState.isSelected(taskStatus.id)) {
+        if (!store.state.taskStatusListState.isSelected(taskStatus!.id)) {
           store.dispatch(AddToTaskStatusMultiselect(entity: taskStatus));
         } else {
           store.dispatch(RemoveFromTaskStatusMultiselect(entity: taskStatus));

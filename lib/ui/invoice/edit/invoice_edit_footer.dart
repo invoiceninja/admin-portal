@@ -17,13 +17,13 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class InvoiceEditFooter extends StatelessWidget {
-  const InvoiceEditFooter({@required this.invoice});
+  const InvoiceEditFooter({required this.invoice});
 
   final InvoiceEntity invoice;
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final total = formatNumber(
@@ -36,7 +36,7 @@ class InvoiceEditFooter extends StatelessWidget {
         state.prefState.useSidebarEditor[EntityType.invoice] ?? false;
     final showLayoutToggle = isDesktop(context);
     final title =
-        '${localization.lookup('${invoice.entityType.snakeCase}_total')} $total';
+        '${localization.lookup('${invoice.entityType!.snakeCase}_total')} $total';
 
     return BottomAppBar(
       elevation: 0,

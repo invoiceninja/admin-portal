@@ -29,24 +29,24 @@ class ViewWebhookList implements PersistUI {
 
 class ViewWebhook implements PersistUI, PersistPrefs {
   ViewWebhook({
-    @required this.webhookId,
+    required this.webhookId,
     this.force = false,
   });
 
-  final String webhookId;
+  final String? webhookId;
   final bool force;
 }
 
 class EditWebhook implements PersistUI, PersistPrefs {
   EditWebhook(
-      {@required this.webhook,
+      {required this.webhook,
       this.completer,
       this.cancelCompleter,
       this.force = false});
 
   final WebhookEntity webhook;
-  final Completer completer;
-  final Completer cancelCompleter;
+  final Completer? completer;
+  final Completer? cancelCompleter;
   final bool force;
 }
 
@@ -59,21 +59,21 @@ class UpdateWebhook implements PersistUI {
 class LoadWebhook {
   LoadWebhook({this.completer, this.webhookId});
 
-  final Completer completer;
-  final String webhookId;
+  final Completer? completer;
+  final String? webhookId;
 }
 
 class LoadWebhookActivity {
   LoadWebhookActivity({this.completer, this.webhookId});
 
-  final Completer completer;
-  final String webhookId;
+  final Completer? completer;
+  final String? webhookId;
 }
 
 class LoadWebhooks {
   LoadWebhooks({this.completer});
 
-  final Completer completer;
+  final Completer? completer;
 }
 
 class LoadWebhookRequest implements StartLoading {}
@@ -127,8 +127,8 @@ class LoadWebhooksSuccess implements StopLoading {
 class SaveWebhookRequest implements StartSaving {
   SaveWebhookRequest({this.completer, this.webhook});
 
-  final Completer completer;
-  final WebhookEntity webhook;
+  final Completer? completer;
+  final WebhookEntity? webhook;
 }
 
 class SaveWebhookSuccess implements StopSaving, PersistData, PersistUI {
@@ -165,7 +165,7 @@ class ArchiveWebhooksSuccess implements StopSaving, PersistData {
 class ArchiveWebhooksFailure implements StopSaving {
   ArchiveWebhooksFailure(this.webhooks);
 
-  final List<WebhookEntity> webhooks;
+  final List<WebhookEntity?> webhooks;
 }
 
 class DeleteWebhooksRequest implements StartSaving {
@@ -184,7 +184,7 @@ class DeleteWebhooksSuccess implements StopSaving, PersistData {
 class DeleteWebhooksFailure implements StopSaving {
   DeleteWebhooksFailure(this.webhooks);
 
-  final List<WebhookEntity> webhooks;
+  final List<WebhookEntity?> webhooks;
 }
 
 class RestoreWebhooksRequest implements StartSaving {
@@ -203,7 +203,7 @@ class RestoreWebhooksSuccess implements StopSaving, PersistData {
 class RestoreWebhooksFailure implements StopSaving {
   RestoreWebhooksFailure(this.webhooks);
 
-  final List<WebhookEntity> webhooks;
+  final List<WebhookEntity?> webhooks;
 }
 
 class FilterWebhooks implements PersistUI {
@@ -249,48 +249,48 @@ class FilterWebhooksByCustom4 implements PersistUI {
 }
 
 void handleWebhookAction(
-    BuildContext context, List<BaseEntity> webhooks, EntityAction action) {
+    BuildContext? context, List<BaseEntity?> webhooks, EntityAction? action) {
   if (webhooks.isEmpty) {
     return;
   }
 
-  final store = StoreProvider.of<AppState>(context);
+  final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
-  final webhook = webhooks.first as WebhookEntity;
-  final webhookIds = webhooks.map((webhook) => webhook.id).toList();
+  final webhook = webhooks.first as WebhookEntity?;
+  final webhookIds = webhooks.map((webhook) => webhook!.id).toList();
 
   switch (action) {
     case EntityAction.copy:
-      Clipboard.setData(ClipboardData(text: webhook.targetUrl));
-      showToast(localization.copiedToClipboard.replaceFirst(':value ', ''));
+      Clipboard.setData(ClipboardData(text: webhook!.targetUrl));
+      showToast(localization!.copiedToClipboard.replaceFirst(':value ', ''));
       break;
     case EntityAction.edit:
-      editEntity(entity: webhook);
+      editEntity(entity: webhook!);
       break;
     case EntityAction.restore:
       final message = webhookIds.length > 1
-          ? localization.restoredWebhooks
+          ? localization!.restoredWebhooks
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', webhookIds.length.toString())
-          : localization.restoredWebhook;
+          : localization!.restoredWebhook;
       store.dispatch(RestoreWebhooksRequest(
           snackBarCompleter<Null>(context, message), webhookIds));
       break;
     case EntityAction.archive:
       final message = webhookIds.length > 1
-          ? localization.archivedWebhooks
+          ? localization!.archivedWebhooks
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', webhookIds.length.toString())
-          : localization.archivedWebhook;
+          : localization!.archivedWebhook;
       store.dispatch(ArchiveWebhooksRequest(
           snackBarCompleter<Null>(context, message), webhookIds));
       break;
     case EntityAction.delete:
       final message = webhookIds.length > 1
-          ? localization.deletedWebhooks
+          ? localization!.deletedWebhooks
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', webhookIds.length.toString())
-          : localization.deletedWebhook;
+          : localization!.deletedWebhook;
       store.dispatch(DeleteWebhooksRequest(
           snackBarCompleter<Null>(context, message), webhookIds));
       break;
@@ -304,7 +304,7 @@ void handleWebhookAction(
       }
 
       for (final webhook in webhooks) {
-        if (!store.state.webhookListState.isSelected(webhook.id)) {
+        if (!store.state.webhookListState.isSelected(webhook!.id)) {
           store.dispatch(AddToWebhookMultiselect(entity: webhook));
         } else {
           store.dispatch(RemoveFromWebhookMultiselect(entity: webhook));
@@ -324,15 +324,15 @@ class StartWebhookMultiselect {
 }
 
 class AddToWebhookMultiselect {
-  AddToWebhookMultiselect({@required this.entity});
+  AddToWebhookMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromWebhookMultiselect {
-  RemoveFromWebhookMultiselect({@required this.entity});
+  RemoveFromWebhookMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearWebhookMultiselect {

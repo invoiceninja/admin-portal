@@ -12,7 +12,7 @@ import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
 
 class CreditPdfScreen extends StatelessWidget {
-  const CreditPdfScreen({Key key, this.showAppBar = true}) : super(key: key);
+  const CreditPdfScreen({Key? key, this.showAppBar = true}) : super(key: key);
 
   final bool showAppBar;
 
@@ -26,7 +26,7 @@ class CreditPdfScreen extends StatelessWidget {
       },
       builder: (context, vm) {
         return InvoicePdfView(
-          key: ValueKey('__credit_pdf_${vm.invoice.id}__'),
+          key: ValueKey('__credit_pdf_${vm.invoice!.id}__'),
           viewModel: vm,
           showAppBar: showAppBar,
         );
@@ -37,9 +37,9 @@ class CreditPdfScreen extends StatelessWidget {
 
 class CreditPdfVM extends EntityPdfVM {
   CreditPdfVM({
-    AppState state,
-    InvoiceEntity invoice,
-    String activityId,
+    AppState? state,
+    InvoiceEntity? invoice,
+    String? activityId,
   }) : super(
           state: state,
           invoice: invoice,
@@ -49,7 +49,7 @@ class CreditPdfVM extends EntityPdfVM {
   factory CreditPdfVM.fromStore(Store<AppState> store) {
     final state = store.state;
     final creditUIState = state.uiState.creditUIState;
-    final invoiceId = creditUIState.selectedId;
+    final invoiceId = creditUIState.selectedId!;
     final invoice = state.creditState.get(invoiceId);
 
     return CreditPdfVM(

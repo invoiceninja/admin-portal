@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
@@ -77,24 +78,24 @@ enum QuoteReportFields {
 }
 
 var memoizedQuoteReport = memo7((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, InvoiceEntity> quoteMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String?, InvoiceEntity?> quoteMap,
+  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String?, UserEntity?> userMap,
   StaticState staticState,
 ) =>
-    quoteReport(userCompany, reportsUIState, quoteMap, clientMap, vendorMap,
+    quoteReport(userCompany!, reportsUIState, quoteMap, clientMap, vendorMap,
         userMap, staticState));
 
 ReportResult quoteReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, InvoiceEntity> quoteMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String?, InvoiceEntity?> quoteMap,
+  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String?, UserEntity?> userMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -104,7 +105,7 @@ ReportResult quoteReport(
   final reportSettings = userCompany.settings?.reportSettings;
   final quoteReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportQuote)
-          ? reportSettings[kReportQuote]
+          ? reportSettings[kReportQuote]!
           : ReportSettingsEntity();
 
   final defaultColumns = [
@@ -118,14 +119,14 @@ ReportResult quoteReport(
   if (quoteReportSettings.columns.isNotEmpty) {
     columns = BuiltList(quoteReportSettings.columns
         .map((e) => EnumUtils.fromString(QuoteReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
   }
 
   for (var quoteId in quoteMap.keys) {
-    final quote = quoteMap[quoteId];
+    final quote = quoteMap[quoteId]!;
     final client = clientMap[quote.clientId] ?? ClientEntity();
 
     if (quote.invitations.isEmpty) {
@@ -135,12 +136,12 @@ ReportResult quoteReport(
     final contact = client.getContact(quote.invitations.first.clientContactId);
     //final vendor = vendorMap[quote.vendorId];
 
-    if ((quote.isDeleted && !userCompany.company.reportIncludeDeleted) ||
-        client.isDeleted) {
+    if ((quote.isDeleted! && !userCompany.company!.reportIncludeDeleted) ||
+        client.isDeleted!) {
       continue;
     }
 
-    if (!userCompany.company.reportIncludeDrafts && quote.isDraft) {
+    if (!userCompany.company!.reportIncludeDrafts && quote.isDraft) {
       continue;
     }
 
@@ -209,28 +210,28 @@ ReportResult quoteReport(
           value = presentCustomField(
             value: quote.customValue1,
             customFieldType: CustomFieldType.invoice1,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case QuoteReportFields.invoice2:
           value = presentCustomField(
             value: quote.customValue2,
             customFieldType: CustomFieldType.invoice2,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case QuoteReportFields.invoice3:
           value = presentCustomField(
             value: quote.customValue3,
             customFieldType: CustomFieldType.invoice3,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case QuoteReportFields.invoice4:
           value = presentCustomField(
             value: quote.customValue4,
             customFieldType: CustomFieldType.invoice4,
-            company: userCompany.company,
+            company: userCompany.company!,
           );
           break;
         case QuoteReportFields.surcharge1:
@@ -357,19 +358,19 @@ ReportResult quoteReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column),
-      )) {
+        column: EnumUtils.parse(column)!,
+      )!) {
         skip = true;
       }
 
       if (value.runtimeType == bool) {
         row.add(quote.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        String currencyId = client.currencyId;
+        String? currencyId = client.currencyId;
         if ([
           QuoteReportFields.converted_amount,
         ].contains(column)) {
-          currencyId = userCompany.company.currencyId;
+          currencyId = userCompany.company!.currencyId;
         }
         row.add(quote.getReportDouble(
           value: value,
@@ -389,7 +390,7 @@ ReportResult quoteReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, quoteReportSettings, selectedColumns));
+      sortReportTableRows(rowA, rowB, quoteReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns:

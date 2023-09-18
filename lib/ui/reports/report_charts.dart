@@ -11,7 +11,7 @@ import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ReportCharts extends StatelessWidget {
-  const ReportCharts({@required this.viewModel});
+  const ReportCharts({required this.viewModel});
 
   final ReportsScreenVM viewModel;
 
@@ -48,7 +48,7 @@ class ReportCharts extends StatelessWidget {
       lineStyle: charts.LineStyleSpec(color: color),
     ));
 
-    Widget child;
+    Widget? child;
     final columnType = getReportColumnType(reportState.group, context);
 
     switch (columnType) {
@@ -59,22 +59,22 @@ class ReportCharts extends StatelessWidget {
       case ReportColumnType.duration:
         child = charts.BarChart(
           [
-            charts.Series<dynamic, String>(
+            charts.Series<dynamic, String?>(
                 id: 'chart',
                 colorFn: (dynamic _, __) =>
-                    charts.ColorUtil.fromDartColor(state.accentColor),
+                    charts.ColorUtil.fromDartColor(state.accentColor!),
                 domainFn: (dynamic item, _) =>
                     columnType == ReportColumnType.age
-                        ? localization.lookup(item['name'])
+                        ? localization!.lookup(item['name'])
                         : item['name'],
                 measureFn: (dynamic item, _) => item['value'],
-                data: viewModel.groupTotals.rows.map((key) {
+                data: viewModel.groupTotals.rows!.map((key) {
                   return {
                     'name': key,
-                    'value': viewModel.groupTotals.totals[key]
+                    'value': viewModel.groupTotals.totals![key]!
                         [reportState.chart]
                   };
-                }).toList())
+                }).toList()) as Series<dynamic, String>
           ],
           animate: true,
           primaryMeasureAxis: numericAxis,
@@ -83,25 +83,25 @@ class ReportCharts extends StatelessWidget {
         break;
       case ReportColumnType.date:
       case ReportColumnType.dateTime:
-        final keys = viewModel.groupTotals.rows
-            .where((element) => element.isNotEmpty)
+        final keys = viewModel.groupTotals.rows!
+            .where((element) => element!.isNotEmpty)
             .toList();
-        keys.sort((String str1, String str2) => str1.compareTo(str2));
+        keys.sort((String? str1, String? str2) => str1!.compareTo(str2!));
         child = charts.TimeSeriesChart(
           [
-            charts.Series<dynamic, DateTime>(
+            charts.Series<dynamic, DateTime?>(
                 id: 'chart',
                 colorFn: (dynamic _, __) =>
-                    charts.ColorUtil.fromDartColor(state.accentColor),
+                    charts.ColorUtil.fromDartColor(state.accentColor!),
                 domainFn: (dynamic item, _) => DateTime.tryParse(item['name']),
                 measureFn: (dynamic item, _) => item['value'],
                 data: keys.map((key) {
                   return {
                     'name': key,
-                    'value': viewModel.groupTotals.totals[key]
+                    'value': viewModel.groupTotals.totals![key]!
                         [reportState.chart]
                   };
-                }).toList())
+                }).toList()) as Series<dynamic, DateTime>
           ],
           animate: true,
           primaryMeasureAxis: numericAxis,

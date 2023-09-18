@@ -43,7 +43,7 @@ abstract class CalculateInvoiceTotal {
 
   bool get usesInclusiveTaxes;
 
-  BuiltList<InvoiceItemEntity> get lineItems;
+  BuiltList<InvoiceItemEntity?> get lineItems;
 
   double _calculateTaxAmount(
       double amount, double rate, bool useInclusiveTaxes, int precision) {
@@ -57,13 +57,13 @@ abstract class CalculateInvoiceTotal {
   }
 
   Map<String, double> calculateTaxes(
-      {@required bool useInclusiveTaxes, @required int precision}) {
+      {required bool useInclusiveTaxes, required int precision}) {
     double total = calculateSubtotal(precision: precision);
     double taxAmount;
     final map = <String, double>{};
 
     lineItems.forEach((item) {
-      final double taxRate1 = round(item.taxRate1, 3);
+      final double taxRate1 = round(item!.taxRate1, 3);
       final double taxRate2 = round(item.taxRate2, 3);
       final double taxRate3 = round(item.taxRate3, 3);
 
@@ -141,7 +141,7 @@ abstract class CalculateInvoiceTotal {
     double total = 0;
 
     lineItems.forEach((invoiceItem) {
-      double lineTotal = invoiceItem.quantity * invoiceItem.cost;
+      double lineTotal = invoiceItem!.quantity * invoiceItem.cost;
 
       if (invoiceItem.discount != 0) {
         if (isAmountDiscount) {
@@ -209,12 +209,12 @@ abstract class CalculateInvoiceTotal {
     return round(lineTotal, precision);
   }
 
-  double calculateTotal({@required int precision}) {
+  double calculateTotal({required int precision}) {
     double total = calculateSubtotal(precision: precision);
     double itemTax = 0.0;
 
     lineItems.forEach((item) {
-      final double qty = round(item.quantity, 5);
+      final double qty = round(item!.quantity, 5);
       final double cost = round(item.cost, 5);
       final double itemDiscount = round(item.discount, 5);
       final double taxRate1 = round(item.taxRate1, 3);
@@ -302,11 +302,11 @@ abstract class CalculateInvoiceTotal {
     return total;
   }
 
-  double calculateSubtotal({@required int precision}) {
+  double calculateSubtotal({required int precision}) {
     var total = 0.0;
 
     lineItems.forEach((item) {
-      final double qty = round(item.quantity, 5);
+      final double qty = round(item!.quantity, 5);
       final double cost = round(item.cost, 5);
       final double discount = round(item.discount, 5);
 

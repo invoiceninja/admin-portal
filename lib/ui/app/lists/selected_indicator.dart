@@ -13,8 +13,8 @@ import 'package:invoiceninja_flutter/utils/colors.dart';
 class SelectedIndicator extends StatelessWidget {
   const SelectedIndicator({this.child, this.isSelected, this.isMenu = false});
 
-  final Widget child;
-  final bool isSelected;
+  final Widget? child;
+  final bool? isSelected;
   final bool isMenu;
 
   @override
@@ -24,7 +24,7 @@ class SelectedIndicator extends StatelessWidget {
     final enableDarkMode = state.prefState.enableDarkMode;
 
     return Material(
-      color: isSelected
+      color: isSelected!
           ? convertHexStringToColor(enableDarkMode
               ? (isMenu
                   ? kDefaultDarkSelectedColorMenu

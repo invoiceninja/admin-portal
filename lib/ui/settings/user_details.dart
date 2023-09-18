@@ -41,8 +41,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class UserDetails extends StatefulWidget {
   const UserDetails({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final UserDetailsVM viewModel;
@@ -56,7 +56,7 @@ class _UserDetailsState extends State<UserDetails>
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_userDetails');
   final FocusScopeNode _focusNode = FocusScopeNode();
-  TabController _controller;
+  TabController? _controller;
 
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
@@ -74,19 +74,19 @@ class _UserDetailsState extends State<UserDetails>
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
         vsync: this, length: 2, initialIndex: settingsUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller!.index));
   }
 
   @override
   void dispose() {
     _focusNode.dispose();
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -107,7 +107,7 @@ class _UserDetailsState extends State<UserDetails>
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    final user = widget.viewModel.state.user;
+    final user = widget.viewModel.state.user!;
     _firstNameController.text = user.firstName;
     _lastNameController.text = user.lastName;
     _emailController.text = user.email;
@@ -135,7 +135,7 @@ class _UserDetailsState extends State<UserDetails>
   }
 
   void _onSavePressed(BuildContext context) {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -146,7 +146,7 @@ class _UserDetailsState extends State<UserDetails>
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final user = viewModel.user;
@@ -154,15 +154,15 @@ class _UserDetailsState extends State<UserDetails>
     final googleButton = Expanded(
       child: OutlinedButton(
         child: Text(
-          (state.user.isConnectedToGoogle
+          (state.user!.isConnectedToGoogle
                   ? localization.disconnectGoogle
                   : localization.connectGoogle)
               .toUpperCase(),
           textAlign: TextAlign.center,
         ),
-        onPressed: state.user.isConnectedToEmail ||
-                state.user.isConnectedToApple ||
-                state.user.isConnectedToMicrosoft
+        onPressed: state.user!.isConnectedToEmail ||
+                state.user!.isConnectedToApple ||
+                state.user!.isConnectedToMicrosoft
             ? null
             : () {
                 if (state.settingsUIState.isChanged) {
@@ -172,7 +172,7 @@ class _UserDetailsState extends State<UserDetails>
                   return;
                 }
 
-                if (state.user.isConnectedToGoogle) {
+                if (state.user!.isConnectedToGoogle) {
                   viewModel.onDisconnectGooglePressed(context);
                 } else {
                   viewModel.onConnectGooglePressed(context);
@@ -184,13 +184,13 @@ class _UserDetailsState extends State<UserDetails>
     final gmailButton = Expanded(
       child: OutlinedButton(
         child: Text(
-          (state.user.isConnectedToEmail
+          (state.user!.isConnectedToEmail
                   ? localization.disconnectGmail
                   : localization.connectGmail)
               .toUpperCase(),
           textAlign: TextAlign.center,
         ),
-        onPressed: !state.user.isConnectedToGoogle
+        onPressed: !state.user!.isConnectedToGoogle
             ? null
             : () async {
                 if (state.settingsUIState.isChanged) {
@@ -200,7 +200,7 @@ class _UserDetailsState extends State<UserDetails>
                   return;
                 }
 
-                if (state.user.isConnectedToEmail) {
+                if (state.user!.isConnectedToEmail) {
                   viewModel.onDisconnectGmailPressed(context);
                 } else {
                   launchUrl(Uri.parse('$kAppProductionUrl/auth/google'));
@@ -212,15 +212,15 @@ class _UserDetailsState extends State<UserDetails>
     final microsoftButton = Expanded(
       child: OutlinedButton(
         child: Text(
-          (state.user.isConnectedToMicrosoft
+          (state.user!.isConnectedToMicrosoft
                   ? localization.disconnectMicrosoft
-                  : localization.connectMicrosoft)
+                  : localization.connectMicrosoft)!
               .toUpperCase(),
           textAlign: TextAlign.center,
         ),
-        onPressed: state.user.isConnectedToEmail ||
-                state.user.isConnectedToGoogle ||
-                state.user.isConnectedToApple
+        onPressed: state.user!.isConnectedToEmail ||
+                state.user!.isConnectedToGoogle ||
+                state.user!.isConnectedToApple
             ? null
             : () {
                 if (state.settingsUIState.isChanged) {
@@ -230,7 +230,7 @@ class _UserDetailsState extends State<UserDetails>
                   return;
                 }
 
-                if (state.user.isConnectedToMicrosoft) {
+                if (state.user!.isConnectedToMicrosoft) {
                   viewModel.onDisconnectMicrosoftPressed(context);
                 } else {
                   viewModel.onConnectMicrosoftPressed(context);
@@ -242,13 +242,13 @@ class _UserDetailsState extends State<UserDetails>
     final office365Button = Expanded(
       child: OutlinedButton(
         child: Text(
-          (state.user.isConnectedToEmail
+          (state.user!.isConnectedToEmail
                   ? localization.disconnectEmail
-                  : localization.connectEmail)
+                  : localization.connectEmail)!
               .toUpperCase(),
           textAlign: TextAlign.center,
         ),
-        onPressed: !state.user.isConnectedToMicrosoft
+        onPressed: !state.user!.isConnectedToMicrosoft
             ? null
             : () async {
                 if (state.settingsUIState.isChanged) {
@@ -258,11 +258,11 @@ class _UserDetailsState extends State<UserDetails>
                   return;
                 }
 
-                if (state.user.isConnectedToEmail) {
+                if (state.user!.isConnectedToEmail) {
                   viewModel.onDisconnectMicrosoftEmailPressed(context);
                 } else {
                   launchUrl(
-                      Uri.parse('${state.account.defaultUrl}/auth/microsoft'));
+                      Uri.parse('${state.account!.defaultUrl}/auth/microsoft'));
                 }
               },
       ),
@@ -271,14 +271,14 @@ class _UserDetailsState extends State<UserDetails>
     final appleButton = Expanded(
       child: OutlinedButton(
         child: Text(
-          (state.user.isConnectedToApple
+          (state.user!.isConnectedToApple
                   ? localization.disconnectApple
-                  : localization.connectApple)
+                  : localization.connectApple)!
               .toUpperCase(),
           textAlign: TextAlign.center,
         ),
         onPressed:
-            state.user.isConnectedToGoogle || state.user.isConnectedToMicrosoft
+            state.user!.isConnectedToGoogle || state.user!.isConnectedToMicrosoft
                 ? null
                 : () {
                     if (state.settingsUIState.isChanged) {
@@ -288,7 +288,7 @@ class _UserDetailsState extends State<UserDetails>
                       return;
                     }
 
-                    if (state.user.isConnectedToApple) {
+                    if (state.user!.isConnectedToApple) {
                       viewModel.onDisconnectApplePressed(context);
                     } else {
                       // do nothing
@@ -388,7 +388,7 @@ class _UserDetailsState extends State<UserDetails>
                     Expanded(
                       child: OutlinedButton(
                         child: Text(
-                          (state.user.isTwoFactorEnabled
+                          (state.user!.isTwoFactorEnabled
                                   ? localization.disableTwoFactor
                                   : localization.enableTwoFactor)
                               .toUpperCase(),
@@ -402,10 +402,10 @@ class _UserDetailsState extends State<UserDetails>
                             return;
                           }
 
-                          if (state.user.isTwoFactorEnabled) {
+                          if (state.user!.isTwoFactorEnabled) {
                             viewModel.onDisableTwoFactorPressed(context);
                           } else {
-                            if (state.user.phone.isEmpty ||
+                            if (state.user!.phone.isEmpty ||
                                 user.phone.isEmpty) {
                               showMessageDialog(
                                   context: context,
@@ -414,8 +414,8 @@ class _UserDetailsState extends State<UserDetails>
                               return;
                             }
 
-                            if (state.isHosted && !state.user.phoneVerified) {
-                              final bool phoneVerified = await showDialog<bool>(
+                            if (state.isHosted && !state.user!.phoneVerified) {
+                              final bool? phoneVerified = await showDialog<bool>(
                                 context: context,
                                 builder: (BuildContext context) =>
                                     UserSmsVerification(),
@@ -423,7 +423,7 @@ class _UserDetailsState extends State<UserDetails>
 
                               if (phoneVerified == true) {
                                 showDialog<void>(
-                                  context: navigatorKey.currentContext,
+                                  context: navigatorKey.currentContext!,
                                   builder: (BuildContext context) =>
                                       _EnableTwoFactor(state: viewModel.state),
                                 );
@@ -447,18 +447,18 @@ class _UserDetailsState extends State<UserDetails>
                 children: <Widget>[
                   FormColorPicker(
                     labelText: localization.accentColor,
-                    initialValue: user.userCompany.settings.accentColor,
+                    initialValue: user.userCompany!.settings!.accentColor,
                     onSelected: (value) {
                       widget.viewModel.onChanged(user.rebuild((b) => b
                         ..userCompany.settings.accentColor =
                             value ?? '#ffffff'));
                     },
                   ),
-                  if (state.company.isLarge || !kReleaseMode) ...[
+                  if (state.company!.isLarge || !kReleaseMode) ...[
                     AppDropdownButton<int>(
                       blankValue: null,
                       labelText: localization.yearsDataShown,
-                      value: user.userCompany.settings.numberYearsActive,
+                      value: user.userCompany!.settings!.numberYearsActive,
                       onChanged: (dynamic value) {
                         widget.viewModel.onChanged(user.rebuild((b) =>
                             b..userCompany.settings.numberYearsActive = value));
@@ -480,7 +480,7 @@ class _UserDetailsState extends State<UserDetails>
                     BoolDropdownButton(
                       label: localization.includeDeletedClients,
                       helpLabel: localization.includeDeletedClientsHelp,
-                      value: user.userCompany.settings.includeDeletedClients,
+                      value: user.userCompany!.settings!.includeDeletedClients,
                       onChanged: (value) {
                         widget.viewModel.onChanged(user.rebuild((b) => b
                           ..userCompany.settings.includeDeletedClients =
@@ -511,7 +511,7 @@ class _UserDetailsState extends State<UserDetails>
 }
 
 class _EnableTwoFactor extends StatefulWidget {
-  const _EnableTwoFactor({@required this.state});
+  const _EnableTwoFactor({required this.state});
 
   final AppState state;
 
@@ -520,9 +520,9 @@ class _EnableTwoFactor extends StatefulWidget {
 }
 
 class _EnableTwoFactorState extends State<_EnableTwoFactor> {
-  String _secret;
-  String _qrCode;
-  String _oneTimePassword;
+  String? _secret;
+  late String _qrCode;
+  String? _oneTimePassword;
   //String _smsCode;
   bool autoValidate = false;
   bool _isLoading = true;
@@ -544,7 +544,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
           serializers.deserializeWith(UserTwoFactorResponse.serializer, data);
       setState(() {
         _isLoading = false;
-        _qrCode = response.data.qrCode;
+        _qrCode = response!.data.qrCode;
         _secret = response.data.secret;
       });
     }).catchError((dynamic error) {
@@ -560,7 +560,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
   }
 
   void _onSavePressed() {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     setState(() {
       autoValidate = !isValid ?? false;
@@ -583,7 +583,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
             }))
         .then((dynamic data) {
       setState(() => _isLoading = false);
-      showToast(AppLocalization.of(context).enabledTwoFactor);
+      showToast(AppLocalization.of(context)!.enabledTwoFactor);
       final store = StoreProvider.of<AppState>(context);
       store.dispatch(RefreshData());
       Navigator.of(context).pop();
@@ -595,7 +595,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
 
   @override
   Widget build(BuildContext context) {
-    final localzation = AppLocalization.of(context);
+    final localzation = AppLocalization.of(context)!;
 
     return AlertDialog(
       title: Text(localzation.enableTwoFactor),
@@ -621,7 +621,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16),
-                        child: SelectableText(_secret),
+                        child: SelectableText(_secret!),
                       ),
                     ],
                     Row(
@@ -634,7 +634,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
                               _oneTimePassword = value;
                             },
                             validator: (value) => value.isEmpty
-                                ? AppLocalization.of(context).pleaseEnterAValue
+                                ? AppLocalization.of(context)!.pleaseEnterAValue
                                 : null,
                             keyboardType: TextInputType.number,
                             onSavePressed: (context) => _onSavePressed(),

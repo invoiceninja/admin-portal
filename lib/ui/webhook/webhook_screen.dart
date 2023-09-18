@@ -20,8 +20,8 @@ import 'webhook_screen_vm.dart';
 
 class WebhookScreen extends StatelessWidget {
   const WebhookScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsWebhooks';
@@ -90,7 +90,7 @@ class WebhookScreen extends StatelessWidget {
             store.dispatch(FilterWebhooksByCustom4(value)),
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany.canCreate(EntityType.webhook)
+              userCompany!.canCreate(EntityType.webhook)
           ? FloatingActionButton(
               heroTag: 'webhook_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
@@ -102,7 +102,7 @@ class WebhookScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newWebhook,
+              tooltip: localization!.newWebhook,
             )
           : null,
     );

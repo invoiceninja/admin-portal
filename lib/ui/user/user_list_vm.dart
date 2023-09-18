@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class UserListBuilder extends StatelessWidget {
-  const UserListBuilder({Key key}) : super(key: key);
+  const UserListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,16 +61,16 @@ class UserListBuilder extends StatelessWidget {
 
 class UserListVM {
   UserListVM({
-    @required this.state,
-    @required this.userCompany,
-    @required this.userList,
-    @required this.userMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.userCompany,
+    required this.userList,
+    required this.userMap,
+    required this.filter,
+    required this.isLoading,
+    required this.listState,
+    required this.onRefreshed,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
   });
 
   static UserListVM fromStore(Store<AppState> store) {
@@ -79,7 +79,7 @@ class UserListVM {
         return Future<Null>(null);
       }
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -95,7 +95,7 @@ class UserListVM {
           state.userState.map,
           state.userState.list,
           state.userListState,
-          state.user.id),
+          state.user!.id),
       userMap: state.userState.map,
       isLoading: state.isLoading,
       filter: state.userUIState.listUIState.filter,
@@ -106,11 +106,11 @@ class UserListVM {
   }
 
   final AppState state;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> userList;
-  final BuiltMap<String, UserEntity> userMap;
+  final BuiltMap<String?, UserEntity?> userMap;
   final ListUIState listState;
-  final String filter;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(String) onSortColumn;

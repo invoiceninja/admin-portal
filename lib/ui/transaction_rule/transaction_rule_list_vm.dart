@@ -17,7 +17,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/transaction_rule/transaction_rule_actions.dart';
 
 class TransactionRuleListBuilder extends StatelessWidget {
-  const TransactionRuleListBuilder({Key key}) : super(key: key);
+  const TransactionRuleListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class TransactionRuleListBuilder extends StatelessWidget {
                 filter: viewModel.filter,
                 transactionRule: transactionRule,
                 isChecked:
-                    isInMultiselect && listState.isSelected(transactionRule.id),
+                    isInMultiselect && listState.isSelected(transactionRule!.id),
               );
             });
       },
@@ -56,18 +56,18 @@ class TransactionRuleListBuilder extends StatelessWidget {
 
 class TransactionRuleListVM {
   TransactionRuleListVM({
-    @required this.state,
-    @required this.userCompany,
-    @required this.transactionRuleList,
-    @required this.transactionRuleMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.onEntityAction,
-    @required this.tableColumns,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.userCompany,
+    required this.transactionRuleList,
+    required this.transactionRuleMap,
+    required this.filter,
+    required this.isLoading,
+    required this.listState,
+    required this.onRefreshed,
+    required this.onEntityAction,
+    required this.tableColumns,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
   });
 
   static TransactionRuleListVM fromStore(Store<AppState> store) {
@@ -76,7 +76,7 @@ class TransactionRuleListVM {
         return Future<Null>(null);
       }
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -99,7 +99,7 @@ class TransactionRuleListVM {
               EntityAction action) =>
           handleTransactionRuleAction(context, transactionRules, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: state.userCompany.settings
+      tableColumns: state.userCompany!.settings
               ?.getTableColumns(EntityType.transactionRule) ??
           TransactionRulePresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortTransactionRules(field)),
@@ -109,11 +109,11 @@ class TransactionRuleListVM {
   }
 
   final AppState state;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> transactionRuleList;
-  final BuiltMap<String, TransactionRuleEntity> transactionRuleMap;
+  final BuiltMap<String?, TransactionRuleEntity?> transactionRuleMap;
   final ListUIState listState;
-  final String filter;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;

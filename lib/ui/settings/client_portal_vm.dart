@@ -25,7 +25,7 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientPortalScreen extends StatelessWidget {
-  const ClientPortalScreen({Key key}) : super(key: key);
+  const ClientPortalScreen({Key? key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsClientPortal';
 
   @override
@@ -44,12 +44,12 @@ class ClientPortalScreen extends StatelessWidget {
 
 class ClientPortalVM {
   ClientPortalVM({
-    @required this.state,
-    @required this.settings,
-    @required this.company,
-    @required this.onCompanyChanged,
-    @required this.onSettingsChanged,
-    @required this.onSavePressed,
+    required this.state,
+    required this.settings,
+    required this.company,
+    required this.onCompanyChanged,
+    required this.onSettingsChanged,
+    required this.onSavePressed,
   });
 
   static ClientPortalVM fromStore(Store<AppState> store) {
@@ -75,15 +75,15 @@ class ClientPortalVM {
               switch (settingsUIState.entityType) {
                 case EntityType.company:
                   final completer = snackBarCompleter<Null>(
-                      context, AppLocalization.of(context).savedSettings);
+                      context, AppLocalization.of(context)!.savedSettings);
 
-                  final oldSubdomain = state.company.subdomain;
+                  final oldSubdomain = state.company!.subdomain;
                   final newSubdomain = settingsUIState.company.subdomain;
                   if (oldSubdomain != newSubdomain) {
                     completer.future.then((value) {
                       showRefreshDataDialog(
-                          context: navigatorKey.currentContext);
-                    });
+                          context: navigatorKey.currentContext!);
+                    } as FutureOr<_> Function(Null));
                   }
 
                   store.dispatch(SaveCompanyRequest(
@@ -91,13 +91,13 @@ class ClientPortalVM {
                   break;
                 case EntityType.group:
                   final completer = snackBarCompleter<GroupEntity>(
-                      context, AppLocalization.of(context).savedSettings);
+                      context, AppLocalization.of(context)!.savedSettings);
                   store.dispatch(SaveGroupRequest(
                       completer: completer, group: settingsUIState.group));
                   break;
                 case EntityType.client:
                   final completer = snackBarCompleter<ClientEntity>(
-                      context, AppLocalization.of(context).savedSettings);
+                      context, AppLocalization.of(context)!.savedSettings);
                   store.dispatch(SaveClientRequest(
                       completer: completer, client: settingsUIState.client));
                   break;

@@ -33,12 +33,12 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class SettingsWizard extends StatefulWidget {
   const SettingsWizard({
-    @required this.user,
-    @required this.company,
+    required this.user,
+    required this.company,
   });
 
-  final UserEntity user;
-  final CompanyEntity company;
+  final UserEntity? user;
+  final CompanyEntity? company;
 
   @override
   _SettingsWizardState createState() => _SettingsWizardState();
@@ -76,9 +76,9 @@ class _SettingsWizardState extends State<SettingsWizard> {
       _subdomainController,
     ];
 
-    _firstNameController.text = widget.user.firstName;
-    _lastNameController.text = widget.user.lastName;
-    _subdomainController.text = widget.company.subdomain;
+    _firstNameController.text = widget.user!.firstName;
+    _lastNameController.text = widget.user!.lastName;
+    _subdomainController.text = widget.company!.subdomain;
   }
 
   @override
@@ -132,7 +132,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
   }
 
   void _onSavePressed() {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid || _isCheckingSubdomain) {
       return;
@@ -148,13 +148,13 @@ class _SettingsWizardState extends State<SettingsWizard> {
           final completer = Completer<Null>();
           completer.future.then((value) {
             final toastCompleter =
-                snackBarCompleter<Null>(context, localization.savedSettings);
+                snackBarCompleter<Null>(context, localization!.savedSettings);
             toastCompleter.future.then((value) {
               setState(() {
                 _isSaving = false;
                 _showLogo = true;
               });
-            }).catchError((Object error) {
+            } as FutureOr<_> Function(Null)).catchError((Object error) {
               setState(() {
                 _isSaving = false;
               });
@@ -162,7 +162,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
             store.dispatch(
               SaveCompanyRequest(
                 completer: toastCompleter,
-                company: state.company.rebuild(
+                company: state.company!.rebuild(
                   (b) => b
                     ..subdomain = _subdomainController.text.trim()
                     ..settings.name = _nameController.text.trim()
@@ -171,7 +171,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
                 ),
               ),
             );
-          }).catchError((Object error) {
+          } as FutureOr<_> Function(Null)).catchError((Object error) {
             setState(() => _isSaving = false);
           });
 
@@ -183,7 +183,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
             store.dispatch(
               SaveAuthUserRequest(
                 completer: completer,
-                user: state.user.rebuild((b) => b
+                user: state.user!.rebuild((b) => b
                   ..firstName = _firstNameController.text.trim()
                   ..lastName = _lastNameController.text.trim()),
                 password: password,
@@ -196,7 +196,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
@@ -246,7 +246,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
       onSelected: (SelectableEntity language) {
         setState(() => _languageId = language?.id);
         store.dispatch(UpdateCompanyLanguage(languageId: language?.id));
-        AppBuilder.of(context).rebuild();
+        AppBuilder.of(context)!.rebuild();
       },
       validator: (dynamic value) =>
           value.isEmpty ? localization.pleaseEnterAValue : null,
@@ -255,7 +255,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
     final darkMode = LayoutBuilder(builder: (context, constraints) {
       return ToggleButtons(
         children: [
-          Text(localization.system),
+          Text(localization.system!),
           Text(localization.light),
           Text(localization.dark),
         ],
@@ -276,7 +276,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
                       : kBrightnessDark,
             ),
           );
-          AppBuilder.of(context).rebuild();
+          AppBuilder.of(context)!.rebuild();
         },
       );
     });
@@ -312,7 +312,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
     if (state.companies.length > 1 && kReleaseMode) {
       showNameFields = false;
     }
-    if (state.user.isConnectedToApple && state.user.fullName.isEmpty) {
+    if (state.user!.isConnectedToApple && state.user!.fullName.isEmpty) {
       showNameFields = false;
     }
 
@@ -332,7 +332,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
                         child: Padding(
                           padding: const EdgeInsets.only(top: 32),
                           child: Text(
-                            localization.setupWizardLogo,
+                            localization.setupWizardLogo!,
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.titleLarge,
                           ),
@@ -364,7 +364,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
                                 if (state.isHosted)
                                   Padding(
                                     padding: const EdgeInsets.only(top: 32),
-                                    child: Text(localization.subdomainGuide),
+                                    child: Text(localization.subdomainGuide!),
                                   )
                               ]
                             : [
@@ -412,7 +412,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
                                 if (state.isHosted)
                                   Padding(
                                     padding: const EdgeInsets.only(top: 32),
-                                    child: Text(localization.subdomainGuide),
+                                    child: Text(localization.subdomainGuide!),
                                   ),
                               ],
                       ),
@@ -434,7 +434,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
                   ));
                   Navigator.of(context).pop();
                 },
-                child: Text(localization.upload.toUpperCase()))
+                child: Text(localization.upload!.toUpperCase()))
           else
             TextButton(
               onPressed: _onSavePressed,

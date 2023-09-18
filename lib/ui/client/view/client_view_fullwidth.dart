@@ -26,8 +26,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ClientViewFullwidth extends StatefulWidget {
   const ClientViewFullwidth({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final ClientViewVM viewModel;
@@ -38,9 +38,9 @@ class ClientViewFullwidth extends StatefulWidget {
 
 class _ClientViewFullwidthState extends State<ClientViewFullwidth>
     with TickerProviderStateMixin {
-  ScrollController _scrollController1;
-  ScrollController _scrollController2;
-  ScrollController _scrollController3;
+  ScrollController? _scrollController1;
+  ScrollController? _scrollController2;
+  ScrollController? _scrollController3;
 
   @override
   void initState() {
@@ -53,9 +53,9 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
 
   @override
   void dispose() {
-    _scrollController1.dispose();
-    _scrollController2.dispose();
-    _scrollController3.dispose();
+    _scrollController1!.dispose();
+    _scrollController2!.dispose();
+    _scrollController3!.dispose();
     super.dispose();
   }
 
@@ -65,7 +65,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final company = state.company;
-    final client = state.clientState.get(state.uiState.filterEntityId);
+    final client = state.clientState.get(state.uiState.filterEntityId!)!;
     final documents = client.documents;
     final viewModel = widget.viewModel;
     final billingAddress = formatAddress(state, object: client);
@@ -85,8 +85,8 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
 
     client.gatewayTokens.forEach((gatewayToken) {
       final companyGateway =
-          state.companyGatewayState.get(gatewayToken.companyGatewayId);
-      if (companyGateway.isOld && !companyGateway.isDeleted) {
+          state.companyGatewayState.get(gatewayToken.companyGatewayId)!;
+      if (companyGateway.isOld && !companyGateway.isDeleted!) {
         final customerReference = gatewayToken.customerReference;
         gatewayMap[customerReference] = companyGateway;
         final clientUrl = GatewayEntity.getClientUrl(
@@ -97,7 +97,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
           linkMap[customerReference] = clientUrl;
         }
         if (tokenMap.containsKey(customerReference)) {
-          tokenMap[customerReference].add(gatewayToken);
+          tokenMap[customerReference]!.add(gatewayToken);
         } else {
           tokenMap[customerReference] = [gatewayToken];
         }
@@ -124,21 +124,21 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                 controller: _scrollController1,
                 children: [
                   Text(
-                    localization.details,
+                    localization!.details,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   SizedBox(height: 8),
-                  if (client.isTaxExempt) Text(localization.isTaxExempt),
+                  if (client.isTaxExempt) Text(localization.isTaxExempt!),
                   if (client.paymentBalance != 0)
                     Text(localization.payments +
                         ': ' +
                         formatNumber(client.paymentBalance, context,
-                            clientId: client.id)),
+                            clientId: client.id)!),
                   if (client.creditBalance != 0)
                     Text(localization.credit +
                         ': ' +
                         formatNumber(client.creditBalance, context,
-                            clientId: client.id)),
+                            clientId: client.id)!),
                   if (client.idNumber.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 1),
@@ -174,7 +174,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                       ),
                     ),
                   SizedBox(height: 4),
-                  if (client.currencyId != state.company.currencyId)
+                  if (client.currencyId != state.company!.currencyId)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 1),
                       child: Text(
@@ -186,7 +186,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                       ),
                     ),
                   if ((client.languageId ?? '').isNotEmpty &&
-                      client.languageId != state.company.languageId)
+                      client.languageId != state.company!.languageId)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 1),
                       child: Text(
@@ -201,16 +201,16 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                     Text(
                         '${localization.taskRate}: ${client.settings.defaultTaskRate}'),
                   if (client.customValue1.isNotEmpty)
-                    Text(company.formatCustomFieldValue(
+                    Text(company!.formatCustomFieldValue(
                         CustomFieldType.client1, client.customValue1)),
                   if (client.customValue2.isNotEmpty)
-                    Text(company.formatCustomFieldValue(
+                    Text(company!.formatCustomFieldValue(
                         CustomFieldType.client2, client.customValue2)),
                   if (client.customValue3.isNotEmpty)
-                    Text(company.formatCustomFieldValue(
+                    Text(company!.formatCustomFieldValue(
                         CustomFieldType.client3, client.customValue3)),
                   if (client.customValue4.isNotEmpty)
-                    Text(company.formatCustomFieldValue(
+                    Text(company!.formatCustomFieldValue(
                         CustomFieldType.client4, client.customValue4)),
                 ],
               ),
@@ -340,7 +340,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                contact.fullName,
+                                contact!.fullName,
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               if (contact.email.isNotEmpty)
@@ -363,7 +363,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                                         icon: Icons.phone, text: contact.phone),
                                   ),
                                 ),
-                              if (company.hasCustomField(
+                              if (company!.hasCustomField(
                                       CustomFieldType.contact1) &&
                                   contact.customValue1.isNotEmpty)
                                 Text(company.formatCustomFieldValue(
@@ -429,7 +429,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                     bottom: kMobileDialogPadding,
                     left: kMobileDialogPadding / 2),
                 child: DefaultTabController(
-                  length: company.isModuleEnabled(EntityType.document) ? 5 : 4,
+                  length: company!.isModuleEnabled(EntityType.document) ? 5 : 4,
                   child: SizedBox(
                     height: minHeight,
                     child: Column(
@@ -439,7 +439,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                           isScrollable: true,
                           tabs: [
                             Tab(
-                              child: Text(localization.standing),
+                              child: Text(localization.standing!),
                             ),
                             if (tokenMap.keys.isNotEmpty)
                               Tab(

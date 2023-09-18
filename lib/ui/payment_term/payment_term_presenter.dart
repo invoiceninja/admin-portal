@@ -17,7 +17,7 @@ class PaymentTermPresenter extends EntityPresenter {
   }
 
   @override
-  Widget getField({String field, BuildContext context}) {
+  Widget getField({String? field, required BuildContext context}) {
     //final state = StoreProvider.of<AppState>(context).state;
     //final paymentTerm = entity as InvoiceEntity;
 

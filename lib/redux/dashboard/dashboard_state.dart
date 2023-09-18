@@ -33,7 +33,7 @@ abstract class DashboardUIState
 
   EntityType get selectedEntityType;
 
-  BuiltMap<EntityType, BuiltList<String>> get selectedEntities;
+  BuiltMap<EntityType?, BuiltList<String>> get selectedEntities;
 
   bool get showSidebar;
 
@@ -107,7 +107,7 @@ abstract class DashboardUISettings
 
   String get groupBy;
 
-  bool matchesCurrency(String match) {
+  bool matchesCurrency(String? match) {
     if (currencyId == null ||
         currencyId.isEmpty ||
         currencyId == kCurrencyAll) {
@@ -117,7 +117,7 @@ abstract class DashboardUISettings
     return currencyId == match;
   }
 
-  String startDate(CompanyEntity company) {
+  String? startDate(CompanyEntity company) {
     return calculateStartDate(
       company: company,
       offset: offset,
@@ -127,7 +127,7 @@ abstract class DashboardUISettings
     );
   }
 
-  String endDate(CompanyEntity company) {
+  String? endDate(CompanyEntity company) {
     return calculateEndDate(
       company: company,
       offset: offset,

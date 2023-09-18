@@ -20,53 +20,53 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class RecurringInvoiceListItem extends StatelessWidget {
   const RecurringInvoiceListItem({
-    @required this.invoice,
+    required this.invoice,
     this.filter,
     this.showCheckbox = true,
   });
 
-  final InvoiceEntity invoice;
-  final String filter;
+  final InvoiceEntity? invoice;
+  final String? filter;
   final bool showCheckbox;
 
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final client = state.clientState.get(invoice.clientId);
+    final client = state.clientState.get(invoice!.clientId);
     final uiState = state.uiState;
     final invoiceUIState = uiState.recurringInvoiceUIState;
-    final listUIState = state.getUIState(invoice.entityType).listUIState;
+    final listUIState = state.getUIState(invoice!.entityType)!.listUIState;
     final isInMultiselect = showCheckbox && listUIState.isInMultiselect();
-    final isChecked = isInMultiselect && listUIState.isSelected(invoice.id);
+    final isChecked = isInMultiselect && listUIState.isSelected(invoice!.id);
     final textStyle = TextStyle(fontSize: 16);
-    final localization = AppLocalization.of(context);
-    final filterMatch = filter != null && filter.isNotEmpty
-        ? (invoice.matchesFilterValue(filter) ??
-            client.matchesFilterValue(filter))
+    final localization = AppLocalization.of(context)!;
+    final filterMatch = filter != null && filter!.isNotEmpty
+        ? (invoice!.matchesFilterValue(filter) ??
+            client!.matchesFilterValue(filter))
         : null;
 
     final statusLabel = localization
-        .lookup(kRecurringInvoiceStatuses[invoice.calculatedStatusId]);
+        .lookup(kRecurringInvoiceStatuses[invoice!.calculatedStatusId]);
     final statusColor =
         RecurringInvoiceStatusColors(state.prefState.colorThemeModel)
-            .colors[invoice.calculatedStatusId];
-    final textColor = Theme.of(context).textTheme.bodyLarge.color;
+            .colors[invoice!.calculatedStatusId];
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
     String subtitle = '';
-    if (invoice.nextSendDate.isNotEmpty) {
-      subtitle += formatDate(invoice.nextSendDate, context);
+    if (invoice!.nextSendDate.isNotEmpty) {
+      subtitle += formatDate(invoice!.nextSendDate, context);
     }
     if (subtitle.isNotEmpty) {
       subtitle += ' • ';
     }
-    subtitle += localization.lookup(kFrequencies[invoice.frequencyId]);
+    subtitle += localization.lookup(kFrequencies[invoice!.frequencyId])!;
 
     return DismissibleEntity(
         isSelected: isDesktop(context) &&
-            invoice.id ==
+            invoice!.id ==
                 (uiState.isEditing
-                    ? invoiceUIState.editing.id
+                    ? invoiceUIState.editing!.id
                     : invoiceUIState.selectedId),
         showMultiselect: showCheckbox,
         userCompany: state.userCompany,
@@ -76,11 +76,11 @@ class RecurringInvoiceListItem extends StatelessWidget {
           return constraints.maxWidth > kTableListWidthCutoff
               ? InkWell(
                   onTap: () => selectEntity(
-                    entity: invoice,
+                    entity: invoice!,
                     forceView: !showCheckbox,
                   ),
                   onLongPress: () =>
-                      selectEntity(entity: invoice, longPress: true),
+                      selectEntity(entity: invoice!, longPress: true),
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 10,
@@ -106,7 +106,7 @@ class RecurringInvoiceListItem extends StatelessWidget {
                                     ),
                                   )
                                 : ActionMenuButton(
-                                    entityActions: invoice.getActions(
+                                    entityActions: invoice!.getActions(
                                       userCompany: state.userCompany,
                                       client: client,
                                       includeEdit: true,
@@ -122,13 +122,13 @@ class RecurringInvoiceListItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                (invoice.number ?? '').isEmpty
+                                (invoice!.number ?? '').isEmpty
                                     ? localization.pending
-                                    : invoice.number,
+                                    : invoice!.number,
                                 style: textStyle,
                                 overflow: TextOverflow.ellipsis,
                               ),
-                              if (!invoice.isActive) EntityStateLabel(invoice)
+                              if (!invoice!.isActive) EntityStateLabel(invoice)
                             ],
                           ),
                         ),
@@ -138,8 +138,8 @@ class RecurringInvoiceListItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                  client.displayName +
-                                      (invoice.documents.isNotEmpty
+                                  client!.displayName +
+                                      (invoice!.documents.isNotEmpty
                                           ? '  📎'
                                           : ''),
                                   style: textStyle),
@@ -149,9 +149,9 @@ class RecurringInvoiceListItem extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .titleSmall
+                                    .titleSmall!
                                     .copyWith(
-                                      color: textColor
+                                      color: textColor!
                                           .withOpacity(kLighterOpacity),
                                     ),
                               ),
@@ -160,8 +160,8 @@ class RecurringInvoiceListItem extends StatelessWidget {
                         ),
                         SizedBox(width: 10),
                         Text(
-                          formatNumber(invoice.amount, context,
-                              clientId: client.id),
+                          formatNumber(invoice!.amount, context,
+                              clientId: client.id)!,
                           style: textStyle,
                           textAlign: TextAlign.end,
                         ),
@@ -173,9 +173,9 @@ class RecurringInvoiceListItem extends StatelessWidget {
                 )
               : ListTile(
                   onTap: () =>
-                      selectEntity(entity: invoice, forceView: !showCheckbox),
+                      selectEntity(entity: invoice!, forceView: !showCheckbox),
                   onLongPress: () =>
-                      selectEntity(entity: invoice, longPress: true),
+                      selectEntity(entity: invoice!, longPress: true),
                   leading: isInMultiselect
                       ? IgnorePointer(
                           ignoring: listUIState.isInMultiselect(),
@@ -195,15 +195,15 @@ class RecurringInvoiceListItem extends StatelessWidget {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            client.displayName,
+                            client!.displayName,
                             style: Theme.of(context).textTheme.titleMedium,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         SizedBox(width: 4),
                         Text(
-                            formatNumber(invoice.amount, context,
-                                clientId: invoice.clientId),
+                            formatNumber(invoice!.amount, context,
+                                clientId: invoice!.clientId)!,
                             style: Theme.of(context).textTheme.titleMedium),
                       ],
                     ),
@@ -216,15 +216,15 @@ class RecurringInvoiceListItem extends StatelessWidget {
                           Expanded(
                             child: filterMatch == null
                                 ? Text(
-                                    (((invoice.number ?? '').isEmpty
+                                    (((invoice!.number ?? '').isEmpty
                                                 ? localization.pending
-                                                : invoice.number) +
-                                            (invoice.nextSendDate.isNotEmpty
+                                                : invoice!.number) +
+                                            (invoice!.nextSendDate.isNotEmpty
                                                 ? ' • '
                                                 : '') +
                                             formatDate(
-                                                invoice.nextSendDate, context) +
-                                            (invoice.documents.isNotEmpty
+                                                invoice!.nextSendDate, context) +
+                                            (invoice!.documents.isNotEmpty
                                                 ? '  📎'
                                                 : ''))
                                         .trim(),
@@ -235,10 +235,10 @@ class RecurringInvoiceListItem extends StatelessWidget {
                                     overflow: TextOverflow.ellipsis,
                                   ),
                           ),
-                          Text(statusLabel,
+                          Text(statusLabel!,
                               style: TextStyle(
                                 color:
-                                    !invoice.isSent ? textColor : statusColor,
+                                    !invoice!.isSent ? textColor : statusColor,
                               )),
                         ],
                       ),

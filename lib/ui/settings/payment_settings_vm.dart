@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentsSettingsScreen extends StatelessWidget {
-  const PaymentsSettingsScreen({Key key}) : super(key: key);
+  const PaymentsSettingsScreen({Key? key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsPaymentSettings';
 
   @override
@@ -42,13 +42,13 @@ class PaymentsSettingsScreen extends StatelessWidget {
 
 class PaymentSettingsVM {
   PaymentSettingsVM({
-    @required this.state,
-    @required this.company,
-    @required this.onCompanyChanged,
-    @required this.onSavePressed,
-    @required this.onSettingsChanged,
-    @required this.settings,
-    @required this.onConfigureGatewaysPressed,
+    required this.state,
+    required this.company,
+    required this.onCompanyChanged,
+    required this.onSavePressed,
+    required this.onSettingsChanged,
+    required this.settings,
+    required this.onConfigureGatewaysPressed,
   });
 
   static PaymentSettingsVM fromStore(Store<AppState> store) {
@@ -68,19 +68,19 @@ class PaymentSettingsVM {
           switch (settingsUIState.entityType) {
             case EntityType.company:
               final completer = snackBarCompleter<Null>(
-                  context, AppLocalization.of(context).savedSettings);
+                  context, AppLocalization.of(context)!.savedSettings);
               store.dispatch(SaveCompanyRequest(
                   completer: completer, company: settingsUIState.company));
               break;
             case EntityType.group:
               final completer = snackBarCompleter<GroupEntity>(
-                  context, AppLocalization.of(context).savedSettings);
+                  context, AppLocalization.of(context)!.savedSettings);
               store.dispatch(SaveGroupRequest(
                   completer: completer, group: settingsUIState.group));
               break;
             case EntityType.client:
               final completer = snackBarCompleter<ClientEntity>(
-                  context, AppLocalization.of(context).savedSettings);
+                  context, AppLocalization.of(context)!.savedSettings);
               store.dispatch(SaveClientRequest(
                   completer: completer, client: settingsUIState.client));
               break;

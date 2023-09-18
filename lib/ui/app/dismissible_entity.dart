@@ -15,16 +15,16 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DismissibleEntity extends StatelessWidget {
   const DismissibleEntity({
-    @required this.userCompany,
-    @required this.entity,
-    @required this.child,
-    @required this.isSelected,
+    required this.userCompany,
+    required this.entity,
+    required this.child,
+    required this.isSelected,
     this.showMultiselect = true,
     this.isDismissible = true,
   });
 
-  final UserCompanyEntity userCompany;
-  final BaseEntity entity;
+  final UserCompanyEntity? userCompany;
+  final BaseEntity? entity;
   final Widget child;
   final bool isSelected;
   final bool showMultiselect;
@@ -32,14 +32,14 @@ class DismissibleEntity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (!userCompany.canEditEntity(entity)) {
+    if (!userCompany!.canEditEntity(entity)) {
       return child;
     }
 
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final isMultiselect =
-        store.state.getListState(entity.entityType).isInMultiselect();
+        store.state.getListState(entity!.entityType).isInMultiselect();
 
     final widget = SelectedIndicator(
       isSelected: isDesktop(context) &&
@@ -47,7 +47,7 @@ class DismissibleEntity extends StatelessWidget {
           showMultiselect &&
           isDismissible &&
           !isMultiselect &&
-          !entity.entityType.isSetting,
+          !entity!.entityType!.isSetting,
       child: ConstrainedBox(
         constraints: BoxConstraints(
           minHeight: 60,
@@ -61,7 +61,7 @@ class DismissibleEntity extends StatelessWidget {
     }
 
     return Slidable(
-      key: Key('__${entity.entityKey}_${entity.entityState}__'),
+      key: Key('__${entity!.entityKey}_${entity!.entityState}__'),
       startActionPane: ActionPane(
         motion: const DrawerMotion(),
         children: [
@@ -70,12 +70,12 @@ class DismissibleEntity extends StatelessWidget {
               onPressed: (context) =>
                   handleEntityAction(entity, EntityAction.toggleMultiselect),
               icon: Icons.check_box,
-              label: localization.select,
+              label: localization!.select,
               backgroundColor: Colors.teal,
               foregroundColor: Colors.white,
             ),
           SlidableAction(
-            label: localization.more,
+            label: localization!.more,
             backgroundColor: Colors.black45,
             foregroundColor: Colors.white,
             icon: Icons.more_vert,
@@ -84,11 +84,11 @@ class DismissibleEntity extends StatelessWidget {
           ),
         ],
       ),
-      endActionPane: entity.isDeletable
+      endActionPane: entity!.isDeletable
           ? ActionPane(
               motion: const DrawerMotion(),
               children: [
-                if (entity.isActive)
+                if (entity!.isActive)
                   SlidableAction(
                     label: localization.archive,
                     backgroundColor: Colors.orange,
@@ -97,7 +97,7 @@ class DismissibleEntity extends StatelessWidget {
                     onPressed: (context) =>
                         handleEntityAction(entity, EntityAction.archive),
                   )
-                else if (entity.isRestorable)
+                else if (entity!.isRestorable)
                   SlidableAction(
                     label: localization.restore,
                     backgroundColor: Colors.blue,
@@ -106,7 +106,7 @@ class DismissibleEntity extends StatelessWidget {
                     onPressed: (context) =>
                         handleEntityAction(entity, EntityAction.restore),
                   ),
-                if (!entity.isDeleted)
+                if (!entity!.isDeleted!)
                   SlidableAction(
                     label: localization.delete,
                     backgroundColor: Colors.red,

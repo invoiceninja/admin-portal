@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:memoize/memoize.dart';
@@ -37,18 +38,18 @@ enum ProfitAndLossReportFields {
 }
 
 var memoizedProfitAndLossReport = memo9((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, PaymentEntity> paymentMap,
-  BuiltMap<String, ExpenseEntity> expenseMap,
-  BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String?, PaymentEntity?> paymentMap,
+  BuiltMap<String?, ExpenseEntity?> expenseMap,
+  BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
+  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String?, UserEntity?> userMap,
   StaticState staticState,
 ) =>
     profitAndLossReport(
-      userCompany,
+      userCompany!,
       reportsUIState,
       clientMap,
       paymentMap,
@@ -62,12 +63,12 @@ var memoizedProfitAndLossReport = memo9((
 ReportResult profitAndLossReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, PaymentEntity> paymentMap,
-  BuiltMap<String, ExpenseEntity> expenseMap,
-  BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String?, PaymentEntity?> paymentMap,
+  BuiltMap<String?, ExpenseEntity?> expenseMap,
+  BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
+  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String?, UserEntity?> userMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -76,7 +77,7 @@ ReportResult profitAndLossReport(
   final reportSettings = userCompany.settings?.reportSettings;
   final profitAndLossReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportProfitAndLoss)
-          ? reportSettings[kReportProfitAndLoss]
+          ? reportSettings[kReportProfitAndLoss]!
           : ReportSettingsEntity();
 
   final defaultColumns = [
@@ -92,18 +93,18 @@ ReportResult profitAndLossReport(
   if (profitAndLossReportSettings.columns.isNotEmpty) {
     columns = BuiltList(profitAndLossReportSettings.columns
         .map((e) => EnumUtils.fromString(ProfitAndLossReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
   }
 
   for (var paymentId in paymentMap.keys) {
-    final payment = paymentMap[paymentId];
+    final payment = paymentMap[paymentId]!;
     final client = clientMap[payment.clientId] ?? ClientEntity();
     final vendor = vendorMap[payment.vendorId] ?? VendorEntity();
 
-    bool skip = payment.isDeleted || client.isDeleted;
+    bool skip = payment.isDeleted! || client.isDeleted!;
     final List<ReportElement> row = [];
 
     for (var column in columns) {
@@ -111,7 +112,7 @@ ReportResult profitAndLossReport(
 
       switch (column) {
         case ProfitAndLossReportFields.type:
-          value = AppLocalization.of(navigatorKey.currentContext).payment;
+          value = AppLocalization.of(navigatorKey.currentContext!)!.payment;
           break;
         case ProfitAndLossReportFields.client:
           value = client?.displayName;
@@ -168,7 +169,7 @@ ReportResult profitAndLossReport(
           value = '';
           break;
         case ProfitAndLossReportFields.currency:
-          value = staticState.currencyMap[client.currencyId].name;
+          value = staticState.currencyMap[client.currencyId]!.name;
           break;
         case ProfitAndLossReportFields.transaction_reference:
           value = payment.transactionReference;
@@ -179,8 +180,8 @@ ReportResult profitAndLossReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column),
-      )) {
+        column: EnumUtils.parse(column)!,
+      )!) {
         skip = true;
       }
 
@@ -202,11 +203,11 @@ ReportResult profitAndLossReport(
   }
 
   for (var expenseId in expenseMap.keys) {
-    final expense = expenseMap[expenseId];
+    final expense = expenseMap[expenseId]!;
     final client = clientMap[expense.clientId] ?? ClientEntity();
     final vendor = vendorMap[expense.vendorId] ?? VendorEntity();
 
-    bool skip = expense.isDeleted || (client?.isDeleted ?? false);
+    bool skip = expense.isDeleted! || (client?.isDeleted ?? false);
     final List<ReportElement> row = [];
 
     for (var column in columns) {
@@ -214,7 +215,7 @@ ReportResult profitAndLossReport(
 
       switch (column) {
         case ProfitAndLossReportFields.type:
-          value = AppLocalization.of(navigatorKey.currentContext).expense;
+          value = AppLocalization.of(navigatorKey.currentContext!)!.expense;
           break;
         case ProfitAndLossReportFields.client:
           value = client?.displayName;
@@ -271,7 +272,7 @@ ReportResult profitAndLossReport(
           value = expenseCategoryMap[expense.categoryId]?.name ?? '';
           break;
         case ProfitAndLossReportFields.currency:
-          value = staticState.currencyMap[expense.currencyId].name;
+          value = staticState.currencyMap[expense.currencyId]!.name;
           break;
         case ProfitAndLossReportFields.transaction_reference:
           value = expense.transactionReference;
@@ -282,8 +283,8 @@ ReportResult profitAndLossReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column),
-      )) {
+        column: EnumUtils.parse(column)!,
+      )!) {
         skip = true;
       }
 
@@ -306,7 +307,7 @@ ReportResult profitAndLossReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) => sortReportTableRows(
-      rowA, rowB, profitAndLossReportSettings, selectedColumns));
+      rowA, rowB, profitAndLossReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns: ProfitAndLossReportFields.values

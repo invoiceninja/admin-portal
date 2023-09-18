@@ -71,15 +71,15 @@ class TransactionFields {
 abstract class TransactionEntity extends Object
     with BaseEntity
     implements Built<TransactionEntity, TransactionEntityBuilder> {
-  factory TransactionEntity({String id, AppState state}) {
+  factory TransactionEntity({String? id, AppState? state}) {
     String bankAccountId = '';
     if (state != null) {
       final bankAccounts = state.bankAccountState.list
           .map((bankAccountId) => state.bankAccountState.map[bankAccountId])
-          .where((bankAccount) => !bankAccount.isDeleted)
+          .where((bankAccount) => !bankAccount!.isDeleted!)
           .toList();
       if (bankAccounts.length == 1) {
-        bankAccountId = bankAccounts.first.id;
+        bankAccountId = bankAccounts.first!.id;
       }
     }
 
@@ -161,17 +161,14 @@ abstract class TransactionEntity extends Object
   @BuiltValueField(wireName: 'bank_transaction_rule_id')
   String get transactionRuleId;
 
-  @nullable
   @BuiltValueField(serialize: false)
-  String get pendingVendorId;
+  String? get pendingVendorId;
 
-  @nullable
   @BuiltValueField(serialize: false)
-  String get pendingCategoryId;
+  String? get pendingCategoryId;
 
-  @nullable
   @BuiltValueField(serialize: false)
-  String get pendingExpenseId;
+  String? get pendingExpenseId;
 
   @override
   EntityType get entityType => EntityType.transaction;
@@ -189,14 +186,14 @@ abstract class TransactionEntity extends Object
   bool get isConverted => statusId == kTransactionStatusConverted;
 
   @override
-  List<EntityAction> getActions(
-      {UserCompanyEntity userCompany,
-      ClientEntity client,
+  List<EntityAction?> getActions(
+      {UserCompanyEntity? userCompany,
+      ClientEntity? client,
       bool includeEdit = false,
       bool multiselect = false}) {
-    final actions = <EntityAction>[];
+    final actions = <EntityAction?>[];
 
-    if (!isDeleted && userCompany.canEditEntity(this)) {
+    if (!isDeleted! && userCompany!.canEditEntity(this)) {
       if (!multiselect && includeEdit) {
         actions.add(EntityAction.edit);
       }
@@ -218,14 +215,14 @@ abstract class TransactionEntity extends Object
   }
 
   int compareTo(
-    TransactionEntity transaction,
+    TransactionEntity? transaction,
     String sortField,
     bool sortAscending,
-    BuiltMap<String, VendorEntity> vendorMap,
-    BuiltMap<String, InvoiceEntity> invoiceMap,
-    BuiltMap<String, ExpenseEntity> expenseMap,
-    BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
-    BuiltMap<String, BankAccountEntity> bankAccountMap,
+    BuiltMap<String?, VendorEntity?> vendorMap,
+    BuiltMap<String?, InvoiceEntity?> invoiceMap,
+    BuiltMap<String?, ExpenseEntity?> expenseMap,
+    BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
+    BuiltMap<String?, BankAccountEntity?> bankAccountMap,
   ) {
     int response = 0;
     final transactionA = sortAscending ? this : transaction;
@@ -233,60 +230,60 @@ abstract class TransactionEntity extends Object
 
     switch (sortField) {
       case TransactionFields.description:
-        response = transactionA.description
+        response = transactionA!.description
             .toLowerCase()
-            .compareTo(transactionB.description.toLowerCase());
+            .compareTo(transactionB!.description.toLowerCase());
         break;
       case TransactionFields.deposit:
       case TransactionFields.withdrawal:
       case TransactionFields.amount:
-        response = transactionA.amount.compareTo(transactionB.amount);
+        response = transactionA!.amount.compareTo(transactionB!.amount);
         break;
       case TransactionFields.status:
-        response = transactionA.statusId.compareTo(transactionB.statusId);
+        response = transactionA!.statusId.compareTo(transactionB!.statusId);
         break;
       case TransactionFields.date:
-        response = transactionA.date.compareTo(transactionB.date);
+        response = transactionA!.date.compareTo(transactionB!.date);
         break;
       case TransactionFields.defaultCategory:
-        response = transactionA.category
+        response = transactionA!.category
             .toLowerCase()
-            .compareTo(transactionB.category.toLowerCase());
+            .compareTo(transactionB!.category.toLowerCase());
         break;
       case TransactionFields.accountType:
         final bankAccountA =
-            bankAccountMap[transactionA.bankAccountId] ?? BankAccountEntity();
+            bankAccountMap[transactionA!.bankAccountId] ?? BankAccountEntity();
         final bankAccountB =
-            bankAccountMap[transactionB.bankAccountId] ?? BankAccountEntity();
+            bankAccountMap[transactionB!.bankAccountId] ?? BankAccountEntity();
         response = bankAccountA.type.compareTo(bankAccountB.type);
         break;
       case TransactionFields.invoices:
         final invoiceA =
-            invoiceMap[transactionA.firstInvoiceId] ?? InvoiceEntity();
+            invoiceMap[transactionA!.firstInvoiceId] ?? InvoiceEntity();
         final invoiceB =
-            invoiceMap[transactionB.firstInvoiceId] ?? InvoiceEntity();
+            invoiceMap[transactionB!.firstInvoiceId] ?? InvoiceEntity();
         response = invoiceA.listDisplayName
             .toLowerCase()
             .compareTo(invoiceB.listDisplayName.toLowerCase());
         break;
       case TransactionFields.expense:
-        final expenseA = expenseMap[transactionA.expenseId] ?? ExpenseEntity();
-        final expenseB = expenseMap[transactionB.expenseId] ?? ExpenseEntity();
+        final expenseA = expenseMap[transactionA!.expenseId] ?? ExpenseEntity();
+        final expenseB = expenseMap[transactionB!.expenseId] ?? ExpenseEntity();
         response = expenseA.listDisplayName
             .toLowerCase()
             .compareTo(expenseB.listDisplayName.toLowerCase());
         break;
       case TransactionFields.vendor:
-        final vendorA = vendorMap[transactionA.vendorId] ?? VendorEntity();
-        final vendorB = vendorMap[transactionB.vendorId] ?? VendorEntity();
+        final vendorA = vendorMap[transactionA!.vendorId] ?? VendorEntity();
+        final vendorB = vendorMap[transactionB!.vendorId] ?? VendorEntity();
         response = vendorA.listDisplayName
             .toLowerCase()
             .compareTo(vendorB.listDisplayName.toLowerCase());
         break;
       case TransactionFields.category:
-        final categoryA = expenseCategoryMap[transactionA.categoryId] ??
+        final categoryA = expenseCategoryMap[transactionA!.categoryId] ??
             ExpenseCategoryEntity();
-        final categoryB = expenseCategoryMap[transactionB.categoryId] ??
+        final categoryB = expenseCategoryMap[transactionB!.categoryId] ??
             ExpenseCategoryEntity();
         response = categoryA.listDisplayName
             .toLowerCase()
@@ -294,9 +291,9 @@ abstract class TransactionEntity extends Object
         break;
       case TransactionFields.bankAccount:
         final bankAccountA =
-            bankAccountMap[transactionA.bankAccountId] ?? BankAccountEntity();
+            bankAccountMap[transactionA!.bankAccountId] ?? BankAccountEntity();
         final bankAccountB =
-            bankAccountMap[transactionB.bankAccountId] ?? BankAccountEntity();
+            bankAccountMap[transactionB!.bankAccountId] ?? BankAccountEntity();
         response = bankAccountA.listDisplayName
             .toLowerCase()
             .compareTo(bankAccountB.listDisplayName.toLowerCase());
@@ -308,7 +305,7 @@ abstract class TransactionEntity extends Object
 
     if (response == 0) {
       // STARTER: sort default - do not remove comment
-      return transactionA.transactionId.compareTo(transactionB.transactionId);
+      return transactionA!.transactionId.compareTo(transactionB!.transactionId);
     } else {
       return response;
     }
@@ -336,7 +333,7 @@ abstract class TransactionEntity extends Object
   }
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     return matchesStrings(
       haystacks: [
         category,
@@ -347,7 +344,7 @@ abstract class TransactionEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     return matchesStringsValue(
       haystacks: [
         category,
@@ -357,7 +354,7 @@ abstract class TransactionEntity extends Object
     );
   }
 
-  String get firstInvoiceId {
+  String? get firstInvoiceId {
     if (invoiceIds.isEmpty) {
       return null;
     }
@@ -366,11 +363,11 @@ abstract class TransactionEntity extends Object
   }
 
   @override
-  String get listDisplayName {
+  String? get listDisplayName {
     if (description.isNotEmpty) {
       return description.split('\n').first;
     } else {
-      return AppLocalization.of(navigatorKey.currentContext).transaction;
+      return AppLocalization.of(navigatorKey.currentContext!)!.transaction;
     }
   }
 

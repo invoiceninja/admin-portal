@@ -24,9 +24,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentView extends StatefulWidget {
   const PaymentView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final PaymentViewVM viewModel;
@@ -48,13 +48,13 @@ class _PaymentViewState extends State<PaymentView> {
     final localization = AppLocalization.of(context);
 
     final companyGateway =
-        state.companyGatewayState.get(payment.companyGatewayId);
+        state.companyGatewayState.get(payment.companyGatewayId)!;
     final companyGatewayLink = GatewayEntity.getPaymentUrl(
       gatewayId: companyGateway.gatewayId,
       transactionReference: payment.transactionReference,
     );
 
-    final fields = <String, String>{};
+    final fields = <String, String?>{};
     /*
     fields[PaymentFields.paymentStatusId] =
         localization.lookup('payment_status_${payment.statusId}');
@@ -93,7 +93,7 @@ class _PaymentViewState extends State<PaymentView> {
                         statusColor:
                             PaymentStatusColors(state.prefState.colorThemeModel)
                                 .colors[payment.statusId],
-                        statusLabel: localization
+                        statusLabel: localization!
                             .lookup('payment_status_${payment.statusId}'),
                         label: localization.amount,
                         value: formatNumber(
@@ -107,14 +107,14 @@ class _PaymentViewState extends State<PaymentView> {
                       EntityListTile(
                         isFilter: widget.isFilter,
                         entity: client,
-                        subtitle: client.primaryContact.email,
+                        subtitle: client.primaryContact!.email,
                       ),
                       for (final paymentable in payment.invoicePaymentables)
                         EntityListTile(
                           isFilter: widget.isFilter,
                           entity: state.invoiceState.map[paymentable.invoiceId],
                           subtitle: formatNumber(paymentable.amount, context,
-                                  clientId: payment.clientId) +
+                                  clientId: payment.clientId)! +
                               ' • ' +
                               formatDate(
                                   convertTimestampToDateString(
@@ -126,7 +126,7 @@ class _PaymentViewState extends State<PaymentView> {
                           isFilter: widget.isFilter,
                           entity: state.creditState.map[paymentable.creditId],
                           subtitle: formatNumber(paymentable.amount, context,
-                                  clientId: payment.clientId) +
+                                  clientId: payment.clientId)! +
                               ' • ' +
                               formatDate(
                                   convertTimestampToDateString(
@@ -181,10 +181,10 @@ class _PaymentViewState extends State<PaymentView> {
                 ),
                 BottomButtons(
                   entity: payment,
-                  action1: state.company.enableApplyingPayments
+                  action1: state.company!.enableApplyingPayments
                       ? EntityAction.applyPayment
                       : EntityAction.sendEmail,
-                  action1Enabled: state.company.enableApplyingPayments
+                  action1Enabled: state.company!.enableApplyingPayments
                       ? payment.applied < payment.amount &&
                           memoizedHasActiveUnpaidInvoices(
                             payment.clientId,

@@ -33,8 +33,8 @@ import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class DeviceSettings extends StatefulWidget {
   const DeviceSettings({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final DeviceSettingsVM viewModel;
@@ -48,8 +48,8 @@ class _DeviceSettingsState extends State<DeviceSettings>
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_deviceSettings');
 
-  TabController _controller;
-  FocusScopeNode _focusNode;
+  TabController? _controller;
+  FocusScopeNode? _focusNode;
 
   @override
   void initState() {
@@ -58,25 +58,25 @@ class _DeviceSettingsState extends State<DeviceSettings>
     _focusNode = FocusScopeNode();
     _controller = TabController(
         vsync: this, length: 2, initialIndex: settingsUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller!.index));
   }
 
   @override
   void dispose() {
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
-    _focusNode.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
+    _focusNode!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final prefState = state.prefState;
@@ -190,8 +190,8 @@ class _DeviceSettingsState extends State<DeviceSettings>
                 FormCard(
                   children: [
                     SwitchListTile(
-                      title: Text(localization.showPdfPreview),
-                      subtitle: Text(localization.showPdfPreviewHelp),
+                      title: Text(localization.showPdfPreview!),
+                      subtitle: Text(localization.showPdfPreviewHelp!),
                       value: prefState.showPdfPreview,
                       onChanged: (value) =>
                           viewModel.onShowPdfChanged(context, value),
@@ -200,8 +200,8 @@ class _DeviceSettingsState extends State<DeviceSettings>
                     ),
                     if (kIsWeb || !kReleaseMode)
                       SwitchListTile(
-                        title: Text(localization.browserPdfViewer),
-                        subtitle: Text(localization.browserPdfViewerHelp),
+                        title: Text(localization.browserPdfViewer!),
+                        subtitle: Text(localization.browserPdfViewerHelp!),
                         value: prefState.enableNativeBrowser,
                         onChanged: (value) => viewModel
                             .onEnableNativeBrowserChanged(context, value),
@@ -229,23 +229,23 @@ class _DeviceSettingsState extends State<DeviceSettings>
                         value: prefState.textScaleFactor,
                         onChanged: (dynamic value) {
                           viewModel.onTextScaleFactorChanged(context, value);
-                          AppBuilder.of(context).rebuild();
+                          AppBuilder.of(context)!.rebuild();
                         },
                         items: [
                           DropdownMenuItem(
-                            child: Text(localization.small),
+                            child: Text(localization.small!),
                             value: PrefState.TEXT_SCALING_SMALL,
                           ),
                           DropdownMenuItem(
-                            child: Text(localization.normal),
+                            child: Text(localization.normal!),
                             value: PrefState.TEXT_SCALING_NORMAL,
                           ),
                           DropdownMenuItem(
-                            child: Text(localization.large),
+                            child: Text(localization.large!),
                             value: PrefState.TEXT_SCALING_LARGE,
                           ),
                           DropdownMenuItem(
-                            child: Text(localization.extraLarge),
+                            child: Text(localization.extraLarge!),
                             value: PrefState.TEXT_SCALING_EXTRA_LARGE,
                           ),
                         ]),
@@ -270,8 +270,8 @@ class _DeviceSettingsState extends State<DeviceSettings>
                     },
                   ),
                   SwitchListTile(
-                    title: Text(localization.enableFlexibleSearch),
-                    subtitle: Text(localization.enableFlexibleSearchHelp),
+                    title: Text(localization.enableFlexibleSearch!),
+                    subtitle: Text(localization.enableFlexibleSearchHelp!),
                     value: prefState.enableFlexibleSearch,
                     onChanged: (value) =>
                         viewModel.onEnableFlexibleSearchChanged(context, value),
@@ -280,8 +280,8 @@ class _DeviceSettingsState extends State<DeviceSettings>
                   ),
                   if (isDesktop(context)) ...[
                     SwitchListTile(
-                      title: Text(localization.enableTouchEvents),
-                      subtitle: Text(localization.enableTouchEventsHelp),
+                      title: Text(localization.enableTouchEvents!),
+                      subtitle: Text(localization.enableTouchEventsHelp!),
                       value: prefState.enableTouchEvents,
                       onChanged: (value) =>
                           viewModel.onEnableTouchEventsChanged(context, value),
@@ -289,8 +289,8 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       secondary: Icon(Icons.touch_app),
                     ),
                     SwitchListTile(
-                      title: Text(localization.enableTooltips),
-                      subtitle: Text(localization.enableTooltipsHelp),
+                      title: Text(localization.enableTooltips!),
+                      subtitle: Text(localization.enableTooltipsHelp!),
                       value: prefState.enableTooltips,
                       onChanged: (value) =>
                           viewModel.onEnableTooltipsChanged(context, value),
@@ -299,8 +299,8 @@ class _DeviceSettingsState extends State<DeviceSettings>
                     ),
                   ],
                   SwitchListTile(
-                    title: Text(localization.cacheData),
-                    subtitle: Text(localization.persistDataHelp),
+                    title: Text(localization.cacheData!),
+                    subtitle: Text(localization.persistDataHelp!),
                     value: prefState.persistData,
                     onChanged: (value) =>
                         viewModel.onPersistDataChanged(context, value),
@@ -321,7 +321,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                           return '';
                         }
 
-                        return localization.lastUpdated +
+                        return localization.lastUpdated! +
                             ': ' +
                             timeago.format(
                                 convertTimestampToDate(
@@ -336,7 +336,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                   }),
                   ListTile(
                     leading: Icon(Icons.logout),
-                    title: Text(localization.endAllSessions),
+                    title: Text(localization.endAllSessions!),
                     /*
                     subtitle: Text(countSessions == 1
                         ? localization.countSession
@@ -397,31 +397,31 @@ class _DeviceSettingsState extends State<DeviceSettings>
                                   ),
                                   Expanded(
                                     child: Container(
-                                      color: colorThemesMap[key].colorInfo,
+                                      color: colorThemesMap[key]!.colorInfo,
                                       height: 50,
                                     ),
                                   ),
                                   Expanded(
                                     child: Container(
-                                      color: colorThemesMap[key].colorPrimary,
+                                      color: colorThemesMap[key]!.colorPrimary,
                                       height: 50,
                                     ),
                                   ),
                                   Expanded(
                                     child: Container(
-                                      color: colorThemesMap[key].colorSuccess,
+                                      color: colorThemesMap[key]!.colorSuccess,
                                       height: 50,
                                     ),
                                   ),
                                   Expanded(
                                     child: Container(
-                                      color: colorThemesMap[key].colorWarning,
+                                      color: colorThemesMap[key]!.colorWarning,
                                       height: 50,
                                     ),
                                   ),
                                   Expanded(
                                     child: Container(
-                                      color: colorThemesMap[key].colorDanger,
+                                      color: colorThemesMap[key]!.colorDanger,
                                       height: 50,
                                     ),
                                   ),
@@ -479,11 +479,11 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       },
                       items: [
                         DropdownMenuItem(
-                            child: Text(localization.clearAll),
+                            child: Text(localization.clearAll!),
                             value: 'clear_all'),
                         if (!state.prefState.enableDarkMode)
                           DropdownMenuItem(
-                              child: Text(localization.contrast),
+                              child: Text(localization.contrast!),
                               value: 'contrast'),
                       ]),
                   ...PrefState.THEME_COLORS
@@ -516,7 +516,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                             showToast(localization.copiedToClipboard
                                 .replaceFirst(':value', colors.join(',')));
                           },
-                          child: Text(localization.exportColors.toUpperCase()),
+                          child: Text(localization.exportColors!.toUpperCase()),
                         ),
                       ),
                       SizedBox(width: kTableColumnGap),
@@ -539,7 +539,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                               title: localization.importColors,
                             );
                           },
-                          child: Text(localization.importColors.toUpperCase()),
+                          child: Text(localization.importColors!.toUpperCase()),
                         ),
                       ),
                     ],

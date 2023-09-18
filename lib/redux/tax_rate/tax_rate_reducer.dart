@@ -14,59 +14,59 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 EntityUIState taxRateUIReducer(TaxRateUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(taxRateListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
+    ..editing.replace(editingReducer(state.editing, action)!)
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
 
-final forceSelectedReducer = combineReducers<bool>([
-  TypedReducer<bool, ViewTaxRate>((completer, action) => true),
-  TypedReducer<bool, ViewTaxRateList>((completer, action) => false),
-  TypedReducer<bool, FilterTaxRatesByState>((completer, action) => false),
-  TypedReducer<bool, FilterTaxRates>((completer, action) => false),
+final forceSelectedReducer = combineReducers<bool?>([
+  TypedReducer<bool?, ViewTaxRate>((completer, action) => true),
+  TypedReducer<bool?, ViewTaxRateList>((completer, action) => false),
+  TypedReducer<bool?, FilterTaxRatesByState>((completer, action) => false),
+  TypedReducer<bool?, FilterTaxRates>((completer, action) => false),
 ]);
 
-Reducer<String> selectedIdReducer = combineReducers([
-  TypedReducer<String, ArchiveTaxRatesSuccess>((completer, action) => ''),
-  TypedReducer<String, DeleteTaxRatesSuccess>((completer, action) => ''),
-  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+Reducer<String?> selectedIdReducer = combineReducers([
+  TypedReducer<String?, ArchiveTaxRatesSuccess>((completer, action) => ''),
+  TypedReducer<String?, DeleteTaxRatesSuccess>((completer, action) => ''),
+  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.taxRate ? action.entityId : selectedId),
-  TypedReducer<String, ViewTaxRate>(
-      (String selectedId, action) => action.taxRateId),
-  TypedReducer<String, AddTaxRateSuccess>(
-      (String selectedId, action) => action.taxRate.id),
-  TypedReducer<String, SelectCompany>(
+  TypedReducer<String?, ViewTaxRate>(
+      (String? selectedId, action) => action.taxRateId),
+  TypedReducer<String?, AddTaxRateSuccess>(
+      (String? selectedId, action) => action.taxRate.id),
+  TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, SortTaxRates>((selectedId, action) => ''),
-  TypedReducer<String, FilterTaxRates>((selectedId, action) => ''),
-  TypedReducer<String, FilterTaxRatesByState>((selectedId, action) => ''),
+  TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String?, SortTaxRates>((selectedId, action) => ''),
+  TypedReducer<String?, FilterTaxRates>((selectedId, action) => ''),
+  TypedReducer<String?, FilterTaxRatesByState>((selectedId, action) => ''),
 ]);
 
-final editingReducer = combineReducers<TaxRateEntity>([
-  TypedReducer<TaxRateEntity, SaveTaxRateSuccess>(_updateEditing),
-  TypedReducer<TaxRateEntity, AddTaxRateSuccess>(_updateEditing),
-  TypedReducer<TaxRateEntity, RestoreTaxRatesSuccess>((taxRates, action) {
+final editingReducer = combineReducers<TaxRateEntity?>([
+  TypedReducer<TaxRateEntity?, SaveTaxRateSuccess>(_updateEditing),
+  TypedReducer<TaxRateEntity?, AddTaxRateSuccess>(_updateEditing),
+  TypedReducer<TaxRateEntity?, RestoreTaxRatesSuccess>((taxRates, action) {
     return action.taxRates[0];
   }),
-  TypedReducer<TaxRateEntity, ArchiveTaxRatesSuccess>((taxRates, action) {
+  TypedReducer<TaxRateEntity?, ArchiveTaxRatesSuccess>((taxRates, action) {
     return action.taxRates[0];
   }),
-  TypedReducer<TaxRateEntity, DeleteTaxRatesSuccess>((taxRates, action) {
+  TypedReducer<TaxRateEntity?, DeleteTaxRatesSuccess>((taxRates, action) {
     return action.taxRates[0];
   }),
-  TypedReducer<TaxRateEntity, EditTaxRate>(_updateEditing),
-  TypedReducer<TaxRateEntity, UpdateTaxRate>((taxRate, action) {
+  TypedReducer<TaxRateEntity?, EditTaxRate>(_updateEditing),
+  TypedReducer<TaxRateEntity?, UpdateTaxRate>((taxRate, action) {
     return action.taxRate.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<TaxRateEntity, DiscardChanges>(_clearEditing),
+  TypedReducer<TaxRateEntity?, DiscardChanges>(_clearEditing),
 ]);
 
-TaxRateEntity _clearEditing(TaxRateEntity taxRate, dynamic action) {
+TaxRateEntity _clearEditing(TaxRateEntity? taxRate, dynamic action) {
   return TaxRateEntity();
 }
 
-TaxRateEntity _updateEditing(TaxRateEntity taxRate, dynamic action) {
+TaxRateEntity? _updateEditing(TaxRateEntity? taxRate, dynamic action) {
   return action.taxRate;
 }
 
@@ -115,7 +115,7 @@ ListUIState _filterTaxRates(
 
 ListUIState _sortTaxRates(ListUIState taxRateListState, SortTaxRates action) {
   return taxRateListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortAscending = b.sortField != action.field || !b.sortAscending!
     ..sortField = action.field);
 }
 
@@ -126,13 +126,13 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState taxRateListState, AddToTaxRateMultiselect action) {
-  return taxRateListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+  return taxRateListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState taxRateListState, RemoveFromTaxRateMultiselect action) {
   return taxRateListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(
@@ -212,7 +212,7 @@ TaxRateState _setLoadedCompany(
     TaxRateState taxRateState, LoadCompanySuccess action) {
   final state = taxRateState.rebuild((b) => b
     ..map.addAll(Map.fromIterable(
-      action.userCompany.company.taxRates,
+      action.userCompany.company!.taxRates,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     )));

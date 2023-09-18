@@ -21,8 +21,8 @@ import 'recurring_invoice_screen_vm.dart';
 
 class RecurringInvoiceScreen extends StatelessWidget {
   const RecurringInvoiceScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/recurring_invoice';
@@ -33,7 +33,7 @@ class RecurringInvoiceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final company = state.company;
+    final company = state.company!;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
 
@@ -41,27 +41,27 @@ class RecurringInvoiceScreen extends StatelessWidget {
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kRecurringInvoiceStatusDraft
-          ..name = localization.draft,
+          ..name = localization!.draft,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kRecurringInvoiceStatusPending
-          ..name = localization.pending,
+          ..name = localization!.pending,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kRecurringInvoiceStatusActive
-          ..name = localization.active,
+          ..name = localization!.active,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kRecurringInvoiceStatusPaused
-          ..name = localization.paused,
+          ..name = localization!.paused,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kRecurringInvoiceStatusCompleted
-          ..name = localization.completed,
+          ..name = localization!.completed,
       ),
     ];
 
@@ -139,7 +139,7 @@ class RecurringInvoiceScreen extends StatelessWidget {
             store.dispatch(FilterRecurringInvoicesByCustom4(value)),
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany.canCreate(EntityType.recurringInvoice)
+              userCompany!.canCreate(EntityType.recurringInvoice)
           ? FloatingActionButton(
               heroTag: 'recurring_invoice_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
@@ -151,7 +151,7 @@ class RecurringInvoiceScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newRecurringInvoice,
+              tooltip: localization!.newRecurringInvoice,
             )
           : null,
     );

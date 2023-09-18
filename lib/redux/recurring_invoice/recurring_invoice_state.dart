@@ -30,9 +30,9 @@ abstract class RecurringInvoiceState
   @memoized
   int get hashCode;
 
-  BuiltMap<String, InvoiceEntity> get map;
+  BuiltMap<String?, InvoiceEntity?> get map;
 
-  InvoiceEntity get(String invoiceId) {
+  InvoiceEntity? get(String invoiceId) {
     if (map.containsKey(invoiceId)) {
       return map[invoiceId];
     } else {
@@ -44,7 +44,7 @@ abstract class RecurringInvoiceState
 
   RecurringInvoiceState loadRecurringInvoices(
       BuiltList<InvoiceEntity> clients) {
-    final map = Map<String, InvoiceEntity>.fromIterable(
+    final map = Map<String?, InvoiceEntity?>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
@@ -62,7 +62,7 @@ abstract class RecurringInvoiceState
 abstract class RecurringInvoiceUIState extends Object
     with EntityUIState
     implements Built<RecurringInvoiceUIState, RecurringInvoiceUIStateBuilder> {
-  factory RecurringInvoiceUIState(PrefStateSortField sortField) {
+  factory RecurringInvoiceUIState(PrefStateSortField? sortField) {
     return _$RecurringInvoiceUIState._(
       listUIState: ListUIState(
           sortField?.field ?? RecurringInvoiceFields.number,
@@ -79,22 +79,19 @@ abstract class RecurringInvoiceUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  InvoiceEntity get editing;
+  InvoiceEntity? get editing;
 
-  @nullable
   @BuiltValueField(serialize: false)
-  int get editingItemIndex;
+  int? get editingItemIndex;
 
-  @nullable
   @BuiltValueField(serialize: false)
-  String get historyActivityId;
+  String? get historyActivityId;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<RecurringInvoiceUIState> get serializer =>
       _$recurringInvoiceUIStateSerializer;

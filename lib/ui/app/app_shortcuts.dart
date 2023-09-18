@@ -8,13 +8,13 @@ import 'package:flutter/material.dart';
 //import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 
 class AppShortcuts extends StatefulWidget {
-  const AppShortcuts({Key key, this.child}) : super(key: key);
-  final Widget child;
+  const AppShortcuts({Key? key, this.child}) : super(key: key);
+  final Widget? child;
 
   @override
   AppShortcutsState createState() => new AppShortcutsState();
 
-  static AppShortcutsState of(BuildContext context) {
+  static AppShortcutsState? of(BuildContext context) {
     return context.findAncestorStateOfType<AppShortcutsState>();
   }
 }

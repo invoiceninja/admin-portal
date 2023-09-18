@@ -31,7 +31,7 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({Key key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   static const String route = '/login';
 
@@ -52,19 +52,19 @@ class LoginScreen extends StatelessWidget {
 
 class LoginVM {
   LoginVM({
-    @required this.state,
-    @required this.isLoading,
-    @required this.authState,
-    @required this.onLoginPressed,
-    @required this.onRecoverPressed,
-    @required this.onSignUpPressed,
-    @required this.onGoogleLoginPressed,
-    @required this.onGoogleSignUpPressed,
-    @required this.onMicrosoftLoginPressed,
-    @required this.onMicrosoftSignUpPressed,
-    @required this.onAppleLoginPressed,
-    @required this.onAppleSignUpPressed,
-    @required this.onTokenLoginPressed,
+    required this.state,
+    required this.isLoading,
+    required this.authState,
+    required this.onLoginPressed,
+    required this.onRecoverPressed,
+    required this.onSignUpPressed,
+    required this.onGoogleLoginPressed,
+    required this.onGoogleSignUpPressed,
+    required this.onMicrosoftLoginPressed,
+    required this.onMicrosoftSignUpPressed,
+    required this.onAppleLoginPressed,
+    required this.onAppleSignUpPressed,
+    required this.onTokenLoginPressed,
   });
 
   AppState state;
@@ -74,32 +74,32 @@ class LoginVM {
   final Function(
     BuildContext,
     Completer<Null> completer, {
-    @required String email,
-    @required String password,
-    @required String url,
-    @required String secret,
-    @required String oneTimePassword,
+    required String email,
+    required String password,
+    required String url,
+    required String secret,
+    required String oneTimePassword,
   }) onLoginPressed;
 
   final Function(
     BuildContext,
     Completer<Null> completer, {
-    @required String email,
-    @required String url,
-    @required String secret,
+    required String email,
+    required String url,
+    required String secret,
   }) onRecoverPressed;
 
   final Function(
     BuildContext,
     Completer<Null> completer, {
-    @required String email,
-    @required String password,
+    required String email,
+    required String password,
   }) onSignUpPressed;
 
   final Function(
     BuildContext,
     Completer<Null> completer, {
-    @required String token,
+    required String token,
   }) onTokenLoginPressed;
 
   final Function(BuildContext, Completer<Null> completer,
@@ -115,12 +115,12 @@ class LoginVM {
       onMicrosoftSignUpPressed;
 
   final Function(BuildContext, Completer<Null> completer,
-      {String url, String secret, String oneTimePassword}) onAppleLoginPressed;
-  final Function(BuildContext, Completer<Null> completer, String url)
+      {String url, String? secret, String? oneTimePassword}) onAppleLoginPressed;
+  final Function(BuildContext, Completer<Null> completer, String? url)
       onAppleSignUpPressed;
 
   static LoginVM fromStore(Store<AppState> store) {
-    void _handleLogin({BuildContext context, bool isSignUp = false}) {
+    void _handleLogin({required BuildContext context, bool isSignUp = false}) {
       final layout = calculateLayout(context);
       final moduleLayout =
           layout == AppLayout.desktop ? ModuleLayout.table : ModuleLayout.list;
@@ -128,7 +128,7 @@ class LoginVM {
         appLayout: layout,
         moduleLayout: isSignUp ? moduleLayout : null,
       ));
-      AppBuilder.of(context).rebuild();
+      AppBuilder.of(context)!.rebuild();
 
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         if (layout == AppLayout.mobile) {
@@ -162,9 +162,9 @@ class LoginVM {
       onGoogleLoginPressed: (
         BuildContext context,
         Completer<Null> completer, {
-        @required String url,
-        @required String secret,
-        @required String oneTimePassword,
+        required String url,
+        required String secret,
+        required String oneTimePassword,
       }) async {
         try {
           await GoogleOAuth.signOut();
@@ -172,7 +172,7 @@ class LoginVM {
             if (idToken.isEmpty || accessToken.isEmpty) {
               GoogleOAuth.signOut();
               completer.completeError(
-                  AppLocalization.of(context).anErrorOccurredTryAgain);
+                  AppLocalization.of(context)!.anErrorOccurredTryAgain);
             } else {
               store.dispatch(OAuthLoginRequest(
                 completer: completer,
@@ -184,12 +184,12 @@ class LoginVM {
                 provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
                 oneTimePassword: oneTimePassword,
               ));
-              completer.future.then((_) => _handleLogin(context: context));
+              completer.future.then(((_) => _handleLogin(context: context)) as FutureOr<_> Function(Null));
             }
           });
           if (!signedIn) {
             completer.completeError(
-                AppLocalization.of(navigatorKey.currentContext)
+                AppLocalization.of(navigatorKey.currentContext!)!
                     .anErrorOccurredTryAgain);
           }
         } catch (error) {
@@ -205,7 +205,7 @@ class LoginVM {
             if (idToken.isEmpty || accessToken.isEmpty) {
               GoogleOAuth.signOut();
               completer.completeError(
-                  AppLocalization.of(context).anErrorOccurredTryAgain);
+                  AppLocalization.of(context)!.anErrorOccurredTryAgain);
             } else {
               store.dispatch(OAuthSignUpRequest(
                 url: url,
@@ -215,12 +215,12 @@ class LoginVM {
                 provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
               ));
               completer.future
-                  .then((_) => _handleLogin(context: context, isSignUp: true));
+                  .then(((_) => _handleLogin(context: context, isSignUp: true)) as FutureOr<_> Function(Null));
             }
           });
           if (!signedIn) {
             completer.completeError(
-                AppLocalization.of(navigatorKey.currentContext)
+                AppLocalization.of(navigatorKey.currentContext!)!
                     .anErrorOccurredTryAgain);
           }
         } catch (error) {
@@ -231,9 +231,9 @@ class LoginVM {
       onMicrosoftLoginPressed: (
         BuildContext context,
         Completer<Null> completer, {
-        @required String url,
-        @required String secret,
-        @required String oneTimePassword,
+        required String url,
+        required String secret,
+        required String oneTimePassword,
       }) async {
         try {
           WebUtils.microsoftLogin((idToken, accessToken) {
@@ -247,7 +247,7 @@ class LoginVM {
               provider: UserEntity.OAUTH_PROVIDER_MICROSOFT,
               oneTimePassword: oneTimePassword,
             ));
-            completer.future.then((_) => _handleLogin(context: context));
+            completer.future.then(((_) => _handleLogin(context: context)) as FutureOr<_> Function(Null));
           }, (dynamic error) {
             completer.completeError(error);
           });
@@ -268,7 +268,7 @@ class LoginVM {
               accessToken: accessToken,
             ));
             completer.future
-                .then((_) => _handleLogin(context: context, isSignUp: true));
+                .then(((_) => _handleLogin(context: context, isSignUp: true)) as FutureOr<_> Function(Null));
           }, (dynamic error) {
             completer.completeError(error);
           });
@@ -280,9 +280,9 @@ class LoginVM {
       onAppleLoginPressed: (
         BuildContext context,
         Completer<Null> completer, {
-        @required String url,
-        @required String secret,
-        @required String oneTimePassword,
+        required String url,
+        required String secret,
+        required String oneTimePassword,
       }) async {
         try {
           final credentials = await SignInWithApple.getAppleIDCredential(
@@ -300,14 +300,14 @@ class LoginVM {
             completer: completer,
             url: _formatApiUrl(url),
             secret: secret.trim(),
-            platform: getPlatform(navigatorKey.currentContext),
+            platform: getPlatform(navigatorKey.currentContext!),
             provider: UserEntity.OAUTH_PROVIDER_APPLE,
             oneTimePassword: oneTimePassword,
             email: credentials.email,
             authCode: credentials.authorizationCode,
             idToken: credentials.identityToken,
           ));
-          completer.future.then((_) => _handleLogin(context: context));
+          completer.future.then(((_) => _handleLogin(context: context)) as FutureOr<_> Function(Null));
         } catch (error) {
           completer.completeError(error);
           print('## onAppleLoginPressed: $error');
@@ -336,7 +336,7 @@ class LoginVM {
             lastName: credentials.familyName,
           ));
           completer.future
-              .then((_) => _handleLogin(context: context, isSignUp: true));
+              .then(((_) => _handleLogin(context: context, isSignUp: true)) as FutureOr<_> Function(Null));
         } catch (error) {
           completer.completeError(error);
           print('## onAppleSignUpPressed: $error');
@@ -345,8 +345,8 @@ class LoginVM {
       onSignUpPressed: (
         BuildContext context,
         Completer<Null> completer, {
-        @required String email,
-        @required String password,
+        required String email,
+        required String password,
       }) async {
         if (store.state.isLoading) {
           return;
@@ -358,14 +358,14 @@ class LoginVM {
           password: password.trim(),
         ));
         completer.future
-            .then((_) => _handleLogin(context: context, isSignUp: true));
+            .then(((_) => _handleLogin(context: context, isSignUp: true)) as FutureOr<_> Function(Null));
       },
       onRecoverPressed: (
         BuildContext context,
         Completer<Null> completer, {
-        @required String email,
-        @required String url,
-        @required String secret,
+        required String email,
+        required String url,
+        required String secret,
       }) async {
         if (store.state.isLoading) {
           return;
@@ -381,11 +381,11 @@ class LoginVM {
       onLoginPressed: (
         BuildContext context,
         Completer<Null> completer, {
-        @required String email,
-        @required String password,
-        @required String url,
-        @required String secret,
-        @required String oneTimePassword,
+        required String email,
+        required String password,
+        required String url,
+        required String secret,
+        required String oneTimePassword,
       }) async {
         if (store.state.isLoading) {
           return;
@@ -400,10 +400,10 @@ class LoginVM {
           platform: getPlatform(context),
           oneTimePassword: oneTimePassword.trim(),
         ));
-        completer.future.then((_) => _handleLogin(context: context));
+        completer.future.then(((_) => _handleLogin(context: context)) as FutureOr<_> Function(Null));
       },
       onTokenLoginPressed: (BuildContext context, Completer<Null> completer,
-          {@required String token}) async {
+          {required String token}) async {
         final SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString(kSharedPrefToken, TokenEntity.obscureToken(token));
         prefs.setString(kSharedPrefUrl, kAppProductionUrl);

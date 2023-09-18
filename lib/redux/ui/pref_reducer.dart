@@ -3,6 +3,7 @@ import 'dart:math';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:redux/redux.dart';
 
@@ -188,9 +189,9 @@ Reducer<BuiltMap<EntityType, PrefStateSortField>> sortFieldsReducer =
 
 Reducer<BuiltMap<EntityType, bool>> sidebarEditorReducer = combineReducers([
   TypedReducer<BuiltMap<EntityType, bool>, ToggleEditorLayout>((value, action) {
-    final entityType = action.entityType.baseType;
+    final entityType = action.entityType!.baseType;
     if (value.containsKey(entityType)) {
-      return value.rebuild((b) => b..[entityType] = !value[entityType]);
+      return value.rebuild((b) => b..[entityType] = !value[entityType]!);
     } else {
       return value.rebuild((b) => b..[entityType] = true);
     }
@@ -199,9 +200,9 @@ Reducer<BuiltMap<EntityType, bool>> sidebarEditorReducer = combineReducers([
 
 Reducer<BuiltMap<EntityType, bool>> sidebarViewerReducer = combineReducers([
   TypedReducer<BuiltMap<EntityType, bool>, ToggleViewerLayout>((value, action) {
-    final entityType = action.entityType.baseType;
+    final entityType = action.entityType!.baseType;
     if (value.containsKey(entityType)) {
-      return value.rebuild((b) => b..[entityType] = !value[entityType]);
+      return value.rebuild((b) => b..[entityType] = !value[entityType]!);
     } else {
       return value.rebuild((b) => b..[entityType] = true);
     }
@@ -303,8 +304,8 @@ Reducer<AppLayout> layoutReducer = combineReducers([
   }),
 ]);
 
-Reducer<ModuleLayout> moduleLayoutReducer = combineReducers([
-  TypedReducer<ModuleLayout, UpdateUserPreferences>((moduleLayout, action) {
+Reducer<ModuleLayout?> moduleLayoutReducer = combineReducers([
+  TypedReducer<ModuleLayout?, UpdateUserPreferences>((moduleLayout, action) {
     if (action.moduleLayout != null) {
       return action.moduleLayout;
     } else if (action.appLayout != null) {
@@ -315,7 +316,7 @@ Reducer<ModuleLayout> moduleLayoutReducer = combineReducers([
 
     return moduleLayout;
   }),
-  TypedReducer<ModuleLayout, SwitchListTableLayout>((moduleLayout, action) {
+  TypedReducer<ModuleLayout?, SwitchListTableLayout>((moduleLayout, action) {
     if (moduleLayout == ModuleLayout.list) {
       return ModuleLayout.table;
     } else {
@@ -509,11 +510,11 @@ Reducer<int> selectedCompanyIndexReducer = combineReducers([
   }),
 ]);
 
-CompanyPrefState companyPrefReducer(CompanyPrefState state, dynamic action) {
+CompanyPrefState companyPrefReducer(CompanyPrefState? state, dynamic action) {
   state ??= CompanyPrefState();
 
   return state.rebuild(
-      (b) => b..historyList.replace(historyReducer(state.historyList, action)));
+      (b) => b..historyList.replace(historyReducer(state!.historyList, action)));
 }
 
 Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
@@ -584,7 +585,7 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
       _addToHistory(
           historyList,
           HistoryRecord(
-              id: action.invoice.id, entityType: EntityType.invoice))),
+              id: action.invoice!.id, entityType: EntityType.invoice))),
   TypedReducer<BuiltList<HistoryRecord>, ViewPayment>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.paymentId, entityType: EntityType.payment))),
@@ -604,7 +605,7 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
           HistoryRecord(entityType: EntityType.quote, page: action.page))),
   TypedReducer<BuiltList<HistoryRecord>, EditQuote>((historyList, action) =>
       _addToHistory(historyList,
-          HistoryRecord(id: action.quote.id, entityType: EntityType.quote))),
+          HistoryRecord(id: action.quote!.id, entityType: EntityType.quote))),
   TypedReducer<BuiltList<HistoryRecord>, ViewTask>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.taskId, entityType: EntityType.task))),
@@ -613,7 +614,7 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
           HistoryRecord(entityType: EntityType.task, page: action.page))),
   TypedReducer<BuiltList<HistoryRecord>, EditTask>((historyList, action) =>
       _addToHistory(historyList,
-          HistoryRecord(id: action.task.id, entityType: EntityType.task))),
+          HistoryRecord(id: action.task!.id, entityType: EntityType.task))),
   TypedReducer<BuiltList<HistoryRecord>, ViewProject>((historyList, action) =>
       _addToHistory(historyList,
           HistoryRecord(id: action.projectId, entityType: EntityType.project))),
@@ -870,7 +871,7 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
           HistoryRecord(entityType: EntityType.credit, page: action.page))),
   TypedReducer<BuiltList<HistoryRecord>, EditCredit>((historyList, action) =>
       _addToHistory(historyList,
-          HistoryRecord(id: action.credit.id, entityType: EntityType.credit))),
+          HistoryRecord(id: action.credit!.id, entityType: EntityType.credit))),
   TypedReducer<BuiltList<HistoryRecord>, ViewDocument>((historyList, action) =>
       _addToHistory(
           historyList,
@@ -883,20 +884,20 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
       _addToHistory(
           historyList,
           HistoryRecord(
-              id: action.document.id, entityType: EntityType.document))),
+              id: action.document!.id, entityType: EntityType.document))),
   TypedReducer<BuiltList<HistoryRecord>, FilterByEntity>((historyList, action) {
     if (action.clearSelection) {
       return historyList;
     }
     return _addToHistory(historyList,
-        HistoryRecord(id: action.entityId, entityType: action.entityType));
+        HistoryRecord(id: action.entityId, entityType: action.entityType!));
   }),
 ]);
 
 BuiltList<HistoryRecord> _addToHistory(
     BuiltList<HistoryRecord> list, HistoryRecord record) {
   // don't track new records
-  if (record.id != null && record.id.startsWith('-')) {
+  if (record.id != null && record.id!.startsWith('-')) {
     return list;
   }
 
@@ -907,7 +908,7 @@ BuiltList<HistoryRecord> _addToHistory(
   }
 
   final old =
-      list.firstWhere((item) => item.matchesRecord(record), orElse: () => null);
+      list.firstWhereOrNull((item) => item.matchesRecord(record));
 
   if (old != null) {
     return list.rebuild((b) => b

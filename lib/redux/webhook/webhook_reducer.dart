@@ -14,42 +14,42 @@ import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
 EntityUIState webhookUIReducer(WebhookUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(webhookListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
+    ..editing.replace(editingReducer(state.editing, action)!)
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
 
-final forceSelectedReducer = combineReducers<bool>([
-  TypedReducer<bool, ViewWebhook>((completer, action) => true),
-  TypedReducer<bool, ViewWebhookList>((completer, action) => false),
-  TypedReducer<bool, FilterWebhooksByState>((completer, action) => false),
-  TypedReducer<bool, FilterWebhooks>((completer, action) => false),
-  TypedReducer<bool, FilterWebhooksByCustom1>((completer, action) => false),
-  TypedReducer<bool, FilterWebhooksByCustom2>((completer, action) => false),
-  TypedReducer<bool, FilterWebhooksByCustom3>((completer, action) => false),
-  TypedReducer<bool, FilterWebhooksByCustom4>((completer, action) => false),
+final forceSelectedReducer = combineReducers<bool?>([
+  TypedReducer<bool?, ViewWebhook>((completer, action) => true),
+  TypedReducer<bool?, ViewWebhookList>((completer, action) => false),
+  TypedReducer<bool?, FilterWebhooksByState>((completer, action) => false),
+  TypedReducer<bool?, FilterWebhooks>((completer, action) => false),
+  TypedReducer<bool?, FilterWebhooksByCustom1>((completer, action) => false),
+  TypedReducer<bool?, FilterWebhooksByCustom2>((completer, action) => false),
+  TypedReducer<bool?, FilterWebhooksByCustom3>((completer, action) => false),
+  TypedReducer<bool?, FilterWebhooksByCustom4>((completer, action) => false),
 ]);
 
-Reducer<String> selectedIdReducer = combineReducers([
-  TypedReducer<String, ArchiveWebhooksSuccess>((completer, action) => ''),
-  TypedReducer<String, DeleteWebhooksSuccess>((completer, action) => ''),
-  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+Reducer<String?> selectedIdReducer = combineReducers([
+  TypedReducer<String?, ArchiveWebhooksSuccess>((completer, action) => ''),
+  TypedReducer<String?, DeleteWebhooksSuccess>((completer, action) => ''),
+  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.webhook ? action.entityId : selectedId),
-  TypedReducer<String, ViewWebhook>(
-      (String selectedId, dynamic action) => action.webhookId),
-  TypedReducer<String, AddWebhookSuccess>(
-      (String selectedId, dynamic action) => action.webhook.id),
-  TypedReducer<String, SelectCompany>(
+  TypedReducer<String?, ViewWebhook>(
+      (String? selectedId, dynamic action) => action.webhookId),
+  TypedReducer<String?, AddWebhookSuccess>(
+      (String? selectedId, dynamic action) => action.webhook.id),
+  TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, SortWebhooks>((selectedId, action) => ''),
-  TypedReducer<String, FilterWebhooks>((selectedId, action) => ''),
-  TypedReducer<String, FilterWebhooksByState>((selectedId, action) => ''),
-  TypedReducer<String, FilterWebhooksByCustom1>((selectedId, action) => ''),
-  TypedReducer<String, FilterWebhooksByCustom2>((selectedId, action) => ''),
-  TypedReducer<String, FilterWebhooksByCustom3>((selectedId, action) => ''),
-  TypedReducer<String, FilterWebhooksByCustom4>((selectedId, action) => ''),
-  TypedReducer<String, FilterByEntity>(
+  TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String?, SortWebhooks>((selectedId, action) => ''),
+  TypedReducer<String?, FilterWebhooks>((selectedId, action) => ''),
+  TypedReducer<String?, FilterWebhooksByState>((selectedId, action) => ''),
+  TypedReducer<String?, FilterWebhooksByCustom1>((selectedId, action) => ''),
+  TypedReducer<String?, FilterWebhooksByCustom2>((selectedId, action) => ''),
+  TypedReducer<String?, FilterWebhooksByCustom3>((selectedId, action) => ''),
+  TypedReducer<String?, FilterWebhooksByCustom4>((selectedId, action) => ''),
+  TypedReducer<String?, FilterByEntity>(
       (selectedId, action) => action.clearSelection
           ? ''
           : action.entityType == EntityType.webhook
@@ -57,30 +57,30 @@ Reducer<String> selectedIdReducer = combineReducers([
               : selectedId),
 ]);
 
-final editingReducer = combineReducers<WebhookEntity>([
-  TypedReducer<WebhookEntity, SaveWebhookSuccess>(_updateEditing),
-  TypedReducer<WebhookEntity, AddWebhookSuccess>(_updateEditing),
-  TypedReducer<WebhookEntity, RestoreWebhooksSuccess>((webhooks, action) {
+final editingReducer = combineReducers<WebhookEntity?>([
+  TypedReducer<WebhookEntity?, SaveWebhookSuccess>(_updateEditing),
+  TypedReducer<WebhookEntity?, AddWebhookSuccess>(_updateEditing),
+  TypedReducer<WebhookEntity?, RestoreWebhooksSuccess>((webhooks, action) {
     return action.webhooks[0];
   }),
-  TypedReducer<WebhookEntity, ArchiveWebhooksSuccess>((webhooks, action) {
+  TypedReducer<WebhookEntity?, ArchiveWebhooksSuccess>((webhooks, action) {
     return action.webhooks[0];
   }),
-  TypedReducer<WebhookEntity, DeleteWebhooksSuccess>((webhooks, action) {
+  TypedReducer<WebhookEntity?, DeleteWebhooksSuccess>((webhooks, action) {
     return action.webhooks[0];
   }),
-  TypedReducer<WebhookEntity, EditWebhook>(_updateEditing),
-  TypedReducer<WebhookEntity, UpdateWebhook>((webhook, action) {
+  TypedReducer<WebhookEntity?, EditWebhook>(_updateEditing),
+  TypedReducer<WebhookEntity?, UpdateWebhook>((webhook, action) {
     return action.webhook.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<WebhookEntity, DiscardChanges>(_clearEditing),
+  TypedReducer<WebhookEntity?, DiscardChanges>(_clearEditing),
 ]);
 
-WebhookEntity _clearEditing(WebhookEntity webhook, dynamic action) {
+WebhookEntity _clearEditing(WebhookEntity? webhook, dynamic action) {
   return WebhookEntity();
 }
 
-WebhookEntity _updateEditing(WebhookEntity webhook, dynamic action) {
+WebhookEntity? _updateEditing(WebhookEntity? webhook, dynamic action) {
   return action.webhook;
 }
 
@@ -151,7 +151,7 @@ ListUIState _filterWebhooks(
 
 ListUIState _sortWebhooks(ListUIState webhookListState, SortWebhooks action) {
   return webhookListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortAscending = b.sortField != action.field || !b.sortAscending!
     ..sortField = action.field);
 }
 
@@ -162,13 +162,13 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState productListState, AddToWebhookMultiselect action) {
-  return productListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+  return productListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState productListState, RemoveFromWebhookMultiselect action) {
   return productListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(
@@ -238,6 +238,6 @@ WebhookState _setLoadedWebhooks(
 
 WebhookState _setLoadedCompany(
     WebhookState webhookState, LoadCompanySuccess action) {
-  final company = action.userCompany.company;
+  final company = action.userCompany.company!;
   return webhookState.loadWebhooks(company.webhooks);
 }

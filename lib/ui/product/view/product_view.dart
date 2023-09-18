@@ -17,10 +17,10 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProductView extends StatefulWidget {
   const ProductView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
-    @required this.tabIndex,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
+    required this.tabIndex,
   }) : super(key: key);
 
   final ProductViewVM viewModel;
@@ -33,7 +33,7 @@ class ProductView extends StatefulWidget {
 
 class _ProductViewState extends State<ProductView>
     with SingleTickerProviderStateMixin {
-  TabController _controller;
+  TabController? _controller;
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _ProductViewState extends State<ProductView>
         vsync: this,
         length: 2,
         initialIndex: widget.isFilter ? 0 : state.productUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
@@ -53,7 +53,7 @@ class _ProductViewState extends State<ProductView>
     }
 
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateProductTab(tabIndex: _controller.index));
+    store.dispatch(UpdateProductTab(tabIndex: _controller!.index));
   }
 
   @override
@@ -61,14 +61,14 @@ class _ProductViewState extends State<ProductView>
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.tabIndex != widget.tabIndex) {
-      _controller.index = widget.tabIndex;
+      _controller!.index = widget.tabIndex;
     }
   }
 
   @override
   void dispose() {
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
     super.dispose();
   }
 
@@ -77,7 +77,7 @@ class _ProductViewState extends State<ProductView>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final company = state.company;
+    final company = state.company!;
     final product = viewModel.product;
     final documents = product.documents;
 
@@ -90,7 +90,7 @@ class _ProductViewState extends State<ProductView>
               isScrollable: false,
               tabs: [
                 Tab(
-                  text: localization.overview,
+                  text: localization!.overview,
                 ),
                 Tab(
                   text: documents.isEmpty

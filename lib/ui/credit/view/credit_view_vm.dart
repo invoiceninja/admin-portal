@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CreditViewScreen extends StatelessWidget {
   const CreditViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
   final bool isFilter;
@@ -40,7 +40,7 @@ class CreditViewScreen extends StatelessWidget {
         return InvoiceView(
           viewModel: viewModel,
           isFilter: isFilter,
-          tabIndex: viewModel.state.creditUIState.tabIndex,
+          tabIndex: viewModel.state!.creditUIState.tabIndex,
         );
       },
     );
@@ -49,22 +49,22 @@ class CreditViewScreen extends StatelessWidget {
 
 class CreditViewVM extends AbstractInvoiceViewVM {
   CreditViewVM({
-    AppState state,
-    CompanyEntity company,
-    InvoiceEntity invoice,
-    ClientEntity client,
-    bool isSaving,
-    bool isDirty,
-    Function(BuildContext, EntityAction) onEntityAction,
-    Function(BuildContext, [int]) onEditPressed,
-    Function(BuildContext, [bool]) onClientPressed,
-    Function(BuildContext, [bool]) onUserPressed,
-    Function(BuildContext) onPaymentsPressed,
-    Function(BuildContext, PaymentEntity) onPaymentPressed,
-    Function(BuildContext) onRefreshed,
-    Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
-    Function(BuildContext, DocumentEntity) onViewExpense,
-    Function(BuildContext, InvoiceEntity, [String]) onViewPdf,
+    AppState? state,
+    CompanyEntity? company,
+    InvoiceEntity? invoice,
+    ClientEntity? client,
+    bool? isSaving,
+    bool? isDirty,
+    Function(BuildContext, EntityAction)? onEntityAction,
+    Function(BuildContext, [int])? onEditPressed,
+    Function(BuildContext, [bool])? onClientPressed,
+    Function(BuildContext, [bool])? onUserPressed,
+    Function(BuildContext)? onPaymentsPressed,
+    Function(BuildContext, PaymentEntity)? onPaymentPressed,
+    Function(BuildContext)? onRefreshed,
+    Function(BuildContext, List<MultipartFile>, bool)? onUploadDocuments,
+    Function(BuildContext, DocumentEntity)? onViewExpense,
+    Function(BuildContext, InvoiceEntity, [String?])? onViewPdf,
   }) : super(
           state: state,
           company: company,
@@ -90,7 +90,7 @@ class CreditViewVM extends AbstractInvoiceViewVM {
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadCredit(completer: completer, creditId: credit.id));
       return completer.future;
     }
@@ -102,12 +102,12 @@ class CreditViewVM extends AbstractInvoiceViewVM {
       isDirty: credit.isNew,
       invoice: credit,
       client: client,
-      onEditPressed: (BuildContext context, [int index]) {
+      onEditPressed: (BuildContext context, [int? index]) {
         editEntity(
             entity: credit,
             subIndex: index,
             completer: snackBarCompleter<ClientEntity>(
-                context, AppLocalization.of(context).updatedCredit));
+                context, AppLocalization.of(context)!.updatedCredit));
       },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
@@ -121,7 +121,7 @@ class CreditViewVM extends AbstractInvoiceViewVM {
             credit: credit,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context).uploadedDocument);
+          showToast(AppLocalization.of(context)!.uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,

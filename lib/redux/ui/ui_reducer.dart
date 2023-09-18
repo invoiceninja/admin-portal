@@ -80,50 +80,50 @@ UIState uiReducer(UIState state, dynamic action) {
     ..currentRoute = currentRoute
     ..previewStack.replace(previewStackReducer(state.previewStack, action))
     ..filterStack.replace(filterStackReducer(state.filterStack, action))
-    ..productUIState.replace(productUIReducer(state.productUIState, action))
-    ..clientUIState.replace(clientUIReducer(state.clientUIState, action))
-    ..invoiceUIState.replace(invoiceUIReducer(state.invoiceUIState, action))
+    ..productUIState.replace(productUIReducer(state.productUIState, action) as ProductUIState)
+    ..clientUIState.replace(clientUIReducer(state.clientUIState, action) as ClientUIState)
+    ..invoiceUIState.replace(invoiceUIReducer(state.invoiceUIState, action) as InvoiceUIState)
     ..dashboardUIState
         .replace(dashboardUIReducer(state.dashboardUIState, action))
     ..reportsUIState.replace(reportsUIReducer(state.reportsUIState, action))
     // STARTER: reducer - do not remove comment
-    ..scheduleUIState.replace(scheduleUIReducer(state.scheduleUIState, action))
+    ..scheduleUIState.replace(scheduleUIReducer(state.scheduleUIState, action) as ScheduleUIState)
     ..transactionRuleUIState
-        .replace(transactionRuleUIReducer(state.transactionRuleUIState, action))
+        .replace(transactionRuleUIReducer(state.transactionRuleUIState, action) as TransactionRuleUIState)
     ..transactionUIState
-        .replace(transactionUIReducer(state.transactionUIState, action))
+        .replace(transactionUIReducer(state.transactionUIState, action) as TransactionUIState)
     ..bankAccountUIState
-        .replace(bankAccountUIReducer(state.bankAccountUIState, action))
+        .replace(bankAccountUIReducer(state.bankAccountUIState, action) as BankAccountUIState)
     ..purchaseOrderUIState
-        .replace(purchaseOrderUIReducer(state.purchaseOrderUIState, action))
+        .replace(purchaseOrderUIReducer(state.purchaseOrderUIState, action) as PurchaseOrderUIState)
     ..recurringExpenseUIState.replace(
-        recurringExpenseUIReducer(state.recurringExpenseUIState, action))
+        recurringExpenseUIReducer(state.recurringExpenseUIState, action) as RecurringExpenseUIState)
     ..subscriptionUIState
-        .replace(subscriptionUIReducer(state.subscriptionUIState, action))
+        .replace(subscriptionUIReducer(state.subscriptionUIState, action) as SubscriptionUIState)
     ..taskStatusUIState
-        .replace(taskStatusUIReducer(state.taskStatusUIState, action))
+        .replace(taskStatusUIReducer(state.taskStatusUIState, action) as TaskStatusUIState)
     ..expenseCategoryUIState
-        .replace(expenseCategoryUIReducer(state.expenseCategoryUIState, action))
+        .replace(expenseCategoryUIReducer(state.expenseCategoryUIState, action) as ExpenseCategoryUIState)
     ..recurringInvoiceUIState.replace(
-        recurringInvoiceUIReducer(state.recurringInvoiceUIState, action))
-    ..webhookUIState.replace(webhookUIReducer(state.webhookUIState, action))
-    ..tokenUIState.replace(tokenUIReducer(state.tokenUIState, action))
+        recurringInvoiceUIReducer(state.recurringInvoiceUIState, action) as RecurringInvoiceUIState)
+    ..webhookUIState.replace(webhookUIReducer(state.webhookUIState, action) as WebhookUIState)
+    ..tokenUIState.replace(tokenUIReducer(state.tokenUIState, action) as TokenUIState)
     ..paymentTermUIState
-        .replace(paymentTermUIReducer(state.paymentTermUIState, action))
-    ..designUIState.replace(designUIReducer(state.designUIState, action))
-    ..creditUIState.replace(creditUIReducer(state.creditUIState, action))
-    ..userUIState.replace(userUIReducer(state.userUIState, action))
-    ..taxRateUIState.replace(taxRateUIReducer(state.taxRateUIState, action))
+        .replace(paymentTermUIReducer(state.paymentTermUIState, action) as PaymentTermUIState)
+    ..designUIState.replace(designUIReducer(state.designUIState, action) as DesignUIState)
+    ..creditUIState.replace(creditUIReducer(state.creditUIState, action) as CreditUIState)
+    ..userUIState.replace(userUIReducer(state.userUIState, action) as UserUIState)
+    ..taxRateUIState.replace(taxRateUIReducer(state.taxRateUIState, action) as TaxRateUIState)
     ..companyGatewayUIState
-        .replace(companyGatewayUIReducer(state.companyGatewayUIState, action))
-    ..groupUIState.replace(groupUIReducer(state.groupUIState, action))
-    ..documentUIState.replace(documentUIReducer(state.documentUIState, action))
-    ..expenseUIState.replace(expenseUIReducer(state.expenseUIState, action))
-    ..vendorUIState.replace(vendorUIReducer(state.vendorUIState, action))
-    ..taskUIState.replace(taskUIReducer(state.taskUIState, action))
-    ..projectUIState.replace(projectUIReducer(state.projectUIState, action))
-    ..paymentUIState.replace(paymentUIReducer(state.paymentUIState, action))
-    ..quoteUIState.replace(quoteUIReducer(state.quoteUIState, action))
+        .replace(companyGatewayUIReducer(state.companyGatewayUIState, action) as CompanyGatewayUIState)
+    ..groupUIState.replace(groupUIReducer(state.groupUIState, action) as GroupUIState)
+    ..documentUIState.replace(documentUIReducer(state.documentUIState, action) as DocumentUIState)
+    ..expenseUIState.replace(expenseUIReducer(state.expenseUIState, action) as ExpenseUIState)
+    ..vendorUIState.replace(vendorUIReducer(state.vendorUIState, action) as VendorUIState)
+    ..taskUIState.replace(taskUIReducer(state.taskUIState, action) as TaskUIState)
+    ..projectUIState.replace(projectUIReducer(state.projectUIState, action) as ProjectUIState)
+    ..paymentUIState.replace(paymentUIReducer(state.paymentUIState, action) as PaymentUIState)
+    ..quoteUIState.replace(quoteUIReducer(state.quoteUIState, action) as QuoteUIState)
     ..settingsUIState
         .replace(settingsUIReducer(state.settingsUIState, action)));
 }
@@ -134,59 +134,59 @@ Reducer<int> lastActivityReducer = combineReducers([
   }),
 ]);
 
-Reducer<String> filterReducer = combineReducers([
-  TypedReducer<String, FilterCompany>((filter, action) {
+Reducer<String?> filterReducer = combineReducers([
+  TypedReducer<String?, FilterCompany>((filter, action) {
     return action.filter;
   }),
-  TypedReducer<String, ViewDashboard>((state, action) {
+  TypedReducer<String?, ViewDashboard>((state, action) {
     return action.filter;
   }),
 ]);
 
-Reducer<EntityType> loadingEntityTypeReducer = combineReducers([
-  TypedReducer<EntityType, StopLoading>((state, action) {
+Reducer<EntityType?> loadingEntityTypeReducer = combineReducers([
+  TypedReducer<EntityType?, StopLoading>((state, action) {
     return null;
   }),
-  TypedReducer<EntityType, LoadClientsRequest>((state, action) {
+  TypedReducer<EntityType?, LoadClientsRequest>((state, action) {
     return EntityType.client;
   }),
-  TypedReducer<EntityType, LoadProductsRequest>((state, action) {
+  TypedReducer<EntityType?, LoadProductsRequest>((state, action) {
     return EntityType.product;
   }),
-  TypedReducer<EntityType, LoadInvoicesRequest>((state, action) {
+  TypedReducer<EntityType?, LoadInvoicesRequest>((state, action) {
     return EntityType.invoice;
   }),
-  TypedReducer<EntityType, LoadRecurringInvoicesRequest>((state, action) {
+  TypedReducer<EntityType?, LoadRecurringInvoicesRequest>((state, action) {
     return EntityType.recurringInvoice;
   }),
-  TypedReducer<EntityType, LoadPaymentsRequest>((state, action) {
+  TypedReducer<EntityType?, LoadPaymentsRequest>((state, action) {
     return EntityType.payment;
   }),
-  TypedReducer<EntityType, LoadQuotesRequest>((state, action) {
+  TypedReducer<EntityType?, LoadQuotesRequest>((state, action) {
     return EntityType.quote;
   }),
-  TypedReducer<EntityType, LoadCreditsRequest>((state, action) {
+  TypedReducer<EntityType?, LoadCreditsRequest>((state, action) {
     return EntityType.credit;
   }),
-  TypedReducer<EntityType, LoadProjectsRequest>((state, action) {
+  TypedReducer<EntityType?, LoadProjectsRequest>((state, action) {
     return EntityType.project;
   }),
-  TypedReducer<EntityType, LoadTasksRequest>((state, action) {
+  TypedReducer<EntityType?, LoadTasksRequest>((state, action) {
     return EntityType.task;
   }),
-  TypedReducer<EntityType, LoadVendorsRequest>((state, action) {
+  TypedReducer<EntityType?, LoadVendorsRequest>((state, action) {
     return EntityType.vendor;
   }),
-  TypedReducer<EntityType, LoadPurchaseOrdersRequest>((state, action) {
+  TypedReducer<EntityType?, LoadPurchaseOrdersRequest>((state, action) {
     return EntityType.purchaseOrder;
   }),
-  TypedReducer<EntityType, LoadExpensesRequest>((state, action) {
+  TypedReducer<EntityType?, LoadExpensesRequest>((state, action) {
     return EntityType.expense;
   }),
-  TypedReducer<EntityType, LoadRecurringExpensesRequest>((state, action) {
+  TypedReducer<EntityType?, LoadRecurringExpensesRequest>((state, action) {
     return EntityType.recurringExpense;
   }),
-  TypedReducer<EntityType, LoadTransactionsRequest>((state, action) {
+  TypedReducer<EntityType?, LoadTransactionsRequest>((state, action) {
     return EntityType.transaction;
   }),
 ]);
@@ -230,7 +230,7 @@ Reducer<BuiltList<EntityType>> previewStackReducer = combineReducers([
       return BuiltList(<EntityType>[]);
     }
 
-    return BuiltList(<EntityType>[
+    return BuiltList(<EntityType?>[
       ...previewStack.where((entityType) => entityType != action.entityType),
       action.entityType
     ]);
@@ -256,7 +256,7 @@ Reducer<BuiltList<BaseEntity>> filterStackReducer = combineReducers([
         return BuiltList<BaseEntity>();
       }
     }
-    return BuiltList(<BaseEntity>[
+    return BuiltList(<BaseEntity?>[
       ...filterStack.where((entity) => entity.entityType != action.entityType),
       action.entity
     ]);

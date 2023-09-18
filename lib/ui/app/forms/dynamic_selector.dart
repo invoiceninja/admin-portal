@@ -16,7 +16,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DynamicSelector extends StatelessWidget {
   const DynamicSelector({
-    Key key,
+    Key? key,
     this.entityId,
     this.entityType,
     this.entityIds,
@@ -28,15 +28,15 @@ class DynamicSelector extends StatelessWidget {
     this.labelText,
   }) : super(key: key);
 
-  final String labelText;
+  final String? labelText;
   final bool allowClearing;
-  final String entityId;
-  final List<String> entityIds;
-  final EntityType entityType;
-  final Function(String) onChanged;
-  final Function(SelectableEntity) overrideSuggestedAmount;
-  final Function(SelectableEntity) overrideSuggestedLabel;
-  final Function(Completer<SelectableEntity> completer) onAddPressed;
+  final String? entityId;
+  final List<String?>? entityIds;
+  final EntityType? entityType;
+  final Function(String)? onChanged;
+  final Function(SelectableEntity)? overrideSuggestedAmount;
+  final Function(SelectableEntity?)? overrideSuggestedLabel;
+  final Function(Completer<SelectableEntity> completer)? onAddPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -44,30 +44,30 @@ class DynamicSelector extends StatelessWidget {
     final state = StoreProvider.of<AppState>(context).state;
     final entityMap = state.getEntityMap(entityType);
 
-    if (!state.company.isModuleEnabled(entityType)) {
+    if (!state.company!.isModuleEnabled(entityType)) {
       return SizedBox();
     }
 
-    if (entityIds.length < 10) {
+    if (entityIds!.length < 10) {
       return AppDropdownButton(
-        labelText: labelText ?? localization.lookup('$entityType'),
+        labelText: labelText ?? localization!.lookup('$entityType'),
         value: entityId,
         showBlank: allowClearing,
-        onChanged: (dynamic entityId) => onChanged(entityId),
-        items: entityIds
+        onChanged: (dynamic entityId) => onChanged!(entityId),
+        items: entityIds!
             .map((entityId) => DropdownMenuItem(
                   child: Text(overrideSuggestedLabel != null
-                      ? overrideSuggestedLabel(entityMap[entityId])
-                      : entityMap[entityId]?.listDisplayName ?? ''),
+                      ? overrideSuggestedLabel!(entityMap![entityId])
+                      : entityMap![entityId]?.listDisplayName ?? ''),
                   value: entityId,
                 ))
             .toList(),
       );
     } else {
       return EntityDropdown(
-        labelText: labelText ?? localization.lookup('$entityType'),
+        labelText: labelText ?? localization!.lookup('$entityType'),
         entityType: entityType,
-        onSelected: (entity) => onChanged(entity?.id),
+        onSelected: (entity) => onChanged!(entity?.id),
         onAddPressed: onAddPressed,
         entityId: entityId,
         entityList: entityIds,

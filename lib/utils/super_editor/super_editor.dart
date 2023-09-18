@@ -10,13 +10,13 @@ import 'package:super_editor/super_editor.dart';
 /// capabilities expand.
 class ExampleEditor extends StatefulWidget {
   const ExampleEditor({
-    Key key,
-    @required this.value,
+    Key? key,
+    required this.value,
     this.onChanged,
   }) : super(key: key);
 
   final String value;
-  final Function(String) onChanged;
+  final Function(String)? onChanged;
 
   @override
   _ExampleEditorState createState() => _ExampleEditorState();
@@ -25,26 +25,26 @@ class ExampleEditor extends StatefulWidget {
 class _ExampleEditorState extends State<ExampleEditor> {
   final GlobalKey _docLayoutKey = GlobalKey();
 
-  Document _doc;
-  DocumentEditor _docEditor;
-  DocumentComposer _composer;
-  CommonEditorOperations _docOps;
+  late Document _doc;
+  DocumentEditor? _docEditor;
+  DocumentComposer? _composer;
+  late CommonEditorOperations _docOps;
 
-  FocusNode _editorFocusNode;
+  FocusNode? _editorFocusNode;
 
-  ScrollController _scrollController;
+  ScrollController? _scrollController;
 
   final _darkBackground = const Color(0xFF222222);
   final _lightBackground = Colors.white;
   //Brightness _brightness = Brightness.light;
 
-  SuperEditorDebugVisualsConfig _debugConfig;
+  SuperEditorDebugVisualsConfig? _debugConfig;
 
-  OverlayEntry _textFormatBarOverlayEntry;
-  final _textSelectionAnchor = ValueNotifier<Offset>(null);
+  OverlayEntry? _textFormatBarOverlayEntry;
+  final _textSelectionAnchor = ValueNotifier<Offset?>(null);
 
-  OverlayEntry _imageFormatBarOverlayEntry;
-  final _imageSelectionAnchor = ValueNotifier<Offset>(null);
+  OverlayEntry? _imageFormatBarOverlayEntry;
+  final _imageSelectionAnchor = ValueNotifier<Offset?>(null);
 
   final _overlayController = MagnifierAndToolbarController();
 
@@ -66,10 +66,10 @@ class _ExampleEditorState extends State<ExampleEditor> {
 
     _docEditor = DocumentEditor(document: _doc as MutableDocument);
     _composer = DocumentComposer();
-    _composer.selectionNotifier.addListener(_hideOrShowToolbar);
+    _composer!.selectionNotifier.addListener(_hideOrShowToolbar);
     _docOps = CommonEditorOperations(
-      editor: _docEditor,
-      composer: _composer,
+      editor: _docEditor!,
+      composer: _composer!,
       documentLayoutResolver: () =>
           _docLayoutKey.currentState as DocumentLayout,
     );
@@ -99,24 +99,24 @@ class _ExampleEditorState extends State<ExampleEditor> {
   @override
   void dispose() {
     if (_textFormatBarOverlayEntry != null) {
-      _textFormatBarOverlayEntry.remove();
+      _textFormatBarOverlayEntry!.remove();
     }
 
     _doc.removeListener(_hideOrShowToolbar);
     _doc.removeListener(_onChanged);
-    _scrollController.removeListener(_hideOrShowToolbar);
-    _composer.removeListener(_hideOrShowToolbar);
+    _scrollController!.removeListener(_hideOrShowToolbar);
+    _composer!.removeListener(_hideOrShowToolbar);
 
-    _scrollController.dispose();
-    _editorFocusNode.dispose();
-    _composer.dispose();
+    _scrollController!.dispose();
+    _editorFocusNode!.dispose();
+    _composer!.dispose();
     super.dispose();
   }
 
   void _onChanged() {
     if (widget.onChanged != null) {
-      final value = serializeDocumentToMarkdown(_docEditor.document);
-      widget.onChanged(value);
+      final value = serializeDocumentToMarkdown(_docEditor!.document);
+      widget.onChanged!(value);
     }
   }
 
@@ -127,7 +127,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
       return;
     }
 
-    final selection = _composer.selection;
+    final selection = _composer!.selection;
     if (selection == null) {
       // Nothing is selected. We don't want to show a toolbar
       // in this case.
@@ -194,7 +194,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
 
       // Display the toolbar in the application overlay.
       final overlay = Overlay.of(context);
-      overlay.insert(_textFormatBarOverlayEntry);
+      overlay.insert(_textFormatBarOverlayEntry!);
     }
 
     // Schedule a callback after this frame to locate the selection
@@ -207,9 +207,9 @@ class _ExampleEditorState extends State<ExampleEditor> {
 
       final docBoundingBox = (_docLayoutKey.currentState as DocumentLayout)
           .getRectForSelection(
-              _composer.selection.base, _composer.selection.extent);
+              _composer!.selection!.base, _composer!.selection!.extent)!;
       final docBox =
-          _docLayoutKey.currentContext.findRenderObject() as RenderBox;
+          _docLayoutKey.currentContext!.findRenderObject() as RenderBox;
       final overlayBoundingBox = Rect.fromPoints(
         docBox.localToGlobal(docBoundingBox.topLeft),
         docBox.localToGlobal(docBoundingBox.bottomRight),
@@ -230,7 +230,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
       // or not the entry exists in the overlay, so in our
       // case, null implies the entry is not in the overlay,
       // and non-null implies the entry is in the overlay.
-      _textFormatBarOverlayEntry.remove();
+      _textFormatBarOverlayEntry!.remove();
       _textFormatBarOverlayEntry = null;
 
       // Ensure that focus returns to the editor.
@@ -238,7 +238,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
       // I tried explicitly unfocus()'ing the URL textfield
       // in the toolbar but it didn't return focus to the
       // editor. I'm not sure why.
-      _editorFocusNode.requestFocus();
+      _editorFocusNode!.requestFocus();
     }
   }
 
@@ -300,7 +300,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
           anchor: _imageSelectionAnchor,
           composer: _composer,
           setWidth: (nodeId, width) {
-            final node = _doc.getNodeById(nodeId);
+            final node = _doc.getNodeById(nodeId)!;
             final currentStyles =
                 SingleColumnLayoutComponentStyles.fromMetadata(node);
             SingleColumnLayoutComponentStyles(
@@ -314,7 +314,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
 
       // Display the toolbar in the application overlay.
       final overlay = Overlay.of(context);
-      overlay.insert(_imageFormatBarOverlayEntry);
+      overlay.insert(_imageFormatBarOverlayEntry!);
     }
 
     // Schedule a callback after this frame to locate the selection
@@ -327,9 +327,9 @@ class _ExampleEditorState extends State<ExampleEditor> {
 
       final docBoundingBox = (_docLayoutKey.currentState as DocumentLayout)
           .getRectForSelection(
-              _composer.selection.base, _composer.selection.extent);
+              _composer!.selection!.base, _composer!.selection!.extent)!;
       final docBox =
-          _docLayoutKey.currentContext.findRenderObject() as RenderBox;
+          _docLayoutKey.currentContext!.findRenderObject() as RenderBox;
       final overlayBoundingBox = Rect.fromPoints(
         docBox.localToGlobal(docBoundingBox.topLeft),
         docBox.localToGlobal(docBoundingBox.bottomRight),
@@ -350,11 +350,11 @@ class _ExampleEditorState extends State<ExampleEditor> {
       // or not the entry exists in the overlay, so in our
       // case, null implies the entry is not in the overlay,
       // and non-null implies the entry is in the overlay.
-      _imageFormatBarOverlayEntry.remove();
+      _imageFormatBarOverlayEntry!.remove();
       _imageFormatBarOverlayEntry = null;
 
       // Ensure that focus returns to the editor.
-      _editorFocusNode.requestFocus();
+      _editorFocusNode!.requestFocus();
     }
   }
 
@@ -460,7 +460,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
       child: SuperEditorDebugVisuals(
         config: _debugConfig ?? const SuperEditorDebugVisualsConfig(),
         child: SuperEditor(
-          editor: _docEditor,
+          editor: _docEditor!,
           composer: _composer,
           focusNode: _editorFocusNode,
           scrollController: _scrollController,
@@ -483,7 +483,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
             ],
           ),
           componentBuilders: [
-            TaskComponentBuilder(_docEditor),
+            TaskComponentBuilder(_docEditor!),
             ...defaultComponentBuilders,
           ],
           gestureMode: _gestureMode,
@@ -512,10 +512,10 @@ class _ExampleEditorState extends State<ExampleEditor> {
     return MultiListenableBuilder(
       listenables: <Listenable>{
         _doc,
-        _composer.selectionNotifier,
+        _composer!.selectionNotifier,
       },
       builder: (_) {
-        final selection = _composer.selection;
+        final selection = _composer!.selection;
 
         if (selection == null) {
           return const SizedBox();
@@ -523,7 +523,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
 
         return KeyboardEditingToolbar(
           document: _doc,
-          composer: _composer,
+          composer: _composer!,
           commonOps: _docOps,
         );
       },

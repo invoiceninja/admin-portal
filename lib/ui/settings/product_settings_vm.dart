@@ -16,7 +16,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProductSettingsScreen extends StatelessWidget {
-  const ProductSettingsScreen({Key key}) : super(key: key);
+  const ProductSettingsScreen({Key? key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsProducts';
 
   @override
@@ -35,10 +35,10 @@ class ProductSettingsScreen extends StatelessWidget {
 
 class ProductSettingsVM {
   ProductSettingsVM({
-    @required this.state,
-    @required this.company,
-    @required this.onCompanyChanged,
-    @required this.onSavePressed,
+    required this.state,
+    required this.company,
+    required this.onCompanyChanged,
+    required this.onSavePressed,
   });
 
   static ProductSettingsVM fromStore(Store<AppState> store) {
@@ -53,7 +53,7 @@ class ProductSettingsVM {
           Debouncer.runOnComplete(() {
             final settingsUIState = store.state.uiState.settingsUIState;
             final completer = snackBarCompleter<Null>(
-                context, AppLocalization.of(context).savedSettings);
+                context, AppLocalization.of(context)!.savedSettings);
             store.dispatch(SaveCompanyRequest(
                 completer: completer, company: settingsUIState.company));
           });

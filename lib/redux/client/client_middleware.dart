@@ -57,14 +57,14 @@ List<Middleware<AppState>> createStoreClientsMiddleware([
 
 Middleware<AppState> _editClient() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditClient;
+    final action = dynamicAction as EditClient?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ClientEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(ClientEditScreen.route);
+      navigatorKey.currentState!.pushNamed(ClientEditScreen.route);
     }
   };
 }
@@ -72,21 +72,21 @@ Middleware<AppState> _editClient() {
 Middleware<AppState> _viewClient() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ViewClient;
+    final action = dynamicAction as ViewClient?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(ClientViewScreen.route);
+      navigatorKey.currentState!.pushNamed(ClientViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewClientList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewClientList;
+    final action = dynamicAction as ViewClientList?;
 
     next(action);
 
@@ -97,7 +97,7 @@ Middleware<AppState> _viewClientList() {
     store.dispatch(UpdateCurrentRoute(ClientScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           ClientScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -143,12 +143,12 @@ Middleware<AppState> _mergeClients(ClientRepository repository) {
       store.dispatch(MergeClientsSuccess(action.clientId));
       store.dispatch(RefreshData());
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
-      store.dispatch(MergeClientsFailure(error));
+      store.dispatch(MergeClientsFailure(error as List<ClientEntity>));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -237,24 +237,24 @@ Middleware<AppState> _saveClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveClientRequest;
     repository
-        .saveData(store.state.credentials, action.client)
+        .saveData(store.state.credentials, action.client!)
         .then((ClientEntity client) {
-      if (action.client.isNew) {
+      if (action.client!.isNew) {
         store.dispatch(AddClientSuccess(client));
       } else {
         store.dispatch(SaveClientSuccess(client));
       }
 
-      action.completer.complete(client);
+      action.completer!.complete(client);
 
       final clientUIState = store.state.clientUIState;
       if (clientUIState.saveCompleter != null) {
-        clientUIState.saveCompleter.complete(client);
+        clientUIState.saveCompleter!.complete(client);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveClientFailure(error));
-      action.completer.completeError(error);
+      action.completer!.completeError(error);
     });
 
     next(action);
@@ -263,7 +263,7 @@ Middleware<AppState> _saveClient(ClientRepository repository) {
 
 Middleware<AppState> _loadClient(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as LoadClient;
+    final action = dynamicAction as LoadClient?;
 
     if (Config.DEMO_MODE) {
       next(action);
@@ -272,18 +272,18 @@ Middleware<AppState> _loadClient(ClientRepository repository) {
 
     store.dispatch(LoadClientRequest());
     repository
-        .loadItem(store.state.credentials, action.clientId)
+        .loadItem(store.state.credentials, action!.clientId)
         .then((client) {
       store.dispatch(LoadClientSuccess(client));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadClientFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -317,7 +317,7 @@ Middleware<AppState> _loadClients(ClientRepository repository) {
         ));
       } else {
         if (action.completer != null) {
-          action.completer.complete(null);
+          action.completer!.complete(null);
         }
         store.dispatch(LoadProducts());
       }
@@ -325,7 +325,7 @@ Middleware<AppState> _loadClients(ClientRepository repository) {
       print(error);
       store.dispatch(LoadClientsFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -335,12 +335,12 @@ Middleware<AppState> _loadClients(ClientRepository repository) {
 
 Middleware<AppState> _saveDocument(ClientRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as SaveClientDocumentRequest;
+    final action = dynamicAction as SaveClientDocumentRequest?;
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
         store.state.credentials,
-        action.client,
+        action!.client,
         action.multipartFile,
         action.isPrivate,
       )
@@ -364,7 +364,7 @@ Middleware<AppState> _saveDocument(ClientRepository repository) {
     } else {
       const error = 'Uploading documents requires an enterprise plan';
       store.dispatch(SaveClientDocumentFailure(error));
-      action.completer.completeError(error);
+      action!.completer.completeError(error);
     }
 
     next(action);
@@ -374,14 +374,14 @@ Middleware<AppState> _saveDocument(ClientRepository repository) {
 Middleware<AppState> _showPdfClient() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ShowPdfClient;
+    final action = dynamicAction as ShowPdfClient?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ClientPdfScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(ClientPdfScreen.route);
+      navigatorKey.currentState!.pushNamed(ClientPdfScreen.route);
     }
   };
 }

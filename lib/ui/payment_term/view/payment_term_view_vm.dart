@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentTermViewScreen extends StatelessWidget {
   const PaymentTermViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
   final bool isFilter;
@@ -46,15 +46,15 @@ class PaymentTermViewScreen extends StatelessWidget {
 
 class PaymentTermViewVM {
   PaymentTermViewVM({
-    @required this.state,
-    @required this.paymentTerm,
-    @required this.company,
-    @required this.onEntityAction,
-    @required this.onBackPressed,
-    @required this.onRefreshed,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.isDirty,
+    required this.state,
+    required this.paymentTerm,
+    required this.company,
+    required this.onEntityAction,
+    required this.onBackPressed,
+    required this.onRefreshed,
+    required this.isSaving,
+    required this.isLoading,
+    required this.isDirty,
   });
 
   factory PaymentTermViewVM.fromStore(Store<AppState> store) {
@@ -65,7 +65,7 @@ class PaymentTermViewVM {
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(
           LoadPaymentTerm(completer: completer, paymentTermId: paymentTerm.id));
       return completer.future;
@@ -89,7 +89,7 @@ class PaymentTermViewVM {
 
   final AppState state;
   final PaymentTermEntity paymentTerm;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;

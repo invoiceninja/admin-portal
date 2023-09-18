@@ -26,24 +26,24 @@ class ViewExpenseCategoryList implements PersistUI {
 
 class ViewExpenseCategory implements PersistUI, PersistPrefs {
   ViewExpenseCategory({
-    @required this.expenseCategoryId,
+    required this.expenseCategoryId,
     this.force = false,
   });
 
-  final String expenseCategoryId;
+  final String? expenseCategoryId;
   final bool force;
 }
 
 class EditExpenseCategory implements PersistUI, PersistPrefs {
   EditExpenseCategory(
-      {@required this.expenseCategory,
+      {required this.expenseCategory,
       this.completer,
       this.cancelCompleter,
       this.force = false});
 
   final ExpenseCategoryEntity expenseCategory;
-  final Completer completer;
-  final Completer cancelCompleter;
+  final Completer? completer;
+  final Completer? cancelCompleter;
   final bool force;
 }
 
@@ -56,21 +56,21 @@ class UpdateExpenseCategory implements PersistUI {
 class LoadExpenseCategory {
   LoadExpenseCategory({this.completer, this.expenseCategoryId});
 
-  final Completer completer;
-  final String expenseCategoryId;
+  final Completer? completer;
+  final String? expenseCategoryId;
 }
 
 class LoadExpenseCategoryActivity {
   LoadExpenseCategoryActivity({this.completer, this.expenseCategoryId});
 
-  final Completer completer;
-  final String expenseCategoryId;
+  final Completer? completer;
+  final String? expenseCategoryId;
 }
 
 class LoadExpenseCategories {
   LoadExpenseCategories({this.completer});
 
-  final Completer completer;
+  final Completer? completer;
 }
 
 class LoadExpenseCategoryRequest implements StartLoading {}
@@ -124,8 +124,8 @@ class LoadExpenseCategoriesSuccess implements StopLoading {
 class SaveExpenseCategoryRequest implements StartSaving {
   SaveExpenseCategoryRequest({this.completer, this.expenseCategory});
 
-  final Completer completer;
-  final ExpenseCategoryEntity expenseCategory;
+  final Completer? completer;
+  final ExpenseCategoryEntity? expenseCategory;
 }
 
 class SaveExpenseCategorySuccess implements StopSaving, PersistData, PersistUI {
@@ -162,7 +162,7 @@ class ArchiveExpenseCategoriesSuccess implements StopSaving, PersistData {
 class ArchiveExpenseCategoriesFailure implements StopSaving {
   ArchiveExpenseCategoriesFailure(this.expenseCategories);
 
-  final List<ExpenseCategoryEntity> expenseCategories;
+  final List<ExpenseCategoryEntity?> expenseCategories;
 }
 
 class DeleteExpenseCategoriesRequest implements StartSaving {
@@ -181,7 +181,7 @@ class DeleteExpenseCategoriesSuccess implements StopSaving, PersistData {
 class DeleteExpenseCategoriesFailure implements StopSaving {
   DeleteExpenseCategoriesFailure(this.expenseCategories);
 
-  final List<ExpenseCategoryEntity> expenseCategories;
+  final List<ExpenseCategoryEntity?> expenseCategories;
 }
 
 class RestoreExpenseCategoriesRequest implements StartSaving {
@@ -200,7 +200,7 @@ class RestoreExpenseCategoriesSuccess implements StopSaving, PersistData {
 class RestoreExpenseCategoriesFailure implements StopSaving {
   RestoreExpenseCategoriesFailure(this.expenseCategories);
 
-  final List<ExpenseCategoryEntity> expenseCategories;
+  final List<ExpenseCategoryEntity?> expenseCategories;
 }
 
 class FilterExpenseCategories implements PersistUI {
@@ -250,62 +250,62 @@ class StartExpenseCategoryMultiselect {
 }
 
 class AddToExpenseCategoryMultiselect {
-  AddToExpenseCategoryMultiselect({@required this.entity});
+  AddToExpenseCategoryMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromExpenseCategoryMultiselect {
-  RemoveFromExpenseCategoryMultiselect({@required this.entity});
+  RemoveFromExpenseCategoryMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearExpenseCategoryMultiselect {
   ClearExpenseCategoryMultiselect();
 }
 
-void handleExpenseCategoryAction(BuildContext context,
-    List<BaseEntity> expenseCategories, EntityAction action) {
+void handleExpenseCategoryAction(BuildContext? context,
+    List<BaseEntity?> expenseCategories, EntityAction? action) {
   if (expenseCategories.isEmpty) {
     return;
   }
 
-  final store = StoreProvider.of<AppState>(context);
+  final store = StoreProvider.of<AppState>(context!);
   final state = store.state;
   final localization = AppLocalization.of(context);
-  final expenseCategory = expenseCategories.first as ExpenseCategoryEntity;
+  final expenseCategory = expenseCategories.first as ExpenseCategoryEntity?;
   final expenseCategoryIds =
-      expenseCategories.map((expenseCategory) => expenseCategory.id).toList();
+      expenseCategories.map((expenseCategory) => expenseCategory!.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: expenseCategory);
+      editEntity(entity: expenseCategory!);
       break;
     case EntityAction.restore:
       final message = expenseCategoryIds.length > 1
-          ? localization.restoredExpenseCategories
+          ? localization!.restoredExpenseCategories
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', expenseCategoryIds.length.toString())
-          : localization.restoredExpenseCategory;
+          : localization!.restoredExpenseCategory;
       store.dispatch(RestoreExpenseCategoriesRequest(
           snackBarCompleter<Null>(context, message), expenseCategoryIds));
       break;
     case EntityAction.archive:
       final message = expenseCategoryIds.length > 1
-          ? localization.archivedExpenseCategories
+          ? localization!.archivedExpenseCategories
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', expenseCategoryIds.length.toString())
-          : localization.archivedExpenseCategory;
+          : localization!.archivedExpenseCategory;
       store.dispatch(ArchiveExpenseCategoriesRequest(
           snackBarCompleter<Null>(context, message), expenseCategoryIds));
       break;
     case EntityAction.delete:
       final message = expenseCategoryIds.length > 1
-          ? localization.deletedExpenseCategories
+          ? localization!.deletedExpenseCategories
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', expenseCategoryIds.length.toString())
-          : localization.deletedExpenseCategory;
+          : localization!.deletedExpenseCategory;
       store.dispatch(DeleteExpenseCategoriesRequest(
           snackBarCompleter<Null>(context, message), expenseCategoryIds));
       break;
@@ -313,14 +313,14 @@ void handleExpenseCategoryAction(BuildContext context,
       createEntity(
         context: context,
         entity: ExpenseEntity(state: state)
-            .rebuild((b) => b..categoryId = expenseCategory.id),
+            .rebuild((b) => b..categoryId = expenseCategory!.id),
       );
       break;
     case EntityAction.newTransaction:
       createEntity(
         context: context,
         entity: TransactionEntity(state: state)
-            .rebuild((b) => b..categoryId = expenseCategory.id),
+            .rebuild((b) => b..categoryId = expenseCategory!.id),
       );
       break;
     case EntityAction.toggleMultiselect:
@@ -334,7 +334,7 @@ void handleExpenseCategoryAction(BuildContext context,
 
       for (final expenseCategory in expenseCategories) {
         if (!store.state.expenseCategoryListState
-            .isSelected(expenseCategory.id)) {
+            .isSelected(expenseCategory!.id)) {
           store.dispatch(
               AddToExpenseCategoryMultiselect(entity: expenseCategory));
         } else {

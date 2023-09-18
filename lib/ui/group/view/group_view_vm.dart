@@ -26,7 +26,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class GroupViewScreen extends StatelessWidget {
   const GroupViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
   final bool isFilter;
@@ -50,17 +50,17 @@ class GroupViewScreen extends StatelessWidget {
 
 class GroupViewVM {
   GroupViewVM({
-    @required this.state,
-    @required this.group,
-    @required this.company,
-    @required this.onEntityAction,
-    @required this.onBackPressed,
-    @required this.onClientsPressed,
-    @required this.onRefreshed,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.isDirty,
-    @required this.onUploadDocuments,
+    required this.state,
+    required this.group,
+    required this.company,
+    required this.onEntityAction,
+    required this.onBackPressed,
+    required this.onClientsPressed,
+    required this.onRefreshed,
+    required this.isSaving,
+    required this.isLoading,
+    required this.isDirty,
+    required this.onUploadDocuments,
   });
 
   factory GroupViewVM.fromStore(Store<AppState> store) {
@@ -70,7 +70,7 @@ class GroupViewVM {
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadGroup(completer: completer, groupId: group.id));
       return completer.future;
     }
@@ -105,7 +105,7 @@ class GroupViewVM {
             group: group,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context).uploadedDocument);
+          showToast(AppLocalization.of(context)!.uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,
@@ -119,12 +119,12 @@ class GroupViewVM {
 
   final AppState state;
   final GroupEntity group;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext, [bool]) onClientsPressed;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;
+  final Function(BuildContext, List<MultipartFile>, bool?) onUploadDocuments;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;

@@ -24,10 +24,10 @@ abstract class PurchaseOrderState
   @memoized
   int get hashCode;
 
-  BuiltMap<String, InvoiceEntity> get map;
+  BuiltMap<String?, InvoiceEntity?> get map;
   BuiltList<String> get list;
 
-  InvoiceEntity get(String purchaseOrderId) {
+  InvoiceEntity? get(String purchaseOrderId) {
     if (map.containsKey(purchaseOrderId)) {
       return map[purchaseOrderId];
     } else {
@@ -36,7 +36,7 @@ abstract class PurchaseOrderState
   }
 
   PurchaseOrderState loadPurchaseOrders(BuiltList<InvoiceEntity> clients) {
-    final map = Map<String, InvoiceEntity>.fromIterable(
+    final map = Map<String?, InvoiceEntity?>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
@@ -54,7 +54,7 @@ abstract class PurchaseOrderState
 abstract class PurchaseOrderUIState extends Object
     with EntityUIState
     implements Built<PurchaseOrderUIState, PurchaseOrderUIStateBuilder> {
-  factory PurchaseOrderUIState(PrefStateSortField sortField) {
+  factory PurchaseOrderUIState(PrefStateSortField? sortField) {
     return _$PurchaseOrderUIState._(
       listUIState: ListUIState(
         sortField?.field ?? PurchaseOrderFields.number,
@@ -71,22 +71,19 @@ abstract class PurchaseOrderUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  InvoiceEntity get editing;
+  InvoiceEntity? get editing;
 
-  @nullable
   @BuiltValueField(serialize: false)
-  int get editingItemIndex;
+  int? get editingItemIndex;
 
-  @nullable
   @BuiltValueField(serialize: false)
-  String get historyActivityId;
+  String? get historyActivityId;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<PurchaseOrderUIState> get serializer =>
       _$purchaseOrderUIStateSerializer;

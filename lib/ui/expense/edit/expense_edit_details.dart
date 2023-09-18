@@ -32,8 +32,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseEditDetails extends StatefulWidget {
   const ExpenseEditDetails({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final AbstractExpenseEditVM viewModel;
@@ -50,7 +50,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
   final _custom3Controller = TextEditingController();
   final _custom4Controller = TextEditingController();
 
-  List<TextEditingController> _controllers;
+  late List<TextEditingController> _controllers;
   final _debouncer = Debouncer();
 
   @override
@@ -67,10 +67,10 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    final expense = widget.viewModel.expense;
+    final expense = widget.viewModel.expense!;
     _numberController.text = expense.number;
     _amountController.text = formatNumber(expense.amount, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
     _custom1Controller.text = expense.customValue1;
     _custom2Controller.text = expense.customValue2;
     _custom3Controller.text = expense.customValue3;
@@ -94,7 +94,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
 
   void _onChanged() {
     final viewModel = widget.viewModel;
-    final expense = viewModel.expense.rebuild((b) => b
+    final expense = viewModel.expense!.rebuild((b) => b
       ..number = _numberController.text.trim()
       ..amount = parseDouble(_amountController.text)
       ..customValue1 = _custom1Controller.text.trim()
@@ -103,22 +103,22 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
       ..customValue4 = _custom4Controller.text.trim());
     if (expense != viewModel.expense) {
       _debouncer.run(() {
-        viewModel.onChanged(expense);
+        viewModel.onChanged!(expense);
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final viewModel = widget.viewModel;
-    final expense = viewModel.expense;
-    final company = state.company;
-    final staticState = viewModel.state.staticState;
-    final vendorState = viewModel.state.vendorState;
-    final clientState = viewModel.state.clientState;
+    final expense = viewModel.expense!;
+    final company = state.company!;
+    final staticState = viewModel.state!.staticState;
+    final vendorState = viewModel.state!.vendorState;
+    final clientState = viewModel.state!.clientState;
     final isFullscreen = state.prefState.isEditorFullScreen(EntityType.expense);
 
     final amountField = DecoratedFormField(
@@ -156,11 +156,11 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               entityList: memoizedDropdownVendorList(vendorState.map,
                   vendorState.list, state.userState.map, state.staticState),
               onSelected: (vendor) {
-                viewModel.onChanged(
+                viewModel.onChanged!(
                     expense.rebuild((b) => b..vendorId = vendor?.id ?? ''));
               },
               onAddPressed: (completer) {
-                viewModel.onAddVendorPressed(context, completer);
+                viewModel.onAddVendorPressed!(context, completer);
               },
               onCreateNew: (completer, name) {
                 store.dispatch(SaveVendorRequest(
@@ -179,12 +179,12 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                   final currencyId =
                       (client as ClientEntity)?.settings?.currencyId ??
                           company.currencyId;
-                  viewModel.onChanged(expense.rebuild((b) => b
+                  viewModel.onChanged!(expense.rebuild((b) => b
                     ..clientId = client?.id ?? ''
                     ..invoiceCurrencyId = currencyId));
                 },
                 onAddPressed: (completer) {
-                  viewModel.onAddClientPressed(context, completer);
+                  viewModel.onAddClientPressed!(context, completer);
                 },
               ),
               ProjectPicker(
@@ -193,10 +193,10 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                 clientId: expense.clientId,
                 onChanged: (selectedId) {
                   final project = store.state.projectState.get(selectedId);
-                  viewModel.onChanged(expense.rebuild((b) => b
+                  viewModel.onChanged!(expense.rebuild((b) => b
                     ..projectId = project?.id
                     ..clientId = (project?.clientId ?? '').isNotEmpty
-                        ? project.clientId
+                        ? project!.clientId
                         : expense.clientId));
                 },
                 /*
@@ -215,7 +215,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                   state.expenseCategoryState.map,
                   state.expenseCategoryState.list),
               onSelected: (category) {
-                viewModel.onChanged(
+                viewModel.onChanged!(
                     expense.rebuild((b) => b..categoryId = category?.id ?? ''));
               },
               onCreateNew: (completer, name) {
@@ -227,7 +227,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
             ),
             UserPicker(
               userId: expense.assignedUserId,
-              onChanged: (userId) => viewModel.onChanged(
+              onChanged: (userId) => viewModel.onChanged!(
                   expense.rebuild((b) => b..assignedUserId = userId)),
             ),
             if (!expense.usesInclusiveTaxes) amountField,
@@ -238,14 +238,14 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                   initialTaxAmount: expense.taxAmount1,
                   initialTaxName: expense.taxName1,
                   onNameChanged: (name) => viewModel
-                      .onChanged(expense.rebuild((b) => b..taxName1 = name)),
-                  onAmountChanged: (amount) => viewModel.onChanged(
+                      .onChanged!(expense.rebuild((b) => b..taxName1 = name)),
+                  onAmountChanged: (amount) => viewModel.onChanged!(
                       expense.rebuild((b) => b..taxAmount1 = amount)),
                 )
               else
                 TaxRateDropdown(
                   onSelected: (taxRate) =>
-                      viewModel.onChanged(expense.rebuild((b) => b
+                      viewModel.onChanged!(expense.rebuild((b) => b
                         ..taxRate1 = taxRate.rate
                         ..taxName1 = taxRate.name)),
                   labelText: localization.tax,
@@ -259,14 +259,14 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                   initialTaxAmount: expense.taxAmount2,
                   initialTaxName: expense.taxName2,
                   onNameChanged: (name) => viewModel
-                      .onChanged(expense.rebuild((b) => b..taxName2 = name)),
-                  onAmountChanged: (amount) => viewModel.onChanged(
+                      .onChanged!(expense.rebuild((b) => b..taxName2 = name)),
+                  onAmountChanged: (amount) => viewModel.onChanged!(
                       expense.rebuild((b) => b..taxAmount2 = amount)),
                 )
               else
                 TaxRateDropdown(
                   onSelected: (taxRate) =>
-                      viewModel.onChanged(expense.rebuild((b) => b
+                      viewModel.onChanged!(expense.rebuild((b) => b
                         ..taxRate2 = taxRate.rate
                         ..taxName2 = taxRate.name)),
                   labelText: localization.tax,
@@ -280,14 +280,14 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                   initialTaxAmount: expense.taxAmount3,
                   initialTaxName: expense.taxName3,
                   onNameChanged: (name) => viewModel
-                      .onChanged(expense.rebuild((b) => b..taxName3 = name)),
-                  onAmountChanged: (amount) => viewModel.onChanged(
+                      .onChanged!(expense.rebuild((b) => b..taxName3 = name)),
+                  onAmountChanged: (amount) => viewModel.onChanged!(
                       expense.rebuild((b) => b..taxAmount3 = amount)),
                 )
               else
                 TaxRateDropdown(
                   onSelected: (taxRate) =>
-                      viewModel.onChanged(expense.rebuild((b) => b
+                      viewModel.onChanged!(expense.rebuild((b) => b
                         ..taxRate3 = taxRate.rate
                         ..taxName3 = taxRate.name)),
                   labelText: localization.tax,
@@ -300,15 +300,15 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               entityList: memoizedCurrencyList(staticState.currencyMap),
               labelText: localization.currency,
               entityId: expense.currencyId,
-              onSelected: (SelectableEntity currency) => viewModel.onChanged(
-                  viewModel.expense
+              onSelected: (SelectableEntity currency) => viewModel.onChanged!(
+                  viewModel.expense!
                       .rebuild((b) => b..currencyId = currency?.id ?? '')),
             ),
             DatePicker(
               labelText: localization.date,
               selectedDate: expense.date,
               onSelected: (date, _) {
-                viewModel.onChanged(expense.rebuild((b) => b..date = date));
+                viewModel.onChanged!(expense.rebuild((b) => b..date = date));
               },
             ),
             CustomField(
@@ -351,13 +351,13 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                   labelText: localization.frequency,
                   value: expense.frequencyId,
                   onChanged: (dynamic value) {
-                    viewModel.onChanged(
+                    viewModel.onChanged!(
                         expense.rebuild((b) => b..frequencyId = value));
                   },
                   items: kFrequencies.entries
                       .map((entry) => DropdownMenuItem(
                             value: entry.key,
-                            child: Text(localization.lookup(entry.value)),
+                            child: Text(localization.lookup(entry.value)!),
                           ))
                       .toList()),
               DatePicker(
@@ -365,7 +365,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                     ? localization.nextSendDate
                     : localization.startDate,
                 onSelected: (date, _) {
-                  viewModel.onChanged(
+                  viewModel.onChanged!(
                       expense.rebuild((b) => b..nextSendDate = date));
                 },
                 selectedDate: expense.nextSendDate,
@@ -375,7 +375,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                 labelText: localization.remainingCycles,
                 value: expense.remainingCycles,
                 blankValue: null,
-                onChanged: (dynamic value) => viewModel.onChanged(
+                onChanged: (dynamic value) => viewModel.onChanged!(
                     expense.rebuild((b) => b..remainingCycles = value)),
                 items: [
                   DropdownMenuItem(

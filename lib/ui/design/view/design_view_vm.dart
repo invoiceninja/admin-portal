@@ -22,7 +22,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DesignViewScreen extends StatelessWidget {
   const DesignViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
   final bool isFilter;
@@ -47,15 +47,15 @@ class DesignViewScreen extends StatelessWidget {
 
 class DesignViewVM {
   DesignViewVM({
-    @required this.state,
-    @required this.design,
-    @required this.company,
-    @required this.onEntityAction,
-    @required this.onRefreshed,
-    @required this.isSaving,
-    @required this.onBackPressed,
-    @required this.isLoading,
-    @required this.isDirty,
+    required this.state,
+    required this.design,
+    required this.company,
+    required this.onEntityAction,
+    required this.onRefreshed,
+    required this.isSaving,
+    required this.onBackPressed,
+    required this.isLoading,
+    required this.isDirty,
   });
 
   factory DesignViewVM.fromStore(Store<AppState> store) {
@@ -65,7 +65,7 @@ class DesignViewVM {
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadDesign(completer: completer, designId: design.id));
       return completer.future;
     }
@@ -88,7 +88,7 @@ class DesignViewVM {
 
   final AppState state;
   final DesignEntity design;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;

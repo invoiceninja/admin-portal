@@ -21,7 +21,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ExpenseListItem extends StatelessWidget {
   const ExpenseListItem({
-    @required this.expense,
+    required this.expense,
     this.filter,
     this.onTap,
     this.onCheckboxChanged,
@@ -31,10 +31,10 @@ class ExpenseListItem extends StatelessWidget {
     this.showSelected = true,
   });
 
-  final Function(bool) onCheckboxChanged;
-  final GestureTapCallback onTap;
-  final ExpenseEntity expense;
-  final String filter;
+  final Function(bool?)? onCheckboxChanged;
+  final GestureTapCallback? onTap;
+  final ExpenseEntity? expense;
+  final String? filter;
   final bool showCheckbox;
   final bool isDismissible;
   final bool isChecked;
@@ -48,22 +48,22 @@ class ExpenseListItem extends StatelessWidget {
     final uiState = state.uiState;
     final expenseUIState = uiState.expenseUIState;
     final listUIState = expenseUIState.listUIState;
-    final client = state.clientState.get(expense.clientId);
-    final vendor = state.vendorState.get(expense.vendorId);
-    final category = state.expenseCategoryState.get(expense.categoryId);
-    final filterMatch = filter != null && filter.isNotEmpty
-        ? (expense.matchesFilterValue(filter) ??
-            client.matchesFilterValue(filter))
+    final client = state.clientState.get(expense!.clientId!);
+    final vendor = state.vendorState.get(expense!.vendorId!);
+    final category = state.expenseCategoryState.get(expense!.categoryId);
+    final filterMatch = filter != null && filter!.isNotEmpty
+        ? (expense!.matchesFilterValue(filter) ??
+            client!.matchesFilterValue(filter))
         : null;
     final textStyle = TextStyle(fontSize: 16);
-    final textColor = Theme.of(context).textTheme.bodyLarge.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
     String subtitle = '';
     if (filterMatch != null) {
       subtitle = filterMatch;
     } else if (client != null || vendor != null || category != null) {
       final parts = <String>[
-        formatDate(expense.date, context),
+        formatDate(expense!.date, context),
       ];
       if (category != null && category.isOld) {
         parts.add(category.name);
@@ -82,9 +82,9 @@ class ExpenseListItem extends StatelessWidget {
       isDismissible: isDismissible,
       isSelected: isDesktop(context) &&
           showSelected &&
-          expense.id ==
+          expense!.id ==
               (uiState.isEditing
-                  ? expenseUIState.editing.id
+                  ? expenseUIState.editing!.id
                   : expenseUIState.selectedId),
       userCompany: store.state.userCompany,
       entity: expense,
@@ -93,10 +93,10 @@ class ExpenseListItem extends StatelessWidget {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: expense),
+                    onTap != null ? onTap!() : selectEntity(entity: expense!),
                 onLongPress: () => onTap != null
                     ? null
-                    : selectEntity(entity: expense, longPress: true),
+                    : selectEntity(entity: expense!, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 10,
@@ -118,14 +118,14 @@ class ExpenseListItem extends StatelessWidget {
                                     materialTapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
                                     onChanged: (value) =>
-                                        onCheckboxChanged(value),
+                                        onCheckboxChanged!(value),
                                     activeColor:
                                         Theme.of(context).colorScheme.secondary,
                                   ),
                                 ),
                               )
                             : ActionMenuButton(
-                                entityActions: expense.getActions(
+                                entityActions: expense!.getActions(
                                   userCompany: state.userCompany,
                                   includeEdit: true,
                                 ),
@@ -141,11 +141,11 @@ class ExpenseListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              expense.number,
+                              expense!.number,
                               style: textStyle,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            if (!expense.isActive) EntityStateLabel(expense)
+                            if (!expense!.isActive) EntityStateLabel(expense)
                           ],
                         ),
                       ),
@@ -155,19 +155,19 @@ class ExpenseListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              (expense.publicNotes ?? '') +
-                                  (expense.documents.isNotEmpty ? '  📎' : ''),
+                              (expense!.publicNotes ?? '') +
+                                  (expense!.documents.isNotEmpty ? '  📎' : ''),
                               style: textStyle,
                               maxLines: 1,
                             ),
-                            Text(subtitle ?? filterMatch,
+                            Text(subtitle ?? filterMatch!,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .titleSmall
+                                    .titleSmall!
                                     .copyWith(
-                                      color: textColor
+                                      color: textColor!
                                           .withOpacity(kLighterOpacity),
                                     )),
                           ],
@@ -175,8 +175,8 @@ class ExpenseListItem extends StatelessWidget {
                       ),
                       SizedBox(width: 8),
                       Text(
-                        formatNumber(expense.grossAmount, context,
-                            currencyId: expense.currencyId),
+                        formatNumber(expense!.grossAmount, context,
+                            currencyId: expense!.currencyId)!,
                         style: textStyle,
                         textAlign: TextAlign.end,
                       ),
@@ -188,10 +188,10 @@ class ExpenseListItem extends StatelessWidget {
               )
             : ListTile(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: expense),
+                    onTap != null ? onTap!() : selectEntity(entity: expense!),
                 onLongPress: () => onTap != null
                     ? null
-                    : selectEntity(entity: expense, longPress: true),
+                    : selectEntity(entity: expense!, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
                         ignoring: listUIState.isInMultiselect(),
@@ -199,7 +199,7 @@ class ExpenseListItem extends StatelessWidget {
                           value: isChecked,
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => onCheckboxChanged(value),
+                          onChanged: (value) => onCheckboxChanged!(value),
                           activeColor: Theme.of(context).colorScheme.secondary,
                         ),
                       )
@@ -210,17 +210,17 @@ class ExpenseListItem extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          (expense.publicNotes.isEmpty
-                                  ? expense.number
-                                  : expense.publicNotes) +
-                              (expense.documents.isNotEmpty ? '  📎' : ''),
+                          (expense!.publicNotes.isEmpty
+                                  ? expense!.number
+                                  : expense!.publicNotes) +
+                              (expense!.documents.isNotEmpty ? '  📎' : ''),
                           style: Theme.of(context).textTheme.titleMedium,
                           maxLines: 1,
                         ),
                       ),
                       Text(
-                          formatNumber(expense.amount, context,
-                              currencyId: expense.currencyId),
+                          formatNumber(expense!.amount, context,
+                              currencyId: expense!.currencyId)!,
                           style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),
@@ -236,25 +236,25 @@ class ExpenseListItem extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
                                   .textTheme
-                                  .titleSmall
+                                  .titleSmall!
                                   .copyWith(
                                     color:
-                                        textColor.withOpacity(kLighterOpacity),
+                                        textColor!.withOpacity(kLighterOpacity),
                                   )),
                           EntityStateLabel(expense),
                         ],
                       ),
                     ),
                     Text(
-                        localization.lookup(
-                            kExpenseStatuses[expense.calculatedStatusId]),
+                        localization!.lookup(
+                            kExpenseStatuses[expense!.calculatedStatusId])!,
                         style: TextStyle(
-                            color: category.color.isNotEmpty &&
+                            color: category!.color.isNotEmpty &&
                                     category.color != '#fff'
                                 ? convertHexStringToColor(category.color)
                                 : ExpenseStatusColors(
                                         state.prefState.colorThemeModel)
-                                    .colors[expense.calculatedStatusId])),
+                                    .colors[expense!.calculatedStatusId])),
                   ],
                 ),
               );

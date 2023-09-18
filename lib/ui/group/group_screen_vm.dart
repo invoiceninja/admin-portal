@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/redux/group/group_selectors.dart';
 import 'group_screen.dart';
 
 class GroupScreenBuilder extends StatelessWidget {
-  const GroupScreenBuilder({Key key}) : super(key: key);
+  const GroupScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,16 +32,16 @@ class GroupScreenBuilder extends StatelessWidget {
 
 class GroupScreenVM {
   GroupScreenVM({
-    @required this.isInMultiselect,
-    @required this.groupList,
-    @required this.userCompany,
-    @required this.groupMap,
+    required this.isInMultiselect,
+    required this.groupList,
+    required this.userCompany,
+    required this.groupMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> groupList;
-  final BuiltMap<String, GroupEntity> groupMap;
+  final BuiltMap<String?, GroupEntity?> groupMap;
 
   static GroupScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

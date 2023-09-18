@@ -11,54 +11,54 @@ import 'package:invoiceninja_flutter/redux/bank_account/bank_account_state.dart'
 EntityUIState bankAccountUIReducer(BankAccountUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(bankAccountListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
+    ..editing.replace(editingReducer(state.editing, action)!)
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..forceSelected = forceSelectedReducer(state.forceSelected, action)
     ..tabIndex = tabIndexReducer(state.tabIndex, action));
 }
 
-final forceSelectedReducer = combineReducers<bool>([
-  TypedReducer<bool, ViewBankAccount>((completer, action) => true),
-  TypedReducer<bool, ViewBankAccountList>((completer, action) => false),
-  TypedReducer<bool, FilterBankAccountsByState>((completer, action) => false),
-  TypedReducer<bool, FilterBankAccounts>((completer, action) => false),
-  TypedReducer<bool, FilterBankAccountsByCustom1>((completer, action) => false),
-  TypedReducer<bool, FilterBankAccountsByCustom2>((completer, action) => false),
-  TypedReducer<bool, FilterBankAccountsByCustom3>((completer, action) => false),
-  TypedReducer<bool, FilterBankAccountsByCustom4>((completer, action) => false),
+final forceSelectedReducer = combineReducers<bool?>([
+  TypedReducer<bool?, ViewBankAccount>((completer, action) => true),
+  TypedReducer<bool?, ViewBankAccountList>((completer, action) => false),
+  TypedReducer<bool?, FilterBankAccountsByState>((completer, action) => false),
+  TypedReducer<bool?, FilterBankAccounts>((completer, action) => false),
+  TypedReducer<bool?, FilterBankAccountsByCustom1>((completer, action) => false),
+  TypedReducer<bool?, FilterBankAccountsByCustom2>((completer, action) => false),
+  TypedReducer<bool?, FilterBankAccountsByCustom3>((completer, action) => false),
+  TypedReducer<bool?, FilterBankAccountsByCustom4>((completer, action) => false),
 ]);
 
-final tabIndexReducer = combineReducers<int>([
-  TypedReducer<int, UpdateBankAccountTab>((completer, action) {
+final int? Function(int, dynamic) tabIndexReducer = combineReducers<int?>([
+  TypedReducer<int?, UpdateBankAccountTab>((completer, action) {
     return action.tabIndex;
   }),
-  TypedReducer<int, PreviewEntity>((completer, action) {
+  TypedReducer<int?, PreviewEntity>((completer, action) {
     return 0;
   }),
 ]);
 
-Reducer<String> selectedIdReducer = combineReducers([
-  TypedReducer<String, ArchiveBankAccountsSuccess>((completer, action) => ''),
-  TypedReducer<String, DeleteBankAccountsSuccess>((completer, action) => ''),
-  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+Reducer<String?> selectedIdReducer = combineReducers([
+  TypedReducer<String?, ArchiveBankAccountsSuccess>((completer, action) => ''),
+  TypedReducer<String?, DeleteBankAccountsSuccess>((completer, action) => ''),
+  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.bankAccount
           ? action.entityId
           : selectedId),
-  TypedReducer<String, ViewBankAccount>(
-      (String selectedId, dynamic action) => action.bankAccountId),
-  TypedReducer<String, AddBankAccountSuccess>(
-      (String selectedId, dynamic action) => action.bankAccount.id),
-  TypedReducer<String, SelectCompany>(
+  TypedReducer<String?, ViewBankAccount>(
+      (String? selectedId, dynamic action) => action.bankAccountId),
+  TypedReducer<String?, AddBankAccountSuccess>(
+      (String? selectedId, dynamic action) => action.bankAccount.id),
+  TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, SortBankAccounts>((selectedId, action) => ''),
-  TypedReducer<String, FilterBankAccounts>((selectedId, action) => ''),
-  TypedReducer<String, FilterBankAccountsByState>((selectedId, action) => ''),
-  TypedReducer<String, FilterBankAccountsByCustom1>((selectedId, action) => ''),
-  TypedReducer<String, FilterBankAccountsByCustom2>((selectedId, action) => ''),
-  TypedReducer<String, FilterBankAccountsByCustom3>((selectedId, action) => ''),
-  TypedReducer<String, FilterBankAccountsByCustom4>((selectedId, action) => ''),
-  TypedReducer<String, FilterByEntity>(
+  TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String?, SortBankAccounts>((selectedId, action) => ''),
+  TypedReducer<String?, FilterBankAccounts>((selectedId, action) => ''),
+  TypedReducer<String?, FilterBankAccountsByState>((selectedId, action) => ''),
+  TypedReducer<String?, FilterBankAccountsByCustom1>((selectedId, action) => ''),
+  TypedReducer<String?, FilterBankAccountsByCustom2>((selectedId, action) => ''),
+  TypedReducer<String?, FilterBankAccountsByCustom3>((selectedId, action) => ''),
+  TypedReducer<String?, FilterBankAccountsByCustom4>((selectedId, action) => ''),
+  TypedReducer<String?, FilterByEntity>(
       (selectedId, action) => action.clearSelection
           ? ''
           : action.entityType == EntityType.bankAccount
@@ -66,34 +66,34 @@ Reducer<String> selectedIdReducer = combineReducers([
               : selectedId),
 ]);
 
-final editingReducer = combineReducers<BankAccountEntity>([
-  TypedReducer<BankAccountEntity, SaveBankAccountSuccess>(_updateEditing),
-  TypedReducer<BankAccountEntity, AddBankAccountSuccess>(_updateEditing),
-  TypedReducer<BankAccountEntity, EditBankAccount>(_updateEditing),
-  TypedReducer<BankAccountEntity, UpdateBankAccount>((bankAccount, action) {
+final editingReducer = combineReducers<BankAccountEntity?>([
+  TypedReducer<BankAccountEntity?, SaveBankAccountSuccess>(_updateEditing),
+  TypedReducer<BankAccountEntity?, AddBankAccountSuccess>(_updateEditing),
+  TypedReducer<BankAccountEntity?, EditBankAccount>(_updateEditing),
+  TypedReducer<BankAccountEntity?, UpdateBankAccount>((bankAccount, action) {
     return action.bankAccount.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<BankAccountEntity, RestoreBankAccountsSuccess>(
+  TypedReducer<BankAccountEntity?, RestoreBankAccountsSuccess>(
       (bankAccounts, action) {
     return action.bankAccounts[0];
   }),
-  TypedReducer<BankAccountEntity, ArchiveBankAccountsSuccess>(
+  TypedReducer<BankAccountEntity?, ArchiveBankAccountsSuccess>(
       (bankAccounts, action) {
     return action.bankAccounts[0];
   }),
-  TypedReducer<BankAccountEntity, DeleteBankAccountsSuccess>(
+  TypedReducer<BankAccountEntity?, DeleteBankAccountsSuccess>(
       (bankAccounts, action) {
     return action.bankAccounts[0];
   }),
-  TypedReducer<BankAccountEntity, DiscardChanges>(_clearEditing),
+  TypedReducer<BankAccountEntity?, DiscardChanges>(_clearEditing),
 ]);
 
-BankAccountEntity _clearEditing(BankAccountEntity bankAccount, dynamic action) {
+BankAccountEntity _clearEditing(BankAccountEntity? bankAccount, dynamic action) {
   return BankAccountEntity();
 }
 
-BankAccountEntity _updateEditing(
-    BankAccountEntity bankAccount, dynamic action) {
+BankAccountEntity? _updateEditing(
+    BankAccountEntity? bankAccount, dynamic action) {
   return action.bankAccount;
 }
 
@@ -171,7 +171,7 @@ ListUIState _filterBankAccounts(
 ListUIState _sortBankAccounts(
     ListUIState bankAccountListState, SortBankAccounts action) {
   return bankAccountListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortAscending = b.sortField != action.field || !b.sortAscending!
     ..sortField = action.field);
 }
 
@@ -182,13 +182,13 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState productListState, AddToBankAccountMultiselect action) {
-  return productListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+  return productListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState productListState, RemoveFromBankAccountMultiselect action) {
   return productListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(
@@ -263,6 +263,6 @@ BankAccountState _setLoadedBankAccounts(
 
 BankAccountState _setLoadedCompany(
     BankAccountState bankAccountState, LoadCompanySuccess action) {
-  final company = action.userCompany.company;
+  final company = action.userCompany.company!;
   return bankAccountState.loadBankAccounts(company.bankAccounts);
 }

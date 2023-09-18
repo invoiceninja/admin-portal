@@ -21,23 +21,23 @@ class PaymentTermRepository {
   final WebClient webClient;
 
   Future<PaymentTermEntity> loadItem(
-      Credentials credentials, String entityId) async {
+      Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/payment_terms/$entityId', credentials.token);
 
     final PaymentTermItemResponse paymentTermResponse = serializers
-        .deserializeWith(PaymentTermItemResponse.serializer, response);
+        .deserializeWith(PaymentTermItemResponse.serializer, response)!;
 
     return paymentTermResponse.data;
   }
 
   Future<BuiltList<PaymentTermEntity>> loadList(Credentials credentials) async {
-    final url = credentials.url + '/payment_terms?';
+    final url = credentials.url! + '/payment_terms?';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
     final PaymentTermListResponse paymentTermResponse = serializers
-        .deserializeWith(PaymentTermListResponse.serializer, response);
+        .deserializeWith(PaymentTermListResponse.serializer, response)!;
 
     return paymentTermResponse.data;
   }
@@ -48,13 +48,13 @@ class PaymentTermRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url +
+    final url = credentials.url! +
         '/payment_terms/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final PaymentTermListResponse paymentTermResponse = serializers
-        .deserializeWith(PaymentTermListResponse.serializer, response);
+        .deserializeWith(PaymentTermListResponse.serializer, response)!;
 
     return paymentTermResponse.data.toList();
   }
@@ -67,7 +67,7 @@ class PaymentTermRepository {
 
     if (paymentTerm.isNew) {
       response = await webClient.post(
-          credentials.url + '/payment_terms', credentials.token,
+          credentials.url! + '/payment_terms', credentials.token,
           data: json.encode(data));
     } else {
       final url = '${credentials.url}/payment_terms/${paymentTerm.id}';
@@ -76,7 +76,7 @@ class PaymentTermRepository {
     }
 
     final PaymentTermItemResponse paymentTermResponse = serializers
-        .deserializeWith(PaymentTermItemResponse.serializer, response);
+        .deserializeWith(PaymentTermItemResponse.serializer, response)!;
 
     return paymentTermResponse.data;
   }

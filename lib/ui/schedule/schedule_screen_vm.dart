@@ -11,7 +11,7 @@ import 'package:redux/redux.dart';
 import 'schedule_screen.dart';
 
 class ScheduleScreenBuilder extends StatelessWidget {
-  const ScheduleScreenBuilder({Key key}) : super(key: key);
+  const ScheduleScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,18 +28,18 @@ class ScheduleScreenBuilder extends StatelessWidget {
 
 class ScheduleScreenVM {
   ScheduleScreenVM({
-    @required this.isInMultiselect,
-    @required this.scheduleList,
-    @required this.userCompany,
-    @required this.onEntityAction,
-    @required this.scheduleMap,
+    required this.isInMultiselect,
+    required this.scheduleList,
+    required this.userCompany,
+    required this.onEntityAction,
+    required this.scheduleMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> scheduleList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final BuiltMap<String, ScheduleEntity> scheduleMap;
+  final BuiltMap<String?, ScheduleEntity?> scheduleMap;
 
   static ScheduleScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

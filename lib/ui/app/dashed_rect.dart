@@ -75,9 +75,9 @@ class DashRectPainter extends CustomPainter {
   }
 
   Path getDashedPath({
-    @required math.Point<double> a,
-    @required math.Point<double> b,
-    @required double gap,
+    required math.Point<double> a,
+    required math.Point<double> b,
+    required double gap,
   }) {
     final size = Size(b.x - a.x, b.y - a.y);
     final path = Path();
@@ -97,8 +97,8 @@ class DashRectPainter extends CustomPainter {
 
     while (currentPoint.x <= b.x && currentPoint.y <= b.y) {
       shouldDraw
-          ? path.lineTo(currentPoint.x, currentPoint.y)
-          : path.moveTo(currentPoint.x, currentPoint.y);
+          ? path.lineTo(currentPoint.x as double, currentPoint.y as double)
+          : path.moveTo(currentPoint.x as double, currentPoint.y as double);
       shouldDraw = !shouldDraw;
       currentPoint = math.Point(
         currentPoint.x + dx,

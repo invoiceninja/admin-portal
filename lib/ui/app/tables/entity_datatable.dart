@@ -22,22 +22,22 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class EntityDataTableSource extends AppDataTableSource {
   EntityDataTableSource(
-      {@required this.context,
-      @required this.editingId,
-      @required this.entityList,
-      @required this.entityMap,
-      @required this.entityPresenter,
-      @required this.tableColumns,
-      @required this.entityType,
-      @required this.onTap});
+      {required this.context,
+      required this.editingId,
+      required this.entityList,
+      required this.entityMap,
+      required this.entityPresenter,
+      required this.tableColumns,
+      required this.entityType,
+      required this.onTap});
 
   EntityType entityType;
   String editingId;
   BuildContext context;
-  List<String> entityList;
-  EntityPresenter entityPresenter;
-  BuiltMap<String, BaseEntity> entityMap;
-  List<String> tableColumns;
+  List<String?> entityList;
+  EntityPresenter? entityPresenter;
+  BuiltMap<String?, BaseEntity?>? entityMap;
+  List<String>? tableColumns;
 
   final Function(BaseEntity entity) onTap;
 
@@ -54,8 +54,8 @@ class EntityDataTableSource extends AppDataTableSource {
   DataRow getRow(int index) {
     final state = StoreProvider.of<AppState>(context).state;
     final prefState = state.prefState;
-    final entity = entityMap[entityList[index]];
-    entityPresenter.initialize(entity, context);
+    final entity = entityMap![entityList[index]];
+    entityPresenter!.initialize(entity, context);
 
     final listState = state.getListState(entityType);
     final uIState = state.getUIState(entityType);
@@ -63,7 +63,7 @@ class EntityDataTableSource extends AppDataTableSource {
     if (entity == null) {
       return DataRow(cells: [
         DataCell(SizedBox()),
-        ...tableColumns.map(
+        ...tableColumns!.map(
           (field) => DataCell(
             SizedBox(),
           ),
@@ -76,12 +76,12 @@ class EntityDataTableSource extends AppDataTableSource {
         (state.prefState.isPreviewVisible || state.uiState.isEditing)) {
       if (state.uiState.isEditing
           ? entity.id == editingId
-          : entity.id == uIState.selectedId) {
+          : entity.id == uIState!.selectedId) {
         isSelected = true;
       }
     }
 
-    Color backgroundColor;
+    Color? backgroundColor;
     final rowColor = state.prefState.activeCustomColors[
             PrefState.THEME_TABLE_ALTERNATE_ROW_BACKGROUND_COLOR] ??
         '';
@@ -115,7 +115,7 @@ class EntityDataTableSource extends AppDataTableSource {
               children: <Widget>[
                 IconButton(
                   tooltip: prefState.enableTooltips
-                      ? AppLocalization.of(context).longPressToSelect
+                      ? AppLocalization.of(context)!.longPressToSelect
                       : null,
                   onPressed: () => editEntity(entity: entity),
                   icon: GestureDetector(
@@ -142,10 +142,10 @@ class EntityDataTableSource extends AppDataTableSource {
             onTap: () => onTap(entity),
             backgroundColor: backgroundColor,
           ),
-        ...tableColumns.map(
+        ...tableColumns!.map(
           (field) => DataCell(
             ConstrainedBox(
-              child: entityPresenter.getField(field: field, context: context),
+              child: entityPresenter!.getField(field: field, context: context),
               constraints: BoxConstraints(
                 maxWidth: wideFields.contains(field)
                     ? kTableColumnWidthMax * 1.5

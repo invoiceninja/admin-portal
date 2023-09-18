@@ -9,21 +9,21 @@ import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class InvoiceTaxDetails extends StatelessWidget {
   const InvoiceTaxDetails({
-    Key key,
-    @required this.invoice,
+    Key? key,
+    required this.invoice,
   }) : super(key: key);
 
   final InvoiceEntity invoice;
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final state = StoreProvider.of<AppState>(context).state;
-    final client = state.clientState.get(invoice.clientId);
+    final client = state.clientState.get(invoice.clientId)!;
     final taxData = invoice.isNew ? client.taxData : invoice.taxData;
 
     return AlertDialog(
-      title: Text(localization.taxDetails),
+      title: Text(localization.taxDetails!),
       content: SizedBox(
         width: isDesktop(context) ? 500 : null,
         child: client.isTaxExempt
@@ -33,7 +33,7 @@ class InvoiceTaxDetails extends StatelessWidget {
               )
             : DataTable(
                 columns: [
-                  DataColumn(label: Text(localization.region)),
+                  DataColumn(label: Text(localization.region!)),
                   DataColumn(label: Text(localization.name)),
                   DataColumn(label: Text(localization.tax)),
                 ],
@@ -44,7 +44,7 @@ class InvoiceTaxDetails extends StatelessWidget {
                     DataCell(Text('${taxData.stateSalesTax}')),
                   ]),
                   DataRow(cells: [
-                    DataCell(Text(localization.county)),
+                    DataCell(Text(localization.county!)),
                     DataCell(Text(toTitleCase(taxData.geoCounty) +
                         (taxData.countyTaxCode.isEmpty
                             ? ''
@@ -60,7 +60,7 @@ class InvoiceTaxDetails extends StatelessWidget {
                     DataCell(Text('${taxData.citySalesTax}')),
                   ]),
                   DataRow(cells: [
-                    DataCell(Text(localization.district)),
+                    DataCell(Text(localization.district!)),
                     DataCell(Text('')),
                     DataCell(Text('${taxData.districtSalesTax}')),
                   ]),

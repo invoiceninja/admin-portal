@@ -16,8 +16,8 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 
 class PurchaseOrderEditItemsScreen extends StatelessWidget {
   const PurchaseOrderEditItemsScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final AbstractInvoiceEditVM viewModel;
@@ -29,7 +29,7 @@ class PurchaseOrderEditItemsScreen extends StatelessWidget {
         return PurchaseOrderEditItemsVM.fromStore(store);
       },
       builder: (context, viewModel) {
-        if (viewModel.state.prefState.isEditorFullScreen(EntityType.invoice)) {
+        if (viewModel.state!.prefState.isEditorFullScreen(EntityType.invoice)) {
           return InvoiceEditItemsDesktop(
             viewModel: viewModel,
             entityViewModel: this.viewModel,
@@ -48,16 +48,16 @@ class PurchaseOrderEditItemsScreen extends StatelessWidget {
 
 class PurchaseOrderEditItemsVM extends EntityEditItemsVM {
   PurchaseOrderEditItemsVM({
-    AppState state,
-    CompanyEntity company,
-    InvoiceEntity invoice,
-    int invoiceItemIndex,
-    Function addLineItem,
-    Function deleteLineItem,
-    Function(int) onRemoveInvoiceItemPressed,
-    Function onDoneInvoiceItemPressed,
-    Function(InvoiceItemEntity, int) onChangedInvoiceItem,
-    Function(int, int) onMovedInvoiceItem,
+    AppState? state,
+    CompanyEntity? company,
+    InvoiceEntity? invoice,
+    int? invoiceItemIndex,
+    Function? addLineItem,
+    Function? deleteLineItem,
+    Function(int)? onRemoveInvoiceItemPressed,
+    Function? onDoneInvoiceItemPressed,
+    Function(InvoiceItemEntity, int)? onChangedInvoiceItem,
+    Function(int, int)? onMovedInvoiceItem,
   }) : super(
           state: state,
           company: company,
@@ -84,7 +84,7 @@ class PurchaseOrderEditItemsVM extends EntityEditItemsVM {
         store.dispatch(EditPurchaseOrderItem());
       },
       onChangedInvoiceItem: (purchaseOrderItem, index) {
-        final purchaseOrder = store.state.purchaseOrderUIState.editing;
+        final purchaseOrder = store.state.purchaseOrderUIState.editing!;
         if (index == purchaseOrder.lineItems.length) {
           store.dispatch(
               AddPurchaseOrderItem(purchaseOrderItem: purchaseOrderItem));

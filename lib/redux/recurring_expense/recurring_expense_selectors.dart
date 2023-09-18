@@ -41,7 +41,7 @@ List<String> dropdownRecurringExpensesSelector(
     StaticState staticState,
     String clientId) {
   final list = recurringExpenseList.where((recurringExpenseId) {
-    final recurringExpense = recurringExpenseMap[recurringExpenseId];
+    final recurringExpense = recurringExpenseMap[recurringExpenseId]!;
     /*
     if (clientId != null && clientId > 0 && recurringExpense.clientId != clientId) {
       return false;
@@ -51,7 +51,7 @@ List<String> dropdownRecurringExpensesSelector(
   }).toList();
 
   list.sort((recurringExpenseAId, recurringExpenseBId) {
-    final recurringExpenseA = recurringExpenseMap[recurringExpenseAId];
+    final recurringExpenseA = recurringExpenseMap[recurringExpenseAId]!;
     final recurringExpenseB = recurringExpenseMap[recurringExpenseBId];
     return recurringExpenseA.compareTo(
         recurringExpenseB,
@@ -69,13 +69,13 @@ List<String> dropdownRecurringExpensesSelector(
 }
 
 var memoizedFilteredRecurringExpenseList = memo9((SelectionState selectionState,
-        BuiltMap<String, ExpenseEntity> expenseMap,
-        BuiltMap<String, ClientEntity> clientMap,
-        BuiltMap<String, VendorEntity> vendorMap,
-        BuiltMap<String, UserEntity> userMap,
+        BuiltMap<String?, ExpenseEntity?> expenseMap,
+        BuiltMap<String?, ClientEntity?> clientMap,
+        BuiltMap<String?, VendorEntity?> vendorMap,
+        BuiltMap<String?, UserEntity?> userMap,
         ListUIState expenseListState,
-        BuiltMap<String, InvoiceEntity> invoiceMap,
-        BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+        BuiltMap<String?, InvoiceEntity?> invoiceMap,
+        BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
         StaticState staticState) =>
     filteredRecurringExpensesSelector(
         selectionState,
@@ -88,21 +88,21 @@ var memoizedFilteredRecurringExpenseList = memo9((SelectionState selectionState,
         expenseCategoryMap,
         staticState));
 
-List<String> filteredRecurringExpensesSelector(
+List<String?> filteredRecurringExpensesSelector(
     SelectionState selectionState,
-    BuiltMap<String, ExpenseEntity> expenseMap,
-    BuiltMap<String, ClientEntity> clientMap,
-    BuiltMap<String, VendorEntity> vendorMap,
-    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String?, ExpenseEntity?> expenseMap,
+    BuiltMap<String?, ClientEntity?> clientMap,
+    BuiltMap<String?, VendorEntity?> vendorMap,
+    BuiltMap<String?, UserEntity?> userMap,
     ListUIState expenseListState,
-    BuiltMap<String, InvoiceEntity> invoiceMap,
-    BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+    BuiltMap<String?, InvoiceEntity?> invoiceMap,
+    BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
     StaticState staticState) {
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;
 
   final list = expenseMap.keys.where((expenseId) {
-    final expense = expenseMap[expenseId];
+    final expense = expenseMap[expenseId]!;
     final expenseCategory =
         expenseCategoryMap[expense.categoryId] ?? ExpenseCategoryEntity();
     final vendor =
@@ -174,7 +174,7 @@ List<String> filteredRecurringExpensesSelector(
   }).toList();
 
   list.sort((expenseAId, expenseBId) {
-    final expenseA = expenseMap[expenseAId];
+    final expenseA = expenseMap[expenseAId]!;
     final expenseB = expenseMap[expenseBId];
     return expenseA.compareTo(
         expenseB,
@@ -192,15 +192,15 @@ List<String> filteredRecurringExpensesSelector(
 }
 
 var memoizedRecurringExpenseStatsForClient = memo2(
-    (String clientId, BuiltMap<String, ExpenseEntity> expenseMap) =>
+    (String clientId, BuiltMap<String?, ExpenseEntity?> expenseMap) =>
         recurringExpenseStatsForClient(clientId, expenseMap));
 
 EntityStats recurringExpenseStatsForClient(
-    String clientId, BuiltMap<String, ExpenseEntity> expenseMap) {
+    String clientId, BuiltMap<String?, ExpenseEntity?> expenseMap) {
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {
-    if (expense.clientId == clientId) {
+    if (expense!.clientId == clientId) {
       if (expense.isActive) {
         countActive++;
       } else if (expense.isArchived) {
@@ -213,15 +213,15 @@ EntityStats recurringExpenseStatsForClient(
 }
 
 var memoizedRecurringExpenseStatsForVendor = memo2(
-    (String vendorId, BuiltMap<String, ExpenseEntity> expenseMap) =>
+    (String vendorId, BuiltMap<String?, ExpenseEntity?> expenseMap) =>
         recurringExpenseStatsForVendor(vendorId, expenseMap));
 
 EntityStats recurringExpenseStatsForVendor(
-    String vendorId, BuiltMap<String, ExpenseEntity> expenseMap) {
+    String vendorId, BuiltMap<String?, ExpenseEntity?> expenseMap) {
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {
-    if (expense.vendorId == vendorId) {
+    if (expense!.vendorId == vendorId) {
       if (expense.isActive) {
         countActive++;
       } else if (expense.isArchived) {
@@ -234,15 +234,15 @@ EntityStats recurringExpenseStatsForVendor(
 }
 
 var memoizedTransactionStatsForVendor = memo2(
-    (String vendorId, BuiltMap<String, TransactionEntity> transactionMap) =>
+    (String vendorId, BuiltMap<String?, TransactionEntity?> transactionMap) =>
         transactionStatsForVendor(vendorId, transactionMap));
 
 EntityStats transactionStatsForVendor(
-    String vendorId, BuiltMap<String, TransactionEntity> transactionMap) {
+    String vendorId, BuiltMap<String?, TransactionEntity?> transactionMap) {
   int countActive = 0;
   int countArchived = 0;
   transactionMap.forEach((transactionId, transaction) {
-    if (transaction.vendorId == vendorId) {
+    if (transaction!.vendorId == vendorId) {
       if (transaction.isActive) {
         countActive++;
       } else if (transaction.isArchived) {
@@ -255,18 +255,18 @@ EntityStats transactionStatsForVendor(
 }
 
 var memoizedRecurringExpenseStatsForUser = memo2(
-    (String userId, BuiltMap<String, ExpenseEntity> expenseMap) =>
+    (String userId, BuiltMap<String?, ExpenseEntity?> expenseMap) =>
         recurringExpenseStatsForUser(userId, expenseMap));
 
 EntityStats recurringExpenseStatsForUser(
-    String userId, BuiltMap<String, ExpenseEntity> expenseMap) {
+    String userId, BuiltMap<String?, ExpenseEntity?> expenseMap) {
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {
-    if (expense.assignedUserId == userId) {
+    if (expense!.assignedUserId == userId) {
       if (expense.isActive) {
         countActive++;
-      } else if (expense.isDeleted) {
+      } else if (expense.isDeleted!) {
         countArchived++;
       }
     }
@@ -276,18 +276,18 @@ EntityStats recurringExpenseStatsForUser(
 }
 
 var memoizedRecurringExpenseStatsForExpense = memo2(
-    (String expenseId, BuiltMap<String, ExpenseEntity> expenseMap) =>
+    (String expenseId, BuiltMap<String?, ExpenseEntity?> expenseMap) =>
         recurringExpenseStatsForExpense(expenseId, expenseMap));
 
 EntityStats recurringExpenseStatsForExpense(
-    String recurrigExpenseId, BuiltMap<String, ExpenseEntity> expenseMap) {
+    String recurrigExpenseId, BuiltMap<String?, ExpenseEntity?> expenseMap) {
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {
-    if (expense.recurringExpenseId == recurrigExpenseId) {
+    if (expense!.recurringExpenseId == recurrigExpenseId) {
       if (expense.isActive) {
         countActive++;
-      } else if (expense.isDeleted) {
+      } else if (expense.isDeleted!) {
         countArchived++;
       }
     }

@@ -490,7 +490,7 @@ abstract class CompanyEntity extends Object
   bool get isActive => true;
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     for (final user in users) {
       if (user.matchesFilter(filter)) {
         return true;
@@ -514,7 +514,7 @@ abstract class CompanyEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     for (final user in users) {
       final value = user.matchesFilterValue(filter);
       if (value != null) {
@@ -541,10 +541,10 @@ abstract class CompanyEntity extends Object
   }
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
   @override
-  FormatNumberType get listDisplayAmountType => null;
+  FormatNumberType? get listDisplayAmountType => null;
 
   @override
   String get listDisplayName => settings?.name ?? '';
@@ -625,15 +625,15 @@ abstract class CompanyEntity extends Object
     }
 
     if (customFields.containsKey(field)) {
-      return customFields[field].split('|').first;
+      return customFields[field]!.split('|').first;
     } else {
       return '';
     }
   }
 
-  String getCustomFieldType(String field) {
+  String getCustomFieldType(String? field) {
     if ((customFields[field] ?? '').contains('|')) {
-      final value = customFields[field].split('|').last;
+      final value = customFields[field]!.split('|').last;
       if ([kFieldTypeSingleLineText, kFieldTypeDate, kFieldTypeSwitch]
           .contains(value)) {
         return value;
@@ -646,14 +646,14 @@ abstract class CompanyEntity extends Object
   }
 
   String formatCustomFieldValue(String field, String value) {
-    final context = navigatorKey.currentContext;
+    final context = navigatorKey.currentContext!;
     final type = getCustomFieldType(field);
     final localization = AppLocalization.of(context);
 
     if (type == kFieldTypeDate) {
       value = formatDate(value, context);
     } else if (type == kFieldTypeSwitch) {
-      value = value == kSwitchValueYes ? localization.yes : localization.no;
+      value = value == kSwitchValueYes ? localization!.yes : localization!.no;
     }
 
     return getCustomFieldLabel(field) + ': $value';
@@ -705,7 +705,7 @@ abstract class CompanyEntity extends Object
           ..companyGateways.clear(),
       );
 
-  bool isModuleEnabled(EntityType entityType) {
+  bool isModuleEnabled(EntityType? entityType) {
     if ((entityType == EntityType.invoice ||
             entityType == EntityType.payment) &&
         enabledModules & kModuleInvoices == 0) {
@@ -860,13 +860,13 @@ abstract class GatewayEntity extends Object
   String get fields;
 
   bool get supportsTokenBilling => options.keys
-      .where((typeId) => options[typeId].supportTokenBilling)
+      .where((typeId) => options[typeId]!.supportTokenBilling)
       .isNotEmpty;
 
   bool supportsRefunds(String gatewayTypeId) =>
       options[gatewayTypeId]?.supportRefunds ?? false;
 
-  Map<String, dynamic> get parsedFields =>
+  Map<String, dynamic>? get parsedFields =>
       fields.isEmpty ? <String, dynamic>{} : jsonDecode(fields);
 
   int compareTo(GatewayEntity gateway, String sortField, bool sortAscending) {
@@ -887,7 +887,7 @@ abstract class GatewayEntity extends Object
   }
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     if (filter == null || filter.isEmpty) {
       return true;
     }
@@ -906,11 +906,11 @@ abstract class GatewayEntity extends Object
     }
 
     final gatewayIds = options.keys.toList();
-    final localization = AppLocalization.of(navigatorKey.currentContext);
+    final localization = AppLocalization.of(navigatorKey.currentContext!);
 
     for (var i = 0; i < gatewayIds.length; i++) {
       final gatewayTypeId = gatewayIds[i];
-      final gatewayType = localization.lookup(kGatewayTypes[gatewayTypeId]);
+      final gatewayType = localization!.lookup(kGatewayTypes[gatewayTypeId])!;
 
       if (gatewayType.toLowerCase().contains(filter)) {
         return true;
@@ -921,7 +921,7 @@ abstract class GatewayEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     if (filter == null || filter.isEmpty) {
       return null;
     }
@@ -934,11 +934,11 @@ abstract class GatewayEntity extends Object
     }
 
     final gatewayIds = options.keys.toList();
-    final localization = AppLocalization.of(navigatorKey.currentContext);
+    final localization = AppLocalization.of(navigatorKey.currentContext!);
 
     for (var i = 0; i < gatewayIds.length; i++) {
       final gatewayTypeId = gatewayIds[i];
-      final gatewayType = localization.lookup(kGatewayTypes[gatewayTypeId]);
+      final gatewayType = localization!.lookup(kGatewayTypes[gatewayTypeId])!;
 
       if (gatewayType.toLowerCase().contains(filter)) {
         return gatewayType;
@@ -952,9 +952,9 @@ abstract class GatewayEntity extends Object
   String get listDisplayName => name;
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
-  static String getClientUrl({String gatewayId, String customerReference}) {
+  static String? getClientUrl({String? gatewayId, String? customerReference}) {
     switch (gatewayId) {
       case kGatewayStripe:
       case kGatewayStripeConnect:
@@ -964,11 +964,11 @@ abstract class GatewayEntity extends Object
     }
   }
 
-  static String getPaymentUrl({String gatewayId, String transactionReference}) {
+  static String? getPaymentUrl({String? gatewayId, String? transactionReference}) {
     switch (gatewayId) {
       case kGatewayStripe:
       case kGatewayStripeConnect:
-        if (transactionReference.startsWith('src'))
+        if (transactionReference!.startsWith('src'))
           return 'https://dashboard.stripe.com/sources/$transactionReference';
         else
           return 'https://dashboard.stripe.com/payments/$transactionReference';
@@ -989,7 +989,7 @@ abstract class GatewayEntity extends Object
   }
 
   @override
-  FormatNumberType get listDisplayAmountType => null;
+  FormatNumberType? get listDisplayAmountType => null;
 
   // ignore: unused_element
   static void _initializeBuilder(GatewayEntityBuilder builder) =>
@@ -1019,8 +1019,7 @@ abstract class GatewayOptionsEntity
   @BuiltValueField(wireName: 'token_billing')
   bool get supportTokenBilling;
 
-  @nullable
-  BuiltList<String> get webhooks;
+  BuiltList<String>? get webhooks;
 
   static Serializer<GatewayOptionsEntity> get serializer =>
       _$gatewayOptionsEntitySerializer;
@@ -1062,33 +1061,27 @@ abstract class UserCompanyEntity
 
   String get permissions;
 
-  @nullable
-  BuiltMap<String, BuiltList<String>> get notifications;
+  BuiltMap<String, BuiltList<String>>? get notifications;
 
-  @nullable
-  CompanyEntity get company;
+  CompanyEntity? get company;
 
-  @nullable
-  UserEntity get user;
+  UserEntity? get user;
 
-  @nullable
-  TokenEntity get token;
+  TokenEntity? get token;
 
-  @nullable
-  AccountEntity get account;
+  AccountEntity? get account;
 
-  @nullable
-  UserSettingsEntity get settings;
+  UserSettingsEntity? get settings;
 
   @BuiltValueField(wireName: 'ninja_portal_url')
   String get ninjaPortalUrl;
 
-  bool can(UserPermission permission, EntityType entityType) {
+  bool can(UserPermission permission, EntityType? entityType) {
     if (entityType == null) {
       return false;
     }
 
-    if (!company.isModuleEnabled(entityType)) {
+    if (!company!.isModuleEnabled(entityType)) {
       return false;
     }
 
@@ -1105,20 +1098,20 @@ abstract class UserCompanyEntity
   }
 
   bool receivesAllNotifications(String channel) =>
-      notifications.containsKey(channel) &&
-      notifications[channel].contains(kNotificationsAll);
+      notifications!.containsKey(channel) &&
+      notifications![channel]!.contains(kNotificationsAll);
 
-  bool canView(EntityType entityType) => can(UserPermission.view, entityType);
+  bool canView(EntityType? entityType) => can(UserPermission.view, entityType);
 
-  bool canEdit(EntityType entityType) => can(UserPermission.edit, entityType);
+  bool canEdit(EntityType? entityType) => can(UserPermission.edit, entityType);
 
-  bool canCreate(EntityType entityType) =>
+  bool canCreate(EntityType? entityType) =>
       can(UserPermission.create, entityType);
 
-  bool canViewCreateOrEdit(EntityType entityType) =>
+  bool canViewCreateOrEdit(EntityType? entityType) =>
       canView(entityType) || canCreate(entityType) || canEdit(entityType);
 
-  bool canEditEntity(BaseEntity entity) {
+  bool canEditEntity(BaseEntity? entity) {
     if (entity == null) {
       return false;
     }
@@ -1126,7 +1119,7 @@ abstract class UserCompanyEntity
     if (entity.isNew) {
       return canCreate(entity.entityType);
     } else {
-      return canEdit(entity.entityType) || user.canEdit(entity);
+      return canEdit(entity.entityType) || user!.canEdit(entity);
     }
   }
 
@@ -1194,9 +1187,8 @@ abstract class UserSettingsEntity
   @memoized
   int get hashCode;
 
-  @nullable
   @BuiltValueField(wireName: 'accent_color')
-  String get accentColor;
+  String? get accentColor;
 
   @BuiltValueField(wireName: 'table_columns')
   BuiltMap<String, BuiltList<String>> get tableColumns;
@@ -1219,20 +1211,20 @@ abstract class UserSettingsEntity
   @BuiltValueField(wireName: 'dashboard_fields_per_row_desktop')
   int get dashboardFieldsPerRowDesktop;
 
-  List<String> getTableColumns(EntityType entityType) {
+  List<String>? getTableColumns(EntityType entityType) {
     if (tableColumns != null && tableColumns.containsKey('$entityType')) {
-      return tableColumns['$entityType'].toList();
+      return tableColumns['$entityType']!.toList();
     } else {
       return null;
     }
   }
 
-  String get validatedAccentColor {
+  String? get validatedAccentColor {
     if ((accentColor ?? '').isEmpty) {
       return kDefaultAccentColor;
     }
 
-    if (accentColor.toLowerCase() == '#ffffff') {
+    if (accentColor!.toLowerCase() == '#ffffff') {
       return kDefaultAccentColor;
     }
 
@@ -1270,10 +1262,10 @@ abstract class UserSettingsEntity
 abstract class ReportSettingsEntity
     implements Built<ReportSettingsEntity, ReportSettingsEntityBuilder> {
   factory ReportSettingsEntity({
-    String sortColumn,
-    bool sortAscending,
-    int sortTotalsIndex,
-    bool sortTotalsAscending,
+    String? sortColumn,
+    bool? sortAscending,
+    int? sortTotalsIndex,
+    bool? sortTotalsAscending,
   }) {
     return _$ReportSettingsEntity._(
       sortColumn: sortColumn ?? '',
@@ -1380,9 +1372,9 @@ abstract class RegistrationFieldEntity
 abstract class DashboardField
     implements Built<DashboardField, DashboardFieldBuilder> {
   factory DashboardField({
-    String field,
-    String period,
-    String type,
+    String? field,
+    String? period,
+    String? type,
   }) {
     return _$DashboardField._(
       field: field ?? '',

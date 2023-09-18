@@ -18,7 +18,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class CreditEmailScreen extends StatelessWidget {
-  const CreditEmailScreen({Key key}) : super(key: key);
+  const CreditEmailScreen({Key? key}) : super(key: key);
 
   static const String route = '/credit/email';
 
@@ -28,8 +28,8 @@ class CreditEmailScreen extends StatelessWidget {
       onInit: (Store<AppState> store) {
         final state = store.state;
         final creditId = state.uiState.creditUIState.selectedId;
-        final credit = state.creditState.map[creditId];
-        final client = state.clientState.map[credit.clientId];
+        final credit = state.creditState.map[creditId]!;
+        final client = state.clientState.map[credit.clientId]!;
         if (client.isStale) {
           store.dispatch(LoadClient(clientId: client.id));
         }
@@ -37,7 +37,7 @@ class CreditEmailScreen extends StatelessWidget {
       converter: (Store<AppState> store) {
         final state = store.state;
         final creditId = state.uiState.creditUIState.selectedId;
-        final credit = state.creditState.map[creditId];
+        final credit = state.creditState.map[creditId]!;
         return EmailCreditVM.fromStore(store, credit);
       },
       builder: (context, viewModel) {
@@ -51,15 +51,15 @@ class CreditEmailScreen extends StatelessWidget {
 
 class EmailCreditVM extends EmailEntityVM {
   EmailCreditVM({
-    AppState state,
-    bool isLoading,
-    bool isSaving,
-    CompanyEntity company,
-    InvoiceEntity invoice,
-    ClientEntity client,
-    VendorEntity vendor,
-    Function loadClient,
-    Function(BuildContext, EmailTemplate, String, String, String) onSendPressed,
+    AppState? state,
+    bool? isLoading,
+    bool? isSaving,
+    CompanyEntity? company,
+    InvoiceEntity? invoice,
+    ClientEntity? client,
+    VendorEntity? vendor,
+    Function? loadClient,
+    Function(BuildContext, EmailTemplate, String, String, String)? onSendPressed,
   }) : super(
           state: state,
           isLoading: isLoading,
@@ -86,12 +86,12 @@ class EmailCreditVM extends EmailEntityVM {
       },
       onSendPressed: (context, template, subject, body, ccEmail) {
         final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).emailedCredit,
+            context, AppLocalization.of(context)!.emailedCredit,
             shouldPop: isMobile(context));
         if (!isMobile(context)) {
           completer.future.then((value) {
             viewEntity(entity: credit);
-          });
+          } as FutureOr<_> Function(Null));
         }
         store.dispatch(EmailCreditRequest(
           completer: completer,

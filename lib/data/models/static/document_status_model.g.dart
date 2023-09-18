@@ -20,10 +20,10 @@ class _$DocumentStatusEntitySerializer
   final String wireName = 'DocumentStatusEntity';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, DocumentStatusEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
       'name',
@@ -35,23 +35,23 @@ class _$DocumentStatusEntitySerializer
 
   @override
   DocumentStatusEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new DocumentStatusEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'name':
           result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -67,10 +67,10 @@ class _$DocumentStatusEntity extends DocumentStatusEntity {
   final String name;
 
   factory _$DocumentStatusEntity(
-          [void Function(DocumentStatusEntityBuilder) updates]) =>
+          [void Function(DocumentStatusEntityBuilder)? updates]) =>
       (new DocumentStatusEntityBuilder()..update(updates))._build();
 
-  _$DocumentStatusEntity._({this.id, this.name}) : super._() {
+  _$DocumentStatusEntity._({required this.id, required this.name}) : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'DocumentStatusEntity', 'id');
     BuiltValueNullFieldError.checkNotNull(
         name, r'DocumentStatusEntity', 'name');
@@ -93,10 +93,10 @@ class _$DocumentStatusEntity extends DocumentStatusEntity {
         name == other.name;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, name.hashCode);
@@ -115,15 +115,15 @@ class _$DocumentStatusEntity extends DocumentStatusEntity {
 
 class DocumentStatusEntityBuilder
     implements Builder<DocumentStatusEntity, DocumentStatusEntityBuilder> {
-  _$DocumentStatusEntity _$v;
+  _$DocumentStatusEntity? _$v;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
 
   DocumentStatusEntityBuilder();
 
@@ -144,7 +144,7 @@ class DocumentStatusEntityBuilder
   }
 
   @override
-  void update(void Function(DocumentStatusEntityBuilder) updates) {
+  void update(void Function(DocumentStatusEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

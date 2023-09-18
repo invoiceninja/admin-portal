@@ -17,9 +17,9 @@ class _$SystemLogEntitySerializer
   final String wireName = 'SystemLogEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, SystemLogEntity object,
+  Iterable<Object?> serialize(Serializers serializers, SystemLogEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
       'company_id',
@@ -50,51 +50,51 @@ class _$SystemLogEntitySerializer
 
   @override
   SystemLogEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new SystemLogEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current as String?;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'company_id':
           result.companyId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'user_id':
           result.userId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'client_id':
           result.clientId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'event_id':
           result.eventId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'category_id':
           result.categoryId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'type_id':
           result.typeId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'log':
           result.log = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int)) as int?;
           break;
       }
     }
@@ -123,19 +123,19 @@ class _$SystemLogEntity extends SystemLogEntity {
   @override
   final int createdAt;
 
-  factory _$SystemLogEntity([void Function(SystemLogEntityBuilder) updates]) =>
+  factory _$SystemLogEntity([void Function(SystemLogEntityBuilder)? updates]) =>
       (new SystemLogEntityBuilder()..update(updates))._build();
 
   _$SystemLogEntity._(
-      {this.id,
-      this.companyId,
-      this.userId,
-      this.clientId,
-      this.eventId,
-      this.categoryId,
-      this.typeId,
-      this.log,
-      this.createdAt})
+      {required this.id,
+      required this.companyId,
+      required this.userId,
+      required this.clientId,
+      required this.eventId,
+      required this.categoryId,
+      required this.typeId,
+      required this.log,
+      required this.createdAt})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'SystemLogEntity', 'id');
     BuiltValueNullFieldError.checkNotNull(
@@ -176,10 +176,10 @@ class _$SystemLogEntity extends SystemLogEntity {
         createdAt == other.createdAt;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, companyId.hashCode);
@@ -212,43 +212,43 @@ class _$SystemLogEntity extends SystemLogEntity {
 
 class SystemLogEntityBuilder
     implements Builder<SystemLogEntity, SystemLogEntityBuilder> {
-  _$SystemLogEntity _$v;
+  _$SystemLogEntity? _$v;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
-  String _companyId;
-  String get companyId => _$this._companyId;
-  set companyId(String companyId) => _$this._companyId = companyId;
+  String? _companyId;
+  String? get companyId => _$this._companyId;
+  set companyId(String? companyId) => _$this._companyId = companyId;
 
-  String _userId;
-  String get userId => _$this._userId;
-  set userId(String userId) => _$this._userId = userId;
+  String? _userId;
+  String? get userId => _$this._userId;
+  set userId(String? userId) => _$this._userId = userId;
 
-  String _clientId;
-  String get clientId => _$this._clientId;
-  set clientId(String clientId) => _$this._clientId = clientId;
+  String? _clientId;
+  String? get clientId => _$this._clientId;
+  set clientId(String? clientId) => _$this._clientId = clientId;
 
-  int _eventId;
-  int get eventId => _$this._eventId;
-  set eventId(int eventId) => _$this._eventId = eventId;
+  int? _eventId;
+  int? get eventId => _$this._eventId;
+  set eventId(int? eventId) => _$this._eventId = eventId;
 
-  int _categoryId;
-  int get categoryId => _$this._categoryId;
-  set categoryId(int categoryId) => _$this._categoryId = categoryId;
+  int? _categoryId;
+  int? get categoryId => _$this._categoryId;
+  set categoryId(int? categoryId) => _$this._categoryId = categoryId;
 
-  int _typeId;
-  int get typeId => _$this._typeId;
-  set typeId(int typeId) => _$this._typeId = typeId;
+  int? _typeId;
+  int? get typeId => _$this._typeId;
+  set typeId(int? typeId) => _$this._typeId = typeId;
 
-  String _log;
-  String get log => _$this._log;
-  set log(String log) => _$this._log = log;
+  String? _log;
+  String? get log => _$this._log;
+  set log(String? log) => _$this._log = log;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
   SystemLogEntityBuilder();
 
@@ -276,7 +276,7 @@ class SystemLogEntityBuilder
   }
 
   @override
-  void update(void Function(SystemLogEntityBuilder) updates) {
+  void update(void Function(SystemLogEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

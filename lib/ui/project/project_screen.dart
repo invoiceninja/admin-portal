@@ -19,8 +19,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProjectScreen extends StatelessWidget {
   const ProjectScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/project';
@@ -31,7 +31,7 @@ class ProjectScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final company = store.state.company;
+    final company = store.state.company!;
     final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
 
@@ -97,7 +97,7 @@ class ProjectScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany.canCreate(EntityType.project)
+              userCompany!.canCreate(EntityType.project)
           ? FloatingActionButton(
               heroTag: 'project_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
@@ -107,7 +107,7 @@ class ProjectScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newProject,
+              tooltip: localization!.newProject,
             )
           : null,
     );

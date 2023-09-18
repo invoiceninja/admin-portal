@@ -88,8 +88,7 @@ abstract class UserCompanyState
 
   int get lastUpdated;
 
-  @nullable
-  UserCompanyEntity get userCompany;
+  UserCompanyEntity? get userCompany;
 
   DocumentState get documentState;
 
@@ -150,11 +149,11 @@ abstract class UserCompanyState
 
   GroupState get groupState;
 
-  CompanyEntity get company => userCompany.company;
+  CompanyEntity? get company => userCompany!.company;
 
-  UserEntity get user => userCompany.user;
+  UserEntity? get user => userCompany!.user;
 
-  TokenEntity get token => userCompany.token;
+  TokenEntity? get token => userCompany!.token;
 
   bool get isStale {
     if (!isLoaded) {

@@ -82,12 +82,12 @@ part 'app_state.g.dart';
 
 abstract class AppState implements Built<AppState, AppStateBuilder> {
   factory AppState({
-    @required PrefState prefState,
-    @required bool reportErrors,
-    @required bool isWhiteLabeled,
-    String url,
-    String referralCode,
-    String currentRoute,
+    required PrefState? prefState,
+    required bool reportErrors,
+    required bool isWhiteLabeled,
+    String? url,
+    String? referralCode,
+    String? currentRoute,
   }) {
     return _$AppState._(
       isLoading: false,
@@ -149,12 +149,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get isStale => userCompanyState.isStale || staticState.isStale;
 
-  AccountEntity get account => userCompany.account;
+  AccountEntity? get account => userCompany!.account;
 
-  CompanyEntity get company => userCompanyState.company;
+  CompanyEntity? get company => userCompanyState.company;
 
-  List<CompanyEntity> get companies {
-    final List<CompanyEntity> list = [];
+  List<CompanyEntity?> get companies {
+    final List<CompanyEntity?> list = [];
 
     for (var companyState in userCompanyStates) {
       if (companyState.company != null) {
@@ -163,7 +163,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     }
 
     final companies = list
-        .where((CompanyEntity company) => (company.id ?? '').isNotEmpty)
+        .where((CompanyEntity? company) => (company!.id ?? '').isNotEmpty)
         .toList();
 
     return companies;
@@ -171,12 +171,12 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   DashboardUIState get dashboardUIState => uiState.dashboardUIState;
 
-  UserEntity get user => userCompanyState.user;
+  UserEntity? get user => userCompanyState.user;
 
-  UserCompanyEntity get userCompany => userCompanyState.userCompany;
+  UserCompanyEntity? get userCompany => userCompanyState.userCompany;
 
   Credentials get credentials =>
-      Credentials(token: userCompanyState.token.token, url: authState.url);
+      Credentials(token: userCompanyState.token!.token, url: authState.url);
 
   bool get hasAccentColor {
     if (isDemo) {
@@ -192,23 +192,23 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return color.isNotEmpty;
   }
 
-  bool get showReviewApp => !prefState.hideReviewApp && company.daysActive > 60;
+  bool get showReviewApp => !prefState.hideReviewApp && company!.daysActive > 60;
 
   bool get showOneYearReviewApp =>
-      !prefState.hideOneYearReviewApp && company.daysActive > 365;
+      !prefState.hideOneYearReviewApp && company!.daysActive > 365;
 
   bool get showTwoYearReviewApp =>
-      !prefState.hideTwoYearReviewApp && company.daysActive > 730;
+      !prefState.hideTwoYearReviewApp && company!.daysActive > 730;
 
-  Color get linkColor => prefState.enableDarkMode
+  Color? get linkColor => prefState.enableDarkMode
       ? convertHexStringToColor('#FFFFFF')
       : accentColor;
 
-  Color get headerTextColor => prefState.enableDarkMode || hasAccentColor
+  Color? get headerTextColor => prefState.enableDarkMode || hasAccentColor
       ? convertHexStringToColor('#FFFFFF')
       : convertHexStringToColor('#000000');
 
-  Color get accentColor {
+  Color? get accentColor {
     var color = userCompany?.settings?.accentColor ?? kDefaultAccentColor;
 
     if (color == '#ffffff' && !prefState.enableDarkMode) {
@@ -237,10 +237,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   }
 
   List<HistoryRecord> get historyList =>
-      prefState.companyPrefs[company.id].historyList.where((history) {
+      prefState.companyPrefs[company!.id]!.historyList.where((history) {
         final entityMap = getEntityMap(history.entityType);
         if (entityMap != null) {
-          final entity = entityMap[history.id] as BaseEntity;
+          final entity = entityMap[history.id] as BaseEntity?;
           if (entity?.isDeleted == true) {
             return false;
           }
@@ -249,21 +249,21 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       }).toList();
 
   List<HistoryRecord> get unfilteredHistoryList =>
-      prefState.companyPrefs[company.id].historyList.toList();
+      prefState.companyPrefs[company!.id]!.historyList.toList();
 
-  bool shouldSelectEntity({EntityType entityType, List<String> entityList}) {
+  bool? shouldSelectEntity({EntityType? entityType, List<String?>? entityList}) {
     final entityUIState = getUIState(entityType);
 
     if (prefState.isMobile ||
         !prefState.isPreviewVisible ||
         uiState.isEditing ||
-        (prefState.isModuleList && entityType.hasFullWidthViewer) ||
-        entityType.isSetting ||
-        (entityList.isEmpty && (entityUIState.selectedId ?? '').isEmpty)) {
+        (prefState.isModuleList && entityType!.hasFullWidthViewer) ||
+        entityType!.isSetting ||
+        (entityList!.isEmpty && (entityUIState!.selectedId ?? '').isEmpty)) {
       return false;
     }
 
-    if ((entityUIState.selectedId ?? '').isEmpty ||
+    if ((entityUIState!.selectedId ?? '').isEmpty ||
         !entityList.contains(entityUIState.selectedId)) {
       return true;
     } else if (unfilteredHistoryList.isNotEmpty &&
@@ -276,13 +276,13 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return false;
   }
 
-  BaseEntity getEntity(EntityType type, String id) {
+  BaseEntity? getEntity(EntityType? type, String? id) {
     final map = getEntityMap(type);
 
-    return map != null ? map[id] : null;
+    return map != null ? map[id] as BaseEntity? : null;
   }
 
-  BuiltMap<String, SelectableEntity> getEntityMap(EntityType type) {
+  BuiltMap<String?, SelectableEntity?>? getEntityMap(EntityType? type) {
     switch (type) {
       case EntityType.product:
         return productState.map;
@@ -362,7 +362,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.timezone:
         return staticState.timezoneMap;
       case EntityType.company:
-        return BuiltMap(Map<String, SelectableEntity>.fromIterable(
+        return BuiltMap(Map<String?, SelectableEntity?>.fromIterable(
           companies,
           key: (dynamic item) => item.id,
           value: (dynamic item) => item,
@@ -377,7 +377,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     }
   }
 
-  BuiltList<String> getEntityList(EntityType type) {
+  BuiltList<String>? getEntityList(EntityType type) {
     switch (type) {
       case EntityType.product:
         return productState.list;
@@ -451,7 +451,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   }
 
   SelectionState getUISelection(EntityType type) {
-    final entityUIState = getUIState(type);
+    final entityUIState = getUIState(type)!;
 
     return SelectionState(
       selectedId:
@@ -461,7 +461,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     );
   }
 
-  EntityUIState getUIState(EntityType type) {
+  EntityUIState? getUIState(EntityType? type) {
     switch (type) {
       case EntityType.product:
         return productUIState;
@@ -532,8 +532,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     }
   }
 
-  ListUIState getListState(EntityType type) {
-    return getUIState(type).listUIState;
+  ListUIState getListState(EntityType? type) {
+    return getUIState(type)!.listUIState;
   }
 
   ProductState get productState => userCompanyState.productState;
@@ -725,60 +725,60 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool hasChanges() {
     switch (uiState.currentRoute) {
       case ClientEditScreen.route:
-        return clientUIState.editing.isChanged == true;
+        return clientUIState.editing!.isChanged == true;
       case ProductEditScreen.route:
-        return productUIState.editing.isChanged == true;
+        return productUIState.editing!.isChanged == true;
       case InvoiceEditScreen.route:
-        return invoiceUIState.editing.isChanged == true;
+        return invoiceUIState.editing!.isChanged == true;
       case PaymentEditScreen.route:
-        return paymentUIState.editing.isChanged == true;
+        return paymentUIState.editing!.isChanged == true;
       case QuoteEditScreen.route:
-        return quoteUIState.editing.isChanged == true;
+        return quoteUIState.editing!.isChanged == true;
       case ProjectEditScreen.route:
-        return projectUIState.editing.isChanged == true;
+        return projectUIState.editing!.isChanged == true;
       case TaskEditScreen.route:
-        return taskUIState.editing.isChanged == true;
+        return taskUIState.editing!.isChanged == true;
       case VendorEditScreen.route:
-        return vendorUIState.editing.isChanged == true;
+        return vendorUIState.editing!.isChanged == true;
       case ExpenseEditScreen.route:
-        return expenseUIState.editing.isChanged == true;
+        return expenseUIState.editing!.isChanged == true;
       case GroupEditScreen.route:
-        return groupUIState.editing.isChanged == true;
+        return groupUIState.editing!.isChanged == true;
       case TaxRateEditScreen.route:
-        return taxRateUIState.editing.isChanged == true;
+        return taxRateUIState.editing!.isChanged == true;
       case CompanyGatewayEditScreen.route:
-        return companyGatewayUIState.editing.isChanged == true;
+        return companyGatewayUIState.editing!.isChanged == true;
       case CreditEditScreen.route:
-        return creditUIState.editing.isChanged == true;
+        return creditUIState.editing!.isChanged == true;
       // STARTER: has changes - do not remove comment
       case ScheduleEditScreen.route:
-        return scheduleUIState.editing.isChanged == true;
+        return scheduleUIState.editing!.isChanged == true;
       case TransactionRuleEditScreen.route:
-        return transactionRuleUIState.editing.isChanged == true;
+        return transactionRuleUIState.editing!.isChanged == true;
       case TransactionEditScreen.route:
-        return transactionUIState.editing.isChanged == true;
+        return transactionUIState.editing!.isChanged == true;
       case PurchaseOrderEditScreen.route:
-        return purchaseOrderUIState.editing.isChanged == true;
+        return purchaseOrderUIState.editing!.isChanged == true;
       case RecurringExpenseEditScreen.route:
-        return recurringExpenseUIState.editing.isChanged == true;
+        return recurringExpenseUIState.editing!.isChanged == true;
       case SubscriptionEditScreen.route:
-        return subscriptionUIState.editing.isChanged == true;
+        return subscriptionUIState.editing!.isChanged == true;
       case TaskStatusEditScreen.route:
-        return taskStatusUIState.editing.isChanged == true;
+        return taskStatusUIState.editing!.isChanged == true;
       case ExpenseCategoryEditScreen.route:
-        return expenseCategoryUIState.editing.isChanged == true;
+        return expenseCategoryUIState.editing!.isChanged == true;
       case RecurringInvoiceEditScreen.route:
-        return recurringInvoiceUIState.editing.isChanged == true;
+        return recurringInvoiceUIState.editing!.isChanged == true;
       case WebhookEditScreen.route:
-        return webhookUIState.editing.isChanged == true;
+        return webhookUIState.editing!.isChanged == true;
       case TokenEditScreen.route:
-        return tokenUIState.editing.isChanged == true;
+        return tokenUIState.editing!.isChanged == true;
       case PaymentTermEditScreen.route:
-        return paymentTermUIState.editing.isChanged == true;
+        return paymentTermUIState.editing!.isChanged == true;
       case DesignEditScreen.route:
-        return designUIState.editing.isChanged == true;
+        return designUIState.editing!.isChanged == true;
       case DocumentEditScreen.route:
-        return documentUIState.editing.isChanged == true;
+        return documentUIState.editing!.isChanged == true;
     }
 
     if (uiState.isInSettings) {
@@ -799,7 +799,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     final int patch = int.parse(parts[2]);
 
     try {
-      final serverParts = account.currentVersion.split('.');
+      final serverParts = account!.currentVersion.split('.');
       final int serverMajor = int.parse(serverParts[0]);
       final int serverMinor = int.parse(serverParts[1]);
       final int serverPatch = int.parse(serverParts[2]);
@@ -828,7 +828,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get reportErrors => account?.reportErrors ?? false;
 
-  bool get isHosted => account == null ? authState.isHosted : account.isHosted;
+  bool get isHosted => account == null ? authState.isHosted : account!.isHosted;
 
   bool get isSelfHosted => !isHosted;
 
@@ -836,31 +836,31 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get isStaging => cleanApiUrl(authState.url) == kAppStagingUrl;
 
-  bool get isProPlan => isEnterprisePlan || account.plan == kPlanPro;
+  bool get isProPlan => isEnterprisePlan || account!.plan == kPlanPro;
 
-  bool get isTrial => isHosted && account.isTrial;
+  bool get isTrial => isHosted && account!.isTrial;
 
-  bool get isEnterprisePlan => isSelfHosted || account.plan == kPlanEnterprise;
+  bool get isEnterprisePlan => isSelfHosted || account!.plan == kPlanEnterprise;
 
   bool get isPaidAccount => isSelfHosted
-      ? (isWhiteLabeled || account.plan == kPlanWhiteLabel)
+      ? (isWhiteLabeled || account!.plan == kPlanWhiteLabel)
       : ((isProPlan || isEnterprisePlan) && !isTrial);
 
   bool get isUpdateAvailable =>
-      isSelfHosted && account.isUpdateAvailable && userCompany.isAdmin;
+      isSelfHosted && account!.isUpdateAvailable && userCompany!.isAdmin;
 
   bool get isUserConfirmed {
     if (isSelfHosted) {
       return true;
     }
 
-    return (user.emailVerifiedAt ?? 0) > 0;
+    return (user!.emailVerifiedAt ?? 0) > 0;
   }
 
   int get createdAtLimit {
-    final numberYearsActive = userCompany.settings?.numberYearsActive ?? 0;
+    final numberYearsActive = userCompany!.settings?.numberYearsActive ?? 0;
 
-    if (!company.isLarge || numberYearsActive == 0) {
+    if (!company!.isLarge || numberYearsActive == 0) {
       return 0;
     }
 
@@ -870,15 +870,15 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   }
 
   bool get filterDeletedClients {
-    if (!company.isLarge) {
+    if (!company!.isLarge) {
       return false;
     }
 
-    return !userCompany.settings.includeDeletedClients;
+    return !userCompany!.settings!.includeDeletedClients;
   }
 
   bool get canAddCompany =>
-      userCompany.isOwner && companies.length < 10 && !isDemo;
+      userCompany!.isOwner && companies.length < 10 && !isDemo;
 
   bool get isMenuCollapsed {
     if (prefState.isMobile) {
@@ -951,7 +951,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     final millisecondsSinceEnteredPassword =
         DateTime.now().millisecondsSinceEpoch - authState.lastEnteredPasswordAt;
 
-    return millisecondsSinceEnteredPassword < company.passwordTimeout;
+    return millisecondsSinceEnteredPassword < company!.passwordTimeout;
   }
 
   @override
@@ -966,7 +966,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         staticState.updatedAt == null || staticState.updatedAt == 0
             ? 'Blank'
             : timeago.format(
-                convertTimestampToDate((staticState.updatedAt / 1000).round()));
+                convertTimestampToDate((staticState.updatedAt! / 1000).round()));
 
     final passwordUpdated = authState.lastEnteredPasswordAt == null ||
             authState.lastEnteredPasswordAt == 0
@@ -1026,8 +1026,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 class Credentials {
   const Credentials({this.url, this.token});
 
-  final String url;
-  final String token;
+  final String? url;
+  final String? token;
 }
 
 class SelectionState {
@@ -1037,9 +1037,9 @@ class SelectionState {
     this.filterEntityType,
   });
 
-  final String selectedId;
-  final String filterEntityId;
-  final EntityType filterEntityType;
+  final String? selectedId;
+  final String? filterEntityId;
+  final EntityType? filterEntityType;
 
   @override
   bool operator ==(Object other) {

@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ClientEditFooter extends StatelessWidget {
-  const ClientEditFooter({@required this.client});
+  const ClientEditFooter({required this.client});
 
   final ClientEntity client;
 
@@ -42,8 +42,8 @@ class ClientEditFooter extends StatelessWidget {
               if (showLayoutToggle)
                 Tooltip(
                   message: useSidebarEditor
-                      ? localization.fullscreenEditor
-                      : localization.sidebarEditor,
+                      ? localization!.fullscreenEditor
+                      : localization!.sidebarEditor,
                   child: InkWell(
                     onTap: () =>
                         store.dispatch(ToggleEditorLayout(EntityType.client)),

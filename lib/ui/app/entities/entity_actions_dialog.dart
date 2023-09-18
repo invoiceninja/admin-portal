@@ -42,18 +42,18 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 Future<void> showEntityActionsDialog(
-    {@required List<BaseEntity> entities,
-    Completer completer,
+    {required List<BaseEntity?> entities,
+    Completer? completer,
     bool multiselect = false}) async {
   if (entities == null) {
     return;
   }
   final mainContext = navigatorKey.currentContext;
-  final state = StoreProvider.of<AppState>(navigatorKey.currentContext).state;
+  final state = StoreProvider.of<AppState>(navigatorKey.currentContext!).state;
   final actions = <Widget>[];
-  final first = entities[0];
-  final ClientEntity client = first is BelongsToClient
-      ? state.clientState.get((first as BelongsToClient).clientId)
+  final first = entities[0]!;
+  final ClientEntity? client = first is BelongsToClient
+      ? state.clientState.get((first as BelongsToClient).clientId!)
       : null;
 
   actions.addAll(first
@@ -81,7 +81,7 @@ Future<void> showEntityActionsDialog(
   }
 
   showDialog<String>(
-      context: navigatorKey.currentContext,
+      context: navigatorKey.currentContext!,
       builder: (BuildContext dialogContext) {
         return SimpleDialog(children: actions);
       });
@@ -96,109 +96,109 @@ class EntityActionListTile extends StatelessWidget {
     this.completer,
   });
 
-  final List<BaseEntity> entities;
-  final EntityAction action;
-  final BuildContext mainContext;
-  final Completer completer;
-  final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
+  final List<BaseEntity?>? entities;
+  final EntityAction? action;
+  final BuildContext? mainContext;
+  final Completer? completer;
+  final Function(BuildContext, List<BaseEntity>, EntityAction)? onEntityAction;
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     return ListTile(
       leading: Icon(getEntityActionIcon(action)),
       title: Text(
-        localization.lookup(action.toString()),
+        localization.lookup(action.toString())!,
         overflow: TextOverflow.ellipsis,
       ),
       onTap: () {
         if (completer != null) {
-          completer.complete(null);
+          completer!.complete(null);
         }
         Navigator.of(context).pop();
-        final first = entities.first;
+        final first = entities!.first!;
         switch (first.entityType) {
           case EntityType.client:
-            handleClientAction(mainContext, entities, action);
+            handleClientAction(mainContext, entities!, action);
             break;
           case EntityType.product:
-            handleProductAction(mainContext, entities, action);
+            handleProductAction(mainContext, entities!, action);
             break;
           case EntityType.invoice:
-            handleInvoiceAction(mainContext, entities, action);
+            handleInvoiceAction(mainContext, entities!, action);
             break;
           case EntityType.recurringInvoice:
-            handleRecurringInvoiceAction(mainContext, entities, action);
+            handleRecurringInvoiceAction(mainContext, entities!, action);
             break;
           case EntityType.payment:
-            handlePaymentAction(mainContext, entities, action);
+            handlePaymentAction(mainContext, entities!, action);
             break;
           case EntityType.quote:
-            handleQuoteAction(mainContext, entities, action);
+            handleQuoteAction(mainContext!, entities!, action);
             break;
           case EntityType.credit:
-            handleCreditAction(mainContext, entities, action);
+            handleCreditAction(mainContext!, entities!, action);
             break;
           case EntityType.task:
-            handleTaskAction(mainContext, entities, action);
+            handleTaskAction(mainContext, entities!, action);
             break;
           case EntityType.project:
-            handleProjectAction(mainContext, entities, action);
+            handleProjectAction(mainContext, entities!, action);
             break;
           case EntityType.vendor:
-            handleVendorAction(mainContext, entities, action);
+            handleVendorAction(mainContext, entities!, action);
             break;
           case EntityType.expense:
-            handleExpenseAction(mainContext, entities, action);
+            handleExpenseAction(mainContext!, entities!, action);
             break;
           case EntityType.companyGateway:
-            handleCompanyGatewayAction(mainContext, entities, action);
+            handleCompanyGatewayAction(mainContext, entities!, action);
             break;
           case EntityType.group:
-            handleGroupAction(mainContext, entities, action);
+            handleGroupAction(mainContext, entities!, action);
             break;
           case EntityType.taxRate:
-            handleTaxRateAction(mainContext, entities, action);
+            handleTaxRateAction(mainContext, entities!, action);
             break;
           case EntityType.user:
-            handleUserAction(mainContext, entities, action);
+            handleUserAction(mainContext, entities!, action);
             break;
           case EntityType.design:
-            handleDesignAction(mainContext, entities, action);
+            handleDesignAction(mainContext, entities!, action);
             break;
           case EntityType.paymentTerm:
-            handlePaymentTermAction(mainContext, entities, action);
+            handlePaymentTermAction(mainContext, entities!, action);
             break;
           case EntityType.token:
-            handleTokenAction(mainContext, entities, action);
+            handleTokenAction(mainContext, entities!, action);
             break;
           case EntityType.webhook:
-            handleWebhookAction(mainContext, entities, action);
+            handleWebhookAction(mainContext, entities!, action);
             break;
           case EntityType.expenseCategory:
-            handleExpenseCategoryAction(mainContext, entities, action);
+            handleExpenseCategoryAction(mainContext, entities!, action);
             break;
           case EntityType.taskStatus:
-            handleTaskStatusAction(mainContext, entities, action);
+            handleTaskStatusAction(mainContext, entities!, action);
             break;
           case EntityType.subscription:
-            handleSubscriptionAction(mainContext, entities, action);
+            handleSubscriptionAction(mainContext, entities!, action);
             break;
           case EntityType.bankAccount:
-            handleBankAccountAction(mainContext, entities, action);
+            handleBankAccountAction(mainContext, entities!, action);
             break;
           case EntityType.transaction:
-            handleTransactionAction(mainContext, entities, action);
+            handleTransactionAction(mainContext, entities!, action);
             break;
           case EntityType.transactionRule:
-            handleTransactionRuleAction(mainContext, entities, action);
+            handleTransactionRuleAction(mainContext, entities!, action);
             break;
           case EntityType.schedule:
-            handleScheduleAction(mainContext, entities, action);
+            handleScheduleAction(mainContext, entities!, action);
             break;
           case EntityType.document:
-            handleDocumentAction(mainContext, entities, action);
+            handleDocumentAction(mainContext, entities!, action);
             break;
           // TODO add to starter.sh
           default:

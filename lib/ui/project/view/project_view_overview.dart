@@ -23,9 +23,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProjectOverview extends StatefulWidget {
   const ProjectOverview({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final ProjectViewVM viewModel;
@@ -36,7 +36,7 @@ class ProjectOverview extends StatefulWidget {
 }
 
 class _ProjectOverviewState extends State<ProjectOverview> {
-  Timer _timer;
+  Timer? _timer;
 
   @override
   void initState() {
@@ -47,7 +47,7 @@ class _ProjectOverviewState extends State<ProjectOverview> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    _timer!.cancel();
     _timer = null;
     super.dispose();
   }
@@ -56,11 +56,11 @@ class _ProjectOverviewState extends State<ProjectOverview> {
   Widget build(BuildContext context) {
     final project = widget.viewModel.project;
     final client = widget.viewModel.client;
-    final company = widget.viewModel.company;
+    final company = widget.viewModel.company!;
     final state = widget.viewModel.state;
     final localization = AppLocalization.of(context);
 
-    final Map<String, String> fields = {
+    final Map<String, String?> fields = {
       ProjectFields.dueDate: formatDate(project.dueDate, context),
       ProjectFields.taskRate: formatNumber(project.taskRate, context,
           formatNumberType: FormatNumberType.money, clientId: project.clientId),
@@ -103,7 +103,7 @@ class _ProjectOverviewState extends State<ProjectOverview> {
       final widgets = <Widget>[
         EntityHeader(
           entity: project,
-          label: localization.total,
+          label: localization!.total,
           value: formatDuration(
               taskDurationForProject(project, state.taskState.map)),
           secondLabel: localization.budgeted,
@@ -121,7 +121,7 @@ class _ProjectOverviewState extends State<ProjectOverview> {
           isFilter: widget.isFilter,
         ),
         EntityListTile(
-          entity: state.userState.get(project.assignedUserId),
+          entity: state.userState.get(project.assignedUserId!),
           isFilter: widget.isFilter,
         ),
         if (company.isModuleEnabled(EntityType.task))

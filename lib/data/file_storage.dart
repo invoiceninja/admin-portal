@@ -67,7 +67,7 @@ class FileStorage {
       */
 
       final prefs = await SharedPreferences.getInstance();
-      String value = prefs.getString(tag);
+      String? value = prefs.getString(tag);
 
       if (value != null) {
         return value;
@@ -88,7 +88,7 @@ class FileStorage {
     }
   }
 
-  Future<File> save(String data) async {
+  Future<File?> save(String data) async {
     if (kIsWeb) {
       /*
       final db = await _getIndexedDb();
@@ -104,7 +104,7 @@ class FileStorage {
       } catch (e) {
         if ('$e'.contains('QuotaExceededError')) {
           await prefs.remove(tag);
-          final gzipBytes = GZipEncoder().encode(utf8.encode(data));
+          final gzipBytes = GZipEncoder().encode(utf8.encode(data))!;
           final zipped = base64Encode(gzipBytes);
           try {
             await prefs.setString(tag + GZIP_TAG, zipped);
@@ -124,7 +124,7 @@ class FileStorage {
     }
   }
 
-  Future<FileSystemEntity> delete() async {
+  Future<FileSystemEntity?> delete() async {
     if (kIsWeb) {
       /*
       final db = await _getIndexedDb();

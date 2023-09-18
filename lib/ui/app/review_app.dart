@@ -10,7 +10,7 @@ import 'package:invoiceninja_flutter/utils/app_review.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ReviewApp extends StatefulWidget {
-  const ReviewApp({Key key}) : super(key: key);
+  const ReviewApp({Key? key}) : super(key: key);
 
   @override
   State<ReviewApp> createState() => _ReviewAppState();
@@ -34,7 +34,7 @@ class _ReviewAppState extends State<ReviewApp> {
         children: [
           SizedBox(height: 12),
           Text(
-            localization.wouldYouRateTheApp,
+            localization!.wouldYouRateTheApp!,
             style: Theme.of(context).textTheme.titleMedium,
             textAlign: TextAlign.center,
           ),
@@ -67,7 +67,7 @@ class _ReviewAppState extends State<ReviewApp> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: Text(
-                      localization.sureHappyTo,
+                      localization.sureHappyTo!,
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -88,7 +88,7 @@ class _ReviewAppState extends State<ReviewApp> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: Text(
-                      localization.noNotNow,
+                      localization.noNotNow!,
                       textAlign: TextAlign.center,
                     ),
                   ),

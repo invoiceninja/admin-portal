@@ -29,7 +29,7 @@ Middleware<AppState> _createViewDashboard() {
         store: store,
         force: action.force,
         callback: () {
-          if (!store.state.userCompany.canViewDashboard) {
+          if (!store.state.userCompany!.canViewDashboard) {
             store.dispatch(ViewClientList());
           } else {
             if (store.state.isStale) {
@@ -42,8 +42,8 @@ Middleware<AppState> _createViewDashboard() {
           next(action);
 
           if (store.state.prefState.isMobile &&
-              store.state.userCompany.canViewDashboard) {
-            navigatorKey.currentState.pushNamedAndRemoveUntil(
+              store.state.userCompany!.canViewDashboard) {
+            navigatorKey.currentState!.pushNamedAndRemoveUntil(
                 DashboardScreenBuilder.route, (Route<dynamic> route) => false);
           }
         });

@@ -8,7 +8,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 class BlankScreen extends StatelessWidget {
   const BlankScreen([this.message]);
 
-  final String message;
+  final String? message;
 
   @override
   Widget build(BuildContext context) {

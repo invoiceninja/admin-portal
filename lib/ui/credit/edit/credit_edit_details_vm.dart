@@ -22,7 +22,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dar
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 
 class CreditEditDetailsScreen extends StatelessWidget {
-  const CreditEditDetailsScreen({Key key, @required this.viewModel})
+  const CreditEditDetailsScreen({Key? key, required this.viewModel})
       : super(key: key);
 
   final AbstractInvoiceEditVM viewModel;
@@ -34,11 +34,11 @@ class CreditEditDetailsScreen extends StatelessWidget {
         return CreditEditDetailsVM.fromStore(store);
       },
       builder: (context, viewModel) {
-        if (viewModel.state.prefState.isEditorFullScreen(EntityType.invoice)) {
+        if (viewModel.state!.prefState.isEditorFullScreen(EntityType.invoice)) {
           return InvoiceEditDesktop(
             viewModel: viewModel,
             entityViewModel: this.viewModel,
-            key: ValueKey('__credit_${viewModel.invoice.id}__'),
+            key: ValueKey('__credit_${viewModel.invoice!.id}__'),
           );
         } else {
           return InvoiceEditDetails(
@@ -53,17 +53,17 @@ class CreditEditDetailsScreen extends StatelessWidget {
 
 class CreditEditDetailsVM extends EntityEditDetailsVM {
   CreditEditDetailsVM({
-    AppState state,
-    CompanyEntity company,
-    InvoiceEntity invoice,
-    Function(InvoiceEntity) onChanged,
-    Function(BuildContext, InvoiceEntity, ClientEntity) onClientChanged,
-    Function(BuildContext, InvoiceEntity, VendorEntity) onVendorChanged,
-    BuiltMap<String, ClientEntity> clientMap,
-    BuiltList<String> clientList,
-    Function(BuildContext context, Completer<SelectableEntity> completer)
+    AppState? state,
+    CompanyEntity? company,
+    InvoiceEntity? invoice,
+    Function(InvoiceEntity)? onChanged,
+    Function(BuildContext, InvoiceEntity, ClientEntity)? onClientChanged,
+    Function(BuildContext, InvoiceEntity, VendorEntity)? onVendorChanged,
+    BuiltMap<String?, ClientEntity?>? clientMap,
+    BuiltList<String>? clientList,
+    Function(BuildContext context, Completer<SelectableEntity> completer)?
         onAddClientPressed,
-    Function(BuildContext context, Completer<SelectableEntity> completer)
+    Function(BuildContext context, Completer<SelectableEntity> completer)?
         onAddVendorPressed,
   }) : super(
           state: state,
@@ -103,7 +103,7 @@ class CreditEditDetailsVM extends EntityEditDetailsVM {
             cancelCompleter: Completer<Null>()
               ..future.then((_) {
                 store.dispatch(UpdateCurrentRoute(CreditEditScreen.route));
-              }));
+              } as FutureOr<_> Function(Null)));
         completer.future.then((SelectableEntity client) {
           store.dispatch(UpdateCurrentRoute(CreditEditScreen.route));
         });

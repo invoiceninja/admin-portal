@@ -33,8 +33,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class SubscriptionEdit extends StatefulWidget {
   const SubscriptionEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final SubscriptionEditVM viewModel;
@@ -48,8 +48,8 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_subscriptionEdit');
   final _debouncer = Debouncer();
-  FocusScopeNode _focusNode;
-  TabController _controller;
+  FocusScopeNode? _focusNode;
+  TabController? _controller;
 
   final _nameController = TextEditingController();
   final _promoCodeController = TextEditingController();
@@ -70,12 +70,12 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
         vsync: this, length: 3, initialIndex: settingsUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller!.index));
   }
 
   @override
@@ -99,10 +99,10 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
     _promoCodeController.text = subscription.promoCode;
     _promoDiscountController.text = formatNumber(
         subscription.promoDiscount, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
     _maxSeatsLimitController.text = formatNumber(
         subscription.maxSeatsLimit.toDouble(), context,
-        formatNumberType: FormatNumberType.inputAmount);
+        formatNumberType: FormatNumberType.inputAmount)!;
     _returnUrlController.text = webhookConfiguration.returnUrl;
     _postPurchaseUrlController.text = webhookConfiguration.postPurchaseUrl;
 
@@ -113,9 +113,9 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
 
   @override
   void dispose() {
-    _focusNode.dispose();
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
+    _focusNode!.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
     _controllers.forEach((controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -140,7 +140,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
   }
 
   void _onSavePressed(BuildContext context) {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -153,7 +153,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final subscription = viewModel.subscription;
     final webhookConfiguration = subscription.webhookConfiguration;
 
@@ -271,7 +271,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       .where((element) => element.isNotEmpty)
                       .map((productId) => ListTile(
                             title: Text(
-                                state.productState.get(productId).productKey),
+                                state.productState.get(productId)!.productKey),
                             trailing: IconButton(
                               icon: Icon(Icons.clear),
                               onPressed: () {
@@ -313,7 +313,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       .where((element) => element.isNotEmpty)
                       .map((productId) => ListTile(
                             title: Text(
-                                state.productState.get(productId).productKey),
+                                state.productState.get(productId)!.productKey),
                             trailing: IconButton(
                               icon: Icon(Icons.clear),
                               onPressed: () {
@@ -357,7 +357,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       .where((element) => element.isNotEmpty)
                       .map((productId) => ListTile(
                             title: Text(
-                                state.productState.get(productId).productKey),
+                                state.productState.get(productId)!.productKey),
                             trailing: IconButton(
                               icon: Icon(Icons.clear),
                               onPressed: () {
@@ -401,7 +401,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       .where((element) => element.isNotEmpty)
                       .map((productId) => ListTile(
                             title: Text(
-                                state.productState.get(productId).productKey),
+                                state.productState.get(productId)!.productKey),
                             trailing: IconButton(
                               icon: Icon(Icons.clear),
                               onPressed: () {
@@ -436,7 +436,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       items: kFrequencies.entries
                           .map((entry) => DropdownMenuItem(
                                 value: entry.key,
-                                child: Text(localization.lookup(entry.value)),
+                                child: Text(localization.lookup(entry.value)!),
                               ))
                           .toList()),
                   AppDropdownButton<String>(
@@ -451,7 +451,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       SettingsEntity.AUTO_BILL_OPT_OUT,
                       SettingsEntity.AUTO_BILL_OPT_IN,
                       SettingsEntity.AUTO_BILL_OFF,
-                    ].map((type) => Text(localization.lookup(type))).toList(),
+                    ].map((type) => Text(localization.lookup(type)!)).toList(),
                     items: [
                       SettingsEntity.AUTO_BILL_ALWAYS,
                       SettingsEntity.AUTO_BILL_OPT_OUT,
@@ -661,7 +661,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                           SizedBox(width: kTableColumnGap),
                           Expanded(
                             child: Text(
-                                webhookConfiguration.postPurchaseHeaders[key]),
+                                webhookConfiguration.postPurchaseHeaders[key]!),
                           )
                         ],
                       ),

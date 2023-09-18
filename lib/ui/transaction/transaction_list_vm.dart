@@ -17,7 +17,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/transaction/transaction_actions.dart';
 
 class TransactionListBuilder extends StatelessWidget {
-  const TransactionListBuilder({Key key}) : super(key: key);
+  const TransactionListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class TransactionListBuilder extends StatelessWidget {
                 filter: viewModel.filter,
                 transaction: transaction,
                 isChecked:
-                    isInMultiselect && listState.isSelected(transaction.id),
+                    isInMultiselect && listState.isSelected(transaction!.id),
               );
             });
       },
@@ -55,18 +55,18 @@ class TransactionListBuilder extends StatelessWidget {
 
 class TransactionListVM {
   TransactionListVM({
-    @required this.state,
-    @required this.userCompany,
-    @required this.transactionList,
-    @required this.transactionMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.onEntityAction,
-    @required this.tableColumns,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.userCompany,
+    required this.transactionList,
+    required this.transactionMap,
+    required this.filter,
+    required this.isLoading,
+    required this.listState,
+    required this.onRefreshed,
+    required this.onEntityAction,
+    required this.tableColumns,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
   });
 
   static TransactionListVM fromStore(Store<AppState> store) {
@@ -75,7 +75,7 @@ class TransactionListVM {
         return Future<Null>(null);
       }
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -104,7 +104,7 @@ class TransactionListVM {
           handleTransactionAction(context, transactions, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
-          state.userCompany.settings?.getTableColumns(EntityType.transaction) ??
+          state.userCompany!.settings?.getTableColumns(EntityType.transaction) ??
               TransactionPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortTransactions(field)),
       onClearMultielsect: () => store.dispatch(ClearTransactionMultiselect()),
@@ -112,11 +112,11 @@ class TransactionListVM {
   }
 
   final AppState state;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> transactionList;
-  final BuiltMap<String, TransactionEntity> transactionMap;
+  final BuiltMap<String?, TransactionEntity?> transactionMap;
   final ListUIState listState;
-  final String filter;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;

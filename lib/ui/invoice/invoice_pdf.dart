@@ -39,8 +39,8 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
 
 class InvoicePdfView extends StatefulWidget {
   const InvoicePdfView({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
     this.showAppBar = true,
   }) : super(key: key);
 
@@ -54,9 +54,9 @@ class InvoicePdfView extends StatefulWidget {
 class _InvoicePdfViewState extends State<InvoicePdfView> {
   bool _isLoading = true;
   bool _isDeliveryNote = false;
-  String _activityId;
-  String _pdfString;
-  http.Response _response;
+  String? _activityId;
+  String? _pdfString;
+  http.Response? _response;
   //int _pageCount = 1;
   //int _currentPage = 1;
 
@@ -75,7 +75,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
 
   void loadPdf() {
     final viewModel = widget.viewModel;
-    final invoice = viewModel.invoice;
+    final invoice = viewModel.invoice!;
     final state = viewModel.state;
 
     if (invoice.invitations.isEmpty) {
@@ -96,9 +96,9 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
         _response = response;
         _isLoading = false;
 
-        if (kIsWeb && state.prefState.enableNativeBrowser) {
+        if (kIsWeb && state!.prefState.enableNativeBrowser) {
           _pdfString =
-              'data:application/pdf;base64,' + base64Encode(response.bodyBytes);
+              'data:application/pdf;base64,' + base64Encode(response!.bodyBytes);
           WebUtils.registerWebView(_pdfString);
         }
       });
@@ -108,7 +108,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
       });
 
       showDialog<void>(
-          context: navigatorKey.currentContext,
+          context: navigatorKey.currentContext!,
           builder: (BuildContext context) {
             return ErrorDialog(error);
           });
@@ -119,8 +119,8 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final localization = AppLocalization.of(context);
-    final invoice = widget.viewModel.invoice;
+    final localization = AppLocalization.of(context)!;
+    final invoice = widget.viewModel.invoice!;
     final client = state.clientState.get(invoice.clientId);
 
     /*
@@ -165,8 +165,8 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                       items: invoice.history
                           .map((history) => DropdownMenuItem(
                                 child: Text(formatNumber(
-                                        history.amount, context,
-                                        clientId: invoice.clientId) +
+                                        history!.amount, context,
+                                        clientId: invoice.clientId)! +
                                     ' • ' +
                                     formatDate(
                                         convertTimestampToDateString(
@@ -212,7 +212,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
 
     // TODO: remove this code
     // hide email option on web to prevent dialog problem
-    if (kIsWeb && !client.hasEmailAddress) {
+    if (kIsWeb && !client!.hasEmailAddress) {
       showEmail = false;
     }
 
@@ -228,7 +228,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                     Expanded(
                       child: Text(EntityPresenter()
                           .initialize(invoice, context)
-                          .title()),
+                          .title()!),
                     ),
                     if (isDesktop(context)) ...activitySelector,
                     //if (isDesktop(context)) ...pageSelector,
@@ -259,7 +259,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                                     Uri.parse(invoice.invitationDownloadLink));
                               } else {
                                 final fileName = localization
-                                        .lookup('${invoice.entityType}') +
+                                        .lookup('${invoice.entityType}')! +
                                     '_' +
                                     (invoice.number.isEmpty
                                         ? localization.pending
@@ -267,10 +267,10 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                                     '.pdf';
                                 if (kIsWeb) {
                                   WebUtils.downloadBinaryFile(
-                                      fileName, _response.bodyBytes);
+                                      fileName, _response!.bodyBytes);
                                 } else {
                                   final directory = await (isDesktopOS()
-                                      ? getDownloadsDirectory()
+                                      ? getDownloadsDirectory() as FutureOr<file.Directory>
                                       : getApplicationDocumentsDirectory());
                                   String filePath =
                                       '${directory.path}${file.Platform.pathSeparator}$fileName';
@@ -284,10 +284,10 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
 
                                   final pdfData = file.File(filePath);
                                   await pdfData
-                                      .writeAsBytes(_response.bodyBytes);
+                                      .writeAsBytes(_response!.bodyBytes);
 
                                   if (isDesktopOS()) {
-                                    showToast(localization.fileSavedInPath
+                                    showToast(localization.fileSavedInPath!
                                         .replaceFirst(':path', directory.path));
                                   } else {
                                     await Share.shareXFiles([XFile(filePath)]);
@@ -310,15 +310,15 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
         body: _isLoading || _response == null
             ? LoadingIndicator()
             : (kIsWeb && state.prefState.enableNativeBrowser)
-                ? HtmlElementView(viewType: _pdfString)
+                ? HtmlElementView(viewType: _pdfString!)
                 : PdfPreview(
-                    build: (format) => _response.bodyBytes,
+                    build: (format) => _response!.bodyBytes,
                     canChangeOrientation: false,
                     canChangePageFormat: false,
                     canDebug: false,
                     maxPageWidth: 800,
                     pdfFileName:
-                        localization.lookup(invoice.entityType.snakeCase) +
+                        localization.lookup(invoice.entityType!.snakeCase)! +
                             '_' +
                             invoice.number +
                             '.pdf',
@@ -326,13 +326,13 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
   }
 }
 
-Future<Response> _loadPDF(
+Future<Response?> _loadPDF(
   BuildContext context,
   InvoiceEntity invoice,
   bool isDeliveryNote,
-  String activityId,
+  String? activityId,
 ) async {
-  http.Response response;
+  http.Response? response;
 
   if ((activityId ?? '').isNotEmpty || isDeliveryNote) {
     final store = StoreProvider.of<AppState>(context);
@@ -340,15 +340,15 @@ Future<Response> _loadPDF(
     final url = isDeliveryNote
         ? '/invoices/${invoice.id}/delivery_note'
         : '/activities/download_entity/$activityId';
-    response = await WebClient()
-        .get('${credential.url}$url', credential.token, rawResponse: true);
+    response = await (WebClient()
+        .get('${credential.url}$url', credential.token, rawResponse: true) as FutureOr<Response?>);
   } else {
     final invitation = invoice.invitations.first;
     final url = invitation.downloadLink;
-    response = await WebClient().get(url, '', rawResponse: true);
+    response = await (WebClient().get(url, '', rawResponse: true) as FutureOr<Response?>);
   }
 
-  if (response.statusCode >= 400) {
+  if (response!.statusCode >= 400) {
     String errorMessage =
         '${response.statusCode}: ${response.reasonPhrase}\n\n';
 

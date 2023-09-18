@@ -14,8 +14,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskStatusList extends StatefulWidget {
   const TaskStatusList({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final TaskStatusListVM viewModel;
@@ -26,7 +26,7 @@ class TaskStatusList extends StatefulWidget {
 
 class _TaskStatusListState extends State<TaskStatusList> {
   // TODO remove this https://github.com/flutter/flutter/issues/71946
-  ScrollController _controller;
+  ScrollController? _controller;
 
   @override
   void initState() {
@@ -36,7 +36,7 @@ class _TaskStatusListState extends State<TaskStatusList> {
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
@@ -54,7 +54,7 @@ class _TaskStatusListState extends State<TaskStatusList> {
 
     if (viewModel.taskStatusList.isEmpty) {
       return Center(
-          child: HelpText(AppLocalization.of(context).noRecordsFound));
+          child: HelpText(AppLocalization.of(context)!.noRecordsFound));
     }
 
     return Stack(
@@ -84,7 +84,7 @@ class _TaskStatusListState extends State<TaskStatusList> {
                 final taskStatus = viewModel.taskStatusMap[taskStatusId];
                 return TaskStatusListItem(
                     key: ValueKey('__task_status_$taskStatusId'),
-                    user: state.userCompany.user,
+                    user: state.userCompany!.user,
                     filter: viewModel.filter,
                     taskStatus: taskStatus,
                     /*
@@ -93,7 +93,7 @@ class _TaskStatusListState extends State<TaskStatusList> {
                       : null,
                       */
                     isChecked: isInMultiselect &&
-                        listUIState.isSelected(taskStatus.id));
+                        listUIState.isSelected(taskStatus!.id));
               }).toList(),
             ),
           ),

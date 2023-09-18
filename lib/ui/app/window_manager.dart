@@ -9,9 +9,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:window_manager/window_manager.dart';
 
 class WindowManager extends StatefulWidget {
-  const WindowManager({Key key, this.child}) : super(key: key);
+  const WindowManager({Key? key, this.child}) : super(key: key);
 
-  final Widget child;
+  final Widget? child;
 
   @override
   State<WindowManager> createState() => _WindowManagerState();
@@ -61,7 +61,7 @@ class _WindowManagerState extends State<WindowManager> with WindowListener {
       return;
     }
 
-    final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
+    final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
 
     if (await windowManager.isPreventClose()) {
       checkForChanges(
@@ -83,5 +83,5 @@ class _WindowManagerState extends State<WindowManager> with WindowListener {
   }
 
   @override
-  Widget build(BuildContext context) => widget.child;
+  Widget build(BuildContext context) => widget.child!;
 }

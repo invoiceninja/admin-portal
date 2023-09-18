@@ -19,23 +19,23 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PurchaseOrderListItem extends StatelessWidget {
   const PurchaseOrderListItem({
-    @required this.user,
-    @required this.purchaseOrder,
-    @required this.vendor,
-    @required this.filter,
+    required this.user,
+    required this.purchaseOrder,
+    required this.vendor,
+    required this.filter,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
 
-  final UserEntity user;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
+  final UserEntity? user;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onLongPress;
   final InvoiceEntity purchaseOrder;
-  final VendorEntity vendor;
-  final String filter;
-  final Function(bool) onCheckboxChanged;
+  final VendorEntity? vendor;
+  final String? filter;
+  final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
 
   @override
@@ -43,16 +43,16 @@ class PurchaseOrderListItem extends StatelessWidget {
     final state = StoreProvider.of<AppState>(context).state;
     final uiState = state.uiState;
     final purchaseOrderUIState = uiState.purchaseOrderUIState;
-    final listUIState = state.getUIState(purchaseOrder.entityType).listUIState;
+    final listUIState = state.getUIState(purchaseOrder.entityType)!.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
     final textStyle = TextStyle(fontSize: 16);
     final localization = AppLocalization.of(context);
-    final filterMatch = filter != null && filter.isNotEmpty
+    final filterMatch = filter != null && filter!.isNotEmpty
         ? (purchaseOrder.matchesFilterValue(filter) ??
-            vendor.matchesFilterValue(filter))
+            vendor!.matchesFilterValue(filter))
         : null;
-    final textColor = Theme.of(context).textTheme.bodyLarge.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
     String subtitle = '';
     if (purchaseOrder.date.isNotEmpty) {
@@ -62,7 +62,7 @@ class PurchaseOrderListItem extends StatelessWidget {
     return DismissibleEntity(
       isSelected: purchaseOrder.id ==
           (uiState.isEditing
-              ? purchaseOrderUIState.editing.id
+              ? purchaseOrderUIState.editing!.id
               : purchaseOrderUIState.selectedId),
       userCompany: state.userCompany,
       entity: purchaseOrder,
@@ -71,10 +71,10 @@ class PurchaseOrderListItem extends StatelessWidget {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
                 onTap: () => onTap != null
-                    ? onTap()
+                    ? onTap!()
                     : selectEntity(entity: purchaseOrder),
                 onLongPress: () => onLongPress != null
-                    ? onLongPress()
+                    ? onLongPress!()
                     : selectEntity(entity: purchaseOrder, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -95,7 +95,7 @@ class PurchaseOrderListItem extends StatelessWidget {
                                     materialTapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
                                     onChanged: (value) =>
-                                        onCheckboxChanged(value),
+                                        onCheckboxChanged!(value),
                                     activeColor:
                                         Theme.of(context).colorScheme.secondary,
                                   ),
@@ -117,7 +117,7 @@ class PurchaseOrderListItem extends StatelessWidget {
                           children: <Widget>[
                             Text(
                               (purchaseOrder.number ?? '').isEmpty
-                                  ? localization.pending
+                                  ? localization!.pending
                                   : purchaseOrder.number,
                               style: textStyle,
                               overflow: TextOverflow.ellipsis,
@@ -133,7 +133,7 @@ class PurchaseOrderListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                                vendor.name +
+                                vendor!.name +
                                     (purchaseOrder.documents.isNotEmpty
                                         ? '  📎'
                                         : ''),
@@ -144,10 +144,10 @@ class PurchaseOrderListItem extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
                                   .textTheme
-                                  .titleSmall
+                                  .titleSmall!
                                   .copyWith(
                                     color:
-                                        textColor.withOpacity(kLighterOpacity),
+                                        textColor!.withOpacity(kLighterOpacity),
                                   ),
                             ),
                           ],
@@ -158,8 +158,8 @@ class PurchaseOrderListItem extends StatelessWidget {
                         formatNumber(
                           purchaseOrder.amount,
                           context,
-                          vendorId: vendor.id,
-                        ),
+                          vendorId: vendor!.id,
+                        )!,
                         style: textStyle,
                         textAlign: TextAlign.end,
                       ),
@@ -171,10 +171,10 @@ class PurchaseOrderListItem extends StatelessWidget {
               )
             : ListTile(
                 onTap: () => onTap != null
-                    ? onTap()
+                    ? onTap!()
                     : selectEntity(entity: purchaseOrder),
                 onLongPress: () => onLongPress != null
-                    ? onLongPress()
+                    ? onLongPress!()
                     : selectEntity(entity: purchaseOrder, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
@@ -183,7 +183,7 @@ class PurchaseOrderListItem extends StatelessWidget {
                           value: isChecked,
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => onCheckboxChanged(value),
+                          onChanged: (value) => onCheckboxChanged!(value),
                           activeColor: Theme.of(context).colorScheme.secondary,
                         ),
                       )
@@ -194,7 +194,7 @@ class PurchaseOrderListItem extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          vendor.name,
+                          vendor!.name,
                           style: Theme.of(context).textTheme.titleMedium,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -204,8 +204,8 @@ class PurchaseOrderListItem extends StatelessWidget {
                           formatNumber(
                             purchaseOrder.amount,
                             context,
-                            vendorId: vendor.id,
-                          ),
+                            vendorId: vendor!.id,
+                          )!,
                           style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),
@@ -218,7 +218,7 @@ class PurchaseOrderListItem extends StatelessWidget {
                         Expanded(
                           child: filterMatch == null
                               ? Text((((purchaseOrder.number ?? '').isEmpty
-                                          ? localization.pending
+                                          ? localization!.pending
                                           : purchaseOrder.number) +
                                       ' • ' +
                                       formatDate(purchaseOrder.date, context) +
@@ -233,8 +233,8 @@ class PurchaseOrderListItem extends StatelessWidget {
                                 ),
                         ),
                         Text(
-                            localization.lookup(kPurchaseOrderStatuses[
-                                purchaseOrder.calculatedStatusId]),
+                            localization!.lookup(kPurchaseOrderStatuses[
+                                purchaseOrder.calculatedStatusId])!,
                             style: TextStyle(
                               color: !purchaseOrder.isSent
                                   ? textColor

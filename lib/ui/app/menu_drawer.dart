@@ -52,8 +52,8 @@ import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class MenuDrawer extends StatefulWidget {
   const MenuDrawer({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final MenuDrawerVM viewModel;
@@ -83,16 +83,16 @@ class _MenuDrawerState extends State<MenuDrawer> {
 
     Widget _companyLogo(CompanyEntity company) {
       if (company.settings.companyLogo != null &&
-          company.settings.companyLogo.isNotEmpty) {
+          company.settings.companyLogo!.isNotEmpty) {
         if (state.isHosted && kIsWeb) {
           // Fix for CORS error using 'object' subdomain
           return CachedImage(
             width: MenuDrawer.LOGO_WIDTH,
-            url: state.credentials.url + '/companies/' + company.id + '/logo',
+            url: state.credentials.url! + '/companies/' + company.id + '/logo',
             apiToken: state.userCompanyStates
                 .firstWhere((userCompanyState) =>
-                    userCompanyState.company.id == company.id)
-                .token
+                    userCompanyState.company!.id == company.id)
+                .token!
                 .token,
           );
         } else {
@@ -113,7 +113,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
     }) {
       final userCompany = state.userCompanyStates
           .firstWhere(
-              (userCompanyState) => userCompanyState.company.id == company.id)
+              (userCompanyState) => userCompanyState.company!.id == company.id)
           .userCompany;
       return MouseRegion(
         onEnter: (_) => setState(() => _isHovered = true),
@@ -171,21 +171,21 @@ class _MenuDrawerState extends State<MenuDrawer> {
             Expanded(
               child: Text(
                 company.displayName.isEmpty
-                    ? localization.newCompany
+                    ? localization!.newCompany
                     : company.displayName,
                 style: Theme.of(context).textTheme.titleMedium,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
             if (showAccentColor &&
-                userCompany.settings.accentColor != null &&
+                userCompany!.settings!.accentColor != null &&
                 state.companies.length > 1)
               Container(
                 padding: const EdgeInsets.only(right: 2),
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: convertHexStringToColor(
-                        userCompany.settings.accentColor)),
+                        userCompany.settings!.accentColor)),
                 width: 10,
                 height: 10,
                 //color: Colors.red,
@@ -196,17 +196,17 @@ class _MenuDrawerState extends State<MenuDrawer> {
     }
 
     final _collapsedCompanySelector = PopupMenuButton<String>(
-      tooltip: localization.selectCompany,
+      tooltip: localization!.selectCompany,
       child: SizedBox(
         height: kTopBottomBarHeight,
         width: MenuDrawer.LOGO_WIDTH,
-        child: _companyLogo(widget.viewModel.selectedCompany),
+        child: _companyLogo(widget.viewModel.selectedCompany!),
       ),
       color: Theme.of(context).cardColor,
       itemBuilder: (BuildContext context) => [
         ...widget.viewModel.state.companies
             .map((company) => PopupMenuItem<String>(
-                  child: _companyListItem(company),
+                  child: _companyListItem(company!),
                   value: company.id,
                 ))
             .toList(),
@@ -259,7 +259,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
           widget.viewModel.onAddCompany(context);
         } else {
           final company =
-              state.companies.firstWhere((company) => company.id == companyId);
+              state.companies.firstWhere((company) => company!.id == companyId);
           final index = state.companies.indexOf(company);
           widget.viewModel.onCompanyChanged(context, index, company);
         }
@@ -275,13 +275,13 @@ class _MenuDrawerState extends State<MenuDrawer> {
               value: widget.viewModel.selectedCompanyIndex,
               selectedItemBuilder: (context) => state.companies
                   .map((company) =>
-                      _companyListItem(company, showAccentColor: false))
+                      _companyListItem(company!, showAccentColor: false))
                   .toList(),
               items: [
                 ...state.companies
-                    .map((CompanyEntity company) => DropdownMenuItem<String>(
+                    .map((CompanyEntity? company) => DropdownMenuItem<String>(
                         value: (state.companies.indexOf(company)).toString(),
-                        child: _companyListItem(company)))
+                        child: _companyListItem(company!)))
                     .toList(),
                 if (state.canAddCompany)
                   DropdownMenuItem<String>(
@@ -353,7 +353,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 // Hide options while refreshing data
-                state.credentials.token.isEmpty
+                state.credentials.token!.isEmpty
                     ? Expanded(child: SizedBox())
                     : Container(
                         padding:
@@ -364,7 +364,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                         child: state.isMenuCollapsed
                             ? _collapsedCompanySelector
                             : _expandedCompanySelector),
-                state.credentials.token.isEmpty
+                state.credentials.token!.isEmpty
                     ? SizedBox()
                     : Theme(
                         data: state.prefState.enableDarkMode ||
@@ -381,7 +381,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                 : Theme.of(context).cardColor,
                             child: ScrollableListView(
                               children: <Widget>[
-                                if (state.account.debugEnabled && kReleaseMode)
+                                if (state.account!.debugEnabled && kReleaseMode)
                                   if (state.isMenuCollapsed)
                                     Tooltip(
                                       message: localization.debugModeIsEnabled,
@@ -417,7 +417,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                             launchUrl(Uri.parse(kDebugModeUrl)),
                                       ),
                                     ),
-                                if (!state.account.accountSmsVerified &&
+                                if (!state.account!.accountSmsVerified &&
                                     state.isHosted)
                                   if (state.isMenuCollapsed)
                                     Tooltip(
@@ -444,7 +444,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                       child: ListTile(
                                         tileColor: Colors.orange.shade800,
                                         subtitle: Text(
-                                          localization.verifyPhoneNumberHelp,
+                                          localization.verifyPhoneNumberHelp!,
                                           style: TextStyle(color: Colors.white),
                                         ),
                                         onTap: () {
@@ -456,8 +456,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                         },
                                       ),
                                     )
-                                else if (state.user.isTwoFactorEnabled &&
-                                    !state.user.phoneVerified &&
+                                else if (state.user!.isTwoFactorEnabled &&
+                                    !state.user!.phoneVerified &&
                                     state.isHosted)
                                   if (state.isMenuCollapsed)
                                     Tooltip(
@@ -486,7 +486,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                       child: ListTile(
                                         tileColor: Colors.orange.shade800,
                                         subtitle: Text(
-                                          localization.verifyPhoneNumber2faHelp,
+                                          localization.verifyPhoneNumber2faHelp!,
                                           style: TextStyle(color: Colors.white),
                                         ),
                                         onTap: () {
@@ -498,8 +498,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                         },
                                       ),
                                     )
-                                else if (state.company.isDisabled &&
-                                    state.userCompany.isAdmin)
+                                else if (state.company!.isDisabled &&
+                                    state.userCompany!.isAdmin)
                                   if (state.isMenuCollapsed)
                                     Tooltip(
                                       message:
@@ -544,7 +544,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                         },
                                       ),
                                     ),
-                                if (state.userCompany.isOwner &&
+                                if (state.userCompany!.isOwner &&
                                     state.isHosted &&
                                     !state.isProPlan &&
                                     (!isApple() || supportsInAppPurchase()))
@@ -577,7 +577,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                                 localization.upgrade,
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .bodyLarge
+                                                    .bodyLarge!
                                                     .copyWith(
                                                       fontSize: 14,
                                                       color: Colors.white,
@@ -594,7 +594,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                       ),
                                     ),
                                   ),
-                                if (state.userCompany.canViewDashboard)
+                                if (state.userCompany!.canViewDashboard)
                                   DrawerTile(
                                     company: company,
                                     icon: getEntityIcon(EntityType.dashboard),
@@ -709,7 +709,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                   title: localization.documents,
                                 ),
                                 if (state.isProPlan &&
-                                    state.userCompany.canViewReports)
+                                    state.userCompany!.canViewReports)
                                   DrawerTile(
                                     company: company,
                                     icon: getEntityIcon(EntityType.reports),
@@ -752,9 +752,9 @@ class _MenuDrawerState extends State<MenuDrawer> {
 
 class DrawerTile extends StatefulWidget {
   const DrawerTile({
-    @required this.company,
-    @required this.icon,
-    @required this.title,
+    required this.company,
+    required this.icon,
+    required this.title,
     this.onTap,
     this.entityType,
     this.onLongPress,
@@ -763,13 +763,13 @@ class DrawerTile extends StatefulWidget {
   });
 
   final CompanyEntity company;
-  final EntityType entityType;
+  final EntityType? entityType;
   final IconData icon;
-  final String title;
-  final Function onTap;
-  final Function onLongPress;
-  final Function onCreateTap;
-  final String iconTooltip;
+  final String? title;
+  final Function? onTap;
+  final Function? onLongPress;
+  final Function? onCreateTap;
+  final String? iconTooltip;
 
   @override
   _DrawerTileState createState() => _DrawerTileState();
@@ -789,13 +789,13 @@ class _DrawerTileState extends State<DrawerTile> {
 
     if (!Config.DEMO_MODE) {
       if (widget.entityType != null &&
-          !userCompany.canViewCreateOrEdit(widget.entityType)) {
+          !userCompany!.canViewCreateOrEdit(widget.entityType)) {
         return Container();
       }
     }
 
     final enableDarkMode = state.prefState.enableDarkMode;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     String route;
     if (widget.title == localization.dashboard) {
@@ -807,7 +807,7 @@ class _DrawerTileState extends State<DrawerTile> {
     } else if (widget.title == localization.kanban) {
       route = kKanban;
     } else {
-      route = widget.entityType.name;
+      route = widget.entityType!.name;
     }
 
     // Workaround to show clients/vendors as selected when
@@ -832,11 +832,11 @@ class _DrawerTileState extends State<DrawerTile> {
             .activeCustomColors[PrefState.THEME_SIDEBAR_ACTIVE_FONT_COLOR] ??
         '';
 
-    Color color = Colors.transparent;
-    Color textColor = Theme.of(context)
+    Color? color = Colors.transparent;
+    Color? textColor = Theme.of(context)
         .textTheme
-        .bodyLarge
-        .color
+        .bodyLarge!
+        .color!
         .withOpacity(isSelected ? 1 : .7);
 
     if (isSelected) {
@@ -867,13 +867,13 @@ class _DrawerTileState extends State<DrawerTile> {
           entityType: widget.entityType,
         );
       } else {
-        widget.onTap();
+        widget.onTap!();
       }
     };
 
     final onLongPress = () {
       if (widget.onLongPress != null) {
-        widget.onLongPress();
+        widget.onLongPress!();
       } else if (widget.entityType != null) {
         createEntityByType(
           context: context,
@@ -887,7 +887,7 @@ class _DrawerTileState extends State<DrawerTile> {
       return Tooltip(
         message: prefState.enableTooltips ? widget.title : '',
         child: ColoredBox(
-          color: color,
+          color: color!,
           child: Opacity(
             opacity: isSelected ? 1 : .8,
             child: InkWell(
@@ -905,7 +905,7 @@ class _DrawerTileState extends State<DrawerTile> {
       );
     }
 
-    Widget iconWidget;
+    Widget? iconWidget;
     if ([
       localization.dashboard,
       localization.settings,
@@ -930,7 +930,7 @@ class _DrawerTileState extends State<DrawerTile> {
           }
         },
       );
-    } else if (userCompany.canCreate(widget.entityType)) {
+    } else if (userCompany!.canCreate(widget.entityType)) {
       iconWidget = IconButton(
         tooltip: prefState.enableTooltips ? widget.iconTooltip : null,
         icon: Icon(
@@ -952,7 +952,7 @@ class _DrawerTileState extends State<DrawerTile> {
 
     bool isLoading = false;
     if (widget.entityType != null &&
-        state.company.isLarge &&
+        state.company!.isLarge &&
         state.uiState.loadingEntityType == widget.entityType) {
       isLoading = true;
     }
@@ -984,9 +984,9 @@ class _DrawerTileState extends State<DrawerTile> {
                       ),
                     ),
           title: Text(
-            widget.title,
+            widget.title!,
             key: ValueKey('menu_${widget.title}'),
-            style: Theme.of(context).textTheme.bodyLarge.copyWith(
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   fontSize: 14,
                   color: textColor,
                 ),
@@ -1010,7 +1010,7 @@ class _DrawerTileState extends State<DrawerTile> {
           SizedBox(
             width: 6,
             height: 40,
-            child: ColoredBox(color: state.accentColor),
+            child: ColoredBox(color: state.accentColor!),
           ),
         ],
       );
@@ -1031,7 +1031,7 @@ class SidebarFooter extends StatelessWidget {
     final state = store.state;
     final prefState = state.prefState;
     final localization = AppLocalization.of(context);
-    final account = state.userCompany.account;
+    final account = state.userCompany!.account;
 
     return Material(
       color: Theme.of(context).bottomAppBarTheme.color,
@@ -1042,19 +1042,19 @@ class SidebarFooter extends StatelessWidget {
           if (state.isMenuCollapsed) ...[
             Expanded(child: SizedBox())
           ] else ...[
-            if (!Config.DEMO_MODE && !state.isDemo && account.isOld)
+            if (!Config.DEMO_MODE && !state.isDemo && account!.isOld)
               if (state.isSelfHosted &&
                   !account.isSchedulerRunning &&
-                  state.userCompany.isAdmin)
+                  state.userCompany!.isAdmin)
                 IconButton(
-                  tooltip: prefState.enableTooltips ? localization.error : '',
+                  tooltip: prefState.enableTooltips ? localization!.error : '',
                   icon: Icon(
                     Icons.warning,
                     color: Colors.red,
                   ),
                   onPressed: () => showMessageDialog(
                       context: context,
-                      message: localization.cronsNotEnabled,
+                      message: localization!.cronsNotEnabled,
                       secondaryActions: [
                         TextButton(
                           child: Text(localization.learnMore.toUpperCase()),
@@ -1071,9 +1071,9 @@ class SidebarFooter extends StatelessWidget {
                         ),
                       ]),
                 )
-              else if (state.credentials.token.isEmpty)
+              else if (state.credentials.token!.isEmpty)
                 IconButton(
-                  tooltip: prefState.enableTooltips ? localization.error : '',
+                  tooltip: prefState.enableTooltips ? localization!.error : '',
                   icon: Icon(
                     Icons.warning,
                     color: Colors.red,
@@ -1083,12 +1083,12 @@ class SidebarFooter extends StatelessWidget {
                   ),
                 )
               else if (state.isSelfHosted &&
-                  !state.account.disableAutoUpdate &&
-                  state.userCompany.isAdmin &&
+                  !state.account!.disableAutoUpdate &&
+                  state.userCompany!.isAdmin &&
                   state.isUpdateAvailable)
                 IconButton(
                   tooltip: prefState.enableTooltips
-                      ? localization.updateAvailable
+                      ? localization!.updateAvailable
                       : '',
                   icon: Icon(
                     Icons.warning,
@@ -1111,8 +1111,8 @@ class SidebarFooter extends StatelessWidget {
                   onPressed: () => showMessageDialog(
                     context: context,
                     message: isMobileOS()
-                        ? localization.recommendMobile
-                        : localization.recommendDesktop,
+                        ? localization!.recommendMobile
+                        : localization!.recommendDesktop,
                     onDismiss: () =>
                         store.dispatch(DismissNativeWarningPermanently()),
                     secondaryActions: [
@@ -1131,7 +1131,7 @@ class SidebarFooter extends StatelessWidget {
                           Navigator.of(context).pop();
                           store.dispatch(DismissNativeWarning());
                         },
-                        child: Text(localization.remindMe.toUpperCase()),
+                        child: Text(localization.remindMe!.toUpperCase()),
                       ),
                     ],
                   ),
@@ -1143,13 +1143,13 @@ class SidebarFooter extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.mail),
               onPressed: () => _showContactUs(context),
-              tooltip: prefState.enableTooltips ? localization.contactUs : '',
+              tooltip: prefState.enableTooltips ? localization!.contactUs : '',
             ),
             IconButton(
               icon: Icon(Icons.forum),
               onPressed: () => launchUrl(Uri.parse(kForumUrl)),
               tooltip:
-                  prefState.enableTooltips ? localization.supportForum : '',
+                  prefState.enableTooltips ? localization!.supportForum : '',
             ),
             IconButton(
               icon: Icon(Icons.help_outline),
@@ -1179,12 +1179,12 @@ class SidebarFooter extends StatelessWidget {
 
                 launchUrl(Uri.parse(url));
               },
-              tooltip: prefState.enableTooltips ? localization.userGuide : '',
+              tooltip: prefState.enableTooltips ? localization!.userGuide : '',
             ),
             IconButton(
               icon: Icon(Icons.info_outline),
               onPressed: () => _showAbout(context),
-              tooltip: prefState.enableTooltips ? localization.about : '',
+              tooltip: prefState.enableTooltips ? localization!.about : '',
             ),
             /*
             if (kDebugMode)
@@ -1203,7 +1203,7 @@ class SidebarFooter extends StatelessWidget {
                   Icons.warning,
                   color: Colors.red,
                 ),
-                tooltip: prefState.enableTooltips ? localization.error : '',
+                tooltip: prefState.enableTooltips ? localization!.error : '',
                 onPressed: () => showDialog<ErrorDialog>(
                     context: context,
                     builder: (BuildContext context) {
@@ -1220,7 +1220,7 @@ class SidebarFooter extends StatelessWidget {
                 isLeft: true,
                 child: Tooltip(
                   message:
-                      prefState.enableTooltips ? localization.hideMenu : '',
+                      prefState.enableTooltips ? localization!.hideMenu : '',
                   child: InkWell(
                     onTap: () => store.dispatch(
                         UpdateUserPreferences(sidebar: AppSidebar.menu)),
@@ -1259,7 +1259,7 @@ class SidebarFooterCollapsed extends StatelessWidget {
                       color: Theme.of(context).colorScheme.secondary)
                   : Icon(Icons.info_outline),
               onSelected: (value) {
-                if (value == localization.updateAvailable) {
+                if (value == localization!.updateAvailable) {
                   _showUpdate(context);
                 } else if (value == localization.about) {
                   _showAbout(context);
@@ -1275,14 +1275,14 @@ class SidebarFooterCollapsed extends StatelessWidget {
                         Icons.warning,
                         color: Theme.of(context).colorScheme.secondary,
                       ),
-                      title: Text(localization.updateAvailable),
+                      title: Text(localization!.updateAvailable),
                     ),
                     value: localization.updateAvailable,
                   ),
                 PopupMenuItem<String>(
                   child: ListTile(
                     leading: Icon(Icons.mail),
-                    title: Text(localization.contactUs),
+                    title: Text(localization!.contactUs),
                   ),
                   value: localization.contactUs,
                 ),
@@ -1315,7 +1315,7 @@ class SidebarFooterCollapsed extends StatelessWidget {
                 color: state.isUpdateAvailable ? state.accentColor : null,
               ),
               tooltip:
-                  state.prefState.enableTooltips ? localization.showMenu : null,
+                  state.prefState.enableTooltips ? localization!.showMenu : null,
               onPressed: () {
                 store.dispatch(UpdateUserPreferences(sidebar: AppSidebar.menu));
               },
@@ -1340,7 +1340,7 @@ void _showUpdate(BuildContext context) {
 }
 
 void _showConnectStripe(BuildContext context) {
-  final localization = AppLocalization.of(context);
+  final localization = AppLocalization.of(context)!;
   showMessageDialog(
       context: context,
       message: localization.unauthorizedStripeWarning,
@@ -1348,10 +1348,10 @@ void _showConnectStripe(BuildContext context) {
         TextButton(
           child: Text(localization.viewSettings.toUpperCase()),
           onPressed: () {
-            final context = navigatorKey.currentContext;
+            final context = navigatorKey.currentContext!;
             Navigator.of(context).pop();
             final store = StoreProvider.of<AppState>(context);
-            final gateway = getUnconnectedStripeAccount(store.state);
+            final gateway = getUnconnectedStripeAccount(store.state)!;
             editEntity(entity: gateway);
           },
         ),
@@ -1371,14 +1371,14 @@ void _showAbout(BuildContext context) async {
     height: 40.0,
   );
 
-  final userCompany = state.userCompany;
+  final userCompany = state.userCompany!;
   String subtitle = state.appVersion + '\n';
   subtitle +=
-      state.isSelfHosted ? localization.selfhosted : localization.hosted;
+      state.isSelfHosted ? localization!.selfhosted : localization!.hosted;
   if (userCompany.isOwner) {
-    subtitle += ' • ' + localization.owner;
+    subtitle += ' • ' + localization.owner!;
   } else if (userCompany.isAdmin) {
-    subtitle += ' • ' + localization.admin;
+    subtitle += ' • ' + localization.admin!;
   }
 
   showDialog<Null>(
@@ -1426,9 +1426,9 @@ void _showAbout(BuildContext context) async {
                       if (kReleaseMode) {
                         showMessageDialog(
                             context: context,
-                            message: FLUTTER_VERSION['channel'].toUpperCase() +
+                            message: FLUTTER_VERSION['channel']!.toUpperCase() +
                                 ' • ' +
-                                FLUTTER_VERSION['frameworkVersion'],
+                                FLUTTER_VERSION['frameworkVersion']!,
                             secondaryActions: [
                               TextButton(
                                 child: Text(localization.logout.toUpperCase()),
@@ -1446,8 +1446,8 @@ void _showAbout(BuildContext context) async {
                   SizedBox(height: 8),
                   ListTile(
                     contentPadding: const EdgeInsets.all(0),
-                    title: Text(state.user.fullName),
-                    subtitle: Text(state.user.email),
+                    title: Text(state.user!.fullName),
+                    subtitle: Text(state.user!.email),
                   ),
                   if (!isApple())
                     Padding(
@@ -1580,12 +1580,12 @@ void _showAbout(BuildContext context) async {
                       ),
                     ),
                   AppButton(
-                    label: (localization.releaseNotes).toUpperCase(),
+                    label: localization.releaseNotes!.toUpperCase(),
                     iconData: MdiIcons.note,
                     color: Colors.cyan,
                     onPressed: () => launchUrl(Uri.parse(kReleaseNotesUrl)),
                   ),
-                  if (state.userCompany.isAdmin) ...[
+                  if (state.userCompany!.isAdmin) ...[
                     if (state.isSelfHosted || !kReleaseMode) ...[
                       AppButton(
                         label: localization.healthCheck.toUpperCase(),
@@ -1599,8 +1599,8 @@ void _showAbout(BuildContext context) async {
                               });
                         },
                       ),
-                      if (!state.account.disableAutoUpdate &&
-                          (!state.account.isDocker || state.isUpdateAvailable))
+                      if (!state.account!.disableAutoUpdate &&
+                          (!state.account!.isDocker || state.isUpdateAvailable))
                         AppButton(
                           label: (state.isUpdateAvailable
                                   ? localization.updateApp
@@ -1612,9 +1612,9 @@ void _showAbout(BuildContext context) async {
                         ),
                     ],
                   ],
-                  if (state.company.daysActive > 30)
+                  if (state.company!.daysActive > 30)
                     AppButton(
-                      label: localization.reviewApp.toUpperCase(),
+                      label: localization.reviewApp!.toUpperCase(),
                       iconData: Icons.star,
                       color: Colors.purple,
                       onPressed: () {
@@ -1684,7 +1684,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
 
     setState(() => _isSaving = true);
     WebClient()
-        .post(state.credentials.url + '/support/messages/send',
+        .post(state.credentials.url! + '/support/messages/send',
             state.credentials.token,
             data: json.encode({
               'message': _message,
@@ -1697,9 +1697,9 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
       await showDialog<MessageDialog>(
           context: context,
           builder: (BuildContext context) {
-            return MessageDialog(localization.yourMessageHasBeenReceived);
+            return MessageDialog(localization!.yourMessageHasBeenReceived);
           });
-      Navigator.pop(navigatorKey.currentContext);
+      Navigator.pop(navigatorKey.currentContext!);
     }).catchError((dynamic error) {
       print('## ERROR: $error');
       setState(() => _isSaving = false);
@@ -1709,9 +1709,9 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final state = StoreProvider.of<AppState>(context).state;
-    final user = state.user;
+    final user = state.user!;
 
     return PointerInterceptor(
       child: AlertDialog(

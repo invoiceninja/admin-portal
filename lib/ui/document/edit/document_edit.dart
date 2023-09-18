@@ -12,8 +12,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DocumentEdit extends StatefulWidget {
   const DocumentEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final DocumentEditVM viewModel;
@@ -68,7 +68,7 @@ class _DocumentEditState extends State<DocumentEdit> {
   }
 
   void _onSavePressed() {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -86,7 +86,7 @@ class _DocumentEditState extends State<DocumentEdit> {
     return EditScaffold(
       entity: document,
       title:
-          document.isNew ? localization.newDocument : localization.editDocument,
+          document.isNew ? localization!.newDocument : localization!.editDocument,
       onSavePressed: (_) => _onSavePressed(),
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       body: Form(

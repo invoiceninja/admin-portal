@@ -16,20 +16,20 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CompanyGatewayListItem extends StatelessWidget {
   const CompanyGatewayListItem({
-    Key key,
-    @required this.user,
-    @required this.companyGateway,
-    @required this.filter,
+    Key? key,
+    required this.user,
+    required this.companyGateway,
+    required this.filter,
     this.onRemovePressed,
     this.onCheckboxChanged,
     this.isChecked = false,
   }) : super(key: key);
 
-  final UserEntity user;
-  final CompanyGatewayEntity companyGateway;
-  final String filter;
-  final Function(bool) onCheckboxChanged;
-  final Function onRemovePressed;
+  final UserEntity? user;
+  final CompanyGatewayEntity? companyGateway;
+  final String? filter;
+  final Function(bool?)? onCheckboxChanged;
+  final Function? onRemovePressed;
   final bool isChecked;
 
   static final companyGatewayItemKey =
@@ -41,8 +41,8 @@ class CompanyGatewayListItem extends StatelessWidget {
     final state = store.state;
 
     final localization = AppLocalization.of(context);
-    final filterMatch = filter != null && filter.isNotEmpty
-        ? companyGateway.matchesFilterValue(filter)
+    final filterMatch = filter != null && filter!.isNotEmpty
+        ? companyGateway!.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch;
     final listUIState = state.uiState.companyGatewayUIState.listUIState;
@@ -50,13 +50,13 @@ class CompanyGatewayListItem extends StatelessWidget {
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     final child = ListTile(
-      onTap: () => selectEntity(entity: companyGateway),
+      onTap: () => selectEntity(entity: companyGateway!),
       trailing: onRemovePressed == null
           ? null
           : Padding(
               padding: const EdgeInsets.only(right: 16),
               child: AppTextButton(
-                label: AppLocalization.of(context).remove,
+                label: AppLocalization.of(context)!.remove,
                 onPressed: onRemovePressed,
               ),
             ),
@@ -66,7 +66,7 @@ class CompanyGatewayListItem extends StatelessWidget {
               child: Checkbox(
                 value: isChecked,
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                onChanged: (value) => onCheckboxChanged(value),
+                onChanged: (value) => onCheckboxChanged!(value),
                 activeColor: Theme.of(context).colorScheme.secondary,
               ),
             )
@@ -77,11 +77,11 @@ class CompanyGatewayListItem extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: Text(
-                companyGateway.listDisplayName,
+                companyGateway!.listDisplayName,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
-            Text(formatNumber(companyGateway.listDisplayAmount, context),
+            Text(formatNumber(companyGateway!.listDisplayAmount, context)!,
                 style: Theme.of(context).textTheme.titleMedium),
           ],
         ),
@@ -90,7 +90,7 @@ class CompanyGatewayListItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          if (companyGateway.isTestMode) Text(localization.testMode),
+          if (companyGateway!.isTestMode) Text(localization!.testMode),
           subtitle != null && subtitle.isNotEmpty
               ? Text(
                   subtitle,

@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:intl/intl.dart';
 import 'package:memoize/memoize.dart';
 
@@ -26,13 +27,13 @@ enum DocumentReportFields {
 }
 
 var memoizedDocumentReport = memo4((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, DocumentEntity> documentMap,
-  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String?, DocumentEntity?> documentMap,
+  BuiltMap<String?, UserEntity?> userMap,
 ) =>
     documentReport(
-      userCompany,
+      userCompany!,
       reportsUIState,
       documentMap,
       userMap,
@@ -41,11 +42,11 @@ var memoizedDocumentReport = memo4((
 ReportResult documentReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, DocumentEntity> documentMap,
-  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String?, DocumentEntity?> documentMap,
+  BuiltMap<String?, UserEntity?> userMap,
 ) {
   final List<List<ReportElement>> data = [];
-  final List<BaseEntity> entities = [];
+  final List<BaseEntity?> entities = [];
   BuiltList<DocumentReportFields> columns;
 
   final localization =
@@ -53,7 +54,7 @@ ReportResult documentReport(
   final reportSettings = userCompany.settings?.reportSettings;
   final documentReportSettings =
       reportSettings != null && reportSettings.containsKey(kReportDocument)
-          ? reportSettings[kReportDocument]
+          ? reportSettings[kReportDocument]!
           : ReportSettingsEntity();
 
   final defaultColumns = [
@@ -69,7 +70,7 @@ ReportResult documentReport(
   if (documentReportSettings.columns.isNotEmpty) {
     columns = BuiltList(documentReportSettings.columns
         .map((e) => EnumUtils.fromString(DocumentReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
@@ -84,34 +85,34 @@ ReportResult documentReport(
 
       switch (column) {
         case DocumentReportFields.name:
-          value = document.name;
+          value = document!.name;
           break;
         case DocumentReportFields.file_type:
-          value = document.type;
+          value = document!.type;
           break;
         case DocumentReportFields.created_at:
-          value = convertTimestampToDateString(document.createdAt);
+          value = convertTimestampToDateString(document!.createdAt);
           break;
         case DocumentReportFields.created_by:
-          value = userMap[document.createdUserId]?.listDisplayName ?? '';
+          value = userMap[document!.createdUserId]?.listDisplayName ?? '';
           break;
         case DocumentReportFields.record_type:
-          value = document.parentType;
+          value = document!.parentType;
           break;
         case DocumentReportFields.updated_at:
-          value = convertTimestampToDateString(document.updatedAt);
+          value = convertTimestampToDateString(document!.updatedAt);
           break;
         case DocumentReportFields.size:
-          value = document.size;
+          value = document!.size;
           break;
         case DocumentReportFields.width:
-          value = document.width;
+          value = document!.width;
           break;
         case DocumentReportFields.height:
-          value = document.height;
+          value = document!.height;
           break;
         case DocumentReportFields.private:
-          value = !document.isPublic;
+          value = !document!.isPublic;
           break;
       }
 
@@ -119,9 +120,9 @@ ReportResult documentReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column),
+        column: EnumUtils.parse(column)!,
         localization: localization,
-      )) {
+      )!) {
         skip = true;
       }
 
@@ -149,7 +150,7 @@ ReportResult documentReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, documentReportSettings, selectedColumns));
+      sortReportTableRows(rowA, rowB, documentReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns:

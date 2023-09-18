@@ -14,18 +14,18 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DashboardChart extends StatefulWidget {
   const DashboardChart({
-    @required this.data,
-    @required this.title,
-    @required this.currencyId,
-    @required this.onDateSelected,
-    @required this.onSelected,
+    required this.data,
+    required this.title,
+    required this.currencyId,
+    required this.onDateSelected,
+    required this.onSelected,
     this.isOverview = false,
   });
 
-  final List<ChartDataGroup> data;
+  final List<ChartDataGroup>? data;
   final String title;
   final String currencyId;
-  final Function(int, String) onDateSelected;
+  final Function(int, String)? onDateSelected;
   final Function() onSelected;
   final bool isOverview;
 
@@ -41,15 +41,15 @@ class DashboardChart extends StatefulWidget {
 }
 
 class _DashboardChartState extends State<DashboardChart> {
-  String _selected;
+  String? _selected;
   int _selectedIndex = 0;
 
   void _onSelectionChanged(charts.SelectionModel model) {
     final selectedDatum = model.selectedDatum;
 
-    DateTime date;
+    DateTime? date;
     double total = 0.0;
-    final measures = <String, num>{};
+    final measures = <String?, num?>{};
 
     if (selectedDatum.isNotEmpty) {
       date = selectedDatum.first.datum.date;
@@ -66,13 +66,13 @@ class _DashboardChartState extends State<DashboardChart> {
       if (date != null) {
         _selected = formatDate(date.toIso8601String(), context) +
             ' • ' +
-            formatNumber(total, context, currencyId: widget.currencyId);
+            formatNumber(total, context, currencyId: widget.currencyId)!;
       } else {
         _selected = null;
       }
     });
 
-    widget.onDateSelected(_selectedIndex, convertDateTimeToSqlDate(date));
+    widget.onDateSelected!(_selectedIndex, convertDateTimeToSqlDate(date));
   }
 
   @override
@@ -84,7 +84,7 @@ class _DashboardChartState extends State<DashboardChart> {
         ? charts.MaterialPalette.white
         : charts.MaterialPalette.gray.shade700;
 
-    final series = widget.data[_selectedIndex];
+    final series = widget.data![_selectedIndex];
     final settings = state.dashboardUIState.settings;
 
     final chart = charts.TimeSeriesChart(
@@ -138,8 +138,8 @@ class _DashboardChartState extends State<DashboardChart> {
             child: ListView(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
-              children: widget.data.map((dataGroup) {
-                final int index = widget.data.indexOf(dataGroup);
+              children: widget.data!.map((dataGroup) {
+                final int index = widget.data!.indexOf(dataGroup);
                 final bool isSelected = index == _selectedIndex;
                 final bool isIncrease =
                     dataGroup.periodTotal > dataGroup.previousTotal;
@@ -147,7 +147,7 @@ class _DashboardChartState extends State<DashboardChart> {
                     formatNumber(
                         dataGroup.periodTotal - dataGroup.previousTotal,
                         context,
-                        currencyId: widget.currencyId);
+                        currencyId: widget.currencyId)!;
                 final changePercent = (isIncrease ? '+' : '') +
                     formatNumber(
                         dataGroup.periodTotal != 0 &&
@@ -161,7 +161,7 @@ class _DashboardChartState extends State<DashboardChart> {
                             : 0.0,
                         context,
                         formatNumberType: FormatNumberType.percent,
-                        currencyId: widget.currencyId);
+                        currencyId: widget.currencyId)!;
                 final String changeString = dataGroup.periodTotal == 0 ||
                         dataGroup.previousTotal == 0 ||
                         dataGroup.periodTotal == dataGroup.previousTotal
@@ -182,15 +182,15 @@ class _DashboardChartState extends State<DashboardChart> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(localization.lookup(dataGroup.name),
-                            style: theme.textTheme.titleLarge.copyWith(
+                        Text(localization!.lookup(dataGroup.name)!,
+                            style: theme.textTheme.titleLarge!.copyWith(
                               color: isSelected ? Colors.white : null,
                             )),
                         SizedBox(height: 4),
                         Text(
                             formatNumber(dataGroup.periodTotal, context,
-                                currencyId: widget.currencyId),
-                            style: theme.textTheme.headlineSmall.copyWith(
+                                currencyId: widget.currencyId)!,
+                            style: theme.textTheme.headlineSmall!.copyWith(
                                 color: isSelected ? Colors.white : null)),
                         SizedBox(height: 4),
                         changeString.isNotEmpty
@@ -233,16 +233,16 @@ class _DashboardChartState extends State<DashboardChart> {
               children: <Widget>[
                 Expanded(
                   child: Text(
-                    localization.average +
+                    localization!.average +
                         ': ' +
                         formatNumber(series.average, context,
-                            currencyId: widget.currencyId),
+                            currencyId: widget.currencyId)!,
                     style: theme.textTheme.titleLarge,
                   ),
                 ),
                 _selected != null
                     ? Text(
-                        _selected,
+                        _selected!,
                         style: theme.textTheme.titleLarge,
                       )
                     : SizedBox(),

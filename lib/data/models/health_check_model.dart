@@ -7,7 +7,23 @@ part 'health_check_model.g.dart';
 abstract class HealthCheckResponse
     implements Built<HealthCheckResponse, HealthCheckResponseBuilder> {
   factory HealthCheckResponse() {
-    return _$HealthCheckResponse._();
+    return _$HealthCheckResponse._(
+      cacheEnabled: false,
+      dbCheck: false,
+      emailDriver: '',
+      envWritable: false,
+      exchangeRateApiNotConfigured: false,
+      execEnabled: false,
+      filePermissions: '',
+      openBasedir: false,
+      pdfEngine: '',
+      pendingJobs: 0,
+      phantomEnabled: false,
+      phpVersion: HealthCheckPHPResponse(),
+      queue: '',
+      systemHealth: false,
+      trailingSlash: false,
+    );
   }
 
   HealthCheckResponse._();
@@ -72,7 +88,13 @@ abstract class HealthCheckResponse
 abstract class HealthCheckPHPResponse
     implements Built<HealthCheckPHPResponse, HealthCheckPHPResponseBuilder> {
   factory HealthCheckPHPResponse() {
-    return _$HealthCheckPHPResponse._();
+    return _$HealthCheckPHPResponse._(
+      currentPHPCLIVersion: '',
+      currentPHPVersion: '',
+      isOkay: false,
+      memoryLimit: '',
+      minimumPHPVersion: '',
+    );
   }
 
   HealthCheckPHPResponse._();

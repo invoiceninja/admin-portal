@@ -23,9 +23,10 @@ class _$VendorListResponseSerializer
   final String wireName = 'VendorListResponse';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, VendorListResponse object,
+  Iterable<Object?> serialize(
+      Serializers serializers, VendorListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType:
@@ -37,21 +38,21 @@ class _$VendorListResponseSerializer
 
   @override
   VendorListResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new VendorListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(VendorEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(VendorEntity)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -68,9 +69,10 @@ class _$VendorItemResponseSerializer
   final String wireName = 'VendorItemResponse';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, VendorItemResponse object,
+  Iterable<Object?> serialize(
+      Serializers serializers, VendorItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(VendorEntity)),
@@ -81,19 +83,19 @@ class _$VendorItemResponseSerializer
 
   @override
   VendorItemResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new VendorItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(VendorEntity)) as VendorEntity);
+              specifiedType: const FullType(VendorEntity))! as VendorEntity);
           break;
       }
     }
@@ -109,9 +111,9 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
   final String wireName = 'VendorEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, VendorEntity object,
+  Iterable<Object?> serialize(Serializers serializers, VendorEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'address1',
@@ -179,7 +181,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'contacts',
       serializers.serialize(object.contacts,
           specifiedType: const FullType(
-              BuiltList, const [const FullType(VendorContactEntity)])),
+              BuiltList, const [const FullType.nullable(VendorContactEntity)])),
       'activities',
       serializers.serialize(object.activities,
           specifiedType: const FullType(
@@ -200,7 +202,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.loadedAt;
     if (value != null) {
       result
@@ -239,157 +241,158 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
   }
 
   @override
-  VendorEntity deserialize(Serializers serializers, Iterable<Object> serialized,
+  VendorEntity deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new VendorEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'loadedAt':
           result.loadedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'name':
           result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'address1':
           result.address1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'address2':
           result.address2 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'city':
           result.city = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'state':
           result.state = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'postal_code':
           result.postalCode = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'country_id':
           result.countryId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'language_id':
           result.languageId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'phone':
           result.phone = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'private_notes':
           result.privateNotes = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'public_notes':
           result.publicNotes = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'website':
           result.website = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'number':
           result.number = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'vat_number':
           result.vatNumber = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'id_number':
           result.idNumber = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'currency_id':
           result.currencyId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value3':
           result.customValue3 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'last_login':
           result.lastLogin = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'classification':
           result.classification = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'contacts':
           result.contacts.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(VendorContactEntity)]))
-              as BuiltList<Object>);
+              specifiedType: const FullType(BuiltList, const [
+                const FullType.nullable(VendorContactEntity)
+              ]))! as BuiltList<Object?>);
           break;
         case 'activities':
           result.activities.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(ActivityEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(ActivityEntity)]))!
+              as BuiltList<Object?>);
           break;
         case 'documents':
           result.documents.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(DocumentEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(DocumentEntity)]))!
+              as BuiltList<Object?>);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'archived_at':
           result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'user_id':
           result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -409,10 +412,10 @@ class _$VendorContactEntitySerializer
   final String wireName = 'VendorContactEntity';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, VendorContactEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'first_name',
       serializers.serialize(object.firstName,
           specifiedType: const FullType(String)),
@@ -457,7 +460,7 @@ class _$VendorContactEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.isChanged;
     if (value != null) {
       result
@@ -491,91 +494,91 @@ class _$VendorContactEntitySerializer
 
   @override
   VendorContactEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new VendorContactEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'first_name':
           result.firstName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'last_name':
           result.lastName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'email':
           result.email = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'is_primary':
           result.isPrimary = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'send_email':
           result.sendEmail = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'phone':
           result.phone = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value3':
           result.customValue3 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'link':
           result.link = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'archived_at':
           result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'user_id':
           result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -589,10 +592,10 @@ class _$VendorListResponse extends VendorListResponse {
   final BuiltList<VendorEntity> data;
 
   factory _$VendorListResponse(
-          [void Function(VendorListResponseBuilder) updates]) =>
+          [void Function(VendorListResponseBuilder)? updates]) =>
       (new VendorListResponseBuilder()..update(updates))._build();
 
-  _$VendorListResponse._({this.data}) : super._() {
+  _$VendorListResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'VendorListResponse', 'data');
   }
 
@@ -611,10 +614,10 @@ class _$VendorListResponse extends VendorListResponse {
     return other is VendorListResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -631,12 +634,12 @@ class _$VendorListResponse extends VendorListResponse {
 
 class VendorListResponseBuilder
     implements Builder<VendorListResponse, VendorListResponseBuilder> {
-  _$VendorListResponse _$v;
+  _$VendorListResponse? _$v;
 
-  ListBuilder<VendorEntity> _data;
+  ListBuilder<VendorEntity>? _data;
   ListBuilder<VendorEntity> get data =>
       _$this._data ??= new ListBuilder<VendorEntity>();
-  set data(ListBuilder<VendorEntity> data) => _$this._data = data;
+  set data(ListBuilder<VendorEntity>? data) => _$this._data = data;
 
   VendorListResponseBuilder();
 
@@ -656,7 +659,7 @@ class VendorListResponseBuilder
   }
 
   @override
-  void update(void Function(VendorListResponseBuilder) updates) {
+  void update(void Function(VendorListResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -668,7 +671,7 @@ class VendorListResponseBuilder
     try {
       _$result = _$v ?? new _$VendorListResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -688,10 +691,10 @@ class _$VendorItemResponse extends VendorItemResponse {
   final VendorEntity data;
 
   factory _$VendorItemResponse(
-          [void Function(VendorItemResponseBuilder) updates]) =>
+          [void Function(VendorItemResponseBuilder)? updates]) =>
       (new VendorItemResponseBuilder()..update(updates))._build();
 
-  _$VendorItemResponse._({this.data}) : super._() {
+  _$VendorItemResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'VendorItemResponse', 'data');
   }
 
@@ -710,10 +713,10 @@ class _$VendorItemResponse extends VendorItemResponse {
     return other is VendorItemResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -730,11 +733,11 @@ class _$VendorItemResponse extends VendorItemResponse {
 
 class VendorItemResponseBuilder
     implements Builder<VendorItemResponse, VendorItemResponseBuilder> {
-  _$VendorItemResponse _$v;
+  _$VendorItemResponse? _$v;
 
-  VendorEntityBuilder _data;
+  VendorEntityBuilder? _data;
   VendorEntityBuilder get data => _$this._data ??= new VendorEntityBuilder();
-  set data(VendorEntityBuilder data) => _$this._data = data;
+  set data(VendorEntityBuilder? data) => _$this._data = data;
 
   VendorItemResponseBuilder();
 
@@ -754,7 +757,7 @@ class VendorItemResponseBuilder
   }
 
   @override
-  void update(void Function(VendorItemResponseBuilder) updates) {
+  void update(void Function(VendorItemResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -766,7 +769,7 @@ class VendorItemResponseBuilder
     try {
       _$result = _$v ?? new _$VendorItemResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -783,7 +786,7 @@ class VendorItemResponseBuilder
 
 class _$VendorEntity extends VendorEntity {
   @override
-  final int loadedAt;
+  final int? loadedAt;
   @override
   final String name;
   @override
@@ -829,13 +832,13 @@ class _$VendorEntity extends VendorEntity {
   @override
   final String classification;
   @override
-  final BuiltList<VendorContactEntity> contacts;
+  final BuiltList<VendorContactEntity?> contacts;
   @override
   final BuiltList<ActivityEntity> activities;
   @override
   final BuiltList<DocumentEntity> documents;
   @override
-  final bool isChanged;
+  final bool? isChanged;
   @override
   final int createdAt;
   @override
@@ -843,52 +846,52 @@ class _$VendorEntity extends VendorEntity {
   @override
   final int archivedAt;
   @override
-  final bool isDeleted;
+  final bool? isDeleted;
   @override
-  final String createdUserId;
+  final String? createdUserId;
   @override
-  final String assignedUserId;
+  final String? assignedUserId;
   @override
   final String id;
 
-  factory _$VendorEntity([void Function(VendorEntityBuilder) updates]) =>
+  factory _$VendorEntity([void Function(VendorEntityBuilder)? updates]) =>
       (new VendorEntityBuilder()..update(updates))._build();
 
   _$VendorEntity._(
       {this.loadedAt,
-      this.name,
-      this.address1,
-      this.address2,
-      this.city,
-      this.state,
-      this.postalCode,
-      this.countryId,
-      this.languageId,
-      this.phone,
-      this.privateNotes,
-      this.publicNotes,
-      this.website,
-      this.number,
-      this.vatNumber,
-      this.idNumber,
-      this.currencyId,
-      this.customValue1,
-      this.customValue2,
-      this.customValue3,
-      this.customValue4,
-      this.lastLogin,
-      this.classification,
-      this.contacts,
-      this.activities,
-      this.documents,
+      required this.name,
+      required this.address1,
+      required this.address2,
+      required this.city,
+      required this.state,
+      required this.postalCode,
+      required this.countryId,
+      required this.languageId,
+      required this.phone,
+      required this.privateNotes,
+      required this.publicNotes,
+      required this.website,
+      required this.number,
+      required this.vatNumber,
+      required this.idNumber,
+      required this.currencyId,
+      required this.customValue1,
+      required this.customValue2,
+      required this.customValue3,
+      required this.customValue4,
+      required this.lastLogin,
+      required this.classification,
+      required this.contacts,
+      required this.activities,
+      required this.documents,
       this.isChanged,
-      this.createdAt,
-      this.updatedAt,
-      this.archivedAt,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.archivedAt,
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.id})
+      required this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'VendorEntity', 'name');
     BuiltValueNullFieldError.checkNotNull(
@@ -989,10 +992,10 @@ class _$VendorEntity extends VendorEntity {
         id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, address1.hashCode);
@@ -1074,152 +1077,152 @@ class _$VendorEntity extends VendorEntity {
 
 class VendorEntityBuilder
     implements Builder<VendorEntity, VendorEntityBuilder> {
-  _$VendorEntity _$v;
+  _$VendorEntity? _$v;
 
-  int _loadedAt;
-  int get loadedAt => _$this._loadedAt;
-  set loadedAt(int loadedAt) => _$this._loadedAt = loadedAt;
+  int? _loadedAt;
+  int? get loadedAt => _$this._loadedAt;
+  set loadedAt(int? loadedAt) => _$this._loadedAt = loadedAt;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
 
-  String _address1;
-  String get address1 => _$this._address1;
-  set address1(String address1) => _$this._address1 = address1;
+  String? _address1;
+  String? get address1 => _$this._address1;
+  set address1(String? address1) => _$this._address1 = address1;
 
-  String _address2;
-  String get address2 => _$this._address2;
-  set address2(String address2) => _$this._address2 = address2;
+  String? _address2;
+  String? get address2 => _$this._address2;
+  set address2(String? address2) => _$this._address2 = address2;
 
-  String _city;
-  String get city => _$this._city;
-  set city(String city) => _$this._city = city;
+  String? _city;
+  String? get city => _$this._city;
+  set city(String? city) => _$this._city = city;
 
-  String _state;
-  String get state => _$this._state;
-  set state(String state) => _$this._state = state;
+  String? _state;
+  String? get state => _$this._state;
+  set state(String? state) => _$this._state = state;
 
-  String _postalCode;
-  String get postalCode => _$this._postalCode;
-  set postalCode(String postalCode) => _$this._postalCode = postalCode;
+  String? _postalCode;
+  String? get postalCode => _$this._postalCode;
+  set postalCode(String? postalCode) => _$this._postalCode = postalCode;
 
-  String _countryId;
-  String get countryId => _$this._countryId;
-  set countryId(String countryId) => _$this._countryId = countryId;
+  String? _countryId;
+  String? get countryId => _$this._countryId;
+  set countryId(String? countryId) => _$this._countryId = countryId;
 
-  String _languageId;
-  String get languageId => _$this._languageId;
-  set languageId(String languageId) => _$this._languageId = languageId;
+  String? _languageId;
+  String? get languageId => _$this._languageId;
+  set languageId(String? languageId) => _$this._languageId = languageId;
 
-  String _phone;
-  String get phone => _$this._phone;
-  set phone(String phone) => _$this._phone = phone;
+  String? _phone;
+  String? get phone => _$this._phone;
+  set phone(String? phone) => _$this._phone = phone;
 
-  String _privateNotes;
-  String get privateNotes => _$this._privateNotes;
-  set privateNotes(String privateNotes) => _$this._privateNotes = privateNotes;
+  String? _privateNotes;
+  String? get privateNotes => _$this._privateNotes;
+  set privateNotes(String? privateNotes) => _$this._privateNotes = privateNotes;
 
-  String _publicNotes;
-  String get publicNotes => _$this._publicNotes;
-  set publicNotes(String publicNotes) => _$this._publicNotes = publicNotes;
+  String? _publicNotes;
+  String? get publicNotes => _$this._publicNotes;
+  set publicNotes(String? publicNotes) => _$this._publicNotes = publicNotes;
 
-  String _website;
-  String get website => _$this._website;
-  set website(String website) => _$this._website = website;
+  String? _website;
+  String? get website => _$this._website;
+  set website(String? website) => _$this._website = website;
 
-  String _number;
-  String get number => _$this._number;
-  set number(String number) => _$this._number = number;
+  String? _number;
+  String? get number => _$this._number;
+  set number(String? number) => _$this._number = number;
 
-  String _vatNumber;
-  String get vatNumber => _$this._vatNumber;
-  set vatNumber(String vatNumber) => _$this._vatNumber = vatNumber;
+  String? _vatNumber;
+  String? get vatNumber => _$this._vatNumber;
+  set vatNumber(String? vatNumber) => _$this._vatNumber = vatNumber;
 
-  String _idNumber;
-  String get idNumber => _$this._idNumber;
-  set idNumber(String idNumber) => _$this._idNumber = idNumber;
+  String? _idNumber;
+  String? get idNumber => _$this._idNumber;
+  set idNumber(String? idNumber) => _$this._idNumber = idNumber;
 
-  String _currencyId;
-  String get currencyId => _$this._currencyId;
-  set currencyId(String currencyId) => _$this._currencyId = currencyId;
+  String? _currencyId;
+  String? get currencyId => _$this._currencyId;
+  set currencyId(String? currencyId) => _$this._currencyId = currencyId;
 
-  String _customValue1;
-  String get customValue1 => _$this._customValue1;
-  set customValue1(String customValue1) => _$this._customValue1 = customValue1;
+  String? _customValue1;
+  String? get customValue1 => _$this._customValue1;
+  set customValue1(String? customValue1) => _$this._customValue1 = customValue1;
 
-  String _customValue2;
-  String get customValue2 => _$this._customValue2;
-  set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+  String? _customValue2;
+  String? get customValue2 => _$this._customValue2;
+  set customValue2(String? customValue2) => _$this._customValue2 = customValue2;
 
-  String _customValue3;
-  String get customValue3 => _$this._customValue3;
-  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+  String? _customValue3;
+  String? get customValue3 => _$this._customValue3;
+  set customValue3(String? customValue3) => _$this._customValue3 = customValue3;
 
-  String _customValue4;
-  String get customValue4 => _$this._customValue4;
-  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+  String? _customValue4;
+  String? get customValue4 => _$this._customValue4;
+  set customValue4(String? customValue4) => _$this._customValue4 = customValue4;
 
-  int _lastLogin;
-  int get lastLogin => _$this._lastLogin;
-  set lastLogin(int lastLogin) => _$this._lastLogin = lastLogin;
+  int? _lastLogin;
+  int? get lastLogin => _$this._lastLogin;
+  set lastLogin(int? lastLogin) => _$this._lastLogin = lastLogin;
 
-  String _classification;
-  String get classification => _$this._classification;
-  set classification(String classification) =>
+  String? _classification;
+  String? get classification => _$this._classification;
+  set classification(String? classification) =>
       _$this._classification = classification;
 
-  ListBuilder<VendorContactEntity> _contacts;
-  ListBuilder<VendorContactEntity> get contacts =>
-      _$this._contacts ??= new ListBuilder<VendorContactEntity>();
-  set contacts(ListBuilder<VendorContactEntity> contacts) =>
+  ListBuilder<VendorContactEntity?>? _contacts;
+  ListBuilder<VendorContactEntity?> get contacts =>
+      _$this._contacts ??= new ListBuilder<VendorContactEntity?>();
+  set contacts(ListBuilder<VendorContactEntity?>? contacts) =>
       _$this._contacts = contacts;
 
-  ListBuilder<ActivityEntity> _activities;
+  ListBuilder<ActivityEntity>? _activities;
   ListBuilder<ActivityEntity> get activities =>
       _$this._activities ??= new ListBuilder<ActivityEntity>();
-  set activities(ListBuilder<ActivityEntity> activities) =>
+  set activities(ListBuilder<ActivityEntity>? activities) =>
       _$this._activities = activities;
 
-  ListBuilder<DocumentEntity> _documents;
+  ListBuilder<DocumentEntity>? _documents;
   ListBuilder<DocumentEntity> get documents =>
       _$this._documents ??= new ListBuilder<DocumentEntity>();
-  set documents(ListBuilder<DocumentEntity> documents) =>
+  set documents(ListBuilder<DocumentEntity>? documents) =>
       _$this._documents = documents;
 
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+  bool? _isChanged;
+  bool? get isChanged => _$this._isChanged;
+  set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
 
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+  int? _archivedAt;
+  int? get archivedAt => _$this._archivedAt;
+  set archivedAt(int? archivedAt) => _$this._archivedAt = archivedAt;
 
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+  bool? _isDeleted;
+  bool? get isDeleted => _$this._isDeleted;
+  set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
 
-  String _createdUserId;
-  String get createdUserId => _$this._createdUserId;
-  set createdUserId(String createdUserId) =>
+  String? _createdUserId;
+  String? get createdUserId => _$this._createdUserId;
+  set createdUserId(String? createdUserId) =>
       _$this._createdUserId = createdUserId;
 
-  String _assignedUserId;
-  String get assignedUserId => _$this._assignedUserId;
-  set assignedUserId(String assignedUserId) =>
+  String? _assignedUserId;
+  String? get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String? assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   VendorEntityBuilder() {
     VendorEntity._initializeBuilder(this);
@@ -1274,7 +1277,7 @@ class VendorEntityBuilder
   }
 
   @override
-  void update(void Function(VendorEntityBuilder) updates) {
+  void update(void Function(VendorEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -1331,7 +1334,7 @@ class VendorEntityBuilder
               assignedUserId: assignedUserId,
               id: BuiltValueNullFieldError.checkNotNull(id, r'VendorEntity', 'id'));
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'contacts';
         contacts.build();
@@ -1374,7 +1377,7 @@ class _$VendorContactEntity extends VendorContactEntity {
   @override
   final String link;
   @override
-  final bool isChanged;
+  final bool? isChanged;
   @override
   final int createdAt;
   @override
@@ -1382,38 +1385,38 @@ class _$VendorContactEntity extends VendorContactEntity {
   @override
   final int archivedAt;
   @override
-  final bool isDeleted;
+  final bool? isDeleted;
   @override
-  final String createdUserId;
+  final String? createdUserId;
   @override
-  final String assignedUserId;
+  final String? assignedUserId;
   @override
   final String id;
 
   factory _$VendorContactEntity(
-          [void Function(VendorContactEntityBuilder) updates]) =>
+          [void Function(VendorContactEntityBuilder)? updates]) =>
       (new VendorContactEntityBuilder()..update(updates))._build();
 
   _$VendorContactEntity._(
-      {this.firstName,
-      this.lastName,
-      this.email,
-      this.isPrimary,
-      this.sendEmail,
-      this.phone,
-      this.customValue1,
-      this.customValue2,
-      this.customValue3,
-      this.customValue4,
-      this.link,
+      {required this.firstName,
+      required this.lastName,
+      required this.email,
+      required this.isPrimary,
+      required this.sendEmail,
+      required this.phone,
+      required this.customValue1,
+      required this.customValue2,
+      required this.customValue3,
+      required this.customValue4,
+      required this.link,
       this.isChanged,
-      this.createdAt,
-      this.updatedAt,
-      this.archivedAt,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.archivedAt,
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.id})
+      required this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         firstName, r'VendorContactEntity', 'firstName');
@@ -1479,10 +1482,10 @@ class _$VendorContactEntity extends VendorContactEntity {
         id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, firstName.hashCode);
     _$hash = $jc(_$hash, lastName.hashCode);
@@ -1535,85 +1538,85 @@ class _$VendorContactEntity extends VendorContactEntity {
 
 class VendorContactEntityBuilder
     implements Builder<VendorContactEntity, VendorContactEntityBuilder> {
-  _$VendorContactEntity _$v;
+  _$VendorContactEntity? _$v;
 
-  String _firstName;
-  String get firstName => _$this._firstName;
-  set firstName(String firstName) => _$this._firstName = firstName;
+  String? _firstName;
+  String? get firstName => _$this._firstName;
+  set firstName(String? firstName) => _$this._firstName = firstName;
 
-  String _lastName;
-  String get lastName => _$this._lastName;
-  set lastName(String lastName) => _$this._lastName = lastName;
+  String? _lastName;
+  String? get lastName => _$this._lastName;
+  set lastName(String? lastName) => _$this._lastName = lastName;
 
-  String _email;
-  String get email => _$this._email;
-  set email(String email) => _$this._email = email;
+  String? _email;
+  String? get email => _$this._email;
+  set email(String? email) => _$this._email = email;
 
-  bool _isPrimary;
-  bool get isPrimary => _$this._isPrimary;
-  set isPrimary(bool isPrimary) => _$this._isPrimary = isPrimary;
+  bool? _isPrimary;
+  bool? get isPrimary => _$this._isPrimary;
+  set isPrimary(bool? isPrimary) => _$this._isPrimary = isPrimary;
 
-  bool _sendEmail;
-  bool get sendEmail => _$this._sendEmail;
-  set sendEmail(bool sendEmail) => _$this._sendEmail = sendEmail;
+  bool? _sendEmail;
+  bool? get sendEmail => _$this._sendEmail;
+  set sendEmail(bool? sendEmail) => _$this._sendEmail = sendEmail;
 
-  String _phone;
-  String get phone => _$this._phone;
-  set phone(String phone) => _$this._phone = phone;
+  String? _phone;
+  String? get phone => _$this._phone;
+  set phone(String? phone) => _$this._phone = phone;
 
-  String _customValue1;
-  String get customValue1 => _$this._customValue1;
-  set customValue1(String customValue1) => _$this._customValue1 = customValue1;
+  String? _customValue1;
+  String? get customValue1 => _$this._customValue1;
+  set customValue1(String? customValue1) => _$this._customValue1 = customValue1;
 
-  String _customValue2;
-  String get customValue2 => _$this._customValue2;
-  set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+  String? _customValue2;
+  String? get customValue2 => _$this._customValue2;
+  set customValue2(String? customValue2) => _$this._customValue2 = customValue2;
 
-  String _customValue3;
-  String get customValue3 => _$this._customValue3;
-  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+  String? _customValue3;
+  String? get customValue3 => _$this._customValue3;
+  set customValue3(String? customValue3) => _$this._customValue3 = customValue3;
 
-  String _customValue4;
-  String get customValue4 => _$this._customValue4;
-  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+  String? _customValue4;
+  String? get customValue4 => _$this._customValue4;
+  set customValue4(String? customValue4) => _$this._customValue4 = customValue4;
 
-  String _link;
-  String get link => _$this._link;
-  set link(String link) => _$this._link = link;
+  String? _link;
+  String? get link => _$this._link;
+  set link(String? link) => _$this._link = link;
 
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+  bool? _isChanged;
+  bool? get isChanged => _$this._isChanged;
+  set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
 
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+  int? _archivedAt;
+  int? get archivedAt => _$this._archivedAt;
+  set archivedAt(int? archivedAt) => _$this._archivedAt = archivedAt;
 
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+  bool? _isDeleted;
+  bool? get isDeleted => _$this._isDeleted;
+  set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
 
-  String _createdUserId;
-  String get createdUserId => _$this._createdUserId;
-  set createdUserId(String createdUserId) =>
+  String? _createdUserId;
+  String? get createdUserId => _$this._createdUserId;
+  set createdUserId(String? createdUserId) =>
       _$this._createdUserId = createdUserId;
 
-  String _assignedUserId;
-  String get assignedUserId => _$this._assignedUserId;
-  set assignedUserId(String assignedUserId) =>
+  String? _assignedUserId;
+  String? get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String? assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   VendorContactEntityBuilder() {
     VendorContactEntity._initializeBuilder(this);
@@ -1653,7 +1656,7 @@ class VendorContactEntityBuilder
   }
 
   @override
-  void update(void Function(VendorContactEntityBuilder) updates) {
+  void update(void Function(VendorContactEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

@@ -45,8 +45,8 @@ import 'package:share_plus/share_plus.dart';
 
 class ClientPdfView extends StatefulWidget {
   const ClientPdfView({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
     this.showAppBar = true,
   }) : super(key: key);
 
@@ -59,14 +59,14 @@ class ClientPdfView extends StatefulWidget {
 
 class _ClientPdfViewState extends State<ClientPdfView> {
   bool _isLoading = false;
-  http.Response _response;
+  http.Response? _response;
   //int _pageCount = 1;
   //int _currentPage = 1;
 
   DateRange _dateRange = DateRange.thisQuarter;
-  String _startDate =
+  String? _startDate =
       convertDateTimeToSqlDate(DateTime.now().subtract(Duration(days: 365)));
-  String _endDate = convertDateTimeToSqlDate();
+  String? _endDate = convertDateTimeToSqlDate();
   String _status = kStatementStatusAll;
 
   @override
@@ -99,8 +99,8 @@ class _ClientPdfViewState extends State<ClientPdfView> {
     _loadPDF(sendEmail: sendEmail).then((response) {
       setState(() {
         if (sendEmail) {
-          if (response.statusCode >= 200) {
-            showToast(localization.emailedStatement);
+          if (response!.statusCode >= 200) {
+            showToast(localization!.emailedStatement);
           }
         } else {
           _response = response;
@@ -114,16 +114,16 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       });
 
       showDialog<void>(
-          context: navigatorKey.currentContext,
+          context: navigatorKey.currentContext!,
           builder: (BuildContext context) {
             return ErrorDialog(error);
           });
     });
   }
 
-  Future<Response> _loadPDF({bool sendEmail = false}) async {
-    final client = widget.viewModel.client;
-    http.Response response;
+  Future<Response?> _loadPDF({bool sendEmail = false}) async {
+    final client = widget.viewModel.client!;
+    http.Response? response;
 
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
@@ -134,17 +134,17 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       url += '?send_email=true';
     }
 
-    String startDate = '';
-    String endDate = '';
+    String? startDate = '';
+    String? endDate = '';
 
     if (_dateRange != null) {
       startDate = calculateStartDate(
-          company: state.company,
+          company: state.company!,
           dateRange: _dateRange,
           customStartDate: _startDate,
           customEndDate: _endDate);
       endDate = calculateEndDate(
-          company: state.company,
+          company: state.company!,
           dateRange: _dateRange,
           customStartDate: _startDate,
           customEndDate: _endDate);
@@ -166,14 +166,14 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       'status': _status,
     });
 
-    response = await webClient.post(
+    response = await (webClient.post(
       url,
       state.credentials.token,
       data: data,
       rawResponse: true,
-    );
+    ) as FutureOr<Response?>);
 
-    if (response.statusCode >= 400) {
+    if (response!.statusCode >= 400) {
       String errorMessage =
           '${response.statusCode}: ${response.reasonPhrase}\n\n';
 
@@ -253,7 +253,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                               ? ThemeData.dark()
                               : ThemeData.light(),
                       child: AppDropdownButton<DateRange>(
-                        labelText: localization.dateRange,
+                        labelText: localization!.dateRange,
                         blankValue: null,
                         //showBlank: true,
                         value: _dateRange,
@@ -270,7 +270,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                             .where((value) => value != DateRange.allTime)
                             .map((dateRange) => DropdownMenuItem<DateRange>(
                                   child: Text(localization
-                                      .lookup(dateRange.toString())),
+                                      .lookup(dateRange.toString())!),
                                   value: dateRange,
                                 ))
                             .toList(),
@@ -300,7 +300,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                             kStatementStatusUnpaid,
                           ]
                               .map((value) => DropdownMenuItem<String>(
-                                    child: Text(localization.lookup(value)),
+                                    child: Text(localization.lookup(value)!),
                                     value: value,
                                   ))
                               .toList()),
@@ -323,7 +323,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                         selectedValues:
                             state.prefState.statementIncludes.toList(),
                         menuItembuilder: (dynamic option) => Text(
-                          localization.lookup(option),
+                          localization.lookup(option)!,
                           style: TextStyle(fontSize: 14),
                         ),
                         isDense: true,
@@ -348,14 +348,14 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                       : () async {
                           final fileName = localization.statement +
                               '_' +
-                              (client.number) +
+                              (client!.number) +
                               '.pdf';
                           if (kIsWeb) {
                             WebUtils.downloadBinaryFile(
-                                fileName, _response.bodyBytes);
+                                fileName, _response!.bodyBytes);
                           } else {
                             final directory = await (isDesktopOS()
-                                ? getDownloadsDirectory()
+                                ? getDownloadsDirectory() as FutureOr<file.Directory>
                                 : getApplicationDocumentsDirectory());
                             String filePath =
                                 '${directory.path}${file.Platform.pathSeparator}$fileName';
@@ -368,10 +368,10 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                             }
 
                             final pdfData = file.File(filePath);
-                            await pdfData.writeAsBytes(_response.bodyBytes);
+                            await pdfData.writeAsBytes(_response!.bodyBytes);
 
                             if (isDesktopOS()) {
-                              showToast(localization.fileSavedInPath
+                              showToast(localization.fileSavedInPath!
                                   .replaceFirst(':path', directory.path));
                             } else {
                               await Share.shareXFiles([XFile(filePath)]);
@@ -385,7 +385,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                   onPressed: _response == null
                       ? null
                       : () async {
-                          if (!client.hasEmailAddress) {
+                          if (!client!.hasEmailAddress) {
                             showMessageDialog(
                                 context: context,
                                 message: localization.clientEmailNotSet,
@@ -395,7 +395,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                                         Navigator.of(context).pop();
                                         editEntity(
                                             entity: state.clientState
-                                                .get(client.id));
+                                                .get(client.id)!);
                                       },
                                       child: Text(localization.editClient
                                           .toUpperCase()))
@@ -434,7 +434,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                           entity: ScheduleEntity(
                                   ScheduleEntity.TEMPLATE_EMAIL_STATEMENT)
                               .rebuild((b) => b
-                                ..parameters.clients.add(client.id)
+                                ..parameters.clients.add(client!.id)
                                 ..parameters.showAgingTable =
                                     includes.contains(localization.aging)
                                 ..parameters.showPaymentsTable =
@@ -451,7 +451,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                     child: Text(localization.close,
                         style: TextStyle(color: state.headerTextColor)),
                     onPressed: () {
-                      viewEntity(entity: client);
+                      viewEntity(entity: client!);
                     },
                   ),
               ],
@@ -471,7 +471,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: DatePicker(
-                      labelText: localization.startDate,
+                      labelText: localization!.startDate,
                       onSelected: (value, _) {
                         setState(() {
                           _startDate = value;
@@ -508,13 +508,13 @@ class _ClientPdfViewState extends State<ClientPdfView> {
             child: _isLoading || _response == null
                 ? LoadingIndicator()
                 : PdfPreview(
-                    build: (format) => _response.bodyBytes,
+                    build: (format) => _response!.bodyBytes,
                     canChangeOrientation: false,
                     canChangePageFormat: false,
                     canDebug: false,
                     maxPageWidth: 800,
                     pdfFileName:
-                        localization.statement + '_' + client.number + '.pdf',
+                        localization!.statement + '_' + client!.number + '.pdf',
                   ),
           ),
         ],

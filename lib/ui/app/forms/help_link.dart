@@ -10,8 +10,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class HelpLink extends StatelessWidget {
   const HelpLink({
-    @required this.url,
-    @required this.message,
+    required this.url,
+    required this.message,
   });
 
   final String url;
@@ -19,10 +19,10 @@ class HelpLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final ThemeData themeData = Theme.of(context);
-    final TextStyle aboutTextStyle = themeData.textTheme.bodyMedium;
-    final TextStyle linkStyle = themeData.textTheme.bodyMedium
+    final TextStyle? aboutTextStyle = themeData.textTheme.bodyMedium;
+    final TextStyle linkStyle = themeData.textTheme.bodyMedium!
         .copyWith(color: themeData.colorScheme.secondary);
 
     return Padding(

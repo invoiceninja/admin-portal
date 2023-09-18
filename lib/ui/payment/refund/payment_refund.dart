@@ -23,8 +23,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class PaymentRefund extends StatefulWidget {
   const PaymentRefund({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final PaymentRefundVM viewModel;
@@ -54,7 +54,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
     final payment = widget.viewModel.payment;
 
     _amountController.text = formatNumber(payment.amount, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
     super.didChangeDependencies();
@@ -84,7 +84,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final payment = viewModel.payment;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     final paymentables = payment.invoices.toList();
     final needsEmpty =
@@ -97,7 +97,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
 
     final state = viewModel.state;
     final companyGateway =
-        state.companyGatewayState.get(payment.companyGatewayId);
+        state.companyGatewayState.get(payment.companyGatewayId)!;
     final GatewayEntity gateway =
         state.staticState.gatewayMap[companyGateway.gatewayId] ??
             GatewayEntity();
@@ -129,7 +129,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
                   ),
               DatePicker(
                 validator: (String val) => val.trim().isEmpty
-                    ? AppLocalization.of(context).pleaseSelectADate
+                    ? AppLocalization.of(context)!.pleaseSelectADate
                     : null,
                 autoValidate: autoValidate,
                 labelText: localization.refundDate,
@@ -166,7 +166,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
     );
 
     void onSavePressed(BuildContext context) {
-      final bool isValid = _formKey.currentState.validate();
+      final bool isValid = _formKey.currentState!.validate();
 
       setState(() {
         autoValidate = !isValid;
@@ -232,11 +232,11 @@ class _PaymentRefundState extends State<PaymentRefund> {
 
 class PaymentableEditor extends StatefulWidget {
   const PaymentableEditor({
-    Key key,
-    @required this.viewModel,
-    @required this.paymentable,
-    @required this.onChanged,
-    @required this.index,
+    Key? key,
+    required this.viewModel,
+    required this.paymentable,
+    required this.onChanged,
+    required this.index,
   }) : super(key: key);
 
   final PaymentRefundVM viewModel;
@@ -250,7 +250,7 @@ class PaymentableEditor extends StatefulWidget {
 
 class _PaymentableEditorState extends State<PaymentableEditor> {
   final _amountController = TextEditingController();
-  String _invoiceId = '';
+  String? _invoiceId = '';
   List<TextEditingController> _controllers = [];
 
   @override
@@ -263,7 +263,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
 
     _invoiceId = widget.paymentable.invoiceId;
     _amountController.text = formatNumber(widget.paymentable.amount, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -280,7 +280,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
     super.dispose();
   }
 
-  void _onChanged([String clientId]) {
+  void _onChanged([String? clientId]) {
     final paymentable = widget.paymentable.rebuild((b) => b
       ..invoiceId = _invoiceId
       ..amount = parseDouble(_amountController.text));
@@ -321,7 +321,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
           child: EntityDropdown(
             allowClearing: false,
             entityType: EntityType.invoice,
-            labelText: AppLocalization.of(context).invoice,
+            labelText: AppLocalization.of(context)!.invoice,
             entityId: paymentable.invoiceId,
             entityList: payment.paymentables
                 .map((payment) => payment.invoiceId)
@@ -356,7 +356,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
               autocorrect: false,
               keyboardType:
                   TextInputType.numberWithOptions(decimal: true, signed: true),
-              label: localization.amount,
+              label: localization!.amount,
               autofocus: !hasMultipleInvoices,
               validator: (value) => !hasMultipleInvoices &&
                       (value.trim().isEmpty || parseDouble(value) == 0)
@@ -371,7 +371,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
           ),
           IconButton(
             icon: Icon(Icons.clear),
-            tooltip: localization.remove,
+            tooltip: localization!.remove,
             onPressed: paymentable.isEmpty
                 ? null
                 : () {

@@ -30,45 +30,45 @@ class ViewClientList implements PersistUI {
   });
 
   final bool force;
-  final int page;
+  final int? page;
 }
 
 class ViewClient implements PersistUI, PersistPrefs {
   ViewClient({
-    @required this.clientId,
+    required this.clientId,
     this.force = false,
   });
 
-  final String clientId;
+  final String? clientId;
   final bool force;
 }
 
 class EditClient implements PersistUI, PersistPrefs {
   EditClient(
-      {@required this.client,
+      {required this.client,
       this.contact,
       this.completer,
       this.cancelCompleter,
       this.force = false});
 
   final ClientEntity client;
-  final ClientContactEntity contact;
-  final Completer completer;
-  final Completer cancelCompleter;
+  final ClientContactEntity? contact;
+  final Completer? completer;
+  final Completer? cancelCompleter;
   final bool force;
 }
 
 class EditContact implements PersistUI {
   EditContact([this.contact]);
 
-  final ClientContactEntity contact;
+  final ClientContactEntity? contact;
 }
 
 class ShowPdfClient {
   ShowPdfClient({this.client, this.context});
 
-  final ClientEntity client;
-  final BuildContext context;
+  final ClientEntity? client;
+  final BuildContext? context;
 }
 
 class UpdateClient implements PersistUI {
@@ -80,21 +80,21 @@ class UpdateClient implements PersistUI {
 class LoadClient {
   LoadClient({this.completer, this.clientId});
 
-  final Completer completer;
-  final String clientId;
+  final Completer? completer;
+  final String? clientId;
 }
 
 class LoadClientActivity {
   LoadClientActivity({this.completer, this.clientId});
 
-  final Completer completer;
-  final String clientId;
+  final Completer? completer;
+  final String? clientId;
 }
 
 class LoadClients {
   LoadClients({this.completer, this.page = 1});
 
-  final Completer completer;
+  final Completer? completer;
   final int page;
 }
 
@@ -149,14 +149,14 @@ class LoadClientsSuccess implements StopLoading {
 class AddContact implements PersistUI {
   AddContact([this.contact]);
 
-  final ClientContactEntity contact;
+  final ClientContactEntity? contact;
 }
 
 class UpdateContact implements PersistUI {
   UpdateContact({this.index, this.contact});
 
-  final int index;
-  final ClientContactEntity contact;
+  final int? index;
+  final ClientContactEntity? contact;
 }
 
 class DeleteContact implements PersistUI {
@@ -168,8 +168,8 @@ class DeleteContact implements PersistUI {
 class SaveClientRequest implements StartSaving {
   SaveClientRequest({this.completer, this.client});
 
-  final Completer completer;
-  final ClientEntity client;
+  final Completer? completer;
+  final ClientEntity? client;
 }
 
 class SaveClientSuccess implements StopSaving, PersistData, PersistUI {
@@ -206,7 +206,7 @@ class ArchiveClientsSuccess implements StopSaving, PersistData {
 class ArchiveClientsFailure implements StopSaving {
   ArchiveClientsFailure(this.clients);
 
-  final List<ClientEntity> clients;
+  final List<ClientEntity?> clients;
 }
 
 class MergeClientsRequest implements StartSaving {
@@ -218,17 +218,17 @@ class MergeClientsRequest implements StartSaving {
     this.idToken,
   });
 
-  final Completer completer;
-  final String clientId;
-  final String mergeIntoClientId;
-  final String password;
-  final String idToken;
+  final Completer? completer;
+  final String? clientId;
+  final String? mergeIntoClientId;
+  final String? password;
+  final String? idToken;
 }
 
 class MergeClientsSuccess implements StopSaving, PersistData {
   MergeClientsSuccess(this.clientId);
 
-  final String clientId;
+  final String? clientId;
 }
 
 class MergeClientsFailure implements StopSaving {
@@ -253,21 +253,21 @@ class DeleteClientsSuccess implements StopSaving, PersistData {
 class DeleteClientsFailure implements StopSaving {
   DeleteClientsFailure(this.clients);
 
-  final List<ClientEntity> clients;
+  final List<ClientEntity?> clients;
 }
 
 class PurgeClientRequest implements StartSaving {
   PurgeClientRequest({
-    @required this.completer,
-    @required this.clientId,
-    @required this.password,
-    @required this.idToken,
+    required this.completer,
+    required this.clientId,
+    required this.password,
+    required this.idToken,
   });
 
   final Completer completer;
   final String clientId;
-  final String password;
-  final String idToken;
+  final String? password;
+  final String? idToken;
 }
 
 class PurgeClientSuccess implements StopSaving, PersistData {
@@ -298,7 +298,7 @@ class RestoreClientSuccess implements StopSaving, PersistData {
 class RestoreClientFailure implements StopSaving {
   RestoreClientFailure(this.clients);
 
-  final List<ClientEntity> clients;
+  final List<ClientEntity?> clients;
 }
 
 class FilterClients implements PersistUI {
@@ -344,26 +344,26 @@ class FilterClientsByCustom4 implements PersistUI {
 }
 
 void handleClientAction(
-    BuildContext context, List<BaseEntity> clients, EntityAction action) async {
+    BuildContext? context, List<BaseEntity?> clients, EntityAction? action) async {
   if (clients.isEmpty) {
     return;
   }
 
-  final store = StoreProvider.of<AppState>(context);
+  final store = StoreProvider.of<AppState>(context!);
   final state = store.state;
   final localization = AppLocalization.of(context);
-  final clientIds = clients.map((client) => client.id).toList();
-  final client = clients[0] as ClientEntity;
+  final clientIds = clients.map((client) => client!.id).toList();
+  final client = clients[0] as ClientEntity?;
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: client);
+      editEntity(entity: client!);
       break;
     case EntityAction.viewStatement:
       store.dispatch(ShowPdfClient(client: client, context: context));
       break;
     case EntityAction.clientPortal:
-      final contact = client.primaryContact;
+      final contact = client!.primaryContact!;
       var link = contact.silentLink;
       if (link.isNotEmpty) {
         if (!link.contains('?')) {
@@ -386,7 +386,7 @@ void handleClientAction(
       createEntity(
           context: context,
           entity:
-              TaskEntity(state: state).rebuild((b) => b..clientId = client.id));
+              TaskEntity(state: state).rebuild((b) => b..clientId = client!.id));
       break;
     case EntityAction.newInvoice:
       createEntity(
@@ -438,47 +438,47 @@ void handleClientAction(
       createEntity(
         context: context,
         entity: PaymentEntity(state: state, client: client)
-            .rebuild((b) => b.clientId = client.id),
+            .rebuild((b) => b.clientId = client!.id),
       );
       break;
     case EntityAction.newProject:
       createEntity(
         context: context,
         entity:
-            ProjectEntity(state: state).rebuild((b) => b.clientId = client.id),
+            ProjectEntity(state: state).rebuild((b) => b.clientId = client!.id),
       );
       break;
     case EntityAction.restore:
       final message = clientIds.length > 1
-          ? localization.restoredClients
+          ? localization!.restoredClients
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', clientIds.length.toString())
-          : localization.restoredClient;
+          : localization!.restoredClient;
       store.dispatch(RestoreClientsRequest(
           snackBarCompleter<Null>(context, message), clientIds));
       break;
     case EntityAction.archive:
       final message = clientIds.length > 1
-          ? localization.archivedClients
+          ? localization!.archivedClients
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', clientIds.length.toString())
-          : localization.archivedClient;
+          : localization!.archivedClient;
       store.dispatch(ArchiveClientsRequest(
           snackBarCompleter<Null>(context, message), clientIds));
       break;
     case EntityAction.delete:
       final message = clientIds.length > 1
-          ? localization.deletedClients
+          ? localization!.deletedClients
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', clientIds.length.toString())
-          : localization.deletedClient;
+          : localization!.deletedClient;
       store.dispatch(DeleteClientsRequest(
           snackBarCompleter<Null>(context, message), clientIds));
       break;
     case EntityAction.purge:
       confirmCallback(
           context: context,
-          message: '${localization.purge} - ${client.displayName}',
+          message: '${localization!.purge} - ${client!.displayName}',
           callback: (_) {
             passwordCallback(
                 alwaysRequire: true,
@@ -507,7 +507,7 @@ void handleClientAction(
       }
 
       for (final client in clients) {
-        if (!state.clientListState.isSelected(client.id)) {
+        if (!state.clientListState.isSelected(client!.id)) {
           store.dispatch(AddToClientMultiselect(entity: client));
         } else {
           store.dispatch(RemoveFromClientMultiselect(entity: client));
@@ -528,14 +528,14 @@ void handleClientAction(
       }
       if (documentIds.isEmpty) {
         showMessageDialog(
-            context: context, message: localization.noDocumentsToDownload);
+            context: context, message: localization!.noDocumentsToDownload);
       } else {
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
             completer: snackBarCompleter<Null>(
               context,
-              localization.exportedData,
+              localization!.exportedData,
             ),
           ),
         );
@@ -557,25 +557,25 @@ void handleClientAction(
 class StartClientMultiselect {}
 
 class AddToClientMultiselect {
-  AddToClientMultiselect({@required this.entity});
+  AddToClientMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromClientMultiselect {
-  RemoveFromClientMultiselect({@required this.entity});
+  RemoveFromClientMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearClientMultiselect {}
 
 class SaveClientDocumentRequest implements StartSaving {
   SaveClientDocumentRequest({
-    @required this.isPrivate,
-    @required this.completer,
-    @required this.multipartFile,
-    @required this.client,
+    required this.isPrivate,
+    required this.completer,
+    required this.multipartFile,
+    required this.client,
   });
 
   final bool isPrivate;
@@ -599,39 +599,39 @@ class SaveClientDocumentFailure implements StopSaving {
 class UpdateClientTab implements PersistUI {
   UpdateClientTab({this.tabIndex});
 
-  final int tabIndex;
+  final int? tabIndex;
 }
 
 class _MergClientPicker extends StatefulWidget {
   const _MergClientPicker({
-    Key key,
-    @required this.client,
+    Key? key,
+    required this.client,
   }) : super(key: key);
 
-  final ClientEntity client;
+  final ClientEntity? client;
 
   @override
   State<_MergClientPicker> createState() => __MergClientPickerState();
 }
 
 class __MergClientPickerState extends State<_MergClientPicker> {
-  String _mergeIntoClientId;
+  String? _mergeIntoClientId;
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
     return AlertDialog(
-      title: Text(localization.mergeInto),
+      title: Text(localization.mergeInto!),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           ClientPicker(
             clientId: _mergeIntoClientId,
             clientState: state.clientState,
-            excludeIds: [widget.client.id],
+            excludeIds: [widget.client!.id],
             onSelected: (client) =>
                 setState(() => _mergeIntoClientId = client?.id),
           ),
@@ -648,7 +648,7 @@ class __MergClientPickerState extends State<_MergClientPicker> {
                 context: context,
                 callback: (password, idToken) {
                   store.dispatch(MergeClientsRequest(
-                    clientId: widget.client.id,
+                    clientId: widget.client!.id,
                     idToken: idToken,
                     password: password,
                     mergeIntoClientId: _mergeIntoClientId,
@@ -660,7 +660,7 @@ class __MergClientPickerState extends State<_MergClientPicker> {
                   Navigator.of(context).pop();
                 });
           },
-          child: Text(localization.merge),
+          child: Text(localization.merge!),
         ),
       ],
     );

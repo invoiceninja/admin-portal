@@ -9,18 +9,18 @@ import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 
 class AppButton extends StatelessWidget {
   const AppButton({
-    @required this.label,
-    @required this.onPressed,
+    required this.label,
+    required this.onPressed,
     this.iconData,
     this.color,
     this.width,
   });
 
-  final Color color;
-  final IconData iconData;
-  final String label;
-  final Function onPressed;
-  final double width;
+  final Color? color;
+  final IconData? iconData;
+  final String? label;
+  final Function? onPressed;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class AppButton extends StatelessWidget {
             )
           : SizedBox(
               child: Text(
-                label,
+                label!,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: Colors.white,
@@ -57,7 +57,7 @@ class AppButton extends StatelessWidget {
               ),
               height: 24,
             ),
-      onPressed: onPressed,
+      onPressed: onPressed as void Function()?,
     );
 
     return Padding(

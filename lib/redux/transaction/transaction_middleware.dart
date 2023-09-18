@@ -56,14 +56,14 @@ List<Middleware<AppState>> createStoreTransactionsMiddleware([
 
 Middleware<AppState> _editTransaction() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditTransaction;
+    final action = dynamicAction as EditTransaction?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TransactionEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(TransactionEditScreen.route);
+      navigatorKey.currentState!.pushNamed(TransactionEditScreen.route);
     }
   };
 }
@@ -71,21 +71,21 @@ Middleware<AppState> _editTransaction() {
 Middleware<AppState> _viewTransaction() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ViewTransaction;
+    final action = dynamicAction as ViewTransaction?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TransactionViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(TransactionViewScreen.route);
+      navigatorKey.currentState!.pushNamed(TransactionViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewTransactionList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewTransactionList;
+    final action = dynamicAction as ViewTransactionList?;
 
     next(action);
 
@@ -96,7 +96,7 @@ Middleware<AppState> _viewTransactionList() {
     store.dispatch(UpdateCurrentRoute(TransactionScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           TransactionScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -343,20 +343,20 @@ Middleware<AppState> _saveTransaction(TransactionRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveTransactionRequest;
     repository
-        .saveData(store.state.credentials, action.transaction)
+        .saveData(store.state.credentials, action.transaction!)
         .then((TransactionEntity transaction) {
-      if (action.transaction.isNew) {
+      if (action.transaction!.isNew) {
         store.dispatch(AddTransactionSuccess(transaction));
       } else {
         store.dispatch(SaveTransactionSuccess(transaction));
       }
       store.dispatch(RefreshData());
-      action.completer.complete(transaction);
+      action.completer!.complete(transaction);
     }).catchError((Object error) {
       //store.dispatch(AddTransactionSuccess(action.transaction.rebuild((b) => b..id = '1')));
       print(error);
       store.dispatch(SaveTransactionFailure(error));
-      action.completer.completeError(error);
+      action.completer!.completeError(error);
     });
 
     next(action);
@@ -375,13 +375,13 @@ Middleware<AppState> _loadTransaction(TransactionRepository repository) {
       store.dispatch(LoadTransactionSuccess(transaction));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadTransactionFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -411,7 +411,7 @@ Middleware<AppState> _loadTransactions(TransactionRepository repository) {
         ));
       } else {
         if (action.completer != null) {
-          action.completer.complete(null);
+          action.completer!.complete(null);
         }
         store.dispatch(PersistData());
       }
@@ -419,7 +419,7 @@ Middleware<AppState> _loadTransactions(TransactionRepository repository) {
       print(error);
       store.dispatch(LoadTransactionsFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 

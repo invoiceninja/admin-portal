@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 
 class SelectCompany implements ClearClientMultiselect {
   SelectCompany({
-    @required this.companyIndex,
+    required this.companyIndex,
     this.clearSelection = true,
   });
 
@@ -29,7 +29,7 @@ class LoadCompanySuccess {
 }
 
 class UpdateCompany implements PersistUI {
-  UpdateCompany({@required this.company});
+  UpdateCompany({required this.company});
 
   final CompanyEntity company;
 }
@@ -40,8 +40,8 @@ class SaveCompanyRequest implements StartSaving {
     this.company,
   });
 
-  final Completer completer;
-  final CompanyEntity company;
+  final Completer? completer;
+  final CompanyEntity? company;
 }
 
 class SaveCompanySuccess implements StopSaving, PersistData, PersistUI {
@@ -63,9 +63,9 @@ class SaveEInvoiceCertificateRequest implements StartSaving {
     this.eInvoiceCertificate,
   });
 
-  final Completer completer;
-  final CompanyEntity company;
-  final MultipartFile eInvoiceCertificate;
+  final Completer? completer;
+  final CompanyEntity? company;
+  final MultipartFile? eInvoiceCertificate;
 }
 
 class SaveEInvoiceCertificateSuccess
@@ -84,18 +84,18 @@ class SaveEInvoiceCertificateFailure implements StopSaving {
 class AddCompany implements StartSaving {
   AddCompany({this.context, this.completer});
 
-  final BuildContext context;
-  final Completer completer;
+  final BuildContext? context;
+  final Completer? completer;
 }
 
 class AddCompanySuccess implements StopSaving {}
 
 class DeleteCompanyRequest implements StartSaving {
   DeleteCompanyRequest({
-    @required this.completer,
-    @required this.password,
-    @required this.idToken,
-    @required this.reason,
+    required this.completer,
+    required this.password,
+    required this.idToken,
+    required this.reason,
   });
 
   final Completer completer;
@@ -114,9 +114,9 @@ class DeleteCompanyFailure implements StopSaving {
 
 class PurgeDataRequest implements StartSaving {
   PurgeDataRequest({
-    @required this.completer,
-    @required this.password,
-    @required this.idToken,
+    required this.completer,
+    required this.password,
+    required this.idToken,
   });
 
   final Completer completer;
@@ -137,14 +137,14 @@ class PurgeDataFailure implements StopSaving {
 class UpdateCompanyLanguage {
   UpdateCompanyLanguage({this.languageId});
 
-  final String languageId;
+  final String? languageId;
 }
 
 class SaveCompanyDocumentRequest implements StartSaving {
   SaveCompanyDocumentRequest({
-    @required this.isPrivate,
-    @required this.completer,
-    @required this.multipartFiles,
+    required this.isPrivate,
+    required this.completer,
+    required this.multipartFiles,
   });
 
   final bool isPrivate;
@@ -166,7 +166,7 @@ class SaveCompanyDocumentFailure implements StopSaving {
 
 class SetDefaultCompanyRequest implements StartSaving {
   SetDefaultCompanyRequest({
-    @required this.completer,
+    required this.completer,
   });
 
   final Completer completer;

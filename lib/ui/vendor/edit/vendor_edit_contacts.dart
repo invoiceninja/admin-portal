@@ -17,9 +17,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorEditContacts extends StatefulWidget {
   const VendorEditContacts({
-    Key key,
-    @required this.viewModel,
-    @required this.vendorViewModel,
+    Key? key,
+    required this.viewModel,
+    required this.vendorViewModel,
   }) : super(key: key);
 
   final VendorEditContactsVM viewModel;
@@ -30,23 +30,23 @@ class VendorEditContacts extends StatefulWidget {
 }
 
 class _VendorEditContactsState extends State<VendorEditContacts> {
-  VendorContactEntity selectedContact;
+  VendorContactEntity? selectedContact;
 
-  void _showContactEditor(VendorContactEntity contact, BuildContext context) {
+  void _showContactEditor(VendorContactEntity? contact, BuildContext context) {
     showDialog<VendorContactEditDetails>(
         context: context,
         builder: (BuildContext context) {
           final viewModel = widget.viewModel;
-          final vendor = viewModel.vendor;
+          final vendor = viewModel.vendor!;
 
           return VendorContactEditDetails(
             viewModel: viewModel,
             vendorViewModel: widget.vendorViewModel,
-            key: Key(contact.entityKey),
+            key: Key(contact!.entityKey),
             contact: contact,
             isDialog: vendor.contacts.length > 1,
             index: vendor.contacts
-                .indexOf(vendor.contacts.firstWhere((c) => c.id == contact.id)),
+                .indexOf(vendor.contacts.firstWhere((c) => c!.id == contact.id)),
           );
         });
   }
@@ -55,7 +55,7 @@ class _VendorEditContactsState extends State<VendorEditContacts> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final vendor = viewModel.vendor;
+    final vendor = viewModel.vendor!;
     final state = widget.vendorViewModel.state;
     final prefState = state.prefState;
     final isFullscreen = prefState.isEditorFullScreen(EntityType.vendor);
@@ -70,7 +70,7 @@ class _VendorEditContactsState extends State<VendorEditContacts> {
               ))
           .toList();
     } else {
-      final contact = vendor.contacts[0];
+      final contact = vendor.contacts[0]!;
       contacts = [
         VendorContactEditDetails(
           viewModel: viewModel,
@@ -104,8 +104,8 @@ class _VendorEditContactsState extends State<VendorEditContacts> {
         ),
         child: AppButton(
           label: (vendor.contacts.length == 1
-                  ? localization.addSecondContact
-                  : localization.addContact)
+                  ? localization!.addSecondContact
+                  : localization!.addContact)!
               .toUpperCase(),
           onPressed: () => viewModel.onAddContactPressed(),
         ),
@@ -124,12 +124,12 @@ class _VendorEditContactsState extends State<VendorEditContacts> {
 
 class ContactListTile extends StatelessWidget {
   const ContactListTile({
-    @required this.contact,
-    @required this.onTap,
+    required this.contact,
+    required this.onTap,
   });
 
   final Function onTap;
-  final VendorContactEntity contact;
+  final VendorContactEntity? contact;
 
   @override
   Widget build(BuildContext context) {
@@ -140,15 +140,15 @@ class ContactListTile extends StatelessWidget {
           child: Column(
             children: <Widget>[
               ListTile(
-                onTap: onTap,
-                title: contact.fullName.isNotEmpty
-                    ? Text(contact.fullName)
-                    : Text(AppLocalization.of(context).blankContact,
+                onTap: onTap as void Function()?,
+                title: contact!.fullName.isNotEmpty
+                    ? Text(contact!.fullName)
+                    : Text(AppLocalization.of(context)!.blankContact,
                         style: TextStyle(
                           fontStyle: FontStyle.italic,
                         )),
                 subtitle: Text(
-                    contact.email.isNotEmpty ? contact.email : contact.phone),
+                    contact!.email.isNotEmpty ? contact!.email : contact!.phone),
                 trailing: Icon(Icons.navigate_next),
               ),
               Divider(
@@ -162,16 +162,16 @@ class ContactListTile extends StatelessWidget {
 
 class VendorContactEditDetails extends StatefulWidget {
   const VendorContactEditDetails({
-    Key key,
-    @required this.index,
-    @required this.contact,
-    @required this.viewModel,
-    @required this.vendorViewModel,
-    @required this.isDialog,
+    Key? key,
+    required this.index,
+    required this.contact,
+    required this.viewModel,
+    required this.vendorViewModel,
+    required this.isDialog,
   }) : super(key: key);
 
   final int index;
-  final VendorContactEntity contact;
+  final VendorContactEntity? contact;
   final VendorEditContactsVM viewModel;
   final VendorEditVM vendorViewModel;
   final bool isDialog;
@@ -193,7 +193,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
 
   final _debouncer = Debouncer();
   List<TextEditingController> _controllers = [];
-  VendorContactEntity _contact;
+  VendorContactEntity? _contact;
 
   void _onDoneContactPressed() {
     if (widget.isDialog) {
@@ -225,7 +225,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    final contact = _contact = widget.contact;
+    final contact = (_contact = widget.contact)!;
     _firstNameController.text = contact.firstName;
     _lastNameController.text = contact.lastName;
     _emailController.text = contact.email;
@@ -252,7 +252,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
   }
 
   void _onChanged() {
-    final contact = _contact = widget.contact.rebuild((b) => b
+    final contact = _contact = widget.contact!.rebuild((b) => b
       ..firstName = _firstNameController.text.trim()
       ..lastName = _lastNameController.text.trim()
       ..email = _emailController.text.trim()
@@ -270,7 +270,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = widget.vendorViewModel.state;
     final isFullscreen = state.prefState.isEditorFullScreen(EntityType.vendor);
@@ -307,25 +307,25 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
         CustomField(
           controller: _custom1Controller,
           field: CustomFieldType.vendorContact1,
-          value: widget.contact.customValue1,
+          value: widget.contact!.customValue1,
           onSavePressed: (_) => _onDoneContactPressed(),
         ),
         CustomField(
           controller: _custom2Controller,
           field: CustomFieldType.vendorContact2,
-          value: widget.contact.customValue2,
+          value: widget.contact!.customValue2,
           onSavePressed: (_) => _onDoneContactPressed(),
         ),
         CustomField(
           controller: _custom3Controller,
           field: CustomFieldType.vendorContact3,
-          value: widget.contact.customValue3,
+          value: widget.contact!.customValue3,
           onSavePressed: (_) => _onDoneContactPressed(),
         ),
         CustomField(
           controller: _custom4Controller,
           field: CustomFieldType.vendorContact4,
-          value: widget.contact.customValue4,
+          value: widget.contact!.customValue4,
           onSavePressed: (_) => _onDoneContactPressed(),
         ),
         if (widget.isDialog)
@@ -333,14 +333,14 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
             padding: const EdgeInsets.only(top: 20),
             child: SwitchListTile(
               activeColor: Theme.of(context).colorScheme.secondary,
-              title: Text(localization.addToInvoices),
-              value: _contact.sendEmail,
+              title: Text(localization.addToInvoices!),
+              value: _contact!.sendEmail,
               onChanged: (value) {
                 setState(() =>
-                    _contact = _contact.rebuild((b) => b..sendEmail = value));
+                    _contact = _contact!.rebuild((b) => b..sendEmail = value));
 
                 viewModel.onChangedContact(
-                  _contact.rebuild((b) => b..sendEmail = value),
+                  _contact!.rebuild((b) => b..sendEmail = value),
                   widget.index,
                 );
               },

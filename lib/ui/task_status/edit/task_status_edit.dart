@@ -13,8 +13,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskStatusEdit extends StatefulWidget {
   const TaskStatusEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final TaskStatusEditVM viewModel;
@@ -69,7 +69,7 @@ class _TaskStatusEditState extends State<TaskStatusEdit> {
   }
 
   void _onSavePressed(BuildContext context) {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -87,8 +87,8 @@ class _TaskStatusEditState extends State<TaskStatusEdit> {
     return EditScaffold(
       entity: taskStatus,
       title: taskStatus.isNew
-          ? localization.newTaskStatus
-          : localization.editTaskStatus,
+          ? localization!.newTaskStatus
+          : localization!.editTaskStatus,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: _onSavePressed,
       body: Form(

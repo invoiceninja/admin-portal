@@ -30,11 +30,11 @@ abstract class PaymentState
   @memoized
   int get hashCode;
 
-  BuiltMap<String, PaymentEntity> get map;
+  BuiltMap<String?, PaymentEntity?> get map;
 
   BuiltList<String> get list;
 
-  PaymentEntity get(String paymentId) {
+  PaymentEntity? get(String paymentId) {
     if (map.containsKey(paymentId)) {
       return map[paymentId];
     } else {
@@ -43,7 +43,7 @@ abstract class PaymentState
   }
 
   PaymentState loadPayments(BuiltList<PaymentEntity> clients) {
-    final map = Map<String, PaymentEntity>.fromIterable(
+    final map = Map<String?, PaymentEntity?>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
@@ -60,7 +60,7 @@ abstract class PaymentState
 abstract class PaymentUIState extends Object
     with EntityUIState
     implements Built<PaymentUIState, PaymentUIStateBuilder> {
-  factory PaymentUIState(PrefStateSortField sortField) {
+  factory PaymentUIState(PrefStateSortField? sortField) {
     return _$PaymentUIState._(
       listUIState: ListUIState(sortField?.field ?? PaymentFields.number,
           sortAscending: sortField?.ascending ?? false),
@@ -76,14 +76,13 @@ abstract class PaymentUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  PaymentEntity get editing;
+  PaymentEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<PaymentUIState> get serializer =>
       _$paymentUIStateSerializer;

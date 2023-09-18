@@ -21,8 +21,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class WorkflowSettings extends StatefulWidget {
   const WorkflowSettings({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final WorkflowSettingsVM viewModel;
@@ -36,8 +36,8 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_workflowSettings');
 
-  FocusScopeNode _focusNode;
-  TabController _controller;
+  FocusScopeNode? _focusNode;
+  TabController? _controller;
 
   @override
   void initState() {
@@ -47,25 +47,25 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
         vsync: this, length: 2, initialIndex: settingsUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller!.index));
   }
 
   @override
   void dispose() {
-    _focusNode.dispose();
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
+    _focusNode!.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final settings = viewModel.settings;
@@ -146,7 +146,7 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                         SettingsEntity.LOCK_INVOICES_PAID,
                       ]
                           .map((option) => DropdownMenuItem(
-                                child: Text(localization.lookup(option)),
+                                child: Text(localization.lookup(option)!),
                                 value: option,
                               ))
                           .toList(),

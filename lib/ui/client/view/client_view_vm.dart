@@ -22,7 +22,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientViewScreen extends StatelessWidget {
   const ClientViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
     this.isTopFilter = false,
   }) : super(key: key);
@@ -52,15 +52,15 @@ class ClientViewScreen extends StatelessWidget {
 
 class ClientViewVM {
   ClientViewVM({
-    @required this.state,
-    @required this.client,
-    @required this.company,
-    @required this.onEntityAction,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.isDirty,
-    @required this.onRefreshed,
-    @required this.onUploadDocuments,
+    required this.state,
+    required this.client,
+    required this.company,
+    required this.onEntityAction,
+    required this.isSaving,
+    required this.isLoading,
+    required this.isDirty,
+    required this.onRefreshed,
+    required this.onUploadDocuments,
   });
 
   factory ClientViewVM.fromStore(Store<AppState> store) {
@@ -70,7 +70,7 @@ class ClientViewVM {
 
     Future<Null> _handleRefresh(BuildContext context) {
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadClient(
         completer: completer,
         clientId: client.id,
@@ -97,7 +97,7 @@ class ClientViewVM {
             client: client,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context).uploadedDocument);
+          showToast(AppLocalization.of(context)!.uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,
@@ -111,7 +111,7 @@ class ClientViewVM {
 
   final AppState state;
   final ClientEntity client;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;

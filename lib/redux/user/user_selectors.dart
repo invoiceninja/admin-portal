@@ -15,7 +15,7 @@ var memoizedDropdownUserList = memo3((BuiltMap<String, UserEntity> userMap,
 List<String> dropdownUsersSelector(BuiltMap<String, UserEntity> userMap,
     BuiltList<String> userList, String clientId) {
   final list = userList.where((userId) {
-    final user = userMap[userId];
+    final user = userMap[userId]!;
     /*
     if (clientId != null && clientId > 0 && user.clientId != clientId) {
       return false;
@@ -25,7 +25,7 @@ List<String> dropdownUsersSelector(BuiltMap<String, UserEntity> userMap,
   }).toList();
 
   list.sort((userAId, userBId) {
-    final userA = userMap[userAId];
+    final userA = userMap[userAId]!;
     final userB = userMap[userBId];
     return userA.compareTo(userB, UserFields.firstName, true);
   });
@@ -34,7 +34,7 @@ List<String> dropdownUsersSelector(BuiltMap<String, UserEntity> userMap,
 }
 
 var memoizedFilteredUserList = memo5((SelectionState selectionState,
-        BuiltMap<String, UserEntity> userMap,
+        BuiltMap<String?, UserEntity?> userMap,
         BuiltList<String> userList,
         ListUIState userListState,
         String authUserId) =>
@@ -43,12 +43,12 @@ var memoizedFilteredUserList = memo5((SelectionState selectionState,
 
 List<String> filteredUsersSelector(
     SelectionState selectionState,
-    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String?, UserEntity?> userMap,
     BuiltList<String> userList,
     ListUIState userListState,
     String authUserId) {
   final list = userList.where((userId) {
-    final user = userMap[userId];
+    final user = userMap[userId]!;
 
     if (user.id == selectionState.selectedId) {
       return true;
@@ -64,7 +64,7 @@ List<String> filteredUsersSelector(
   }).toList();
 
   list.sort((userAId, userBId) {
-    final userA = userMap[userAId];
+    final userA = userMap[userAId]!;
     final userB = userMap[userBId];
     return userA.compareTo(
         userB, userListState.sortField, userListState.sortAscending);
@@ -74,24 +74,24 @@ List<String> filteredUsersSelector(
 }
 
 var memoizedUserList =
-    memo1((BuiltMap<String, UserEntity> userMap) => userList(userMap));
+    memo1((BuiltMap<String?, UserEntity?> userMap) => userList(userMap));
 
-List<String> userList(BuiltMap<String, UserEntity> userMap) {
+List<String?> userList(BuiltMap<String?, UserEntity?> userMap) {
   final list =
-      userMap.keys.where((userId) => userMap[userId].isActive).toList();
+      userMap.keys.where((userId) => userMap[userId]!.isActive).toList();
 
-  list.sort((idA, idB) => userMap[idA]
+  list.sort((idA, idB) => userMap[idA]!
       .fullName
       .toLowerCase()
-      .compareTo(userMap[idB].fullName.toLowerCase()));
+      .compareTo(userMap[idB]!.fullName.toLowerCase()));
 
   return list;
 }
 
 var memoizedGmailUserList =
-    memo1((BuiltMap<String, UserEntity> userMap) => gmailUserList(userMap));
+    memo1((BuiltMap<String?, UserEntity?> userMap) => gmailUserList(userMap));
 
-List<String> gmailUserList(BuiltMap<String, UserEntity> userMap) {
+List<String?> gmailUserList(BuiltMap<String?, UserEntity?> userMap) {
   return userList(userMap).where((userId) {
     final user = (userMap[userId] ?? UserEntity) as UserEntity;
 
@@ -100,9 +100,9 @@ List<String> gmailUserList(BuiltMap<String, UserEntity> userMap) {
 }
 
 var memoizedMicrosoftUserList =
-    memo1((BuiltMap<String, UserEntity> userMap) => microsoftUserList(userMap));
+    memo1((BuiltMap<String?, UserEntity?> userMap) => microsoftUserList(userMap));
 
-List<String> microsoftUserList(BuiltMap<String, UserEntity> userMap) {
+List<String?> microsoftUserList(BuiltMap<String?, UserEntity?> userMap) {
   return userList(userMap).where((userId) {
     final user = (userMap[userId] ?? UserEntity) as UserEntity;
 
@@ -112,5 +112,5 @@ List<String> microsoftUserList(BuiltMap<String, UserEntity> userMap) {
   }).toList();
 }
 
-bool hasUserChanges(UserEntity user, BuiltMap<String, UserEntity> userMap) =>
+bool? hasUserChanges(UserEntity user, BuiltMap<String, UserEntity> userMap) =>
     user.isNew ? user.isChanged : user != userMap[user.id];

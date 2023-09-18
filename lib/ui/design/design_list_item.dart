@@ -15,19 +15,19 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class DesignListItem extends StatelessWidget {
   const DesignListItem({
-    @required this.design,
-    @required this.filter,
+    required this.design,
+    required this.filter,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
 
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
-  final DesignEntity design;
-  final String filter;
-  final Function(bool) onCheckboxChanged;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onLongPress;
+  final DesignEntity? design;
+  final String? filter;
+  final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
 
   @override
@@ -40,8 +40,8 @@ class DesignListItem extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
-    final filterMatch = filter != null && filter.isNotEmpty
-        ? design.matchesFilterValue(filter)
+    final filterMatch = filter != null && filter!.isNotEmpty
+        ? design!.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch;
 
@@ -50,17 +50,17 @@ class DesignListItem extends StatelessWidget {
       entity: design,
       isSelected: false,
       child: ListTile(
-        onTap: () => onTap != null ? onTap() : selectEntity(entity: design),
+        onTap: () => onTap != null ? onTap!() : selectEntity(entity: design!),
         onLongPress: () => onLongPress != null
-            ? onLongPress()
-            : selectEntity(entity: design, longPress: true),
+            ? onLongPress!()
+            : selectEntity(entity: design!, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),
                 child: Checkbox(
                   value: isChecked,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  onChanged: (value) => onCheckboxChanged(value),
+                  onChanged: (value) => onCheckboxChanged!(value),
                   activeColor: Theme.of(context).colorScheme.secondary,
                 ),
               )
@@ -71,11 +71,11 @@ class DesignListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  design.name,
+                  design!.name,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Text(formatNumber(design.listDisplayAmount, context),
+              Text(formatNumber(design!.listDisplayAmount, context)!,
                   style: Theme.of(context).textTheme.titleMedium),
             ],
           ),

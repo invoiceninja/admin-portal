@@ -13,8 +13,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentTermEdit extends StatefulWidget {
   const PaymentTermEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final PaymentTermEditVM viewModel;
@@ -43,7 +43,7 @@ class _PaymentTermEditState extends State<PaymentTermEdit> {
     final paymentTerm = widget.viewModel.paymentTerm;
     _numDaysController.text = formatNumber(
         paymentTerm.numDays.toDouble(), context,
-        formatNumberType: FormatNumberType.inputAmount);
+        formatNumberType: FormatNumberType.inputAmount)!;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -71,7 +71,7 @@ class _PaymentTermEditState extends State<PaymentTermEdit> {
   }
 
   void _onSavePressed() {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -88,8 +88,8 @@ class _PaymentTermEditState extends State<PaymentTermEdit> {
     return EditScaffold(
       entity: viewModel.paymentTerm,
       title: viewModel.paymentTerm.isNew
-          ? localization.newPaymentTerm
-          : localization.editPaymentTerm,
+          ? localization!.newPaymentTerm
+          : localization!.editPaymentTerm,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) => _onSavePressed(),
       body: Form(

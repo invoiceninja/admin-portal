@@ -36,8 +36,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ClientPortal extends StatefulWidget {
   const ClientPortal({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final ClientPortalVM viewModel;
@@ -51,7 +51,7 @@ class _ClientPortalState extends State<ClientPortal>
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_clientPortal');
   final FocusScopeNode _focusNode = FocusScopeNode();
-  TabController _controller;
+  TabController? _controller;
 
   final _webClient = WebClient();
   bool _isSubdomainUnique = true;
@@ -85,12 +85,12 @@ class _ClientPortalState extends State<ClientPortal>
         vsync: this,
         length: settingsUIState.isFiltered ? 4 : 5,
         initialIndex: settingsUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller!.index));
   }
 
   void _validateSubdomain() {
@@ -107,7 +107,7 @@ class _ClientPortalState extends State<ClientPortal>
         return;
       }
 
-      if (subdomain == state.company.subdomain) {
+      if (subdomain == state.company!.subdomain) {
         setState(() => _isSubdomainUnique = true);
         return;
       }
@@ -137,8 +137,8 @@ class _ClientPortalState extends State<ClientPortal>
   @override
   void dispose() {
     _focusNode.dispose();
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -170,16 +170,16 @@ class _ClientPortalState extends State<ClientPortal>
     final settings = widget.viewModel.settings;
     _portalDomainController.text = company.portalDomain;
     _subdomainController.text = company.subdomain;
-    _customMessageDashboard.text = settings.customMessageDashboard;
-    _customMessagePaidInvoice.text = settings.customMessagePaidInvoice;
-    _customMessageUnpaidInvoice.text = settings.customMessageUnpaidInvoice;
-    _customMessageUnapprovedQuote.text = settings.customMessageUnapprovedQuote;
-    _privacyController.text = settings.clientPortalPrivacy;
-    _termsController.text = settings.clientPortalTerms;
-    _customHeaderController.text = settings.clientPortalCustomHeader;
-    _customFooterController.text = settings.clientPortalCustomFooter;
-    _customCssController.text = settings.clientPortalCustomCss;
-    _customJavaScriptController.text = settings.clientPortalCustomJs;
+    _customMessageDashboard.text = settings.customMessageDashboard!;
+    _customMessagePaidInvoice.text = settings.customMessagePaidInvoice!;
+    _customMessageUnpaidInvoice.text = settings.customMessageUnpaidInvoice!;
+    _customMessageUnapprovedQuote.text = settings.customMessageUnapprovedQuote!;
+    _privacyController.text = settings.clientPortalPrivacy!;
+    _termsController.text = settings.clientPortalTerms!;
+    _customHeaderController.text = settings.clientPortalCustomHeader!;
+    _customFooterController.text = settings.clientPortalCustomFooter!;
+    _customCssController.text = settings.clientPortalCustomCss!;
+    _customJavaScriptController.text = settings.clientPortalCustomJs!;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -258,7 +258,7 @@ class _ClientPortalState extends State<ClientPortal>
   }
 
   void _onSavePressed(BuildContext context) {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid || _isCheckingSubdomain) {
       return;
@@ -269,7 +269,7 @@ class _ClientPortalState extends State<ClientPortal>
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final company = viewModel.company;
@@ -408,7 +408,7 @@ class _ClientPortalState extends State<ClientPortal>
                     ],
                     SizedBox(height: 16),
                     ListTile(
-                      title: Text(localization.loginUrl),
+                      title: Text(localization.loginUrl!),
                       subtitle: Text(
                         loginUrl,
                         maxLines: 1,
@@ -478,7 +478,7 @@ class _ClientPortalState extends State<ClientPortal>
                           company.rebuild((b) => b..enableShopApi = value)),
                     ),
                   if (!state.isDemo &&
-                      (state.company.enableShopApi ?? false)) ...[
+                      (state.company!.enableShopApi ?? false)) ...[
                     SizedBox(height: 16),
                     ListDivider(),
                     ListTile(
@@ -532,7 +532,7 @@ class _ClientPortalState extends State<ClientPortal>
                       onChanged: (value) => viewModel.onCompanyChanged(
                           company.rebuild((b) => b..clientCanRegister = value)),
                     ),
-                    if (state.company.clientCanRegister ?? false) ...[
+                    if (state.company!.clientCanRegister ?? false) ...[
                       SizedBox(height: 16),
                       ListTile(
                         title: Text(localization.registrationUrl),
@@ -558,7 +558,7 @@ class _ClientPortalState extends State<ClientPortal>
                     return Row(
                       children: [
                         Expanded(
-                          child: Text(localization.lookup(field.key)),
+                          child: Text(localization.lookup(field.key)!),
                         ),
                         Expanded(
                           child: AppDropdownButton<String>(
@@ -583,7 +583,7 @@ class _ClientPortalState extends State<ClientPortal>
                             items: [
                               DropdownMenuItem(
                                 value: RegistrationFieldEntity.SETTING_HIDDEN,
-                                child: Text(localization.hidden),
+                                child: Text(localization.hidden!),
                               ),
                               DropdownMenuItem(
                                 value: RegistrationFieldEntity.SETTING_OPTIONAL,
@@ -591,7 +591,7 @@ class _ClientPortalState extends State<ClientPortal>
                               ),
                               DropdownMenuItem(
                                 value: RegistrationFieldEntity.SETTING_REQUIRED,
-                                child: Text(localization.requiredWord),
+                                child: Text(localization.requiredWord!),
                               ),
                             ],
                           ),

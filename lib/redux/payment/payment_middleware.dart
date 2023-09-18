@@ -53,19 +53,19 @@ List<Middleware<AppState>> createStorePaymentsMiddleware([
 
 Middleware<AppState> _editPayment() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditPayment;
+    final action = dynamicAction as EditPayment?;
 
     next(action);
 
-    if (store.state.prefState.isMobile || action.payment.isApplying != true) {
+    if (store.state.prefState.isMobile || action!.payment.isApplying != true) {
       store.dispatch(UpdateCurrentRoute(PaymentEditScreen.route));
 
       if (store.state.prefState.isMobile) {
-        navigatorKey.currentState.pushNamed(PaymentEditScreen.route);
+        navigatorKey.currentState!.pushNamed(PaymentEditScreen.route);
       }
     } else {
       showDialog<PaymentEditScreen>(
-          context: navigatorKey.currentContext,
+          context: navigatorKey.currentContext!,
           barrierDismissible: false,
           builder: (BuildContext context) {
             return PaymentEditScreen();
@@ -76,16 +76,16 @@ Middleware<AppState> _editPayment() {
 
 Middleware<AppState> _viewRefundPayment() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewRefundPayment;
+    final action = dynamicAction as ViewRefundPayment?;
 
     next(action);
 
     if (store.state.prefState.isMobile) {
       store.dispatch(UpdateCurrentRoute(PaymentRefundScreen.route));
-      navigatorKey.currentState.pushNamed(PaymentRefundScreen.route);
+      navigatorKey.currentState!.pushNamed(PaymentRefundScreen.route);
     } else {
       showDialog<PaymentRefundScreen>(
-          context: navigatorKey.currentContext,
+          context: navigatorKey.currentContext!,
           barrierDismissible: false,
           builder: (BuildContext context) {
             return PaymentRefundScreen();
@@ -101,14 +101,14 @@ Middleware<AppState> _viewPayment() {
     store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(PaymentViewScreen.route);
+      navigatorKey.currentState!.pushNamed(PaymentViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewPaymentList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewPaymentList;
+    final action = dynamicAction as ViewPaymentList?;
 
     next(action);
 
@@ -119,7 +119,7 @@ Middleware<AppState> _viewPaymentList() {
     store.dispatch(UpdateCurrentRoute(PaymentScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           PaymentScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -209,7 +209,7 @@ Middleware<AppState> _savePayment(PaymentRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SavePaymentRequest;
     final PaymentEntity payment = action.payment;
-    final bool sendEmail = payment.isNew ? payment.sendEmail : false;
+    final bool? sendEmail = payment.isNew ? payment.sendEmail : false;
     repository
         .saveData(store.state.credentials, action.payment, sendEmail: sendEmail)
         .then((PaymentEntity payment) {
@@ -281,13 +281,13 @@ Middleware<AppState> _loadPayment(PaymentRepository repository) {
       store.dispatch(LoadPaymentSuccess(payment));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadPaymentFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -317,7 +317,7 @@ Middleware<AppState> _loadPayments(PaymentRepository repository) {
         ));
       } else {
         if (action.completer != null) {
-          action.completer.complete(null);
+          action.completer!.complete(null);
         }
         store.dispatch(LoadQuotes());
       }
@@ -325,7 +325,7 @@ Middleware<AppState> _loadPayments(PaymentRepository repository) {
       print(error);
       store.dispatch(LoadPaymentsFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 

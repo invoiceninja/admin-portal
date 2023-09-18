@@ -26,8 +26,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TaskScreen extends StatelessWidget {
   const TaskScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/task';
@@ -38,25 +38,25 @@ class TaskScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final company = store.state.company;
+    final company = store.state.company!;
     final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
     final statuses = [
       TaskStatusEntity().rebuild((b) => b
         ..id = kTaskStatusLogged
-        ..name = localization.logged),
+        ..name = localization!.logged),
       TaskStatusEntity().rebuild((b) => b
         ..id = kTaskStatusRunning
-        ..name = localization.running),
+        ..name = localization!.running),
       if (!state.prefState.showKanban)
         TaskStatusEntity().rebuild((b) => b
           ..id = kTaskStatusInvoiced
-          ..name = localization.invoiced),
+          ..name = localization!.invoiced),
       for (var statusId in memoizedSortedActiveTaskStatusIds(
           state.taskStatusState.list, state.taskStatusState.map))
         TaskStatusEntity().rebuild((b) => b
           ..id = statusId
-          ..name = state.taskStatusState.map[statusId].name),
+          ..name = state.taskStatusState.map[statusId]!.name),
     ];
 
     return ListScaffold(
@@ -154,7 +154,7 @@ class TaskScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany.canCreate(EntityType.task)
+              userCompany!.canCreate(EntityType.task)
           ? FloatingActionButton(
               heroTag: 'task_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
@@ -166,7 +166,7 @@ class TaskScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newTask,
+              tooltip: localization!.newTask,
             )
           : null,
     );

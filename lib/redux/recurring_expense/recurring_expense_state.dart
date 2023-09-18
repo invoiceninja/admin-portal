@@ -29,10 +29,10 @@ abstract class RecurringExpenseState
   @memoized
   int get hashCode;
 
-  BuiltMap<String, ExpenseEntity> get map;
+  BuiltMap<String?, ExpenseEntity?> get map;
   BuiltList<String> get list;
 
-  ExpenseEntity get(String recurringExpenseId) {
+  ExpenseEntity? get(String recurringExpenseId) {
     if (map.containsKey(recurringExpenseId)) {
       return map[recurringExpenseId];
     } else {
@@ -42,7 +42,7 @@ abstract class RecurringExpenseState
 
   RecurringExpenseState loadRecurringExpenses(
       BuiltList<ExpenseEntity> clients) {
-    final map = Map<String, ExpenseEntity>.fromIterable(
+    final map = Map<String?, ExpenseEntity?>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
@@ -60,7 +60,7 @@ abstract class RecurringExpenseState
 abstract class RecurringExpenseUIState extends Object
     with EntityUIState
     implements Built<RecurringExpenseUIState, RecurringExpenseUIStateBuilder> {
-  factory RecurringExpenseUIState(PrefStateSortField sortField) {
+  factory RecurringExpenseUIState(PrefStateSortField? sortField) {
     return _$RecurringExpenseUIState._(
       listUIState: ListUIState(
           sortField?.field ?? RecurringExpenseFields.number,
@@ -76,14 +76,13 @@ abstract class RecurringExpenseUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  ExpenseEntity get editing;
+  ExpenseEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<RecurringExpenseUIState> get serializer =>
       _$recurringExpenseUIStateSerializer;

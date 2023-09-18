@@ -19,8 +19,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ExpenseEditNotes extends StatefulWidget {
   const ExpenseEditNotes({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final AbstractExpenseEditVM viewModel;
@@ -33,7 +33,7 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
   final _publicNotesController = TextEditingController();
   final _privateNotesController = TextEditingController();
 
-  List<TextEditingController> _controllers;
+  late List<TextEditingController> _controllers;
   final _debouncer = Debouncer();
 
   @override
@@ -46,7 +46,7 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    final expense = widget.viewModel.expense;
+    final expense = widget.viewModel.expense!;
     _publicNotesController.text = expense.publicNotes;
     _privateNotesController.text = expense.privateNotes;
 
@@ -68,12 +68,12 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
 
   void _onChanged() {
     final viewModel = widget.viewModel;
-    final expense = viewModel.expense.rebuild((b) => b
+    final expense = viewModel.expense!.rebuild((b) => b
       ..publicNotes = _publicNotesController.text.trim()
       ..privateNotes = _privateNotesController.text.trim());
     if (expense != viewModel.expense) {
       _debouncer.run(() {
-        viewModel.onChanged(expense);
+        viewModel.onChanged!(expense);
       });
     }
   }
@@ -81,16 +81,16 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
-    final state = viewModel.state;
+    final state = viewModel.state!;
     final expense = viewModel.expense;
     final isFullscreen = state.prefState.isEditorFullScreen(EntityType.expense);
     final company = state.company;
 
     final showDocuments = isDesktop(context) &&
         state.isEnterprisePlan &&
-        company.isModuleEnabled(EntityType.document);
+        company!.isModuleEnabled(EntityType.document);
 
     return ScrollableListView(
       children: <Widget>[
@@ -116,7 +116,7 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
               label: localization.privateNotes,
             ),
             if (showDocuments)
-              if (expense.isNew || state.hasChanges())
+              if (expense!.isNew || state.hasChanges())
                 SizedBox(
                   child: HelpText(localization.saveToUploadDocuments),
                   height: 200,
@@ -126,7 +126,7 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
                 DocumentGrid(
                   documents: expense.documents.toList(),
                   onUploadDocument: (path, isPrivate) => widget.viewModel
-                      .onUploadDocument(context, path, isPrivate),
+                      .onUploadDocument!(context, path, isPrivate),
                   onRenamedDocument: () =>
                       store.dispatch(LoadExpense(expenseId: expense.id)),
                 )

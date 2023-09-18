@@ -34,8 +34,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceEditDetails extends StatefulWidget {
   const InvoiceEditDetails({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
     this.entityType = EntityType.invoice,
   }) : super(key: key);
 
@@ -83,25 +83,25 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    final invoice = widget.viewModel.invoice;
+    final invoice = widget.viewModel.invoice!;
     _invoiceNumberController.text = invoice.number;
     _poNumberController.text = invoice.poNumber;
     _discountController.text = formatNumber(invoice.discount, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
     _partialController.text = formatNumber(invoice.partial, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
     _custom1Controller.text = invoice.customValue1;
     _custom2Controller.text = invoice.customValue2;
     _custom3Controller.text = invoice.customValue3;
     _custom4Controller.text = invoice.customValue4;
     _surcharge1Controller.text = formatNumber(invoice.customSurcharge1, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
     _surcharge2Controller.text = formatNumber(invoice.customSurcharge2, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
     _surcharge3Controller.text = formatNumber(invoice.customSurcharge3, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
     _surcharge4Controller.text = formatNumber(invoice.customSurcharge4, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
 
@@ -119,7 +119,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
   }
 
   void _onChanged() {
-    final invoice = widget.viewModel.invoice.rebuild((b) => b
+    final invoice = widget.viewModel.invoice!.rebuild((b) => b
       ..number = _invoiceNumberController.text.trim()
       ..poNumber = _poNumberController.text.trim()
       ..discount = parseDouble(_discountController.text)
@@ -134,7 +134,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
       ..customSurcharge4 = parseDouble(_surcharge4Controller.text));
     if (invoice != widget.viewModel.invoice) {
       _debouncer.run(() {
-        widget.viewModel.onChanged(invoice);
+        widget.viewModel.onChanged!(invoice);
       });
     }
   }
@@ -142,20 +142,20 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
-    final state = viewModel.state;
-    final invoice = viewModel.invoice;
-    final company = viewModel.company;
+    final state = viewModel.state!;
+    final invoice = viewModel.invoice!;
+    final company = viewModel.company!;
     final originalInvoice =
-        state.getEntity(invoice.entityType, invoice.id) as InvoiceEntity;
+        state.getEntity(invoice.entityType, invoice.id) as InvoiceEntity?;
 
     final client = state.clientState.get(invoice.clientId);
     final settings = getClientSettings(state, client);
     final terms = widget.entityType == EntityType.quote
         ? settings.defaultValidUntil
         : settings.defaultPaymentTerms;
-    String termsString;
+    String? termsString;
     if ((terms ?? '').isNotEmpty) {
       termsString = '${localization.net} $terms';
     }
@@ -172,18 +172,18 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                         vendorId: invoice.vendorId,
                         vendorState: state.vendorState,
                         onSelected: (vendor) {
-                          viewModel.onVendorChanged(context, invoice, vendor);
+                          viewModel.onVendorChanged!(context, invoice, vendor as VendorEntity);
                         },
                         onAddPressed: (completer) =>
-                            viewModel.onAddVendorPressed(context, completer),
+                            viewModel.onAddVendorPressed!(context, completer),
                       )
                     : ClientPicker(
                         clientId: invoice.clientId,
                         clientState: state.clientState,
                         onSelected: (client) =>
-                            viewModel.onClientChanged(context, invoice, client),
+                            viewModel.onClientChanged!(context, invoice, client as ClientEntity?),
                         onAddPressed: (completer) =>
-                            viewModel.onAddClientPressed(context, completer),
+                            viewModel.onAddClientPressed!(context, completer),
                       )
                 : DecoratedFormField(
                     controller: _invoiceNumberController,
@@ -197,13 +197,13 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     keyboardType: TextInputType.text,
                     validator: (String val) => val.trim().isEmpty &&
                             invoice.isOld &&
-                            originalInvoice.number.isNotEmpty
-                        ? AppLocalization.of(context).pleaseEnterAnInvoiceNumber
+                            originalInvoice!.number.isNotEmpty
+                        ? AppLocalization.of(context)!.pleaseEnterAnInvoiceNumber
                         : null,
                   ),
             UserPicker(
               userId: invoice.assignedUserId,
-              onChanged: (userId) => viewModel.onChanged(
+              onChanged: (userId) => viewModel.onChanged!(
                   invoice.rebuild((b) => b..assignedUserId = userId)),
             ),
             if (invoice.isRecurringInvoice) ...[
@@ -211,13 +211,13 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                   labelText: localization.frequency,
                   value: invoice.frequencyId,
                   onChanged: (dynamic value) {
-                    viewModel.onChanged(
+                    viewModel.onChanged!(
                         invoice.rebuild((b) => b..frequencyId = value));
                   },
                   items: kFrequencies.entries
                       .map((entry) => DropdownMenuItem(
                             value: entry.key,
-                            child: Text(localization.lookup(entry.value)),
+                            child: Text(localization.lookup(entry.value)!),
                           ))
                       .toList()),
               DatePicker(
@@ -225,7 +225,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     ? localization.nextSendDate
                     : localization.startDate,
                 onSelected: (date, _) => viewModel
-                    .onChanged(invoice.rebuild((b) => b..nextSendDate = date)),
+                    .onChanged!(invoice.rebuild((b) => b..nextSendDate = date)),
                 selectedDate: invoice.nextSendDate,
                 firstDate: DateTime.now(),
               ),
@@ -233,7 +233,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 labelText: localization.remainingCycles,
                 value: invoice.remainingCycles,
                 blankValue: null,
-                onChanged: (dynamic value) => viewModel.onChanged(
+                onChanged: (dynamic value) => viewModel.onChanged!(
                     invoice.rebuild((b) => b..remainingCycles = value)),
                 items: [
                   DropdownMenuItem(
@@ -252,14 +252,14 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 labelText: localization.dueDate,
                 value: invoice.dueDateDays ?? '',
                 onChanged: (dynamic value) => viewModel
-                    .onChanged(invoice.rebuild((b) => b..dueDateDays = value)),
+                    .onChanged!(invoice.rebuild((b) => b..dueDateDays = value)),
                 items: [
                   DropdownMenuItem(
                     child: Text(localization.usePaymentTerms),
                     value: 'terms',
                   ),
                   DropdownMenuItem(
-                    child: Text(localization.dueOnReceipt),
+                    child: Text(localization.dueOnReceipt!),
                     value: 'on_receipt',
                   ),
                   ...List<int>.generate(31, (i) => i + 1)
@@ -278,7 +278,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
             ] else ...[
               DatePicker(
                 validator: (String val) => val.trim().isEmpty
-                    ? AppLocalization.of(context).pleaseSelectADate
+                    ? AppLocalization.of(context)!.pleaseSelectADate
                     : null,
                 labelText: widget.entityType == EntityType.purchaseOrder
                     ? localization.purchaseOrderDate
@@ -289,7 +289,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                             : localization.invoiceDate,
                 selectedDate: invoice.date,
                 onSelected: (date, _) {
-                  viewModel.onChanged(invoice.rebuild((b) => b..date = date));
+                  viewModel.onChanged!(invoice.rebuild((b) => b..date = date));
                 },
               ),
               DatePicker(
@@ -301,7 +301,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 message: termsString,
                 onSelected: (date, _) {
                   viewModel
-                      .onChanged(invoice.rebuild((b) => b..dueDate = date));
+                      .onChanged!(invoice.rebuild((b) => b..dueDate = date));
                 },
               ),
               DecoratedFormField(
@@ -310,7 +310,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 keyboardType: TextInputType.numberWithOptions(
                     decimal: true, signed: true),
                 validator: (String value) {
-                  final amount = parseDouble(_partialController.text);
+                  final amount = parseDouble(_partialController.text)!;
                   final total = invoice.calculateTotal(
                       precision: precisionForInvoice(state, invoice));
                   if (amount < 0 || (amount != 0 && amount > total)) {
@@ -325,7 +325,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                   labelText: localization.partialDueDate,
                   selectedDate: invoice.partialDueDate,
                   onSelected: (date, _) {
-                    viewModel.onChanged(
+                    viewModel.onChanged!(
                         invoice.rebuild((b) => b..partialDueDate = date));
                   },
                 ),
@@ -340,7 +340,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               controller: _discountController,
               value: invoice.discount,
               isAmountDiscount: invoice.isAmountDiscount,
-              onTypeChanged: (value) => viewModel.onChanged(
+              onTypeChanged: (value) => viewModel.onChanged!(
                   invoice.rebuild((b) => b..isAmountDiscount = value)),
             ),
             if (invoice.isRecurringInvoice)
@@ -355,10 +355,10 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                             SettingsEntity.AUTO_BILL_OPT_IN,
                             SettingsEntity.AUTO_BILL_OFF,
                           ]
-                              .map((type) => Text(localization.lookup(type)))
+                              .map((type) => Text(localization.lookup(type)!))
                               .toList(),
                   onChanged: (dynamic value) => viewModel
-                      .onChanged(invoice.rebuild((b) => b..autoBill = value)),
+                      .onChanged!(invoice.rebuild((b) => b..autoBill = value)),
                   items: [
                     SettingsEntity.AUTO_BILL_ALWAYS,
                     SettingsEntity.AUTO_BILL_OPT_OUT,
@@ -422,9 +422,9 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 invoice.taxName1.isNotEmpty)
               TaxRateDropdown(
                 onSelected: (taxRate) =>
-                    viewModel.onChanged(invoice.applyTax(taxRate)),
+                    viewModel.onChanged!(invoice.applyTax(taxRate)),
                 labelText: localization.tax +
-                    (company.settings.enableInclusiveTaxes
+                    (company.settings.enableInclusiveTaxes!
                         ? ' - ${localization.inclusive}'
                         : ''),
                 initialTaxName: invoice.taxName1,
@@ -434,9 +434,9 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 invoice.taxName2.isNotEmpty)
               TaxRateDropdown(
                 onSelected: (taxRate) => viewModel
-                    .onChanged(invoice.applyTax(taxRate, isSecond: true)),
+                    .onChanged!(invoice.applyTax(taxRate, isSecond: true)),
                 labelText: localization.tax +
-                    (company.settings.enableInclusiveTaxes
+                    (company.settings.enableInclusiveTaxes!
                         ? ' - ${localization.inclusive}'
                         : ''),
                 initialTaxName: invoice.taxName2,
@@ -446,9 +446,9 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 invoice.taxName3.isNotEmpty)
               TaxRateDropdown(
                 onSelected: (taxRate) => viewModel
-                    .onChanged(invoice.applyTax(taxRate, isThird: true)),
+                    .onChanged!(invoice.applyTax(taxRate, isThird: true)),
                 labelText: localization.tax +
-                    (company.settings.enableInclusiveTaxes
+                    (company.settings.enableInclusiveTaxes!
                         ? ' - ${localization.inclusive}'
                         : ''),
                 initialTaxName: invoice.taxName3,
@@ -457,24 +457,24 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
             DesignPicker(
               initialValue: invoice.designId,
               onSelected: (value) => viewModel
-                  .onChanged(invoice.rebuild((b) => b..designId = value?.id)),
+                  .onChanged!(invoice.rebuild((b) => b..designId = value?.id)),
             ),
             if (company.isModuleEnabled(EntityType.project))
               ProjectPicker(
                 clientId: invoice.clientId,
                 projectId: invoice.projectId,
                 onChanged: (projectId) {
-                  final project = state.projectState.get(projectId);
+                  final project = state.projectState.get(projectId)!;
                   final client = state.clientState.get(project.clientId);
 
                   if (project.isOld && project.clientId != invoice.clientId) {
-                    viewModel.onClientChanged(
+                    viewModel.onClientChanged!(
                       context,
                       invoice.rebuild((b) => b..projectId = projectId),
                       client,
                     );
                   } else {
-                    viewModel.onChanged(
+                    viewModel.onChanged!(
                         invoice.rebuild((b) => b..projectId = projectId));
                   }
                 },
@@ -484,7 +484,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 clientId: invoice.clientId,
                 clientState: state.clientState,
                 onSelected: (client) {
-                  viewModel.onChanged(
+                  viewModel.onChanged!(
                       invoice.rebuild((b) => b..clientId = client?.id ?? ''));
                 },
               )
@@ -498,7 +498,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     state.vendorState.list,
                     state.userState.map,
                     state.staticState),
-                onSelected: (vendor) => viewModel.onChanged(
+                onSelected: (vendor) => viewModel.onChanged!(
                   invoice.rebuild((b) => b.vendorId = vendor.id),
                 ),
                 onCreateNew: (completer, name) {
@@ -512,7 +512,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
               label: localization.exchangeRate,
               initialValue: formatNumber(invoice.exchangeRate, context,
                   formatNumberType: FormatNumberType.inputAmount),
-              onChanged: (value) => viewModel.onChanged(
+              onChanged: (value) => viewModel.onChanged!(
                   invoice.rebuild((b) => b..exchangeRate = parseDouble(value))),
               keyboardType:
                   TextInputType.numberWithOptions(decimal: true, signed: true),
@@ -526,7 +526,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                   dense: true,
                   value: invoice.usesInclusiveTaxes,
                   onChanged: (value) {
-                    viewModel.onChanged(
+                    viewModel.onChanged!(
                         invoice.rebuild((b) => b..usesInclusiveTaxes = value));
                   },
                 ),
@@ -540,7 +540,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                   dense: true,
                   value: invoice.autoBillEnabled,
                   onChanged: (value) {
-                    viewModel.onChanged(
+                    viewModel.onChanged!(
                         invoice.rebuild((b) => b..autoBillEnabled = value));
                   },
                 ),
@@ -551,7 +551,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
           Padding(
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 20),
             child: AppButton(
-              label: localization.taxDetails.toUpperCase(),
+              label: localization.taxDetails!.toUpperCase(),
               onPressed: invoice.hasClient
                   ? () {
                       showDialog<void>(

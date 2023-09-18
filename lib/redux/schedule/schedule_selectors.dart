@@ -21,7 +21,7 @@ List<String> dropdownSchedulesSelector(
     BuiltMap<String, UserEntity> userMap,
     String clientId) {
   final list = scheduleList.where((scheduleId) {
-    final schedule = scheduleMap[scheduleId];
+    final schedule = scheduleMap[scheduleId]!;
     /*
     if (clientId != null && clientId > 0 && schedule.clientId != clientId) {
       return false;
@@ -31,7 +31,7 @@ List<String> dropdownSchedulesSelector(
   }).toList();
 
   list.sort((scheduleAId, scheduleBId) {
-    final scheduleA = scheduleMap[scheduleAId];
+    final scheduleA = scheduleMap[scheduleAId]!;
     final scheduleB = scheduleMap[scheduleBId];
     return scheduleA.compareTo(scheduleB, ScheduleFields.template, true);
   });
@@ -40,7 +40,7 @@ List<String> dropdownSchedulesSelector(
 }
 
 var memoizedFilteredScheduleList = memo4((SelectionState selectionState,
-        BuiltMap<String, ScheduleEntity> scheduleMap,
+        BuiltMap<String?, ScheduleEntity?> scheduleMap,
         BuiltList<String> scheduleList,
         ListUIState scheduleListState) =>
     filteredSchedulesSelector(
@@ -48,7 +48,7 @@ var memoizedFilteredScheduleList = memo4((SelectionState selectionState,
 
 List<String> filteredSchedulesSelector(
     SelectionState selectionState,
-    BuiltMap<String, ScheduleEntity> scheduleMap,
+    BuiltMap<String?, ScheduleEntity?> scheduleMap,
     BuiltList<String> scheduleList,
     ListUIState scheduleListState) {
   final filterEntityId = selectionState.filterEntityId;
@@ -56,11 +56,11 @@ List<String> filteredSchedulesSelector(
 
   final list = scheduleList.where((scheduleId) {
     final schedule = scheduleMap[scheduleId];
-    if (filterEntityId != null && schedule.id != filterEntityId) {
+    if (filterEntityId != null && schedule!.id != filterEntityId) {
       return false;
     } else {}
 
-    if (!schedule.matchesStates(scheduleListState.stateFilters)) {
+    if (!schedule!.matchesStates(scheduleListState.stateFilters)) {
       return false;
     }
 
@@ -68,7 +68,7 @@ List<String> filteredSchedulesSelector(
   }).toList();
 
   list.sort((scheduleAId, scheduleBId) {
-    final scheduleA = scheduleMap[scheduleAId];
+    final scheduleA = scheduleMap[scheduleAId]!;
     final scheduleB = scheduleMap[scheduleBId];
     return scheduleA.compareTo(scheduleB, scheduleListState.sortField,
         scheduleListState.sortAscending);

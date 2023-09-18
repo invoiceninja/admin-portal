@@ -22,8 +22,8 @@ import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class ScheduleEdit extends StatefulWidget {
   const ScheduleEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final ScheduleEditVM viewModel;
@@ -75,7 +75,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
   }
 
   void _onSavePressed() {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -100,7 +100,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
       '',
       state.userState.map,
       [],
-      state.company.settings.recurringNumberPrefix,
+      state.company!.settings.recurringNumberPrefix,
     );
 
     final quoteIds = memoizedDropdownQuoteList(
@@ -130,7 +130,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
 
     return EditScaffold(
       title:
-          schedule.isNew ? localization.newSchedule : localization.editSchedule,
+          schedule.isNew ? localization!.newSchedule : localization!.editSchedule,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) => _onSavePressed(),
       body: Form(
@@ -163,7 +163,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                         items: ScheduleEntity.TEMPLATES
                             .map((entry) => DropdownMenuItem(
                                   value: entry,
-                                  child: Text(localization.lookup(entry)),
+                                  child: Text(localization.lookup(entry)!),
                                 ))
                             .toList()),
                     DatePicker(
@@ -202,7 +202,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                               .map((entry) => DropdownMenuItem(
                                     value: entry.key,
                                     child:
-                                        Text(localization.lookup(entry.value)),
+                                        Text(localization.lookup(entry.value)!),
                                   ))
                               .toList()),
                       if (schedule.frequencyId.isNotEmpty)
@@ -235,8 +235,8 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                     AppDropdownButton<DateRange>(
                       labelText: localization.dateRange,
                       blankValue: null,
-                      value: parameters.dateRange.isNotEmpty
-                          ? DateRange.valueOf(toCamelCase(parameters.dateRange))
+                      value: parameters.dateRange!.isNotEmpty
+                          ? DateRange.valueOf(toCamelCase(parameters.dateRange!))
                           : null,
                       onChanged: (dynamic value) {
                         viewModel.onChanged(schedule.rebuild((b) => b
@@ -247,7 +247,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           .where((value) => value != DateRange.custom)
                           .map((dateRange) => DropdownMenuItem<DateRange>(
                                 child: Text(
-                                    localization.lookup(dateRange.toString())),
+                                    localization.lookup(dateRange.toString())!),
                                 value: dateRange,
                               ))
                           .toList(),
@@ -266,7 +266,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                         kStatementStatusUnpaid,
                       ]
                           .map((value) => DropdownMenuItem<String>(
-                                child: Text(localization.lookup(value)),
+                                child: Text(localization.lookup(value)!),
                                 value: value,
                               ))
                           .toList(),
@@ -303,9 +303,9 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           isRequired: false,
                           clientId: null,
                           clientState: state.clientState,
-                          excludeIds: parameters.clients.toList(),
+                          excludeIds: parameters.clients!.toList(),
                           onSelected: (value) {
-                            if (!parameters.clients.contains(value.id)) {
+                            if (!parameters.clients!.contains(value.id)) {
                               viewModel.onChanged(schedule.rebuild(
                                   (b) => b..parameters.clients.add(value.id)));
                             }
@@ -315,12 +315,12 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                             });
                           }),
                       SizedBox(height: 20),
-                      if (parameters.clients.isEmpty)
+                      if (parameters.clients!.isEmpty)
                         HelpText(localization.allClients),
-                      for (var clientId in parameters.clients)
+                      for (var clientId in parameters.clients!)
                         ListTile(
                           title:
-                              Text(state.clientState.get(clientId).displayName),
+                              Text(state.clientState.get(clientId)!.displayName),
                           trailing: IconButton(
                             icon: Icon(Icons.clear),
                             onPressed: () {
@@ -352,7 +352,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                               .map((entityType) => DropdownMenuItem<String>(
                                     value: entityType.apiValue,
                                     child: Text(
-                                      localization.lookup(entityType.apiValue),
+                                      localization.lookup(entityType.apiValue)!,
                                     ),
                                   ))
                               .toList()),

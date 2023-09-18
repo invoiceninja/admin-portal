@@ -45,14 +45,14 @@ List<Middleware<AppState>> createStoreTaskStatusesMiddleware([
 
 Middleware<AppState> _editTaskStatus() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditTaskStatus;
+    final action = dynamicAction as EditTaskStatus?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TaskStatusEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(TaskStatusEditScreen.route);
+      navigatorKey.currentState!.pushNamed(TaskStatusEditScreen.route);
     }
   };
 }
@@ -60,21 +60,21 @@ Middleware<AppState> _editTaskStatus() {
 Middleware<AppState> _viewTaskStatus() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ViewTaskStatus;
+    final action = dynamicAction as ViewTaskStatus?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TaskStatusViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(TaskStatusViewScreen.route);
+      navigatorKey.currentState!.pushNamed(TaskStatusViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewTaskStatusList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewTaskStatusList;
+    final action = dynamicAction as ViewTaskStatusList?;
 
     next(action);
 
@@ -85,7 +85,7 @@ Middleware<AppState> _viewTaskStatusList() {
     store.dispatch(UpdateCurrentRoute(TaskStatusScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           TaskStatusScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -173,20 +173,20 @@ Middleware<AppState> _saveTaskStatus(TaskStatusRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveTaskStatusRequest;
     repository
-        .saveData(store.state.credentials, action.taskStatus)
+        .saveData(store.state.credentials, action.taskStatus!)
         .then((TaskStatusEntity taskStatus) {
-      if (action.taskStatus.isNew) {
+      if (action.taskStatus!.isNew) {
         store.dispatch(AddTaskStatusSuccess(taskStatus));
       } else {
         store.dispatch(SaveTaskStatusSuccess(taskStatus));
       }
 
       store.dispatch(RefreshData());
-      action.completer.complete(taskStatus);
+      action.completer!.complete(taskStatus);
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveTaskStatusFailure(error));
-      action.completer.completeError(error);
+      action.completer!.completeError(error);
     });
 
     next(action);
@@ -205,13 +205,13 @@ Middleware<AppState> _loadTaskStatus(TaskStatusRepository repository) {
       store.dispatch(LoadTaskStatusSuccess(taskStatus));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadTaskStatusFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -221,15 +221,15 @@ Middleware<AppState> _loadTaskStatus(TaskStatusRepository repository) {
 
 Middleware<AppState> _loadTaskStatuses(TaskStatusRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as LoadTaskStatuses;
+    final action = dynamicAction as LoadTaskStatuses?;
     final AppState state = store.state;
 
     store.dispatch(LoadTaskStatusesRequest());
     repository.loadList(state.credentials).then((data) {
       store.dispatch(LoadTaskStatusesSuccess(data));
 
-      if (action.completer != null) {
-        action.completer.complete(null);
+      if (action!.completer != null) {
+        action.completer!.complete(null);
       }
       /*
       if (state.productState.isStale) {
@@ -239,8 +239,8 @@ Middleware<AppState> _loadTaskStatuses(TaskStatusRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadTaskStatusesFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
+      if (action!.completer != null) {
+        action.completer!.completeError(error);
       }
     });
 

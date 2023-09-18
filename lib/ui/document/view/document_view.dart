@@ -14,9 +14,9 @@ import 'package:printing/printing.dart';
 
 class DocumentView extends StatefulWidget {
   const DocumentView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final DocumentViewVM viewModel;
@@ -50,10 +50,10 @@ class _DocumentViewState extends State<DocumentView> {
                 ? LoadingIndicator()
                 : document.isImage
                     ? PinchZoom(
-                        child: Image.memory(document.data),
+                        child: Image.memory(document.data!),
                       )
                     : PdfPreview(
-                        build: (format) => document.data,
+                        build: (format) => document.data!,
                         canChangeOrientation: false,
                         canChangePageFormat: false,
                         allowPrinting: false,

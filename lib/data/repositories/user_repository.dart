@@ -19,24 +19,24 @@ class UserRepository {
 
   final WebClient webClient;
 
-  Future<UserEntity> loadItem(Credentials credentials, String entityId) async {
+  Future<UserEntity> loadItem(Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/users/$entityId?include=company_user',
         credentials.token);
 
     final UserItemResponse userResponse =
-        serializers.deserializeWith(UserItemResponse.serializer, response);
+        serializers.deserializeWith(UserItemResponse.serializer, response)!;
 
     return userResponse.data;
   }
 
   Future<BuiltList<UserEntity>> loadList(Credentials credentials) async {
-    final url = credentials.url + '/users?include=company_user';
+    final url = credentials.url! + '/users?include=company_user';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
     final UserListResponse userResponse =
-        serializers.deserializeWith(UserListResponse.serializer, response);
+        serializers.deserializeWith(UserListResponse.serializer, response)!;
 
     return userResponse.data;
   }
@@ -45,14 +45,14 @@ class UserRepository {
     Credentials credentials,
     List<String> ids,
     EntityAction action,
-    String password,
-    String idToken,
+    String? password,
+    String? idToken,
   ) async {
     if (ids.length > kMaxEntitiesPerBulkAction && action.applyMaxLimit) {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url +
+    final url = credentials.url! +
         '/users/bulk?per_page=$kMaxEntitiesPerBulkAction&include=company_user';
     final dynamic response = await webClient.post(
       url,
@@ -63,18 +63,18 @@ class UserRepository {
     );
 
     final UserListResponse userResponse =
-        serializers.deserializeWith(UserListResponse.serializer, response);
+        serializers.deserializeWith(UserListResponse.serializer, response)!;
 
     return userResponse.data.toList();
   }
 
   Future<List<UserEntity>> detachFromCompany(
     Credentials credentials,
-    String userId,
-    String password,
-    String idToken,
+    String? userId,
+    String? password,
+    String? idToken,
   ) async {
-    final url = credentials.url + '/users/$userId/detach_from_company';
+    final url = credentials.url! + '/users/$userId/detach_from_company';
     final dynamic response = await webClient.delete(
       url,
       credentials.token,
@@ -83,18 +83,18 @@ class UserRepository {
     );
 
     final UserListResponse userResponse =
-        serializers.deserializeWith(UserListResponse.serializer, response);
+        serializers.deserializeWith(UserListResponse.serializer, response)!;
 
     return userResponse.data.toList();
   }
 
-  Future<List<UserEntity>> resendInvite(
+  Future<List<UserEntity>?> resendInvite(
     Credentials credentials,
-    String userId,
-    String password,
-    String idToken,
+    String? userId,
+    String? password,
+    String? idToken,
   ) async {
-    final url = credentials.url + '/users/$userId/invite';
+    final url = credentials.url! + '/users/$userId/invite';
     final dynamic response = await webClient.post(
       url,
       credentials.token,
@@ -116,22 +116,22 @@ class UserRepository {
   Future<UserEntity> saveData(
     Credentials credentials,
     UserEntity user,
-    String password,
-    String idToken,
+    String? password,
+    String? idToken,
   ) async {
     final data = serializers.serializeWith(UserEntity.serializer, user);
     dynamic response;
 
     if (user.isNew) {
       response = await webClient.post(
-        credentials.url + '/users?include=company_user',
+        credentials.url! + '/users?include=company_user',
         credentials.token,
         data: json.encode(data),
         password: password,
         idToken: idToken,
       );
     } else {
-      final url = credentials.url + '/users/${user.id}?include=company_user';
+      final url = credentials.url! + '/users/${user.id}?include=company_user';
       response = await webClient.put(
         url,
         credentials.token,
@@ -142,7 +142,7 @@ class UserRepository {
     }
 
     final UserItemResponse userResponse =
-        serializers.deserializeWith(UserItemResponse.serializer, response);
+        serializers.deserializeWith(UserItemResponse.serializer, response)!;
 
     return userResponse.data;
   }

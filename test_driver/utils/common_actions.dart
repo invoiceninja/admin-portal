@@ -20,10 +20,10 @@ Future<bool> isTablet(FlutterDriver driver) async {
       await driver.getRenderObjectDiagnostics(find.byType('MaterialApp'));
 
   final regExp = new RegExp(r'Size\(([\d\.]*), ([\d\.]*)');
-  final match = regExp.firstMatch(info.toString());
+  final match = regExp.firstMatch(info.toString())!;
 
-  final width = double.parse(match.group(1));
-  final height = double.parse(match.group(2));
+  final width = double.parse(match.group(1)!);
+  final height = double.parse(match.group(2)!);
 
   return min(width, height) > 600;
 }
@@ -103,7 +103,7 @@ Future<void> logout(FlutterDriver driver, TestLocalization localization) async {
 }
 
 Future<void> viewSection(
-    {FlutterDriver driver, String name, TestLocalization localization}) async {
+    {required FlutterDriver driver, required String name, TestLocalization? localization}) async {
   if (await isMobile(driver)) {
     await driver.tap(find.byTooltip('Menu Sidebar'));
   }
@@ -112,15 +112,15 @@ Future<void> viewSection(
 }
 
 Future<void> fillTextField(
-    {FlutterDriver driver, String field, String value}) async {
+    {required FlutterDriver driver, String? field, required String value}) async {
   await driver.tap(find.byValueKey(field));
   await driver.enterText(value);
 }
 
 Future<void> fillTextFields(
-    FlutterDriver driver, Map<String, dynamic> values) async {
+    FlutterDriver? driver, Map<String, dynamic> values) async {
   for (var entry in values.entries) {
-    await fillTextField(driver: driver, field: entry.key, value: entry.value);
+    await fillTextField(driver: driver!, field: entry.key, value: entry.value);
   }
 }
 
@@ -157,11 +157,11 @@ Future<void> fillAndSaveForm(FlutterDriver driver, Map<String, dynamic> values,
 }
 
 Future<void> testArchiveAndDelete(
-    {FlutterDriver driver,
-    String archivedMessage,
-    String rowText,
-    String deletedMessage,
-    String restoredMessage}) async {
+    {required FlutterDriver driver,
+    required String archivedMessage,
+    String? rowText,
+    required String deletedMessage,
+    required String restoredMessage}) async {
   final localization = TestLocalization('en');
   final mobile = await isMobile(driver);
 
@@ -178,7 +178,7 @@ Future<void> testArchiveAndDelete(
 
   print('Restore record');
   if (mobile)
-    await driver.scrollUntilVisible(find.byType('ListView'), find.text(rowText),
+    await driver.scrollUntilVisible(find.byType('ListView'), find.text(rowText!),
         dyScroll: -300);
 
   //await driver.tap(find.text(rowText));
@@ -193,7 +193,7 @@ Future<void> testArchiveAndDelete(
 
   print('Restore record');
   if (mobile)
-    await driver.scrollUntilVisible(find.byType('ListView'), find.text(rowText),
+    await driver.scrollUntilVisible(find.byType('ListView'), find.text(rowText!),
         dyScroll: -300);
   //await driver.tap(find.text(rowText));
   await selectAction(driver, localization.restore);

@@ -25,7 +25,7 @@ import 'package:invoiceninja_flutter/ui/quote/view/quote_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class QuoteEditScreen extends StatelessWidget {
-  const QuoteEditScreen({Key key}) : super(key: key);
+  const QuoteEditScreen({Key? key}) : super(key: key);
 
   static const String route = '/quote/edit';
 
@@ -38,7 +38,7 @@ class QuoteEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return QuoteEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.invoice.updatedAt),
+          key: ValueKey(viewModel.invoice!.updatedAt),
         );
       },
     );
@@ -47,16 +47,16 @@ class QuoteEditScreen extends StatelessWidget {
 
 class QuoteEditVM extends AbstractInvoiceEditVM {
   QuoteEditVM({
-    AppState state,
-    CompanyEntity company,
-    InvoiceEntity invoice,
-    int invoiceItemIndex,
-    InvoiceEntity origInvoice,
-    Function(BuildContext, [EntityAction]) onSavePressed,
-    Function(List<InvoiceItemEntity>, String, String) onItemsAdded,
-    bool isSaving,
-    Function(BuildContext) onCancelPressed,
-    Function(BuildContext, List<MultipartFile>, bool) onUploadDocument,
+    AppState? state,
+    CompanyEntity? company,
+    InvoiceEntity? invoice,
+    int? invoiceItemIndex,
+    InvoiceEntity? origInvoice,
+    Function(BuildContext, [EntityAction])? onSavePressed,
+    Function(List<InvoiceItemEntity>, String, String)? onItemsAdded,
+    bool? isSaving,
+    Function(BuildContext)? onCancelPressed,
+    Function(BuildContext, List<MultipartFile>, bool?)? onUploadDocument,
   }) : super(
           state: state,
           company: company,
@@ -72,7 +72,7 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
 
   factory QuoteEditVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
-    final quote = state.quoteUIState.editing;
+    final quote = state.quoteUIState.editing!;
 
     return QuoteEditVM(
       state: state,
@@ -81,16 +81,16 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
       invoice: quote,
       invoiceItemIndex: state.quoteUIState.editingItemIndex,
       origInvoice: store.state.quoteState.map[quote.id],
-      onSavePressed: (BuildContext context, [EntityAction action]) {
+      onSavePressed: (BuildContext context, [EntityAction? action]) {
         Debouncer.runOnComplete(() {
-          final quote = store.state.quoteUIState.editing;
+          final quote = store.state.quoteUIState.editing!;
           final localization = navigatorKey.localization;
           final navigator = navigatorKey.currentState;
           if (quote.clientId.isEmpty) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
-                  return ErrorDialog(localization.pleaseSelectAClient);
+                  return ErrorDialog(localization!.pleaseSelectAClient);
                 });
             return null;
           }
@@ -109,15 +109,15 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
             ));
             return completer.future.then((savedQuote) {
               showToast(quote.isNew
-                  ? localization.createdQuote
-                  : localization.updatedQuote);
+                  ? localization!.createdQuote
+                  : localization!.updatedQuote);
 
               if (state.prefState.isMobile) {
                 store.dispatch(UpdateCurrentRoute(QuoteViewScreen.route));
                 if (quote.isNew) {
-                  navigator.pushReplacementNamed(QuoteViewScreen.route);
+                  navigator!.pushReplacementNamed(QuoteViewScreen.route);
                 } else {
-                  navigator.pop(savedQuote);
+                  navigator!.pop(savedQuote);
                 }
               } else {
                 if (!state.prefState.isPreviewVisible) {
@@ -140,7 +140,7 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext,
+                  context: navigatorKey.currentContext!,
                   builder: (BuildContext context) {
                     return ErrorDialog(error);
                   });
@@ -163,7 +163,7 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
         }
       },
       onUploadDocument: (BuildContext context,
-          List<MultipartFile> multipartFile, bool isPrivate) {
+          List<MultipartFile> multipartFile, bool? isPrivate) {
         final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
         store.dispatch(SaveQuoteDocumentRequest(
             isPrivate: isPrivate,
@@ -171,7 +171,7 @@ class QuoteEditVM extends AbstractInvoiceEditVM {
             quote: quote,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context).uploadedDocument);
+          showToast(AppLocalization.of(context)!.uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,

@@ -58,7 +58,7 @@ class TaskStatusFields {
 abstract class TaskStatusEntity extends Object
     with BaseEntity, SelectableEntity, EntityStatus
     implements Built<TaskStatusEntity, TaskStatusEntityBuilder> {
-  factory TaskStatusEntity({String id, AppState state}) {
+  factory TaskStatusEntity({String? id, AppState? state}) {
     return _$TaskStatusEntity._(
       id: id ?? BaseEntity.nextId,
       name: '',
@@ -89,23 +89,22 @@ abstract class TaskStatusEntity extends Object
 
   String get color;
 
-  @nullable
   @BuiltValueField(wireName: 'status_order')
-  int get statusOrder;
+  int? get statusOrder;
 
   @override
-  List<EntityAction> getActions(
-      {UserCompanyEntity userCompany,
-      ClientEntity client,
+  List<EntityAction?> getActions(
+      {UserCompanyEntity? userCompany,
+      ClientEntity? client,
       bool includeEdit = false,
       bool includePreview = false,
       bool multiselect = false}) {
-    final actions = <EntityAction>[];
+    final actions = <EntityAction?>[];
 
-    if (!isDeleted &&
+    if (!isDeleted! &&
         !multiselect &&
         includeEdit &&
-        userCompany.canEditEntity(this)) {
+        userCompany!.canEditEntity(this)) {
       actions.add(EntityAction.edit);
     }
 
@@ -117,24 +116,24 @@ abstract class TaskStatusEntity extends Object
   }
 
   int compareTo({
-    TaskStatusEntity taskStatus,
-    String sortField,
-    bool sortAscending,
+    TaskStatusEntity? taskStatus,
+    String? sortField,
+    required bool sortAscending,
   }) {
     int response = 0;
-    final TaskStatusEntity taskStatusA = sortAscending ? this : taskStatus;
-    final TaskStatusEntity taskStatusB = sortAscending ? taskStatus : this;
+    final TaskStatusEntity? taskStatusA = sortAscending ? this : taskStatus;
+    final TaskStatusEntity? taskStatusB = sortAscending ? taskStatus : this;
 
     switch (sortField) {
       case TaskStatusFields.name:
-        response = taskStatusA.name.compareTo(taskStatusB.name);
+        response = taskStatusA!.name.compareTo(taskStatusB!.name);
         break;
       case TaskStatusFields.order:
-        response = (taskStatusA.statusOrder ?? 99999)
-            .compareTo(taskStatusB.statusOrder ?? 99999);
+        response = (taskStatusA!.statusOrder ?? 99999)
+            .compareTo(taskStatusB!.statusOrder ?? 99999);
         break;
       case TaskStatusFields.updatedAt:
-        response = taskStatusA.updatedAt.compareTo(taskStatusB.updatedAt);
+        response = taskStatusA!.updatedAt.compareTo(taskStatusB!.updatedAt);
         break;
       default:
         print('## ERROR: sort by taskStatus.$sortField is not implemented');
@@ -145,7 +144,7 @@ abstract class TaskStatusEntity extends Object
   }
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     return matchesStrings(
       haystacks: [
         name,
@@ -155,7 +154,7 @@ abstract class TaskStatusEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     return matchesStringsValue(
       haystacks: [
         name,

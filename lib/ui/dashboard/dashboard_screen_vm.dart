@@ -25,7 +25,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DashboardScreenBuilder extends StatelessWidget {
-  const DashboardScreenBuilder({Key key}) : super(key: key);
+  const DashboardScreenBuilder({Key? key}) : super(key: key);
   static const String route = '/dashboard';
 
   @override
@@ -45,7 +45,7 @@ class DashboardScreenBuilder extends StatelessWidget {
         return DashboardScreen(
           viewModel: viewModel,
           key: ValueKey(
-              '__${company.id}_${company.enabledModules}_${state.prefState.isDesktop}__'),
+              '__${company!.id}_${company.enabledModules}_${state.prefState.isDesktop}__'),
         );
       },
     );
@@ -54,21 +54,21 @@ class DashboardScreenBuilder extends StatelessWidget {
 
 class DashboardVM {
   DashboardVM({
-    @required this.state,
-    @required this.dashboardUIState,
-    @required this.currencyMap,
-    @required this.isLoading,
-    @required this.filter,
-    @required this.filteredList,
-    @required this.onRefreshed,
-    @required this.onEntityTypeChanged,
-    @required this.onSettingsChanged,
-    @required this.onSelectionChanged,
-    @required this.onOffsetChanged,
-    @required this.onCurrencyChanged,
-    @required this.onTaxesChanged,
-    @required this.onGroupByChanged,
-    @required this.onShowSidebar,
+    required this.state,
+    required this.dashboardUIState,
+    required this.currencyMap,
+    required this.isLoading,
+    required this.filter,
+    required this.filteredList,
+    required this.onRefreshed,
+    required this.onEntityTypeChanged,
+    required this.onSettingsChanged,
+    required this.onSelectionChanged,
+    required this.onOffsetChanged,
+    required this.onCurrencyChanged,
+    required this.onTaxesChanged,
+    required this.onGroupByChanged,
+    required this.onShowSidebar,
   });
 
   static DashboardVM fromStore(Store<AppState> store) {
@@ -77,7 +77,7 @@ class DashboardVM {
         return Future<Null>(null);
       }
       final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+          context, AppLocalization.of(context)!.refreshComplete);
 
       // TODO just reload activities
       store.dispatch(RefreshData(completer: completer));
@@ -125,17 +125,17 @@ class DashboardVM {
 
   final AppState state;
   final DashboardUIState dashboardUIState;
-  final BuiltMap<String, CurrencyEntity> currencyMap;
-  final String filter;
-  final List<BaseEntity> filteredList;
+  final BuiltMap<String?, CurrencyEntity?> currencyMap;
+  final String? filter;
+  final List<BaseEntity?> filteredList;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(DashboardSettings) onSettingsChanged;
-  final Function(EntityType, List<String>) onSelectionChanged;
+  final Function(EntityType, List<String>?) onSelectionChanged;
   final Function(EntityType) onEntityTypeChanged;
   final Function(int) onOffsetChanged;
-  final Function(String) onCurrencyChanged;
-  final Function(bool) onTaxesChanged;
-  final Function(String) onGroupByChanged;
+  final Function(String?) onCurrencyChanged;
+  final Function(bool?) onTaxesChanged;
+  final Function(String?) onGroupByChanged;
   final Function onShowSidebar;
 }

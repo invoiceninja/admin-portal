@@ -13,7 +13,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProductPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
-    final company = userCompany.company;
+    final company = userCompany.company!;
 
     return [
       ProductFields.productKey,
@@ -25,7 +25,7 @@ class ProductPresenter extends EntityPresenter {
   }
 
   static List<String> getAllTableFields(UserCompanyEntity userCompany) {
-    final company = userCompany.company;
+    final company = userCompany.company!;
 
     return [
       ...getDefaultTableFields(userCompany),
@@ -48,73 +48,73 @@ class ProductPresenter extends EntityPresenter {
   }
 
   @override
-  Widget getField({String field, BuildContext context}) {
-    final product = entity as ProductEntity;
+  Widget getField({String? field, required BuildContext context}) {
+    final product = entity as ProductEntity?;
     final localization = AppLocalization.of(context);
 
     switch (field) {
       case ProductFields.productKey:
-        return Text(product.productKey);
+        return Text(product!.productKey);
       case ProductFields.description:
-        return TableTooltip(message: product.notes);
+        return TableTooltip(message: product!.notes);
       case ProductFields.cost:
         return Align(
           alignment: Alignment.centerRight,
-          child: Text(formatNumber(product.cost, context,
+          child: Text(formatNumber(product!.cost, context,
               formatNumberType: FormatNumberType.money,
-              roundToPrecision: false)),
+              roundToPrecision: false)!),
         );
       case ProductFields.price:
         return Align(
           alignment: Alignment.centerRight,
-          child: Text(formatNumber(product.price, context,
+          child: Text(formatNumber(product!.price, context,
               formatNumberType: FormatNumberType.money,
-              roundToPrecision: false)),
+              roundToPrecision: false)!),
         );
       case ProductFields.quantity:
         return Align(
           alignment: Alignment.centerRight,
-          child: Text(formatNumber(product.quantity, context,
-              formatNumberType: FormatNumberType.double)),
+          child: Text(formatNumber(product!.quantity, context,
+              formatNumberType: FormatNumberType.double)!),
         );
       case ProductFields.customValue1:
-        return Text(presentCustomField(context, product.customValue1));
+        return Text(presentCustomField(context, product!.customValue1)!);
       case ProductFields.customValue2:
-        return Text(presentCustomField(context, product.customValue2));
+        return Text(presentCustomField(context, product!.customValue2)!);
       case ProductFields.customValue3:
-        return Text(presentCustomField(context, product.customValue3));
+        return Text(presentCustomField(context, product!.customValue3)!);
       case ProductFields.customValue4:
-        return Text(presentCustomField(context, product.customValue4));
+        return Text(presentCustomField(context, product!.customValue4)!);
       case ProductFields.documents:
-        return Text('${product.documents.length}');
+        return Text('${product!.documents.length}');
       case ProductFields.taxName1:
-        return Text(product.taxName1);
+        return Text(product!.taxName1);
       case ProductFields.taxName2:
-        return Text(product.taxName2);
+        return Text(product!.taxName2);
       case ProductFields.taxName3:
-        return Text(product.taxName3);
+        return Text(product!.taxName3);
       case ProductFields.taxRate1:
-        return Text(formatNumber(product.taxRate1, context,
-            formatNumberType: FormatNumberType.percent));
+        return Text(formatNumber(product!.taxRate1, context,
+            formatNumberType: FormatNumberType.percent)!);
       case ProductFields.taxRate2:
-        return Text(formatNumber(product.taxRate2, context,
-            formatNumberType: FormatNumberType.percent));
+        return Text(formatNumber(product!.taxRate2, context,
+            formatNumberType: FormatNumberType.percent)!);
       case ProductFields.taxRate3:
-        return Text(formatNumber(product.taxRate3, context,
-            formatNumberType: FormatNumberType.percent));
+        return Text(formatNumber(product!.taxRate3, context,
+            formatNumberType: FormatNumberType.percent)!);
       case ProductFields.stockQuantity:
-        return Text(formatNumber(product.stockQuantity.toDouble(), context,
-            formatNumberType: FormatNumberType.int));
+        return Text(formatNumber(product!.stockQuantity.toDouble(), context,
+            formatNumberType: FormatNumberType.int)!);
       case ProductFields.taxCategory:
-        return Text(localization.lookup(kTaxCategories[product.taxCategoryId]));
+        return Text(localization!.lookup(kTaxCategories[product!.taxCategoryId])!);
       case ProductFields.notificationThreshold:
         final store = StoreProvider.of<AppState>(context);
         return Text(formatNumber(
             productNotificationThreshold(
-                    product: product, company: store.state.company)
+                    product: product!, company: store.state.company)
                 .toDouble(),
             context,
-            formatNumberType: FormatNumberType.int));
+            formatNumberType: FormatNumberType.int)!);
     }
 
     return super.getField(field: field, context: context);

@@ -14,62 +14,62 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 EntityUIState subscriptionUIReducer(SubscriptionUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(subscriptionListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
+    ..editing.replace(editingReducer(state.editing, action)!)
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..forceSelected = forceSelectedReducer(state.forceSelected, action)
     ..tabIndex = tabIndexReducer(state.tabIndex, action));
 }
 
-final forceSelectedReducer = combineReducers<bool>([
-  TypedReducer<bool, ViewSubscription>((completer, action) => true),
-  TypedReducer<bool, ViewSubscriptionList>((completer, action) => false),
-  TypedReducer<bool, FilterSubscriptionsByState>((completer, action) => false),
-  TypedReducer<bool, FilterSubscriptions>((completer, action) => false),
-  TypedReducer<bool, FilterSubscriptionsByCustom1>(
+final forceSelectedReducer = combineReducers<bool?>([
+  TypedReducer<bool?, ViewSubscription>((completer, action) => true),
+  TypedReducer<bool?, ViewSubscriptionList>((completer, action) => false),
+  TypedReducer<bool?, FilterSubscriptionsByState>((completer, action) => false),
+  TypedReducer<bool?, FilterSubscriptions>((completer, action) => false),
+  TypedReducer<bool?, FilterSubscriptionsByCustom1>(
       (completer, action) => false),
-  TypedReducer<bool, FilterSubscriptionsByCustom2>(
+  TypedReducer<bool?, FilterSubscriptionsByCustom2>(
       (completer, action) => false),
-  TypedReducer<bool, FilterSubscriptionsByCustom3>(
+  TypedReducer<bool?, FilterSubscriptionsByCustom3>(
       (completer, action) => false),
-  TypedReducer<bool, FilterSubscriptionsByCustom4>(
+  TypedReducer<bool?, FilterSubscriptionsByCustom4>(
       (completer, action) => false),
 ]);
 
-final tabIndexReducer = combineReducers<int>([
-  TypedReducer<int, UpdateSubscriptionTab>((completer, action) {
+final int? Function(int, dynamic) tabIndexReducer = combineReducers<int?>([
+  TypedReducer<int?, UpdateSubscriptionTab>((completer, action) {
     return action.tabIndex;
   }),
-  TypedReducer<int, PreviewEntity>((completer, action) {
+  TypedReducer<int?, PreviewEntity>((completer, action) {
     return 0;
   }),
 ]);
 
-Reducer<String> selectedIdReducer = combineReducers([
-  TypedReducer<String, ArchiveSubscriptionsSuccess>((completer, action) => ''),
-  TypedReducer<String, DeleteSubscriptionsSuccess>((completer, action) => ''),
-  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+Reducer<String?> selectedIdReducer = combineReducers([
+  TypedReducer<String?, ArchiveSubscriptionsSuccess>((completer, action) => ''),
+  TypedReducer<String?, DeleteSubscriptionsSuccess>((completer, action) => ''),
+  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.subscription
           ? action.entityId
           : selectedId),
-  TypedReducer<String, ViewSubscription>(
-      (String selectedId, dynamic action) => action.subscriptionId),
-  TypedReducer<String, AddSubscriptionSuccess>(
-      (String selectedId, dynamic action) => action.subscription.id),
-  TypedReducer<String, SelectCompany>(
+  TypedReducer<String?, ViewSubscription>(
+      (String? selectedId, dynamic action) => action.subscriptionId),
+  TypedReducer<String?, AddSubscriptionSuccess>(
+      (String? selectedId, dynamic action) => action.subscription.id),
+  TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, SortSubscriptions>((selectedId, action) => ''),
-  TypedReducer<String, FilterSubscriptions>((selectedId, action) => ''),
-  TypedReducer<String, FilterSubscriptionsByState>((selectedId, action) => ''),
-  TypedReducer<String, FilterSubscriptionsByCustom1>(
+  TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String?, SortSubscriptions>((selectedId, action) => ''),
+  TypedReducer<String?, FilterSubscriptions>((selectedId, action) => ''),
+  TypedReducer<String?, FilterSubscriptionsByState>((selectedId, action) => ''),
+  TypedReducer<String?, FilterSubscriptionsByCustom1>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterSubscriptionsByCustom2>(
+  TypedReducer<String?, FilterSubscriptionsByCustom2>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterSubscriptionsByCustom3>(
+  TypedReducer<String?, FilterSubscriptionsByCustom3>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterSubscriptionsByCustom4>(
+  TypedReducer<String?, FilterSubscriptionsByCustom4>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterByEntity>(
+  TypedReducer<String?, FilterByEntity>(
       (selectedId, action) => action.clearSelection
           ? ''
           : action.entityType == EntityType.subscription
@@ -77,35 +77,35 @@ Reducer<String> selectedIdReducer = combineReducers([
               : selectedId),
 ]);
 
-final editingReducer = combineReducers<SubscriptionEntity>([
-  TypedReducer<SubscriptionEntity, SaveSubscriptionSuccess>(_updateEditing),
-  TypedReducer<SubscriptionEntity, AddSubscriptionSuccess>(_updateEditing),
-  TypedReducer<SubscriptionEntity, RestoreSubscriptionsSuccess>(
+final editingReducer = combineReducers<SubscriptionEntity?>([
+  TypedReducer<SubscriptionEntity?, SaveSubscriptionSuccess>(_updateEditing),
+  TypedReducer<SubscriptionEntity?, AddSubscriptionSuccess>(_updateEditing),
+  TypedReducer<SubscriptionEntity?, RestoreSubscriptionsSuccess>(
       (subscriptions, action) {
     return action.subscriptions[0];
   }),
-  TypedReducer<SubscriptionEntity, ArchiveSubscriptionsSuccess>(
+  TypedReducer<SubscriptionEntity?, ArchiveSubscriptionsSuccess>(
       (subscriptions, action) {
     return action.subscriptions[0];
   }),
-  TypedReducer<SubscriptionEntity, DeleteSubscriptionsSuccess>(
+  TypedReducer<SubscriptionEntity?, DeleteSubscriptionsSuccess>(
       (subscriptions, action) {
     return action.subscriptions[0];
   }),
-  TypedReducer<SubscriptionEntity, EditSubscription>(_updateEditing),
-  TypedReducer<SubscriptionEntity, UpdateSubscription>((subscription, action) {
+  TypedReducer<SubscriptionEntity?, EditSubscription>(_updateEditing),
+  TypedReducer<SubscriptionEntity?, UpdateSubscription>((subscription, action) {
     return action.subscription.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<SubscriptionEntity, DiscardChanges>(_clearEditing),
+  TypedReducer<SubscriptionEntity?, DiscardChanges>(_clearEditing),
 ]);
 
 SubscriptionEntity _clearEditing(
-    SubscriptionEntity subscription, dynamic action) {
+    SubscriptionEntity? subscription, dynamic action) {
   return SubscriptionEntity();
 }
 
-SubscriptionEntity _updateEditing(
-    SubscriptionEntity subscription, dynamic action) {
+SubscriptionEntity? _updateEditing(
+    SubscriptionEntity? subscription, dynamic action) {
   return action.subscription;
 }
 
@@ -177,7 +177,7 @@ ListUIState _filterSubscriptions(
 ListUIState _sortSubscriptions(
     ListUIState subscriptionListState, SortSubscriptions action) {
   return subscriptionListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortAscending = b.sortField != action.field || !b.sortAscending!
     ..sortField = action.field);
 }
 
@@ -188,13 +188,13 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState productListState, AddToSubscriptionMultiselect action) {
-  return productListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+  return productListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState productListState, RemoveFromSubscriptionMultiselect action) {
   return productListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(
@@ -270,6 +270,6 @@ SubscriptionState _setLoadedSubscriptions(
 
 SubscriptionState _setLoadedCompany(
     SubscriptionState subscriptionState, LoadCompanySuccess action) {
-  final company = action.userCompany.company;
+  final company = action.userCompany.company!;
   return subscriptionState.loadSubscriptions(company.subscriptions);
 }

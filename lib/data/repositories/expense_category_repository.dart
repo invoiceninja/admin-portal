@@ -20,23 +20,23 @@ class ExpenseCategoryRepository {
   final WebClient webClient;
 
   Future<ExpenseCategoryEntity> loadItem(
-      Credentials credentials, String entityId) async {
+      Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/expense_categories/$entityId', credentials.token);
 
     final ExpenseCategoryItemResponse expenseCategoryResponse = serializers
-        .deserializeWith(ExpenseCategoryItemResponse.serializer, response);
+        .deserializeWith(ExpenseCategoryItemResponse.serializer, response)!;
 
     return expenseCategoryResponse.data;
   }
 
   Future<BuiltList<ExpenseCategoryEntity>> loadList(
       Credentials credentials) async {
-    final String url = credentials.url + '/expense_categories?';
+    final String url = credentials.url! + '/expense_categories?';
     final dynamic response = await webClient.get(url, credentials.token);
 
     final ExpenseCategoryListResponse expenseCategoryResponse = serializers
-        .deserializeWith(ExpenseCategoryListResponse.serializer, response);
+        .deserializeWith(ExpenseCategoryListResponse.serializer, response)!;
 
     return expenseCategoryResponse.data;
   }
@@ -47,13 +47,13 @@ class ExpenseCategoryRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url +
+    final url = credentials.url! +
         '/expense_categories/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final ExpenseCategoryListResponse expenseCategoryResponse = serializers
-        .deserializeWith(ExpenseCategoryListResponse.serializer, response);
+        .deserializeWith(ExpenseCategoryListResponse.serializer, response)!;
 
     return expenseCategoryResponse.data.toList();
   }
@@ -66,7 +66,7 @@ class ExpenseCategoryRepository {
 
     if (expenseCategory.isNew) {
       response = await webClient.post(
-          credentials.url + '/expense_categories', credentials.token,
+          credentials.url! + '/expense_categories', credentials.token,
           data: json.encode(data));
     } else {
       final url = '${credentials.url}/expense_categories/${expenseCategory.id}';
@@ -75,7 +75,7 @@ class ExpenseCategoryRepository {
     }
 
     final ExpenseCategoryItemResponse expenseCategoryResponse = serializers
-        .deserializeWith(ExpenseCategoryItemResponse.serializer, response);
+        .deserializeWith(ExpenseCategoryItemResponse.serializer, response)!;
 
     return expenseCategoryResponse.data;
   }

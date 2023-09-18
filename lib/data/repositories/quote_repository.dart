@@ -25,21 +25,21 @@ class QuoteRepository {
   final WebClient webClient;
 
   Future<InvoiceEntity> loadItem(
-      Credentials credentials, String entityId) async {
+      Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/quotes/$entityId?include=activities.history',
         credentials.token);
 
-    final InvoiceItemResponse quoteResponse = await compute<dynamic, dynamic>(
+    final InvoiceItemResponse quoteResponse = await (compute<dynamic, dynamic>(
         SerializationUtils.deserializeWith,
-        <dynamic>[InvoiceItemResponse.serializer, response]);
+        <dynamic>[InvoiceItemResponse.serializer, response]) as FutureOr<InvoiceItemResponse>);
 
     return quoteResponse.data;
   }
 
   Future<BuiltList<InvoiceEntity>> loadList(Credentials credentials, int page,
       int createdAt, bool filterDeleted) async {
-    String url = credentials.url +
+    String url = credentials.url! +
         '/quotes?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
 
     if (filterDeleted) {
@@ -48,22 +48,22 @@ class QuoteRepository {
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final InvoiceListResponse quoteResponse = await compute<dynamic, dynamic>(
+    final InvoiceListResponse quoteResponse = await (compute<dynamic, dynamic>(
         SerializationUtils.deserializeWith,
-        <dynamic>[InvoiceListResponse.serializer, response]);
+        <dynamic>[InvoiceListResponse.serializer, response]) as FutureOr<InvoiceListResponse>);
 
     return quoteResponse.data;
   }
 
   Future<List<InvoiceEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action,
-      {EmailTemplate template}) async {
+      {EmailTemplate? template}) async {
     if (ids.length > kMaxEntitiesPerBulkAction && action.applyMaxLimit) {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
     final url =
-        credentials.url + '/quotes/bulk?per_page=$kMaxEntitiesPerBulkAction';
+        credentials.url! + '/quotes/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({
           'ids': ids,
@@ -72,7 +72,7 @@ class QuoteRepository {
         }));
 
     final InvoiceListResponse invoiceResponse =
-        serializers.deserializeWith(InvoiceListResponse.serializer, response);
+        serializers.deserializeWith(InvoiceListResponse.serializer, response)!;
 
     return invoiceResponse.data.toList();
   }
@@ -80,7 +80,7 @@ class QuoteRepository {
   Future<InvoiceEntity> saveData(
     Credentials credentials,
     InvoiceEntity quote,
-    EntityAction action,
+    EntityAction? action,
   ) async {
     quote = quote.rebuild((b) => b..documents.clear());
     final data = serializers.serializeWith(InvoiceEntity.serializer, quote);
@@ -88,7 +88,7 @@ class QuoteRepository {
     dynamic response;
 
     if (quote.isNew) {
-      url = credentials.url + '/quotes?include=activities.history';
+      url = credentials.url! + '/quotes?include=activities.history';
     } else {
       url = '${credentials.url}/quotes/${quote.id}?include=activities.history';
     }
@@ -117,7 +117,7 @@ class QuoteRepository {
     }
 
     final InvoiceItemResponse quoteResponse =
-        serializers.deserializeWith(InvoiceItemResponse.serializer, response);
+        serializers.deserializeWith(InvoiceItemResponse.serializer, response)!;
 
     return quoteResponse.data;
   }
@@ -140,11 +140,11 @@ class QuoteRepository {
     };
 
     final dynamic response = await webClient.post(
-        credentials.url + '/emails', credentials.token,
+        credentials.url! + '/emails', credentials.token,
         data: json.encode(data));
 
     final InvoiceItemResponse invoiceResponse =
-        serializers.deserializeWith(InvoiceItemResponse.serializer, response);
+        serializers.deserializeWith(InvoiceItemResponse.serializer, response)!;
 
     return invoiceResponse.data;
   }
@@ -164,7 +164,7 @@ class QuoteRepository {
         data: fields, multipartFiles: multipartFiles);
 
     final InvoiceItemResponse invoiceResponse =
-        serializers.deserializeWith(InvoiceItemResponse.serializer, response);
+        serializers.deserializeWith(InvoiceItemResponse.serializer, response)!;
 
     return invoiceResponse.data;
   }

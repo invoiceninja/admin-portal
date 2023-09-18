@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:memoize/memoize.dart';
@@ -47,18 +48,18 @@ enum RecurringExpenseReportFields {
 }
 
 var memoizedRecurringExpenseReport = memo9((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, ExpenseEntity> expenseMap,
-  BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String?, ExpenseEntity?> expenseMap,
+  BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
+  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String?, UserEntity?> userMap,
   StaticState staticState,
 ) =>
     recurringExpenseReport(
-      userCompany,
+      userCompany!,
       reportsUIState,
       expenseMap,
       expenseCategoryMap,
@@ -72,23 +73,23 @@ var memoizedRecurringExpenseReport = memo9((
 ReportResult recurringExpenseReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, ExpenseEntity> expenseMap,
-  BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, ClientEntity> clientMap,
-  BuiltMap<String, VendorEntity> vendorMap,
-  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String?, ExpenseEntity?> expenseMap,
+  BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
+  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String?, UserEntity?> userMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
   final List<BaseEntity> entities = [];
   BuiltList<RecurringExpenseReportFields> columns;
 
-  final localization = AppLocalization.of(navigatorKey.currentContext);
+  final localization = AppLocalization.of(navigatorKey.currentContext!);
   final reportSettings = userCompany.settings?.reportSettings;
   final expenseReportSettings = reportSettings != null &&
           reportSettings.containsKey(kReportRecurringExpense)
-      ? reportSettings[kReportRecurringExpense]
+      ? reportSettings[kReportRecurringExpense]!
       : ReportSettingsEntity();
 
   final defaultColumns = [
@@ -106,19 +107,19 @@ ReportResult recurringExpenseReport(
     columns = BuiltList(expenseReportSettings.columns
         .map(
             (e) => EnumUtils.fromString(RecurringExpenseReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
   }
 
   for (var expenseId in expenseMap.keys) {
-    final expense = expenseMap[expenseId];
+    final expense = expenseMap[expenseId]!;
     final client = clientMap[expense.clientId] ?? ClientEntity();
     final invoice = invoiceMap[expense.invoiceId] ?? InvoiceEntity();
     final vendor = vendorMap[expense.vendorId] ?? VendorEntity();
 
-    if (expense.isDeleted && !userCompany.company.reportIncludeDeleted) {
+    if (expense.isDeleted! && !userCompany.company!.reportIncludeDeleted) {
       continue;
     }
 
@@ -216,14 +217,14 @@ ReportResult recurringExpenseReport(
           value = expense.privateNotes;
           break;
         case RecurringExpenseReportFields.frequency:
-          value = localization.lookup(kFrequencies[invoice.frequencyId]);
+          value = localization!.lookup(kFrequencies[invoice.frequencyId]);
           break;
         case RecurringExpenseReportFields.start_date:
           value = invoice.nextSendDate;
           break;
         case RecurringExpenseReportFields.remaining_cycles:
           value = invoice.remainingCycles == -1
-              ? localization.endless
+              ? localization!.endless
               : '${invoice.remainingCycles}';
           break;
       }
@@ -232,8 +233,8 @@ ReportResult recurringExpenseReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column),
-      )) {
+        column: EnumUtils.parse(column)!,
+      )!) {
         skip = true;
       }
 
@@ -255,7 +256,7 @@ ReportResult recurringExpenseReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, expenseReportSettings, selectedColumns));
+      sortReportTableRows(rowA, rowB, expenseReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns: RecurringExpenseReportFields.values

@@ -17,9 +17,9 @@ class _$ReportsUIStateSerializer
   final String wireName = 'ReportsUIState';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, ReportsUIState object,
+  Iterable<Object?> serialize(Serializers serializers, ReportsUIState object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'report',
       serializers.serialize(object.report,
           specifiedType: const FullType(String)),
@@ -43,8 +43,10 @@ class _$ReportsUIStateSerializer
           specifiedType: const FullType(String)),
       'filters',
       serializers.serialize(object.filters,
-          specifiedType: const FullType(BuiltMap,
-              const [const FullType(String), const FullType(String)])),
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType.nullable(String),
+            const FullType.nullable(String)
+          ])),
     ];
 
     return result;
@@ -52,48 +54,50 @@ class _$ReportsUIStateSerializer
 
   @override
   ReportsUIState deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ReportsUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'report':
           result.report = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'group':
           result.group = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'selectedGroup':
           result.selectedGroup = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'chart':
           result.chart = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'subgroup':
           result.subgroup = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'customStartDate':
           result.customStartDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'customEndDate':
           result.customEndDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'filters':
           result.filters.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap,
-                  const [const FullType(String), const FullType(String)])));
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType.nullable(String),
+                const FullType.nullable(String)
+              ]))!);
           break;
       }
     }
@@ -118,20 +122,20 @@ class _$ReportsUIState extends ReportsUIState {
   @override
   final String customEndDate;
   @override
-  final BuiltMap<String, String> filters;
+  final BuiltMap<String?, String?> filters;
 
-  factory _$ReportsUIState([void Function(ReportsUIStateBuilder) updates]) =>
+  factory _$ReportsUIState([void Function(ReportsUIStateBuilder)? updates]) =>
       (new ReportsUIStateBuilder()..update(updates))._build();
 
   _$ReportsUIState._(
-      {this.report,
-      this.group,
-      this.selectedGroup,
-      this.chart,
-      this.subgroup,
-      this.customStartDate,
-      this.customEndDate,
-      this.filters})
+      {required this.report,
+      required this.group,
+      required this.selectedGroup,
+      required this.chart,
+      required this.subgroup,
+      required this.customStartDate,
+      required this.customEndDate,
+      required this.filters})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(report, r'ReportsUIState', 'report');
     BuiltValueNullFieldError.checkNotNull(group, r'ReportsUIState', 'group');
@@ -170,10 +174,10 @@ class _$ReportsUIState extends ReportsUIState {
         filters == other.filters;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, report.hashCode);
     _$hash = $jc(_$hash, group.hashCode);
@@ -204,43 +208,44 @@ class _$ReportsUIState extends ReportsUIState {
 
 class ReportsUIStateBuilder
     implements Builder<ReportsUIState, ReportsUIStateBuilder> {
-  _$ReportsUIState _$v;
+  _$ReportsUIState? _$v;
 
-  String _report;
-  String get report => _$this._report;
-  set report(String report) => _$this._report = report;
+  String? _report;
+  String? get report => _$this._report;
+  set report(String? report) => _$this._report = report;
 
-  String _group;
-  String get group => _$this._group;
-  set group(String group) => _$this._group = group;
+  String? _group;
+  String? get group => _$this._group;
+  set group(String? group) => _$this._group = group;
 
-  String _selectedGroup;
-  String get selectedGroup => _$this._selectedGroup;
-  set selectedGroup(String selectedGroup) =>
+  String? _selectedGroup;
+  String? get selectedGroup => _$this._selectedGroup;
+  set selectedGroup(String? selectedGroup) =>
       _$this._selectedGroup = selectedGroup;
 
-  String _chart;
-  String get chart => _$this._chart;
-  set chart(String chart) => _$this._chart = chart;
+  String? _chart;
+  String? get chart => _$this._chart;
+  set chart(String? chart) => _$this._chart = chart;
 
-  String _subgroup;
-  String get subgroup => _$this._subgroup;
-  set subgroup(String subgroup) => _$this._subgroup = subgroup;
+  String? _subgroup;
+  String? get subgroup => _$this._subgroup;
+  set subgroup(String? subgroup) => _$this._subgroup = subgroup;
 
-  String _customStartDate;
-  String get customStartDate => _$this._customStartDate;
-  set customStartDate(String customStartDate) =>
+  String? _customStartDate;
+  String? get customStartDate => _$this._customStartDate;
+  set customStartDate(String? customStartDate) =>
       _$this._customStartDate = customStartDate;
 
-  String _customEndDate;
-  String get customEndDate => _$this._customEndDate;
-  set customEndDate(String customEndDate) =>
+  String? _customEndDate;
+  String? get customEndDate => _$this._customEndDate;
+  set customEndDate(String? customEndDate) =>
       _$this._customEndDate = customEndDate;
 
-  MapBuilder<String, String> _filters;
-  MapBuilder<String, String> get filters =>
-      _$this._filters ??= new MapBuilder<String, String>();
-  set filters(MapBuilder<String, String> filters) => _$this._filters = filters;
+  MapBuilder<String?, String?>? _filters;
+  MapBuilder<String?, String?> get filters =>
+      _$this._filters ??= new MapBuilder<String?, String?>();
+  set filters(MapBuilder<String?, String?>? filters) =>
+      _$this._filters = filters;
 
   ReportsUIStateBuilder();
 
@@ -267,7 +272,7 @@ class ReportsUIStateBuilder
   }
 
   @override
-  void update(void Function(ReportsUIStateBuilder) updates) {
+  void update(void Function(ReportsUIStateBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -295,7 +300,7 @@ class ReportsUIStateBuilder
                   customEndDate, r'ReportsUIState', 'customEndDate'),
               filters: filters.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'filters';
         filters.build();
