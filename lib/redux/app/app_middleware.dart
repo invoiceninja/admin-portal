@@ -234,10 +234,10 @@ Middleware<AppState> _createLoadState(
       store.dispatch(LoadStateSuccess(appState));
       store.dispatch(RefreshData(
           completer: Completer<Null>()
-            ..future.then((value) {
+            ..future.then<Null>(() {
               AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
               store.dispatch(UpdatedSetting());
-            } as FutureOr<_> Function(Null))));
+            } as FutureOr<Null> Function(Null))));
 
       if (uiState!.currentRoute != LoginScreen.route &&
           uiState!.currentRoute.isNotEmpty) {

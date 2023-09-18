@@ -189,14 +189,17 @@ class InvoiceOverview extends StatelessWidget {
         RecurringInvoiceFields.remainingCycles: invoice.remainingCycles == -1
             ? localization.endless
             : '${invoice.remainingCycles}',
-        RecurringInvoiceFields.autoBill: localization.lookup(invoice.autoBill)! +
-            ([SettingsEntity.AUTO_BILL_OPT_IN, SettingsEntity.AUTO_BILL_OPT_OUT]
-                    .contains(invoice.autoBill)
-                ? (' - ' +
-                    (invoice.autoBillEnabled
-                        ? localization.yes
-                        : localization.no))
-                : ''),
+        RecurringInvoiceFields.autoBill:
+            localization.lookup(invoice.autoBill)! +
+                ([
+                  SettingsEntity.AUTO_BILL_OPT_IN,
+                  SettingsEntity.AUTO_BILL_OPT_OUT
+                ].contains(invoice.autoBill)
+                    ? (' - ' +
+                        (invoice.autoBillEnabled
+                            ? localization.yes
+                            : localization.no))
+                    : ''),
         InvoiceFields.dueDate: invoice.dueDateDays == 'terms'
             ? localization.paymentTerm
             : invoice.dueDateDays == 'on_receipt'
@@ -320,12 +323,12 @@ class InvoiceOverview extends StatelessWidget {
       paymentMap.entries.forEach((entry) {
         final payment = entry.value!;
         final paymentable = entry.key;
-        String? amount = formatNumber(
+        String amount = formatNumber(
           paymentable.amount,
           context,
           clientId: invoice.isPurchaseOrder ? null : client!.id,
           vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
-        );
+        )!;
         if (paymentable.amount != payment.amount) {
           amount += '/' +
               formatNumber(
@@ -350,12 +353,12 @@ class InvoiceOverview extends StatelessWidget {
       creditMap.entries.forEach((entry) {
         final credit = entry.value!;
         final paymentable = entry.key;
-        String? amount = formatNumber(
+        String amount = formatNumber(
           paymentable.amount,
           context,
           clientId: invoice.isPurchaseOrder ? null : client!.id,
           vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
-        );
+        )!;
         if (paymentable.amount != credit.amount) {
           amount += '/' +
               formatNumber(

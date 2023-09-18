@@ -51,7 +51,7 @@ class RecurringInvoiceRepository {
 
   Future<List<InvoiceEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action,
-      {Map<String, Object?>? data}) async {
+      {Map<String, Object>? data}) async {
     if (ids.length > kMaxEntitiesPerBulkAction && action.applyMaxLimit) {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }

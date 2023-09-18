@@ -1,4 +1,5 @@
 // Dart imports:
+import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 
@@ -29,8 +30,9 @@ class TaskRepository {
         '${credentials.url}/tasks/$entityId', credentials.token);
 
     final TaskItemResponse taskResponse = await (compute<dynamic, dynamic>(
-        SerializationUtils.deserializeWith,
-        <dynamic>[TaskItemResponse.serializer, response]) as FutureOr<TaskItemResponse>);
+            SerializationUtils.deserializeWith,
+            <dynamic>[TaskItemResponse.serializer, response])
+        as FutureOr<TaskItemResponse>);
 
     return taskResponse.data;
   }
@@ -49,8 +51,9 @@ class TaskRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final TaskListResponse taskResponse = await (compute<dynamic, dynamic>(
-        SerializationUtils.deserializeWith,
-        <dynamic>[TaskListResponse.serializer, response]) as FutureOr<TaskListResponse>);
+            SerializationUtils.deserializeWith,
+            <dynamic>[TaskListResponse.serializer, response])
+        as FutureOr<TaskListResponse>);
 
     return taskResponse.data;
   }

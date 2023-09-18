@@ -1,4 +1,5 @@
 // Dart imports:
+import 'dart:async';
 import 'dart:convert';
 import 'dart:core';
 
@@ -31,8 +32,9 @@ class VendorRepository {
         credentials.token);
 
     final VendorItemResponse vendorResponse = await (compute<dynamic, dynamic>(
-        SerializationUtils.deserializeWith,
-        <dynamic>[VendorItemResponse.serializer, response]) as FutureOr<VendorItemResponse>);
+            SerializationUtils.deserializeWith,
+            <dynamic>[VendorItemResponse.serializer, response])
+        as FutureOr<VendorItemResponse>);
 
     return vendorResponse.data;
   }
@@ -45,8 +47,9 @@ class VendorRepository {
     final dynamic response = await webClient.get(url, credentials.token);
 
     final VendorListResponse vendorResponse = await (compute<dynamic, dynamic>(
-        SerializationUtils.deserializeWith,
-        <dynamic>[VendorListResponse.serializer, response]) as FutureOr<VendorListResponse>);
+            SerializationUtils.deserializeWith,
+            <dynamic>[VendorListResponse.serializer, response])
+        as FutureOr<VendorListResponse>);
 
     return vendorResponse.data;
   }

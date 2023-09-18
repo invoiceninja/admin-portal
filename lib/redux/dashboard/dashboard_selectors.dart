@@ -150,17 +150,18 @@ List<ChartDataGroup> _chartInvoices({
           outstandingData.entityMap[date] = [];
         }
 
-        totals[STATUS_ACTIVE]![date] += amount;
-        totals[STATUS_OUTSTANDING]![date] += balance;
+        totals[STATUS_ACTIVE]![date] = totals[STATUS_ACTIVE]![date]! + amount;
+        totals[STATUS_OUTSTANDING]![date] =
+            totals[STATUS_OUTSTANDING]![date]! + balance;
 
         activeData.periodTotal += amount;
         outstandingData.periodTotal += balance;
 
-        counts[STATUS_ACTIVE]++;
+        counts[STATUS_ACTIVE] = counts[STATUS_ACTIVE]! + 1;
         activeData.entityMap[date]!.add(invoice.id);
 
         if (invoice.balance > 0) {
-          counts[STATUS_OUTSTANDING]++;
+          counts[STATUS_OUTSTANDING] = counts[STATUS_OUTSTANDING]! + 1;
           outstandingData.entityMap[date]!.add(invoice.id);
         }
       }
@@ -275,7 +276,10 @@ List<ChartDataGroup> chartQuotes({
       }
     }
 
-    if (!quote.isSent || quote.isDeleted! || client.isDeleted! || date.isEmpty) {
+    if (!quote.isSent ||
+        quote.isDeleted! ||
+        client.isDeleted! ||
+        date.isEmpty) {
       // skip it
     } else if (!settings.matchesCurrency(client.currencyId)) {
       // skip it
@@ -312,18 +316,20 @@ List<ChartDataGroup> chartQuotes({
           unapprovedData.entityMap[date] = [];
         }
 
-        totals[STATUS_ACTIVE]![date] += amount;
-        counts[STATUS_ACTIVE]++;
+        totals[STATUS_ACTIVE]![date] = totals[STATUS_ACTIVE]![date]! + amount;
+        counts[STATUS_ACTIVE] = counts[STATUS_ACTIVE]! + 1;
         activeData.entityMap[date]!.add(quote.id);
 
         if (quote.isApproved) {
-          totals[STATUS_APPROVED]![date] += amount;
-          counts[STATUS_APPROVED]++;
+          totals[STATUS_APPROVED]![date] =
+              totals[STATUS_APPROVED]![date]! + amount;
+          counts[STATUS_APPROVED] = counts[STATUS_APPROVED]! + 1;
           approvedData.entityMap[date]!.add(quote.id);
           approvedData.periodTotal += amount;
         } else {
-          totals[STATUS_UNAPPROVED]![date] += amount;
-          counts[STATUS_UNAPPROVED]++;
+          totals[STATUS_UNAPPROVED]![date] =
+              totals[STATUS_UNAPPROVED]![date]! + amount;
+          counts[STATUS_UNAPPROVED] = counts[STATUS_UNAPPROVED]! + 1;
           unapprovedData.entityMap[date]!.add(quote.id);
           unapprovedData.periodTotal += amount;
         }
@@ -928,12 +934,13 @@ List<ChartDataGroup> chartExpenses(
   return data;
 }
 
-var memoizedChartExpenses = memo5((BuiltMap<String?, CurrencyEntity?> currencyMap,
-        CompanyEntity? company,
-        DashboardUISettings settings,
-        BuiltMap<String?, InvoiceEntity?> invoiceMap,
-        BuiltMap<String?, ExpenseEntity?> expenseMap) =>
-    chartExpenses(currencyMap, company!, settings, invoiceMap, expenseMap));
+var memoizedChartExpenses = memo5(
+    (BuiltMap<String?, CurrencyEntity?> currencyMap,
+            CompanyEntity? company,
+            DashboardUISettings settings,
+            BuiltMap<String?, InvoiceEntity?> invoiceMap,
+            BuiltMap<String?, ExpenseEntity?> expenseMap) =>
+        chartExpenses(currencyMap, company!, settings, invoiceMap, expenseMap));
 
 var memoizedPreviousChartExpenses = memo5(
     (BuiltMap<String?, CurrencyEntity?> currencyMap,

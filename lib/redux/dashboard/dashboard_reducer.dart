@@ -60,7 +60,7 @@ DashboardUISettings dashboardSettingsReducer(
     } else if (action.includeTaxes != null) {
       return state.rebuild((b) => b..includeTaxes = action.includeTaxes);
     } else if (action.offset != null) {
-      return state.rebuild((b) => b..offset += action.offset!);
+      return state.rebuild((b) => b..offset = state.offset + action.offset!);
     } else if (action.currencyId != null) {
       return state.rebuild((b) => b..currencyId = action.currencyId);
     } else if (action.groupBy != null) {

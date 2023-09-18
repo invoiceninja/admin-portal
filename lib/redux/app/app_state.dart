@@ -106,7 +106,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
               .map((index) => UserCompanyState(reportErrors))
               .toList()),
       uiState: UIState(
-          currentRoute: currentRoute, sortFields: prefState?.sortFields),
+          currentRoute: currentRoute,
+          sortFields: prefState?.sortFields ??
+              BuiltMap<EntityType, PrefStateSortField>()),
       prefState: prefState ?? PrefState(),
     );
   }
@@ -192,7 +194,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return color.isNotEmpty;
   }
 
-  bool get showReviewApp => !prefState.hideReviewApp && company!.daysActive > 60;
+  bool get showReviewApp =>
+      !prefState.hideReviewApp && company!.daysActive > 60;
 
   bool get showOneYearReviewApp =>
       !prefState.hideOneYearReviewApp && company!.daysActive > 365;
@@ -251,7 +254,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   List<HistoryRecord> get unfilteredHistoryList =>
       prefState.companyPrefs[company!.id]!.historyList.toList();
 
-  bool? shouldSelectEntity({EntityType? entityType, List<String?>? entityList}) {
+  bool? shouldSelectEntity(
+      {EntityType? entityType, List<String?>? entityList}) {
     final entityUIState = getUIState(entityType);
 
     if (prefState.isMobile ||
@@ -962,11 +966,11 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         : timeago.format(convertTimestampToDate(
             (userCompanyState.lastUpdated / 1000).round()));
 
-    final staticUpdated =
-        staticState.updatedAt == null || staticState.updatedAt == 0
-            ? 'Blank'
-            : timeago.format(
-                convertTimestampToDate((staticState.updatedAt! / 1000).round()));
+    final staticUpdated = staticState.updatedAt == null ||
+            staticState.updatedAt == 0
+        ? 'Blank'
+        : timeago.format(
+            convertTimestampToDate((staticState.updatedAt! / 1000).round()));
 
     final passwordUpdated = authState.lastEnteredPasswordAt == null ||
             authState.lastEnteredPasswordAt == 0
