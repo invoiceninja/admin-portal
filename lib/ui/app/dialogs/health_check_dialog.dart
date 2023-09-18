@@ -88,9 +88,9 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
     webClient.get(url, credentials.token).then((dynamic response) {
       store.dispatch(RefreshData(
           completer: Completer<Null>()
-            ..future.then((value) {
+            ..future.then<Null>(() {
               runCheck();
-            } as FutureOr<_> Function(Null))));
+            } as FutureOr<Null> Function(Null))));
     }).catchError((dynamic error) {
       showErrorDialog(message: error);
     });

@@ -122,8 +122,9 @@ class MultiSelectListState extends State<MultiSelectList> {
           columnTitle.isEmpty ? lookupOption(option) : columnTitle;
     });
     final keys = options.keys.toList();
-    keys.sort((a, b) =>
-        lookupOption(a!)!.toLowerCase().compareTo(lookupOption(b!)!.toLowerCase()));
+    keys.sort((a, b) => lookupOption(a!)!
+        .toLowerCase()
+        .compareTo(lookupOption(b!)!.toLowerCase()));
 
     final column = Container(
       width: isMobile(context) ? double.maxFinite : 400,

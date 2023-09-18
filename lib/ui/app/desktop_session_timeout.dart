@@ -90,11 +90,11 @@ class _DesktopSessionTimeoutState extends State<DesktopSessionTimeout> {
                       onPressed: () {
                         final store = StoreProvider.of<AppState>(context);
                         final completer = Completer<Null>();
-                        completer.future.then((value) {
+                        completer.future.then(() {
                           setState(() {
                             _isWarned = false;
                           });
-                        } as FutureOr<_> Function(Null));
+                        } as FutureOr<Null> Function(Null));
                         store.dispatch(RefreshData(completer: completer));
                       },
                       child: Text(
