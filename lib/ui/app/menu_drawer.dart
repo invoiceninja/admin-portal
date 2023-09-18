@@ -81,11 +81,12 @@ class _MenuDrawerState extends State<MenuDrawer> {
       return Container();
     }
 
-    Widget _companyLogo(CompanyEntity company) => company
-                    .settings.companyLogo !=
-                null &&
-            company.settings.companyLogo.isNotEmpty
-        ? CachedImage(
+    Widget _companyLogo(CompanyEntity company) {
+      if (company.settings.companyLogo != null &&
+          company.settings.companyLogo.isNotEmpty) {
+        if (state.isHosted && kIsWeb) {
+          // Fix for CORS error using 'object' subdomain
+          return CachedImage(
             width: MenuDrawer.LOGO_WIDTH,
             url: state.credentials.url + '/companies/' + company.id + '/logo',
             apiToken: state.userCompanyStates
@@ -93,8 +94,18 @@ class _MenuDrawerState extends State<MenuDrawer> {
                     userCompanyState.company.id == company.id)
                 .token
                 .token,
-          )
-        : Image.asset('assets/images/icon.png', width: MenuDrawer.LOGO_WIDTH);
+          );
+        } else {
+          return CachedImage(
+            width: MenuDrawer.LOGO_WIDTH,
+            url: company.settings.companyLogo,
+          );
+        }
+      } else {
+        return Image.asset('assets/images/icon.png',
+            width: MenuDrawer.LOGO_WIDTH);
+      }
+    }
 
     Widget _companyListItem(
       CompanyEntity company, {

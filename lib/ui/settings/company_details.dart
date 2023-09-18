@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -572,14 +573,20 @@ class _CompanyDetailsState extends State<CompanyDetails>
                 if ('${settings.companyLogo ?? ''}'.isNotEmpty)
                   Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: CachedImage(
-                        width: double.infinity,
-                        url: state.credentials.url +
-                            '/companies/' +
-                            company.id +
-                            '/logo',
-                        apiToken: state.userCompany.token.token,
-                      )),
+                      // Fix for CORS error using 'object' subdomain
+                      child: (state.isHosted && kIsWeb)
+                          ? CachedImage(
+                              width: double.infinity,
+                              url: state.credentials.url +
+                                  '/companies/' +
+                                  company.id +
+                                  '/logo',
+                              apiToken: state.userCompany.token.token,
+                            )
+                          : CachedImage(
+                              width: double.infinity,
+                              url: company.settings.companyLogo,
+                            )),
               ],
             ),
           ),
