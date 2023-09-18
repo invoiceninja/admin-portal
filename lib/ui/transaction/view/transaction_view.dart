@@ -943,8 +943,8 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                         updateExpenseList();
                       });
                     },
-                    placeholder:
-                        localization!.searchExpenses.replaceFirst(':count ', ''),
+                    placeholder: localization!.searchExpenses
+                        .replaceFirst(':count ', ''),
                   ),
                 ),
               ),
@@ -1112,7 +1112,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                               ..future.then((_) {
                                 store.dispatch(UpdateCurrentRoute(
                                     TransactionScreen.route));
-                              } as FutureOr<_> Function(Null)));
+                              } as FutureOr<Null> Function(Null)));
                         completer.future.then((SelectableEntity vendor) {
                           store.dispatch(SaveTransactionSuccess(transaction
                               .rebuild((b) => b..pendingVendorId = vendor.id)));
@@ -1196,7 +1196,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                               ..future.then((_) {
                                 store.dispatch(UpdateCurrentRoute(
                                     TransactionScreen.route));
-                              } as FutureOr<_> Function(Null)));
+                              } as FutureOr<Null> Function(Null)));
                         completer.future.then((SelectableEntity category) {
                           store.dispatch(SaveTransactionSuccess(
                               transaction.rebuild(

@@ -59,7 +59,8 @@ class EmailCreditVM extends EmailEntityVM {
     ClientEntity? client,
     VendorEntity? vendor,
     Function? loadClient,
-    Function(BuildContext, EmailTemplate, String, String, String)? onSendPressed,
+    Function(BuildContext, EmailTemplate, String, String, String)?
+        onSendPressed,
   }) : super(
           state: state,
           isLoading: isLoading,
@@ -91,7 +92,7 @@ class EmailCreditVM extends EmailEntityVM {
         if (!isMobile(context)) {
           completer.future.then((value) {
             viewEntity(entity: credit);
-          } as FutureOr<_> Function(Null));
+          } as FutureOr<Null> Function(Null));
         }
         store.dispatch(EmailCreditRequest(
           completer: completer,

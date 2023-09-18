@@ -109,8 +109,8 @@ class UserDetailsVM {
               passwordCallback(
                   context: context,
                   callback: (password, idToken) {
-                    final completer = snackBarCompleter<Null>(
-                        context, AppLocalization.of(context)!.disconnectedEmail);
+                    final completer = snackBarCompleter<Null>(context,
+                        AppLocalization.of(context)!.disconnectedEmail);
                     store.dispatch(
                       DisconnectOAuthMailerRequest(
                           user: state.user,
@@ -128,8 +128,8 @@ class UserDetailsVM {
               passwordCallback(
                   context: context,
                   callback: (password, idToken) {
-                    final completer = snackBarCompleter<Null>(
-                        context, AppLocalization.of(context)!.disconnectedGmail);
+                    final completer = snackBarCompleter<Null>(context,
+                        AppLocalization.of(context)!.disconnectedGmail);
                     store.dispatch(
                       DisconnectOAuthMailerRequest(
                           user: state.user,
@@ -178,7 +178,7 @@ class UserDetailsVM {
                         AppLocalization.of(context)!.disconnectedGoogle);
                     completer.future.then((value) {
                       GoogleOAuth.disconnect();
-                    } as FutureOr<_> Function(Null));
+                    } as FutureOr<Null> Function(Null));
                     store.dispatch(
                       DisconnecOAuthUserRequest(
                         user: state.user,
@@ -268,8 +268,8 @@ class UserDetailsVM {
                   context: context,
                   skipOAuth: true,
                   callback: (password, idToken) {
-                    final completer = snackBarCompleter<Null>(
-                        context, AppLocalization.of(context)!.disconnectedApple);
+                    final completer = snackBarCompleter<Null>(context,
+                        AppLocalization.of(context)!.disconnectedApple);
                     store.dispatch(
                       DisconnecOAuthUserRequest(
                         user: state.user,
@@ -338,7 +338,7 @@ class UserDetailsVM {
             }
 
             appBuilder!.rebuild();
-          } as FutureOr<_> Function(Null));
+          } as FutureOr<Null> Function(Null));
 
           confirmCallback(
               context: context,

@@ -90,7 +90,7 @@ class ProjectEditVM {
             cancelCompleter: Completer<Null>()
               ..future.then((_) {
                 store.dispatch(UpdateCurrentRoute(ProjectEditScreen.route));
-              } as FutureOr<_> Function(Null)));
+              } as FutureOr<Null> Function(Null)));
         completer.future.then((SelectableEntity client) {
           store.dispatch(UpdateCurrentRoute(ProjectEditScreen.route));
         });

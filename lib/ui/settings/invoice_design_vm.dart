@@ -105,7 +105,7 @@ class InvoiceDesignVM {
                         showErrorDialog(message: '$error');
                       });
                     });
-                  } as FutureOr<_> Function(Null));
+                  } as FutureOr<Null> Function(Null));
                 store.dispatch(SaveCompanyRequest(
                     completer: completer, company: settingsUIState.company));
                 break;

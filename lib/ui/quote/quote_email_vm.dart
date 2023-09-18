@@ -58,9 +58,8 @@ class EmailQuoteVM extends EmailEntityVM {
     required InvoiceEntity invoice,
     required ClientEntity? client,
     required VendorEntity? vendor,
-    required
-        Function(BuildContext, EmailTemplate, String, String, String)
-            onSendPressed,
+    required Function(BuildContext, EmailTemplate, String, String, String)
+        onSendPressed,
   }) : super(
           state: state,
           isLoading: isLoading,
@@ -90,7 +89,7 @@ class EmailQuoteVM extends EmailEntityVM {
         if (!isMobile(context)) {
           completer.future.then((value) {
             viewEntity(entity: quote);
-          } as FutureOr<_> Function(Null));
+          } as FutureOr<Null> Function(Null));
         }
         store.dispatch(EmailQuoteRequest(
           completer: completer,

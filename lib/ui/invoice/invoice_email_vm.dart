@@ -81,7 +81,8 @@ class EmailInvoiceVM extends EmailEntityVM {
     InvoiceEntity? invoice,
     ClientEntity? client,
     VendorEntity? vendor,
-    Function(BuildContext, EmailTemplate, String, String, String)? onSendPressed,
+    Function(BuildContext, EmailTemplate, String, String, String)?
+        onSendPressed,
   }) : super(
           state: state,
           isLoading: isLoading,
@@ -112,7 +113,7 @@ class EmailInvoiceVM extends EmailEntityVM {
         if (!isMobile(context)) {
           completer.future.then((value) {
             viewEntity(entity: invoice);
-          } as FutureOr<_> Function(Null));
+          } as FutureOr<Null> Function(Null));
         }
         store.dispatch(EmailInvoiceRequest(
           completer: completer,

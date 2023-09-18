@@ -83,7 +83,7 @@ class ClientPortalVM {
                     completer.future.then((value) {
                       showRefreshDataDialog(
                           context: navigatorKey.currentContext!);
-                    } as FutureOr<_> Function(Null));
+                    } as FutureOr<Null> Function(Null));
                   }
 
                   store.dispatch(SaveCompanyRequest(

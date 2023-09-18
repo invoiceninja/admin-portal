@@ -184,11 +184,13 @@ class _LoginState extends State<LoginView> {
     }
 
     final Completer<Null> completer = Completer<Null>();
-    completer.future.then((_) {
+    completer.future
+        .then((_) {
       setState(() {
         _loginError = '';
       });
-    } as FutureOr<_> Function(Null)).catchError((Object error) {
+    } as FutureOr<_> Function(Null))
+        .catchError((Object error) {
       setState(() {
         _buttonController.reset();
         _loginError = error.toString();
@@ -225,7 +227,8 @@ class _LoginState extends State<LoginView> {
     }
 
     final Completer<Null> completer = Completer<Null>();
-    completer.future.then((_) {
+    completer.future
+        .then<Null>(() {
       setState(() {
         _loginError = '';
         if (_recoverPassword) {
@@ -240,7 +243,8 @@ class _LoginState extends State<LoginView> {
               });
         }
       });
-    } as FutureOr<_> Function(Null)).catchError((Object error) {
+    } as FutureOr<Null> Function(Null))
+        .catchError((Object error) {
       setState(() {
         _buttonController.reset();
         _loginError = error.toString();
@@ -512,8 +516,9 @@ class _LoginState extends State<LoginView> {
                                             children: <TextSpan>[
                                               TextSpan(
                                                 style: aboutTextStyle,
-                                                text: localization!.iAgreeToThe +
-                                                    ' ',
+                                                text:
+                                                    localization!.iAgreeToThe +
+                                                        ' ',
                                               ),
                                               LinkTextSpan(
                                                 style: linkStyle,

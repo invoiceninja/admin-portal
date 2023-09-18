@@ -258,8 +258,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
         } else if (companyId == 'company') {
           widget.viewModel.onAddCompany(context);
         } else {
-          final company =
-              state.companies.firstWhere((company) => company!.id == companyId);
+          final company = state.companies
+              .firstWhere((company) => company!.id == companyId)!;
           final index = state.companies.indexOf(company);
           widget.viewModel.onCompanyChanged(context, index, company);
         }
@@ -332,8 +332,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   widget.viewModel.onAddCompany(context);
                 } else {
                   final index = int.parse(value);
-                  widget.viewModel
-                      .onCompanyChanged(context, index, state.companies[index]);
+                  widget.viewModel.onCompanyChanged(
+                      context, index, state.companies[index]!);
                 }
               },
             ),
@@ -486,7 +486,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                       child: ListTile(
                                         tileColor: Colors.orange.shade800,
                                         subtitle: Text(
-                                          localization.verifyPhoneNumber2faHelp!,
+                                          localization
+                                              .verifyPhoneNumber2faHelp!,
                                           style: TextStyle(color: Colors.white),
                                         ),
                                         onTap: () {
@@ -1314,8 +1315,9 @@ class SidebarFooterCollapsed extends StatelessWidget {
                 Icons.chevron_right,
                 color: state.isUpdateAvailable ? state.accentColor : null,
               ),
-              tooltip:
-                  state.prefState.enableTooltips ? localization!.showMenu : null,
+              tooltip: state.prefState.enableTooltips
+                  ? localization!.showMenu
+                  : null,
               onPressed: () {
                 store.dispatch(UpdateUserPreferences(sidebar: AppSidebar.menu));
               },

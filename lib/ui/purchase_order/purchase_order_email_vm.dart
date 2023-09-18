@@ -58,9 +58,8 @@ class EmailPurchaseOrderVM extends EmailEntityVM {
     required InvoiceEntity invoice,
     required ClientEntity? client,
     required VendorEntity? vendor,
-    required
-        Function(BuildContext, EmailTemplate, String, String, String)
-            onSendPressed,
+    required Function(BuildContext, EmailTemplate, String, String, String)
+        onSendPressed,
   }) : super(
           state: state,
           isLoading: isLoading,
@@ -91,7 +90,7 @@ class EmailPurchaseOrderVM extends EmailEntityVM {
         if (!isMobile(context)) {
           completer.future.then((value) {
             viewEntity(entity: purchaseOrder);
-          } as FutureOr<_> Function(Null));
+          } as FutureOr<Null> Function(Null));
         }
         store.dispatch(EmailPurchaseOrderRequest(
           completer: completer,

@@ -24,7 +24,7 @@ class IconMessage extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
         child: Row(
-          children: <Widget?>[
+          children: <Widget>[
             Icon(
               iconData ?? Icons.info_outline,
               size: 18.0,
@@ -53,7 +53,7 @@ class IconMessage extends StatelessWidget {
             ),
             if (trailing != null) ...[
               SizedBox(width: 16),
-              trailing,
+              trailing!,
             ]
           ],
         ),

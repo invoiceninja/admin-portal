@@ -73,7 +73,8 @@ class AccountManagementVM {
 
           final companyLength = state.companies.length;
           final deleteCompleter = Completer<Null>()
-            ..future.then((value) {
+            ..future
+                .then((value) {
               final context = navigatorKey.currentContext;
               final state = store.state;
               if (companyLength == 1) {
@@ -94,11 +95,12 @@ class AccountManagementVM {
                     if (Navigator.of(context!).canPop()) {
                       Navigator.of(context).pop();
                     }
-                  } as FutureOr<_> Function(Null));
+                  } as FutureOr<Null> Function(Null));
                 store.dispatch(
                     RefreshData(clearData: true, completer: refreshCompleter));
               }
-            } as FutureOr<_> Function(Null)).catchError((Object error) {
+            } as FutureOr<_> Function(Null))
+                .catchError((Object error) {
               if (Navigator.of(navigatorKey.currentContext!).canPop()) {
                 Navigator.of(navigatorKey.currentContext!).pop();
               }

@@ -135,7 +135,8 @@ class _HistoryListTileState extends State<HistoryListTile> {
     } else if (history.id == null) {
       title = Text(localization!.lookup(history.entityType.plural)!);
     } else {
-      entity = state.getEntityMap(history.entityType)![history.id] as BaseEntity?;
+      entity =
+          state.getEntityMap(history.entityType)![history.id] as BaseEntity?;
 
       if (entity == null) {
         return SizedBox();
@@ -260,9 +261,9 @@ class _HistoryListTileState extends State<HistoryListTile> {
                   entities: [entity],
                   completer: state.prefState.isHistoryFloated
                       ? (Completer<Null>()
-                        ..future.then((value) {
+                        ..future.then<Null>(() {
                           Navigator.pop(context);
-                        } as FutureOr<_> Function(Null)))
+                        } as FutureOr<Null> Function(Null)))
                       : null,
                 );
               },

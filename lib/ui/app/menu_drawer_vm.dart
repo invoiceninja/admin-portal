@@ -54,7 +54,7 @@ class MenuDrawerVM {
   final CompanyEntity? selectedCompany;
   final UserEntity? user;
   final String selectedCompanyIndex;
-  final Function(BuildContext context, int, CompanyEntity?) onCompanyChanged;
+  final Function(BuildContext context, int, CompanyEntity) onCompanyChanged;
   final Function(BuildContext context) onAddCompany;
   final Function(BuildContext) onLogoutTap;
 
@@ -140,7 +140,7 @@ class MenuDrawerVM {
                   shouldPop: true)
                 ..future.then((value) {
                   AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
-                } as FutureOr<_> Function(Null));
+                } as FutureOr<Null> Function(Null));
 
               store
                   .dispatch(AddCompany(context: context, completer: completer));
