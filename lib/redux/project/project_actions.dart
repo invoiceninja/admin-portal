@@ -213,7 +213,7 @@ class RestoreProjectFailure implements StopSaving {
 class FilterProjects implements PersistUI {
   FilterProjects(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortProjects implements PersistUI, PersistPrefs {
@@ -301,8 +301,8 @@ void handleProjectAction(
 
       final items = <InvoiceItemEntity>[];
       projects.forEach((project) {
-        items.addAll(
-            convertProjectToInvoiceItem(project: project as ProjectEntity?, context: context));
+        items.addAll(convertProjectToInvoiceItem(
+            project: project as ProjectEntity?, context: context));
       });
       createEntity(
           context: context,

@@ -197,7 +197,7 @@ class RestoreTransactionRulesFailure implements StopSaving {
 class FilterTransactionRules implements PersistUI {
   FilterTransactionRules(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortTransactionRules implements PersistUI, PersistPrefs {
@@ -292,7 +292,8 @@ void handleTransactionRuleAction(BuildContext? context,
       break;
     case EntityAction.delete:
       store.dispatch(DeleteTransactionRulesRequest(
-          snackBarCompleter<Null>(context, localization!.deletedTransactionRule),
+          snackBarCompleter<Null>(
+              context, localization!.deletedTransactionRule),
           transactionRuleIds));
       break;
     case EntityAction.toggleMultiselect:

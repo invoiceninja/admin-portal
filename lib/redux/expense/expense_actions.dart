@@ -210,7 +210,7 @@ class RestoreExpenseFailure implements StopSaving {
 class FilterExpenses implements PersistUI {
   FilterExpenses(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortExpenses implements PersistUI, PersistPrefs {
@@ -299,7 +299,8 @@ void handleExpenseAction(
         }
         if (expense.projectId!.isNotEmpty) {
           if (projectId!.isEmpty &&
-              state.projectState.get(expense.projectId!)!.clientId == client!.id) {
+              state.projectState.get(expense.projectId!)!.clientId ==
+                  client!.id) {
             projectId = expense.projectId;
           }
         }

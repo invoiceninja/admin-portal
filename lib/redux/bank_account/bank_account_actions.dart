@@ -196,7 +196,7 @@ class RestoreBankAccountsFailure implements StopSaving {
 class FilterBankAccounts implements PersistUI {
   FilterBankAccounts(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortBankAccounts implements PersistUI, PersistPrefs {
@@ -261,8 +261,8 @@ class UpdateBankAccountTab implements PersistUI {
   final int? tabIndex;
 }
 
-void handleBankAccountAction(
-    BuildContext? context, List<BaseEntity?> bankAccounts, EntityAction? action) {
+void handleBankAccountAction(BuildContext? context,
+    List<BaseEntity?> bankAccounts, EntityAction? action) {
   if (bankAccounts.isEmpty) {
     return;
   }

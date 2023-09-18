@@ -217,7 +217,7 @@ class RestoreRecurringExpensesFailure implements StopSaving {
 class FilterRecurringExpenses implements PersistUI {
   FilterRecurringExpenses(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortRecurringExpenses implements PersistUI, PersistPrefs {
@@ -364,8 +364,9 @@ void handleRecurringExpenseAction(BuildContext? context,
   final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
   final recurringExpense = recurringExpenses.first as ExpenseEntity?;
-  final recurringExpenseIds =
-      recurringExpenses.map((recurringExpense) => recurringExpense!.id).toList();
+  final recurringExpenseIds = recurringExpenses
+      .map((recurringExpense) => recurringExpense!.id)
+      .toList();
 
   switch (action) {
     case EntityAction.edit:

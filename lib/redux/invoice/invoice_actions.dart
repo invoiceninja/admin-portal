@@ -436,7 +436,7 @@ class RestoreInvoicesFailure implements StopSaving {
 class FilterInvoices implements PersistUI {
   FilterInvoices(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortInvoices implements PersistUI, PersistPrefs {
@@ -460,7 +460,7 @@ class FilterInvoicesByStatus implements PersistUI {
 class FilterInvoiceDropdown {
   FilterInvoiceDropdown(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class FilterInvoicesByCustom1 implements PersistUI {
@@ -782,7 +782,8 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity?> invoices,
         entity: PaymentEntity(state: state, client: client).rebuild((b) => b
           ..invoices.addAll(invoices
               .where((invoice) => !(invoice as InvoiceEntity).isPaid)
-              .map((invoice) => PaymentableEntity.fromInvoice(invoice as InvoiceEntity))
+              .map((invoice) =>
+                  PaymentableEntity.fromInvoice(invoice as InvoiceEntity))
               .toList())),
         filterEntity: client,
       );
@@ -841,8 +842,8 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity?> invoices,
       final invitation = invoice.invitations.first;
       final url = invitation.downloadLink;
       store.dispatch(StartSaving());
-      final http.Response? response =
-          await (WebClient().get(url, '', rawResponse: true) as FutureOr<Response?>);
+      final http.Response? response = await (WebClient()
+          .get(url, '', rawResponse: true) as FutureOr<Response?>);
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;
@@ -852,7 +853,8 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity?> invoices,
       final data = json.encode(
           {'ids': invoiceIds, 'action': EntityAction.bulkPrint.toApiParam()});
       final http.Response? response = await (WebClient()
-          .post(url, state.credentials.token, data: data, rawResponse: true) as FutureOr<Response?>);
+              .post(url, state.credentials.token, data: data, rawResponse: true)
+          as FutureOr<Response?>);
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;

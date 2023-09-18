@@ -503,7 +503,7 @@ class DeletePurchaseOrderItem implements PersistUI {
 class FilterPurchaseOrders implements PersistUI {
   FilterPurchaseOrders(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortPurchaseOrders implements PersistUI, PersistPrefs {
@@ -527,7 +527,7 @@ class FilterPurchaseOrdersByStatus implements PersistUI {
 class FilterPurchaseOrderDropdown {
   FilterPurchaseOrderDropdown(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class FilterPurchaseOrdersByCustom1 implements PersistUI {
@@ -620,8 +620,8 @@ void handlePurchaseOrderAction(BuildContext? context,
       final invitation = purchaseOrder!.invitations.first;
       final url = invitation.downloadLink;
       store.dispatch(StartSaving());
-      final http.Response? response =
-          await (WebClient().get(url, '', rawResponse: true) as FutureOr<Response?>);
+      final http.Response? response = await (WebClient()
+          .get(url, '', rawResponse: true) as FutureOr<Response?>);
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;
@@ -633,7 +633,8 @@ void handlePurchaseOrderAction(BuildContext? context,
         'action': EntityAction.bulkPrint.toApiParam()
       });
       final http.Response? response = await (WebClient()
-          .post(url, state.credentials.token, data: data, rawResponse: true) as FutureOr<Response?>);
+              .post(url, state.credentials.token, data: data, rawResponse: true)
+          as FutureOr<Response?>);
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;
@@ -728,7 +729,8 @@ void handlePurchaseOrderAction(BuildContext? context,
                   onPressed: () {
                     Navigator.of(context).pop();
                     editEntity(
-                        entity: state.vendorState.get(purchaseOrder!.vendorId)!);
+                        entity:
+                            state.vendorState.get(purchaseOrder!.vendorId)!);
                   },
                   child: Text(localization.editVendor.toUpperCase()))
             ]);

@@ -379,7 +379,7 @@ class RestoreQuotesFailure implements StopSaving {
 class FilterQuotes implements PersistUI {
   FilterQuotes(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortQuotes implements PersistUI, PersistPrefs {
@@ -403,7 +403,7 @@ class FilterQuotesByStatus implements PersistUI {
 class FilterQuoteDropdown {
   FilterQuoteDropdown(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class FilterQuotesByCustom1 implements PersistUI {
@@ -513,8 +513,8 @@ class SaveQuoteDocumentFailure implements StopSaving {
   final Object error;
 }
 
-Future handleQuoteAction(
-    BuildContext context, List<BaseEntity?> quotes, EntityAction? action) async {
+Future handleQuoteAction(BuildContext context, List<BaseEntity?> quotes,
+    EntityAction? action) async {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
@@ -561,7 +561,8 @@ Future handleQuoteAction(
           ApproveQuotes(snackBarCompleter<Null>(context, message), quoteIds));
       break;
     case EntityAction.viewInvoice:
-      viewEntityById(entityId: quote!.invoiceId, entityType: EntityType.invoice);
+      viewEntityById(
+          entityId: quote!.invoiceId, entityType: EntityType.invoice);
       break;
     case EntityAction.markSent:
       store.dispatch(MarkSentQuotesRequest(
@@ -740,8 +741,8 @@ Future handleQuoteAction(
       final invitation = quote!.invitations.first;
       final url = invitation.downloadLink;
       store.dispatch(StartSaving());
-      final http.Response? response =
-          await (WebClient().get(url, '', rawResponse: true) as FutureOr<Response?>);
+      final http.Response? response = await (WebClient()
+          .get(url, '', rawResponse: true) as FutureOr<Response?>);
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;
@@ -751,7 +752,8 @@ Future handleQuoteAction(
       final data = json.encode(
           {'ids': quoteIds, 'action': EntityAction.bulkPrint.toApiParam()});
       final http.Response? response = await (WebClient()
-          .post(url, state.credentials.token, data: data, rawResponse: true) as FutureOr<Response?>);
+              .post(url, state.credentials.token, data: data, rawResponse: true)
+          as FutureOr<Response?>);
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;

@@ -206,7 +206,7 @@ class RestoreSubscriptionsFailure implements StopSaving {
 class FilterSubscriptions implements PersistUI {
   FilterSubscriptions(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortSubscriptions implements PersistUI, PersistPrefs {
@@ -271,8 +271,8 @@ class UpdateSubscriptionTab implements PersistUI {
   final int? tabIndex;
 }
 
-void handleSubscriptionAction(
-    BuildContext? context, List<BaseEntity?> subscriptions, EntityAction? action) {
+void handleSubscriptionAction(BuildContext? context,
+    List<BaseEntity?> subscriptions, EntityAction? action) {
   if (subscriptions.isEmpty) {
     return;
   }

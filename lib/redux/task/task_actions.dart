@@ -304,7 +304,7 @@ class SortTasksFailure implements StopSaving {
 class FilterTasks implements PersistUI {
   FilterTasks(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortTasks implements PersistUI, PersistPrefs {

@@ -207,7 +207,7 @@ class RestorePaymentTermsFailure implements StopSaving {
 class FilterPaymentTerms implements PersistUI {
   FilterPaymentTerms(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortPaymentTerms implements PersistUI, PersistPrefs {
@@ -246,8 +246,8 @@ class FilterPaymentTermsByCustom4 implements PersistUI {
   final String value;
 }
 
-void handlePaymentTermAction(
-    BuildContext? context, List<BaseEntity?> paymentTerms, EntityAction? action) {
+void handlePaymentTermAction(BuildContext? context,
+    List<BaseEntity?> paymentTerms, EntityAction? action) {
   if (paymentTerms.isEmpty) {
     return;
   }

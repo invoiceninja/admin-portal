@@ -57,6 +57,7 @@ final editingItemIndexReducer = combineReducers<int?>([
       (index, action) => action.invoiceItemIndex),
 ]);
 
+/*
 Reducer<String> dropdownFilterReducer = combineReducers([
   TypedReducer<String, FilterInvoiceDropdown>(filterInvoiceDropdownReducer),
 ]);
@@ -65,6 +66,7 @@ String filterInvoiceDropdownReducer(
     String dropdownFilter, FilterInvoiceDropdown action) {
   return action.filter;
 }
+*/
 
 Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, ArchiveInvoicesSuccess>((completer, action) => ''),

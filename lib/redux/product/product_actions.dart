@@ -221,7 +221,7 @@ class SetTaxCategoryProductsFailure implements StopSaving {
 class FilterProducts implements PersistUI {
   FilterProducts(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortProducts implements PersistUI, PersistPrefs {
@@ -263,7 +263,7 @@ class FilterProductsByCustom4 implements PersistUI {
 class FilterProductDropdown {
   FilterProductDropdown(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 void handleProductAction(

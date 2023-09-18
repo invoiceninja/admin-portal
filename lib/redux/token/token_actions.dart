@@ -219,7 +219,7 @@ class RestoreTokensFailure implements StopSaving {
 class FilterTokens implements PersistUI {
   FilterTokens(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortTokens implements PersistUI, PersistPrefs {

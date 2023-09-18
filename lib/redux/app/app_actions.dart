@@ -316,7 +316,7 @@ class FilterByEntity implements PersistUI {
 class FilterCompany implements PersistUI {
   FilterCompany(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 void filterByEntity({
@@ -556,8 +556,8 @@ void viewEntityById({
             store.dispatch(ToggleViewerLayout(entityType));
           final filterEntity =
               store.state.getEntityMap(entityType)![entityId] as BaseEntity;
-          final entityTypes = filterEntity.entityType!.relatedTypes
-              .where((entityType) => state.company!.isModuleEnabled(entityType));
+          final entityTypes = filterEntity.entityType!.relatedTypes.where(
+              (entityType) => state.company!.isModuleEnabled(entityType));
           if (entityTypes.isNotEmpty) {
             viewEntitiesByType(
                 entityType: entityTypes.first, filterEntity: filterEntity);
@@ -1325,14 +1325,17 @@ void editEntity({
             ));
             break;
           case EntityType.project:
-            store.dispatch(EditProject(project: entity as ProjectEntity, completer: completer));
+            store.dispatch(EditProject(
+                project: entity as ProjectEntity, completer: completer));
             break;
           case EntityType.taxRate:
-            store.dispatch(EditTaxRate(taxRate: entity as TaxRateEntity, completer: completer));
+            store.dispatch(EditTaxRate(
+                taxRate: entity as TaxRateEntity, completer: completer));
             break;
           case EntityType.companyGateway:
             store.dispatch(EditCompanyGateway(
-                companyGateway: entity as CompanyGatewayEntity, completer: completer));
+                companyGateway: entity as CompanyGatewayEntity,
+                completer: completer));
             break;
           case EntityType.invoice:
             final invoice = entity as InvoiceEntity;
@@ -1372,7 +1375,8 @@ void editEntity({
             ));
             break;
           case EntityType.product:
-            store.dispatch(EditProduct(product: entity as ProductEntity, completer: completer));
+            store.dispatch(EditProduct(
+                product: entity as ProductEntity, completer: completer));
             break;
           case EntityType.task:
             if (!state.company!.invoiceTaskLock ||
@@ -1385,7 +1389,8 @@ void editEntity({
             break;
           case EntityType.expense:
             store.dispatch(
-              EditExpense(expense: entity as ExpenseEntity, completer: completer),
+              EditExpense(
+                  expense: entity as ExpenseEntity, completer: completer),
             );
             break;
           case EntityType.payment:
@@ -1402,32 +1407,36 @@ void editEntity({
             break;
           // STARTER: edit - do not remove comment
           case EntityType.schedule:
-            store
-                .dispatch(EditSchedule(schedule: entity as ScheduleEntity, completer: completer));
+            store.dispatch(EditSchedule(
+                schedule: entity as ScheduleEntity, completer: completer));
             break;
 
           case EntityType.transactionRule:
             store.dispatch(EditTransactionRule(
-                transactionRule: entity as TransactionRuleEntity, completer: completer));
+                transactionRule: entity as TransactionRuleEntity,
+                completer: completer));
             break;
 
           case EntityType.transaction:
-            store.dispatch(
-                EditTransaction(transaction: entity as TransactionEntity, completer: completer));
+            store.dispatch(EditTransaction(
+                transaction: entity as TransactionEntity,
+                completer: completer));
             break;
 
           case EntityType.purchaseOrder:
-            store.dispatch(
-                EditPurchaseOrder(purchaseOrder: entity as InvoiceEntity, completer: completer));
+            store.dispatch(EditPurchaseOrder(
+                purchaseOrder: entity as InvoiceEntity, completer: completer));
             break;
 
           case EntityType.recurringExpense:
             store.dispatch(EditRecurringExpense(
-                recurringExpense: entity as ExpenseEntity, completer: completer));
+                recurringExpense: entity as ExpenseEntity,
+                completer: completer));
             break;
           case EntityType.subscription:
-            store.dispatch(
-                EditSubscription(subscription: entity as SubscriptionEntity, completer: completer));
+            store.dispatch(EditSubscription(
+                subscription: entity as SubscriptionEntity,
+                completer: completer));
             break;
           case EntityType.taskStatus:
             store.dispatch(EditTaskStatus(

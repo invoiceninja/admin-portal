@@ -41,6 +41,7 @@ final int? Function(int, dynamic) tabIndexReducer = combineReducers<int?>([
   }),
 ]);
 
+/*
 Reducer<String> dropdownFilterReducer = combineReducers([
   TypedReducer<String, FilterProductDropdown>(filterProductDropdownReducer),
 ]);
@@ -49,6 +50,7 @@ String filterProductDropdownReducer(
     String dropdownFilter, FilterProductDropdown action) {
   return action.filter;
 }
+*/
 
 final editingReducer = combineReducers<ProductEntity?>([
   TypedReducer<ProductEntity?, SaveProductSuccess>(_updateEditing),

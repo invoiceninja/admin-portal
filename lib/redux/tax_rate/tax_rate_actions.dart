@@ -199,7 +199,7 @@ class RestoreTaxRateFailure implements StopSaving {
 class FilterTaxRates implements PersistUI {
   FilterTaxRates(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortTaxRates implements PersistUI, PersistPrefs {

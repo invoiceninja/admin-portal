@@ -269,7 +269,7 @@ class RestoreDocumentFailure implements StopSaving {
 class FilterDocuments implements PersistUI {
   FilterDocuments(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class FilterDocumentsByStatus implements PersistUI {

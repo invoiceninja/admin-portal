@@ -254,7 +254,7 @@ class EmailPaymentFailure implements StopSaving {
 class FilterPayments implements PersistUI {
   FilterPayments(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortPayments implements PersistUI, PersistPrefs {

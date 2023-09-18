@@ -82,7 +82,7 @@ InvoiceItemEntity convertTaskToInvoiceItem({
         final date = formatDate(time.startDate!.toIso8601String(), context,
             showTime: false);
         if (dates.containsKey(date)) {
-          dates[date] += hours;
+          dates[date] = dates[date]! + hours;
         } else {
           dates[date] = hours;
         }

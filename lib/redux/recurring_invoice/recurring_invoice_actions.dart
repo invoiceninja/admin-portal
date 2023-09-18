@@ -323,12 +323,15 @@ class UpdatePricesRecurringInvoicesFailure implements StopSaving {
 }
 
 class IncreasePricesRecurringInvoicesRequest implements StartSaving {
-  IncreasePricesRecurringInvoicesRequest(
-      {this.completer, this.recurringInvoiceIds, this.percentageIncrease});
+  IncreasePricesRecurringInvoicesRequest({
+    this.completer,
+    required this.recurringInvoiceIds,
+    required this.percentageIncrease,
+  });
 
   final Completer? completer;
-  final double? percentageIncrease;
-  final List<String>? recurringInvoiceIds;
+  final double percentageIncrease;
+  final List<String> recurringInvoiceIds;
 }
 
 class IncreasePricesRecurringInvoicesSuccess
@@ -385,7 +388,7 @@ class RestoreRecurringInvoicesFailure implements StopSaving {
 class FilterRecurringInvoices implements PersistUI {
   FilterRecurringInvoices(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortRecurringInvoices implements PersistUI, PersistPrefs {
@@ -409,7 +412,7 @@ class FilterRecurringInvoicesByStatus implements PersistUI {
 class FilterRecurringInvoiceDropdown {
   FilterRecurringInvoiceDropdown(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class FilterRecurringInvoicesByCustom1 implements PersistUI {
@@ -513,8 +516,9 @@ void handleRecurringInvoiceAction(BuildContext? context,
   final state = store.state;
   final localization = AppLocalization.of(context);
   final recurringInvoice = recurringInvoices.first as InvoiceEntity;
-  final recurringInvoiceIds =
-      recurringInvoices.map((recurringInvoice) => recurringInvoice!.id).toList();
+  final recurringInvoiceIds = recurringInvoices
+      .map((recurringInvoice) => recurringInvoice!.id)
+      .toList();
   final client = state.clientState.get(recurringInvoice.clientId);
 
   switch (action) {
@@ -563,7 +567,7 @@ void handleRecurringInvoiceAction(BuildContext? context,
             );
           });
 
-      if (amount != 0) {
+      if (amount != null && amount != 0) {
         store.dispatch(IncreasePricesRecurringInvoicesRequest(
           completer: snackBarCompleter<Null>(
               navigatorKey.currentContext!, localization!.updatedPrices),

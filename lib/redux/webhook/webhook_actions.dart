@@ -209,7 +209,7 @@ class RestoreWebhooksFailure implements StopSaving {
 class FilterWebhooks implements PersistUI {
   FilterWebhooks(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortWebhooks implements PersistUI, PersistPrefs {

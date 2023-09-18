@@ -304,7 +304,7 @@ class RestoreClientFailure implements StopSaving {
 class FilterClients implements PersistUI {
   FilterClients(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortClients implements PersistUI, PersistPrefs {
@@ -343,8 +343,8 @@ class FilterClientsByCustom4 implements PersistUI {
   final String value;
 }
 
-void handleClientAction(
-    BuildContext? context, List<BaseEntity?> clients, EntityAction? action) async {
+void handleClientAction(BuildContext? context, List<BaseEntity?> clients,
+    EntityAction? action) async {
   if (clients.isEmpty) {
     return;
   }
@@ -385,8 +385,8 @@ void handleClientAction(
     case EntityAction.newTask:
       createEntity(
           context: context,
-          entity:
-              TaskEntity(state: state).rebuild((b) => b..clientId = client!.id));
+          entity: TaskEntity(state: state)
+              .rebuild((b) => b..clientId = client!.id));
       break;
     case EntityAction.newInvoice:
       createEntity(

@@ -224,7 +224,7 @@ class RestoreCompanyGatewayFailure implements StopSaving {
 class FilterCompanyGateways implements PersistUI {
   FilterCompanyGateways(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortCompanyGateways implements PersistUI, PersistPrefs {

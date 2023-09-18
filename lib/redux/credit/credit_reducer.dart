@@ -54,6 +54,7 @@ final editingItemReducer = combineReducers<int?>([
   TypedReducer<int?, EditCreditItem>((index, action) => action.creditItemIndex),
 ]);
 
+/*
 Reducer<String> dropdownFilterReducer = combineReducers([
   TypedReducer<String, FilterCreditDropdown>(filtercreditDropdownReducer),
 ]);
@@ -62,6 +63,7 @@ String filtercreditDropdownReducer(
     String dropdownFilter, FilterCreditDropdown action) {
   return action.filter;
 }
+*/
 
 Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, ArchiveCreditsSuccess>((completer, action) => ''),
@@ -73,7 +75,8 @@ Reducer<String?> selectedIdReducer = combineReducers([
       (selectedId, action) => action.credit.id),
   TypedReducer<String?, ShowEmailCredit>(
       (selectedId, action) => action.credit!.id),
-  TypedReducer<String?, ShowPdfCredit>((selectedId, action) => action.credit!.id),
+  TypedReducer<String?, ShowPdfCredit>(
+      (selectedId, action) => action.credit!.id),
   TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
@@ -165,14 +168,16 @@ InvoiceEntity _addCreditItems(InvoiceEntity? credit, AddCreditItems action) {
   return credit!.rebuild((b) => b..lineItems.addAll(action.creditItems));
 }
 
-InvoiceEntity? _removeCreditItem(InvoiceEntity? credit, DeleteCreditItem action) {
+InvoiceEntity? _removeCreditItem(
+    InvoiceEntity? credit, DeleteCreditItem action) {
   if (credit!.lineItems.length <= action.index) {
     return credit;
   }
   return credit.rebuild((b) => b..lineItems.removeAt(action.index));
 }
 
-InvoiceEntity? _updateCreditItem(InvoiceEntity? credit, UpdateCreditItem action) {
+InvoiceEntity? _updateCreditItem(
+    InvoiceEntity? credit, UpdateCreditItem action) {
   if (credit!.lineItems.length <= action.index!) {
     return credit;
   }

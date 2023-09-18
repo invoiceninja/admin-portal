@@ -27,7 +27,8 @@ EntityUIState purchaseOrderUIReducer(
 final forceSelectedReducer = combineReducers<bool?>([
   TypedReducer<bool?, ViewPurchaseOrder>((completer, action) => true),
   TypedReducer<bool?, ViewPurchaseOrderList>((completer, action) => false),
-  TypedReducer<bool?, FilterPurchaseOrdersByState>((completer, action) => false),
+  TypedReducer<bool?, FilterPurchaseOrdersByState>(
+      (completer, action) => false),
   TypedReducer<bool?, FilterPurchaseOrdersByStatus>(
       (completer, action) => false),
   TypedReducer<bool?, FilterPurchaseOrders>((completer, action) => false),
@@ -58,9 +59,11 @@ final historyActivityIdReducer = combineReducers<String?>([
 final editingItemReducer = combineReducers<int?>([
   TypedReducer<int?, EditPurchaseOrder>(
       (index, action) => action.purchaseOrderItemIndex),
-  TypedReducer<int?, EditPurchaseOrderItem>((index, action) => action.itemIndex),
+  TypedReducer<int?, EditPurchaseOrderItem>(
+      (index, action) => action.itemIndex),
 ]);
 
+/*
 Reducer<String> dropdownFilterReducer = combineReducers([
   TypedReducer<String, FilterPurchaseOrderDropdown>(
       filterpurchaseOrderDropdownReducer),
@@ -70,9 +73,11 @@ String filterpurchaseOrderDropdownReducer(
     String dropdownFilter, FilterPurchaseOrderDropdown action) {
   return action.filter;
 }
+*/
 
 Reducer<String?> selectedIdReducer = combineReducers([
-  TypedReducer<String?, ArchivePurchaseOrdersSuccess>((completer, action) => ''),
+  TypedReducer<String?, ArchivePurchaseOrdersSuccess>(
+      (completer, action) => ''),
   TypedReducer<String?, DeletePurchaseOrdersSuccess>((completer, action) => ''),
   TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.purchaseOrder
@@ -91,7 +96,8 @@ Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
   TypedReducer<String?, SortPurchaseOrders>((selectedId, action) => ''),
   TypedReducer<String?, FilterPurchaseOrders>((selectedId, action) => ''),
-  TypedReducer<String?, FilterPurchaseOrdersByState>((selectedId, action) => ''),
+  TypedReducer<String?, FilterPurchaseOrdersByState>(
+      (selectedId, action) => ''),
   TypedReducer<String?, FilterPurchaseOrdersByStatus>(
       (selectedId, action) => ''),
   TypedReducer<String?, FilterPurchaseOrdersByCustom1>(

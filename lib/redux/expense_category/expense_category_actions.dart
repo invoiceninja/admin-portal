@@ -206,7 +206,7 @@ class RestoreExpenseCategoriesFailure implements StopSaving {
 class FilterExpenseCategories implements PersistUI {
   FilterExpenseCategories(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortExpenseCategories implements PersistUI, PersistPrefs {

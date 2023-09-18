@@ -197,7 +197,7 @@ class RestoreSchedulesFailure implements StopSaving {
 class FilterSchedules implements PersistUI {
   FilterSchedules(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortSchedules implements PersistUI, PersistPrefs {

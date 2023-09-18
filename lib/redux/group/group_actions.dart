@@ -203,7 +203,7 @@ class RestoreGroupFailure implements StopSaving {
 class FilterGroups implements PersistUI {
   FilterGroups(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortGroups implements PersistUI, PersistPrefs {

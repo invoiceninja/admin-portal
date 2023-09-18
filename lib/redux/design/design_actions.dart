@@ -206,7 +206,7 @@ class RestoreDesignsFailure implements StopSaving {
 class FilterDesigns implements PersistUI {
   FilterDesigns(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortDesigns implements PersistUI, PersistPrefs {

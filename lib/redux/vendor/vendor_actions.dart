@@ -240,7 +240,7 @@ class DeleteVendorContact implements PersistUI {
 class FilterVendors implements PersistUI {
   FilterVendors(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortVendors implements PersistUI, PersistPrefs {

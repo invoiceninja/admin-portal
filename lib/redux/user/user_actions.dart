@@ -293,7 +293,7 @@ class ResendInviteFailure implements StopSaving {
 class FilterUsers {
   FilterUsers(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortUsers implements PersistUI, PersistPrefs {
@@ -409,8 +409,8 @@ void handleUserAction(
     case EntityAction.newTask:
       createEntity(
         context: context,
-        entity:
-            TaskEntity(state: state).rebuild((b) => b.assignedUserId = user!.id),
+        entity: TaskEntity(state: state)
+            .rebuild((b) => b.assignedUserId = user!.id),
       );
       break;
     case EntityAction.newVendor:

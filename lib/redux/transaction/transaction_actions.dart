@@ -341,7 +341,7 @@ class ConvertTransactionsFailure implements StopSaving {
 class FilterTransactions implements PersistUI {
   FilterTransactions(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortTransactions implements PersistUI, PersistPrefs {
@@ -412,8 +412,8 @@ class UpdateTransactionTab implements PersistUI {
   final int? tabIndex;
 }
 
-void handleTransactionAction(
-    BuildContext? context, List<BaseEntity?> transactions, EntityAction? action) {
+void handleTransactionAction(BuildContext? context,
+    List<BaseEntity?> transactions, EntityAction? action) {
   if (transactions.isEmpty) {
     return;
   }

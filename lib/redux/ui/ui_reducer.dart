@@ -1,19 +1,48 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/redux/bank_account/bank_account_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
+import 'package:invoiceninja_flutter/redux/client/client_state.dart';
+import 'package:invoiceninja_flutter/redux/company_gateway/company_gateway_state.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
+import 'package:invoiceninja_flutter/redux/credit/credit_state.dart';
+import 'package:invoiceninja_flutter/redux/design/design_state.dart';
+import 'package:invoiceninja_flutter/redux/document/document_state.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/expense/expense_state.dart';
+import 'package:invoiceninja_flutter/redux/expense_category/expense_category_state.dart';
+import 'package:invoiceninja_flutter/redux/group/group_state.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/invoice/invoice_state.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_state.dart';
+import 'package:invoiceninja_flutter/redux/payment_term/payment_term_state.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
+import 'package:invoiceninja_flutter/redux/product/product_state.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
+import 'package:invoiceninja_flutter/redux/project/project_state.dart';
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
+import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_state.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
+import 'package:invoiceninja_flutter/redux/quote/quote_state.dart';
 import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_actions.dart';
+import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_state.dart';
 import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/recurring_invoice/recurring_invoice_state.dart';
+import 'package:invoiceninja_flutter/redux/schedule/schedule_state.dart';
+import 'package:invoiceninja_flutter/redux/subscription/subscription_state.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
+import 'package:invoiceninja_flutter/redux/task/task_state.dart';
+import 'package:invoiceninja_flutter/redux/task_status/task_status_state.dart';
+import 'package:invoiceninja_flutter/redux/tax_rate/tax_rate_state.dart';
+import 'package:invoiceninja_flutter/redux/token/token_state.dart';
 import 'package:invoiceninja_flutter/redux/transaction/transaction_actions.dart';
+import 'package:invoiceninja_flutter/redux/transaction/transaction_state.dart';
+import 'package:invoiceninja_flutter/redux/transaction_rule/transaction_rule_state.dart';
+import 'package:invoiceninja_flutter/redux/user/user_state.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
+import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
+import 'package:invoiceninja_flutter/redux/webhook/webhook_state.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -80,50 +109,79 @@ UIState uiReducer(UIState state, dynamic action) {
     ..currentRoute = currentRoute
     ..previewStack.replace(previewStackReducer(state.previewStack, action))
     ..filterStack.replace(filterStackReducer(state.filterStack, action))
-    ..productUIState.replace(productUIReducer(state.productUIState, action) as ProductUIState)
-    ..clientUIState.replace(clientUIReducer(state.clientUIState, action) as ClientUIState)
-    ..invoiceUIState.replace(invoiceUIReducer(state.invoiceUIState, action) as InvoiceUIState)
+    ..productUIState.replace(
+        productUIReducer(state.productUIState, action) as ProductUIState)
+    ..clientUIState
+        .replace(clientUIReducer(state.clientUIState, action) as ClientUIState)
+    ..invoiceUIState.replace(
+        invoiceUIReducer(state.invoiceUIState, action) as InvoiceUIState)
     ..dashboardUIState
         .replace(dashboardUIReducer(state.dashboardUIState, action))
     ..reportsUIState.replace(reportsUIReducer(state.reportsUIState, action))
     // STARTER: reducer - do not remove comment
-    ..scheduleUIState.replace(scheduleUIReducer(state.scheduleUIState, action) as ScheduleUIState)
-    ..transactionRuleUIState
-        .replace(transactionRuleUIReducer(state.transactionRuleUIState, action) as TransactionRuleUIState)
-    ..transactionUIState
-        .replace(transactionUIReducer(state.transactionUIState, action) as TransactionUIState)
-    ..bankAccountUIState
-        .replace(bankAccountUIReducer(state.bankAccountUIState, action) as BankAccountUIState)
-    ..purchaseOrderUIState
-        .replace(purchaseOrderUIReducer(state.purchaseOrderUIState, action) as PurchaseOrderUIState)
+    ..scheduleUIState.replace(
+        scheduleUIReducer(state.scheduleUIState, action) as ScheduleUIState)
+    ..transactionRuleUIState.replace(
+        transactionRuleUIReducer(state.transactionRuleUIState, action)
+            as TransactionRuleUIState)
+    ..transactionUIState.replace(
+        transactionUIReducer(state.transactionUIState, action)
+            as TransactionUIState)
+    ..bankAccountUIState.replace(
+        bankAccountUIReducer(state.bankAccountUIState, action)
+            as BankAccountUIState)
+    ..purchaseOrderUIState.replace(
+        purchaseOrderUIReducer(state.purchaseOrderUIState, action)
+            as PurchaseOrderUIState)
     ..recurringExpenseUIState.replace(
-        recurringExpenseUIReducer(state.recurringExpenseUIState, action) as RecurringExpenseUIState)
-    ..subscriptionUIState
-        .replace(subscriptionUIReducer(state.subscriptionUIState, action) as SubscriptionUIState)
-    ..taskStatusUIState
-        .replace(taskStatusUIReducer(state.taskStatusUIState, action) as TaskStatusUIState)
-    ..expenseCategoryUIState
-        .replace(expenseCategoryUIReducer(state.expenseCategoryUIState, action) as ExpenseCategoryUIState)
+        recurringExpenseUIReducer(state.recurringExpenseUIState, action)
+            as RecurringExpenseUIState)
+    ..subscriptionUIState.replace(
+        subscriptionUIReducer(state.subscriptionUIState, action)
+            as SubscriptionUIState)
+    ..taskStatusUIState.replace(
+        taskStatusUIReducer(state.taskStatusUIState, action)
+            as TaskStatusUIState)
+    ..expenseCategoryUIState.replace(
+        expenseCategoryUIReducer(state.expenseCategoryUIState, action)
+            as ExpenseCategoryUIState)
     ..recurringInvoiceUIState.replace(
-        recurringInvoiceUIReducer(state.recurringInvoiceUIState, action) as RecurringInvoiceUIState)
-    ..webhookUIState.replace(webhookUIReducer(state.webhookUIState, action) as WebhookUIState)
-    ..tokenUIState.replace(tokenUIReducer(state.tokenUIState, action) as TokenUIState)
-    ..paymentTermUIState
-        .replace(paymentTermUIReducer(state.paymentTermUIState, action) as PaymentTermUIState)
-    ..designUIState.replace(designUIReducer(state.designUIState, action) as DesignUIState)
-    ..creditUIState.replace(creditUIReducer(state.creditUIState, action) as CreditUIState)
-    ..userUIState.replace(userUIReducer(state.userUIState, action) as UserUIState)
-    ..taxRateUIState.replace(taxRateUIReducer(state.taxRateUIState, action) as TaxRateUIState)
-    ..companyGatewayUIState
-        .replace(companyGatewayUIReducer(state.companyGatewayUIState, action) as CompanyGatewayUIState)
-    ..groupUIState.replace(groupUIReducer(state.groupUIState, action) as GroupUIState)
-    ..documentUIState.replace(documentUIReducer(state.documentUIState, action) as DocumentUIState)
-    ..expenseUIState.replace(expenseUIReducer(state.expenseUIState, action) as ExpenseUIState)
-    ..vendorUIState.replace(vendorUIReducer(state.vendorUIState, action) as VendorUIState)
-    ..taskUIState.replace(taskUIReducer(state.taskUIState, action) as TaskUIState)
-    ..projectUIState.replace(projectUIReducer(state.projectUIState, action) as ProjectUIState)
-    ..paymentUIState.replace(paymentUIReducer(state.paymentUIState, action) as PaymentUIState)
-    ..quoteUIState.replace(quoteUIReducer(state.quoteUIState, action) as QuoteUIState)
+        recurringInvoiceUIReducer(state.recurringInvoiceUIState, action)
+            as RecurringInvoiceUIState)
+    ..webhookUIState.replace(
+        webhookUIReducer(state.webhookUIState, action) as WebhookUIState)
+    ..tokenUIState
+        .replace(tokenUIReducer(state.tokenUIState, action) as TokenUIState)
+    ..paymentTermUIState.replace(
+        paymentTermUIReducer(state.paymentTermUIState, action)
+            as PaymentTermUIState)
+    ..designUIState
+        .replace(designUIReducer(state.designUIState, action) as DesignUIState)
+    ..creditUIState
+        .replace(creditUIReducer(state.creditUIState, action) as CreditUIState)
+    ..userUIState
+        .replace(userUIReducer(state.userUIState, action) as UserUIState)
+    ..taxRateUIState.replace(
+        taxRateUIReducer(state.taxRateUIState, action) as TaxRateUIState)
+    ..companyGatewayUIState.replace(
+        companyGatewayUIReducer(state.companyGatewayUIState, action)
+            as CompanyGatewayUIState)
+    ..groupUIState
+        .replace(groupUIReducer(state.groupUIState, action) as GroupUIState)
+    ..documentUIState.replace(
+        documentUIReducer(state.documentUIState, action) as DocumentUIState)
+    ..expenseUIState.replace(
+        expenseUIReducer(state.expenseUIState, action) as ExpenseUIState)
+    ..vendorUIState
+        .replace(vendorUIReducer(state.vendorUIState, action) as VendorUIState)
+    ..taskUIState
+        .replace(taskUIReducer(state.taskUIState, action) as TaskUIState)
+    ..projectUIState.replace(
+        projectUIReducer(state.projectUIState, action) as ProjectUIState)
+    ..paymentUIState.replace(
+        paymentUIReducer(state.paymentUIState, action) as PaymentUIState)
+    ..quoteUIState
+        .replace(quoteUIReducer(state.quoteUIState, action) as QuoteUIState)
     ..settingsUIState
         .replace(settingsUIReducer(state.settingsUIState, action)));
 }

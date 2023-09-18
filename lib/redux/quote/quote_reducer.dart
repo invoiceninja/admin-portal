@@ -56,6 +56,7 @@ final editingItemReducer = combineReducers<int?>([
   TypedReducer<int?, EditQuoteItem>((index, action) => action.quoteItemIndex),
 ]);
 
+/*
 Reducer<String> dropdownFilterReducer = combineReducers([
   TypedReducer<String, FilterQuoteDropdown>(filterquoteDropdownReducer),
 ]);
@@ -64,6 +65,7 @@ String filterquoteDropdownReducer(
     String dropdownFilter, FilterQuoteDropdown action) {
   return action.filter;
 }
+*/
 
 Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, ArchiveQuotesSuccess>((completer, action) => ''),
@@ -73,7 +75,8 @@ Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, ViewQuote>((selectedId, action) => action.quoteId),
   TypedReducer<String?, AddQuoteSuccess>(
       (selectedId, action) => action.quote.id),
-  TypedReducer<String?, ShowEmailQuote>((selectedId, action) => action.quote!.id),
+  TypedReducer<String?, ShowEmailQuote>(
+      (selectedId, action) => action.quote!.id),
   TypedReducer<String?, ShowPdfQuote>((selectedId, action) => action.quote!.id),
   TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
@@ -293,7 +296,8 @@ ListUIState _addToListMultiselect(
 
 ListUIState _removeFromListMultiselect(
     ListUIState quoteListState, RemoveFromQuoteMultiselect action) {
-  return quoteListState.rebuild((b) => b..selectedIds.remove(action.entity!.id));
+  return quoteListState
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(

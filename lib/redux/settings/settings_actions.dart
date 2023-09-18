@@ -267,7 +267,7 @@ class ConnecGmailUserFailure implements StopSaving {
 class FilterSettings implements PersistUI {
   FilterSettings(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class ToggleShowNewSettings {}

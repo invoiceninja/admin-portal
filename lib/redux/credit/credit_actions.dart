@@ -393,7 +393,7 @@ class RestoreCreditsFailure implements StopSaving {
 class FilterCredits implements PersistUI {
   FilterCredits(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortCredits implements PersistUI, PersistPrefs {
@@ -417,7 +417,7 @@ class FilterCreditsByStatus implements PersistUI {
 class FilterCreditDropdown {
   FilterCreditDropdown(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class FilterCreditsByCustom1 implements PersistUI {
@@ -470,8 +470,8 @@ class SaveCreditDocumentFailure implements StopSaving {
   final Object error;
 }
 
-Future handleCreditAction(
-    BuildContext context, List<BaseEntity?> credits, EntityAction? action) async {
+Future handleCreditAction(BuildContext context, List<BaseEntity?> credits,
+    EntityAction? action) async {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
@@ -631,7 +631,8 @@ Future handleCreditAction(
         entity: PaymentEntity(state: state, client: client).rebuild((b) => b
           ..typeId = kPaymentTypeCredit
           ..credits.addAll(credits
-              .map((credit) => PaymentableEntity.fromCredit(credit as InvoiceEntity))
+              .map((credit) =>
+                  PaymentableEntity.fromCredit(credit as InvoiceEntity))
               .toList())),
         filterEntity: client,
       );
@@ -687,8 +688,8 @@ Future handleCreditAction(
       final invitation = credit.invitations.first;
       final url = invitation.downloadLink;
       store.dispatch(StartSaving());
-      final http.Response? response =
-          await (WebClient().get(url, '', rawResponse: true) as FutureOr<Response?>);
+      final http.Response? response = await (WebClient()
+          .get(url, '', rawResponse: true) as FutureOr<Response?>);
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;
@@ -698,7 +699,8 @@ Future handleCreditAction(
       final data = json.encode(
           {'ids': creditIds, 'action': EntityAction.bulkPrint.toApiParam()});
       final http.Response? response = await (WebClient()
-          .post(url, state.credentials.token, data: data, rawResponse: true) as FutureOr<Response?>);
+              .post(url, state.credentials.token, data: data, rawResponse: true)
+          as FutureOr<Response?>);
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;

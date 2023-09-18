@@ -260,7 +260,7 @@ Middleware<AppState> _loadDocumentData(DocumentRepository repository) {
     final action = dynamicAction as LoadDocumentData;
 
     final state = store.state;
-    final document = state.documentState.map[action.documentId];
+    final document = state.documentState.map[action.documentId]!;
 
     store.dispatch(LoadDocumentRequest());
     repository.loadData(store.state.credentials, document).then((bodyBytes) {

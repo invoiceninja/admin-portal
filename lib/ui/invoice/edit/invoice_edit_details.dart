@@ -172,7 +172,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                         vendorId: invoice.vendorId,
                         vendorState: state.vendorState,
                         onSelected: (vendor) {
-                          viewModel.onVendorChanged!(context, invoice, vendor as VendorEntity);
+                          viewModel.onVendorChanged!(
+                              context, invoice, vendor as VendorEntity);
                         },
                         onAddPressed: (completer) =>
                             viewModel.onAddVendorPressed!(context, completer),
@@ -180,8 +181,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     : ClientPicker(
                         clientId: invoice.clientId,
                         clientState: state.clientState,
-                        onSelected: (client) =>
-                            viewModel.onClientChanged!(context, invoice, client as ClientEntity?),
+                        onSelected: (client) => viewModel.onClientChanged!(
+                            context, invoice, client as ClientEntity?),
                         onAddPressed: (completer) =>
                             viewModel.onAddClientPressed!(context, completer),
                       )
@@ -198,7 +199,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     validator: (String val) => val.trim().isEmpty &&
                             invoice.isOld &&
                             originalInvoice!.number.isNotEmpty
-                        ? AppLocalization.of(context)!.pleaseEnterAnInvoiceNumber
+                        ? AppLocalization.of(context)!
+                            .pleaseEnterAnInvoiceNumber
                         : null,
                   ),
             UserPicker(

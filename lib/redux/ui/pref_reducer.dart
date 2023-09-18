@@ -245,11 +245,13 @@ Reducer<bool> historyVisibleReducer = combineReducers([
   }),
 ]);
 
+/*
 Reducer<String> filterReducer = combineReducers([
   TypedReducer<String, FilterCompany>((filter, action) {
     return action.filter;
   }),
 ]);
+*/
 
 Reducer<bool> hideDesktopWarningReducer = combineReducers([
   TypedReducer<bool, DismissNativeWarningPermanently>((filter, action) {
@@ -513,8 +515,8 @@ Reducer<int> selectedCompanyIndexReducer = combineReducers([
 CompanyPrefState companyPrefReducer(CompanyPrefState? state, dynamic action) {
   state ??= CompanyPrefState();
 
-  return state.rebuild(
-      (b) => b..historyList.replace(historyReducer(state!.historyList, action)));
+  return state.rebuild((b) =>
+      b..historyList.replace(historyReducer(state!.historyList, action)));
 }
 
 Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
@@ -907,8 +909,7 @@ BuiltList<HistoryRecord> _addToHistory(
     }
   }
 
-  final old =
-      list.firstWhereOrNull((item) => item.matchesRecord(record));
+  final old = list.firstWhereOrNull((item) => item.matchesRecord(record));
 
   if (old != null) {
     return list.rebuild((b) => b

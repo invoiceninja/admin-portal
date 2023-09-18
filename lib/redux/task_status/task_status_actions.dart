@@ -206,7 +206,7 @@ class RestoreTaskStatusesFailure implements StopSaving {
 class FilterTaskStatuses implements PersistUI {
   FilterTaskStatuses(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortTaskStatuses implements PersistUI, PersistPrefs {
@@ -265,8 +265,8 @@ class ClearTaskStatusMultiselect {
   ClearTaskStatusMultiselect();
 }
 
-void handleTaskStatusAction(
-    BuildContext? context, List<BaseEntity?> taskStatuses, EntityAction? action) {
+void handleTaskStatusAction(BuildContext? context,
+    List<BaseEntity?> taskStatuses, EntityAction? action) {
   if (taskStatuses.isEmpty) {
     return;
   }
