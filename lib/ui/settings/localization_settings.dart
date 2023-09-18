@@ -147,7 +147,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                         memoizedCurrencyList(state.staticState.currencyMap),
                     labelText: localization.currency,
                     entityId: settings.currencyId,
-                    onSelected: (SelectableEntity currency) =>
+                    onSelected: (SelectableEntity? currency) =>
                         viewModel.onSettingsChanged(settings
                             .rebuild((b) => b..currencyId = currency?.id)),
                   ),
@@ -175,7 +175,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                             memoizedLanguageList(state.staticState.languageMap),
                         labelText: localization.language,
                         entityId: settings.languageId,
-                        onSelected: (SelectableEntity language) =>
+                        onSelected: (SelectableEntity? language) =>
                             viewModel.onSettingsChanged(settings
                                 .rebuild((b) => b..languageId = language?.id)),
                       ),
@@ -186,7 +186,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                         memoizedTimezoneList(state.staticState.timezoneMap),
                     labelText: localization.timezone,
                     entityId: settings.timezoneId,
-                    onSelected: (SelectableEntity timezone) =>
+                    onSelected: (SelectableEntity? timezone) =>
                         viewModel.onSettingsChanged(settings
                             .rebuild((b) => b..timezoneId = timezone?.id)),
                   ),
@@ -196,7 +196,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                         memoizedDateFormatList(state.staticState.dateFormatMap),
                     labelText: localization.dateFormat,
                     entityId: settings.dateFormatId,
-                    onSelected: (SelectableEntity dateFormat) =>
+                    onSelected: (SelectableEntity? dateFormat) =>
                         viewModel.onSettingsChanged(settings
                             .rebuild((b) => b..dateFormatId = dateFormat?.id)),
                   ),
@@ -418,7 +418,7 @@ class _AddCompanyDialogState extends State<_AddCompanyDialog> {
         entityType: EntityType.country,
         entityList: memoizedCountryList(state.staticState.countryMap),
         labelText: localization.country,
-        onSelected: (SelectableEntity country) {
+        onSelected: (SelectableEntity? country) {
           _countryId = country.id;
         },
       ),

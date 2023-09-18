@@ -300,7 +300,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
               entityList: memoizedCurrencyList(staticState.currencyMap),
               labelText: localization.currency,
               entityId: expense.currencyId,
-              onSelected: (SelectableEntity currency) => viewModel.onChanged!(
+              onSelected: (SelectableEntity? currency) => viewModel.onChanged!(
                   viewModel.expense!
                       .rebuild((b) => b..currencyId = currency?.id ?? '')),
             ),

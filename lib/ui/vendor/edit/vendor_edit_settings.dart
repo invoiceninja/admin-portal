@@ -46,7 +46,7 @@ class VendorEditSettingsState extends State<VendorEditSettings> {
           entityList: memoizedCurrencyList(state.staticState.currencyMap),
           labelText: localization.currency,
           entityId: vendor.currencyId,
-          onSelected: (SelectableEntity currency) => viewModel.onChanged(
+          onSelected: (SelectableEntity? currency) => viewModel.onChanged(
               vendor.rebuild((b) => b..currencyId = currency?.id ?? '')),
         ),
         EntityDropdown(
@@ -54,7 +54,7 @@ class VendorEditSettingsState extends State<VendorEditSettings> {
           entityList: memoizedLanguageList(state.staticState.languageMap),
           labelText: localization.language,
           entityId: vendor.languageId,
-          onSelected: (SelectableEntity language) => viewModel.onChanged(
+          onSelected: (SelectableEntity? language) => viewModel.onChanged(
               vendor.rebuild((b) => b..languageId = language?.id ?? '')),
         ),
       ],

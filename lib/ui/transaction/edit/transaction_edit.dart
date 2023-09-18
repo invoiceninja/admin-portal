@@ -150,7 +150,7 @@ class _TransactionEditState extends State<TransactionEdit> {
                           memoizedCurrencyList(state.staticState.currencyMap),
                       labelText: localization.currency,
                       entityId: transaction.currencyId,
-                      onSelected: (SelectableEntity currency) =>
+                      onSelected: (SelectableEntity? currency) =>
                           viewModel.onChanged(viewModel.transaction.rebuild(
                               (b) => b..currencyId = currency?.id ?? '')),
                     ),

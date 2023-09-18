@@ -123,7 +123,7 @@ class ClientEditNotesState extends State<ClientEditNotes> {
           entityList: memoizedIndustryList(viewModel.staticState.industryMap),
           labelText: localization.industry,
           entityId: client.industryId,
-          onSelected: (SelectableEntity industry) => viewModel.onChanged(
+          onSelected: (SelectableEntity? industry) => viewModel.onChanged(
               client.rebuild((b) => b..industryId = industry?.id ?? '')),
         ),
       ],

@@ -499,17 +499,19 @@ List<ChartDataGroup> chartPayments(
           refundedData.entityMap[date] = [];
         }
 
-        totals[STATUS_COMPLETED]![date] += completedAmount;
-        totals[STATUS_REFUNDED]![date] += refunded ?? 0;
+        totals[STATUS_COMPLETED]![date] =
+            totals[STATUS_COMPLETED]![date]! + completedAmount;
+        totals[STATUS_REFUNDED]![date] =
+            totals[STATUS_REFUNDED]![date]! + refunded;
 
-        counts[STATUS_COMPLETED]++;
+        counts[STATUS_COMPLETED] = counts[STATUS_COMPLETED]! + 1;
         activeData.entityMap[date]!.add(payment.id);
         activeData.periodTotal += completedAmount;
 
         if ((payment.refunded ?? 0) > 0) {
-          counts[STATUS_REFUNDED]++;
+          counts[STATUS_REFUNDED] = counts[STATUS_REFUNDED]! + 1;
           refundedData.entityMap[date]!.add(payment.id);
-          refundedData.periodTotal += refunded ?? 0;
+          refundedData.periodTotal += refunded;
         }
       }
     }
@@ -693,16 +695,19 @@ List<ChartDataGroup> chartTasks(
             if (task.isInvoiced) {
               if (invoiceMap.containsKey(task.invoiceId) &&
                   invoiceMap[task.invoiceId]!.isPaid) {
-                totals[STATUS_PAID]![date] += amount;
+                totals[STATUS_PAID]![date] =
+                    totals[STATUS_PAID]![date]! + amount;
                 paidData.entityMap[date]!.add(task.id);
                 paidData.periodTotal += amount;
               } else {
-                totals[STATUS_INVOICED]![date] += amount;
+                totals[STATUS_INVOICED]![date] =
+                    totals[STATUS_INVOICED]![date]! + amount;
                 invoicedData.entityMap[date]!.add(task.id);
                 invoicedData.periodTotal += amount;
               }
             } else {
-              totals[STATUS_LOGGED]![date] += amount;
+              totals[STATUS_LOGGED]![date] =
+                  totals[STATUS_LOGGED]![date]! + amount;
               loggedData.entityMap[date]!.add(task.id);
               loggedData.periodTotal += amount;
             }
@@ -713,12 +718,12 @@ List<ChartDataGroup> chartTasks(
       if (task.isInvoiced) {
         if (invoiceMap.containsKey(task.invoiceId) &&
             invoiceMap[task.invoiceId]!.isPaid) {
-          counts[STATUS_PAID]++;
+          counts[STATUS_PAID] = counts[STATUS_PAID]! + 1;
         } else {
-          counts[STATUS_INVOICED]++;
+          counts[STATUS_INVOICED] = counts[STATUS_INVOICED]! + 1;
         }
       } else {
-        counts[STATUS_LOGGED]++;
+        counts[STATUS_LOGGED] = counts[STATUS_LOGGED]! + 1;
       }
     }
   });
@@ -857,24 +862,26 @@ List<ChartDataGroup> chartExpenses(
         if (expense.isInvoiced) {
           final invoice = invoiceMap[expense.invoiceId] ?? InvoiceEntity();
           if (invoice.isPaid) {
-            totals[STATUS_PAID]![date] += amount;
-            counts[STATUS_PAID]++;
+            totals[STATUS_PAID]![date] = totals[STATUS_PAID]![date]! + amount;
+            counts[STATUS_PAID] = counts[STATUS_PAID]! + 1;
             paidData.entityMap[date]!.add(expense.id);
             paidData.periodTotal += amount;
           } else {
-            totals[STATUS_INVOICED]![date] += amount;
-            counts[STATUS_INVOICED]++;
+            totals[STATUS_INVOICED]![date] =
+                totals[STATUS_INVOICED]![date]! + amount;
+            counts[STATUS_INVOICED] = counts[STATUS_INVOICED]! + 1;
             invoicedData.entityMap[date]!.add(expense.id);
             invoicedData.periodTotal += amount;
           }
         } else if (expense.isPending) {
-          totals[STATUS_PENDING]![date] += amount;
-          counts[STATUS_PENDING]++;
+          totals[STATUS_PENDING]![date] =
+              totals[STATUS_PENDING]![date]! + amount;
+          counts[STATUS_PENDING] = counts[STATUS_PENDING]! + 1;
           pendingData.entityMap[date]!.add(expense.id);
           pendingData.periodTotal += amount;
         } else {
-          totals[STATUS_LOGGED]![date] += amount;
-          counts[STATUS_LOGGED]++;
+          totals[STATUS_LOGGED]![date] = totals[STATUS_LOGGED]![date]! + amount;
+          counts[STATUS_LOGGED] = counts[STATUS_LOGGED]! + 1;
           loggedData.entityMap[date]!.add(expense.id);
           loggedData.periodTotal += amount;
         }

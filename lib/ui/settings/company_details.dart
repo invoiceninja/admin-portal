@@ -438,7 +438,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                           memoizedIndustryList(state.staticState.industryMap),
                       labelText: localization.industry,
                       entityId: company.industryId,
-                      onSelected: (SelectableEntity industry) =>
+                      onSelected: (SelectableEntity? industry) =>
                           viewModel.onCompanyChanged(
                         company
                             .rebuild((b) => b..industryId = industry?.id ?? ''),
@@ -496,7 +496,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                           memoizedCountryList(state.staticState.countryMap),
                       labelText: localization.country,
                       entityId: settings.countryId,
-                      onSelected: (SelectableEntity country) =>
+                      onSelected: (SelectableEntity? country) =>
                           viewModel.onSettingsChanged(settings
                               .rebuild((b) => b..countryId = country?.id)),
                     ),

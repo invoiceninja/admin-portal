@@ -146,15 +146,18 @@ class _SettingsWizardState extends State<SettingsWizard> {
         callback: (password, idToken) {
           final localization = AppLocalization.of(context);
           final completer = Completer<Null>();
-          completer.future.then((value) {
+          completer.future
+              .then((value) {
             final toastCompleter =
                 snackBarCompleter<Null>(context, localization!.savedSettings);
-            toastCompleter.future.then((value) {
+            toastCompleter.future
+                .then((value) {
               setState(() {
                 _isSaving = false;
                 _showLogo = true;
               });
-            } as FutureOr<_> Function(Null)).catchError((Object error) {
+            } as FutureOr<_> Function(Null))
+                .catchError((Object error) {
               setState(() {
                 _isSaving = false;
               });
@@ -171,7 +174,8 @@ class _SettingsWizardState extends State<SettingsWizard> {
                 ),
               ),
             );
-          } as FutureOr<_> Function(Null)).catchError((Object error) {
+          } as FutureOr<_> Function(Null))
+              .catchError((Object error) {
             setState(() => _isSaving = false);
           });
 
@@ -232,7 +236,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
       entityList: memoizedCurrencyList(state.staticState.currencyMap),
       labelText: localization.currency,
       entityId: _currencyId,
-      onSelected: (SelectableEntity currency) =>
+      onSelected: (SelectableEntity? currency) =>
           setState(() => _currencyId = currency?.id),
       validator: (dynamic value) =>
           value.isEmpty ? localization.pleaseEnterAValue : null,
@@ -243,7 +247,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
       entityList: memoizedLanguageList(state.staticState.languageMap),
       labelText: localization.language,
       entityId: _languageId,
-      onSelected: (SelectableEntity language) {
+      onSelected: (SelectableEntity? language) {
         setState(() => _languageId = language?.id);
         store.dispatch(UpdateCompanyLanguage(languageId: language?.id));
         AppBuilder.of(context)!.rebuild();

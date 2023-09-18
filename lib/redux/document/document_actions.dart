@@ -483,67 +483,82 @@ void handleDocumentAction(
                       context, AppLocalization.of(context)!.deletedDocument);
                   switch (document!.parentType) {
                     case EntityType.client:
-                      completer.future.then<Null>(((value) => store
-                          .dispatch(LoadClient(clientId: document.parentId))) as FutureOr<Null> Function(Null));
+                      completer.future.then<Null>((() => store.dispatch(
+                              LoadClient(clientId: document.parentId)))
+                          as FutureOr<Null> Function(Null));
                       break;
                     case EntityType.credit:
-                      completer.future.then<Null>(((value) => store
-                          .dispatch(LoadCredit(creditId: document.parentId))) as FutureOr<Null> Function(Null));
+                      completer.future.then<Null>((() => store.dispatch(
+                              LoadCredit(creditId: document.parentId)))
+                          as FutureOr<Null> Function(Null));
                       break;
                     case EntityType.expense:
-                      completer.future.then<Null>(((value) => store
-                          .dispatch(LoadExpense(expenseId: document.parentId))) as FutureOr<Null> Function(Null));
+                      completer.future.then<Null>((() => store.dispatch(
+                              LoadExpense(expenseId: document.parentId)))
+                          as FutureOr<Null> Function(Null));
                       break;
                     case EntityType.group:
-                      completer.future.then<Null>(((value) => store
-                          .dispatch(LoadGroup(groupId: document.parentId))) as FutureOr<Null> Function(Null));
+                      completer.future.then<Null>((() => store
+                              .dispatch(LoadGroup(groupId: document.parentId)))
+                          as FutureOr<Null> Function(Null));
                       break;
                     case EntityType.invoice:
-                      completer.future.then<Null>(((value) => store
-                          .dispatch(LoadInvoice(invoiceId: document.parentId))) as FutureOr<Null> Function(Null));
+                      completer.future.then<Null>((() => store.dispatch(
+                              LoadInvoice(invoiceId: document.parentId)))
+                          as FutureOr<Null> Function(Null));
                       break;
                     case EntityType.product:
-                      completer.future.then<Null>(((value) => store
-                          .dispatch(LoadProduct(productId: document.parentId))) as FutureOr<Null> Function(Null));
+                      completer.future.then<Null>((() => store.dispatch(
+                              LoadProduct(productId: document.parentId)))
+                          as FutureOr<Null> Function(Null));
                       break;
                     case EntityType.project:
-                      completer.future.then<Null>(((value) => store
-                          .dispatch(LoadProject(projectId: document.parentId))) as FutureOr<Null> Function(Null));
+                      completer.future.then<Null>((() => store.dispatch(
+                              LoadProject(projectId: document.parentId)))
+                          as FutureOr<Null> Function(Null));
                       break;
                     case EntityType.purchaseOrder:
-                      completer.future.then<Null>(((value) => store.dispatch(
-                          LoadPurchaseOrder(
-                              purchaseOrderId: document.parentId))) as FutureOr<Null> Function(Null));
+                      completer.future.then<Null>((() => store.dispatch(
+                              LoadPurchaseOrder(
+                                  purchaseOrderId: document.parentId)))
+                          as FutureOr<Null> Function(Null));
                       break;
                     case EntityType.quote:
-                      completer.future.then<Null>(((value) => store
-                          .dispatch(LoadQuote(quoteId: document.parentId))) as FutureOr<Null> Function(Null));
+                      completer.future.then<Null>((() => store
+                              .dispatch(LoadQuote(quoteId: document.parentId)))
+                          as FutureOr<Null> Function(Null));
                       break;
                     case EntityType.recurringExpense:
-                      completer.future.then<Null>(((value) => store.dispatch(
-                          LoadRecurringExpense(
-                              recurringExpenseId: document.parentId))) as FutureOr<Null> Function(Null));
+                      completer.future.then<Null>((() => store.dispatch(
+                              LoadRecurringExpense(
+                                  recurringExpenseId: document.parentId)))
+                          as FutureOr<Null> Function(Null));
                       break;
                     case EntityType.recurringInvoice:
-                      completer.future.then<Null>(((value) => store.dispatch(
-                          LoadRecurringInvoice(
-                              recurringInvoiceId: document.parentId))) as FutureOr<Null> Function(Null));
+                      completer.future.then<Null>((() => store.dispatch(
+                              LoadRecurringInvoice(
+                                  recurringInvoiceId: document.parentId)))
+                          as FutureOr<Null> Function(Null));
                       break;
                     case EntityType.task:
-                      completer.future.then<Null>(((value) =>
-                          store.dispatch(LoadTask(taskId: document.parentId))) as FutureOr<Null> Function(Null));
+                      completer.future.then<Null>((() => store
+                              .dispatch(LoadTask(taskId: document.parentId)))
+                          as FutureOr<Null> Function(Null));
                       break;
                     case EntityType.vendor:
-                      completer.future.then<Null>(((value) => store
-                          .dispatch(LoadVendor(vendorId: document.parentId))) as FutureOr<Null> Function(Null));
+                      completer.future.then<Null>((() => store.dispatch(
+                              LoadVendor(vendorId: document.parentId)))
+                          as FutureOr<Null> Function(Null));
                       break;
                     default:
-                      completer.future
-                          .then<Null>(((value) => store.dispatch(RefreshData())) as FutureOr<Null> Function(Null));
+                      completer.future.then<Null>((() =>
+                              store.dispatch(RefreshData()))
+                          as FutureOr<Null> Function(Null));
                   }
 
-                  completer.future
-                      .then<Null>(((value) => store.dispatch(RefreshData())) as FutureOr<Null> Function(Null));
+                  completer.future.then<Null>((() =>
+                          store.dispatch(RefreshData()))
+                      as FutureOr<Null> Function(Null));
                   store.dispatch(DeleteDocumentRequest(
                     completer: completer,
                     documentIds: [document.id],

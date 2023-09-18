@@ -376,7 +376,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                       memoizedCurrencyList(viewModel.staticState.currencyMap),
                   labelText: localization.currency,
                   entityId: payment.exchangeCurrencyId,
-                  onSelected: (SelectableEntity currency) =>
+                  onSelected: (SelectableEntity? currency) =>
                       convertCurrency(currency),
                 ),
                 DecoratedFormField(

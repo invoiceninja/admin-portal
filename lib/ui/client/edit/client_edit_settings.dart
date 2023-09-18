@@ -99,7 +99,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
           entityList: memoizedCurrencyList(viewModel.staticState.currencyMap),
           labelText: localization.currency,
           entityId: client.currencyId,
-          onSelected: (SelectableEntity currency) => viewModel.onChanged(client
+          onSelected: (SelectableEntity? currency) => viewModel.onChanged(client
               .rebuild((b) => b..settings.currencyId = currency?.id ?? '')),
         ),
         EntityDropdown(
@@ -107,7 +107,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
           entityList: memoizedLanguageList(viewModel.staticState.languageMap),
           labelText: localization.language,
           entityId: client.languageId,
-          onSelected: (SelectableEntity language) => viewModel.onChanged(client
+          onSelected: (SelectableEntity? language) => viewModel.onChanged(client
               .rebuild((b) => b..settings.languageId = language?.id ?? '')),
         ),
         if (company.isModuleEnabled(EntityType.invoice))

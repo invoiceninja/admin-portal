@@ -155,7 +155,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                           memoizedGatewayList(state.staticState.gatewayMap),
                       labelText: localization.provider,
                       entityId: companyGateway.gatewayId,
-                      onSelected: (SelectableEntity gateway) {
+                      onSelected: (SelectableEntity? gateway) {
                         viewModel.onChanged(
                           companyGateway.rebuild((b) => b
                             ..feesAndLimitsMap[((gateway ?? GatewayEntity())
@@ -237,18 +237,18 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     AppDropdownButton<String>(
                       labelText: localization.captureCard,
                       value: companyGateway.tokenBilling,
-                      selectedItemBuilder: (companyGateway.tokenBilling ?? '')
-                              .isEmpty
-                          ? null
-                          : (context) => [
-                                SettingsEntity.AUTO_BILL_ALWAYS,
-                                SettingsEntity.AUTO_BILL_OPT_OUT,
-                                SettingsEntity.AUTO_BILL_OPT_IN,
-                                SettingsEntity.AUTO_BILL_OFF,
-                              ]
-                                  .map(
-                                      (type) => Text(localization.lookup(type)!))
-                                  .toList(),
+                      selectedItemBuilder:
+                          (companyGateway.tokenBilling ?? '').isEmpty
+                              ? null
+                              : (context) => [
+                                    SettingsEntity.AUTO_BILL_ALWAYS,
+                                    SettingsEntity.AUTO_BILL_OPT_OUT,
+                                    SettingsEntity.AUTO_BILL_OPT_IN,
+                                    SettingsEntity.AUTO_BILL_OFF,
+                                  ]
+                                      .map((type) =>
+                                          Text(localization.lookup(type)!))
+                                      .toList(),
                       onChanged: (dynamic value) => viewModel.onChanged(
                           companyGateway
                               .rebuild((b) => b..tokenBilling = value)),

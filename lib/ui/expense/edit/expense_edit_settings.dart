@@ -134,7 +134,8 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
         formatNumberType: FormatNumberType.inputMoney)!;
     _exchangeRateController.addListener(_onChanged);
 
-    viewModel.onChanged!(expense.rebuild((b) => b..exchangeRate = exchangeRate));
+    viewModel
+        .onChanged!(expense.rebuild((b) => b..exchangeRate = exchangeRate));
     _convertedAmount = 0;
   }
 
@@ -252,7 +253,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                 entityList: memoizedCurrencyList(staticState.currencyMap),
                 labelText: localization.currency,
                 entityId: expense.invoiceCurrencyId,
-                onSelected: (SelectableEntity currency) =>
+                onSelected: (SelectableEntity? currency) =>
                     _setCurrency(currency as CurrencyEntity?),
               ),
               DecoratedFormField(
