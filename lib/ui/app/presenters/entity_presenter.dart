@@ -19,7 +19,7 @@ class EntityPresenter {
     return this;
   }
 
-  BaseEntity? entity;
+  late BaseEntity entity;
   late BuildContext context;
 
   String? title({bool isNarrow = false}) {

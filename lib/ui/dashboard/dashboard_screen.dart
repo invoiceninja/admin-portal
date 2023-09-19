@@ -51,9 +51,9 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen>
     with TickerProviderStateMixin {
-  TabController? _mainTabController;
-  TabController? _sideTabController;
-  ScrollController? _scrollController;
+  late TabController _mainTabController;
+  late TabController _sideTabController;
+  late ScrollController _scrollController;
   final List<EntityType> _tabs = [];
 
   @override
