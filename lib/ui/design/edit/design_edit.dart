@@ -230,7 +230,8 @@ class _DesignEditState extends State<DesignEdit>
     return EditScaffold(
         entity: design,
         isFullscreen: true,
-        title: design.isNew ? localization!.newDesign : localization!.editDesign,
+        title:
+            design.isNew ? localization!.newDesign : localization!.editDesign,
         onCancelPressed: (context) => viewModel.onCancelPressed(context),
         appBarBottom: isMobile(context)
             ? TabBar(

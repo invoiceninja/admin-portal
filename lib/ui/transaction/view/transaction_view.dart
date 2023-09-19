@@ -1109,7 +1109,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                             force: true,
                             completer: completer,
                             cancelCompleter: Completer<Null>()
-                              ..future.then((_) {
+                              ..future.then<Null>(() {
                                 store.dispatch(UpdateCurrentRoute(
                                     TransactionScreen.route));
                               } as FutureOr<Null> Function(Null)));
@@ -1193,7 +1193,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                             force: true,
                             completer: completer,
                             cancelCompleter: Completer<Null>()
-                              ..future.then((_) {
+                              ..future.then<Null>(() {
                                 store.dispatch(UpdateCurrentRoute(
                                     TransactionScreen.route));
                               } as FutureOr<Null> Function(Null)));

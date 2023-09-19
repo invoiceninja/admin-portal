@@ -82,7 +82,7 @@ class TaskEditDetailsVM {
             force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()
-              ..future.then((_) {
+              ..future.then<Null>(() {
                 store.dispatch(UpdateCurrentRoute(TaskEditDetailsScreen.route));
               } as FutureOr<Null> Function(Null)));
         completer.future.then((SelectableEntity client) {
@@ -107,7 +107,7 @@ class TaskEditDetailsVM {
             force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()
-              ..future.then((_) {
+              ..future.then<Null>(() {
                 store.dispatch(UpdateCurrentRoute(TaskEditDetailsScreen.route));
               } as FutureOr<Null> Function(Null)));
         completer.future.then((SelectableEntity client) {

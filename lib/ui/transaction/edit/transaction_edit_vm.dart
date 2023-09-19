@@ -110,7 +110,7 @@ class TransactionEditVM {
             force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()
-              ..future.then((_) {
+              ..future.then<Null>(() {
                 store.dispatch(UpdateCurrentRoute(TransactionEditScreen.route));
               } as FutureOr<Null> Function(Null)));
         completer.future.then((SelectableEntity client) {

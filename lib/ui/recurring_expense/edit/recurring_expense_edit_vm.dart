@@ -48,7 +48,7 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
     AppState? state,
     ExpenseEntity? expense,
     Function(ExpenseEntity)? onChanged,
-    Function(BuildContext)? onSavePressed,
+    Function(BuildContext, [EntityAction?])? onSavePressed,
     Function(BuildContext)? onCancelPressed,
     bool? isLoading,
     bool? isSaving,
@@ -62,8 +62,7 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
           state: state,
           expense: expense,
           onChanged: onChanged,
-          onSavePressed:
-              onSavePressed as dynamic Function(BuildContext, [EntityAction])?,
+          onSavePressed: onSavePressed,
           onCancelPressed: onCancelPressed,
           origExpense: origExpense,
           onAddClientPressed: onAddClientPressed,
@@ -91,10 +90,10 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
             force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()
-              ..future.then((_) {
+              ..future.then<Null>(() {
                 store.dispatch(
                     UpdateCurrentRoute(RecurringExpenseEditScreen.route));
-              } as FutureOr<Null> Function(Null)));
+              } as FutureOr<_> Function(Null)));
         completer.future.then((SelectableEntity client) {
           store.dispatch(UpdateCurrentRoute(RecurringExpenseEditScreen.route));
         });
@@ -106,7 +105,7 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
             force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()
-              ..future.then((_) {
+              ..future.then<Null>(() {
                 store.dispatch(
                     UpdateCurrentRoute(RecurringExpenseEditScreen.route));
               } as FutureOr<Null> Function(Null)));

@@ -17,7 +17,7 @@ class DesignPicker extends StatelessWidget {
     this.initialValue,
   });
 
-  final Function(DesignEntity?) onSelected;
+  final Function(DesignEntity) onSelected;
   final String? label;
   final String? initialValue;
 

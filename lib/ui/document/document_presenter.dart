@@ -57,7 +57,7 @@ class DocumentPresenter extends EntityPresenter {
       case DocumentFields.id:
         return Text(document!.id);
       case DocumentFields.hash:
-        return Text(document.hash);
+        return Text(document!.hash);
       case DocumentFields.linkedTo:
         final parentEntity =
             state.getEntity(document!.parentType, document.parentId);
