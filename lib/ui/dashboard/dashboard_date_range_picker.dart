@@ -13,11 +13,12 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DashboardDateRangePicker extends StatefulWidget {
-  const DashboardDateRangePicker({Key? key, this.state, this.onSettingsChanged})
+  const DashboardDateRangePicker(
+      {Key? key, required this.state, required this.onSettingsChanged})
       : super(key: key);
 
-  final DashboardUIState? state;
-  final Function(DashboardSettings?)? onSettingsChanged;
+  final DashboardUIState state;
+  final Function(DashboardSettings) onSettingsChanged;
 
   @override
   _DashboardDateRangePickerState createState() =>
@@ -196,8 +197,8 @@ class _DashboardDateRangePickerState extends State<DashboardDateRangePicker> {
 
                             if (_settings!.compareDateRange ==
                                     DateRange.custom &&
-                                _settings!.compareStartDate!
-                                        .compareTo(_settings!.compareEndDate!) ==
+                                _settings!.compareStartDate!.compareTo(
+                                        _settings!.compareEndDate!) ==
                                     1) {
                               showDialog<ErrorDialog>(
                                   context: context,
@@ -208,7 +209,7 @@ class _DashboardDateRangePickerState extends State<DashboardDateRangePicker> {
                               return;
                             }
 
-                            widget.onSettingsChanged!(_settings);
+                            widget.onSettingsChanged(_settings!);
                             Navigator.of(context).pop();
                           },
                         ),

@@ -177,8 +177,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     final template = templateMap[_selectedTemplate!.name] ?? TemplateEntity();
 
     SettingsEntity settings = widget.viewModel.settings;
-    String body = _bodyController.text.trim();
-    String subject = _subjectController.text.trim();
+    String? body = _bodyController.text.trim();
+    String? subject = _subjectController.text.trim();
 
     if (subject.isEmpty || subject == template.subject) {
       subject = null;

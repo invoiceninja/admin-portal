@@ -254,7 +254,8 @@ ReportResult recurringExpenseReport(
     }
   }
 
-  final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
+  final selectedColumns =
+      columns.map((item) => EnumUtils.parse(item)!).toList();
   data.sort((rowA, rowB) =>
       sortReportTableRows(rowA, rowB, expenseReportSettings, selectedColumns)!);
 

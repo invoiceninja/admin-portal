@@ -68,7 +68,7 @@ abstract class EmailEntityVM {
   final InvoiceEntity? invoice;
   final ClientEntity? client;
   final VendorEntity? vendor;
-  final Function(BuildContext, EmailTemplate?, String, String, String)?
+  final Function(BuildContext, EmailTemplate, String, String, String)?
       onSendPressed;
 }
 

@@ -176,7 +176,7 @@ class UserDetailsVM {
                   callback: (password, idToken) {
                     final completer = snackBarCompleter<Null>(context,
                         AppLocalization.of(context)!.disconnectedGoogle);
-                    completer.future.then((value) {
+                    completer.future.then<Null>(() {
                       GoogleOAuth.disconnect();
                     } as FutureOr<Null> Function(Null));
                     store.dispatch(
@@ -223,7 +223,7 @@ class UserDetailsVM {
                           .anErrorOccurredTryAgain);
                 }
               } catch (error) {
-                showErrorDialog(message: error);
+                showErrorDialog(message: '$error');
               }
             });
       },
@@ -303,7 +303,7 @@ class UserDetailsVM {
                   showErrorDialog(message: error);
                 });
               } catch (error) {
-                showErrorDialog(message: error);
+                showErrorDialog(message: '$error');
               }
             });
       },

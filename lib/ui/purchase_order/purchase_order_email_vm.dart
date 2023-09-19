@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -88,7 +90,7 @@ class EmailPurchaseOrderVM extends EmailEntityVM {
             context, AppLocalization.of(context)!.emailedPurchaseOrder,
             shouldPop: isMobile(context));
         if (!isMobile(context)) {
-          completer.future.then((value) {
+          completer.future.then<Null>(() {
             viewEntity(entity: purchaseOrder);
           } as FutureOr<Null> Function(Null));
         }
