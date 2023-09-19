@@ -124,7 +124,7 @@ class GroupViewVM {
   final Function(BuildContext, [bool]) onClientsPressed;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, List<MultipartFile>, bool?) onUploadDocuments;
+  final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;

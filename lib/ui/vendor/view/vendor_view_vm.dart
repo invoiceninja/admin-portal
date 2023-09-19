@@ -137,5 +137,5 @@ class VendorViewVM {
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;
-  final Function(BuildContext, List<MultipartFile>, bool?) onUploadDocuments;
+  final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;
 }

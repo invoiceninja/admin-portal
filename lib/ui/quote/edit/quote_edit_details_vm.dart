@@ -56,8 +56,8 @@ class QuoteEditDetailsVM extends EntityEditDetailsVM {
     CompanyEntity? company,
     InvoiceEntity? invoice,
     Function(InvoiceEntity)? onChanged,
-    Function(BuildContext, InvoiceEntity, ClientEntity)? onClientChanged,
-    Function(BuildContext, InvoiceEntity, VendorEntity)? onVendorChanged,
+    Function(BuildContext, InvoiceEntity, ClientEntity?)? onClientChanged,
+    Function(BuildContext, InvoiceEntity, VendorEntity?)? onVendorChanged,
     BuiltMap<String?, ClientEntity?>? clientMap,
     BuiltList<String>? clientList,
     Function(BuildContext context, Completer<SelectableEntity> completer)?
@@ -100,7 +100,7 @@ class QuoteEditDetailsVM extends EntityEditDetailsVM {
             force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()
-              ..future.then((_) {
+              ..future.then<Null>(() {
                 store.dispatch(UpdateCurrentRoute(QuoteEditScreen.route));
               } as FutureOr<Null> Function(Null)));
         completer.future.then((SelectableEntity client) {

@@ -74,7 +74,7 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
     AppState? state,
     ExpenseEntity? expense,
     Function(ExpenseEntity)? onChanged,
-    Function(BuildContext, [EntityAction])? onSavePressed,
+    Function(BuildContext, [EntityAction?])? onSavePressed,
     Function(BuildContext)? onCancelPressed,
     bool? isLoading,
     bool? isSaving,

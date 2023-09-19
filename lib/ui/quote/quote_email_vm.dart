@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -87,7 +89,7 @@ class EmailQuoteVM extends EmailEntityVM {
             context, AppLocalization.of(context)!.emailedQuote,
             shouldPop: isMobile(context));
         if (!isMobile(context)) {
-          completer.future.then((value) {
+          completer.future.then<Null>(() {
             viewEntity(entity: quote);
           } as FutureOr<Null> Function(Null));
         }
