@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
@@ -304,8 +305,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                 clientId: invoice.clientId,
                                 clientState: state.clientState,
                                 onSelected: (client) {
-                                  viewModel.onClientChanged!(
-                                      context, invoice, client as ClientEntity?);
+                                  viewModel.onClientChanged!(context, invoice,
+                                      client as ClientEntity?);
                                 },
                                 onAddPressed: (completer) => viewModel
                                     .onAddClientPressed!(context, completer),
@@ -370,8 +371,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                 items: kFrequencies.entries
                                     .map((entry) => DropdownMenuItem(
                                           value: entry.key,
-                                          child: Text(
-                                              localization.lookup(entry.value)!),
+                                          child: Text(localization
+                                              .lookup(entry.value)!),
                                         ))
                                     .toList()),
                             DatePicker(
@@ -389,8 +390,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               labelText: localization.remainingCycles,
                               value: invoice.remainingCycles,
                               blankValue: null,
-                              onChanged: (dynamic value) => viewModel.onChanged!(
-                                  invoice.rebuild(
+                              onChanged: (dynamic value) =>
+                                  viewModel.onChanged!(invoice.rebuild(
                                       (b) => b..remainingCycles = value)),
                               items: [
                                 DropdownMenuItem(
@@ -570,7 +571,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                           .map((type) =>
                                               Text(localization.lookup(type)!))
                                           .toList(),
-                              onChanged: (dynamic value) => viewModel.onChanged!(
+                              onChanged: (dynamic value) => viewModel
+                                      .onChanged!(
                                   invoice.rebuild((b) => b..autoBill = value)),
                               items: [
                                 SettingsEntity.AUTO_BILL_ALWAYS,
@@ -800,8 +802,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                       UserPicker(
                                         userId: invoice.assignedUserId,
                                         onChanged: (userId) => viewModel
-                                            .onChanged!(invoice.rebuild((b) =>
-                                                b..assignedUserId = userId)),
+                                            .onChanged!(invoice.rebuild((b) => b
+                                          ..assignedUserId = userId)),
                                       ),
                                       if (company
                                           .isModuleEnabled(EntityType.project))
@@ -836,8 +838,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                           clientId: invoice.clientId,
                                           clientState: state.clientState,
                                           onSelected: (client) {
-                                            viewModel.onChanged!(invoice.rebuild(
-                                                (b) => b
+                                            viewModel.onChanged!(
+                                                invoice.rebuild((b) => b
                                                   ..clientId =
                                                       client?.id ?? ''));
                                           },
@@ -876,8 +878,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                                 FormatNumberType.inputMoney),
                                         onChanged: (value) => viewModel
                                             .onChanged!(invoice.rebuild((b) => b
-                                              ..exchangeRate =
-                                                  parseDouble(value))),
+                                          ..exchangeRate = parseDouble(value))),
                                         keyboardType:
                                             TextInputType.numberWithOptions(
                                                 decimal: true),
@@ -905,8 +906,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                                     value: invoice
                                                         .usesInclusiveTaxes,
                                                     onChanged: (value) {
-                                                      viewModel.onChanged!(invoice
-                                                          .rebuild((b) => b
+                                                      viewModel.onChanged!(
+                                                          invoice.rebuild((b) => b
                                                             ..usesInclusiveTaxes =
                                                                 value));
                                                     },
@@ -932,8 +933,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                                     value:
                                                         invoice.autoBillEnabled,
                                                     onChanged: (value) {
-                                                      viewModel.onChanged!(invoice
-                                                          .rebuild((b) => b
+                                                      viewModel.onChanged!(
+                                                          invoice.rebuild((b) => b
                                                             ..autoBillEnabled =
                                                                 value));
                                                     },
@@ -955,8 +956,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                           originalInvoice.documents.toList(),
                                       onUploadDocument: (path, isPrivate) =>
                                           widget.entityViewModel
-                                              .onUploadDocuments!(
-                                                  context, path, isPrivate),
+                                                  .onUploadDocuments!(
+                                              context, path, isPrivate),
                                       onRenamedDocument: () => store.dispatch(
                                           LoadInvoice(invoiceId: invoice.id)),
                                     )
@@ -1030,8 +1031,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                     invoice.taxName1.isNotEmpty)
                                   TaxRateDropdown(
                                     onSelected: (taxRate) {
-                                      viewModel
-                                          .onChanged!(invoice.applyTax(taxRate));
+                                      viewModel.onChanged!(
+                                          invoice.applyTax(taxRate!));
                                     },
                                     labelText: localization.tax +
                                         (company.settings.enableInclusiveTaxes!
@@ -1045,7 +1046,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   TaxRateDropdown(
                                     onSelected: (taxRate) {
                                       viewModel.onChanged!(invoice
-                                          .applyTax(taxRate, isSecond: true));
+                                          .applyTax(taxRate!, isSecond: true));
                                     },
                                     labelText: localization.tax +
                                         (company.settings.enableInclusiveTaxes!
@@ -1059,9 +1060,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   TaxRateDropdown(
                                     onSelected: (taxRate) {
                                       final updatedInvoice = invoice
-                                          .applyTax(taxRate, isThird: true);
-                                      print(
-                                          '## UPDATED\nRate 3: ${updatedInvoice.taxName3} => ${updatedInvoice.taxRate3}');
+                                          .applyTax(taxRate!, isThird: true);
                                       viewModel.onChanged!(invoice
                                           .applyTax(taxRate, isThird: true));
                                     },

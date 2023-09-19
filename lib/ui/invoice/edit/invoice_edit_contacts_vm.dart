@@ -53,8 +53,8 @@ class EntityEditContactsVM {
   final InvoiceEntity? invoice;
   final ClientEntity? client;
   final VendorEntity? vendor;
-  final Function(ClientContactEntity?) onAddClientContact;
-  final Function(VendorContactEntity?) onAddVendorContact;
+  final Function(ClientContactEntity) onAddClientContact;
+  final Function(VendorContactEntity) onAddVendorContact;
   final Function(InvitationEntity) onRemoveContact;
 }
 

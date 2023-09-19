@@ -424,7 +424,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 invoice.taxName1.isNotEmpty)
               TaxRateDropdown(
                 onSelected: (taxRate) =>
-                    viewModel.onChanged!(invoice.applyTax(taxRate)),
+                    viewModel.onChanged!(invoice.applyTax(taxRate!)),
                 labelText: localization.tax +
                     (company.settings.enableInclusiveTaxes!
                         ? ' - ${localization.inclusive}'

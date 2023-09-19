@@ -1,9 +1,11 @@
 // Flutter imports:
+import 'dart:async';
 import 'dart:convert';
 
 // Package imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/purchase_order_model.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
@@ -144,7 +146,9 @@ class _InvoiceDesignState extends State<InvoiceDesign>
       ..companyLogoSize = logoSize.isEmpty
           ? ''
           : logoSize +
-              (viewModel.settings.companyLogoSize!.contains('px') ? 'px' : '%'));
+              (viewModel.settings.companyLogoSize!.contains('px')
+                  ? 'px'
+                  : '%'));
     if (settings != viewModel.settings) {
       _debouncer.run(() {
         viewModel.onSettingsChanged(settings);

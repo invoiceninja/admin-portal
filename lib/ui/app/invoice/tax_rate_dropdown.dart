@@ -19,7 +19,7 @@ class TaxRateDropdown extends StatefulWidget {
   }) : super(key: key);
 
   final String? labelText;
-  final Function(TaxRateEntity?) onSelected;
+  final Function(TaxRateEntity) onSelected;
   final String? initialTaxName;
   final double? initialTaxRate;
 

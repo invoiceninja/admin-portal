@@ -296,7 +296,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     onSelected: (value) {
                       final parts = subscription.recurringProductIds.split(',');
                       viewModel.onChanged(subscription.rebuild((b) => b
-                        ..recurringProductIds = <String>[...parts, value.id]
+                        ..recurringProductIds = <String>[...parts, value!.id]
                             .where((part) => part.isNotEmpty)
                             .join(',')));
 

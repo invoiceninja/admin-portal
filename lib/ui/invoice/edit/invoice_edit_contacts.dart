@@ -62,7 +62,7 @@ class InvoiceEditContacts extends StatelessWidget {
             invoice: invoice,
             invitation: invitation,
             onTap: () => invitation == null
-                ? viewModel.onAddVendorContact(contact)
+                ? viewModel.onAddVendorContact(contact!)
                 : viewModel.onRemoveContact(invitation),
           );
         }).toList(),
@@ -97,7 +97,7 @@ class InvoiceEditContacts extends StatelessWidget {
             invoice: invoice,
             invitation: invitation,
             onTap: () => invitation == null
-                ? viewModel.onAddClientContact(contact)
+                ? viewModel.onAddClientContact(contact!)
                 : viewModel.onRemoveContact(invitation),
           );
         }).toList(),

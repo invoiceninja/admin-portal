@@ -189,7 +189,7 @@ class _ImportExportState extends State<ImportExport> {
               )
             else
               _FileMapper(
-                key: ValueKey(_response.hash),
+                key: ValueKey(_response!.hash),
                 importType: _importFormat,
                 formKey: _formKey,
                 response: _response,
@@ -220,8 +220,8 @@ class _ImportExportState extends State<ImportExport> {
                           ]
                               .map((importType) => DropdownMenuItem<ImportType>(
                                   value: importType,
-                                  child:
-                                      Text(localization.lookup('$importType')!)))
+                                  child: Text(
+                                      localization.lookup('$importType')!)))
                               .toList()),
                     ),
                   ),
@@ -253,7 +253,8 @@ class _ImportExportState extends State<ImportExport> {
                         items: DATE_FIELDS[_exportType]!
                             .map((dateField) => DropdownMenuItem<String>(
                                 value: dateField,
-                                child: Text(localization.lookup('$dateField')!)))
+                                child:
+                                    Text(localization.lookup('$dateField')!)))
                             .toList(),
                       ),
                       if (_exportDate.isNotEmpty)
@@ -777,7 +778,7 @@ class __FileMapperState extends State<_FileMapper> {
                   setState(() => _isLoading = true);
 
                   final importRequest = ImportRequest(
-                    hash: widget.response.hash,
+                    hash: widget.response!.hash,
                     skipHeader: _useFirstRowAsHeaders,
                     columnMap: BuiltMap(convertedMapping),
                     importType: widget.importType.name,
@@ -862,7 +863,8 @@ class _FieldMapper extends StatelessWidget {
           isExpanded: true,
           value: available.contains(mappedTo) ? mappedTo : null,
           validator: (value) => (value ?? '').isNotEmpty &&
-                  mapping!.values.where((element) => element == value).length > 1
+                  mapping!.values.where((element) => element == value).length >
+                      1
               ? localization!.duplicateColumnMapping
               : null,
           onChanged: onMappedToChanged as void Function(String?)?,
