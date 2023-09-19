@@ -141,7 +141,7 @@ class AppPaginatedDataTable extends StatefulWidget {
   /// checkbox in the heading row.
   ///
   /// See [DataTable.onSelectAll].
-  final ValueSetter<bool>? onSelectAll;
+  final ValueSetter<bool?>? onSelectAll;
 
   /// The height of each row (excluding the row that contains column headings).
   ///

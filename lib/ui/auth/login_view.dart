@@ -185,11 +185,11 @@ class _LoginState extends State<LoginView> {
 
     final Completer<Null> completer = Completer<Null>();
     completer.future
-        .then((_) {
+        .then<Null>(() {
       setState(() {
         _loginError = '';
       });
-    } as FutureOr<_> Function(Null))
+    } as FutureOr<Null> Function(Null))
         .catchError((Object error) {
       setState(() {
         _buttonController.reset();

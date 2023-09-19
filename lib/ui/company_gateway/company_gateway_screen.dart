@@ -72,8 +72,9 @@ class CompanyGatewayScreen extends StatelessWidget {
                       entities: companyGateways,
                       multiselect: true,
                       completer: Completer<Null>()
-                        ..future.then<dynamic>(((_) =>
-                            store.dispatch(ClearCompanyGatewayMultiselect())) as FutureOr<dynamic> Function(Null)),
+                        ..future.then<Null>((() => store
+                                .dispatch(ClearCompanyGatewayMultiselect()))
+                            as FutureOr<Null> Function(Null)),
                     );
                   },
             onCancelPressed: (context) =>

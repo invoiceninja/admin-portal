@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:math';
 
 // Flutter imports:
+import 'package:built_collection/built_collection.dart';
 import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:flutter/material.dart' hide DataRow, DataCell, DataColumn;
 
@@ -116,7 +117,8 @@ class _EntityListState extends State<EntityList> {
     final uiState = state.getUIState(widget.entityType)!;
     dataTableSource.editingId = uiState.editingId;
     dataTableSource.entityList = widget.entityList;
-    dataTableSource.entityMap = state.getEntityMap(widget.entityType) as BuiltMap<String?, BaseEntity?>?;
+    dataTableSource.entityMap = state.getEntityMap(widget.entityType)
+        as BuiltMap<String?, BaseEntity?>?;
 
     // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
     dataTableSource.notifyListeners();
@@ -254,8 +256,8 @@ class _EntityListState extends State<EntityList> {
                           min(_firstRowIndex + rowsPerPage, entityList.length);
                       final entities = entityList
                           .sublist(startIndex, endIndex)
-                          .map<BaseEntity?>(
-                              (String? entityId) => entityMap![entityId] as BaseEntity?)
+                          .map<BaseEntity?>((String? entityId) =>
+                              entityMap![entityId] as BaseEntity?)
                           .where((invoice) =>
                               value != listUIState.isSelected(invoice!.id))
                           .toList();
@@ -285,16 +287,18 @@ class _EntityListState extends State<EntityList> {
                       }),
                     ],
                     source: dataTableSource,
-                    sortColumnIndex:
-                        widget.tableColumns!.contains(listUIState.sortField)
-                            ? widget.tableColumns!.indexOf(listUIState.sortField)
-                            : 0,
+                    sortColumnIndex: widget.tableColumns!
+                            .contains(listUIState.sortField)
+                        ? widget.tableColumns!.indexOf(listUIState.sortField)
+                        : 0,
                     sortAscending: listUIState.sortAscending,
                     rowsPerPage: state.prefState.rowsPerPage,
                     onPageChanged: (row) {
-                      _firstRowIndex = row;
-                      store.dispatch(UpdateLastHistory(
-                          (row / state.prefState.rowsPerPage).floor()));
+                      if (row != null) {
+                        _firstRowIndex = row;
+                        store.dispatch(UpdateLastHistory(
+                            (row / state.prefState.rowsPerPage).floor()));
+                      }
                     },
                     initialFirstRowIndex: _firstRowIndex,
                     availableRowsPerPage: [
@@ -358,8 +362,8 @@ class _EntityListState extends State<EntityList> {
                               min(entityList.length, kMaxEntitiesPerBulkAction);
                           final entities = entityList
                               .sublist(0, endIndex)
-                              .map<BaseEntity?>(
-                                  (entityId) => entityMap![entityId] as BaseEntity?)
+                              .map<BaseEntity?>((entityId) =>
+                                  entityMap![entityId] as BaseEntity?)
                               .toList();
                           handleEntitiesActions(
                               entities, EntityAction.toggleMultiselect);
@@ -466,8 +470,9 @@ class _EntityListState extends State<EntityList> {
                             entities: entities,
                             multiselect: true,
                             completer: Completer<Null>()
-                              ..future.then<dynamic>(
-                                  ((_) => widget.onClearMultiselect()) as FutureOr<dynamic> Function(Null)),
+                              ..future.then<Null>((() =>
+                                      widget.onClearMultiselect())
+                                  as FutureOr<Null> Function(Null)),
                           );
                         },
                         onCancelPressed: (_) => widget.onClearMultiselect(),

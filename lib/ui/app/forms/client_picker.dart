@@ -29,7 +29,7 @@ class ClientPicker extends StatelessWidget {
 
   final String? clientId;
   final ClientState clientState;
-  final Function(SelectableEntity) onSelected;
+  final Function(SelectableEntity?) onSelected;
   final Function(Completer<SelectableEntity> completer)? onAddPressed;
   final bool? autofocus;
   final List<String> excludeIds;

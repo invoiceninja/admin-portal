@@ -68,7 +68,7 @@ class EntityEditDetailsVM {
   final Function(InvoiceEntity)? onChanged;
   final Function(BuildContext context, InvoiceEntity, ClientEntity?)?
       onClientChanged;
-  final Function(BuildContext context, InvoiceEntity, VendorEntity)?
+  final Function(BuildContext context, InvoiceEntity, VendorEntity?)?
       onVendorChanged;
   final BuiltMap<String?, ClientEntity?>? clientMap;
   final BuiltList<String>? clientList;

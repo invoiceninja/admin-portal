@@ -117,7 +117,7 @@ class _DatePickerState extends State<DatePicker> {
 
   @override
   Widget build(BuildContext context) {
-    var label = widget.labelText;
+    var label = widget.labelText ?? '';
     if (widget.message != null && (widget.selectedDate ?? '').isEmpty) {
       label += ' • ${widget.message}';
     }
@@ -130,7 +130,7 @@ class _DatePickerState extends State<DatePicker> {
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         hintText: widget.hint ?? '',
-        labelText: _pendingValue ?? label ?? '',
+        labelText: _pendingValue ?? label,
         suffixIcon:
             widget.allowClearing && (widget.selectedDate ?? '').isNotEmpty
                 ? IconButton(

@@ -28,7 +28,7 @@ class VendorPicker extends StatelessWidget {
 
   final String vendorId;
   final VendorState vendorState;
-  final Function(SelectableEntity) onSelected;
+  final Function(SelectableEntity?) onSelected;
   final Function(Completer<SelectableEntity> completer) onAddPressed;
   final bool? autofocus;
 

@@ -393,7 +393,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
                                           : kDefaultLightSelectedColor)
                                   : Theme.of(context).cardColor,
                               child: EntityAutocompleteListTile(
-                                onTap: (entity) => onSelected(entity),
+                                onTap: (entity) => onSelected(entity!),
                                 entity: options.elementAt(index),
                                 filter: _filter,
                                 overrideSuggestedAmount:
@@ -550,7 +550,7 @@ class _EntityDropdownDialogState extends State<EntityDropdownDialog> {
         itemCount: matches.length,
         itemBuilder: (BuildContext context, int index) {
           final entityId = matches[index];
-          final entity = widget.entityMap![entityId];
+          final entity = widget.entityMap![entityId]!;
           return EntityAutocompleteListTile(
             entity: entity,
             filter: _filter,
@@ -586,12 +586,12 @@ class EntityAutocompleteListTile extends StatelessWidget {
       this.onTap,
       this.subtitle});
 
-  final SelectableEntity? entity;
-  final Function(SelectableEntity? entity)? onTap;
+  final SelectableEntity entity;
+  final Function(SelectableEntity entity)? onTap;
   final String? filter;
   final String? subtitle;
-  final Function(SelectableEntity?)? overrideSuggestedAmount;
-  final Function(SelectableEntity?)? overrideSuggestedLabel;
+  final Function(SelectableEntity)? overrideSuggestedAmount;
+  final Function(SelectableEntity)? overrideSuggestedLabel;
 
   @override
   Widget build(BuildContext context) {

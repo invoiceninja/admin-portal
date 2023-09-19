@@ -115,10 +115,8 @@ class LoginVM {
       onMicrosoftSignUpPressed;
 
   final Function(BuildContext, Completer<Null> completer,
-      {String url,
-      String? secret,
-      String? oneTimePassword}) onAppleLoginPressed;
-  final Function(BuildContext, Completer<Null> completer, String? url)
+      {String url, String secret, String oneTimePassword}) onAppleLoginPressed;
+  final Function(BuildContext, Completer<Null> completer, String url)
       onAppleSignUpPressed;
 
   static LoginVM fromStore(Store<AppState> store) {
@@ -164,9 +162,9 @@ class LoginVM {
       onGoogleLoginPressed: (
         BuildContext context,
         Completer<Null> completer, {
-        required String url,
-        required String secret,
-        required String oneTimePassword,
+        String url = '',
+        String secret = '',
+        String oneTimePassword = '',
       }) async {
         try {
           await GoogleOAuth.signOut();
@@ -286,9 +284,9 @@ class LoginVM {
       onAppleLoginPressed: (
         BuildContext context,
         Completer<Null> completer, {
-        required String url,
-        required String secret,
-        required String oneTimePassword,
+        String url = '',
+        String secret = '',
+        String oneTimePassword = '',
       }) async {
         try {
           final credentials = await SignInWithApple.getAppleIDCredential(

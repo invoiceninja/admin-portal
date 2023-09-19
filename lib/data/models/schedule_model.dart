@@ -130,7 +130,8 @@ abstract class ScheduleEntity extends Object
     return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
-  int compareTo(ScheduleEntity? schedule, String sortField, bool sortAscending) {
+  int compareTo(
+      ScheduleEntity? schedule, String sortField, bool sortAscending) {
     int response = 0;
     final scheduleA = sortAscending ? this : schedule;
     final scheduleB = sortAscending ? schedule : this;
@@ -174,9 +175,9 @@ abstract class ScheduleEntity extends Object
   }
 
   @override
-  String? get listDisplayName {
+  String get listDisplayName {
     final localization = AppLocalization.of(navigatorKey.currentContext!)!;
-    return localization.lookup(template);
+    return localization.lookup(template) ?? '';
   }
 
   @override
@@ -204,7 +205,7 @@ abstract class ScheduleParameters
       showPaymentsTable:
           action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT ? true : null,
       onlyClientsWithInvoices:
-        action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT ? false : null,
+          action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT ? false : null,
       showCreditsTable:
           action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT ? true : null,
       status: action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT

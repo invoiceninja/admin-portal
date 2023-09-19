@@ -67,7 +67,7 @@ class EntityEditItemsVM {
   final int? invoiceItemIndex;
   final Function? addLineItem;
   final Function? deleteLineItem;
-  final Function(int?)? onRemoveInvoiceItemPressed;
+  final Function(int)? onRemoveInvoiceItemPressed;
   final Function? clearSelectedInvoiceItem;
   final Function(InvoiceItemEntity, int?)? onChangedInvoiceItem;
   final Function(int, int)? onMovedInvoiceItem;

@@ -78,8 +78,9 @@ class TaskStatusScreen extends StatelessWidget {
                 entities: taskStatusIds,
                 multiselect: true,
                 completer: Completer<Null>()
-                  ..future.then<dynamic>(
-                      ((_) => store.dispatch(ClearTaskStatusMultiselect())) as FutureOr<dynamic> Function(Null)),
+                  ..future.then<Null>((() =>
+                          store.dispatch(ClearTaskStatusMultiselect()))
+                      as FutureOr<Null> Function(Null)),
               );
             },
             label: localization!.actions,

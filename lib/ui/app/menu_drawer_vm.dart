@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -138,7 +140,7 @@ class MenuDrawerVM {
               final completer = snackBarCompleter<Null>(
                   context, AppLocalization.of(context)!.addedCompany,
                   shouldPop: true)
-                ..future.then((value) {
+                ..future.then<Null>(() {
                   AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
                 } as FutureOr<Null> Function(Null));
 

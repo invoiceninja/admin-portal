@@ -49,7 +49,7 @@ class AppBottomBar extends StatefulWidget {
   final List<String> sortFields;
   final List<EntityStatus> statuses;
   final Function onCheckboxPressed;
-  final Function(String?)? onSelectedSortField;
+  final Function(String)? onSelectedSortField;
   final Function(EntityState, bool?)? onSelectedState;
   final Function(EntityStatus, bool?)? onSelectedStatus;
   final Function(String)? onSelectedCustom1;
@@ -258,7 +258,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                                 listUIState.sortField == field) {
                               // Is re-selecting
                               widget.onSelectedSortField!(field);
-                            } else {
+                            } else if (value != null) {
                               widget.onSelectedSortField!(value);
                             }
                           },
