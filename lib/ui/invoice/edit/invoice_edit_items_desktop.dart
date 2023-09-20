@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -676,8 +678,10 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                   return <ProductEntity>[];
                                 }
 
-                                return options as FutureOr<Iterable<ProductEntity>>;
-                              } as FutureOr<Iterable<ProductEntity>> Function(TextEditingValue),
+                                return options
+                                    as FutureOr<Iterable<ProductEntity>>;
+                              } as FutureOr<Iterable<ProductEntity>> Function(
+                                      TextEditingValue),
                               displayStringForOption: (product) =>
                                   product.productKey,
                               onSelected: (product) {
@@ -818,8 +822,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                                         .cardColor,
                                                 child:
                                                     EntityAutocompleteListTile(
-                                                  onTap: (entity) =>
-                                                      onSelected(entity as ProductEntity),
+                                                  onTap: (entity) => onSelected(
+                                                      entity as ProductEntity),
                                                   overrideSuggestedAmount:
                                                       (entity) {
                                                     final product =
@@ -1162,6 +1166,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             ),
                           ),
                         );
+                      } else {
+                        return SizedBox();
                       }
                     }).toList(),
                     Padding(

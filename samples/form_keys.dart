@@ -243,7 +243,7 @@ class ContactForm extends StatefulWidget {
   }) : super(key: key);
 
   final ContactEntity contact;
-  final Function(GlobalKey<ContactFormState>?) onRemovePressed;
+  final Function(GlobalKey<ContactFormState>) onRemovePressed;
 
   @override
   ContactFormState createState() => ContactFormState();
@@ -274,7 +274,8 @@ class ContactFormState extends State<ContactForm> {
             Padding(
               padding: const EdgeInsets.only(top: 12.0),
               child: TextButton(
-                onPressed: () => widget.onRemovePressed(widget.key as GlobalKey<ContactFormState>?),
+                onPressed: () => widget
+                    .onRemovePressed(widget.key as GlobalKey<ContactFormState>),
                 child: Text(
                   'Delete',
                   style: TextStyle(

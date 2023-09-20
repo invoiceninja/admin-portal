@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:async';
+
 import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:flutter/material.dart' hide DataRow, DataCell, DataColumn;
 import 'package:flutter/material.dart' as mt;
@@ -961,7 +963,7 @@ class ReportResult {
   }
 
   static bool matchDateTime({
-    String? filter,
+    required String filter,
     required String value,
     required UserCompanyEntity userCompany,
     required ReportsUIState reportsUIState,
@@ -1165,7 +1167,7 @@ class ReportResult {
             showBlank: true,
             blankValue: null,
             value: (reportState.filters[column] ?? '').isNotEmpty
-                ? DateRange.valueOf(reportState.filters[column])
+                ? DateRange.valueOf(reportState.filters[column]!)
                 : null,
             onChanged: (dynamic value) {
               if (value == null) {
@@ -1213,7 +1215,7 @@ class ReportResult {
               focusNode: textEditingFocusNodes![column],
               optionsBuilder: (TextEditingValue textEditingValue) {
                 final filter = textEditingValue.text.toLowerCase();
-                final index = columns.indexOf(column);
+                final index = columns.indexOf(column!);
                 final options = data
                     .where((row) =>
                         row[index]
@@ -1327,7 +1329,7 @@ class ReportResult {
       final row = data[index - 1];
       final cells = <DataCell>[];
       for (var j = 0; j < row.length; j++) {
-        final index = columns.indexOf(sorted[j]);
+        final index = columns.indexOf(sorted[j]!);
         final cell = row[index];
         final column = sorted[j];
         cells.add(
@@ -1534,13 +1536,14 @@ class ReportResult {
             totals[currencyId] = {'count': 0};
           }
           if (!countedRow) {
-            totals[currencyId]!['count']++;
+            totals[currencyId]!['count'] = totals[currencyId]!['count']! + 1;
             countedRow = true;
           }
           if (!totals[currencyId]!.containsKey(column)) {
             totals[currencyId]![column] = 0;
           }
-          totals[currencyId]![column] += cell.doubleValue!;
+          totals[currencyId]![column] =
+              totals[currencyId]![column]! + cell.doubleValue!;
         }
       }
     }

@@ -502,6 +502,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
             onCutPressed: _cut,
             onCopyPressed: _copy,
             onPastePressed: _paste,
+            focalPoint: _overlayController.toolbarTopAnchor!,
           ),
           overlayController: _overlayController,
         ),

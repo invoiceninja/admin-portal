@@ -49,8 +49,8 @@ class RecurringExpenseViewScreen extends StatelessWidget {
 
 class RecurringExpenseViewVM extends AbstractExpenseViewVM {
   RecurringExpenseViewVM({
+    required ExpenseEntity expense,
     AppState? state,
-    ExpenseEntity? expense,
     CompanyEntity? company,
     Function(BuildContext, EntityAction)? onEntityAction,
     Function(BuildContext)? onRefreshed,

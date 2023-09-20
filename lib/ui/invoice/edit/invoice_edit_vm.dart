@@ -78,8 +78,8 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
     InvoiceEntity? invoice,
     int? invoiceItemIndex,
     InvoiceEntity? origInvoice,
-    Function(BuildContext, [EntityAction])? onSavePressed,
-    Function(List<InvoiceItemEntity>, String, String)? onItemsAdded,
+    Function(BuildContext, [EntityAction?])? onSavePressed,
+    Function(List<InvoiceItemEntity>, String?, String?)? onItemsAdded,
     bool? isSaving,
     Function(BuildContext)? onCancelPressed,
     Function(BuildContext, List<MultipartFile>, bool?)? onUploadDocuments,
@@ -202,7 +202,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
       },
       onItemsAdded: (items, clientId, projectId) {
         if ((clientId ?? '').isNotEmpty || (projectId ?? '').isNotEmpty) {
-          final client = state.clientState.get(clientId);
+          final client = state.clientState.get(clientId!);
           store.dispatch(UpdateInvoice(invoice.rebuild((b) => b
             ..clientId = clientId ?? ''
             ..projectId = projectId ?? ''

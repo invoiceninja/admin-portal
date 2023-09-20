@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -71,8 +72,8 @@ class ReportCharts extends StatelessWidget {
                 data: viewModel.groupTotals.rows!.map((key) {
                   return {
                     'name': key,
-                    'value': viewModel.groupTotals.totals![key]!
-                        [reportState.chart]
+                    'value':
+                        viewModel.groupTotals.totals![key]![reportState.chart]
                   };
                 }).toList()) as Series<dynamic, String>
           ],
@@ -98,8 +99,8 @@ class ReportCharts extends StatelessWidget {
                 data: keys.map((key) {
                   return {
                     'name': key,
-                    'value': viewModel.groupTotals.totals![key]!
-                        [reportState.chart]
+                    'value':
+                        viewModel.groupTotals.totals![key]![reportState.chart]
                   };
                 }).toList()) as Series<dynamic, DateTime>
           ],

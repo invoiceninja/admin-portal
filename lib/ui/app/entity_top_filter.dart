@@ -115,7 +115,8 @@ class EntityTopFilter extends StatelessWidget {
                                   constraints: BoxConstraints(maxWidth: 220),
                                   child: Text(
                                     EntityPresenter()
-                                        .initialize(filterEntity as BaseEntity?, context)
+                                        .initialize(
+                                            filterEntity as BaseEntity, context)
                                         .title()!,
                                     style: TextStyle(
                                         fontSize: 17,
@@ -153,7 +154,8 @@ class EntityTopFilter extends StatelessWidget {
                                       onPressed: () {
                                         viewEntitiesByType(
                                           entityType: relatedTypes[i],
-                                          filterEntity: filterEntity as BaseEntity?,
+                                          filterEntity:
+                                              filterEntity as BaseEntity?,
                                         );
                                       },
                                       onLongPress: () {
@@ -206,7 +208,8 @@ class EntityTopFilter extends StatelessWidget {
                                     } else {
                                       viewEntitiesByType(
                                         entityType: value,
-                                        filterEntity: filterEntity as BaseEntity?,
+                                        filterEntity:
+                                            filterEntity as BaseEntity?,
                                       );
                                     }
                                   },

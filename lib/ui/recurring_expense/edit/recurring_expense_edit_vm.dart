@@ -93,7 +93,7 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
               ..future.then<Null>(() {
                 store.dispatch(
                     UpdateCurrentRoute(RecurringExpenseEditScreen.route));
-              } as FutureOr<_> Function(Null)));
+              } as FutureOr<Null> Function(Null)));
         completer.future.then((SelectableEntity client) {
           store.dispatch(UpdateCurrentRoute(RecurringExpenseEditScreen.route));
         });

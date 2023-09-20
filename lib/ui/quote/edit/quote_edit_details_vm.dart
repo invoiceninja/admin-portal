@@ -90,7 +90,9 @@ class QuoteEditDetailsVM extends EntityEditDetailsVM {
       clientMap: state.clientState.map,
       clientList: state.clientState.list,
       onClientChanged: (context, quote, client) {
-        store.dispatch(UpdateQuote(quote.applyClient(state, client)));
+        if (client != null) {
+          store.dispatch(UpdateQuote(quote.applyClient(state, client)));
+        }
         store.dispatch(UpdateQuoteClient(client: client));
       },
       onAddClientPressed: (context, completer) {

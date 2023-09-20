@@ -330,7 +330,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                     EntityPresenter()
                                         .initialize(
                                             invoice.isPurchaseOrder
-                                                ? vendor
+                                                ? vendor!
                                                 : client,
                                             context)
                                         .title()!,

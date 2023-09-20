@@ -12,7 +12,10 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EntityPresenter {
-  EntityPresenter initialize(BaseEntity? entity, BuildContext context) {
+  EntityPresenter initialize(
+    BaseEntity entity,
+    BuildContext context,
+  ) {
     this.entity = entity;
     this.context = context;
 

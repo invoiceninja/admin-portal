@@ -61,7 +61,7 @@ class TransactionViewVM {
       transactionIds = [state.transactionUIState.selectedId];
     }
 
-    transactionIds.forEach((transactionId) {
+    transactionIds.forEach((String transactionId) {
       transactions.add(state.transactionState.map[transactionId] ??
           TransactionEntity(id: transactionId));
     } as void Function(String?));
@@ -118,14 +118,14 @@ class TransactionViewVM {
           ConvertTransactionsToExpensesRequest(
             snackBarCompleter<Null>(
                 context, AppLocalization.of(context)!.convertedTransaction)
-              ..future.then((value) {
+              ..future.then<Null>(() {
                 if (state.transactionListState.isInMultiselect()) {
                   store.dispatch(ClearTransactionMultiselect());
                   if (store.state.prefState.isPreviewVisible) {
                     store.dispatch(TogglePreviewSidebar());
                   }
                 }
-              } as FutureOr<_> Function(Null)),
+              } as FutureOr<Null> Function(Null)),
             transactionIds,
             vendorId,
             categoryId,

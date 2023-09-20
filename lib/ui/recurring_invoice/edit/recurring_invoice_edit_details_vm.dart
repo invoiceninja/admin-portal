@@ -92,8 +92,10 @@ class RecurringInvoiceEditDetailsVM extends EntityEditDetailsVM {
       clientMap: state.clientState.map,
       clientList: state.clientState.list,
       onClientChanged: (context, invoice, client) {
-        store.dispatch(
-            UpdateRecurringInvoice(invoice.applyClient(state, client)));
+        if (client != null) {
+          store.dispatch(
+              UpdateRecurringInvoice(invoice.applyClient(state, client)));
+        }
         store.dispatch(UpdateRecurringInvoiceClient(client: client));
       },
       onAddClientPressed: (context, completer) {

@@ -52,8 +52,8 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
     InvoiceEntity? purchaseOrder,
     int? invoiceItemIndex,
     InvoiceEntity? origInvoice,
-    Function(BuildContext, [EntityAction])? onSavePressed,
-    Function(List<InvoiceItemEntity>, String, String)? onItemsAdded,
+    Function(BuildContext, [EntityAction?])? onSavePressed,
+    Function(List<InvoiceItemEntity>, String?, String?)? onItemsAdded,
     bool? isSaving,
     Function(BuildContext)? onCancelPressed,
     Function(BuildContext, List<MultipartFile>, bool?)? onUploadDocuments,
@@ -116,7 +116,8 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
                 store.dispatch(
                     UpdateCurrentRoute(PurchaseOrderViewScreen.route));
                 if (purchaseOrder.isNew) {
-                  navigator!.pushReplacementNamed(PurchaseOrderViewScreen.route);
+                  navigator!
+                      .pushReplacementNamed(PurchaseOrderViewScreen.route);
                 } else {
                   navigator!.pop(savedPurchaseOrder);
                 }

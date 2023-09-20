@@ -101,8 +101,10 @@ class CompanyGatewayEditVM {
                 store.dispatch(SaveCompanyRequest(
                     completer: Completer<Null>(),
                     company: company.rebuild((b) => b
-                      ..settings.companyGatewayIds +=
-                          ',' + savedCompanyGateway.id)));
+                      ..settings.companyGatewayIds =
+                          company.settings.companyGatewayIds! +
+                              ',' +
+                              savedCompanyGateway.id)));
               }
 
               if (state.prefState.isMobile) {

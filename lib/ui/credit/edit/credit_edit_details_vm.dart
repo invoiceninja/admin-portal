@@ -57,8 +57,8 @@ class CreditEditDetailsVM extends EntityEditDetailsVM {
     CompanyEntity? company,
     InvoiceEntity? invoice,
     Function(InvoiceEntity)? onChanged,
-    Function(BuildContext, InvoiceEntity, ClientEntity)? onClientChanged,
-    Function(BuildContext, InvoiceEntity, VendorEntity)? onVendorChanged,
+    Function(BuildContext, InvoiceEntity, ClientEntity?)? onClientChanged,
+    Function(BuildContext, InvoiceEntity, VendorEntity?)? onVendorChanged,
     BuiltMap<String?, ClientEntity?>? clientMap,
     BuiltList<String>? clientList,
     Function(BuildContext context, Completer<SelectableEntity> completer)?
@@ -91,7 +91,9 @@ class CreditEditDetailsVM extends EntityEditDetailsVM {
       clientMap: state.clientState.map,
       clientList: state.clientState.list,
       onClientChanged: (context, credit, client) {
-        store.dispatch(UpdateCredit(credit.applyClient(state, client)));
+        if (client != null) {
+          store.dispatch(UpdateCredit(credit.applyClient(state, client)));
+        }
         store.dispatch(UpdateCreditClient(client: client));
       },
       onAddClientPressed: (context, completer) {

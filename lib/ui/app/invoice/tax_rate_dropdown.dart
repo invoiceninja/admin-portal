@@ -91,7 +91,7 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
             value: taxRate,
             isExpanded: true,
             isDense: true,
-            onChanged: widget.onSelected,
+            onChanged: (rate) => widget.onSelected(rate!),
             items: [
               if (!taxRate.isEmpty)
                 DropdownMenuItem(

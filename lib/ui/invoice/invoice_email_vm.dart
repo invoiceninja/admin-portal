@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -111,7 +113,7 @@ class EmailInvoiceVM extends EmailEntityVM {
             context, AppLocalization.of(context)!.emailedInvoice,
             shouldPop: isMobile(context));
         if (!isMobile(context)) {
-          completer.future.then((value) {
+          completer.future.then<Null>(() {
             viewEntity(entity: invoice);
           } as FutureOr<Null> Function(Null));
         }

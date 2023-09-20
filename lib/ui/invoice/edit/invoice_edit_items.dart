@@ -46,7 +46,7 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
             viewModel: viewModel,
             entityViewModel: widget.entityViewModel,
             key: ValueKey('__${lineItemIndex}__'),
-            invoiceItem: invoice.lineItems[lineItemIndex!],
+            invoiceItem: invoice.lineItems[lineItemIndex!]!,
             index: lineItemIndex,
           );
         });
@@ -97,8 +97,8 @@ class ItemEditDetails extends StatefulWidget {
     required this.entityViewModel,
   }) : super(key: key);
 
-  final int? index;
-  final InvoiceItemEntity? invoiceItem;
+  final int index;
+  final InvoiceItemEntity invoiceItem;
   final EntityEditItemsVM viewModel;
   final AbstractInvoiceEditVM entityViewModel;
 

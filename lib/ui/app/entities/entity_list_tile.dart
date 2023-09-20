@@ -34,7 +34,8 @@ class EntityListTile extends StatefulWidget {
   final BaseEntity? entity;
   final bool isFilter;
   final ClientEntity? client;
-  final Function(BuildContext, BaseEntity?, EntityAction)? onEntityActionSelected;
+  final Function(BuildContext, BaseEntity?, EntityAction)?
+      onEntityActionSelected;
 
   @override
   _EntityListTileState createState() => _EntityListTileState();
@@ -64,8 +65,9 @@ class _EntityListTileState extends State<EntityListTile> {
             _isHovered;
 
     final leading = ActionMenuButton(
-      iconData:
-          isHovered ? Icons.more_vert : getEntityIcon(widget.entity!.entityType),
+      iconData: isHovered
+          ? Icons.more_vert
+          : getEntityIcon(widget.entity!.entityType),
       iconSize: isHovered ? null : 18,
       entityActions: widget.entity!.getActions(
           userCompany: state.userCompany,
@@ -146,7 +148,7 @@ class _EntityListTileState extends State<EntityListTile> {
               onLongPress: () =>
                   inspectEntity(entity: widget.entity, longPress: true),
               title: Text(
-                EntityPresenter().initialize(widget.entity, context).title()!,
+                EntityPresenter().initialize(widget.entity!, context).title()!,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -166,8 +168,8 @@ class _EntityListTileState extends State<EntityListTile> {
                   : null,
               leading: leading,
               trailing: trailing,
-              isThreeLine:
-                  (widget.subtitle ?? '').isNotEmpty && !widget.entity!.isActive,
+              isThreeLine: (widget.subtitle ?? '').isNotEmpty &&
+                  !widget.entity!.isActive,
             ),
           ),
           ListDivider(),

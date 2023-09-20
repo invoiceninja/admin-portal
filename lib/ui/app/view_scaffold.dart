@@ -30,7 +30,7 @@ class ViewScaffold extends StatelessWidget {
   });
 
   final bool isFilter;
-  final BaseEntity? entity;
+  final BaseEntity entity;
   final Widget body;
   final Function? onBackPressed;
   final Widget? appBarBottom;
@@ -105,7 +105,7 @@ class ViewScaffold extends StatelessWidget {
               child: Text(appBarTitle!),
             ),
             bottom: appBarBottom as PreferredSizeWidget?,
-            actions: entity!.isNew
+            actions: entity.isNew
                 ? []
                 : [
                     if (isSettings && isDesktop(context) && !isFilter)

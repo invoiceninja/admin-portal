@@ -85,8 +85,8 @@ class ProjectViewVM {
       client: client,
       onRefreshed: (context) => _handleRefresh(context),
       onEntityPressed: (BuildContext context, EntityType entityType,
-          {bool longPress = false}) {
-        if (longPress && project.isActive && client.isActive) {
+          {bool? longPress = false}) {
+        if (longPress == true && project.isActive && client.isActive) {
           handleProjectAction(
               context, [project], EntityAction.newEntityType(entityType));
         } else {

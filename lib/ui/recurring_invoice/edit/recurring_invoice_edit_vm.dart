@@ -53,7 +53,7 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
     int? invoiceItemIndex,
     InvoiceEntity? origInvoice,
     Function(BuildContext, [EntityAction?])? onSavePressed,
-    Function(List<InvoiceItemEntity>, String, String)? onItemsAdded,
+    Function(List<InvoiceItemEntity>, String?, String?)? onItemsAdded,
     bool? isSaving,
     Function(BuildContext)? onCancelPressed,
     Function(BuildContext, List<MultipartFile>, bool)? onUploadDocuments,

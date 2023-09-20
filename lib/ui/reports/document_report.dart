@@ -46,7 +46,7 @@ ReportResult documentReport(
   BuiltMap<String?, UserEntity?> userMap,
 ) {
   final List<List<ReportElement>> data = [];
-  final List<BaseEntity?> entities = [];
+  final List<BaseEntity> entities = [];
   BuiltList<DocumentReportFields> columns;
 
   final localization =
@@ -144,13 +144,13 @@ ReportResult documentReport(
 
     if (!skip) {
       data.add(row);
-      entities.add(document);
+      entities.add(document!);
     }
   });
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, documentReportSettings, selectedColumns)!);
+  data.sort((rowA, rowB) => sortReportTableRows(
+      rowA, rowB, documentReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns:

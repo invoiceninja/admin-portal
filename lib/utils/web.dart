@@ -84,7 +84,7 @@ class WebUtils {
     final loginRequest = PopupRequest()..scopes = ['user.read'];
 
     publicClientApp.loginPopup(loginRequest).then((result) {
-      succesCallback(result?.idToken, result?.accessToken);
+      succesCallback(result?.idToken ?? '', result?.accessToken ?? '');
     }).catchError((dynamic error) {
       failureCallback(error);
     });

@@ -61,7 +61,7 @@ class AbstractExpenseViewVM {
   });
 
   final AppState? state;
-  final ExpenseEntity? expense;
+  final ExpenseEntity expense;
   final CompanyEntity? company;
   final Function(BuildContext, EntityAction)? onEntityAction;
   final Function(BuildContext)? onRefreshed;
@@ -73,8 +73,8 @@ class AbstractExpenseViewVM {
 
 class ExpenseViewVM extends AbstractExpenseViewVM {
   ExpenseViewVM({
+    required ExpenseEntity expense,
     AppState? state,
-    ExpenseEntity? expense,
     CompanyEntity? company,
     Function(BuildContext, EntityAction)? onEntityAction,
     Function(BuildContext)? onRefreshed,
