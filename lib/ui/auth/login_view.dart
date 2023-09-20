@@ -453,15 +453,12 @@ class _LoginState extends State<LoginView> {
                               if (_loginType == LOGIN_TYPE_EMAIL)
                                 DecoratedFormField(
                                   controller: _emailController,
-                                  label: localization!.email,
                                   keyboardType: TextInputType.emailAddress,
+                                  label: localization!.email,
                                   validator: (val) =>
                                       val.isEmpty || val.trim().isEmpty
                                           ? localization.pleaseEnterYourEmail
                                           : null,
-                                  autofillHints: [AutofillHints.email],
-                                  autofocus: _loginType == LOGIN_TYPE_EMAIL,
-                                  onSavePressed: (_) => _submitForm(),
                                 ),
                               if (_loginType == LOGIN_TYPE_EMAIL &&
                                   !_recoverPassword)

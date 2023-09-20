@@ -138,7 +138,9 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
       controller: widget.controller,
       autofocus: widget.autofocus,
       decoration: inputDecoration,
-      validator: widget.validator as String? Function(String?)?,
+      validator: (val) => val == null || widget.validator == null
+          ? null
+          : widget.validator!(val),
       autovalidateMode: AutovalidateMode.onUserInteraction,
       keyboardType: widget.keyboardType,
       maxLines: widget.expands ? null : widget.maxLines ?? 1,
