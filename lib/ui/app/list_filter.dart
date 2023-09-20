@@ -88,7 +88,7 @@ class _ListFilterState extends State<ListFilter> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _filterController!.text = widget.filter!;
+    _filterController!.text = widget.filter ?? '';
 
     if (widget.filter != null) {
       _focusNode!.requestFocus();
@@ -196,8 +196,9 @@ class _ListFilterState extends State<ListFilter> {
                           child: Text(
                             selected.isNotEmpty
                                 ? selected
-                                    .map<String?>((dynamic value) => localization
-                                        .lookup((value as EntityState).name))
+                                    .map<String?>((dynamic value) =>
+                                        localization.lookup(
+                                            (value as EntityState).name))
                                     .join(', ')
                                 : localization.all,
                             style: TextStyle(fontSize: 15),

@@ -41,7 +41,7 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
   }
 
   ClientState loadClients(BuiltList<ClientEntity> clients) {
-    final map = Map<String?, ClientEntity?>.fromIterable(
+    final map = Map<String, ClientEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

@@ -36,7 +36,8 @@ Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, DeleteDocumentSuccess>((completer, action) => ''),
   TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.document ? action.entityId : selectedId),
-  TypedReducer<String?, ViewDocument>((selectedId, action) => action.documentId),
+  TypedReducer<String?, ViewDocument>(
+      (selectedId, action) => action.documentId),
   //TypedReducer<String, AddDocumentSuccess>((selectedId, action) => action.document.id),
   TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
@@ -162,7 +163,8 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState documentListState, AddToDocumentMultiselect action) {
-  return documentListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
+  return documentListState
+      .rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
@@ -363,7 +365,7 @@ DocumentState _setLoadedCompany(
   });
 
   final state = documentState.rebuild((b) => b
-    ..map.addAll(Map.fromIterable(
+    ..map.addAll(Map<String, DocumentEntity>.fromIterable(
       documents,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
