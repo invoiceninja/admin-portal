@@ -117,7 +117,7 @@ class PaymentRefundVM {
   final Function(PaymentEntity) onChanged;
   final Function(BuildContext, Completer<PaymentEntity>) onRefundPressed;
   final Function(BuildContext) onCancelPressed;
-  final BuiltMap<String?, InvoiceEntity?> invoiceMap;
+  final BuiltMap<String, InvoiceEntity> invoiceMap;
   final PrefState prefState;
   final BuiltList<String> invoiceList;
   final StaticState staticState;

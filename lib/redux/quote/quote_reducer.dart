@@ -337,7 +337,7 @@ QuoteState _purgeClientSuccess(
 
 QuoteState _markSentQuoteSuccess(
     QuoteState quoteState, MarkSentQuoteSuccess action) {
-  final quoteMap = Map<String?, InvoiceEntity?>.fromIterable(
+  final quoteMap = Map<String, InvoiceEntity>.fromIterable(
     action.quotes,
     key: (dynamic item) => item.id,
     value: (dynamic item) => item,
@@ -378,7 +378,7 @@ QuoteState _emailQuoteSuccess(QuoteState quoteState, EmailQuoteSuccess action) {
 
 QuoteState _convertQuotesToInvoicesSuccess(
     QuoteState quoteState, ConvertQuotesToInvoicesSuccess action) {
-  final quoteMap = Map<String?, InvoiceEntity?>.fromIterable(
+  final quoteMap = Map<String, InvoiceEntity>.fromIterable(
     action.quotes!,
     key: (dynamic item) => item.id,
     value: (dynamic item) => item,
@@ -388,7 +388,7 @@ QuoteState _convertQuotesToInvoicesSuccess(
 
 QuoteState _convertQuotesToProjectsSuccess(
     QuoteState quoteState, ConvertQuotesToProjectsSuccess action) {
-  final quoteMap = Map<String?, InvoiceEntity?>.fromIterable(
+  final quoteMap = Map<String, InvoiceEntity>.fromIterable(
     action.quotes!,
     key: (dynamic item) => item.id,
     value: (dynamic item) => item,

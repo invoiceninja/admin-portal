@@ -29,7 +29,7 @@ abstract class VendorState implements Built<VendorState, VendorStateBuilder> {
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, VendorEntity?> get map;
+  BuiltMap<String, VendorEntity> get map;
 
   VendorEntity? get(String vendorId) {
     if (map.containsKey(vendorId)) {
@@ -42,7 +42,7 @@ abstract class VendorState implements Built<VendorState, VendorStateBuilder> {
   BuiltList<String> get list;
 
   VendorState loadVendors(BuiltList<VendorEntity> clients) {
-    final map = Map<String?, VendorEntity?>.fromIterable(
+    final map = Map<String, VendorEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

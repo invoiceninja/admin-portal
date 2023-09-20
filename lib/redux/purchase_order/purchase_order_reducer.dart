@@ -389,7 +389,7 @@ final purchaseOrdersReducer = combineReducers<PurchaseOrderState>([
 PurchaseOrderState _markSentPurchaseOrderSuccess(
     PurchaseOrderState purchaseOrderState,
     MarkPurchaseOrderSentSuccess action) {
-  final purchaseOrderMap = Map<String?, InvoiceEntity?>.fromIterable(
+  final purchaseOrderMap = Map<String, InvoiceEntity>.fromIterable(
     action.purchaseOrders,
     key: (dynamic item) => item.id,
     value: (dynamic item) => item,
@@ -400,7 +400,7 @@ PurchaseOrderState _markSentPurchaseOrderSuccess(
 PurchaseOrderState _convertPurchaseOrdersToExpenses(
     PurchaseOrderState purchaseOrderState,
     ConvertPurchaseOrdersToExpensesSuccess action) {
-  final purchaseOrderMap = Map<String?, InvoiceEntity?>.fromIterable(
+  final purchaseOrderMap = Map<String, InvoiceEntity>.fromIterable(
     action.purchaseOrders,
     key: (dynamic item) => item.id,
     value: (dynamic item) => item,
@@ -411,7 +411,7 @@ PurchaseOrderState _convertPurchaseOrdersToExpenses(
 PurchaseOrderState _addPurchaseOrdersToInventorySuccess(
     PurchaseOrderState purchaseOrderState,
     AddPurchaseOrdersToInventorySuccess action) {
-  final purchaseOrderMap = Map<String?, InvoiceEntity?>.fromIterable(
+  final purchaseOrderMap = Map<String, InvoiceEntity>.fromIterable(
     action.purchaseOrders,
     key: (dynamic item) => item.id,
     value: (dynamic item) => item,
@@ -421,7 +421,7 @@ PurchaseOrderState _addPurchaseOrdersToInventorySuccess(
 
 PurchaseOrderState _acceptPurchaseOrderSuccess(
     PurchaseOrderState purchaseOrderState, AcceptPurchaseOrderSuccess action) {
-  final purchaseOrderMap = Map<String?, InvoiceEntity?>.fromIterable(
+  final purchaseOrderMap = Map<String, InvoiceEntity>.fromIterable(
     action.purchaseOrders,
     key: (dynamic item) => item.id,
     value: (dynamic item) => item,
@@ -431,7 +431,7 @@ PurchaseOrderState _acceptPurchaseOrderSuccess(
 
 PurchaseOrderState _cancelPurchaseOrderSuccess(
     PurchaseOrderState purchaseOrderState, CancelPurchaseOrderSuccess action) {
-  final purchaseOrderMap = Map<String?, InvoiceEntity?>.fromIterable(
+  final purchaseOrderMap = Map<String, InvoiceEntity>.fromIterable(
     action.purchaseOrders,
     key: (dynamic item) => item.id,
     value: (dynamic item) => item,
@@ -476,7 +476,7 @@ PurchaseOrderState _emailPurchaseOrderSuccess(
 
 PurchaseOrderState _approvePurchaseOrderSuccess(
     PurchaseOrderState purchaseOrderState, ApprovePurchaseOrderSuccess action) {
-  final purchaseOrderMap = Map<String?, InvoiceEntity?>.fromIterable(
+  final purchaseOrderMap = Map<String, InvoiceEntity>.fromIterable(
     action.purchaseOrders!,
     key: (dynamic item) => item.id,
     value: (dynamic item) => item,

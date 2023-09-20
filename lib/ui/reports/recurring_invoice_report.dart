@@ -89,7 +89,7 @@ enum RecurringInvoiceReportFields {
 var memoizedRecurringInvoiceReport = memo8((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, UserEntity?> userMap,
   BuiltMap<String?, VendorEntity?> vendorMap,
@@ -110,7 +110,7 @@ var memoizedRecurringInvoiceReport = memo8((
 ReportResult recurringInvoiceReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, UserEntity?> userMap,
   BuiltMap<String?, VendorEntity?> vendorMap,

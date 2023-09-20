@@ -43,7 +43,7 @@ class CreditScreenVM {
   final UserCompanyEntity? userCompany;
   final List<String> creditList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final BuiltMap<String?, InvoiceEntity?> creditMap;
+  final BuiltMap<String, InvoiceEntity> creditMap;
 
   static CreditScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

@@ -23,10 +23,8 @@ class _$PaymentStateSerializer implements StructuredSerializer<PaymentState> {
     final result = <Object?>[
       'map',
       serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(PaymentEntity)
-          ])),
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(PaymentEntity)])),
       'list',
       serializers.serialize(object.list,
           specifiedType:
@@ -51,8 +49,8 @@ class _$PaymentStateSerializer implements StructuredSerializer<PaymentState> {
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType.nullable(String),
-                const FullType.nullable(PaymentEntity)
+                const FullType(String),
+                const FullType(PaymentEntity)
               ]))!);
           break;
         case 'list':
@@ -152,7 +150,7 @@ class _$PaymentUIStateSerializer
 
 class _$PaymentState extends PaymentState {
   @override
-  final BuiltMap<String?, PaymentEntity?> map;
+  final BuiltMap<String, PaymentEntity> map;
   @override
   final BuiltList<String> list;
 
@@ -201,10 +199,10 @@ class PaymentStateBuilder
     implements Builder<PaymentState, PaymentStateBuilder> {
   _$PaymentState? _$v;
 
-  MapBuilder<String?, PaymentEntity?>? _map;
-  MapBuilder<String?, PaymentEntity?> get map =>
-      _$this._map ??= new MapBuilder<String?, PaymentEntity?>();
-  set map(MapBuilder<String?, PaymentEntity?>? map) => _$this._map = map;
+  MapBuilder<String, PaymentEntity>? _map;
+  MapBuilder<String, PaymentEntity> get map =>
+      _$this._map ??= new MapBuilder<String, PaymentEntity>();
+  set map(MapBuilder<String, PaymentEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();

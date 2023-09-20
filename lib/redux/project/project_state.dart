@@ -30,7 +30,7 @@ abstract class ProjectState
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, ProjectEntity?> get map;
+  BuiltMap<String, ProjectEntity> get map;
 
   ProjectEntity? get(String projectId) {
     if (map.containsKey(projectId)) {
@@ -43,7 +43,7 @@ abstract class ProjectState
   BuiltList<String> get list;
 
   ProjectState loadProjects(BuiltList<ProjectEntity> clients) {
-    final map = Map<String?, ProjectEntity?>.fromIterable(
+    final map = Map<String, ProjectEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

@@ -25,8 +25,8 @@ class _$TaskStatusStateSerializer
       'map',
       serializers.serialize(object.map,
           specifiedType: const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(TaskStatusEntity)
+            const FullType(String),
+            const FullType(TaskStatusEntity)
           ])),
       'list',
       serializers.serialize(object.list,
@@ -52,8 +52,8 @@ class _$TaskStatusStateSerializer
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType.nullable(String),
-                const FullType.nullable(TaskStatusEntity)
+                const FullType(String),
+                const FullType(TaskStatusEntity)
               ]))!);
           break;
         case 'list':
@@ -154,7 +154,7 @@ class _$TaskStatusUIStateSerializer
 
 class _$TaskStatusState extends TaskStatusState {
   @override
-  final BuiltMap<String?, TaskStatusEntity?> map;
+  final BuiltMap<String, TaskStatusEntity> map;
   @override
   final BuiltList<String> list;
 
@@ -204,10 +204,10 @@ class TaskStatusStateBuilder
     implements Builder<TaskStatusState, TaskStatusStateBuilder> {
   _$TaskStatusState? _$v;
 
-  MapBuilder<String?, TaskStatusEntity?>? _map;
-  MapBuilder<String?, TaskStatusEntity?> get map =>
-      _$this._map ??= new MapBuilder<String?, TaskStatusEntity?>();
-  set map(MapBuilder<String?, TaskStatusEntity?>? map) => _$this._map = map;
+  MapBuilder<String, TaskStatusEntity>? _map;
+  MapBuilder<String, TaskStatusEntity> get map =>
+      _$this._map ??= new MapBuilder<String, TaskStatusEntity>();
+  set map(MapBuilder<String, TaskStatusEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();

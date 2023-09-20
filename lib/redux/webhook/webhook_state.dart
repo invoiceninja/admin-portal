@@ -29,12 +29,12 @@ abstract class WebhookState
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, WebhookEntity?> get map;
+  BuiltMap<String, WebhookEntity> get map;
 
   BuiltList<String> get list;
 
   WebhookState loadWebhooks(BuiltList<WebhookEntity> clients) {
-    final map = Map<String?, WebhookEntity?>.fromIterable(
+    final map = Map<String, WebhookEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

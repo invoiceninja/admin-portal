@@ -47,7 +47,7 @@ var memoizedQuoteItemReport = memo6((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String?, ProductEntity?> productMap,
-  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   StaticState staticState,
 ) =>
@@ -58,7 +58,7 @@ ReportResult lineItemReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String?, ProductEntity?> productMap,
-  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   StaticState staticState,
 ) {
@@ -232,8 +232,8 @@ ReportResult lineItemReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, lineItemReportSettings, selectedColumns)!);
+  data.sort((rowA, rowB) => sortReportTableRows(
+      rowA, rowB, lineItemReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns: QuoteItemReportFields.values

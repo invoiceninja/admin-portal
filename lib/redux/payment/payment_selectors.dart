@@ -12,8 +12,10 @@ var memoizedPaymentsByInvoice = memo3((String invoiceId,
         BuiltList<String> paymentList) =>
     paymentsByInvoiceSelector(invoiceId, paymentMap, paymentList));
 
-List<PaymentEntity?> paymentsByInvoiceSelector(String invoiceId,
-    BuiltMap<String?, PaymentEntity?> paymentMap, BuiltList<String> paymentList) {
+List<PaymentEntity?> paymentsByInvoiceSelector(
+    String invoiceId,
+    BuiltMap<String?, PaymentEntity?> paymentMap,
+    BuiltList<String> paymentList) {
   return paymentList.map((paymentId) => paymentMap[paymentId]).where((payment) {
     return payment!.paymentables.map((p) => p.invoiceId).contains(invoiceId) &&
         !payment.isDeleted!;
@@ -25,8 +27,10 @@ var memoizedPaymentsByCredit = memo3((String invoiceId,
         BuiltList<String> paymentList) =>
     paymentsByCreditSelector(invoiceId, paymentMap, paymentList));
 
-List<PaymentEntity?> paymentsByCreditSelector(String creditId,
-    BuiltMap<String?, PaymentEntity?> paymentMap, BuiltList<String> paymentList) {
+List<PaymentEntity?> paymentsByCreditSelector(
+    String creditId,
+    BuiltMap<String?, PaymentEntity?> paymentMap,
+    BuiltList<String> paymentList) {
   return paymentList.map((paymentId) => paymentMap[paymentId]).where((payment) {
     return payment!.paymentables.map((p) => p.creditId).contains(creditId) &&
         !payment.isDeleted!;
@@ -52,8 +56,9 @@ List<String> dropdownPaymentsSelector(
   BuiltMap<String, UserEntity> userMap,
   BuiltMap<String, PaymentTypeEntity> paymentTypeMap,
 ) {
-  final list =
-      paymentList.where((paymentId) => paymentMap[paymentId]!.isActive).toList();
+  final list = paymentList
+      .where((paymentId) => paymentMap[paymentId]!.isActive)
+      .toList();
 
   list.sort((paymentAId, paymentBId) {
     final paymentA = paymentMap[paymentAId]!;
@@ -76,7 +81,7 @@ List<String> dropdownPaymentsSelector(
 var memoizedFilteredPaymentList = memo8((SelectionState selectionState,
         BuiltMap<String?, PaymentEntity?> paymentMap,
         BuiltList<String> paymentList,
-        BuiltMap<String?, InvoiceEntity?> invoiceMap,
+        BuiltMap<String, InvoiceEntity> invoiceMap,
         BuiltMap<String?, ClientEntity?> clientMap,
         BuiltMap<String?, UserEntity?> userMap,
         BuiltMap<String?, PaymentTypeEntity?> paymentTypeMap,
@@ -96,7 +101,7 @@ List<String> filteredPaymentsSelector(
     SelectionState selectionState,
     BuiltMap<String?, PaymentEntity?> paymentMap,
     BuiltList<String> paymentList,
-    BuiltMap<String?, InvoiceEntity?> invoiceMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String?, ClientEntity?> clientMap,
     BuiltMap<String?, UserEntity?> userMap,
     BuiltMap<String?, PaymentTypeEntity?> paymentTypeMap,
@@ -170,13 +175,13 @@ List<String> filteredPaymentsSelector(
 
 var memoizedPaymentStatsForClient = memo3((String clientId,
         BuiltMap<String?, PaymentEntity?> paymentMap,
-        BuiltMap<String?, InvoiceEntity?> invoiceMap) =>
+        BuiltMap<String, InvoiceEntity> invoiceMap) =>
     paymentStatsForClient(clientId, paymentMap, invoiceMap));
 
 EntityStats paymentStatsForClient(
     String clientId,
     BuiltMap<String?, PaymentEntity?> paymentMap,
-    BuiltMap<String?, InvoiceEntity?> invoiceMap) {
+    BuiltMap<String, InvoiceEntity> invoiceMap) {
   int countActive = 0;
   int countArchived = 0;
   paymentMap.forEach((paymentId, payment) {

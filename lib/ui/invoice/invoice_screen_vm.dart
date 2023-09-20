@@ -40,7 +40,7 @@ class InvoiceScreenVM {
   final bool isInMultiselect;
   final UserCompanyEntity? userCompany;
   final List<String> invoiceList;
-  final BuiltMap<String?, InvoiceEntity?> invoiceMap;
+  final BuiltMap<String, InvoiceEntity> invoiceMap;
 
   static InvoiceScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

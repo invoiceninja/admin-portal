@@ -98,7 +98,7 @@ enum InvoiceReportFields {
 var memoizedInvoiceReport = memo9((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, UserEntity?> userMap,
   BuiltMap<String?, VendorEntity?> vendorMap,
@@ -121,7 +121,7 @@ var memoizedInvoiceReport = memo9((
 ReportResult invoiceReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, UserEntity?> userMap,
   BuiltMap<String?, VendorEntity?> vendorMap,

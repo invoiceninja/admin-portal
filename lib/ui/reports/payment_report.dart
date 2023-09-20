@@ -54,8 +54,8 @@ var memoizedPaymentReport = memo8(
     BuiltMap<String?, PaymentEntity?> paymentMap,
     BuiltMap<String?, ClientEntity?> clientMap,
     BuiltMap<String?, UserEntity?> userMap,
-    BuiltMap<String?, InvoiceEntity?> invoiceMap,
-    BuiltMap<String?, InvoiceEntity?> creditMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
+    BuiltMap<String, InvoiceEntity> creditMap,
     StaticState staticState,
   ) =>
       paymentReport(
@@ -76,8 +76,8 @@ ReportResult paymentReport(
   BuiltMap<String?, PaymentEntity?> paymentMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, UserEntity?> userMap,
-  BuiltMap<String?, InvoiceEntity?> invoiceMap,
-  BuiltMap<String?, InvoiceEntity?> creditMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, InvoiceEntity> creditMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];

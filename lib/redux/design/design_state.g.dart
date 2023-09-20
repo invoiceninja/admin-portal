@@ -22,10 +22,8 @@ class _$DesignStateSerializer implements StructuredSerializer<DesignState> {
     final result = <Object?>[
       'map',
       serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(DesignEntity)
-          ])),
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(DesignEntity)])),
       'list',
       serializers.serialize(object.list,
           specifiedType:
@@ -49,8 +47,8 @@ class _$DesignStateSerializer implements StructuredSerializer<DesignState> {
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType.nullable(String),
-                const FullType.nullable(DesignEntity)
+                const FullType(String),
+                const FullType(DesignEntity)
               ]))!);
           break;
         case 'list':
@@ -149,7 +147,7 @@ class _$DesignUIStateSerializer implements StructuredSerializer<DesignUIState> {
 
 class _$DesignState extends DesignState {
   @override
-  final BuiltMap<String?, DesignEntity?> map;
+  final BuiltMap<String, DesignEntity> map;
   @override
   final BuiltList<String> list;
 
@@ -197,10 +195,10 @@ class _$DesignState extends DesignState {
 class DesignStateBuilder implements Builder<DesignState, DesignStateBuilder> {
   _$DesignState? _$v;
 
-  MapBuilder<String?, DesignEntity?>? _map;
-  MapBuilder<String?, DesignEntity?> get map =>
-      _$this._map ??= new MapBuilder<String?, DesignEntity?>();
-  set map(MapBuilder<String?, DesignEntity?>? map) => _$this._map = map;
+  MapBuilder<String, DesignEntity>? _map;
+  MapBuilder<String, DesignEntity> get map =>
+      _$this._map ??= new MapBuilder<String, DesignEntity>();
+  set map(MapBuilder<String, DesignEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();

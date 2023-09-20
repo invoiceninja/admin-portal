@@ -29,7 +29,7 @@ abstract class TaskStatusState
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, TaskStatusEntity?> get map;
+  BuiltMap<String, TaskStatusEntity> get map;
 
   TaskStatusEntity? get(String statusId) {
     if (map.containsKey(statusId)) {
@@ -42,7 +42,7 @@ abstract class TaskStatusState
   BuiltList<String> get list;
 
   TaskStatusState loadTaskStatuses(BuiltList<TaskStatusEntity> clients) {
-    final map = Map<String?, TaskStatusEntity?>.fromIterable(
+    final map = Map<String, TaskStatusEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

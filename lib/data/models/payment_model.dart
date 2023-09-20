@@ -244,7 +244,7 @@ abstract class PaymentEntity extends Object
     PaymentEntity? payment,
     String? sortField,
     required bool sortAscending,
-    BuiltMap<String?, InvoiceEntity?>? invoiceMap,
+    BuiltMap<String, InvoiceEntity>? invoiceMap,
     BuiltMap<String?, ClientEntity?>? clientMap,
     BuiltMap<String?, UserEntity?>? userMap,
     BuiltMap<String?, PaymentTypeEntity?>? paymentTypeMap,
@@ -477,8 +477,8 @@ abstract class PaymentEntity extends Object
       paymentables.where((p) => p.entityType == EntityType.credit).toList();
 
   String? get invoiceId {
-    final invoicePaymentables = paymentables.firstWhereOrNull(
-        (p) => p.entityType == EntityType.invoice);
+    final invoicePaymentables = paymentables
+        .firstWhereOrNull((p) => p.entityType == EntityType.invoice);
 
     if (invoicePaymentables == null) {
       return null;

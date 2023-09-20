@@ -28,10 +28,8 @@ class _$RecurringInvoiceStateSerializer
     final result = <Object?>[
       'map',
       serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(InvoiceEntity)
-          ])),
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(InvoiceEntity)])),
       'list',
       serializers.serialize(object.list,
           specifiedType:
@@ -56,8 +54,8 @@ class _$RecurringInvoiceStateSerializer
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType.nullable(String),
-                const FullType.nullable(InvoiceEntity)
+                const FullType(String),
+                const FullType(InvoiceEntity)
               ]))!);
           break;
         case 'list':
@@ -161,7 +159,7 @@ class _$RecurringInvoiceUIStateSerializer
 
 class _$RecurringInvoiceState extends RecurringInvoiceState {
   @override
-  final BuiltMap<String?, InvoiceEntity?> map;
+  final BuiltMap<String, InvoiceEntity> map;
   @override
   final BuiltList<String> list;
 
@@ -217,10 +215,10 @@ class RecurringInvoiceStateBuilder
     implements Builder<RecurringInvoiceState, RecurringInvoiceStateBuilder> {
   _$RecurringInvoiceState? _$v;
 
-  MapBuilder<String?, InvoiceEntity?>? _map;
-  MapBuilder<String?, InvoiceEntity?> get map =>
-      _$this._map ??= new MapBuilder<String?, InvoiceEntity?>();
-  set map(MapBuilder<String?, InvoiceEntity?>? map) => _$this._map = map;
+  MapBuilder<String, InvoiceEntity>? _map;
+  MapBuilder<String, InvoiceEntity> get map =>
+      _$this._map ??= new MapBuilder<String, InvoiceEntity>();
+  set map(MapBuilder<String, InvoiceEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();

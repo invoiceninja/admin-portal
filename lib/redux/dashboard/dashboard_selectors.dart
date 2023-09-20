@@ -36,7 +36,7 @@ var memoizedChartInvoices = memo5((
   BuiltMap<String?, CurrencyEntity?> currencyMap,
   CompanyEntity? company,
   DashboardUISettings settings,
-  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String?, ClientEntity?> clientMap,
 ) =>
     _chartInvoices(
@@ -50,7 +50,7 @@ var memoizedChartOverviewInvoices = memo5((
   BuiltMap<String?, CurrencyEntity?> currencyMap,
   CompanyEntity? company,
   DashboardUISettings settings,
-  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String?, ClientEntity?> clientMap,
 ) =>
     _chartInvoices(
@@ -64,7 +64,7 @@ var memoizedPreviousChartInvoices = memo5((
   BuiltMap<String?, CurrencyEntity?> currencyMap,
   CompanyEntity? company,
   DashboardUISettings settings,
-  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String?, ClientEntity?> clientMap,
 ) =>
     _chartInvoices(
@@ -78,7 +78,7 @@ List<ChartDataGroup> _chartInvoices({
   BuiltMap<String?, CurrencyEntity?>? currencyMap,
   required CompanyEntity company,
   required DashboardUISettings settings,
-  required BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  required BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String?, ClientEntity?>? clientMap,
 }) {
   const STATUS_ACTIVE = 'active';
@@ -211,7 +211,7 @@ var memoizedChartQuotes = memo5((
   BuiltMap<String?, CurrencyEntity?> currencyMap,
   CompanyEntity? company,
   DashboardUISettings settings,
-  BuiltMap<String?, InvoiceEntity?> quoteMap,
+  BuiltMap<String, InvoiceEntity> quoteMap,
   BuiltMap<String?, ClientEntity?> clientMap,
 ) =>
     chartQuotes(
@@ -226,7 +226,7 @@ var memoizedPreviousChartQuotes = memo5((
   BuiltMap<String?, CurrencyEntity?> currencyMap,
   CompanyEntity? company,
   DashboardUISettings settings,
-  BuiltMap<String?, InvoiceEntity?> quoteMap,
+  BuiltMap<String, InvoiceEntity> quoteMap,
   BuiltMap<String?, ClientEntity?> clientMap,
 ) =>
     chartQuotes(
@@ -241,7 +241,7 @@ List<ChartDataGroup> chartQuotes({
   BuiltMap<String?, CurrencyEntity?>? currencyMap,
   required CompanyEntity company,
   required DashboardUISettings settings,
-  required BuiltMap<String?, InvoiceEntity?> quoteMap,
+  required BuiltMap<String, InvoiceEntity> quoteMap,
   BuiltMap<String?, ClientEntity?>? clientMap,
 }) {
   const STATUS_ACTIVE = 'active';
@@ -387,7 +387,7 @@ var memoizedChartPayments = memo6((
   BuiltMap<String?, CurrencyEntity?> currencyMap,
   CompanyEntity? company,
   DashboardUISettings settings,
-  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, PaymentEntity?> paymentMap,
 ) =>
@@ -404,7 +404,7 @@ var memoizedPreviousChartPayments = memo6((
   BuiltMap<String?, CurrencyEntity?> currencyMap,
   CompanyEntity? company,
   DashboardUISettings settings,
-  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, PaymentEntity?> paymentMap,
 ) =>
@@ -421,7 +421,7 @@ List<ChartDataGroup> chartPayments(
   BuiltMap<String?, CurrencyEntity?> currencyMap,
   CompanyEntity company,
   DashboardUISettings settings,
-  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, PaymentEntity?> paymentMap,
 ) {
@@ -561,7 +561,7 @@ var memoizedChartTasks = memo8((
   CompanyEntity? company,
   DashboardUISettings settings,
   BuiltMap<String?, TaskEntity?> taskMap,
-  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String?, ProjectEntity?> projectMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, GroupEntity?> groupMap,
@@ -582,7 +582,7 @@ var memoizedPreviousChartTasks = memo8((
   CompanyEntity? company,
   DashboardUISettings settings,
   BuiltMap<String?, TaskEntity?> taskMap,
-  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String?, ProjectEntity?> projectMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, GroupEntity?> groupMap,
@@ -603,7 +603,7 @@ List<ChartDataGroup> chartTasks(
   CompanyEntity company,
   DashboardUISettings settings,
   BuiltMap<String?, TaskEntity?> taskMap,
-  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String?, ProjectEntity?> projectMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, GroupEntity?> groupMap,
@@ -777,7 +777,7 @@ List<ChartDataGroup> chartExpenses(
     BuiltMap<String?, CurrencyEntity?> currencyMap,
     CompanyEntity company,
     DashboardUISettings settings,
-    BuiltMap<String?, InvoiceEntity?> invoiceMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String?, ExpenseEntity?> expenseMap) {
   const STATUS_LOGGED = 'logged';
   const STATUS_PENDING = 'pending';
@@ -945,7 +945,7 @@ var memoizedChartExpenses = memo5(
     (BuiltMap<String?, CurrencyEntity?> currencyMap,
             CompanyEntity? company,
             DashboardUISettings settings,
-            BuiltMap<String?, InvoiceEntity?> invoiceMap,
+            BuiltMap<String, InvoiceEntity> invoiceMap,
             BuiltMap<String?, ExpenseEntity?> expenseMap) =>
         chartExpenses(currencyMap, company!, settings, invoiceMap, expenseMap));
 
@@ -953,7 +953,7 @@ var memoizedPreviousChartExpenses = memo5(
     (BuiltMap<String?, CurrencyEntity?> currencyMap,
             CompanyEntity? company,
             DashboardUISettings settings,
-            BuiltMap<String?, InvoiceEntity?> invoiceMap,
+            BuiltMap<String, InvoiceEntity> invoiceMap,
             BuiltMap<String?, ExpenseEntity?> expenseMap) =>
         chartExpenses(currencyMap, company!, settings, invoiceMap, expenseMap));
 

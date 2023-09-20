@@ -29,7 +29,7 @@ abstract class InvoiceState
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, InvoiceEntity?> get map;
+  BuiltMap<String, InvoiceEntity> get map;
 
   InvoiceEntity? get(String invoiceId) {
     if (map.containsKey(invoiceId)) {
@@ -42,7 +42,7 @@ abstract class InvoiceState
   BuiltList<String> get list;
 
   InvoiceState loadInvoices(BuiltList<InvoiceEntity> clients) {
-    final map = Map<String?, InvoiceEntity?>.fromIterable(
+    final map = Map<String, InvoiceEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

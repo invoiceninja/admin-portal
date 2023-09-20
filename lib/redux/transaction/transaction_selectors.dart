@@ -62,7 +62,7 @@ List<String> dropdownTransactionsSelector(
 var memoizedFilteredTransactionList = memo9((SelectionState selectionState,
         BuiltMap<String?, TransactionEntity?> transactionMap,
         BuiltList<String> transactionList,
-        BuiltMap<String?, InvoiceEntity?> invoiceMap,
+        BuiltMap<String, InvoiceEntity> invoiceMap,
         BuiltMap<String?, VendorEntity?> vendorMap,
         BuiltMap<String?, ExpenseEntity?> expenseMap,
         BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
@@ -83,7 +83,7 @@ List<String> filteredTransactionsSelector(
     SelectionState selectionState,
     BuiltMap<String?, TransactionEntity?> transactionMap,
     BuiltList<String> transactionList,
-    BuiltMap<String?, InvoiceEntity?> invoiceMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String?, VendorEntity?> vendorMap,
     BuiltMap<String?, ExpenseEntity?> expenseMap,
     BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
@@ -156,8 +156,8 @@ var memoizedTransactionStatsForBankAccount = memo2((String bankAccountId,
         BuiltMap<String?, TransactionEntity?> transactionMap) =>
     transactionStatsForBankAccount(bankAccountId, transactionMap));
 
-EntityStats transactionStatsForBankAccount(
-    String bankAccountId, BuiltMap<String?, TransactionEntity?> transactionMap) {
+EntityStats transactionStatsForBankAccount(String bankAccountId,
+    BuiltMap<String?, TransactionEntity?> transactionMap) {
   int countActive = 0;
   int countArchived = 0;
   transactionMap.forEach((transactionId, transaction) {

@@ -22,10 +22,8 @@ class _$GroupStateSerializer implements StructuredSerializer<GroupState> {
     final result = <Object?>[
       'map',
       serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(GroupEntity)
-          ])),
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(GroupEntity)])),
       'list',
       serializers.serialize(object.list,
           specifiedType:
@@ -49,8 +47,8 @@ class _$GroupStateSerializer implements StructuredSerializer<GroupState> {
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType.nullable(String),
-                const FullType.nullable(GroupEntity)
+                const FullType(String),
+                const FullType(GroupEntity)
               ]))!);
           break;
         case 'list':
@@ -149,7 +147,7 @@ class _$GroupUIStateSerializer implements StructuredSerializer<GroupUIState> {
 
 class _$GroupState extends GroupState {
   @override
-  final BuiltMap<String?, GroupEntity?> map;
+  final BuiltMap<String, GroupEntity> map;
   @override
   final BuiltList<String> list;
 
@@ -197,10 +195,10 @@ class _$GroupState extends GroupState {
 class GroupStateBuilder implements Builder<GroupState, GroupStateBuilder> {
   _$GroupState? _$v;
 
-  MapBuilder<String?, GroupEntity?>? _map;
-  MapBuilder<String?, GroupEntity?> get map =>
-      _$this._map ??= new MapBuilder<String?, GroupEntity?>();
-  set map(MapBuilder<String?, GroupEntity?>? map) => _$this._map = map;
+  MapBuilder<String, GroupEntity>? _map;
+  MapBuilder<String, GroupEntity> get map =>
+      _$this._map ??= new MapBuilder<String, GroupEntity>();
+  set map(MapBuilder<String, GroupEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();

@@ -28,7 +28,7 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, ClientEntity?> get map;
+  BuiltMap<String, ClientEntity> get map;
 
   BuiltList<String> get list;
 

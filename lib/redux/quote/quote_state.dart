@@ -30,7 +30,7 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, InvoiceEntity?> get map;
+  BuiltMap<String, InvoiceEntity> get map;
 
   BuiltList<String> get list;
 
@@ -43,7 +43,7 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
   }
 
   QuoteState loadQuotes(BuiltList<InvoiceEntity> quotes) {
-    final map = Map<String?, InvoiceEntity?>.fromIterable(
+    final map = Map<String, InvoiceEntity>.fromIterable(
       quotes,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

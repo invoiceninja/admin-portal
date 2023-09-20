@@ -29,7 +29,7 @@ abstract class ProductState
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, ProductEntity?> get map;
+  BuiltMap<String, ProductEntity> get map;
 
   BuiltList<String> get list;
 
@@ -42,7 +42,7 @@ abstract class ProductState
   }
 
   ProductState loadProducts(BuiltList<ProductEntity> clients) {
-    final map = Map<String?, ProductEntity?>.fromIterable(
+    final map = Map<String, ProductEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

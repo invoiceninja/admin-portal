@@ -20,7 +20,7 @@ ClientContactEntity? creditContactSelector(
 }
 
 var memoizedDropdownCreditList = memo7(
-    (BuiltMap<String?, InvoiceEntity?> creditMap,
+    (BuiltMap<String, InvoiceEntity> creditMap,
             BuiltMap<String?, ClientEntity?> clientMap,
             BuiltMap<String?, VendorEntity?> vendorMap,
             BuiltList<String> creditList,
@@ -38,7 +38,7 @@ var memoizedDropdownCreditList = memo7(
         ));
 
 List<String> dropdownCreditSelector(
-    BuiltMap<String?, InvoiceEntity?> creditMap,
+    BuiltMap<String, InvoiceEntity> creditMap,
     BuiltMap<String?, ClientEntity?> clientMap,
     BuiltMap<String?, VendorEntity?> vendorMap,
     BuiltList<String> creditList,
@@ -86,7 +86,7 @@ ClientEntity? creditClientSelector(
 }
 
 var memoizedFilteredCreditList = memo8((SelectionState selectionState,
-        BuiltMap<String?, InvoiceEntity?> creditMap,
+        BuiltMap<String, InvoiceEntity> creditMap,
         BuiltList<String> creditList,
         BuiltMap<String?, ClientEntity?> clientMap,
         BuiltMap<String?, VendorEntity?> vendorMap,
@@ -98,7 +98,7 @@ var memoizedFilteredCreditList = memo8((SelectionState selectionState,
 
 List<String> filteredCreditsSelector(
     SelectionState selectionState,
-    BuiltMap<String?, InvoiceEntity?> creditMap,
+    BuiltMap<String, InvoiceEntity> creditMap,
     BuiltList<String> creditList,
     BuiltMap<String?, ClientEntity?> clientMap,
     BuiltMap<String?, VendorEntity?> vendorMap,
@@ -203,11 +203,11 @@ List<String> filteredCreditsSelector(
 }
 
 var memoizedCreditStatsForDesign = memo2(
-    (String designId, BuiltMap<String?, InvoiceEntity?> creditMap) =>
+    (String designId, BuiltMap<String, InvoiceEntity> creditMap) =>
         creditStatsForDesign(designId, creditMap));
 
 EntityStats creditStatsForDesign(
-    String designId, BuiltMap<String?, InvoiceEntity?> creditMap) {
+    String designId, BuiltMap<String, InvoiceEntity> creditMap) {
   int countActive = 0;
   int countArchived = 0;
   creditMap.forEach((creditId, credit) {
@@ -224,11 +224,11 @@ EntityStats creditStatsForDesign(
 }
 
 var memoizedCreditStatsForClient = memo2(
-    (String clientId, BuiltMap<String?, InvoiceEntity?> creditMap) =>
+    (String clientId, BuiltMap<String, InvoiceEntity> creditMap) =>
         creditStatsForClient(clientId, creditMap));
 
 EntityStats creditStatsForClient(
-    String clientId, BuiltMap<String?, InvoiceEntity?> creditMap) {
+    String clientId, BuiltMap<String, InvoiceEntity> creditMap) {
   int countActive = 0;
   int countArchived = 0;
   creditMap.forEach((creditId, credit) {
@@ -245,12 +245,12 @@ EntityStats creditStatsForClient(
 }
 
 var memoizedCreditStatsForUser = memo2(
-    (String userId, BuiltMap<String?, InvoiceEntity?> creditMap) =>
+    (String userId, BuiltMap<String, InvoiceEntity> creditMap) =>
         creditStatsForUser(userId, creditMap));
 
 EntityStats creditStatsForUser(
   String userId,
-  BuiltMap<String?, InvoiceEntity?> creditMap,
+  BuiltMap<String, InvoiceEntity> creditMap,
 ) {
   int countActive = 0;
   int countArchived = 0;

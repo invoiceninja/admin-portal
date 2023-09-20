@@ -29,7 +29,7 @@ abstract class TaxRateState
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, TaxRateEntity?> get map;
+  BuiltMap<String, TaxRateEntity> get map;
 
   BuiltList<String> get list;
 

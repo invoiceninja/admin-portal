@@ -29,7 +29,7 @@ abstract class ExpenseCategoryState
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, ExpenseCategoryEntity?> get map;
+  BuiltMap<String, ExpenseCategoryEntity> get map;
 
   ExpenseCategoryEntity? get(String categoryId) {
     if (map.containsKey(categoryId)) {
@@ -43,7 +43,7 @@ abstract class ExpenseCategoryState
 
   ExpenseCategoryState loadExpenseCategories(
       BuiltList<ExpenseCategoryEntity> clients) {
-    final map = Map<String?, ExpenseCategoryEntity?>.fromIterable(
+    final map = Map<String, ExpenseCategoryEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

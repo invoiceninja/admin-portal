@@ -28,10 +28,8 @@ class _$RecurringExpenseStateSerializer
     final result = <Object?>[
       'map',
       serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(ExpenseEntity)
-          ])),
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(ExpenseEntity)])),
       'list',
       serializers.serialize(object.list,
           specifiedType:
@@ -56,8 +54,8 @@ class _$RecurringExpenseStateSerializer
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType.nullable(String),
-                const FullType.nullable(ExpenseEntity)
+                const FullType(String),
+                const FullType(ExpenseEntity)
               ]))!);
           break;
         case 'list':
@@ -161,7 +159,7 @@ class _$RecurringExpenseUIStateSerializer
 
 class _$RecurringExpenseState extends RecurringExpenseState {
   @override
-  final BuiltMap<String?, ExpenseEntity?> map;
+  final BuiltMap<String, ExpenseEntity> map;
   @override
   final BuiltList<String> list;
 
@@ -217,10 +215,10 @@ class RecurringExpenseStateBuilder
     implements Builder<RecurringExpenseState, RecurringExpenseStateBuilder> {
   _$RecurringExpenseState? _$v;
 
-  MapBuilder<String?, ExpenseEntity?>? _map;
-  MapBuilder<String?, ExpenseEntity?> get map =>
-      _$this._map ??= new MapBuilder<String?, ExpenseEntity?>();
-  set map(MapBuilder<String?, ExpenseEntity?>? map) => _$this._map = map;
+  MapBuilder<String, ExpenseEntity>? _map;
+  MapBuilder<String, ExpenseEntity> get map =>
+      _$this._map ??= new MapBuilder<String, ExpenseEntity>();
+  set map(MapBuilder<String, ExpenseEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();

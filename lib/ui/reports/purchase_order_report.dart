@@ -81,7 +81,7 @@ enum PurchaseOrderReportFields {
 var memoizedPurchaseOrderReport = memo7((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, InvoiceEntity?> purchaseOrderMap,
+  BuiltMap<String, InvoiceEntity> purchaseOrderMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, VendorEntity?> vendorMap,
   BuiltMap<String?, UserEntity?> userMap,
@@ -93,7 +93,7 @@ var memoizedPurchaseOrderReport = memo7((
 ReportResult purchaseOrderReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, InvoiceEntity?> purchaseOrderMap,
+  BuiltMap<String, InvoiceEntity> purchaseOrderMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, VendorEntity?> vendorMap,
   BuiltMap<String?, UserEntity?> userMap,

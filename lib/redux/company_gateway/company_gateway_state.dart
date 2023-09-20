@@ -38,7 +38,7 @@ abstract class CompanyGatewayState
     }
   }
 
-  BuiltMap<String?, CompanyGatewayEntity?> get map;
+  BuiltMap<String, CompanyGatewayEntity> get map;
 
   BuiltList<String> get list;
 

@@ -44,7 +44,7 @@ var memoizedPurchaseOrderItemReport = memo7((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String?, ProductEntity?> productMap,
-  BuiltMap<String?, InvoiceEntity?> purchaseOrderMap,
+  BuiltMap<String, InvoiceEntity> purchaseOrderMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, VendorEntity?> vendorMap,
   StaticState staticState,
@@ -56,7 +56,7 @@ ReportResult lineItemReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String?, ProductEntity?> productMap,
-  BuiltMap<String?, InvoiceEntity?> purchaseOrderMap,
+  BuiltMap<String, InvoiceEntity> purchaseOrderMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, VendorEntity?> vendorMap,
   StaticState staticState,
@@ -234,8 +234,8 @@ ReportResult lineItemReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, lineItemReportSettings, selectedColumns)!);
+  data.sort((rowA, rowB) => sortReportTableRows(
+      rowA, rowB, lineItemReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns: PurchaseOrderItemReportFields.values

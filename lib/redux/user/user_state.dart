@@ -36,7 +36,7 @@ abstract class UserState implements Built<UserState, UserStateBuilder> {
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, UserEntity?> get map;
+  BuiltMap<String, UserEntity> get map;
 
   BuiltList<String> get list;
 

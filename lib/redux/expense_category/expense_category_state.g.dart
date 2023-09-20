@@ -29,8 +29,8 @@ class _$ExpenseCategoryStateSerializer
       'map',
       serializers.serialize(object.map,
           specifiedType: const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(ExpenseCategoryEntity)
+            const FullType(String),
+            const FullType(ExpenseCategoryEntity)
           ])),
       'list',
       serializers.serialize(object.list,
@@ -56,8 +56,8 @@ class _$ExpenseCategoryStateSerializer
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType.nullable(String),
-                const FullType.nullable(ExpenseCategoryEntity)
+                const FullType(String),
+                const FullType(ExpenseCategoryEntity)
               ]))!);
           break;
         case 'list':
@@ -162,7 +162,7 @@ class _$ExpenseCategoryUIStateSerializer
 
 class _$ExpenseCategoryState extends ExpenseCategoryState {
   @override
-  final BuiltMap<String?, ExpenseCategoryEntity?> map;
+  final BuiltMap<String, ExpenseCategoryEntity> map;
   @override
   final BuiltList<String> list;
 
@@ -218,11 +218,10 @@ class ExpenseCategoryStateBuilder
     implements Builder<ExpenseCategoryState, ExpenseCategoryStateBuilder> {
   _$ExpenseCategoryState? _$v;
 
-  MapBuilder<String?, ExpenseCategoryEntity?>? _map;
-  MapBuilder<String?, ExpenseCategoryEntity?> get map =>
-      _$this._map ??= new MapBuilder<String?, ExpenseCategoryEntity?>();
-  set map(MapBuilder<String?, ExpenseCategoryEntity?>? map) =>
-      _$this._map = map;
+  MapBuilder<String, ExpenseCategoryEntity>? _map;
+  MapBuilder<String, ExpenseCategoryEntity> get map =>
+      _$this._map ??= new MapBuilder<String, ExpenseCategoryEntity>();
+  set map(MapBuilder<String, ExpenseCategoryEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();

@@ -389,7 +389,7 @@ abstract class ExpenseEntity extends Object
       BuiltMap<String?, ClientEntity?> clientMap,
       BuiltMap<String?, UserEntity?> userMap,
       BuiltMap<String?, VendorEntity?> vendorMap,
-      BuiltMap<String?, InvoiceEntity?> invoiceMap,
+      BuiltMap<String, InvoiceEntity> invoiceMap,
       BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
       StaticState staticState) {
     int response = 0;
@@ -447,8 +447,9 @@ abstract class ExpenseEntity extends Object
             .compareTo(expenseB!.publicNotes.toLowerCase());
         break;
       case ExpenseFields.expenseDate:
-        response =
-            expenseA!.date!.toLowerCase().compareTo(expenseB!.date!.toLowerCase());
+        response = expenseA!.date!
+            .toLowerCase()
+            .compareTo(expenseB!.date!.toLowerCase());
         break;
       case ExpenseFields.paymentDate:
         response = expenseA!.paymentDate
@@ -555,8 +556,8 @@ abstract class ExpenseEntity extends Object
         response = expenseA!.lastSentDate.compareTo(expenseB!.lastSentDate);
         break;
       case ExpenseFields.status:
-        response =
-            expenseA!.calculatedStatusId!.compareTo(expenseB!.calculatedStatusId!);
+        response = expenseA!.calculatedStatusId!
+            .compareTo(expenseB!.calculatedStatusId!);
         break;
       default:
         print('## ERROR: sort by expense.$sortField is not implemented');

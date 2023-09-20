@@ -24,7 +24,7 @@ VendorContactEntity? purchaseOrderContactSelector(
 }
 
 var memoizedDropdownPurchaseOrderList = memo7(
-    (BuiltMap<String?, InvoiceEntity?> purchaseOrderMap,
+    (BuiltMap<String, InvoiceEntity> purchaseOrderMap,
             BuiltList<String> purchaseOrderList,
             StaticState staticState,
             BuiltMap<String?, UserEntity?> userMap,
@@ -35,7 +35,7 @@ var memoizedDropdownPurchaseOrderList = memo7(
             staticState, userMap, clientMap, vendorMap, clientId));
 
 List<String> dropdownPurchaseOrdersSelector(
-    BuiltMap<String?, InvoiceEntity?> purchaseOrderMap,
+    BuiltMap<String, InvoiceEntity> purchaseOrderMap,
     BuiltList<String> purchaseOrderList,
     StaticState staticState,
     BuiltMap<String?, UserEntity?> userMap,
@@ -70,7 +70,7 @@ List<String> dropdownPurchaseOrdersSelector(
 
 var memoizedFilteredPurchaseOrderList = memo7((
   SelectionState selectionState,
-  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltList<String> invoiceList,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, VendorEntity?> vendorMap,
@@ -82,7 +82,7 @@ var memoizedFilteredPurchaseOrderList = memo7((
 
 List<String> filteredPurchaseOrdersSelector(
   SelectionState selectionState,
-  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltList<String> invoiceList,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, VendorEntity?> vendorMap,
@@ -178,11 +178,11 @@ List<String> filteredPurchaseOrdersSelector(
 }
 
 var memoizedPurchaseOrderStatsForVendor = memo2(
-    (String vendorId, BuiltMap<String?, InvoiceEntity?> purchaseOrderMap) =>
+    (String vendorId, BuiltMap<String, InvoiceEntity> purchaseOrderMap) =>
         purchaseOrderStatsForVendor(vendorId, purchaseOrderMap));
 
 EntityStats purchaseOrderStatsForVendor(
-    String vendorId, BuiltMap<String?, InvoiceEntity?> purchaseOrderMap) {
+    String vendorId, BuiltMap<String, InvoiceEntity> purchaseOrderMap) {
   int countActive = 0;
   int countArchived = 0;
   purchaseOrderMap.forEach((purchaseOrderId, purchaseOrder) {

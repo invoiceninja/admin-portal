@@ -30,7 +30,7 @@ abstract class RecurringInvoiceState
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, InvoiceEntity?> get map;
+  BuiltMap<String, InvoiceEntity> get map;
 
   InvoiceEntity? get(String invoiceId) {
     if (map.containsKey(invoiceId)) {
@@ -44,7 +44,7 @@ abstract class RecurringInvoiceState
 
   RecurringInvoiceState loadRecurringInvoices(
       BuiltList<InvoiceEntity> clients) {
-    final map = Map<String?, InvoiceEntity?>.fromIterable(
+    final map = Map<String, InvoiceEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

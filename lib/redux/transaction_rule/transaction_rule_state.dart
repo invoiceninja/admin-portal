@@ -23,7 +23,7 @@ abstract class TransactionRuleState
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, TransactionRuleEntity?> get map;
+  BuiltMap<String, TransactionRuleEntity> get map;
   BuiltList<String> get list;
 
   TransactionRuleEntity? get(String transactionRuleId) {
@@ -36,7 +36,7 @@ abstract class TransactionRuleState
 
   TransactionRuleState loadTransactionRules(
       BuiltList<TransactionRuleEntity> clients) {
-    final map = Map<String?, TransactionRuleEntity?>.fromIterable(
+    final map = Map<String, TransactionRuleEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

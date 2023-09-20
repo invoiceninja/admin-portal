@@ -115,7 +115,7 @@ class RecurringInvoiceListVM {
   final AppState state;
   final UserCompanyEntity? userCompany;
   final List<String> recurringInvoiceList;
-  final BuiltMap<String?, InvoiceEntity?> recurringInvoiceMap;
+  final BuiltMap<String, InvoiceEntity> recurringInvoiceMap;
   final ListUIState listState;
   final String? filter;
   final bool isLoading;

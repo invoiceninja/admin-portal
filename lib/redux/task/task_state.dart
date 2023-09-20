@@ -37,12 +37,12 @@ abstract class TaskState implements Built<TaskState, TaskStateBuilder> {
     }
   }
 
-  BuiltMap<String?, TaskEntity?> get map;
+  BuiltMap<String, TaskEntity> get map;
 
   BuiltList<String> get list;
 
   TaskState loadTasks(BuiltList<TaskEntity> clients) {
-    final map = Map<String?, TaskEntity?>.fromIterable(
+    final map = Map<String, TaskEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

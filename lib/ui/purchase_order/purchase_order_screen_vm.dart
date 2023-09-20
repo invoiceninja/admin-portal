@@ -39,7 +39,7 @@ class PurchaseOrderScreenVM {
   final UserCompanyEntity? userCompany;
   final List<String> purchaseOrderList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final BuiltMap<String?, InvoiceEntity?> purchaseOrderMap;
+  final BuiltMap<String, InvoiceEntity> purchaseOrderMap;
 
   static PurchaseOrderScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

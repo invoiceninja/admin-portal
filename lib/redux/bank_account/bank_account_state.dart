@@ -23,7 +23,8 @@ abstract class BankAccountState
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, BankAccountEntity?> get map;
+  BuiltMap<String, BankAccountEntity> get map;
+
   BuiltList<String> get list;
 
   BankAccountEntity? get(String bankAccountId) {
@@ -35,7 +36,7 @@ abstract class BankAccountState
   }
 
   BankAccountState loadBankAccounts(BuiltList<BankAccountEntity> clients) {
-    final map = Map<String?, BankAccountEntity?>.fromIterable(
+    final map = Map<String, BankAccountEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

@@ -25,7 +25,7 @@ ClientContactEntity? quoteContactSelector(
 }
 
 var memoizedDropdownQuoteList = memo7((
-  BuiltMap<String?, InvoiceEntity?> quoteMap,
+  BuiltMap<String, InvoiceEntity> quoteMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, VendorEntity?> vendorMap,
   BuiltList<String> quoteList,
@@ -44,7 +44,7 @@ var memoizedDropdownQuoteList = memo7((
     ));
 
 List<String> dropdownQuoteSelector(
-  BuiltMap<String?, InvoiceEntity?> quoteMap,
+  BuiltMap<String, InvoiceEntity> quoteMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, VendorEntity?> vendorMap,
   BuiltList<String> quoteList,
@@ -88,7 +88,7 @@ List<String> dropdownQuoteSelector(
 }
 
 var memoizedFilteredQuoteList = memo7((SelectionState selectionState,
-        BuiltMap<String?, InvoiceEntity?> quoteMap,
+        BuiltMap<String, InvoiceEntity> quoteMap,
         BuiltList<String> quoteList,
         BuiltMap<String?, ClientEntity?> clientMap,
         BuiltMap<String?, VendorEntity?> vendorMap,
@@ -99,7 +99,7 @@ var memoizedFilteredQuoteList = memo7((SelectionState selectionState,
 
 List<String> filteredQuotesSelector(
     SelectionState selectionState,
-    BuiltMap<String?, InvoiceEntity?> quoteMap,
+    BuiltMap<String, InvoiceEntity> quoteMap,
     BuiltList<String> quoteList,
     BuiltMap<String?, ClientEntity?> clientMap,
     BuiltMap<String?, VendorEntity?> vendorMap,
@@ -182,11 +182,11 @@ List<String> filteredQuotesSelector(
 }
 
 var memoizedQuoteStatsForClient = memo2(
-    (String clientId, BuiltMap<String?, InvoiceEntity?> quoteMap) =>
+    (String clientId, BuiltMap<String, InvoiceEntity> quoteMap) =>
         quoteStatsForClient(clientId, quoteMap));
 
 EntityStats quoteStatsForClient(
-    String clientId, BuiltMap<String?, InvoiceEntity?> quoteMap) {
+    String clientId, BuiltMap<String, InvoiceEntity> quoteMap) {
   int countActive = 0;
   int countArchived = 0;
 
@@ -204,11 +204,11 @@ EntityStats quoteStatsForClient(
 }
 
 var memoizedQuoteStatsForDesign = memo2(
-    (String designId, BuiltMap<String?, InvoiceEntity?> quoteMap) =>
+    (String designId, BuiltMap<String, InvoiceEntity> quoteMap) =>
         quoteStatsForDesign(designId, quoteMap));
 
 EntityStats quoteStatsForDesign(
-    String designId, BuiltMap<String?, InvoiceEntity?> quoteMap) {
+    String designId, BuiltMap<String, InvoiceEntity> quoteMap) {
   int countActive = 0;
   int countArchived = 0;
   quoteMap.forEach((quoteId, quote) {
@@ -225,12 +225,12 @@ EntityStats quoteStatsForDesign(
 }
 
 var memoizedQuoteStatsForUser = memo2(
-    (String userId, BuiltMap<String?, InvoiceEntity?> quoteMap) =>
+    (String userId, BuiltMap<String, InvoiceEntity> quoteMap) =>
         quoteStatsForUser(userId, quoteMap));
 
 EntityStats quoteStatsForUser(
   String userId,
-  BuiltMap<String?, InvoiceEntity?> quoteMap,
+  BuiltMap<String, InvoiceEntity> quoteMap,
 ) {
   int countActive = 0;
   int countArchived = 0;

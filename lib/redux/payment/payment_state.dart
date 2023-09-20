@@ -30,7 +30,7 @@ abstract class PaymentState
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, PaymentEntity?> get map;
+  BuiltMap<String, PaymentEntity> get map;
 
   BuiltList<String> get list;
 
@@ -43,7 +43,7 @@ abstract class PaymentState
   }
 
   PaymentState loadPayments(BuiltList<PaymentEntity> clients) {
-    final map = Map<String?, PaymentEntity?>.fromIterable(
+    final map = Map<String, PaymentEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

@@ -23,10 +23,8 @@ class _$WebhookStateSerializer implements StructuredSerializer<WebhookState> {
     final result = <Object?>[
       'map',
       serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(WebhookEntity)
-          ])),
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(WebhookEntity)])),
       'list',
       serializers.serialize(object.list,
           specifiedType:
@@ -51,8 +49,8 @@ class _$WebhookStateSerializer implements StructuredSerializer<WebhookState> {
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType.nullable(String),
-                const FullType.nullable(WebhookEntity)
+                const FullType(String),
+                const FullType(WebhookEntity)
               ]))!);
           break;
         case 'list':
@@ -152,7 +150,7 @@ class _$WebhookUIStateSerializer
 
 class _$WebhookState extends WebhookState {
   @override
-  final BuiltMap<String?, WebhookEntity?> map;
+  final BuiltMap<String, WebhookEntity> map;
   @override
   final BuiltList<String> list;
 
@@ -201,10 +199,10 @@ class WebhookStateBuilder
     implements Builder<WebhookState, WebhookStateBuilder> {
   _$WebhookState? _$v;
 
-  MapBuilder<String?, WebhookEntity?>? _map;
-  MapBuilder<String?, WebhookEntity?> get map =>
-      _$this._map ??= new MapBuilder<String?, WebhookEntity?>();
-  set map(MapBuilder<String?, WebhookEntity?>? map) => _$this._map = map;
+  MapBuilder<String, WebhookEntity>? _map;
+  MapBuilder<String, WebhookEntity> get map =>
+      _$this._map ??= new MapBuilder<String, WebhookEntity>();
+  set map(MapBuilder<String, WebhookEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();

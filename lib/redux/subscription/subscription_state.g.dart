@@ -25,8 +25,8 @@ class _$SubscriptionStateSerializer
       'map',
       serializers.serialize(object.map,
           specifiedType: const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(SubscriptionEntity)
+            const FullType(String),
+            const FullType(SubscriptionEntity)
           ])),
       'list',
       serializers.serialize(object.list,
@@ -52,8 +52,8 @@ class _$SubscriptionStateSerializer
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType.nullable(String),
-                const FullType.nullable(SubscriptionEntity)
+                const FullType(String),
+                const FullType(SubscriptionEntity)
               ]))!);
           break;
         case 'list':
@@ -158,7 +158,7 @@ class _$SubscriptionUIStateSerializer
 
 class _$SubscriptionState extends SubscriptionState {
   @override
-  final BuiltMap<String?, SubscriptionEntity?> map;
+  final BuiltMap<String, SubscriptionEntity> map;
   @override
   final BuiltList<String> list;
 
@@ -209,10 +209,10 @@ class SubscriptionStateBuilder
     implements Builder<SubscriptionState, SubscriptionStateBuilder> {
   _$SubscriptionState? _$v;
 
-  MapBuilder<String?, SubscriptionEntity?>? _map;
-  MapBuilder<String?, SubscriptionEntity?> get map =>
-      _$this._map ??= new MapBuilder<String?, SubscriptionEntity?>();
-  set map(MapBuilder<String?, SubscriptionEntity?>? map) => _$this._map = map;
+  MapBuilder<String, SubscriptionEntity>? _map;
+  MapBuilder<String, SubscriptionEntity> get map =>
+      _$this._map ??= new MapBuilder<String, SubscriptionEntity>();
+  set map(MapBuilder<String, SubscriptionEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();

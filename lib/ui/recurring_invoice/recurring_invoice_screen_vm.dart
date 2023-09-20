@@ -43,7 +43,7 @@ class RecurringInvoiceScreenVM {
   final UserCompanyEntity? userCompany;
   final List<String> recurringInvoiceList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final BuiltMap<String?, InvoiceEntity?> recurringInvoiceMap;
+  final BuiltMap<String, InvoiceEntity> recurringInvoiceMap;
 
   static RecurringInvoiceScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

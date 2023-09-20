@@ -36,12 +36,12 @@ abstract class CreditState implements Built<CreditState, CreditStateBuilder> {
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, InvoiceEntity?> get map;
+  BuiltMap<String, InvoiceEntity> get map;
 
   BuiltList<String> get list;
 
   CreditState loadCredits(BuiltList<InvoiceEntity> clients) {
-    final map = Map<String?, InvoiceEntity?>.fromIterable(
+    final map = Map<String, InvoiceEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

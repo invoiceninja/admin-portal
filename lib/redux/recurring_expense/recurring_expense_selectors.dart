@@ -74,7 +74,7 @@ var memoizedFilteredRecurringExpenseList = memo9((SelectionState selectionState,
         BuiltMap<String?, VendorEntity?> vendorMap,
         BuiltMap<String?, UserEntity?> userMap,
         ListUIState expenseListState,
-        BuiltMap<String?, InvoiceEntity?> invoiceMap,
+        BuiltMap<String, InvoiceEntity> invoiceMap,
         BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
         StaticState staticState) =>
     filteredRecurringExpensesSelector(
@@ -95,7 +95,7 @@ List<String?> filteredRecurringExpensesSelector(
     BuiltMap<String?, VendorEntity?> vendorMap,
     BuiltMap<String?, UserEntity?> userMap,
     ListUIState expenseListState,
-    BuiltMap<String?, InvoiceEntity?> invoiceMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
     StaticState staticState) {
   final filterEntityId = selectionState.filterEntityId;

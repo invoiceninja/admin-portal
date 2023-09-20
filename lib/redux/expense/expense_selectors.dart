@@ -15,11 +15,11 @@ import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedExpensePurchaseOrderSelector = memo2(
-    (ExpenseEntity expense, BuiltMap<String?, InvoiceEntity?> purchaseOrderMap) =>
+    (ExpenseEntity expense, BuiltMap<String, InvoiceEntity> purchaseOrderMap) =>
         expensePurchaseOrderSelector(expense, purchaseOrderMap));
 
 InvoiceEntity? expensePurchaseOrderSelector(
-    ExpenseEntity expense, BuiltMap<String?, InvoiceEntity?> purchaseOrderMap) {
+    ExpenseEntity expense, BuiltMap<String, InvoiceEntity> purchaseOrderMap) {
   InvoiceEntity? purchaseOrder;
   purchaseOrderMap.forEach((purchaseOrderId, purchaseOrder) {
     if (purchaseOrder!.expenseId == expense.id) {
@@ -154,7 +154,7 @@ var memoizedFilteredExpenseList = memo9((SelectionState selectionState,
         BuiltMap<String?, VendorEntity?> vendorMap,
         BuiltMap<String?, UserEntity?> userMap,
         ListUIState expenseListState,
-        BuiltMap<String?, InvoiceEntity?> invoiceMap,
+        BuiltMap<String, InvoiceEntity> invoiceMap,
         BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
         StaticState staticState) =>
     filteredExpensesSelector(
@@ -175,7 +175,7 @@ List<String?> filteredExpensesSelector(
     BuiltMap<String?, VendorEntity?> vendorMap,
     BuiltMap<String?, UserEntity?> userMap,
     ListUIState expenseListState,
-    BuiltMap<String?, InvoiceEntity?> invoiceMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
     StaticState staticState) {
   final filterEntityId = selectionState.filterEntityId;

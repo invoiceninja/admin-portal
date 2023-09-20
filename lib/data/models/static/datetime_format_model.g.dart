@@ -45,15 +45,15 @@ class _$DatetimeFormatListResponseSerializer
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String?;
+      final key = iterator.current! as String;
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(DatetimeFormatEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(DatetimeFormatEntity)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -93,13 +93,13 @@ class _$DatetimeFormatItemResponseSerializer
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String?;
+      final key = iterator.current! as String;
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(DatetimeFormatEntity))
+                  specifiedType: const FullType(DatetimeFormatEntity))!
               as DatetimeFormatEntity);
           break;
       }
@@ -142,17 +142,17 @@ class _$DatetimeFormatEntitySerializer
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String?;
+      final key = iterator.current! as String;
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'format_dart':
           result.format = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -215,7 +215,7 @@ class DatetimeFormatListResponseBuilder
   ListBuilder<DatetimeFormatEntity>? _data;
   ListBuilder<DatetimeFormatEntity> get data =>
       _$this._data ??= new ListBuilder<DatetimeFormatEntity>();
-  set data(ListBuilder<DatetimeFormatEntity> data) => _$this._data = data;
+  set data(ListBuilder<DatetimeFormatEntity>? data) => _$this._data = data;
 
   DatetimeFormatListResponseBuilder();
 
@@ -316,7 +316,7 @@ class DatetimeFormatItemResponseBuilder
   DatetimeFormatEntityBuilder? _data;
   DatetimeFormatEntityBuilder get data =>
       _$this._data ??= new DatetimeFormatEntityBuilder();
-  set data(DatetimeFormatEntityBuilder data) => _$this._data = data;
+  set data(DatetimeFormatEntityBuilder? data) => _$this._data = data;
 
   DatetimeFormatItemResponseBuilder();
 
@@ -373,7 +373,8 @@ class _$DatetimeFormatEntity extends DatetimeFormatEntity {
           [void Function(DatetimeFormatEntityBuilder)? updates]) =>
       (new DatetimeFormatEntityBuilder()..update(updates))._build();
 
-  _$DatetimeFormatEntity._({required this.id, required this.format}) : super._() {
+  _$DatetimeFormatEntity._({required this.id, required this.format})
+      : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'DatetimeFormatEntity', 'id');
     BuiltValueNullFieldError.checkNotNull(
         format, r'DatetimeFormatEntity', 'format');

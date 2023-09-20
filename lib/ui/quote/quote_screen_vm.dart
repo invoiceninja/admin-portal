@@ -40,7 +40,7 @@ class QuoteScreenVM {
   final bool isInMultiselect;
   final UserCompanyEntity? userCompany;
   final List<String> quoteList;
-  final BuiltMap<String?, InvoiceEntity?> quoteMap;
+  final BuiltMap<String, InvoiceEntity> quoteMap;
 
   static QuoteScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

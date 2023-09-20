@@ -173,9 +173,9 @@ class SaveTaskSuccess implements StopSaving, PersistData, PersistUI {
 }
 
 class AddTaskSuccess implements StopSaving, PersistData, PersistUI {
-  AddTaskSuccess({this.task, this.autoSelect = true});
+  AddTaskSuccess({required this.task, this.autoSelect = true});
 
-  final TaskEntity? task;
+  final TaskEntity task;
   final bool autoSelect;
 }
 

@@ -6,7 +6,7 @@ import 'package:memoize/memoize.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 
 var memoizedUpcomingInvoices = memo2((
-  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String?, ClientEntity?> clientMap,
 ) =>
     _upcomingInvoices(
@@ -15,7 +15,7 @@ var memoizedUpcomingInvoices = memo2((
     ));
 
 List<InvoiceEntity?> _upcomingInvoices({
-  required BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  required BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String?, ClientEntity?>? clientMap,
 }) {
   final invoices = <InvoiceEntity?>[];
@@ -38,7 +38,7 @@ List<InvoiceEntity?> _upcomingInvoices({
 }
 
 var memoizedPastDueInvoices = memo2((
-  BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String?, ClientEntity?> clientMap,
 ) =>
     _pastDueInvoices(
@@ -47,7 +47,7 @@ var memoizedPastDueInvoices = memo2((
     ));
 
 List<InvoiceEntity?> _pastDueInvoices({
-  required BuiltMap<String?, InvoiceEntity?> invoiceMap,
+  required BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String?, ClientEntity?>? clientMap,
 }) {
   final invoices = <InvoiceEntity?>[];
@@ -109,7 +109,7 @@ List<PaymentEntity?> _recentPayments({
 }
 
 var memoizedUpcomingQuotes = memo2((
-  BuiltMap<String?, InvoiceEntity?> quoteMap,
+  BuiltMap<String, InvoiceEntity> quoteMap,
   BuiltMap<String?, ClientEntity?> clientMap,
 ) =>
     _upcomingQuotes(
@@ -118,7 +118,7 @@ var memoizedUpcomingQuotes = memo2((
     ));
 
 List<InvoiceEntity?> _upcomingQuotes({
-  required BuiltMap<String?, InvoiceEntity?> quoteMap,
+  required BuiltMap<String, InvoiceEntity> quoteMap,
   BuiltMap<String?, ClientEntity?>? clientMap,
 }) {
   final quotes = <InvoiceEntity?>[];
@@ -139,7 +139,7 @@ List<InvoiceEntity?> _upcomingQuotes({
 }
 
 var memoizedExpiredQuotes = memo2((
-  BuiltMap<String?, InvoiceEntity?> quoteMap,
+  BuiltMap<String, InvoiceEntity> quoteMap,
   BuiltMap<String?, ClientEntity?> clientMap,
 ) =>
     _expiredQuotes(
@@ -148,7 +148,7 @@ var memoizedExpiredQuotes = memo2((
     ));
 
 List<InvoiceEntity?> _expiredQuotes({
-  required BuiltMap<String?, InvoiceEntity?> quoteMap,
+  required BuiltMap<String, InvoiceEntity> quoteMap,
   BuiltMap<String?, ClientEntity?>? clientMap,
 }) {
   final quotes = <InvoiceEntity?>[];
@@ -183,7 +183,8 @@ List<TaskEntity?> _runningTasks({
 }) {
   final tasks = <TaskEntity?>[];
   taskMap.forEach((index, task) {
-    final client = clientMap![task!.clientId] ?? ClientEntity(id: task.clientId);
+    final client =
+        clientMap![task!.clientId] ?? ClientEntity(id: task.clientId);
     if (task.isNotActive || client.isNotActive) {
       // do noting
     } else if (task.isRunning) {
@@ -191,8 +192,8 @@ List<TaskEntity?> _runningTasks({
     }
   });
 
-  tasks.sort(
-      (taskA, taskB) => (taskB!.updatedAt ?? 0).compareTo(taskA!.updatedAt ?? 0));
+  tasks.sort((taskA, taskB) =>
+      (taskB!.updatedAt ?? 0).compareTo(taskA!.updatedAt ?? 0));
 
   return tasks;
 }
@@ -212,7 +213,8 @@ List<TaskEntity?> _recentTasks({
 }) {
   final tasks = <TaskEntity?>[];
   taskMap.forEach((index, task) {
-    final client = clientMap![task!.clientId] ?? ClientEntity(id: task.clientId);
+    final client =
+        clientMap![task!.clientId] ?? ClientEntity(id: task.clientId);
     if (task.isNotActive || client.isNotActive) {
       // do noting
     } else if (!task.isRunning) {
@@ -220,8 +222,8 @@ List<TaskEntity?> _recentTasks({
     }
   });
 
-  tasks.sort(
-      (taskA, taskB) => (taskB!.updatedAt ?? 0).compareTo(taskA!.updatedAt ?? 0));
+  tasks.sort((taskA, taskB) =>
+      (taskB!.updatedAt ?? 0).compareTo(taskA!.updatedAt ?? 0));
 
   return tasks;
 }

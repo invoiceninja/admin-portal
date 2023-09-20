@@ -28,12 +28,12 @@ abstract class TokenState implements Built<TokenState, TokenStateBuilder> {
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, TokenEntity?> get map;
+  BuiltMap<String, TokenEntity> get map;
 
   BuiltList<String> get list;
 
   TokenState loadTokens(BuiltList<TokenEntity> clients) {
-    final map = Map<String?, TokenEntity?>.fromIterable(
+    final map = Map<String, TokenEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

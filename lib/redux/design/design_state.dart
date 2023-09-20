@@ -29,12 +29,13 @@ abstract class DesignState implements Built<DesignState, DesignStateBuilder> {
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, DesignEntity?> get map;
+  BuiltMap<String, DesignEntity> get map;
 
   BuiltList<String> get list;
 
   DesignEntity get cleanDesign =>
-      map[list.firstWhereOrNull((id) => !map[id]!.isCustom && map[id]!.name == 'Clean')] ??
+      map[list.firstWhereOrNull(
+          (id) => !map[id]!.isCustom && map[id]!.name == 'Clean')] ??
       DesignEntity();
 
   List<DesignEntity?> get customDesigns => list
@@ -43,7 +44,7 @@ abstract class DesignState implements Built<DesignState, DesignStateBuilder> {
       .toList();
 
   DesignState loadDesigns(BuiltList<DesignEntity> clients) {
-    final map = Map<String?, DesignEntity?>.fromIterable(
+    final map = Map<String, DesignEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

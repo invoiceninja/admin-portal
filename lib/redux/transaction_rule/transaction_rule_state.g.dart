@@ -29,8 +29,8 @@ class _$TransactionRuleStateSerializer
       'map',
       serializers.serialize(object.map,
           specifiedType: const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(TransactionRuleEntity)
+            const FullType(String),
+            const FullType(TransactionRuleEntity)
           ])),
       'list',
       serializers.serialize(object.list,
@@ -56,8 +56,8 @@ class _$TransactionRuleStateSerializer
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType.nullable(String),
-                const FullType.nullable(TransactionRuleEntity)
+                const FullType(String),
+                const FullType(TransactionRuleEntity)
               ]))!);
           break;
         case 'list':
@@ -162,7 +162,7 @@ class _$TransactionRuleUIStateSerializer
 
 class _$TransactionRuleState extends TransactionRuleState {
   @override
-  final BuiltMap<String?, TransactionRuleEntity?> map;
+  final BuiltMap<String, TransactionRuleEntity> map;
   @override
   final BuiltList<String> list;
 
@@ -218,11 +218,10 @@ class TransactionRuleStateBuilder
     implements Builder<TransactionRuleState, TransactionRuleStateBuilder> {
   _$TransactionRuleState? _$v;
 
-  MapBuilder<String?, TransactionRuleEntity?>? _map;
-  MapBuilder<String?, TransactionRuleEntity?> get map =>
-      _$this._map ??= new MapBuilder<String?, TransactionRuleEntity?>();
-  set map(MapBuilder<String?, TransactionRuleEntity?>? map) =>
-      _$this._map = map;
+  MapBuilder<String, TransactionRuleEntity>? _map;
+  MapBuilder<String, TransactionRuleEntity> get map =>
+      _$this._map ??= new MapBuilder<String, TransactionRuleEntity>();
+  set map(MapBuilder<String, TransactionRuleEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();

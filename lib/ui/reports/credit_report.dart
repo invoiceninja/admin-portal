@@ -82,7 +82,7 @@ enum CreditReportFields {
 var memoizedCreditReport = memo6((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, InvoiceEntity?> creditMap,
+  BuiltMap<String, InvoiceEntity> creditMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, UserEntity?> userMap,
   StaticState staticState,
@@ -93,7 +93,7 @@ var memoizedCreditReport = memo6((
 ReportResult creditReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, InvoiceEntity?> creditMap,
+  BuiltMap<String, InvoiceEntity> creditMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, UserEntity?> userMap,
   StaticState staticState,

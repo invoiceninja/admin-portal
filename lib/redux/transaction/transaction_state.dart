@@ -23,7 +23,7 @@ abstract class TransactionState
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, TransactionEntity?> get map;
+  BuiltMap<String, TransactionEntity> get map;
   BuiltList<String> get list;
 
   TransactionEntity? get(String transactionId) {
@@ -35,7 +35,7 @@ abstract class TransactionState
   }
 
   TransactionState loadTransactions(BuiltList<TransactionEntity> transactions) {
-    final map = Map<String?, TransactionEntity?>.fromIterable(
+    final map = Map<String, TransactionEntity>.fromIterable(
       transactions,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

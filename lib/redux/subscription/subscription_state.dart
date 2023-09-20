@@ -29,7 +29,7 @@ abstract class SubscriptionState
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, SubscriptionEntity?> get map;
+  BuiltMap<String, SubscriptionEntity> get map;
 
   BuiltList<String> get list;
 
@@ -42,7 +42,7 @@ abstract class SubscriptionState
   }
 
   SubscriptionState loadSubscriptions(BuiltList<SubscriptionEntity> clients) {
-    final map = Map<String?, SubscriptionEntity?>.fromIterable(
+    final map = Map<String, SubscriptionEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

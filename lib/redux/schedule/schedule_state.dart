@@ -23,7 +23,7 @@ abstract class ScheduleState
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, ScheduleEntity?> get map;
+  BuiltMap<String, ScheduleEntity> get map;
   BuiltList<String> get list;
 
   ScheduleEntity? get(String scheduleId) {
@@ -36,7 +36,7 @@ abstract class ScheduleState
   }
 
   ScheduleState loadSchedules(BuiltList<ScheduleEntity> clients) {
-    final map = Map<String?, ScheduleEntity?>.fromIterable(
+    final map = Map<String, ScheduleEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

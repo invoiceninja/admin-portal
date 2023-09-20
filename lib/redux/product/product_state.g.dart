@@ -23,10 +23,8 @@ class _$ProductStateSerializer implements StructuredSerializer<ProductState> {
     final result = <Object?>[
       'map',
       serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(ProductEntity)
-          ])),
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(ProductEntity)])),
       'list',
       serializers.serialize(object.list,
           specifiedType:
@@ -51,8 +49,8 @@ class _$ProductStateSerializer implements StructuredSerializer<ProductState> {
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType.nullable(String),
-                const FullType.nullable(ProductEntity)
+                const FullType(String),
+                const FullType(ProductEntity)
               ]))!);
           break;
         case 'list':
@@ -152,7 +150,7 @@ class _$ProductUIStateSerializer
 
 class _$ProductState extends ProductState {
   @override
-  final BuiltMap<String?, ProductEntity?> map;
+  final BuiltMap<String, ProductEntity> map;
   @override
   final BuiltList<String> list;
 
@@ -201,10 +199,10 @@ class ProductStateBuilder
     implements Builder<ProductState, ProductStateBuilder> {
   _$ProductState? _$v;
 
-  MapBuilder<String?, ProductEntity?>? _map;
-  MapBuilder<String?, ProductEntity?> get map =>
-      _$this._map ??= new MapBuilder<String?, ProductEntity?>();
-  set map(MapBuilder<String?, ProductEntity?>? map) => _$this._map = map;
+  MapBuilder<String, ProductEntity>? _map;
+  MapBuilder<String, ProductEntity> get map =>
+      _$this._map ??= new MapBuilder<String, ProductEntity>();
+  set map(MapBuilder<String, ProductEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();

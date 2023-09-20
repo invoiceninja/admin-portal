@@ -23,10 +23,8 @@ class _$DocumentStateSerializer implements StructuredSerializer<DocumentState> {
     final result = <Object?>[
       'map',
       serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(DocumentEntity)
-          ])),
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(DocumentEntity)])),
       'list',
       serializers.serialize(object.list,
           specifiedType:
@@ -51,8 +49,8 @@ class _$DocumentStateSerializer implements StructuredSerializer<DocumentState> {
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType.nullable(String),
-                const FullType.nullable(DocumentEntity)
+                const FullType(String),
+                const FullType(DocumentEntity)
               ]))!);
           break;
         case 'list':
@@ -153,7 +151,7 @@ class _$DocumentUIStateSerializer
 
 class _$DocumentState extends DocumentState {
   @override
-  final BuiltMap<String?, DocumentEntity?> map;
+  final BuiltMap<String, DocumentEntity> map;
   @override
   final BuiltList<String> list;
 
@@ -202,10 +200,10 @@ class DocumentStateBuilder
     implements Builder<DocumentState, DocumentStateBuilder> {
   _$DocumentState? _$v;
 
-  MapBuilder<String?, DocumentEntity?>? _map;
-  MapBuilder<String?, DocumentEntity?> get map =>
-      _$this._map ??= new MapBuilder<String?, DocumentEntity?>();
-  set map(MapBuilder<String?, DocumentEntity?>? map) => _$this._map = map;
+  MapBuilder<String, DocumentEntity>? _map;
+  MapBuilder<String, DocumentEntity> get map =>
+      _$this._map ??= new MapBuilder<String, DocumentEntity>();
+  set map(MapBuilder<String, DocumentEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();

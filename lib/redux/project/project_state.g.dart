@@ -23,10 +23,8 @@ class _$ProjectStateSerializer implements StructuredSerializer<ProjectState> {
     final result = <Object?>[
       'map',
       serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(ProjectEntity)
-          ])),
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(ProjectEntity)])),
       'list',
       serializers.serialize(object.list,
           specifiedType:
@@ -51,8 +49,8 @@ class _$ProjectStateSerializer implements StructuredSerializer<ProjectState> {
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType.nullable(String),
-                const FullType.nullable(ProjectEntity)
+                const FullType(String),
+                const FullType(ProjectEntity)
               ]))!);
           break;
         case 'list':
@@ -152,7 +150,7 @@ class _$ProjectUIStateSerializer
 
 class _$ProjectState extends ProjectState {
   @override
-  final BuiltMap<String?, ProjectEntity?> map;
+  final BuiltMap<String, ProjectEntity> map;
   @override
   final BuiltList<String> list;
 
@@ -201,10 +199,10 @@ class ProjectStateBuilder
     implements Builder<ProjectState, ProjectStateBuilder> {
   _$ProjectState? _$v;
 
-  MapBuilder<String?, ProjectEntity?>? _map;
-  MapBuilder<String?, ProjectEntity?> get map =>
-      _$this._map ??= new MapBuilder<String?, ProjectEntity?>();
-  set map(MapBuilder<String?, ProjectEntity?>? map) => _$this._map = map;
+  MapBuilder<String, ProjectEntity>? _map;
+  MapBuilder<String, ProjectEntity> get map =>
+      _$this._map ??= new MapBuilder<String, ProjectEntity>();
+  set map(MapBuilder<String, ProjectEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();

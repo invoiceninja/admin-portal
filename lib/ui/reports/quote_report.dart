@@ -80,7 +80,7 @@ enum QuoteReportFields {
 var memoizedQuoteReport = memo7((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, InvoiceEntity?> quoteMap,
+  BuiltMap<String, InvoiceEntity> quoteMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, VendorEntity?> vendorMap,
   BuiltMap<String?, UserEntity?> userMap,
@@ -92,7 +92,7 @@ var memoizedQuoteReport = memo7((
 ReportResult quoteReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, InvoiceEntity?> quoteMap,
+  BuiltMap<String, InvoiceEntity> quoteMap,
   BuiltMap<String?, ClientEntity?> clientMap,
   BuiltMap<String?, VendorEntity?> vendorMap,
   BuiltMap<String?, UserEntity?> userMap,

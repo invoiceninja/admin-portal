@@ -24,7 +24,7 @@ abstract class PurchaseOrderState
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, InvoiceEntity?> get map;
+  BuiltMap<String, InvoiceEntity> get map;
   BuiltList<String> get list;
 
   InvoiceEntity? get(String purchaseOrderId) {
@@ -36,7 +36,7 @@ abstract class PurchaseOrderState
   }
 
   PurchaseOrderState loadPurchaseOrders(BuiltList<InvoiceEntity> clients) {
-    final map = Map<String?, InvoiceEntity?>.fromIterable(
+    final map = Map<String, InvoiceEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

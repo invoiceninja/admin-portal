@@ -38,12 +38,12 @@ abstract class ExpenseState
     }
   }
 
-  BuiltMap<String?, ExpenseEntity?> get map;
+  BuiltMap<String, ExpenseEntity> get map;
 
   BuiltList<String> get list;
 
   ExpenseState loadExpenses(BuiltList<ExpenseEntity> clients) {
-    final map = Map<String?, ExpenseEntity?>.fromIterable(
+    final map = Map<String, ExpenseEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

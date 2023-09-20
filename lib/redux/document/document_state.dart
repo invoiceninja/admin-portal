@@ -30,7 +30,7 @@ abstract class DocumentState
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, DocumentEntity?> get map;
+  BuiltMap<String, DocumentEntity> get map;
 
   BuiltList<String> get list;
 

@@ -29,7 +29,7 @@ abstract class RecurringExpenseState
   @memoized
   int get hashCode;
 
-  BuiltMap<String?, ExpenseEntity?> get map;
+  BuiltMap<String, ExpenseEntity> get map;
   BuiltList<String> get list;
 
   ExpenseEntity? get(String recurringExpenseId) {
@@ -42,7 +42,7 @@ abstract class RecurringExpenseState
 
   RecurringExpenseState loadRecurringExpenses(
       BuiltList<ExpenseEntity> clients) {
-    final map = Map<String?, ExpenseEntity?>.fromIterable(
+    final map = Map<String, ExpenseEntity>.fromIterable(
       clients,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,

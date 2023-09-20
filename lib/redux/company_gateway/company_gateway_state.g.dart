@@ -29,8 +29,8 @@ class _$CompanyGatewayStateSerializer
       'map',
       serializers.serialize(object.map,
           specifiedType: const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(CompanyGatewayEntity)
+            const FullType(String),
+            const FullType(CompanyGatewayEntity)
           ])),
       'list',
       serializers.serialize(object.list,
@@ -56,8 +56,8 @@ class _$CompanyGatewayStateSerializer
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType.nullable(String),
-                const FullType.nullable(CompanyGatewayEntity)
+                const FullType(String),
+                const FullType(CompanyGatewayEntity)
               ]))!);
           break;
         case 'list':
@@ -162,7 +162,7 @@ class _$CompanyGatewayUIStateSerializer
 
 class _$CompanyGatewayState extends CompanyGatewayState {
   @override
-  final BuiltMap<String?, CompanyGatewayEntity?> map;
+  final BuiltMap<String, CompanyGatewayEntity> map;
   @override
   final BuiltList<String> list;
 
@@ -216,10 +216,10 @@ class CompanyGatewayStateBuilder
     implements Builder<CompanyGatewayState, CompanyGatewayStateBuilder> {
   _$CompanyGatewayState? _$v;
 
-  MapBuilder<String?, CompanyGatewayEntity?>? _map;
-  MapBuilder<String?, CompanyGatewayEntity?> get map =>
-      _$this._map ??= new MapBuilder<String?, CompanyGatewayEntity?>();
-  set map(MapBuilder<String?, CompanyGatewayEntity?>? map) => _$this._map = map;
+  MapBuilder<String, CompanyGatewayEntity>? _map;
+  MapBuilder<String, CompanyGatewayEntity> get map =>
+      _$this._map ??= new MapBuilder<String, CompanyGatewayEntity>();
+  set map(MapBuilder<String, CompanyGatewayEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();

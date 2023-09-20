@@ -25,8 +25,8 @@ class _$BankAccountStateSerializer
       'map',
       serializers.serialize(object.map,
           specifiedType: const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(BankAccountEntity)
+            const FullType(String),
+            const FullType(BankAccountEntity)
           ])),
       'list',
       serializers.serialize(object.list,
@@ -52,8 +52,8 @@ class _$BankAccountStateSerializer
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType.nullable(String),
-                const FullType.nullable(BankAccountEntity)
+                const FullType(String),
+                const FullType(BankAccountEntity)
               ]))!);
           break;
         case 'list':
@@ -155,7 +155,7 @@ class _$BankAccountUIStateSerializer
 
 class _$BankAccountState extends BankAccountState {
   @override
-  final BuiltMap<String?, BankAccountEntity?> map;
+  final BuiltMap<String, BankAccountEntity> map;
   @override
   final BuiltList<String> list;
 
@@ -206,10 +206,10 @@ class BankAccountStateBuilder
     implements Builder<BankAccountState, BankAccountStateBuilder> {
   _$BankAccountState? _$v;
 
-  MapBuilder<String?, BankAccountEntity?>? _map;
-  MapBuilder<String?, BankAccountEntity?> get map =>
-      _$this._map ??= new MapBuilder<String?, BankAccountEntity?>();
-  set map(MapBuilder<String?, BankAccountEntity?>? map) => _$this._map = map;
+  MapBuilder<String, BankAccountEntity>? _map;
+  MapBuilder<String, BankAccountEntity> get map =>
+      _$this._map ??= new MapBuilder<String, BankAccountEntity>();
+  set map(MapBuilder<String, BankAccountEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();

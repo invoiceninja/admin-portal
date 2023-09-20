@@ -334,7 +334,7 @@ CreditState _purgeClientSuccess(
 
 CreditState _markSentCreditSuccess(
     CreditState creditState, MarkSentCreditSuccess action) {
-  final creditMap = Map<String?, InvoiceEntity?>.fromIterable(
+  final creditMap = Map<String, InvoiceEntity>.fromIterable(
     action.credits,
     key: (dynamic item) => item.id,
     value: (dynamic item) => item,

@@ -23,10 +23,8 @@ class _$TaxRateStateSerializer implements StructuredSerializer<TaxRateState> {
     final result = <Object?>[
       'map',
       serializers.serialize(object.map,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(TaxRateEntity)
-          ])),
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(TaxRateEntity)])),
       'list',
       serializers.serialize(object.list,
           specifiedType:
@@ -51,8 +49,8 @@ class _$TaxRateStateSerializer implements StructuredSerializer<TaxRateState> {
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
-                const FullType.nullable(String),
-                const FullType.nullable(TaxRateEntity)
+                const FullType(String),
+                const FullType(TaxRateEntity)
               ]))!);
           break;
         case 'list':
@@ -152,7 +150,7 @@ class _$TaxRateUIStateSerializer
 
 class _$TaxRateState extends TaxRateState {
   @override
-  final BuiltMap<String?, TaxRateEntity?> map;
+  final BuiltMap<String, TaxRateEntity> map;
   @override
   final BuiltList<String> list;
 
@@ -201,10 +199,10 @@ class TaxRateStateBuilder
     implements Builder<TaxRateState, TaxRateStateBuilder> {
   _$TaxRateState? _$v;
 
-  MapBuilder<String?, TaxRateEntity?>? _map;
-  MapBuilder<String?, TaxRateEntity?> get map =>
-      _$this._map ??= new MapBuilder<String?, TaxRateEntity?>();
-  set map(MapBuilder<String?, TaxRateEntity?>? map) => _$this._map = map;
+  MapBuilder<String, TaxRateEntity>? _map;
+  MapBuilder<String, TaxRateEntity> get map =>
+      _$this._map ??= new MapBuilder<String, TaxRateEntity>();
+  set map(MapBuilder<String, TaxRateEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();

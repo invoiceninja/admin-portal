@@ -541,8 +541,8 @@ abstract class TaskEntity extends Object
     });
 
     if (sort) {
-      details
-          .sort((timeA, timeB) => timeA!.startDate!.compareTo(timeB!.startDate!));
+      details.sort(
+          (timeA, timeB) => timeA!.startDate!.compareTo(timeB!.startDate!));
     }
 
     return details;
@@ -703,7 +703,7 @@ abstract class TaskEntity extends Object
     BuiltMap<String?, UserEntity?> userMap,
     BuiltMap<String?, ClientEntity?> clientMap,
     BuiltMap<String?, ProjectEntity?> projectMap,
-    BuiltMap<String?, InvoiceEntity?> invoiceMap,
+    BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String?, TaskStatusEntity?> taskStatusMap,
   ) {
     int response = 0;
@@ -764,8 +764,9 @@ abstract class TaskEntity extends Object
         break;
       case TaskFields.date:
       case TaskFields.timeLog:
-        response =
-            taskA!.timeLog.toLowerCase().compareTo(taskB!.timeLog.toLowerCase());
+        response = taskA!.timeLog
+            .toLowerCase()
+            .compareTo(taskB!.timeLog.toLowerCase());
         break;
       case EntityFields.createdAt:
         response = taskA!.createdAt.compareTo(taskB!.createdAt);

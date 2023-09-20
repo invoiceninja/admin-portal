@@ -37,7 +37,7 @@ abstract class GroupState implements Built<GroupState, GroupStateBuilder> {
     }
   }
 
-  BuiltMap<String?, GroupEntity?> get map;
+  BuiltMap<String, GroupEntity> get map;
 
   BuiltList<String> get list;
 
