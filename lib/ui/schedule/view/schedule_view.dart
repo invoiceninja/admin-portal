@@ -36,8 +36,9 @@ class _ScheduleViewState extends State<ScheduleView> {
 
     BaseEntity? entity;
     if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_RECORD) {
-      final entityType = EntityType.valueOf(schedule.parameters.entityType);
-      entity = state.getEntityMap(entityType)![schedule.parameters.entityId] as BaseEntity?;
+      final entityType = EntityType.valueOf(schedule.parameters.entityType!);
+      entity = state.getEntityMap(entityType)![schedule.parameters.entityId]
+          as BaseEntity?;
     }
 
     return ViewScaffold(
@@ -86,9 +87,11 @@ class _ScheduleViewState extends State<ScheduleView> {
               localization.showPaymentsTable: parameters.showPaymentsTable!
                   ? localization.yes
                   : localization.no,
-              localization.onlyClientsWithInvoices: (parameters.onlyClientsWithInvoices != null && parameters.onlyClientsWithInvoices!)
-                  ? localization.yes
-                  : localization.no,
+              localization.onlyClientsWithInvoices:
+                  (parameters.onlyClientsWithInvoices != null &&
+                          parameters.onlyClientsWithInvoices!)
+                      ? localization.yes
+                      : localization.no,
               localization.status: localization.lookup(parameters.status),
             })
         ],

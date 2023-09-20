@@ -45,10 +45,10 @@ packages:
     dependency: transitive
     description:
       name: attributed_text
-      sha256: "892b9517ba27f78ebee526424a91d1aba44d729e610f06a0dd9a3a43d3d81f6d"
+      sha256: e43495051b63e6cdbe96aa62123974074cca109d9c56f74ce2ffaec8060e044e
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.1"
+    version: "0.2.2"
   barcode:
     dependency: transitive
     description:
@@ -466,6 +466,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  follow_the_leader:
+    dependency: transitive
+    description:
+      name: follow_the_leader
+      sha256: "44396bad4abbf0d43d5ca3ee98180772bb45a78f39a1960c62170843bd46753f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.4+3"
   frontend_server_client:
     dependency: transitive
     description:
@@ -808,13 +816,13 @@ packages:
     source: hosted
     version: "1.0.2"
   markdown:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: markdown
-      sha256: "39caf989ccc72c63e87b961851a74257141938599ed2db45fbd9403fee0db423"
+      sha256: "01512006c8429f604eb10f9848717baeaedf99e991d14a50d540d9beff08e5c6"
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.0"
+    version: "4.0.1"
   matcher:
     dependency: transitive
     description:
@@ -911,6 +919,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.1"
+  overlord:
+    dependency: transitive
+    description:
+      name: overlord
+      sha256: "7fa6a83455b7da5c66a16320c02783d110c574a6e6c511750c662dbadfe9399f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3+2"
   package_config:
     dependency: transitive
     description:
@@ -1456,20 +1472,27 @@ packages:
   super_editor:
     dependency: "direct main"
     description:
-      path: super_editor
-      ref: HEAD
-      resolved-ref: e4eceea4a72706410a1e910ad0ce01b815c63a8e
-      url: "https://github.com/superlistapp/super_editor.git"
-    source: git
-    version: "0.2.3-dev.1"
+      name: super_editor
+      sha256: "2d5acf95449f53eec1c7d0788530b3a667758224a1e4aa4164bd5d6c0d159bab"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.6"
+  super_editor_markdown:
+    dependency: "direct main"
+    description:
+      name: super_editor_markdown
+      sha256: "2515d0183ee21aa22d577e95e80b1e4bc1b9ce0f651127d40844be7cb58b5330"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.5"
   super_text_layout:
     dependency: transitive
     description:
       name: super_text_layout
-      sha256: "6cf41a07780d7e40cec56ed3dcde59b527968a4e282b78e2d7e9a0134b26685c"
+      sha256: "8afed48db5e15c9c3488ca9f24b24cd24a4867a6d9d2dd2ba540ac363f50b60d"
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.4"
+    version: "0.1.6"
   sync_http:
     dependency: transitive
     description:

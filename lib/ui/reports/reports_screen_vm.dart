@@ -93,7 +93,8 @@ class ReportsScreenVM {
   final GroupTotals groupTotals;
   final Function(BuildContext, List<String>) onReportColumnsChanged;
   final Function(BuildContext) onExportPressed;
-  final Function(BuildContext, BuiltMap<String?, String?>) onReportFiltersChanged;
+  final Function(BuildContext, BuiltMap<String?, String?>)
+      onReportFiltersChanged;
   final Function(String?, bool) onReportSorted;
   final Function(int, bool) onReportTotalsSorted;
   final Function({
@@ -471,7 +472,8 @@ class ReportsScreenVM {
                     getReportColumnType(column, context) ==
                     ReportColumnType.number)
                 .toList();
-            columns.sort((String? str1, String? str2) => str1!.compareTo(str2!));
+            columns
+                .sort((String? str1, String? str2) => str1!.compareTo(str2!));
 
             csvData += localization!.lookup(reportState.group)! +
                 ',' +
@@ -651,7 +653,7 @@ GroupTotals calculateReportTotals({
       final column = columns[j];
 
       if (column == reportState.group) {
-        totals[group]!['count'] += 1;
+        totals[group]!['count'] = totals[group]!['count']! + 1;
       }
 
       if (cell is ReportNumberValue ||
@@ -676,9 +678,9 @@ GroupTotals calculateReportTotals({
               fromCurrencyId: cell.currencyId,
               toCurrencyId: company.currencyId);
           cellValue = round(cellValue * rate, toCurrency.precision);
-          totals[group]![column] += cellValue;
+          totals[group]![column] = totals[group]![column]! + cellValue;
         } else {
-          totals[group]![column] += cell.doubleValue!;
+          totals[group]![column] = totals[group]![column]! + cell.doubleValue!;
         }
       }
     }

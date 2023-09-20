@@ -1,3 +1,4 @@
+/*
 // DELETE THIS FILE ONCE SUPER EDITOR IS UPDATED
 
 import 'dart:convert';
@@ -587,3 +588,4 @@ class _EmptyParagraphSyntax extends md.BlockSyntax {
     return md.Element('p', []);
   }
 }
+*/

@@ -129,8 +129,9 @@ class _ScheduleEditState extends State<ScheduleEdit> {
         '');
 
     return EditScaffold(
-      title:
-          schedule.isNew ? localization!.newSchedule : localization!.editSchedule,
+      title: schedule.isNew
+          ? localization!.newSchedule
+          : localization!.editSchedule,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) => _onSavePressed(),
       body: Form(
@@ -236,7 +237,8 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                       labelText: localization.dateRange,
                       blankValue: null,
                       value: parameters.dateRange!.isNotEmpty
-                          ? DateRange.valueOf(toCamelCase(parameters.dateRange!))
+                          ? DateRange.valueOf(
+                              toCamelCase(parameters.dateRange!))
                           : null,
                       onChanged: (dynamic value) {
                         viewModel.onChanged(schedule.rebuild((b) => b
@@ -290,8 +292,8 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                         label: localization.onlyClientsWithInvoices,
                         value: parameters.onlyClientsWithInvoices,
                         onChanged: (value) {
-                          viewModel.onChanged(schedule.rebuild(
-                                  (b) => b..parameters.onlyClientsWithInvoices = value));
+                          viewModel.onChanged(schedule.rebuild((b) =>
+                              b..parameters.onlyClientsWithInvoices = value));
                         }),
                   ]),
                   FormCard(
@@ -305,6 +307,9 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           clientState: state.clientState,
                           excludeIds: parameters.clients!.toList(),
                           onSelected: (value) {
+                            if (value == null) {
+                              return;
+                            }
                             if (!parameters.clients!.contains(value.id)) {
                               viewModel.onChanged(schedule.rebuild(
                                   (b) => b..parameters.clients.add(value.id)));
@@ -319,8 +324,8 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                         HelpText(localization.allClients),
                       for (var clientId in parameters.clients!)
                         ListTile(
-                          title:
-                              Text(state.clientState.get(clientId)!.displayName),
+                          title: Text(
+                              state.clientState.get(clientId)!.displayName),
                           trailing: IconButton(
                             icon: Icon(Icons.clear),
                             onPressed: () {

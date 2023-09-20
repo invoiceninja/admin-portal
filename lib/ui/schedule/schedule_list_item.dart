@@ -43,9 +43,9 @@ class ScheduleListItem extends StatelessWidget {
 
     String subtitle = formatDate(schedule!.nextRun, context);
 
-    String? title = localization.lookup(schedule!.template);
+    String title = localization.lookup(schedule!.template) ?? '';
     if (schedule!.template == ScheduleEntity.TEMPLATE_EMAIL_RECORD) {
-      final entityType = EntityType.valueOf(schedule!.parameters.entityType);
+      final entityType = EntityType.valueOf(schedule!.parameters.entityType!);
       final entity =
           state.getEntityMap(entityType)![schedule!.parameters.entityId];
 
@@ -87,7 +87,8 @@ class ScheduleListItem extends StatelessWidget {
       child: Container(
         width: MediaQuery.of(context).size.width,
         child: ListTile(
-          onTap: () => onTap != null ? onTap!() : selectEntity(entity: schedule!),
+          onTap: () =>
+              onTap != null ? onTap!() : selectEntity(entity: schedule!),
           onLongPress: () => onLongPress != null
               ? onLongPress!()
               : selectEntity(entity: schedule!, longPress: true),

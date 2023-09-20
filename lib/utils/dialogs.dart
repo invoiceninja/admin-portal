@@ -419,7 +419,7 @@ class _FieldConfirmationState extends State<FieldConfirmation> {
         maxLengthEnforcement: widget.maxLength != null
             ? MaxLengthEnforcement.enforced
             : MaxLengthEnforcement.none,
-        buildCounter: (_, {currentLength, maxLength, isFocused}) => null,
+        //buildCounter: (_, {currentLength, maxLength, isFocused}) => null,
         decoration: InputDecoration(
           labelText: widget.field,
         ),
