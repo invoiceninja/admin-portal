@@ -199,7 +199,7 @@ class WebClient {
   }
 }
 
-Map<String, String?> _getHeaders(
+Map<String, String> _getHeaders(
   String url,
   String? token, {
   String? secret,
@@ -209,20 +209,20 @@ Map<String, String?> _getHeaders(
   if (url.startsWith(Constants.hostedApiUrl)) {
     secret = Config.API_SECRET;
   }
-  final headers = {
+  final headers = <String, String>{
     'X-CLIENT-PLATFORM': getPlatformName(),
     'X-CLIENT-VERSION': kClientVersion,
-    'X-API-SECRET': secret,
+    'X-API-SECRET': secret ?? '',
     'X-Requested-With': 'XMLHttpRequest',
     'Content-Type': 'application/json; charset=utf-8',
   };
 
   if ((token ?? '').isNotEmpty) {
-    headers['X-API-Token'] = token;
+    headers['X-API-Token'] = token ?? '';
   }
 
   if ((idToken ?? '').isNotEmpty) {
-    headers['X-API-OAUTH-PASSWORD'] = idToken;
+    headers['X-API-OAUTH-PASSWORD'] = idToken ?? '';
   }
 
   if ((password ?? '').isNotEmpty) {

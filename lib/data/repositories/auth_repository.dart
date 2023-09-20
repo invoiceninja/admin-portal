@@ -246,9 +246,8 @@ class AuthRepository {
           secret: secret, data: json.encode(data));
     }
 
-    return await (compute<dynamic, dynamic>(SerializationUtils.deserializeWith,
-            <dynamic>[LoginResponse.serializer, response])
-        as FutureOr<LoginResponse>);
+    return await compute<dynamic, dynamic>(SerializationUtils.deserializeWith,
+        <dynamic>[LoginResponse.serializer, response]);
   }
 
   String get _tokenName => kIsWeb

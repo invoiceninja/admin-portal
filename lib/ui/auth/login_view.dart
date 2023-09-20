@@ -227,8 +227,7 @@ class _LoginState extends State<LoginView> {
     }
 
     final Completer<Null> completer = Completer<Null>();
-    completer.future
-        .then<Null>(() {
+    completer.future.then<Null>((_) {
       setState(() {
         _loginError = '';
         if (_recoverPassword) {
@@ -243,8 +242,7 @@ class _LoginState extends State<LoginView> {
               });
         }
       });
-    } as FutureOr<Null> Function(Null))
-        .catchError((Object error) {
+    }).catchError((Object error) {
       setState(() {
         _buttonController.reset();
         _loginError = error.toString();

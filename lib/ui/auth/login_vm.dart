@@ -120,7 +120,7 @@ class LoginVM {
       onAppleSignUpPressed;
 
   static LoginVM fromStore(Store<AppState> store) {
-    void _handleLogin({required BuildContext context, bool isSignUp = false}) {
+    Null _handleLogin({required BuildContext context, bool isSignUp = false}) {
       final layout = calculateLayout(context);
       final moduleLayout =
           layout == AppLayout.desktop ? ModuleLayout.table : ModuleLayout.list;
@@ -407,8 +407,7 @@ class LoginVM {
           platform: getPlatform(context),
           oneTimePassword: oneTimePassword.trim(),
         ));
-        completer.future.then<Null>((() => _handleLogin(context: context))
-            as FutureOr<Null> Function(Null));
+        completer.future.then<Null>(((_) => _handleLogin(context: context)));
       },
       onTokenLoginPressed: (BuildContext context, Completer<Null> completer,
           {required String token}) async {
