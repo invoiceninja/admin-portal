@@ -1,4 +1,5 @@
 // Dart imports:
+import 'dart:async';
 import 'dart:convert';
 
 // Flutter imports:
@@ -82,7 +83,7 @@ class InvoiceDesignVM {
               case EntityType.company:
                 final completer = snackBarCompleter<Null>(
                     context, AppLocalization.of(context)!.savedSettings)
-                  ..future.then((value) {
+                  ..future.then<Null>(() {
                     final webClient = WebClient();
                     final credentials = state.credentials;
                     final url = '${credentials.url}/designs/set/default';

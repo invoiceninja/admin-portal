@@ -560,7 +560,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                               if (multipartFiles != null &&
                                   multipartFiles.isNotEmpty) {
                                 viewModel.onUploadLogo(
-                                    navigatorKey.currentContext,
+                                    navigatorKey.currentContext!,
                                     multipartFiles.first);
                               }
                             },

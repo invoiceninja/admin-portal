@@ -599,7 +599,7 @@ class _AccountOverview extends StatelessWidget {
                                 context: context,
                                 callback: (password, idToken) {
                                   viewModel.onPurgeData(
-                                      context, password, idToken);
+                                      context, password ?? '', idToken ?? '');
                                 });
                           });
                     },
@@ -648,10 +648,10 @@ class _AccountOverview extends StatelessWidget {
                               );
 
                               viewModel.onCompanyDelete(
-                                navigatorKey.currentContext,
+                                navigatorKey.currentContext!,
                                 '',
-                                credentials.identityToken,
-                                reason,
+                                credentials.identityToken ?? '',
+                                reason ?? '',
                               );
                             } else {
                               passwordCallback(
@@ -660,9 +660,9 @@ class _AccountOverview extends StatelessWidget {
                                   callback: (password, idToken) {
                                     viewModel.onCompanyDelete(
                                       context,
-                                      password,
-                                      idToken,
-                                      reason,
+                                      password ?? '',
+                                      idToken ?? '',
+                                      reason ?? '',
                                     );
                                   });
                             }

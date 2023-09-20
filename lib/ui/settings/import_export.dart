@@ -185,7 +185,7 @@ class _ImportExportState extends State<ImportExport> {
                     }
                 },
                 onImportTypeChanged: (importType) =>
-                    setState(() => _importFormat = importType),
+                    setState(() => _importFormat = importType!),
               )
             else
               _FileMapper(

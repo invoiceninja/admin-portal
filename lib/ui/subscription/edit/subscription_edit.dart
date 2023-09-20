@@ -252,15 +252,18 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     entityMap: state.productState.map,
                     labelText: localization.oneTimeProducts,
                     onSelected: (value) {
-                      final parts = subscription.productIds.split(',');
-                      viewModel.onChanged(subscription.rebuild((b) => b
-                        ..productIds = <String>[...parts, value.id]
-                            .where((part) => part.isNotEmpty)
-                            .join(',')));
+                      if (value != null) {
+                        final parts = subscription.productIds.split(',');
+                        viewModel.onChanged(subscription.rebuild((b) => b
+                          ..productIds = <String>[...parts, value.id]
+                              .where((part) => part.isNotEmpty)
+                              .join(',')));
 
-                      WidgetsBinding.instance.addPostFrameCallback((duration) {
-                        FocusScope.of(context).unfocus();
-                      });
+                        WidgetsBinding.instance
+                            .addPostFrameCallback((duration) {
+                          FocusScope.of(context).unfocus();
+                        });
+                      }
                     },
                   ),
                   SizedBox(
@@ -338,15 +341,19 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     entityMap: state.productState.map,
                     labelText: localization.optionalOneTimeProducts,
                     onSelected: (value) {
-                      final parts = subscription.optionalProductIds.split(',');
-                      viewModel.onChanged(subscription.rebuild((b) => b
-                        ..optionalProductIds = <String>[...parts, value.id]
-                            .where((part) => part.isNotEmpty)
-                            .join(',')));
+                      if (value != null) {
+                        final parts =
+                            subscription.optionalProductIds.split(',');
+                        viewModel.onChanged(subscription.rebuild((b) => b
+                          ..optionalProductIds = <String>[...parts, value.id]
+                              .where((part) => part.isNotEmpty)
+                              .join(',')));
 
-                      WidgetsBinding.instance.addPostFrameCallback((duration) {
-                        FocusScope.of(context).unfocus();
-                      });
+                        WidgetsBinding.instance
+                            .addPostFrameCallback((duration) {
+                          FocusScope.of(context).unfocus();
+                        });
+                      }
                     },
                   ),
                   SizedBox(
@@ -380,17 +387,20 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     entityMap: state.productState.map,
                     labelText: localization.optionalRecurringProducts,
                     onSelected: (value) {
-                      final parts =
-                          subscription.optionalRecurringProductIds.split(',');
-                      viewModel.onChanged(subscription.rebuild((b) => b
-                        ..optionalRecurringProductIds = <String>[
-                          ...parts,
-                          value.id
-                        ].where((part) => part.isNotEmpty).join(',')));
+                      if (value != null) {
+                        final parts =
+                            subscription.optionalRecurringProductIds.split(',');
+                        viewModel.onChanged(subscription.rebuild((b) => b
+                          ..optionalRecurringProductIds = <String>[
+                            ...parts,
+                            value.id
+                          ].where((part) => part.isNotEmpty).join(',')));
 
-                      WidgetsBinding.instance.addPostFrameCallback((duration) {
-                        FocusScope.of(context).unfocus();
-                      });
+                        WidgetsBinding.instance
+                            .addPostFrameCallback((duration) {
+                          FocusScope.of(context).unfocus();
+                        });
+                      }
                     },
                   ),
                   SizedBox(

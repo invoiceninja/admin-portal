@@ -419,7 +419,7 @@ class _AddCompanyDialogState extends State<_AddCompanyDialog> {
         entityList: memoizedCountryList(state.staticState.countryMap),
         labelText: localization.country,
         onSelected: (SelectableEntity? country) {
-          _countryId = country.id;
+          _countryId = country?.id ?? '';
         },
       ),
     );

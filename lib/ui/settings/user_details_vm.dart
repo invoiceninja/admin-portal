@@ -315,7 +315,7 @@ class UserDetailsVM {
           final appBuilder = AppBuilder.of(context);
           final origUserSettings = state.userCompany!.settings;
 
-          completer.future.then((_) async {
+          completer.future.then<Null>(() async {
             final newUserSettings = store.state.userCompany!.settings!;
             if (origUserSettings!.includeDeletedClients !=
                     newUserSettings.includeDeletedClients ||

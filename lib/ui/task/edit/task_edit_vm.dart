@@ -160,7 +160,7 @@ class TaskEditVM {
   final int? taskTimeIndex;
   final CompanyEntity? company;
   final Function(BuildContext, [EntityAction?]) onSavePressed;
-  final Function(BuildContext?) onCancelPressed;
+  final Function(BuildContext) onCancelPressed;
   final Function onFabPressed;
   final bool isLoading;
   final bool isSaving;

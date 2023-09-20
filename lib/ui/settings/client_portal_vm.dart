@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -80,7 +82,7 @@ class ClientPortalVM {
                   final oldSubdomain = state.company!.subdomain;
                   final newSubdomain = settingsUIState.company.subdomain;
                   if (oldSubdomain != newSubdomain) {
-                    completer.future.then((value) {
+                    completer.future.then<Null>(() {
                       showRefreshDataDialog(
                           context: navigatorKey.currentContext!);
                     } as FutureOr<Null> Function(Null));

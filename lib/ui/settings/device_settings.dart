@@ -120,7 +120,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                     value: prefState.appLayout == AppLayout.mobile,
                     onChanged: (value) {
                       viewModel.onLayoutChanged(context,
-                          value ? AppLayout.mobile : AppLayout.desktop);
+                          value == true ? AppLayout.mobile : AppLayout.desktop);
                     },
                     enabledLabel: localization.mobile,
                     disabledLabel: localization.desktop,
@@ -132,7 +132,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       onChanged: (value) {
                         viewModel.onMenuModeChanged(
                           context,
-                          value
+                          value == true
                               ? AppSidebarMode.float
                               : AppSidebarMode.collapse,
                         );
@@ -147,7 +147,9 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       onChanged: (value) {
                         viewModel.onHistoryModeChanged(
                           context,
-                          value ? AppSidebarMode.float : AppSidebarMode.visible,
+                          value == true
+                              ? AppSidebarMode.float
+                              : AppSidebarMode.visible,
                         );
                       },
                       enabledLabel: localization.float,
@@ -159,7 +161,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       label: localization.clickSelected,
                       value: prefState.tapSelectedToEdit,
                       onChanged: (value) {
-                        viewModel.onTapSelectedChanged(context, value);
+                        viewModel.onTapSelectedChanged(context, value == true);
                       },
                       enabledLabel: localization.editRecord,
                       disabledLabel: localization.hidePreview,
@@ -168,7 +170,8 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       label: localization.afterSaving,
                       value: prefState.editAfterSaving,
                       onChanged: (value) {
-                        viewModel.onEditAfterSavingChanged(context, value);
+                        viewModel.onEditAfterSavingChanged(
+                            context, value == true);
                       },
                       enabledLabel: localization.editRecord,
                       disabledLabel: localization.viewRecord,
@@ -179,7 +182,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       value: !prefState.longPressSelectionIsDefault,
                       onChanged: (value) {
                         viewModel.onLongPressSelectionIsDefault(
-                            context, !value);
+                            context, value == false);
                       },
                       enabledLabel: localization.showActions,
                       disabledLabel: localization.startMultiselect,
@@ -213,7 +216,8 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       label: localization.previewLocation,
                       value: prefState.showPdfPreviewSideBySide,
                       onChanged: (value) {
-                        viewModel.onShowPdfSideBySideChanged(context, value);
+                        viewModel.onShowPdfSideBySideChanged(
+                            context, value == true);
                       },
                       disabledLabel: localization.bottom,
                       enabledLabel: localization.side,

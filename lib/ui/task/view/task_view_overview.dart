@@ -61,7 +61,7 @@ class _TaskOverviewState extends State<TaskOverview> {
     final company = viewModel.company!;
     final invoice = viewModel.state.invoiceState.map[task.invoiceId];
     final user = viewModel.state.userState.map[task.assignedUserId];
-    final group = state.groupState.get(client?.groupId);
+    final group = state.groupState.get(client?.groupId ?? '');
     final status = state.taskStatusState.get(task.statusId);
 
     final Map<String, String?> fields = {

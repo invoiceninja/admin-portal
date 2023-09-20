@@ -575,8 +575,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           value: !(settings.hideEmptyColumnsOnPdf ?? false),
                           iconData: MdiIcons.table,
                           onChanged: (value) => viewModel.onSettingsChanged(
-                            settings.rebuild(
-                                (b) => b..hideEmptyColumnsOnPdf = !value),
+                            settings.rebuild((b) =>
+                                b..hideEmptyColumnsOnPdf = value == false),
                           ),
                           enabledLabel: localization.show,
                           disabledLabel: localization.hide,

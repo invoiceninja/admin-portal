@@ -174,7 +174,7 @@ class CompanyDetailsVM {
   final Function(SettingsEntity) onSettingsChanged;
   final Function(CompanyEntity) onCompanyChanged;
   final Function(BuildContext) onSavePressed;
-  final Function(BuildContext?, MultipartFile) onUploadLogo;
+  final Function(BuildContext, MultipartFile) onUploadLogo;
   final Function(BuildContext) onDeleteLogo;
   final Function(BuildContext) onConfigurePaymentTermsPressed;
   final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;

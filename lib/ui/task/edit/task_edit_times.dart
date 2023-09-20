@@ -145,8 +145,8 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                   : convertDateTimeToSqlDate(_taskTime!.startDate!.toLocal()),
               onSelected: (date, _) {
                 setState(() {
-                  _taskTime = _taskTime!.copyWithStartDate(date,
-                      syncDates: !showEndDate);
+                  _taskTime = _taskTime!
+                      .copyWithStartDate(date, syncDates: !showEndDate);
                   viewModel.onUpdatedTaskTime(_taskTime, widget.index);
                   _startDateUpdatedAt = DateTime.now().millisecondsSinceEpoch;
                 });
@@ -157,6 +157,10 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               labelText: localization.startTime,
               selectedDateTime: _taskTime!.startDate,
               onSelected: (timeOfDay) {
+                if (timeOfDay == null) {
+                  return;
+                }
+
                 setState(() {
                   _taskTime = _taskTime!.copyWithStartTime(timeOfDay);
                   viewModel.onUpdatedTaskTime(_taskTime, widget.index);
@@ -188,6 +192,10 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               isEndTime: true,
               onSelected: (timeOfDay) {
                 setState(() {
+                  if (timeOfDay == null) {
+                    return;
+                  }
+
                   _taskTime = _taskTime!.copyWithEndTime(timeOfDay);
                   viewModel.onUpdatedTaskTime(_taskTime, widget.index);
                   _endTimeUpdatedAt = DateTime.now().millisecondsSinceEpoch;

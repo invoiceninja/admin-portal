@@ -65,7 +65,7 @@ class AccountManagementVM {
             store.dispatch(UpdateCompany(company: company)),
         onCompanyDelete: (context, password, idToken, reason) {
           showDialog<AlertDialog>(
-              context: context,
+              context: context!,
               barrierDismissible: false,
               builder: (BuildContext context) => SimpleDialog(
                     children: <Widget>[LoadingDialog()],
@@ -74,7 +74,7 @@ class AccountManagementVM {
           final companyLength = state.companies.length;
           final deleteCompleter = Completer<Null>()
             ..future
-                .then((value) {
+                .then<Null>(() {
               final context = navigatorKey.currentContext;
               final state = store.state;
               if (companyLength == 1) {
@@ -87,7 +87,7 @@ class AccountManagementVM {
                 final index = selectedCompanyIndex == 0 ? 1 : 0;
                 store.dispatch(SelectCompany(companyIndex: index));
                 final refreshCompleter = Completer<Null>()
-                  ..future.then((value) {
+                  ..future.then<Null>(() {
                     store.dispatch(SelectCompany(companyIndex: 0));
                     store.dispatch(ViewDashboard());
                     AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
@@ -99,7 +99,7 @@ class AccountManagementVM {
                 store.dispatch(
                     RefreshData(clearData: true, completer: refreshCompleter));
               }
-            } as FutureOr<_> Function(Null))
+            } as FutureOr<Null> Function(Null))
                 .catchError((Object error) {
               if (Navigator.of(navigatorKey.currentContext!).canPop()) {
                 Navigator.of(navigatorKey.currentContext!).pop();
@@ -151,7 +151,7 @@ class AccountManagementVM {
   final CompanyEntity company;
   final Function(BuildContext) onSetPrimaryCompany;
   final Function(CompanyEntity) onCompanyChanged;
-  final Function(BuildContext?, String?, String?, String?) onCompanyDelete;
-  final Function(BuildContext, String?, String?) onPurgeData;
+  final Function(BuildContext, String, String, String) onCompanyDelete;
+  final Function(BuildContext, String, String) onPurgeData;
   final Function onAppliedLicense;
 }
