@@ -1,4 +1,6 @@
 // Package imports:
+import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -15,47 +17,47 @@ StaticState staticLoadedReducer(
   return StaticState().rebuild((b) => b
     ..updatedAt = DateTime.now().millisecondsSinceEpoch
     ..templateMap.replace(data!.templates)
-    ..currencyMap.addAll(Map.fromIterable(
+    ..currencyMap.addAll(Map<String, CurrencyEntity>.fromIterable(
       data.currencies,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     ))
-    ..sizeMap.addAll(Map.fromIterable(
+    ..sizeMap.addAll(Map<String, SizeEntity>.fromIterable(
       data.sizes,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     ))
-    ..industryMap.addAll(Map.fromIterable(
+    ..industryMap.addAll(Map<String, IndustryEntity>.fromIterable(
       data.industries,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     ))
-    ..timezoneMap.addAll(Map.fromIterable(
+    ..timezoneMap.addAll(Map<String, TimezoneEntity>.fromIterable(
       data.timezones,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     ))
-    ..dateFormatMap.addAll(Map.fromIterable(
+    ..dateFormatMap.addAll(Map<String, DateFormatEntity>.fromIterable(
       data.dateFormats,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     ))
-    ..languageMap.addAll(Map.fromIterable(
+    ..languageMap.addAll(Map<String, LanguageEntity>.fromIterable(
       data.languages,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     ))
-    ..paymentTypeMap.addAll(Map.fromIterable(
+    ..paymentTypeMap.addAll(Map<String, PaymentTypeEntity>.fromIterable(
       data.paymentTypes,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     ))
-    ..countryMap.addAll(Map.fromIterable(
+    ..countryMap.addAll(Map<String, CountryEntity>.fromIterable(
       data.countries,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     ))
-    ..gatewayMap.addAll(Map.fromIterable(
+    ..gatewayMap.addAll(Map<String, GatewayEntity>.fromIterable(
       data.gateways,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
