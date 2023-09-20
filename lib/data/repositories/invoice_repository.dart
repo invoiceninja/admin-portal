@@ -31,10 +31,9 @@ class InvoiceRepository {
         '${credentials.url}/invoices/$entityId?include=activities.history',
         credentials.token);
 
-    final InvoiceItemResponse invoiceResponse =
-        await (compute<dynamic, dynamic>(SerializationUtils.deserializeWith,
-                <dynamic>[InvoiceItemResponse.serializer, response])
-            as FutureOr<InvoiceItemResponse>);
+    final InvoiceItemResponse invoiceResponse = await compute<dynamic, dynamic>(
+        SerializationUtils.deserializeWith,
+        <dynamic>[InvoiceItemResponse.serializer, response]);
 
     return invoiceResponse.data;
   }
@@ -50,10 +49,9 @@ class InvoiceRepository {
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final InvoiceListResponse invoiceResponse =
-        await (compute<dynamic, dynamic>(SerializationUtils.deserializeWith,
-                <dynamic>[InvoiceListResponse.serializer, response])
-            as FutureOr<InvoiceListResponse>);
+    final InvoiceListResponse invoiceResponse = await compute<dynamic, dynamic>(
+        SerializationUtils.deserializeWith,
+        <dynamic>[InvoiceListResponse.serializer, response]);
 
     return invoiceResponse.data;
   }

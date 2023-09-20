@@ -31,10 +31,9 @@ class ProductRepository {
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final ProductItemResponse productResponse =
-        await (compute<dynamic, dynamic>(SerializationUtils.deserializeWith,
-                <dynamic>[ProductItemResponse.serializer, response])
-            as FutureOr<ProductItemResponse>);
+    final ProductItemResponse productResponse = await compute<dynamic, dynamic>(
+        SerializationUtils.deserializeWith,
+        <dynamic>[ProductItemResponse.serializer, response]);
 
     return productResponse.data;
   }
@@ -46,10 +45,9 @@ class ProductRepository {
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final ProductListResponse productResponse =
-        await (compute<dynamic, dynamic>(SerializationUtils.deserializeWith,
-                <dynamic>[ProductListResponse.serializer, response])
-            as FutureOr<ProductListResponse>);
+    final ProductListResponse productResponse = await compute<dynamic, dynamic>(
+        SerializationUtils.deserializeWith,
+        <dynamic>[ProductListResponse.serializer, response]);
 
     return productResponse.data;
   }

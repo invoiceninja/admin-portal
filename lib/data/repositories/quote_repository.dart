@@ -31,10 +31,9 @@ class QuoteRepository {
         '${credentials.url}/quotes/$entityId?include=activities.history',
         credentials.token);
 
-    final InvoiceItemResponse quoteResponse = await (compute<dynamic, dynamic>(
-            SerializationUtils.deserializeWith,
-            <dynamic>[InvoiceItemResponse.serializer, response])
-        as FutureOr<InvoiceItemResponse>);
+    final InvoiceItemResponse quoteResponse = await compute<dynamic, dynamic>(
+        SerializationUtils.deserializeWith,
+        <dynamic>[InvoiceItemResponse.serializer, response]);
 
     return quoteResponse.data;
   }
@@ -50,10 +49,9 @@ class QuoteRepository {
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final InvoiceListResponse quoteResponse = await (compute<dynamic, dynamic>(
-            SerializationUtils.deserializeWith,
-            <dynamic>[InvoiceListResponse.serializer, response])
-        as FutureOr<InvoiceListResponse>);
+    final InvoiceListResponse quoteResponse = await compute<dynamic, dynamic>(
+        SerializationUtils.deserializeWith,
+        <dynamic>[InvoiceListResponse.serializer, response]);
 
     return quoteResponse.data;
   }

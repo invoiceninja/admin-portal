@@ -32,10 +32,9 @@ class ClientRepository {
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final ClientItemResponse clientResponse = await (compute<dynamic, dynamic>(
-            SerializationUtils.deserializeWith,
-            <dynamic>[ClientItemResponse.serializer, response])
-        as FutureOr<ClientItemResponse>);
+    final ClientItemResponse clientResponse = await compute<dynamic, dynamic>(
+        SerializationUtils.deserializeWith,
+        <dynamic>[ClientItemResponse.serializer, response]);
 
     return clientResponse.data;
   }
@@ -49,10 +48,9 @@ class ClientRepository {
 
     //debugPrint('## CLIENTS: $response');
 
-    final ClientListResponse clientResponse = await (compute<dynamic, dynamic>(
-            SerializationUtils.deserializeWith,
-            <dynamic>[ClientListResponse.serializer, response])
-        as FutureOr<ClientListResponse>);
+    final ClientListResponse clientResponse = await compute<dynamic, dynamic>(
+        SerializationUtils.deserializeWith,
+        <dynamic>[ClientListResponse.serializer, response]);
 
     return clientResponse.data;
   }

@@ -30,10 +30,9 @@ class ProjectRepository {
     final dynamic response = await webClient.get(
         '${credentials.url}/projects/$entityId', credentials.token);
 
-    final ProjectItemResponse projectResponse =
-        await (compute<dynamic, dynamic>(SerializationUtils.deserializeWith,
-                <dynamic>[ProjectItemResponse.serializer, response])
-            as FutureOr<ProjectItemResponse>);
+    final ProjectItemResponse projectResponse = await compute<dynamic, dynamic>(
+        SerializationUtils.deserializeWith,
+        <dynamic>[ProjectItemResponse.serializer, response]);
 
     return projectResponse.data;
   }
@@ -48,10 +47,9 @@ class ProjectRepository {
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final ProjectListResponse projectResponse =
-        await (compute<dynamic, dynamic>(SerializationUtils.deserializeWith,
-                <dynamic>[ProjectListResponse.serializer, response])
-            as FutureOr<ProjectListResponse>);
+    final ProjectListResponse projectResponse = await compute<dynamic, dynamic>(
+        SerializationUtils.deserializeWith,
+        <dynamic>[ProjectListResponse.serializer, response]);
 
     return projectResponse.data;
   }

@@ -30,10 +30,9 @@ class ExpenseRepository {
     final dynamic response = await webClient.get(
         '${credentials.url}/expenses/$entityId', credentials.token);
 
-    final ExpenseItemResponse expenseResponse =
-        await (compute<dynamic, dynamic>(SerializationUtils.deserializeWith,
-                <dynamic>[ExpenseItemResponse.serializer, response])
-            as FutureOr<ExpenseItemResponse>);
+    final ExpenseItemResponse expenseResponse = await compute<dynamic, dynamic>(
+        SerializationUtils.deserializeWith,
+        <dynamic>[ExpenseItemResponse.serializer, response]);
 
     return expenseResponse.data;
   }
@@ -51,10 +50,9 @@ class ExpenseRepository {
 
     final dynamic response = await webClient.get(url, credentials.token);
 
-    final ExpenseListResponse expenseResponse =
-        await (compute<dynamic, dynamic>(SerializationUtils.deserializeWith,
-                <dynamic>[ExpenseListResponse.serializer, response])
-            as FutureOr<ExpenseListResponse>);
+    final ExpenseListResponse expenseResponse = await compute<dynamic, dynamic>(
+        SerializationUtils.deserializeWith,
+        <dynamic>[ExpenseListResponse.serializer, response]);
 
     return expenseResponse.data;
   }
