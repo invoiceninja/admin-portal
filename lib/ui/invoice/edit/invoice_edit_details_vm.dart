@@ -84,8 +84,8 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
     CompanyEntity? company,
     InvoiceEntity? invoice,
     Function(InvoiceEntity)? onChanged,
-    Function(BuildContext, InvoiceEntity, ClientEntity)? onClientChanged,
-    Function(BuildContext, InvoiceEntity, VendorEntity)? onVendorChanged,
+    Function(BuildContext, InvoiceEntity, ClientEntity?)? onClientChanged,
+    Function(BuildContext, InvoiceEntity, VendorEntity?)? onVendorChanged,
     BuiltMap<String?, ClientEntity?>? clientMap,
     BuiltList<String>? clientList,
     Function(BuildContext context, Completer<SelectableEntity> completer)?
@@ -119,7 +119,9 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
       clientMap: state.clientState.map,
       clientList: state.clientState.list,
       onClientChanged: (context, invoice, client) {
-        store.dispatch(UpdateInvoice(invoice.applyClient(state, client)));
+        if (client != null) {
+          store.dispatch(UpdateInvoice(invoice.applyClient(state, client)));
+        }
         store.dispatch(UpdateInvoiceClient(client: client));
       },
       onAddClientPressed: (context, completer) {

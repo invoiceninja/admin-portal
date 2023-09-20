@@ -501,7 +501,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     state.userState.map,
                     state.staticState),
                 onSelected: (vendor) => viewModel.onChanged!(
-                  invoice.rebuild((b) => b.vendorId = vendor.id),
+                  invoice.rebuild((b) => b.vendorId = vendor?.id ?? ''),
                 ),
                 onCreateNew: (completer, name) {
                   store.dispatch(SaveVendorRequest(

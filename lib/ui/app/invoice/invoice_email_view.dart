@@ -45,7 +45,7 @@ class InvoiceEmailView extends StatefulWidget {
 
 class _InvoiceEmailViewState extends State<InvoiceEmailView>
     with SingleTickerProviderStateMixin {
-  EmailTemplate? selectedTemplate;
+  late EmailTemplate selectedTemplate;
   String _emailPreview = '';
   String _bodyPreview = '';
   String _rawBodyPreview = '';
@@ -129,7 +129,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
   }
 
   void _loadTemplate() {
-    if (_isLoading || (isMobile(context) && _controller!.index != kTabPreview)) {
+    if (_isLoading ||
+        (isMobile(context) && _controller!.index != kTabPreview)) {
       return;
     }
 
@@ -218,6 +219,9 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                   onChanged: _isLoading
                       ? null
                       : (template) {
+                          if (template == null) {
+                            return;
+                          }
                           setState(() {
                             _subjectController.text = '';
                             _bodyController.text = '';

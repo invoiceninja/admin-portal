@@ -345,7 +345,7 @@ class DashboardPanels extends StatelessWidget {
     final previousInvoiceData = memoizedPreviousChartInvoices(
       state.staticState.currencyMap,
       state.company,
-      settings.rebuild((b) => b..offset += 1),
+      settings.rebuild((b) => b..offset = settings.offset + 1),
       state.invoiceState.map,
       state.clientState.map,
     );
@@ -361,7 +361,7 @@ class DashboardPanels extends StatelessWidget {
     final previousPaymentData = memoizedPreviousChartPayments(
         state.staticState.currencyMap,
         state.company,
-        settings.rebuild((b) => b..offset += 1),
+        settings.rebuild((b) => b..offset = settings.offset + 1),
         state.invoiceState.map,
         state.clientState.map,
         state.paymentState.map);
@@ -377,7 +377,7 @@ class DashboardPanels extends StatelessWidget {
     final previousQuoteData = memoizedPreviousChartQuotes(
       state.staticState.currencyMap,
       state.company,
-      settings.rebuild((b) => b..offset += 1),
+      settings.rebuild((b) => b..offset = settings.offset + 1),
       state.quoteState.map,
       state.clientState.map,
     );
@@ -396,7 +396,7 @@ class DashboardPanels extends StatelessWidget {
     final previousTaskData = memoizedPreviousChartTasks(
       state.staticState.currencyMap,
       state.company,
-      settings.rebuild((b) => b..offset += 1),
+      settings.rebuild((b) => b..offset = settings.offset + 1),
       state.taskState.map,
       state.invoiceState.map,
       state.projectState.map,
