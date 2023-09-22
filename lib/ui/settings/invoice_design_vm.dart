@@ -83,7 +83,7 @@ class InvoiceDesignVM {
               case EntityType.company:
                 final completer = snackBarCompleter<Null>(
                     context, AppLocalization.of(context)!.savedSettings)
-                  ..future.then<Null>(() {
+                  ..future.then<Null>((_) {
                     final webClient = WebClient();
                     final credentials = state.credentials;
                     final url = '${credentials.url}/designs/set/default';
@@ -106,7 +106,7 @@ class InvoiceDesignVM {
                         showErrorDialog(message: '$error');
                       });
                     });
-                  } as FutureOr<Null> Function(Null));
+                  });
                 store.dispatch(SaveCompanyRequest(
                     completer: completer, company: settingsUIState.company));
                 break;

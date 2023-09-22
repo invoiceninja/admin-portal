@@ -46,11 +46,9 @@ Completer<T> snackBarCompleter<T>(
 Completer<Null> popCompleter(BuildContext context, dynamic result) {
   final Completer<Null> completer = Completer<Null>();
 
-  completer.future
-      .then<Null>(() {
+  completer.future.then<Null>((_) {
     Navigator.of(context).pop<dynamic>(result);
-  } as FutureOr<Null> Function(Null))
-      .catchError((Object error) {
+  }).catchError((Object error) {
     showDialog<ErrorDialog>(
         context: navigatorKey.currentContext!,
         builder: (BuildContext context) {

@@ -113,9 +113,9 @@ class EmailInvoiceVM extends EmailEntityVM {
             context, AppLocalization.of(context)!.emailedInvoice,
             shouldPop: isMobile(context));
         if (!isMobile(context)) {
-          completer.future.then<Null>(() {
+          completer.future.then<Null>((_) {
             viewEntity(entity: invoice);
-          } as FutureOr<Null> Function(Null));
+          });
         }
         store.dispatch(EmailInvoiceRequest(
           completer: completer,

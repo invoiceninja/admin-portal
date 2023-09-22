@@ -140,9 +140,9 @@ class MenuDrawerVM {
               final completer = snackBarCompleter<Null>(
                   context, AppLocalization.of(context)!.addedCompany,
                   shouldPop: true)
-                ..future.then<Null>(() {
+                ..future.then<Null>((_) {
                   AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
-                } as FutureOr<Null> Function(Null));
+                });
 
               store
                   .dispatch(AddCompany(context: context, completer: completer));

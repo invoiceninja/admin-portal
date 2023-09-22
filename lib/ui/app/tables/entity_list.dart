@@ -470,9 +470,8 @@ class _EntityListState extends State<EntityList> {
                             entities: entities,
                             multiselect: true,
                             completer: Completer<Null>()
-                              ..future.then<Null>((() =>
-                                      widget.onClearMultiselect())
-                                  as FutureOr<Null> Function(Null)),
+                              ..future.then<Null>(
+                                  ((_) => widget.onClearMultiselect())),
                           );
                         },
                         onCancelPressed: (_) => widget.onClearMultiselect(),

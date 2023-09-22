@@ -105,10 +105,10 @@ class RecurringInvoiceEditDetailsVM extends EntityEditDetailsVM {
             force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()
-              ..future.then<Null>(() {
+              ..future.then<Null>((_) {
                 store.dispatch(
                     UpdateCurrentRoute(RecurringInvoiceEditScreen.route));
-              } as FutureOr<Null> Function(Null)));
+              }));
         completer.future.then((SelectableEntity client) {
           store.dispatch(UpdateCurrentRoute(RecurringInvoiceEditScreen.route));
         });

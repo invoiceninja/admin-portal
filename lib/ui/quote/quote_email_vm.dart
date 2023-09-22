@@ -89,9 +89,9 @@ class EmailQuoteVM extends EmailEntityVM {
             context, AppLocalization.of(context)!.emailedQuote,
             shouldPop: isMobile(context));
         if (!isMobile(context)) {
-          completer.future.then<Null>(() {
+          completer.future.then<Null>((_) {
             viewEntity(entity: quote);
-          } as FutureOr<Null> Function(Null));
+          });
         }
         store.dispatch(EmailQuoteRequest(
           completer: completer,

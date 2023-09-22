@@ -73,8 +73,7 @@ class AccountManagementVM {
 
           final companyLength = state.companies.length;
           final deleteCompleter = Completer<Null>()
-            ..future
-                .then<Null>(() {
+            ..future.then<Null>((_) {
               final context = navigatorKey.currentContext;
               final state = store.state;
               if (companyLength == 1) {
@@ -87,7 +86,7 @@ class AccountManagementVM {
                 final index = selectedCompanyIndex == 0 ? 1 : 0;
                 store.dispatch(SelectCompany(companyIndex: index));
                 final refreshCompleter = Completer<Null>()
-                  ..future.then<Null>(() {
+                  ..future.then<Null>((_) {
                     store.dispatch(SelectCompany(companyIndex: 0));
                     store.dispatch(ViewDashboard());
                     AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
@@ -95,12 +94,11 @@ class AccountManagementVM {
                     if (Navigator.of(context!).canPop()) {
                       Navigator.of(context).pop();
                     }
-                  } as FutureOr<Null> Function(Null));
+                  });
                 store.dispatch(
                     RefreshData(clearData: true, completer: refreshCompleter));
               }
-            } as FutureOr<Null> Function(Null))
-                .catchError((Object error) {
+            }).catchError((Object error) {
               if (Navigator.of(navigatorKey.currentContext!).canPop()) {
                 Navigator.of(navigatorKey.currentContext!).pop();
               }

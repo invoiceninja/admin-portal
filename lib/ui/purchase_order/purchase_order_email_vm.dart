@@ -90,9 +90,9 @@ class EmailPurchaseOrderVM extends EmailEntityVM {
             context, AppLocalization.of(context)!.emailedPurchaseOrder,
             shouldPop: isMobile(context));
         if (!isMobile(context)) {
-          completer.future.then<Null>(() {
+          completer.future.then<Null>((_) {
             viewEntity(entity: purchaseOrder);
-          } as FutureOr<Null> Function(Null));
+          });
         }
         store.dispatch(EmailPurchaseOrderRequest(
           completer: completer,

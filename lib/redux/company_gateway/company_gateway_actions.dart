@@ -309,9 +309,9 @@ void handleCompanyGatewayAction(BuildContext? context,
     case EntityAction.disconnect:
       final completer =
           snackBarCompleter<Null>(context, localization!.disconnectedGateway);
-      completer.future.then<Null>(() {
+      completer.future.then<Null>((_) {
         store.dispatch(RefreshData());
-      } as FutureOr<Null> Function(Null));
+      });
       confirmCallback(
           context: context,
           callback: (_) {

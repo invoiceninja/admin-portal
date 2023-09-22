@@ -75,14 +75,14 @@ class LocalizationSettingsVM {
                 final appBuilder = AppBuilder.of(context);
                 final completer = snackBarCompleter<Null>(
                     context, AppLocalization.of(context)!.savedSettings)
-                  ..future.then<Null>(() {
+                  ..future.then<Null>((_) {
                     appBuilder!.rebuild();
                     store.dispatch(RefreshData(
                         includeStatic: true,
                         completer: Completer<dynamic>()
                           ..future
                               .then((dynamic value) => appBuilder.rebuild())));
-                  } as FutureOr<Null> Function(Null));
+                  });
                 store.dispatch(SaveCompanyRequest(
                     completer: completer, company: settingsUIState.company));
                 break;

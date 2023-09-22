@@ -176,9 +176,9 @@ class UserDetailsVM {
                   callback: (password, idToken) {
                     final completer = snackBarCompleter<Null>(context,
                         AppLocalization.of(context)!.disconnectedGoogle);
-                    completer.future.then<Null>(() {
+                    completer.future.then<Null>((_) {
                       GoogleOAuth.disconnect();
-                    } as FutureOr<Null> Function(Null));
+                    });
                     store.dispatch(
                       DisconnecOAuthUserRequest(
                         user: state.user,
@@ -315,7 +315,7 @@ class UserDetailsVM {
           final appBuilder = AppBuilder.of(context);
           final origUserSettings = state.userCompany!.settings;
 
-          completer.future.then<Null>(() async {
+          completer.future.then<Null>((_) async {
             final newUserSettings = store.state.userCompany!.settings!;
             if (origUserSettings!.includeDeletedClients !=
                     newUserSettings.includeDeletedClients ||
@@ -338,7 +338,7 @@ class UserDetailsVM {
             }
 
             appBuilder!.rebuild();
-          } as FutureOr<Null> Function(Null));
+          });
 
           confirmCallback(
               context: context,

@@ -120,9 +120,9 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
             force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()
-              ..future.then<Null>(() {
+              ..future.then<Null>((_) {
                 store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
-              } as FutureOr<Null> Function(Null)));
+              }));
         completer.future.then((SelectableEntity client) {
           store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
         });
@@ -134,9 +134,9 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
             force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()
-              ..future.then<Null>(() {
+              ..future.then<Null>((_) {
                 store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
-              } as FutureOr<Null> Function(Null)));
+              }));
         completer.future.then((SelectableEntity expense) {
           store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
         });

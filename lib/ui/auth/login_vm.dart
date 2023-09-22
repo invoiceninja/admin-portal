@@ -184,8 +184,8 @@ class LoginVM {
                 provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
                 oneTimePassword: oneTimePassword,
               ));
-              completer.future.then<Null>((() => _handleLogin(context: context))
-                  as FutureOr<Null> Function(Null));
+              completer.future
+                  .then<Null>(((_) => _handleLogin(context: context)));
             }
           });
           if (!signedIn) {
@@ -215,9 +215,8 @@ class LoginVM {
                 accessToken: accessToken,
                 provider: UserEntity.OAUTH_PROVIDER_GOOGLE,
               ));
-              completer.future.then<Null>((() =>
-                      _handleLogin(context: context, isSignUp: true))
-                  as FutureOr<Null> Function(Null));
+              completer.future.then<Null>(
+                  ((_) => _handleLogin(context: context, isSignUp: true)));
             }
           });
           if (!signedIn) {
@@ -249,8 +248,8 @@ class LoginVM {
               provider: UserEntity.OAUTH_PROVIDER_MICROSOFT,
               oneTimePassword: oneTimePassword,
             ));
-            completer.future.then<Null>((() => _handleLogin(context: context))
-                as FutureOr<Null> Function(Null));
+            completer.future
+                .then<Null>(((_) => _handleLogin(context: context)));
           }, (dynamic error) {
             completer.completeError(error);
           });
@@ -270,9 +269,8 @@ class LoginVM {
               provider: UserEntity.OAUTH_PROVIDER_MICROSOFT,
               accessToken: accessToken,
             ));
-            completer.future.then<Null>((() =>
-                    _handleLogin(context: context, isSignUp: true))
-                as FutureOr<Null> Function(Null));
+            completer.future.then<Null>(
+                ((_) => _handleLogin(context: context, isSignUp: true)));
           }, (dynamic error) {
             completer.completeError(error);
           });
@@ -311,8 +309,7 @@ class LoginVM {
             authCode: credentials.authorizationCode,
             idToken: credentials.identityToken,
           ));
-          completer.future.then<Null>((() => _handleLogin(context: context))
-              as FutureOr<Null> Function(Null));
+          completer.future.then<Null>(((_) => _handleLogin(context: context)));
         } catch (error) {
           completer.completeError(error);
           print('## onAppleLoginPressed: $error');
@@ -340,9 +337,8 @@ class LoginVM {
             firstName: credentials.givenName,
             lastName: credentials.familyName,
           ));
-          completer.future.then<Null>((() =>
-                  _handleLogin(context: context, isSignUp: true))
-              as FutureOr<Null> Function(Null));
+          completer.future.then<Null>(
+              ((_) => _handleLogin(context: context, isSignUp: true)));
         } catch (error) {
           completer.completeError(error);
           print('## onAppleSignUpPressed: $error');
@@ -363,9 +359,8 @@ class LoginVM {
           email: email.trim(),
           password: password.trim(),
         ));
-        completer.future.then<Null>((() =>
-                _handleLogin(context: context, isSignUp: true))
-            as FutureOr<Null> Function(Null));
+        completer.future.then<Null>(
+            ((_) => _handleLogin(context: context, isSignUp: true)));
       },
       onRecoverPressed: (
         BuildContext context,

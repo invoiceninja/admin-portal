@@ -92,9 +92,9 @@ class EmailCreditVM extends EmailEntityVM {
             context, AppLocalization.of(context)!.emailedCredit,
             shouldPop: isMobile(context));
         if (!isMobile(context)) {
-          completer.future.then<Null>(() {
+          completer.future.then<Null>((_) {
             viewEntity(entity: credit);
-          } as FutureOr<Null> Function(Null));
+          });
         }
         store.dispatch(EmailCreditRequest(
           completer: completer,

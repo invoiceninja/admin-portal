@@ -379,12 +379,12 @@ Middleware<AppState> _createCompany(AuthRepository repository) {
       store.dispatch(RefreshData(
         allCompanies: true,
         completer: Completer<Null>()
-          ..future.then<Null>(() {
+          ..future.then<Null>((_) {
             store.dispatch(SelectCompany(companyIndex: state.companies.length));
             store.dispatch(ViewDashboard(force: true));
 
             action!.completer!.complete();
-          } as FutureOr<Null> Function(Null)),
+          }),
       ));
     });
 
@@ -459,9 +459,9 @@ Middleware<AppState> _purgeData(AuthRepository repository) {
       store.dispatch(RefreshData(
           clearData: true,
           completer: Completer<Null>()
-            ..future.then<Null>(() {
+            ..future.then<Null>((_) {
               action.completer.complete(null);
-            } as FutureOr<Null> Function(Null))));
+            })));
     }).catchError((Object error) {
       store.dispatch(PurgeDataFailure(error));
       action.completer.completeError(error);

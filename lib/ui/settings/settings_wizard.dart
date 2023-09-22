@@ -146,18 +146,15 @@ class _SettingsWizardState extends State<SettingsWizard> {
         callback: (password, idToken) {
           final localization = AppLocalization.of(context);
           final completer = Completer<Null>();
-          completer.future
-              .then<Null>(() {
+          completer.future.then<Null>((_) {
             final toastCompleter =
                 snackBarCompleter<Null>(context, localization!.savedSettings);
-            toastCompleter.future
-                .then<Null>(() {
+            toastCompleter.future.then<Null>((_) {
               setState(() {
                 _isSaving = false;
                 _showLogo = true;
               });
-            } as FutureOr<Null> Function(Null))
-                .catchError((Object error) {
+            }).catchError((Object error) {
               setState(() {
                 _isSaving = false;
               });
@@ -174,8 +171,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
                 ),
               ),
             );
-          } as FutureOr<Null> Function(Null))
-              .catchError((Object error) {
+          }).catchError((Object error) {
             setState(() => _isSaving = false);
           });
 

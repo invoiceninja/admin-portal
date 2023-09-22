@@ -82,10 +82,10 @@ class ClientPortalVM {
                   final oldSubdomain = state.company!.subdomain;
                   final newSubdomain = settingsUIState.company.subdomain;
                   if (oldSubdomain != newSubdomain) {
-                    completer.future.then<Null>(() {
+                    completer.future.then<Null>((_) {
                       showRefreshDataDialog(
                           context: navigatorKey.currentContext!);
-                    } as FutureOr<Null> Function(Null));
+                    });
                   }
 
                   store.dispatch(SaveCompanyRequest(
