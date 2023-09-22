@@ -117,8 +117,8 @@ class CreditPresenter extends EntityPresenter {
       case CreditFields.documents:
         return Text('${credit.documents.length}');
       case CreditFields.taxAmount:
-        return Text(
-            formatNumber(credit.taxAmount, context, clientId: credit.clientId)!);
+        return Text(formatNumber(credit.taxAmount, context,
+            clientId: credit.clientId)!);
       case CreditFields.exchangeRate:
         return Text(formatNumber(credit.exchangeRate, context,
             formatNumberType: FormatNumberType.double)!);
@@ -137,7 +137,8 @@ class CreditPresenter extends EntityPresenter {
       case CreditFields.clientPostalCode:
         return Text(client!.postalCode);
       case CreditFields.clientCountry:
-        return Text(state.staticState.countryMap[client!.countryId]?.name ?? '');
+        return Text(
+            state.staticState.countryMap[client!.countryId]?.name ?? '');
       case CreditFields.contactName:
       case CreditFields.contactEmail:
         final contact = creditContactSelector(

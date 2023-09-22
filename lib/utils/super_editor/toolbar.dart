@@ -284,8 +284,8 @@ class _EditorToolbarState extends State<EditorToolbar> {
     final selectionRange =
         SpanRange(start: selectionStart, end: selectionEnd - 1);
 
-    final textNode =
-        widget.editor!.document.getNodeById(selection.extent.nodeId) as TextNode;
+    final textNode = widget.editor!.document
+        .getNodeById(selection.extent.nodeId) as TextNode;
     final text = textNode.text;
 
     final overlappingLinkAttributions = text.getAttributionSpansInRange(
@@ -308,8 +308,8 @@ class _EditorToolbarState extends State<EditorToolbar> {
     final selectionRange =
         SpanRange(start: selectionStart, end: selectionEnd - 1);
 
-    final textNode =
-        widget.editor!.document.getNodeById(selection.extent.nodeId) as TextNode;
+    final textNode = widget.editor!.document
+        .getNodeById(selection.extent.nodeId) as TextNode;
     final text = textNode.text;
 
     final overlappingLinkAttributions = text.getAttributionSpansInRange(
@@ -367,8 +367,8 @@ class _EditorToolbarState extends State<EditorToolbar> {
     final selectionRange =
         TextRange(start: selectionStart, end: selectionEnd - 1);
 
-    final textNode =
-        widget.editor!.document.getNodeById(selection.extent.nodeId) as TextNode;
+    final textNode = widget.editor!.document
+        .getNodeById(selection.extent.nodeId) as TextNode;
     final text = textNode.text;
 
     final trimmedRange = _trimTextRangeWhitespace(text, selectionRange);
@@ -383,8 +383,8 @@ class _EditorToolbarState extends State<EditorToolbar> {
     _urlController!.clear();
     setState(() {
       _showUrlField = false;
-      _urlFocusNode!.unfocus(
-          disposition: UnfocusDisposition.previouslyFocusedChild);
+      _urlFocusNode!
+          .unfocus(disposition: UnfocusDisposition.previouslyFocusedChild);
       widget.closeToolbar();
     });
   }

@@ -24,7 +24,9 @@ EntityUIState clientUIReducer(ClientUIState state, dynamic action) {
     ..forceSelected = forceSelectedReducer(state.forceSelected, action)
     ..tabIndex = tabIndexReducer(state.tabIndex, action)
     ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
-    ..cancelCompleter = cancelCompleterReducer(state.cancelCompleter as Completer<SelectableEntity>?, action) as Completer<Null>?);
+    ..cancelCompleter = cancelCompleterReducer(
+            state.cancelCompleter as Completer<SelectableEntity>?, action)
+        as Completer<Null>?);
 }
 
 final forceSelectedReducer = combineReducers<bool?>([
@@ -79,7 +81,8 @@ final selectedIdReducer = combineReducers<String?>([
   TypedReducer<String?, AddClientSuccess>((selectedId, action) {
     return action.client.id;
   }),
-  TypedReducer<String?, ShowPdfClient>((selectedId, action) => action.client!.id),
+  TypedReducer<String?, ShowPdfClient>(
+      (selectedId, action) => action.client!.id),
   TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),

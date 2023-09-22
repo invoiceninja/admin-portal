@@ -65,7 +65,9 @@ List<String> filteredDesignsSelector(BuiltMap<String?, DesignEntity?> designMap,
 }
 
 String? getDesignIdForClientByEntity(
-    {required AppState state, required String clientId, EntityType? entityType}) {
+    {required AppState state,
+    required String clientId,
+    EntityType? entityType}) {
   final client = state.clientState.get(clientId);
   final settings = getClientSettings(state, client);
   switch (entityType) {
@@ -82,7 +84,9 @@ String? getDesignIdForClientByEntity(
 }
 
 String? getDesignIdForVendorByEntity(
-    {required AppState state, required String vendorId, EntityType? entityType}) {
+    {required AppState state,
+    required String vendorId,
+    EntityType? entityType}) {
   final vendor = state.vendorState.get(vendorId);
 
   final settings = getVendorSettings(state, vendor);

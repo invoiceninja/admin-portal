@@ -25,10 +25,14 @@ final forceSelectedReducer = combineReducers<bool?>([
   TypedReducer<bool?, ViewPaymentTermList>((completer, action) => false),
   TypedReducer<bool?, FilterPaymentTermsByState>((completer, action) => false),
   TypedReducer<bool?, FilterPaymentTerms>((completer, action) => false),
-  TypedReducer<bool?, FilterPaymentTermsByCustom1>((completer, action) => false),
-  TypedReducer<bool?, FilterPaymentTermsByCustom2>((completer, action) => false),
-  TypedReducer<bool?, FilterPaymentTermsByCustom3>((completer, action) => false),
-  TypedReducer<bool?, FilterPaymentTermsByCustom4>((completer, action) => false),
+  TypedReducer<bool?, FilterPaymentTermsByCustom1>(
+      (completer, action) => false),
+  TypedReducer<bool?, FilterPaymentTermsByCustom2>(
+      (completer, action) => false),
+  TypedReducer<bool?, FilterPaymentTermsByCustom3>(
+      (completer, action) => false),
+  TypedReducer<bool?, FilterPaymentTermsByCustom4>(
+      (completer, action) => false),
 ]);
 
 Reducer<String?> selectedIdReducer = combineReducers([
@@ -48,10 +52,14 @@ Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, SortPaymentTerms>((selectedId, action) => ''),
   TypedReducer<String?, FilterPaymentTerms>((selectedId, action) => ''),
   TypedReducer<String?, FilterPaymentTermsByState>((selectedId, action) => ''),
-  TypedReducer<String?, FilterPaymentTermsByCustom1>((selectedId, action) => ''),
-  TypedReducer<String?, FilterPaymentTermsByCustom2>((selectedId, action) => ''),
-  TypedReducer<String?, FilterPaymentTermsByCustom3>((selectedId, action) => ''),
-  TypedReducer<String?, FilterPaymentTermsByCustom4>((selectedId, action) => ''),
+  TypedReducer<String?, FilterPaymentTermsByCustom1>(
+      (selectedId, action) => ''),
+  TypedReducer<String?, FilterPaymentTermsByCustom2>(
+      (selectedId, action) => ''),
+  TypedReducer<String?, FilterPaymentTermsByCustom3>(
+      (selectedId, action) => ''),
+  TypedReducer<String?, FilterPaymentTermsByCustom4>(
+      (selectedId, action) => ''),
 ]);
 
 final editingReducer = combineReducers<PaymentTermEntity?>([
@@ -76,7 +84,8 @@ final editingReducer = combineReducers<PaymentTermEntity?>([
   TypedReducer<PaymentTermEntity?, DiscardChanges>(_clearEditing),
 ]);
 
-PaymentTermEntity _clearEditing(PaymentTermEntity? paymentTerm, dynamic action) {
+PaymentTermEntity _clearEditing(
+    PaymentTermEntity? paymentTerm, dynamic action) {
   return PaymentTermEntity();
 }
 

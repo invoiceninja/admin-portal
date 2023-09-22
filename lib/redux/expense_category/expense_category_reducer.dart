@@ -21,7 +21,9 @@ EntityUIState expenseCategoryUIReducer(
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..forceSelected = forceSelectedReducer(state.forceSelected, action)
     ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
-    ..cancelCompleter = cancelCompleterReducer(state.cancelCompleter as Completer<SelectableEntity>?, action) as Completer<Null>?);
+    ..cancelCompleter = cancelCompleterReducer(
+            state.cancelCompleter as Completer<SelectableEntity>?, action)
+        as Completer<Null>?);
 }
 
 final saveCompleterReducer = combineReducers<Completer<SelectableEntity>?>([

@@ -22,10 +22,14 @@ final forceSelectedReducer = combineReducers<bool?>([
   TypedReducer<bool?, ViewBankAccountList>((completer, action) => false),
   TypedReducer<bool?, FilterBankAccountsByState>((completer, action) => false),
   TypedReducer<bool?, FilterBankAccounts>((completer, action) => false),
-  TypedReducer<bool?, FilterBankAccountsByCustom1>((completer, action) => false),
-  TypedReducer<bool?, FilterBankAccountsByCustom2>((completer, action) => false),
-  TypedReducer<bool?, FilterBankAccountsByCustom3>((completer, action) => false),
-  TypedReducer<bool?, FilterBankAccountsByCustom4>((completer, action) => false),
+  TypedReducer<bool?, FilterBankAccountsByCustom1>(
+      (completer, action) => false),
+  TypedReducer<bool?, FilterBankAccountsByCustom2>(
+      (completer, action) => false),
+  TypedReducer<bool?, FilterBankAccountsByCustom3>(
+      (completer, action) => false),
+  TypedReducer<bool?, FilterBankAccountsByCustom4>(
+      (completer, action) => false),
 ]);
 
 final int? Function(int, dynamic) tabIndexReducer = combineReducers<int?>([
@@ -54,10 +58,14 @@ Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, SortBankAccounts>((selectedId, action) => ''),
   TypedReducer<String?, FilterBankAccounts>((selectedId, action) => ''),
   TypedReducer<String?, FilterBankAccountsByState>((selectedId, action) => ''),
-  TypedReducer<String?, FilterBankAccountsByCustom1>((selectedId, action) => ''),
-  TypedReducer<String?, FilterBankAccountsByCustom2>((selectedId, action) => ''),
-  TypedReducer<String?, FilterBankAccountsByCustom3>((selectedId, action) => ''),
-  TypedReducer<String?, FilterBankAccountsByCustom4>((selectedId, action) => ''),
+  TypedReducer<String?, FilterBankAccountsByCustom1>(
+      (selectedId, action) => ''),
+  TypedReducer<String?, FilterBankAccountsByCustom2>(
+      (selectedId, action) => ''),
+  TypedReducer<String?, FilterBankAccountsByCustom3>(
+      (selectedId, action) => ''),
+  TypedReducer<String?, FilterBankAccountsByCustom4>(
+      (selectedId, action) => ''),
   TypedReducer<String?, FilterByEntity>(
       (selectedId, action) => action.clearSelection
           ? ''
@@ -88,7 +96,8 @@ final editingReducer = combineReducers<BankAccountEntity?>([
   TypedReducer<BankAccountEntity?, DiscardChanges>(_clearEditing),
 ]);
 
-BankAccountEntity _clearEditing(BankAccountEntity? bankAccount, dynamic action) {
+BankAccountEntity _clearEditing(
+    BankAccountEntity? bankAccount, dynamic action) {
   return BankAccountEntity();
 }
 

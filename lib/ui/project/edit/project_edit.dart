@@ -135,7 +135,8 @@ class _ProjectEditState extends State<ProjectEdit> {
 
     return EditScaffold(
       entity: project,
-      title: project.isNew ? localization!.newProject : localization!.editProject,
+      title:
+          project.isNew ? localization!.newProject : localization!.editProject,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: _onSavePressed,
       body: Form(

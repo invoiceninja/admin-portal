@@ -46,8 +46,8 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
             key: Key(contact!.entityKey),
             contact: contact,
             isDialog: client.contacts.length > 1,
-            index: client.contacts
-                .indexOf(client.contacts.firstWhere((c) => c!.id == contact.id)),
+            index: client.contacts.indexOf(
+                client.contacts.firstWhere((c) => c!.id == contact.id)),
           );
         });
   }
@@ -148,8 +148,9 @@ class ContactListTile extends StatelessWidget {
                         style: TextStyle(
                           fontStyle: FontStyle.italic,
                         )),
-                subtitle: Text(
-                    contact!.email.isNotEmpty ? contact!.email : contact!.phone),
+                subtitle: Text(contact!.email.isNotEmpty
+                    ? contact!.email
+                    : contact!.phone),
                 trailing: Icon(Icons.navigate_next),
               ),
               Divider(
@@ -365,8 +366,8 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                 title: Text(localization.addToInvoices!),
                 value: _contact!.sendEmail,
                 onChanged: (value) {
-                  setState(() =>
-                      _contact = _contact!.rebuild((b) => b..sendEmail = value));
+                  setState(() => _contact =
+                      _contact!.rebuild((b) => b..sendEmail = value));
 
                   viewModel.onChangedContact(
                     _contact!.rebuild((b) => b..sendEmail = value),

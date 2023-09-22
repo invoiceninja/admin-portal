@@ -155,7 +155,8 @@ EntityStats taskStatsForTaskStatus(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
-String? defaultTaskStatusId(BuiltMap<String?, TaskStatusEntity?> taskStatusMap) {
+String? defaultTaskStatusId(
+    BuiltMap<String?, TaskStatusEntity?> taskStatusMap) {
   final statusIds = taskStatusMap.keys.where((statusId) {
     final status = taskStatusMap[statusId]!;
     return status.isActive;

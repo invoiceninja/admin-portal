@@ -24,7 +24,9 @@ EntityUIState vendorUIReducer(VendorUIState state, dynamic action) {
     ..forceSelected = forceSelectedReducer(state.forceSelected, action)
     ..tabIndex = tabIndexReducer(state.tabIndex, action)
     ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
-    ..cancelCompleter = cancelCompleterReducer(state.cancelCompleter as Completer<SelectableEntity>?, action) as Completer<Null>?);
+    ..cancelCompleter = cancelCompleterReducer(
+            state.cancelCompleter as Completer<SelectableEntity>?, action)
+        as Completer<Null>?);
 }
 
 final forceSelectedReducer = combineReducers<bool?>([

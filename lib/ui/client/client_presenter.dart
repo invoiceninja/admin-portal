@@ -120,7 +120,8 @@ class ClientPresenter extends EntityPresenter {
               formatNumber(client!.paidToDate, context, clientId: client.id)!),
         );
       case ClientFields.country:
-        return Text(state.staticState.countryMap[client!.countryId]?.name ?? '');
+        return Text(
+            state.staticState.countryMap[client!.countryId]?.name ?? '');
       case ClientFields.language:
         return Text(
             state.staticState.languageMap[client!.languageId]?.name ?? '');

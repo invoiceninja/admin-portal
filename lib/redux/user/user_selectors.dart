@@ -99,8 +99,8 @@ List<String?> gmailUserList(BuiltMap<String?, UserEntity?> userMap) {
   }).toList();
 }
 
-var memoizedMicrosoftUserList =
-    memo1((BuiltMap<String?, UserEntity?> userMap) => microsoftUserList(userMap));
+var memoizedMicrosoftUserList = memo1(
+    (BuiltMap<String?, UserEntity?> userMap) => microsoftUserList(userMap));
 
 List<String?> microsoftUserList(BuiltMap<String?, UserEntity?> userMap) {
   return userList(userMap).where((userId) {

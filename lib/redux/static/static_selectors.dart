@@ -21,7 +21,8 @@ List<String?> countryList(BuiltMap<String?, CountryEntity?> countryMap) {
 }
 
 var memoizedCountryIso2Map = memo1(
-    (BuiltMap<String?, CountryEntity?> countryMap) => countryIso2Map(countryMap));
+    (BuiltMap<String?, CountryEntity?> countryMap) =>
+        countryIso2Map(countryMap));
 
 Map<String, CountryEntity> countryIso2Map(
     BuiltMap<String?, CountryEntity?> countryMap) {
@@ -92,7 +93,8 @@ var memoizedDateFormatList = memo1(
     (BuiltMap<String?, DateFormatEntity?> dateFormatMap) =>
         dateFormatList(dateFormatMap));
 
-List<String?> dateFormatList(BuiltMap<String?, DateFormatEntity?> dateFormatMap) {
+List<String?> dateFormatList(
+    BuiltMap<String?, DateFormatEntity?> dateFormatMap) {
   final list = dateFormatMap.keys.toList();
 
   list.sort((idA, idB) => dateFormatMap[idA]!

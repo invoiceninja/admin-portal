@@ -47,7 +47,8 @@ class _DesignViewState extends State<DesignView> {
 
     count += state.invoiceState.list
         .map((invoiceId) => state.invoiceState.map[invoiceId])
-        .where((invoice) => !invoice!.isDeleted! && invoice.designId == design.id)
+        .where(
+            (invoice) => !invoice!.isDeleted! && invoice.designId == design.id)
         .length;
 
     count += state.quoteState.list
@@ -62,7 +63,8 @@ class _DesignViewState extends State<DesignView> {
 
     count += state.recurringInvoiceState.list
         .map((invoiceId) => state.recurringInvoiceState.map[invoiceId])
-        .where((invoice) => !invoice!.isDeleted! && invoice.designId == design.id)
+        .where(
+            (invoice) => !invoice!.isDeleted! && invoice.designId == design.id)
         .length;
 
     return ViewScaffold(

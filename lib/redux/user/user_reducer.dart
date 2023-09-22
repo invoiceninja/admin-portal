@@ -36,7 +36,8 @@ Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, DeleteUserSuccess>((completer, action) => ''),
   TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.user ? action.entityId : selectedId),
-  TypedReducer<String?, ViewUser>((String? selectedId, action) => action.userId),
+  TypedReducer<String?, ViewUser>(
+      (String? selectedId, action) => action.userId),
   TypedReducer<String?, AddUserSuccess>(
       (String? selectedId, action) => action.user.id),
   TypedReducer<String?, SelectCompany>(

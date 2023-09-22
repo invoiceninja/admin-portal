@@ -10,8 +10,7 @@ import 'package:invoiceninja_flutter/ui/app/document_grid.dart';
 import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
 
 class ExpenseViewDocuments extends StatelessWidget {
-  const ExpenseViewDocuments(
-      {required this.expense, required this.viewModel});
+  const ExpenseViewDocuments({required this.expense, required this.viewModel});
 
   final AbstractExpenseViewVM viewModel;
   final ExpenseEntity? expense;

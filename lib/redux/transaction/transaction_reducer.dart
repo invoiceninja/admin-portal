@@ -23,10 +23,14 @@ final forceSelectedReducer = combineReducers<bool?>([
   TypedReducer<bool?, FilterTransactionsByState>((completer, action) => false),
   TypedReducer<bool?, FilterTransactionsByStatus>((completer, action) => false),
   TypedReducer<bool?, FilterTransactions>((completer, action) => false),
-  TypedReducer<bool?, FilterTransactionsByCustom1>((completer, action) => false),
-  TypedReducer<bool?, FilterTransactionsByCustom2>((completer, action) => false),
-  TypedReducer<bool?, FilterTransactionsByCustom3>((completer, action) => false),
-  TypedReducer<bool?, FilterTransactionsByCustom4>((completer, action) => false),
+  TypedReducer<bool?, FilterTransactionsByCustom1>(
+      (completer, action) => false),
+  TypedReducer<bool?, FilterTransactionsByCustom2>(
+      (completer, action) => false),
+  TypedReducer<bool?, FilterTransactionsByCustom3>(
+      (completer, action) => false),
+  TypedReducer<bool?, FilterTransactionsByCustom4>(
+      (completer, action) => false),
 ]);
 
 final int? Function(int, dynamic) tabIndexReducer = combineReducers<int?>([
@@ -56,10 +60,14 @@ Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, FilterTransactions>((selectedId, action) => ''),
   TypedReducer<String?, FilterTransactionsByState>((selectedId, action) => ''),
   TypedReducer<String?, FilterTransactionsByStatus>((selectedId, action) => ''),
-  TypedReducer<String?, FilterTransactionsByCustom1>((selectedId, action) => ''),
-  TypedReducer<String?, FilterTransactionsByCustom2>((selectedId, action) => ''),
-  TypedReducer<String?, FilterTransactionsByCustom3>((selectedId, action) => ''),
-  TypedReducer<String?, FilterTransactionsByCustom4>((selectedId, action) => ''),
+  TypedReducer<String?, FilterTransactionsByCustom1>(
+      (selectedId, action) => ''),
+  TypedReducer<String?, FilterTransactionsByCustom2>(
+      (selectedId, action) => ''),
+  TypedReducer<String?, FilterTransactionsByCustom3>(
+      (selectedId, action) => ''),
+  TypedReducer<String?, FilterTransactionsByCustom4>(
+      (selectedId, action) => ''),
   TypedReducer<String?, FilterByEntity>(
       (selectedId, action) => action.clearSelection
           ? ''
@@ -90,7 +98,8 @@ final editingReducer = combineReducers<TransactionEntity?>([
   TypedReducer<TransactionEntity?, DiscardChanges>(_clearEditing),
 ]);
 
-TransactionEntity _clearEditing(TransactionEntity? transaction, dynamic action) {
+TransactionEntity _clearEditing(
+    TransactionEntity? transaction, dynamic action) {
   return TransactionEntity();
 }
 

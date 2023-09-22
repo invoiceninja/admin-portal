@@ -238,7 +238,8 @@ class KanbanViewState extends State<KanbanView> {
                               _tasks![status.id]!.indexOf(task.id)) &&
                           task.statusId == statusId,
                       onSavePressed: (completer, description) {
-                        final statusOrder = _tasks![status.id]!.indexOf(task.id);
+                        final statusOrder =
+                            _tasks![status.id]!.indexOf(task.id);
                         widget.viewModel.onSaveTaskPressed(
                           completer,
                           task.id,

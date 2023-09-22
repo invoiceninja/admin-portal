@@ -355,7 +355,8 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                                 fileName, _response!.bodyBytes);
                           } else {
                             final directory = await (isDesktopOS()
-                                ? getDownloadsDirectory() as FutureOr<file.Directory>
+                                ? getDownloadsDirectory()
+                                    as FutureOr<file.Directory>
                                 : getApplicationDocumentsDirectory());
                             String filePath =
                                 '${directory.path}${file.Platform.pathSeparator}$fileName';

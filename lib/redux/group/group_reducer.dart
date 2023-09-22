@@ -137,7 +137,8 @@ ListUIState _addToListMultiselect(
 
 ListUIState _removeFromListMultiselect(
     ListUIState groupListState, RemoveFromGroupMultiselect action) {
-  return groupListState.rebuild((b) => b..selectedIds.remove(action.entity!.id));
+  return groupListState
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(

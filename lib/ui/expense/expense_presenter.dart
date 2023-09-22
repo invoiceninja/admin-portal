@@ -97,8 +97,8 @@ class ExpensePresenter extends EntityPresenter {
       case ExpenseFields.transactionReference:
         return Text(expense!.transactionReference);
       case ExpenseFields.currency:
-        return Text(state
-                .staticState.currencyMap[expense!.currencyId]?.listDisplayName ??
+        return Text(state.staticState.currencyMap[expense!.currencyId]
+                ?.listDisplayName ??
             '');
       case ExpenseFields.category:
         final category = state.expenseCategoryState.map[expense!.categoryId];

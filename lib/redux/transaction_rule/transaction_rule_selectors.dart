@@ -61,7 +61,8 @@ List<String> filteredTransactionRulesSelector(
       return false;
     } else {}
 
-    if (!transactionRule!.matchesStates(transactionRuleListState.stateFilters)) {
+    if (!transactionRule!
+        .matchesStates(transactionRuleListState.stateFilters)) {
       return false;
     }
 

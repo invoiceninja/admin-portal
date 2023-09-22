@@ -113,7 +113,8 @@ class _CompanyGatewayOverview extends StatelessWidget {
     final webhookUrl =
         '${state.account!.defaultUrl}/payment_webhook/${state.company!.companyKey}/${companyGateway.id}';
 
-    final Map<String, Map<String, String?>> allFields = <String, Map<String, String>>{};
+    final Map<String, Map<String, String?>> allFields =
+        <String, Map<String, String>>{};
     for (var gatewayTypeId in kGatewayTypes.keys) {
       final Map<String, String?> fields = {};
       if (companyGateway.feesAndLimitsMap.containsKey(gatewayTypeId)) {

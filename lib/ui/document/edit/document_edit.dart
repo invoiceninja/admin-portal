@@ -85,8 +85,9 @@ class _DocumentEditState extends State<DocumentEdit> {
 
     return EditScaffold(
       entity: document,
-      title:
-          document.isNew ? localization!.newDocument : localization!.editDocument,
+      title: document.isNew
+          ? localization!.newDocument
+          : localization!.editDocument,
       onSavePressed: (_) => _onSavePressed(),
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       body: Form(

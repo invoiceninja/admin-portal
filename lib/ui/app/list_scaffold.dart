@@ -113,7 +113,8 @@ class ListScaffold extends StatelessWidget {
         if (isDesktop(context) && onCheckboxPressed != null)
           IconButton(
             icon: Icon(Icons.check_box),
-            tooltip: prefState.enableTooltips ? localization!.multiselect : null,
+            tooltip:
+                prefState.enableTooltips ? localization!.multiselect : null,
             onPressed: state.prefState.showKanban &&
                     state.uiState.mainRoute == '${EntityType.task}'
                 ? null

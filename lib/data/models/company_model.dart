@@ -964,7 +964,8 @@ abstract class GatewayEntity extends Object
     }
   }
 
-  static String? getPaymentUrl({String? gatewayId, String? transactionReference}) {
+  static String? getPaymentUrl(
+      {String? gatewayId, String? transactionReference}) {
     switch (gatewayId) {
       case kGatewayStripe:
       case kGatewayStripeConnect:

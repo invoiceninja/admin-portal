@@ -222,8 +222,8 @@ class RecurringInvoiceListItem extends StatelessWidget {
                                             (invoice!.nextSendDate.isNotEmpty
                                                 ? ' • '
                                                 : '') +
-                                            formatDate(
-                                                invoice!.nextSendDate, context) +
+                                            formatDate(invoice!.nextSendDate,
+                                                context) +
                                             (invoice!.documents.isNotEmpty
                                                 ? '  📎'
                                                 : ''))

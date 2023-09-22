@@ -29,7 +29,8 @@ class ListFilterMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
-    final filteredEntity = state.getEntityMap(filterEntityType)![filterEntityId];
+    final filteredEntity =
+        state.getEntityMap(filterEntityType)![filterEntityId];
 
     return Material(
       color: Colors.orange,

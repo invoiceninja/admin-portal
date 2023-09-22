@@ -114,8 +114,11 @@ var memoizedCalculateVendorBalance = memo4((String vendorId,
         BuiltList<String> expenseList) =>
     calculateVendorBalance(vendorId, currencyId, expenseMap, expenseList));
 
-double calculateVendorBalance(String vendorId, String currencyId,
-    BuiltMap<String?, ExpenseEntity?> expenseMap, BuiltList<String> expenseList) {
+double calculateVendorBalance(
+    String vendorId,
+    String currencyId,
+    BuiltMap<String?, ExpenseEntity?> expenseMap,
+    BuiltList<String> expenseList) {
   double total = 0;
 
   expenseList.forEach((expenseId) {

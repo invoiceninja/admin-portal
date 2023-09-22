@@ -220,8 +220,9 @@ abstract class ProjectEntity extends Object
 
     switch (sortField) {
       case ProjectFields.name:
-        response =
-            projectA!.name.toLowerCase().compareTo(projectB!.name.toLowerCase());
+        response = projectA!.name
+            .toLowerCase()
+            .compareTo(projectB!.name.toLowerCase());
         break;
       case ProjectFields.taskRate:
         response = projectA!.taskRate.compareTo(projectB!.taskRate);

@@ -65,8 +65,9 @@ class _TransactionRuleViewState extends State<TransactionRuleView> {
                 : localization.disabled,
             localization.vendor:
                 state.vendorState.get(transactionRule.vendorId)!.name,
-            localization.category:
-                state.expenseCategoryState.get(transactionRule.categoryId)!.name,
+            localization.category: state.expenseCategoryState
+                .get(transactionRule.categoryId)!
+                .name,
           }),
           if (transactionRule.rules.isNotEmpty) ...[
             Padding(

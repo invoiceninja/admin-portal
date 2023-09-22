@@ -56,7 +56,8 @@ class TaxRateFields {
 abstract class TaxRateEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<TaxRateEntity, TaxRateEntityBuilder> {
-  factory TaxRateEntity({String? id, String? name, double? rate, AppState? state}) {
+  factory TaxRateEntity(
+      {String? id, String? name, double? rate, AppState? state}) {
     return _$TaxRateEntity._(
       id: BaseEntity.nextId,
       isChanged: false,
@@ -100,8 +101,9 @@ abstract class TaxRateEntity extends Object
 
     switch (sortField) {
       case TaxRateFields.name:
-        response =
-            taxRateA!.name.toLowerCase().compareTo(taxRateB!.name.toLowerCase());
+        response = taxRateA!.name
+            .toLowerCase()
+            .compareTo(taxRateB!.name.toLowerCase());
         break;
       case TaxRateFields.rate:
         response = taxRateA!.rate.compareTo(taxRateB!.rate);

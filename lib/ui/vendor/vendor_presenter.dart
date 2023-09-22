@@ -83,7 +83,8 @@ class VendorPresenter extends EntityPresenter {
       case VendorFields.postalCode:
         return Text(vendor!.postalCode);
       case VendorFields.countryId:
-        return Text(state.staticState.countryMap[vendor!.countryId]?.name ?? '');
+        return Text(
+            state.staticState.countryMap[vendor!.countryId]?.name ?? '');
       case VendorFields.privateNotes:
         return TableTooltip(message: vendor!.privateNotes);
       case VendorFields.publicNotes:

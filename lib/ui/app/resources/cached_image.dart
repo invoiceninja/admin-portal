@@ -43,7 +43,8 @@ class CachedImage extends StatelessWidget {
         url!,
         width: width,
         height: height,
-        key: ValueKey(url! + (apiToken != null ? apiToken!.substring(0, 8) : '')),
+        key: ValueKey(
+            url! + (apiToken != null ? apiToken!.substring(0, 8) : '')),
         fit: BoxFit.contain,
         headers: apiToken != null ? {'X-API-TOKEN': apiToken!} : null,
       );

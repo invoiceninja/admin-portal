@@ -50,8 +50,7 @@ void loadDesign({
       .then((dynamic response) {
     if ((response as Response).statusCode >= 400) {
       showErrorDialog(
-          message:
-              '${response.statusCode}: ${response.reasonPhrase}');
+          message: '${response.statusCode}: ${response.reasonPhrase}');
       onComplete(null);
     } else {
       onComplete(response);

@@ -128,7 +128,9 @@ Middleware<AppState> _showEmailInvoice() {
       final emailWasSent =
           await navigatorKey.currentState!.pushNamed(InvoiceEmailScreen.route);
 
-      if (action!.completer != null && emailWasSent != null && emailWasSent as bool) {
+      if (action!.completer != null &&
+          emailWasSent != null &&
+          emailWasSent as bool) {
         action.completer!.complete(null);
       }
     }

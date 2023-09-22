@@ -77,7 +77,8 @@ class TransactionScreen extends StatelessWidget {
           store.dispatch(FilterTransactionsByState(state));
         },
         onSelectedStatus: (EntityStatus status, value) {
-          store.dispatch(FilterTransactionsByStatus(status as TransactionStatusEntity));
+          store.dispatch(
+              FilterTransactionsByStatus(status as TransactionStatusEntity));
         },
         statuses: statuses,
       ),

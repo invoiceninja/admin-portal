@@ -97,7 +97,8 @@ class _WebhookEditState extends State<WebhookEdit> {
 
     return EditScaffold(
       entity: webhook,
-      title: webhook.isNew ? localization!.newWebhook : localization!.editWebhook,
+      title:
+          webhook.isNew ? localization!.newWebhook : localization!.editWebhook,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: _onSavePressed,
       body: Form(

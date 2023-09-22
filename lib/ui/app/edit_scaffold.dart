@@ -190,7 +190,8 @@ class EditScaffold extends StatelessWidget {
                       entity != null &&
                       entity!.isOld) ...[
                     EntityStatusChip(
-                        entity: state.getEntity(entity!.entityType, entity!.id)),
+                        entity:
+                            state.getEntity(entity!.entityType, entity!.id)),
                     SizedBox(width: 8),
                   ],
                   if (showOverflow)
@@ -437,32 +438,37 @@ class EditScaffold extends StatelessWidget {
                           itemBuilder: (BuildContext context) =>
                               <PopupMenuEntry<EntityAction>>[
                             ...actions!
-                                .map((action) => action == null
-                                    ? PopupMenuDivider()
-                                    : PopupMenuItem<EntityAction>(
-                                        child: Row(
-                                          children: <Widget>[
-                                            Icon(
-                                              getEntityActionIcon(action),
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .secondary,
+                                    .map((action) => action == null
+                                        ? PopupMenuDivider()
+                                        : PopupMenuItem<EntityAction>(
+                                            child: Row(
+                                              children: <Widget>[
+                                                Icon(
+                                                  getEntityActionIcon(action),
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .secondary,
+                                                ),
+                                                SizedBox(width: 16.0),
+                                                Text(AppLocalization.of(
+                                                        context)!
+                                                    .lookup(
+                                                        action.toString())!),
+                                              ],
                                             ),
-                                            SizedBox(width: 16.0),
-                                            Text(AppLocalization.of(context)!
-                                                .lookup(action.toString())!),
-                                          ],
-                                        ),
-                                        value: action,
-                                      ))
-                                .toList() as Iterable<PopupMenuEntry<EntityAction>>
+                                            value: action,
+                                          ))
+                                    .toList()
+                                as Iterable<PopupMenuEntry<EntityAction>>
                           ],
                           onSelected: (action) =>
                               onActionPressed!(context, action),
                           enabled: isEnabled,
                         )
                     ],
-              bottom: isFullscreen && isDesktop(context) ? null : appBarBottom as PreferredSizeWidget?,
+              bottom: isFullscreen && isDesktop(context)
+                  ? null
+                  : appBarBottom as PreferredSizeWidget?,
             ),
             bottomNavigationBar: bottomNavigationBar,
             floatingActionButtonLocation:

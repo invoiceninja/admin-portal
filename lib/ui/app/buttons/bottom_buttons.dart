@@ -88,7 +88,9 @@ class BottomButtons extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: textColor.withOpacity(
-                                action2Enabled && !entity!.isDeleted! ? 1 : .6)),
+                                action2Enabled && !entity!.isDeleted!
+                                    ? 1
+                                    : .6)),
                       ),
                     ],
                   ),

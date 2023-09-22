@@ -19,7 +19,8 @@ class TokenRepository {
 
   final WebClient webClient;
 
-  Future<TokenEntity> loadItem(Credentials credentials, String? entityId) async {
+  Future<TokenEntity> loadItem(
+      Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/tokens/$entityId', credentials.token);
 

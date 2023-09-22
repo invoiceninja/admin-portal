@@ -48,7 +48,8 @@ class TaskListItem extends StatelessWidget {
     final taskUIState = uiState.taskUIState;
     final client = state.clientState.get(task!.clientId)!;
     final filterMatch = filter != null && filter!.isNotEmpty
-        ? (task!.matchesFilterValue(filter) ?? client.matchesFilterValue(filter))
+        ? (task!.matchesFilterValue(filter) ??
+            client.matchesFilterValue(filter))
         : null;
     final listUIState = taskUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();

@@ -181,7 +181,8 @@ class ProductListItem extends StatelessWidget {
                       ),
                       Text(
                           formatNumber(
-                              showCost ? product!.cost : product!.price, context,
+                              showCost ? product!.cost : product!.price,
+                              context,
                               roundToPrecision: false)!,
                           style: Theme.of(context).textTheme.titleMedium),
                     ],

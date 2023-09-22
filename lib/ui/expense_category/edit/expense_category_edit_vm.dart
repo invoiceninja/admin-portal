@@ -94,7 +94,8 @@ class ExpenseCategoryEditVM {
                   UpdateCurrentRoute(ExpenseCategoryViewScreen.route));
               if (expenseCategory.isNew &&
                   state.expenseCategoryUIState.saveCompleter == null) {
-                navigator!.pushReplacementNamed(ExpenseCategoryViewScreen.route);
+                navigator!
+                    .pushReplacementNamed(ExpenseCategoryViewScreen.route);
               } else {
                 navigator!.pop(savedExpenseCategory);
               }

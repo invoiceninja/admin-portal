@@ -25,10 +25,14 @@ final forceSelectedReducer = combineReducers<bool?>([
   TypedReducer<bool?, ViewTaskStatusList>((completer, action) => false),
   TypedReducer<bool?, FilterTaskStatusesByState>((completer, action) => false),
   TypedReducer<bool?, FilterTaskStatuses>((completer, action) => false),
-  TypedReducer<bool?, FilterTaskStatusesByCustom1>((completer, action) => false),
-  TypedReducer<bool?, FilterTaskStatusesByCustom2>((completer, action) => false),
-  TypedReducer<bool?, FilterTaskStatusesByCustom3>((completer, action) => false),
-  TypedReducer<bool?, FilterTaskStatusesByCustom4>((completer, action) => false),
+  TypedReducer<bool?, FilterTaskStatusesByCustom1>(
+      (completer, action) => false),
+  TypedReducer<bool?, FilterTaskStatusesByCustom2>(
+      (completer, action) => false),
+  TypedReducer<bool?, FilterTaskStatusesByCustom3>(
+      (completer, action) => false),
+  TypedReducer<bool?, FilterTaskStatusesByCustom4>(
+      (completer, action) => false),
 ]);
 
 Reducer<String?> selectedIdReducer = combineReducers([
@@ -48,10 +52,14 @@ Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, SortTaskStatuses>((selectedId, action) => ''),
   TypedReducer<String?, FilterTaskStatuses>((selectedId, action) => ''),
   TypedReducer<String?, FilterTaskStatusesByState>((selectedId, action) => ''),
-  TypedReducer<String?, FilterTaskStatusesByCustom1>((selectedId, action) => ''),
-  TypedReducer<String?, FilterTaskStatusesByCustom2>((selectedId, action) => ''),
-  TypedReducer<String?, FilterTaskStatusesByCustom3>((selectedId, action) => ''),
-  TypedReducer<String?, FilterTaskStatusesByCustom4>((selectedId, action) => ''),
+  TypedReducer<String?, FilterTaskStatusesByCustom1>(
+      (selectedId, action) => ''),
+  TypedReducer<String?, FilterTaskStatusesByCustom2>(
+      (selectedId, action) => ''),
+  TypedReducer<String?, FilterTaskStatusesByCustom3>(
+      (selectedId, action) => ''),
+  TypedReducer<String?, FilterTaskStatusesByCustom4>(
+      (selectedId, action) => ''),
   TypedReducer<String?, FilterByEntity>(
       (selectedId, action) => action.clearSelection
           ? ''

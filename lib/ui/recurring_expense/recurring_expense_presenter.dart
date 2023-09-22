@@ -104,8 +104,8 @@ class RecurringExpensePresenter extends EntityPresenter {
       case RecurringExpenseFields.shouldBeInvoiced:
         return Text(expense!.shouldBeInvoiced.toString());
       case RecurringExpenseFields.currencyId:
-        return Text(state
-                .staticState.currencyMap[expense!.currencyId]?.listDisplayName ??
+        return Text(state.staticState.currencyMap[expense!.currencyId]
+                ?.listDisplayName ??
             '');
       case RecurringExpenseFields.category:
         return Text(state.expenseCategoryState.map[expense!.categoryId]

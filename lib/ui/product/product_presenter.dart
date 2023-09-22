@@ -106,7 +106,8 @@ class ProductPresenter extends EntityPresenter {
         return Text(formatNumber(product!.stockQuantity.toDouble(), context,
             formatNumberType: FormatNumberType.int)!);
       case ProductFields.taxCategory:
-        return Text(localization!.lookup(kTaxCategories[product!.taxCategoryId])!);
+        return Text(
+            localization!.lookup(kTaxCategories[product!.taxCategoryId])!);
       case ProductFields.notificationThreshold:
         final store = StoreProvider.of<AppState>(context);
         return Text(formatNumber(

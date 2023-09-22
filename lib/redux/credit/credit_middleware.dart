@@ -123,7 +123,9 @@ Middleware<AppState> _showEmailCredit() {
       final emailWasSent =
           await navigatorKey.currentState!.pushNamed(CreditEmailScreen.route);
 
-      if (action!.completer != null && emailWasSent != null && emailWasSent as bool) {
+      if (action!.completer != null &&
+          emailWasSent != null &&
+          emailWasSent as bool) {
         action.completer!.complete(null);
       }
     }

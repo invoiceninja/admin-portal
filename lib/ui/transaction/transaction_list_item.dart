@@ -65,8 +65,9 @@ class TransactionListItem extends StatelessWidget {
           builder: (BuildContext context, BoxConstraints constraints) {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
-                onTap: () =>
-                    onTap != null ? onTap!() : selectEntity(entity: transaction!),
+                onTap: () => onTap != null
+                    ? onTap!()
+                    : selectEntity(entity: transaction!),
                 onLongPress: () => onLongPress != null
                     ? onLongPress!()
                     : selectEntity(entity: transaction!, longPress: true),
@@ -115,7 +116,8 @@ class TransactionListItem extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(transaction!.description, style: textStyle),
+                                Text(transaction!.description,
+                                    style: textStyle),
                                 Text(
                                   state.bankAccountState
                                       .get(transaction!.bankAccountId)!
@@ -168,8 +170,9 @@ class TransactionListItem extends StatelessWidget {
                 ),
               )
             : ListTile(
-                onTap: () =>
-                    onTap != null ? onTap!() : selectEntity(entity: transaction!),
+                onTap: () => onTap != null
+                    ? onTap!()
+                    : selectEntity(entity: transaction!),
                 onLongPress: () => onLongPress != null
                     ? onLongPress!()
                     : selectEntity(entity: transaction!, longPress: true),

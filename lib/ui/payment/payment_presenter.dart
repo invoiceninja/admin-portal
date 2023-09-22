@@ -93,7 +93,8 @@ class PaymentPresenter extends EntityPresenter {
       case PaymentFields.amount:
         return Align(
             alignment: Alignment.centerRight,
-            child: Text(formatNumber(payment!.amount - payment.refunded, context,
+            child: Text(formatNumber(
+                payment!.amount - payment.refunded, context,
                 clientId: payment.clientId)!));
       case PaymentFields.convertedAmount:
         return Align(
@@ -124,7 +125,8 @@ class PaymentPresenter extends EntityPresenter {
             state.companyGatewayState.get(payment!.companyGatewayId)!;
         return Text(companyGateway.label);
       case PaymentFields.gatewayType:
-        return Text(localization!.lookup(kGatewayTypes[payment!.gatewayTypeId])!);
+        return Text(
+            localization!.lookup(kGatewayTypes[payment!.gatewayTypeId])!);
     }
 
     return super.getField(field: field, context: context);

@@ -42,8 +42,8 @@ InvoiceItemEntity convertProductToInvoiceItem({
       if (!company.convertRateToClient && exchangeRate != 0) {
         exchangeRate = 1 / exchangeRate;
       }
-      cost =
-          round(cost * exchangeRate, currencyMap[client!.currencyId]!.precision);
+      cost = round(
+          cost * exchangeRate, currencyMap[client!.currencyId]!.precision);
     }
 
     return InvoiceItemEntity().rebuild((b) => b
@@ -69,7 +69,8 @@ InvoiceItemEntity convertProductToInvoiceItem({
 }
 
 var memoizedDropdownProductList = memo3(
-    (BuiltMap<String?, ProductEntity?> productMap, BuiltList<String> productList,
+    (BuiltMap<String?, ProductEntity?> productMap,
+            BuiltList<String> productList,
             BuiltMap<String?, UserEntity?> userMap) =>
         dropdownProductsSelector(productMap, productList, userMap));
 
@@ -77,8 +78,9 @@ List<String> dropdownProductsSelector(
     BuiltMap<String?, ProductEntity?> productMap,
     BuiltList<String> productList,
     BuiltMap<String?, UserEntity?> userMap) {
-  final list =
-      productList.where((productId) => productMap[productId]!.isActive).toList();
+  final list = productList
+      .where((productId) => productMap[productId]!.isActive)
+      .toList();
 
   list.sort((productAId, productBId) {
     final productA = productMap[productAId]!;

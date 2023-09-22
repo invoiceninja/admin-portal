@@ -183,7 +183,8 @@ class _TaskSettingsState extends State<TaskSettings> {
                     activeColor: Theme.of(context).colorScheme.secondary,
                     title: Text(localization.invoiceTaskItemDescription!),
                     value: company.invoiceTaskItemDescription,
-                    subtitle: Text(localization.invoiceTaskItemDescriptionHelp!),
+                    subtitle:
+                        Text(localization.invoiceTaskItemDescriptionHelp!),
                     onChanged: (value) => viewModel.onCompanyChanged(company
                         .rebuild((b) => b..invoiceTaskItemDescription = value)),
                   ),

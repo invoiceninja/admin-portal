@@ -78,8 +78,8 @@ List<String> getCurrencyIds(
   }
 }
 
-var memoizedFilteredSelector = memo2(
-    (String? filter, UserCompanyState state) => filteredSelector(filter, state));
+var memoizedFilteredSelector = memo2((String? filter, UserCompanyState state) =>
+    filteredSelector(filter, state));
 
 List<BaseEntity?> filteredSelector(String? filter, UserCompanyState state) {
   final List<BaseEntity?> list = []

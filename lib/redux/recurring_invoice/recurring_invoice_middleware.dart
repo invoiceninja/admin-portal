@@ -200,7 +200,8 @@ Middleware<AppState> _updatePricesRecurringInvoice(
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(UpdatePricesRecurringInvoicesFailure(error as List<InvoiceEntity>));
+      store.dispatch(
+          UpdatePricesRecurringInvoicesFailure(error as List<InvoiceEntity>));
       if (action.completer != null) {
         action.completer!.completeError(error);
       }
@@ -225,7 +226,8 @@ Middleware<AppState> _increasePricesRecurringInvoice(
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(IncreasePricesRecurringInvoicesFailure(error as List<InvoiceEntity>));
+      store.dispatch(
+          IncreasePricesRecurringInvoicesFailure(error as List<InvoiceEntity>));
       if (action.completer != null) {
         action.completer!.completeError(error);
       }
@@ -249,7 +251,8 @@ Middleware<AppState> _sendNowRecurringInvoice(
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(SendNowRecurringInvoicesFailure(error as List<InvoiceEntity>));
+      store.dispatch(
+          SendNowRecurringInvoicesFailure(error as List<InvoiceEntity>));
       if (action.completer != null) {
         action.completer.completeError(error);
       }

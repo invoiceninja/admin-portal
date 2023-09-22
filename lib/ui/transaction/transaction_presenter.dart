@@ -126,7 +126,8 @@ class TransactionPresenter extends EntityPresenter {
         final vendor = state.vendorState.get(transaction!.vendorId);
         return LinkTextRelatedEntity(entity: vendor, relation: transaction);
       case TransactionFields.category:
-        final category = state.expenseCategoryState.get(transaction!.categoryId);
+        final category =
+            state.expenseCategoryState.get(transaction!.categoryId);
         return LinkTextRelatedEntity(entity: category, relation: transaction);
     }
 

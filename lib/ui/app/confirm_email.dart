@@ -51,7 +51,8 @@ class ConfirmEmail extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(bottom: kTableColumnGap),
                         child: TextButton(
-                          onPressed: viewModel.onResendPressed as void Function()?,
+                          onPressed:
+                              viewModel.onResendPressed as void Function()?,
                           child: Text(localization.resendEmail.toUpperCase()),
                         ),
                       ),
@@ -91,14 +92,16 @@ class ConfirmEmail extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(bottom: kTableColumnGap),
                         child: TextButton(
-                          onPressed: viewModel.onRefreshPressed as void Function()?,
+                          onPressed:
+                              viewModel.onRefreshPressed as void Function()?,
                           child: Text(localization.refreshData.toUpperCase()),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: kTableColumnGap),
                         child: TextButton(
-                          onPressed: viewModel.onLogoutPressed as void Function()?,
+                          onPressed:
+                              viewModel.onLogoutPressed as void Function()?,
                           child: Text(localization.logout.toUpperCase()),
                         ),
                       ),

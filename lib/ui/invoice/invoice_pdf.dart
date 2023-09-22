@@ -97,8 +97,8 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
         _isLoading = false;
 
         if (kIsWeb && state!.prefState.enableNativeBrowser) {
-          _pdfString =
-              'data:application/pdf;base64,' + base64Encode(response!.bodyBytes);
+          _pdfString = 'data:application/pdf;base64,' +
+              base64Encode(response!.bodyBytes);
           WebUtils.registerWebView(_pdfString);
         }
       });
@@ -270,7 +270,8 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                                       fileName, _response!.bodyBytes);
                                 } else {
                                   final directory = await (isDesktopOS()
-                                      ? getDownloadsDirectory() as FutureOr<file.Directory>
+                                      ? getDownloadsDirectory()
+                                          as FutureOr<file.Directory>
                                       : getApplicationDocumentsDirectory());
                                   String filePath =
                                       '${directory.path}${file.Platform.pathSeparator}$fileName';
@@ -340,12 +341,13 @@ Future<Response?> _loadPDF(
     final url = isDeliveryNote
         ? '/invoices/${invoice.id}/delivery_note'
         : '/activities/download_entity/$activityId';
-    response = await (WebClient()
-        .get('${credential.url}$url', credential.token, rawResponse: true) as FutureOr<Response?>);
+    response = await (WebClient().get('${credential.url}$url', credential.token,
+        rawResponse: true) as FutureOr<Response?>);
   } else {
     final invitation = invoice.invitations.first;
     final url = invitation.downloadLink;
-    response = await (WebClient().get(url, '', rawResponse: true) as FutureOr<Response?>);
+    response = await (WebClient().get(url, '', rawResponse: true)
+        as FutureOr<Response?>);
   }
 
   if (response!.statusCode >= 400) {

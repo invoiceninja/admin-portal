@@ -297,7 +297,8 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                                 startLabel,
                               ]
                                   .map((value) => PopupMenuItem<String>(
-                                        child: Text(localization.lookup(value)!),
+                                        child:
+                                            Text(localization.lookup(value)!),
                                         value: value,
                                       ))
                                   .toList();

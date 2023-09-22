@@ -21,7 +21,8 @@ class GroupRepository {
 
   final WebClient webClient;
 
-  Future<GroupEntity> loadItem(Credentials credentials, String? entityId) async {
+  Future<GroupEntity> loadItem(
+      Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/group_settings/$entityId', credentials.token);
 

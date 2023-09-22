@@ -125,8 +125,8 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
                 SizedBox(height: 8),
                 DocumentGrid(
                   documents: expense.documents.toList(),
-                  onUploadDocument: (path, isPrivate) => widget.viewModel
-                      .onUploadDocument!(context, path, isPrivate),
+                  onUploadDocument: (path, isPrivate) => widget
+                      .viewModel.onUploadDocument!(context, path, isPrivate),
                   onRenamedDocument: () =>
                       store.dispatch(LoadExpense(expenseId: expense.id)),
                 )
