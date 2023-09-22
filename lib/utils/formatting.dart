@@ -88,12 +88,14 @@ String? formatNumber(
   bool zeroIsNull = false,
   bool roundToPrecision = true,
 }) {
-  if ((zeroIsNull ||
-          formatNumberType == FormatNumberType.inputMoney ||
-          formatNumberType == FormatNumberType.inputAmount) &&
-      value == 0) {
+  if (zeroIsNull && value == 0) {
     return null;
-  } else if (value == null) {
+  } else if (value == null ||
+      (value == 0 &&
+          ([
+            FormatNumberType.inputMoney,
+            FormatNumberType.inputAmount,
+          ].contains(formatNumberType)))) {
     return '';
   }
 
@@ -344,7 +346,8 @@ String formatDuration(Duration? duration, {bool showSeconds = true}) {
   }
 }
 
-DateTime convertTimeOfDayToDateTime(TimeOfDay? timeOfDay, [DateTime? dateTime]) {
+DateTime convertTimeOfDayToDateTime(TimeOfDay? timeOfDay,
+    [DateTime? dateTime]) {
   dateTime ??= DateTime.now();
   return DateTime(dateTime.year, dateTime.month, dateTime.day,
           timeOfDay?.hour ?? 0, timeOfDay?.minute ?? 0)
@@ -479,7 +482,8 @@ String cleanApiUrl(String? url) => (url ?? '')
     .replaceFirst(RegExp(r'/api/v1'), '')
     .replaceFirst(RegExp(r'/$'), '');
 
-String? formatCustomValue({String? value, String? field, required BuildContext context}) {
+String? formatCustomValue(
+    {String? value, String? field, required BuildContext context}) {
   final localization = AppLocalization.of(context);
   final state = StoreProvider.of<AppState>(context).state;
   final CompanyEntity company = state.company!;
