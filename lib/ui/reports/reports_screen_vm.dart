@@ -305,7 +305,7 @@ class ReportsScreenVM {
           state.staticState,
         );
         break;
-      case kReportContact:
+      case kReportClientContact:
         reportResult = memoizedContactReport(
           state.userCompany,
           state.uiState.reportsUIState,

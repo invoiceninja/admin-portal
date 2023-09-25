@@ -91,8 +91,8 @@ ReportResult contactReport(
 
   final reportSettings = userCompany.settings?.reportSettings;
   final clientReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportClient)
-          ? reportSettings[kReportClient]!
+      reportSettings != null && reportSettings.containsKey(kReportClientContact)
+          ? reportSettings[kReportClientContact]!
           : ReportSettingsEntity();
 
   final defaultColumns = [

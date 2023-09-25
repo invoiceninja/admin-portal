@@ -628,7 +628,7 @@ const List<String> kAdvancedSettings = [
 ];
 
 const String kReportClient = 'client';
-const String kReportContact = 'contact';
+const String kReportClientContact = 'client_contact';
 const String kReportCredit = 'credit';
 const String kReportCreditItem = 'credit_item';
 const String kReportDocument = 'document';
