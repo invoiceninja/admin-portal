@@ -122,9 +122,8 @@ ReportResult recurringInvoiceReport(
   BuiltList<RecurringInvoiceReportFields> columns;
 
   final localization = AppLocalization.of(navigatorKey.currentContext!);
-  final reportSettings = userCompany.settings?.reportSettings;
-  final invoiceReportSettings = reportSettings != null &&
-          reportSettings.containsKey(kReportRecurringInvoice)
+  final reportSettings = userCompany.settings.reportSettings;
+  final invoiceReportSettings = reportSettings.containsKey(kReportRecurringInvoice)
       ? reportSettings[kReportRecurringInvoice]!
       : ReportSettingsEntity();
 
@@ -158,12 +157,12 @@ ReportResult recurringInvoiceReport(
     final contact =
         client.getContact(invoice.invitations.first.clientContactId);
 
-    if ((invoice.isDeleted! && !userCompany.company!.reportIncludeDeleted) ||
+    if ((invoice.isDeleted! && !userCompany.company.reportIncludeDeleted) ||
         client.isDeleted!) {
       continue;
     }
 
-    if (!userCompany.company!.reportIncludeDrafts && invoice.isDraft) {
+    if (!userCompany.company.reportIncludeDrafts && invoice.isDraft) {
       continue;
     }
 
@@ -401,7 +400,7 @@ ReportResult recurringInvoiceReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column)!,
+        column: EnumUtils.parse(column),
       )!) {
         skip = true;
       }
@@ -413,7 +412,7 @@ ReportResult recurringInvoiceReport(
         if ([
           RecurringInvoiceReportFields.converted_amount,
         ].contains(column)) {
-          currencyId = userCompany.company!.currencyId;
+          currencyId = userCompany.company.currencyId;
         }
         row.add(invoice.getReportDouble(
           value: value,

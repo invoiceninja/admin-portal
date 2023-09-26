@@ -326,8 +326,8 @@ final quotesReducer = combineReducers<QuoteState>([
 QuoteState _purgeClientSuccess(
     QuoteState quoteState, PurgeClientSuccess action) {
   final ids = quoteState.map.values
-      .where((each) => each!.clientId == action.clientId)
-      .map((each) => each!.id)
+      .where((each) => each.clientId == action.clientId)
+      .map((each) => each.id)
       .toList();
 
   return quoteState.rebuild((b) => b
@@ -414,6 +414,6 @@ QuoteState _setLoadedQuotes(QuoteState quoteState, LoadQuotesSuccess action) =>
     quoteState.loadQuotes(action.quotes);
 
 QuoteState _setLoadedCompany(QuoteState quoteState, LoadCompanySuccess action) {
-  final company = action.userCompany.company!;
+  final company = action.userCompany.company;
   return quoteState.loadQuotes(company.quotes);
 }

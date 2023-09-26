@@ -353,7 +353,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                           );
                         } else {
                           launchUrl(
-                              Uri.parse(state.userCompany!.ninjaPortalUrl));
+                              Uri.parse(state.userCompany.ninjaPortalUrl));
                         }
                       }),
             ),

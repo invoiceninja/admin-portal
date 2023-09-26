@@ -47,7 +47,7 @@ class WebClient {
     final client = http.Client();
     final http.Response response = await client.get(
       Uri.parse(url),
-      headers: _getHeaders(url, token) as Map<String, String>?,
+      headers: _getHeaders(url, token),
     );
     client.close();
 
@@ -103,7 +103,7 @@ class WebClient {
           .post(
             Uri.parse(url),
             body: data,
-            headers: headers as Map<String, String>?,
+            headers: headers,
           )
           .timeout(
             Duration(
@@ -155,7 +155,7 @@ class WebClient {
           token,
           password: password,
           idToken: idToken,
-        ) as Map<String, String>?,
+        ),
       );
       client.close();
     }
@@ -188,7 +188,7 @@ class WebClient {
         token,
         password: password,
         idToken: idToken,
-      ) as Map<String, String>?,
+      ),
       body: data,
     );
     client.close();
@@ -313,7 +313,7 @@ Future<http.Response> _uploadFiles(
     {String method = 'POST', dynamic data}) async {
   final request = http.MultipartRequest(method, Uri.parse(url))
     ..fields.addAll(data ?? {})
-    ..headers.addAll(_getHeaders(url, token) as Map<String, String>)
+    ..headers.addAll(_getHeaders(url, token))
     ..files.addAll(multipartFiles as Iterable<MultipartFile>);
 
   return await http.Response.fromStream(await request.send())

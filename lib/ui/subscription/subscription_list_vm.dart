@@ -106,8 +106,8 @@ class SubscriptionListVM {
               EntityAction action) =>
           handleSubscriptionAction(context, subscriptions, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: state.userCompany!.settings
-              ?.getTableColumns(EntityType.subscription) ??
+      tableColumns: state.userCompany.settings
+              .getTableColumns(EntityType.subscription) ??
           SubscriptionPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortSubscriptions(field)),
       onClearMultielsect: () => store.dispatch(ClearSubscriptionMultiselect()),

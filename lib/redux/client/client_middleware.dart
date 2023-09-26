@@ -113,15 +113,11 @@ Middleware<AppState> _archiveClient(ClientRepository repository) {
             store.state.credentials, action.clientIds, EntityAction.archive)
         .then((List<ClientEntity> clients) {
       store.dispatch(ArchiveClientsSuccess(clients));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveClientsFailure(prevClients));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -166,15 +162,11 @@ Middleware<AppState> _deleteClient(ClientRepository repository) {
             store.state.credentials, action.clientIds, EntityAction.delete)
         .then((List<ClientEntity> clients) {
       store.dispatch(DeleteClientsSuccess(clients));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteClientsFailure(prevClients));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -193,15 +185,11 @@ Middleware<AppState> _purgeClient(ClientRepository repository) {
     )
         .then((_) {
       store.dispatch(PurgeClientSuccess(action.clientId));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(PurgeClientFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -218,15 +206,11 @@ Middleware<AppState> _restoreClient(ClientRepository repository) {
             store.state.credentials, action.clientIds, EntityAction.restore)
         .then((List<ClientEntity> clients) {
       store.dispatch(RestoreClientSuccess(clients));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreClientFailure(prevClients));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

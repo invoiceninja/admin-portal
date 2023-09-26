@@ -1,6 +1,5 @@
 // Package imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:

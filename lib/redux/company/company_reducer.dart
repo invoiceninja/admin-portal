@@ -110,8 +110,8 @@ Reducer<UserCompanyEntity?> userCompanyEntityReducer = combineReducers([
           action.company.hasEInvoiceCertificatePassphrase);
   }),
   TypedReducer<UserCompanyEntity?, UpdateReportSettings>((userCompany, action) {
-    if (userCompany!.settings!.reportSettings.containsKey(action.report)) {
-      final settings = userCompany.settings!.reportSettings[action.report];
+    if (userCompany!.settings.reportSettings.containsKey(action.report)) {
+      final settings = userCompany.settings.reportSettings[action.report];
       return userCompany.rebuild((b) => b
         ..settings.reportSettings[action.report] = settings!.rebuild((b) => b
           ..sortAscending = action.sortColumn == null
@@ -140,7 +140,7 @@ Reducer<UserCompanyEntity?> userCompanyEntityReducer = combineReducers([
   TypedReducer<UserCompanyEntity?, SaveAuthUserSuccess>(
     (userCompany, action) => userCompany!.rebuild((b) => b
       ..user.replace(action.user)
-      ..settings.replace(action.user.userCompany!.settings!)),
+      ..settings.replace(action.user.userCompany!.settings)),
   ),
   TypedReducer<UserCompanyEntity?, ConnectOAuthUserSuccess>(
     (userCompany, action) =>
@@ -164,7 +164,7 @@ Reducer<UserCompanyEntity?> userCompanyEntityReducer = combineReducers([
   ),
   TypedReducer<UserCompanyEntity?, SaveUserSettingsSuccess>(
       (userCompany, action) => userCompany!
-          .rebuild((b) => b..settings.replace(action.userCompany.settings!))),
+          .rebuild((b) => b..settings.replace(action.userCompany.settings))),
   TypedReducer<UserCompanyEntity?, UpdateCompanyLanguage>(
     (userCompany, action) => userCompany!
         .rebuild((b) => b..company.settings.languageId = action.languageId),
@@ -236,7 +236,7 @@ UserCompanyEntity loadCompanySuccessReducer(
 
   // clear all sub-data
   userCompany = userCompany
-      .rebuild((b) => b..company.replace(userCompany.company!.coreCompany));
+      .rebuild((b) => b..company.replace(userCompany.company.coreCompany));
 
   return userCompany;
 }
@@ -244,11 +244,11 @@ UserCompanyEntity loadCompanySuccessReducer(
 UserCompanyEntity saveCompanySuccessReducer(
     UserCompanyEntity? userCompany, SaveCompanySuccess action) {
   final company = action.company.rebuild((b) => b
-    ..taxRates.replace(userCompany!.company!.taxRates)
-    ..taskStatuses.replace(userCompany.company!.taskStatuses)
-    ..taskStatusMap.replace(userCompany.company!.taskStatusMap)
-    ..expenseCategories.replace(userCompany.company!.expenseCategories)
-    ..users.replace(userCompany.company!.users));
+    ..taxRates.replace(userCompany!.company.taxRates)
+    ..taskStatuses.replace(userCompany.company.taskStatuses)
+    ..taskStatusMap.replace(userCompany.company.taskStatusMap)
+    ..expenseCategories.replace(userCompany.company.expenseCategories)
+    ..users.replace(userCompany.company.users));
 
   userCompany = userCompany!.rebuild((b) => b..company.replace(company));
 
@@ -257,7 +257,7 @@ UserCompanyEntity saveCompanySuccessReducer(
 
 Reducer<int> lastUpdatedReducer = combineReducers([
   TypedReducer<int, LoadCompanySuccess>((state, action) {
-    return action.userCompany.company!.isLarge && state == 0
+    return action.userCompany.company.isLarge && state == 0
         ? 0
         : DateTime.now().millisecondsSinceEpoch;
   }),

@@ -216,18 +216,14 @@ Middleware<AppState> _disconnectOAuthUser(
     )
         .then((user) {
       store.dispatch(DisconnectOAuthUserSuccess(user));
-      if (action.completer != null) {
-        action.completer.complete();
-      }
+      action.completer.complete();
     }).catchError((Object error) {
       print(error);
       store.dispatch(DisconnecOAuthUserFailure(error));
       if ('$error'.contains('412')) {
         store.dispatch(UserUnverifiedPassword());
       }
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -248,18 +244,14 @@ Middleware<AppState> _disconnectOAuthMailer(
     )
         .then((user) {
       store.dispatch(DisconnectOAuthMailerSuccess(user));
-      if (action.completer != null) {
-        action.completer.complete();
-      }
+      action.completer.complete();
     }).catchError((Object error) {
       print(error);
       store.dispatch(DisconnectOAuthMailerFailure(error));
       if ('$error'.contains('412')) {
         store.dispatch(UserUnverifiedPassword());
       }
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -302,18 +294,14 @@ Middleware<AppState> _disableTwoFactor(SettingsRepository settingsRepository) {
             store.state.credentials, action.password, action.idToken)
         .then((_) {
       store.dispatch(DisableTwoFactorSuccess());
-      if (action.completer != null) {
-        action.completer.complete();
-      }
+      action.completer.complete();
     }).catchError((Object error) {
       print(error);
       store.dispatch(DisableTwoFactorFailure(error));
       if ('$error'.contains('412')) {
         store.dispatch(UserUnverifiedPassword());
       }
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

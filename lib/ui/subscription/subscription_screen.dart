@@ -92,7 +92,7 @@ class SubscriptionScreen extends StatelessWidget {
             store.dispatch(FilterSubscriptionsByCustom4(value)),
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany!.canCreate(EntityType.subscription)
+              userCompany.canCreate(EntityType.subscription)
           ? FloatingActionButton(
               heroTag: 'subscription_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

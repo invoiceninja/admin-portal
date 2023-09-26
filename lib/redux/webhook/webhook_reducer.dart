@@ -238,6 +238,6 @@ WebhookState _setLoadedWebhooks(
 
 WebhookState _setLoadedCompany(
     WebhookState webhookState, LoadCompanySuccess action) {
-  final company = action.userCompany.company!;
+  final company = action.userCompany.company;
   return webhookState.loadWebhooks(company.webhooks);
 }

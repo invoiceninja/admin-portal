@@ -24,8 +24,8 @@ class WidgetData {
         companyId = state.account!.defaultCompanyId,
         companies = {
           for (var userCompany in state.userCompanyStates
-              .where((state) => state.company!.hasName))
-            userCompany.company!.id: WidgetCompany.fromUserCompany(
+              .where((state) => state.company.hasName))
+            userCompany.company.id: WidgetCompany.fromUserCompany(
               userCompanyState: userCompany,
               staticState: state.staticState,
             )
@@ -77,17 +77,17 @@ class WidgetCompany {
 
   WidgetCompany.fromUserCompany(
       {required UserCompanyState userCompanyState, StaticState? staticState})
-      : id = userCompanyState.userCompany!.company!.id,
-        name = userCompanyState.userCompany!.company!.displayName,
-        token = userCompanyState.userCompany!.token!.token,
+      : id = userCompanyState.userCompany.company.id,
+        name = userCompanyState.userCompany.company.displayName,
+        token = userCompanyState.userCompany.token.token,
         accentColor =
-            userCompanyState.userCompany!.settings!.validatedAccentColor,
+            userCompanyState.userCompany.settings.validatedAccentColor,
         firstMonthOfYear =
-            parseInt(userCompanyState.userCompany!.company!.firstMonthOfYear),
-        currencyId = userCompanyState.userCompany!.company!.currencyId,
+            parseInt(userCompanyState.userCompany.company.firstMonthOfYear),
+        currencyId = userCompanyState.userCompany.company.currencyId,
         currencies = {
           for (var currencyId in getCurrencyIds(
-            userCompanyState.userCompany!.company!,
+            userCompanyState.userCompany.company,
             userCompanyState.clientState.map,
             userCompanyState.groupState.map,
           ).where((currencyId) => currencyId != kCurrencyAll))

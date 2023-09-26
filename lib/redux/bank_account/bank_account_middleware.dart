@@ -97,15 +97,11 @@ Middleware<AppState> _archiveBankAccount(BankAccountRepository repository) {
             EntityAction.archive)
         .then((List<BankAccountEntity> bankAccounts) {
       store.dispatch(ArchiveBankAccountsSuccess(bankAccounts));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveBankAccountsFailure(prevBankAccounts));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -123,15 +119,11 @@ Middleware<AppState> _deleteBankAccount(BankAccountRepository repository) {
             store.state.credentials, action.bankAccountIds, EntityAction.delete)
         .then((List<BankAccountEntity> bankAccounts) {
       store.dispatch(DeleteBankAccountsSuccess(bankAccounts));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteBankAccountsFailure(prevBankAccounts));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -149,15 +141,11 @@ Middleware<AppState> _restoreBankAccount(BankAccountRepository repository) {
             EntityAction.restore)
         .then((List<BankAccountEntity> bankAccounts) {
       store.dispatch(RestoreBankAccountsSuccess(bankAccounts));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreBankAccountsFailure(prevBankAccounts));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

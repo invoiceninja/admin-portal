@@ -89,7 +89,7 @@ class PaymentTermScreen extends StatelessWidget {
             store.dispatch(FilterPaymentTermsByCustom4(value)),
       ),
       floatingActionButton: state.prefState.isMobile &&
-              userCompany!.canCreate(EntityType.paymentTerm)
+              userCompany.canCreate(EntityType.paymentTerm)
           ? FloatingActionButton(
               heroTag: 'payment_term_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

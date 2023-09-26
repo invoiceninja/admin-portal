@@ -43,12 +43,12 @@ class ViewScaffold extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final userCompany = state.userCompany;
-    final isSettings = entity!.entityType!.isSetting;
+    final isSettings = entity.entityType!.isSetting;
 
     String? appBarTitle;
     if (title != null) {
       appBarTitle = title;
-    } else if (entity!.isNew) {
+    } else if (entity.isNew) {
       appBarTitle = '';
     } else {
       final presenter = EntityPresenter().initialize(entity, context);
@@ -58,7 +58,7 @@ class ViewScaffold extends StatelessWidget {
     Widget? leading;
     if (isDesktop(context)) {
       if (isFilter == true &&
-          entity!.entityType == state.uiState.filterEntityType) {
+          entity.entityType == state.uiState.filterEntityType) {
         if (state.uiState.filterStack.length > 1 && !isFilter) {
           leading = IconButton(
             icon: Icon(Icons.arrow_back),
@@ -78,7 +78,7 @@ class ViewScaffold extends StatelessWidget {
             icon: Icon(Icons.arrow_back),
             onPressed: () => store.dispatch(PopPreviewStack()));
       } else if (isDesktop(context) &&
-          !entity!.entityType!.isSetting &&
+          !entity.entityType!.isSetting &&
           state.prefState.isModuleTable) {
         leading = IconButton(
           icon: Icon(Icons.close),
@@ -120,7 +120,7 @@ class ViewScaffold extends StatelessWidget {
                             localization!.back,
                             style: TextStyle(color: state.headerTextColor),
                           )),
-                    if (isEditable && userCompany!.canEditEntity(entity))
+                    if (isEditable && userCompany.canEditEntity(entity))
                       Builder(builder: (context) {
                         final isDisabled = state.uiState.isEditing &&
                             state.uiState.mainRoute ==
@@ -132,7 +132,7 @@ class ViewScaffold extends StatelessWidget {
                           onPressed: isDisabled
                               ? null
                               : () {
-                                  editEntity(entity: entity!);
+                                  editEntity(entity: entity);
                                 },
                         );
                       }),
@@ -141,7 +141,7 @@ class ViewScaffold extends StatelessWidget {
                       entity: entity,
                       onSelected: (context, action) =>
                           handleEntityAction(entity, action, autoPop: true),
-                      entityActions: entity!.getActions(
+                      entityActions: entity.getActions(
                         userCompany: userCompany,
                         client: entity is BelongsToClient
                             ? state.clientState
@@ -152,7 +152,7 @@ class ViewScaffold extends StatelessWidget {
                   ],
           ),
           body: SafeArea(
-            child: entity!.isNew
+            child: entity.isNew
                 ? BlankScreen(localization!.noRecordSelected)
                 : body,
           ),

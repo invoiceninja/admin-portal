@@ -323,8 +323,8 @@ final creditsReducer = combineReducers<CreditState>([
 CreditState _purgeClientSuccess(
     CreditState creditState, PurgeClientSuccess action) {
   final ids = creditState.map.values
-      .where((each) => each!.clientId == action.clientId)
-      .map((each) => each!.id)
+      .where((each) => each.clientId == action.clientId)
+      .map((each) => each.id)
       .toList();
 
   return creditState.rebuild((b) => b
@@ -389,6 +389,6 @@ CreditState _setLoadedCredits(
 
 CreditState _setLoadedCompany(
     CreditState creditState, LoadCompanySuccess action) {
-  final company = action.userCompany.company!;
+  final company = action.userCompany.company;
   return creditState.loadCredits(company.credits);
 }

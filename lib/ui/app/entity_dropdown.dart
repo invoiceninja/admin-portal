@@ -183,7 +183,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
                 .where((elementId) => !widget.excludeIds.contains(elementId))
                 .toList(),
             onSelected: (entity, [update = true]) {
-              if (entity?.id == widget.entityId) {
+              if (entity.id == widget.entityId) {
                 return;
               }
 
@@ -261,11 +261,11 @@ class _EntityDropdownState extends State<EntityDropdown> {
               .map((entityId) => _entityMap![entityId])
               .whereType<SelectableEntity>()
               .where((entity) =>
-                  entity?.matchesFilter(textEditingValue.text) ?? false)
-              .where((element) => !widget.excludeIds.contains(element!.id))
+                  entity.matchesFilter(textEditingValue.text) ?? false)
+              .where((element) => !widget.excludeIds.contains(element.id))
               .toList();
 
-          if (options.length == 1 && options[0]!.id == widget.entityId) {
+          if (options.length == 1 && options[0].id == widget.entityId) {
             return <SelectableEntity>[];
           }
 
@@ -273,13 +273,13 @@ class _EntityDropdownState extends State<EntityDropdown> {
               options.isEmpty &&
               _filter.trim().isNotEmpty &&
               textEditingValue.text.trim().isNotEmpty &&
-              state.userCompany!.canCreate(widget.entityType)) {
+              state.userCompany.canCreate(widget.entityType)) {
             options.add(_AutocompleteEntity(name: textEditingValue.text));
           }
 
           return options;
         },
-        displayStringForOption: (entity) => entity.listDisplayName!,
+        displayStringForOption: (entity) => entity.listDisplayName,
         onSelected: (entity) {
           _filter = '';
           /*
@@ -288,7 +288,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
               : entity?.listDisplayName;
               */
 
-          if (entity?.id == widget.entityId) {
+          if (entity.id == widget.entityId) {
             return;
           }
 
@@ -302,7 +302,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
             });
           }
 
-          if (entity?.id == _AutocompleteEntity.KEY) {
+          if (entity.id == _AutocompleteEntity.KEY) {
             final name = (entity as _AutocompleteEntity).name!.trim();
             _textController.text = name;
 
@@ -394,7 +394,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
                                           : kDefaultLightSelectedColor)
                                   : Theme.of(context).cardColor,
                               child: EntityAutocompleteListTile(
-                                onTap: (entity) => onSelected(entity!),
+                                onTap: (entity) => onSelected(entity),
                                 entity: options.elementAt(index),
                                 filter: _filter,
                                 overrideSuggestedAmount:
@@ -597,20 +597,19 @@ class EntityAutocompleteListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String? subtitle =
-        this.subtitle ?? entity!.matchesFilterValue(filter);
+        this.subtitle ?? entity.matchesFilterValue(filter);
     final String label = overrideSuggestedLabel == null
-        ? entity!.listDisplayName!
-        : overrideSuggestedLabel!(entity);
+        ? entity.listDisplayName: overrideSuggestedLabel!(entity);
     final String? amount = overrideSuggestedAmount == null
-        ? formatNumber(entity!.listDisplayAmount, context,
-            formatNumberType: entity!.listDisplayAmountType)
+        ? formatNumber(entity.listDisplayAmount, context,
+            formatNumberType: entity.listDisplayAmountType)
         : overrideSuggestedAmount!(entity);
 
     return ListTile(
       title: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          if (entity!.id == _AutocompleteEntity.KEY)
+          if (entity.id == _AutocompleteEntity.KEY)
             Padding(
               padding: const EdgeInsets.only(right: 8, top: 4),
               child: Icon(
@@ -621,7 +620,7 @@ class EntityAutocompleteListTile extends StatelessWidget {
           Expanded(
             child: Text(label, style: Theme.of(context).textTheme.titleMedium),
           ),
-          entity!.listDisplayAmount != null
+          entity.listDisplayAmount != null
               ? Text(amount!, style: Theme.of(context).textTheme.titleMedium)
               : Container(),
         ],

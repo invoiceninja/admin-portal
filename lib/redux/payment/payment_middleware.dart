@@ -136,15 +136,11 @@ Middleware<AppState> _archivePayment(PaymentRepository repository) {
             store.state.credentials, action.paymentIds, EntityAction.archive)
         .then((List<PaymentEntity> payments) {
       store.dispatch(ArchivePaymentsSuccess(payments));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchivePaymentsFailure(prevPayments));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -163,15 +159,11 @@ Middleware<AppState> _deletePayment(PaymentRepository repository) {
         .then((List<PaymentEntity> payments) {
       store.dispatch(DeletePaymentsSuccess(payments));
       store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeletePaymentsFailure(prevPayments));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -190,15 +182,11 @@ Middleware<AppState> _restorePayment(PaymentRepository repository) {
         .then((List<PaymentEntity> payments) {
       store.dispatch(RestorePaymentsSuccess(payments));
       store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestorePaymentsFailure(prevPayments));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

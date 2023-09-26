@@ -107,15 +107,11 @@ Middleware<AppState> _archiveVendor(VendorRepository repository) {
             store.state.credentials, action.vendorIds, EntityAction.archive)
         .then((List<VendorEntity> vendors) {
       store.dispatch(ArchiveVendorSuccess(vendors));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveVendorFailure(prevVendors));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -133,15 +129,11 @@ Middleware<AppState> _deleteVendor(VendorRepository repository) {
             store.state.credentials, action.vendorIds, EntityAction.delete)
         .then((List<VendorEntity> vendors) {
       store.dispatch(DeleteVendorSuccess(vendors));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteVendorFailure(prevVendors));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -159,15 +151,11 @@ Middleware<AppState> _restoreVendor(VendorRepository repository) {
             store.state.credentials, action.vendorIds, EntityAction.restore)
         .then((List<VendorEntity> vendors) {
       store.dispatch(RestoreVendorSuccess(vendors));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreVendorFailure(prevVendors));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

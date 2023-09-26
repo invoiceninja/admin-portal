@@ -270,6 +270,6 @@ SubscriptionState _setLoadedSubscriptions(
 
 SubscriptionState _setLoadedCompany(
     SubscriptionState subscriptionState, LoadCompanySuccess action) {
-  final company = action.userCompany.company!;
+  final company = action.userCompany.company;
   return subscriptionState.loadSubscriptions(company.subscriptions);
 }

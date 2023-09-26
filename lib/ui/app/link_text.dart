@@ -39,7 +39,7 @@ class _LinkTextRelatedEntityState extends State<LinkTextRelatedEntity> {
       },
       child: GestureDetector(
         child: Text(
-          widget.entity!.listDisplayName!,
+          widget.entity!.listDisplayName,
           style: TextStyle(
             decoration:
                 _isHovered ? TextDecoration.underline : TextDecoration.none,

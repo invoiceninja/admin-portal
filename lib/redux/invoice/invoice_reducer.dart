@@ -333,8 +333,8 @@ final invoicesReducer = combineReducers<InvoiceState>([
 InvoiceState _purgeClientSuccess(
     InvoiceState invoiceState, PurgeClientSuccess action) {
   final ids = invoiceState.map.values
-      .where((each) => each!.clientId == action.clientId)
-      .map((each) => each!.id)
+      .where((each) => each.clientId == action.clientId)
+      .map((each) => each.id)
       .toList();
 
   return invoiceState.rebuild((b) => b
@@ -422,6 +422,6 @@ InvoiceState _setLoadedInvoices(
 
 InvoiceState _setLoadedCompany(
     InvoiceState invoiceState, LoadCompanySuccess action) {
-  final company = action.userCompany.company!;
+  final company = action.userCompany.company;
   return invoiceState.loadInvoices(company.invoices);
 }

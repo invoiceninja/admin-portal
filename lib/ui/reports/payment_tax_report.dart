@@ -54,9 +54,9 @@ ReportResult paymentTaxReport(
   final List<List<ReportElement>> data = [];
   BuiltList<TaxRateReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
+  final reportSettings = userCompany.settings.reportSettings;
   final taxRateReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportPaymentTax)
+      reportSettings.containsKey(kReportPaymentTax)
           ? reportSettings[kReportPaymentTax]!
           : ReportSettingsEntity();
 
@@ -163,7 +163,7 @@ ReportResult paymentTaxReport(
                 value: value,
                 userCompany: userCompany,
                 reportsUIState: reportsUIState,
-                column: EnumUtils.parse(column)!,
+                column: EnumUtils.parse(column),
               )!) {
                 skip = true;
               }

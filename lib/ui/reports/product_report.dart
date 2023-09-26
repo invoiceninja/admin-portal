@@ -57,9 +57,9 @@ ReportResult productReport(
   final List<BaseEntity> entities = [];
   BuiltList<ProductReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
+  final reportSettings = userCompany.settings.reportSettings;
   final productReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportProduct)
+      reportSettings.containsKey(kReportProduct)
           ? reportSettings[kReportProduct]!
           : ReportSettingsEntity();
 
@@ -83,7 +83,7 @@ ReportResult productReport(
   for (var productId in productMap.keys) {
     final product = productMap[productId]!;
 
-    if (product.isDeleted! && !userCompany.company!.reportIncludeDeleted) {
+    if (product.isDeleted! && !userCompany.company.reportIncludeDeleted) {
       continue;
     }
 
@@ -125,28 +125,28 @@ ReportResult productReport(
           value = presentCustomField(
             value: product.customValue1,
             customFieldType: CustomFieldType.product1,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case ProductReportFields.product2:
           value = presentCustomField(
             value: product.customValue2,
             customFieldType: CustomFieldType.product2,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case ProductReportFields.product3:
           value = presentCustomField(
             value: product.customValue3,
             customFieldType: CustomFieldType.product3,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case ProductReportFields.product4:
           value = presentCustomField(
             value: product.customValue4,
             customFieldType: CustomFieldType.product4,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case ProductReportFields.stock_quantity:
@@ -168,7 +168,7 @@ ReportResult productReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column)!,
+        column: EnumUtils.parse(column),
       )!) {
         skip = true;
       }
@@ -181,7 +181,7 @@ ReportResult productReport(
       ].contains(column)) {
         row.add(product.getReportDouble(
           value: value,
-          currencyId: userCompany.company!.currencyId,
+          currencyId: userCompany.company.currencyId,
           formatNumberType: FormatNumberType.double,
         ));
       } else if (column == ProductReportFields.notification_threshold) {
@@ -190,7 +190,7 @@ ReportResult productReport(
         ));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(product.getReportDouble(
-            value: value, currencyId: userCompany.company!.currencyId));
+            value: value, currencyId: userCompany.company.currencyId));
       } else {
         row.add(product.getReportString(value: value));
       }

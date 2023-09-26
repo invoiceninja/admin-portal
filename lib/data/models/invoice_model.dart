@@ -218,7 +218,7 @@ abstract class InvoiceEntity extends Object
       subscriptionId: '',
       recurringDates: BuiltList<InvoiceScheduleEntity>(),
       lineItems: BuiltList<InvoiceItemEntity>(),
-      usesInclusiveTaxes: company?.settings?.enableInclusiveTaxes ?? false,
+      usesInclusiveTaxes: company?.settings.enableInclusiveTaxes ?? false,
       documents: BuiltList<DocumentEntity>(),
       activities: BuiltList<ActivityEntity>(),
       invitations: client != null
@@ -671,7 +671,7 @@ abstract class InvoiceEntity extends Object
     if (isPastDue) {
       final now = DateTime.now();
       final dueDate = DateTime.tryParse(
-          partialDueDate == null || partialDueDate.isEmpty
+          partialDueDate.isEmpty
               ? this.dueDate
               : partialDueDate);
 
@@ -1417,9 +1417,7 @@ abstract class InvoiceEntity extends Object
 
       if (item.taxName1.isNotEmpty) {
         final itemTaxAmount = calculateAmount(itemTaxable, item.taxRate1);
-        final itemPaidAmount = amount != null &&
-                itemTaxAmount != null &&
-                amount * itemTaxAmount != 0
+        final itemPaidAmount = amount * itemTaxAmount != 0
             ? (paidToDate / amount * itemTaxAmount)
             : 0.0;
 
@@ -1429,9 +1427,7 @@ abstract class InvoiceEntity extends Object
 
       if (item.taxName2.isNotEmpty) {
         final itemTaxAmount = calculateAmount(itemTaxable, item.taxRate2);
-        final itemPaidAmount = amount != null &&
-                itemTaxAmount != null &&
-                amount * itemTaxAmount != 0
+        final itemPaidAmount = amount * itemTaxAmount != 0
             ? (paidToDate / amount * itemTaxAmount)
             : 0.0;
         _calculateTax(
@@ -1440,9 +1436,7 @@ abstract class InvoiceEntity extends Object
 
       if (item.taxName3.isNotEmpty) {
         final itemTaxAmount = calculateAmount(itemTaxable, item.taxRate3);
-        final itemPaidAmount = amount != null &&
-                itemTaxAmount != null &&
-                amount * itemTaxAmount != 0
+        final itemPaidAmount = amount * itemTaxAmount != 0
             ? (paidToDate / amount * itemTaxAmount)
             : 0.0;
         _calculateTax(

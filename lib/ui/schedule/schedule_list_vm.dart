@@ -99,7 +99,7 @@ class ScheduleListVM {
           handleScheduleAction(context, schedules, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
-          state.userCompany!.settings?.getTableColumns(EntityType.schedule) ??
+          state.userCompany.settings.getTableColumns(EntityType.schedule) ??
               SchedulePresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortSchedules(field)),
       onClearMultielsect: () => store.dispatch(ClearScheduleMultiselect()),

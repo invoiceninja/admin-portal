@@ -249,7 +249,7 @@ class _EntitiesListTileState extends State<EntitiesListTile> {
               leading: _isHovered &&
                       !widget.hideNew &&
                       !widget.entity.isDeleted! &&
-                      state.userCompany!.canCreate(widget.entityType)
+                      state.userCompany.canCreate(widget.entityType)
                   ? IconButton(
                       icon: Icon(Icons.add_circle_outline),
                       onPressed: _onLongPress,

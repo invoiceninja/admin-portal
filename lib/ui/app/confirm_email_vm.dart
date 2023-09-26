@@ -61,7 +61,7 @@ class ConfirmEmailVM {
         store.dispatch(ResendConfirmation());
       },
       onChangeEmail: (context, email, password, idToken) {
-        final user = store.state.user!.rebuild((b) => b..email = email);
+        final user = store.state.user.rebuild((b) => b..email = email);
         final completer = snackBarCompleter<Null>(
             context, AppLocalization.of(context)!.savedSettings);
         store.dispatch(SaveAuthUserRequest(
@@ -78,7 +78,7 @@ class ConfirmEmailVM {
             callback: (password, idToken) {
               store.dispatch(
                 SaveAuthUserRequest(
-                  user: user!.rebuild((b) => b..email = user.lastEmailAddress),
+                  user: user.rebuild((b) => b..email = user.lastEmailAddress),
                   password: password,
                   idToken: idToken,
                 ),

@@ -483,67 +483,67 @@ void handleDocumentAction(
                       context, AppLocalization.of(context)!.deletedDocument);
                   switch (document!.parentType) {
                     case EntityType.client:
-                      completer.future.then<Null>(((_) => store
-                          .dispatch(LoadClient(clientId: document.parentId))));
+                      completer.future.then<Null>((_) => store
+                          .dispatch(LoadClient(clientId: document.parentId)));
                       break;
                     case EntityType.credit:
-                      completer.future.then<Null>(((_) => store
-                          .dispatch(LoadCredit(creditId: document.parentId))));
+                      completer.future.then<Null>((_) => store
+                          .dispatch(LoadCredit(creditId: document.parentId)));
                       break;
                     case EntityType.expense:
-                      completer.future.then<Null>(((_) => store.dispatch(
-                          LoadExpense(expenseId: document.parentId))));
+                      completer.future.then<Null>((_) => store.dispatch(
+                          LoadExpense(expenseId: document.parentId)));
                       break;
                     case EntityType.group:
-                      completer.future.then<Null>(((_) => store
-                          .dispatch(LoadGroup(groupId: document.parentId))));
+                      completer.future.then<Null>((_) => store
+                          .dispatch(LoadGroup(groupId: document.parentId)));
                       break;
                     case EntityType.invoice:
-                      completer.future.then<Null>(((_) => store.dispatch(
-                          LoadInvoice(invoiceId: document.parentId))));
+                      completer.future.then<Null>((_) => store.dispatch(
+                          LoadInvoice(invoiceId: document.parentId)));
                       break;
                     case EntityType.product:
-                      completer.future.then<Null>(((_) => store.dispatch(
-                          LoadProduct(productId: document.parentId))));
+                      completer.future.then<Null>((_) => store.dispatch(
+                          LoadProduct(productId: document.parentId)));
                       break;
                     case EntityType.project:
-                      completer.future.then<Null>(((_) => store.dispatch(
-                          LoadProject(projectId: document.parentId))));
+                      completer.future.then<Null>((_) => store.dispatch(
+                          LoadProject(projectId: document.parentId)));
                       break;
                     case EntityType.purchaseOrder:
-                      completer.future.then<Null>(((_) => store.dispatch(
+                      completer.future.then<Null>((_) => store.dispatch(
                           LoadPurchaseOrder(
-                              purchaseOrderId: document.parentId))));
+                              purchaseOrderId: document.parentId)));
                       break;
                     case EntityType.quote:
-                      completer.future.then<Null>(((_) => store
-                          .dispatch(LoadQuote(quoteId: document.parentId))));
+                      completer.future.then<Null>((_) => store
+                          .dispatch(LoadQuote(quoteId: document.parentId)));
                       break;
                     case EntityType.recurringExpense:
-                      completer.future.then<Null>(((_) => store.dispatch(
+                      completer.future.then<Null>((_) => store.dispatch(
                           LoadRecurringExpense(
-                              recurringExpenseId: document.parentId))));
+                              recurringExpenseId: document.parentId)));
                       break;
                     case EntityType.recurringInvoice:
-                      completer.future.then<Null>(((_) => store.dispatch(
+                      completer.future.then<Null>((_) => store.dispatch(
                           LoadRecurringInvoice(
-                              recurringInvoiceId: document.parentId))));
+                              recurringInvoiceId: document.parentId)));
                       break;
                     case EntityType.task:
-                      completer.future.then<Null>(((_) =>
-                          store.dispatch(LoadTask(taskId: document.parentId))));
+                      completer.future.then<Null>((_) =>
+                          store.dispatch(LoadTask(taskId: document.parentId)));
                       break;
                     case EntityType.vendor:
-                      completer.future.then<Null>(((_) => store
-                          .dispatch(LoadVendor(vendorId: document.parentId))));
+                      completer.future.then<Null>((_) => store
+                          .dispatch(LoadVendor(vendorId: document.parentId)));
                       break;
                     default:
                       completer.future
-                          .then<Null>(((_) => store.dispatch(RefreshData())));
+                          .then<Null>((_) => store.dispatch(RefreshData()));
                   }
 
                   completer.future
-                      .then<Null>(((_) => store.dispatch(RefreshData())));
+                      .then<Null>((_) => store.dispatch(RefreshData()));
                   store.dispatch(DeleteDocumentRequest(
                     completer: completer,
                     documentIds: [document.id],

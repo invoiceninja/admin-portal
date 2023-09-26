@@ -370,7 +370,7 @@ abstract class ProjectEntity extends Object
   @override
   double? get listDisplayAmount => null;
 
-  bool get hasClient => clientId != null && clientId.isNotEmpty;
+  bool get hasClient => clientId.isNotEmpty;
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;

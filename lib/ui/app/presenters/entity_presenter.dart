@@ -27,8 +27,8 @@ class EntityPresenter {
 
   String? title({bool isNarrow = false}) {
     final localization = AppLocalization.of(context)!;
-    final type = localization.lookup('${entity!.entityType}');
-    var name = entity!.listDisplayName;
+    final type = localization.lookup('${entity.entityType}');
+    var name = entity.listDisplayName;
 
     // TODO replace with this: https://github.com/flutter/flutter/issues/45336
     if ((name ?? '').isEmpty) {
@@ -44,7 +44,7 @@ class EntityPresenter {
           EntityType.product,
           EntityType.transaction,
           EntityType.document,
-        ].contains(entity!.entityType) ||
+        ].contains(entity.entityType) ||
         isNarrow) {
       return name;
     } else {
@@ -72,34 +72,34 @@ class EntityPresenter {
     switch (field) {
       case EntityFields.createdAt:
         return Text(formatDate(
-            convertTimestampToDateString(entity!.createdAt), context,
+            convertTimestampToDateString(entity.createdAt), context,
             showTime: true));
       case EntityFields.updatedAt:
-        return Text(entity!.updatedAt == 0
+        return Text(entity.updatedAt == 0
             ? ''
             : formatDate(
-                convertTimestampToDateString(entity!.updatedAt), context,
+                convertTimestampToDateString(entity.updatedAt), context,
                 showTime: true));
       case EntityFields.archivedAt:
-        return Text(entity!.archivedAt == 0
+        return Text(entity.archivedAt == 0
             ? ''
             : formatDate(
-                convertTimestampToDateString(entity!.archivedAt), context,
+                convertTimestampToDateString(entity.archivedAt), context,
                 showTime: true));
       case EntityFields.state:
-        return Text(entity!.isActive
+        return Text(entity.isActive
             ? localization!.active
-            : entity!.isArchived
+            : entity.isArchived
                 ? localization!.archived
                 : localization!.deleted);
       case EntityFields.createdBy:
-        final user = state.userState.get(entity!.createdUserId!);
+        final user = state.userState.get(entity.createdUserId!);
         return LinkTextRelatedEntity(entity: user, relation: entity);
       case EntityFields.assignedTo:
-        final user = state.userState.get(entity!.assignedUserId!);
+        final user = state.userState.get(entity.assignedUserId!);
         return LinkTextRelatedEntity(entity: user, relation: entity);
       case EntityFields.isDeleted:
-        return Text(entity!.isDeleted! ? localization!.yes : localization!.no);
+        return Text(entity.isDeleted! ? localization!.yes : localization!.no);
     }
 
     return Text('Error: $field not found');

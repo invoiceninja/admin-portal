@@ -507,6 +507,6 @@ PurchaseOrderState _setLoadedPurchaseOrders(
 
 PurchaseOrderState _setLoadedCompany(
     PurchaseOrderState purchaseOrderState, LoadCompanySuccess action) {
-  final company = action.userCompany.company!;
+  final company = action.userCompany.company;
   return purchaseOrderState.loadPurchaseOrders(company.purchaseOrders);
 }

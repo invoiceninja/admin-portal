@@ -102,15 +102,11 @@ Middleware<AppState> _archiveTaskStatus(TaskStatusRepository repository) {
             store.state.credentials, action.taskStatusIds, EntityAction.archive)
         .then((List<TaskStatusEntity> taskStatuses) {
       store.dispatch(ArchiveTaskStatusesSuccess(taskStatuses));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveTaskStatusesFailure(prevTaskStatuses));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -128,15 +124,11 @@ Middleware<AppState> _deleteTaskStatus(TaskStatusRepository repository) {
             store.state.credentials, action.taskStatusIds, EntityAction.delete)
         .then((List<TaskStatusEntity> taskStatuses) {
       store.dispatch(DeleteTaskStatusesSuccess(taskStatuses));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteTaskStatusesFailure(prevTaskStatuses));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -154,15 +146,11 @@ Middleware<AppState> _restoreTaskStatus(TaskStatusRepository repository) {
             store.state.credentials, action.taskStatusIds, EntityAction.restore)
         .then((List<TaskStatusEntity> taskStatuses) {
       store.dispatch(RestoreTaskStatusesSuccess(taskStatuses));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreTaskStatusesFailure(prevTaskStatuses));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

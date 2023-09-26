@@ -99,11 +99,11 @@ var memoizedInvoiceReport = memo9((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, UserEntity?> userMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
-  BuiltMap<String?, ProjectEntity?> projectMap,
-  BuiltMap<String?, PaymentEntity?> paymentMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, ProjectEntity> projectMap,
+  BuiltMap<String, PaymentEntity> paymentMap,
   StaticState staticState,
 ) =>
     invoiceReport(
@@ -122,22 +122,21 @@ ReportResult invoiceReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, UserEntity?> userMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
-  BuiltMap<String?, ProjectEntity?> projectMap,
-  BuiltMap<String?, PaymentEntity?> paymentMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, ProjectEntity> projectMap,
+  BuiltMap<String, PaymentEntity> paymentMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
   final List<BaseEntity> entities = [];
   BuiltList<InvoiceReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
-  final invoiceReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportInvoice)
-          ? reportSettings[kReportInvoice]!
-          : ReportSettingsEntity();
+  final reportSettings = userCompany.settings.reportSettings;
+  final invoiceReportSettings = reportSettings.containsKey(kReportInvoice)
+      ? reportSettings[kReportInvoice]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     InvoiceReportFields.number,
@@ -163,7 +162,7 @@ ReportResult invoiceReport(
   if (columns.contains(InvoiceReportFields.paid_date)) {
     // Loop through each payment and add to the map if it is the last payment for the invoice
     paymentMap.forEach((paymentId, payment) {
-      if (payment!.paymentables != null && payment.paymentables.isNotEmpty) {
+      if (payment.paymentables.isNotEmpty) {
         // Loop through each invoice on the payment
         payment.paymentables.forEach((paymentable) {
           final invoiceId = paymentable.invoiceId;
@@ -191,12 +190,12 @@ ReportResult invoiceReport(
     final contact =
         client.getContact(invoice.invitations.first.clientContactId);
 
-    if ((invoice.isDeleted! && !userCompany.company!.reportIncludeDeleted) ||
+    if ((invoice.isDeleted! && !userCompany.company.reportIncludeDeleted) ||
         client.isDeleted!) {
       continue;
     }
 
-    if (!userCompany.company!.reportIncludeDrafts && invoice.isDraft) {
+    if (!userCompany.company.reportIncludeDrafts && invoice.isDraft) {
       continue;
     }
 
@@ -291,28 +290,28 @@ ReportResult invoiceReport(
           value = presentCustomField(
             value: invoice.customValue1,
             customFieldType: CustomFieldType.invoice1,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case InvoiceReportFields.invoice2:
           value = presentCustomField(
             value: invoice.customValue2,
             customFieldType: CustomFieldType.invoice2,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case InvoiceReportFields.invoice3:
           value = presentCustomField(
             value: invoice.customValue3,
             customFieldType: CustomFieldType.invoice3,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case InvoiceReportFields.invoice4:
           value = presentCustomField(
             value: invoice.customValue4,
             customFieldType: CustomFieldType.invoice4,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case InvoiceReportFields.has_expenses:
@@ -475,7 +474,7 @@ ReportResult invoiceReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column)!,
+        column: EnumUtils.parse(column),
       )!) {
         skip = true;
       }
@@ -491,7 +490,7 @@ ReportResult invoiceReport(
           InvoiceReportFields.converted_amount,
           InvoiceReportFields.converted_balance
         ].contains(column)) {
-          currencyId = userCompany.company!.currencyId;
+          currencyId = userCompany.company.currencyId;
         }
         row.add(invoice.getReportDouble(
           value: value,

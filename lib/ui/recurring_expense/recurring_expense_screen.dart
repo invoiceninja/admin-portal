@@ -139,7 +139,7 @@ class RecurringExpenseScreen extends StatelessWidget {
             store.dispatch(FilterRecurringExpensesByCustom4(value)),
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany!.canCreate(EntityType.recurringExpense)
+              userCompany.canCreate(EntityType.recurringExpense)
           ? FloatingActionButton(
               heroTag: 'recurring_expense_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

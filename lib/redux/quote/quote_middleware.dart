@@ -162,15 +162,11 @@ Middleware<AppState> _archiveQuote(QuoteRepository repository) {
             store.state.credentials, action.quoteIds, EntityAction.archive)
         .then((List<InvoiceEntity> quotes) {
       store.dispatch(ArchiveQuotesSuccess(quotes));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveQuotesFailure(prevQuotes));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -188,15 +184,11 @@ Middleware<AppState> _deleteQuote(QuoteRepository repository) {
             store.state.credentials, action.quoteIds, EntityAction.delete)
         .then((List<InvoiceEntity> quotes) {
       store.dispatch(DeleteQuotesSuccess(quotes));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteQuotesFailure(prevQuotes));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -214,15 +206,11 @@ Middleware<AppState> _restoreQuote(QuoteRepository repository) {
             store.state.credentials, action.quoteIds, EntityAction.restore)
         .then((List<InvoiceEntity> quotes) {
       store.dispatch(RestoreQuotesSuccess(quotes));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreQuotesFailure(prevQuotes));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -297,15 +285,11 @@ Middleware<AppState> _markSentQuote(QuoteRepository repository) {
             store.state.credentials, action.quoteIds, EntityAction.markSent)
         .then((quotes) {
       store.dispatch(MarkSentQuoteSuccess(quotes));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(MarkSentQuoteFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -327,15 +311,11 @@ Middleware<AppState> _emailQuote(QuoteRepository repository) {
     )
         .then((quote) {
       store.dispatch(EmailQuoteSuccess(quote));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(EmailQuoteFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -404,15 +384,11 @@ Middleware<AppState> _downloadQuotes(QuoteRepository repository) {
             EntityAction.bulkDownload)
         .then((invoices) {
       store.dispatch(DownloadQuotesSuccess());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DownloadQuotesFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

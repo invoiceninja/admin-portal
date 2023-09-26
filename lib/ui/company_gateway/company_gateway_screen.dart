@@ -133,7 +133,7 @@ class CompanyGatewayScreen extends StatelessWidget {
         },
       ),
       floatingActionButton:
-          state.prefState.isMobile && state.userCompany!.isAdmin
+          state.prefState.isMobile && state.userCompany.isAdmin
               ? FloatingActionButton(
                   heroTag: 'company_gateway_fab',
                   backgroundColor: Theme.of(context).primaryColorDark,

@@ -112,10 +112,10 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
     final state = store.state;
     final localization = AppLocalization.of(context);
     final webPhpVersion =
-        _parseVersion(_response?.phpVersion?.currentPHPVersion ?? '');
+        _parseVersion(_response?.phpVersion.currentPHPVersion ?? '');
     final cliPhpVersion =
-        _parseVersion(_response?.phpVersion?.currentPHPCLIVersion ?? '');
-    final phpMemoryLimit = _response?.phpVersion?.memoryLimit ?? '';
+        _parseVersion(_response?.phpVersion.currentPHPCLIVersion ?? '');
+    final phpMemoryLimit = _response?.phpVersion.memoryLimit ?? '';
     final phpMemoryLimitDouble = parseDouble(phpMemoryLimit);
 
     return AlertDialog(

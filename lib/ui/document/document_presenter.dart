@@ -44,7 +44,7 @@ class DocumentPresenter extends EntityPresenter {
         return Text(document!.name);
       case DocumentFields.createdAt:
         return Text(formatDate(
-            convertTimestampToDateString(entity!.createdAt), context,
+            convertTimestampToDateString(entity.createdAt), context,
             showTime: true));
       case DocumentFields.type:
         return Text(document!.type);

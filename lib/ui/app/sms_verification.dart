@@ -236,7 +236,7 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
     _webClient
         .post('$url/sms_reset', credentials.token,
             data: json.encode(
-              {'email': widget.email ?? state.user!.email},
+              {'email': widget.email ?? state.user.email},
             ))
         .then((dynamic data) {
       setState(() {
@@ -277,7 +277,7 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
         .post(url, credentials.token,
             data: json.encode({
               'code': _code,
-              'email': widget.email ?? state.user!.email,
+              'email': widget.email ?? state.user.email,
             }))
         .then((dynamic data) {
       setState(() {
@@ -324,7 +324,7 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(localization.codeWasSentTo!
-                      .replaceFirst(':number', state.user!.phone)),
+                      .replaceFirst(':number', state.user.phone)),
                   SizedBox(height: 20),
                   AppPinput(
                     onCompleted: (code) => _code = code,

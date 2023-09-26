@@ -120,9 +120,7 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
     }).catchError((Object error) {
       print('## Login error: $error');
       final message = _parseError('$error');
-      if (action.completer != null) {
-        action.completer.completeError(message);
-      }
+      action.completer.completeError(message);
       store.dispatch(UserLoginFailure(message));
       if ('$error'.startsWith('Error ::')) {
         throw error;
@@ -152,9 +150,7 @@ Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
     }).catchError((Object error) {
       print('## Signup error: $error');
       final message = _parseError('$error');
-      if (action.completer != null) {
-        action.completer.completeError(message);
-      }
+      action.completer.completeError(message);
       store.dispatch(UserLoginFailure(message));
       if ('$error'.startsWith('Error ::')) {
         throw error;
@@ -189,9 +185,7 @@ Middleware<AppState> _createOAuthLoginRequest(AuthRepository repository) {
     }).catchError((Object error) {
       print('## Oauth login error: $error');
       final message = _parseError('$error');
-      if (action.completer != null) {
-        action.completer.completeError(message);
-      }
+      action.completer.completeError(message);
       store.dispatch(UserLoginFailure(message));
       if ('$error'.startsWith('Error ::')) {
         throw error;
@@ -226,9 +220,7 @@ Middleware<AppState> _createOAuthSignUpRequest(AuthRepository repository) {
     }).catchError((Object error) {
       print('## OAuth signup error: $error');
       final message = _parseError('$error');
-      if (action.completer != null) {
-        action.completer.completeError(message);
-      }
+      action.completer.completeError(message);
       store.dispatch(UserLoginFailure(message));
       if ('$error'.startsWith('Error ::')) {
         throw error;
@@ -270,8 +262,8 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
 
     String token;
     bool hasToken = false;
-    if ((state?.userCompany?.token?.token ?? '').isNotEmpty) {
-      token = state.userCompany!.token!.token;
+    if ((state.userCompany.token.token ?? '').isNotEmpty) {
+      token = state.userCompany.token.token;
       hasToken = true;
     } else {
       token = TokenEntity.unobscureToken(prefs.getString(kSharedPrefToken)) ??
@@ -298,10 +290,10 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
       bool permissionsWereChanged = false;
       data.userCompanies.forEach((userCompany) {
         state.userCompanyStates.forEach((userCompanyState) {
-          if (userCompany.company!.id == userCompanyState.company!.id) {
-            if (userCompanyState.userCompany!.permissionsUpdatedAt > 0 &&
+          if (userCompany.company.id == userCompanyState.company.id) {
+            if (userCompanyState.userCompany.permissionsUpdatedAt > 0 &&
                 userCompany.permissionsUpdatedAt !=
-                    userCompanyState.userCompany!.permissionsUpdatedAt) {
+                    userCompanyState.userCompany.permissionsUpdatedAt) {
               permissionsWereChanged = true;
             }
           }
@@ -359,9 +351,7 @@ Middleware<AppState> _createRecoverRequest(AuthRepository repository) {
       action.completer.complete(null);
     }).catchError((Object error) {
       store.dispatch(RecoverPasswordFailure(error.toString()));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -407,9 +397,7 @@ Middleware<AppState> _setDefaultCompany(AuthRepository repository) {
       action!.completer.complete();
     }).catchError((Object error) {
       store.dispatch(SetDefaultCompanyFailure(error));
-      if (action!.completer != null) {
-        action.completer.completeError(error);
-      }
+      action!.completer.completeError(error);
     });
 
     next(action);
@@ -479,7 +467,7 @@ Middleware<AppState> _resendConfirmation(AuthRepository repository) {
 
     repository
         .resendConfirmation(
-            credentials: state.credentials, userId: state.user!.id)
+            credentials: state.credentials, userId: state.user.id)
         .then((dynamic value) {
       store.dispatch(ResendConfirmationSuccess());
     }).catchError((Object error) {

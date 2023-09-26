@@ -52,7 +52,7 @@ class UserScreenVM {
           state.userState.map,
           state.userState.list,
           state.userListState,
-          state.user!.id),
+          state.user.id),
       userCompany: state.userCompany,
       isInMultiselect: state.userListState.isInMultiselect(),
     );

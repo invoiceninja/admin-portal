@@ -53,9 +53,9 @@ ReportResult taxReport(
   final List<List<ReportElement>> data = [];
   BuiltList<TaxRateReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
+  final reportSettings = userCompany.settings.reportSettings;
   final taxRateReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportInvoiceTax)
+      reportSettings.containsKey(kReportInvoiceTax)
           ? reportSettings[kReportInvoiceTax]!
           : ReportSettingsEntity();
 
@@ -80,7 +80,7 @@ ReportResult taxReport(
   for (var invoiceId in invoiceMap.keys) {
     final invoice = invoiceMap[invoiceId];
 
-    if (!userCompany.company!.reportIncludeDrafts && invoice!.isDraft) {
+    if (!userCompany.company.reportIncludeDrafts && invoice!.isDraft) {
       continue;
     }
 
@@ -141,7 +141,7 @@ ReportResult taxReport(
             value: value,
             userCompany: userCompany,
             reportsUIState: reportsUIState,
-            column: EnumUtils.parse(column)!,
+            column: EnumUtils.parse(column),
           )!) {
             skip = true;
           }
@@ -223,7 +223,7 @@ ReportResult taxReport(
             value: value,
             userCompany: userCompany,
             reportsUIState: reportsUIState,
-            column: EnumUtils.parse(column)!,
+            column: EnumUtils.parse(column),
           )!) {
             skip = true;
           }

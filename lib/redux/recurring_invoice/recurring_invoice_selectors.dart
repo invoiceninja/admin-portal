@@ -123,7 +123,7 @@ EntityStats recurringInvoiceStatsForClient(
   int countActive = 0;
   int countArchived = 0;
   invoiceMap.forEach((invoiceId, invoice) {
-    if (invoice!.clientId == clientId) {
+    if (invoice.clientId == clientId) {
       if (invoice.isActive) {
         countActive++;
       } else if (invoice.isArchived) {
@@ -144,7 +144,7 @@ EntityStats recurringInvoiceStatsForUser(
   int countActive = 0;
   int countArchived = 0;
   invoiceMap.forEach((invoiceId, invoice) {
-    if (invoice!.assignedUserId == userId) {
+    if (invoice.assignedUserId == userId) {
       if (invoice.isActive) {
         countActive++;
       } else if (invoice.isDeleted!) {
@@ -165,7 +165,7 @@ EntityStats recurringInvoiceStatsForInvoice(
   int countActive = 0;
   int countArchived = 0;
   invoiceMap.forEach((invoiceId, invoice) {
-    if (invoice!.recurringId == recurrinInvoiceId) {
+    if (invoice.recurringId == recurrinInvoiceId) {
       if (invoice.isActive) {
         countActive++;
       } else if (invoice.isDeleted!) {
@@ -186,7 +186,7 @@ EntityStats recurringInvoiceStatsForDesign(
   int countActive = 0;
   int countArchived = 0;
   recurringInvoiceMap.forEach((invoiceId, invoice) {
-    if (invoice!.designId == designId) {
+    if (invoice.designId == designId) {
       if (invoice.isActive) {
         countActive++;
       } else if (invoice.isArchived) {
@@ -207,7 +207,7 @@ EntityStats recurringInvoiceStatsForSubscription(
   int countActive = 0;
   int countArchived = 0;
   invoiceMap.forEach((invoiceId, invoice) {
-    if (invoice!.subscriptionId == subscriptionId) {
+    if (invoice.subscriptionId == subscriptionId) {
       if (invoice.isActive) {
         countActive++;
       } else if (invoice.isArchived) {

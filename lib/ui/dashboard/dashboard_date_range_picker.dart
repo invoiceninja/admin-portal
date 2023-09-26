@@ -32,7 +32,7 @@ class _DashboardDateRangePickerState extends State<DashboardDateRangePicker> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    _settings = DashboardSettings.fromState(widget.state!);
+    _settings = DashboardSettings.fromState(widget.state);
 
     if (_settings!.dateRange != DateRange.custom) {
       _settings!.startDate = '';

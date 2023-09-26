@@ -107,15 +107,11 @@ Middleware<AppState> _archiveProject(ProjectRepository repository) {
             store.state.credentials, action.projectIds, EntityAction.archive)
         .then((List<ProjectEntity> projects) {
       store.dispatch(ArchiveProjectSuccess(projects));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveProjectFailure(prevProjects));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -134,15 +130,11 @@ Middleware<AppState> _deleteProject(ProjectRepository repository) {
             store.state.credentials, action.projectIds, EntityAction.delete)
         .then((List<ProjectEntity> projects) {
       store.dispatch(DeleteProjectSuccess(projects));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteProjectFailure(prevProjects));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -161,15 +153,11 @@ Middleware<AppState> _restoreProject(ProjectRepository repository) {
             store.state.credentials, action.projectIds, EntityAction.restore)
         .then((List<ProjectEntity> projects) {
       store.dispatch(RestoreProjectSuccess(projects));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreProjectFailure(prevProjects));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

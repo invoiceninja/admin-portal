@@ -34,7 +34,7 @@ class FieldGrid extends StatelessWidget {
           );
         }
 
-        if (value != null && value.isNotEmpty) {
+        if (value.isNotEmpty) {
           fieldWidgets.add(Material(
             color: Colors.transparent,
             child: CopyToClipboard(

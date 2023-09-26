@@ -146,11 +146,11 @@ class _HistoryListTileState extends State<HistoryListTile> {
         clientId = (entity as BelongsToClient).clientId;
       }
 
-      title = Text(entity.listDisplayName!.isEmpty
+      title = Text(entity.listDisplayName.isEmpty
           ? formatNumber(entity.listDisplayAmount, context,
               formatNumberType: entity.listDisplayAmountType,
               clientId: clientId)!
-          : entity.listDisplayName!);
+          : entity.listDisplayName);
 
       subtitle = Text(
         localization!.lookup('${history.entityType}')!,

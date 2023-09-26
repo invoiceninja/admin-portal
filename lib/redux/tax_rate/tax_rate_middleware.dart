@@ -103,15 +103,11 @@ Middleware<AppState> _archiveTaxRate(TaxRateRepository repository) {
             store.state.credentials, action.taxRateIds, EntityAction.archive)
         .then((List<TaxRateEntity> taxRates) {
       store.dispatch(ArchiveTaxRatesSuccess(taxRates));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveTaxRateFailure(prevTaxRates));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -130,15 +126,11 @@ Middleware<AppState> _deleteTaxRate(TaxRateRepository repository) {
             store.state.credentials, action.taxRateIds, EntityAction.delete)
         .then((List<TaxRateEntity> taxRates) {
       store.dispatch(DeleteTaxRatesSuccess(taxRates));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteTaxRateFailure(prevTaxRates));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -157,15 +149,11 @@ Middleware<AppState> _restoreTaxRate(TaxRateRepository repository) {
             store.state.credentials, action.taxRateIds, EntityAction.restore)
         .then((List<TaxRateEntity> taxRates) {
       store.dispatch(RestoreTaxRatesSuccess(taxRates));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreTaxRateFailure(prevTaxRates));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

@@ -204,8 +204,7 @@ class PaymentListItem extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Expanded(
-                          child: mobileSubtitle != null &&
-                                  mobileSubtitle.isNotEmpty
+                          child: mobileSubtitle.isNotEmpty
                               ? Text(
                                   mobileSubtitle,
                                   maxLines: 3,

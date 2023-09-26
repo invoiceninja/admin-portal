@@ -84,7 +84,7 @@ class _TaskStatusListState extends State<TaskStatusList> {
                 final taskStatus = viewModel.taskStatusMap[taskStatusId];
                 return TaskStatusListItem(
                     key: ValueKey('__task_status_$taskStatusId'),
-                    user: state.userCompany!.user,
+                    user: state.userCompany.user,
                     filter: viewModel.filter,
                     taskStatus: taskStatus,
                     /*

@@ -106,15 +106,11 @@ Middleware<AppState> _archiveGroup(GroupRepository repository) {
             store.state.credentials, action.groupIds, EntityAction.archive)
         .then((List<GroupEntity> groups) {
       store.dispatch(ArchiveGroupSuccess(groups));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveGroupFailure(prevGroups));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -132,15 +128,11 @@ Middleware<AppState> _deleteGroup(GroupRepository repository) {
             store.state.credentials, action.groupIds, EntityAction.delete)
         .then((List<GroupEntity> groups) {
       store.dispatch(DeleteGroupSuccess(groups));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteGroupFailure(prevGroups));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -158,15 +150,11 @@ Middleware<AppState> _restoreGroup(GroupRepository repository) {
             store.state.credentials, action.groupIds, EntityAction.restore)
         .then((List<GroupEntity> groups) {
       store.dispatch(RestoreGroupSuccess(groups));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreGroupFailure(prevGroups));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

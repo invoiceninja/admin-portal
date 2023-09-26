@@ -215,7 +215,7 @@ Middleware<AppState> _increasePricesRecurringInvoice(
     RecurringInvoiceRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as IncreasePricesRecurringInvoicesRequest;
-    repository.bulkAction(store.state.credentials, action.recurringInvoiceIds!,
+    repository.bulkAction(store.state.credentials, action.recurringInvoiceIds,
         EntityAction.increasePrices,
         data: {
           'percentage_increase': action.percentageIncrease,
@@ -246,16 +246,12 @@ Middleware<AppState> _sendNowRecurringInvoice(
             EntityAction.sendNow)
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(SendNowRecurringInvoicesSuccess(invoices));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(
           SendNowRecurringInvoicesFailure(error as List<InvoiceEntity>));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -274,15 +270,11 @@ Middleware<AppState> _archiveRecurringInvoice(
             EntityAction.archive)
         .then((List<InvoiceEntity> recurringInvoices) {
       store.dispatch(ArchiveRecurringInvoicesSuccess(recurringInvoices));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveRecurringInvoicesFailure(prevRecurringInvoices));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -301,15 +293,11 @@ Middleware<AppState> _deleteRecurringInvoice(
             EntityAction.delete)
         .then((List<InvoiceEntity> recurringInvoices) {
       store.dispatch(DeleteRecurringInvoicesSuccess(recurringInvoices));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteRecurringInvoicesFailure(prevRecurringInvoices));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -328,15 +316,11 @@ Middleware<AppState> _restoreRecurringInvoice(
             EntityAction.restore)
         .then((List<InvoiceEntity> recurringInvoices) {
       store.dispatch(RestoreRecurringInvoicesSuccess(recurringInvoices));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreRecurringInvoicesFailure(prevRecurringInvoices));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

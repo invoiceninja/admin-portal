@@ -21,7 +21,7 @@ class UserPicker extends StatelessWidget {
     final state = StoreProvider.of<AppState>(context).state;
     final userIds = memoizedUserList(state.userState.map);
 
-    if (!state.userCompany!.isAdmin) {
+    if (!state.userCompany.isAdmin) {
       return SizedBox();
     }
 

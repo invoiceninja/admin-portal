@@ -325,7 +325,7 @@ abstract class TaskEntity extends Object
       createdAt: 0,
       createdUserId: '',
       statusId: defaultTaskStatusId(
-          state?.taskStatusState?.map ?? BuiltMap<String, TaskStatusEntity>())!,
+          state?.taskStatusState.map ?? BuiltMap<String, TaskStatusEntity>())!,
       documents: BuiltList<DocumentEntity>(),
     );
   }
@@ -355,7 +355,7 @@ abstract class TaskEntity extends Object
     return updateTaskTime(taskTime, times.length - 1);
   }
 
-  bool get isInvoiced => invoiceId != null && invoiceId.isNotEmpty;
+  bool get isInvoiced => invoiceId.isNotEmpty;
 
   @override
   EntityType get entityType {
@@ -640,7 +640,7 @@ abstract class TaskEntity extends Object
       bool multiselect = false}) {
     final actions = <EntityAction?>[];
 
-    final isLocked = userCompany!.company!.invoiceTaskLock && isInvoiced;
+    final isLocked = userCompany!.company.invoiceTaskLock && isInvoiced;
 
     if (!isDeleted!) {
       if (includeEdit &&

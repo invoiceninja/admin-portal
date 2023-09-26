@@ -96,9 +96,9 @@ ReportResult expenseReport(
   final List<BaseEntity> entities = [];
   BuiltList<ExpenseReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
+  final reportSettings = userCompany.settings.reportSettings;
   final expenseReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportExpense)
+      reportSettings.containsKey(kReportExpense)
           ? reportSettings[kReportExpense]!
           : ReportSettingsEntity();
 
@@ -128,7 +128,7 @@ ReportResult expenseReport(
     final vendor = vendorMap[expense.vendorId] ?? VendorEntity();
     final project = projectMap[expense.projectId] ?? ProjectEntity();
 
-    if (expense.isDeleted! && !userCompany.company!.reportIncludeDeleted) {
+    if (expense.isDeleted! && !userCompany.company.reportIncludeDeleted) {
       continue;
     }
 
@@ -181,64 +181,64 @@ ReportResult expenseReport(
           value = expense.taxRate3;
           break;
         case ExpenseReportFields.client:
-          value = client?.displayName;
+          value = client.displayName;
           break;
         case ExpenseReportFields.client_balance:
-          value = client?.balance;
+          value = client.balance;
           break;
         case ExpenseReportFields.client_address1:
-          value = client?.address1;
+          value = client.address1;
           break;
         case ExpenseReportFields.client_address2:
-          value = client?.address2;
+          value = client.address2;
           break;
         case ExpenseReportFields.client_shipping_address1:
-          value = client?.shippingAddress1;
+          value = client.shippingAddress1;
           break;
         case ExpenseReportFields.client_shipping_address2:
-          value = client?.shippingAddress2;
+          value = client.shippingAddress2;
           break;
         case ExpenseReportFields.invoice:
-          value = invoice?.listDisplayName;
+          value = invoice.listDisplayName;
           break;
         case ExpenseReportFields.invoice_amount:
-          value = invoice?.amount;
+          value = invoice.amount;
           break;
         case ExpenseReportFields.invoice_date:
           value = invoice.isNew ? '' : invoice.date;
           break;
         case ExpenseReportFields.vendor:
-          value = vendor?.listDisplayName;
+          value = vendor.listDisplayName;
           break;
         case ExpenseReportFields.project:
-          value = project?.name;
+          value = project.name;
           break;
         case ExpenseReportFields.expense1:
           value = presentCustomField(
             value: expense.customValue1,
             customFieldType: CustomFieldType.expense1,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case ExpenseReportFields.expense2:
           value = presentCustomField(
             value: expense.customValue2,
             customFieldType: CustomFieldType.expense2,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case ExpenseReportFields.expense3:
           value = presentCustomField(
             value: expense.customValue3,
             customFieldType: CustomFieldType.expense3,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case ExpenseReportFields.expense4:
           value = presentCustomField(
             value: expense.customValue4,
             customFieldType: CustomFieldType.expense4,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case ExpenseReportFields.category:
@@ -280,7 +280,7 @@ ReportResult expenseReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column)!,
+        column: EnumUtils.parse(column),
       )!) {
         skip = true;
       }

@@ -51,9 +51,9 @@ ReportResult documentReport(
 
   final localization =
       AppLocalization(AppLocalization.createLocale(Intl.defaultLocale));
-  final reportSettings = userCompany.settings?.reportSettings;
+  final reportSettings = userCompany.settings.reportSettings;
   final documentReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportDocument)
+      reportSettings.containsKey(kReportDocument)
           ? reportSettings[kReportDocument]!
           : ReportSettingsEntity();
 
@@ -120,7 +120,7 @@ ReportResult documentReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column)!,
+        column: EnumUtils.parse(column),
         localization: localization,
       )!) {
         skip = true;

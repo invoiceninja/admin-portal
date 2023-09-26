@@ -36,7 +36,7 @@ InvoiceEntity? invoiceQuoteSelector(
     InvoiceEntity invoice, BuiltMap<String, InvoiceEntity> quoteMap) {
   InvoiceEntity? invoiceQuote;
   quoteMap.forEach((quoteId, quote) {
-    if (quote!.invoiceId == invoice.id) {
+    if (quote.invoiceId == invoice.id) {
       invoiceQuote = quote;
     }
   });
@@ -90,8 +90,7 @@ List<String> dropdownInvoiceSelector(
     if (excludedIds.contains(invoiceId)) {
       return false;
     }
-    if (clientId != null &&
-        clientId.isNotEmpty &&
+    if (clientId.isNotEmpty &&
         invoice!.clientId != clientId) {
       return false;
     }
@@ -268,7 +267,7 @@ EntityStats invoiceStatsForClient(
   int countActive = 0;
   int countArchived = 0;
   invoiceMap.forEach((invoiceId, invoice) {
-    if (invoice!.clientId == clientId) {
+    if (invoice.clientId == clientId) {
       if (invoice.isActive) {
         countActive++;
       } else if (invoice.isArchived) {
@@ -289,7 +288,7 @@ EntityStats invoiceStatsForDesign(
   int countActive = 0;
   int countArchived = 0;
   invoiceMap.forEach((invoiceId, invoice) {
-    if (invoice!.designId == designId) {
+    if (invoice.designId == designId) {
       if (invoice.isActive) {
         countActive++;
       } else if (invoice.isArchived) {
@@ -310,7 +309,7 @@ EntityStats invoiceStatsForSubscription(
   int countActive = 0;
   int countArchived = 0;
   invoiceMap.forEach((invoiceId, invoice) {
-    if (invoice!.subscriptionId == subscriptionId) {
+    if (invoice.subscriptionId == subscriptionId) {
       if (invoice.isActive) {
         countActive++;
       } else if (invoice.isArchived) {
@@ -333,7 +332,7 @@ EntityStats invoiceStatsForProject(
   int countActive = 0;
   int countArchived = 0;
   invoiceMap.forEach((invoiceId, invoice) {
-    if (invoice!.projectId == projectId) {
+    if (invoice.projectId == projectId) {
       if (invoice.isActive) {
         countActive++;
       } else if (invoice.isArchived) {
@@ -354,7 +353,7 @@ EntityStats invoiceStatsForUser(
   int countActive = 0;
   int countArchived = 0;
   invoiceMap.forEach((invoiceId, invoice) {
-    if (invoice!.assignedUserId == userId) {
+    if (invoice.assignedUserId == userId) {
       if (invoice.isActive) {
         countActive++;
       } else if (invoice.isDeleted!) {

@@ -72,9 +72,8 @@ class ListScaffold extends StatelessWidget {
           ),
         ),
       );
-    } else if (entityType != null &&
-        !entityType.hideCreate &&
-        state.userCompany!.canCreate(entityType)) {
+    } else if (!entityType.hideCreate &&
+        state.userCompany.canCreate(entityType)) {
       leading = Padding(
         padding: const EdgeInsets.only(left: 16, right: 14),
         child: OutlinedButton(

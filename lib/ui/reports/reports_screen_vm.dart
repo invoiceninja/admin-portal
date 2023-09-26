@@ -110,9 +110,9 @@ class ReportsScreenVM {
   static ReportsScreenVM fromStore(Store<AppState> store) {
     final state = store.state;
     final report = state.uiState.reportsUIState.report;
-    final allReportSettings = state.userCompany?.settings?.reportSettings;
+    final allReportSettings = state.userCompany.settings.reportSettings;
     final reportSettings =
-        allReportSettings != null && allReportSettings.containsKey(report)
+        allReportSettings.containsKey(report)
             ? allReportSettings[report]
             : ReportSettingsEntity();
 
@@ -404,14 +404,14 @@ class ReportsScreenVM {
           ));
         },
         onReportColumnsChanged: (context, columns) {
-          final settings = state.userCompany!.settings!.rebuild((b) => b
+          final settings = state.userCompany.settings.rebuild((b) => b
             ..reportSettings[state.uiState.reportsUIState.report] =
                 reportSettings!.rebuild(
                     (b) => b..columns.replace(BuiltList<String>(columns))));
           final userCompany =
-              state.userCompany!.rebuild((b) => b..settings.replace(settings));
+              state.userCompany.rebuild((b) => b..settings.replace(settings));
           final user =
-              state.user!.rebuild((b) => b..userCompany.replace(userCompany));
+              state.user.rebuild((b) => b..userCompany.replace(userCompany));
           final completer = snackBarCompleter<Null>(
               context, AppLocalization.of(context)!.savedSettings);
           store.dispatch(
@@ -700,7 +700,7 @@ GroupTotals calculateReportTotals({
   rows.sort((rowA, rowB) {
     final valuesA = totals[rowA];
     final valuesB = totals[rowB];
-    if (index != null && index < columns.length) {
+    if (index < columns.length) {
       final sort = sortedColumns[index];
       if (index == 0) {
         return reportSettings.sortAscending

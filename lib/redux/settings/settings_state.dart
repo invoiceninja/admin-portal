@@ -91,9 +91,9 @@ abstract class SettingsUIState extends Object
   bool get isFiltered => entityType != EntityType.company;
 
   SettingsEntity get settings {
-    if (entityType == EntityType.client && client != null) {
+    if (entityType == EntityType.client) {
       return client.settings;
-    } else if (entityType == EntityType.group && group != null) {
+    } else if (entityType == EntityType.group) {
       return group.settings;
     } else {
       return company.settings;

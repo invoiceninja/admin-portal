@@ -120,7 +120,7 @@ List<BaseEntity?> filteredSelector(String? filter, UserCompanyState state) {
     }).toList());
 
   list.sort((BaseEntity? entityA, BaseEntity? entityB) {
-    return entityA!.listDisplayName!.compareTo(entityB!.listDisplayName!);
+    return entityA!.listDisplayName.compareTo(entityB!.listDisplayName);
   });
 
   return list;
@@ -128,7 +128,7 @@ List<BaseEntity?> filteredSelector(String? filter, UserCompanyState state) {
 
 String localeSelector(AppState state, {bool twoLetter = false}) {
   final locale = state.staticState
-          ?.languageMap[state.company?.settings?.languageId]?.locale ??
+          .languageMap[state.company?.settings.languageId]?.locale ??
       'en';
 
   // https://github.com/flutter/flutter/issues/32090

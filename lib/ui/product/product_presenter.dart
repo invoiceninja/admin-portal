@@ -13,7 +13,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProductPresenter extends EntityPresenter {
   static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
-    final company = userCompany.company!;
+    final company = userCompany.company;
 
     return [
       ProductFields.productKey,
@@ -25,7 +25,7 @@ class ProductPresenter extends EntityPresenter {
   }
 
   static List<String> getAllTableFields(UserCompanyEntity userCompany) {
-    final company = userCompany.company!;
+    final company = userCompany.company;
 
     return [
       ...getDefaultTableFields(userCompany),

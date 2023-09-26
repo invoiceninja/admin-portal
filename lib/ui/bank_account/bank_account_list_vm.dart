@@ -98,8 +98,8 @@ class BankAccountListVM {
               EntityAction action) =>
           handleBankAccountAction(context, bankAccounts, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: state.userCompany!.settings
-              ?.getTableColumns(EntityType.bankAccount) ??
+      tableColumns: state.userCompany.settings
+              .getTableColumns(EntityType.bankAccount) ??
           BankAccountPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortBankAccounts(field)),
       onClearMultielsect: () => store.dispatch(ClearBankAccountMultiselect()),

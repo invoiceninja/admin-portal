@@ -212,7 +212,7 @@ TaxRateState _setLoadedCompany(
     TaxRateState taxRateState, LoadCompanySuccess action) {
   final state = taxRateState.rebuild((b) => b
     ..map.addAll(Map.fromIterable(
-      action.userCompany.company!.taxRates,
+      action.userCompany.company.taxRates,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     )));

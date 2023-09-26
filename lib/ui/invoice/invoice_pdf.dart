@@ -345,12 +345,12 @@ Future<Response?> _loadPDF(
     final url = isDeliveryNote
         ? '/invoices/${invoice.id}/delivery_note'
         : '/activities/download_entity/$activityId';
-    response = await (WebClient()
-        .get('${credential.url}$url', credential.token, rawResponse: true));
+    response = await WebClient()
+        .get('${credential.url}$url', credential.token, rawResponse: true);
   } else {
     final invitation = invoice.invitations.first;
     final url = invitation.downloadLink;
-    response = await (WebClient().get(url, '', rawResponse: true));
+    response = await WebClient().get(url, '', rawResponse: true);
   }
 
   if (response!.statusCode >= 400) {

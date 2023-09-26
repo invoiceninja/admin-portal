@@ -117,7 +117,7 @@ class QuoteListVM extends EntityListVM {
               EntityAction action) =>
           handleQuoteAction(context, quotes, action),
       tableColumns:
-          state.userCompany!.settings?.getTableColumns(EntityType.quote) ??
+          state.userCompany.settings.getTableColumns(EntityType.quote) ??
               QuotePresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortQuotes(field)),
       onClearMultiselect: () => store.dispatch(ClearQuoteMultiselect()),

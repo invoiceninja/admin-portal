@@ -150,7 +150,7 @@ class InvoiceListVM extends EntityListVM {
               EntityAction action) =>
           handleInvoiceAction(context, invoices, action),
       tableColumns:
-          state.userCompany!.settings?.getTableColumns(EntityType.invoice) ??
+          state.userCompany.settings.getTableColumns(EntityType.invoice) ??
               InvoicePresenter.getDefaultTableFields(state.userCompany),
       entityType: EntityType.invoice,
       onSortColumn: (field) => store.dispatch(SortInvoices(field)),

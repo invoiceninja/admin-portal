@@ -22,7 +22,7 @@ InvoiceEntity? expensePurchaseOrderSelector(
     ExpenseEntity expense, BuiltMap<String, InvoiceEntity> purchaseOrderMap) {
   InvoiceEntity? purchaseOrder;
   purchaseOrderMap.forEach((purchaseOrderId, purchaseOrder) {
-    if (purchaseOrder!.expenseId == expense.id) {
+    if (purchaseOrder.expenseId == expense.id) {
       purchaseOrder = purchaseOrder;
     }
   });

@@ -102,9 +102,9 @@ ReportResult quoteReport(
   final List<BaseEntity> entities = [];
   BuiltList<QuoteReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
+  final reportSettings = userCompany.settings.reportSettings;
   final quoteReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportQuote)
+      reportSettings.containsKey(kReportQuote)
           ? reportSettings[kReportQuote]!
           : ReportSettingsEntity();
 
@@ -136,12 +136,12 @@ ReportResult quoteReport(
     final contact = client.getContact(quote.invitations.first.clientContactId);
     //final vendor = vendorMap[quote.vendorId];
 
-    if ((quote.isDeleted! && !userCompany.company!.reportIncludeDeleted) ||
+    if ((quote.isDeleted! && !userCompany.company.reportIncludeDeleted) ||
         client.isDeleted!) {
       continue;
     }
 
-    if (!userCompany.company!.reportIncludeDrafts && quote.isDraft) {
+    if (!userCompany.company.reportIncludeDrafts && quote.isDraft) {
       continue;
     }
 
@@ -210,28 +210,28 @@ ReportResult quoteReport(
           value = presentCustomField(
             value: quote.customValue1,
             customFieldType: CustomFieldType.invoice1,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case QuoteReportFields.invoice2:
           value = presentCustomField(
             value: quote.customValue2,
             customFieldType: CustomFieldType.invoice2,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case QuoteReportFields.invoice3:
           value = presentCustomField(
             value: quote.customValue3,
             customFieldType: CustomFieldType.invoice3,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case QuoteReportFields.invoice4:
           value = presentCustomField(
             value: quote.customValue4,
             customFieldType: CustomFieldType.invoice4,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case QuoteReportFields.surcharge1:
@@ -358,7 +358,7 @@ ReportResult quoteReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column)!,
+        column: EnumUtils.parse(column),
       )!) {
         skip = true;
       }
@@ -370,7 +370,7 @@ ReportResult quoteReport(
         if ([
           QuoteReportFields.converted_amount,
         ].contains(column)) {
-          currencyId = userCompany.company!.currencyId;
+          currencyId = userCompany.company.currencyId;
         }
         row.add(quote.getReportDouble(
           value: value,

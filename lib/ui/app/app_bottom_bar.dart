@@ -375,13 +375,12 @@ class _AppBottomBarState extends State<AppBottomBar> {
             if (!selected.contains(listUIState.sortField)) {
               widget.onSelectedSortField!(selected.isEmpty ? '' : selected[0]);
             }
-            final settings = state.userCompany!.settings!.rebuild((b) => b
+            final settings = state.userCompany.settings.rebuild((b) => b
               ..tableColumns['${widget.entityType}'] =
                   BuiltList<String>(selected));
-            final userCompany = state.userCompany!
-                .rebuild((b) => b..settings.replace(settings));
+            final userCompany = state.userCompany.rebuild((b) => b..settings.replace(settings));
             final user =
-                state.user!.rebuild((b) => b..userCompany.replace(userCompany));
+                state.user.rebuild((b) => b..userCompany.replace(userCompany));
             final completer = snackBarCompleter<Null>(
                 context, AppLocalization.of(context)!.savedSettings);
             store.dispatch(
@@ -394,7 +393,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
           options: widget.tableColumns ?? [],
           defaultSelected: widget.defaultTableColumns ?? [],
           selected: state
-                  .userCompany!.settings!.tableColumns['${widget.entityType}']
+                  .userCompany.settings.tableColumns['${widget.entityType}']
                   ?.toList() ??
               [],
         );

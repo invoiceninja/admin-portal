@@ -1,11 +1,9 @@
 // Flutter imports:
-import 'dart:async';
 import 'dart:convert';
 
 // Package imports:
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/purchase_order_model.dart';
 import 'package:invoiceninja_flutter/data/models/quote_model.dart';
@@ -300,7 +298,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                             ),
                             if (!isFiltered &&
                                 _wasInvoiceDesignChanged &&
-                                state.userCompany!.isAdmin)
+                                state.userCompany.isAdmin)
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 8),
                                 child: CheckboxListTile(
@@ -328,7 +326,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                             ),
                             if (!isFiltered &&
                                 _wasQuoteDesignChanged &&
-                                state.userCompany!.isAdmin)
+                                state.userCompany.isAdmin)
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 8),
                                 child: CheckboxListTile(
@@ -357,7 +355,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                             ),
                             if (!isFiltered &&
                                 _wasCreditDesignChanged &&
-                                state.userCompany!.isAdmin)
+                                state.userCompany.isAdmin)
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 8),
                                 child: CheckboxListTile(
@@ -389,7 +387,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                             ),
                             if (!isFiltered &&
                                 _wasPurchaseOrderDesignChanged &&
-                                state.userCompany!.isAdmin)
+                                state.userCompany.isAdmin)
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 8),
                                 child: CheckboxListTile(
@@ -1297,7 +1295,7 @@ class _PdfPreviewState extends State<_PdfPreview> {
 
     setState(() => isLoading = true);
 
-    response = await (WebClient()
+    response = await WebClient()
         .post(
       url,
       state.credentials.token,
@@ -1311,7 +1309,7 @@ class _PdfPreviewState extends State<_PdfPreview> {
     )
         .catchError((dynamic error) {
       print('## Error: $error');
-    }));
+    });
 
     setState(() => isLoading = false);
   }

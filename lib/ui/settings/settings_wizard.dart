@@ -183,7 +183,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
             store.dispatch(
               SaveAuthUserRequest(
                 completer: completer,
-                user: state.user!.rebuild((b) => b
+                user: state.user.rebuild((b) => b
                   ..firstName = _firstNameController.text.trim()
                   ..lastName = _lastNameController.text.trim()),
                 password: password,
@@ -312,7 +312,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
     if (state.companies.length > 1 && kReleaseMode) {
       showNameFields = false;
     }
-    if (state.user!.isConnectedToApple && state.user!.fullName.isEmpty) {
+    if (state.user.isConnectedToApple && state.user.fullName.isEmpty) {
       showNameFields = false;
     }
 

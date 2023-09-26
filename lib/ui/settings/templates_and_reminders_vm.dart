@@ -96,7 +96,7 @@ class TemplatesAndRemindersVM {
             case EntityType.company:
               final completer = snackBarCompleter<Null>(
                   context, AppLocalization.of(context)!.savedSettings);
-              completer.future.then<Null>(((_) => callback()));
+              completer.future.then<Null>((_) => callback());
               store.dispatch(SaveCompanyRequest(
                   completer: completer, company: settingsUIState.company));
               break;

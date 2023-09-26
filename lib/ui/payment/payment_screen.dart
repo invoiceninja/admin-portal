@@ -161,7 +161,7 @@ class PaymentScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany!.canCreate(EntityType.payment)
+              userCompany.canCreate(EntityType.payment)
           ? FloatingActionButton(
               heroTag: 'payment_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

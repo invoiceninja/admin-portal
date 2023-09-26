@@ -179,15 +179,13 @@ class _DocumentGridState extends State<DocumentGrid> {
                           final images = await ImagePicker().pickMultiImage();
                           for (var index = 0; index < images.length; index++) {
                             final image = images[index];
-                            if (image != null && image.path != null) {
-                              final croppedFile = (await ImageCropper()
-                                  .cropImage(sourcePath: image.path))!;
-                              final bytes = await croppedFile.readAsBytes();
-                              final multipartFile = MultipartFile.fromBytes(
-                                  'documents[$index]', bytes,
-                                  filename: image.path.split('/').last);
-                              multipartFiles.add(multipartFile);
-                            }
+                            final croppedFile = (await ImageCropper()
+                                .cropImage(sourcePath: image.path))!;
+                            final bytes = await croppedFile.readAsBytes();
+                            final multipartFile = MultipartFile.fromBytes(
+                                'documents[$index]', bytes,
+                                filename: image.path.split('/').last);
+                            multipartFiles.add(multipartFile);
                           }
                           widget.onUploadDocument(multipartFiles, _isPrivate);
                         } else {

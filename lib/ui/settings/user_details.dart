@@ -107,7 +107,7 @@ class _UserDetailsState extends State<UserDetails>
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    final user = widget.viewModel.state.user!;
+    final user = widget.viewModel.state.user;
     _firstNameController.text = user.firstName;
     _lastNameController.text = user.lastName;
     _emailController.text = user.email;
@@ -154,15 +154,15 @@ class _UserDetailsState extends State<UserDetails>
     final googleButton = Expanded(
       child: OutlinedButton(
         child: Text(
-          (state.user!.isConnectedToGoogle
+          (state.user.isConnectedToGoogle
                   ? localization.disconnectGoogle
                   : localization.connectGoogle)
               .toUpperCase(),
           textAlign: TextAlign.center,
         ),
-        onPressed: state.user!.isConnectedToEmail ||
-                state.user!.isConnectedToApple ||
-                state.user!.isConnectedToMicrosoft
+        onPressed: state.user.isConnectedToEmail ||
+                state.user.isConnectedToApple ||
+                state.user.isConnectedToMicrosoft
             ? null
             : () {
                 if (state.settingsUIState.isChanged) {
@@ -172,7 +172,7 @@ class _UserDetailsState extends State<UserDetails>
                   return;
                 }
 
-                if (state.user!.isConnectedToGoogle) {
+                if (state.user.isConnectedToGoogle) {
                   viewModel.onDisconnectGooglePressed(context);
                 } else {
                   viewModel.onConnectGooglePressed(context);
@@ -184,13 +184,13 @@ class _UserDetailsState extends State<UserDetails>
     final gmailButton = Expanded(
       child: OutlinedButton(
         child: Text(
-          (state.user!.isConnectedToEmail
+          (state.user.isConnectedToEmail
                   ? localization.disconnectGmail
                   : localization.connectGmail)
               .toUpperCase(),
           textAlign: TextAlign.center,
         ),
-        onPressed: !state.user!.isConnectedToGoogle
+        onPressed: !state.user.isConnectedToGoogle
             ? null
             : () async {
                 if (state.settingsUIState.isChanged) {
@@ -200,7 +200,7 @@ class _UserDetailsState extends State<UserDetails>
                   return;
                 }
 
-                if (state.user!.isConnectedToEmail) {
+                if (state.user.isConnectedToEmail) {
                   viewModel.onDisconnectGmailPressed(context);
                 } else {
                   launchUrl(Uri.parse('$kAppProductionUrl/auth/google'));
@@ -212,15 +212,15 @@ class _UserDetailsState extends State<UserDetails>
     final microsoftButton = Expanded(
       child: OutlinedButton(
         child: Text(
-          (state.user!.isConnectedToMicrosoft
+          (state.user.isConnectedToMicrosoft
                   ? localization.disconnectMicrosoft
                   : localization.connectMicrosoft)!
               .toUpperCase(),
           textAlign: TextAlign.center,
         ),
-        onPressed: state.user!.isConnectedToEmail ||
-                state.user!.isConnectedToGoogle ||
-                state.user!.isConnectedToApple
+        onPressed: state.user.isConnectedToEmail ||
+                state.user.isConnectedToGoogle ||
+                state.user.isConnectedToApple
             ? null
             : () {
                 if (state.settingsUIState.isChanged) {
@@ -230,7 +230,7 @@ class _UserDetailsState extends State<UserDetails>
                   return;
                 }
 
-                if (state.user!.isConnectedToMicrosoft) {
+                if (state.user.isConnectedToMicrosoft) {
                   viewModel.onDisconnectMicrosoftPressed(context);
                 } else {
                   viewModel.onConnectMicrosoftPressed(context);
@@ -242,13 +242,13 @@ class _UserDetailsState extends State<UserDetails>
     final office365Button = Expanded(
       child: OutlinedButton(
         child: Text(
-          (state.user!.isConnectedToEmail
+          (state.user.isConnectedToEmail
                   ? localization.disconnectEmail
                   : localization.connectEmail)!
               .toUpperCase(),
           textAlign: TextAlign.center,
         ),
-        onPressed: !state.user!.isConnectedToMicrosoft
+        onPressed: !state.user.isConnectedToMicrosoft
             ? null
             : () async {
                 if (state.settingsUIState.isChanged) {
@@ -258,7 +258,7 @@ class _UserDetailsState extends State<UserDetails>
                   return;
                 }
 
-                if (state.user!.isConnectedToEmail) {
+                if (state.user.isConnectedToEmail) {
                   viewModel.onDisconnectMicrosoftEmailPressed(context);
                 } else {
                   launchUrl(
@@ -271,14 +271,14 @@ class _UserDetailsState extends State<UserDetails>
     final appleButton = Expanded(
       child: OutlinedButton(
         child: Text(
-          (state.user!.isConnectedToApple
+          (state.user.isConnectedToApple
                   ? localization.disconnectApple
                   : localization.connectApple)!
               .toUpperCase(),
           textAlign: TextAlign.center,
         ),
-        onPressed: state.user!.isConnectedToGoogle ||
-                state.user!.isConnectedToMicrosoft
+        onPressed: state.user.isConnectedToGoogle ||
+                state.user.isConnectedToMicrosoft
             ? null
             : () {
                 if (state.settingsUIState.isChanged) {
@@ -288,7 +288,7 @@ class _UserDetailsState extends State<UserDetails>
                   return;
                 }
 
-                if (state.user!.isConnectedToApple) {
+                if (state.user.isConnectedToApple) {
                   viewModel.onDisconnectApplePressed(context);
                 } else {
                   // do nothing
@@ -388,7 +388,7 @@ class _UserDetailsState extends State<UserDetails>
                     Expanded(
                       child: OutlinedButton(
                         child: Text(
-                          (state.user!.isTwoFactorEnabled
+                          (state.user.isTwoFactorEnabled
                                   ? localization.disableTwoFactor
                                   : localization.enableTwoFactor)
                               .toUpperCase(),
@@ -402,10 +402,10 @@ class _UserDetailsState extends State<UserDetails>
                             return;
                           }
 
-                          if (state.user!.isTwoFactorEnabled) {
+                          if (state.user.isTwoFactorEnabled) {
                             viewModel.onDisableTwoFactorPressed(context);
                           } else {
-                            if (state.user!.phone.isEmpty ||
+                            if (state.user.phone.isEmpty ||
                                 user.phone.isEmpty) {
                               showMessageDialog(
                                   context: context,
@@ -414,7 +414,7 @@ class _UserDetailsState extends State<UserDetails>
                               return;
                             }
 
-                            if (state.isHosted && !state.user!.phoneVerified) {
+                            if (state.isHosted && !state.user.phoneVerified) {
                               final bool? phoneVerified =
                                   await showDialog<bool>(
                                 context: context,
@@ -448,7 +448,7 @@ class _UserDetailsState extends State<UserDetails>
                 children: <Widget>[
                   FormColorPicker(
                     labelText: localization.accentColor,
-                    initialValue: user.userCompany!.settings!.accentColor,
+                    initialValue: user.userCompany!.settings.accentColor,
                     onSelected: (value) {
                       widget.viewModel.onChanged(user.rebuild((b) => b
                         ..userCompany.settings.accentColor =
@@ -459,7 +459,7 @@ class _UserDetailsState extends State<UserDetails>
                     AppDropdownButton<int>(
                       blankValue: null,
                       labelText: localization.yearsDataShown,
-                      value: user.userCompany!.settings!.numberYearsActive,
+                      value: user.userCompany!.settings.numberYearsActive,
                       onChanged: (dynamic value) {
                         widget.viewModel.onChanged(user.rebuild((b) =>
                             b..userCompany.settings.numberYearsActive = value));
@@ -481,7 +481,7 @@ class _UserDetailsState extends State<UserDetails>
                     BoolDropdownButton(
                       label: localization.includeDeletedClients,
                       helpLabel: localization.includeDeletedClientsHelp,
-                      value: user.userCompany!.settings!.includeDeletedClients,
+                      value: user.userCompany!.settings.includeDeletedClients,
                       onChanged: (value) {
                         widget.viewModel.onChanged(user.rebuild((b) => b
                           ..userCompany.settings.includeDeletedClients =

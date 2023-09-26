@@ -272,6 +272,6 @@ BankAccountState _setLoadedBankAccounts(
 
 BankAccountState _setLoadedCompany(
     BankAccountState bankAccountState, LoadCompanySuccess action) {
-  final company = action.userCompany.company!;
+  final company = action.userCompany.company;
   return bankAccountState.loadBankAccounts(company.bankAccounts);
 }

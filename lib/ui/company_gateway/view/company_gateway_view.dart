@@ -205,7 +205,7 @@ class _CompanyGatewayOverview extends StatelessWidget {
         ),
         ListDivider(),
       ],
-      if (gateway?.supportsTokenBilling == true) ...[
+      if (gateway.supportsTokenBilling == true) ...[
         EntitiesListTile(
           hideNew: true,
           entity: companyGateway,

@@ -124,7 +124,7 @@ class _TaxSettingsState extends State<TaxSettings> {
                   TaxRateDropdown(
                     onSelected: (taxRate) =>
                         viewModel.onSettingsChanged(settings.rebuild((b) => b
-                          ..defaultTaxName1 = taxRate!.name
+                          ..defaultTaxName1 = taxRate.name
                           ..defaultTaxRate1 = taxRate.rate)),
                     labelText: localization.defaultTaxRate,
                     initialTaxName: settings.defaultTaxName1,
@@ -134,7 +134,7 @@ class _TaxSettingsState extends State<TaxSettings> {
                   TaxRateDropdown(
                     onSelected: (taxRate) =>
                         viewModel.onSettingsChanged(settings.rebuild((b) => b
-                          ..defaultTaxName2 = taxRate!.name
+                          ..defaultTaxName2 = taxRate.name
                           ..defaultTaxRate2 = taxRate.rate)),
                     labelText: localization.defaultTaxRate,
                     initialTaxName: settings.defaultTaxName2,
@@ -144,7 +144,7 @@ class _TaxSettingsState extends State<TaxSettings> {
                   TaxRateDropdown(
                     onSelected: (taxRate) =>
                         viewModel.onSettingsChanged(settings.rebuild((b) => b
-                          ..defaultTaxName3 = taxRate!.name
+                          ..defaultTaxName3 = taxRate.name
                           ..defaultTaxRate3 = taxRate.rate)),
                     labelText: localization.defaultTaxRate,
                     initialTaxName: settings.defaultTaxName3,

@@ -110,8 +110,8 @@ class RecurringExpenseListVM {
               EntityAction action) =>
           handleRecurringExpenseAction(context, recurringExpenses, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: state.userCompany!.settings
-              ?.getTableColumns(EntityType.recurringExpense) ??
+      tableColumns: state.userCompany.settings
+              .getTableColumns(EntityType.recurringExpense) ??
           RecurringExpensePresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortRecurringExpenses(field)),
       onClearMultielsect: () =>

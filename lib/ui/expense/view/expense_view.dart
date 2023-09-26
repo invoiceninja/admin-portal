@@ -49,7 +49,7 @@ class _ExpenseViewState extends State<ExpenseView>
     _controller = TabController(
         vsync: this,
         length: 1 +
-            (viewModel.expense!.isRecurring ? 1 : 0) +
+            (viewModel.expense.isRecurring ? 1 : 0) +
             (company.isModuleEnabled(EntityType.document) ? 1 : 0),
         initialIndex: widget.isFilter ? 0 : state.expenseUIState.tabIndex);
     _controller!.addListener(_onTabChanged);
@@ -61,7 +61,7 @@ class _ExpenseViewState extends State<ExpenseView>
     }
 
     final store = StoreProvider.of<AppState>(context);
-    final expense = widget.viewModel.expense!;
+    final expense = widget.viewModel.expense;
 
     if (expense.isRecurring) {
       store.dispatch(UpdateRecurringExpenseTab(tabIndex: _controller!.index));
@@ -97,7 +97,7 @@ class _ExpenseViewState extends State<ExpenseView>
       isFilter: widget.isFilter,
       entity: expense,
       appBarBottom:
-          (company.isModuleEnabled(EntityType.document) || expense!.isRecurring)
+          (company.isModuleEnabled(EntityType.document) || expense.isRecurring)
               ? TabBar(
                   controller: _controller,
                   isScrollable: isMobile(context),
@@ -107,11 +107,11 @@ class _ExpenseViewState extends State<ExpenseView>
                     ),
                     if (company.isModuleEnabled(EntityType.document))
                       Tab(
-                        text: expense!.documents.isEmpty
+                        text: expense.documents.isEmpty
                             ? localization.documents
                             : '${localization.documents} (${expense.documents.length})',
                       ),
-                    if (expense!.isRecurring)
+                    if (expense.isRecurring)
                       Tab(
                         text: localization.schedule,
                       )

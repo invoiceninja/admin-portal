@@ -90,7 +90,7 @@ class WebhookScreen extends StatelessWidget {
             store.dispatch(FilterWebhooksByCustom4(value)),
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany!.canCreate(EntityType.webhook)
+              userCompany.canCreate(EntityType.webhook)
           ? FloatingActionButton(
               heroTag: 'webhook_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

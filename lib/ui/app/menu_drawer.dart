@@ -91,9 +91,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
             url: state.credentials.url! + '/companies/' + company.id + '/logo',
             apiToken: state.userCompanyStates
                 .firstWhere((userCompanyState) =>
-                    userCompanyState.company!.id == company.id)
-                .token!
-                .token,
+                    userCompanyState.company.id == company.id)
+                .token.token,
           );
         } else {
           return CachedImage(
@@ -113,7 +112,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
     }) {
       final userCompany = state.userCompanyStates
           .firstWhere(
-              (userCompanyState) => userCompanyState.company!.id == company.id)
+              (userCompanyState) => userCompanyState.company.id == company.id)
           .userCompany;
       return MouseRegion(
         onEnter: (_) => setState(() => _isHovered = true),
@@ -178,14 +177,14 @@ class _MenuDrawerState extends State<MenuDrawer> {
               ),
             ),
             if (showAccentColor &&
-                userCompany!.settings!.accentColor != null &&
+                userCompany.settings.accentColor != null &&
                 state.companies.length > 1)
               Container(
                 padding: const EdgeInsets.only(right: 2),
                 decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: convertHexStringToColor(
-                        userCompany.settings!.accentColor)),
+                        userCompany.settings.accentColor)),
                 width: 10,
                 height: 10,
                 //color: Colors.red,
@@ -456,8 +455,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                         },
                                       ),
                                     )
-                                else if (state.user!.isTwoFactorEnabled &&
-                                    !state.user!.phoneVerified &&
+                                else if (state.user.isTwoFactorEnabled &&
+                                    !state.user.phoneVerified &&
                                     state.isHosted)
                                   if (state.isMenuCollapsed)
                                     Tooltip(
@@ -500,7 +499,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                       ),
                                     )
                                 else if (state.company!.isDisabled &&
-                                    state.userCompany!.isAdmin)
+                                    state.userCompany.isAdmin)
                                   if (state.isMenuCollapsed)
                                     Tooltip(
                                       message:
@@ -545,7 +544,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                         },
                                       ),
                                     ),
-                                if (state.userCompany!.isOwner &&
+                                if (state.userCompany.isOwner &&
                                     state.isHosted &&
                                     !state.isProPlan &&
                                     (!isApple() || supportsInAppPurchase()))
@@ -595,7 +594,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                       ),
                                     ),
                                   ),
-                                if (state.userCompany!.canViewDashboard)
+                                if (state.userCompany.canViewDashboard)
                                   DrawerTile(
                                     company: company,
                                     icon: getEntityIcon(EntityType.dashboard),
@@ -710,7 +709,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                   title: localization.documents,
                                 ),
                                 if (state.isProPlan &&
-                                    state.userCompany!.canViewReports)
+                                    state.userCompany.canViewReports)
                                   DrawerTile(
                                     company: company,
                                     icon: getEntityIcon(EntityType.reports),
@@ -790,7 +789,7 @@ class _DrawerTileState extends State<DrawerTile> {
 
     if (!Config.DEMO_MODE) {
       if (widget.entityType != null &&
-          !userCompany!.canViewCreateOrEdit(widget.entityType)) {
+          !userCompany.canViewCreateOrEdit(widget.entityType)) {
         return Container();
       }
     }
@@ -931,7 +930,7 @@ class _DrawerTileState extends State<DrawerTile> {
           }
         },
       );
-    } else if (userCompany!.canCreate(widget.entityType)) {
+    } else if (userCompany.canCreate(widget.entityType)) {
       iconWidget = IconButton(
         tooltip: prefState.enableTooltips ? widget.iconTooltip : null,
         icon: Icon(
@@ -1032,7 +1031,7 @@ class SidebarFooter extends StatelessWidget {
     final state = store.state;
     final prefState = state.prefState;
     final localization = AppLocalization.of(context);
-    final account = state.userCompany!.account;
+    final account = state.userCompany.account;
 
     return Material(
       color: Theme.of(context).bottomAppBarTheme.color,
@@ -1043,10 +1042,10 @@ class SidebarFooter extends StatelessWidget {
           if (state.isMenuCollapsed) ...[
             Expanded(child: SizedBox())
           ] else ...[
-            if (!Config.DEMO_MODE && !state.isDemo && account!.isOld)
+            if (!Config.DEMO_MODE && !state.isDemo && account.isOld)
               if (state.isSelfHosted &&
                   !account.isSchedulerRunning &&
-                  state.userCompany!.isAdmin)
+                  state.userCompany.isAdmin)
                 IconButton(
                   tooltip: prefState.enableTooltips ? localization!.error : '',
                   icon: Icon(
@@ -1085,7 +1084,7 @@ class SidebarFooter extends StatelessWidget {
                 )
               else if (state.isSelfHosted &&
                   !state.account!.disableAutoUpdate &&
-                  state.userCompany!.isAdmin &&
+                  state.userCompany.isAdmin &&
                   state.isUpdateAvailable)
                 IconButton(
                   tooltip: prefState.enableTooltips
@@ -1373,7 +1372,7 @@ void _showAbout(BuildContext context) async {
     height: 40.0,
   );
 
-  final userCompany = state.userCompany!;
+  final userCompany = state.userCompany;
   String subtitle = state.appVersion + '\n';
   subtitle +=
       state.isSelfHosted ? localization!.selfhosted : localization!.hosted;
@@ -1448,8 +1447,8 @@ void _showAbout(BuildContext context) async {
                   SizedBox(height: 8),
                   ListTile(
                     contentPadding: const EdgeInsets.all(0),
-                    title: Text(state.user!.fullName),
-                    subtitle: Text(state.user!.email),
+                    title: Text(state.user.fullName),
+                    subtitle: Text(state.user.email),
                   ),
                   if (!isApple())
                     Padding(
@@ -1587,7 +1586,7 @@ void _showAbout(BuildContext context) async {
                     color: Colors.cyan,
                     onPressed: () => launchUrl(Uri.parse(kReleaseNotesUrl)),
                   ),
-                  if (state.userCompany!.isAdmin) ...[
+                  if (state.userCompany.isAdmin) ...[
                     if (state.isSelfHosted || !kReleaseMode) ...[
                       AppButton(
                         label: localization.healthCheck.toUpperCase(),
@@ -1713,7 +1712,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context)!;
     final state = StoreProvider.of<AppState>(context).state;
-    final user = state.user!;
+    final user = state.user;
 
     return PointerInterceptor(
       child: AlertDialog(

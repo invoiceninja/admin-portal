@@ -59,7 +59,7 @@ class _SettingsListState extends State<SettingsList> {
       return SizedBox();
     }
 
-    if (!state.userCompany!.isAdmin)
+    if (!state.userCompany.isAdmin)
       return Stack(
         children: [
           ScrollableListView(
@@ -169,7 +169,7 @@ class _SettingsListState extends State<SettingsList> {
                 section: kSettingsDeviceSettings,
                 viewModel: widget.viewModel,
               ),
-            if (showAll && state.userCompany!.isAdmin)
+            if (showAll && state.userCompany.isAdmin)
               SettingsListTile(
                 section: kSettingsAccountManagement,
                 viewModel: widget.viewModel,

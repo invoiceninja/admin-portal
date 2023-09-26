@@ -137,18 +137,16 @@ class _ClientPdfViewState extends State<ClientPdfView> {
     String? startDate = '';
     String? endDate = '';
 
-    if (_dateRange != null) {
-      startDate = calculateStartDate(
-          company: state.company!,
-          dateRange: _dateRange,
-          customStartDate: _startDate,
-          customEndDate: _endDate);
-      endDate = calculateEndDate(
-          company: state.company!,
-          dateRange: _dateRange,
-          customStartDate: _startDate,
-          customEndDate: _endDate);
-    }
+    startDate = calculateStartDate(
+        company: state.company!,
+        dateRange: _dateRange,
+        customStartDate: _startDate,
+        customEndDate: _endDate);
+    endDate = calculateEndDate(
+        company: state.company!,
+        dateRange: _dateRange,
+        customStartDate: _startDate,
+        customEndDate: _endDate);
 
     if (_dateRange != DateRange.custom) {
       _startDate = startDate;
@@ -166,12 +164,12 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       'status': _status,
     });
 
-    response = await (webClient.post(
+    response = await webClient.post(
       url,
       state.credentials.token,
       data: data,
       rawResponse: true,
-    ));
+    );
 
     if (response!.statusCode >= 400) {
       String errorMessage =

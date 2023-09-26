@@ -395,7 +395,7 @@ class _AccountOverview extends StatelessWidget {
                         builder: (context) => UpgradeDialog(),
                       );
                     } else {
-                      launchUrl(Uri.parse(state.userCompany!.ninjaPortalUrl));
+                      launchUrl(Uri.parse(state.userCompany.ninjaPortalUrl));
                     }
                   }),
             ),
@@ -573,7 +573,7 @@ class _AccountOverview extends StatelessWidget {
                 ),
               ),
             ])),
-        if (state.userCompany!.isOwner && !state.isDemo) ...[
+        if (state.userCompany.isOwner && !state.isDemo) ...[
           Padding(
             padding: const EdgeInsets.only(top: 16, right: 16, left: 16),
             child: ListDivider(),
@@ -631,8 +631,8 @@ class _AccountOverview extends StatelessWidget {
                           typeToConfirm: localization.delete.toLowerCase(),
                           askForReason: true,
                           callback: (String? reason) async {
-                            if (state.user!.isConnectedToApple &&
-                                !state.user!.hasPassword) {
+                            if (state.user.isConnectedToApple &&
+                                !state.user.hasPassword) {
                               final credentials =
                                   await SignInWithApple.getAppleIDCredential(
                                 scopes: [

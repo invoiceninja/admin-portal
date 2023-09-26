@@ -67,7 +67,7 @@ class EditScaffold extends StatelessWidget {
     bool showUpgradeBanner = false;
     bool isEnabled = !state.isSaving && (entity?.isEditable ?? true);
     bool isCancelEnabled = false;
-    String? upgradeMessage = state.userCompany!.isOwner
+    String? upgradeMessage = state.userCompany.isOwner
         ? (state.account!.isEligibleForTrial && !supportsInAppPurchase()
             ? localization!.startFreeTrialMessage
             : localization!.upgradeToPaidPlan)
@@ -142,7 +142,7 @@ class EditScaffold extends StatelessWidget {
                       Column(
                         children: [
                           if (showUpgradeBanner &&
-                              state.userCompany!.isOwner &&
+                              state.userCompany.isOwner &&
                               (!isApple() || supportsInAppPurchase()))
                             InkWell(
                               child: IconMessage(
@@ -160,7 +160,7 @@ class EditScaffold extends StatelessWidget {
                                   );
                                 } else {
                                   launchUrl(Uri.parse(
-                                      state.userCompany!.ninjaPortalUrl));
+                                      state.userCompany.ninjaPortalUrl));
                                 }
                               },
                             ),

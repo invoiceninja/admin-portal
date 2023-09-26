@@ -76,7 +76,7 @@ Reducer<String?> selectedIdReducer = combineReducers([
       action.entityType == EntityType.task ? action.entityId : selectedId),
   TypedReducer<String?, ViewTask>((selectedId, action) => action.taskId),
   TypedReducer<String?, AddTaskSuccess>((selectedId, action) =>
-      selectedId!.isNotEmpty || action.autoSelect ? action.task!.id : ''),
+      selectedId!.isNotEmpty || action.autoSelect ? action.task.id : ''),
   TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
   TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
@@ -251,8 +251,8 @@ final tasksReducer = combineReducers<TaskState>([
 
 TaskState _purgeClientSuccess(TaskState taskState, PurgeClientSuccess action) {
   final ids = taskState.map.values
-      .where((each) => each!.clientId == action.clientId)
-      .map((each) => each!.id)
+      .where((each) => each.clientId == action.clientId)
+      .map((each) => each.id)
       .toList();
 
   return taskState.rebuild((b) => b
@@ -314,8 +314,8 @@ TaskState _restoreTaskSuccess(TaskState taskState, RestoreTaskSuccess action) {
 
 TaskState _addTask(TaskState taskState, AddTaskSuccess action) {
   return taskState.rebuild((b) => b
-    ..map[action.task!.id] = action.task
-    ..list.add(action.task!.id));
+    ..map[action.task.id] = action.task
+    ..list.add(action.task.id));
 }
 
 TaskState _updateTask(TaskState taskState, SaveTaskSuccess action) {
@@ -330,6 +330,6 @@ TaskState _setLoadedTasks(TaskState taskState, LoadTasksSuccess action) =>
     taskState.loadTasks(action.tasks);
 
 TaskState _setLoadedCompany(TaskState taskState, LoadCompanySuccess action) {
-  final company = action.userCompany.company!;
+  final company = action.userCompany.company;
   return taskState.loadTasks(company.tasks);
 }

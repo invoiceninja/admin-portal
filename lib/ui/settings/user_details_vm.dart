@@ -38,7 +38,7 @@ class UserDetailsScreen extends StatelessWidget {
         final state = viewModel.state;
         return UserDetails(
             key: ValueKey(
-                state.settingsUIState.updatedAt + state.user!.updatedAt),
+                state.settingsUIState.updatedAt + state.user.updatedAt),
             viewModel: viewModel);
       },
     );
@@ -161,7 +161,7 @@ class UserDetailsVM {
             });
       },
       onDisconnectGooglePressed: (context) {
-        if (!state.user!.hasPassword) {
+        if (!state.user.hasPassword) {
           showErrorDialog(
               message: AppLocalization.of(context)!.pleaseFirstSetAPassword);
           return;
@@ -228,7 +228,7 @@ class UserDetailsVM {
             });
       },
       onDisconnectMicrosoftPressed: (context) {
-        if (!state.user!.hasPassword) {
+        if (!state.user.hasPassword) {
           showErrorDialog(
               message: AppLocalization.of(context)!.pleaseFirstSetAPassword);
           return;
@@ -255,7 +255,7 @@ class UserDetailsVM {
             });
       },
       onDisconnectApplePressed: (context) {
-        if (!state.user!.hasPassword) {
+        if (!state.user.hasPassword) {
           showErrorDialog(
               message: AppLocalization.of(context)!.pleaseFirstSetAPassword);
           return;
@@ -313,11 +313,11 @@ class UserDetailsVM {
           final completer =
               snackBarCompleter<Null>(context, localization.updatedUser);
           final appBuilder = AppBuilder.of(context);
-          final origUserSettings = state.userCompany!.settings;
+          final origUserSettings = state.userCompany.settings;
 
           completer.future.then<Null>((_) async {
-            final newUserSettings = store.state.userCompany!.settings!;
-            if (origUserSettings!.includeDeletedClients !=
+            final newUserSettings = store.state.userCompany.settings;
+            if (origUserSettings.includeDeletedClients !=
                     newUserSettings.includeDeletedClients ||
                 origUserSettings.numberYearsActive !=
                     newUserSettings.numberYearsActive) {
@@ -343,9 +343,9 @@ class UserDetailsVM {
           confirmCallback(
               context: context,
               message: localization.changingPhoneDisablesTwoFactor,
-              skip: state.user!.phone ==
+              skip: state.user.phone ==
                       state.uiState.settingsUIState.user.phone ||
-                  !state.user!.isTwoFactorEnabled,
+                  !state.user.isTwoFactorEnabled,
               callback: (_) {
                 passwordCallback(
                     context: context,

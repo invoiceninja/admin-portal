@@ -547,7 +547,7 @@ abstract class CompanyEntity extends Object
   FormatNumberType? get listDisplayAmountType => null;
 
   @override
-  String get listDisplayName => settings?.name ?? '';
+  String get listDisplayName => settings.name ?? '';
 
   bool hasCustomField(String field) => getCustomFieldLabel(field).isNotEmpty;
 
@@ -577,7 +577,7 @@ abstract class CompanyEntity extends Object
 
   bool get isSmall => !isLarge;
 
-  bool get hasName => (settings?.name ?? '').isNotEmpty;
+  bool get hasName => (settings.name ?? '').isNotEmpty;
 
   bool get hasCustomSurcharge =>
       hasCustomField(CustomFieldType.surcharge1) ||
@@ -1083,7 +1083,7 @@ abstract class UserCompanyEntity
       return false;
     }
 
-    if (!company!.isModuleEnabled(entityType)) {
+    if (!company.isModuleEnabled(entityType)) {
       return false;
     }
 
@@ -1100,8 +1100,8 @@ abstract class UserCompanyEntity
   }
 
   bool receivesAllNotifications(String channel) =>
-      notifications!.containsKey(channel) &&
-      notifications![channel]!.contains(kNotificationsAll);
+      notifications.containsKey(channel) &&
+      notifications[channel]!.contains(kNotificationsAll);
 
   bool canView(EntityType? entityType) => can(UserPermission.view, entityType);
 
@@ -1121,7 +1121,7 @@ abstract class UserCompanyEntity
     if (entity.isNew) {
       return canCreate(entity.entityType);
     } else {
-      return canEdit(entity.entityType) || user!.canEdit(entity);
+      return canEdit(entity.entityType) || user.canEdit(entity);
     }
   }
 
@@ -1218,7 +1218,7 @@ abstract class UserSettingsEntity
   int get dashboardFieldsPerRowDesktop;
 
   List<String>? getTableColumns(EntityType entityType) {
-    if (tableColumns != null && tableColumns.containsKey('$entityType')) {
+    if (tableColumns.containsKey('$entityType')) {
       return tableColumns['$entityType']!.toList();
     } else {
       return null;

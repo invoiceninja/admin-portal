@@ -68,7 +68,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     final gateway =
         widget.viewModel.state.staticState.gatewayMap[companyGateway.gatewayId];
 
-    final enabledGatewayIds = (gateway?.options?.keys ?? []).where(
+    final enabledGatewayIds = (gateway?.options.keys ?? []).where(
         (gatewayTypeId) => companyGateway
             .getSettingsForGatewayTypeId(gatewayTypeId)
             .isEnabled);
@@ -109,7 +109,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
     final disableSave = (connectGateways.contains(companyGateway.gatewayId) &&
             companyGateway.isNew) ||
         state.isDemo;
-    final enabledGatewayIds = (gateway?.options?.keys ?? []).where(
+    final enabledGatewayIds = (gateway?.options.keys ?? []).where(
         (gatewayTypeId) => companyGateway
             .getSettingsForGatewayTypeId(gatewayTypeId)
             .isEnabled);
@@ -266,7 +266,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     ),
                   SizedBox(height: 16),
                   for (var gatewayTypeId
-                      in gateway?.options?.keys ?? <String>[])
+                      in gateway?.options.keys ?? <String>[])
                     SwitchListTile(
                         title: Text(kGatewayTypes.containsKey(gatewayTypeId)
                             ? localization
@@ -1017,7 +1017,7 @@ class _FeesEditorState extends State<FeesEditor> {
                 (b) => b
                   ..feesAndLimitsMap[widget.gatewayTypeId] =
                       settings.rebuild((b) => b
-                        ..taxRate1 = taxRate!.rate
+                        ..taxRate1 = taxRate.rate
                         ..taxName1 = taxRate.name))),
             labelText: localization.tax,
             initialTaxName: settings.taxName1,
@@ -1029,7 +1029,7 @@ class _FeesEditorState extends State<FeesEditor> {
                 (b) => b
                   ..feesAndLimitsMap[widget.gatewayTypeId] =
                       settings.rebuild((b) => b
-                        ..taxRate2 = taxRate!.rate
+                        ..taxRate2 = taxRate.rate
                         ..taxName2 = taxRate.name))),
             labelText: localization.tax,
             initialTaxName: settings.taxName2,
@@ -1041,7 +1041,7 @@ class _FeesEditorState extends State<FeesEditor> {
                 (b) => b
                   ..feesAndLimitsMap[widget.gatewayTypeId] =
                       settings.rebuild((b) => b
-                        ..taxRate3 = taxRate!.rate
+                        ..taxRate3 = taxRate.rate
                         ..taxName3 = taxRate.name))),
             labelText: localization.tax,
             initialTaxName: settings.taxName3,

@@ -759,7 +759,7 @@ class EntityScreens extends StatelessWidget {
             child: ClipRRect(
               child: AppBorder(
                 isLeft: leftFilterChild != null,
-                child: topFilterChild == null || prefState.isFilterVisible
+                child: prefState.isFilterVisible
                     ? listWidget
                     : Column(
                         children: [
@@ -773,8 +773,7 @@ class EntityScreens extends StatelessWidget {
                             topFilterChild,
                           Expanded(
                             child: AppBorder(
-                              isTop: uiState.filterEntityType != null &&
-                                  topFilterChild != null,
+                              isTop: uiState.filterEntityType != null,
                               child: listWidget,
                             ),
                           )

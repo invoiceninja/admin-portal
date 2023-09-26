@@ -621,7 +621,7 @@ void handlePurchaseOrderAction(BuildContext? context,
       final url = invitation.downloadLink;
       store.dispatch(StartSaving());
       final http.Response? response =
-          await (WebClient().get(url, '', rawResponse: true));
+          await WebClient().get(url, '', rawResponse: true);
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;
@@ -632,8 +632,8 @@ void handlePurchaseOrderAction(BuildContext? context,
         'ids': purchaseOrderIds,
         'action': EntityAction.bulkPrint.toApiParam()
       });
-      final http.Response? response = await (WebClient()
-          .post(url, state.credentials.token, data: data, rawResponse: true));
+      final http.Response? response = await WebClient()
+          .post(url, state.credentials.token, data: data, rawResponse: true);
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;

@@ -179,15 +179,11 @@ Middleware<AppState> _archivePurchaseOrder(PurchaseOrderRepository repository) {
             EntityAction.archive)
         .then((List<InvoiceEntity> purchaseOrders) {
       store.dispatch(ArchivePurchaseOrdersSuccess(purchaseOrders));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchivePurchaseOrdersFailure(prevPurchaseOrders));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -206,15 +202,11 @@ Middleware<AppState> _deletePurchaseOrder(PurchaseOrderRepository repository) {
             EntityAction.delete)
         .then((List<InvoiceEntity> purchaseOrders) {
       store.dispatch(DeletePurchaseOrdersSuccess(purchaseOrders));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeletePurchaseOrdersFailure(prevPurchaseOrders));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -233,15 +225,11 @@ Middleware<AppState> _restorePurchaseOrder(PurchaseOrderRepository repository) {
             EntityAction.restore)
         .then((List<InvoiceEntity> purchaseOrders) {
       store.dispatch(RestorePurchaseOrdersSuccess(purchaseOrders));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestorePurchaseOrdersFailure(prevPurchaseOrders));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -278,15 +266,11 @@ Middleware<AppState> _markSentPurchaseOrder(
             EntityAction.markSent)
         .then((purchaseOrders) {
       store.dispatch(MarkPurchaseOrderSentSuccess(purchaseOrders));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(MarkPurchaseOrderSentFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -303,15 +287,11 @@ Middleware<AppState> _convertPurchaseOrdersToExpense(
         .then((purchaseOrders) {
       store.dispatch(ConvertPurchaseOrdersToExpensesSuccess(purchaseOrders));
       store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ConvertPurchaseOrdersToExpensesFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -328,15 +308,11 @@ Middleware<AppState> _addPurchaseOrdersToInventory(
         .then((purchaseOrders) {
       store.dispatch(AddPurchaseOrdersToInventorySuccess(purchaseOrders));
       store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(AddPurchaseOrdersToInventoryFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -351,15 +327,11 @@ Middleware<AppState> _acceptPurchaseOrders(PurchaseOrderRepository repository) {
             EntityAction.accept)
         .then((purchaseOrders) {
       store.dispatch(AcceptPurchaseOrderSuccess(purchaseOrders));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(AcceptPurchaseOrderFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -374,15 +346,11 @@ Middleware<AppState> _cancelPurchaseOrders(PurchaseOrderRepository repository) {
             store.state.credentials, action.purchaseOrderIds, EntityAction.back)
         .then((purchaseOrders) {
       store.dispatch(CancelPurchaseOrderSuccess(purchaseOrders));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(CancelPurchaseOrderFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -405,15 +373,11 @@ Middleware<AppState> _emailPurchaseOrder(PurchaseOrderRepository repository) {
     )
         .then((purchaseOrder) {
       store.dispatch(EmailPurchaseOrderSuccess(purchaseOrder));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(EmailPurchaseOrderFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -489,15 +453,11 @@ Middleware<AppState> _downloadPurchaseOrders(
             EntityAction.bulkDownload)
         .then((invoices) {
       store.dispatch(DownloadPurchaseOrdersSuccess());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DownloadPurchaseOrdersFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

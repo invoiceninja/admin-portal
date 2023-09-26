@@ -430,19 +430,19 @@ Middleware<AppState> _createAccountLoaded() {
 
         if (i == 0) {
           final SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setString(kSharedPrefToken, userCompany.token!.obscuredToken);
+          prefs.setString(kSharedPrefToken, userCompany.token.obscuredToken);
         }
 
         store.dispatch(
             SelectCompany(companyIndex: i, clearSelection: loadedStaticData));
         store.dispatch(LoadCompanySuccess(userCompany));
 
-        if (store.state.account!.defaultCompanyId == userCompany.company!.id) {
+        if (store.state.account!.defaultCompanyId == userCompany.company.id) {
           selectedCompanyIndex = i;
         }
       }
     } catch (error) {
-      action.completer?.completeError(error);
+      action.completer.completeError(error);
       rethrow;
     }
 
@@ -453,13 +453,11 @@ Middleware<AppState> _createAccountLoaded() {
     if (!store.state.userCompanyState.isLoaded &&
         response.userCompanies.isNotEmpty && // TODO remove this check
         response.userCompanies.length > selectedCompanyIndex &&
-        response.userCompanies[selectedCompanyIndex].company!.isLarge) {
+        response.userCompanies[selectedCompanyIndex].company.isLarge) {
       store.dispatch(LoadClients());
     }
 
-    if (action.completer != null) {
-      action.completer.complete(null);
-    }
+    action.completer.complete(null);
 
     next(action);
 
@@ -493,7 +491,7 @@ Middleware<AppState> _createDataRefreshed() {
           if (i == 0) {
             final SharedPreferences prefs =
                 await SharedPreferences.getInstance();
-            prefs.setString(kSharedPrefToken, userCompany.token!.obscuredToken);
+            prefs.setString(kSharedPrefToken, userCompany.token.obscuredToken);
           }
 
           store.dispatch(
@@ -564,7 +562,7 @@ Middleware<AppState> _createViewMainScreen() {
 
     if (store.state.uiState.currentRoute == LoginScreen.route) {
       store.dispatch(UpdateCurrentRoute(
-          store.state.userCompany!.canViewDashboard || store.state.isDemo
+          store.state.userCompany.canViewDashboard || store.state.isDemo
               ? DashboardScreenBuilder.route
               : ClientScreen.route));
     }

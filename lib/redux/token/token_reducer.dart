@@ -229,6 +229,6 @@ TokenState _setLoadedTokens(TokenState tokenState, LoadTokensSuccess action) =>
     tokenState.loadTokens(action.tokens);
 
 TokenState _setLoadedCompany(TokenState tokenState, LoadCompanySuccess action) {
-  final company = action.userCompany.company!;
+  final company = action.userCompany.company;
   return tokenState.loadTokens(company.tokens);
 }

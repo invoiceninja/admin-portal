@@ -101,15 +101,11 @@ Middleware<AppState> _archiveDesign(DesignRepository repository) {
             store.state.credentials, action.designIds, EntityAction.archive)
         .then((List<DesignEntity> designs) {
       store.dispatch(ArchiveDesignsSuccess(designs));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveDesignsFailure(prevDesigns));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -126,15 +122,11 @@ Middleware<AppState> _deleteDesign(DesignRepository repository) {
             store.state.credentials, action.designIds, EntityAction.delete)
         .then((List<DesignEntity> designs) {
       store.dispatch(DeleteDesignsSuccess(designs));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteDesignsFailure(prevDesigns));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -151,15 +143,11 @@ Middleware<AppState> _restoreDesign(DesignRepository repository) {
             store.state.credentials, action.designIds, EntityAction.restore)
         .then((List<DesignEntity> designs) {
       store.dispatch(RestoreDesignsSuccess(designs));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreDesignsFailure(prevDesigns));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

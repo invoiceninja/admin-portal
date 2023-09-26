@@ -121,7 +121,7 @@ class DocumentListVM {
       onSortColumn: (field) => store.dispatch(SortDocuments(field)),
       onClearMultielsect: () => store.dispatch(ClearDocumentMultiselect()),
       tableColumns:
-          state.userCompany!.settings?.getTableColumns(EntityType.document) ??
+          state.userCompany.settings.getTableColumns(EntityType.document) ??
               DocumentPresenter.getDefaultTableFields(state.userCompany),
     );
   }

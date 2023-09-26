@@ -103,7 +103,7 @@ class ScheduleListItem extends StatelessWidget {
                   ),
                 )
               : null,
-          title: Text(title!),
+          title: Text(title),
           trailing: Text(timeago.format(
             convertSqlDateToDateTime(schedule!.nextRun),
             locale: localeSelector(state, twoLetter: true),
@@ -112,7 +112,7 @@ class ScheduleListItem extends StatelessWidget {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              subtitle != null && subtitle.isNotEmpty
+              subtitle.isNotEmpty
                   ? Text(
                       (filter ?? '').isNotEmpty ? filter! : subtitle,
                       maxLines: 3,

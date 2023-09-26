@@ -140,15 +140,15 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
     });
 
     widget.viewModel.onChanged(vendor.rebuild((b) => b
-      ..name = (contact?.company ?? '').trim()
+      ..name = (contact.company ?? '').trim()
       ..address1 = (contactAddress?.street ?? '').trim()
       ..city = (contactAddress?.city ?? '').trim()
       ..state = (contactAddress?.region ?? '').trim()
       ..postalCode = (contactAddress?.postcode ?? '').trim()
       ..countryId = countryId ?? ''
       ..contacts[0] = vendor.contacts[0]!.rebuild((b) => b
-        ..firstName = (contact?.givenName ?? '').trim()
-        ..lastName = (contact?.familyName ?? '').trim()
+        ..firstName = (contact.givenName ?? '').trim()
+        ..lastName = (contact.familyName ?? '').trim()
         ..email = (contactEmail?.value ?? '').trim()
         ..phone = (contactPhone?.value ?? '').trim())
       ..updatedAt = DateTime.now().millisecondsSinceEpoch));

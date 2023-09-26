@@ -489,7 +489,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                 }
                               },
                             ),
-                            if (invoice.partial != null && invoice.partial > 0)
+                            if (invoice.partial > 0)
                               DatePicker(
                                 labelText: localization.partialDueDate,
                                 selectedDate: invoice.partialDueDate,
@@ -1032,7 +1032,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   TaxRateDropdown(
                                     onSelected: (taxRate) {
                                       viewModel.onChanged!(
-                                          invoice.applyTax(taxRate!));
+                                          invoice.applyTax(taxRate));
                                     },
                                     labelText: localization.tax +
                                         (company.settings.enableInclusiveTaxes!
@@ -1046,7 +1046,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   TaxRateDropdown(
                                     onSelected: (taxRate) {
                                       viewModel.onChanged!(invoice
-                                          .applyTax(taxRate!, isSecond: true));
+                                          .applyTax(taxRate, isSecond: true));
                                     },
                                     labelText: localization.tax +
                                         (company.settings.enableInclusiveTaxes!
@@ -1060,7 +1060,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   TaxRateDropdown(
                                     onSelected: (taxRate) {
                                       final updatedInvoice = invoice
-                                          .applyTax(taxRate!, isThird: true);
+                                          .applyTax(taxRate, isThird: true);
                                       viewModel.onChanged!(invoice
                                           .applyTax(taxRate, isThird: true));
                                     },

@@ -57,8 +57,7 @@ List<String> dropdownQuoteSelector(
     if (excludedIds.contains(invoiceId)) {
       return false;
     }
-    if (clientId != null &&
-        clientId.isNotEmpty &&
+    if (clientId.isNotEmpty &&
         invoice!.clientId != clientId) {
       return false;
     }
@@ -191,7 +190,7 @@ EntityStats quoteStatsForClient(
   int countArchived = 0;
 
   quoteMap.forEach((quoteId, quote) {
-    if (quote!.clientId == clientId) {
+    if (quote.clientId == clientId) {
       if (quote.isActive) {
         countActive++;
       } else if (quote.isArchived) {
@@ -212,7 +211,7 @@ EntityStats quoteStatsForDesign(
   int countActive = 0;
   int countArchived = 0;
   quoteMap.forEach((quoteId, quote) {
-    if (quote!.designId == designId) {
+    if (quote.designId == designId) {
       if (quote.isActive) {
         countActive++;
       } else if (quote.isArchived) {
@@ -235,7 +234,7 @@ EntityStats quoteStatsForUser(
   int countActive = 0;
   int countArchived = 0;
   quoteMap.forEach((quoteId, quote) {
-    if (quote!.assignedUserId == userId) {
+    if (quote.assignedUserId == userId) {
       if (quote.isActive) {
         countActive++;
       } else if (quote.isArchived) {

@@ -106,15 +106,11 @@ Middleware<AppState> _archiveExpenseCategory(
             EntityAction.archive)
         .then((List<ExpenseCategoryEntity> expenseCategories) {
       store.dispatch(ArchiveExpenseCategoriesSuccess(expenseCategories));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveExpenseCategoriesFailure(prevExpenseCategories));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -133,15 +129,11 @@ Middleware<AppState> _deleteExpenseCategory(
             EntityAction.delete)
         .then((List<ExpenseCategoryEntity> expenseCategories) {
       store.dispatch(DeleteExpenseCategoriesSuccess(expenseCategories));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteExpenseCategoriesFailure(prevExpenseCategories));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -160,15 +152,11 @@ Middleware<AppState> _restoreExpenseCategory(
             EntityAction.restore)
         .then((List<ExpenseCategoryEntity> expenseCategories) {
       store.dispatch(RestoreExpenseCategoriesSuccess(expenseCategories));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreExpenseCategoriesFailure(prevExpenseCategories));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

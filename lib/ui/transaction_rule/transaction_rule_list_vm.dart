@@ -99,8 +99,8 @@ class TransactionRuleListVM {
               EntityAction action) =>
           handleTransactionRuleAction(context, transactionRules, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: state.userCompany!.settings
-              ?.getTableColumns(EntityType.transactionRule) ??
+      tableColumns: state.userCompany.settings
+              .getTableColumns(EntityType.transactionRule) ??
           TransactionRulePresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortTransactionRules(field)),
       onClearMultielsect: () =>

@@ -101,15 +101,11 @@ Middleware<AppState> _archiveTransactionRule(
             EntityAction.archive)
         .then((List<TransactionRuleEntity> transactionRules) {
       store.dispatch(ArchiveTransactionRulesSuccess(transactionRules));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveTransactionRulesFailure(prevTransactionRules));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -128,15 +124,11 @@ Middleware<AppState> _deleteTransactionRule(
             EntityAction.delete)
         .then((List<TransactionRuleEntity> transactionRules) {
       store.dispatch(DeleteTransactionRulesSuccess(transactionRules));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteTransactionRulesFailure(prevTransactionRules));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -155,15 +147,11 @@ Middleware<AppState> _restoreTransactionRule(
             EntityAction.restore)
         .then((List<TransactionRuleEntity> transactionRules) {
       store.dispatch(RestoreTransactionRulesSuccess(transactionRules));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreTransactionRulesFailure(prevTransactionRules));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

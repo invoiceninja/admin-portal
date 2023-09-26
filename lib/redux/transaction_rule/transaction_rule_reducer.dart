@@ -295,6 +295,6 @@ TransactionRuleState _setLoadedTransactionRules(
 
 TransactionRuleState _setLoadedCompany(
     TransactionRuleState transactionRuleState, LoadCompanySuccess action) {
-  final company = action.userCompany.company!;
+  final company = action.userCompany.company;
   return transactionRuleState.loadTransactionRules(company.transactionRules);
 }

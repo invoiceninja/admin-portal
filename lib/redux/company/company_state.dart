@@ -163,7 +163,7 @@ abstract class UserCompanyState
         kMillisecondsToRefreshData;
   }
 
-  bool get isLoaded => lastUpdated != null && lastUpdated > 0;
+  bool get isLoaded => lastUpdated > 0;
 
   static Serializer<UserCompanyState> get serializer =>
       _$userCompanyStateSerializer;

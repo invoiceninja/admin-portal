@@ -102,15 +102,11 @@ Middleware<AppState> _archiveWebhook(WebhookRepository repository) {
             store.state.credentials, action.webhookIds, EntityAction.archive)
         .then((List<WebhookEntity> webhooks) {
       store.dispatch(ArchiveWebhooksSuccess(webhooks));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveWebhooksFailure(prevWebhooks));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -128,15 +124,11 @@ Middleware<AppState> _deleteWebhook(WebhookRepository repository) {
             store.state.credentials, action.webhookIds, EntityAction.delete)
         .then((List<WebhookEntity> webhooks) {
       store.dispatch(DeleteWebhooksSuccess(webhooks));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteWebhooksFailure(prevWebhooks));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -154,15 +146,11 @@ Middleware<AppState> _restoreWebhook(WebhookRepository repository) {
             store.state.credentials, action.webhookIds, EntityAction.restore)
         .then((List<WebhookEntity> webhooks) {
       store.dispatch(RestoreWebhooksSuccess(webhooks));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreWebhooksFailure(prevWebhooks));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

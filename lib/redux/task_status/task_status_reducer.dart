@@ -275,6 +275,6 @@ TaskStatusState _setLoadedTaskStatuses(
 
 TaskStatusState _setLoadedCompany(
     TaskStatusState taskStatusState, LoadCompanySuccess action) {
-  final company = action.userCompany.company!;
+  final company = action.userCompany.company;
   return taskStatusState.loadTaskStatuses(company.taskStatuses);
 }

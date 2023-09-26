@@ -157,12 +157,10 @@ String? formatNumber(
 
   if (currency.id == kCurrencyEuro) {
     swapCurrencySymbol = companyCountry.swapCurrencySymbol;
-    if (country.thousandSeparator != null &&
-        country.thousandSeparator.isNotEmpty) {
+    if (country.thousandSeparator.isNotEmpty) {
       thousandSeparator = country.thousandSeparator;
     }
-    if (country.decimalSeparator != null &&
-        country.decimalSeparator.isNotEmpty) {
+    if (country.decimalSeparator.isNotEmpty) {
       decimalSeparator = country.decimalSeparator;
     }
   }
@@ -374,7 +372,7 @@ String formatDateRange(String startDate, String endDate, BuildContext context) {
 }
 
 String parseDate(String value, BuildContext context) {
-  if (value == null || value.isEmpty) {
+  if (value.isEmpty) {
     return '';
   }
 
@@ -393,7 +391,7 @@ String parseDate(String value, BuildContext context) {
 }
 
 DateTime? parseTime(String value, BuildContext context) {
-  if (value == null || value.isEmpty) {
+  if (value.isEmpty) {
     return null;
   }
 

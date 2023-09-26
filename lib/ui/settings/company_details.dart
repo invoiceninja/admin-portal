@@ -271,7 +271,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
     final company = viewModel.company;
     final settings = viewModel.settings;
 
-    if (!state.userCompany!.isAdmin) {
+    if (!state.userCompany.isAdmin) {
       return BlankScreen();
     }
 
@@ -583,7 +583,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                                   '/companies/' +
                                   company.id +
                                   '/logo',
-                              apiToken: state.userCompany!.token!.token,
+                              apiToken: state.userCompany.token.token,
                             )
                           : CachedImage(
                               width: double.infinity,

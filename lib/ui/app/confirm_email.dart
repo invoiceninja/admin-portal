@@ -43,7 +43,7 @@ class ConfirmEmail extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 16, bottom: 80),
-                    child: HelpText(state.user!.email),
+                    child: HelpText(state.user.email),
                   ),
                   Wrap(
                     alignment: WrapAlignment.center,

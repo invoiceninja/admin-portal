@@ -31,7 +31,7 @@ class ExpenseOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final expense = viewModel.expense!;
+    final expense = viewModel.expense;
     final company = viewModel.company!;
     final state = viewModel.state!;
     final vendor = state.vendorState.get(expense.vendorId!);

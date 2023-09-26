@@ -346,6 +346,6 @@ ClientState _setLoadedClients(
 
 ClientState _setLoadedCompany(
     ClientState clientState, LoadCompanySuccess action) {
-  final company = action.userCompany.company!;
+  final company = action.userCompany.company;
   return clientState.loadClients(company.clients);
 }

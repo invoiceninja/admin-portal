@@ -266,8 +266,8 @@ final recurringExpensesReducer = combineReducers<RecurringExpenseState>([
 RecurringExpenseState _purgeClientSuccess(
     RecurringExpenseState expenseState, PurgeClientSuccess action) {
   final ids = expenseState.map.values
-      .where((each) => each!.clientId == action.clientId)
-      .map((each) => each!.id)
+      .where((each) => each.clientId == action.clientId)
+      .map((each) => each.id)
       .toList();
 
   return expenseState.rebuild((b) => b
@@ -357,6 +357,6 @@ RecurringExpenseState _setLoadedRecurringExpenses(
 
 RecurringExpenseState _setLoadedCompany(
     RecurringExpenseState recurringExpenseState, LoadCompanySuccess action) {
-  final company = action.userCompany.company!;
+  final company = action.userCompany.company;
   return recurringExpenseState.loadRecurringExpenses(company.recurringExpenses);
 }

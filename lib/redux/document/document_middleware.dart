@@ -113,15 +113,11 @@ Middleware<AppState> _saveDocument(DocumentRepository repository) {
 
       store.dispatch(SaveDocumentSuccess(document));
 
-      if (action.completer != null) {
-        action.completer.complete(document);
-      }
+      action.completer.complete(document);
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveDocumentFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -140,15 +136,11 @@ Middleware<AppState> _archiveDocument(DocumentRepository repository) {
             store.state.credentials, action.documentIds, EntityAction.archive)
         .then((List<DocumentEntity> documents) {
       store.dispatch(ArchiveDocumentSuccess(documents));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveDocumentFailure(prevDocuments));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -188,15 +180,11 @@ Middleware<AppState> _deleteDocument(DocumentRepository repository) {
             action.idToken)
         .then((value) {
       store.dispatch(DeleteDocumentSuccess(documentId: documentId));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteDocumentFailure());
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -215,15 +203,11 @@ Middleware<AppState> _restoreDocument(DocumentRepository repository) {
             store.state.credentials, action.documentIds, EntityAction.restore)
         .then((List<DocumentEntity> documents) {
       store.dispatch(RestoreDocumentSuccess(documents));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreDocumentFailure(prevDocuments));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -266,7 +250,7 @@ Middleware<AppState> _loadDocumentData(DocumentRepository repository) {
     repository.loadData(store.state.credentials, document).then((bodyBytes) {
       store.dispatch(
         LoadDocumentSuccess(
-          document!.rebuild((b) => b..data = bodyBytes),
+          document.rebuild((b) => b..data = bodyBytes),
         ),
       );
 

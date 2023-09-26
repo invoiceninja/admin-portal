@@ -156,15 +156,15 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     });
 
     widget.viewModel.onChanged(client.rebuild((b) => b
-      ..name = (contact?.company ?? '').trim()
+      ..name = (contact.company ?? '').trim()
       ..address1 = (contactAddress?.street ?? '').trim()
       ..city = (contactAddress?.city ?? '').trim()
       ..state = (contactAddress?.region ?? '').trim()
       ..postalCode = (contactAddress?.postcode ?? '').trim()
       ..countryId = countryId ?? ''
       ..contacts[0] = client.contacts[0]!.rebuild((b) => b
-        ..firstName = (contact?.givenName ?? '').trim()
-        ..lastName = (contact?.familyName ?? '').trim()
+        ..firstName = (contact.givenName ?? '').trim()
+        ..lastName = (contact.familyName ?? '').trim()
         ..email = (contactEmail?.value ?? '').trim()
         ..phone = (contactPhone?.value ?? '').trim())
       ..updatedAt = DateTime.now().millisecondsSinceEpoch));

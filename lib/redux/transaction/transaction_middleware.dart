@@ -113,15 +113,11 @@ Middleware<AppState> _archiveTransaction(TransactionRepository repository) {
             EntityAction.archive)
         .then((List<TransactionEntity> transactions) {
       store.dispatch(ArchiveTransactionsSuccess(transactions));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveTransactionsFailure(prevTransactions));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -139,15 +135,11 @@ Middleware<AppState> _deleteTransaction(TransactionRepository repository) {
             store.state.credentials, action.transactionIds, EntityAction.delete)
         .then((List<TransactionEntity> transactions) {
       store.dispatch(DeleteTransactionsSuccess(transactions));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteTransactionsFailure(prevTransactions));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -165,15 +157,11 @@ Middleware<AppState> _restoreTransaction(TransactionRepository repository) {
             EntityAction.restore)
         .then((List<TransactionEntity> transactions) {
       store.dispatch(RestoreTransactionsSuccess(transactions));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreTransactionsFailure(prevTransactions));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -190,15 +178,11 @@ Middleware<AppState> _convertTransactions(TransactionRepository repository) {
       store.dispatch(ConvertTransactionsSuccess(
           BuiltList<TransactionEntity>(transactions)));
       store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ConvertTransactionsFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -215,15 +199,11 @@ Middleware<AppState> _unlinkTransactions(TransactionRepository repository) {
       store.dispatch(UnlinkTransactionsSuccess(
           BuiltList<TransactionEntity>(transactions)));
       store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(UnlinkTransactionsFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -242,15 +222,11 @@ Middleware<AppState> _convertToPayment(TransactionRepository repository) {
         .then((TransactionEntity transaction) {
       store.dispatch(ConvertTransactionToPaymentSuccess(transaction));
       store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ConvertTransactionToPaymentFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -270,15 +246,11 @@ Middleware<AppState> _convertToExpense(TransactionRepository repository) {
         .then((BuiltList<TransactionEntity> transactions) {
       store.dispatch(ConvertTransactionsToExpensesSuccess(transactions));
       store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ConvertTransactionsToExpensesFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -297,15 +269,11 @@ Middleware<AppState> _linkToPayment(TransactionRepository repository) {
         .then((TransactionEntity transaction) {
       store.dispatch(LinkTransactionToPaymentSuccess(transaction));
       store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(LinkTransactionToPaymentFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -324,15 +292,11 @@ Middleware<AppState> _linkToExpense(TransactionRepository repository) {
         .then((TransactionEntity transaction) {
       store.dispatch(LinkTransactionToExpenseSuccess(transaction));
       store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(LinkTransactionToExpenseFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

@@ -322,7 +322,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                   }
                 },
               ),
-              if (invoice.partial != null && invoice.partial > 0)
+              if (invoice.partial > 0)
                 DatePicker(
                   labelText: localization.partialDueDate,
                   selectedDate: invoice.partialDueDate,
@@ -424,7 +424,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 invoice.taxName1.isNotEmpty)
               TaxRateDropdown(
                 onSelected: (taxRate) =>
-                    viewModel.onChanged!(invoice.applyTax(taxRate!)),
+                    viewModel.onChanged!(invoice.applyTax(taxRate)),
                 labelText: localization.tax +
                     (company.settings.enableInclusiveTaxes!
                         ? ' - ${localization.inclusive}'
@@ -459,7 +459,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
             DesignPicker(
               initialValue: invoice.designId,
               onSelected: (value) => viewModel
-                  .onChanged!(invoice.rebuild((b) => b..designId = value?.id)),
+                  .onChanged!(invoice.rebuild((b) => b..designId = value.id)),
             ),
             if (company.isModuleEnabled(EntityType.project))
               ProjectPicker(

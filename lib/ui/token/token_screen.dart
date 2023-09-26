@@ -90,7 +90,7 @@ class TokenScreen extends StatelessWidget {
             store.dispatch(FilterTokensByCustom4(value)),
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany!.canCreate(EntityType.token)
+              userCompany.canCreate(EntityType.token)
           ? FloatingActionButton(
               heroTag: 'token_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

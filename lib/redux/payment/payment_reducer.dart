@@ -239,8 +239,8 @@ final paymentsReducer = combineReducers<PaymentState>([
 PaymentState _purgeClientSuccess(
     PaymentState paymentState, PurgeClientSuccess action) {
   final ids = paymentState.map.values
-      .where((each) => each!.clientId == action.clientId)
-      .map((each) => each!.id)
+      .where((each) => each.clientId == action.clientId)
+      .map((each) => each.id)
       .toList();
 
   return paymentState.rebuild((b) => b
@@ -299,6 +299,6 @@ PaymentState _setLoadedPayments(
 
 PaymentState _setLoadedCompany(
     PaymentState paymentState, LoadCompanySuccess action) {
-  final company = action.userCompany.company!;
+  final company = action.userCompany.company;
   return paymentState.loadPayments(company.payments);
 }

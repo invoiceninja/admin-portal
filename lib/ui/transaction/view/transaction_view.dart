@@ -204,18 +204,18 @@ class _MatchDepositsState extends State<_MatchDeposits> {
 
     _invoices = invoiceState.map.values.where((invoice) {
       if (_selectedInvoices.isNotEmpty) {
-        if (invoice!.clientId != _selectedInvoices.first!.clientId) {
+        if (invoice.clientId != _selectedInvoices.first!.clientId) {
           return false;
         }
       }
 
       if (transactions.isNotEmpty &&
-          state.clientState.get(invoice!.clientId)!.currencyId !=
+          state.clientState.get(invoice.clientId)!.currencyId !=
               transactions.first.currencyId) {
         return false;
       }
 
-      if (invoice!.isPaid || invoice.isDeleted!) {
+      if (invoice.isPaid || invoice.isDeleted!) {
         return false;
       }
 
@@ -269,12 +269,12 @@ class _MatchDepositsState extends State<_MatchDeposits> {
 
     _payments = paymentState.map.values.where((payment) {
       if (_selectedPayment != null) {
-        if (payment!.id != _selectedPayment!.id) {
+        if (payment.id != _selectedPayment!.id) {
           return false;
         }
       }
 
-      if (payment!.transactionId.isNotEmpty || payment.isDeleted!) {
+      if (payment.transactionId.isNotEmpty || payment.isDeleted!) {
         return false;
       }
 
@@ -734,12 +734,12 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
 
     _categories = categoryState.map.values.where((category) {
       if (_selectedCategory != null) {
-        if (category!.id != _selectedCategory?.id) {
+        if (category.id != _selectedCategory?.id) {
           return false;
         }
       }
 
-      if (category!.isDeleted!) {
+      if (category.isDeleted!) {
         return false;
       }
 
@@ -766,12 +766,12 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
 
     _vendors = vendorState.map.values.where((vendor) {
       if (_selectedVendor != null) {
-        if (vendor!.id != _selectedVendor?.id) {
+        if (vendor.id != _selectedVendor?.id) {
           return false;
         }
       }
 
-      if (vendor!.isDeleted!) {
+      if (vendor.isDeleted!) {
         return false;
       }
 
@@ -796,7 +796,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
     final transactions = widget.viewModel.transactions;
 
     _expenses = expenseState.map.values.where((expense) {
-      if (expense!.transactionId.isNotEmpty || expense.isDeleted!) {
+      if (expense.transactionId.isNotEmpty || expense.isDeleted!) {
         return false;
       }
 

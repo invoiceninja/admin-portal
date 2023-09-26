@@ -119,15 +119,11 @@ Middleware<AppState> _archiveRecurringExpense(
             EntityAction.archive)
         .then((List<ExpenseEntity> recurringExpenses) {
       store.dispatch(ArchiveRecurringExpensesSuccess(recurringExpenses));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveRecurringExpensesFailure(prevRecurringExpenses));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -146,15 +142,11 @@ Middleware<AppState> _deleteRecurringExpense(
             EntityAction.delete)
         .then((List<ExpenseEntity> recurringExpenses) {
       store.dispatch(DeleteRecurringExpensesSuccess(recurringExpenses));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteRecurringExpensesFailure(prevRecurringExpenses));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -173,15 +165,11 @@ Middleware<AppState> _restoreRecurringExpense(
             EntityAction.restore)
         .then((List<ExpenseEntity> recurringExpenses) {
       store.dispatch(RestoreRecurringExpensesSuccess(recurringExpenses));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreRecurringExpensesFailure(prevRecurringExpenses));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

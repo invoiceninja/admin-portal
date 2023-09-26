@@ -104,7 +104,7 @@ class _PaymentTermEditState extends State<PaymentTermEdit> {
                       keyboardType: TextInputType.number,
                       controller: _numDaysController,
                       label: localization.numberOfDays,
-                      validator: (value) => value == null || value.isEmpty
+                      validator: (value) => value.isEmpty
                           ? localization.pleaseEnterAValue
                           : null,
                       onSavePressed: (context) => _onSavePressed(),

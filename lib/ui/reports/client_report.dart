@@ -103,9 +103,9 @@ ReportResult clientReport(
   final List<BaseEntity> entities = [];
   BuiltList<ClientReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
+  final reportSettings = userCompany.settings.reportSettings;
   final clientReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportClient)
+      reportSettings.containsKey(kReportClient)
           ? reportSettings[kReportClient]!
           : ReportSettingsEntity();
 
@@ -133,7 +133,7 @@ ReportResult clientReport(
   for (var clientId in clientMap.keys) {
     final client = clientMap[clientId]!;
     final contact = client.primaryContact;
-    if (client.isDeleted! && !userCompany.company!.reportIncludeDeleted) {
+    if (client.isDeleted! && !userCompany.company.reportIncludeDeleted) {
       continue;
     }
 
@@ -142,7 +142,7 @@ ReportResult clientReport(
 
     final exchangeRate = getExchangeRate(staticState.currencyMap,
         fromCurrencyId: client.currencyId,
-        toCurrencyId: userCompany.company!.currencyId);
+        toCurrencyId: userCompany.company.currencyId);
 
     for (var column in columns) {
       dynamic value = '';
@@ -185,28 +185,28 @@ ReportResult clientReport(
           value = presentCustomField(
             value: client.customValue1,
             customFieldType: CustomFieldType.client1,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case ClientReportFields.client2:
           value = presentCustomField(
             value: client.customValue2,
             customFieldType: CustomFieldType.client2,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case ClientReportFields.client3:
           value = presentCustomField(
             value: client.customValue3,
             customFieldType: CustomFieldType.client3,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case ClientReportFields.client4:
           value = presentCustomField(
             value: client.customValue4,
             customFieldType: CustomFieldType.client4,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case ClientReportFields.address1:
@@ -285,28 +285,28 @@ ReportResult clientReport(
           value = presentCustomField(
             value: contact!.customValue1,
             customFieldType: CustomFieldType.contact1,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case ClientReportFields.contact2:
           value = presentCustomField(
             value: contact!.customValue2,
             customFieldType: CustomFieldType.contact2,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case ClientReportFields.contact3:
           value = presentCustomField(
             value: contact!.customValue3,
             customFieldType: CustomFieldType.contact3,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case ClientReportFields.contact4:
           value = presentCustomField(
             value: contact!.customValue4,
             customFieldType: CustomFieldType.contact4,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case ClientReportFields.last_login:
@@ -373,7 +373,7 @@ ReportResult clientReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column)!,
+        column: EnumUtils.parse(column),
       )!) {
         skip = true;
       }
@@ -390,7 +390,7 @@ ReportResult clientReport(
           ClientReportFields.converted_paid_to_date,
           ClientReportFields.converted_total,
         ].contains(column)) {
-          currencyId = userCompany.company!.currencyId;
+          currencyId = userCompany.company.currencyId;
         }
         row.add(client.getReportDouble(
           value: value,
@@ -409,17 +409,17 @@ ReportResult clientReport(
   }
 
   final selectedColumns =
-      columns.map((item) => EnumUtils.parse(item)!).toList();
+      columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>
       sortReportTableRows(rowA, rowB, clientReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns: ClientReportFields.values
-        .map((item) => EnumUtils.parse(item)!)
+        .map((item) => EnumUtils.parse(item))
         .toList(),
     columns: selectedColumns,
     defaultColumns:
-        defaultColumns.map((item) => EnumUtils.parse(item)!).toList(),
+        defaultColumns.map((item) => EnumUtils.parse(item)).toList(),
     data: data,
     entities: entities,
   );

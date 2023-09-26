@@ -114,15 +114,11 @@ Middleware<AppState> _archiveCompanyGateway(
             EntityAction.archive)
         .then((List<CompanyGatewayEntity> companyGateways) {
       store.dispatch(ArchiveCompanyGatewaySuccess(companyGateways));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveCompanyGatewayFailure(prevCompanyGateways));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -141,15 +137,11 @@ Middleware<AppState> _deleteCompanyGateway(
             EntityAction.delete)
         .then((List<CompanyGatewayEntity> companyGateways) {
       store.dispatch(DeleteCompanyGatewaySuccess(companyGateways));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteCompanyGatewayFailure(prevCompanyGateways));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -169,15 +161,11 @@ Middleware<AppState> _restoreCompanyGateway(
             EntityAction.restore)
         .then((List<CompanyGatewayEntity> companyGateways) {
       store.dispatch(RestoreCompanyGatewaySuccess(companyGateways));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreCompanyGatewayFailure(prevCompanyGateways));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -193,15 +181,11 @@ Middleware<AppState> _disconnectCompanyGateway(
             action.password, action.idToken)
         .then((_) {
       store.dispatch(DisconnectCompanyGatewaySuccess());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DisconnectCompanyGatewayFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

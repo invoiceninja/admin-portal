@@ -21,7 +21,7 @@ class ExpenseViewSchedule extends StatefulWidget {
 class _ExpenseViewScheduleState extends State<ExpenseViewSchedule> {
   @override
   void didChangeDependencies() {
-    if (widget.viewModel.expense!.isStale) {
+    if (widget.viewModel.expense.isStale) {
       widget.viewModel.onRefreshed!(context);
     }
     super.didChangeDependencies();
@@ -29,7 +29,7 @@ class _ExpenseViewScheduleState extends State<ExpenseViewSchedule> {
 
   @override
   Widget build(BuildContext context) {
-    final expense = widget.viewModel.expense!;
+    final expense = widget.viewModel.expense;
     final localization = AppLocalization.of(context)!;
 
     return ScrollableListView(

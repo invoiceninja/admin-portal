@@ -292,7 +292,7 @@ UserState _setLoadedUsers(UserState userState, LoadUsersSuccess action) {
 UserState _setLoadedCompany(UserState userState, LoadCompanySuccess action) {
   final state = userState.rebuild((b) => b
     ..map.addAll(Map.fromIterable(
-      action.userCompany.company!.users,
+      action.userCompany.company.users,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     )));

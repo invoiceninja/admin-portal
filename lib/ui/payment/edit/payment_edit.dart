@@ -649,7 +649,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
                 if (entity == null) {
                   return '';
                 } else {
-                  return entity.listDisplayName!.isEmpty
+                  return entity.listDisplayName.isEmpty
                       ? localization!.pending
                       : entity.listDisplayName;
                 }
@@ -687,7 +687,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
                 if (entity == null) {
                   return '';
                 } else {
-                  return entity.listDisplayName!.isEmpty
+                  return entity.listDisplayName.isEmpty
                       ? localization!.pending
                       : entity.listDisplayName;
                 }

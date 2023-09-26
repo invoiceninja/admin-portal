@@ -273,7 +273,7 @@ CompanyGatewayState _setLoadedCompany(
     CompanyGatewayState companyGatewayState, LoadCompanySuccess action) {
   final state = companyGatewayState.rebuild((b) => b
     ..map.addAll(Map.fromIterable(
-      action.userCompany.company!.companyGateways,
+      action.userCompany.company.companyGateways,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     )));

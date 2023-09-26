@@ -125,7 +125,7 @@ double calculateVendorBalance(
     final expense = expenseMap[expenseId] ?? ExpenseEntity();
     if (expense.vendorId == vendorId &&
         expense.isActive &&
-        (currencyId == null || expense.currencyId == currencyId)) {
+        (expense.currencyId == currencyId)) {
       total += expense.grossAmount;
     }
   });

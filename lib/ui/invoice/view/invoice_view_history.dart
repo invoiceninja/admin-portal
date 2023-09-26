@@ -39,7 +39,7 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
     final invoice = viewModel.invoice!;
 
     // TODO remove this null check, it shouldn't be needed
-    if (invoice.isStale || invoice.history == null) {
+    if (invoice.isStale) {
       return LoadingIndicator();
     }
 

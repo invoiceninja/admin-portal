@@ -403,7 +403,7 @@ List<String> filteredTasksSelector(
           client.groupId != filterEntityId) {
         return false;
       }
-    } else if (task.clientId != null && !client.isActive) {
+    } else if (!client.isActive) {
       return false;
     }
 

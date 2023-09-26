@@ -97,15 +97,11 @@ Middleware<AppState> _archiveSchedule(ScheduleRepository repository) {
             store.state.credentials, action.scheduleIds, EntityAction.archive)
         .then((List<ScheduleEntity> schedules) {
       store.dispatch(ArchiveSchedulesSuccess(schedules));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveSchedulesFailure(prevSchedules));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -123,15 +119,11 @@ Middleware<AppState> _deleteSchedule(ScheduleRepository repository) {
             store.state.credentials, action.scheduleIds, EntityAction.delete)
         .then((List<ScheduleEntity> schedules) {
       store.dispatch(DeleteSchedulesSuccess(schedules));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteSchedulesFailure(prevSchedules));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -149,15 +141,11 @@ Middleware<AppState> _restoreSchedule(ScheduleRepository repository) {
             store.state.credentials, action.scheduleIds, EntityAction.restore)
         .then((List<ScheduleEntity> schedules) {
       store.dispatch(RestoreSchedulesSuccess(schedules));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreSchedulesFailure(prevSchedules));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

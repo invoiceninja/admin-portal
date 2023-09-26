@@ -321,6 +321,6 @@ VendorState _setLoadedVendors(
 
 VendorState _setLoadedCompany(
     VendorState vendorState, LoadCompanySuccess action) {
-  final company = action.userCompany.company!;
+  final company = action.userCompany.company;
   return vendorState.loadVendors(company.vendors);
 }

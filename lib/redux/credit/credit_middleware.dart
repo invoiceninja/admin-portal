@@ -157,15 +157,11 @@ Middleware<AppState> _archiveCredit(CreditRepository repository) {
             store.state.credentials, action.creditIds, EntityAction.archive)
         .then((List<InvoiceEntity> credits) {
       store.dispatch(ArchiveCreditsSuccess(credits));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveCreditsFailure(prevCredits));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -183,15 +179,11 @@ Middleware<AppState> _deleteCredit(CreditRepository repository) {
             store.state.credentials, action.creditIds, EntityAction.delete)
         .then((List<InvoiceEntity> credits) {
       store.dispatch(DeleteCreditsSuccess(credits));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteCreditsFailure(prevCredits));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -209,15 +201,11 @@ Middleware<AppState> _restoreCredit(CreditRepository repository) {
             store.state.credentials, action.creditIds, EntityAction.restore)
         .then((List<InvoiceEntity> credits) {
       store.dispatch(RestoreCreditsSuccess(credits));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreCreditsFailure(prevCredits));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -232,15 +220,11 @@ Middleware<AppState> _markSentCredit(CreditRepository repository) {
             store.state.credentials, action.creditIds, EntityAction.markSent)
         .then((credits) {
       store.dispatch(MarkSentCreditSuccess(credits));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(MarkSentCreditFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -256,15 +240,11 @@ Middleware<AppState> _markPaidCredit(CreditRepository repository) {
         .then((invoices) {
       store.dispatch(MarkCreditsPaidSuccess(invoices));
       store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(MarkCreditsPaidFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -286,15 +266,11 @@ Middleware<AppState> _emailCredit(CreditRepository repository) {
     )
         .then((void _) {
       store.dispatch(EmailCreditSuccess());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(EmailCreditFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -400,15 +376,11 @@ Middleware<AppState> _downloadCredits(CreditRepository repository) {
             EntityAction.bulkDownload)
         .then((invoices) {
       store.dispatch(DownloadCreditsSuccess());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DownloadCreditsFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

@@ -86,9 +86,9 @@ ReportResult taskReport(
   final List<BaseEntity> entities = [];
   BuiltList<TaskReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
+  final reportSettings = userCompany.settings.reportSettings;
   final taskReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportTask)
+      reportSettings.containsKey(kReportTask)
           ? reportSettings[kReportTask]!
           : ReportSettingsEntity();
 
@@ -119,7 +119,7 @@ ReportResult taskReport(
     final project = projectMap[task.projectId] ?? ProjectEntity();
     final group = groupMap[client.groupId] ?? GroupEntity();
 
-    if ((task.isDeleted! && !userCompany.company!.reportIncludeDeleted) ||
+    if ((task.isDeleted! && !userCompany.company.reportIncludeDeleted) ||
         client.isDeleted!) {
       continue;
     }
@@ -165,10 +165,10 @@ ReportResult taskReport(
           value = task.description;
           break;
         case TaskReportFields.invoice:
-          value = invoice?.listDisplayName ?? '';
+          value = invoice.listDisplayName ?? '';
           break;
         case TaskReportFields.invoice_amount:
-          value = invoice?.amount ?? '';
+          value = invoice.amount ?? '';
           break;
         case TaskReportFields.invoice_date:
           value = invoice.isNew ? '' : invoice.date;
@@ -204,28 +204,28 @@ ReportResult taskReport(
           value = presentCustomField(
             value: task.customValue1,
             customFieldType: CustomFieldType.task1,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case TaskReportFields.task2:
           value = presentCustomField(
             value: task.customValue2,
             customFieldType: CustomFieldType.task2,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case TaskReportFields.task3:
           value = presentCustomField(
             value: task.customValue3,
             customFieldType: CustomFieldType.task3,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case TaskReportFields.task4:
           value = presentCustomField(
             value: task.customValue4,
             customFieldType: CustomFieldType.task4,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case TaskReportFields.status:
@@ -254,14 +254,14 @@ ReportResult taskReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column)!,
+        column: EnumUtils.parse(column),
       )!) {
         skip = true;
       }
 
       if (column == TaskReportFields.duration) {
         row.add(task.getReportDuration(
-            value: value, currencyId: client?.currencyId));
+            value: value, currencyId: client.currencyId));
       } else if (value.runtimeType == bool) {
         row.add(task.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {

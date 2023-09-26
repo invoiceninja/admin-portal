@@ -65,9 +65,9 @@ ReportResult lineItemReport(
   final List<List<ReportElement>> data = [];
   BuiltList<InvoiceItemReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
+  final reportSettings = userCompany.settings.reportSettings;
   final lineItemReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportInvoiceItem)
+      reportSettings.containsKey(kReportInvoiceItem)
           ? reportSettings[kReportInvoiceItem]!
           : ReportSettingsEntity();
 
@@ -94,17 +94,17 @@ ReportResult lineItemReport(
   }
 
   for (var entry in invoiceMap.entries) {
-    final invoice = entry.value!;
+    final invoice = entry.value;
     final client = clientMap[invoice.clientId] ?? ClientEntity();
     final precision =
         staticState.currencyMap[client.currencyId]?.precision ?? 2;
 
-    if ((invoice.isDeleted! && !userCompany.company!.reportIncludeDeleted) ||
+    if ((invoice.isDeleted! && !userCompany.company.reportIncludeDeleted) ||
         client.isDeleted!) {
       continue;
     }
 
-    if (!userCompany.company!.reportIncludeDrafts && invoice.isDraft) {
+    if (!userCompany.company.reportIncludeDrafts && invoice.isDraft) {
       continue;
     }
 
@@ -211,7 +211,7 @@ ReportResult lineItemReport(
           value: value,
           userCompany: userCompany,
           reportsUIState: reportsUIState,
-          column: EnumUtils.parse(column)!,
+          column: EnumUtils.parse(column),
         )!) {
           skip = true;
         }
@@ -243,7 +243,7 @@ ReportResult lineItemReport(
     allColumns: InvoiceItemReportFields.values
         .where((field) =>
             field != InvoiceItemReportFields.discount ||
-            userCompany.company!.enableProductDiscount)
+            userCompany.company.enableProductDiscount)
         .map((e) => EnumUtils.parse(e))
         .toList(),
     columns: selectedColumns,

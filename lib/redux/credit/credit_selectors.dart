@@ -50,8 +50,7 @@ List<String> dropdownCreditSelector(
     if (excludedIds.contains(creditId)) {
       return false;
     }
-    if (clientId != null &&
-        clientId.isNotEmpty &&
+    if (clientId.isNotEmpty &&
         credit!.clientId != clientId) {
       return false;
     }
@@ -211,7 +210,7 @@ EntityStats creditStatsForDesign(
   int countActive = 0;
   int countArchived = 0;
   creditMap.forEach((creditId, credit) {
-    if (credit!.designId == designId) {
+    if (credit.designId == designId) {
       if (credit.isActive) {
         countActive++;
       } else if (credit.isArchived) {
@@ -232,7 +231,7 @@ EntityStats creditStatsForClient(
   int countActive = 0;
   int countArchived = 0;
   creditMap.forEach((creditId, credit) {
-    if (credit!.clientId == clientId) {
+    if (credit.clientId == clientId) {
       if (credit.isActive) {
         countActive++;
       } else if (credit.isArchived) {
@@ -255,7 +254,7 @@ EntityStats creditStatsForUser(
   int countActive = 0;
   int countArchived = 0;
   creditMap.forEach((creditId, credit) {
-    if (credit!.assignedUserId == userId) {
+    if (credit.assignedUserId == userId) {
       if (credit.isActive) {
         countActive++;
       } else if (credit.isArchived) {

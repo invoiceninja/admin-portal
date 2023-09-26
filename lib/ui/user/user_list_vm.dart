@@ -95,7 +95,7 @@ class UserListVM {
           state.userState.map,
           state.userState.list,
           state.userListState,
-          state.user!.id),
+          state.user.id),
       userMap: state.userState.map,
       isLoading: state.isLoading,
       filter: state.userUIState.listUIState.filter,

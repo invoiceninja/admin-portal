@@ -92,9 +92,9 @@ ReportResult vendorReport(
   final List<BaseEntity> entities = [];
   BuiltList<VendorReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
+  final reportSettings = userCompany.settings.reportSettings;
   final vendorReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportVendor)
+      reportSettings.containsKey(kReportVendor)
           ? reportSettings[kReportVendor]!
           : ReportSettingsEntity();
 
@@ -120,7 +120,7 @@ ReportResult vendorReport(
   for (var vendorId in vendorMap.keys) {
     final vendor = vendorMap[vendorId]!;
     final contact = vendor.primaryContact;
-    if (vendor.isDeleted! && !userCompany.company!.reportIncludeDeleted) {
+    if (vendor.isDeleted! && !userCompany.company.reportIncludeDeleted) {
       continue;
     }
 
@@ -129,7 +129,7 @@ ReportResult vendorReport(
 
     final exchangeRate = getExchangeRate(staticState.currencyMap,
         fromCurrencyId: vendor.currencyId,
-        toCurrencyId: userCompany.company!.currencyId);
+        toCurrencyId: userCompany.company.currencyId);
 
     for (var column in columns) {
       dynamic value = '';
@@ -173,28 +173,28 @@ ReportResult vendorReport(
           value = presentCustomField(
             value: vendor.customValue1,
             customFieldType: CustomFieldType.vendor1,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case VendorReportFields.vendor2:
           value = presentCustomField(
             value: vendor.customValue2,
             customFieldType: CustomFieldType.vendor2,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case VendorReportFields.vendor3:
           value = presentCustomField(
             value: vendor.customValue3,
             customFieldType: CustomFieldType.vendor3,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case VendorReportFields.vendor4:
           value = presentCustomField(
             value: vendor.customValue4,
             customFieldType: CustomFieldType.vendor4,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case VendorReportFields.address1:
@@ -276,28 +276,28 @@ ReportResult vendorReport(
           value = presentCustomField(
             value: contact!.customValue1,
             customFieldType: CustomFieldType.vendorContact1,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case VendorReportFields.contact2:
           value = presentCustomField(
             value: contact!.customValue2,
             customFieldType: CustomFieldType.vendorContact2,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case VendorReportFields.contact3:
           value = presentCustomField(
             value: contact!.customValue3,
             customFieldType: CustomFieldType.vendorContact3,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case VendorReportFields.contact4:
           value = presentCustomField(
             value: contact!.customValue4,
             customFieldType: CustomFieldType.vendorContact4,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case VendorReportFields.last_login:
@@ -330,7 +330,7 @@ ReportResult vendorReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column)!,
+        column: EnumUtils.parse(column),
       )!) {
         skip = true;
       }

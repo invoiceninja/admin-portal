@@ -162,8 +162,7 @@ class _PaymentViewState extends State<PaymentView> {
                           isFilter: widget.isFilter,
                           entity: transaction,
                         ),
-                      payment.privateNotes != null &&
-                              payment.privateNotes.isNotEmpty
+                      payment.privateNotes.isNotEmpty
                           ? Column(
                               children: <Widget>[
                                 IconMessage(payment.privateNotes,

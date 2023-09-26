@@ -110,15 +110,11 @@ Middleware<AppState> _archiveProduct(ProductRepository repository) {
             store.state.credentials, action.productIds, EntityAction.archive)
         .then((List<ProductEntity> products) {
       store.dispatch(ArchiveProductsSuccess(products));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((dynamic error) {
       print(error);
       store.dispatch(ArchiveProductsFailure(prevProducts));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -160,15 +156,11 @@ Middleware<AppState> _deleteProduct(ProductRepository repository) {
             store.state.credentials, action.productIds, EntityAction.delete)
         .then((List<ProductEntity> products) {
       store.dispatch(DeleteProductsSuccess(products));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteProductsFailure(prevProducts));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -186,15 +178,11 @@ Middleware<AppState> _restoreProduct(ProductRepository repository) {
             store.state.credentials, action.productIds, EntityAction.restore)
         .then((List<ProductEntity> products) {
       store.dispatch(RestoreProductsSuccess(products));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreProductsFailure(prevProducts));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

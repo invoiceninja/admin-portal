@@ -242,8 +242,8 @@ final projectsReducer = combineReducers<ProjectState>([
 ProjectState _purgeClientSuccess(
     ProjectState projectState, PurgeClientSuccess action) {
   final ids = projectState.map.values
-      .where((each) => each!.clientId == action.clientId)
-      .map((each) => each!.id)
+      .where((each) => each.clientId == action.clientId)
+      .map((each) => each.id)
       .toList();
 
   return projectState.rebuild((b) => b
@@ -302,6 +302,6 @@ ProjectState _setLoadedProjects(
 
 ProjectState _setLoadedCompany(
     ProjectState projectState, LoadCompanySuccess action) {
-  final company = action.userCompany.company!;
+  final company = action.userCompany.company;
   return projectState.loadProjects(company.projects);
 }

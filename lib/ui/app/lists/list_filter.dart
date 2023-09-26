@@ -77,7 +77,7 @@ class FilterListTile extends StatelessWidget {
       }
     } else {
       title = localization!.filteredBy
-          .replaceFirst(':value', entity!.listDisplayName!);
+          .replaceFirst(':value', entity!.listDisplayName);
       subtitle = localization.lookup(entityType.toString());
     }
 

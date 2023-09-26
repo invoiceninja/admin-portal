@@ -41,7 +41,7 @@ class UserView extends StatelessWidget {
     final localization = AppLocalization.of(context)!;
     final user = viewModel.user;
     final state = StoreProvider.of<AppState>(context).state;
-    final userCompany = state.userCompany!;
+    final userCompany = state.userCompany;
 
     return ViewScaffold(
       isFilter: isFilter,

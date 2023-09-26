@@ -113,15 +113,11 @@ Middleware<AppState> _archiveTask(TaskRepository repository) {
             store.state.credentials, action.taskIds, EntityAction.archive)
         .then((List<TaskEntity> tasks) {
       store.dispatch(ArchiveTaskSuccess(tasks));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveTaskFailure(prevTasks));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -138,15 +134,11 @@ Middleware<AppState> _startTask(TaskRepository repository) {
         .bulkAction(store.state.credentials, action.taskIds, EntityAction.start)
         .then((List<TaskEntity> tasks) {
       store.dispatch(StartTasksSuccess(tasks));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(StartTasksFailure(prevTasks));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -163,15 +155,11 @@ Middleware<AppState> _stopTask(TaskRepository repository) {
         .bulkAction(store.state.credentials, action.taskIds, EntityAction.stop)
         .then((List<TaskEntity> tasks) {
       store.dispatch(StopTasksSuccess(tasks));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(StopTasksFailure(prevTasks));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -189,15 +177,11 @@ Middleware<AppState> _deleteTask(TaskRepository repository) {
             store.state.credentials, action.taskIds, EntityAction.delete)
         .then((List<TaskEntity> tasks) {
       store.dispatch(DeleteTaskSuccess(tasks));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteTaskFailure(prevTasks));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -215,15 +199,11 @@ Middleware<AppState> _restoreTask(TaskRepository repository) {
             store.state.credentials, action.taskIds, EntityAction.restore)
         .then((List<TaskEntity> tasks) {
       store.dispatch(RestoreTaskSuccess(tasks));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreTaskFailure(prevTasks));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

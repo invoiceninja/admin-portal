@@ -83,26 +83,15 @@ class AppPaginatedDataTable extends StatefulWidget {
     this.onRowsPerPageChanged,
     this.dragStartBehavior = DragStartBehavior.start,
     required this.source,
-  })  : assert(columns != null),
-        assert(dragStartBehavior != null),
-        assert(columns.isNotEmpty),
+  })  : assert(columns.isNotEmpty),
         assert(sortColumnIndex == null ||
             (sortColumnIndex >= 0 && sortColumnIndex < columns.length)),
-        assert(sortAscending != null),
-        assert(dataRowHeight != null),
-        assert(headingRowHeight != null),
-        assert(horizontalMargin != null),
-        assert(columnSpacing != null),
-        assert(showCheckboxColumn != null),
-        assert(rowsPerPage != null),
         assert(rowsPerPage > 0),
         assert(() {
           if (onRowsPerPageChanged != null)
-            assert(availableRowsPerPage != null &&
-                availableRowsPerPage.contains(rowsPerPage));
+            assert(availableRowsPerPage.contains(rowsPerPage));
           return true;
         }()),
-        assert(source != null),
         super(key: key);
 
   /// The table card's header.

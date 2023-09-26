@@ -123,8 +123,8 @@ class PurchaseOrderListVM extends EntityListVM {
       onEntityAction: (BuildContext context, List<BaseEntity> purchaseOrders,
               EntityAction action) =>
           handlePurchaseOrderAction(context, purchaseOrders, action),
-      tableColumns: state.userCompany!.settings
-              ?.getTableColumns(EntityType.purchaseOrder) ??
+      tableColumns: state.userCompany.settings
+              .getTableColumns(EntityType.purchaseOrder) ??
           PurchaseOrderPresenter.getDefaultTableFields(state.userCompany),
       entityType: EntityType.purchaseOrder,
       onSortColumn: (field) => store.dispatch(SortPurchaseOrders(field)),

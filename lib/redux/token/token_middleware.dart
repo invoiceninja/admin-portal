@@ -102,15 +102,11 @@ Middleware<AppState> _archiveToken(TokenRepository repository) {
             store.state.credentials, action.tokenIds, EntityAction.archive)
         .then((List<TokenEntity> tokens) {
       store.dispatch(ArchiveTokensSuccess(tokens));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveTokensFailure(prevTokens));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -127,15 +123,11 @@ Middleware<AppState> _deleteToken(TokenRepository repository) {
             store.state.credentials, action.tokenIds, EntityAction.delete)
         .then((List<TokenEntity> tokens) {
       store.dispatch(DeleteTokensSuccess(tokens));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteTokensFailure(prevTokens));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -152,15 +144,11 @@ Middleware<AppState> _restoreToken(TokenRepository repository) {
             store.state.credentials, action.tokenIds, EntityAction.restore)
         .then((List<TokenEntity> tokens) {
       store.dispatch(RestoreTokensSuccess(tokens));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreTokensFailure(prevTokens));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

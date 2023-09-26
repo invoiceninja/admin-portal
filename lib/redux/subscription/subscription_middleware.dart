@@ -102,15 +102,11 @@ Middleware<AppState> _archiveSubscription(SubscriptionRepository repository) {
             EntityAction.archive)
         .then((List<SubscriptionEntity> subscriptions) {
       store.dispatch(ArchiveSubscriptionsSuccess(subscriptions));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveSubscriptionsFailure(prevSubscriptions));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -128,15 +124,11 @@ Middleware<AppState> _deleteSubscription(SubscriptionRepository repository) {
             EntityAction.delete)
         .then((List<SubscriptionEntity> subscriptions) {
       store.dispatch(DeleteSubscriptionsSuccess(subscriptions));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteSubscriptionsFailure(prevSubscriptions));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -154,15 +146,11 @@ Middleware<AppState> _restoreSubscription(SubscriptionRepository repository) {
             EntityAction.restore)
         .then((List<SubscriptionEntity> subscriptions) {
       store.dispatch(RestoreSubscriptionsSuccess(subscriptions));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreSubscriptionsFailure(prevSubscriptions));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

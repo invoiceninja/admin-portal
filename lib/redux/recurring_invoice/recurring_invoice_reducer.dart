@@ -394,8 +394,8 @@ final recurringInvoicesReducer = combineReducers<RecurringInvoiceState>([
 RecurringInvoiceState _purgeClientSuccess(
     RecurringInvoiceState invoiceState, PurgeClientSuccess action) {
   final ids = invoiceState.map.values
-      .where((each) => each!.clientId == action.clientId)
-      .map((each) => each!.id)
+      .where((each) => each.clientId == action.clientId)
+      .map((each) => each.id)
       .toList();
 
   return invoiceState.rebuild((b) => b
@@ -494,6 +494,6 @@ RecurringInvoiceState _setLoadedRecurringInvoices(
 
 RecurringInvoiceState _setLoadedCompany(
     RecurringInvoiceState recurringInvoiceState, LoadCompanySuccess action) {
-  final company = action.userCompany.company!;
+  final company = action.userCompany.company;
   return recurringInvoiceState.loadRecurringInvoices(company.recurringInvoices);
 }

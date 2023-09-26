@@ -86,7 +86,7 @@ class ScheduleScreen extends StatelessWidget {
             store.dispatch(FilterSchedulesByCustom4(value)),
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany!.canCreate(EntityType.schedule)
+              userCompany.canCreate(EntityType.schedule)
           ? FloatingActionButton(
               heroTag: 'schedule_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

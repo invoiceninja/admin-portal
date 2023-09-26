@@ -742,7 +742,7 @@ Future handleQuoteAction(BuildContext context, List<BaseEntity?> quotes,
       final url = invitation.downloadLink;
       store.dispatch(StartSaving());
       final http.Response? response =
-          await (WebClient().get(url, '', rawResponse: true));
+          await WebClient().get(url, '', rawResponse: true);
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;
@@ -751,8 +751,8 @@ Future handleQuoteAction(BuildContext context, List<BaseEntity?> quotes,
       final url = state.credentials.url! + '/quotes/bulk';
       final data = json.encode(
           {'ids': quoteIds, 'action': EntityAction.bulkPrint.toApiParam()});
-      final http.Response? response = await (WebClient()
-          .post(url, state.credentials.token, data: data, rawResponse: true));
+      final http.Response? response = await WebClient()
+          .post(url, state.credentials.token, data: data, rawResponse: true);
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;

@@ -88,7 +88,7 @@ class TransactionRuleScreen extends StatelessWidget {
             store.dispatch(FilterTransactionRulesByCustom4(value)),
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany!.canCreate(EntityType.transactionRule)
+              userCompany.canCreate(EntityType.transactionRule)
           ? FloatingActionButton(
               heroTag: 'transaction_rule_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

@@ -134,7 +134,7 @@ class TransactionScreen extends StatelessWidget {
         statuses: statuses,
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany!.canCreate(EntityType.transaction)
+              userCompany.canCreate(EntityType.transaction)
           ? FloatingActionButton(
               heroTag: 'transaction_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

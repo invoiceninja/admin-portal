@@ -43,7 +43,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final account = state.userCompany!.account!;
+    final account = state.userCompany.account;
     const dockerCommand =
         'docker-compose down\ndocker-compose pull\ndocker-compose up';
 
@@ -62,7 +62,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
           ? localization!.updateAvailable
           : localization!.forceUpdate),
       content: updateState == UpdateState.done
-          ? SelectableText(message!)
+          ? SelectableText(message)
           : updateState == UpdateState.loading
               ? Padding(
                   padding: const EdgeInsets.only(top: 10),

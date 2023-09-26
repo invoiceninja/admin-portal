@@ -97,9 +97,7 @@ class Debouncer {
     Debouncer.action = action;
 
     timer = Timer(Duration(milliseconds: milliseconds), () {
-      if (action != null) {
-        action();
-      }
+      action();
       Debouncer.action = null;
       Debouncer.timer = null;
     });
@@ -133,9 +131,7 @@ class SimpleDebouncer {
     }
 
     timer = Timer(Duration(milliseconds: milliseconds), () {
-      if (action != null) {
-        action();
-      }
+      action();
     });
   }
 }
@@ -155,9 +151,7 @@ class PersistDebouncer {
     }
 
     timer = Timer(Duration(milliseconds: milliseconds), () {
-      if (action != null) {
-        action();
-      }
+      action();
     });
   }
 }

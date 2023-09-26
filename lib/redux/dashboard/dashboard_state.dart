@@ -108,8 +108,7 @@ abstract class DashboardUISettings
   String get groupBy;
 
   bool matchesCurrency(String? match) {
-    if (currencyId == null ||
-        currencyId.isEmpty ||
+    if (currencyId.isEmpty ||
         currencyId == kCurrencyAll) {
       return true;
     }

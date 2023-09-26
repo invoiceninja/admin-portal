@@ -262,7 +262,7 @@ PaymentTermState _setLoadedCompany(
     PaymentTermState paymentTermState, LoadCompanySuccess action) {
   final state = paymentTermState.rebuild((b) => b
     ..map.addAll(Map.fromIterable(
-      action.userCompany.company!.paymentTerms,
+      action.userCompany.company.paymentTerms,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     )));

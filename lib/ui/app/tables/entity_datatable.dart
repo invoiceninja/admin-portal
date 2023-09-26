@@ -130,7 +130,7 @@ class EntityDataTableSource extends AppDataTableSource {
                       includeEdit: state.prefState.tapSelectedToEdit,
                       client: entity is BelongsToClient
                           ? state.clientState
-                              .map[(entity as BelongsToClient)?.clientId]
+                              .map[(entity as BelongsToClient).clientId]
                           : null),
                   isSaving: false,
                   entity: entity,

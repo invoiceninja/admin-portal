@@ -65,9 +65,9 @@ ReportResult lineItemReport(
   final List<List<ReportElement>> data = [];
   BuiltList<CreditItemReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
+  final reportSettings = userCompany.settings.reportSettings;
   final lineItemReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportCreditItem)
+      reportSettings.containsKey(kReportCreditItem)
           ? reportSettings[kReportCreditItem]!
           : ReportSettingsEntity();
 
@@ -94,17 +94,17 @@ ReportResult lineItemReport(
   }
 
   for (var entry in creditMap.entries) {
-    final credit = entry.value!;
+    final credit = entry.value;
     final client = clientMap[credit.clientId] ?? ClientEntity();
     final precision =
         staticState.currencyMap[client.currencyId]?.precision ?? 2;
 
-    if ((credit.isDeleted! && !userCompany.company!.reportIncludeDeleted) ||
+    if ((credit.isDeleted! && !userCompany.company.reportIncludeDeleted) ||
         client.isDeleted!) {
       continue;
     }
 
-    if (!userCompany.company!.reportIncludeDrafts && credit.isDraft) {
+    if (!userCompany.company.reportIncludeDrafts && credit.isDraft) {
       continue;
     }
 
@@ -211,7 +211,7 @@ ReportResult lineItemReport(
           value: value,
           userCompany: userCompany,
           reportsUIState: reportsUIState,
-          column: EnumUtils.parse(column)!,
+          column: EnumUtils.parse(column),
         )!) {
           skip = true;
         }
@@ -243,7 +243,7 @@ ReportResult lineItemReport(
     allColumns: CreditItemReportFields.values
         .where((field) =>
             field != CreditItemReportFields.discount ||
-            userCompany.company!.enableProductDiscount)
+            userCompany.company.enableProductDiscount)
         .map((e) => EnumUtils.parse(e))
         .toList(),
     columns: selectedColumns,

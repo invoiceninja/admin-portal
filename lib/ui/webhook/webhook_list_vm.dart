@@ -105,7 +105,7 @@ class WebhookListVM {
           handleWebhookAction(context, webhooks, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
-          state.userCompany!.settings?.getTableColumns(EntityType.webhook) ??
+          state.userCompany.settings.getTableColumns(EntityType.webhook) ??
               WebhookPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortWebhooks(field)),
       onClearMultielsect: () => store.dispatch(ClearWebhookMultiselect()),

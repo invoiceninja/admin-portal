@@ -115,7 +115,7 @@ class TaskStatusScreen extends StatelessWidget {
             store.dispatch(FilterTaskStatusesByCustom4(value)),
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany!.canCreate(EntityType.taskStatus)
+              userCompany.canCreate(EntityType.taskStatus)
           ? FloatingActionButton(
               heroTag: 'task_status_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

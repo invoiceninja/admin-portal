@@ -251,6 +251,6 @@ ScheduleState _setLoadedSchedules(
 
 ScheduleState _setLoadedCompany(
     ScheduleState scheduleState, LoadCompanySuccess action) {
-  final company = action.userCompany.company!;
+  final company = action.userCompany.company;
   return scheduleState.loadSchedules(company.schedules);
 }

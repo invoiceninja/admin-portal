@@ -139,7 +139,7 @@ class RecurringInvoiceScreen extends StatelessWidget {
             store.dispatch(FilterRecurringInvoicesByCustom4(value)),
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany!.canCreate(EntityType.recurringInvoice)
+              userCompany.canCreate(EntityType.recurringInvoice)
           ? FloatingActionButton(
               heroTag: 'recurring_invoice_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

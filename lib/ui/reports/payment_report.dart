@@ -84,9 +84,9 @@ ReportResult paymentReport(
   final List<BaseEntity> entities = [];
   BuiltList<PaymentReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
+  final reportSettings = userCompany.settings.reportSettings;
   final paymentReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportPayment)
+      reportSettings.containsKey(kReportPayment)
           ? reportSettings[kReportPayment]!
           : ReportSettingsEntity();
 
@@ -114,13 +114,13 @@ ReportResult paymentReport(
     for (var paymentId in paymentMap.keys) {
       final payment = paymentMap[paymentId] ?? PaymentEntity();
       paymentInvoiceMap[payment.id] = [];
-      if (payment.isDeleted! && !userCompany.company!.reportIncludeDeleted) {
+      if (payment.isDeleted! && !userCompany.company.reportIncludeDeleted) {
         continue;
       }
       for (var invoicePaymentable in payment.invoicePaymentables) {
         final invoice =
             invoiceMap[invoicePaymentable.invoiceId] ?? InvoiceEntity();
-        if (invoice.isDeleted! && !userCompany.company!.reportIncludeDeleted) {
+        if (invoice.isDeleted! && !userCompany.company.reportIncludeDeleted) {
           continue;
         }
         paymentInvoiceMap[payment.id]!.add(invoice.number);
@@ -132,13 +132,13 @@ ReportResult paymentReport(
     for (var paymentId in paymentMap.keys) {
       final payment = paymentMap[paymentId] ?? PaymentEntity();
       paymentCreditMap[payment.id] = [];
-      if (payment.isDeleted! && !userCompany.company!.reportIncludeDeleted) {
+      if (payment.isDeleted! && !userCompany.company.reportIncludeDeleted) {
         continue;
       }
       for (var creditPaymentable in payment.creditPaymentables) {
         final credit =
             creditMap[creditPaymentable.invoiceId] ?? InvoiceEntity();
-        if (credit.isDeleted! && !userCompany.company!.reportIncludeDeleted) {
+        if (credit.isDeleted! && !userCompany.company.reportIncludeDeleted) {
           continue;
         }
         paymentCreditMap[payment.id]!.add(credit.number);
@@ -150,7 +150,7 @@ ReportResult paymentReport(
     final payment = paymentMap[paymentId] ?? PaymentEntity();
     final client = clientMap[payment.clientId] ?? ClientEntity();
 
-    if ((payment.isDeleted! && !userCompany.company!.reportIncludeDeleted) ||
+    if ((payment.isDeleted! && !userCompany.company.reportIncludeDeleted) ||
         client.isDeleted!) {
       continue;
     }
@@ -235,28 +235,28 @@ ReportResult paymentReport(
           value = presentCustomField(
             value: payment.customValue1,
             customFieldType: CustomFieldType.payment1,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case PaymentReportFields.payment2:
           value = presentCustomField(
             value: payment.customValue2,
             customFieldType: CustomFieldType.payment2,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case PaymentReportFields.payment3:
           value = presentCustomField(
             value: payment.customValue3,
             customFieldType: CustomFieldType.payment3,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case PaymentReportFields.payment4:
           value = presentCustomField(
             value: payment.customValue4,
             customFieldType: CustomFieldType.payment4,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case PaymentReportFields.exchange_rate:
@@ -277,7 +277,7 @@ ReportResult paymentReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column)!,
+        column: EnumUtils.parse(column),
       )!) {
         skip = true;
       }

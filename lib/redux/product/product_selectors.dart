@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';

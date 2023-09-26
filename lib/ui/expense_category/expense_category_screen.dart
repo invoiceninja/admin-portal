@@ -93,7 +93,7 @@ class ExpenseCategoryScreen extends StatelessWidget {
             store.dispatch(FilterExpenseCategoriesByCustom4(value)),
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany!.canCreate(EntityType.expenseCategory)
+              userCompany.canCreate(EntityType.expenseCategory)
           ? FloatingActionButton(
               heroTag: 'expense_category_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

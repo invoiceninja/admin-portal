@@ -111,13 +111,12 @@ class MultiSelectListState extends State<MultiSelectList> {
     final state = StoreProvider.of<AppState>(context).state;
 
     final Map<String?, String?> options = {};
-    widget.options!
-        .where((option) => !selected!.contains(option))
+    widget.options.where((option) => !selected.contains(option))
         .forEach((option) {
       final columnTitle = state.company!.getCustomFieldLabel(
           widget.entityType != null
-              ? option!.replaceFirst('custom', widget.entityType!.snakeCase)
-              : option!);
+              ? option.replaceFirst('custom', widget.entityType!.snakeCase)
+              : option);
       options[option] =
           columnTitle.isEmpty ? lookupOption(option) : columnTitle;
     });
@@ -146,12 +145,12 @@ class MultiSelectListState extends State<MultiSelectList> {
                 return;
               }
 
-              if (selected!.contains(value)) {
+              if (selected.contains(value)) {
                 return;
               }
 
               setState(() {
-                selected!.add(value);
+                selected.add(value);
               });
 
               if (widget.liveChanges) {
@@ -167,13 +166,13 @@ class MultiSelectListState extends State<MultiSelectList> {
               child: ReorderableListView(
                 scrollController: _controller,
                 padding: const EdgeInsets.only(right: 12),
-                children: selected!.asMap().entries.map((entry) {
+                children: selected.asMap().entries.map((entry) {
                   final option = entry.value;
                   final columnTitle = state.company!.getCustomFieldLabel(
                       widget.entityType != null
-                          ? option!.replaceFirst(
+                          ? option.replaceFirst(
                               'custom', widget.entityType!.snakeCase)
-                          : option!);
+                          : option);
                   return Padding(
                     key: ValueKey('__${entry.key}_${entry.value}__'),
                     padding:
@@ -183,7 +182,7 @@ class MultiSelectListState extends State<MultiSelectList> {
                         IconButton(
                           icon: Icon(Icons.close),
                           onPressed: () {
-                            setState(() => selected!.remove(option));
+                            setState(() => selected.remove(option));
                             if (widget.liveChanges) {
                               widget.onSelected(selected);
                             }
@@ -206,17 +205,17 @@ class MultiSelectListState extends State<MultiSelectList> {
                 onReorder: (oldIndex, newIndex) {
                   // https://stackoverflow.com/a/54164333/497368
                   // These two lines are workarounds for ReorderableListView problems
-                  if (newIndex > selected!.length) {
-                    newIndex = selected!.length;
+                  if (newIndex > selected.length) {
+                    newIndex = selected.length;
                   }
                   if (oldIndex < newIndex) {
                     newIndex--;
                   }
 
                   setState(() {
-                    final field = selected![oldIndex];
-                    selected!.removeAt(oldIndex);
-                    selected!.insert(newIndex, field);
+                    final field = selected[oldIndex];
+                    selected.removeAt(oldIndex);
+                    selected.insert(newIndex, field);
                   });
 
                   if (widget.liveChanges) {
@@ -236,7 +235,7 @@ class MultiSelectListState extends State<MultiSelectList> {
                       child: Text(localization!.reset.toUpperCase()),
                       onPressed: () {
                         setState(
-                            () => selected = widget.defaultSelected!.toList());
+                            () => selected = widget.defaultSelected.toList());
                         if (widget.liveChanges) {
                           widget.onSelected(selected);
                         }
@@ -257,7 +256,7 @@ class MultiSelectListState extends State<MultiSelectList> {
               TextButton(
                   child: Text(localization.reset.toUpperCase()),
                   onPressed: () {
-                    setState(() => selected = widget.defaultSelected!.toList());
+                    setState(() => selected = widget.defaultSelected.toList());
                     if (widget.liveChanges) {
                       widget.onSelected(selected);
                     }

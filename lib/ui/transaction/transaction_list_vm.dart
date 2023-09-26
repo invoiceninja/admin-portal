@@ -103,8 +103,8 @@ class TransactionListVM {
               EntityAction action) =>
           handleTransactionAction(context, transactions, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: state.userCompany!.settings
-              ?.getTableColumns(EntityType.transaction) ??
+      tableColumns: state.userCompany.settings
+              .getTableColumns(EntityType.transaction) ??
           TransactionPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortTransactions(field)),
       onClearMultielsect: () => store.dispatch(ClearTransactionMultiselect()),

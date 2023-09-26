@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 
@@ -659,7 +658,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                   final filter =
                                       textEditingValue.text.toLowerCase();
                                   final productKey =
-                                      product!.productKey.toLowerCase();
+                                      product.productKey.toLowerCase();
 
                                   if (company.showProductDetails &&
                                       product.notes
@@ -672,7 +671,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 }).toList();
 
                                 if (options.length == 1 &&
-                                    options[0]!.productKey.toLowerCase() ==
+                                    options[0].productKey.toLowerCase() ==
                                         lineItems[index]!
                                             .productKey
                                             .toLowerCase()) {
@@ -696,7 +695,6 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                     ? product.cost
                                     : product.price;
                                 if (company.convertProductExchangeRate &&
-                                    invoice.clientId != null &&
                                     client.currencyId != company.currencyId) {
                                   double exchangeRate = invoice.exchangeRate;
                                   if (!company.convertRateToClient &&

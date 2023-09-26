@@ -85,7 +85,7 @@ class _TaxRateDropdownState extends State<TaxRateDropdown> {
       decoration: InputDecoration(
         labelText: widget.labelText,
       ),
-      isEmpty: taxRate == null || taxRate.isEmpty,
+      isEmpty: taxRate.isEmpty,
       child: DropdownButtonHideUnderline(
         child: DropdownButton<TaxRateEntity>(
             value: taxRate,

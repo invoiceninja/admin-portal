@@ -105,8 +105,8 @@ class ExpenseCategoryListVM {
               EntityAction action) =>
           handleExpenseCategoryAction(context, expenseCategories, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: state.userCompany!.settings
-              ?.getTableColumns(EntityType.expenseCategory) ??
+      tableColumns: state.userCompany.settings
+              .getTableColumns(EntityType.expenseCategory) ??
           ExpenseCategoryPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortExpenseCategories(field)),
       onClearMultielsect: () =>

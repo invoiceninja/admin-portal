@@ -22,7 +22,7 @@ List<InvoiceItemEntity> convertProjectToInvoiceItem({
 
   final tasks = <TaskEntity?>[];
   state.taskState.map.forEach((index, task) {
-    if (task!.isActive &&
+    if (task.isActive &&
         task.isStopped &&
         !task.isInvoiced &&
         task.projectId == project!.id) {
@@ -32,7 +32,7 @@ List<InvoiceItemEntity> convertProjectToInvoiceItem({
 
   final expenses = <ExpenseEntity?>[];
   state.expenseState.map.forEach((index, expense) {
-    if (expense!.isActive &&
+    if (expense.isActive &&
         expense.projectId == project!.id &&
         expense.isPending) {
       expenses.add(expense);

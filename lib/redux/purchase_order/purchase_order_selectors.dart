@@ -186,7 +186,7 @@ EntityStats purchaseOrderStatsForVendor(
   int countActive = 0;
   int countArchived = 0;
   purchaseOrderMap.forEach((purchaseOrderId, purchaseOrder) {
-    if (purchaseOrder!.vendorId == vendorId) {
+    if (purchaseOrder.vendorId == vendorId) {
       if (purchaseOrder.isActive) {
         countActive++;
       } else if (purchaseOrder.isArchived) {

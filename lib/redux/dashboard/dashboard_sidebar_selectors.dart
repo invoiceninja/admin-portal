@@ -21,7 +21,7 @@ List<InvoiceEntity?> _upcomingInvoices({
   final invoices = <InvoiceEntity?>[];
   invoiceMap.forEach((index, invoice) {
     final client =
-        clientMap![invoice!.clientId] ?? ClientEntity(id: invoice.clientId);
+        clientMap![invoice.clientId] ?? ClientEntity(id: invoice.clientId);
     if (invoice.isNotActive ||
         invoice.isCancelledOrReversed ||
         client.isNotActive) {
@@ -53,7 +53,7 @@ List<InvoiceEntity?> _pastDueInvoices({
   final invoices = <InvoiceEntity?>[];
   invoiceMap.forEach((index, invoice) {
     final client =
-        clientMap![invoice!.clientId] ?? ClientEntity(id: invoice.clientId);
+        clientMap![invoice.clientId] ?? ClientEntity(id: invoice.clientId);
     if (invoice.isNotActive ||
         invoice.isCancelledOrReversed ||
         client.isNotActive) {
@@ -124,7 +124,7 @@ List<InvoiceEntity?> _upcomingQuotes({
   final quotes = <InvoiceEntity?>[];
   quoteMap.forEach((index, quote) {
     final client =
-        clientMap![quote!.clientId] ?? ClientEntity(id: quote.clientId);
+        clientMap![quote.clientId] ?? ClientEntity(id: quote.clientId);
     if (quote.isNotActive || client.isNotActive) {
       // do noting
     } else if (quote.isUpcoming) {
@@ -154,7 +154,7 @@ List<InvoiceEntity?> _expiredQuotes({
   final quotes = <InvoiceEntity?>[];
   quoteMap.forEach((index, quote) {
     final client =
-        clientMap![quote!.clientId] ?? ClientEntity(id: quote.clientId);
+        clientMap![quote.clientId] ?? ClientEntity(id: quote.clientId);
     if (quote.isNotActive || client.isNotActive) {
       // do noting
     } else if (quote.isPastDue) {

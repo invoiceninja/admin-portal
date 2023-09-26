@@ -211,7 +211,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   ReportsUIState get reportsUIState;
 
   bool containsRoute(String route) {
-    if (route == null || route.isEmpty) {
+    if (route.isEmpty) {
       return false;
     }
     return currentRoute.contains(route);

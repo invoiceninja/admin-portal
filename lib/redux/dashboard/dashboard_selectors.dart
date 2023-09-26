@@ -99,7 +99,7 @@ List<ChartDataGroup> _chartInvoices({
 
   invoiceMap.forEach((int, invoice) {
     final client =
-        clientMap![invoice!.clientId] ?? ClientEntity(id: invoice.clientId);
+        clientMap![invoice.clientId] ?? ClientEntity(id: invoice.clientId);
 
     // Fix for mock data
     var date = invoice.date.split('T')[0];
@@ -266,7 +266,7 @@ List<ChartDataGroup> chartQuotes({
 
   quoteMap.forEach((int, quote) {
     final client =
-        clientMap![quote!.clientId] ?? ClientEntity(id: quote.clientId);
+        clientMap![quote.clientId] ?? ClientEntity(id: quote.clientId);
     var date = quote.date;
     if (date.isNotEmpty) {
       if (settings.groupBy == kReportGroupYear) {

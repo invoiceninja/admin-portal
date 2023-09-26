@@ -74,9 +74,9 @@ ReportResult transactionReport(
   final List<BaseEntity> entities = [];
   BuiltList<TransactionReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
+  final reportSettings = userCompany.settings.reportSettings;
   final transactionReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportTransaction)
+      reportSettings.containsKey(kReportTransaction)
           ? reportSettings[kReportTransaction]!
           : ReportSettingsEntity();
 
@@ -102,7 +102,7 @@ ReportResult transactionReport(
   for (var transactionId in transactionMap.keys) {
     final transaction = transactionMap[transactionId]!;
 
-    if (transaction.isDeleted! && !userCompany.company!.reportIncludeDeleted) {
+    if (transaction.isDeleted! && !userCompany.company.reportIncludeDeleted) {
       continue;
     }
 
@@ -178,7 +178,7 @@ ReportResult transactionReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column)!,
+        column: EnumUtils.parse(column),
       )!) {
         skip = true;
       }

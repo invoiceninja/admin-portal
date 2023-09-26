@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -81,7 +80,7 @@ class MenuDrawerVM {
             callback: (_) async {
               store.dispatch(UserLogout());
 
-              final user = store.state.user!;
+              final user = store.state.user;
               if (user.isConnectedToGoogle) {
                 GoogleOAuth.signOut();
               }

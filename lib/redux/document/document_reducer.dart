@@ -252,7 +252,7 @@ DocumentState _setLoadedDocuments(
 
 DocumentState _setLoadedCompany(
     DocumentState documentState, LoadCompanySuccess action) {
-  final company = action.userCompany.company!;
+  final company = action.userCompany.company;
   final documents = <DocumentEntity>[];
   company.documents.forEach((document) {
     documents.add(document.rebuild((b) => b

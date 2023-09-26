@@ -114,7 +114,7 @@ class ClientListVM {
               EntityAction action) =>
           handleClientAction(context, client, action),
       tableColumns:
-          state.userCompany!.settings?.getTableColumns(EntityType.client) ??
+          state.userCompany.settings.getTableColumns(EntityType.client) ??
               ClientPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortClients(field)),
       onClearMultielsect: () => store.dispatch(ClearClientMultiselect()),

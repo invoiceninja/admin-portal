@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:http/http.dart';

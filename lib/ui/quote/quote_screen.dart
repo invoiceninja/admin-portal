@@ -139,7 +139,7 @@ class QuoteScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany!.canCreate(EntityType.quote)
+              userCompany.canCreate(EntityType.quote)
           ? FloatingActionButton(
               heroTag: 'quote_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

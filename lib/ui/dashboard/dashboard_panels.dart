@@ -267,7 +267,7 @@ class DashboardPanels extends StatelessWidget {
     final state = viewModel.state;
 
     final runningTasks =
-        memoizedRunningTasks(state.taskState.map, state.user!.id);
+        memoizedRunningTasks(state.taskState.map, state.user.id);
 
     if (runningTasks.isEmpty) {
       return null;
@@ -327,7 +327,7 @@ class DashboardPanels extends StatelessWidget {
     final company = state.company;
     final localization = AppLocalization.of(context);
     final settings = viewModel.dashboardUIState.settings;
-    final userCompanySettings = state.userCompany!.settings;
+    final userCompanySettings = state.userCompany.settings;
     final runningTasks = _runningTasks(context);
 
     if (!state.staticState.isLoaded) {
@@ -464,7 +464,7 @@ class DashboardPanels extends StatelessWidget {
                           state.showOneYearReviewApp ||
                           state.showTwoYearReviewApp)
                         ReviewApp(),
-                      if (state.userCompany!.isAdmin &&
+                      if (state.userCompany.isAdmin &&
                           state.company!.daysActive < 30 &&
                           !state.prefState.hideGatewayWarning &&
                           state.companyGatewayState.list.isEmpty)
@@ -606,12 +606,11 @@ class DashboardPanels extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: StaggeredGrid.count(
                           crossAxisCount: isMobile(context)
-                              ? userCompanySettings!.dashboardFieldsPerRowMobile
-                              : userCompanySettings!
-                                  .dashboardFieldsPerRowDesktop,
+                              ? userCompanySettings.dashboardFieldsPerRowMobile
+                              : userCompanySettings.dashboardFieldsPerRowDesktop,
                           crossAxisSpacing: 8,
                           mainAxisSpacing: 12,
-                          children: state.userCompany!.settings!.dashboardFields
+                          children: state.userCompany.settings.dashboardFields
                               .map<Widget>((dashboardField) {
                             double value = 0;
                             if (dashboardField.period ==
@@ -1031,7 +1030,7 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
     final groupMap = state.groupState.map;
     final company = state.company;
     final settings = state.dashboardUIState.settings;
-    final userCompanySettings = state.userCompany!.settings!;
+    final userCompanySettings = state.userCompany.settings;
 
     final hasMultipleCurrencies =
         memoizedHasMultipleCurrencies(company, clientMap, groupMap);
@@ -1122,8 +1121,7 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
             onPressed: () {
               final completer = snackBarCompleter<Null>(
                   context, AppLocalization.of(context)!.savedSettings);
-              final user = state.user!
-                  .rebuild((b) => b..userCompany.replace(state.userCompany!));
+              final user = state.user.rebuild((b) => b..userCompany.replace(state.userCompany));
               store.dispatch(
                 SaveUserSettingsRequest(
                   completer: completer,
@@ -1170,7 +1168,7 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
               child: ReorderableListView(
                 onReorder: (oldIndex, newIndex) {
                   final fields =
-                      store.state.userCompany!.settings!.dashboardFields;
+                      store.state.userCompany.settings.dashboardFields;
 
                   // https://stackoverflow.com/a/54164333/497368
                   // These two lines are workarounds for ReorderableListView problems
@@ -1266,7 +1264,7 @@ class _DashboardFieldState extends State<_DashboardField> {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final company = state.company;
-    final dashboardFields = state.userCompany!.settings!.dashboardFields;
+    final dashboardFields = state.userCompany.settings.dashboardFields;
 
     final fieldMap = {
       EntityType.invoice: [

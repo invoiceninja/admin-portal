@@ -103,15 +103,11 @@ Middleware<AppState> _archivePaymentTerm(PaymentTermRepository repository) {
             EntityAction.archive)
         .then((List<PaymentTermEntity> paymentTerms) {
       store.dispatch(ArchivePaymentTermsSuccess(paymentTerms));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchivePaymentTermsFailure(prevPaymentTerms));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -129,15 +125,11 @@ Middleware<AppState> _deletePaymentTerm(PaymentTermRepository repository) {
             store.state.credentials, action.paymentTermIds, EntityAction.delete)
         .then((List<PaymentTermEntity> paymentTerms) {
       store.dispatch(DeletePaymentTermsSuccess(paymentTerms));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeletePaymentTermsFailure(prevPaymentTerms));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -155,15 +147,11 @@ Middleware<AppState> _restorePaymentTerm(PaymentTermRepository repository) {
             EntityAction.restore)
         .then((List<PaymentTermEntity> paymentTerms) {
       store.dispatch(RestorePaymentTermsSuccess(paymentTerms));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestorePaymentTermsFailure(prevPaymentTerms));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);

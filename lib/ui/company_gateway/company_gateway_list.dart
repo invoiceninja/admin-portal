@@ -85,7 +85,7 @@ class _CompanyGatewayListState extends State<CompanyGatewayList> {
                     widget.viewModel.companyGatewayMap[companyGatewayId];
                 return CompanyGatewayListItem(
                     key: ValueKey('__company_gateway_$companyGatewayId'),
-                    user: state.userCompany!.user,
+                    user: state.userCompany.user,
                     filter: widget.viewModel.filter,
                     companyGateway: companyGateway,
                     onRemovePressed: widget

@@ -103,9 +103,9 @@ ReportResult purchaseOrderReport(
   final List<BaseEntity> entities = [];
   BuiltList<PurchaseOrderReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
+  final reportSettings = userCompany.settings.reportSettings;
   final purchaseOrderReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportPurchaseOrder)
+      reportSettings.containsKey(kReportPurchaseOrder)
           ? reportSettings[kReportPurchaseOrder]!
           : ReportSettingsEntity();
 
@@ -139,12 +139,12 @@ ReportResult purchaseOrderReport(
     //final vendor = vendorMap[purchaseOrder.vendorId];
 
     if ((purchaseOrder.isDeleted! &&
-            !userCompany.company!.reportIncludeDeleted) ||
+            !userCompany.company.reportIncludeDeleted) ||
         vendor.isDeleted!) {
       continue;
     }
 
-    if (!userCompany.company!.reportIncludeDrafts && purchaseOrder.isDraft) {
+    if (!userCompany.company.reportIncludeDrafts && purchaseOrder.isDraft) {
       continue;
     }
 
@@ -209,28 +209,28 @@ ReportResult purchaseOrderReport(
           value = presentCustomField(
             value: purchaseOrder.customValue1,
             customFieldType: CustomFieldType.invoice1,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case PurchaseOrderReportFields.invoice2:
           value = presentCustomField(
             value: purchaseOrder.customValue2,
             customFieldType: CustomFieldType.invoice2,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case PurchaseOrderReportFields.invoice3:
           value = presentCustomField(
             value: purchaseOrder.customValue3,
             customFieldType: CustomFieldType.invoice3,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case PurchaseOrderReportFields.invoice4:
           value = presentCustomField(
             value: purchaseOrder.customValue4,
             customFieldType: CustomFieldType.invoice4,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case PurchaseOrderReportFields.surcharge1:
@@ -303,7 +303,7 @@ ReportResult purchaseOrderReport(
           value = vendor.city;
           break;
         case PurchaseOrderReportFields.currency:
-          value = staticState.currencyMap[userCompany.company!.currencyId]
+          value = staticState.currencyMap[userCompany.company.currencyId]
                   ?.listDisplayName ??
               '';
           break;
@@ -363,7 +363,7 @@ ReportResult purchaseOrderReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column)!,
+        column: EnumUtils.parse(column),
       )!) {
         skip = true;
       }
@@ -375,7 +375,7 @@ ReportResult purchaseOrderReport(
         if ([
           PurchaseOrderReportFields.converted_amount,
         ].contains(column)) {
-          currencyId = userCompany.company!.currencyId;
+          currencyId = userCompany.company.currencyId;
         }
         row.add(purchaseOrder.getReportDouble(
           value: value,

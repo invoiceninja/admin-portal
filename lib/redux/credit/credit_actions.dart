@@ -689,7 +689,7 @@ Future handleCreditAction(BuildContext context, List<BaseEntity?> credits,
       final url = invitation.downloadLink;
       store.dispatch(StartSaving());
       final http.Response? response =
-          await (WebClient().get(url, '', rawResponse: true));
+          await WebClient().get(url, '', rawResponse: true);
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;
@@ -698,8 +698,8 @@ Future handleCreditAction(BuildContext context, List<BaseEntity?> credits,
       final url = state.credentials.url! + '/credits/bulk';
       final data = json.encode(
           {'ids': creditIds, 'action': EntityAction.bulkPrint.toApiParam()});
-      final http.Response? response = await (WebClient()
-          .post(url, state.credentials.token, data: data, rawResponse: true));
+      final http.Response? response = await WebClient()
+          .post(url, state.credentials.token, data: data, rawResponse: true);
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;

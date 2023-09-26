@@ -325,6 +325,6 @@ TransactionState _setLoadedTransactions(
 
 TransactionState _setLoadedCompany(
     TransactionState transactionState, LoadCompanySuccess action) {
-  final company = action.userCompany.company!;
+  final company = action.userCompany.company;
   return transactionState.loadTransactions(company.transactions);
 }

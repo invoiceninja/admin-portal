@@ -2,7 +2,6 @@
 import 'dart:ui';
 
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
@@ -151,7 +150,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get isStale => userCompanyState.isStale || staticState.isStale;
 
-  AccountEntity? get account => userCompany!.account;
+  AccountEntity? get account => userCompany.account;
 
   CompanyEntity? get company => userCompanyState.company;
 
@@ -159,9 +158,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     final List<CompanyEntity?> list = [];
 
     for (var companyState in userCompanyStates) {
-      if (companyState.company != null) {
-        list.add(companyState.company);
-      }
+      list.add(companyState.company);
     }
 
     final companies = list
@@ -178,14 +175,14 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   UserCompanyEntity get userCompany => userCompanyState.userCompany;
 
   Credentials get credentials =>
-      Credentials(token: userCompanyState.token!.token, url: authState.url);
+      Credentials(token: userCompanyState.token.token, url: authState.url);
 
   bool get hasAccentColor {
     if (isDemo) {
       return true;
     }
 
-    final color = userCompany?.settings?.accentColor ?? '';
+    final color = userCompany.settings.accentColor ?? '';
 
     if (color == '#ffffff' && !prefState.enableDarkMode) {
       return false;
@@ -212,7 +209,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       : convertHexStringToColor('#000000');
 
   Color? get accentColor {
-    var color = userCompany?.settings?.accentColor ?? kDefaultAccentColor;
+    var color = userCompany.settings.accentColor ?? kDefaultAccentColor;
 
     if (color == '#ffffff' && !prefState.enableDarkMode) {
       color = kDefaultAccentColor;
@@ -851,18 +848,18 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       : ((isProPlan || isEnterprisePlan) && !isTrial);
 
   bool get isUpdateAvailable =>
-      isSelfHosted && account!.isUpdateAvailable && userCompany!.isAdmin;
+      isSelfHosted && account!.isUpdateAvailable && userCompany.isAdmin;
 
   bool get isUserConfirmed {
     if (isSelfHosted) {
       return true;
     }
 
-    return (user!.emailVerifiedAt ?? 0) > 0;
+    return (user.emailVerifiedAt ?? 0) > 0;
   }
 
   int get createdAtLimit {
-    final numberYearsActive = userCompany!.settings?.numberYearsActive ?? 0;
+    final numberYearsActive = userCompany.settings.numberYearsActive ?? 0;
 
     if (!company!.isLarge || numberYearsActive == 0) {
       return 0;
@@ -878,11 +875,11 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       return false;
     }
 
-    return !userCompany!.settings!.includeDeletedClients;
+    return !userCompany.settings.includeDeletedClients;
   }
 
   bool get canAddCompany =>
-      userCompany!.isOwner && companies.length < 10 && !isDemo;
+      userCompany.isOwner && companies.length < 10 && !isDemo;
 
   bool get isMenuCollapsed {
     if (prefState.isMobile) {
@@ -960,8 +957,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   @override
   String toString() {
-    final companyUpdated = userCompanyState.lastUpdated == null ||
-            userCompanyState.lastUpdated == 0
+    final companyUpdated = userCompanyState.lastUpdated == 0
         ? 'Blank'
         : timeago.format(convertTimestampToDate(
             (userCompanyState.lastUpdated / 1000).round()));
@@ -972,8 +968,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         : timeago.format(
             convertTimestampToDate((staticState.updatedAt! / 1000).round()));
 
-    final passwordUpdated = authState.lastEnteredPasswordAt == null ||
-            authState.lastEnteredPasswordAt == 0
+    final passwordUpdated = authState.lastEnteredPasswordAt == 0
         ? 'Blank'
         : timeago.format(convertTimestampToDate(
             (authState.lastEnteredPasswordAt / 1000).round()));
@@ -1022,7 +1017,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         '\nCompany: $companyUpdated${userCompanyState.isStale ? ' [S]' : ''}'
         '\nStatic: $staticUpdated${staticState.isStale ? ' [S]' : ''}'
         '\nPassword: $passwordUpdated${hasRecentlyEnteredPassword ? '' : ' [S]'}'
-        '\nAccent: $hasAccentColor ${userCompany?.settings?.accentColor ?? ''}'
+        '\nAccent: $hasAccentColor ${userCompany.settings.accentColor ?? ''}'
         '\n';
   }
 }

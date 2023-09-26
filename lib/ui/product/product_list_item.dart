@@ -191,7 +191,7 @@ class ProductListItem extends StatelessWidget {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    subtitle != null && subtitle.isNotEmpty
+                    subtitle.isNotEmpty
                         ? Text(
                             subtitle,
                             maxLines: 3,

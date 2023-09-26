@@ -85,7 +85,7 @@ class UserScreen extends StatelessWidget {
         },
       ),
       floatingActionButton:
-          state.prefState.isMobile && userCompany!.canCreate(EntityType.user)
+          state.prefState.isMobile && userCompany.canCreate(EntityType.user)
               ? FloatingActionButton(
                   heroTag: 'user_fab',
                   backgroundColor: Theme.of(context).primaryColorDark,

@@ -64,9 +64,8 @@ ReportResult lineItemReport(
   final List<List<ReportElement>> data = [];
   BuiltList<PurchaseOrderItemReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
-  final lineItemReportSettings = reportSettings != null &&
-          reportSettings.containsKey(kReportPurchaseOrderItem)
+  final reportSettings = userCompany.settings.reportSettings;
+  final lineItemReportSettings = reportSettings.containsKey(kReportPurchaseOrderItem)
       ? reportSettings[kReportPurchaseOrderItem]!
       : ReportSettingsEntity();
 
@@ -94,18 +93,18 @@ ReportResult lineItemReport(
   }
 
   for (var entry in purchaseOrderMap.entries) {
-    final invoice = entry.value!;
+    final invoice = entry.value;
     final client = clientMap[invoice.clientId] ?? ClientEntity();
     final vendor = vendorMap[invoice.vendorId] ?? VendorEntity();
     final precision =
         staticState.currencyMap[client.currencyId]?.precision ?? 2;
 
-    if ((invoice.isDeleted! && !userCompany.company!.reportIncludeDeleted) ||
+    if ((invoice.isDeleted! && !userCompany.company.reportIncludeDeleted) ||
         client.isDeleted!) {
       continue;
     }
 
-    if (!userCompany.company!.reportIncludeDrafts && invoice.isDraft) {
+    if (!userCompany.company.reportIncludeDrafts && invoice.isDraft) {
       continue;
     }
 
@@ -198,10 +197,10 @@ ReportResult lineItemReport(
                     '';
             break;
           case PurchaseOrderItemReportFields.clientNumber:
-            value = client?.number ?? '';
+            value = client.number ?? '';
             break;
           case PurchaseOrderItemReportFields.clientIdNumber:
-            value = client?.idNumber ?? '';
+            value = client.idNumber ?? '';
             break;
         }
 
@@ -209,7 +208,7 @@ ReportResult lineItemReport(
           value: value,
           userCompany: userCompany,
           reportsUIState: reportsUIState,
-          column: EnumUtils.parse(column)!,
+          column: EnumUtils.parse(column),
         )!) {
           skip = true;
         }
@@ -241,7 +240,7 @@ ReportResult lineItemReport(
     allColumns: PurchaseOrderItemReportFields.values
         .where((field) =>
             field != PurchaseOrderItemReportFields.discount ||
-            userCompany.company!.enableProductDiscount)
+            userCompany.company.enableProductDiscount)
         .map((e) => EnumUtils.parse(e))
         .toList(),
     columns: selectedColumns,

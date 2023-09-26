@@ -86,9 +86,8 @@ ReportResult recurringExpenseReport(
   BuiltList<RecurringExpenseReportFields> columns;
 
   final localization = AppLocalization.of(navigatorKey.currentContext!);
-  final reportSettings = userCompany.settings?.reportSettings;
-  final expenseReportSettings = reportSettings != null &&
-          reportSettings.containsKey(kReportRecurringExpense)
+  final reportSettings = userCompany.settings.reportSettings;
+  final expenseReportSettings = reportSettings.containsKey(kReportRecurringExpense)
       ? reportSettings[kReportRecurringExpense]!
       : ReportSettingsEntity();
 
@@ -119,7 +118,7 @@ ReportResult recurringExpenseReport(
     final invoice = invoiceMap[expense.invoiceId] ?? InvoiceEntity();
     final vendor = vendorMap[expense.vendorId] ?? VendorEntity();
 
-    if (expense.isDeleted! && !userCompany.company!.reportIncludeDeleted) {
+    if (expense.isDeleted! && !userCompany.company.reportIncludeDeleted) {
       continue;
     }
 
@@ -169,25 +168,25 @@ ReportResult recurringExpenseReport(
           value = expense.taxRate3;
           break;
         case RecurringExpenseReportFields.client:
-          value = client?.displayName;
+          value = client.displayName;
           break;
         case RecurringExpenseReportFields.client_balance:
-          value = client?.balance;
+          value = client.balance;
           break;
         case RecurringExpenseReportFields.client_address1:
-          value = client?.address1;
+          value = client.address1;
           break;
         case RecurringExpenseReportFields.client_address2:
-          value = client?.address2;
+          value = client.address2;
           break;
         case RecurringExpenseReportFields.client_shipping_address1:
-          value = client?.shippingAddress1;
+          value = client.shippingAddress1;
           break;
         case RecurringExpenseReportFields.client_shipping_address2:
-          value = client?.shippingAddress2;
+          value = client.shippingAddress2;
           break;
         case RecurringExpenseReportFields.vendor:
-          value = vendor?.listDisplayName;
+          value = vendor.listDisplayName;
           break;
         case RecurringExpenseReportFields.expense1:
           value = expense.customValue1;
@@ -233,7 +232,7 @@ ReportResult recurringExpenseReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column)!,
+        column: EnumUtils.parse(column),
       )!) {
         skip = true;
       }
@@ -255,7 +254,7 @@ ReportResult recurringExpenseReport(
   }
 
   final selectedColumns =
-      columns.map((item) => EnumUtils.parse(item)!).toList();
+      columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>
       sortReportTableRows(rowA, rowB, expenseReportSettings, selectedColumns)!);
 

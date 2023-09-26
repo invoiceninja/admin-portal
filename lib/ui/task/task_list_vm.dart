@@ -104,7 +104,7 @@ class TaskListVM {
       onSortColumn: (field) => store.dispatch(SortTasks(field)),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
-          state.userCompany!.settings?.getTableColumns(EntityType.task) ??
+          state.userCompany.settings.getTableColumns(EntityType.task) ??
               TaskPresenter.getDefaultTableFields(state.userCompany),
       onClearMultielsect: () => store.dispatch(ClearTaskMultiselect()),
     );

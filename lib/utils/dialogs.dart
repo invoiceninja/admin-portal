@@ -185,7 +185,7 @@ void passwordCallback({
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
-  final user = state.user!;
+  final user = state.user;
 
   print(
       '## Confirm password: $alwaysRequire, ${user.hasPassword}, ${state.hasRecentlyEnteredPassword}, ${user.oauthProvider}, ${state.company!.oauthPasswordRequired}');
@@ -456,7 +456,7 @@ void cloneToDialog({
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (userCompany!.canCreate(EntityType.invoice))
+              if (userCompany.canCreate(EntityType.invoice))
                 ListTile(
                   leading: Icon(getEntityIcon(EntityType.invoice)),
                   title: Text(localization.invoice),
@@ -571,7 +571,7 @@ void addToInvoiceDialog({
   final state = store.state;
 
   final invoices = state.invoiceState.map.values.where((invoice) {
-    if (clientId != invoice!.clientId) {
+    if (clientId != invoice.clientId) {
       return false;
     }
 
@@ -591,7 +591,7 @@ void addToInvoiceDialog({
           children: invoices.map((invoice) {
             return SimpleDialogOption(
               child: Row(children: [
-                Expanded(child: Text(invoice!.number)),
+                Expanded(child: Text(invoice.number)),
                 Text(
                   formatNumber(invoice.amount, context,
                       clientId: invoice.clientId)!,

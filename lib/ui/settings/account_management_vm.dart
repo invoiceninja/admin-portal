@@ -65,7 +65,7 @@ class AccountManagementVM {
             store.dispatch(UpdateCompany(company: company)),
         onCompanyDelete: (context, password, idToken, reason) {
           showDialog<AlertDialog>(
-              context: context!,
+              context: context,
               barrierDismissible: false,
               builder: (BuildContext context) => SimpleDialog(
                     children: <Widget>[LoadingDialog()],
@@ -78,7 +78,7 @@ class AccountManagementVM {
               final state = store.state;
               if (companyLength == 1) {
                 store.dispatch(UserLogout());
-                if (state.user!.isConnectedToGoogle) {
+                if (state.user.isConnectedToGoogle) {
                   GoogleOAuth.disconnect();
                 }
               } else {

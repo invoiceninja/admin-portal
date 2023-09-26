@@ -131,7 +131,7 @@ class PurchaseOrderScreen extends StatelessWidget {
             store.dispatch(FilterPurchaseOrdersByCustom4(value)),
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany!.canCreate(EntityType.purchaseOrder)
+              userCompany.canCreate(EntityType.purchaseOrder)
           ? FloatingActionButton(
               heroTag: 'purchase_order_fab',
               backgroundColor: Theme.of(context).primaryColorDark,

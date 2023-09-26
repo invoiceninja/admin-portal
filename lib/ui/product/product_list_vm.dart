@@ -96,8 +96,8 @@ class ProductListVM {
       filter: state.productUIState.listUIState.filter,
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
-          state.userCompany!.settings?.getTableColumns(EntityType.product) ??
-              ProductPresenter.getDefaultTableFields(state.userCompany!),
+          state.userCompany.settings.getTableColumns(EntityType.product) ??
+              ProductPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortProducts(field)),
       onClearMultielsect: () => store.dispatch(ClearProductMultiselect()),
     );

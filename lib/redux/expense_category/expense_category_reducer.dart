@@ -300,6 +300,6 @@ ExpenseCategoryState _setLoadedExpenseCategories(
 
 ExpenseCategoryState _setLoadedCompany(
     ExpenseCategoryState expenseCategoryState, LoadCompanySuccess action) {
-  final company = action.userCompany.company!;
+  final company = action.userCompany.company;
   return expenseCategoryState.loadExpenseCategories(company.expenseCategories);
 }

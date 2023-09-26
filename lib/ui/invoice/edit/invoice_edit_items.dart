@@ -131,7 +131,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       return;
     }
 
-    final invoiceItem = widget.invoiceItem!;
+    final invoiceItem = widget.invoiceItem;
     _productKeyController.text = invoiceItem.productKey;
     _notesController.text = invoiceItem.notes;
     _costController.text = formatNumber(invoiceItem.cost, context,
@@ -190,7 +190,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   void _onChanged() {
     final company = widget.viewModel.company!;
 
-    var invoiceItem = widget.invoiceItem!.rebuild((b) => b
+    var invoiceItem = widget.invoiceItem.rebuild((b) => b
       ..productKey = _productKeyController.text.trim()
       ..notes = _notesController.text
       ..cost = parseDouble(_costController.text)
@@ -265,7 +265,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
             ),
             CustomField(
               controller: _custom1Controller,
-              field: widget.invoiceItem!.isTask
+              field: widget.invoiceItem.isTask
                   ? CustomFieldType.task1
                   : CustomFieldType.product1,
               onSavePressed: widget.entityViewModel.onSavePressed,
@@ -273,7 +273,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
             ),
             CustomField(
               controller: _custom2Controller,
-              field: widget.invoiceItem!.isTask
+              field: widget.invoiceItem.isTask
                   ? CustomFieldType.task2
                   : CustomFieldType.product2,
               onSavePressed: widget.entityViewModel.onSavePressed,
@@ -281,7 +281,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
             ),
             CustomField(
               controller: _custom3Controller,
-              field: widget.invoiceItem!.isTask
+              field: widget.invoiceItem.isTask
                   ? CustomFieldType.task3
                   : CustomFieldType.product3,
               onSavePressed: widget.entityViewModel.onSavePressed,
@@ -289,7 +289,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
             ),
             CustomField(
               controller: _custom4Controller,
-              field: widget.invoiceItem!.isTask
+              field: widget.invoiceItem.isTask
                   ? CustomFieldType.task4
                   : CustomFieldType.product4,
               onSavePressed: widget.entityViewModel.onSavePressed,

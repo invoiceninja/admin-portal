@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'dart:async';
 
 import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:flutter/material.dart' hide DataRow, DataCell, DataColumn;
@@ -158,7 +157,7 @@ class ReportsScreen extends StatelessWidget {
             .where((column) =>
                 getReportColumnType(column, context) != ReportColumnType.number)
             .map((column) {
-          final columnTitle = state.company!.getCustomFieldLabel(column!);
+          final columnTitle = state.company!.getCustomFieldLabel(column);
           return DropdownMenuItem(
             child: Text(columnTitle.isEmpty
                 ? localization.lookup(column)!
@@ -443,7 +442,7 @@ class ReportsScreen extends StatelessWidget {
                             );
                           } else {
                             launchUrl(
-                                Uri.parse(state.userCompany!.ninjaPortalUrl));
+                                Uri.parse(state.userCompany.ninjaPortalUrl));
                           }
                         })
                   ],
@@ -610,7 +609,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
         textEditingController.addListener(() {
           _onChanged(column, textEditingController.text);
         });
-        if (reportState.filters.containsKey(column!)) {
+        if (reportState.filters.containsKey(column)) {
           textEditingController.text = reportState.filters[column]!;
         }
         _textEditingControllers[reportState.report]![column] =
@@ -646,9 +645,8 @@ class _ReportDataTableState extends State<ReportDataTable> {
     final viewModel = widget.viewModel;
     final reportResult = viewModel.reportResult!;
     final reportState = viewModel.reportState;
-    final settings = state.userCompany!.settings;
-    final reportSettings = settings != null &&
-            settings.reportSettings.containsKey(reportState.report)
+    final settings = state.userCompany.settings;
+    final reportSettings = settings.reportSettings.containsKey(reportState.report)
         ? settings.reportSettings[reportState.report]!
         : ReportSettingsEntity();
     final sortedColumns = reportResult.sortedColumns(reportState);
@@ -716,8 +714,7 @@ class TotalsDataTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return mt.DataTable(
-      sortColumnIndex: reportSettings!.sortTotalsIndex != null &&
-              reportResult!.columns.length > reportSettings!.sortTotalsIndex
+      sortColumnIndex: reportResult!.columns.length > reportSettings!.sortTotalsIndex
           ? reportSettings!.sortTotalsIndex
           : null,
       sortAscending: reportSettings!.sortTotalsAscending ?? true,
@@ -766,13 +763,13 @@ ReportColumnType getReportColumnType(String? column, BuildContext context) {
   }
 
   final store = StoreProvider.of<AppState>(context);
-  final company = store.state.userCompany!.company;
+  final company = store.state.userCompany.company;
 
   if (column.startsWith('surcharge')) {
     return ReportColumnType.number;
   } else if (column == 'duration') {
     return ReportColumnType.duration;
-  } else if (company!.hasCustomField(column)) {
+  } else if (company.hasCustomField(column)) {
     return convertCustomFieldType(company.getCustomFieldType(column));
   } else if (EntityPresenter.isFieldNumeric(column)) {
     return ReportColumnType.number;
@@ -926,7 +923,7 @@ class ReportResult {
   static bool matchString({required String filter, String? value}) {
     filter = filter.trim();
 
-    if (filter == null || filter.isEmpty) {
+    if (filter.isEmpty) {
       return true;
     }
 
@@ -977,13 +974,13 @@ class ReportResult {
 
     final startDate = calculateStartDate(
       dateRange: dateRange,
-      company: userCompany.company!,
+      company: userCompany.company,
       customStartDate: reportsUIState.customStartDate,
       customEndDate: reportsUIState.customEndDate,
     );
     final endDate = calculateEndDate(
       dateRange: dateRange,
-      company: userCompany.company!,
+      company: userCompany.company,
       customStartDate: reportsUIState.customStartDate,
       customEndDate: reportsUIState.customEndDate,
     );
@@ -1483,9 +1480,8 @@ class ReportResult {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final reportState = state.uiState.reportsUIState;
-    final settings = state.userCompany!.settings;
-    final reportSettings = settings != null &&
-            settings.reportSettings.containsKey(reportState.report)
+    final settings = state.userCompany.settings;
+    final reportSettings = settings.reportSettings.containsKey(reportState.report)
         ? settings.reportSettings[reportState.report]!
         : ReportSettingsEntity();
 
@@ -1558,36 +1554,34 @@ class ReportResult {
     }
 
     final keys = totals.keys.whereNotNull().toList();
-    if (reportSettings.sortTotalsIndex != null) {
-      keys.sort((rowA, rowB) {
-        dynamic valueA;
-        dynamic valueB;
+    keys.sort((rowA, rowB) {
+      dynamic valueA;
+      dynamic valueB;
 
-        if (reportSettings.sortTotalsIndex == 0) {
-          final currencyMap = state.staticState.currencyMap;
-          valueA = currencyMap[rowA]?.listDisplayName;
-          valueB = currencyMap[rowB]?.listDisplayName;
-        } else if (reportSettings.sortTotalsIndex == 1) {
-          valueA = totals[rowA]!['count'];
-          valueB = totals[rowB]!['count'];
-        } else {
-          final List<String?> fields = totals[rowA]!.keys.toList()
-            ..remove('count')
-            ..sort((String? str1, String? str2) => str1!.compareTo(str2!));
-          final sortColumn = fields[reportSettings.sortTotalsIndex - 2];
-          valueA = totals[rowA]![sortColumn];
-          valueB = totals[rowB]![sortColumn];
-        }
+      if (reportSettings.sortTotalsIndex == 0) {
+        final currencyMap = state.staticState.currencyMap;
+        valueA = currencyMap[rowA]?.listDisplayName;
+        valueB = currencyMap[rowB]?.listDisplayName;
+      } else if (reportSettings.sortTotalsIndex == 1) {
+        valueA = totals[rowA]!['count'];
+        valueB = totals[rowB]!['count'];
+      } else {
+        final List<String?> fields = totals[rowA]!.keys.toList()
+          ..remove('count')
+          ..sort((String? str1, String? str2) => str1!.compareTo(str2!));
+        final sortColumn = fields[reportSettings.sortTotalsIndex - 2];
+        valueA = totals[rowA]![sortColumn];
+        valueB = totals[rowB]![sortColumn];
+      }
 
-        if (valueA == null || valueB == null) {
-          return 0;
-        }
+      if (valueA == null || valueB == null) {
+        return 0;
+      }
 
-        return reportSettings.sortTotalsAscending
-            ? valueA.compareTo(valueB)
-            : valueB.compareTo(valueA);
-      });
-    }
+      return reportSettings.sortTotalsAscending
+          ? valueA.compareTo(valueB)
+          : valueB.compareTo(valueA);
+    });
 
     List<String?> allFields = [];
     keys.forEach((currencyId) {
@@ -1871,7 +1865,7 @@ class ReportBoolValue extends ReportElement {
 
 int? sortReportTableRows(dynamic rowA, dynamic rowB,
     ReportSettingsEntity reportSettings, List<String?> columns) {
-  if (reportSettings.sortColumn == null || reportSettings.sortColumn.isEmpty) {
+  if (reportSettings.sortColumn.isEmpty) {
     return 0;
   }
 

@@ -212,7 +212,7 @@ GroupState _setLoadedGroups(GroupState groupState, LoadGroupsSuccess action) {
 GroupState _setLoadedCompany(GroupState groupState, LoadCompanySuccess action) {
   final state = groupState.rebuild((b) => b
     ..map.addAll(Map.fromIterable(
-      action.userCompany.company!.groups,
+      action.userCompany.company.groups,
       key: (dynamic item) => item.id,
       value: (dynamic item) => item,
     )));

@@ -102,9 +102,9 @@ ReportResult creditReport(
   final List<BaseEntity> entities = [];
   BuiltList<CreditReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
+  final reportSettings = userCompany.settings.reportSettings;
   final creditReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportCredit)
+      reportSettings.containsKey(kReportCredit)
           ? reportSettings[kReportCredit]!
           : ReportSettingsEntity();
 
@@ -136,12 +136,12 @@ ReportResult creditReport(
 
     final contact = client.getContact(credit.invitations.first.clientContactId);
 
-    if ((credit.isDeleted! && !userCompany.company!.reportIncludeDeleted) ||
+    if ((credit.isDeleted! && !userCompany.company.reportIncludeDeleted) ||
         client.isDeleted!) {
       continue;
     }
 
-    if (!userCompany.company!.reportIncludeDrafts && credit.isDraft) {
+    if (!userCompany.company.reportIncludeDrafts && credit.isDraft) {
       continue;
     }
 
@@ -168,7 +168,7 @@ ReportResult creditReport(
           value = round(credit.balance * 1 / credit.exchangeRate, 2);
           break;
         case CreditReportFields.client:
-          value = client?.listDisplayName ?? '';
+          value = client.listDisplayName ?? '';
           break;
         case CreditReportFields.client_balance:
           value = client.balance;
@@ -216,28 +216,28 @@ ReportResult creditReport(
           value = presentCustomField(
             value: credit.customValue1,
             customFieldType: CustomFieldType.invoice1,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case CreditReportFields.invoice2:
           value = presentCustomField(
             value: credit.customValue2,
             customFieldType: CustomFieldType.invoice2,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case CreditReportFields.invoice3:
           value = presentCustomField(
             value: credit.customValue3,
             customFieldType: CustomFieldType.invoice3,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case CreditReportFields.invoice4:
           value = presentCustomField(
             value: credit.customValue4,
             customFieldType: CustomFieldType.invoice4,
-            company: userCompany.company!,
+            company: userCompany.company,
           );
           break;
         case CreditReportFields.surcharge1:
@@ -364,7 +364,7 @@ ReportResult creditReport(
         value: value,
         userCompany: userCompany,
         reportsUIState: reportsUIState,
-        column: EnumUtils.parse(column)!,
+        column: EnumUtils.parse(column),
       )!) {
         skip = true;
       }
@@ -377,7 +377,7 @@ ReportResult creditReport(
           CreditReportFields.converted_amount,
           CreditReportFields.converted_balance
         ].contains(column)) {
-          currencyId = userCompany.company!.currencyId;
+          currencyId = userCompany.company.currencyId;
         }
         row.add(credit.getReportDouble(
           value: value,

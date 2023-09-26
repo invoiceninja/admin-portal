@@ -768,7 +768,7 @@ void createEntityByType({
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
 
-  if (!state.userCompany!.canCreate(entityType)) {
+  if (!state.userCompany.canCreate(entityType)) {
     return;
   }
 
@@ -1051,7 +1051,7 @@ void createEntity({
   final state = store.state;
   final uiState = state.uiState;
 
-  if (!state.userCompany!.canCreate(entity.entityType)) {
+  if (!state.userCompany.canCreate(entity.entityType)) {
     return;
   }
 

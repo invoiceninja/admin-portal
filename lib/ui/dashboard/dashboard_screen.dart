@@ -95,7 +95,7 @@ class _DashboardScreenState extends State<DashboardScreen>
 
     final companyName = state.company!.settings.name ?? '';
     if (!state.isDemo &&
-        state.userCompany!.isAdmin &&
+        state.userCompany.isAdmin &&
         (companyName.isEmpty || companyName == 'Untitled Company') &&
         state.company!.isOld) {
       WidgetsBinding.instance.addPostFrameCallback((duration) {
@@ -160,7 +160,7 @@ class _DashboardScreenState extends State<DashboardScreen>
 
   @override
   void dispose() {
-    _mainTabController!.dispose();
+    _mainTabController.dispose();
     _sideTabController
       ..removeListener(onTabListener)
       ..dispose();
@@ -243,7 +243,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           ],
         ),
         actions: [
-          if (state.userCompany!.isOwner &&
+          if (state.userCompany.isOwner &&
               state.isSelfHosted &&
               !state.isDemo &&
               !isPaidAccount(context) &&
@@ -260,7 +260,7 @@ class _DashboardScreenState extends State<DashboardScreen>
           if (!kReleaseMode ||
               (kIsWeb &&
                   state.isSelfHosted &&
-                  state.userCompany!.isAdmin &&
+                  state.userCompany.isAdmin &&
                   !state.isDemo))
             Padding(
               padding: const EdgeInsets.only(right: 10),
@@ -414,7 +414,7 @@ class _CustomTabBarView extends StatelessWidget {
             final subtitle = entity.matchesFilterValue(viewModel.filter);
 
             return ListTile(
-              title: Text(entity.listDisplayName!),
+              title: Text(entity.listDisplayName),
               leading: Icon(getEntityIcon(entity.entityType)),
               trailing: Icon(Icons.navigate_next),
               subtitle: Text(subtitle != null

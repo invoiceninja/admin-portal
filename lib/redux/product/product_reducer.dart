@@ -286,6 +286,6 @@ ProductState _setLoadedProducts(
 
 ProductState _setLoadedCompany(
     ProductState productState, LoadCompanySuccess action) {
-  final company = action.userCompany.company!;
+  final company = action.userCompany.company;
   return productState.loadProducts(company.products);
 }
