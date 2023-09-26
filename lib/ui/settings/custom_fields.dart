@@ -246,7 +246,7 @@ class CustomFieldsSettings extends StatelessWidget {
     }
 
     return FormCard(
-      children: <Widget>[
+      children: [
         CustomFormField(
           label: localization.lookup(labelKey),
           value: company.customFields['${fieldType}1'],
@@ -361,10 +361,10 @@ class _CustomFormFieldState extends State<CustomFormField> {
         }
       } else {
         _fieldType = kFieldTypeMultiLineText;
-        _customFieldController.text = widget.value!;
+        _customFieldController.text = widget.value ?? '';
       }
     } else {
-      _customFieldController.text = widget.value!;
+      _customFieldController.text = widget.value ?? '';
     }
 
     _controllers

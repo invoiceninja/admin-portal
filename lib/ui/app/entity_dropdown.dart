@@ -259,6 +259,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
         optionsBuilder: (TextEditingValue textEditingValue) {
           final options = (widget.entityList ?? widget.entityMap!.keys.toList())
               .map((entityId) => _entityMap![entityId])
+              .whereType<SelectableEntity>()
               .where((entity) =>
                   entity?.matchesFilter(textEditingValue.text) ?? false)
               .where((element) => !widget.excludeIds.contains(element!.id))
@@ -276,8 +277,8 @@ class _EntityDropdownState extends State<EntityDropdown> {
             options.add(_AutocompleteEntity(name: textEditingValue.text));
           }
 
-          return options as FutureOr<Iterable<SelectableEntity>>;
-        } as FutureOr<Iterable<SelectableEntity>> Function(TextEditingValue),
+          return options;
+        },
         displayStringForOption: (entity) => entity.listDisplayName!,
         onSelected: (entity) {
           _filter = '';
