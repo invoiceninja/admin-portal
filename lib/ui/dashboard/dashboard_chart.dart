@@ -45,6 +45,10 @@ class _DashboardChartState extends State<DashboardChart> {
   int _selectedIndex = 0;
 
   void _onSelectionChanged(charts.SelectionModel model) {
+    if (widget.onDateSelected == null) {
+      return;
+    }
+
     final selectedDatum = model.selectedDatum;
 
     DateTime? date;
