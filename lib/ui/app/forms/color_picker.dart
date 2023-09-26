@@ -80,7 +80,7 @@ class _FormColorPickerState extends State<FormColorPicker> {
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    _selectedColor = _textController.text = widget.initialValue!;
+    _selectedColor = _textController.text = widget.initialValue ?? '';
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));

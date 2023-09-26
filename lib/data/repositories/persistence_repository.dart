@@ -50,7 +50,7 @@ class PersistenceRepository {
   }
 
   Future<UserCompanyState?> loadCompanyState(int index) async {
-    final String data = await (fileStorage.load() as FutureOr<String>);
+    final String data = await fileStorage.load();
     final companyState = serializers.deserializeWith(
         UserCompanyState.serializer, json.decode(data));
 
@@ -66,7 +66,7 @@ class PersistenceRepository {
 
   Future<AuthState?> loadAuthState() async {
     if (await fileStorage.exists()) {
-      final String data = await (fileStorage.load() as FutureOr<String>);
+      final String data = await fileStorage.load();
       return serializers.deserializeWith(
           AuthState.serializer, json.decode(data));
     } else {
@@ -80,7 +80,7 @@ class PersistenceRepository {
   }
 
   Future<StaticState?> loadStaticState() async {
-    final String data = await (fileStorage.load() as FutureOr<String>);
+    final String data = await fileStorage.load();
     return serializers.deserializeWith(
         StaticState.serializer, json.decode(data));
   }
@@ -91,7 +91,7 @@ class PersistenceRepository {
   }
 
   Future<UIState?> loadUIState() async {
-    final String data = await (fileStorage.load() as FutureOr<String>);
+    final String data = await fileStorage.load();
     return serializers.deserializeWith(UIState.serializer, json.decode(data));
   }
 
