@@ -96,16 +96,16 @@ class _EmailSettingsState extends State<EmailSettings> {
     final company = viewModel.company;
     final settings = viewModel.settings;
 
-    _fromNameController.text = settings.emailFromName!;
-    _replyToEmailController.text = settings.replyToEmail!;
-    _replyToNameController.text = settings.replyToName!;
-    _bccEmailController.text = settings.bccEmail!;
-    _emailStyleCustomController.text = settings.emailStyleCustom!;
-    _emailSignatureController.text = settings.emailSignature!;
-    _postmarkSecretController.text = settings.postmarkSecret!;
-    _customSendingEmailController.text = settings.customSendingEmail!;
-    _mailgunSecretController.text = settings.mailgunSecret!;
-    _mailgunDomainController.text = settings.mailgunDomain!;
+    _fromNameController.text = settings.emailFromName ?? '';
+    _replyToEmailController.text = settings.replyToEmail ?? '';
+    _replyToNameController.text = settings.replyToName ?? '';
+    _bccEmailController.text = settings.bccEmail ?? '';
+    _emailStyleCustomController.text = settings.emailStyleCustom ?? '';
+    _emailSignatureController.text = settings.emailSignature ?? '';
+    _postmarkSecretController.text = settings.postmarkSecret ?? '';
+    _customSendingEmailController.text = settings.customSendingEmail ?? '';
+    _mailgunSecretController.text = settings.mailgunSecret ?? '';
+    _mailgunDomainController.text = settings.mailgunDomain ?? '';
     _eInvoiceCertificatePassphraseController.text =
         company.eInvoiceCertificatePassphrase;
 

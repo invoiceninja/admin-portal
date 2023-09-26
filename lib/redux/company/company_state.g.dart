@@ -23,6 +23,9 @@ class _$UserCompanyStateSerializer
       'lastUpdated',
       serializers.serialize(object.lastUpdated,
           specifiedType: const FullType(int)),
+      'userCompany',
+      serializers.serialize(object.userCompany,
+          specifiedType: const FullType(UserCompanyEntity)),
       'documentState',
       serializers.serialize(object.documentState,
           specifiedType: const FullType(DocumentState)),
@@ -111,14 +114,7 @@ class _$UserCompanyStateSerializer
       serializers.serialize(object.groupState,
           specifiedType: const FullType(GroupState)),
     ];
-    Object? value;
-    value = object.userCompany;
-    if (value != null) {
-      result
-        ..add('userCompany')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(UserCompanyEntity)));
-    }
+
     return result;
   }
 
@@ -281,7 +277,7 @@ class _$UserCompanyState extends UserCompanyState {
   @override
   final int lastUpdated;
   @override
-  final UserCompanyEntity? userCompany;
+  final UserCompanyEntity userCompany;
   @override
   final DocumentState documentState;
   @override
@@ -347,7 +343,7 @@ class _$UserCompanyState extends UserCompanyState {
 
   _$UserCompanyState._(
       {required this.lastUpdated,
-      this.userCompany,
+      required this.userCompany,
       required this.documentState,
       required this.productState,
       required this.clientState,
@@ -380,6 +376,8 @@ class _$UserCompanyState extends UserCompanyState {
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         lastUpdated, r'UserCompanyState', 'lastUpdated');
+    BuiltValueNullFieldError.checkNotNull(
+        userCompany, r'UserCompanyState', 'userCompany');
     BuiltValueNullFieldError.checkNotNull(
         documentState, r'UserCompanyState', 'documentState');
     BuiltValueNullFieldError.checkNotNull(
@@ -757,7 +755,7 @@ class UserCompanyStateBuilder
     final $v = _$v;
     if ($v != null) {
       _lastUpdated = $v.lastUpdated;
-      _userCompany = $v.userCompany?.toBuilder();
+      _userCompany = $v.userCompany.toBuilder();
       _documentState = $v.documentState.toBuilder();
       _productState = $v.productState.toBuilder();
       _clientState = $v.clientState.toBuilder();
@@ -813,7 +811,7 @@ class UserCompanyStateBuilder
           new _$UserCompanyState._(
               lastUpdated: BuiltValueNullFieldError.checkNotNull(
                   lastUpdated, r'UserCompanyState', 'lastUpdated'),
-              userCompany: _userCompany?.build(),
+              userCompany: userCompany.build(),
               documentState: documentState.build(),
               productState: productState.build(),
               clientState: clientState.build(),
@@ -847,7 +845,7 @@ class UserCompanyStateBuilder
       late String _$failedField;
       try {
         _$failedField = 'userCompany';
-        _userCompany?.build();
+        userCompany.build();
         _$failedField = 'documentState';
         documentState.build();
         _$failedField = 'productState';

@@ -111,7 +111,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final settings = widget.viewModel.settings;
-    _recurringPrefixController.text = settings.recurringNumberPrefix!;
+    _recurringPrefixController.text = settings.recurringNumberPrefix ?? '';
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));

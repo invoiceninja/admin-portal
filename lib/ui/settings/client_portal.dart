@@ -170,16 +170,18 @@ class _ClientPortalState extends State<ClientPortal>
     final settings = widget.viewModel.settings;
     _portalDomainController.text = company.portalDomain;
     _subdomainController.text = company.subdomain;
-    _customMessageDashboard.text = settings.customMessageDashboard!;
-    _customMessagePaidInvoice.text = settings.customMessagePaidInvoice!;
-    _customMessageUnpaidInvoice.text = settings.customMessageUnpaidInvoice!;
-    _customMessageUnapprovedQuote.text = settings.customMessageUnapprovedQuote!;
-    _privacyController.text = settings.clientPortalPrivacy!;
-    _termsController.text = settings.clientPortalTerms!;
-    _customHeaderController.text = settings.clientPortalCustomHeader!;
-    _customFooterController.text = settings.clientPortalCustomFooter!;
-    _customCssController.text = settings.clientPortalCustomCss!;
-    _customJavaScriptController.text = settings.clientPortalCustomJs!;
+    _customMessageDashboard.text = settings.customMessageDashboard ?? '';
+    _customMessagePaidInvoice.text = settings.customMessagePaidInvoice ?? '';
+    _customMessageUnpaidInvoice.text =
+        settings.customMessageUnpaidInvoice ?? '';
+    _customMessageUnapprovedQuote.text =
+        settings.customMessageUnapprovedQuote ?? '';
+    _privacyController.text = settings.clientPortalPrivacy ?? '';
+    _termsController.text = settings.clientPortalTerms ?? '';
+    _customHeaderController.text = settings.clientPortalCustomHeader ?? '';
+    _customFooterController.text = settings.clientPortalCustomFooter ?? '';
+    _customCssController.text = settings.clientPortalCustomCss ?? '';
+    _customJavaScriptController.text = settings.clientPortalCustomJs ?? '';
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
