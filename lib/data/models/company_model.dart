@@ -1035,6 +1035,7 @@ abstract class UserCompanyEntity
       permissions: '',
       ninjaPortalUrl: '',
       permissionsUpdatedAt: 0,
+      settings: UserSettingsEntity(),
       company: CompanyEntity(),
       user: UserEntity(),
       token: TokenEntity(),
@@ -1062,17 +1063,17 @@ abstract class UserCompanyEntity
 
   String get permissions;
 
-  BuiltMap<String, BuiltList<String>>? get notifications;
+  BuiltMap<String, BuiltList<String>> get notifications;
 
-  CompanyEntity? get company;
+  CompanyEntity get company;
 
-  UserEntity? get user;
+  UserEntity get user;
 
-  TokenEntity? get token;
+  TokenEntity get token;
 
-  AccountEntity? get account;
+  AccountEntity get account;
 
-  UserSettingsEntity? get settings;
+  UserSettingsEntity get settings;
 
   @BuiltValueField(wireName: 'ninja_portal_url')
   String get ninjaPortalUrl;
@@ -1142,6 +1143,10 @@ abstract class UserCompanyEntity
 
   // ignore: unused_element
   static void _initializeBuilder(UserCompanyEntityBuilder builder) => builder
+    ..company.replace(CompanyEntity())
+    ..user.replace(UserEntity())
+    ..token.replace(TokenEntity())
+    ..account.replace(AccountEntity(false))
     ..settings.replace(UserSettingsEntity())
     ..notifications.replace(BuiltMap<String, BuiltList<String>>().rebuild((b) =>
         b

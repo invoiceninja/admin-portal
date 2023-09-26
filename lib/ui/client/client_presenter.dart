@@ -54,7 +54,7 @@ class ClientPresenter extends EntityPresenter {
       ClientFields.group,
       ClientFields.contactPhone,
       ClientFields.contacts,
-      if (userCompany.company!.settings.enableEInvoice!) ...[
+      if (userCompany.company!.settings.enableEInvoice == true) ...[
         ClientFields.routingId,
       ],
       if (userCompany.company!.calculateTaxes) ...[

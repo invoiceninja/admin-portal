@@ -1194,56 +1194,32 @@ class _$UserCompanyEntitySerializer
       'permissions',
       serializers.serialize(object.permissions,
           specifiedType: const FullType(String)),
+      'notifications',
+      serializers.serialize(object.notifications,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(BuiltList, const [const FullType(String)])
+          ])),
+      'company',
+      serializers.serialize(object.company,
+          specifiedType: const FullType(CompanyEntity)),
+      'user',
+      serializers.serialize(object.user,
+          specifiedType: const FullType(UserEntity)),
+      'token',
+      serializers.serialize(object.token,
+          specifiedType: const FullType(TokenEntity)),
+      'account',
+      serializers.serialize(object.account,
+          specifiedType: const FullType(AccountEntity)),
+      'settings',
+      serializers.serialize(object.settings,
+          specifiedType: const FullType(UserSettingsEntity)),
       'ninja_portal_url',
       serializers.serialize(object.ninjaPortalUrl,
           specifiedType: const FullType(String)),
     ];
-    Object? value;
-    value = object.notifications;
-    if (value != null) {
-      result
-        ..add('notifications')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(BuiltMap, const [
-              const FullType(String),
-              const FullType(BuiltList, const [const FullType(String)])
-            ])));
-    }
-    value = object.company;
-    if (value != null) {
-      result
-        ..add('company')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(CompanyEntity)));
-    }
-    value = object.user;
-    if (value != null) {
-      result
-        ..add('user')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(UserEntity)));
-    }
-    value = object.token;
-    if (value != null) {
-      result
-        ..add('token')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(TokenEntity)));
-    }
-    value = object.account;
-    if (value != null) {
-      result
-        ..add('account')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(AccountEntity)));
-    }
-    value = object.settings;
-    if (value != null) {
-      result
-        ..add('settings')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(UserSettingsEntity)));
-    }
+
     return result;
   }
 
@@ -3958,17 +3934,17 @@ class _$UserCompanyEntity extends UserCompanyEntity {
   @override
   final String permissions;
   @override
-  final BuiltMap<String, BuiltList<String>>? notifications;
+  final BuiltMap<String, BuiltList<String>> notifications;
   @override
-  final CompanyEntity? company;
+  final CompanyEntity company;
   @override
-  final UserEntity? user;
+  final UserEntity user;
   @override
-  final TokenEntity? token;
+  final TokenEntity token;
   @override
-  final AccountEntity? account;
+  final AccountEntity account;
   @override
-  final UserSettingsEntity? settings;
+  final UserSettingsEntity settings;
   @override
   final String ninjaPortalUrl;
 
@@ -3981,12 +3957,12 @@ class _$UserCompanyEntity extends UserCompanyEntity {
       required this.isOwner,
       required this.permissionsUpdatedAt,
       required this.permissions,
-      this.notifications,
-      this.company,
-      this.user,
-      this.token,
-      this.account,
-      this.settings,
+      required this.notifications,
+      required this.company,
+      required this.user,
+      required this.token,
+      required this.account,
+      required this.settings,
       required this.ninjaPortalUrl})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -3997,6 +3973,16 @@ class _$UserCompanyEntity extends UserCompanyEntity {
         permissionsUpdatedAt, r'UserCompanyEntity', 'permissionsUpdatedAt');
     BuiltValueNullFieldError.checkNotNull(
         permissions, r'UserCompanyEntity', 'permissions');
+    BuiltValueNullFieldError.checkNotNull(
+        notifications, r'UserCompanyEntity', 'notifications');
+    BuiltValueNullFieldError.checkNotNull(
+        company, r'UserCompanyEntity', 'company');
+    BuiltValueNullFieldError.checkNotNull(user, r'UserCompanyEntity', 'user');
+    BuiltValueNullFieldError.checkNotNull(token, r'UserCompanyEntity', 'token');
+    BuiltValueNullFieldError.checkNotNull(
+        account, r'UserCompanyEntity', 'account');
+    BuiltValueNullFieldError.checkNotNull(
+        settings, r'UserCompanyEntity', 'settings');
     BuiltValueNullFieldError.checkNotNull(
         ninjaPortalUrl, r'UserCompanyEntity', 'ninjaPortalUrl');
   }
@@ -4131,12 +4117,12 @@ class UserCompanyEntityBuilder
       _isOwner = $v.isOwner;
       _permissionsUpdatedAt = $v.permissionsUpdatedAt;
       _permissions = $v.permissions;
-      _notifications = $v.notifications?.toBuilder();
-      _company = $v.company?.toBuilder();
-      _user = $v.user?.toBuilder();
-      _token = $v.token?.toBuilder();
-      _account = $v.account?.toBuilder();
-      _settings = $v.settings?.toBuilder();
+      _notifications = $v.notifications.toBuilder();
+      _company = $v.company.toBuilder();
+      _user = $v.user.toBuilder();
+      _token = $v.token.toBuilder();
+      _account = $v.account.toBuilder();
+      _settings = $v.settings.toBuilder();
       _ninjaPortalUrl = $v.ninjaPortalUrl;
       _$v = null;
     }
@@ -4172,29 +4158,29 @@ class UserCompanyEntityBuilder
                   'permissionsUpdatedAt'),
               permissions: BuiltValueNullFieldError.checkNotNull(
                   permissions, r'UserCompanyEntity', 'permissions'),
-              notifications: _notifications?.build(),
-              company: _company?.build(),
-              user: _user?.build(),
-              token: _token?.build(),
-              account: _account?.build(),
-              settings: _settings?.build(),
+              notifications: notifications.build(),
+              company: company.build(),
+              user: user.build(),
+              token: token.build(),
+              account: account.build(),
+              settings: settings.build(),
               ninjaPortalUrl: BuiltValueNullFieldError.checkNotNull(
                   ninjaPortalUrl, r'UserCompanyEntity', 'ninjaPortalUrl'));
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'notifications';
-        _notifications?.build();
+        notifications.build();
         _$failedField = 'company';
-        _company?.build();
+        company.build();
         _$failedField = 'user';
-        _user?.build();
+        user.build();
         _$failedField = 'token';
-        _token?.build();
+        token.build();
         _$failedField = 'account';
-        _account?.build();
+        account.build();
         _$failedField = 'settings';
-        _settings?.build();
+        settings.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'UserCompanyEntity', _$failedField, e.toString());
