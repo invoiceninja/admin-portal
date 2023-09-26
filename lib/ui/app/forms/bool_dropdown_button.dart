@@ -77,7 +77,7 @@ class BoolDropdownButton extends StatelessWidget {
                   child: Text(trueLabel),
                   value: true,
                 ),
-              ].toList() as List<DropdownMenuItem<bool>>?,
+              ],
             ),
           )
         : Padding(

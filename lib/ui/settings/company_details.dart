@@ -140,31 +140,33 @@ class _CompanyDetailsState extends State<CompanyDetails>
     final viewModel = widget.viewModel;
     final settings = viewModel.settings;
 
-    _nameController.text = settings.name!;
-    _idNumberController.text = settings.idNumber!;
-    _vatNumberController.text = settings.vatNumber!;
-    _emailController.text = settings.email!;
-    _websiteController.text = settings.website!;
-    _phoneController.text = settings.phone!;
-    _address1Controller.text = settings.address1!;
-    _address2Controller.text = settings.address2!;
-    _cityController.text = settings.city!;
-    _stateController.text = settings.state!;
-    _postalCodeController.text = settings.postalCode!;
-    _custom1Controller.text = settings.customValue1!;
-    _custom2Controller.text = settings.customValue2!;
-    _custom3Controller.text = settings.customValue3!;
-    _custom4Controller.text = settings.customValue4!;
-    _invoiceTermsController.text = settings.defaultInvoiceTerms!;
-    _invoiceFooterController.text = settings.defaultInvoiceFooter!;
-    _quoteTermsController.text = settings.defaultQuoteTerms!;
-    _quoteFooterController.text = settings.defaultQuoteFooter!;
-    _creditFooterController.text = settings.defaultCreditFooter!;
-    _creditTermsController.text = settings.defaultCreditTerms!;
-    _purchaseOrderFooterController.text = settings.defaultPurchaseOrderFooter!;
-    _purchaseOrderTermsController.text = settings.defaultPurchaseOrderTerms!;
-    _qrIbanController.text = settings.qrIban!;
-    _besrIdController.text = settings.besrId!;
+    _nameController.text = settings.name ?? '';
+    _idNumberController.text = settings.idNumber ?? '';
+    _vatNumberController.text = settings.vatNumber ?? '';
+    _emailController.text = settings.email ?? '';
+    _websiteController.text = settings.website ?? '';
+    _phoneController.text = settings.phone ?? '';
+    _address1Controller.text = settings.address1 ?? '';
+    _address2Controller.text = settings.address2 ?? '';
+    _cityController.text = settings.city ?? '';
+    _stateController.text = settings.state ?? '';
+    _postalCodeController.text = settings.postalCode ?? '';
+    _custom1Controller.text = settings.customValue1 ?? '';
+    _custom2Controller.text = settings.customValue2 ?? '';
+    _custom3Controller.text = settings.customValue3 ?? '';
+    _custom4Controller.text = settings.customValue4 ?? '';
+    _invoiceTermsController.text = settings.defaultInvoiceTerms ?? '';
+    _invoiceFooterController.text = settings.defaultInvoiceFooter ?? '';
+    _quoteTermsController.text = settings.defaultQuoteTerms ?? '';
+    _quoteFooterController.text = settings.defaultQuoteFooter ?? '';
+    _creditFooterController.text = settings.defaultCreditFooter ?? '';
+    _creditTermsController.text = settings.defaultCreditTerms ?? '';
+    _purchaseOrderFooterController.text =
+        settings.defaultPurchaseOrderFooter ?? '';
+    _purchaseOrderTermsController.text =
+        settings.defaultPurchaseOrderTerms ?? '';
+    _qrIbanController.text = settings.qrIban ?? '';
+    _besrIdController.text = settings.besrId ?? '';
 
     _controllers.forEach(
         (dynamic controller) => controller.addListener(_onSettingsChanged));
@@ -692,19 +694,20 @@ class _CompanyDetailsState extends State<CompanyDetails>
                               b..defaultPurchaseOrderDesignId = value.id)),
                     ),
                 ]),
-              FormCard(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    BoolDropdownButton(
-                      value: company.useQuoteTermsOnConversion,
-                      onChanged: (value) => viewModel.onCompanyChanged(
-                          company.rebuild(
-                              (b) => b..useQuoteTermsOnConversion = value)),
-                      label: localization.useQuoteTerms,
-                      helpLabel: localization.useQuoteTermsHelp,
-                      iconData: getEntityIcon(EntityType.quote),
-                    ),
-                  ]),
+              if (!state.settingsUIState.isFiltered)
+                FormCard(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      BoolDropdownButton(
+                        value: company.useQuoteTermsOnConversion,
+                        onChanged: (value) => viewModel.onCompanyChanged(
+                            company.rebuild(
+                                (b) => b..useQuoteTermsOnConversion = value)),
+                        label: localization.useQuoteTerms,
+                        helpLabel: localization.useQuoteTermsHelp,
+                        iconData: getEntityIcon(EntityType.quote),
+                      ),
+                    ]),
               FormCard(
                 isLast: true,
                 children: <Widget>[
