@@ -842,8 +842,8 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity?> invoices,
       final invitation = invoice.invitations.first;
       final url = invitation.downloadLink;
       store.dispatch(StartSaving());
-      final http.Response? response = await (WebClient()
-          .get(url, '', rawResponse: true) as FutureOr<Response?>);
+      final http.Response? response =
+          await (WebClient().get(url, '', rawResponse: true));
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;
@@ -853,8 +853,7 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity?> invoices,
       final data = json.encode(
           {'ids': invoiceIds, 'action': EntityAction.bulkPrint.toApiParam()});
       final http.Response? response = await (WebClient()
-              .post(url, state.credentials.token, data: data, rawResponse: true)
-          as FutureOr<Response?>);
+          .post(url, state.credentials.token, data: data, rawResponse: true));
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;

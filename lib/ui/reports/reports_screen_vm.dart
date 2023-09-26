@@ -513,8 +513,13 @@ class ReportsScreenVM {
             WebUtils.downloadTextFile(filename, csvData);
           } else {
             final directory = await (isDesktopOS()
-                ? getDownloadsDirectory() as FutureOr<file.Directory>
+                ? getDownloadsDirectory()
                 : getApplicationDocumentsDirectory());
+
+            if (directory == null) {
+              return;
+            }
+
             final filePath =
                 directory.path + file.Platform.pathSeparator + filename;
             final csvFile = file.File(filePath);

@@ -171,7 +171,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       state.credentials.token,
       data: data,
       rawResponse: true,
-    ) as FutureOr<Response?>);
+    ));
 
     if (response!.statusCode >= 400) {
       String errorMessage =
@@ -356,8 +356,12 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                           } else {
                             final directory = await (isDesktopOS()
                                 ? getDownloadsDirectory()
-                                    as FutureOr<file.Directory>
                                 : getApplicationDocumentsDirectory());
+
+                            if (directory == null) {
+                              return;
+                            }
+
                             String filePath =
                                 '${directory.path}${file.Platform.pathSeparator}$fileName';
 

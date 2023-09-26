@@ -1311,7 +1311,7 @@ class _PdfPreviewState extends State<_PdfPreview> {
     )
         .catchError((dynamic error) {
       print('## Error: $error');
-    }) as FutureOr<Response?>);
+    }));
 
     setState(() => isLoading = false);
   }

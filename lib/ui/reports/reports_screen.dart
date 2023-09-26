@@ -1227,11 +1227,12 @@ class ReportResult {
                             .trim()
                             .isNotEmpty)
                     .map((row) => row[index].renderText(context, column))
+                    .whereType<String>()
                     .toSet()
                     .toList();
 
-                return options as FutureOr<Iterable<String>>;
-              } as FutureOr<Iterable<String>> Function(TextEditingValue),
+                return options;
+              },
               onSelected: (value) {
                 final textEditingController = textEditingControllers[column]!;
                 textEditingController.text = value;

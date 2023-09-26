@@ -654,6 +654,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 final options = productIds
                                     .map((productId) =>
                                         productState.map[productId])
+                                    .whereType<ProductEntity>()
                                     .where((product) {
                                   final filter =
                                       textEditingValue.text.toLowerCase();
@@ -678,10 +679,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                   return <ProductEntity>[];
                                 }
 
-                                return options
-                                    as FutureOr<Iterable<ProductEntity>>;
-                              } as FutureOr<Iterable<ProductEntity>> Function(
-                                      TextEditingValue),
+                                return options;
+                              },
                               displayStringForOption: (product) =>
                                   product.productKey,
                               onSelected: (product) {

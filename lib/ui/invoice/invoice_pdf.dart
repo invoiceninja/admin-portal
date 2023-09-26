@@ -271,8 +271,12 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                                 } else {
                                   final directory = await (isDesktopOS()
                                       ? getDownloadsDirectory()
-                                          as FutureOr<file.Directory>
                                       : getApplicationDocumentsDirectory());
+
+                                  if (directory == null) {
+                                    return;
+                                  }
+
                                   String filePath =
                                       '${directory.path}${file.Platform.pathSeparator}$fileName';
 
@@ -341,13 +345,12 @@ Future<Response?> _loadPDF(
     final url = isDeliveryNote
         ? '/invoices/${invoice.id}/delivery_note'
         : '/activities/download_entity/$activityId';
-    response = await (WebClient().get('${credential.url}$url', credential.token,
-        rawResponse: true) as FutureOr<Response?>);
+    response = await (WebClient()
+        .get('${credential.url}$url', credential.token, rawResponse: true));
   } else {
     final invitation = invoice.invitations.first;
     final url = invitation.downloadLink;
-    response = await (WebClient().get(url, '', rawResponse: true)
-        as FutureOr<Response?>);
+    response = await (WebClient().get(url, '', rawResponse: true));
   }
 
   if (response!.statusCode >= 400) {

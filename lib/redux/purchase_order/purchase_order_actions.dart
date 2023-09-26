@@ -620,8 +620,8 @@ void handlePurchaseOrderAction(BuildContext? context,
       final invitation = purchaseOrder!.invitations.first;
       final url = invitation.downloadLink;
       store.dispatch(StartSaving());
-      final http.Response? response = await (WebClient()
-          .get(url, '', rawResponse: true) as FutureOr<Response?>);
+      final http.Response? response =
+          await (WebClient().get(url, '', rawResponse: true));
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;
@@ -633,8 +633,7 @@ void handlePurchaseOrderAction(BuildContext? context,
         'action': EntityAction.bulkPrint.toApiParam()
       });
       final http.Response? response = await (WebClient()
-              .post(url, state.credentials.token, data: data, rawResponse: true)
-          as FutureOr<Response?>);
+          .post(url, state.credentials.token, data: data, rawResponse: true));
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;
