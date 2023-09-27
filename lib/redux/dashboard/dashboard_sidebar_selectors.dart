@@ -199,22 +199,21 @@ List<TaskEntity?> _runningTasks({
 }
 
 var memoizedRecentTasks = memo2((
-  BuiltMap<String?, TaskEntity?> taskMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String, TaskEntity> taskMap,
+  BuiltMap<String, ClientEntity> clientMap,
 ) =>
     _recentTasks(
       taskMap: taskMap,
       clientMap: clientMap,
     ));
 
-List<TaskEntity?> _recentTasks({
-  required BuiltMap<String?, TaskEntity?> taskMap,
-  BuiltMap<String?, ClientEntity?>? clientMap,
+List<TaskEntity> _recentTasks({
+  required BuiltMap<String, TaskEntity> taskMap,
+  required BuiltMap<String, ClientEntity> clientMap,
 }) {
-  final tasks = <TaskEntity?>[];
+  final tasks = <TaskEntity>[];
   taskMap.forEach((index, task) {
-    final client =
-        clientMap![task!.clientId] ?? ClientEntity(id: task.clientId);
+    final client = clientMap[task.clientId] ?? ClientEntity(id: task.clientId);
     if (task.isNotActive || client.isNotActive) {
       // do noting
     } else if (!task.isRunning) {

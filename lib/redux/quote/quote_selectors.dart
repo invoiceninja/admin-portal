@@ -57,8 +57,7 @@ List<String> dropdownQuoteSelector(
     if (excludedIds.contains(invoiceId)) {
       return false;
     }
-    if (clientId.isNotEmpty &&
-        invoice!.clientId != clientId) {
+    if (clientId.isNotEmpty && invoice!.clientId != clientId) {
       return false;
     }
     if (!clientMap.containsKey(invoice!.clientId) ||

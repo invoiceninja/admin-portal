@@ -244,7 +244,7 @@ List<String> dropdownTasksSelector(
 
   list.sort((taskAId, taskBId) {
     final taskA = taskMap[taskAId]!;
-    final taskB = taskMap[taskBId];
+    final taskB = taskMap[taskBId]!;
     return taskA.compareTo(
       taskB,
       TaskFields.updatedAt,
@@ -261,12 +261,12 @@ List<String> dropdownTasksSelector(
 }
 
 var memoizedKanbanTaskList = memo9((SelectionState selectionState,
-        BuiltMap<String?, TaskEntity?> taskMap,
-        BuiltMap<String?, ClientEntity?> clientMap,
-        BuiltMap<String?, UserEntity?> userMap,
-        BuiltMap<String?, ProjectEntity?> projectMap,
+        BuiltMap<String, TaskEntity> taskMap,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, UserEntity> userMap,
+        BuiltMap<String, ProjectEntity> projectMap,
         BuiltMap<String, InvoiceEntity> invoiceMap,
-        BuiltMap<String?, TaskStatusEntity?> taskStatusMap,
+        BuiltMap<String, TaskStatusEntity> taskStatusMap,
         BuiltList<String> taskList,
         ListUIState taskListState) =>
     kanbanTasksSelector(selectionState, taskMap, clientMap, userMap, projectMap,
@@ -274,12 +274,12 @@ var memoizedKanbanTaskList = memo9((SelectionState selectionState,
 
 List<String> kanbanTasksSelector(
     SelectionState selectionState,
-    BuiltMap<String?, TaskEntity?> taskMap,
-    BuiltMap<String?, ClientEntity?> clientMap,
-    BuiltMap<String?, UserEntity?> userMap,
-    BuiltMap<String?, ProjectEntity?> projectMap,
+    BuiltMap<String, TaskEntity> taskMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String, ProjectEntity> projectMap,
     BuiltMap<String, InvoiceEntity> invoiceMap,
-    BuiltMap<String?, TaskStatusEntity?> taskStatusMap,
+    BuiltMap<String, TaskStatusEntity> taskStatusMap,
     BuiltList<String> taskList,
     ListUIState taskListState) {
   final filterEntityId = selectionState.filterEntityId;
@@ -303,7 +303,7 @@ List<String> kanbanTasksSelector(
 
   list.sort((taskAId, taskBId) {
     final taskA = taskMap[taskAId]!;
-    final taskB = taskMap[taskBId];
+    final taskB = taskMap[taskBId]!;
     return taskA.compareTo(
       taskB,
       taskListState.sortField,
@@ -321,12 +321,12 @@ List<String> kanbanTasksSelector(
 
 var memoizedFilteredTaskList = memo9((
   SelectionState selectionState,
-  BuiltMap<String?, TaskEntity?> taskMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, UserEntity?> userMap,
-  BuiltMap<String?, ProjectEntity?> projectMap,
+  BuiltMap<String, TaskEntity> taskMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String, ProjectEntity> projectMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String?, TaskStatusEntity?> taskStatusMap,
+  BuiltMap<String, TaskStatusEntity> taskStatusMap,
   BuiltList<String> taskList,
   ListUIState taskListState,
 ) =>
@@ -344,12 +344,12 @@ var memoizedFilteredTaskList = memo9((
 
 List<String> filteredTasksSelector(
     SelectionState selectionState,
-    BuiltMap<String?, TaskEntity?> taskMap,
-    BuiltMap<String?, ClientEntity?> clientMap,
-    BuiltMap<String?, UserEntity?> userMap,
-    BuiltMap<String?, ProjectEntity?> projectMap,
+    BuiltMap<String, TaskEntity> taskMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String, ProjectEntity> projectMap,
     BuiltMap<String, InvoiceEntity> invoiceMap,
-    BuiltMap<String?, TaskStatusEntity?> taskStatusMap,
+    BuiltMap<String, TaskStatusEntity> taskStatusMap,
     BuiltList<String> taskList,
     ListUIState taskListState) {
   final filterEntityId = selectionState.filterEntityId;
@@ -426,7 +426,7 @@ List<String> filteredTasksSelector(
 
   list.sort((taskAId, taskBId) {
     final taskA = taskMap[taskAId]!;
-    final taskB = taskMap[taskBId];
+    final taskB = taskMap[taskBId]!;
     return taskA.compareTo(
       taskB,
       taskListState.sortField,

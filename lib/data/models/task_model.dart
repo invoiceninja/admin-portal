@@ -188,7 +188,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
   }
 
   TaskTime copyWithStartDate(String date, {bool syncDates = false}) {
-    if ((date ?? '').isEmpty) {
+    if (date.isEmpty) {
       return this;
     }
 
@@ -220,7 +220,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
   }
 
   TaskTime copyWithEndDate(String date) {
-    if ((date ?? '').isEmpty) {
+    if (date.isEmpty) {
       return this;
     }
 
@@ -666,7 +666,7 @@ abstract class TaskEntity extends Object
       if (!isInvoiced && !isRunning) {
         if (userCompany.canCreate(EntityType.invoice)) {
           actions.add(EntityAction.invoiceTask);
-          if ((clientId ?? '').isNotEmpty) {
+          if (clientId.isNotEmpty) {
             actions.add(EntityAction.addToInvoice);
           }
         }
@@ -697,114 +697,111 @@ abstract class TaskEntity extends Object
   }
 
   int compareTo(
-    TaskEntity? task,
+    TaskEntity task,
     String sortField,
     bool sortAscending,
-    BuiltMap<String?, UserEntity?> userMap,
-    BuiltMap<String?, ClientEntity?> clientMap,
-    BuiltMap<String?, ProjectEntity?> projectMap,
+    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, ProjectEntity> projectMap,
     BuiltMap<String, InvoiceEntity> invoiceMap,
-    BuiltMap<String?, TaskStatusEntity?> taskStatusMap,
+    BuiltMap<String, TaskStatusEntity> taskStatusMap,
   ) {
     int response = 0;
-    final TaskEntity? taskA = sortAscending ? this : task;
-    final TaskEntity? taskB = sortAscending ? task : this;
+    final TaskEntity taskA = sortAscending ? this : task;
+    final TaskEntity taskB = sortAscending ? task : this;
 
     switch (sortField) {
       case TaskFields.duration:
       case TaskFields.amount:
         response =
-            taskA!.calculateDuration().compareTo(taskB!.calculateDuration());
+            taskA.calculateDuration().compareTo(taskB.calculateDuration());
         break;
       case TaskFields.description:
-        response = taskA!.description.compareTo(taskB!.description);
+        response = taskA.description.compareTo(taskB.description);
         break;
       case TaskFields.customValue1:
-        response = taskA!.customValue1.compareTo(taskB!.customValue1);
+        response = taskA.customValue1.compareTo(taskB.customValue1);
         break;
       case TaskFields.customValue2:
-        response = taskA!.customValue2.compareTo(taskB!.customValue2);
+        response = taskA.customValue2.compareTo(taskB.customValue2);
         break;
       case TaskFields.customValue3:
-        response = taskA!.customValue3.compareTo(taskB!.customValue3);
+        response = taskA.customValue3.compareTo(taskB.customValue3);
         break;
       case TaskFields.customValue4:
-        response = taskA!.customValue4.compareTo(taskB!.customValue4);
+        response = taskA.customValue4.compareTo(taskB.customValue4);
         break;
       case TaskFields.clientId:
       case TaskFields.client:
-        final clientA = clientMap[taskA!.clientId] ?? ClientEntity();
-        final clientB = clientMap[taskB!.clientId] ?? ClientEntity();
+        final clientA = clientMap[taskA.clientId] ?? ClientEntity();
+        final clientB = clientMap[taskB.clientId] ?? ClientEntity();
         response = removeDiacritics(clientA.listDisplayName)
             .toLowerCase()
             .compareTo(removeDiacritics(clientB.listDisplayName).toLowerCase());
         break;
       case TaskFields.projectId:
       case TaskFields.project:
-        final projectA = projectMap[taskA!.projectId] ?? ProjectEntity();
-        final projectB = projectMap[taskB!.projectId] ?? ProjectEntity();
+        final projectA = projectMap[taskA.projectId] ?? ProjectEntity();
+        final projectB = projectMap[taskB.projectId] ?? ProjectEntity();
         response = projectA.listDisplayName
             .toLowerCase()
             .compareTo(projectB.listDisplayName.toLowerCase());
         break;
       case TaskFields.invoiceId:
-        final invoiceA = invoiceMap[taskA!.invoiceId] ?? InvoiceEntity();
-        final invoiceB = invoiceMap[taskB!.invoiceId] ?? InvoiceEntity();
+        final invoiceA = invoiceMap[taskA.invoiceId] ?? InvoiceEntity();
+        final invoiceB = invoiceMap[taskB.invoiceId] ?? InvoiceEntity();
         response = invoiceA.listDisplayName
             .toLowerCase()
             .compareTo(invoiceB.listDisplayName.toLowerCase());
         break;
       case EntityFields.state:
-        final stateA =
-            EntityState.valueOf(taskA!.entityState) ?? EntityState.active;
-        final stateB =
-            EntityState.valueOf(taskB!.entityState) ?? EntityState.active;
+        final stateA = EntityState.valueOf(taskA.entityState);
+        final stateB = EntityState.valueOf(taskB.entityState);
         response =
             stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
         break;
       case TaskFields.date:
       case TaskFields.timeLog:
-        response = taskA!.timeLog
-            .toLowerCase()
-            .compareTo(taskB!.timeLog.toLowerCase());
+        response =
+            taskA.timeLog.toLowerCase().compareTo(taskB.timeLog.toLowerCase());
         break;
       case EntityFields.createdAt:
-        response = taskA!.createdAt.compareTo(taskB!.createdAt);
+        response = taskA.createdAt.compareTo(taskB.createdAt);
         break;
       case TaskFields.archivedAt:
-        response = taskA!.archivedAt.compareTo(taskB!.archivedAt);
+        response = taskA.archivedAt.compareTo(taskB.archivedAt);
         break;
       case TaskFields.updatedAt:
-        response = taskA!.updatedAt.compareTo(taskB!.updatedAt);
+        response = taskA.updatedAt.compareTo(taskB.updatedAt);
         break;
       case TaskFields.documents:
-        response = taskA!.documents.length.compareTo(taskB!.documents.length);
+        response = taskA.documents.length.compareTo(taskB.documents.length);
         break;
       case TaskFields.number:
         response = compareNatural(
-            taskA!.number.toLowerCase(), taskB!.number.toLowerCase());
+            taskA.number.toLowerCase(), taskB.number.toLowerCase());
         break;
       case TaskFields.createdBy:
-        final userA = userMap[taskA!.createdUserId] ?? UserEntity();
-        final userB = userMap[taskB!.createdUserId] ?? UserEntity();
+        final userA = userMap[taskA.createdUserId] ?? UserEntity();
+        final userB = userMap[taskB.createdUserId] ?? UserEntity();
         response = userA.fullName
             .toLowerCase()
             .compareTo(userB.fullName.toLowerCase());
         break;
       case TaskFields.assignedTo:
-        final userA = userMap[taskA!.assignedUserId] ?? UserEntity();
-        final userB = userMap[taskB!.assignedUserId] ?? UserEntity();
+        final userA = userMap[taskA.assignedUserId] ?? UserEntity();
+        final userB = userMap[taskB.assignedUserId] ?? UserEntity();
         response = userA.fullName
             .toLowerCase()
             .compareTo(userB.fullName.toLowerCase());
         break;
       case TaskFields.status:
-        final taskAStatus = taskA!.isRunning
+        final taskAStatus = taskA.isRunning
             ? -1
             : taskA.isInvoiced
                 ? 999999
                 : (taskStatusMap[taskA.statusId]?.statusOrder ?? 0);
-        final taskBStatus = taskB!.isRunning
+        final taskBStatus = taskB.isRunning
             ? -1
             : taskB.isInvoiced
                 ? 999999
@@ -817,7 +814,7 @@ abstract class TaskEntity extends Object
     }
 
     if (response == 0) {
-      response = task!.number.toLowerCase().compareTo(number.toLowerCase());
+      response = task.number.toLowerCase().compareTo(number.toLowerCase());
     }
 
     return response;

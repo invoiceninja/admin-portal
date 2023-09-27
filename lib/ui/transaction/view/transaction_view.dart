@@ -581,7 +581,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                 separatorBuilder: (context, index) => ListDivider(),
                 itemCount: _invoices.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final invoice = _invoices[index];
+                  final invoice = _invoices[index]!;
                   return InvoiceListItem(
                     invoice: invoice,
                     showCheckbox: true,

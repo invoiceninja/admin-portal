@@ -489,7 +489,7 @@ abstract class PaymentEntity extends Object
     return startDate.compareTo(date) <= 0 && endDate!.compareTo(date) >= 0;
   }
 
-  bool get isOnline => (companyGatewayId).isNotEmpty;
+  bool get isOnline => companyGatewayId.isNotEmpty;
 
   bool get isCompletedOrPartiallyRefunded => [
         kPaymentStatusCompleted,
@@ -511,7 +511,7 @@ abstract class PaymentEntity extends Object
       return 0;
     }
 
-    return amount - (refunded);
+    return amount - refunded;
   }
 
   // ignore: unused_element

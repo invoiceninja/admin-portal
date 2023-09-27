@@ -553,21 +553,21 @@ abstract class CompanyEntity extends Object
 
   bool get enableFirstInvoiceTaxRate => numberOfInvoiceTaxRates >= 1;
 
-  bool get enableSecondInvoiceTaxRate => (numberOfInvoiceTaxRates) >= 2;
+  bool get enableSecondInvoiceTaxRate => numberOfInvoiceTaxRates >= 2;
 
-  bool get enableThirdInvoiceTaxRate => (numberOfInvoiceTaxRates) >= 3;
+  bool get enableThirdInvoiceTaxRate => numberOfInvoiceTaxRates >= 3;
 
-  bool get enableFirstItemTaxRate => (numberOfItemTaxRates) >= 1;
+  bool get enableFirstItemTaxRate => numberOfItemTaxRates >= 1;
 
-  bool get enableSecondItemTaxRate => (numberOfItemTaxRates) >= 2;
+  bool get enableSecondItemTaxRate => numberOfItemTaxRates >= 2;
 
-  bool get enableThirdItemTaxRate => (numberOfItemTaxRates) >= 3;
+  bool get enableThirdItemTaxRate => numberOfItemTaxRates >= 3;
 
-  bool get enableFirstExpenseTaxRate => (numberOfExpenseTaxRates) >= 1;
+  bool get enableFirstExpenseTaxRate => numberOfExpenseTaxRates >= 1;
 
-  bool get enableSecondExpenseTaxRate => (numberOfExpenseTaxRates) >= 2;
+  bool get enableSecondExpenseTaxRate => numberOfExpenseTaxRates >= 2;
 
-  bool get enableThirdExpenseTaxRate => (numberOfExpenseTaxRates) >= 3;
+  bool get enableThirdExpenseTaxRate => numberOfExpenseTaxRates >= 3;
 
   bool get hasInvoiceTaxes => numberOfInvoiceTaxRates > 0;
 

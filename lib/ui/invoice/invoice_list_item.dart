@@ -28,7 +28,7 @@ class InvoiceListItem extends StatelessWidget {
     this.showSelected = true,
   });
 
-  final InvoiceEntity? invoice;
+  final InvoiceEntity invoice;
   final String? filter;
   final bool showCheckbox;
   final bool isChecked;
@@ -39,42 +39,42 @@ class InvoiceListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final client = state.clientState.get(invoice!.clientId);
+    final client = state.clientState.get(invoice.clientId);
     final uiState = state.uiState;
     final invoiceUIState = uiState.invoiceUIState;
     final textStyle = TextStyle(fontSize: 16);
     final localization = AppLocalization.of(context)!;
     final filterMatch = filter != null && filter!.isNotEmpty
-        ? (invoice!.matchesFilterValue(filter) ??
+        ? (invoice.matchesFilterValue(filter) ??
             client!.matchesFilterValue(filter))
         : null;
 
     final statusLabel =
-        localization.lookup(kInvoiceStatuses[invoice!.calculatedStatusId]);
+        localization.lookup(kInvoiceStatuses[invoice.calculatedStatusId]);
     final statusColor = InvoiceStatusColors(state.prefState.colorThemeModel)
-        .colors[invoice!.calculatedStatusId];
+        .colors[invoice.calculatedStatusId];
     final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
     String subtitle = '';
-    if (invoice!.date.isNotEmpty) {
-      subtitle = formatDate(invoice!.date, context);
+    if (invoice.date.isNotEmpty) {
+      subtitle = formatDate(invoice.date, context);
     }
-    if (invoice!.partialDueDate.isNotEmpty && invoice!.partial != 0) {
+    if (invoice.partialDueDate.isNotEmpty && invoice.partial != 0) {
       if (subtitle.isNotEmpty) {
         subtitle += ' • ';
       }
-      subtitle += formatDate(invoice!.partialDueDate, context);
-    } else if (invoice!.dueDate.isNotEmpty) {
+      subtitle += formatDate(invoice.partialDueDate, context);
+    } else if (invoice.dueDate.isNotEmpty) {
       if (subtitle.isNotEmpty) {
         subtitle += ' • ';
       }
-      subtitle += formatDate(invoice!.dueDate, context);
+      subtitle += formatDate(invoice.dueDate, context);
     }
 
     return DismissibleEntity(
         isSelected: isDesktop(context) &&
             showSelected &&
-            invoice!.id ==
+            invoice.id ==
                 (uiState.isEditing
                     ? invoiceUIState.editing!.id
                     : invoiceUIState.selectedId),
@@ -88,12 +88,12 @@ class InvoiceListItem extends StatelessWidget {
                   onTap: () => onTap != null
                       ? onTap!()
                       : selectEntity(
-                          entity: invoice!,
+                          entity: invoice,
                           forceView: !showCheckbox,
                         ),
                   onLongPress: () => onTap != null
                       ? null
-                      : selectEntity(entity: invoice!, longPress: true),
+                      : selectEntity(entity: invoice, longPress: true),
                   child: Padding(
                     padding: const EdgeInsets.only(
                       left: 10,
@@ -118,7 +118,7 @@ class InvoiceListItem extends StatelessWidget {
                                     ),
                                   )
                                 : ActionMenuButton(
-                                    entityActions: invoice!.getActions(
+                                    entityActions: invoice.getActions(
                                       userCompany: state.userCompany,
                                       client: client,
                                       includeEdit: true,
@@ -134,13 +134,13 @@ class InvoiceListItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                (invoice!.number ?? '').isEmpty
+                                (invoice.number ?? '').isEmpty
                                     ? localization.pending
-                                    : invoice!.number,
+                                    : invoice.number,
                                 style: textStyle,
                                 overflow: TextOverflow.ellipsis,
                               ),
-                              if (!invoice!.isActive) EntityStateLabel(invoice)
+                              if (!invoice.isActive) EntityStateLabel(invoice)
                             ],
                           ),
                         ),
@@ -151,7 +151,7 @@ class InvoiceListItem extends StatelessWidget {
                             children: <Widget>[
                               Text(
                                   client!.displayName +
-                                      (invoice!.documents.isNotEmpty
+                                      (invoice.documents.isNotEmpty
                                           ? '  📎'
                                           : ''),
                                   style: textStyle),
@@ -173,9 +173,9 @@ class InvoiceListItem extends StatelessWidget {
                         SizedBox(width: 10),
                         Text(
                           formatNumber(
-                              invoice!.balance != 0
-                                  ? invoice!.balance
-                                  : invoice!.amount,
+                              invoice.balance != 0
+                                  ? invoice.balance
+                                  : invoice.amount,
                               context,
                               clientId: client.id)!,
                           style: textStyle,
@@ -191,10 +191,10 @@ class InvoiceListItem extends StatelessWidget {
                   onTap: () => onTap != null
                       ? onTap!()
                       : selectEntity(
-                          entity: invoice!, forceView: !showCheckbox),
+                          entity: invoice, forceView: !showCheckbox),
                   onLongPress: () => onTap != null
                       ? null
-                      : selectEntity(entity: invoice!, longPress: true),
+                      : selectEntity(entity: invoice, longPress: true),
                   leading: showCheckbox
                       ? IgnorePointer(
                           child: Checkbox(
@@ -221,11 +221,11 @@ class InvoiceListItem extends StatelessWidget {
                         SizedBox(width: 4),
                         Text(
                             formatNumber(
-                                invoice!.balance != 0
-                                    ? invoice!.balance
-                                    : invoice!.amount,
+                                invoice.balance != 0
+                                    ? invoice.balance
+                                    : invoice.amount,
                                 context,
-                                clientId: invoice!.clientId)!,
+                                clientId: invoice.clientId)!,
                             style: Theme.of(context).textTheme.titleMedium),
                       ],
                     ),
@@ -237,13 +237,13 @@ class InvoiceListItem extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: filterMatch == null
-                                ? Text((((invoice!.number ?? '').isEmpty
+                                ? Text((((invoice.number ?? '').isEmpty
                                             ? localization.pending
-                                            : invoice!.number) +
+                                            : invoice.number) +
                                         ' • ' +
                                         formatDate(
-                                            invoice!.primaryDate, context) +
-                                        (invoice!.documents.isNotEmpty
+                                            invoice.primaryDate, context) +
+                                        (invoice.documents.isNotEmpty
                                             ? '  📎'
                                             : ''))
                                     .trim())
@@ -256,7 +256,7 @@ class InvoiceListItem extends StatelessWidget {
                           Text(statusLabel!,
                               style: TextStyle(
                                 color:
-                                    !invoice!.isSent ? textColor : statusColor,
+                                    !invoice.isSent ? textColor : statusColor,
                               )),
                         ],
                       ),

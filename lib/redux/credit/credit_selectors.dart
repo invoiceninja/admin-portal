@@ -50,8 +50,7 @@ List<String> dropdownCreditSelector(
     if (excludedIds.contains(creditId)) {
       return false;
     }
-    if (clientId.isNotEmpty &&
-        credit!.clientId != clientId) {
+    if (clientId.isNotEmpty && credit!.clientId != clientId) {
       return false;
     }
     if (!clientMap.containsKey(credit!.clientId) ||

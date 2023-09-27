@@ -119,7 +119,7 @@ class InvoiceSidebar extends StatelessWidget {
               itemCount: upcomingInvoices.length,
               itemBuilder: (BuildContext context, int index) {
                 return InvoiceListItem(
-                  invoice: upcomingInvoices[index],
+                  invoice: upcomingInvoices[index]!,
                   showSelected: false,
                 );
               },
@@ -133,7 +133,7 @@ class InvoiceSidebar extends StatelessWidget {
               itemCount: pastDueInvoices.length,
               itemBuilder: (BuildContext context, int index) {
                 return InvoiceListItem(
-                  invoice: pastDueInvoices[index],
+                  invoice: pastDueInvoices[index]!,
                   showSelected: false,
                 );
               },
