@@ -40,7 +40,7 @@ List<String> dropdownSchedulesSelector(
 }
 
 var memoizedFilteredScheduleList = memo4((SelectionState selectionState,
-        BuiltMap<String?, ScheduleEntity?> scheduleMap,
+        BuiltMap<String, ScheduleEntity> scheduleMap,
         BuiltList<String> scheduleList,
         ListUIState scheduleListState) =>
     filteredSchedulesSelector(
@@ -48,7 +48,7 @@ var memoizedFilteredScheduleList = memo4((SelectionState selectionState,
 
 List<String> filteredSchedulesSelector(
     SelectionState selectionState,
-    BuiltMap<String?, ScheduleEntity?> scheduleMap,
+    BuiltMap<String, ScheduleEntity> scheduleMap,
     BuiltList<String> scheduleList,
     ListUIState scheduleListState) {
   final filterEntityId = selectionState.filterEntityId;

@@ -82,9 +82,9 @@ var memoizedPurchaseOrderReport = memo7((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, InvoiceEntity> purchaseOrderMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) =>
     purchaseOrderReport(userCompany!, reportsUIState, purchaseOrderMap,
@@ -94,9 +94,9 @@ ReportResult purchaseOrderReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, InvoiceEntity> purchaseOrderMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];

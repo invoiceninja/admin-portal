@@ -205,7 +205,7 @@ abstract class ProductEntity extends Object
     ProductEntity? product, [
     String? sortField,
     bool sortAscending = true,
-    BuiltMap<String?, UserEntity?>? userMap,
+    BuiltMap<String, UserEntity>? userMap,
   ]) {
     int response = 0;
     final ProductEntity? productA = sortAscending ? this : product;

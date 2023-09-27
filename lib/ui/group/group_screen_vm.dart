@@ -41,7 +41,7 @@ class GroupScreenVM {
   final bool isInMultiselect;
   final UserCompanyEntity? userCompany;
   final List<String> groupList;
-  final BuiltMap<String?, GroupEntity?> groupMap;
+  final BuiltMap<String, GroupEntity> groupMap;
 
   static GroupScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

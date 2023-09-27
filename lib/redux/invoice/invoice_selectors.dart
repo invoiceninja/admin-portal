@@ -57,11 +57,11 @@ ClientContactEntity? invoiceContactSelector(
 
 var memoizedDropdownInvoiceList = memo8(
     (BuiltMap<String, InvoiceEntity> invoiceMap,
-            BuiltMap<String?, ClientEntity?> clientMap,
-            BuiltMap<String?, VendorEntity?> vendorMap,
+            BuiltMap<String, ClientEntity> clientMap,
+            BuiltMap<String, VendorEntity> vendorMap,
             BuiltList<String> invoiceList,
             String clientId,
-            BuiltMap<String?, UserEntity?> userMap,
+            BuiltMap<String, UserEntity> userMap,
             List<String?> excludedIds,
             String? recurringPrefix) =>
         dropdownInvoiceSelector(
@@ -77,11 +77,11 @@ var memoizedDropdownInvoiceList = memo8(
 
 List<String> dropdownInvoiceSelector(
   BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, VendorEntity> vendorMap,
   BuiltList<String> invoiceList,
   String clientId,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, UserEntity> userMap,
   List<String?> excludedIds,
   String? recurringPrefix,
 ) {
@@ -90,8 +90,7 @@ List<String> dropdownInvoiceSelector(
     if (excludedIds.contains(invoiceId)) {
       return false;
     }
-    if (clientId.isNotEmpty &&
-        invoice!.clientId != clientId) {
+    if (clientId.isNotEmpty && invoice!.clientId != clientId) {
       return false;
     }
     if (!clientMap.containsKey(invoice!.clientId) ||
@@ -123,11 +122,11 @@ List<String> dropdownInvoiceSelector(
 var memoizedFilteredInvoiceList = memo9((SelectionState selectionState,
         BuiltMap<String, InvoiceEntity> invoiceMap,
         BuiltList<String> invoiceList,
-        BuiltMap<String?, ClientEntity?> clientMap,
-        BuiltMap<String?, VendorEntity?> vendorMap,
-        BuiltMap<String?, PaymentEntity?> paymentMap,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, VendorEntity> vendorMap,
+        BuiltMap<String, PaymentEntity> paymentMap,
         ListUIState invoiceListState,
-        BuiltMap<String?, UserEntity?> userMap,
+        BuiltMap<String, UserEntity> userMap,
         String? recurringPrefix) =>
     filteredInvoicesSelector(
       selectionState,
@@ -145,11 +144,11 @@ List<String> filteredInvoicesSelector(
   SelectionState selectionState,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltList<String> invoiceList,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
-  BuiltMap<String?, PaymentEntity?> paymentMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, PaymentEntity> paymentMap,
   ListUIState invoiceListState,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, UserEntity> userMap,
   String? recurringPrefix,
 ) {
   final filterEntityId = selectionState.filterEntityId;

@@ -388,7 +388,7 @@ abstract class ClientEntity extends Object
       contacts.where((contact) => contact!.email.isNotEmpty).isNotEmpty;
 
   int compareTo(ClientEntity? client, String sortField, bool sortAscending,
-      BuiltMap<String?, UserEntity?> userMap, StaticState staticState) {
+      BuiltMap<String, UserEntity> userMap, StaticState staticState) {
     int response = 0;
     final ClientEntity? clientA = sortAscending ? this : client;
     final ClientEntity? clientB = sortAscending ? client : this;

@@ -34,7 +34,7 @@ List<String> dropdownUsersSelector(BuiltMap<String, UserEntity> userMap,
 }
 
 var memoizedFilteredUserList = memo5((SelectionState selectionState,
-        BuiltMap<String?, UserEntity?> userMap,
+        BuiltMap<String, UserEntity> userMap,
         BuiltList<String> userList,
         ListUIState userListState,
         String authUserId) =>
@@ -43,7 +43,7 @@ var memoizedFilteredUserList = memo5((SelectionState selectionState,
 
 List<String> filteredUsersSelector(
     SelectionState selectionState,
-    BuiltMap<String?, UserEntity?> userMap,
+    BuiltMap<String, UserEntity> userMap,
     BuiltList<String> userList,
     ListUIState userListState,
     String authUserId) {
@@ -74,9 +74,9 @@ List<String> filteredUsersSelector(
 }
 
 var memoizedUserList =
-    memo1((BuiltMap<String?, UserEntity?> userMap) => userList(userMap));
+    memo1((BuiltMap<String, UserEntity> userMap) => userList(userMap));
 
-List<String?> userList(BuiltMap<String?, UserEntity?> userMap) {
+List<String?> userList(BuiltMap<String, UserEntity> userMap) {
   final list =
       userMap.keys.where((userId) => userMap[userId]!.isActive).toList();
 
@@ -89,9 +89,9 @@ List<String?> userList(BuiltMap<String?, UserEntity?> userMap) {
 }
 
 var memoizedGmailUserList =
-    memo1((BuiltMap<String?, UserEntity?> userMap) => gmailUserList(userMap));
+    memo1((BuiltMap<String, UserEntity> userMap) => gmailUserList(userMap));
 
-List<String?> gmailUserList(BuiltMap<String?, UserEntity?> userMap) {
+List<String?> gmailUserList(BuiltMap<String, UserEntity> userMap) {
   return userList(userMap).where((userId) {
     final user = (userMap[userId] ?? UserEntity) as UserEntity;
 
@@ -99,10 +99,10 @@ List<String?> gmailUserList(BuiltMap<String?, UserEntity?> userMap) {
   }).toList();
 }
 
-var memoizedMicrosoftUserList = memo1(
-    (BuiltMap<String?, UserEntity?> userMap) => microsoftUserList(userMap));
+var memoizedMicrosoftUserList =
+    memo1((BuiltMap<String, UserEntity> userMap) => microsoftUserList(userMap));
 
-List<String?> microsoftUserList(BuiltMap<String?, UserEntity?> userMap) {
+List<String?> microsoftUserList(BuiltMap<String, UserEntity> userMap) {
   return userList(userMap).where((userId) {
     final user = (userMap[userId] ?? UserEntity) as UserEntity;
 

@@ -6,19 +6,19 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedDropdownBankAccountList = memo5(
-    (BuiltMap<String?, BankAccountEntity?> bankAccountMap,
+    (BuiltMap<String, BankAccountEntity> bankAccountMap,
             BuiltList<String> bankAccountList,
             StaticState staticState,
-            BuiltMap<String?, UserEntity?> userMap,
+            BuiltMap<String, UserEntity> userMap,
             String? bankAccountId) =>
         dropdownBankAccountsSelector(bankAccountMap, bankAccountList,
             staticState, userMap, bankAccountId));
 
 List<String> dropdownBankAccountsSelector(
-    BuiltMap<String?, BankAccountEntity?> bankAccountMap,
+    BuiltMap<String, BankAccountEntity> bankAccountMap,
     BuiltList<String> bankAccountList,
     StaticState staticState,
-    BuiltMap<String?, UserEntity?> userMap,
+    BuiltMap<String, UserEntity> userMap,
     String? bankAccountId) {
   final list = bankAccountList.where((bankAccountId) {
     final bankAccount = bankAccountMap[bankAccountId]!;
@@ -40,7 +40,7 @@ List<String> dropdownBankAccountsSelector(
 }
 
 var memoizedFilteredBankAccountList = memo4((SelectionState selectionState,
-        BuiltMap<String?, BankAccountEntity?> bankAccountMap,
+        BuiltMap<String, BankAccountEntity> bankAccountMap,
         BuiltList<String> bankAccountList,
         ListUIState bankAccountListState) =>
     filteredBankAccountsSelector(
@@ -48,7 +48,7 @@ var memoizedFilteredBankAccountList = memo4((SelectionState selectionState,
 
 List<String> filteredBankAccountsSelector(
     SelectionState selectionState,
-    BuiltMap<String?, BankAccountEntity?> bankAccountMap,
+    BuiltMap<String, BankAccountEntity> bankAccountMap,
     BuiltList<String> bankAccountList,
     ListUIState bankAccountListState) {
   final filterEntityId = selectionState.filterEntityId;

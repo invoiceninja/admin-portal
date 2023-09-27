@@ -43,10 +43,10 @@ enum PurchaseOrderItemReportFields {
 var memoizedPurchaseOrderItemReport = memo7((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, ProductEntity?> productMap,
+  BuiltMap<String, ProductEntity> productMap,
   BuiltMap<String, InvoiceEntity> purchaseOrderMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, VendorEntity> vendorMap,
   StaticState staticState,
 ) =>
     lineItemReport(userCompany!, reportsUIState, productMap, purchaseOrderMap,
@@ -55,19 +55,20 @@ var memoizedPurchaseOrderItemReport = memo7((
 ReportResult lineItemReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, ProductEntity?> productMap,
+  BuiltMap<String, ProductEntity> productMap,
   BuiltMap<String, InvoiceEntity> purchaseOrderMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, VendorEntity> vendorMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
   BuiltList<PurchaseOrderItemReportFields> columns;
 
   final reportSettings = userCompany.settings.reportSettings;
-  final lineItemReportSettings = reportSettings.containsKey(kReportPurchaseOrderItem)
-      ? reportSettings[kReportPurchaseOrderItem]!
-      : ReportSettingsEntity();
+  final lineItemReportSettings =
+      reportSettings.containsKey(kReportPurchaseOrderItem)
+          ? reportSettings[kReportPurchaseOrderItem]!
+          : ReportSettingsEntity();
 
   final defaultColumns = [
     PurchaseOrderItemReportFields.purchaseOrderNumber,

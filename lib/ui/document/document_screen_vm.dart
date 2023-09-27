@@ -40,7 +40,7 @@ class DocumentScreenVM {
   final bool isInMultiselect;
   final UserCompanyEntity? userCompany;
   final List<String> documentList;
-  final BuiltMap<String?, DocumentEntity?> documentMap;
+  final BuiltMap<String, DocumentEntity> documentMap;
 
   static DocumentScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

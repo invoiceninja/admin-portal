@@ -40,7 +40,7 @@ class TaskScreenVM {
   final bool isInMultiselect;
   final UserCompanyEntity? userCompany;
   final List<String> taskList;
-  final BuiltMap<String?, TaskEntity?> taskMap;
+  final BuiltMap<String, TaskEntity> taskMap;
 
   static TaskScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

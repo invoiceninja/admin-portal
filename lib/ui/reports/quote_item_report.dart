@@ -46,9 +46,9 @@ enum QuoteItemReportFields {
 var memoizedQuoteItemReport = memo6((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, ProductEntity?> productMap,
+  BuiltMap<String, ProductEntity> productMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String, ClientEntity> clientMap,
   StaticState staticState,
 ) =>
     lineItemReport(userCompany!, reportsUIState, productMap, invoiceMap,
@@ -57,19 +57,18 @@ var memoizedQuoteItemReport = memo6((
 ReportResult lineItemReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, ProductEntity?> productMap,
+  BuiltMap<String, ProductEntity> productMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String, ClientEntity> clientMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
   BuiltList<QuoteItemReportFields> columns;
 
   final reportSettings = userCompany.settings.reportSettings;
-  final lineItemReportSettings =
-      reportSettings.containsKey(kReportQuoteItem)
-          ? reportSettings[kReportQuoteItem]!
-          : ReportSettingsEntity();
+  final lineItemReportSettings = reportSettings.containsKey(kReportQuoteItem)
+      ? reportSettings[kReportQuoteItem]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     QuoteItemReportFields.quoteNumber,

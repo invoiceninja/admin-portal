@@ -31,9 +31,9 @@ var memoizedInvoiceTaxReport = memo9((
   BuiltMap<String?, TaxRateEntity?> taxRateMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, InvoiceEntity> creditMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, PaymentEntity?> paymentMap,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, PaymentEntity> paymentMap,
+  BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) =>
     taxReport(userCompany!, reportsUIState, taxRateMap, invoiceMap, creditMap,
@@ -45,19 +45,18 @@ ReportResult taxReport(
   BuiltMap<String?, TaxRateEntity?> taxRateMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, InvoiceEntity> creditMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, PaymentEntity?> paymentMap,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, PaymentEntity> paymentMap,
+  BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
   BuiltList<TaxRateReportFields> columns;
 
   final reportSettings = userCompany.settings.reportSettings;
-  final taxRateReportSettings =
-      reportSettings.containsKey(kReportInvoiceTax)
-          ? reportSettings[kReportInvoiceTax]!
-          : ReportSettingsEntity();
+  final taxRateReportSettings = reportSettings.containsKey(kReportInvoiceTax)
+      ? reportSettings[kReportInvoiceTax]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     TaxRateReportFields.tax_name,

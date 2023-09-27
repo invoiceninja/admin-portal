@@ -117,8 +117,8 @@ class PaymentListVM {
   final UserEntity? user;
   final ListUIState listState;
   final List<String> paymentList;
-  final BuiltMap<String?, PaymentEntity?> paymentMap;
-  final BuiltMap<String?, ClientEntity?> clientMap;
+  final BuiltMap<String, PaymentEntity> paymentMap;
+  final BuiltMap<String, ClientEntity> clientMap;
   final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;

@@ -48,13 +48,13 @@ enum TaskReportFields {
 var memoizedTaskReport = memo10((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, TaskEntity?> taskMap,
+  BuiltMap<String, TaskEntity> taskMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String?, GroupEntity?> groupMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String, GroupEntity> groupMap,
+  BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String?, TaskStatusEntity?> taskStatusMap,
-  BuiltMap<String?, UserEntity?> userMap,
-  BuiltMap<String?, ProjectEntity?> projectMap,
+  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String, ProjectEntity> projectMap,
   StaticState staticState,
 ) =>
     taskReport(
@@ -73,13 +73,13 @@ var memoizedTaskReport = memo10((
 ReportResult taskReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, TaskEntity?> taskMap,
+  BuiltMap<String, TaskEntity> taskMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String?, GroupEntity?> groupMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String, GroupEntity> groupMap,
+  BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String?, TaskStatusEntity?> taskStatusMap,
-  BuiltMap<String?, UserEntity?> userMap,
-  BuiltMap<String?, ProjectEntity?> projectMap,
+  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String, ProjectEntity> projectMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -87,10 +87,9 @@ ReportResult taskReport(
   BuiltList<TaskReportFields> columns;
 
   final reportSettings = userCompany.settings.reportSettings;
-  final taskReportSettings =
-      reportSettings.containsKey(kReportTask)
-          ? reportSettings[kReportTask]!
-          : ReportSettingsEntity();
+  final taskReportSettings = reportSettings.containsKey(kReportTask)
+      ? reportSettings[kReportTask]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     TaskReportFields.start_time,

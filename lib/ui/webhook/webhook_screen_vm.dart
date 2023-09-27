@@ -43,7 +43,7 @@ class WebhookScreenVM {
   final UserCompanyEntity? userCompany;
   final List<String> webhookList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final BuiltMap<String?, WebhookEntity?> webhookMap;
+  final BuiltMap<String, WebhookEntity> webhookMap;
 
   static WebhookScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

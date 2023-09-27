@@ -59,7 +59,7 @@ class CreditEditDetailsVM extends EntityEditDetailsVM {
     Function(InvoiceEntity)? onChanged,
     Function(BuildContext, InvoiceEntity, ClientEntity?)? onClientChanged,
     Function(BuildContext, InvoiceEntity, VendorEntity?)? onVendorChanged,
-    BuiltMap<String?, ClientEntity?>? clientMap,
+    BuiltMap<String, ClientEntity>? clientMap,
     BuiltList<String>? clientList,
     Function(BuildContext context, Completer<SelectableEntity> completer)?
         onAddClientPressed,

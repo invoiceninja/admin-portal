@@ -21,11 +21,11 @@ ClientContactEntity? creditContactSelector(
 
 var memoizedDropdownCreditList = memo7(
     (BuiltMap<String, InvoiceEntity> creditMap,
-            BuiltMap<String?, ClientEntity?> clientMap,
-            BuiltMap<String?, VendorEntity?> vendorMap,
+            BuiltMap<String, ClientEntity> clientMap,
+            BuiltMap<String, VendorEntity> vendorMap,
             BuiltList<String> creditList,
             String clientId,
-            BuiltMap<String?, UserEntity?> userMap,
+            BuiltMap<String, UserEntity> userMap,
             List<String?> excludedIds) =>
         dropdownCreditSelector(
           creditMap,
@@ -39,11 +39,11 @@ var memoizedDropdownCreditList = memo7(
 
 List<String> dropdownCreditSelector(
     BuiltMap<String, InvoiceEntity> creditMap,
-    BuiltMap<String?, ClientEntity?> clientMap,
-    BuiltMap<String?, VendorEntity?> vendorMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, VendorEntity> vendorMap,
     BuiltList<String> creditList,
     String clientId,
-    BuiltMap<String?, UserEntity?> userMap,
+    BuiltMap<String, UserEntity> userMap,
     List<String?> excludedIds) {
   final list = creditList.where((creditId) {
     final credit = creditMap[creditId];
@@ -86,11 +86,11 @@ ClientEntity? creditClientSelector(
 var memoizedFilteredCreditList = memo8((SelectionState selectionState,
         BuiltMap<String, InvoiceEntity> creditMap,
         BuiltList<String> creditList,
-        BuiltMap<String?, ClientEntity?> clientMap,
-        BuiltMap<String?, VendorEntity?> vendorMap,
-        BuiltMap<String?, PaymentEntity?> paymentMap,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, VendorEntity> vendorMap,
+        BuiltMap<String, PaymentEntity> paymentMap,
         ListUIState creditListState,
-        BuiltMap<String?, UserEntity?> userMap) =>
+        BuiltMap<String, UserEntity> userMap) =>
     filteredCreditsSelector(selectionState, creditMap, creditList, clientMap,
         vendorMap, paymentMap, creditListState, userMap));
 
@@ -98,11 +98,11 @@ List<String> filteredCreditsSelector(
     SelectionState selectionState,
     BuiltMap<String, InvoiceEntity> creditMap,
     BuiltList<String> creditList,
-    BuiltMap<String?, ClientEntity?> clientMap,
-    BuiltMap<String?, VendorEntity?> vendorMap,
-    BuiltMap<String?, PaymentEntity?> paymentMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, VendorEntity> vendorMap,
+    BuiltMap<String, PaymentEntity> paymentMap,
     ListUIState creditListState,
-    BuiltMap<String?, UserEntity?> userMap) {
+    BuiltMap<String, UserEntity> userMap) {
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;
 

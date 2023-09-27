@@ -117,7 +117,7 @@ class ExpenseCategoryListVM {
   final AppState state;
   final UserCompanyEntity? userCompany;
   final List<String> expenseCategoryList;
-  final BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap;
+  final BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap;
   final ListUIState listState;
   final String? filter;
   final bool isLoading;

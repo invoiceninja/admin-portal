@@ -10,12 +10,12 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_state.dart';
 
 var memoizedDropdownExpenseCategoriesList = memo2(
-    (BuiltMap<String?, ExpenseCategoryEntity?> categoryMap,
+    (BuiltMap<String, ExpenseCategoryEntity> categoryMap,
             BuiltList<String> categoryList) =>
         dropdownExpenseCategoriesSelector(categoryMap, categoryList));
 
 List<String> dropdownExpenseCategoriesSelector(
-    BuiltMap<String?, ExpenseCategoryEntity?> categoryMap,
+    BuiltMap<String, ExpenseCategoryEntity> categoryMap,
     BuiltList<String> categoryList) {
   final list = categoryList
       .where((categoryId) => categoryMap[categoryId]!.isActive)
@@ -34,25 +34,25 @@ List<String> dropdownExpenseCategoriesSelector(
 }
 
 var memoizedHasMultipleCurrencies = memo3((CompanyEntity? company,
-        BuiltMap<String?, ClientEntity?> clientMap,
-        BuiltMap<String?, GroupEntity?> groupMap) =>
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, GroupEntity> groupMap) =>
     hasMultipleCurrencies(company, clientMap, groupMap));
 
 bool hasMultipleCurrencies(
         CompanyEntity? company,
-        BuiltMap<String?, ClientEntity?> clientMap,
-        BuiltMap<String?, GroupEntity?> groupMap) =>
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, GroupEntity> groupMap) =>
     memoizedGetCurrencyIds(company, clientMap, groupMap).length > 1;
 
 var memoizedGetCurrencyIds = memo3((CompanyEntity? company,
-        BuiltMap<String?, ClientEntity?> clientMap,
-        BuiltMap<String?, GroupEntity?> groupMap) =>
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, GroupEntity> groupMap) =>
     getCurrencyIds(company!, clientMap, groupMap));
 
 List<String> getCurrencyIds(
     CompanyEntity company,
-    BuiltMap<String?, ClientEntity?> clientMap,
-    BuiltMap<String?, GroupEntity?> groupMap) {
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, GroupEntity> groupMap) {
   final currencyIds = <String>[company.currencyId];
   clientMap.forEach((clientId, client) {
     final group = groupMap[client!.groupId];

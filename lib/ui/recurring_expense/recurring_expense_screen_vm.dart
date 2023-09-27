@@ -43,7 +43,7 @@ class RecurringExpenseScreenVM {
   final UserCompanyEntity? userCompany;
   final List<String?> recurringExpenseList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final BuiltMap<String?, ExpenseEntity?> recurringExpenseMap;
+  final BuiltMap<String, ExpenseEntity> recurringExpenseMap;
 
   static RecurringExpenseScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

@@ -149,13 +149,13 @@ List<String> dropdownExpensesSelector(
 }
 
 var memoizedFilteredExpenseList = memo9((SelectionState selectionState,
-        BuiltMap<String?, ExpenseEntity?> expenseMap,
-        BuiltMap<String?, ClientEntity?> clientMap,
-        BuiltMap<String?, VendorEntity?> vendorMap,
-        BuiltMap<String?, UserEntity?> userMap,
+        BuiltMap<String, ExpenseEntity> expenseMap,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, VendorEntity> vendorMap,
+        BuiltMap<String, UserEntity> userMap,
         ListUIState expenseListState,
         BuiltMap<String, InvoiceEntity> invoiceMap,
-        BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
+        BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
         StaticState staticState) =>
     filteredExpensesSelector(
         selectionState,
@@ -170,13 +170,13 @@ var memoizedFilteredExpenseList = memo9((SelectionState selectionState,
 
 List<String?> filteredExpensesSelector(
     SelectionState selectionState,
-    BuiltMap<String?, ExpenseEntity?> expenseMap,
-    BuiltMap<String?, ClientEntity?> clientMap,
-    BuiltMap<String?, VendorEntity?> vendorMap,
-    BuiltMap<String?, UserEntity?> userMap,
+    BuiltMap<String, ExpenseEntity> expenseMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, VendorEntity> vendorMap,
+    BuiltMap<String, UserEntity> userMap,
     ListUIState expenseListState,
     BuiltMap<String, InvoiceEntity> invoiceMap,
-    BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
+    BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
     StaticState staticState) {
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;
@@ -275,11 +275,11 @@ List<String?> filteredExpensesSelector(
 }
 
 var memoizedExpenseStatsForVendor = memo2(
-    (String vendorId, BuiltMap<String?, ExpenseEntity?> expenseMap) =>
+    (String vendorId, BuiltMap<String, ExpenseEntity> expenseMap) =>
         expenseStatsForVendor(vendorId, expenseMap));
 
 EntityStats expenseStatsForVendor(
-    String vendorId, BuiltMap<String?, ExpenseEntity?> expenseMap) {
+    String vendorId, BuiltMap<String, ExpenseEntity> expenseMap) {
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {
@@ -296,11 +296,11 @@ EntityStats expenseStatsForVendor(
 }
 
 var memoizedExpenseStatsForClient = memo2(
-    (String clientId, BuiltMap<String?, ExpenseEntity?> expenseMap) =>
+    (String clientId, BuiltMap<String, ExpenseEntity> expenseMap) =>
         expenseStatsForClient(clientId, expenseMap));
 
 EntityStats expenseStatsForClient(
-    String clientId, BuiltMap<String?, ExpenseEntity?> expenseMap) {
+    String clientId, BuiltMap<String, ExpenseEntity> expenseMap) {
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {
@@ -317,11 +317,11 @@ EntityStats expenseStatsForClient(
 }
 
 var memoizedClientExpenseList = memo2(
-    (BuiltMap<String?, ExpenseEntity?> expenseMap, String? clientId) =>
+    (BuiltMap<String, ExpenseEntity> expenseMap, String? clientId) =>
         clientExpenseList(expenseMap, clientId));
 
 List<String?> clientExpenseList(
-    BuiltMap<String?, ExpenseEntity?> expenseMap, String? clientId) {
+    BuiltMap<String, ExpenseEntity> expenseMap, String? clientId) {
   final list = expenseMap.keys.where((expenseid) {
     final expense = expenseMap[expenseid];
     if ((clientId ?? '').isNotEmpty &&
@@ -341,12 +341,12 @@ List<String?> clientExpenseList(
 
 var memoizedExpenseStatsForProject = memo2((
   String projectId,
-  BuiltMap<String?, ExpenseEntity?> expenseMap,
+  BuiltMap<String, ExpenseEntity> expenseMap,
 ) =>
     expenseStatsForProject(projectId, expenseMap));
 
 EntityStats expenseStatsForProject(
-    String projectId, BuiltMap<String?, ExpenseEntity?> expenseMap) {
+    String projectId, BuiltMap<String, ExpenseEntity> expenseMap) {
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {
@@ -364,12 +364,12 @@ EntityStats expenseStatsForProject(
 
 var memoizedExpenseStatsForUser = memo2((
   String userId,
-  BuiltMap<String?, ExpenseEntity?> expenseMap,
+  BuiltMap<String, ExpenseEntity> expenseMap,
 ) =>
     expenseStatsForUser(userId, expenseMap));
 
 EntityStats expenseStatsForUser(
-    String userId, BuiltMap<String?, ExpenseEntity?> expenseMap) {
+    String userId, BuiltMap<String, ExpenseEntity> expenseMap) {
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {

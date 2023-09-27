@@ -27,9 +27,9 @@ var memoizedDropdownPurchaseOrderList = memo7(
     (BuiltMap<String, InvoiceEntity> purchaseOrderMap,
             BuiltList<String> purchaseOrderList,
             StaticState staticState,
-            BuiltMap<String?, UserEntity?> userMap,
-            BuiltMap<String?, ClientEntity?> clientMap,
-            BuiltMap<String?, VendorEntity?> vendorMap,
+            BuiltMap<String, UserEntity> userMap,
+            BuiltMap<String, ClientEntity> clientMap,
+            BuiltMap<String, VendorEntity> vendorMap,
             String clientId) =>
         dropdownPurchaseOrdersSelector(purchaseOrderMap, purchaseOrderList,
             staticState, userMap, clientMap, vendorMap, clientId));
@@ -38,9 +38,9 @@ List<String> dropdownPurchaseOrdersSelector(
     BuiltMap<String, InvoiceEntity> purchaseOrderMap,
     BuiltList<String> purchaseOrderList,
     StaticState staticState,
-    BuiltMap<String?, UserEntity?> userMap,
-    BuiltMap<String?, ClientEntity?> clientMap,
-    BuiltMap<String?, VendorEntity?> vendorMap,
+    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, VendorEntity> vendorMap,
     String clientId) {
   final list = purchaseOrderList.where((purchaseOrderId) {
     final purchaseOrder = purchaseOrderMap[purchaseOrderId]!;
@@ -72,10 +72,10 @@ var memoizedFilteredPurchaseOrderList = memo7((
   SelectionState selectionState,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltList<String> invoiceList,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, VendorEntity> vendorMap,
   ListUIState invoiceListState,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, UserEntity> userMap,
 ) =>
     filteredPurchaseOrdersSelector(selectionState, invoiceMap, invoiceList,
         clientMap, vendorMap, invoiceListState, userMap));
@@ -84,10 +84,10 @@ List<String> filteredPurchaseOrdersSelector(
   SelectionState selectionState,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltList<String> invoiceList,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, VendorEntity> vendorMap,
   ListUIState invoiceListState,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, UserEntity> userMap,
 ) {
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;

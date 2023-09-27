@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 
 var memoizedUpcomingInvoices = memo2((
   BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String, ClientEntity> clientMap,
 ) =>
     _upcomingInvoices(
       invoiceMap: invoiceMap,
@@ -16,7 +16,7 @@ var memoizedUpcomingInvoices = memo2((
 
 List<InvoiceEntity?> _upcomingInvoices({
   required BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String?, ClientEntity?>? clientMap,
+  BuiltMap<String, ClientEntity>? clientMap,
 }) {
   final invoices = <InvoiceEntity?>[];
   invoiceMap.forEach((index, invoice) {
@@ -39,7 +39,7 @@ List<InvoiceEntity?> _upcomingInvoices({
 
 var memoizedPastDueInvoices = memo2((
   BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String, ClientEntity> clientMap,
 ) =>
     _pastDueInvoices(
       invoiceMap: invoiceMap,
@@ -48,7 +48,7 @@ var memoizedPastDueInvoices = memo2((
 
 List<InvoiceEntity?> _pastDueInvoices({
   required BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String?, ClientEntity?>? clientMap,
+  BuiltMap<String, ClientEntity>? clientMap,
 }) {
   final invoices = <InvoiceEntity?>[];
   invoiceMap.forEach((index, invoice) {
@@ -70,8 +70,8 @@ List<InvoiceEntity?> _pastDueInvoices({
 }
 
 var memoizedRecentPayments = memo2((
-  BuiltMap<String?, PaymentEntity?> paymentMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String, PaymentEntity> paymentMap,
+  BuiltMap<String, ClientEntity> clientMap,
 ) =>
     _recentPayments(
       paymentMap: paymentMap,
@@ -79,8 +79,8 @@ var memoizedRecentPayments = memo2((
     ));
 
 List<PaymentEntity?> _recentPayments({
-  required BuiltMap<String?, PaymentEntity?> paymentMap,
-  BuiltMap<String?, ClientEntity?>? clientMap,
+  required BuiltMap<String, PaymentEntity> paymentMap,
+  BuiltMap<String, ClientEntity>? clientMap,
 }) {
   final payments = <PaymentEntity?>[];
   final threeMonthsAgo =
@@ -110,7 +110,7 @@ List<PaymentEntity?> _recentPayments({
 
 var memoizedUpcomingQuotes = memo2((
   BuiltMap<String, InvoiceEntity> quoteMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String, ClientEntity> clientMap,
 ) =>
     _upcomingQuotes(
       quoteMap: quoteMap,
@@ -119,7 +119,7 @@ var memoizedUpcomingQuotes = memo2((
 
 List<InvoiceEntity?> _upcomingQuotes({
   required BuiltMap<String, InvoiceEntity> quoteMap,
-  BuiltMap<String?, ClientEntity?>? clientMap,
+  BuiltMap<String, ClientEntity>? clientMap,
 }) {
   final quotes = <InvoiceEntity?>[];
   quoteMap.forEach((index, quote) {
@@ -140,7 +140,7 @@ List<InvoiceEntity?> _upcomingQuotes({
 
 var memoizedExpiredQuotes = memo2((
   BuiltMap<String, InvoiceEntity> quoteMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String, ClientEntity> clientMap,
 ) =>
     _expiredQuotes(
       quoteMap: quoteMap,
@@ -149,7 +149,7 @@ var memoizedExpiredQuotes = memo2((
 
 List<InvoiceEntity?> _expiredQuotes({
   required BuiltMap<String, InvoiceEntity> quoteMap,
-  BuiltMap<String?, ClientEntity?>? clientMap,
+  BuiltMap<String, ClientEntity>? clientMap,
 }) {
   final quotes = <InvoiceEntity?>[];
   quoteMap.forEach((index, quote) {
@@ -169,8 +169,8 @@ List<InvoiceEntity?> _expiredQuotes({
 }
 
 var memoizedRunningTasks = memo2((
-  BuiltMap<String?, TaskEntity?> taskMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String, TaskEntity> taskMap,
+  BuiltMap<String, ClientEntity> clientMap,
 ) =>
     _runningTasks(
       taskMap: taskMap,
@@ -178,8 +178,8 @@ var memoizedRunningTasks = memo2((
     ));
 
 List<TaskEntity?> _runningTasks({
-  required BuiltMap<String?, TaskEntity?> taskMap,
-  BuiltMap<String?, ClientEntity?>? clientMap,
+  required BuiltMap<String, TaskEntity> taskMap,
+  BuiltMap<String, ClientEntity>? clientMap,
 }) {
   final tasks = <TaskEntity?>[];
   taskMap.forEach((index, task) {
@@ -260,8 +260,8 @@ List<ExpenseEntity> _upcomingExpenses({
 */
 
 var memoizedRecentExpenses = memo2((
-  BuiltMap<String?, ExpenseEntity?> expenseMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String, ExpenseEntity> expenseMap,
+  BuiltMap<String, ClientEntity> clientMap,
 ) =>
     _recentExpenses(
       expenseMap: expenseMap,
@@ -269,8 +269,8 @@ var memoizedRecentExpenses = memo2((
     ));
 
 List<ExpenseEntity?> _recentExpenses({
-  required BuiltMap<String?, ExpenseEntity?> expenseMap,
-  BuiltMap<String?, ClientEntity?>? clientMap,
+  required BuiltMap<String, ExpenseEntity> expenseMap,
+  BuiltMap<String, ClientEntity>? clientMap,
 }) {
   final expenses = <ExpenseEntity?>[];
   expenseMap.forEach((index, expense) {

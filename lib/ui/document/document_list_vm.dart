@@ -128,7 +128,7 @@ class DocumentListVM {
 
   final AppState state;
   final List<String> documentList;
-  final BuiltMap<String?, DocumentEntity?> documentMap;
+  final BuiltMap<String, DocumentEntity> documentMap;
   final ListUIState listState;
   final List<String> tableColumns;
   final String? filter;

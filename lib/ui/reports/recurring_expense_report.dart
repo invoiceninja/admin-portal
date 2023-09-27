@@ -50,12 +50,12 @@ enum RecurringExpenseReportFields {
 var memoizedRecurringExpenseReport = memo9((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, ExpenseEntity?> expenseMap,
-  BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
+  BuiltMap<String, ExpenseEntity> expenseMap,
+  BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) =>
     recurringExpenseReport(
@@ -73,12 +73,12 @@ var memoizedRecurringExpenseReport = memo9((
 ReportResult recurringExpenseReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, ExpenseEntity?> expenseMap,
-  BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
+  BuiltMap<String, ExpenseEntity> expenseMap,
+  BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -87,9 +87,10 @@ ReportResult recurringExpenseReport(
 
   final localization = AppLocalization.of(navigatorKey.currentContext!);
   final reportSettings = userCompany.settings.reportSettings;
-  final expenseReportSettings = reportSettings.containsKey(kReportRecurringExpense)
-      ? reportSettings[kReportRecurringExpense]!
-      : ReportSettingsEntity();
+  final expenseReportSettings =
+      reportSettings.containsKey(kReportRecurringExpense)
+          ? reportSettings[kReportRecurringExpense]!
+          : ReportSettingsEntity();
 
   final defaultColumns = [
     RecurringExpenseReportFields.amount,
@@ -253,8 +254,7 @@ ReportResult recurringExpenseReport(
     }
   }
 
-  final selectedColumns =
-      columns.map((item) => EnumUtils.parse(item)).toList();
+  final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>
       sortReportTableRows(rowA, rowB, expenseReportSettings, selectedColumns)!);
 

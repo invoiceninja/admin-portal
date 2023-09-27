@@ -40,7 +40,7 @@ class PaymentScreenVM {
   final bool isInMultiselect;
   final UserCompanyEntity? userCompany;
   final List<String> paymentList;
-  final BuiltMap<String?, PaymentEntity?> paymentMap;
+  final BuiltMap<String, PaymentEntity> paymentMap;
 
   static PaymentScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

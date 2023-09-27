@@ -40,7 +40,7 @@ class VendorScreenVM {
   final bool isInMultiselect;
   final UserCompanyEntity? userCompany;
   final List<String> vendorList;
-  final BuiltMap<String?, VendorEntity?> vendorMap;
+  final BuiltMap<String, VendorEntity> vendorMap;
 
   static VendorScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

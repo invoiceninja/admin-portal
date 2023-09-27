@@ -108,7 +108,7 @@ class UserListVM {
   final AppState state;
   final UserCompanyEntity? userCompany;
   final List<String> userList;
-  final BuiltMap<String?, UserEntity?> userMap;
+  final BuiltMap<String, UserEntity> userMap;
   final ListUIState listState;
   final String? filter;
   final bool isLoading;

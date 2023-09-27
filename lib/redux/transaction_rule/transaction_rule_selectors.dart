@@ -82,12 +82,12 @@ List<String> filteredTransactionRulesSelector(
 }
 
 var memoizedTransactionStatsForTransactionRule = memo2(
-    (String userId, BuiltMap<String?, TransactionEntity?> transactionMap) =>
+    (String userId, BuiltMap<String, TransactionEntity> transactionMap) =>
         transactionStatsForTransactionRule(userId, transactionMap));
 
 EntityStats transactionStatsForTransactionRule(
   String transactionRuleId,
-  BuiltMap<String?, TransactionEntity?> transactionMap,
+  BuiltMap<String, TransactionEntity> transactionMap,
 ) {
   int countActive = 0;
   int countArchived = 0;

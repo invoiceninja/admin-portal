@@ -218,11 +218,11 @@ abstract class TransactionEntity extends Object
     TransactionEntity? transaction,
     String sortField,
     bool sortAscending,
-    BuiltMap<String?, VendorEntity?> vendorMap,
+    BuiltMap<String, VendorEntity> vendorMap,
     BuiltMap<String, InvoiceEntity> invoiceMap,
-    BuiltMap<String?, ExpenseEntity?> expenseMap,
-    BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
-    BuiltMap<String?, BankAccountEntity?> bankAccountMap,
+    BuiltMap<String, ExpenseEntity> expenseMap,
+    BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+    BuiltMap<String, BankAccountEntity> bankAccountMap,
   ) {
     int response = 0;
     final transactionA = sortAscending ? this : transaction;

@@ -40,7 +40,7 @@ class ExpenseScreenVM {
   final bool isInMultiselect;
   final UserCompanyEntity? userCompany;
   final List<String?> expenseList;
-  final BuiltMap<String?, ExpenseEntity?> expenseMap;
+  final BuiltMap<String, ExpenseEntity> expenseMap;
 
   static ExpenseScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

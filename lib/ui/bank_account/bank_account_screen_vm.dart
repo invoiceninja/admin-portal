@@ -44,7 +44,7 @@ class BankAccountScreenVM {
   final UserCompanyEntity? userCompany;
   final List<String> bankAccountList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final BuiltMap<String?, BankAccountEntity?> bankAccountMap;
+  final BuiltMap<String, BankAccountEntity> bankAccountMap;
   final Function(BuildContext) onRefreshAccounts;
 
   static BankAccountScreenVM fromStore(Store<AppState> store) {

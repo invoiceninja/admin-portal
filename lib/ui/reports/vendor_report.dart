@@ -72,9 +72,9 @@ enum VendorReportFields {
 var memoizedVendorReport = memo6((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, VendorEntity?> vendorMap,
-  BuiltMap<String?, UserEntity?> userMap,
-  BuiltMap<String?, GroupEntity?> groupMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String, GroupEntity> groupMap,
   StaticState staticState,
 ) =>
     vendorReport(userCompany!, reportsUIState, vendorMap, userMap, groupMap,
@@ -83,9 +83,9 @@ var memoizedVendorReport = memo6((
 ReportResult vendorReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, VendorEntity?> vendorMap,
-  BuiltMap<String?, UserEntity?> userMap,
-  BuiltMap<String?, GroupEntity?> groupMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String, GroupEntity> groupMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -93,10 +93,9 @@ ReportResult vendorReport(
   BuiltList<VendorReportFields> columns;
 
   final reportSettings = userCompany.settings.reportSettings;
-  final vendorReportSettings =
-      reportSettings.containsKey(kReportVendor)
-          ? reportSettings[kReportVendor]!
-          : ReportSettingsEntity();
+  final vendorReportSettings = reportSettings.containsKey(kReportVendor)
+      ? reportSettings[kReportVendor]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     VendorReportFields.name,

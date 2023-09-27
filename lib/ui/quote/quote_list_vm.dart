@@ -61,7 +61,7 @@ class QuoteListVM extends EntityListVM {
     required AppState state,
     required List<String> invoiceList,
     required BuiltMap<String, InvoiceEntity> invoiceMap,
-    required BuiltMap<String?, ClientEntity?> clientMap,
+    required BuiltMap<String, ClientEntity> clientMap,
     required String? filter,
     required bool isLoading,
     required Function(BuildContext) onRefreshed,

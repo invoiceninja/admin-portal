@@ -35,11 +35,11 @@ List<String> dropdownDesignsSelector(BuiltMap<String, DesignEntity> designMap,
 }
 
 var memoizedFilteredDesignList = memo3(
-    (BuiltMap<String?, DesignEntity?> designMap, BuiltList<String> designList,
+    (BuiltMap<String, DesignEntity> designMap, BuiltList<String> designList,
             ListUIState designListState) =>
         filteredDesignsSelector(designMap, designList, designListState));
 
-List<String> filteredDesignsSelector(BuiltMap<String?, DesignEntity?> designMap,
+List<String> filteredDesignsSelector(BuiltMap<String, DesignEntity> designMap,
     BuiltList<String> designList, ListUIState designListState) {
   final list = designList.where((designId) {
     final design = designMap[designId]!;

@@ -44,7 +44,7 @@ class PaymentTermScreenVM {
   final UserCompanyEntity? userCompany;
   final List<String> paymentTermList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final BuiltMap<String?, PaymentTermEntity?> paymentTermMap;
+  final BuiltMap<String, PaymentTermEntity> paymentTermMap;
 
   static PaymentTermScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

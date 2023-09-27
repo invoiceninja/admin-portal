@@ -386,11 +386,11 @@ abstract class ExpenseEntity extends Object
       ExpenseEntity? expense,
       String sortField,
       bool sortAscending,
-      BuiltMap<String?, ClientEntity?> clientMap,
-      BuiltMap<String?, UserEntity?> userMap,
-      BuiltMap<String?, VendorEntity?> vendorMap,
+      BuiltMap<String, ClientEntity> clientMap,
+      BuiltMap<String, UserEntity> userMap,
+      BuiltMap<String, VendorEntity> vendorMap,
       BuiltMap<String, InvoiceEntity> invoiceMap,
-      BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
+      BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
       StaticState staticState) {
     int response = 0;
     final ExpenseEntity? expenseA = sortAscending ? this : expense;

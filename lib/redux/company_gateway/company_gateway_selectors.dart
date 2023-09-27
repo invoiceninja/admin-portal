@@ -87,13 +87,13 @@ List<String> filteredCompanyGatewaysSelector(
 }
 
 var memoizedCalculateCompanyGatewayProcessed = memo2(
-    (String companyGatewayId, BuiltMap<String?, PaymentEntity?> paymentMap) =>
+    (String companyGatewayId, BuiltMap<String, PaymentEntity> paymentMap) =>
         calculateCompanyGatewayProcessed(
             companyGatewayId: companyGatewayId, paymentMap: paymentMap));
 
 double calculateCompanyGatewayProcessed({
   String? companyGatewayId,
-  required BuiltMap<String?, PaymentEntity?> paymentMap,
+  required BuiltMap<String, PaymentEntity> paymentMap,
 }) {
   double total = 0;
 
@@ -107,12 +107,12 @@ double calculateCompanyGatewayProcessed({
 }
 
 var memoizedClientStatsForCompanyGateway = memo2(
-    (String companyGatewayId, BuiltMap<String?, ClientEntity?> clientMap) =>
+    (String companyGatewayId, BuiltMap<String, ClientEntity> clientMap) =>
         clientStatsForCompanyGateway(companyGatewayId, clientMap));
 
 EntityStats clientStatsForCompanyGateway(
   String companyGatewayId,
-  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String, ClientEntity> clientMap,
 ) {
   int countActive = 0;
   int countArchived = 0;
@@ -132,12 +132,12 @@ EntityStats clientStatsForCompanyGateway(
 }
 
 var memoizedPaymentStatsForCompanyGateway = memo2(
-    (String companyGatewayId, BuiltMap<String?, PaymentEntity?> paymentMap) =>
+    (String companyGatewayId, BuiltMap<String, PaymentEntity> paymentMap) =>
         paymentStatsForCompanyGateway(companyGatewayId, paymentMap));
 
 EntityStats paymentStatsForCompanyGateway(
   String companyGatewayId,
-  BuiltMap<String?, PaymentEntity?> paymentMap,
+  BuiltMap<String, PaymentEntity> paymentMap,
 ) {
   int countActive = 0;
   int countArchived = 0;

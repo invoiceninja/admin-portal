@@ -10,11 +10,11 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 var memoizedFilteredRecurringInvoiceList = memo7((
   SelectionState selectionState,
   BuiltMap<String, InvoiceEntity> recurringInvoiceMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, VendorEntity> vendorMap,
   BuiltList<String> recurringInvoiceList,
   ListUIState recurringInvoiceListState,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, UserEntity> userMap,
 ) =>
     filteredRecurringInvoicesSelector(
       selectionState,
@@ -29,11 +29,11 @@ var memoizedFilteredRecurringInvoiceList = memo7((
 List<String> filteredRecurringInvoicesSelector(
   SelectionState selectionState,
   BuiltMap<String, InvoiceEntity> recurringInvoiceMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, VendorEntity> vendorMap,
   BuiltList<String> recurringInvoiceList,
   ListUIState invoiceListState,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, UserEntity> userMap,
 ) {
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;

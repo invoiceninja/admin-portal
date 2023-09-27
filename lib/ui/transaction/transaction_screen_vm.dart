@@ -39,7 +39,7 @@ class TransactionScreenVM {
   final UserCompanyEntity? userCompany;
   final List<String> transactionList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final BuiltMap<String?, TransactionEntity?> transactionMap;
+  final BuiltMap<String, TransactionEntity> transactionMap;
 
   static TransactionScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

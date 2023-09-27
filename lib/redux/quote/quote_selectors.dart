@@ -26,11 +26,11 @@ ClientContactEntity? quoteContactSelector(
 
 var memoizedDropdownQuoteList = memo7((
   BuiltMap<String, InvoiceEntity> quoteMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, VendorEntity> vendorMap,
   BuiltList<String> quoteList,
   String clientId,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, UserEntity> userMap,
   List<String> excludedIds,
 ) =>
     dropdownQuoteSelector(
@@ -45,11 +45,11 @@ var memoizedDropdownQuoteList = memo7((
 
 List<String> dropdownQuoteSelector(
   BuiltMap<String, InvoiceEntity> quoteMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, VendorEntity> vendorMap,
   BuiltList<String> quoteList,
   String clientId,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, UserEntity> userMap,
   List<String> excludedIds,
 ) {
   final list = quoteList.where((invoiceId) {
@@ -88,10 +88,10 @@ List<String> dropdownQuoteSelector(
 var memoizedFilteredQuoteList = memo7((SelectionState selectionState,
         BuiltMap<String, InvoiceEntity> quoteMap,
         BuiltList<String> quoteList,
-        BuiltMap<String?, ClientEntity?> clientMap,
-        BuiltMap<String?, VendorEntity?> vendorMap,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, VendorEntity> vendorMap,
         ListUIState quoteListState,
-        BuiltMap<String?, UserEntity?> userMap) =>
+        BuiltMap<String, UserEntity> userMap) =>
     filteredQuotesSelector(selectionState, quoteMap, quoteList, clientMap,
         vendorMap, quoteListState, userMap));
 
@@ -99,10 +99,10 @@ List<String> filteredQuotesSelector(
     SelectionState selectionState,
     BuiltMap<String, InvoiceEntity> quoteMap,
     BuiltList<String> quoteList,
-    BuiltMap<String?, ClientEntity?> clientMap,
-    BuiltMap<String?, VendorEntity?> vendorMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, VendorEntity> vendorMap,
     ListUIState quoteListState,
-    BuiltMap<String?, UserEntity?> userMap) {
+    BuiltMap<String, UserEntity> userMap) {
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;
 

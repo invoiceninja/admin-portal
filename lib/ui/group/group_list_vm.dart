@@ -107,7 +107,7 @@ class GroupListVM {
   final AppState state;
   final UserCompanyEntity? userCompany;
   final List<String> groupList;
-  final BuiltMap<String?, GroupEntity?> groupMap;
+  final BuiltMap<String, GroupEntity> groupMap;
   final ListUIState listState;
   final String? filter;
   final bool isLoading;

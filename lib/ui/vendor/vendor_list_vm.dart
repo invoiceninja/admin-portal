@@ -110,7 +110,7 @@ class VendorListVM {
 
   final AppState state;
   final List<String> vendorList;
-  final BuiltMap<String?, VendorEntity?> vendorMap;
+  final BuiltMap<String, VendorEntity> vendorMap;
   final ListUIState listState;
   final String? filter;
   final bool isLoading;

@@ -113,8 +113,8 @@ class ProjectListVM {
 
   final AppState state;
   final List<String> projectList;
-  final BuiltMap<String?, ProjectEntity?> projectMap;
-  final BuiltMap<String?, ClientEntity?> clientMap;
+  final BuiltMap<String, ProjectEntity> projectMap;
+  final BuiltMap<String, ClientEntity> clientMap;
   final ListUIState listState;
   final String? filter;
   final bool isLoading;

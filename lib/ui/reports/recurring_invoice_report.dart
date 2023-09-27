@@ -90,10 +90,10 @@ var memoizedRecurringInvoiceReport = memo8((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, UserEntity?> userMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
-  BuiltMap<String?, ProjectEntity?> projectMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, ProjectEntity> projectMap,
   StaticState staticState,
 ) =>
     recurringInvoiceReport(
@@ -111,10 +111,10 @@ ReportResult recurringInvoiceReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, UserEntity?> userMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
-  BuiltMap<String?, ProjectEntity?> projectMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, ProjectEntity> projectMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -123,9 +123,10 @@ ReportResult recurringInvoiceReport(
 
   final localization = AppLocalization.of(navigatorKey.currentContext!);
   final reportSettings = userCompany.settings.reportSettings;
-  final invoiceReportSettings = reportSettings.containsKey(kReportRecurringInvoice)
-      ? reportSettings[kReportRecurringInvoice]!
-      : ReportSettingsEntity();
+  final invoiceReportSettings =
+      reportSettings.containsKey(kReportRecurringInvoice)
+          ? reportSettings[kReportRecurringInvoice]!
+          : ReportSettingsEntity();
 
   final defaultColumns = [
     RecurringInvoiceReportFields.number,

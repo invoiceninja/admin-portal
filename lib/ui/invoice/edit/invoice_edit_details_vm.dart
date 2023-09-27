@@ -70,7 +70,7 @@ class EntityEditDetailsVM {
       onClientChanged;
   final Function(BuildContext context, InvoiceEntity, VendorEntity?)?
       onVendorChanged;
-  final BuiltMap<String?, ClientEntity?>? clientMap;
+  final BuiltMap<String, ClientEntity>? clientMap;
   final BuiltList<String>? clientList;
   final Function(BuildContext context, Completer<SelectableEntity> completer)?
       onAddClientPressed;
@@ -86,7 +86,7 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
     Function(InvoiceEntity)? onChanged,
     Function(BuildContext, InvoiceEntity, ClientEntity?)? onClientChanged,
     Function(BuildContext, InvoiceEntity, VendorEntity?)? onVendorChanged,
-    BuiltMap<String?, ClientEntity?>? clientMap,
+    BuiltMap<String, ClientEntity>? clientMap,
     BuiltList<String>? clientList,
     Function(BuildContext context, Completer<SelectableEntity> completer)?
         onAddClientPressed,

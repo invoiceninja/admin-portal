@@ -51,9 +51,9 @@ var memoizedPaymentReport = memo8(
   (
     UserCompanyEntity? userCompany,
     ReportsUIState reportsUIState,
-    BuiltMap<String?, PaymentEntity?> paymentMap,
-    BuiltMap<String?, ClientEntity?> clientMap,
-    BuiltMap<String?, UserEntity?> userMap,
+    BuiltMap<String, PaymentEntity> paymentMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, UserEntity> userMap,
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, InvoiceEntity> creditMap,
     StaticState staticState,
@@ -73,9 +73,9 @@ var memoizedPaymentReport = memo8(
 ReportResult paymentReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, PaymentEntity?> paymentMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, PaymentEntity> paymentMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, UserEntity> userMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, InvoiceEntity> creditMap,
   StaticState staticState,
@@ -85,10 +85,9 @@ ReportResult paymentReport(
   BuiltList<PaymentReportFields> columns;
 
   final reportSettings = userCompany.settings.reportSettings;
-  final paymentReportSettings =
-      reportSettings.containsKey(kReportPayment)
-          ? reportSettings[kReportPayment]!
-          : ReportSettingsEntity();
+  final paymentReportSettings = reportSettings.containsKey(kReportPayment)
+      ? reportSettings[kReportPayment]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     PaymentReportFields.number,

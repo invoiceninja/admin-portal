@@ -38,7 +38,7 @@ List<String> dropdownWebhooksSelector(
 
 var memoizedFilteredWebhookList = memo4((
   SelectionState selectionState,
-  BuiltMap<String?, WebhookEntity?> webhookMap,
+  BuiltMap<String, WebhookEntity> webhookMap,
   BuiltList<String> webhookList,
   ListUIState webhookListState,
 ) =>
@@ -51,7 +51,7 @@ var memoizedFilteredWebhookList = memo4((
 
 List<String> filteredWebhooksSelector(
   SelectionState selectionState,
-  BuiltMap<String?, WebhookEntity?> webhookMap,
+  BuiltMap<String, WebhookEntity> webhookMap,
   BuiltList<String> webhookList,
   ListUIState webhookListState,
 ) {

@@ -111,10 +111,9 @@ class ReportsScreenVM {
     final state = store.state;
     final report = state.uiState.reportsUIState.report;
     final allReportSettings = state.userCompany.settings.reportSettings;
-    final reportSettings =
-        allReportSettings.containsKey(report)
-            ? allReportSettings[report]
-            : ReportSettingsEntity();
+    final reportSettings = allReportSettings.containsKey(report)
+        ? allReportSettings[report]
+        : ReportSettingsEntity();
 
     ReportResult? reportResult;
 
@@ -547,7 +546,7 @@ var memoizeedGroupTotals = memo5((
   ReportResult? reportResult,
   ReportsUIState reportUIState,
   ReportSettingsEntity? reportSettings,
-  BuiltMap<String?, CurrencyEntity?> currencyMap,
+  BuiltMap<String, CurrencyEntity> currencyMap,
   CompanyEntity? company,
 ) =>
     calculateReportTotals(
@@ -562,7 +561,7 @@ GroupTotals calculateReportTotals({
   required ReportResult reportResult,
   required ReportsUIState reportState,
   ReportSettingsEntity? reportSettings,
-  BuiltMap<String?, CurrencyEntity?>? currencyMap,
+  BuiltMap<String, CurrencyEntity>? currencyMap,
   CompanyEntity? company,
 }) {
   final Map<String?, Map<String?, double?>> totals = {};

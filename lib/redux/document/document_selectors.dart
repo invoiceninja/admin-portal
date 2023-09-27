@@ -37,7 +37,7 @@ List<String> dropdownDocumentsSelector(
 
 var memoizedFilteredDocumentList = memo4((
   SelectionState selectionState,
-  BuiltMap<String?, DocumentEntity?> documentMap,
+  BuiltMap<String, DocumentEntity> documentMap,
   BuiltList<String> documentList,
   ListUIState documentListState,
 ) =>
@@ -50,7 +50,7 @@ var memoizedFilteredDocumentList = memo4((
 
 List<String> filteredDocumentsSelector(
   SelectionState selectionState,
-  BuiltMap<String?, DocumentEntity?> documentMap,
+  BuiltMap<String, DocumentEntity> documentMap,
   BuiltList<String> documentList,
   ListUIState documentListState,
 ) {

@@ -77,7 +77,7 @@ class EntityListVM {
   final EntityType entityType;
   final List<String> invoiceList;
   final BuiltMap<String, InvoiceEntity> invoiceMap;
-  final BuiltMap<String?, ClientEntity?> clientMap;
+  final BuiltMap<String, ClientEntity> clientMap;
   final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
@@ -91,7 +91,7 @@ class InvoiceListVM extends EntityListVM {
     required AppState state,
     required List<String> invoiceList,
     required BuiltMap<String, InvoiceEntity> invoiceMap,
-    required BuiltMap<String?, ClientEntity?> clientMap,
+    required BuiltMap<String, ClientEntity> clientMap,
     required String? filter,
     required bool isLoading,
     required Function(BuildContext) onRefreshed,

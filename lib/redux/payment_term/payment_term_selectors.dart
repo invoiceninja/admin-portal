@@ -8,12 +8,12 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedDropdownPaymentTermList = memo2(
-    (BuiltMap<String?, PaymentTermEntity?> paymentTermMap,
+    (BuiltMap<String, PaymentTermEntity> paymentTermMap,
             BuiltList<String> paymentTermList) =>
         dropdownPaymentTermsSelector(paymentTermMap, paymentTermList));
 
 List<String> dropdownPaymentTermsSelector(
-    BuiltMap<String?, PaymentTermEntity?> paymentTermMap,
+    BuiltMap<String, PaymentTermEntity> paymentTermMap,
     BuiltList<String> paymentTermList) {
   final Map<int, bool> numDays = {};
   final list = paymentTermList.where((paymentTermId) {
@@ -38,7 +38,7 @@ List<String> dropdownPaymentTermsSelector(
 }
 
 var memoizedFilteredPaymentTermList = memo4((SelectionState selectionState,
-        BuiltMap<String?, PaymentTermEntity?> paymentTermMap,
+        BuiltMap<String, PaymentTermEntity> paymentTermMap,
         BuiltList<String> paymentTermList,
         ListUIState paymentTermListState) =>
     filteredPaymentTermsSelector(
@@ -46,7 +46,7 @@ var memoizedFilteredPaymentTermList = memo4((SelectionState selectionState,
 
 List<String> filteredPaymentTermsSelector(
     SelectionState selectionState,
-    BuiltMap<String?, PaymentTermEntity?> paymentTermMap,
+    BuiltMap<String, PaymentTermEntity> paymentTermMap,
     BuiltList<String> paymentTermList,
     ListUIState paymentTermListState) {
   final list = paymentTermList.where((paymentTermId) {

@@ -72,8 +72,8 @@ enum ContactReportFields {
 var memoizedContactReport = memo5((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) =>
     contactReport(
@@ -82,18 +82,17 @@ var memoizedContactReport = memo5((
 ReportResult contactReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
   BuiltList<ContactReportFields> columns;
 
   final reportSettings = userCompany.settings.reportSettings;
-  final clientReportSettings =
-      reportSettings.containsKey(kReportClientContact)
-          ? reportSettings[kReportClientContact]!
-          : ReportSettingsEntity();
+  final clientReportSettings = reportSettings.containsKey(kReportClientContact)
+      ? reportSettings[kReportClientContact]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     ContactReportFields.name,

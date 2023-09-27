@@ -46,9 +46,9 @@ enum CreditItemReportFields {
 var memoizedCreditItemReport = memo6((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, ProductEntity?> productMap,
+  BuiltMap<String, ProductEntity> productMap,
   BuiltMap<String, InvoiceEntity> creditMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String, ClientEntity> clientMap,
   StaticState staticState,
 ) =>
     lineItemReport(userCompany!, reportsUIState, productMap, creditMap,
@@ -57,19 +57,18 @@ var memoizedCreditItemReport = memo6((
 ReportResult lineItemReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, ProductEntity?> productMap,
+  BuiltMap<String, ProductEntity> productMap,
   BuiltMap<String, InvoiceEntity> creditMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
+  BuiltMap<String, ClientEntity> clientMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
   BuiltList<CreditItemReportFields> columns;
 
   final reportSettings = userCompany.settings.reportSettings;
-  final lineItemReportSettings =
-      reportSettings.containsKey(kReportCreditItem)
-          ? reportSettings[kReportCreditItem]!
-          : ReportSettingsEntity();
+  final lineItemReportSettings = reportSettings.containsKey(kReportCreditItem)
+      ? reportSettings[kReportCreditItem]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     CreditItemReportFields.creditNumber,

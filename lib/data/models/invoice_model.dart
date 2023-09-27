@@ -688,9 +688,9 @@ abstract class InvoiceEntity extends Object
     InvoiceEntity? invoice,
     String? sortField,
     required bool sortAscending,
-    required BuiltMap<String?, ClientEntity?> clientMap,
-    required BuiltMap<String?, VendorEntity?> vendorMap,
-    BuiltMap<String?, UserEntity?>? userMap,
+    required BuiltMap<String, ClientEntity> clientMap,
+    required BuiltMap<String, VendorEntity> vendorMap,
+    BuiltMap<String, UserEntity>? userMap,
     String? recurringPrefix = '',
   }) {
     int response = 0;

@@ -183,19 +183,19 @@ InvoiceItemEntity convertTaskToInvoiceItem({
     ..customValue4 = customValue4);
 }
 
-var memoizedTaskList = memo5((BuiltMap<String?, TaskEntity?> taskMap,
+var memoizedTaskList = memo5((BuiltMap<String, TaskEntity> taskMap,
         String? clientId,
-        BuiltMap<String?, UserEntity?> userMap,
-        BuiltMap<String?, ClientEntity?> clientMap,
-        BuiltMap<String?, ProjectEntity?> projectMap) =>
+        BuiltMap<String, UserEntity> userMap,
+        BuiltMap<String, ClientEntity> clientMap,
+        BuiltMap<String, ProjectEntity> projectMap) =>
     taskList(taskMap, clientId, userMap, clientMap, projectMap));
 
 List<String?> taskList(
-    BuiltMap<String?, TaskEntity?> taskMap,
+    BuiltMap<String, TaskEntity> taskMap,
     String? clientId,
-    BuiltMap<String?, UserEntity?> userMap,
-    BuiltMap<String?, ClientEntity?> clientMap,
-    BuiltMap<String?, ProjectEntity?> projectMap) {
+    BuiltMap<String, UserEntity> userMap,
+    BuiltMap<String, ClientEntity> clientMap,
+    BuiltMap<String, ProjectEntity> projectMap) {
   final list = taskMap.keys.where((taskId) {
     final task = taskMap[taskId];
     if ((clientId ?? '').isNotEmpty &&
@@ -465,11 +465,11 @@ double? taskRateSelector({
 }
 
 var memoizedTaskStatsForClient = memo2(
-    (String clientId, BuiltMap<String?, TaskEntity?> taskMap) =>
+    (String clientId, BuiltMap<String, TaskEntity> taskMap) =>
         taskStatsForClient(clientId, taskMap));
 
 EntityStats taskStatsForClient(
-    String clientId, BuiltMap<String?, TaskEntity?> taskMap) {
+    String clientId, BuiltMap<String, TaskEntity> taskMap) {
   int countActive = 0;
   int countArchived = 0;
   taskMap.forEach((taskId, task) {
@@ -487,12 +487,12 @@ EntityStats taskStatsForClient(
 
 var memoizedTaskStatsForProject = memo2((
   String projectId,
-  BuiltMap<String?, TaskEntity?> taskMap,
+  BuiltMap<String, TaskEntity> taskMap,
 ) =>
     taskStatsForProject(projectId, taskMap));
 
 EntityStats taskStatsForProject(
-    String projectId, BuiltMap<String?, TaskEntity?> taskMap) {
+    String projectId, BuiltMap<String, TaskEntity> taskMap) {
   int countActive = 0;
   int countArchived = 0;
   taskMap.forEach((taskId, task) {
@@ -510,7 +510,7 @@ EntityStats taskStatsForProject(
 
 var memoizedTaskStatsForUser = memo2((
   String userId,
-  BuiltMap<String?, TaskEntity?> taskMap,
+  BuiltMap<String, TaskEntity> taskMap,
 ) =>
     taskStatsForProject(userId, taskMap));
 

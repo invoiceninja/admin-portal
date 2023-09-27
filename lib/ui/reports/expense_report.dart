@@ -58,13 +58,13 @@ enum ExpenseReportFields {
 var memoizedExpenseReport = memo10((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, ExpenseEntity?> expenseMap,
-  BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
+  BuiltMap<String, ExpenseEntity> expenseMap,
+  BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
-  BuiltMap<String?, ProjectEntity?> projectMap,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, ProjectEntity> projectMap,
+  BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) =>
     expenseReport(
@@ -83,13 +83,13 @@ var memoizedExpenseReport = memo10((
 ReportResult expenseReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, ExpenseEntity?> expenseMap,
-  BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
+  BuiltMap<String, ExpenseEntity> expenseMap,
+  BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
-  BuiltMap<String?, ProjectEntity?> projectMap,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, ProjectEntity> projectMap,
+  BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -97,10 +97,9 @@ ReportResult expenseReport(
   BuiltList<ExpenseReportFields> columns;
 
   final reportSettings = userCompany.settings.reportSettings;
-  final expenseReportSettings =
-      reportSettings.containsKey(kReportExpense)
-          ? reportSettings[kReportExpense]!
-          : ReportSettingsEntity();
+  final expenseReportSettings = reportSettings.containsKey(kReportExpense)
+      ? reportSettings[kReportExpense]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     ExpenseReportFields.amount,

@@ -98,9 +98,9 @@ class BankAccountListVM {
               EntityAction action) =>
           handleBankAccountAction(context, bankAccounts, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: state.userCompany.settings
-              .getTableColumns(EntityType.bankAccount) ??
-          BankAccountPresenter.getDefaultTableFields(state.userCompany),
+      tableColumns:
+          state.userCompany.settings.getTableColumns(EntityType.bankAccount) ??
+              BankAccountPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortBankAccounts(field)),
       onClearMultielsect: () => store.dispatch(ClearBankAccountMultiselect()),
     );
@@ -109,7 +109,7 @@ class BankAccountListVM {
   final AppState state;
   final UserCompanyEntity? userCompany;
   final List<String> bankAccountList;
-  final BuiltMap<String?, BankAccountEntity?> bankAccountMap;
+  final BuiltMap<String, BankAccountEntity> bankAccountMap;
   final ListUIState listState;
   final String? filter;
   final bool isLoading;

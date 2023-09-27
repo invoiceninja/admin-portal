@@ -109,7 +109,7 @@ class DesignListVM {
   final AppState state;
   final UserCompanyEntity? userCompany;
   final List<String> designList;
-  final BuiltMap<String?, DesignEntity?> designMap;
+  final BuiltMap<String, DesignEntity> designMap;
   final ListUIState listState;
   final String? filter;
   final bool isLoading;

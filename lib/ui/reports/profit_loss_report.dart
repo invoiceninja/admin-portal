@@ -40,12 +40,12 @@ enum ProfitAndLossReportFields {
 var memoizedProfitAndLossReport = memo9((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, PaymentEntity?> paymentMap,
-  BuiltMap<String?, ExpenseEntity?> expenseMap,
-  BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, PaymentEntity> paymentMap,
+  BuiltMap<String, ExpenseEntity> expenseMap,
+  BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) =>
     profitAndLossReport(
@@ -63,12 +63,12 @@ var memoizedProfitAndLossReport = memo9((
 ReportResult profitAndLossReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, PaymentEntity?> paymentMap,
-  BuiltMap<String?, ExpenseEntity?> expenseMap,
-  BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, PaymentEntity> paymentMap,
+  BuiltMap<String, ExpenseEntity> expenseMap,
+  BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];

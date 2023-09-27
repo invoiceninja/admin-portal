@@ -36,13 +36,13 @@ enum TransactionReportFields {
 var memoizedTransactionReport = memo10((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, TransactionEntity?> transactionMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
-  BuiltMap<String?, ExpenseEntity?> expenseMap,
-  BuiltMap<String?, ExpenseCategoryEntity?> categoryMap,
+  BuiltMap<String, TransactionEntity> transactionMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, ExpenseEntity> expenseMap,
+  BuiltMap<String, ExpenseCategoryEntity> categoryMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String?, BankAccountEntity?> bankAccountMap,
-  BuiltMap<String?, PaymentEntity?> paymentMap,
+  BuiltMap<String, BankAccountEntity> bankAccountMap,
+  BuiltMap<String, PaymentEntity> paymentMap,
   StaticState staticState,
 ) =>
     transactionReport(
@@ -61,13 +61,13 @@ var memoizedTransactionReport = memo10((
 ReportResult transactionReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, TransactionEntity?> transactionMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
-  BuiltMap<String?, ExpenseEntity?> expenseMap,
-  BuiltMap<String?, ExpenseCategoryEntity?> categoryMap,
+  BuiltMap<String, TransactionEntity> transactionMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, ExpenseEntity> expenseMap,
+  BuiltMap<String, ExpenseCategoryEntity> categoryMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String?, BankAccountEntity?> bankAccountMap,
-  BuiltMap<String?, PaymentEntity?> paymentMap,
+  BuiltMap<String, BankAccountEntity> bankAccountMap,
+  BuiltMap<String, PaymentEntity> paymentMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];

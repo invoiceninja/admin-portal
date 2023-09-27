@@ -40,7 +40,7 @@ class ProjectScreenVM {
   final bool isInMultiselect;
   final UserCompanyEntity? userCompany;
   final List<String> projectList;
-  final BuiltMap<String?, ProjectEntity?> projectMap;
+  final BuiltMap<String, ProjectEntity> projectMap;
 
   static ProjectScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

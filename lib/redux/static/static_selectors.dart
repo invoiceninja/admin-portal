@@ -8,9 +8,9 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/static/font_model.dart';
 
 var memoizedCountryList = memo1(
-    (BuiltMap<String?, CountryEntity?> countryMap) => countryList(countryMap));
+    (BuiltMap<String, CountryEntity> countryMap) => countryList(countryMap));
 
-List<String?> countryList(BuiltMap<String?, CountryEntity?> countryMap) {
+List<String?> countryList(BuiltMap<String, CountryEntity> countryMap) {
   final list = countryMap.keys.toList();
 
   list.sort((idA, idB) => countryMap[idA]!
@@ -21,11 +21,10 @@ List<String?> countryList(BuiltMap<String?, CountryEntity?> countryMap) {
 }
 
 var memoizedCountryIso2Map = memo1(
-    (BuiltMap<String?, CountryEntity?> countryMap) =>
-        countryIso2Map(countryMap));
+    (BuiltMap<String, CountryEntity> countryMap) => countryIso2Map(countryMap));
 
 Map<String, CountryEntity> countryIso2Map(
-    BuiltMap<String?, CountryEntity?> countryMap) {
+    BuiltMap<String, CountryEntity> countryMap) {
   final map = <String, CountryEntity>{};
   countryMap.keys.forEach((countryId) {
     final country = countryMap[countryId]!;
@@ -35,9 +34,9 @@ Map<String, CountryEntity> countryIso2Map(
 }
 
 var memoizedGroupList =
-    memo1((BuiltMap<String?, GroupEntity?> groupMap) => groupList(groupMap));
+    memo1((BuiltMap<String, GroupEntity> groupMap) => groupList(groupMap));
 
-List<String?> groupList(BuiltMap<String?, GroupEntity?> groupMap) {
+List<String?> groupList(BuiltMap<String, GroupEntity> groupMap) {
   final list =
       groupMap.keys.where((groupId) => groupMap[groupId]!.isActive).toList();
 
@@ -48,10 +47,10 @@ List<String?> groupList(BuiltMap<String?, GroupEntity?> groupMap) {
 }
 
 var memoizedLanguageList = memo1(
-    (BuiltMap<String?, LanguageEntity?> languageMap) =>
+    (BuiltMap<String, LanguageEntity> languageMap) =>
         languageList(languageMap));
 
-List<String?> languageList(BuiltMap<String?, LanguageEntity?> languageMap) {
+List<String?> languageList(BuiltMap<String, LanguageEntity> languageMap) {
   final list = languageMap.keys.toList();
 
   list.sort((idA, idB) => languageMap[idA]!
@@ -62,10 +61,10 @@ List<String?> languageList(BuiltMap<String?, LanguageEntity?> languageMap) {
 }
 
 var memoizedCurrencyList = memo1(
-    (BuiltMap<String?, CurrencyEntity?> currencyMap) =>
+    (BuiltMap<String, CurrencyEntity> currencyMap) =>
         currencyList(currencyMap));
 
-List<String?> currencyList(BuiltMap<String?, CurrencyEntity?> currencyMap) {
+List<String?> currencyList(BuiltMap<String, CurrencyEntity> currencyMap) {
   final list = currencyMap.keys.toList();
 
   list.sort((idA, idB) => currencyMap[idA]!
@@ -76,10 +75,10 @@ List<String?> currencyList(BuiltMap<String?, CurrencyEntity?> currencyMap) {
 }
 
 var memoizedTimezoneList = memo1(
-    (BuiltMap<String?, TimezoneEntity?> timezoneMap) =>
+    (BuiltMap<String, TimezoneEntity> timezoneMap) =>
         timezoneList(timezoneMap));
 
-List<String?> timezoneList(BuiltMap<String?, TimezoneEntity?> timezoneMap) {
+List<String?> timezoneList(BuiltMap<String, TimezoneEntity> timezoneMap) {
   final list = timezoneMap.keys.toList();
 
   list.sort((idA, idB) => timezoneMap[idA]!
@@ -90,11 +89,10 @@ List<String?> timezoneList(BuiltMap<String?, TimezoneEntity?> timezoneMap) {
 }
 
 var memoizedDateFormatList = memo1(
-    (BuiltMap<String?, DateFormatEntity?> dateFormatMap) =>
+    (BuiltMap<String, DateFormatEntity> dateFormatMap) =>
         dateFormatList(dateFormatMap));
 
-List<String?> dateFormatList(
-    BuiltMap<String?, DateFormatEntity?> dateFormatMap) {
+List<String?> dateFormatList(BuiltMap<String, DateFormatEntity> dateFormatMap) {
   final list = dateFormatMap.keys.toList();
 
   list.sort((idA, idB) => dateFormatMap[idA]!
@@ -119,9 +117,9 @@ List<String?> industryList(BuiltMap<String?, IndustryEntity?> industryMap) {
 }
 
 var memoizedSizeList =
-    memo1((BuiltMap<String?, SizeEntity?> sizeMap) => sizeList(sizeMap));
+    memo1((BuiltMap<String, SizeEntity> sizeMap) => sizeList(sizeMap));
 
-List<String?> sizeList(BuiltMap<String?, SizeEntity?> sizeMap) {
+List<String?> sizeList(BuiltMap<String, SizeEntity> sizeMap) {
   final list = sizeMap.keys.toList();
 
   list.sort((idA, idB) => sizeMap[idA]!.id.compareTo(sizeMap[idB]!.id));
@@ -130,9 +128,9 @@ List<String?> sizeList(BuiltMap<String?, SizeEntity?> sizeMap) {
 }
 
 var memoizedGatewayList = memo1(
-    (BuiltMap<String?, GatewayEntity?> gatewayMap) => gatewayList(gatewayMap));
+    (BuiltMap<String, GatewayEntity> gatewayMap) => gatewayList(gatewayMap));
 
-List<String?> gatewayList(BuiltMap<String?, GatewayEntity?> gatewayMap) {
+List<String?> gatewayList(BuiltMap<String, GatewayEntity> gatewayMap) {
   final list = gatewayMap.keys
       .where((gatewayId) => gatewayMap[gatewayId]!.isVisible)
       .toList();

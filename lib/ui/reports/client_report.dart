@@ -83,9 +83,9 @@ enum ClientReportFields {
 var memoizedClientReport = memo6((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, UserEntity?> userMap,
-  BuiltMap<String?, GroupEntity?> groupMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String, GroupEntity> groupMap,
   StaticState staticState,
 ) =>
     clientReport(userCompany!, reportsUIState, clientMap, userMap, groupMap,
@@ -94,9 +94,9 @@ var memoizedClientReport = memo6((
 ReportResult clientReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, UserEntity?> userMap,
-  BuiltMap<String?, GroupEntity?> groupMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, UserEntity> userMap,
+  BuiltMap<String, GroupEntity> groupMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -104,10 +104,9 @@ ReportResult clientReport(
   BuiltList<ClientReportFields> columns;
 
   final reportSettings = userCompany.settings.reportSettings;
-  final clientReportSettings =
-      reportSettings.containsKey(kReportClient)
-          ? reportSettings[kReportClient]!
-          : ReportSettingsEntity();
+  final clientReportSettings = reportSettings.containsKey(kReportClient)
+      ? reportSettings[kReportClient]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     ClientReportFields.name,
@@ -408,15 +407,13 @@ ReportResult clientReport(
     }
   }
 
-  final selectedColumns =
-      columns.map((item) => EnumUtils.parse(item)).toList();
+  final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>
       sortReportTableRows(rowA, rowB, clientReportSettings, selectedColumns)!);
 
   return ReportResult(
-    allColumns: ClientReportFields.values
-        .map((item) => EnumUtils.parse(item))
-        .toList(),
+    allColumns:
+        ClientReportFields.values.map((item) => EnumUtils.parse(item)).toList(),
     columns: selectedColumns,
     defaultColumns:
         defaultColumns.map((item) => EnumUtils.parse(item)).toList(),

@@ -81,9 +81,9 @@ var memoizedQuoteReport = memo7((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, InvoiceEntity> quoteMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) =>
     quoteReport(userCompany!, reportsUIState, quoteMap, clientMap, vendorMap,
@@ -93,9 +93,9 @@ ReportResult quoteReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, InvoiceEntity> quoteMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -103,10 +103,9 @@ ReportResult quoteReport(
   BuiltList<QuoteReportFields> columns;
 
   final reportSettings = userCompany.settings.reportSettings;
-  final quoteReportSettings =
-      reportSettings.containsKey(kReportQuote)
-          ? reportSettings[kReportQuote]!
-          : ReportSettingsEntity();
+  final quoteReportSettings = reportSettings.containsKey(kReportQuote)
+      ? reportSettings[kReportQuote]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     QuoteReportFields.number,

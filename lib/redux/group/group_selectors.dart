@@ -35,7 +35,7 @@ List<String> dropdownGroupsSelector(BuiltMap<String, GroupEntity> groupMap,
 }
 
 var memoizedFilteredGroupList = memo4((SelectionState selectionState,
-        BuiltMap<String?, GroupEntity?> groupMap,
+        BuiltMap<String, GroupEntity> groupMap,
         BuiltList<String> groupList,
         ListUIState groupListState) =>
     filteredGroupsSelector(
@@ -43,7 +43,7 @@ var memoizedFilteredGroupList = memo4((SelectionState selectionState,
 
 List<String> filteredGroupsSelector(
     SelectionState selectionState,
-    BuiltMap<String?, GroupEntity?> groupMap,
+    BuiltMap<String, GroupEntity> groupMap,
     BuiltList<String> groupList,
     ListUIState groupListState) {
   final list = groupList.where((groupId) {
@@ -70,11 +70,11 @@ List<String> filteredGroupsSelector(
 }
 
 var memoizedClientStatsForGroup = memo2(
-    (BuiltMap<String?, ClientEntity?> clientMap, String groupId) =>
+    (BuiltMap<String, ClientEntity> clientMap, String groupId) =>
         clientStatsForGroup(clientMap, groupId));
 
 EntityStats clientStatsForGroup(
-    BuiltMap<String?, ClientEntity?> clientMap, String groupId) {
+    BuiltMap<String, ClientEntity> clientMap, String groupId) {
   int countActive = 0;
   int countArchived = 0;
   clientMap.forEach((clientId, client) {

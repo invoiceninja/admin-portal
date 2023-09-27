@@ -43,7 +43,7 @@ class ExpenseCategoryScreenVM {
   final UserCompanyEntity? userCompany;
   final List<String> expenseCategoryList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final BuiltMap<String?, ExpenseCategoryEntity?> expenseCategoryMap;
+  final BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap;
 
   static ExpenseCategoryScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

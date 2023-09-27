@@ -25,7 +25,7 @@ InvoiceItemEntity convertProductToInvoiceItem({
   required ProductEntity? product,
   required CompanyEntity company,
   required InvoiceEntity invoice,
-  required BuiltMap<String?, CurrencyEntity?> currencyMap,
+  required BuiltMap<String, CurrencyEntity> currencyMap,
   ClientEntity? client,
 }) {
   if (company.fillProducts) {
@@ -68,15 +68,14 @@ InvoiceItemEntity convertProductToInvoiceItem({
 }
 
 var memoizedDropdownProductList = memo3(
-    (BuiltMap<String?, ProductEntity?> productMap,
-            BuiltList<String> productList,
-            BuiltMap<String?, UserEntity?> userMap) =>
+    (BuiltMap<String, ProductEntity> productMap, BuiltList<String> productList,
+            BuiltMap<String, UserEntity> userMap) =>
         dropdownProductsSelector(productMap, productList, userMap));
 
 List<String> dropdownProductsSelector(
-    BuiltMap<String?, ProductEntity?> productMap,
+    BuiltMap<String, ProductEntity> productMap,
     BuiltList<String> productList,
-    BuiltMap<String?, UserEntity?> userMap) {
+    BuiltMap<String, UserEntity> userMap) {
   final list = productList
       .where((productId) => productMap[productId]!.isActive)
       .toList();
@@ -92,9 +91,9 @@ List<String> dropdownProductsSelector(
 }
 
 var memoizedProductList = memo1(
-    (BuiltMap<String?, ProductEntity?> productMap) => productList(productMap));
+    (BuiltMap<String, ProductEntity> productMap) => productList(productMap));
 
-List<String?> productList(BuiltMap<String?, ProductEntity?> productMap) {
+List<String?> productList(BuiltMap<String, ProductEntity> productMap) {
   final list = productMap.keys
       .where((productId) => productMap[productId]!.isActive)
       .toList();
@@ -107,19 +106,19 @@ List<String?> productList(BuiltMap<String?, ProductEntity?> productMap) {
 }
 
 var memoizedFilteredProductList = memo5((SelectionState selectionState,
-        BuiltMap<String?, ProductEntity?> productMap,
+        BuiltMap<String, ProductEntity> productMap,
         BuiltList<String> productList,
         ListUIState productListState,
-        BuiltMap<String?, UserEntity?> userMap) =>
+        BuiltMap<String, UserEntity> userMap) =>
     filteredProductsSelector(
         selectionState, productMap, productList, productListState, userMap));
 
 List<String> filteredProductsSelector(
     SelectionState selectionState,
-    BuiltMap<String?, ProductEntity?> productMap,
+    BuiltMap<String, ProductEntity> productMap,
     BuiltList<String> productList,
     ListUIState productListState,
-    BuiltMap<String?, UserEntity?> userMap) {
+    BuiltMap<String, UserEntity> userMap) {
   final list = productList.where((productId) {
     final product = productMap[productId]!;
 

@@ -704,6 +704,48 @@ Serializers _$serializers = (new Serializers().toBuilder()
           () => new ListBuilder<String>())
       ..addBuilderFactory(
           const FullType(BuiltMap,
+              const [const FullType(String), const FullType(CurrencyEntity)]),
+          () => new MapBuilder<String, CurrencyEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(String), const FullType(SizeEntity)]),
+          () => new MapBuilder<String, SizeEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(String), const FullType(GatewayEntity)]),
+          () => new MapBuilder<String, GatewayEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(String), const FullType(IndustryEntity)]),
+          () => new MapBuilder<String, IndustryEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(String), const FullType(TimezoneEntity)]),
+          () => new MapBuilder<String, TimezoneEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(String), const FullType(DateFormatEntity)]),
+          () => new MapBuilder<String, DateFormatEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(String), const FullType(LanguageEntity)]),
+          () => new MapBuilder<String, LanguageEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(PaymentTypeEntity)
+          ]),
+          () => new MapBuilder<String, PaymentTypeEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(String), const FullType(CountryEntity)]),
+          () => new MapBuilder<String, CountryEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(String), const FullType(TemplateEntity)]),
+          () => new MapBuilder<String, TemplateEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
               const [const FullType(String), const FullType(DesignEntity)]),
           () => new MapBuilder<String, DesignEntity>())
       ..addBuilderFactory(
@@ -965,64 +1007,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
             const FullType(BuiltList, const [const FullType(String)])
           ]),
           () => new MapBuilder<String, BuiltList<String>>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(CurrencyEntity)
-          ]),
-          () => new MapBuilder<String?, CurrencyEntity?>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(SizeEntity)
-          ]),
-          () => new MapBuilder<String?, SizeEntity?>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(GatewayEntity)
-          ]),
-          () => new MapBuilder<String?, GatewayEntity?>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(IndustryEntity)
-          ]),
-          () => new MapBuilder<String?, IndustryEntity?>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(TimezoneEntity)
-          ]),
-          () => new MapBuilder<String?, TimezoneEntity?>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(DateFormatEntity)
-          ]),
-          () => new MapBuilder<String?, DateFormatEntity?>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(LanguageEntity)
-          ]),
-          () => new MapBuilder<String?, LanguageEntity?>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(PaymentTypeEntity)
-          ]),
-          () => new MapBuilder<String?, PaymentTypeEntity?>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(CountryEntity)
-          ]),
-          () => new MapBuilder<String?, CountryEntity?>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap,
-              const [const FullType(String), const FullType(TemplateEntity)]),
-          () => new MapBuilder<String, TemplateEntity>())
       ..addBuilderFactory(
           const FullType(BuiltMap, const [
             const FullType.nullable(String),

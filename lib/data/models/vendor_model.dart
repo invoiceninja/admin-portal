@@ -268,7 +268,7 @@ abstract class VendorEntity extends Object
   }
 
   int compareTo(VendorEntity? vendor, String sortField, bool sortAscending,
-      BuiltMap<String?, UserEntity?> userMap, StaticState staticState) {
+      BuiltMap<String, UserEntity> userMap, StaticState staticState) {
     int response = 0;
     final VendorEntity? vendorA = sortAscending ? this : vendor;
     final VendorEntity? vendorB = sortAscending ? vendor : this;

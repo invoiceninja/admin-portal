@@ -29,8 +29,8 @@ enum DocumentReportFields {
 var memoizedDocumentReport = memo4((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, DocumentEntity?> documentMap,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, DocumentEntity> documentMap,
+  BuiltMap<String, UserEntity> userMap,
 ) =>
     documentReport(
       userCompany!,
@@ -42,8 +42,8 @@ var memoizedDocumentReport = memo4((
 ReportResult documentReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, DocumentEntity?> documentMap,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, DocumentEntity> documentMap,
+  BuiltMap<String, UserEntity> userMap,
 ) {
   final List<List<ReportElement>> data = [];
   final List<BaseEntity> entities = [];
@@ -52,10 +52,9 @@ ReportResult documentReport(
   final localization =
       AppLocalization(AppLocalization.createLocale(Intl.defaultLocale));
   final reportSettings = userCompany.settings.reportSettings;
-  final documentReportSettings =
-      reportSettings.containsKey(kReportDocument)
-          ? reportSettings[kReportDocument]!
-          : ReportSettingsEntity();
+  final documentReportSettings = reportSettings.containsKey(kReportDocument)
+      ? reportSettings[kReportDocument]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     DocumentReportFields.record_type,

@@ -43,7 +43,7 @@ class DesignScreenVM {
   final UserCompanyEntity? userCompany;
   final List<String> designList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final BuiltMap<String?, DesignEntity?> designMap;
+  final BuiltMap<String, DesignEntity> designMap;
 
   static DesignScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

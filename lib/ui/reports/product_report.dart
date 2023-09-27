@@ -37,9 +37,9 @@ enum ProductReportFields {
 var memoizedProductReport = memo6((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, ProductEntity?> productMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, ProductEntity> productMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) =>
     productReport(userCompany!, reportsUIState, productMap, vendorMap, userMap,
@@ -48,9 +48,9 @@ var memoizedProductReport = memo6((
 ReportResult productReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String?, ProductEntity?> productMap,
-  BuiltMap<String?, VendorEntity?> vendorMap,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, ProductEntity> productMap,
+  BuiltMap<String, VendorEntity> vendorMap,
+  BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -58,10 +58,9 @@ ReportResult productReport(
   BuiltList<ProductReportFields> columns;
 
   final reportSettings = userCompany.settings.reportSettings;
-  final productReportSettings =
-      reportSettings.containsKey(kReportProduct)
-          ? reportSettings[kReportProduct]!
-          : ReportSettingsEntity();
+  final productReportSettings = reportSettings.containsKey(kReportProduct)
+      ? reportSettings[kReportProduct]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     ProductReportFields.name,

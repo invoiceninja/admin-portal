@@ -233,7 +233,7 @@ List<String> filteredProjectsSelector(
 
 Duration taskDurationForProject(
   ProjectEntity project,
-  BuiltMap<String?, TaskEntity?> taskMap,
+  BuiltMap<String, TaskEntity> taskMap,
 ) {
   int total = 0;
   taskMap.forEach((index, task) {
@@ -245,11 +245,11 @@ Duration taskDurationForProject(
 }
 
 var memoizedProjectStatsForClient = memo2(
-    (String clientId, BuiltMap<String?, ProjectEntity?> projectMap) =>
+    (String clientId, BuiltMap<String, ProjectEntity> projectMap) =>
         projectStatsForClient(clientId, projectMap));
 
 EntityStats projectStatsForClient(
-    String clientId, BuiltMap<String?, ProjectEntity?> projectMap) {
+    String clientId, BuiltMap<String, ProjectEntity> projectMap) {
   int countActive = 0;
   int countArchived = 0;
   projectMap.forEach((projectId, project) {
@@ -266,7 +266,7 @@ EntityStats projectStatsForClient(
 }
 
 var memoizedProjectStatsForUser = memo2(
-    (String userId, BuiltMap<String?, ProjectEntity?> projectMap) =>
+    (String userId, BuiltMap<String, ProjectEntity> projectMap) =>
         projectStatsForClient(userId, projectMap));
 
 EntityStats projectStatsForUser(

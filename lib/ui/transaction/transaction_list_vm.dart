@@ -103,9 +103,9 @@ class TransactionListVM {
               EntityAction action) =>
           handleTransactionAction(context, transactions, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: state.userCompany.settings
-              .getTableColumns(EntityType.transaction) ??
-          TransactionPresenter.getDefaultTableFields(state.userCompany),
+      tableColumns:
+          state.userCompany.settings.getTableColumns(EntityType.transaction) ??
+              TransactionPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortTransactions(field)),
       onClearMultielsect: () => store.dispatch(ClearTransactionMultiselect()),
     );
@@ -114,7 +114,7 @@ class TransactionListVM {
   final AppState state;
   final UserCompanyEntity? userCompany;
   final List<String> transactionList;
-  final BuiltMap<String?, TransactionEntity?> transactionMap;
+  final BuiltMap<String, TransactionEntity> transactionMap;
   final ListUIState listState;
   final String? filter;
   final bool isLoading;

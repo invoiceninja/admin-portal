@@ -10,14 +10,14 @@ import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedDropdownClientList = memo4(
-    (BuiltMap<String?, ClientEntity?> clientMap, BuiltList<String> clientList,
-            BuiltMap<String?, UserEntity?> userMap, StaticState staticState) =>
+    (BuiltMap<String, ClientEntity> clientMap, BuiltList<String> clientList,
+            BuiltMap<String, UserEntity> userMap, StaticState staticState) =>
         dropdownClientsSelector(clientMap, clientList, userMap, staticState));
 
 List<String> dropdownClientsSelector(
-    BuiltMap<String?, ClientEntity?> clientMap,
+    BuiltMap<String, ClientEntity> clientMap,
     BuiltList<String> clientList,
-    BuiltMap<String?, UserEntity?> userMap,
+    BuiltMap<String, UserEntity> userMap,
     StaticState staticState) {
   final list =
       clientList.where((clientId) => clientMap[clientId]!.isActive).toList();
@@ -33,11 +33,11 @@ List<String> dropdownClientsSelector(
 }
 
 var memoizedClientStatsForUser = memo2(
-    (String userId, BuiltMap<String?, ClientEntity?> clientMap) =>
+    (String userId, BuiltMap<String, ClientEntity> clientMap) =>
         clientStatsForUser(userId, clientMap));
 
 EntityStats clientStatsForUser(
-    String userId, BuiltMap<String?, ClientEntity?> clientMap) {
+    String userId, BuiltMap<String, ClientEntity> clientMap) {
   int countActive = 0;
   int countArchived = 0;
   clientMap.forEach((clientId, client) {
@@ -54,22 +54,22 @@ EntityStats clientStatsForUser(
 }
 
 var memoizedFilteredClientList = memo7((SelectionState selectionState,
-        BuiltMap<String?, ClientEntity?> clientMap,
+        BuiltMap<String, ClientEntity> clientMap,
         BuiltList<String> clientList,
-        BuiltMap<String?, GroupEntity?> groupMap,
+        BuiltMap<String, GroupEntity> groupMap,
         ListUIState clientListState,
-        BuiltMap<String?, UserEntity?> userMap,
+        BuiltMap<String, UserEntity> userMap,
         StaticState staticState) =>
     filteredClientsSelector(selectionState, clientMap, clientList, groupMap,
         clientListState, userMap, staticState));
 
 List<String> filteredClientsSelector(
     SelectionState selectionState,
-    BuiltMap<String?, ClientEntity?> clientMap,
+    BuiltMap<String, ClientEntity> clientMap,
     BuiltList<String> clientList,
-    BuiltMap<String?, GroupEntity?> groupMap,
+    BuiltMap<String, GroupEntity> groupMap,
     ListUIState clientListState,
-    BuiltMap<String?, UserEntity?> userMap,
+    BuiltMap<String, UserEntity> userMap,
     StaticState staticState) {
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;

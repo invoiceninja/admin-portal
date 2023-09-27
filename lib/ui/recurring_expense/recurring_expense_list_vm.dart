@@ -122,7 +122,7 @@ class RecurringExpenseListVM {
   final AppState state;
   final UserCompanyEntity? userCompany;
   final List<String?> recurringExpenseList;
-  final BuiltMap<String?, ExpenseEntity?> recurringExpenseMap;
+  final BuiltMap<String, ExpenseEntity> recurringExpenseMap;
   final ListUIState listState;
   final String? filter;
   final bool isLoading;

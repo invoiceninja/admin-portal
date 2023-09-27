@@ -245,8 +245,8 @@ abstract class PaymentEntity extends Object
     String? sortField,
     required bool sortAscending,
     BuiltMap<String, InvoiceEntity>? invoiceMap,
-    BuiltMap<String?, ClientEntity?>? clientMap,
-    BuiltMap<String?, UserEntity?>? userMap,
+    BuiltMap<String, ClientEntity>? clientMap,
+    BuiltMap<String, UserEntity>? userMap,
     BuiltMap<String?, PaymentTypeEntity?>? paymentTypeMap,
   }) {
     int response = 0;

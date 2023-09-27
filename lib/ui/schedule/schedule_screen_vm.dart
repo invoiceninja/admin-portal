@@ -39,7 +39,7 @@ class ScheduleScreenVM {
   final UserCompanyEntity? userCompany;
   final List<String> scheduleList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final BuiltMap<String?, ScheduleEntity?> scheduleMap;
+  final BuiltMap<String, ScheduleEntity> scheduleMap;
 
   static ScheduleScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

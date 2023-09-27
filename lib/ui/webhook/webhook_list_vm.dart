@@ -115,7 +115,7 @@ class WebhookListVM {
   final AppState state;
   final UserCompanyEntity? userCompany;
   final List<String> webhookList;
-  final BuiltMap<String?, WebhookEntity?> webhookMap;
+  final BuiltMap<String, WebhookEntity> webhookMap;
   final ListUIState listState;
   final String? filter;
   final bool isLoading;

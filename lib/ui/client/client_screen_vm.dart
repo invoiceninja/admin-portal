@@ -40,7 +40,7 @@ class ClientScreenVM {
   final bool isInMultiselect;
   final UserCompanyEntity? userCompany;
   final List<String> clientList;
-  final BuiltMap<String?, ClientEntity?> clientMap;
+  final BuiltMap<String, ClientEntity> clientMap;
 
   static ClientScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

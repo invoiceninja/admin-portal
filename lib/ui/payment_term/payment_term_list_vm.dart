@@ -112,7 +112,7 @@ class PaymentTermListVM {
   final AppState state;
   final UserCompanyEntity? userCompany;
   final List<String> paymentTermList;
-  final BuiltMap<String?, PaymentTermEntity?> paymentTermMap;
+  final BuiltMap<String, PaymentTermEntity> paymentTermMap;
   final ListUIState listState;
   final String? filter;
   final bool isLoading;

@@ -109,7 +109,7 @@ class ScheduleListVM {
   final AppState state;
   final UserCompanyEntity? userCompany;
   final List<String> scheduleList;
-  final BuiltMap<String?, ScheduleEntity?> scheduleMap;
+  final BuiltMap<String, ScheduleEntity> scheduleMap;
   final ListUIState listState;
   final String? filter;
   final bool isLoading;

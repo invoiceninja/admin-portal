@@ -83,8 +83,8 @@ var memoizedCreditReport = memo6((
   UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, InvoiceEntity> creditMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) =>
     creditReport(userCompany!, reportsUIState, creditMap, clientMap, userMap,
@@ -94,8 +94,8 @@ ReportResult creditReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, InvoiceEntity> creditMap,
-  BuiltMap<String?, ClientEntity?> clientMap,
-  BuiltMap<String?, UserEntity?> userMap,
+  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) {
   final List<List<ReportElement>> data = [];
@@ -103,10 +103,9 @@ ReportResult creditReport(
   BuiltList<CreditReportFields> columns;
 
   final reportSettings = userCompany.settings.reportSettings;
-  final creditReportSettings =
-      reportSettings.containsKey(kReportCredit)
-          ? reportSettings[kReportCredit]!
-          : ReportSettingsEntity();
+  final creditReportSettings = reportSettings.containsKey(kReportCredit)
+      ? reportSettings[kReportCredit]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     CreditReportFields.number,

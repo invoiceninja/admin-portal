@@ -45,7 +45,7 @@ var memoizedDropdownTaskStatusList = memo4(
     (BuiltMap<String?, TaskStatusEntity?> taskStatusMap,
             BuiltList<String> taskStatusList,
             StaticState staticState,
-            BuiltMap<String?, UserEntity?> userMap) =>
+            BuiltMap<String, UserEntity> userMap) =>
         dropdownTaskStatusesSelector(
             taskStatusMap, taskStatusList, staticState, userMap));
 
@@ -53,7 +53,7 @@ List<String> dropdownTaskStatusesSelector(
     BuiltMap<String?, TaskStatusEntity?> taskStatusMap,
     BuiltList<String> taskStatusList,
     StaticState staticState,
-    BuiltMap<String?, UserEntity?> userMap) {
+    BuiltMap<String, UserEntity> userMap) {
   final list = taskStatusList.where((taskStatusId) {
     final taskStatus = taskStatusMap[taskStatusId]!;
     return taskStatus.isActive;
@@ -114,12 +114,12 @@ List<String> filteredTaskStatusesSelector(
 }
 
 var memoizedCalculateTaskStatusAmount = memo2((String taskStatusId,
-        BuiltMap<String?, TaskEntity?> taskMap) =>
+        BuiltMap<String, TaskEntity> taskMap) =>
     calculateTaskStatusAmount(taskStatusId: taskStatusId, taskMap: taskMap));
 
 int calculateTaskStatusAmount({
   String? taskStatusId,
-  required BuiltMap<String?, TaskEntity?> taskMap,
+  required BuiltMap<String, TaskEntity> taskMap,
 }) {
   int total = 0;
 
@@ -133,12 +133,12 @@ int calculateTaskStatusAmount({
 }
 
 var memoizedTaskStatsForTaskStatus = memo2(
-    (String companyGatewayId, BuiltMap<String?, TaskEntity?> taskMap) =>
+    (String companyGatewayId, BuiltMap<String, TaskEntity> taskMap) =>
         taskStatsForTaskStatus(companyGatewayId, taskMap));
 
 EntityStats taskStatsForTaskStatus(
   String statusId,
-  BuiltMap<String?, TaskEntity?> taskMap,
+  BuiltMap<String, TaskEntity> taskMap,
 ) {
   int countActive = 0;
   int countArchived = 0;
