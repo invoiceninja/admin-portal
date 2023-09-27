@@ -124,7 +124,7 @@ int calculateTaskStatusAmount({
   int total = 0;
 
   taskMap.forEach((taskId, task) {
-    if (task!.statusId == taskStatusId) {
+    if (task.statusId == taskStatusId) {
       total += task.calculateDuration().inSeconds;
     }
   });
@@ -143,7 +143,7 @@ EntityStats taskStatsForTaskStatus(
   int countActive = 0;
   int countArchived = 0;
   taskMap.forEach((taskId, task) {
-    if (task!.statusId == statusId) {
+    if (task.statusId == statusId) {
       if (task.isActive) {
         countActive++;
       } else if (task.isArchived) {

@@ -78,7 +78,7 @@ EntityStats clientStatsForGroup(
   int countActive = 0;
   int countArchived = 0;
   clientMap.forEach((clientId, client) {
-    if (client!.groupId == groupId) {
+    if (client.groupId == groupId) {
       if (client.isActive) {
         countActive++;
       } else if (client.isArchived) {

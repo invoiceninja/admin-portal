@@ -89,7 +89,7 @@ List<PaymentEntity?> _recentPayments({
           .round();
   paymentMap.forEach((index, payment) {
     final client =
-        clientMap![payment!.clientId] ?? ClientEntity(id: payment.clientId);
+        clientMap![payment.clientId] ?? ClientEntity(id: payment.clientId);
     if (payment.isNotActive || client.isNotActive) {
       // do noting
     } else if (payment.isActive && payment.createdAt > threeMonthsAgo) {
@@ -179,12 +179,11 @@ var memoizedRunningTasks = memo2((
 
 List<TaskEntity?> _runningTasks({
   required BuiltMap<String, TaskEntity> taskMap,
-  BuiltMap<String, ClientEntity>? clientMap,
+  required BuiltMap<String, ClientEntity> clientMap,
 }) {
-  final tasks = <TaskEntity?>[];
+  final tasks = <TaskEntity>[];
   taskMap.forEach((index, task) {
-    final client =
-        clientMap![task!.clientId] ?? ClientEntity(id: task.clientId);
+    final client = clientMap[task.clientId] ?? ClientEntity(id: task.clientId);
     if (task.isNotActive || client.isNotActive) {
       // do noting
     } else if (task.isRunning) {
@@ -192,8 +191,7 @@ List<TaskEntity?> _runningTasks({
     }
   });
 
-  tasks.sort((taskA, taskB) =>
-      (taskB!.updatedAt ?? 0).compareTo(taskA!.updatedAt ?? 0));
+  tasks.sort((taskA, taskB) => (taskB.updatedAt).compareTo(taskA.updatedAt));
 
   return tasks;
 }
@@ -221,8 +219,7 @@ List<TaskEntity> _recentTasks({
     }
   });
 
-  tasks.sort((taskA, taskB) =>
-      (taskB!.updatedAt ?? 0).compareTo(taskA!.updatedAt ?? 0));
+  tasks.sort((taskA, taskB) => (taskB.updatedAt).compareTo(taskA.updatedAt));
 
   return tasks;
 }
@@ -275,7 +272,7 @@ List<ExpenseEntity?> _recentExpenses({
   final expenses = <ExpenseEntity?>[];
   expenseMap.forEach((index, expense) {
     final client =
-        clientMap![expense!.clientId] ?? ClientEntity(id: expense.clientId);
+        clientMap![expense.clientId] ?? ClientEntity(id: expense.clientId);
     if (client.isNotActive || expense.isNotActive || expense.isInvoiced) {
       // do noting
     } else {

@@ -157,7 +157,7 @@ List<String> filteredInvoicesSelector(
   final Map<String?, List<String>> invoicePaymentMap = {};
   if (filterEntityType == EntityType.payment) {
     paymentMap.forEach((paymentId, payment) {
-      payment!.invoicePaymentables.forEach((invoicePaymentable) {
+      payment.invoicePaymentables.forEach((invoicePaymentable) {
         final List<String> paymentIds =
             invoicePaymentMap[invoicePaymentable.invoiceId] ?? [];
         paymentIds.add(payment.id);

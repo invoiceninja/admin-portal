@@ -96,7 +96,7 @@ EntityStats vendorStatsForUser(
   int countActive = 0;
   int countArchived = 0;
   vendorMap.forEach((vendorId, vendor) {
-    if (vendor!.assignedUserId == userId) {
+    if (vendor.assignedUserId == userId) {
       if (vendor.isActive) {
         countActive++;
       } else if (vendor.isArchived) {

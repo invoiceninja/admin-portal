@@ -181,7 +181,7 @@ EntityStats paymentStatsForClient(
   int countActive = 0;
   int countArchived = 0;
   paymentMap.forEach((paymentId, payment) {
-    if (payment!.clientId == clientId) {
+    if (payment.clientId == clientId) {
       if (payment.isActive) {
         countActive++;
       } else if (payment.isArchived) {

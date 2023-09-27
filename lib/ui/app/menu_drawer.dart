@@ -92,7 +92,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
             apiToken: state.userCompanyStates
                 .firstWhere((userCompanyState) =>
                     userCompanyState.company.id == company.id)
-                .token.token,
+                .token
+                .token,
           );
         } else {
           return CachedImage(
@@ -278,9 +279,9 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   .toList(),
               items: [
                 ...state.companies
-                    .map((CompanyEntity? company) => DropdownMenuItem<String>(
+                    .map((CompanyEntity company) => DropdownMenuItem<String>(
                         value: (state.companies.indexOf(company)).toString(),
-                        child: _companyListItem(company!)))
+                        child: _companyListItem(company)))
                     .toList(),
                 if (state.canAddCompany)
                   DropdownMenuItem<String>(

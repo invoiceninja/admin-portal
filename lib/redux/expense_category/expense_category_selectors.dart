@@ -93,7 +93,7 @@ double calculateExpenseCategoryAmount({
   double total = 0;
 
   expenseMap.forEach((expenseId, expense) {
-    if (expense!.categoryId == categoryId) {
+    if (expense.categoryId == categoryId) {
       total += expense.grossAmount;
     }
   });
@@ -112,7 +112,7 @@ EntityStats expenseStatsForExpenseCategory(
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {
-    if (expense!.categoryId == categoryId) {
+    if (expense.categoryId == categoryId) {
       if (expense.isActive) {
         countActive++;
       } else if (expense.isArchived) {
@@ -135,7 +135,7 @@ EntityStats transactionStatsForExpenseCategory(
   int countActive = 0;
   int countArchived = 0;
   transactionMap.forEach((transactionId, transaction) {
-    if (transaction!.categoryId == categoryId) {
+    if (transaction.categoryId == categoryId) {
       if (transaction.isActive) {
         countActive++;
       } else if (transaction.isArchived) {

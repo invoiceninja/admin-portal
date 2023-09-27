@@ -286,7 +286,7 @@ void handleProjectAction(
       String lastClientId = '';
       bool hasMultipleClients = false;
       projects.forEach((project) {
-        final clientId = (project as ProjectEntity).clientId ?? '';
+        final clientId = (project as ProjectEntity).clientId;
         if (clientId.isNotEmpty) {
           if (lastClientId.isNotEmpty && lastClientId != clientId) {
             hasMultipleClients = true;

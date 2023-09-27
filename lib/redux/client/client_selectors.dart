@@ -41,7 +41,7 @@ EntityStats clientStatsForUser(
   int countActive = 0;
   int countArchived = 0;
   clientMap.forEach((clientId, client) {
-    if (client!.assignedUserId == userId) {
+    if (client.assignedUserId == userId) {
       if (client.isActive) {
         countActive++;
       } else if (client.isDeleted!) {

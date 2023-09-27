@@ -1692,7 +1692,7 @@ void selectEntity({
 
   if (longPress == true) {
     final longPressIsSelection =
-        (state.prefState.longPressSelectionIsDefault ?? true) ||
+        (state.prefState.longPressSelectionIsDefault) ||
             state.prefState.moduleLayout == ModuleLayout.table;
     if (longPressIsSelection &&
         state.uiState.currentRoute != DashboardScreenBuilder.route) {

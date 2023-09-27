@@ -302,7 +302,7 @@ class ConvertTransactionsToExpensesRequest implements StartSaving {
   );
 
   final Completer completer;
-  final List<String?> transactionIds;
+  final List<String> transactionIds;
   final String vendorId;
   final String categoryId;
 }

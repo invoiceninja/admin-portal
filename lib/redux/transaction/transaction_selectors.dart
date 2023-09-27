@@ -161,7 +161,7 @@ EntityStats transactionStatsForBankAccount(
   int countActive = 0;
   int countArchived = 0;
   transactionMap.forEach((transactionId, transaction) {
-    if (transaction!.bankAccountId == bankAccountId) {
+    if (transaction.bankAccountId == bankAccountId) {
       if (transaction.isActive) {
         countActive++;
       } else if (transaction.isArchived) {

@@ -84,34 +84,34 @@ ReportResult documentReport(
 
       switch (column) {
         case DocumentReportFields.name:
-          value = document!.name;
+          value = document.name;
           break;
         case DocumentReportFields.file_type:
-          value = document!.type;
+          value = document.type;
           break;
         case DocumentReportFields.created_at:
-          value = convertTimestampToDateString(document!.createdAt);
+          value = convertTimestampToDateString(document.createdAt);
           break;
         case DocumentReportFields.created_by:
-          value = userMap[document!.createdUserId]?.listDisplayName ?? '';
+          value = userMap[document.createdUserId]?.listDisplayName ?? '';
           break;
         case DocumentReportFields.record_type:
-          value = document!.parentType;
+          value = document.parentType;
           break;
         case DocumentReportFields.updated_at:
-          value = convertTimestampToDateString(document!.updatedAt);
+          value = convertTimestampToDateString(document.updatedAt);
           break;
         case DocumentReportFields.size:
-          value = document!.size;
+          value = document.size;
           break;
         case DocumentReportFields.width:
-          value = document!.width;
+          value = document.width;
           break;
         case DocumentReportFields.height:
-          value = document!.height;
+          value = document.height;
           break;
         case DocumentReportFields.private:
-          value = !document!.isPublic;
+          value = !document.isPublic;
           break;
       }
 
@@ -143,7 +143,7 @@ ReportResult documentReport(
 
     if (!skip) {
       data.add(row);
-      entities.add(document!);
+      entities.add(document);
     }
   });
 

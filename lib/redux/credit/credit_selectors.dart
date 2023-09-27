@@ -109,7 +109,7 @@ List<String> filteredCreditsSelector(
   final Map<String?, List<String>> creditPaymentMap = {};
   if (filterEntityType == EntityType.payment) {
     paymentMap.forEach((paymentId, payment) {
-      payment!.creditPaymentables.forEach((creditPaymentable) {
+      payment.creditPaymentables.forEach((creditPaymentable) {
         final List<String> paymentIds =
             creditPaymentMap[creditPaymentable.creditId] ?? [];
         paymentIds.add(payment.id);

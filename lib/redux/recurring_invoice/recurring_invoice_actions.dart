@@ -636,7 +636,7 @@ void handleRecurringInvoiceAction(BuildContext? context,
       store.dispatch(StartRecurringInvoicesRequest(
         completer: snackBarCompleter<Null>(
             context,
-            (recurringInvoice.lastSentDate ?? '').isEmpty
+            (recurringInvoice.lastSentDate).isEmpty
                 ? localization!.startedRecurringInvoice
                 : localization!.resumedRecurringInvoice),
         invoiceIds: recurringInvoiceIds,

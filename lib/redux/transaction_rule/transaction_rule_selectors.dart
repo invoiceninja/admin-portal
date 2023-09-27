@@ -95,7 +95,7 @@ EntityStats transactionStatsForTransactionRule(
   String? currencyId;
 
   transactionMap.forEach((transactionId, transaction) {
-    if (transaction!.transactionRuleId == transactionRuleId) {
+    if (transaction.transactionRuleId == transactionRuleId) {
       if (transaction.isActive) {
         countActive++;
       } else if (transaction.isDeleted!) {

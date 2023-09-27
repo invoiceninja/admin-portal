@@ -55,7 +55,7 @@ List<String> getCurrencyIds(
     BuiltMap<String, GroupEntity> groupMap) {
   final currencyIds = <String>[company.currencyId];
   clientMap.forEach((clientId, client) {
-    final group = groupMap[client!.groupId];
+    final group = groupMap[client.groupId];
     if (!client.isDeleted!) {
       String? currencyId;
       if (client.hasCurrency) {

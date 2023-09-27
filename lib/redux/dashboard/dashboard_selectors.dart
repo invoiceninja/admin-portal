@@ -443,7 +443,7 @@ List<ChartDataGroup> chartPayments(
 
   paymentMap.forEach((int, payment) {
     final client =
-        clientMap[payment!.clientId] ?? ClientEntity(id: payment.clientId);
+        clientMap[payment.clientId] ?? ClientEntity(id: payment.clientId);
     var date = payment.date;
     if (date.isNotEmpty) {
       if (settings.groupBy == kReportGroupYear) {
@@ -485,8 +485,8 @@ List<ChartDataGroup> chartPayments(
       }
 
       activeData.total += completedAmount;
-      if ((payment.refunded ?? 0) > 0) {
-        refundedData.total += refunded ?? 0;
+      if ((payment.refunded) > 0) {
+        refundedData.total += refunded;
       }
 
       if (payment.isBetween(
@@ -508,7 +508,7 @@ List<ChartDataGroup> chartPayments(
         activeData.entityMap[date]!.add(payment.id);
         activeData.periodTotal += completedAmount;
 
-        if ((payment.refunded ?? 0) > 0) {
+        if ((payment.refunded) > 0) {
           counts[STATUS_REFUNDED] = counts[STATUS_REFUNDED]! + 1;
           refundedData.entityMap[date]!.add(payment.id);
           refundedData.periodTotal += refunded;
@@ -629,7 +629,7 @@ List<ChartDataGroup> chartTasks(
   final ChartDataGroup paidData = ChartDataGroup(STATUS_PAID);
 
   taskMap.forEach((int, task) {
-    final client = clientMap[task!.clientId] ?? ClientEntity(id: task.clientId);
+    final client = clientMap[task.clientId] ?? ClientEntity(id: task.clientId);
     final invoice =
         invoiceMap[task.invoiceId] ?? InvoiceEntity(id: task.clientId);
     final project =
@@ -804,7 +804,7 @@ List<ChartDataGroup> chartExpenses(
   final ChartDataGroup paidData = ChartDataGroup(STATUS_PAID);
 
   expenseMap.forEach((int, expense) {
-    final currencyId = expense!.currencyId;
+    final currencyId = expense.currencyId;
     var date = expense.date!;
     if (date.isNotEmpty) {
       if (settings.groupBy == kReportGroupYear) {
@@ -965,7 +965,7 @@ List<TaskEntity?> runningTasks(
   final tasks = <TaskEntity?>[];
 
   taskMap.forEach((taskId, task) {
-    if (task!.isRunning &&
+    if (task.isRunning &&
         !task.isDeleted! &&
         (task.createdUserId == userId || task.assignedUserId == userId)) {
       tasks.add(task);

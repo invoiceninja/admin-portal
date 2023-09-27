@@ -90,7 +90,7 @@ ReportResult lineItemReport(
 
   final productKeyMap = <String, String>{};
   for (var entry in productMap.entries) {
-    productKeyMap[entry.value!.productKey] = entry.value!.id;
+    productKeyMap[entry.value.productKey] = entry.value.id;
   }
 
   for (var entry in purchaseOrderMap.entries) {

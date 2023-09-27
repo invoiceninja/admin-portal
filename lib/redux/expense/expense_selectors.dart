@@ -283,7 +283,7 @@ EntityStats expenseStatsForVendor(
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {
-    if (expense!.vendorId == vendorId) {
+    if (expense.vendorId == vendorId) {
       if (expense.isActive) {
         countActive++;
       } else if (expense.isArchived) {
@@ -304,7 +304,7 @@ EntityStats expenseStatsForClient(
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {
-    if (expense!.clientId == clientId) {
+    if (expense.clientId == clientId) {
       if (expense.isActive) {
         countActive++;
       } else if (expense.isArchived) {
@@ -350,7 +350,7 @@ EntityStats expenseStatsForProject(
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {
-    if (expense!.projectId == projectId) {
+    if (expense.projectId == projectId) {
       if (expense.isActive) {
         countActive++;
       } else if (expense.isArchived) {
@@ -373,7 +373,7 @@ EntityStats expenseStatsForUser(
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {
-    if (expense!.assignedUserId == userId) {
+    if (expense.assignedUserId == userId) {
       if (expense.isActive) {
         countActive++;
       } else if (expense.isArchived) {

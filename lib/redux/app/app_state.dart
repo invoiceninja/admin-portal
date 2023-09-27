@@ -154,16 +154,15 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   CompanyEntity? get company => userCompanyState.company;
 
-  List<CompanyEntity?> get companies {
-    final List<CompanyEntity?> list = [];
+  List<CompanyEntity> get companies {
+    final List<CompanyEntity> list = [];
 
     for (var companyState in userCompanyStates) {
       list.add(companyState.company);
     }
 
-    final companies = list
-        .where((CompanyEntity? company) => (company!.id ?? '').isNotEmpty)
-        .toList();
+    final companies =
+        list.where((CompanyEntity company) => (company.id).isNotEmpty).toList();
 
     return companies;
   }
@@ -859,7 +858,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   }
 
   int get createdAtLimit {
-    final numberYearsActive = userCompany.settings.numberYearsActive ?? 0;
+    final numberYearsActive = userCompany.settings.numberYearsActive;
 
     if (!company!.isLarge || numberYearsActive == 0) {
       return 0;

@@ -237,7 +237,7 @@ Duration taskDurationForProject(
 ) {
   int total = 0;
   taskMap.forEach((index, task) {
-    if (!task!.isDeleted! && task.projectId == project.id) {
+    if (!task.isDeleted! && task.projectId == project.id) {
       total += task.calculateDuration().inSeconds;
     }
   });
@@ -253,7 +253,7 @@ EntityStats projectStatsForClient(
   int countActive = 0;
   int countArchived = 0;
   projectMap.forEach((projectId, project) {
-    if (project!.clientId == clientId) {
+    if (project.clientId == clientId) {
       if (project.isActive) {
         countActive++;
       } else if (project.isArchived) {

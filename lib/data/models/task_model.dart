@@ -872,7 +872,7 @@ abstract class TaskEntity extends Object
   }
 
   @override
-  String get listDisplayName => number ?? '';
+  String get listDisplayName => number;
 
   @override
   double get listDisplayAmount => calculateDuration().inSeconds.toDouble();

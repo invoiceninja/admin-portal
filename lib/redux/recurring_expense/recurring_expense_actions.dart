@@ -394,7 +394,7 @@ void handleRecurringExpenseAction(BuildContext? context,
       store.dispatch(StartRecurringExpensesRequest(
         completer: snackBarCompleter<Null>(
             context,
-            (recurringExpense!.lastSentDate ?? '').isEmpty
+            (recurringExpense!.lastSentDate).isEmpty
                 ? localization!.startedRecurringInvoice
                 : localization!.resumedRecurringInvoice),
         expenseIds: recurringExpenseIds,

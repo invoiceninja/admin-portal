@@ -200,7 +200,7 @@ EntityStats recurringExpenseStatsForClient(
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {
-    if (expense!.clientId == clientId) {
+    if (expense.clientId == clientId) {
       if (expense.isActive) {
         countActive++;
       } else if (expense.isArchived) {
@@ -221,7 +221,7 @@ EntityStats recurringExpenseStatsForVendor(
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {
-    if (expense!.vendorId == vendorId) {
+    if (expense.vendorId == vendorId) {
       if (expense.isActive) {
         countActive++;
       } else if (expense.isArchived) {
@@ -242,7 +242,7 @@ EntityStats transactionStatsForVendor(
   int countActive = 0;
   int countArchived = 0;
   transactionMap.forEach((transactionId, transaction) {
-    if (transaction!.vendorId == vendorId) {
+    if (transaction.vendorId == vendorId) {
       if (transaction.isActive) {
         countActive++;
       } else if (transaction.isArchived) {
@@ -263,7 +263,7 @@ EntityStats recurringExpenseStatsForUser(
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {
-    if (expense!.assignedUserId == userId) {
+    if (expense.assignedUserId == userId) {
       if (expense.isActive) {
         countActive++;
       } else if (expense.isDeleted!) {
@@ -284,7 +284,7 @@ EntityStats recurringExpenseStatsForExpense(
   int countActive = 0;
   int countArchived = 0;
   expenseMap.forEach((expenseId, expense) {
-    if (expense!.recurringExpenseId == recurrigExpenseId) {
+    if (expense.recurringExpenseId == recurrigExpenseId) {
       if (expense.isActive) {
         countActive++;
       } else if (expense.isDeleted!) {

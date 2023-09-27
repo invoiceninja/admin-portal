@@ -98,7 +98,7 @@ double calculateCompanyGatewayProcessed({
   double total = 0;
 
   paymentMap.forEach((paymentId, payment) {
-    if (payment!.companyGatewayId == companyGatewayId) {
+    if (payment.companyGatewayId == companyGatewayId) {
       total += payment.completedAmount * payment.exchangeRate;
     }
   });
@@ -117,7 +117,7 @@ EntityStats clientStatsForCompanyGateway(
   int countActive = 0;
   int countArchived = 0;
   clientMap.forEach((clientId, client) {
-    if (client!.gatewayTokens
+    if (client.gatewayTokens
         .where((token) => token.companyGatewayId == companyGatewayId)
         .isNotEmpty) {
       if (client.isActive) {
@@ -142,7 +142,7 @@ EntityStats paymentStatsForCompanyGateway(
   int countActive = 0;
   int countArchived = 0;
   paymentMap.forEach((paymentId, payment) {
-    if (payment!.companyGatewayId == companyGatewayId) {
+    if (payment.companyGatewayId == companyGatewayId) {
       if (payment.isActive) {
         countActive++;
       } else if (payment.isArchived) {

@@ -473,7 +473,7 @@ EntityStats taskStatsForClient(
   int countActive = 0;
   int countArchived = 0;
   taskMap.forEach((taskId, task) {
-    if (task!.clientId == clientId) {
+    if (task.clientId == clientId) {
       if (task.isActive) {
         countActive++;
       } else if (task.isArchived) {
@@ -496,7 +496,7 @@ EntityStats taskStatsForProject(
   int countActive = 0;
   int countArchived = 0;
   taskMap.forEach((taskId, task) {
-    if (task!.projectId == projectId) {
+    if (task.projectId == projectId) {
       if (task.isActive) {
         countActive++;
       } else if (task.isArchived) {

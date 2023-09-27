@@ -54,11 +54,13 @@ class TransactionViewVM {
   factory TransactionViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
     final List<TransactionEntity> transactions = [];
-    List<String?> transactionIds = [];
+    List<String> transactionIds = [];
     if (state.transactionListState.isInMultiselect()) {
       transactionIds = state.transactionListState.selectedIds!.toList();
+    } else if (state.transactionUIState.selectedId != null) {
+      transactionIds = [state.transactionUIState.selectedId!];
     } else {
-      transactionIds = [state.transactionUIState.selectedId];
+      transactionIds = [];
     }
 
     transactionIds.forEach((String transactionId) {
