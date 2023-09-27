@@ -48,9 +48,9 @@ class InvoiceEditContacts extends StatelessWidget {
                   .compareTo(contactB.fullName.toLowerCase());
             }
             */
-            return contactA!.fullName
+            return contactA.fullName
                 .toLowerCase()
-                .compareTo(contactB!.fullName.toLowerCase());
+                .compareTo(contactB.fullName.toLowerCase());
           });
       }
 
@@ -78,7 +78,7 @@ class InvoiceEditContacts extends StatelessWidget {
       } else {
         clientContacts = client.contacts.toList()
           ..sort((contactA, contactB) {
-            if (contactA!.sendEmail != contactB!.sendEmail) {
+            if (contactA.sendEmail != contactB.sendEmail) {
               return contactA.sendEmail ? 1 : -1;
             } else {
               return contactA.fullName

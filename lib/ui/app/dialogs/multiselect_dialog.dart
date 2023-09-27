@@ -73,9 +73,8 @@ class MultiSelectListState extends State<MultiSelectList> {
   @override
   void initState() {
     super.initState();
-    selected = (widget.selected ?? []).isNotEmpty
-        ? widget.selected
-        : widget.defaultSelected;
+    selected =
+        (widget.selected).isNotEmpty ? widget.selected : widget.defaultSelected;
     _controller = ScrollController();
   }
 
@@ -111,7 +110,8 @@ class MultiSelectListState extends State<MultiSelectList> {
     final state = StoreProvider.of<AppState>(context).state;
 
     final Map<String?, String?> options = {};
-    widget.options.where((option) => !selected.contains(option))
+    widget.options
+        .where((option) => !selected.contains(option))
         .forEach((option) {
       final columnTitle = state.company!.getCustomFieldLabel(
           widget.entityType != null

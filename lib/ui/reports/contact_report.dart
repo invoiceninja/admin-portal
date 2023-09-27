@@ -134,7 +134,7 @@ ReportResult contactReport(
 
         switch (column) {
           case ContactReportFields.id:
-            value = contact!.id;
+            value = contact.id;
             break;
           case ContactReportFields.name:
             value = client.displayName;
@@ -252,81 +252,81 @@ ReportResult contactReport(
             value = userMap[client.createdUserId]?.listDisplayName ?? '';
             break;
           case ContactReportFields.contact_full_name:
-            value = contact!.fullName;
+            value = contact.fullName;
             break;
           case ContactReportFields.contact_first_name:
-            value = contact!.firstName;
+            value = contact.firstName;
             break;
           case ContactReportFields.contact_last_name:
-            value = contact!.lastName;
+            value = contact.lastName;
             break;
           case ContactReportFields.contact_email:
-            value = contact!.email;
+            value = contact.email;
             break;
           case ContactReportFields.contact_phone:
-            value = contact!.phone;
+            value = contact.phone;
             break;
           case ContactReportFields.contact1:
             value = presentCustomField(
-              value: contact!.customValue1,
+              value: contact.customValue1,
               customFieldType: CustomFieldType.contact1,
               company: userCompany.company,
             );
             break;
           case ContactReportFields.contact2:
             value = presentCustomField(
-              value: contact!.customValue2,
+              value: contact.customValue2,
               customFieldType: CustomFieldType.contact2,
               company: userCompany.company,
             );
             break;
           case ContactReportFields.contact3:
             value = presentCustomField(
-              value: contact!.customValue3,
+              value: contact.customValue3,
               customFieldType: CustomFieldType.contact3,
               company: userCompany.company,
             );
             break;
           case ContactReportFields.contact4:
             value = presentCustomField(
-              value: contact!.customValue4,
+              value: contact.customValue4,
               customFieldType: CustomFieldType.contact4,
               company: userCompany.company,
             );
             break;
           case ContactReportFields.contact_last_login:
-            value = convertTimestampToDateString(contact!.lastLogin);
+            value = convertTimestampToDateString(contact.lastLogin);
             break;
           case ContactReportFields.total:
             value =
-                contact!.isPrimary ? (client.balance + client.paidToDate) : 0.0;
+                contact.isPrimary ? (client.balance + client.paidToDate) : 0.0;
             break;
           case ContactReportFields.balance:
-            value = contact!.isPrimary ? client.balance : 0.0;
+            value = contact.isPrimary ? client.balance : 0.0;
             break;
           case ContactReportFields.credit_balance:
-            value = contact!.isPrimary ? client.creditBalance : 0.0;
+            value = contact.isPrimary ? client.creditBalance : 0.0;
             break;
           case ContactReportFields.paid_to_date:
-            value = contact!.isPrimary ? client.paidToDate : 0.0;
+            value = contact.isPrimary ? client.paidToDate : 0.0;
             break;
           case ContactReportFields.converted_total:
-            value = contact!.isPrimary
+            value = contact.isPrimary
                 ? round((client.balance + client.paidToDate) * exchangeRate, 2)
                 : 0.0;
             break;
           case ContactReportFields.converted_balance:
-            value = contact!.isPrimary
+            value = contact.isPrimary
                 ? round(client.balance * exchangeRate, 2)
                 : 0.0;
             break;
           case ContactReportFields.converted_credit_balance:
-            value = contact!.isPrimary
+            value = contact.isPrimary
                 ? round(client.creditBalance * exchangeRate, 2)
                 : 0.0;
             break;
           case ContactReportFields.converted_paid_to_date:
-            value = contact!.isPrimary
+            value = contact.isPrimary
                 ? round(client.paidToDate * exchangeRate, 2)
                 : 0.0;
             break;

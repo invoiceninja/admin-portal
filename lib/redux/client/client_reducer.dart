@@ -137,8 +137,7 @@ final editingReducer = combineReducers<ClientEntity?>([
   }),
   TypedReducer<ClientEntity?, UpdateContact>((client, action) {
     return client!.rebuild((b) => b
-      ..contacts[action.index!] = action.contact
-      ..isChanged = true);
+      ..contacts[action.index] = action.contact..isChanged = true);
   }),
   TypedReducer<ClientEntity?, ViewClient>((client, action) {
     return ClientEntity();

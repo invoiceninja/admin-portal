@@ -162,7 +162,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
       ..state = (contactAddress?.region ?? '').trim()
       ..postalCode = (contactAddress?.postcode ?? '').trim()
       ..countryId = countryId ?? ''
-      ..contacts[0] = client.contacts[0]!.rebuild((b) => b
+      ..contacts[0] = client.contacts[0].rebuild((b) => b
         ..firstName = (contact.givenName ?? '').trim()
         ..lastName = (contact.familyName ?? '').trim()
         ..email = (contactEmail?.value ?? '').trim()

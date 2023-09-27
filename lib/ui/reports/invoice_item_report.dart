@@ -176,7 +176,7 @@ ReportResult lineItemReport(
             value = client.displayName;
             break;
           case InvoiceItemReportFields.clientEmail:
-            value = client.primaryContact!.email;
+            value = client.primaryContact.email;
             break;
           case InvoiceItemReportFields.dueDate:
             value = invoice.dueDate;

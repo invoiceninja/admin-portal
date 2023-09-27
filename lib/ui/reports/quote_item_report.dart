@@ -172,7 +172,7 @@ ReportResult lineItemReport(
             value = client.displayName;
             break;
           case QuoteItemReportFields.clientEmail:
-            value = client.primaryContact!.email;
+            value = client.primaryContact.email;
             break;
           case QuoteItemReportFields.validUntil:
             value = invoice.dueDate;

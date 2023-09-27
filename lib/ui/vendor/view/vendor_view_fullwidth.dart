@@ -254,7 +254,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                contact!.fullName,
+                                contact.fullName,
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               if (contact.email.isNotEmpty)

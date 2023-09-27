@@ -12,11 +12,11 @@ ClientContactEntity? creditContactSelector(
   var contactIds = credit.invitations
       .map((invitation) => invitation.clientContactId)
       .toList();
-  if (contactIds.contains(client.primaryContact!.id)) {
-    contactIds = [client.primaryContact!.id];
+  if (contactIds.contains(client.primaryContact.id)) {
+    contactIds = [client.primaryContact.id];
   }
   return client.contacts
-      .firstWhere((contact) => contactIds.contains(contact!.id), orElse: null);
+      .firstWhere((contact) => contactIds.contains(contact.id), orElse: null);
 }
 
 var memoizedDropdownCreditList = memo7(

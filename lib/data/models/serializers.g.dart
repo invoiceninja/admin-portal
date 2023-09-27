@@ -244,6 +244,25 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(BankAccountEntity)]),
           () => new ListBuilder<BankAccountEntity>())
       ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(ClientContactEntity)]),
+          () => new ListBuilder<ClientContactEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(ActivityEntity)]),
+          () => new ListBuilder<ActivityEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(LedgerEntity)]),
+          () => new ListBuilder<LedgerEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(GatewayTokenEntity)]),
+          () => new ListBuilder<GatewayTokenEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(DocumentEntity)]),
+          () => new ListBuilder<DocumentEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(SystemLogEntity)]),
+          () => new ListBuilder<SystemLogEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ClientEntity)]),
           () => new ListBuilder<ClientEntity>())
       ..addBuilderFactory(
@@ -589,44 +608,25 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(UserEntity)]),
           () => new ListBuilder<UserEntity>())
       ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(VendorContactEntity)]),
+          () => new ListBuilder<VendorContactEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(ActivityEntity)]),
+          () => new ListBuilder<ActivityEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(DocumentEntity)]),
+          () => new ListBuilder<DocumentEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(VendorEntity)]),
           () => new ListBuilder<VendorEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(WebhookEntity)]),
           () => new ListBuilder<WebhookEntity>())
       ..addBuilderFactory(
-          const FullType(
-              BuiltList, const [const FullType.nullable(ClientContactEntity)]),
-          () => new ListBuilder<ClientContactEntity?>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(ActivityEntity)]),
-          () => new ListBuilder<ActivityEntity>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(LedgerEntity)]),
-          () => new ListBuilder<LedgerEntity>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(GatewayTokenEntity)]),
-          () => new ListBuilder<GatewayTokenEntity>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(DocumentEntity)]),
-          () => new ListBuilder<DocumentEntity>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(SystemLogEntity)]),
-          () => new ListBuilder<SystemLogEntity>())
-      ..addBuilderFactory(
           const FullType(BuiltList,
               const [const FullType.nullable(TransactionRuleCriteriaEntity)]),
           () => new ListBuilder<TransactionRuleCriteriaEntity?>())
-      ..addBuilderFactory(
-          const FullType(
-              BuiltList, const [const FullType.nullable(VendorContactEntity)]),
-          () => new ListBuilder<VendorContactEntity?>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(ActivityEntity)]),
-          () => new ListBuilder<ActivityEntity>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(DocumentEntity)]),
-          () => new ListBuilder<DocumentEntity>())
       ..addBuilderFactory(
           const FullType(BuiltMap,
               const [const FullType(EntityType), const FullType(bool)]),

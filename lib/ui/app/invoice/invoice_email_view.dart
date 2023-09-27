@@ -189,11 +189,11 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             (invoice.isPurchaseOrder ? vendor!.contacts : client!.contacts)
                 .firstWhere(
                     (contact) =>
-                        contact!.id ==
+                        contact.id ==
                         (invoice.isPurchaseOrder
                             ? invitation.vendorContactId
                             : invitation.clientContactId),
-                    orElse: () => null))
+                    orElse: () => ClientContactEntity()))
         .toList();
 
     return Column(

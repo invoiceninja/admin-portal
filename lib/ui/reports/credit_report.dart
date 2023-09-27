@@ -325,13 +325,13 @@ ReportResult creditReport(
           value = client.phone;
           break;
         case CreditReportFields.contact_email:
-          value = contact?.email ?? '';
+          value = contact.email ?? '';
           break;
         case CreditReportFields.contact_name:
-          value = contact?.fullName ?? '';
+          value = contact.fullName ?? '';
           break;
         case CreditReportFields.contact_phone:
-          value = contact?.phone ?? '';
+          value = contact.phone ?? '';
           break;
         case CreditReportFields.client_website:
           value = client.website;

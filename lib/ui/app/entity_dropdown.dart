@@ -260,8 +260,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
           final options = (widget.entityList ?? widget.entityMap!.keys.toList())
               .map((entityId) => _entityMap![entityId])
               .whereType<SelectableEntity>()
-              .where((entity) =>
-                  entity.matchesFilter(textEditingValue.text) ?? false)
+              .where((entity) => entity.matchesFilter(textEditingValue.text))
               .where((element) => !widget.excludeIds.contains(element.id))
               .toList();
 
@@ -596,10 +595,10 @@ class EntityAutocompleteListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String? subtitle =
-        this.subtitle ?? entity.matchesFilterValue(filter);
+    final String? subtitle = this.subtitle ?? entity.matchesFilterValue(filter);
     final String label = overrideSuggestedLabel == null
-        ? entity.listDisplayName: overrideSuggestedLabel!(entity);
+        ? entity.listDisplayName
+        : overrideSuggestedLabel!(entity);
     final String? amount = overrideSuggestedAmount == null
         ? formatNumber(entity.listDisplayAmount, context,
             formatNumberType: entity.listDisplayAmountType)

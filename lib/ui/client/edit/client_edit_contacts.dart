@@ -47,7 +47,7 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
             contact: contact,
             isDialog: client.contacts.length > 1,
             index: client.contacts.indexOf(
-                client.contacts.firstWhere((c) => c!.id == contact.id)),
+                client.contacts.firstWhere((c) => c.id == contact.id)),
           );
         });
   }
@@ -71,7 +71,7 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
               ))
           .toList();
     } else {
-      final contact = client.contacts[0]!;
+      final contact = client.contacts[0];
       contacts = [
         ContactEditDetails(
           viewModel: viewModel,

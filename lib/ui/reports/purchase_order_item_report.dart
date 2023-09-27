@@ -169,7 +169,7 @@ ReportResult lineItemReport(
             value = client.displayName;
             break;
           case PurchaseOrderItemReportFields.clientEmail:
-            value = client.primaryContact!.email;
+            value = client.primaryContact.email;
             break;
           case PurchaseOrderItemReportFields.vendor:
             value = vendor.name;

@@ -199,7 +199,7 @@ List<String?> taskList(
   final list = taskMap.keys.where((taskId) {
     final task = taskMap[taskId];
     if ((clientId ?? '').isNotEmpty &&
-        (task!.clientId ?? '').isNotEmpty &&
+        (task!.clientId).isNotEmpty &&
         task.clientId != clientId) {
       return false;
     }

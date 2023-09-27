@@ -340,7 +340,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                contact!.fullName,
+                                contact.fullName,
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                               if (contact.email.isNotEmpty)

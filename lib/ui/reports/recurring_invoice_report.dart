@@ -338,13 +338,13 @@ ReportResult recurringInvoiceReport(
           value = client.phone;
           break;
         case RecurringInvoiceReportFields.contact_email:
-          value = contact?.email ?? '';
+          value = contact.email ?? '';
           break;
         case RecurringInvoiceReportFields.contact_name:
-          value = contact?.fullName ?? '';
+          value = contact.fullName ?? '';
           break;
         case RecurringInvoiceReportFields.contact_phone:
-          value = contact?.phone ?? '';
+          value = contact.phone ?? '';
           break;
         case RecurringInvoiceReportFields.client_website:
           value = client.website;

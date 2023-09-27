@@ -318,7 +318,7 @@ abstract class ClientEntity extends Object
 
   String get classification;
 
-  BuiltList<ClientContactEntity?> get contacts;
+  BuiltList<ClientContactEntity> get contacts;
 
   @override
   BuiltList<ActivityEntity> get activities;
@@ -368,12 +368,12 @@ abstract class ClientEntity extends Object
     return template;
   }
 
-  ClientContactEntity? get primaryContact =>
-      contacts.firstWhere((contact) => contact!.isPrimary,
+  ClientContactEntity get primaryContact =>
+      contacts.firstWhere((contact) => contact.isPrimary,
           orElse: () => ClientContactEntity());
 
   List<ClientContactEntity?> get emailContacts {
-    final list = contacts.where((contact) => contact!.sendEmail).toList();
+    final list = contacts.where((contact) => contact.sendEmail).toList();
     return list.isEmpty ? [primaryContact] : list;
   }
 
@@ -385,7 +385,7 @@ abstract class ClientEntity extends Object
       settings.languageId != null && settings.languageId!.isNotEmpty;
 
   bool get hasEmailAddress =>
-      contacts.where((contact) => contact!.email.isNotEmpty).isNotEmpty;
+      contacts.where((contact) => contact.email.isNotEmpty).isNotEmpty;
 
   int compareTo(ClientEntity? client, String sortField, bool sortAscending,
       BuiltMap<String, UserEntity> userMap, StaticState staticState) {
@@ -400,15 +400,15 @@ abstract class ClientEntity extends Object
             .compareTo(removeDiacritics(clientB!.displayName).toLowerCase());
         break;
       case ClientFields.contactName:
-        response = removeDiacritics(clientA!.primaryContact!.fullName)
+        response = removeDiacritics(clientA!.primaryContact.fullName)
             .toLowerCase()
-            .compareTo(removeDiacritics(clientB!.primaryContact!.fullName)
+            .compareTo(removeDiacritics(clientB!.primaryContact.fullName)
                 .toLowerCase());
         break;
       case ClientFields.contactEmail:
-        response = clientA!.primaryContact!.email
+        response = clientA!.primaryContact.email
             .toLowerCase()
-            .compareTo(clientB!.primaryContact!.email.toLowerCase());
+            .compareTo(clientB!.primaryContact.email.toLowerCase());
         break;
       case ClientFields.balance:
         response = clientA!.balance.compareTo(clientB!.balance);
@@ -573,7 +573,7 @@ abstract class ClientEntity extends Object
     }
 
     for (var i = 0; i < contacts.length; i++) {
-      final contact = contacts[i]!;
+      final contact = contacts[i];
       if (matchesString(haystack: contact.fullName, needle: filter)) {
         return true;
       }
@@ -589,7 +589,7 @@ abstract class ClientEntity extends Object
   @override
   bool matchesFilter(String? filter) {
     for (var i = 0; i < contacts.length; i++) {
-      if (contacts[i]!.matchesFilter(filter)) {
+      if (contacts[i].matchesFilter(filter)) {
         return true;
       }
     }
@@ -616,7 +616,7 @@ abstract class ClientEntity extends Object
   @override
   String? matchesFilterValue(String? filter) {
     for (var i = 0; i < contacts.length; i++) {
-      final value = contacts[i]!.matchesFilterValue(filter);
+      final value = contacts[i].matchesFilterValue(filter);
       if (value != null) {
         return value;
       }
@@ -719,7 +719,7 @@ abstract class ClientEntity extends Object
     if (name.isNotEmpty) {
       return name;
     } else {
-      return primaryContact!.fullNameOrEmail;
+      return primaryContact.fullNameOrEmail;
     }
   }
 
@@ -756,8 +756,9 @@ abstract class ClientEntity extends Object
 
   String? get languageId => settings.languageId;
 
-  ClientContactEntity? getContact(String? contactId) => contacts
-      .firstWhere((contact) => contact!.id == contactId, orElse: () => null);
+  ClientContactEntity getContact(String? contactId) =>
+      contacts.firstWhere((contact) => contact.id == contactId,
+          orElse: () => ClientContactEntity());
 
   bool get hasNameSet {
     if (contacts.isEmpty) {
@@ -767,7 +768,7 @@ abstract class ClientEntity extends Object
     final contact = contacts.first;
 
     return name.isNotEmpty ||
-        contact!.fullName.isNotEmpty ||
+        contact.fullName.isNotEmpty ||
         contact.email.isNotEmpty;
   }
 

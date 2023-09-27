@@ -75,16 +75,16 @@ class ClientPresenter extends EntityPresenter {
       case ClientFields.name:
         return Text(client!.displayName);
       case ClientFields.contactName:
-        return Text(client!.primaryContact!.fullName);
+        return Text(client!.primaryContact.fullName);
       case ClientFields.contactEmail:
         return CopyToClipboard(
-          value: client!.primaryContact!.email,
+          value: client!.primaryContact.email,
           showBorder: true,
           onLongPress: () =>
-              launchUrl(Uri.parse('mailto:${client.primaryContact!.email}')),
+              launchUrl(Uri.parse('mailto:${client.primaryContact.email}')),
         );
       case ClientFields.contactPhone:
-        return Text(client!.primaryContact!.phone);
+        return Text(client!.primaryContact.phone);
       case ClientFields.address1:
         return Text(client!.address1);
       case ClientFields.address2:
@@ -161,7 +161,7 @@ class ClientPresenter extends EntityPresenter {
         return LinkTextRelatedEntity(entity: group, relation: client);
       case ClientFields.contacts:
         final contacts =
-            client!.contacts.map((contact) => contact!.fullName).join('\n');
+            client!.contacts.map((contact) => contact.fullName).join('\n');
         return TableTooltip(message: contacts);
       case ClientFields.classification:
         return Text(localization!.lookup(client!.classification)!);

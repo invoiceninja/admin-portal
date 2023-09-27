@@ -56,7 +56,7 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
 
       contacts.forEach((contact) {
         final subtitleParts = <String>[];
-        if (contact!.email.isNotEmpty) {
+        if (contact.email.isNotEmpty) {
           subtitleParts.add(contact.email);
         }
         if (company!.hasCustomField(CustomFieldType.vendorContact1) &&

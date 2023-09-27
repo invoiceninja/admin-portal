@@ -141,8 +141,7 @@ VendorEntity _removeContact(VendorEntity? vendor, DeleteVendorContact action) {
 
 VendorEntity _updateContact(VendorEntity? vendor, UpdateVendorContact action) {
   return vendor!.rebuild((b) => b
-    ..contacts[action.index!] = action.contact
-    ..isChanged = true);
+    ..contacts[action.index] = action.contact..isChanged = true);
 }
 
 final vendorListReducer = combineReducers<ListUIState>([

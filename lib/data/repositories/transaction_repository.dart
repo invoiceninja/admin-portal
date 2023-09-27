@@ -93,8 +93,8 @@ class TransactionRepository {
           'transactions': transactionIds
               .map((transactionId) => {
                     'id': transactionId,
-                    if ((vendorId).isNotEmpty) 'vendor_id': vendorId,
-                    if ((categoryId).isNotEmpty)
+                    if (vendorId.isNotEmpty) 'vendor_id': vendorId,
+                    if (categoryId.isNotEmpty)
                       'ninja_category_id': categoryId,
                   })
               .toList()

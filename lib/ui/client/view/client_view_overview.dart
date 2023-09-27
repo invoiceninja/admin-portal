@@ -48,7 +48,7 @@ class ClientOverview extends StatelessWidget {
     final statics = state.staticState;
     final fields = <String?, String?>{};
     final group = client.hasGroup ? state.groupState.map[client.groupId] : null;
-    final contact = client.primaryContact!;
+    final contact = client.primaryContact;
     final user =
         client.hasUser ? state.userState.get(client.assignedUserId!) : null;
 

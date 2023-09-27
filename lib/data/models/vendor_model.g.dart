@@ -181,7 +181,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'contacts',
       serializers.serialize(object.contacts,
           specifiedType: const FullType(
-              BuiltList, const [const FullType.nullable(VendorContactEntity)])),
+              BuiltList, const [const FullType(VendorContactEntity)])),
       'activities',
       serializers.serialize(object.activities,
           specifiedType: const FullType(
@@ -346,9 +346,9 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           break;
         case 'contacts':
           result.contacts.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType.nullable(VendorContactEntity)
-              ]))! as BuiltList<Object?>);
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(VendorContactEntity)]))!
+              as BuiltList<Object?>);
           break;
         case 'activities':
           result.activities.replace(serializers.deserialize(value,
@@ -832,7 +832,7 @@ class _$VendorEntity extends VendorEntity {
   @override
   final String classification;
   @override
-  final BuiltList<VendorContactEntity?> contacts;
+  final BuiltList<VendorContactEntity> contacts;
   @override
   final BuiltList<ActivityEntity> activities;
   @override
@@ -1172,10 +1172,10 @@ class VendorEntityBuilder
   set classification(String? classification) =>
       _$this._classification = classification;
 
-  ListBuilder<VendorContactEntity?>? _contacts;
-  ListBuilder<VendorContactEntity?> get contacts =>
-      _$this._contacts ??= new ListBuilder<VendorContactEntity?>();
-  set contacts(ListBuilder<VendorContactEntity?>? contacts) =>
+  ListBuilder<VendorContactEntity>? _contacts;
+  ListBuilder<VendorContactEntity> get contacts =>
+      _$this._contacts ??= new ListBuilder<VendorContactEntity>();
+  set contacts(ListBuilder<VendorContactEntity>? contacts) =>
       _$this._contacts = contacts;
 
   ListBuilder<ActivityEntity>? _activities;

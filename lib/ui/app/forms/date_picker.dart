@@ -265,7 +265,7 @@ class _DatePickerState extends State<DatePicker> {
             }
           }
 
-          if ((date ?? '').isNotEmpty) {
+          if ((date).isNotEmpty) {
             widget.onSelected(date, true);
           }
 

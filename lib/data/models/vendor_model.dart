@@ -220,7 +220,7 @@ abstract class VendorEntity extends Object
 
   String get classification;
 
-  BuiltList<VendorContactEntity?> get contacts;
+  BuiltList<VendorContactEntity> get contacts;
 
   @override
   BuiltList<ActivityEntity> get activities;
@@ -395,7 +395,7 @@ abstract class VendorEntity extends Object
     }
 
     for (var i = 0; i < contacts.length; i++) {
-      final contact = contacts[i]!;
+      final contact = contacts[i];
       if (matchesString(haystack: contact.fullName, needle: filter)) {
         return true;
       }
@@ -411,7 +411,7 @@ abstract class VendorEntity extends Object
   @override
   bool matchesFilter(String? filter) {
     for (final contact in contacts) {
-      if (contact!.matchesFilter(filter)) {
+      if (contact.matchesFilter(filter)) {
         return true;
       }
     }
@@ -440,7 +440,7 @@ abstract class VendorEntity extends Object
   @override
   String? matchesFilterValue(String? filter) {
     for (final contact in contacts) {
-      final value = contact!.matchesFilterValue(filter);
+      final value = contact.matchesFilterValue(filter);
       if (value != null) {
         return value;
       }
@@ -487,13 +487,13 @@ abstract class VendorEntity extends Object
   }
 
   List<VendorContactEntity?> get emailContacts {
-    final list = contacts.where((contact) => contact!.sendEmail).toList();
+    final list = contacts.where((contact) => contact.sendEmail).toList();
 
     return list.isEmpty ? [primaryContact] : list;
   }
 
   VendorContactEntity? get primaryContact =>
-      contacts.firstWhere((contact) => contact!.isPrimary,
+      contacts.firstWhere((contact) => contact.isPrimary,
           orElse: () => VendorContactEntity());
 
   bool get hasCurrency => currencyId.isNotEmpty;
@@ -503,17 +503,18 @@ abstract class VendorEntity extends Object
   bool get hasUser => assignedUserId != null && assignedUserId!.isNotEmpty;
 
   bool get hasEmailAddress =>
-      contacts.where((contact) => contact!.email.isNotEmpty).isNotEmpty;
+      contacts.where((contact) => contact.email.isNotEmpty).isNotEmpty;
 
   bool get hasNameSet {
     final contact = contacts.first;
     return name.isNotEmpty ||
-        contact!.fullName.isNotEmpty ||
+        contact.fullName.isNotEmpty ||
         contact.email.isNotEmpty;
   }
 
-  VendorContactEntity? getContact(String? contactId) => contacts
-      .firstWhere((contact) => contact!.id == contactId, orElse: () => null);
+  VendorContactEntity getContact(String? contactId) =>
+      contacts.firstWhere((contact) => contact.id == contactId,
+          orElse: () => VendorContactEntity());
 
   static void _initializeBuilder(VendorEntityBuilder builder) => builder
     ..activities.replace(BuiltList<ActivityEntity>())

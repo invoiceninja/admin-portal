@@ -225,10 +225,13 @@ class AddVendorContact implements PersistUI {
 }
 
 class UpdateVendorContact implements PersistUI {
-  UpdateVendorContact({this.index, this.contact});
+  UpdateVendorContact({
+    required this.index,
+    required this.contact,
+  });
 
-  final int? index;
-  final VendorContactEntity? contact;
+  final int index;
+  final VendorContactEntity contact;
 }
 
 class DeleteVendorContact implements PersistUI {
@@ -297,11 +300,9 @@ void handleVendorAction(
       break;
     case EntityAction.vendorPortal:
       final contact = vendor!.contacts.firstWhere((contact) {
-        return (contact!.link ?? '').isNotEmpty;
+        return (contact.link).isNotEmpty;
       }, orElse: null);
-      if (contact != null) {
-        launchUrl(Uri.parse(contact.silentLink));
-      }
+      launchUrl(Uri.parse(contact.silentLink));
       break;
     case EntityAction.newPurchaseOrder:
       createEntity(

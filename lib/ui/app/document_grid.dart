@@ -329,9 +329,9 @@ class DocumentTile extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Tooltip(
-                            message: document.name ?? '',
+                            message: document.name,
                             child: Text(
-                              document.name ?? '',
+                              document.name,
                               style: Theme.of(context).textTheme.titleLarge,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,

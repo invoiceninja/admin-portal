@@ -111,7 +111,7 @@ class VendorPresenter extends EntityPresenter {
         return Text('${vendor!.documents.length}');
       case VendorFields.contacts:
         return Text(
-          vendor!.contacts.map((contact) => contact!.fullName).join('\n'),
+          vendor!.contacts.map((contact) => contact.fullName).join('\n'),
           maxLines: 3,
           overflow: TextOverflow.ellipsis,
         );

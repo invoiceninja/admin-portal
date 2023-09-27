@@ -153,10 +153,13 @@ class AddContact implements PersistUI {
 }
 
 class UpdateContact implements PersistUI {
-  UpdateContact({this.index, this.contact});
+  UpdateContact({
+    required this.index,
+    required this.contact,
+  });
 
-  final int? index;
-  final ClientContactEntity? contact;
+  final int index;
+  final ClientContactEntity contact;
 }
 
 class DeleteContact implements PersistUI {
@@ -363,7 +366,7 @@ void handleClientAction(BuildContext? context, List<BaseEntity?> clients,
       store.dispatch(ShowPdfClient(client: client, context: context));
       break;
     case EntityAction.clientPortal:
-      final contact = client!.primaryContact!;
+      final contact = client!.primaryContact;
       var link = contact.silentLink;
       if (link.isNotEmpty) {
         if (!link.contains('?')) {

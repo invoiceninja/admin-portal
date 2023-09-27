@@ -222,7 +222,7 @@ ReportResult paymentReport(
           value = client.number;
           break;
         case PaymentReportFields.client_email:
-          value = client.primaryContact!.email;
+          value = client.primaryContact.email;
           break;
         case PaymentReportFields.transaction_reference:
           value = payment.transactionReference;

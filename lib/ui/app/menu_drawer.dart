@@ -206,7 +206,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
       itemBuilder: (BuildContext context) => [
         ...widget.viewModel.state.companies
             .map((company) => PopupMenuItem<String>(
-                  child: _companyListItem(company!),
+                  child: _companyListItem(company),
                   value: company.id,
                 ))
             .toList(),
@@ -259,7 +259,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
           widget.viewModel.onAddCompany(context);
         } else {
           final company = state.companies
-              .firstWhere((company) => company!.id == companyId)!;
+              .firstWhere((company) => company.id == companyId);
           final index = state.companies.indexOf(company);
           widget.viewModel.onCompanyChanged(context, index, company);
         }
@@ -275,7 +275,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
               value: widget.viewModel.selectedCompanyIndex,
               selectedItemBuilder: (context) => state.companies
                   .map((company) =>
-                      _companyListItem(company!, showAccentColor: false))
+                      _companyListItem(company, showAccentColor: false))
                   .toList(),
               items: [
                 ...state.companies
@@ -333,7 +333,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 } else {
                   final index = int.parse(value);
                   widget.viewModel.onCompanyChanged(
-                      context, index, state.companies[index]!);
+                      context, index, state.companies[index]);
                 }
               },
             ),

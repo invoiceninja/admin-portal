@@ -20,7 +20,7 @@ VendorContactEntity? purchaseOrderContactSelector(
     contactIds = [vendor.primaryContact!.id];
   }
   return vendor.contacts
-      .firstWhere((contact) => contactIds.contains(contact!.id), orElse: null);
+      .firstWhere((contact) => contactIds.contains(contact.id), orElse: null);
 }
 
 var memoizedDropdownPurchaseOrderList = memo7(

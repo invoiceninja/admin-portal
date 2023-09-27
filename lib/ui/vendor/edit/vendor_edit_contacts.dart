@@ -46,7 +46,7 @@ class _VendorEditContactsState extends State<VendorEditContacts> {
             contact: contact,
             isDialog: vendor.contacts.length > 1,
             index: vendor.contacts.indexOf(
-                vendor.contacts.firstWhere((c) => c!.id == contact.id)),
+                vendor.contacts.firstWhere((c) => c.id == contact.id)),
           );
         });
   }
@@ -70,7 +70,7 @@ class _VendorEditContactsState extends State<VendorEditContacts> {
               ))
           .toList();
     } else {
-      final contact = vendor.contacts[0]!;
+      final contact = vendor.contacts[0];
       contacts = [
         VendorContactEditDetails(
           viewModel: viewModel,

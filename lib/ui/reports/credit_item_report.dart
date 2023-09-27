@@ -176,7 +176,7 @@ ReportResult lineItemReport(
             value = client.displayName;
             break;
           case CreditItemReportFields.clientEmail:
-            value = client.primaryContact!.email;
+            value = client.primaryContact.email;
             break;
           case CreditItemReportFields.dueDate:
             value = credit.dueDate;

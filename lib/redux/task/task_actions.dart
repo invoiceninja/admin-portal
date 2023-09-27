@@ -392,7 +392,7 @@ void handleTaskAction(
       String lastClientId = '';
       bool hasMultipleClients = false;
       tasks.forEach((task) {
-        final clientId = (task as TaskEntity).clientId ?? '';
+        final clientId = (task as TaskEntity).clientId;
         if (clientId.isNotEmpty) {
           if (lastClientId.isNotEmpty && lastClientId != clientId) {
             hasMultipleClients = true;
@@ -409,8 +409,8 @@ void handleTaskAction(
         final taskAEntity = taskA as TaskEntity;
         final taskBEntity = taskB as TaskEntity;
 
-        final taskAProjectId = taskAEntity.projectId ?? '';
-        final taskBProjectId = taskBEntity.projectId ?? '';
+        final taskAProjectId = taskAEntity.projectId;
+        final taskBProjectId = taskBEntity.projectId;
 
         if (taskAProjectId != taskBProjectId) {
           return taskAProjectId.compareTo(taskBProjectId);

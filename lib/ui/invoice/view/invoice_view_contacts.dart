@@ -51,8 +51,8 @@ class _InvitationListTile extends StatelessWidget {
 
     if (viewModel.invoice!.isPurchaseOrder) {
       final contact = vendor!.contacts.firstWhere(
-          (contact) => contact!.id == invitation.vendorContactId,
-          orElse: () => VendorContactEntity())!;
+          (contact) => contact.id == invitation.vendorContactId,
+          orElse: () => VendorContactEntity());
       if (contact.isNew) {
         return SizedBox();
       }
@@ -62,8 +62,8 @@ class _InvitationListTile extends StatelessWidget {
       }
     } else {
       final contact = client!.contacts.firstWhere(
-          (contact) => contact!.id == invitation.clientContactId,
-          orElse: () => ClientContactEntity())!;
+          (contact) => contact.id == invitation.clientContactId,
+          orElse: () => ClientContactEntity());
       if (contact.isNew) {
         return SizedBox();
       }
