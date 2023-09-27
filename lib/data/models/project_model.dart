@@ -264,10 +264,8 @@ abstract class ProjectEntity extends Object
         response = projectA!.totalHours.compareTo(projectB!.totalHours);
         break;
       case EntityFields.state:
-        final stateA =
-            EntityState.valueOf(projectA!.entityState) ?? EntityState.active;
-        final stateB =
-            EntityState.valueOf(projectB!.entityState) ?? EntityState.active;
+        final stateA = EntityState.valueOf(projectA!.entityState);
+        final stateB = EntityState.valueOf(projectB!.entityState);
         response =
             stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
         break;

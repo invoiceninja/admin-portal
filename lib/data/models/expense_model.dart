@@ -434,10 +434,8 @@ abstract class ExpenseEntity extends Object
             .compareTo(removeDiacritics(vendorB.listDisplayName).toLowerCase());
         break;
       case EntityFields.state:
-        final stateA =
-            EntityState.valueOf(expenseA!.entityState) ?? EntityState.active;
-        final stateB =
-            EntityState.valueOf(expenseB!.entityState) ?? EntityState.active;
+        final stateA = EntityState.valueOf(expenseA!.entityState);
+        final stateB = EntityState.valueOf(expenseB!.entityState);
         response =
             stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
         break;
@@ -653,7 +651,7 @@ abstract class ExpenseEntity extends Object
   }
 
   @override
-  String get listDisplayName => number ?? '';
+  String get listDisplayName => number;
 
   @BuiltValueField(compare: false)
   int? get loadedAt;
@@ -835,8 +833,7 @@ abstract class ExpenseEntity extends Object
 
   bool get isPending {
     if (isRecurring) {
-      return statusId == kRecurringExpenseStatusActive &&
-          (lastSentDate ?? '').isEmpty;
+      return statusId == kRecurringExpenseStatusActive && lastSentDate.isEmpty;
     } else {
       return !isInvoiced && shouldBeInvoiced;
     }

@@ -599,9 +599,9 @@ abstract class InvoiceEntity extends Object
     return false;
   }
 
-  bool get hasClient => '${clientId ?? ''}'.isNotEmpty;
+  bool get hasClient => clientId.isNotEmpty;
 
-  bool get hasVendor => '${vendorId ?? ''}'.isNotEmpty;
+  bool get hasVendor => vendorId.isNotEmpty;
 
   bool get hasInvoice => '${invoiceId ?? ''}'.isNotEmpty;
 
@@ -629,7 +629,7 @@ abstract class InvoiceEntity extends Object
   List<InvoiceHistoryEntity?> get history => activities
       .where((activity) =>
           activity.history != null &&
-          (activity.history!.id ?? '').isNotEmpty &&
+          activity.history!.id.isNotEmpty &&
           activity.history!.createdAt > 0)
       .map((activity) => activity.history)
       .toList();
@@ -671,9 +671,7 @@ abstract class InvoiceEntity extends Object
     if (isPastDue) {
       final now = DateTime.now();
       final dueDate = DateTime.tryParse(
-          partialDueDate.isEmpty
-              ? this.dueDate
-              : partialDueDate);
+          partialDueDate.isEmpty ? this.dueDate : partialDueDate);
 
       if (dueDate != null) {
         ageInDays = now.difference(dueDate).inDays;
@@ -705,9 +703,9 @@ abstract class InvoiceEntity extends Object
     switch (sortField) {
       case InvoiceFields.number:
         var invoiceANumber =
-            (invoiceA.number ?? '').isEmpty ? 'ZZZZZZZZZZ' : invoiceA.number;
+            invoiceA.number.isEmpty ? 'ZZZZZZZZZZ' : invoiceA.number;
         var invoiceBNumber =
-            (invoiceB.number ?? '').isEmpty ? 'ZZZZZZZZZZ' : invoiceB.number;
+            invoiceB.number.isEmpty ? 'ZZZZZZZZZZ' : invoiceB.number;
         invoiceANumber = (recurringPrefix ?? '').isNotEmpty &&
                 invoiceANumber.startsWith(recurringPrefix!)
             ? invoiceANumber.replaceFirst(recurringPrefix, '')
@@ -768,10 +766,8 @@ abstract class InvoiceEntity extends Object
             invoiceA.calculatedStatusId.compareTo(invoiceB.calculatedStatusId);
         break;
       case EntityFields.state:
-        final stateA =
-            EntityState.valueOf(invoiceA.entityState) ?? EntityState.active;
-        final stateB =
-            EntityState.valueOf(invoiceB.entityState) ?? EntityState.active;
+        final stateA = EntityState.valueOf(invoiceA.entityState);
+        final stateB = EntityState.valueOf(invoiceB.entityState);
         response =
             stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
         break;
@@ -1087,7 +1083,7 @@ abstract class InvoiceEntity extends Object
             actions.add(EntityAction.viewInvoice);
           }
 
-          if ((projectId ?? '').isEmpty) {
+          if (projectId.isEmpty) {
             actions.add(EntityAction.convertToProject);
           }
         } else if (isPurchaseOrder) {
@@ -1209,7 +1205,7 @@ abstract class InvoiceEntity extends Object
 
   @override
   String get listDisplayName {
-    return number ?? id;
+    return number;
   }
 
   @override
@@ -1303,7 +1299,7 @@ abstract class InvoiceEntity extends Object
   bool get isPending =>
       isRecurring &&
       statusId == kRecurringInvoiceStatusActive &&
-      (lastSentDate ?? '').isEmpty;
+      lastSentDate.isEmpty;
 
   String? get calculateRemainingCycles =>
       remainingCycles == -1 ? 'endless' : remainingCycles as String?;

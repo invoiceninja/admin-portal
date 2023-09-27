@@ -346,10 +346,8 @@ abstract class PaymentEntity extends Object
             .compareTo(userB.listDisplayName.toLowerCase());
         break;
       case EntityFields.state:
-        final stateA =
-            EntityState.valueOf(paymentA!.entityState) ?? EntityState.active;
-        final stateB =
-            EntityState.valueOf(paymentB!.entityState) ?? EntityState.active;
+        final stateA = EntityState.valueOf(paymentA!.entityState);
+        final stateB = EntityState.valueOf(paymentB!.entityState);
         response =
             stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
         break;
@@ -465,7 +463,7 @@ abstract class PaymentEntity extends Object
   }
 
   @override
-  String get listDisplayName => number ?? '';
+  String get listDisplayName => number;
 
   @override
   double get listDisplayAmount => amount;
@@ -491,7 +489,7 @@ abstract class PaymentEntity extends Object
     return startDate.compareTo(date) <= 0 && endDate!.compareTo(date) >= 0;
   }
 
-  bool get isOnline => (companyGatewayId ?? '').isNotEmpty;
+  bool get isOnline => (companyGatewayId).isNotEmpty;
 
   bool get isCompletedOrPartiallyRefunded => [
         kPaymentStatusCompleted,
@@ -513,7 +511,7 @@ abstract class PaymentEntity extends Object
       return 0;
     }
 
-    return amount - (refunded ?? 0);
+    return amount - (refunded);
   }
 
   // ignore: unused_element

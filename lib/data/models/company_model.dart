@@ -551,23 +551,23 @@ abstract class CompanyEntity extends Object
 
   bool hasCustomField(String field) => getCustomFieldLabel(field).isNotEmpty;
 
-  bool get enableFirstInvoiceTaxRate => (numberOfInvoiceTaxRates ?? 0) >= 1;
+  bool get enableFirstInvoiceTaxRate => numberOfInvoiceTaxRates >= 1;
 
-  bool get enableSecondInvoiceTaxRate => (numberOfInvoiceTaxRates ?? 0) >= 2;
+  bool get enableSecondInvoiceTaxRate => (numberOfInvoiceTaxRates) >= 2;
 
-  bool get enableThirdInvoiceTaxRate => (numberOfInvoiceTaxRates ?? 0) >= 3;
+  bool get enableThirdInvoiceTaxRate => (numberOfInvoiceTaxRates) >= 3;
 
-  bool get enableFirstItemTaxRate => (numberOfItemTaxRates ?? 0) >= 1;
+  bool get enableFirstItemTaxRate => (numberOfItemTaxRates) >= 1;
 
-  bool get enableSecondItemTaxRate => (numberOfItemTaxRates ?? 0) >= 2;
+  bool get enableSecondItemTaxRate => (numberOfItemTaxRates) >= 2;
 
-  bool get enableThirdItemTaxRate => (numberOfItemTaxRates ?? 0) >= 3;
+  bool get enableThirdItemTaxRate => (numberOfItemTaxRates) >= 3;
 
-  bool get enableFirstExpenseTaxRate => (numberOfExpenseTaxRates ?? 0) >= 1;
+  bool get enableFirstExpenseTaxRate => (numberOfExpenseTaxRates) >= 1;
 
-  bool get enableSecondExpenseTaxRate => (numberOfExpenseTaxRates ?? 0) >= 2;
+  bool get enableSecondExpenseTaxRate => (numberOfExpenseTaxRates) >= 2;
 
-  bool get enableThirdExpenseTaxRate => (numberOfExpenseTaxRates ?? 0) >= 3;
+  bool get enableThirdExpenseTaxRate => (numberOfExpenseTaxRates) >= 3;
 
   bool get hasInvoiceTaxes => numberOfInvoiceTaxRates > 0;
 
@@ -1091,7 +1091,7 @@ abstract class UserCompanyEntity
       return true;
     }
 
-    if (isAdmin ?? false) {
+    if (isAdmin) {
       return true;
     }
 
