@@ -113,32 +113,33 @@ class _CompanyGatewayOverview extends StatelessWidget {
     final webhookUrl =
         '${state.account!.defaultUrl}/payment_webhook/${state.company!.companyKey}/${companyGateway.id}';
 
-    final Map<String, Map<String, String?>> allFields =
-        <String, Map<String, String>>{};
+    final allFields = <String, Map<String, String>>{};
     for (var gatewayTypeId in kGatewayTypes.keys) {
-      final Map<String, String?> fields = {};
+      final Map<String, String> fields = {};
       if (companyGateway.feesAndLimitsMap.containsKey(gatewayTypeId)) {
         final settings =
             companyGateway.getSettingsForGatewayTypeId(gatewayTypeId);
         if (settings.feeAmount != 0) {
           fields[localization.feeAmount] =
-              formatNumber(settings.feeAmount, context);
+              formatNumber(settings.feeAmount, context) ?? '';
         }
         if (settings.feePercent != 0) {
           fields[localization.feePercent] = formatNumber(
-              settings.feePercent, context,
-              formatNumberType: FormatNumberType.percent);
+                  settings.feePercent, context,
+                  formatNumberType: FormatNumberType.percent) ??
+              '';
         }
         if (settings.feeCap != 0) {
-          fields[localization.feeCap] = formatNumber(settings.feeCap, context);
+          fields[localization.feeCap] =
+              formatNumber(settings.feeCap, context) ?? '';
         }
         if (settings.minLimit != -1) {
           fields[localization.minLimit] =
-              formatNumber(settings.minLimit, context);
+              formatNumber(settings.minLimit, context) ?? '';
         }
         if (settings.maxLimit != -1) {
           fields[localization.maxLimit] =
-              formatNumber(settings.maxLimit, context);
+              formatNumber(settings.maxLimit, context) ?? '';
         }
         if (fields.isNotEmpty) {
           allFields[gatewayTypeId] = fields;
