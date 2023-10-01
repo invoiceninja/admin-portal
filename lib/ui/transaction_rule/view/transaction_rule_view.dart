@@ -76,18 +76,18 @@ class _TransactionRuleViewState extends State<TransactionRuleView> {
                 children: [
                   Expanded(
                       child: Text(
-                    localization.field!,
+                    localization.field,
                     style: textStyle,
                   )),
                   Expanded(
                     child: Text(
-                      localization.operator!,
+                      localization.operator,
                       style: textStyle,
                     ),
                   ),
                   Expanded(
                     child: Text(
-                      localization.value!,
+                      localization.value,
                       style: textStyle,
                     ),
                   ),

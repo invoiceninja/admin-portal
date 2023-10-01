@@ -400,7 +400,7 @@ void handleProductAction(
           context: context,
           builder: (context) {
             return SimpleDialog(
-              title: Text(localization!.setTaxCategory!),
+              title: Text(localization!.setTaxCategory),
               children: kTaxCategories.keys.map((taxCategoryId) {
                 final taxCategory = kTaxCategories[taxCategoryId];
                 return SimpleDialogOption(

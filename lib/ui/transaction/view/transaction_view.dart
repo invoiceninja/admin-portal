@@ -1177,8 +1177,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                                 updateCategoryList();
                               });
                             },
-                            placeholder: localization.searchCategories!
-                                .replaceFirst(':count ', '')),
+                            placeholder: localization.searchCategories.replaceFirst(':count ', '')),
                       ),
                     ),
                     IconButton(

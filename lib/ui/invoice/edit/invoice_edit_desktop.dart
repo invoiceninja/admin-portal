@@ -418,7 +418,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   value: 'terms',
                                 ),
                                 DropdownMenuItem(
-                                  child: Text(localization.dueOnReceipt!),
+                                  child: Text(localization.dueOnReceipt),
                                   value: 'on_receipt',
                                 ),
                                 ...List<int>.generate(31, (i) => i + 1)
@@ -719,7 +719,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                         dense: true,
                                         value: invoice.saveDefaultTerms,
                                         title: Text(
-                                            localization.saveAsDefaultTerms!),
+                                            localization.saveAsDefaultTerms),
                                         controlAffinity:
                                             ListTileControlAffinity.leading,
                                         activeColor: Theme.of(context)
@@ -754,7 +754,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                         dense: true,
                                         value: invoice.saveDefaultFooter,
                                         title: Text(
-                                            localization.saveAsDefaultFooter!),
+                                            localization.saveAsDefaultFooter),
                                         controlAffinity:
                                             ListTileControlAffinity.leading,
                                         activeColor: Theme.of(context)
@@ -1127,7 +1127,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               padding:
                                   const EdgeInsets.only(left: 10, right: 16),
                               child: AppButton(
-                                label: localization.taxDetails!.toUpperCase(),
+                                label: localization.taxDetails.toUpperCase(),
                                 onPressed: invoice.hasClient
                                     ? () {
                                         showDialog<void>(

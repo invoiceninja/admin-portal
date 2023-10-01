@@ -218,7 +218,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               isScrollable: true,
               tabs: tabs
                   .map((tab) => Tab(
-                        child: Text(tab!),
+                        child: Text(tab),
                       ))
                   .toList(),
             ),
@@ -264,7 +264,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 child: Padding(
                               padding: const EdgeInsets.only(top: 18),
                               child: SwitchListTile(
-                                title: Text(localization.showPreview!),
+                                title: Text(localization.showPreview),
                                 value: state.settingsUIState.showPdfPreview,
                                 onChanged: (value) {
                                   final store =
@@ -304,7 +304,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 child: CheckboxListTile(
                                   activeColor:
                                       Theme.of(context).colorScheme.secondary,
-                                  title: Text(localization.updateAllRecords!),
+                                  title: Text(localization.updateAllRecords),
                                   value: _updateAllInvoiceDesigns,
                                   onChanged: (value) => setState(
                                     () => _updateAllInvoiceDesigns = value,
@@ -332,7 +332,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 child: CheckboxListTile(
                                   activeColor:
                                       Theme.of(context).colorScheme.secondary,
-                                  title: Text(localization.updateAllRecords!),
+                                  title: Text(localization.updateAllRecords),
                                   value: _updateAllQuoteDesigns,
                                   onChanged: (value) => setState(
                                     () => _updateAllQuoteDesigns = value,
@@ -361,7 +361,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 child: CheckboxListTile(
                                   activeColor:
                                       Theme.of(context).colorScheme.secondary,
-                                  title: Text(localization.updateAllRecords!),
+                                  title: Text(localization.updateAllRecords),
                                   value: _updateAllCreditDesigns,
                                   onChanged: (value) => setState(
                                     () => _updateAllCreditDesigns = value,
@@ -393,7 +393,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 child: CheckboxListTile(
                                   activeColor:
                                       Theme.of(context).colorScheme.secondary,
-                                  title: Text(localization.updateAllRecords!),
+                                  title: Text(localization.updateAllRecords),
                                   value: _updateAllPurchaseOrderDesigns,
                                   onChanged: (value) => setState(
                                     () =>
@@ -405,7 +405,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         ] else ...[
                           OutlinedButton(
                             child: Text(
-                                localization.setDefaultDesign!.toUpperCase()),
+                                localization.setDefaultDesign.toUpperCase()),
                             onPressed: () {
                               store.dispatch(ViewSettings(
                                 company: state.company,
@@ -495,7 +495,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                     value: localization.percent,
                                   ),
                                   DropdownMenuItem<String>(
-                                    child: Text(localization.pixels!),
+                                    child: Text(localization.pixels),
                                     value: localization.pixels,
                                   ),
                                 ],
@@ -597,15 +597,15 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                   (b) => b..pageNumberingAlignment = value)),
                           items: [
                             DropdownMenuItem<String>(
-                              child: Text(localization.left!),
+                              child: Text(localization.left),
                               value: SettingsEntity.PAGE_NUMBER_ALIGN_LEFT,
                             ),
                             DropdownMenuItem<String>(
-                              child: Text(localization.center!),
+                              child: Text(localization.center),
                               value: SettingsEntity.PAGE_NUMBER_ALIGN_CENTER,
                             ),
                             DropdownMenuItem<String>(
-                                child: Text(localization.right!),
+                                child: Text(localization.right),
                                 value: SettingsEntity.PAGE_NUMBER_ALIGN_RIGHT),
                           ],
                           /*
@@ -1076,7 +1076,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                     FormCard(
                       isLast: true,
                       child: SwitchListTile(
-                        title: Text(localization.shareInvoiceQuoteColumns!),
+                        title: Text(localization.shareInvoiceQuoteColumns),
                         value: settings.shareInvoiceQuoteColumns ?? true,
                         activeColor: Theme.of(context).colorScheme.secondary,
                         onChanged: (value) {

@@ -550,19 +550,19 @@ class _FileImportState extends State<_FileImport> {
         Padding(
           padding: const EdgeInsets.only(bottom: 8),
           child: Text(
-            localization.jsonHelp!,
+            localization.jsonHelp,
             style: TextStyle(color: Colors.grey),
           ),
         ),
         SwitchListTile(
           activeColor: Theme.of(context).colorScheme.secondary,
-          title: Text(localization.importSettings!),
+          title: Text(localization.importSettings),
           value: _importJsonSettings,
           onChanged: (value) => setState(() => _importJsonSettings = value),
         ),
         SwitchListTile(
           activeColor: Theme.of(context).colorScheme.secondary,
-          title: Text(localization.importData!),
+          title: Text(localization.importData),
           value: _importJsonData,
           onChanged: (value) => setState(() => _importJsonData = value),
         ),

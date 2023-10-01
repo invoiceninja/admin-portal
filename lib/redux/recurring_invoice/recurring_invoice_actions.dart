@@ -547,7 +547,7 @@ void handleRecurringInvoiceAction(BuildContext? context,
           builder: (context) {
             double? _amount = 0.0;
             return AlertDialog(
-              title: Text(localization!.increasePrices!),
+              title: Text(localization!.increasePrices),
               content: DecoratedFormField(
                 autofocus: true,
                 label: localization.percent,

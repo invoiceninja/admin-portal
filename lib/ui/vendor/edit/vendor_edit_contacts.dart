@@ -105,8 +105,7 @@ class _VendorEditContactsState extends State<VendorEditContacts> {
         child: AppButton(
           label: (vendor.contacts.length == 1
                   ? localization!.addSecondContact
-                  : localization!.addContact)!
-              .toUpperCase(),
+                  : localization!.addContact).toUpperCase(),
           onPressed: () => viewModel.onAddContactPressed(),
         ),
       ));
@@ -334,7 +333,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
             padding: const EdgeInsets.only(top: 20),
             child: SwitchListTile(
               activeColor: Theme.of(context).colorScheme.secondary,
-              title: Text(localization.addToInvoices!),
+              title: Text(localization.addToInvoices),
               value: _contact!.sendEmail,
               onChanged: (value) {
                 setState(() =>

@@ -100,17 +100,17 @@ class _ProductSettingsState extends State<ProductSettings> {
             children: [
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.trackInventory!),
+                title: Text(localization.trackInventory),
                 value: company.trackInventory,
-                subtitle: Text(localization.trackInventoryHelp!),
+                subtitle: Text(localization.trackInventoryHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..trackInventory = value)),
               ),
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.stockNotifications!),
+                title: Text(localization.stockNotifications),
                 value: company.stockNotification,
-                subtitle: Text(localization.stockNotificationsHelp!),
+                subtitle: Text(localization.stockNotificationsHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..stockNotification = value)),
               ),
@@ -163,9 +163,9 @@ class _ProductSettingsState extends State<ProductSettings> {
             children: <Widget>[
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.showProductDescription!),
+                title: Text(localization.showProductDescription),
                 value: company.showProductDetails,
-                subtitle: Text(localization.showProductDescriptionHelp!),
+                subtitle: Text(localization.showProductDescriptionHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..showProductDetails = value)),
               ),

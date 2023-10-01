@@ -93,7 +93,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                 activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.convertCurrency),
                 value: company.convertExpenseCurrency,
-                subtitle: Text(localization.convertExpenseCurrencyHelp!),
+                subtitle: Text(localization.convertExpenseCurrencyHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..convertExpenseCurrency = value)),
               ),
@@ -110,9 +110,9 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
           FormCard(children: <Widget>[
             SwitchListTile(
               activeColor: Theme.of(context).colorScheme.secondary,
-              title: Text(localization.notifyVendorWhenPaid!),
+              title: Text(localization.notifyVendorWhenPaid),
               value: company.notifyVendorWhenPaid,
-              subtitle: Text(localization.notifyVendorWhenPaidHelp!),
+              subtitle: Text(localization.notifyVendorWhenPaidHelp),
               onChanged: (value) => viewModel.onCompanyChanged(
                   company.rebuild((b) => b..notifyVendorWhenPaid = value)),
             ),

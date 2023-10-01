@@ -553,8 +553,7 @@ Future handleQuoteAction(BuildContext context, List<BaseEntity?> quotes,
       break;
     case EntityAction.approve:
       final message = quoteIds.length > 1
-          ? localization!.approvedQuotes!
-              .replaceFirst(':value', ':count')
+          ? localization!.approvedQuotes.replaceFirst(':value', ':count')
               .replaceFirst(':count', quoteIds.length.toString())
           : localization!.approveQuote;
       store.dispatch(

@@ -125,8 +125,8 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                     ),
                     SizedBox(height: 16),
                     SwitchListTile(
-                      title: Text(localization.matchAllRules!),
-                      subtitle: Text(localization.matchAllRulesHelp!),
+                      title: Text(localization.matchAllRules),
+                      subtitle: Text(localization.matchAllRulesHelp),
                       activeColor: Theme.of(context).colorScheme.secondary,
                       value: transactionRule.matchesOnAll,
                       onChanged: (value) {
@@ -136,7 +136,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                     ),
                     SwitchListTile(
                       title: Text(localization.autoConvert),
-                      subtitle: Text(localization.autoConvertHelp!),
+                      subtitle: Text(localization.autoConvertHelp),
                       activeColor: Theme.of(context).colorScheme.secondary,
                       value: transactionRule.autoConvert,
                       onChanged: (value) {
@@ -154,18 +154,18 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                         children: [
                           Expanded(
                               child: Text(
-                            localization.field!,
+                            localization.field,
                             style: textStyle,
                           )),
                           Expanded(
                             child: Text(
-                              localization.operator!,
+                              localization.operator,
                               style: textStyle,
                             ),
                           ),
                           Expanded(
                             child: Text(
-                              localization.value!,
+                              localization.value,
                               style: textStyle,
                             ),
                           ),
@@ -390,21 +390,21 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                       TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION
                   ? [
                       DropdownMenuItem<String>(
-                        child: Text(localization.contains!),
+                        child: Text(localization.contains),
                         value: TransactionRuleCriteriaEntity
                             .STRING_OPERATOR_CONTAINS,
                       ),
                       DropdownMenuItem<String>(
-                        child: Text(localization.startsWith!),
+                        child: Text(localization.startsWith),
                         value: TransactionRuleCriteriaEntity
                             .STRING_OPERATOR_STARTS_WITH,
                       ),
                       DropdownMenuItem<String>(
-                        child: Text(localization.isWord!),
+                        child: Text(localization.isWord),
                         value: TransactionRuleCriteriaEntity.STRING_OPERATOR_IS,
                       ),
                       DropdownMenuItem<String>(
-                        child: Text(localization.isEmpty!),
+                        child: Text(localization.isEmpty),
                         value: TransactionRuleCriteriaEntity
                             .STRING_OPERATOR_IS_EMPTY,
                       ),

@@ -54,7 +54,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
               value: formatNumber(subscription.price, context)),
           ListDivider(),
           ListTile(
-            title: Text(localization.paymentLink!),
+            title: Text(localization.paymentLink),
             subtitle: Text(
               subscription.purchasePage,
               maxLines: 1,

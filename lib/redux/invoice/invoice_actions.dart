@@ -700,8 +700,7 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity?> invoices,
               title: Text(
                 invoiceIds.length == 1
                     ? localization.emailInvoice
-                    : localization.emailCountInvoices!
-                        .replaceFirst(':count', '${invoiceIds.length}'),
+                    : localization.emailCountInvoices.replaceFirst(':count', '${invoiceIds.length}'),
               ),
               children: templates.keys
                   .map((template) => SimpleDialogOption(

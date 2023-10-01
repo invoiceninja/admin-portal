@@ -255,7 +255,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
     final darkMode = LayoutBuilder(builder: (context, constraints) {
       return ToggleButtons(
         children: [
-          Text(localization.system!),
+          Text(localization.system),
           Text(localization.light),
           Text(localization.dark),
         ],
@@ -332,7 +332,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
                         child: Padding(
                           padding: const EdgeInsets.only(top: 32),
                           child: Text(
-                            localization.setupWizardLogo!,
+                            localization.setupWizardLogo,
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.titleLarge,
                           ),
@@ -364,7 +364,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
                                 if (state.isHosted)
                                   Padding(
                                     padding: const EdgeInsets.only(top: 32),
-                                    child: Text(localization.subdomainGuide!),
+                                    child: Text(localization.subdomainGuide),
                                   )
                               ]
                             : [
@@ -412,7 +412,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
                                 if (state.isHosted)
                                   Padding(
                                     padding: const EdgeInsets.only(top: 32),
-                                    child: Text(localization.subdomainGuide!),
+                                    child: Text(localization.subdomainGuide),
                                   ),
                               ],
                       ),
@@ -434,7 +434,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
                   ));
                   Navigator.of(context).pop();
                 },
-                child: Text(localization.upload!.toUpperCase()))
+                child: Text(localization.upload.toUpperCase()))
           else
             TextButton(
               onPressed: _onSavePressed,

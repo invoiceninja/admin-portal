@@ -104,7 +104,7 @@ class _KanbanStatusCardState extends State<KanbanStatusCard> {
         child: Opacity(
           opacity: widget.isCorrectOrder ? 1 : .7,
           child: Text(
-            status.isNew ? localization!.unassigned! : status.name,
+            status.isNew ? localization!.unassigned: status.name,
             style: TextStyle(fontWeight: FontWeight.w600),
           ),
         ),

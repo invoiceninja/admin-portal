@@ -525,8 +525,7 @@ class ReportsScreenVM {
             await csvFile.writeAsString(csvData);
 
             if (isDesktopOS()) {
-              showToast(localization!.fileSavedInPath!
-                  .replaceFirst(':path', directory.path));
+              showToast(localization!.fileSavedInPath.replaceFirst(':path', directory.path));
             } else {
               await Share.shareXFiles([XFile(filePath)]);
             }

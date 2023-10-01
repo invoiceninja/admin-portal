@@ -314,7 +314,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Flexible(child: Text(localization.expenseTaxHelp!)),
+                      Flexible(child: Text(localization.expenseTaxHelp)),
                       OutlinedButton(
                           onPressed: () {
                             final store = StoreProvider.of<AppState>(context);

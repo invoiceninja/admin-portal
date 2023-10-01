@@ -212,7 +212,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                 },
                 items: [
                   DropdownMenuItem(
-                      child: Text(localization.defaultWord!),
+                      child: Text(localization.defaultWord),
                       value: SettingsEntity.EMAIL_SENDING_METHOD_DEFAULT),
                   if (viewModel.state.isHosted) ...[
                     DropdownMenuItem(
@@ -236,7 +236,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                   SizedBox(height: 20),
                   if (isApple() || isDesktopOS())
                     Text(
-                      localization.useWebAppToConnectGmail!,
+                      localization.useWebAppToConnectGmail,
                       textAlign: TextAlign.center,
                     )
                   else
@@ -272,12 +272,12 @@ class _EmailSettingsState extends State<EmailSettings> {
                   SizedBox(height: 20),
                   if (isApple() || !kIsWeb)
                     Text(
-                      localization.useWebAppToConnectMicrosoft!,
+                      localization.useWebAppToConnectMicrosoft,
                       textAlign: TextAlign.center,
                     )
                   else
                     OutlinedButton(
-                      child: Text(localization.connectMicrosoft!.toUpperCase()),
+                      child: Text(localization.connectMicrosoft.toUpperCase()),
                       onPressed: () {
                         final store = StoreProvider.of<AppState>(context);
                         store.dispatch(ViewSettings(
@@ -466,15 +466,15 @@ class _EmailSettingsState extends State<EmailSettings> {
                     settings.rebuild((b) => b..emailAlignment = value)),
                 items: [
                   DropdownMenuItem(
-                    child: Text(localization.left!),
+                    child: Text(localization.left),
                     value: SettingsEntity.EMAIL_ALIGNMENT_LEFT,
                   ),
                   DropdownMenuItem(
-                    child: Text(localization.center!),
+                    child: Text(localization.center),
                     value: SettingsEntity.EMAIL_ALIGNMENT_CENTER,
                   ),
                   DropdownMenuItem(
-                    child: Text(localization.right!),
+                    child: Text(localization.right),
                     value: SettingsEntity.EMAIL_ALIGNMENT_RIGHT,
                   ),
                 ],
@@ -594,7 +594,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                           child: Padding(
                             padding: const EdgeInsets.all(8),
                             child: Text(
-                                localization.uploadCertificate!.toUpperCase()),
+                                localization.uploadCertificate.toUpperCase()),
                           ),
                         ),
                       ),
@@ -615,8 +615,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                             Flexible(
                               child: Text(
                                 company.hasEInvoiceCertificate
-                                    ? localization.certificateSet!
-                                    : localization.certificateNotSet!,
+                                    ? localization.certificateSet: localization.certificateNotSet,
                                 maxLines: 2,
                               ),
                             ),
@@ -652,8 +651,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                           Flexible(
                             child: Text(
                               company.hasEInvoiceCertificatePassphrase
-                                  ? localization.passphraseSet!
-                                  : localization.passphraseNotSet!,
+                                  ? localization.passphraseSet: localization.passphraseNotSet,
                               maxLines: 2,
                             ),
                           ),

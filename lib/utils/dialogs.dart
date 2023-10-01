@@ -139,7 +139,7 @@ void confirmCallback({
                     ),
                     if (askForReason) ...[
                       SizedBox(height: 30),
-                      Flexible(child: Text(localization.whyAreYouLeaving!)),
+                      Flexible(child: Text(localization.whyAreYouLeaving)),
                       DecoratedFormField(
                         onChanged: (value) => _reason = value,
                         minLines: 4,
@@ -200,7 +200,7 @@ void passwordCallback({
                 store.dispatch(ViewSettings(section: kSettingsUserDetails));
                 Navigator.of(context).pop();
               },
-              child: Text(localization.setPassword!.toUpperCase()))
+              child: Text(localization.setPassword.toUpperCase()))
         ]);
     print('## 1');
     return;
@@ -495,7 +495,7 @@ void cloneToDialog({
               if (userCompany.canCreate(EntityType.purchaseOrder))
                 ListTile(
                   leading: Icon(getEntityIcon(EntityType.purchaseOrder)),
-                  title: Text(localization.purchaseOrder!),
+                  title: Text(localization.purchaseOrder),
                   onTap: () {
                     Navigator.of(context).pop();
                     handleEntityAction(
@@ -530,7 +530,7 @@ void changeTaskStatusDialog({
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(localization!.changeStatus!),
+          title: Text(localization!.changeStatus),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: statusIds.map((statusId) {
@@ -587,7 +587,7 @@ void addToInvoiceDialog({
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(
-          title: Text(localization!.addToInvoice!),
+          title: Text(localization!.addToInvoice),
           children: invoices.map((invoice) {
             return SimpleDialogOption(
               child: Row(children: [

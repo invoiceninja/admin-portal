@@ -280,7 +280,7 @@ class _UserEditState extends State<UserEdit>
                   ),
                   SwitchListTile(
                     title: Text(localization.dashboard),
-                    subtitle: Text(localization.viewDashboardPermission!),
+                    subtitle: Text(localization.viewDashboardPermission),
                     value: userCompany.isAdmin
                         ? true
                         : userCompany.permissions
@@ -314,7 +314,7 @@ class _UserEditState extends State<UserEdit>
                   ),
                   SwitchListTile(
                     title: Text(localization.reports),
-                    subtitle: Text(localization.viewReportPermission!),
+                    subtitle: Text(localization.viewReportPermission),
                     value: userCompany.isAdmin
                         ? true
                         : userCompany.permissions
@@ -361,10 +361,10 @@ class _UserEditState extends State<UserEdit>
                           label: Text(localization.create),
                         ),
                         DataColumn(
-                          label: Text(localization.viewAll!),
+                          label: Text(localization.viewAll),
                         ),
                         DataColumn(
-                          label: Text(localization.editAll!),
+                          label: Text(localization.editAll),
                         ),
                       ],
                       rows: [

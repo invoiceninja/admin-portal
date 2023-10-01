@@ -182,7 +182,7 @@ class ReportsScreen extends StatelessWidget {
               value: kReportGroupDay,
             ),
             DropdownMenuItem(
-              child: Text(localization.week!),
+              child: Text(localization.week),
               value: kReportGroupWeek,
             ),
             DropdownMenuItem(

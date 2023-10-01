@@ -367,8 +367,7 @@ abstract class TransactionEntity extends Object
     if (description.isNotEmpty) {
       return description.split('\n').first;
     } else {
-      return AppLocalization.of(navigatorKey.currentContext!)!.transaction ??
-          '';
+      return AppLocalization.of(navigatorKey.currentContext!)!.transaction;
     }
   }
 

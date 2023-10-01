@@ -117,25 +117,25 @@ class _TaskSettingsState extends State<TaskSettings> {
               ),
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.showTaskEndDate!),
+                title: Text(localization.showTaskEndDate),
                 value: company.showTaskEndDate,
-                subtitle: Text(localization.showTaskEndDateHelp!),
+                subtitle: Text(localization.showTaskEndDateHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..showTaskEndDate = value)),
               ),
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.showTaskItemDescription!),
+                title: Text(localization.showTaskItemDescription),
                 value: settings.showTaskItemDescription!,
-                subtitle: Text(localization.showTaskItemDescriptionHelp!),
+                subtitle: Text(localization.showTaskItemDescriptionHelp),
                 onChanged: (value) => viewModel.onSettingsChanged(settings
                     .rebuild((b) => b..showTaskItemDescription = value)),
               ),
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.showTaskBillable!),
+                title: Text(localization.showTaskBillable),
                 value: settings.allowBillableTaskItems!,
-                subtitle: Text(localization.allowBillableTaskItemsHelp!),
+                subtitle: Text(localization.allowBillableTaskItemsHelp),
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..allowBillableTaskItems = value)),
               ),
@@ -172,27 +172,27 @@ class _TaskSettingsState extends State<TaskSettings> {
                 ),
                 SwitchListTile(
                   activeColor: Theme.of(context).colorScheme.secondary,
-                  title: Text(localization.invoiceTaskHours!),
+                  title: Text(localization.invoiceTaskHours),
                   value: company.invoiceTaskHours,
-                  subtitle: Text(localization.invoiceTaskHoursHelp!),
+                  subtitle: Text(localization.invoiceTaskHoursHelp),
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..invoiceTaskHours = value)),
                 ),
                 if (settings.showTaskItemDescription == true)
                   SwitchListTile(
                     activeColor: Theme.of(context).colorScheme.secondary,
-                    title: Text(localization.invoiceTaskItemDescription!),
+                    title: Text(localization.invoiceTaskItemDescription),
                     value: company.invoiceTaskItemDescription,
                     subtitle:
-                        Text(localization.invoiceTaskItemDescriptionHelp!),
+                        Text(localization.invoiceTaskItemDescriptionHelp),
                     onChanged: (value) => viewModel.onCompanyChanged(company
                         .rebuild((b) => b..invoiceTaskItemDescription = value)),
                   ),
                 SwitchListTile(
                   activeColor: Theme.of(context).colorScheme.secondary,
-                  title: Text(localization.invoiceTaskProject!),
+                  title: Text(localization.invoiceTaskProject),
                   value: company.invoiceTaskProject,
-                  subtitle: Text(localization.invoiceTaskProjectHelp!),
+                  subtitle: Text(localization.invoiceTaskProjectHelp),
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..invoiceTaskProject = value)),
                 ),
@@ -232,9 +232,9 @@ class _TaskSettingsState extends State<TaskSettings> {
                 ),
                 SwitchListTile(
                   activeColor: Theme.of(context).colorScheme.secondary,
-                  title: Text(localization.lockInvoicedTasks!),
+                  title: Text(localization.lockInvoicedTasks),
                   value: company.invoiceTaskLock,
-                  subtitle: Text(localization.lockInvoicedTasksHelp!),
+                  subtitle: Text(localization.lockInvoicedTasksHelp),
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..invoiceTaskLock = value)),
                 ),

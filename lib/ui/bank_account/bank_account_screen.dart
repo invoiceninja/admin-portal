@@ -98,7 +98,7 @@ class BankAccountScreen extends StatelessWidget {
                   if (state.isEnterprisePlan) ...[
                     Expanded(
                       child: AppButton(
-                        label: localization!.connect!.toUpperCase(),
+                        label: localization!.connect.toUpperCase(),
                         onPressed: () => connectAccounts(context),
                         iconData: Icons.link,
                       ),
@@ -150,8 +150,7 @@ class BankAccountScreen extends StatelessWidget {
                   child: AppButton(
                     label: (state.isHosted
                             ? localization!.rules
-                            : localization!.manageRules)!
-                        .toUpperCase(),
+                            : localization!.manageRules).toUpperCase(),
                     onPressed: () {
                       store.dispatch(
                           ViewSettings(section: kSettingsTransactionRules));

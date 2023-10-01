@@ -482,7 +482,7 @@ class DashboardPanels extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child: Text(
-                                      localization!.addGatewayHelpMessage!),
+                                      localization!.addGatewayHelpMessage),
                                 ),
                                 if (isDesktop(context))
                                   TextButton(
@@ -492,7 +492,7 @@ class DashboardPanels extends StatelessWidget {
                                           entityType: EntityType.companyGateway,
                                         );
                                       },
-                                      child: Text(localization.addGateway!)),
+                                      child: Text(localization.addGateway)),
                                 IconButton(
                                     onPressed: () {
                                       final store =
@@ -1375,7 +1375,7 @@ class _DashboardFieldState extends State<_DashboardField> {
 
             Navigator.of(context).pop();
           },
-          child: Text(localization.add!.toUpperCase()),
+          child: Text(localization.add.toUpperCase()),
         ),
       ],
     );

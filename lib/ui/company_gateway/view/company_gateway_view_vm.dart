@@ -111,7 +111,7 @@ class CompanyGatewayViewVM {
                     context: navigatorKey.currentContext!,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text(localization!.customerCount!),
+                        title: Text(localization!.customerCount),
                         actions: [
                           TextButton(
                               onPressed: () => Navigator.of(context).pop(),

@@ -76,8 +76,7 @@ class EditScaffold extends StatelessWidget {
       if (account.trialDaysLeft <= 1) {
         upgradeMessage = localization.freeTrialEndsToday;
       } else {
-        upgradeMessage = localization.freeTrialEndsInDays!
-            .replaceFirst(':count', account.trialDaysLeft.toString());
+        upgradeMessage = localization.freeTrialEndsInDays.replaceFirst(':count', account.trialDaysLeft.toString());
       }
     }
 

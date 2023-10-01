@@ -261,7 +261,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     value: 'terms',
                   ),
                   DropdownMenuItem(
-                    child: Text(localization.dueOnReceipt!),
+                    child: Text(localization.dueOnReceipt),
                     value: 'on_receipt',
                   ),
                   ...List<int>.generate(31, (i) => i + 1)
@@ -553,7 +553,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
           Padding(
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 20),
             child: AppButton(
-              label: localization.taxDetails!.toUpperCase(),
+              label: localization.taxDetails.toUpperCase(),
               onPressed: invoice.hasClient
                   ? () {
                       showDialog<void>(

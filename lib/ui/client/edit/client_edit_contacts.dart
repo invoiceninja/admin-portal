@@ -106,8 +106,7 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
         child: AppButton(
           label: (client.contacts.length == 1
                   ? localization!.addSecondContact
-                  : localization!.addContact)!
-              .toUpperCase(),
+                  : localization!.addContact).toUpperCase(),
           onPressed: () => viewModel.onAddContactPressed(),
         ),
       ));
@@ -363,7 +362,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
             padding: const EdgeInsets.only(top: 20),
             child: SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.addToInvoices!),
+                title: Text(localization.addToInvoices),
                 value: _contact!.sendEmail,
                 onChanged: (value) {
                   setState(() => _contact =

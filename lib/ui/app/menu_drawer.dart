@@ -444,7 +444,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                       child: ListTile(
                                         tileColor: Colors.orange.shade800,
                                         subtitle: Text(
-                                          localization.verifyPhoneNumberHelp!,
+                                          localization.verifyPhoneNumberHelp,
                                           style: TextStyle(color: Colors.white),
                                         ),
                                         onTap: () {
@@ -487,7 +487,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                         tileColor: Colors.orange.shade800,
                                         subtitle: Text(
                                           localization
-                                              .verifyPhoneNumber2faHelp!,
+                                              .verifyPhoneNumber2faHelp,
                                           style: TextStyle(color: Colors.white),
                                         ),
                                         onTap: () {
@@ -1137,7 +1137,7 @@ class SidebarFooter extends StatelessWidget {
                           Navigator.of(context).pop();
                           store.dispatch(DismissNativeWarning());
                         },
-                        child: Text(localization.remindMe!.toUpperCase()),
+                        child: Text(localization.remindMe.toUpperCase()),
                       ),
                     ],
                   ),
@@ -1383,9 +1383,9 @@ void _showAbout(BuildContext context) async {
   subtitle +=
       state.isSelfHosted ? localization!.selfhosted : localization!.hosted;
   if (userCompany.isOwner) {
-    subtitle += ' • ' + localization.owner!;
+    subtitle += ' • ' + localization.owner;
   } else if (userCompany.isAdmin) {
-    subtitle += ' • ' + localization.admin!;
+    subtitle += ' • ' + localization.admin;
   }
 
   showDialog<Null>(
@@ -1587,7 +1587,7 @@ void _showAbout(BuildContext context) async {
                       ),
                     ),
                   AppButton(
-                    label: localization.releaseNotes!.toUpperCase(),
+                    label: localization.releaseNotes.toUpperCase(),
                     iconData: MdiIcons.note,
                     color: Colors.cyan,
                     onPressed: () => launchUrl(Uri.parse(kReleaseNotesUrl)),
@@ -1621,7 +1621,7 @@ void _showAbout(BuildContext context) async {
                   ],
                   if (state.company.daysActive > 30)
                     AppButton(
-                      label: localization.reviewApp!.toUpperCase(),
+                      label: localization.reviewApp.toUpperCase(),
                       iconData: Icons.star,
                       color: Colors.purple,
                       onPressed: () {

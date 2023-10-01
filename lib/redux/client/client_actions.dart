@@ -627,7 +627,7 @@ class __MergClientPickerState extends State<_MergClientPicker> {
     final state = store.state;
 
     return AlertDialog(
-      title: Text(localization.mergeInto!),
+      title: Text(localization.mergeInto),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -663,7 +663,7 @@ class __MergClientPickerState extends State<_MergClientPicker> {
                   Navigator.of(context).pop();
                 });
           },
-          child: Text(localization.merge!),
+          child: Text(localization.merge),
         ),
       ],
     );

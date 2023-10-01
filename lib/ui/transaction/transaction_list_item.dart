@@ -149,8 +149,7 @@ class TransactionListItem extends StatelessWidget {
                         width: 100,
                         child: Text(
                           transaction!.isWithdrawal
-                              ? localization!.withdrawal!
-                              : localization!.deposit!,
+                              ? localization!.withdrawal: localization!.deposit,
                         ),
                       ),
                       SizedBox(width: 30),
@@ -217,8 +216,7 @@ class TransactionListItem extends StatelessWidget {
                                       .name +
                                   ' • ' +
                                   (transaction!.isDeposit
-                                      ? localization!.deposit!
-                                      : localization!.withdrawal!))
+                                      ? localization!.deposit: localization!.withdrawal))
                               : Text(
                                   filterMatch,
                                   maxLines: 3,

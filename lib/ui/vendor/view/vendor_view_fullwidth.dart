@@ -345,7 +345,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                           isScrollable: true,
                           tabs: [
                             Tab(
-                              child: Text(localization.standing!),
+                              child: Text(localization.standing),
                             ),
                             if (company.isModuleEnabled(EntityType.document))
                               Tab(

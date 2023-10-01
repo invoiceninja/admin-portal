@@ -75,7 +75,7 @@ class ConfirmEmail extends StatelessWidget {
                               },
                             );
                           },
-                          child: Text(localization.changeEmail!.toUpperCase()),
+                          child: Text(localization.changeEmail.toUpperCase()),
                         ),
                       ),
                       /*

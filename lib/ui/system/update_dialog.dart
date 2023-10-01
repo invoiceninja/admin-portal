@@ -115,7 +115,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
           ),
           if (account.isUpdateAvailable)
             TextButton(
-              child: Text(localization.releaseNotes!.toUpperCase()),
+              child: Text(localization.releaseNotes.toUpperCase()),
               onPressed: () => launchUrl(Uri.parse(kReleaseNotesUrl)),
             )
           else

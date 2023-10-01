@@ -231,7 +231,7 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: SwitchListTile(
-                    title: Text(localization.billable!),
+                    title: Text(localization.billable),
                     value: _taskTime!.isBillable,
                     onChanged: (value) {
                       _taskTime =

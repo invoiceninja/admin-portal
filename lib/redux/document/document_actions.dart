@@ -456,8 +456,7 @@ void handleDocumentAction(
           await File(filePath).writeAsBytes(document.data!);
 
           if (isDesktopOS()) {
-            showToast(localization!.fileSavedInPath!
-                .replaceFirst(':path', directory.path));
+            showToast(localization!.fileSavedInPath.replaceFirst(':path', directory.path));
           } else {
             await Share.shareXFiles([XFile(filePath)]);
           }

@@ -80,7 +80,7 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
           title: Text(
             formatNumber(history.amount, context, clientId: invoice.clientId)! +
                 ' • ' +
-                personName!,
+                personName,
           ),
           subtitle: Text(formatDate(
                 convertTimestampToDateString(activity.createdAt),

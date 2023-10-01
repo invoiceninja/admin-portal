@@ -360,7 +360,7 @@ class _AccountOverview extends StatelessWidget {
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
             child: AppButton(
               iconData: Icons.business,
-              label: localization.setDefaultCompany!.toUpperCase(),
+              label: localization.setDefaultCompany.toUpperCase(),
               onPressed: () => viewModel.onSetPrimaryCompany(context),
             ),
           ),
@@ -369,7 +369,7 @@ class _AccountOverview extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(20),
               child: Text(
-                localization.useMobileToManagePlan!,
+                localization.useMobileToManagePlan,
                 textAlign: TextAlign.center,
               ),
             )
@@ -384,8 +384,7 @@ class _AccountOverview extends StatelessWidget {
                       text: (account.isEligibleForTrial &&
                                   !supportsInAppPurchase()
                               ? localization.startFreeTrial
-                              : localization.changePlan)!
-                          .toUpperCase(),
+                              : localization.changePlan).toUpperCase(),
                     ),
                   ),
                   onPressed: () {
@@ -417,8 +416,8 @@ class _AccountOverview extends StatelessWidget {
               viewModel.onCompanyChanged(
                   company.rebuild((b) => b..markdownEnabled = value));
             },
-            title: Text(localization.enablePdfMarkdown!),
-            subtitle: Text(localization.enableMarkdownHelp!),
+            title: Text(localization.enablePdfMarkdown),
+            subtitle: Text(localization.enableMarkdownHelp),
             activeColor: Theme.of(context).colorScheme.secondary,
           ),
           SwitchListTile(
@@ -427,8 +426,8 @@ class _AccountOverview extends StatelessWidget {
               viewModel.onCompanyChanged(
                   company.rebuild((b) => b..markdownEmailEnabled = value));
             },
-            title: Text(localization.enableEmailMarkdown!),
-            subtitle: Text(localization.enableEmailMarkdownHelp!),
+            title: Text(localization.enableEmailMarkdown),
+            subtitle: Text(localization.enableEmailMarkdownHelp),
             activeColor: Theme.of(context).colorScheme.secondary,
           ),
         ]),
@@ -440,8 +439,8 @@ class _AccountOverview extends StatelessWidget {
                 viewModel.onCompanyChanged(
                     company.rebuild((b) => b..reportIncludeDrafts = value));
               },
-              title: Text(localization.includeDrafts!),
-              subtitle: Text(localization.includeDraftsHelp!),
+              title: Text(localization.includeDrafts),
+              subtitle: Text(localization.includeDraftsHelp),
               activeColor: Theme.of(context).colorScheme.secondary,
             ),
             SwitchListTile(
@@ -450,8 +449,8 @@ class _AccountOverview extends StatelessWidget {
                 viewModel.onCompanyChanged(
                     company.rebuild((b) => b..reportIncludeDeleted = value));
               },
-              title: Text(localization.includeDeleted!),
-              subtitle: Text(localization.includeDeletedHelp!),
+              title: Text(localization.includeDeleted),
+              subtitle: Text(localization.includeDeletedHelp),
               activeColor: Theme.of(context).colorScheme.secondary,
             ),
           ],

@@ -127,7 +127,7 @@ class _BankAccountEditState extends State<BankAccountEdit> {
                   SizedBox(height: 16),
                   SwitchListTile(
                     activeColor: Theme.of(context).colorScheme.secondary,
-                    title: Text(localization.autoSync!),
+                    title: Text(localization.autoSync),
                     value: bankAccount.autoSync,
                     onChanged: (value) => viewModel.onChanged(
                         bankAccount.rebuild((b) => b..autoSync = value)),

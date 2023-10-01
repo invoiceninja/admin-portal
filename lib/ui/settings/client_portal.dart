@@ -410,7 +410,7 @@ class _ClientPortalState extends State<ClientPortal>
                     ],
                     SizedBox(height: 16),
                     ListTile(
-                      title: Text(localization.loginUrl!),
+                      title: Text(localization.loginUrl),
                       subtitle: Text(
                         loginUrl,
                         maxLines: 1,
@@ -584,7 +584,7 @@ class _ClientPortalState extends State<ClientPortal>
                             items: [
                               DropdownMenuItem(
                                 value: RegistrationFieldEntity.SETTING_HIDDEN,
-                                child: Text(localization.hidden!),
+                                child: Text(localization.hidden),
                               ),
                               DropdownMenuItem(
                                 value: RegistrationFieldEntity.SETTING_OPTIONAL,
@@ -592,7 +592,7 @@ class _ClientPortalState extends State<ClientPortal>
                               ),
                               DropdownMenuItem(
                                 value: RegistrationFieldEntity.SETTING_REQUIRED,
-                                child: Text(localization.requiredWord!),
+                                child: Text(localization.requiredWord),
                               ),
                             ],
                           ),

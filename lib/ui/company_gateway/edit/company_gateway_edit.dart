@@ -173,7 +173,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         (companyGateway.gatewayId == kGatewayStripeConnect &&
                             accountId.isEmpty)) ...[
                       AppButton(
-                        label: localization.gatewaySetup!.toUpperCase(),
+                        label: localization.gatewaySetup.toUpperCase(),
                         onPressed: viewModel.state.isSaving
                             ? null
                             : () {
@@ -977,8 +977,7 @@ class _FeesEditorState extends State<FeesEditor> {
     const double amount = 100;
     final fee = settings.calculateSampleFee(100);
 
-    return localization.feesSample!
-        .replaceFirst(':amount', formatNumber(amount, context)!)
+    return localization.feesSample.replaceFirst(':amount', formatNumber(amount, context)!)
         .replaceFirst(':total', formatNumber(fee, context)!);
   }
 

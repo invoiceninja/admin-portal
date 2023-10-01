@@ -313,7 +313,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
             ),
             SizedBox(height: 20),
             SwitchListTile(
-              title: Text(localization.isTaxExempt!),
+              title: Text(localization.isTaxExempt),
               value: client.isTaxExempt,
               onChanged: (value) {
                 viewModel

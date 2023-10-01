@@ -183,7 +183,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
               onPressed: () {
                 _inAppPurchase.restorePurchases();
               },
-              child: Text(localization.restorePurchases!)),
+              child: Text(localization.restorePurchases)),
         TextButton(
           child: Text(localization.termsOfService),
           onPressed: () => launchUrl(Uri.parse(kTermsOfServiceURL)),
@@ -258,8 +258,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
                   }
                 },
                 child: Text(previousPurchase != null
-                    ? AppLocalization.of(context)!.activate!
-                    : productDetails.price),
+                    ? AppLocalization.of(context)!.activate: productDetails.price),
               ),
               SizedBox(height: 20),
             ],
@@ -350,7 +349,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       } else {
         showErrorDialog(
             message: priceChangeConfirmationResult.debugMessage ??
-                localization!.priceChangeFailed! +
+                localization!.priceChangeFailed+
                     ' ${priceChangeConfirmationResult.responseCode}');
       }
     }

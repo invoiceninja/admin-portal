@@ -215,8 +215,8 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                         viewModel.onCompanyChanged(company
                             .rebuild((b) => b..useCommaAsDecimalPlace = value));
                       },
-                      title: Text(localization.decimalComma!),
-                      subtitle: Text(localization.useCommaAsDecimalPlace!),
+                      title: Text(localization.decimalComma),
+                      subtitle: Text(localization.useCommaAsDecimalPlace),
                       activeColor: Theme.of(context).colorScheme.secondary,
                       secondary: isDesktop(context)
                           ? Icon(MdiIcons.commaCircle)
@@ -333,7 +333,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                                       (b) => b..translations[key] = ''));
                                 }
                               },
-                              child: Text(localization.addCountry!),
+                              child: Text(localization.addCountry),
                             )
                           ],
                         ),
@@ -398,7 +398,7 @@ class _AddCompanyDialogState extends State<_AddCompanyDialog> {
     final state = store.state;
 
     return AlertDialog(
-      title: Text(localization.addCountry!),
+      title: Text(localization.addCountry),
       actions: [
         TextButton(
           onPressed: () {

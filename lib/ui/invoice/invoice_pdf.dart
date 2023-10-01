@@ -292,8 +292,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                                       .writeAsBytes(_response!.bodyBytes);
 
                                   if (isDesktopOS()) {
-                                    showToast(localization.fileSavedInPath!
-                                        .replaceFirst(':path', directory.path));
+                                    showToast(localization.fileSavedInPath.replaceFirst(':path', directory.path));
                                   } else {
                                     await Share.shareXFiles([XFile(filePath)]);
                                   }

@@ -179,7 +179,7 @@ class _TaxSettingsState extends State<TaxSettings> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: LearnMoreUrl(
-                      child: Text(localization.ziptaxHelp!),
+                      child: Text(localization.ziptaxHelp),
                       url: kZipTaxURL,
                     ),
                   ),
@@ -232,14 +232,14 @@ class _TaxSettingsState extends State<TaxSettings> {
                                     DropdownMenuItem<bool>(
                                       child: ListTile(
                                         dense: true,
-                                        title: Text(localization.taxAll!),
+                                        title: Text(localization.taxAll),
                                       ),
                                       value: true,
                                     ),
                                     DropdownMenuItem<bool>(
                                       child: ListTile(
                                         dense: true,
-                                        title: Text(localization.taxSelected!),
+                                        title: Text(localization.taxSelected),
                                         subtitle: Text(
                                             '${taxDataRegion.subregions.keys.where((element) => taxDataRegion.subregions[element]!.applyTax).length} ${localization.selected}'),
                                       ),

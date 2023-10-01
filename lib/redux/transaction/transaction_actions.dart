@@ -454,8 +454,7 @@ void handleTransactionAction(BuildContext? context,
               context,
               transactionIds.length == 1
                   ? localization!.unlinkedTransaction
-                  : localization!.unlinkedTransactions!
-                      .replaceFirst(':count', '${transactionIds.length}')),
+                  : localization!.unlinkedTransactions.replaceFirst(':count', '${transactionIds.length}')),
           transactionIds));
       break;
     case EntityAction.toggleMultiselect:

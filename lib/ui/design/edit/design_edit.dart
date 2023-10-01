@@ -471,8 +471,8 @@ class _DesignSettingsState extends State<DesignSettings> {
               SizedBox(height: 16),
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.draftMode!),
-                subtitle: Text(localization.draftModeHelp!),
+                title: Text(localization.draftMode),
+                subtitle: Text(localization.draftModeHelp),
                 value: widget.draftMode,
                 onChanged: widget.isLoading ? null : widget.onDraftModeChanged,
               ),
@@ -555,7 +555,7 @@ class _DesignSettingsState extends State<DesignSettings> {
               Padding(
                 padding: const EdgeInsets.only(top: 16, left: 30, right: 30),
                 child: Text(
-                  localization.htmlPreviewWarning!,
+                  localization.htmlPreviewWarning,
                   style: TextStyle(color: Colors.grey),
                 ),
               ),
@@ -755,7 +755,7 @@ class __DesignImportDialogState extends State<_DesignImportDialog> {
     final localization = AppLocalization.of(context)!;
 
     return AlertDialog(
-      title: Text(localization.importDesign!),
+      title: Text(localization.importDesign),
       content: DecoratedFormField(
         autofocus: true,
         autocorrect: false,
@@ -781,8 +781,7 @@ class __DesignImportDialogState extends State<_DesignImportDialog> {
                 kDesignIncludes
               ]) {
                 if (!map!.containsKey(field)) {
-                  throw localization.invalidDesign!
-                      .replaceFirst(':value', field);
+                  throw localization.invalidDesign.replaceFirst(':value', field);
                 }
               }
               Navigator.of(context).pop(value);

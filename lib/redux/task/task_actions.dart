@@ -371,8 +371,7 @@ void handleTaskAction(
     case EntityAction.start:
     case EntityAction.resume:
       final message = taskIds.length > 1
-          ? localization!.startedTasks!
-              .replaceFirst(':value', ':count')
+          ? localization!.startedTasks.replaceFirst(':value', ':count')
               .replaceFirst(':count', taskIds.length.toString())
           : localization!.startedTask;
       store.dispatch(StartTasksRequest(
@@ -380,8 +379,7 @@ void handleTaskAction(
       break;
     case EntityAction.stop:
       final message = taskIds.length > 1
-          ? localization!.stoppedTasks!
-              .replaceFirst(':value', ':count')
+          ? localization!.stoppedTasks.replaceFirst(':value', ':count')
               .replaceFirst(':count', taskIds.length.toString())
           : localization!.stoppedTask;
       store.dispatch(

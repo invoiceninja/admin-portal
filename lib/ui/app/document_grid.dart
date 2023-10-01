@@ -64,7 +64,7 @@ class _DocumentGridState extends State<DocumentGrid> {
           children: [
             Icon(Icons.lock),
             SizedBox(width: 16),
-            Text(localization.private!),
+            Text(localization.private),
           ],
         ),
         value: _isPrivate,
@@ -120,7 +120,7 @@ class _DocumentGridState extends State<DocumentGrid> {
                           height: 75,
                           width: double.infinity,
                           child: Center(
-                            child: Text(localization.clickOrDropFilesHere!),
+                            child: Text(localization.clickOrDropFilesHere),
                           ),
                           color: _dragging
                               ? Colors.blue.withOpacity(0.4)

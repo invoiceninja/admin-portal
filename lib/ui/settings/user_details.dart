@@ -214,8 +214,7 @@ class _UserDetailsState extends State<UserDetails>
         child: Text(
           (state.user.isConnectedToMicrosoft
                   ? localization.disconnectMicrosoft
-                  : localization.connectMicrosoft)!
-              .toUpperCase(),
+                  : localization.connectMicrosoft).toUpperCase(),
           textAlign: TextAlign.center,
         ),
         onPressed: state.user.isConnectedToEmail ||
@@ -244,8 +243,7 @@ class _UserDetailsState extends State<UserDetails>
         child: Text(
           (state.user.isConnectedToEmail
                   ? localization.disconnectEmail
-                  : localization.connectEmail)!
-              .toUpperCase(),
+                  : localization.connectEmail).toUpperCase(),
           textAlign: TextAlign.center,
         ),
         onPressed: !state.user.isConnectedToMicrosoft
@@ -273,8 +271,7 @@ class _UserDetailsState extends State<UserDetails>
         child: Text(
           (state.user.isConnectedToApple
                   ? localization.disconnectApple
-                  : localization.connectApple)!
-              .toUpperCase(),
+                  : localization.connectApple).toUpperCase(),
           textAlign: TextAlign.center,
         ),
         onPressed:

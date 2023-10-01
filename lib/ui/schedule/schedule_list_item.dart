@@ -65,7 +65,7 @@ class ScheduleListItem extends StatelessWidget {
           (entity?.listDisplayName ?? '');
     } else if (schedule!.template == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT) {
       if (schedule!.parameters.clients!.isEmpty) {
-        title += ': ' + localization.allClients!;
+        title += ': ' + localization.allClients;
       } else if (schedule!.parameters.clients!.length == 1) {
         final clientId = schedule!.parameters.clients!.first;
         title += ': ' + state.clientState.get(clientId).displayName;

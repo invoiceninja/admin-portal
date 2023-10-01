@@ -124,7 +124,7 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
     final country = state.staticState.countryMap[countryId];
 
     return AlertDialog(
-      title: Text(localization.verifyPhoneNumber!),
+      title: Text(localization.verifyPhoneNumber),
       content: _isLoading
           ? LoadingIndicator(height: 80)
           : AppForm(
@@ -135,7 +135,7 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   if (_showCode) ...[
-                    Text(localization.codeWasSent!),
+                    Text(localization.codeWasSent),
                     SizedBox(height: 20),
                     AppPinput(
                       onCompleted: (code) => _code = code,
@@ -169,20 +169,20 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
           TextButton(
             onPressed: () => _sendCode(),
             child: Text(
-              localization.resend!.toUpperCase(),
+              localization.resend.toUpperCase(),
             ),
           ),
           TextButton(
             onPressed: () => _verifyCode(),
             child: Text(
-              localization.verify!.toUpperCase(),
+              localization.verify.toUpperCase(),
             ),
           ),
         ] else ...[
           TextButton(
             onPressed: () => _sendCode(),
             child: Text(
-              localization.sendCode!.toUpperCase(),
+              localization.sendCode.toUpperCase(),
             ),
           ),
         ]
@@ -312,8 +312,7 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
 
     return AlertDialog(
       title: Text(widget.email == null
-          ? localization.verifyPhoneNumber!
-          : localization.disableTwoFactor),
+          ? localization.verifyPhoneNumber: localization.disableTwoFactor),
       content: _isLoading
           ? LoadingIndicator(height: 80)
           : AppForm(
@@ -323,8 +322,7 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(localization.codeWasSentTo!
-                      .replaceFirst(':number', state.user.phone)),
+                  Text(localization.codeWasSentTo.replaceFirst(':number', state.user.phone)),
                   SizedBox(height: 20),
                   AppPinput(
                     onCompleted: (code) => _code = code,
@@ -347,19 +345,19 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
                 Navigator.of(context).pop();
               },
               child: Text(
-                localization.changeNumber!.toUpperCase(),
+                localization.changeNumber.toUpperCase(),
               ),
             ),
           TextButton(
             onPressed: () => _sendCode(),
             child: Text(
-              localization.resendCode!.toUpperCase(),
+              localization.resendCode.toUpperCase(),
             ),
           ),
           TextButton(
             onPressed: () => _verifyCode(),
             child: Text(
-              localization.verify!.toUpperCase(),
+              localization.verify.toUpperCase(),
             ),
           ),
         ],

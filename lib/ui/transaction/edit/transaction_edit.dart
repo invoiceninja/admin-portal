@@ -119,11 +119,11 @@ class _TransactionEditState extends State<TransactionEdit> {
                         },
                         items: [
                           DropdownMenuItem(
-                            child: Text(localization.withdrawal!),
+                            child: Text(localization.withdrawal),
                             value: TransactionEntity.TYPE_WITHDRAWL,
                           ),
                           DropdownMenuItem(
-                            child: Text(localization.deposit!),
+                            child: Text(localization.deposit),
                             value: TransactionEntity.TYPE_DEPOSIT,
                           ),
                         ]),
