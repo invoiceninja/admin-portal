@@ -753,8 +753,6 @@ class DashboardPanels extends StatelessWidget {
                 case DashboardSections.runningTasks:
                   return runningTasks!;
               }
-
-              return SizedBox();
             },
           ),
         ),

@@ -60,17 +60,6 @@ class EntityDataTableSource extends AppDataTableSource {
     final listState = state.getListState(entityType);
     final uIState = state.getUIState(entityType);
 
-    if (entity == null) {
-      return DataRow(cells: [
-        DataCell(SizedBox()),
-        ...tableColumns!.map(
-          (field) => DataCell(
-            SizedBox(),
-          ),
-        )
-      ]);
-    }
-
     bool isSelected = false;
     if (!listState.isInMultiselect() &&
         (state.prefState.isPreviewVisible || state.uiState.isEditing)) {

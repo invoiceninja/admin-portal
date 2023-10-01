@@ -45,9 +45,6 @@ Future<void> showEntityActionsDialog(
     {required List<BaseEntity?> entities,
     Completer? completer,
     bool multiselect = false}) async {
-  if (entities == null) {
-    return;
-  }
   final mainContext = navigatorKey.currentContext;
   final state = StoreProvider.of<AppState>(navigatorKey.currentContext!).state;
   final actions = <Widget>[];

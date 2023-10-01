@@ -133,7 +133,6 @@ abstract class UserEntity extends Object
       customValue2: '',
       customValue3: '',
       customValue4: '',
-      userCompany: userCompany,
       oauthProvider: '',
       isTwoFactorEnabled: false,
       hasPassword: false,
@@ -141,6 +140,7 @@ abstract class UserEntity extends Object
       oauthUserToken: '',
       password: '',
       phoneVerified: false,
+      userCompany: userCompany ?? UserCompanyEntity(false),
     );
   }
 
@@ -332,6 +332,7 @@ abstract class UserEntity extends Object
 
   // ignore: unused_element
   static void _initializeBuilder(UserEntityBuilder builder) => builder
+    ..userCompany.replace(UserCompanyEntity(false))
     ..isTwoFactorEnabled = false
     ..hasPassword = false
     ..phoneVerified = false

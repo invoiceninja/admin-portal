@@ -95,9 +95,6 @@ class DashboardVM {
       isLoading: state.isLoading,
       onRefreshed: (context) => _handleRefresh(context),
       onEntityTypeChanged: (entityType) {
-        if (entityType == null) {
-          return;
-        }
         store.dispatch(UpdateDashboardEntityType(entityType: entityType));
       },
       onSettingsChanged: (DashboardSettings settings) =>

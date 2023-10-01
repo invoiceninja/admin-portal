@@ -154,7 +154,7 @@ class InvoiceItemListTile extends StatelessWidget {
                   SizedBox(width: 1),
                 ],
               ),
-              trailing: onTap != null ? Icon(Icons.navigate_next) : null,
+              trailing: Icon(Icons.navigate_next),
             ),
             ListDivider(),
           ],

@@ -125,7 +125,6 @@ class EntityStatusChip extends StatelessWidget {
           break;
         default:
           return SizedBox();
-          break;
       }
 
       label = localization!.lookup(label) ?? '';

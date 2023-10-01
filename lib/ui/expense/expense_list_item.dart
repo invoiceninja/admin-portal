@@ -61,7 +61,7 @@ class ExpenseListItem extends StatelessWidget {
     String subtitle = '';
     if (filterMatch != null) {
       subtitle = filterMatch;
-    } else if (client != null || vendor != null || category != null) {
+    } else {
       final parts = <String>[
         formatDate(expense.date, context),
       ];

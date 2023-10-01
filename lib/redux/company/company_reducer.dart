@@ -194,16 +194,6 @@ UserCompanyEntity loadCompanySuccessReducer(
     UserCompanyEntity? company, LoadCompanySuccess action) {
   var userCompany = action.userCompany;
 
-  // Check user has a blank user settings object
-  if (userCompany.settings == null) {
-    userCompany = userCompany.rebuild((b) => b
-      ..settings.replace(UserSettingsEntity())
-      ..user
-          .userCompany
-          .notifications
-          .replace(BuiltMap<String, BuiltList<String>>()));
-  }
-
   userCompany = userCompany.rebuild((b) => b.company
     ..taskStatuses.replace(<TaskStatusEntity>[])
     ..taskStatusMap.replace(BuiltMap<String, TaskStatusEntity>())
