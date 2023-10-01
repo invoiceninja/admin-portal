@@ -77,7 +77,7 @@ class _ExpenseEditState extends State<ExpenseEdit>
     final expense = viewModel.expense!;
     final state = viewModel.state!;
     final store = StoreProvider.of<AppState>(context);
-    final client = state.clientState.get(expense.clientId!);
+    final client = state.clientState.get(expense.clientId ?? '');
     final prefState = state.prefState;
     final isFullscreen = prefState.isEditorFullScreen(EntityType.expense);
     final footer = localization.expenseTotal +
