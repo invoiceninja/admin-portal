@@ -209,7 +209,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         itemCount: tasks.length,
         itemBuilder: (BuildContext context, int index) {
           final String? entityId = tasks[index];
-          final task = state.taskState.map[entityId];
+          final task = state.taskState.map[entityId]!;
           return TaskListItem(
             isDismissible: false,
             onCheckboxChanged: (checked) => _toggleEntity(task),

@@ -314,7 +314,7 @@ class TaskSidebar extends StatelessWidget {
               itemCount: runningTasks.length,
               itemBuilder: (BuildContext context, int index) {
                 return TaskListItem(
-                  task: runningTasks[index],
+                  task: runningTasks[index]!,
                   showCheckbox: false,
                 );
               },

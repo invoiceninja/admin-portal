@@ -42,7 +42,7 @@ class TaskListBuilder extends StatelessWidget {
             onSortColumn: viewModel.onSortColumn,
             itemBuilder: (BuildContext context, index) {
               final taskId = viewModel.taskList[index];
-              final task = viewModel.taskMap[taskId];
+              final task = viewModel.taskMap[taskId]!;
 
               return TaskListItem(
                 filter: viewModel.filter,
