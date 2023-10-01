@@ -80,7 +80,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
     final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final company = state.company!;
+    final company = state.company;
     final client = viewModel.client;
     final isFullscreen = state.prefState.isEditorFullScreen(EntityType.client);
 

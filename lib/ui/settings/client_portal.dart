@@ -107,7 +107,7 @@ class _ClientPortalState extends State<ClientPortal>
         return;
       }
 
-      if (subdomain == state.company!.subdomain) {
+      if (subdomain == state.company.subdomain) {
         setState(() => _isSubdomainUnique = true);
         return;
       }
@@ -479,8 +479,7 @@ class _ClientPortalState extends State<ClientPortal>
                       onChanged: (value) => viewModel.onCompanyChanged(
                           company.rebuild((b) => b..enableShopApi = value)),
                     ),
-                  if (!state.isDemo &&
-                      (state.company!.enableShopApi ?? false)) ...[
+                  if (!state.isDemo && state.company.enableShopApi) ...[
                     SizedBox(height: 16),
                     ListDivider(),
                     ListTile(
@@ -534,7 +533,7 @@ class _ClientPortalState extends State<ClientPortal>
                       onChanged: (value) => viewModel.onCompanyChanged(
                           company.rebuild((b) => b..clientCanRegister = value)),
                     ),
-                    if (state.company!.clientCanRegister ?? false) ...[
+                    if (state.company.clientCanRegister ?? false) ...[
                       SizedBox(height: 16),
                       ListTile(
                         title: Text(localization.registrationUrl),

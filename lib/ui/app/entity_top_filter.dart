@@ -42,7 +42,7 @@ class EntityTopFilter extends StatelessWidget {
     final filterEntity =
         entityMap != null ? entityMap[uiState.filterEntityId] : null;
     final relatedTypes = filterEntityType?.relatedTypes
-            .where((element) => state.company!.isModuleEnabled(element))
+            .where((element) => state.company.isModuleEnabled(element))
             .toList() ??
         [];
 
@@ -217,8 +217,7 @@ class EntityTopFilter extends StatelessWidget {
                                       filterEntityType!.relatedTypes
                                           .sublist(
                                               relatedTypes.length - remaining)
-                                          .where((element) => state.company!
-                                              .isModuleEnabled(element))
+                                          .where((element) => state.company.isModuleEnabled(element))
                                           .map((type) =>
                                               PopupMenuItem<EntityType>(
                                                 value: type,

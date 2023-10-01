@@ -67,7 +67,7 @@ List<InvoiceItemEntity> convertProjectToInvoiceItem({
 
     if (i == 0) {
       var notes = '';
-      if (state.company!.markdownEnabled) {
+      if (state.company.markdownEnabled) {
         notes = '## ${project!.name}\n';
       } else {
         notes = '<div class="project-header">${project!.name}</div>\n';
@@ -90,7 +90,7 @@ List<InvoiceItemEntity> convertProjectToInvoiceItem({
 
     if (i == 0) {
       var notes = '';
-      if (state.company!.markdownEnabled) {
+      if (state.company.markdownEnabled) {
         notes = '## ${project!.name}\n';
       } else {
         notes = '<div class="project-header">${project!.name}</div>\n';

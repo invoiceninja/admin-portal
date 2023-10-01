@@ -31,7 +31,7 @@ class ProjectScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final company = store.state.company!;
+    final company = store.state.company;
     final userCompany = store.state.userCompany;
     final localization = AppLocalization.of(context);
 

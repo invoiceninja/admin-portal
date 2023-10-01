@@ -41,7 +41,7 @@ class _DesktopSessionTimeoutState extends State<DesktopSessionTimeout> {
       (Timer timer) {
         final store = StoreProvider.of<AppState>(context);
         final state = store.state;
-        final sessionTimeout = state.company!.sessionTimeout;
+        final sessionTimeout = state.company.sessionTimeout;
 
         if (sessionTimeout == 0 || isMobile(context)) {
           return;

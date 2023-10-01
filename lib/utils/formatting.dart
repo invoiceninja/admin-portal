@@ -49,7 +49,7 @@ double? parseDouble(String? value, {bool zeroIsNull = false}) {
   // check for comma as decimal separator
   final state = StoreProvider.of<AppState>(navigatorKey.currentContext!).state;
 
-  if (state.company!.useCommaAsDecimalPlace && value!.contains(',')) {
+  if (state.company.useCommaAsDecimalPlace && value!.contains(',')) {
     value = value.replaceAll('.', '');
     value = value.replaceAll(',', '.');
   }
@@ -104,7 +104,7 @@ String? formatNumber(
   }
 
   final state = StoreProvider.of<AppState>(context!).state;
-  final CompanyEntity company = state.company!;
+  final CompanyEntity company = state.company;
   final ClientEntity? client = state.clientState.map[clientId];
   final VendorEntity? vendor = state.vendorState.map[vendorId];
   final GroupEntity? group = state.groupState.map[client?.groupId];
@@ -170,7 +170,7 @@ String? formatNumber(
     FormatNumberType.inputAmount,
   ].contains(formatNumberType)) {
     thousandSeparator = '';
-    if (state.company!.useCommaAsDecimalPlace) {
+    if (state.company.useCommaAsDecimalPlace) {
       decimalSeparator = ',';
     } else {
       decimalSeparator = '.';
@@ -301,7 +301,7 @@ String formatAddress(AppState appState,
   }
 
   if (countryId.isNotEmpty &&
-      countryId != appState.company!.settings.countryId) {
+      countryId != appState.company.settings.countryId) {
     if (str.isNotEmpty) {
       str += delimiter;
     }
@@ -377,7 +377,7 @@ String parseDate(String value, BuildContext context) {
   }
 
   final state = StoreProvider.of<AppState>(context).state;
-  final CompanyEntity company = state.company!;
+  final CompanyEntity company = state.company;
 
   final dateFormats = state.staticState.dateFormatMap;
   final dateFormatId = (company.settings.dateFormatId ?? '').isNotEmpty
@@ -396,7 +396,7 @@ DateTime? parseTime(String value, BuildContext context) {
   }
 
   final state = StoreProvider.of<AppState>(context).state;
-  final CompanyEntity company = state.company!;
+  final CompanyEntity company = state.company;
 
   final showSeconds = ':'.allMatches(value).length >= 2;
   final enableMilitaryTime = company.settings.enableMilitaryTime;
@@ -484,7 +484,7 @@ String? formatCustomValue(
     {String? value, String? field, required BuildContext context}) {
   final localization = AppLocalization.of(context);
   final state = StoreProvider.of<AppState>(context).state;
-  final CompanyEntity company = state.company!;
+  final CompanyEntity company = state.company;
 
   switch (company.getCustomFieldType(field)) {
     case kFieldTypeSwitch:

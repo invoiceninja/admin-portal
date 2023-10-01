@@ -15,7 +15,7 @@ class DashboardSystemLogs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final company = viewModel.state.company!;
+    final company = viewModel.state.company;
     final systemLogs = company.systemLogs;
 
     return SystemLogViewer(

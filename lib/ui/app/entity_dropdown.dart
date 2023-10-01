@@ -221,7 +221,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
-    if (!state.company!.isModuleEnabled(widget.entityType)) {
+    if (!state.company.isModuleEnabled(widget.entityType)) {
       return SizedBox();
     }
 

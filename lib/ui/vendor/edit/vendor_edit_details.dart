@@ -274,7 +274,7 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
             value: vendor.customValue4,
             onSavePressed: _onSavePressed,
           ),
-          if (state.company!.calculateTaxes)
+          if (state.company.calculateTaxes)
             AppDropdownButton<String>(
               labelText: localization.classification,
               showBlank: true,

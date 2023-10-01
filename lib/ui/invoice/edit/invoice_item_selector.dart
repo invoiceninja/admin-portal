@@ -79,7 +79,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       if (entity!.entityType == EntityType.product) {
         items.add(
           convertProductToInvoiceItem(
-            company: company!,
+            company: company,
             product: entity as ProductEntity?,
             invoice: widget.invoice,
             currencyMap: state.staticState.currencyMap,
@@ -137,7 +137,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context)!;
     final state = StoreProvider.of<AppState>(context).state;
-    final company = state.company!;
+    final company = state.company;
     final showTabBar = widget.showTasksAndExpenses &&
         (company.isModuleEnabled(EntityType.task) ||
             company.isModuleEnabled(EntityType.expense));

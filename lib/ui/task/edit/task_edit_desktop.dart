@@ -123,7 +123,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
     final task = viewModel.task;
     final state = viewModel.state;
 
-    final company = state.company!;
+    final company = state.company;
     final settings = company.settings;
     final client = state.clientState.get(task.clientId);
     final showEndDate = company.showTaskEndDate;

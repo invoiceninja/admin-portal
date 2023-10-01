@@ -138,12 +138,12 @@ class _ClientPdfViewState extends State<ClientPdfView> {
     String? endDate = '';
 
     startDate = calculateStartDate(
-        company: state.company!,
+        company: state.company,
         dateRange: _dateRange,
         customStartDate: _startDate,
         customEndDate: _endDate);
     endDate = calculateEndDate(
-        company: state.company!,
+        company: state.company,
         dateRange: _dateRange,
         customStartDate: _startDate,
         customEndDate: _endDate);

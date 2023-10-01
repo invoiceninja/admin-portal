@@ -557,7 +557,7 @@ void viewEntityById({
           final filterEntity =
               store.state.getEntityMap(entityType)![entityId] as BaseEntity;
           final entityTypes = filterEntity.entityType!.relatedTypes.where(
-              (entityType) => state.company!.isModuleEnabled(entityType));
+              (entityType) => state.company.isModuleEnabled(entityType));
           if (entityTypes.isNotEmpty) {
             viewEntitiesByType(
                 entityType: entityTypes.first, filterEntity: filterEntity);
@@ -1379,7 +1379,7 @@ void editEntity({
                 product: entity as ProductEntity, completer: completer));
             break;
           case EntityType.task:
-            if (!state.company!.invoiceTaskLock ||
+            if (!state.company.invoiceTaskLock ||
                 !(entity as TaskEntity).isInvoiced)
               store.dispatch(EditTask(
                 task: entity as TaskEntity?,

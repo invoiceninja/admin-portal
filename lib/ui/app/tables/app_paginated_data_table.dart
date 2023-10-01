@@ -296,10 +296,12 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
       DataRow? row;
       if (index < _rowCount || _rowCountApproximate) {
         row = _rows.putIfAbsent(index, () => widget.source.getRow(index));
+        /*
         if (!haveProgressIndicator) {
           row = _getProgressIndicatorRowFor(index);
           haveProgressIndicator = true;
         }
+        */
       }
       if (row != null) {
         result.add(row);

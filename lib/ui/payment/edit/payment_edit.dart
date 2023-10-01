@@ -81,7 +81,7 @@ class _PaymentEditState extends State<PaymentEdit> {
     _showConvertCurrency =
         payment.exchangeRate != 1 && payment.exchangeRate != 0;
     final state = widget.viewModel.state;
-    if (state.company!.convertExpenseCurrency) {
+    if (state.company.convertExpenseCurrency) {
       _showConvertCurrency = true;
     }
 
@@ -228,7 +228,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                       state.userState.map,
                       state.staticState),
                 ),
-                if (state.company!.enableApplyingPayments)
+                if (state.company.enableApplyingPayments)
                   DecoratedFormField(
                     controller: _amountController,
                     autocorrect: false,
@@ -280,7 +280,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                       .rebuild((b) => b..typeId = paymentType?.id ?? '')),
                 ),
               if (payment.isNew || payment.isApplying == true)
-                if (state.company!.isModuleEnabled(EntityType.credit))
+                if (state.company.isModuleEnabled(EntityType.credit))
                   for (var index = 0;
                       index < creditPaymentables.length;
                       index++)
@@ -610,7 +610,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
       payment.clientId,
       state.userState.map,
       payment.invoices.map((p) => p.invoiceId).toList(),
-      state.company!.settings.recurringNumberPrefix,
+      state.company.settings.recurringNumberPrefix,
     );
 
     final creditList = memoizedDropdownCreditList(

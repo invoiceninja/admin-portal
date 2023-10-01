@@ -60,7 +60,7 @@ class _CustomFieldState extends State<CustomField> {
   @override
   Widget build(BuildContext context) {
     final state = StoreProvider.of<AppState>(context).state;
-    final CompanyEntity company = state.company!;
+    final CompanyEntity company = state.company;
     final localization = AppLocalization.of(context);
     final fieldLabel = company.getCustomFieldLabel(widget.field);
 

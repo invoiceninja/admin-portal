@@ -101,7 +101,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
       EntityType.vendor,
       EntityType.purchaseOrder,
     ].forEach((entityType) {
-      if (state.company!.isModuleEnabled(entityType)) {
+      if (state.company.isModuleEnabled(entityType)) {
         tabs++;
       }
     });

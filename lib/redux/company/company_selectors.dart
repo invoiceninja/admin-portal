@@ -128,7 +128,7 @@ List<BaseEntity?> filteredSelector(String? filter, UserCompanyState state) {
 
 String localeSelector(AppState state, {bool twoLetter = false}) {
   final locale = state.staticState
-          .languageMap[state.company?.settings.languageId]?.locale ??
+          .languageMap[state.company.settings.languageId]?.locale ??
       'en';
 
   // https://github.com/flutter/flutter/issues/32090
@@ -145,12 +145,12 @@ String clientPortalUrlSelector(AppState state, {String route = 'login'}) {
   String url;
 
   final account = state.account;
-  final company = state.company!;
+  final company = state.company;
 
   if (company.portalMode == kClientPortalModeDomain) {
     url = company.portalDomain;
   } else {
-    url = account!.defaultUrl;
+    url = account.defaultUrl;
 
     if (state.isHosted) {
       url = url.replaceFirst('//', '//${company.subdomain}.');
@@ -161,7 +161,7 @@ String clientPortalUrlSelector(AppState state, {String route = 'login'}) {
 
   if (state.isSelfHosted &&
       state.companies.length > 1 &&
-      company.id != account!.defaultCompanyId) {
+      company.id != account.defaultCompanyId) {
     url += '/' + company.companyKey;
   }
 

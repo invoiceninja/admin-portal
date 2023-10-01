@@ -71,7 +71,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
       EntityType.expense,
       EntityType.recurringExpense,
     ].forEach((entityType) {
-      if (company!.isModuleEnabled(entityType)) {
+      if (company.isModuleEnabled(entityType)) {
         tabs++;
       }
     });
@@ -183,7 +183,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
     final viewModel = widget.viewModel;
     final settings = viewModel.settings;
     final state = viewModel.state;
-    final company = state.company!;
+    final company = state.company;
 
     return EditScaffold(
       title: localization.generatedNumbers,

@@ -87,14 +87,14 @@ class NotificationSettings extends StatelessWidget {
                           kNotificationsQuoteApproved,
                           kNotificationsQuoteExpired,
                         ].contains(eventType) &&
-                        !state.company!.isModuleEnabled(EntityType.quote)) {
+                        !state.company.isModuleEnabled(EntityType.quote)) {
                       return false;
                     } else if ([
                           kNotificationsCreditCreated,
                           kNotificationsCreditSent,
                           kNotificationsCreditViewed,
                         ].contains(eventType) &&
-                        !state.company!.isModuleEnabled(EntityType.credit)) {
+                        !state.company.isModuleEnabled(EntityType.credit)) {
                       return false;
                     } else if ([
                           kNotificationsPurchaseOrderCreated,
@@ -102,13 +102,12 @@ class NotificationSettings extends StatelessWidget {
                           kNotificationsPurchaseOrderViewed,
                           kNotificationsPurchaseOrderAccepted,
                         ].contains(eventType) &&
-                        !state.company!
-                            .isModuleEnabled(EntityType.purchaseOrder)) {
+                        !state.company.isModuleEnabled(EntityType.purchaseOrder)) {
                       return false;
                     } else if ([
                           kNotificationsInventoryThreshold,
                         ].contains(eventType) &&
-                        !state.company!.stockNotification) {
+                        !state.company.stockNotification) {
                       return false;
                     }
 

@@ -24,7 +24,7 @@ InvoiceItemEntity convertTaskToInvoiceItem({
   final client = state.clientState.get(task.clientId);
   final group = state.groupState.get(client.groupId);
   final localization = AppLocalization.of(context)!;
-  final company = state.company!;
+  final company = state.company;
 
   var notes = '';
   final dates = <String, double>{};
@@ -38,7 +38,7 @@ InvoiceItemEntity convertTaskToInvoiceItem({
   if (company.invoiceTaskProjectHeader &&
       project.isOld &&
       includeProjectHeader) {
-    if (state.company!.markdownEnabled) {
+    if (state.company.markdownEnabled) {
       notes += '## ${project.name}\n';
     } else {
       notes += '<div class="project-header">${project.name}</div>\n';

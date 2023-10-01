@@ -30,7 +30,7 @@ class _KanbanViewBuilderState extends State<KanbanViewBuilder> {
       converter: KanbanVM.fromStore,
       builder: (context, viewModel) {
         final state = viewModel.state;
-        final company = state.company!;
+        final company = state.company;
         return KanbanView(
           viewModel: viewModel,
           key: ValueKey(

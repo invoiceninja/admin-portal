@@ -288,7 +288,7 @@ void handleProductAction(
             ..lineItems.addAll(
               productIds.map(
                 (productId) => convertProductToInvoiceItem(
-                  company: state.company!,
+                  company: state.company,
                   invoice: invoice,
                   product: state.productState.map[productId],
                   currencyMap: state.staticState.currencyMap,
@@ -308,7 +308,7 @@ void handleProductAction(
             ..lineItems.addAll(
               productIds.map(
                 (productId) => convertProductToInvoiceItem(
-                  company: state.company!,
+                  company: state.company,
                   invoice: invoice,
                   product: state.productState.map[productId],
                   currencyMap: state.staticState.currencyMap,

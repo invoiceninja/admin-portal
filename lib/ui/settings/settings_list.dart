@@ -137,12 +137,12 @@ class _SettingsListState extends State<SettingsList> {
                 section: kSettingsProducts,
                 viewModel: widget.viewModel,
               ),
-            if (state.company!.isModuleEnabled(EntityType.task))
+            if (state.company.isModuleEnabled(EntityType.task))
               SettingsListTile(
                 section: kSettingsTasks,
                 viewModel: widget.viewModel,
               ),
-            if (showAll && state.company!.isModuleEnabled(EntityType.expense))
+            if (showAll && state.company.isModuleEnabled(EntityType.expense))
               SettingsListTile(
                 section: kSettingsExpenses,
                 viewModel: widget.viewModel,
@@ -333,7 +333,7 @@ class SettingsSearch extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
-    final company = store.state.company!;
+    final company = store.state.company;
 
     final map = {
       kSettingsCompanyDetails: [

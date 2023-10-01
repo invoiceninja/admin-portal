@@ -90,7 +90,7 @@ class ExpenseEditNotesState extends State<ExpenseEditNotes> {
 
     final showDocuments = isDesktop(context) &&
         state.isEnterprisePlan &&
-        company!.isModuleEnabled(EntityType.document);
+        company.isModuleEnabled(EntityType.document);
 
     return ScrollableListView(
       children: <Widget>[

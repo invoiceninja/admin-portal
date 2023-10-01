@@ -59,7 +59,7 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
         if (contact.email.isNotEmpty) {
           subtitleParts.add(contact.email);
         }
-        if (company!.hasCustomField(CustomFieldType.vendorContact1) &&
+        if (company.hasCustomField(CustomFieldType.vendorContact1) &&
             contact.customValue1.isNotEmpty) {
           subtitleParts.add(company.formatCustomFieldValue(
               CustomFieldType.vendorContact1, contact.customValue1));

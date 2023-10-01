@@ -32,7 +32,7 @@ class SidebarScaffold extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final company = state.company!;
+    final company = state.company;
 
     return Scaffold(
       appBar: AppBar(

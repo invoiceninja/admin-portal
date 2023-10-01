@@ -180,10 +180,10 @@ class _PaymentViewState extends State<PaymentView> {
                 ),
                 BottomButtons(
                   entity: payment,
-                  action1: state.company!.enableApplyingPayments
+                  action1: state.company.enableApplyingPayments
                       ? EntityAction.applyPayment
                       : EntityAction.sendEmail,
-                  action1Enabled: state.company!.enableApplyingPayments
+                  action1Enabled: state.company.enableApplyingPayments
                       ? payment.applied < payment.amount &&
                           memoizedHasActiveUnpaidInvoices(
                             payment.clientId,

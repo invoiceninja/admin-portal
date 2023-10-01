@@ -76,7 +76,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     super.initState();
 
     final state = widget.viewModel.state;
-    final company = state.company!;
+    final company = state.company;
     final settingsUIState = state.settingsUIState;
     final length = company.markdownEmailEnabled ? 3 : 2;
 
@@ -142,7 +142,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       _bodyController.text = template.body;
     }
 
-    if (viewModel.state.company!.markdownEmailEnabled &&
+    if (viewModel.state.company.markdownEmailEnabled &&
         _bodyController.text.trim().startsWith('<')) {
       _bodyController.text = html2md.convert(_bodyController.text);
     }
@@ -158,7 +158,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       _bodyPreview = '';
       _emailPreview = '';
 
-      if (state.company!.markdownEmailEnabled &&
+      if (state.company.markdownEmailEnabled &&
           _defaultBody.trim().startsWith('<')) {
         _defaultBody = html2md.convert(_defaultBody);
       }
@@ -262,7 +262,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       _selectedIndex = _controller!.index;
     });
 
-    final previewIndex = store.state.company!.markdownEmailEnabled ? 2 : 1;
+    final previewIndex = store.state.company.markdownEmailEnabled ? 2 : 1;
 
     if (_controller!.index != previewIndex) {
       return;
@@ -312,7 +312,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     final state = viewModel.state;
     final settings = viewModel.settings;
     final template = widget.viewModel.selectedTemplate;
-    final company = state.company!;
+    final company = state.company;
     final enableCustomEmail = state.isProPlan;
 
     return EditScaffold(

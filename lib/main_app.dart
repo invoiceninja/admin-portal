@@ -359,7 +359,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   : Colors.white,
             ),
             child: WebSocketRefresh(
-              companyId: state.company?.id,
+              companyId: state.company.id,
               child: WindowManager(
                 child: MaterialApp(
                   builder: (BuildContext context, Widget? child) {
@@ -368,7 +368,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       data: data.copyWith(
                         textScaleFactor: state.prefState.textScaleFactor,
                         alwaysUse24HourFormat:
-                            state.company?.settings.enableMilitaryTime ?? false,
+                            state.company.settings.enableMilitaryTime ?? false,
                       ),
                       child: child!,
                     );

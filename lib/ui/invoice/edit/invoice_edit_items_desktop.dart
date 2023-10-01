@@ -79,7 +79,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     final viewModel = widget.viewModel;
     final lineItems = viewModel.invoice!.lineItems;
     final state = viewModel.state!;
-    final company = state.company!;
+    final company = state.company;
 
     final includedLineItems = lineItems.where((lineItem) {
       return (lineItem!.typeId == InvoiceItemEntity.TYPE_TASK &&
@@ -284,7 +284,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     final theme = Theme.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state!;
-    final company = state.company!;
+    final company = state.company;
 
     final invoice = viewModel.invoice!;
     final client = state.clientState.get(invoice.clientId);
@@ -718,8 +718,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                       ..quantity =
                                           item.isTask || item.quantity != 0
                                               ? item.quantity
-                                              : viewModel.state!.company!
-                                                      .defaultQuantity
+                                              : viewModel.state!.company.defaultQuantity
                                                   ? 1
                                                   : product.quantity
                                       ..customValue1 = product.customValue1

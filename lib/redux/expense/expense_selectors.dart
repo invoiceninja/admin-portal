@@ -34,7 +34,7 @@ InvoiceItemEntity convertExpenseToInvoiceItem({
   required BuildContext context,
 }) {
   final state = StoreProvider.of<AppState>(context).state;
-  final company = state.company!;
+  final company = state.company;
   final categoryMap = state.expenseCategoryState.map;
   final localization = AppLocalization.of(context)!;
 

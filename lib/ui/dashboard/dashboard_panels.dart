@@ -149,7 +149,7 @@ class DashboardPanels extends StatelessWidget {
             children: <Widget>[
               Flexible(
                 child: Text(
-                  formatDateRange(settings.startDate(company!)!,
+                  formatDateRange(settings.startDate(company)!,
                       settings.endDate(company)!, context),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
@@ -420,7 +420,7 @@ class DashboardPanels extends StatelessWidget {
 
     final sections = [
       DashboardSections.messages,
-      if (company!.isModuleEnabled(EntityType.task) && runningTasks != null)
+      if (company.isModuleEnabled(EntityType.task) && runningTasks != null)
         DashboardSections.runningTasks,
       DashboardSections.overview,
       if (company.isModuleEnabled(EntityType.invoice))
@@ -465,7 +465,7 @@ class DashboardPanels extends StatelessWidget {
                           state.showTwoYearReviewApp)
                         ReviewApp(),
                       if (state.userCompany.isAdmin &&
-                          state.company!.daysActive < 30 &&
+                          state.company.daysActive < 30 &&
                           !state.prefState.hideGatewayWarning &&
                           state.companyGatewayState.list.isEmpty)
                         Padding(
@@ -865,7 +865,7 @@ class __DashboardPanelState extends State<_DashboardPanel> {
       onSelected: widget.onSelected as dynamic Function(),
       currencyId: settings.currencyId.isNotEmpty
           ? settings.currencyId
-          : state.company!.currencyId,
+          : state.company.currencyId,
     );
 
     return _chart!;
@@ -931,7 +931,7 @@ class __OverviewPanelState extends State<_OverviewPanel> {
       final index = invoiceData!.indexOf(dataGroup);
       final invoiceSeries = dataGroup.rawSeries;
 
-      if (state.company!.isModuleEnabled(EntityType.expense)) {
+      if (state.company.isModuleEnabled(EntityType.expense)) {
         final List<ChartMoneyData> expenses = [];
         final expenseSeries = expenseData![index].rawSeries;
         dataGroup.previousTotal = expenseData![index].periodTotal;
@@ -996,7 +996,7 @@ class __OverviewPanelState extends State<_OverviewPanel> {
       onDateSelected: widget.onDateSelected,
       currencyId: settings.currencyId.isNotEmpty
           ? settings.currencyId
-          : state.company!.currencyId,
+          : state.company.currencyId,
       isOverview: true,
     );
 
@@ -1154,7 +1154,7 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
                     currencySettings,
                   ],
                 ),
-              if (company!.hasTaxes)
+              if (company.hasTaxes)
                 Row(
                   children: [
                     Text(localization.taxes),
@@ -1295,7 +1295,7 @@ class _DashboardFieldState extends State<_DashboardField> {
 
     fieldMap.forEach((entityType, fields) {
       fields.forEach((field) {
-        if (company!.isModuleEnabled(entityType)) {
+        if (company.isModuleEnabled(entityType)) {
           items.add(DropdownMenuItem<String>(
             child: Text(localization.lookup(field)!),
             value: field,

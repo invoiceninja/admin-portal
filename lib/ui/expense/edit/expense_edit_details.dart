@@ -115,7 +115,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
     final state = store.state;
     final viewModel = widget.viewModel;
     final expense = viewModel.expense!;
-    final company = state.company!;
+    final company = state.company;
     final staticState = viewModel.state!.staticState;
     final vendorState = viewModel.state!.vendorState;
     final clientState = viewModel.state!.clientState;

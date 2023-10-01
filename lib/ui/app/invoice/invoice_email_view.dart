@@ -161,7 +161,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             if (_rawBodyPreview.isEmpty) {
               _rawBodyPreview = rawBody!.trim();
 
-              final company = widget.viewModel.state!.company!;
+              final company = widget.viewModel.state!.company;
               if (company.markdownEmailEnabled &&
                   _rawBodyPreview.trim().startsWith('<')) {
                 _rawBodyPreview = html2md.convert(_rawBodyPreview);
@@ -326,7 +326,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     final enableCustomEmail = state.isSelfHosted ||
         state.isProPlan ||
         state.isTrial ||
-        !state.account!.accountSmsVerified;
+        !state.account.accountSmsVerified;
 
     return Column(
       children: [
@@ -346,7 +346,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                       ),
                       onPressed: () {
                         if (supportsInAppPurchase() &&
-                            state.account!.canMakeIAP) {
+                            state.account.canMakeIAP) {
                           showDialog<void>(
                             context: context,
                             builder: (context) => UpgradeDialog(),
@@ -359,7 +359,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             ),
           ),
         ColoredBox(
-          color: state.company!.markdownEmailEnabled && !isDarkMode(context)
+          color: state.company.markdownEmailEnabled && !isDarkMode(context)
               ? Colors.white
               : Theme.of(context).colorScheme.background,
           child: Padding(
@@ -373,7 +373,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             ),
           ),
         ),
-        if (state.company!.markdownEmailEnabled)
+        if (state.company.markdownEmailEnabled)
           Expanded(
             child: ColoredBox(
               color: Colors.white,
@@ -444,7 +444,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
         onCancelPressed: (context) => viewEntity(entity: invoice!),
         saveLabel: localization.send,
         onSavePressed: (context) {
-          if (state!.account!.accountSmsVerified || state.isSelfHosted) {
+          if (state!.account.accountSmsVerified || state.isSelfHosted) {
             viewModel.onSendPressed!(
               context,
               selectedTemplate,

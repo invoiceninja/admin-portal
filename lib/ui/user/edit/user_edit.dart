@@ -425,7 +425,7 @@ class _UserEditState extends State<UserEdit>
                           EntityType.transaction,
                         ]
                             .where((entityType) =>
-                                state.company!.isModuleEnabled(entityType))
+                                state.company.isModuleEnabled(entityType))
                             .map((EntityType type) {
                           final createPermission = 'create_' + type.apiValue;
                           final editPermission = 'edit_' + type.apiValue;

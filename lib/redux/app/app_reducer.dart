@@ -48,7 +48,7 @@ AppState appReducer(AppState state, dynamic action) {
     return AppState(
             prefState: state.prefState,
             isWhiteLabeled: state.isWhiteLabeled,
-            reportErrors: state.account!.reportErrors)
+            reportErrors: state.account.reportErrors)
         .rebuild((b) => b
           ..authState.replace(state.authState.rebuild((b) => b
             ..isAuthenticated = false
@@ -61,7 +61,7 @@ AppState appReducer(AppState state, dynamic action) {
   } else if (action is ClearData) {
     return state.rebuild((b) => b
       ..userCompanyStates[state.uiState.selectedCompanyIndex] =
-          UserCompanyState(state.account!.reportErrors));
+          UserCompanyState(state.account.reportErrors));
   }
 
   return state.rebuild((b) => b
@@ -76,7 +76,7 @@ AppState appReducer(AppState state, dynamic action) {
         state.userCompanyStates[state.uiState.selectedCompanyIndex], action)
     ..uiState.replace(uiReducer(state.uiState, action))
     ..prefState
-        .replace(prefReducer(state.prefState, action, state.company!.id)));
+        .replace(prefReducer(state.prefState, action, state.company.id)));
 }
 
 final lastErrorReducer = combineReducers<String>([

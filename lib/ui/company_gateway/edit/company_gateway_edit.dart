@@ -324,7 +324,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                           .rebuild((b) => b..requireContactEmail = value)),
                       controlAffinity: ListTileControlAffinity.leading,
                     ),
-                    if (company!.hasCustomField(CustomFieldType.client1))
+                    if (company.hasCustomField(CustomFieldType.client1))
                       CheckboxListTile(
                         activeColor: Theme.of(context).colorScheme.secondary,
                         title: Text(company
@@ -987,7 +987,7 @@ class _FeesEditorState extends State<FeesEditor> {
     final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel!;
     final companyGateway = viewModel.companyGateway;
-    final company = viewModel.state.company!;
+    final company = viewModel.state.company;
     final settings =
         companyGateway.getSettingsForGatewayTypeId(widget.gatewayTypeId);
 

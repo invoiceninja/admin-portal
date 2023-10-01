@@ -113,7 +113,7 @@ class MultiSelectListState extends State<MultiSelectList> {
     widget.options
         .where((option) => !selected.contains(option))
         .forEach((option) {
-      final columnTitle = state.company!.getCustomFieldLabel(
+      final columnTitle = state.company.getCustomFieldLabel(
           widget.entityType != null
               ? option.replaceFirst('custom', widget.entityType!.snakeCase)
               : option);
@@ -168,7 +168,7 @@ class MultiSelectListState extends State<MultiSelectList> {
                 padding: const EdgeInsets.only(right: 12),
                 children: selected.asMap().entries.map((entry) {
                   final option = entry.value;
-                  final columnTitle = state.company!.getCustomFieldLabel(
+                  final columnTitle = state.company.getCustomFieldLabel(
                       widget.entityType != null
                           ? option.replaceFirst(
                               'custom', widget.entityType!.snakeCase)

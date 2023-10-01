@@ -223,7 +223,7 @@ Middleware<AppState> _createLoadState(
       final AppState appState = AppState(
               prefState: prefState,
               isWhiteLabeled: store.state.isWhiteLabeled,
-              reportErrors: store.state.account!.reportErrors)
+              reportErrors: store.state.account.reportErrors)
           .rebuild((b) => b
             ..authState.replace(authState!)
             ..uiState.replace(uiState!)
@@ -437,7 +437,7 @@ Middleware<AppState> _createAccountLoaded() {
             SelectCompany(companyIndex: i, clearSelection: loadedStaticData));
         store.dispatch(LoadCompanySuccess(userCompany));
 
-        if (store.state.account!.defaultCompanyId == userCompany.company.id) {
+        if (store.state.account.defaultCompanyId == userCompany.company.id) {
           selectedCompanyIndex = i;
         }
       }
@@ -518,7 +518,7 @@ Middleware<AppState> _createDataRefreshed() {
 
     WidgetUtils.updateData();
 
-    if (store.state.company!.isLarge && !store.state.isLoaded) {
+    if (store.state.company.isLarge && !store.state.isLoaded) {
       store.dispatch(LoadClients());
     }
   };

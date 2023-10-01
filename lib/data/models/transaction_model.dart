@@ -95,7 +95,7 @@ abstract class TransactionEntity extends Object
       amount: 0,
       bankAccountId: bankAccountId,
       category: '',
-      currencyId: state?.company?.currencyId ?? kDefaultCurrencyId,
+      currencyId: state?.company.currencyId ?? kDefaultCurrencyId,
       date: convertDateTimeToSqlDate(),
       description: '',
       expenseId: '',

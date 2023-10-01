@@ -36,7 +36,7 @@ class DesignPicker extends StatelessWidget {
             final design = designState.map[designId];
             if (state.isHosted &&
                 !state.isPaidAccount &&
-                !state.account!.isTrial &&
+                !state.account.isTrial &&
                 !design!.isFree) {
               return false;
             }

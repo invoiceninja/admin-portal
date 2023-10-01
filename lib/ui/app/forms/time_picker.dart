@@ -91,7 +91,7 @@ class _TimePickerState extends State<TimePicker> {
       builder: (BuildContext context, Widget? child) {
         final store = StoreProvider.of<AppState>(context);
         final enableMilitaryTime =
-            store.state.company!.settings.enableMilitaryTime;
+            store.state.company.settings.enableMilitaryTime;
         return MediaQuery(
           data: MediaQuery.of(context)
               .copyWith(alwaysUse24HourFormat: enableMilitaryTime),
@@ -176,7 +176,7 @@ class _TimePickerState extends State<TimePicker> {
             dateTimeStr += ' PM';
           } else {
             final store = StoreProvider.of<AppState>(context);
-            if (!store.state.company!.settings.enableMilitaryTime!) {
+            if (!store.state.company.settings.enableMilitaryTime!) {
               final hour = parseDouble(parts[0])!;
               if (hour > 12) {
                 final parts = dateTimeStr

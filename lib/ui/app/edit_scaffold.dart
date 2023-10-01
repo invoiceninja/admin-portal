@@ -60,7 +60,7 @@ class EditScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final account = state.account!;
+    final account = state.account;
     final localization = AppLocalization.of(context);
     Function? bannerClick;
 
@@ -68,7 +68,7 @@ class EditScaffold extends StatelessWidget {
     bool isEnabled = !state.isSaving && (entity?.isEditable ?? true);
     bool isCancelEnabled = false;
     String? upgradeMessage = state.userCompany.isOwner
-        ? (state.account!.isEligibleForTrial && !supportsInAppPurchase()
+        ? (state.account.isEligibleForTrial && !supportsInAppPurchase()
             ? localization!.startFreeTrialMessage
             : localization!.upgradeToPaidPlan)
         : localization!.ownerUpgradeToPaidPlan;
@@ -81,10 +81,10 @@ class EditScaffold extends StatelessWidget {
       }
     }
 
-    if (!state.isProPlan || state.account!.isTrial) {
+    if (!state.isProPlan || state.account.isTrial) {
       if (kAdvancedSettings.contains(state.uiState.baseSubRoute)) {
         showUpgradeBanner = true;
-        if (!state.isProPlan && !state.account!.isTrial && isEnabled) {
+        if (!state.isProPlan && !state.account.isTrial && isEnabled) {
           isCancelEnabled = true;
           isEnabled = false;
         }

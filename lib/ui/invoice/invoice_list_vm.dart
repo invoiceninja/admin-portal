@@ -139,7 +139,7 @@ class InvoiceListVM extends EntityListVM {
         state.paymentState.map,
         state.invoiceListState,
         state.userState.map,
-        state.company!.settings.recurringNumberPrefix,
+        state.company.settings.recurringNumberPrefix,
       ),
       invoiceMap: state.invoiceState.map,
       clientMap: state.clientState.map,

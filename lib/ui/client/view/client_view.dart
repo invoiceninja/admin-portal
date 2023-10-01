@@ -51,7 +51,7 @@ class _ClientViewState extends State<ClientView>
     final state = widget.viewModel.state;
     _controller = TabController(
         vsync: this,
-        length: state.company!.isModuleEnabled(EntityType.document) ? 6 : 5,
+        length: state.company.isModuleEnabled(EntityType.document) ? 6 : 5,
         initialIndex: widget.isFilter ? 0 : state.clientUIState.tabIndex);
     _controller!.addListener(_onTabChanged);
   }
@@ -123,7 +123,7 @@ class _ClientViewState extends State<ClientView>
           Tab(
             text: localization.details,
           ),
-          if (company!.isModuleEnabled(EntityType.document))
+          if (company.isModuleEnabled(EntityType.document))
             Tab(
               text: documents.isEmpty
                   ? localization.documents

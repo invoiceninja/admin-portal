@@ -44,7 +44,7 @@ class DynamicSelector extends StatelessWidget {
     final state = StoreProvider.of<AppState>(context).state;
     final entityMap = state.getEntityMap(entityType);
 
-    if (!state.company!.isModuleEnabled(entityType)) {
+    if (!state.company.isModuleEnabled(entityType)) {
       return SizedBox();
     }
 

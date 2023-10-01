@@ -150,9 +150,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get isStale => userCompanyState.isStale || staticState.isStale;
 
-  AccountEntity? get account => userCompany.account;
+  AccountEntity get account => userCompany.account;
 
-  CompanyEntity? get company => userCompanyState.company;
+  CompanyEntity get company => userCompanyState.company;
 
   List<CompanyEntity> get companies {
     final List<CompanyEntity> list = [];
@@ -191,13 +191,13 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   }
 
   bool get showReviewApp =>
-      !prefState.hideReviewApp && company!.daysActive > 60;
+      !prefState.hideReviewApp && company.daysActive > 60;
 
   bool get showOneYearReviewApp =>
-      !prefState.hideOneYearReviewApp && company!.daysActive > 365;
+      !prefState.hideOneYearReviewApp && company.daysActive > 365;
 
   bool get showTwoYearReviewApp =>
-      !prefState.hideTwoYearReviewApp && company!.daysActive > 730;
+      !prefState.hideTwoYearReviewApp && company.daysActive > 730;
 
   Color? get linkColor => prefState.enableDarkMode
       ? convertHexStringToColor('#FFFFFF')
@@ -222,7 +222,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   String get appVersion {
     String version = 'v';
 
-    version += account?.currentVersion ?? '';
+    version += account.currentVersion ?? '';
 
     if (version.isNotEmpty) {
       version += '-';
@@ -236,7 +236,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   }
 
   List<HistoryRecord> get historyList =>
-      prefState.companyPrefs[company!.id]!.historyList.where((history) {
+      prefState.companyPrefs[company.id]!.historyList.where((history) {
         final entityMap = getEntityMap(history.entityType);
         if (entityMap != null) {
           final entity = entityMap[history.id] as BaseEntity?;
@@ -248,7 +248,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       }).toList();
 
   List<HistoryRecord> get unfilteredHistoryList =>
-      prefState.companyPrefs[company!.id]!.historyList.toList();
+      prefState.companyPrefs[company.id]!.historyList.toList();
 
   bool? shouldSelectEntity(
       {EntityType? entityType, List<String?>? entityList}) {
@@ -799,7 +799,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     final int patch = int.parse(parts[2]);
 
     try {
-      final serverParts = account!.currentVersion.split('.');
+      final serverParts = account.currentVersion.split('.');
       final int serverMajor = int.parse(serverParts[0]);
       final int serverMinor = int.parse(serverParts[1]);
       final int serverPatch = int.parse(serverParts[2]);
@@ -826,9 +826,9 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     }
   }
 
-  bool get reportErrors => account?.reportErrors ?? false;
+  bool get reportErrors => account.reportErrors ?? false;
 
-  bool get isHosted => account == null ? authState.isHosted : account!.isHosted;
+  bool get isHosted => account == null ? authState.isHosted : account.isHosted;
 
   bool get isSelfHosted => !isHosted;
 
@@ -836,18 +836,18 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get isStaging => cleanApiUrl(authState.url) == kAppStagingUrl;
 
-  bool get isProPlan => isEnterprisePlan || account!.plan == kPlanPro;
+  bool get isProPlan => isEnterprisePlan || account.plan == kPlanPro;
 
-  bool get isTrial => isHosted && account!.isTrial;
+  bool get isTrial => isHosted && account.isTrial;
 
-  bool get isEnterprisePlan => isSelfHosted || account!.plan == kPlanEnterprise;
+  bool get isEnterprisePlan => isSelfHosted || account.plan == kPlanEnterprise;
 
   bool get isPaidAccount => isSelfHosted
-      ? (isWhiteLabeled || account!.plan == kPlanWhiteLabel)
+      ? (isWhiteLabeled || account.plan == kPlanWhiteLabel)
       : ((isProPlan || isEnterprisePlan) && !isTrial);
 
   bool get isUpdateAvailable =>
-      isSelfHosted && account!.isUpdateAvailable && userCompany.isAdmin;
+      isSelfHosted && account.isUpdateAvailable && userCompany.isAdmin;
 
   bool get isUserConfirmed {
     if (isSelfHosted) {
@@ -860,7 +860,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   int get createdAtLimit {
     final numberYearsActive = userCompany.settings.numberYearsActive;
 
-    if (!company!.isLarge || numberYearsActive == 0) {
+    if (!company.isLarge || numberYearsActive == 0) {
       return 0;
     }
 
@@ -870,7 +870,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   }
 
   bool get filterDeletedClients {
-    if (!company!.isLarge) {
+    if (!company.isLarge) {
       return false;
     }
 
@@ -951,7 +951,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     final millisecondsSinceEnteredPassword =
         DateTime.now().millisecondsSinceEpoch - authState.lastEnteredPasswordAt;
 
-    return millisecondsSinceEnteredPassword < company!.passwordTimeout;
+    return millisecondsSinceEnteredPassword < company.passwordTimeout;
   }
 
   @override
@@ -1012,7 +1012,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         '\nIs Loading: ${isLoading ? 'Yes' : 'No'}'
         '\nIs Saving: ${isSaving ? 'Yes' : 'No'}'
         '\nIs Loaded: ${isLoaded ? 'Yes' : 'No'}'
-        '\nis Large: ${(company?.isLarge ?? false) ? 'Yes' : 'No'}'
+        '\nis Large: ${(company.isLarge ?? false) ? 'Yes' : 'No'}'
         '\nCompany: $companyUpdated${userCompanyState.isStale ? ' [S]' : ''}'
         '\nStatic: $staticUpdated${staticState.isStale ? ' [S]' : ''}'
         '\nPassword: $passwordUpdated${hasRecentlyEnteredPassword ? '' : ' [S]'}'

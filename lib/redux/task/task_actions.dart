@@ -446,7 +446,7 @@ void handleTaskAction(
         items.add(convertTaskToInvoiceItem(
             task: task as TaskEntity,
             context: context,
-            includeProjectHeader: company!.invoiceTaskProject &&
+            includeProjectHeader: company.invoiceTaskProject &&
                 !company.hasCustomProductField(localization!.project) &&
                 task.projectId != lastTask?.projectId));
         lastTask = task;

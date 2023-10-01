@@ -117,7 +117,7 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
     final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    var countryId = state.company!.settings.countryId;
+    var countryId = state.company.settings.countryId;
     if ((countryId ?? '').isEmpty) {
       countryId = kCountryUnitedStates;
     }

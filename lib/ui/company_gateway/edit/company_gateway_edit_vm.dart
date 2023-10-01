@@ -96,7 +96,7 @@ class CompanyGatewayEditVM {
                   ? localization!.createdCompanyGateway
                   : localization!.updatedCompanyGateway);
 
-              final company = store.state.company!;
+              final company = store.state.company;
               if ((company.settings.companyGatewayIds ?? '').isNotEmpty) {
                 store.dispatch(SaveCompanyRequest(
                     completer: Completer<Null>(),

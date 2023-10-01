@@ -49,7 +49,7 @@ class _VendorViewState extends State<VendorView>
     final state = widget.viewModel.state;
     _controller = TabController(
         vsync: this,
-        length: state.company!.isModuleEnabled(EntityType.document) ? 4 : 3,
+        length: state.company.isModuleEnabled(EntityType.document) ? 4 : 3,
         initialIndex: widget.isFilter ? 0 : state.vendorUIState.tabIndex);
     _controller!.addListener(_onTabChanged);
   }
@@ -121,7 +121,7 @@ class _VendorViewState extends State<VendorView>
           Tab(
             text: localization.details,
           ),
-          if (company!.isModuleEnabled(EntityType.document))
+          if (company.isModuleEnabled(EntityType.document))
             Tab(
               text: documents.isEmpty
                   ? localization.documents

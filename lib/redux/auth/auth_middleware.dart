@@ -248,7 +248,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
         print('## Skipping refresh request - pending load');
         next(action);
         return;
-      } else if (state.company!.isLarge && !state.isLoaded) {
+      } else if (state.company.isLarge && !state.isLoaded) {
         print('## Skipping refresh request - not loaded');
         next(action);
         store.dispatch(LoadClients());
@@ -387,7 +387,7 @@ Middleware<AppState> _setDefaultCompany(AuthRepository repository) {
       NextDispatcher next) async {
     final action = dynamicAction as SetDefaultCompanyRequest?;
     final state = store.state;
-    final companyId = state.company!.id;
+    final companyId = state.company.id;
 
     repository
         .setDefaultCompany(credentials: state.credentials, companyId: companyId)
@@ -414,7 +414,7 @@ Middleware<AppState> _deleteCompany(AuthRepository repository) {
         .deleteCompany(
       credentials: state.credentials,
       password: action.password,
-      companyId: state.company!.id,
+      companyId: state.company.id,
       reason: action.reason,
     )
         .then((dynamic value) {
@@ -434,7 +434,7 @@ Middleware<AppState> _purgeData(AuthRepository repository) {
       NextDispatcher next) async {
     final action = dynamicAction as PurgeDataRequest;
     final state = store.state;
-    final company = state.company!;
+    final company = state.company;
 
     repository
         .purgeData(

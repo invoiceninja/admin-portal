@@ -354,7 +354,7 @@ void handlePaymentAction(
         }
         store.dispatch(ViewRefundPayment(
           payment: payment!.rebuild((b) =>
-              b..sendEmail = company!.settings.clientManualPaymentNotification),
+              b..sendEmail = company.settings.clientManualPaymentNotification),
         ));
       });
       break;

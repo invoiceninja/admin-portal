@@ -40,7 +40,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
     final subscription = viewModel.subscription;
     final localization = AppLocalization.of(context)!;
     final state = viewModel.state;
-    final company = state.company!;
+    final company = state.company;
 
     return ViewScaffold(
       isFilter: widget.isFilter,

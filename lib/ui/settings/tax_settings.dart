@@ -174,8 +174,8 @@ class _TaxSettingsState extends State<TaxSettings> {
                   helpLabel: localization.calculateTaxesHelp,
                 ),
                 if (state.isSelfHosted &&
-                    !state.account!.taxApiEnabled &&
-                    state.company!.settings.countryId == kCountryUnitedStates)
+                    !state.account.taxApiEnabled &&
+                    state.company.settings.countryId == kCountryUnitedStates)
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: LearnMoreUrl(

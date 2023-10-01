@@ -21,7 +21,7 @@ class WidgetData {
 
   WidgetData.fromState(AppState state, AppLocalization? localization)
       : url = formatApiUrl(state.authState.url),
-        companyId = state.account!.defaultCompanyId,
+        companyId = state.account.defaultCompanyId,
         companies = {
           for (var userCompany in state.userCompanyStates
               .where((state) => state.company.hasName))

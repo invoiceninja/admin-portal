@@ -77,7 +77,7 @@ class _ProductViewState extends State<ProductView>
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final company = state.company!;
+    final company = state.company;
     final product = viewModel.product;
     final documents = product.documents;
 

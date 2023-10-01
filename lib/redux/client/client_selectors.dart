@@ -136,7 +136,7 @@ SettingsEntity getClientSettings(AppState? state, ClientEntity? client) {
   }
 
   client ??= ClientEntity();
-  final company = state.company!;
+  final company = state.company;
   final group = state.groupState.get(client.groupId);
 
   return SettingsEntity(
@@ -148,7 +148,7 @@ SettingsEntity getClientSettings(AppState? state, ClientEntity? client) {
 
 SettingsEntity getVendorSettings(AppState state, VendorEntity? vendor) {
   vendor ??= VendorEntity();
-  final company = state.company!;
+  final company = state.company;
   //final group = state.groupState.get(vendor.groupId);
 
   return SettingsEntity(

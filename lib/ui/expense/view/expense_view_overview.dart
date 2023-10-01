@@ -45,7 +45,7 @@ class ExpenseOverview extends StatelessWidget {
         state.recurringExpenseState.get(expense.recurringExpenseId!);
 
     InvoiceEntity? purchaseOrder;
-    if (state.company!.isModuleEnabled(EntityType.purchaseOrder)) {
+    if (state.company.isModuleEnabled(EntityType.purchaseOrder)) {
       purchaseOrder = memoizedExpensePurchaseOrderSelector(
           expense, state.purchaseOrderState.map);
     }

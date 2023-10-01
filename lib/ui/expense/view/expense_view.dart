@@ -44,7 +44,7 @@ class _ExpenseViewState extends State<ExpenseView>
 
     final viewModel = widget.viewModel;
     final state = viewModel.state!;
-    final company = state.company!;
+    final company = state.company;
 
     _controller = TabController(
         vsync: this,

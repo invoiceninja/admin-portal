@@ -153,7 +153,7 @@ class RecurringExpenseListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              (expense.publicNotes ?? '') +
+                              expense.publicNotes +
                                   (expense.documents.isNotEmpty ? '  📎' : ''),
                               style: textStyle,
                               maxLines: 1,

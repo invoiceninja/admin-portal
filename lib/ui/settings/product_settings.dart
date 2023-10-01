@@ -46,7 +46,7 @@ class _ProductSettingsState extends State<ProductSettings> {
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final viewModel = widget.viewModel;
-    final company = viewModel.state.company!;
+    final company = viewModel.state.company;
 
     _stockThresholdController.text = company.stockNotificationThreshold == 0
         ? ''

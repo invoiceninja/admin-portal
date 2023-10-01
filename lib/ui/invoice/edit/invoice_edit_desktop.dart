@@ -113,7 +113,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
 
     final invoice = widget.viewModel.invoice!;
     final state = widget.viewModel.state!;
-    final company = state.company!;
+    final company = state.company;
 
     _selectTasksTable = invoice.hasTasks && !invoice.hasProducts;
     _showSaveDefault = invoice.isInvoice ||

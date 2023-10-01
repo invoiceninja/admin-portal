@@ -91,7 +91,7 @@ abstract class PaymentEntity extends Object
       clientId: client?.id ?? '',
       privateNotes: '',
       exchangeRate: 1,
-      exchangeCurrencyId: state?.company?.currencyId ?? '',
+      exchangeCurrencyId: state?.company.currencyId ?? '',
       refunded: 0.0,
       applied: 0,
       statusId: '',

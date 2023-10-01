@@ -77,7 +77,7 @@ class _ProjectViewState extends State<ProjectView>
     final viewModel = widget.viewModel;
     final project = viewModel.project;
     final state = viewModel.state;
-    final company = state.company!;
+    final company = state.company;
     final localization = AppLocalization.of(context);
     final documents = project.documents;
 

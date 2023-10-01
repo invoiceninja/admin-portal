@@ -86,7 +86,7 @@ class InvoiceDesignVM {
                     final webClient = WebClient();
                     final credentials = state.credentials;
                     final url = '${credentials.url}/designs/set/default';
-                    final settings = store.state.company!.settings;
+                    final settings = store.state.company.settings;
                     entityTypes.forEach((entityType) {
                       webClient
                           .post(

@@ -56,7 +56,7 @@ class InvoiceScreenVM {
         state.paymentState.map,
         state.invoiceListState,
         state.userState.map,
-        state.company!.settings.recurringNumberPrefix,
+        state.company.settings.recurringNumberPrefix,
       ),
       userCompany: state.userCompany,
       isInMultiselect: state.invoiceListState.isInMultiselect(),

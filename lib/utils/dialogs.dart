@@ -188,7 +188,7 @@ void passwordCallback({
   final user = state.user;
 
   print(
-      '## Confirm password: $alwaysRequire, ${user.hasPassword}, ${state.hasRecentlyEnteredPassword}, ${user.oauthProvider}, ${state.company!.oauthPasswordRequired}');
+      '## Confirm password: $alwaysRequire, ${user.hasPassword}, ${state.hasRecentlyEnteredPassword}, ${user.oauthProvider}, ${state.company.oauthPasswordRequired}');
 
   if (alwaysRequire && !user.hasPassword) {
     showMessageDialog(
@@ -234,7 +234,7 @@ void passwordCallback({
   try {
     if (user.isConnectedToGoogle) {
       GoogleOAuth.signIn((idToken, accessToken) {
-        if ((!alwaysRequire && !state.company!.oauthPasswordRequired) ||
+        if ((!alwaysRequire && !state.company.oauthPasswordRequired) ||
             !user.hasPassword) {
           print('## 4');
           callback(null, idToken);
@@ -254,7 +254,7 @@ void passwordCallback({
       }, isSilent: true);
     } else if (user.isConnectedToMicrosoft) {
       WebUtils.microsoftLogin((idToken, accessToken) {
-        if ((!alwaysRequire && !state.company!.oauthPasswordRequired) ||
+        if ((!alwaysRequire && !state.company.oauthPasswordRequired) ||
             !user.hasPassword) {
           print('## 6');
           callback(null, idToken);

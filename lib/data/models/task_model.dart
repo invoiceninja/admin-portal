@@ -126,7 +126,7 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
         endDate != null ? (endDate!.millisecondsSinceEpoch / 1000).floor() : 0;
 
     final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
-    final company = store.state.company!;
+    final company = store.state.company;
 
     // Handle the end time being before the start time
     if (!company.showTaskEndDate && endTime != 0) {
@@ -300,7 +300,7 @@ abstract class TaskEntity extends Object
     UserEntity? user,
     ProjectEntity? project,
   }) {
-    final isRunning = state?.company?.autoStartTasks ?? false;
+    final isRunning = state?.company.autoStartTasks ?? false;
 
     return _$TaskEntity._(
       id: id ?? BaseEntity.nextId,

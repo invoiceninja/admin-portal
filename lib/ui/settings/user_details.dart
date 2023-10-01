@@ -262,7 +262,7 @@ class _UserDetailsState extends State<UserDetails>
                   viewModel.onDisconnectMicrosoftEmailPressed(context);
                 } else {
                   launchUrl(
-                      Uri.parse('${state.account!.defaultUrl}/auth/microsoft'));
+                      Uri.parse('${state.account.defaultUrl}/auth/microsoft'));
                 }
               },
       ),
@@ -455,7 +455,7 @@ class _UserDetailsState extends State<UserDetails>
                             value ?? '#ffffff'));
                     },
                   ),
-                  if (state.company!.isLarge || !kReleaseMode) ...[
+                  if (state.company.isLarge || !kReleaseMode) ...[
                     AppDropdownButton<int>(
                       blankValue: null,
                       labelText: localization.yearsDataShown,

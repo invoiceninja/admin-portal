@@ -111,7 +111,7 @@ class _CompanyGatewayOverview extends StatelessWidget {
     final processed = memoizedCalculateCompanyGatewayProcessed(
         companyGateway.id, viewModel.state.paymentState.map);
     final webhookUrl =
-        '${state.account!.defaultUrl}/payment_webhook/${state.company!.companyKey}/${companyGateway.id}';
+        '${state.account.defaultUrl}/payment_webhook/${state.company.companyKey}/${companyGateway.id}';
 
     final allFields = <String, Map<String, String>>{};
     for (var gatewayTypeId in kGatewayTypes.keys) {

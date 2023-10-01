@@ -39,7 +39,7 @@ class InvoiceItemListTile extends StatelessWidget {
 
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final company = state.company!;
+    final company = state.company;
     final client = state.clientState.get(invoice.clientId);
     final precision =
         state.staticState.currencyMap[client.currencyId]?.precision ?? 2;

@@ -45,7 +45,7 @@ class DashboardScreenBuilder extends StatelessWidget {
         return DashboardScreen(
           viewModel: viewModel,
           key: ValueKey(
-              '__${company!.id}_${company.enabledModules}_${state.prefState.isDesktop}__'),
+              '__${company.id}_${company.enabledModules}_${state.prefState.isDesktop}__'),
         );
       },
     );

@@ -244,11 +244,11 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
                     if (Platform.isAndroid) {
                       purchaseParam = GooglePlayPurchaseParam(
                           productDetails: productDetails,
-                          applicationUserName: account!.id);
+                          applicationUserName: account.id);
                     } else {
                       purchaseParam = PurchaseParam(
                         productDetails: productDetails,
-                        applicationUserName: account!.id,
+                        applicationUserName: account.id,
                       );
                     }
 
@@ -292,7 +292,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
 
     final data = {
       'inapp_transaction_id': purchaseDetails.purchaseID,
-      'key': state.account!.key,
+      'key': state.account.key,
       'plan': purchaseDetails.productID.replaceAll('-', '_'),
       'plan_paid': (int.parse(purchaseDetails.transactionDate!) / 1000).floor(),
     };

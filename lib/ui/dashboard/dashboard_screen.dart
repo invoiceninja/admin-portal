@@ -71,7 +71,7 @@ class _DashboardScreenState extends State<DashboardScreen>
       EntityType.task,
       EntityType.expense,
     ].forEach((entityType) {
-      if (company!.isModuleEnabled(entityType)) {
+      if (company.isModuleEnabled(entityType)) {
         _tabs.add(entityType);
       }
     });
@@ -93,11 +93,11 @@ class _DashboardScreenState extends State<DashboardScreen>
         )
       ..addListener(onScrollListener);
 
-    final companyName = state.company!.settings.name ?? '';
+    final companyName = state.company.settings.name ?? '';
     if (!state.isDemo &&
         state.userCompany.isAdmin &&
         (companyName.isEmpty || companyName == 'Untitled Company') &&
-        state.company!.isOld) {
+        state.company.isOld) {
       WidgetsBinding.instance.addPostFrameCallback((duration) {
         showDialog<void>(
             context: context,
@@ -268,8 +268,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                 tooltip: localization!.enableReactApp,
                 onPressed: () async {
                   final credentials = state.credentials;
-                  final account = state.account!
-                      .rebuild((b) => b..setReactAsDefaultAP = true);
+                  final account = state.account.rebuild((b) => b..setReactAsDefaultAP = true);
                   final url = '${credentials.url}/accounts/${account.id}';
                   final data = serializers.serializeWith(
                       AccountEntity.serializer, account);
@@ -326,27 +325,27 @@ class _DashboardScreenState extends State<DashboardScreen>
                     text: localization.systemLogs,
                   ),
                   if (isMobile(context) &&
-                      company!.isModuleEnabled(EntityType.invoice))
+                      company.isModuleEnabled(EntityType.invoice))
                     Tab(
                       text: localization.invoices,
                     ),
                   if (isMobile(context) &&
-                      company!.isModuleEnabled(EntityType.payment))
+                      company.isModuleEnabled(EntityType.payment))
                     Tab(
                       text: localization.payments,
                     ),
                   if (isMobile(context) &&
-                      company!.isModuleEnabled(EntityType.quote))
+                      company.isModuleEnabled(EntityType.quote))
                     Tab(
                       text: localization.quotes,
                     ),
                   if (isMobile(context) &&
-                      company!.isModuleEnabled(EntityType.task))
+                      company.isModuleEnabled(EntityType.task))
                     Tab(
                       text: localization.tasks,
                     ),
                   if (isMobile(context) &&
-                      company!.isModuleEnabled(EntityType.expense))
+                      company.isModuleEnabled(EntityType.expense))
                     Tab(
                       text: localization.expense,
                     ),
@@ -444,15 +443,15 @@ class _CustomTabBarView extends StatelessWidget {
           onRefresh: () => viewModel.onRefreshed(context),
           child: DashboardSystemLogs(viewModel: viewModel),
         ),
-        if (isMobile(context) && company!.isModuleEnabled(EntityType.invoice))
+        if (isMobile(context) && company.isModuleEnabled(EntityType.invoice))
           InvoiceSidebar(),
-        if (isMobile(context) && company!.isModuleEnabled(EntityType.payment))
+        if (isMobile(context) && company.isModuleEnabled(EntityType.payment))
           PaymentSidebar(),
-        if (isMobile(context) && company!.isModuleEnabled(EntityType.quote))
+        if (isMobile(context) && company.isModuleEnabled(EntityType.quote))
           QuoteSidebar(),
-        if (isMobile(context) && company!.isModuleEnabled(EntityType.task))
+        if (isMobile(context) && company.isModuleEnabled(EntityType.task))
           TaskSidebar(),
-        if (isMobile(context) && company!.isModuleEnabled(EntityType.expense))
+        if (isMobile(context) && company.isModuleEnabled(EntityType.expense))
           ExpenseSidbar(),
       ],
     );

@@ -132,10 +132,10 @@ abstract class ExpenseEntity extends Object
       exchangeRate: 1,
       currencyId: (vendor != null && vendor.hasCurrency)
           ? vendor.currencyId
-          : (state?.company?.currencyId ?? kDefaultCurrencyId),
+          : (state?.company.currencyId ?? kDefaultCurrencyId),
       invoiceCurrencyId: (client != null && client.hasCurrency)
           ? client.settings.currencyId! // TODO handle group currency
-          : (state?.company?.currencyId ?? kDefaultCurrencyId),
+          : (state?.company.currencyId ?? kDefaultCurrencyId),
       documents: BuiltList<DocumentEntity>(),
       taxName1: '',
       taxName2: '',

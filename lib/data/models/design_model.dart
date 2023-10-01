@@ -91,7 +91,7 @@ abstract class DesignEntity extends Object
     if (design == null && state != null) {
       final designMap = state.designState.map;
       design =
-          designMap[state.company!.settings.defaultInvoiceDesignId]?.design;
+          designMap[state.company.settings.defaultInvoiceDesignId]?.design;
     }
 
     return _$DesignEntity._(

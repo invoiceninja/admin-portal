@@ -149,7 +149,7 @@ abstract class InvoiceEntity extends Object
     if ((client?.currencyId ?? '').isNotEmpty) {
       exchangeRate = getExchangeRate(
         state!.staticState.currencyMap,
-        fromCurrencyId: state.company!.currencyId,
+        fromCurrencyId: state.company.currencyId,
         toCurrencyId: client!.currencyId,
       );
     }
@@ -335,33 +335,33 @@ abstract class InvoiceEntity extends Object
 
   InvoiceEntity applyClient(AppState state, ClientEntity client) {
     final exchangeRate = getExchangeRate(state.staticState.currencyMap,
-        fromCurrencyId: state.company!.currencyId,
+        fromCurrencyId: state.company.currencyId,
         toCurrencyId: client.currencyId);
     final settings = getClientSettings(state, client);
 
     return rebuild((b) => b
       ..exchangeRate = exchangeRate
-      ..taxName1 = state.company!.numberOfInvoiceTaxRates >= 1 &&
+      ..taxName1 = state.company.numberOfInvoiceTaxRates >= 1 &&
               (settings.defaultTaxName1 ?? '').isNotEmpty
           ? settings.defaultTaxName1
           : taxName1
-      ..taxRate1 = state.company!.numberOfInvoiceTaxRates >= 1 &&
+      ..taxRate1 = state.company.numberOfInvoiceTaxRates >= 1 &&
               (settings.defaultTaxName1 ?? '').isNotEmpty
           ? settings.defaultTaxRate1
           : taxRate1
-      ..taxName2 = state.company!.numberOfInvoiceTaxRates >= 2 &&
+      ..taxName2 = state.company.numberOfInvoiceTaxRates >= 2 &&
               (settings.defaultTaxName2 ?? '').isNotEmpty
           ? settings.defaultTaxName2
           : taxName2
-      ..taxRate2 = state.company!.numberOfInvoiceTaxRates >= 2 &&
+      ..taxRate2 = state.company.numberOfInvoiceTaxRates >= 2 &&
               (settings.defaultTaxName2 ?? '').isNotEmpty
           ? settings.defaultTaxRate2
           : taxRate2
-      ..taxName3 = state.company!.numberOfInvoiceTaxRates >= 3 &&
+      ..taxName3 = state.company.numberOfInvoiceTaxRates >= 3 &&
               (settings.defaultTaxName3 ?? '').isNotEmpty
           ? settings.defaultTaxName3
           : taxName3
-      ..taxRate3 = state.company!.numberOfInvoiceTaxRates >= 3 &&
+      ..taxRate3 = state.company.numberOfInvoiceTaxRates >= 3 &&
               (settings.defaultTaxName3 ?? '').isNotEmpty
           ? settings.defaultTaxRate3
           : taxRate3);
@@ -1032,7 +1032,7 @@ abstract class InvoiceEntity extends Object
         if (!isRecurring) {
           actions.add(EntityAction.printPdf);
           actions.add(EntityAction.download);
-          if (isInvoice && state.company!.settings.enableEInvoice == true) {
+          if (isInvoice && state.company.settings.enableEInvoice == true) {
             actions.add(EntityAction.eInvoice);
           }
         }

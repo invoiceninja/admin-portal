@@ -54,7 +54,7 @@ class _CustomFieldsState extends State<CustomFields>
       EntityType.expense,
       EntityType.project,
     ].forEach((entityType) {
-      if (state.company!.isModuleEnabled(entityType)) {
+      if (state.company.isModuleEnabled(entityType)) {
         tabs++;
       }
     });
@@ -83,7 +83,7 @@ class _CustomFieldsState extends State<CustomFields>
     final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final company = state.company!;
+    final company = state.company;
 
     return EditScaffold(
       title: localization.customFields,

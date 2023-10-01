@@ -57,7 +57,7 @@ class _ExpenseCategoryViewState extends State<ExpenseCategoryView> {
                     expenseCategory.id, state.expenseState.map)
                 .present(localization.active, localization.archived),
           ),
-          if (state.company!.isModuleEnabled(EntityType.transaction))
+          if (state.company.isModuleEnabled(EntityType.transaction))
             EntitiesListTile(
               entity: expenseCategory,
               isFilter: widget.isFilter,

@@ -272,7 +272,7 @@ class _EntityListState extends State<EntityList> {
                         if (field.startsWith('custom')) {
                           final key = field.replaceFirst(
                               'custom', entityType.snakeCase);
-                          label = state.company!.getCustomFieldLabel(key);
+                          label = state.company.getCustomFieldLabel(key);
                         }
                         return DataColumn(
                             label: Container(

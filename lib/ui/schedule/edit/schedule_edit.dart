@@ -100,7 +100,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
       '',
       state.userState.map,
       [],
-      state.company!.settings.recurringNumberPrefix,
+      state.company.settings.recurringNumberPrefix,
     );
 
     final quoteIds = memoizedDropdownQuoteList(

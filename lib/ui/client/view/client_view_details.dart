@@ -59,7 +59,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         if (contact.email.isNotEmpty) {
           subtitleParts.add(contact.email);
         }
-        if (company!.hasCustomField(CustomFieldType.contact1) &&
+        if (company.hasCustomField(CustomFieldType.contact1) &&
             contact.customValue1.isNotEmpty) {
           subtitleParts.add(company.formatCustomFieldValue(
               CustomFieldType.contact1, contact.customValue1));

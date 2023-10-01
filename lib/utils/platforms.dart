@@ -30,7 +30,7 @@ bool supportsInlineBrowser() {
     final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
     final state = store.state;
 
-    if (state.isHosted && !state.account!.accountSmsVerified) {
+    if (state.isHosted && !state.account.accountSmsVerified) {
       return false;
     }
   }
@@ -63,7 +63,7 @@ bool supportsLatestFeatures(String version) {
     return false;
   }
 
-  return Version.parse(state.account!.currentVersion) >= Version.parse(version);
+  return Version.parse(state.account.currentVersion) >= Version.parse(version);
 }
 
 bool supportsInAppPurchase() {

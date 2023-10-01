@@ -795,6 +795,46 @@ abstract class CompanyEntity extends Object
     ..hasEInvoiceCertificate = false
     ..hasEInvoiceCertificatePassphrase = false
     ..eInvoiceCertificatePassphrase = ''
+    ..enableCustomSurchargeTaxes1 = false
+    ..enableCustomSurchargeTaxes2 = false
+    ..enableCustomSurchargeTaxes3 = false
+    ..enableCustomSurchargeTaxes4 = false
+    ..sizeId = ''
+    ..industryId = ''
+    ..subdomain = ''
+    ..portalMode = ''
+    ..portalDomain = ''
+    ..updateProducts = false
+    ..convertProductExchangeRate = false
+    ..fillProducts = false
+    ..enableProductCost = false
+    ..enableProductQuantity = true
+    ..defaultQuantity = true
+    ..showProductDetails = true
+    ..clientCanRegister = false
+    ..isLarge = false
+    ..isDisabled = false
+    ..enableShopApi = false
+    ..companyKey = ''
+    ..firstDayOfWeek = ''
+    ..firstMonthOfYear = ''
+    ..numberOfInvoiceTaxRates = 0
+    ..numberOfItemTaxRates = 0
+    ..expenseInclusiveTaxes = false
+    ..slackWebhookUrl = ''
+    ..googleAnalyticsKey = ''
+    ..markExpensesInvoiceable = false
+    ..markExpensesPaid = false
+    ..invoiceExpenseDocuments = false
+    ..invoiceTaskDocuments = false
+    ..invoiceTaskTimelog = false
+    ..autoStartTasks = false
+    ..showTasksTable = false
+    ..enabledModules = 0
+    ..createdAt = 0
+    ..updatedAt = 0
+    ..archivedAt = 0
+    ..id = ''
     ..taxConfig.replace(TaxConfigEntity())
     ..taxData.replace(TaxDataEntity())
     ..systemLogs.replace(BuiltList<SystemLogEntity>())
@@ -1142,7 +1182,6 @@ abstract class UserCompanyEntity
 
   // ignore: unused_element
   static void _initializeBuilder(UserCompanyEntityBuilder builder) => builder
-    ..company.replace(CompanyEntity())
     ..user.replace(UserEntity())
     ..token.replace(TokenEntity())
     ..account.replace(AccountEntity(false))

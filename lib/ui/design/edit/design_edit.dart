@@ -440,7 +440,7 @@ class _DesignSettingsState extends State<DesignSettings> {
       final state = viewModel.state;
       final designMap = state.designState.map;
       _selectedDesign =
-          designMap[state.company!.settings.defaultInvoiceDesignId];
+          designMap[state.company.settings.defaultInvoiceDesignId];
     }
   }
 

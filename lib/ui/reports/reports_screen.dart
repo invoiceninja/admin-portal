@@ -94,41 +94,41 @@ class ReportsScreen extends StatelessWidget {
     final reports = [
       kReportClient,
       kReportClientContact,
-      if (state.company!.isModuleEnabled(EntityType.invoice)) ...[
+      if (state.company.isModuleEnabled(EntityType.invoice)) ...[
         kReportInvoice,
         kReportInvoiceItem,
         kReportPayment,
-        if (state.company!.hasTaxes) ...[
+        if (state.company.hasTaxes) ...[
           kReportInvoiceTax,
           kReportPaymentTax,
         ],
-        if (state.company!.isModuleEnabled(EntityType.recurringInvoice))
+        if (state.company.isModuleEnabled(EntityType.recurringInvoice))
           kReportRecurringInvoice,
       ],
-      if (state.company!.isModuleEnabled(EntityType.quote)) ...[
+      if (state.company.isModuleEnabled(EntityType.quote)) ...[
         kReportQuote,
         kReportQuoteItem,
       ],
-      if (state.company!.isModuleEnabled(EntityType.credit)) ...[
+      if (state.company.isModuleEnabled(EntityType.credit)) ...[
         kReportCredit,
         kReportCreditItem,
       ],
       kReportDocument,
-      if (state.company!.isModuleEnabled(EntityType.expense)) ...[
+      if (state.company.isModuleEnabled(EntityType.expense)) ...[
         kReportExpense,
-        if (state.company!.isModuleEnabled(EntityType.recurringExpense))
+        if (state.company.isModuleEnabled(EntityType.recurringExpense))
           kReportRecurringExpense,
       ],
       kReportProduct,
       kReportProfitAndLoss,
       kReportTask,
-      if (state.company!.isModuleEnabled(EntityType.vendor)) ...[
+      if (state.company.isModuleEnabled(EntityType.vendor)) ...[
         kReportVendor,
-        if (state.company!.isModuleEnabled(EntityType.purchaseOrder))
+        if (state.company.isModuleEnabled(EntityType.purchaseOrder))
           kReportPurchaseOrder,
         kReportPurchaseOrderItem,
       ],
-      if (state.company!.isModuleEnabled(EntityType.transaction))
+      if (state.company.isModuleEnabled(EntityType.transaction))
         kReportTransaction,
     ]..sort((a, b) => a.compareTo(b));
 
@@ -157,7 +157,7 @@ class ReportsScreen extends StatelessWidget {
             .where((column) =>
                 getReportColumnType(column, context) != ReportColumnType.number)
             .map((column) {
-          final columnTitle = state.company!.getCustomFieldLabel(column);
+          final columnTitle = state.company.getCustomFieldLabel(column);
           return DropdownMenuItem(
             child: Text(columnTitle.isEmpty
                 ? localization.lookup(column)!
@@ -435,7 +435,7 @@ class ReportsScreen extends StatelessWidget {
                         label: localization.upgrade.toUpperCase(),
                         onPressed: () {
                           if (supportsInAppPurchase() &&
-                              state.account!.canMakeIAP) {
+                              state.account.canMakeIAP) {
                             showDialog<void>(
                               context: context,
                               builder: (context) => UpgradeDialog(),
@@ -451,7 +451,7 @@ class ReportsScreen extends StatelessWidget {
             : ScrollableListView(
                 primary: true,
                 key: ValueKey(
-                    '${viewModel.state.company!.id}_${viewModel.state.isSaving}_${reportsState.report}_${reportsState.group}'),
+                    '${viewModel.state.company.id}_${viewModel.state.isSaving}_${reportsState.report}_${reportsState.group}'),
                 children: <Widget>[
                   isMobile(context)
                       ? FormCard(
@@ -1050,7 +1050,7 @@ class ReportResult {
             child: Row(
               children: [
                 Text(
-                  (company!.getCustomFieldLabel(column!).isNotEmpty
+                  (company.getCustomFieldLabel(column!).isNotEmpty
                           ? company.getCustomFieldLabel(column)
                           : localization!.lookup(column))! +
                       '   ',
@@ -1468,7 +1468,7 @@ class ReportResult {
         ].contains(getReportColumnType(column, context)))
           mt.DataColumn(
             label: Text(
-              company!.getCustomFieldLabel(column!).isEmpty
+              company.getCustomFieldLabel(column!).isEmpty
                   ? localization.lookup(column)!
                   : company.getCustomFieldLabel(column),
               overflow: TextOverflow.ellipsis,

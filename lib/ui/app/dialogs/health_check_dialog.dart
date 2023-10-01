@@ -51,7 +51,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
     final state = StoreProvider.of<AppState>(context).state;
 
     try {
-      await webClient.get('${state.account!.defaultUrl}/update?secret=', '',
+      await webClient.get('${state.account.defaultUrl}/update?secret=', '',
           rawResponse: true);
     } catch (e) {
       // do nothing
@@ -172,7 +172,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                   ),
                   */
                 if (_response!.filePermissions != 'Ok' &&
-                    !state.account!.disableAutoUpdate)
+                    !state.account.disableAutoUpdate)
                   _HealthListTile(
                     title: 'Invalid File Permissions',
                     isValid: false,
@@ -196,7 +196,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                       ),
                 ],
                 */
-                if (!state.account!.isDocker &&
+                if (!state.account.isDocker &&
                     phpMemoryLimitDouble! > 100 &&
                     phpMemoryLimitDouble < 512)
                   _HealthListTile(

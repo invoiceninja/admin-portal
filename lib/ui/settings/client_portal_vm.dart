@@ -78,7 +78,7 @@ class ClientPortalVM {
                   final completer = snackBarCompleter<Null>(
                       context, AppLocalization.of(context)!.savedSettings);
 
-                  final oldSubdomain = state.company!.subdomain;
+                  final oldSubdomain = state.company.subdomain;
                   final newSubdomain = settingsUIState.company.subdomain;
                   if (oldSubdomain != newSubdomain) {
                     completer.future.then<Null>((_) {

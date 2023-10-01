@@ -300,7 +300,7 @@ class _AccountOverview extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final localization = AppLocalization.of(context)!;
     final state = viewModel.state;
-    final account = state.account!;
+    final account = state.account;
     final company = viewModel.company;
     final companies = state.companies;
 
@@ -321,7 +321,7 @@ class _AccountOverview extends StatelessWidget {
             (count == 1 ? localization!.product : localization!.products);
       }
 
-      if (state.invoiceState.list.isNotEmpty && !state.company!.isLarge) {
+      if (state.invoiceState.list.isNotEmpty && !state.company.isLarge) {
         final count = state.invoiceState.list.length;
         stats += '\n- $count ' +
             (count == 1 ? localization!.invoice : localization!.invoices);
@@ -355,7 +355,7 @@ class _AccountOverview extends StatelessWidget {
           secondLabel: secondLabel,
           secondValue: secondValue,
         ),
-        if (state.company!.id != state.account!.defaultCompanyId)
+        if (state.company.id != state.account.defaultCompanyId)
           Padding(
             padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
             child: AppButton(

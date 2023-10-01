@@ -333,7 +333,7 @@ Middleware<AppState> _uploadLogo(SettingsRepository settingsRepository) {
     final state = store.state;
     final settingsState = state.uiState.settingsUIState;
     final entityId = action.type == EntityType.company
-        ? state.company!.id
+        ? state.company.id
         : action.type == EntityType.group
             ? settingsState.group.id
             : settingsState.client.id;
@@ -368,7 +368,7 @@ Middleware<AppState> _saveDocument(SettingsRepository repository) {
       repository
           .uploadDocument(
         store.state.credentials,
-        state.company!,
+        state.company,
         action!.multipartFiles,
         action.isPrivate,
       )

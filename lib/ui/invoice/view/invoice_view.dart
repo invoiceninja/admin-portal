@@ -49,7 +49,7 @@ class _InvoiceViewState extends State<InvoiceView>
 
     final invoice = widget.viewModel.invoice!;
     final state = widget.viewModel.state!;
-    final company = state.company!;
+    final company = state.company;
 
     int tabIndex = 0;
 
@@ -116,7 +116,7 @@ class _InvoiceViewState extends State<InvoiceView>
     final invoice = viewModel.invoice!;
     final localization = AppLocalization.of(context)!;
     final state = viewModel.state!;
-    final company = state.company!;
+    final company = state.company;
     /*
     final documents = memoizedInvoiceDocumentsSelector(
         documentState.map, viewModel.state.expenseState.map, invoice);

@@ -174,7 +174,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                       ),
                     ),
                   SizedBox(height: 4),
-                  if (client.currencyId != state.company!.currencyId)
+                  if (client.currencyId != state.company.currencyId)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 1),
                       child: Text(
@@ -186,7 +186,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                       ),
                     ),
                   if ((client.languageId ?? '').isNotEmpty &&
-                      client.languageId != state.company!.languageId)
+                      client.languageId != state.company.languageId)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 1),
                       child: Text(
@@ -201,16 +201,16 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                     Text(
                         '${localization.taskRate}: ${client.settings.defaultTaskRate}'),
                   if (client.customValue1.isNotEmpty)
-                    Text(company!.formatCustomFieldValue(
+                    Text(company.formatCustomFieldValue(
                         CustomFieldType.client1, client.customValue1)),
                   if (client.customValue2.isNotEmpty)
-                    Text(company!.formatCustomFieldValue(
+                    Text(company.formatCustomFieldValue(
                         CustomFieldType.client2, client.customValue2)),
                   if (client.customValue3.isNotEmpty)
-                    Text(company!.formatCustomFieldValue(
+                    Text(company.formatCustomFieldValue(
                         CustomFieldType.client3, client.customValue3)),
                   if (client.customValue4.isNotEmpty)
-                    Text(company!.formatCustomFieldValue(
+                    Text(company.formatCustomFieldValue(
                         CustomFieldType.client4, client.customValue4)),
                 ],
               ),
@@ -363,7 +363,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                                         icon: Icons.phone, text: contact.phone),
                                   ),
                                 ),
-                              if (company!.hasCustomField(
+                              if (company.hasCustomField(
                                       CustomFieldType.contact1) &&
                                   contact.customValue1.isNotEmpty)
                                 Text(company.formatCustomFieldValue(
@@ -429,7 +429,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                     bottom: kMobileDialogPadding,
                     left: kMobileDialogPadding / 2),
                 child: DefaultTabController(
-                  length: company!.isModuleEnabled(EntityType.document) ? 5 : 4,
+                  length: company.isModuleEnabled(EntityType.document) ? 5 : 4,
                   child: SizedBox(
                     height: minHeight,
                     child: Column(

@@ -236,7 +236,7 @@ class _DatePickerState extends State<DatePicker> {
             final day = secondPart;
 
             final state = StoreProvider.of<AppState>(context).state;
-            final countryId = state.company!.settings.countryId;
+            final countryId = state.company.settings.countryId;
 
             value = [
               kCountryUnitedStates,

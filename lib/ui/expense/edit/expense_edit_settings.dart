@@ -69,7 +69,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
         expense.exchangeRate != 0 && expense.exchangeRate != 1;
 
     final state = widget.viewModel.state!;
-    if (state.company!.convertExpenseCurrency) {
+    if (state.company.convertExpenseCurrency) {
       _showConvertCurrencyFields = true;
     }
 
@@ -144,7 +144,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
     final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final staticState = viewModel.state!.staticState;
-    final company = viewModel.state!.company!;
+    final company = viewModel.state!.company;
     final expense = viewModel.expense!;
     final state = widget.viewModel.state!;
     final isFullscreen = state.prefState.isEditorFullScreen(EntityType.expense);

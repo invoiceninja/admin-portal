@@ -162,7 +162,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
             store.dispatch(
               SaveCompanyRequest(
                 completer: toastCompleter,
-                company: state.company!.rebuild(
+                company: state.company.rebuild(
                   (b) => b
                     ..subdomain = _subdomainController.text.trim()
                     ..settings.name = _nameController.text.trim()

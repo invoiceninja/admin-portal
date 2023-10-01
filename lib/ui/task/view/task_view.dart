@@ -79,12 +79,12 @@ class _TaskViewState extends State<TaskView>
     final localization = AppLocalization.of(context);
     final documents = task.documents;
     final state = viewModel.state;
-    final company = state.company!;
+    final company = state.company;
 
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: task,
-      isEditable: !state.company!.invoiceTaskLock || !task.isInvoiced,
+      isEditable: !state.company.invoiceTaskLock || !task.isInvoiced,
       appBarBottom: company.isModuleEnabled(EntityType.document)
           ? TabBar(
               controller: _controller,

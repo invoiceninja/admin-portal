@@ -17,7 +17,7 @@ class DashboardActivity extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final company = viewModel.state.company!;
+    final company = viewModel.state.company;
     final activities = company.activities;
 
     return Material(

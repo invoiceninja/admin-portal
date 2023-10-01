@@ -348,7 +348,7 @@ abstract class ProductEntity extends Object
       }
 
       final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
-      final company = store.state.company!;
+      final company = store.state.company;
 
       if (company.calculateTaxes) {
         actions.add(EntityAction.setTaxCategory);

@@ -135,7 +135,7 @@ class _DocumentGridState extends State<DocumentGrid> {
                 ),
               );
 
-              if (Version.parse(state.account!.currentVersion) <
+              if (Version.parse(state.account.currentVersion) <
                       Version.parse('5.6.32') &&
                   kReleaseMode) {
                 return child;

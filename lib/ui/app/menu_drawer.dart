@@ -381,7 +381,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                 : Theme.of(context).cardColor,
                             child: ScrollableListView(
                               children: <Widget>[
-                                if (state.account!.debugEnabled && kReleaseMode)
+                                if (state.account.debugEnabled && kReleaseMode)
                                   if (state.isMenuCollapsed)
                                     Tooltip(
                                       message: localization.debugModeIsEnabled,
@@ -417,7 +417,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                             launchUrl(Uri.parse(kDebugModeUrl)),
                                       ),
                                     ),
-                                if (!state.account!.accountSmsVerified &&
+                                if (!state.account.accountSmsVerified &&
                                     state.isHosted)
                                   if (state.isMenuCollapsed)
                                     Tooltip(
@@ -499,7 +499,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                         },
                                       ),
                                     )
-                                else if (state.company!.isDisabled &&
+                                else if (state.company.isDisabled &&
                                     state.userCompany.isAdmin)
                                   if (state.isMenuCollapsed)
                                     Tooltip(
@@ -958,7 +958,7 @@ class _DrawerTileState extends State<DrawerTile> {
 
     bool isLoading = false;
     if (widget.entityType != null &&
-        state.company!.isLarge &&
+        state.company.isLarge &&
         state.uiState.loadingEntityType == widget.entityType) {
       isLoading = true;
     }
@@ -1089,7 +1089,7 @@ class SidebarFooter extends StatelessWidget {
                   ),
                 )
               else if (state.isSelfHosted &&
-                  !state.account!.disableAutoUpdate &&
+                  !state.account.disableAutoUpdate &&
                   state.userCompany.isAdmin &&
                   state.isUpdateAvailable)
                 IconButton(
@@ -1606,8 +1606,8 @@ void _showAbout(BuildContext context) async {
                               });
                         },
                       ),
-                      if (!state.account!.disableAutoUpdate &&
-                          (!state.account!.isDocker || state.isUpdateAvailable))
+                      if (!state.account.disableAutoUpdate &&
+                          (!state.account.isDocker || state.isUpdateAvailable))
                         AppButton(
                           label: (state.isUpdateAvailable
                                   ? localization.updateApp
@@ -1619,7 +1619,7 @@ void _showAbout(BuildContext context) async {
                         ),
                     ],
                   ],
-                  if (state.company!.daysActive > 30)
+                  if (state.company.daysActive > 30)
                     AppButton(
                       label: localization.reviewApp!.toUpperCase(),
                       iconData: Icons.star,

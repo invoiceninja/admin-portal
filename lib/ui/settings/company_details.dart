@@ -297,9 +297,9 @@ class _CompanyDetailsState extends State<CompanyDetails>
           ),
           if (!state.settingsUIState.isFiltered)
             Tab(
-              text: state.company!.documents.isEmpty
+              text: state.company.documents.isEmpty
                   ? localization.documents
-                  : '${localization.documents} (${state.company!.documents.length})',
+                  : '${localization.documents} (${state.company.documents.length})',
             ),
         ],
       ),
@@ -382,7 +382,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   ),
                 ],
               ),
-              if (state.company!.calculateTaxes)
+              if (state.company.calculateTaxes)
                 AppDropdownButton<String>(
                   labelText: localization.classification,
                   showBlank: true,
@@ -773,7 +773,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
           ),
           if (!state.settingsUIState.isFiltered)
             DocumentGrid(
-              documents: state.company!.documents.toList(),
+              documents: state.company.documents.toList(),
               onUploadDocument: (path, isPrivate) =>
                   viewModel.onUploadDocuments(context, path, isPrivate),
               onRenamedDocument: () => store.dispatch(RefreshData()),

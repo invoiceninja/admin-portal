@@ -124,7 +124,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
             context,
             currencyId: (client.currencyId ?? '').isNotEmpty
                 ? client.currencyId
-                : company!.currencyId)!;
+                : company.currencyId)!;
 
     return ScrollableListView(
       children: <Widget>[

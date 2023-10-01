@@ -399,7 +399,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                   items: List<int>.generate(24, (i) => i).map((value) {
                     final hour = value + 1;
                     String timeLabel;
-                    if (viewModel.state.company!.settings.enableMilitaryTime!) {
+                    if (viewModel.state.company.settings.enableMilitaryTime!) {
                       timeLabel = '$hour:00';
                     } else {
                       if (hour > 12) {
@@ -603,7 +603,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                         child: Row(
                           children: [
                             Icon(
-                              company!.hasEInvoiceCertificate
+                              company.hasEInvoiceCertificate
                                   ? Icons.check_circle_outline
                                   : Icons.circle_outlined,
                               size: 16,

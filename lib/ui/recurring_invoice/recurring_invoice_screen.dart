@@ -33,7 +33,7 @@ class RecurringInvoiceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final company = state.company!;
+    final company = state.company;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
 

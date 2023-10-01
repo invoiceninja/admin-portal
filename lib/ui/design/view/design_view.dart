@@ -39,7 +39,7 @@ class _DesignViewState extends State<DesignView> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final company = state.company!;
+    final company = state.company;
     final design = viewModel.design;
     final localization = AppLocalization.of(context)!;
 
