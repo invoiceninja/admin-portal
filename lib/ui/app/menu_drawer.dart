@@ -258,8 +258,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
         } else if (companyId == 'company') {
           widget.viewModel.onAddCompany(context);
         } else {
-          final company = state.companies
-              .firstWhere((company) => company.id == companyId);
+          final company =
+              state.companies.firstWhere((company) => company.id == companyId);
           final index = state.companies.indexOf(company);
           widget.viewModel.onCompanyChanged(context, index, company);
         }
@@ -332,8 +332,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   widget.viewModel.onAddCompany(context);
                 } else {
                   final index = int.parse(value);
-                  widget.viewModel.onCompanyChanged(
-                      context, index, state.companies[index]);
+                  widget.viewModel
+                      .onCompanyChanged(context, index, state.companies[index]);
                 }
               },
             ),
@@ -931,6 +931,11 @@ class _DrawerTileState extends State<DrawerTile> {
           }
         },
       );
+    } else if ([
+      EntityType.document,
+      EntityType.reports,
+    ].contains(widget.entityType)) {
+      //
     } else if (userCompany.canCreate(widget.entityType)) {
       iconWidget = IconButton(
         tooltip: prefState.enableTooltips ? widget.iconTooltip : null,
