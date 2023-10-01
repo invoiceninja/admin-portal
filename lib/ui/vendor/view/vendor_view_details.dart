@@ -93,7 +93,7 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
           subtitle: subtitleParts.join('\n'),
           copyValue: contact.email,
           onLongPress: () => setState(() {
-            if ((contact.email ?? '').isEmpty) {
+            if (contact.email.isEmpty) {
               return;
             }
 
@@ -101,7 +101,7 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
           }),
         ));
 
-        if ((contact.phone ?? '').isNotEmpty) {
+        if (contact.phone.isNotEmpty) {
           listTiles.add(AppListTile(
             icon: Icons.phone,
             title: contact.fullName + '\n' + contact.phone,
@@ -130,7 +130,7 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
         }
       });
 
-      if ((vendor.website ?? '').isNotEmpty) {
+      if (vendor.website.isNotEmpty) {
         listTiles.add(AppListTile(
           icon: Icons.link,
           title: vendor.website,
@@ -141,7 +141,7 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
         ));
       }
 
-      if ((vendor.phone ?? '').isNotEmpty) {
+      if (vendor.phone.isNotEmpty) {
         listTiles.add(AppListTile(
           icon: Icons.phone,
           title: vendor.phone,
@@ -168,7 +168,7 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
         ));
       }
 
-      if ((vendor.vatNumber ?? '').isNotEmpty) {
+      if (vendor.vatNumber.isNotEmpty) {
         listTiles.add(AppListTile(
           icon: Icons.location_city,
           title: vendor.vatNumber,
@@ -176,7 +176,7 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
         ));
       }
 
-      if ((vendor.idNumber ?? '').isNotEmpty) {
+      if (vendor.idNumber.isNotEmpty) {
         listTiles.add(AppListTile(
           icon: Icons.business,
           title: vendor.idNumber,

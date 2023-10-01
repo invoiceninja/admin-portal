@@ -102,8 +102,7 @@ class TaskEditDetailsVM {
       onAddProjectPressed: (context, completer) {
         createEntity(
             context: context,
-            entity: ProjectEntity()
-                .rebuild((b) => b..clientId = task.clientId ?? ''),
+            entity: ProjectEntity().rebuild((b) => b..clientId = task.clientId),
             force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()

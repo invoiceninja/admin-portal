@@ -233,7 +233,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                 SwitchListTile(
                   activeColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.lockInvoicedTasks!),
-                  value: company.invoiceTaskLock ?? false,
+                  value: company.invoiceTaskLock,
                   subtitle: Text(localization.lockInvoicedTasksHelp!),
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..invoiceTaskLock = value)),
@@ -241,7 +241,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                 SwitchListTile(
                   activeColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.addDocumentsToInvoice),
-                  value: company.invoiceTaskDocuments ?? false,
+                  value: company.invoiceTaskDocuments,
                   subtitle: Text(localization.addDocumentsToInvoiceHelp),
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..invoiceTaskDocuments = value)),

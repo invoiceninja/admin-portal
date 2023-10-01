@@ -711,14 +711,14 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
       if ((transaction.pendingCategoryId ?? '').isNotEmpty) {
         _selectedCategory =
             state.expenseCategoryState.get(transaction.pendingCategoryId!);
-      } else if ((transaction.categoryId ?? '').isNotEmpty) {
+      } else if (transaction.categoryId.isNotEmpty) {
         _selectedCategory =
             state.expenseCategoryState.get(transaction.categoryId);
       }
 
       if ((transaction.pendingVendorId ?? '').isNotEmpty) {
         _selectedVendor = state.vendorState.get(transaction.pendingVendorId!);
-      } else if ((transaction.vendorId ?? '').isNotEmpty) {
+      } else if (transaction.vendorId.isNotEmpty) {
         _selectedVendor = state.vendorState.get(transaction.vendorId);
       }
     }

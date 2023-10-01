@@ -564,7 +564,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
     final bool isValid = _formKey.currentState!.validate();
 
     setState(() {
-      autoValidate = !isValid ?? false;
+      autoValidate = !isValid;
     });
 
     if (!isValid) {

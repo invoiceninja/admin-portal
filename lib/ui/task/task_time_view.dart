@@ -56,9 +56,7 @@ class TaskTimeListTile extends StatelessWidget {
             ],
           ),
           subtitle: Text(subtitle),
-          trailing: onTap != null
-              ? Icon(isValid ? Icons.navigate_next : Icons.error)
-              : null,
+          trailing: Icon(isValid ? Icons.navigate_next : Icons.error),
         ),
         Divider(
           height: 1.0,

@@ -575,7 +575,7 @@ class _FileImportState extends State<_FileImport> {
       children.add(AppButton(
         label: localization.import.toUpperCase(),
         iconData: MdiIcons.import,
-        onPressed: _multipartFiles == null
+        onPressed: _multipartFiles.isEmpty
             ? null
             : () {
                 if (widget.importType == ImportType.json) {

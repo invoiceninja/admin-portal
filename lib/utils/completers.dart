@@ -85,7 +85,7 @@ class Debouncer {
   static Timer? timer;
 
   void run(VoidCallback action) {
-    if (milliseconds == null) {
+    if (milliseconds == 0) {
       action();
       return;
     }

@@ -29,7 +29,7 @@ class InvoiceEditContacts extends StatelessWidget {
     final vendor = viewModel.vendor;
 
     if (invoice.isPurchaseOrder) {
-      List<VendorContactEntity?> vendorContacts;
+      List<VendorContactEntity> vendorContacts;
       if (vendor == null) {
         if (viewModel.state.prefState.isDesktop) {
           vendorContacts = [];
@@ -62,13 +62,13 @@ class InvoiceEditContacts extends StatelessWidget {
             invoice: invoice,
             invitation: invitation,
             onTap: () => invitation == null
-                ? viewModel.onAddVendorContact(contact!)
+                ? viewModel.onAddVendorContact(contact)
                 : viewModel.onRemoveContact(invitation),
           );
         }).toList(),
       );
     } else {
-      List<ClientContactEntity?> clientContacts;
+      List<ClientContactEntity> clientContacts;
       if (client == null) {
         if (viewModel.state.prefState.isDesktop) {
           clientContacts = [];
@@ -97,7 +97,7 @@ class InvoiceEditContacts extends StatelessWidget {
             invoice: invoice,
             invitation: invitation,
             onTap: () => invitation == null
-                ? viewModel.onAddClientContact(contact!)
+                ? viewModel.onAddClientContact(contact)
                 : viewModel.onRemoveContact(invitation),
           );
         }).toList(),
@@ -108,14 +108,14 @@ class InvoiceEditContacts extends StatelessWidget {
 
 class _ClientContactListTile extends StatelessWidget {
   const _ClientContactListTile({
-    this.clientContact,
-    this.invoice,
+    required this.clientContact,
+    required this.invoice,
     this.invitation,
     this.onTap,
   });
 
-  final InvoiceEntity? invoice;
-  final ClientContactEntity? clientContact;
+  final InvoiceEntity invoice;
+  final ClientContactEntity clientContact;
   final InvitationEntity? invitation;
   final Function? onTap;
 
@@ -157,14 +157,14 @@ class _ClientContactListTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  clientContact!.fullName.isNotEmpty
-                      ? clientContact!.fullName
+                  clientContact.fullName.isNotEmpty
+                      ? clientContact.fullName
                       : AppLocalization.of(context)!.blankContact,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                if (clientContact!.email != null)
+                if (clientContact.email.isNotEmpty)
                   Text(
-                    clientContact!.email,
+                    clientContact.email,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
               ],
@@ -179,14 +179,14 @@ class _ClientContactListTile extends StatelessWidget {
 
 class _VendorContactListTile extends StatelessWidget {
   const _VendorContactListTile({
-    this.vendorContact,
-    this.invoice,
+    required this.vendorContact,
+    required this.invoice,
     this.invitation,
     this.onTap,
   });
 
-  final InvoiceEntity? invoice;
-  final VendorContactEntity? vendorContact;
+  final InvoiceEntity invoice;
+  final VendorContactEntity vendorContact;
   final InvitationEntity? invitation;
   final Function? onTap;
 
@@ -228,14 +228,14 @@ class _VendorContactListTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  vendorContact!.fullName.isNotEmpty
-                      ? vendorContact!.fullName
+                  vendorContact.fullName.isNotEmpty
+                      ? vendorContact.fullName
                       : AppLocalization.of(context)!.blankContact,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                if (vendorContact!.email != null)
+                if (vendorContact.email.isNotEmpty)
                   Text(
-                    vendorContact!.email,
+                    vendorContact.email,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
               ],

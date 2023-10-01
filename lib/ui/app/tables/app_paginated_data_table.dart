@@ -268,6 +268,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
       widget.onPageChanged!(_firstRowIndex);
   }
 
+  /*
   DataRow _getProgressIndicatorRowFor(int index) {
     bool haveProgressIndicator = false;
     final List<DataCell> cells =
@@ -287,11 +288,12 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
       cells: cells,
     );
   }
+  */
 
   List<DataRow> _getRows(int firstRowIndex, int rowsPerPage) {
     final List<DataRow> result = <DataRow>[];
     final int nextPageFirstRowIndex = firstRowIndex + rowsPerPage;
-    bool haveProgressIndicator = false;
+    //final bool haveProgressIndicator = false;
     for (int index = firstRowIndex; index < nextPageFirstRowIndex; index += 1) {
       DataRow? row;
       if (index < _rowCount || _rowCountApproximate) {

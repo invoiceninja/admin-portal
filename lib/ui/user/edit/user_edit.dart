@@ -125,7 +125,7 @@ class _UserEditState extends State<UserEdit>
     final user = widget.viewModel.user;
     final userCompany = user.userCompany!;
 
-    final permissions = (userCompany.permissions ?? '').split(',');
+    final permissions = userCompany.permissions.split(',');
     if (permissions.contains(permission)) {
       permissions.remove(permission);
     } else {
@@ -273,7 +273,7 @@ class _UserEditState extends State<UserEdit>
                   SwitchListTile(
                     title: Text(localization.administrator),
                     subtitle: Text(localization.administratorHelp),
-                    value: userCompany.isAdmin ?? false,
+                    value: userCompany.isAdmin,
                     onChanged: (value) => viewModel.onUserChanged(
                         user.rebuild((b) => b..userCompany.isAdmin = value)),
                     activeColor: Theme.of(context).colorScheme.secondary,
@@ -513,9 +513,7 @@ class _PermissionCheckbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Checkbox(
-      value: checkAll
-          ? true
-          : (userCompany.permissions ?? '').contains(permission),
+      value: checkAll ? true : userCompany.permissions.contains(permission),
       onChanged: checkAll ? null : onChanged,
       activeColor: Theme.of(context).colorScheme.secondary,
     );

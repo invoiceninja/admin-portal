@@ -60,7 +60,7 @@ class RecurringExpenseListItem extends StatelessWidget {
     String subtitle = '';
     if (filterMatch != null) {
       subtitle = filterMatch;
-    } else if (client != null || vendor != null || category != null) {
+    } else {
       final parts = <String>[];
       if (expense.nextSendDate.isNotEmpty) {
         parts.add(formatDate(expense.nextSendDate, context));

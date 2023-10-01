@@ -69,7 +69,7 @@ class _TaskOverviewState extends State<TaskOverview> {
           zeroIsNull: true, clientId: client?.id),
     };
 
-    if ((task.statusId ?? '').isNotEmpty) {
+    if (task.statusId.isNotEmpty) {
       fields[localization!.status] =
           company.taskStatusMap[task.statusId]?.name ?? '';
     }

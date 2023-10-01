@@ -158,7 +158,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                   final project = store.state.projectState.get(selectedId);
                   viewModel.onChanged(task.rebuild((b) => b
                     ..projectId = project.id
-                    ..clientId = (project.clientId ?? '').isNotEmpty
+                    ..clientId = project.clientId.isNotEmpty
                         ? project.clientId
                         : task.clientId));
                 },

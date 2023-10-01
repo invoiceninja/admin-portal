@@ -137,7 +137,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                if ((vendor.languageId ?? '').isNotEmpty &&
+                if (vendor.languageId.isNotEmpty &&
                     vendor.languageId != state.company.languageId)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 1),
@@ -373,8 +373,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                                             state.expenseState.map,
                                             state.expenseState.list),
                                         context,
-                                        currencyId: vendor.currencyId ??
-                                            state.company.currencyId),
+                                        currencyId: vendor.currencyId),
                                   ),
                                   if (vendor.privateNotes.isNotEmpty)
                                     IconText(

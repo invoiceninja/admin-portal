@@ -1148,20 +1148,18 @@ class ReportResult {
             keyboardType:
                 TextInputType.numberWithOptions(decimal: true, signed: true),
             decoration: InputDecoration(
-                suffixIcon: textEditingControllers == null
+                suffixIcon: (textEditingControllers[column]?.text ?? '').isEmpty
                     ? null
-                    : (textEditingControllers[column]?.text ?? '').isEmpty
-                        ? null
-                        : IconButton(
-                            icon: Icon(
-                              Icons.clear,
-                              color: Colors.grey,
-                            ),
-                            onPressed: () {
-                              textEditingControllers[column]!.text = '';
-                              onFilterChanged(column, '');
-                            },
-                          )),
+                    : IconButton(
+                        icon: Icon(
+                          Icons.clear,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          textEditingControllers[column]!.text = '';
+                          onFilterChanged(column, '');
+                        },
+                      )),
           ))
         else if ([
           ReportColumnType.date,
@@ -1194,24 +1192,20 @@ class ReportResult {
         // TODO remove DEMO_MODE check
         else if (Config.DEMO_MODE)
           DataCell(TextFormField(
-            controller: textEditingControllers != null
-                ? textEditingControllers[column]
-                : null,
+            controller: textEditingControllers[column],
             decoration: InputDecoration(
-                suffixIcon: textEditingControllers == null
+                suffixIcon: (textEditingControllers[column]?.text ?? '').isEmpty
                     ? null
-                    : (textEditingControllers[column]?.text ?? '').isEmpty
-                        ? null
-                        : IconButton(
-                            icon: Icon(
-                              Icons.clear,
-                              color: Colors.grey,
-                            ),
-                            onPressed: () {
-                              textEditingControllers[column]!.text = '';
-                              onFilterChanged(column, '');
-                            },
-                          )),
+                    : IconButton(
+                        icon: Icon(
+                          Icons.clear,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          textEditingControllers[column]!.text = '';
+                          onFilterChanged(column, '');
+                        },
+                      )),
           ))
         else
           DataCell(

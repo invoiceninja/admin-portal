@@ -59,7 +59,7 @@ bool supportsLatestFeatures(String version) {
     return true;
   }
 
-  if (version == null) {
+  if (version.isEmpty) {
     return false;
   }
 

@@ -65,7 +65,7 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
         final user = state.userState.get(activity.userId);
 
         String? personName;
-        if (contact != null) {
+        if (contact.isOld) {
           personName = contact.fullNameOrEmail;
         } else if (user.isOld) {
           personName = user.fullName;

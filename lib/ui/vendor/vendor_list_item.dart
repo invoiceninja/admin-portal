@@ -44,7 +44,7 @@ class VendorListItem extends StatelessWidget {
         : null;
     final textStyle = TextStyle(fontSize: 16);
     final textColor = Theme.of(context).textTheme.bodyLarge!.color;
-    final documents = vendor.documents ?? <DocumentEntity>[];
+    final documents = vendor.documents;
 
     return DismissibleEntity(
       isSelected: isDesktop(context) &&

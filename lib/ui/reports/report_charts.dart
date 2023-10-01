@@ -118,15 +118,13 @@ class ReportCharts extends StatelessWidget {
         break;
     }
 
-    return child == null
-        ? SizedBox()
-        : FormCard(
-            child: ClipRect(
-              child: SizedBox(
-                height: 200,
-                child: child,
-              ),
-            ),
-          );
+    return FormCard(
+      child: ClipRect(
+        child: SizedBox(
+          height: 200,
+          child: child,
+        ),
+      ),
+    );
   }
 }

@@ -489,10 +489,8 @@ String? formatCustomValue(
   switch (company.getCustomFieldType(field)) {
     case kFieldTypeSwitch:
       return value == 'yes' ? localization!.yes : localization!.no;
-      break;
     case kFieldTypeDate:
       return formatDate(value, context);
-      break;
     default:
       return value;
   }

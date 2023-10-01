@@ -655,12 +655,8 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
                 }
               },
               overrideSuggestedAmount: (entity) {
-                if (entity == null) {
-                  return '';
-                } else {
-                  return formatNumber(entity.listDisplayAmount, context,
-                      clientId: (entity as InvoiceEntity).clientId);
-                }
+                return formatNumber(entity.listDisplayAmount, context,
+                    clientId: (entity as InvoiceEntity).clientId);
               },
               onSelected: (selected) {
                 final invoice = selected as InvoiceEntity;
@@ -693,12 +689,8 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
                 }
               },
               overrideSuggestedAmount: (entity) {
-                if (entity == null) {
-                  return '';
-                } else {
-                  return formatNumber(entity.listDisplayAmount, context,
-                      clientId: (entity as InvoiceEntity).clientId);
-                }
+                return formatNumber(entity.listDisplayAmount, context,
+                    clientId: (entity as InvoiceEntity).clientId);
               },
               onSelected: (selected) {
                 final credit = selected as InvoiceEntity;

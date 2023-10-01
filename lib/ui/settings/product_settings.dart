@@ -188,7 +188,7 @@ class _ProductSettingsState extends State<ProductSettings> {
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.convertProducts),
-                value: company.convertProductExchangeRate ?? false,
+                value: company.convertProductExchangeRate,
                 subtitle: Text(localization.convertProductsHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(company
                     .rebuild((b) => b..convertProductExchangeRate = value)),

@@ -254,8 +254,6 @@ class _ExampleEditorState extends State<ExampleEditor> {
       case TargetPlatform.windows:
         return DocumentGestureMode.mouse;
     }
-
-    return DocumentGestureMode.mouse;
   }
 
   bool get _isMobile => _gestureMode != DocumentGestureMode.mouse;
@@ -271,8 +269,6 @@ class _ExampleEditorState extends State<ExampleEditor> {
         return TextInputSource.ime;
       // return DocumentInputSource.keyboard;
     }
-
-    return TextInputSource.ime;
   }
 
   void _cut() {
