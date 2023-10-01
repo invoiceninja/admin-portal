@@ -320,13 +320,13 @@ ReportResult purchaseOrderReport(
           value = vendor.phone;
           break;
         case PurchaseOrderReportFields.contact_email:
-          value = contact.email ?? '';
+          value = contact.email;
           break;
         case PurchaseOrderReportFields.contact_name:
-          value = contact.fullName ?? '';
+          value = contact.fullName;
           break;
         case PurchaseOrderReportFields.contact_phone:
-          value = contact.phone ?? '';
+          value = contact.phone;
           break;
         case PurchaseOrderReportFields.vendor_website:
           value = vendor.website;

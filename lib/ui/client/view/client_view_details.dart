@@ -101,7 +101,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
           }),
         ));
 
-        if ((contact.phone ?? '').isNotEmpty) {
+        if (contact.phone.isNotEmpty) {
           listTiles.add(AppListTile(
             icon: Icons.phone,
             title: (contact.fullName.isEmpty
@@ -134,7 +134,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         }
       });
 
-      if ((client.website ?? '').isNotEmpty) {
+      if (client.website.isNotEmpty) {
         listTiles.add(AppListTile(
           icon: Icons.link,
           title: client.website,
@@ -145,7 +145,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         ));
       }
 
-      if ((client.phone ?? '').isNotEmpty) {
+      if (client.phone.isNotEmpty) {
         listTiles.add(AppListTile(
           icon: Icons.phone,
           title: client.phone,
@@ -183,7 +183,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
       }
       */
 
-      if ((client.vatNumber ?? '').isNotEmpty) {
+      if (client.vatNumber.isNotEmpty) {
         listTiles.add(AppListTile(
           icon: Icons.location_city,
           title: client.vatNumber,
@@ -191,7 +191,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
         ));
       }
 
-      if ((client.idNumber ?? '').isNotEmpty) {
+      if (client.idNumber.isNotEmpty) {
         listTiles.add(AppListTile(
           icon: Icons.business,
           title: client.idNumber,

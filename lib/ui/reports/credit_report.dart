@@ -167,7 +167,7 @@ ReportResult creditReport(
           value = round(credit.balance * 1 / credit.exchangeRate, 2);
           break;
         case CreditReportFields.client:
-          value = client.listDisplayName ?? '';
+          value = client.listDisplayName;
           break;
         case CreditReportFields.client_balance:
           value = client.balance;
@@ -325,13 +325,13 @@ ReportResult creditReport(
           value = client.phone;
           break;
         case CreditReportFields.contact_email:
-          value = contact.email ?? '';
+          value = contact.email;
           break;
         case CreditReportFields.contact_name:
-          value = contact.fullName ?? '';
+          value = contact.fullName;
           break;
         case CreditReportFields.contact_phone:
-          value = contact.phone ?? '';
+          value = contact.phone;
           break;
         case CreditReportFields.client_website:
           value = client.website;

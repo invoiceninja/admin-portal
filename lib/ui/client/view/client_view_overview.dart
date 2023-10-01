@@ -165,7 +165,7 @@ class ClientOverview extends StatelessWidget {
           ),
         ),
         ListDivider(),
-        if ((client.privateNotes ?? '').isNotEmpty) ...[
+        if ((client.privateNotes).isNotEmpty) ...[
           IconMessage(client.privateNotes, iconData: Icons.lock),
           ListDivider()
         ],
@@ -301,7 +301,7 @@ class ClientOverview extends StatelessWidget {
                     client.id, state.recurringExpenseState.map)
                 .present(localization.active, localization.archived),
           ),
-        if ((client.publicNotes ?? '').isNotEmpty) ...[
+        if (client.publicNotes.isNotEmpty) ...[
           IconMessage(client.publicNotes, copyToClipboard: true),
           ListDivider()
         ],

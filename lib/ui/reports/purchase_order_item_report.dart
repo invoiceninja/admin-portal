@@ -198,10 +198,10 @@ ReportResult lineItemReport(
                     '';
             break;
           case PurchaseOrderItemReportFields.clientNumber:
-            value = client.number ?? '';
+            value = client.number;
             break;
           case PurchaseOrderItemReportFields.clientIdNumber:
-            value = client.idNumber ?? '';
+            value = client.idNumber;
             break;
         }
 

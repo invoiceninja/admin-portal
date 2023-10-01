@@ -159,9 +159,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         viewModel.onChanged(
                           companyGateway.rebuild((b) => b
                             ..feesAndLimitsMap[((gateway ?? GatewayEntity())
-                                            as GatewayEntity)
-                                        .defaultGatewayTypeId ??
-                                    kGatewayTypeCreditCard] =
+                                        as GatewayEntity)
+                                    .defaultGatewayTypeId] =
                                 FeesAndLimitsSettings(isEnabled: true)
                             ..gatewayId = gateway?.id ?? ''
                             ..config = '{}'

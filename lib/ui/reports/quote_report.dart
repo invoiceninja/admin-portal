@@ -319,13 +319,13 @@ ReportResult quoteReport(
           value = client.phone;
           break;
         case QuoteReportFields.contact_email:
-          value = contact.email ?? '';
+          value = contact.email;
           break;
         case QuoteReportFields.contact_name:
-          value = contact.fullName ?? '';
+          value = contact.fullName;
           break;
         case QuoteReportFields.contact_phone:
-          value = contact.phone ?? '';
+          value = contact.phone;
           break;
         case QuoteReportFields.client_website:
           value = client.website;

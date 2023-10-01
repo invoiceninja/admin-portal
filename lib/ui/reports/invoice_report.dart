@@ -415,13 +415,13 @@ ReportResult invoiceReport(
           value = client.phone;
           break;
         case InvoiceReportFields.contact_email:
-          value = contact.email ?? '';
+          value = contact.email;
           break;
         case InvoiceReportFields.contact_name:
-          value = contact.fullName ?? '';
+          value = contact.fullName;
           break;
         case InvoiceReportFields.contact_phone:
-          value = contact.phone ?? '';
+          value = contact.phone;
           break;
         case InvoiceReportFields.client_website:
           value = client.website;

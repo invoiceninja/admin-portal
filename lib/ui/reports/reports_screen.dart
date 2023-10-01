@@ -364,7 +364,7 @@ class ReportsScreen extends StatelessWidget {
                               viewModel.onReportColumnsChanged(
                                   context, selected);
                             },
-                            options: reportResult.allColumns ?? [],
+                            options: reportResult.allColumns,
                             selected: reportResult.columns.toList(),
                             defaultSelected: reportResult.defaultColumns,
                           );
@@ -691,7 +691,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
             sortColumnIndex: sortedColumns.contains(reportSettings.sortColumn)
                 ? sortedColumns.indexOf(reportSettings.sortColumn)
                 : null,
-            sortAscending: reportSettings.sortAscending ?? true,
+            sortAscending: reportSettings.sortAscending,
             columns: reportResult.tableColumns(
                 context,
                 (index, ascending) => widget.viewModel
@@ -705,8 +705,11 @@ class _ReportDataTableState extends State<ReportDataTable> {
 }
 
 class TotalsDataTable extends StatelessWidget {
-  const TotalsDataTable(
-      {this.reportSettings, this.reportResult, this.viewModel});
+  const TotalsDataTable({
+    this.reportSettings,
+    this.reportResult,
+    this.viewModel,
+  });
 
   final ReportsScreenVM? viewModel;
   final ReportSettingsEntity? reportSettings;
