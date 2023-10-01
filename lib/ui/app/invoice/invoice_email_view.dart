@@ -87,7 +87,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           selectedTemplate = EmailTemplate.reminder3;
         else if ((invoice.reminder1Sent ?? '').isNotEmpty)
           selectedTemplate = EmailTemplate.reminder2;
-        else if ((invoice.lastSentDate ?? '').isNotEmpty)
+        else if ((invoice.lastSentDate).isNotEmpty)
           selectedTemplate = EmailTemplate.reminder1;
         else
           selectedTemplate = EmailTemplate.invoice;

@@ -227,8 +227,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
     super.initState();
     _controller = ScrollController();
     _firstRowIndex = PageStorage.of(context).readState(context) as int? ??
-        widget.initialFirstRowIndex ??
-        0;
+        widget.initialFirstRowIndex;
     widget.source.addListener(_handleDataSourceChanged);
     _handleDataSourceChanged();
   }
@@ -298,7 +297,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
       if (index < _rowCount || _rowCountApproximate) {
         row = _rows.putIfAbsent(index, () => widget.source.getRow(index));
         if (row == null && !haveProgressIndicator) {
-          row ??= _getProgressIndicatorRowFor(index);
+          row = _getProgressIndicatorRowFor(index);
           haveProgressIndicator = true;
         }
       }

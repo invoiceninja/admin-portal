@@ -139,7 +139,7 @@ class ActivityListTile extends StatelessWidget {
       subtitle: Row(
         children: <Widget>[
           Flexible(
-            child: Text(((activity.notes ?? '').isNotEmpty
+            child: Text(((activity.notes).isNotEmpty
                     ? localization.lookup(activity.notes)!.trim() + '\n'
                     : '') +
                 formatDate(

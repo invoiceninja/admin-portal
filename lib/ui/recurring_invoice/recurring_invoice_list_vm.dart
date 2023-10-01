@@ -43,7 +43,7 @@ class RecurringInvoiceListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final recurringInvoiceId = viewModel.recurringInvoiceList[index];
               final recurringInvoice =
-                  viewModel.recurringInvoiceMap[recurringInvoiceId];
+                  viewModel.recurringInvoiceMap[recurringInvoiceId]!;
 
               return RecurringInvoiceListItem(
                 filter: viewModel.filter,

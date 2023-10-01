@@ -174,7 +174,7 @@ class _DropDownMultiSelectState extends State<DropDownMultiSelect> {
                                   ? widget.selectedValues
                                       .map((dynamic e) => e.toString())
                                       .reduce((a, b) => a + ' , ' + b)
-                                  : widget.whenEmpty ?? ''),
+                                  : widget.whenEmpty),
                         ),
                         alignment: Alignment.centerLeft),
               ),

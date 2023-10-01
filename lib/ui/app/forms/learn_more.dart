@@ -22,7 +22,7 @@ class LearnMoreUrl extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
 
-    if ((url).isEmpty) {
+    if (url.isEmpty) {
       return child;
     }
 
