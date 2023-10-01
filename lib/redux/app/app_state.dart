@@ -190,8 +190,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     return color.isNotEmpty;
   }
 
-  bool get showReviewApp =>
-      !prefState.hideReviewApp && company.daysActive > 60;
+  bool get showReviewApp => !prefState.hideReviewApp && company.daysActive > 60;
 
   bool get showOneYearReviewApp =>
       !prefState.hideOneYearReviewApp && company.daysActive > 365;
@@ -222,7 +221,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   String get appVersion {
     String version = 'v';
 
-    version += account.currentVersion ?? '';
+    version += account.currentVersion;
 
     if (version.isNotEmpty) {
       version += '-';
@@ -826,7 +825,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     }
   }
 
-  bool get reportErrors => account.reportErrors ?? false;
+  bool get reportErrors => account.reportErrors;
 
   bool get isHosted => account == null ? authState.isHosted : account.isHosted;
 
@@ -1012,7 +1011,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         '\nIs Loading: ${isLoading ? 'Yes' : 'No'}'
         '\nIs Saving: ${isSaving ? 'Yes' : 'No'}'
         '\nIs Loaded: ${isLoaded ? 'Yes' : 'No'}'
-        '\nis Large: ${(company.isLarge ?? false) ? 'Yes' : 'No'}'
+        '\nis Large: ${(company.isLarge) ? 'Yes' : 'No'}'
         '\nCompany: $companyUpdated${userCompanyState.isStale ? ' [S]' : ''}'
         '\nStatic: $staticUpdated${staticState.isStale ? ' [S]' : ''}'
         '\nPassword: $passwordUpdated${hasRecentlyEnteredPassword ? '' : ' [S]'}'

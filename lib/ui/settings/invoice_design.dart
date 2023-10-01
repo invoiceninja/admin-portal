@@ -1289,8 +1289,8 @@ class _PdfPreviewState extends State<_PdfPreview> {
       entityType: widget.entityType.apiValue,
       settingsType: settingsUIState.entityType.apiValue,
       settings: widget.settings!,
-      groupId: settingsUIState.group.id ?? '',
-      clientId: settingsUIState.client.id ?? '',
+      groupId: settingsUIState.group.id,
+      clientId: settingsUIState.client.id,
     );
 
     setState(() => isLoading = true);

@@ -138,6 +138,7 @@ abstract class AccountEntity
   // ignore: unused_element
   static void _initializeBuilder(AccountEntityBuilder builder) => builder
     ..key = ''
+    ..currentVersion = ''
     ..debugEnabled = false
     ..isDocker = false
     ..isSchedulerRunning = true

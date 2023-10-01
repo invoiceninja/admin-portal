@@ -62,7 +62,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.shouldBeInvoiced),
-                value: company.markExpensesInvoiceable ?? false,
+                value: company.markExpensesInvoiceable,
                 subtitle: Text(localization.shouldBeInvoicedHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..markExpensesInvoiceable = value)),
@@ -70,7 +70,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.markPaid),
-                value: company.markExpensesPaid ?? false,
+                value: company.markExpensesPaid,
                 subtitle: Text(localization.markPaidHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..markExpensesPaid = value)),
@@ -92,7 +92,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.convertCurrency),
-                value: company.convertExpenseCurrency ?? false,
+                value: company.convertExpenseCurrency,
                 subtitle: Text(localization.convertExpenseCurrencyHelp!),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..convertExpenseCurrency = value)),
@@ -100,7 +100,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.addDocumentsToInvoice),
-                value: company.invoiceExpenseDocuments ?? false,
+                value: company.invoiceExpenseDocuments,
                 subtitle: Text(localization.addDocumentsToInvoiceHelp),
                 onChanged: (value) => viewModel.onCompanyChanged(
                     company.rebuild((b) => b..invoiceExpenseDocuments = value)),
@@ -111,7 +111,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
             SwitchListTile(
               activeColor: Theme.of(context).colorScheme.secondary,
               title: Text(localization.notifyVendorWhenPaid!),
-              value: company.notifyVendorWhenPaid ?? false,
+              value: company.notifyVendorWhenPaid,
               subtitle: Text(localization.notifyVendorWhenPaidHelp!),
               onChanged: (value) => viewModel.onCompanyChanged(
                   company.rebuild((b) => b..notifyVendorWhenPaid = value)),
@@ -124,7 +124,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                   label: localization.enterTaxes,
                   enabledLabel: localization.byAmount,
                   disabledLabel: localization.byRate,
-                  value: company.calculateExpenseTaxByAmount ?? false,
+                  value: company.calculateExpenseTaxByAmount,
                   onChanged: (value) => viewModel.onCompanyChanged(company
                       .rebuild((b) => b..calculateExpenseTaxByAmount = value)),
                 ),
@@ -132,7 +132,7 @@ class _ExpenseSettingsState extends State<ExpenseSettings> {
                 SwitchListTile(
                   activeColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.inclusiveTaxes),
-                  value: company.expenseInclusiveTaxes ?? false,
+                  value: company.expenseInclusiveTaxes,
                   subtitle: Text(
                       '\n${localization.exclusive}: 100 + 10% = 100 + 10\n${localization.inclusive}: 100 + 10% = 90.91 + 9.09'),
                   onChanged: (value) => viewModel.onCompanyChanged(

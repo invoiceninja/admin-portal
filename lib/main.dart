@@ -185,7 +185,7 @@ void main({bool isTesting = false}) async {
         options.beforeSend = (SentryEvent event, {dynamic hint}) {
           final state = store.state;
           final account = state.account;
-          final reportErrors = account.reportErrors ?? false;
+          final reportErrors = account.reportErrors;
 
           if (!reportErrors) {
             return null;
@@ -194,7 +194,7 @@ void main({bool isTesting = false}) async {
           event = event.copyWith(
             environment: '${store.state.environment}'.split('.').last,
             extra: <String, dynamic>{
-              'server_version': account.currentVersion ?? 'Unknown',
+              'server_version': account.currentVersion,
               'route': state.uiState.currentRoute,
             },
           );

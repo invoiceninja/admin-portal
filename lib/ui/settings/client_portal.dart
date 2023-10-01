@@ -533,7 +533,7 @@ class _ClientPortalState extends State<ClientPortal>
                       onChanged: (value) => viewModel.onCompanyChanged(
                           company.rebuild((b) => b..clientCanRegister = value)),
                     ),
-                    if (state.company.clientCanRegister ?? false) ...[
+                    if (state.company.clientCanRegister) ...[
                       SizedBox(height: 16),
                       ListTile(
                         title: Text(localization.registrationUrl),
