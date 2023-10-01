@@ -250,9 +250,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             !item!.isEmpty && item.typeId == InvoiceItemEntity.TYPE_TASK)
         .length;
 
-    final showTasksTable =
-        (invoice.hasTasks || (company.showTasksTable ?? false)) &&
-            (invoice.isInvoice || invoice.isQuote);
+    final showTasksTable = (invoice.hasTasks || company.showTasksTable) &&
+        (invoice.isInvoice || invoice.isQuote);
 
     final settings = getClientSettings(state, client);
     final terms = entityType == EntityType.quote
@@ -376,7 +375,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                         ))
                                     .toList()),
                             DatePicker(
-                              labelText: (invoice.lastSentDate ?? '').isNotEmpty
+                              labelText: invoice.lastSentDate.isNotEmpty
                                   ? localization.nextSendDate
                                   : localization.startDate,
                               onSelected: (date, _) {

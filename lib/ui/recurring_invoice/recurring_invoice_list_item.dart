@@ -216,7 +216,7 @@ class RecurringInvoiceListItem extends StatelessWidget {
                           Expanded(
                             child: filterMatch == null
                                 ? Text(
-                                    (((invoice.number ?? '').isEmpty
+                                    ((invoice.number.isEmpty
                                                 ? localization.pending
                                                 : invoice.number) +
                                             (invoice.nextSendDate.isNotEmpty

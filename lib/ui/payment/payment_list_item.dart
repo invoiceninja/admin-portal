@@ -28,7 +28,7 @@ class PaymentListItem extends StatelessWidget {
     this.showSelected = true,
   });
 
-  final PaymentEntity? payment;
+  final PaymentEntity payment;
   final String? filter;
   final bool showCheckbox;
   final bool isChecked;
@@ -41,31 +41,31 @@ class PaymentListItem extends StatelessWidget {
     final uiState = state.uiState;
     final paymentUIState = uiState.paymentUIState;
     final textStyle = TextStyle(fontSize: 16);
-    final client = state.clientState.get(payment!.clientId);
+    final client = state.clientState.get(payment.clientId);
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter!.isNotEmpty
-        ? (payment!.matchesFilterValue(filter) ??
+        ? (payment.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))
         : null;
     final mobileSubtitle = filterMatch ??
-        (payment!.number ?? '') + ' • ' + formatDate(payment!.date, context);
+        payment.number + ' • ' + formatDate(payment.date, context);
     final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
     String desktopSubtitle = '';
-    if (payment!.date.isNotEmpty) {
-      desktopSubtitle = formatDate(payment!.date, context);
+    if (payment.date.isNotEmpty) {
+      desktopSubtitle = formatDate(payment.date, context);
     }
-    if (payment!.transactionReference.isNotEmpty) {
+    if (payment.transactionReference.isNotEmpty) {
       if (desktopSubtitle.isNotEmpty) {
         desktopSubtitle += ' • ';
       }
-      desktopSubtitle += payment!.transactionReference;
+      desktopSubtitle += payment.transactionReference;
     }
 
     return DismissibleEntity(
       isSelected: isDesktop(context) &&
           showSelected &&
-          payment!.id ==
+          payment.id ==
               (uiState.isEditing
                   ? paymentUIState.editing!.id
                   : paymentUIState.selectedId),
@@ -78,10 +78,10 @@ class PaymentListItem extends StatelessWidget {
             ? InkWell(
                 onTap: () => onTap != null
                     ? onTap!()
-                    : selectEntity(entity: payment!, forceView: !showCheckbox),
+                    : selectEntity(entity: payment, forceView: !showCheckbox),
                 onLongPress: () => onTap != null
                     ? null
-                    : selectEntity(entity: payment!, longPress: true),
+                    : selectEntity(entity: payment, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 10,
@@ -105,7 +105,7 @@ class PaymentListItem extends StatelessWidget {
                                   ),
                                 )
                               : ActionMenuButton(
-                                  entityActions: payment!.getActions(
+                                  entityActions: payment.getActions(
                                     userCompany: state.userCompany,
                                     client: client,
                                     includeEdit: true,
@@ -121,11 +121,11 @@ class PaymentListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              payment!.number,
+                              payment.number,
                               style: textStyle,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            if (!payment!.isActive) EntityStateLabel(payment)
+                            if (!payment.isActive) EntityStateLabel(payment)
                           ],
                         ),
                       ),
@@ -152,7 +152,7 @@ class PaymentListItem extends StatelessWidget {
                       ),
                       SizedBox(width: 10),
                       Text(
-                        formatNumber(payment!.amount, context,
+                        formatNumber(payment.amount, context,
                             clientId: client.id)!,
                         style: textStyle,
                         textAlign: TextAlign.end,
@@ -166,10 +166,10 @@ class PaymentListItem extends StatelessWidget {
             : ListTile(
                 onTap: () => onTap != null
                     ? onTap!()
-                    : selectEntity(entity: payment!, forceView: !showCheckbox),
+                    : selectEntity(entity: payment, forceView: !showCheckbox),
                 onLongPress: () => onTap != null
                     ? null
-                    : selectEntity(entity: payment!, longPress: true),
+                    : selectEntity(entity: payment, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
                         child: Checkbox(
@@ -192,8 +192,8 @@ class PaymentListItem extends StatelessWidget {
                         ),
                       ),
                       Text(
-                          formatNumber(payment!.amount, context,
-                              clientId: payment!.clientId)!,
+                          formatNumber(payment.amount, context,
+                              clientId: payment.clientId)!,
                           style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),
@@ -214,11 +214,11 @@ class PaymentListItem extends StatelessWidget {
                         ),
                         Text(
                             localization!.lookup(
-                                'payment_status_${payment!.calculatedStatusId}')!,
+                                'payment_status_${payment.calculatedStatusId}')!,
                             style: TextStyle(
                               color: PaymentStatusColors(
                                       state.prefState.colorThemeModel)
-                                  .colors[payment!.calculatedStatusId],
+                                  .colors[payment.calculatedStatusId],
                             )),
                       ],
                     ),

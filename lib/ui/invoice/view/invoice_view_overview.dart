@@ -137,7 +137,7 @@ class InvoiceOverview extends StatelessWidget {
       ListDivider(),
     ]);
 
-    if ((invoice.privateNotes ?? '').isNotEmpty) {
+    if (invoice.privateNotes.isNotEmpty) {
       widgets.addAll([
         IconMessage(invoice.privateNotes,
             iconData: Icons.lock, copyToClipboard: true),
@@ -516,7 +516,7 @@ class InvoiceOverview extends StatelessWidget {
       widgets.add(surchargeRow(localization.partialDue, invoice.partial));
     }
 
-    if ((invoice.publicNotes ?? '').isNotEmpty) {
+    if (invoice.publicNotes.isNotEmpty) {
       widgets.addAll([
         ListDivider(),
         IconMessage(invoice.publicNotes, copyToClipboard: true),

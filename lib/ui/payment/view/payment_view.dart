@@ -62,7 +62,7 @@ class _PaymentViewState extends State<PaymentView> {
     if (payment.date.isNotEmpty) {
       fields[PaymentFields.date] = formatDate(payment.date, context);
     }
-    if ((payment.typeId ?? '').isNotEmpty) {
+    if (payment.typeId.isNotEmpty) {
       final paymentType = state.staticState.paymentTypeMap[payment.typeId];
       if (paymentType != null) {
         fields[PaymentFields.typeId] = paymentType.name;
@@ -133,7 +133,7 @@ class _PaymentViewState extends State<PaymentView> {
                                       paymentable.createdAt),
                                   context),
                         ),
-                      if ((payment.companyGatewayId ?? '').isNotEmpty) ...[
+                      if (payment.companyGatewayId.isNotEmpty) ...[
                         ListTile(
                           title: Text(
                               '${localization.gateway}  ›  ${companyGateway.label}'),

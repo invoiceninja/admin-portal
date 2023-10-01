@@ -57,7 +57,7 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
       itemBuilder: (BuildContext context, index) {
         final activity = activityList[index];
         final history = activity.history!;
-        final activityId = history.activityId ?? '';
+        final activityId = history.activityId;
 
         final state = viewModel.state!;
         final client = state.clientState.get(activity.clientId!);

@@ -70,9 +70,8 @@ class QuotePresenter extends EntityPresenter {
       case QuoteFields.status:
         return EntityStatusChip(entity: quote, showState: true);
       case QuoteFields.number:
-        return Text((quote.number ?? '').isEmpty
-            ? localization!.pending
-            : quote.number);
+        return Text(
+            quote.number.isEmpty ? localization!.pending : quote.number);
       case QuoteFields.client:
         return LinkTextRelatedEntity(entity: client, relation: quote);
       case QuoteFields.date:

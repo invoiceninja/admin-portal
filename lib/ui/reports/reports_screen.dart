@@ -722,7 +722,7 @@ class TotalsDataTable extends StatelessWidget {
           reportResult.columns.length > reportSettings.sortTotalsIndex
               ? reportSettings.sortTotalsIndex
               : null,
-      sortAscending: reportSettings.sortTotalsAscending ?? true,
+      sortAscending: reportSettings.sortTotalsAscending,
       columns: reportResult.totalColumns(
           context,
           (index, ascending) =>
@@ -925,7 +925,10 @@ class ReportResult {
     return true;
   }
 
-  static bool matchString({required String filter, String? value}) {
+  static bool matchString({
+    required String filter,
+    String? value,
+  }) {
     filter = filter.trim();
 
     if (filter.isEmpty) {
@@ -933,7 +936,7 @@ class ReportResult {
     }
 
     value = (value ?? '').toLowerCase();
-    filter = (filter ?? '').toLowerCase();
+    filter = filter.toLowerCase();
 
     if (filter == 'null' && value.isEmpty) {
       return true;
@@ -1120,7 +1123,7 @@ class ReportResult {
           ))
         else if (getReportColumnType(column, context) == ReportColumnType.age)
           DataCell(AppDropdownButton<String>(
-            value: (textEditingControllers[column]!.text ?? '').isNotEmpty &&
+            value: (textEditingControllers[column]!.text).isNotEmpty &&
                     textEditingControllers[column]!.text != 'null'
                 ? textEditingControllers[column]!.text
                 : null,

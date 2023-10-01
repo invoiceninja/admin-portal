@@ -69,7 +69,7 @@ class ProjectPresenter extends EntityPresenter {
         return Text(formatNumber(project.budgetedHours, context,
             formatNumberType: FormatNumberType.double)!);
       case ProjectFields.number:
-        return Text(project.number ?? '');
+        return Text(project.number);
       case ProjectFields.customValue1:
         return Text(presentCustomField(context, project.customValue1)!);
       case ProjectFields.customValue2:

@@ -625,7 +625,7 @@ class _PaymentableEditorState extends State<PaymentableEditor> {
     // If a client isn't selected or a client is selected but the client
     // doesn't have any more credits then don't show the picker
     if (widget.entityType == EntityType.credit &&
-        ((payment.clientId ?? '').isEmpty ||
+        (payment.clientId.isEmpty ||
             (creditList.isEmpty && (paymentable.creditId ?? '').isEmpty))) {
       return SizedBox();
     } else if (widget.entityType == EntityType.invoice &&

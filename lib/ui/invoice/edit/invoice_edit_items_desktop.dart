@@ -448,10 +448,10 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       ..._columns
                           .map((column) {
                             if (column == COLUMN_ITEM) {
-                              return Text(item.productKey ?? '');
+                              return Text(item.productKey);
                             } else if (column == COLUMN_DESCRIPTION) {
                               return Text(
-                                item.notes ?? '',
+                                item.notes,
                                 maxLines: 2, // TODO change to 1
                                 overflow: TextOverflow.ellipsis,
                               );

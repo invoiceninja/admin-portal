@@ -223,7 +223,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                           ))
                       .toList()),
               DatePicker(
-                labelText: (invoice.lastSentDate ?? '').isNotEmpty
+                labelText: invoice.lastSentDate.isNotEmpty
                     ? localization.nextSendDate
                     : localization.startDate,
                 onSelected: (date, _) => viewModel

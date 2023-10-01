@@ -152,7 +152,7 @@ class VendorOverview extends StatelessWidget {
                     vendor.id, state.transactionState.map)
                 .present(localization.active, localization.archived),
           ),
-        if ((vendor.publicNotes ?? '').isNotEmpty) ...[
+        if (vendor.publicNotes.isNotEmpty) ...[
           IconMessage(vendor.publicNotes, copyToClipboard: true),
           ListDivider()
         ],

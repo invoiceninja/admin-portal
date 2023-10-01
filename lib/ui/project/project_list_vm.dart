@@ -43,7 +43,7 @@ class ProjectListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final projectId = viewModel.projectList[index];
-              final project = viewModel.projectMap[projectId];
+              final project = viewModel.projectMap[projectId]!;
               final listState = state.getListState(EntityType.project);
               final isInMultiselect = listState.isInMultiselect();
 
@@ -51,7 +51,7 @@ class ProjectListBuilder extends StatelessWidget {
                 user: state.user,
                 filter: viewModel.filter,
                 project: project,
-                isChecked: isInMultiselect && listState.isSelected(project!.id),
+                isChecked: isInMultiselect && listState.isSelected(project.id),
               );
             });
       },

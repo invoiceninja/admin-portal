@@ -189,7 +189,7 @@ class ExpenseOverview extends StatelessWidget {
                     currencyId: expense.currencyId),
               ),
         ListDivider(),
-        if ((expense.privateNotes ?? '').isNotEmpty) ...[
+        if (expense.privateNotes.isNotEmpty) ...[
           IconMessage(expense.privateNotes,
               iconData: Icons.lock, copyToClipboard: true),
           ListDivider(),
@@ -223,7 +223,7 @@ class ExpenseOverview extends StatelessWidget {
                 .present(localization.active, localization.archived),
           ),
         ..._buildDetailsList(),
-        if ((expense.publicNotes ?? '').isNotEmpty) ...[
+        if (expense.publicNotes.isNotEmpty) ...[
           IconMessage(expense.publicNotes, copyToClipboard: true),
           ListDivider()
         ],

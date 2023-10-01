@@ -34,7 +34,7 @@ String toCamelCase(String subject) {
 }
 
 String toSpaceCase(String value) {
-  if ((value ?? '').isEmpty) {
+  if (value.isEmpty) {
     return '';
   }
 

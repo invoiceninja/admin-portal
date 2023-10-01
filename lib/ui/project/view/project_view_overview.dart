@@ -111,7 +111,7 @@ class _ProjectOverviewState extends State<ProjectOverview> {
               Duration(minutes: (project.budgetedHours * 60).toInt())),
         ),
         ListDivider(),
-        if ((project.privateNotes ?? '').isNotEmpty) ...[
+        if (project.privateNotes.isNotEmpty) ...[
           IconMessage(project.privateNotes,
               iconData: Icons.lock, copyToClipboard: true),
           ListDivider()
@@ -160,7 +160,7 @@ class _ProjectOverviewState extends State<ProjectOverview> {
         FieldGrid(fields),
       ]);
 
-      if ((project.publicNotes ?? '').isNotEmpty) {
+      if (project.publicNotes.isNotEmpty) {
         widgets.addAll([
           IconMessage(project.publicNotes, copyToClipboard: true),
           ListDivider()

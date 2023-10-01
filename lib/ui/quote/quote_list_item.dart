@@ -206,7 +206,7 @@ class QuoteListItem extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: filterMatch == null
-                                ? Text((((quote.number ?? '').isEmpty
+                                ? Text(((quote.number.isEmpty
                                             ? localization!.pending
                                             : quote.number) +
                                         ' • ' +

@@ -164,10 +164,10 @@ ReportResult taskReport(
           value = task.description;
           break;
         case TaskReportFields.invoice:
-          value = invoice.listDisplayName ?? '';
+          value = invoice.listDisplayName;
           break;
         case TaskReportFields.invoice_amount:
-          value = invoice.amount ?? '';
+          value = invoice.amount;
           break;
         case TaskReportFields.invoice_date:
           value = invoice.isNew ? '' : invoice.date;

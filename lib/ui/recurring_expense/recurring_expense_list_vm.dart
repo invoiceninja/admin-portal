@@ -44,7 +44,7 @@ class RecurringExpenseListBuilder extends StatelessWidget {
               final state = viewModel.state;
               final recurringExpenseId = viewModel.recurringExpenseList[index];
               final recurringExpense =
-                  viewModel.recurringExpenseMap[recurringExpenseId];
+                  viewModel.recurringExpenseMap[recurringExpenseId]!;
               final listState = state.getListState(EntityType.recurringExpense);
               final isInMultiselect = listState.isInMultiselect();
 
@@ -52,7 +52,7 @@ class RecurringExpenseListBuilder extends StatelessWidget {
                 filter: viewModel.filter,
                 expense: recurringExpense,
                 isChecked: isInMultiselect &&
-                    listState.isSelected(recurringExpense!.id),
+                    listState.isSelected(recurringExpense.id),
               );
             });
       },

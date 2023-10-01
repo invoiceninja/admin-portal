@@ -186,7 +186,7 @@ class PaymentSidebar extends StatelessWidget {
               itemCount: recentPayments.length,
               itemBuilder: (BuildContext context, int index) {
                 return PaymentListItem(
-                  payment: recentPayments[index],
+                  payment: recentPayments[index]!,
                   showSelected: false,
                 );
               },

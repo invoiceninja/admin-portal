@@ -116,7 +116,7 @@ class PurchaseOrderListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              (purchaseOrder.number ?? '').isEmpty
+                              purchaseOrder.number.isEmpty
                                   ? localization!.pending
                                   : purchaseOrder.number,
                               style: textStyle,
