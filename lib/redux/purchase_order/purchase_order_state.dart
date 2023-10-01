@@ -27,9 +27,9 @@ abstract class PurchaseOrderState
   BuiltMap<String, InvoiceEntity> get map;
   BuiltList<String> get list;
 
-  InvoiceEntity? get(String purchaseOrderId) {
+  InvoiceEntity get(String purchaseOrderId) {
     if (map.containsKey(purchaseOrderId)) {
-      return map[purchaseOrderId];
+      return map[purchaseOrderId]!;
     } else {
       return InvoiceEntity(id: purchaseOrderId);
     }

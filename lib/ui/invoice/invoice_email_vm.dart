@@ -28,8 +28,8 @@ class InvoiceEmailScreen extends StatelessWidget {
       onInit: (Store<AppState> store) {
         final state = store.state;
         final invoiceId = state.uiState.invoiceUIState.selectedId!;
-        final invoice = state.invoiceState.get(invoiceId)!;
-        final client = state.clientState.get(invoice.clientId)!;
+        final invoice = state.invoiceState.get(invoiceId);
+        final client = state.clientState.get(invoice.clientId);
         if (client.isStale) {
           store.dispatch(LoadClient(clientId: client.id));
         }
@@ -37,7 +37,7 @@ class InvoiceEmailScreen extends StatelessWidget {
       converter: (Store<AppState> store) {
         final state = store.state;
         final invoiceId = state.uiState.invoiceUIState.selectedId!;
-        final invoice = state.invoiceState.get(invoiceId)!;
+        final invoice = state.invoiceState.get(invoiceId);
         return EmailInvoiceVM.fromStore(store, invoice);
       },
       builder: (context, vm) {

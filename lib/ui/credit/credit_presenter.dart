@@ -131,18 +131,18 @@ class CreditPresenter extends EntityPresenter {
         final vendor = state.vendorState.get(credit.vendorId);
         return LinkTextRelatedEntity(entity: vendor, relation: credit);
       case CreditFields.clientState:
-        return Text(client!.state);
+        return Text(client.state);
       case CreditFields.clientCity:
-        return Text(client!.city);
+        return Text(client.city);
       case CreditFields.clientPostalCode:
-        return Text(client!.postalCode);
+        return Text(client.postalCode);
       case CreditFields.clientCountry:
         return Text(
-            state.staticState.countryMap[client!.countryId]?.name ?? '');
+            state.staticState.countryMap[client.countryId]?.name ?? '');
       case CreditFields.contactName:
       case CreditFields.contactEmail:
         final contact = creditContactSelector(
-            credit, state.clientState.get(credit.clientId)!);
+            credit, state.clientState.get(credit.clientId));
         if (contact == null) {
           return SizedBox();
         }

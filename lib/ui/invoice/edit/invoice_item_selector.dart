@@ -155,25 +155,25 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       state.clientState.map,
       state.projectState.map,
     ).where((entityId) {
-      final task = state.taskState.get(entityId!)!;
+      final task = state.taskState.get(entityId!);
       final client = state.clientState.get(task.clientId);
       if (widget.excluded != null && widget.excluded!.contains(task)) {
         return false;
       }
-      return task.matchesFilter(_filter) || client!.matchesNameOrEmail(_filter);
+      return task.matchesFilter(_filter) || client.matchesNameOrEmail(_filter);
     }).toList();
 
     final expenses = memoizedClientExpenseList(
       state.expenseState.map,
       _filterClientId,
     ).where((entityId) {
-      final expense = state.expenseState.get(entityId!)!;
+      final expense = state.expenseState.get(entityId!);
       final client = state.clientState.get(expense.clientId!);
       if (widget.excluded != null && widget.excluded!.contains(expense)) {
         return false;
       }
       return expense.matchesFilter(_filter) ||
-          client!.matchesNameOrEmail(_filter);
+          client.matchesNameOrEmail(_filter);
     }).toList();
 
     Widget _productList() {

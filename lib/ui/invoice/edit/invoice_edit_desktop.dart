@@ -234,7 +234,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
     final state = viewModel.state!;
     final invoice = viewModel.invoice!;
     final company = viewModel.company!;
-    final client = state.clientState.get(invoice.clientId)!;
+    final client = state.clientState.get(invoice.clientId);
     final vendor = state.vendorState.get(invoice.vendorId);
     final entityType = invoice.entityType;
     final originalInvoice =
@@ -315,12 +315,10 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             InkWell(
                               onLongPress: () => editEntity(
                                   entity: invoice.isPurchaseOrder
-                                      ? vendor!
-                                      : client),
+                                      ? vendor: client),
                               onTap: () => viewEntity(
                                   entity: invoice.isPurchaseOrder
-                                      ? vendor!
-                                      : client),
+                                      ? vendor: client),
                               child: ConstrainedBox(
                                 constraints: BoxConstraints(
                                     minWidth: double.infinity, minHeight: 40),
@@ -330,8 +328,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                     EntityPresenter()
                                         .initialize(
                                             invoice.isPurchaseOrder
-                                                ? vendor!
-                                                : client,
+                                                ? vendor: client,
                                             context)
                                         .title()!,
                                     style:
@@ -813,7 +810,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                           onChanged: (projectId) {
                                             final project = store
                                                 .state.projectState
-                                                .get(projectId)!;
+                                                .get(projectId);
                                             final client = state.clientState
                                                 .get(project.clientId);
 

@@ -118,7 +118,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
       entity: companyGateway,
       title: viewModel.companyGateway.isNew
           ? localization.newCompanyGateway
-          : origCompanyGateway!.listDisplayName,
+          : origCompanyGateway.listDisplayName,
       onSavePressed: disableSave ? null : viewModel.onSavePressed,
       onCancelPressed: viewModel.onCancelPressed,
       appBarBottom: TabBar(

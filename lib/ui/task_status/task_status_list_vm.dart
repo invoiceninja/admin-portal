@@ -74,7 +74,7 @@ class TaskStatusListVM {
       onRefreshed: (context) => _handleRefresh(context),
       onSortChanged: (int oldIndex, int newIndex) {
         final taskStatusId = taskStatusIds[oldIndex];
-        final taskStatus = state.taskStatusState.get(taskStatusId)!;
+        final taskStatus = state.taskStatusState.get(taskStatusId);
 
         store.dispatch(SaveTaskStatusRequest(
             completer: snackBarCompleter<TaskStatusEntity>(

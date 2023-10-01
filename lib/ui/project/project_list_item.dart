@@ -40,7 +40,7 @@ class ProjectListItem extends StatelessWidget {
     final state = store.state;
     final uiState = state.uiState;
     final projectUIState = uiState.projectUIState;
-    final client = state.clientState.get(project!.clientId)!;
+    final client = state.clientState.get(project!.clientId);
     final filterMatch = filter != null && filter!.isNotEmpty
         ? (project!.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))

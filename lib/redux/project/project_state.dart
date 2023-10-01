@@ -32,9 +32,9 @@ abstract class ProjectState
 
   BuiltMap<String, ProjectEntity> get map;
 
-  ProjectEntity? get(String projectId) {
+  ProjectEntity get(String projectId) {
     if (map.containsKey(projectId)) {
-      return map[projectId];
+      return map[projectId]!;
     } else {
       return ProjectEntity(id: projectId);
     }

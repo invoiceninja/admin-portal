@@ -561,7 +561,7 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity?> invoices,
         if (!link.contains('?')) {
           link += '?';
         }
-        link += '&client_hash=${client!.clientHash}';
+        link += '&client_hash=${client.clientHash}';
         launchUrl(Uri.parse(link));
       }
       break;
@@ -630,7 +630,7 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity?> invoices,
       invoices.forEach((invoice) {
         final client = state.clientState.get(
           (invoice as InvoiceEntity).clientId,
-        )!;
+        );
         if (!client.hasEmailAddress) {
           emailValid = false;
         }
@@ -643,7 +643,7 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity?> invoices,
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    editEntity(entity: client!);
+                    editEntity(entity: client);
                   },
                   child: Text(localization.editClient.toUpperCase()))
             ]);

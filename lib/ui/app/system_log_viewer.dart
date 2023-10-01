@@ -72,7 +72,7 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
                       localization.lookup(systemLog.type)!),
                   isThreeLine: true,
                   subtitle: Text(localization.lookup(systemLog.event)! +
-                      (client!.isOld ? ' • ${client.displayName}' : '') +
+                      (client.isOld ? ' • ${client.displayName}' : '') +
                       '\n' +
                       formatDate(
                           convertTimestampToDateString(systemLog.createdAt),

@@ -110,7 +110,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
     final state = viewModel.state;
 
     final company = state.company;
-    final client = state.clientState.get(task.clientId)!;
+    final client = state.clientState.get(task.clientId);
     final rateLabel = localization.rate +
         ' • ' +
         formatNumber(
@@ -157,9 +157,9 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                 onChanged: (selectedId) {
                   final project = store.state.projectState.get(selectedId);
                   viewModel.onChanged(task.rebuild((b) => b
-                    ..projectId = project?.id
-                    ..clientId = (project?.clientId ?? '').isNotEmpty
-                        ? project!.clientId
+                    ..projectId = project.id
+                    ..clientId = (project.clientId ?? '').isNotEmpty
+                        ? project.clientId
                         : task.clientId));
                 },
                 onAddPressed: (completer) {

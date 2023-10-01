@@ -210,7 +210,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       }
 
       if (transactions.isNotEmpty &&
-          state.clientState.get(invoice.clientId)!.currencyId !=
+          state.clientState.get(invoice.clientId).currencyId !=
               transactions.first.currencyId) {
         return false;
       }
@@ -224,7 +224,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       if (filter.isNotEmpty) {
         final client = state.clientState.get(invoice.clientId);
         if (!invoice.matchesFilter(filter) &&
-            !client!.matchesNameOrEmail(filter)) {
+            !client.matchesNameOrEmail(filter)) {
           return false;
         }
       }
@@ -279,7 +279,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       }
 
       if (transactions.isNotEmpty &&
-          state.clientState.get(payment.clientId)!.currencyId !=
+          state.clientState.get(payment.clientId).currencyId !=
               transactions.first.currencyId) {
         return false;
       }
@@ -289,7 +289,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       if (filter.isNotEmpty) {
         final client = state.clientState.get(payment.clientId);
         if (!payment.matchesFilter(filter) &&
-            !client!.matchesNameOrEmail(filter)) {
+            !client.matchesNameOrEmail(filter)) {
           return false;
         }
       }
@@ -358,7 +358,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
     String? currencyId;
     if (_selectedInvoices.isNotEmpty) {
       currencyId =
-          state.clientState.get(_selectedInvoices.first!.clientId)!.currencyId;
+          state.clientState.get(_selectedInvoices.first!.clientId).currencyId;
     }
 
     double totalSelected = 0;
@@ -811,8 +811,8 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
         final client = state.clientState.get(expense.clientId!);
         final vendor = state.vendorState.get(expense.vendorId!);
         if (!expense.matchesFilter(filter) &&
-            !client!.matchesNameOrEmail(filter) &&
-            !vendor!.matchesNameOrEmail(filter)) {
+            !client.matchesNameOrEmail(filter) &&
+            !vendor.matchesNameOrEmail(filter)) {
           return false;
         }
       }
@@ -892,7 +892,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
     String? currencyId;
     if (_selectedExpenses.isNotEmpty) {
       currencyId =
-          state.clientState.get(_selectedExpenses.first!.clientId!)!.currencyId;
+          state.clientState.get(_selectedExpenses.first!.clientId!).currencyId;
     }
 
     double totalSelected = 0;

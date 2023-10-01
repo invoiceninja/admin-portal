@@ -46,7 +46,7 @@ class TaskListItem extends StatelessWidget {
     final state = store.state;
     final uiState = state.uiState;
     final taskUIState = uiState.taskUIState;
-    final client = state.clientState.get(task!.clientId)!;
+    final client = state.clientState.get(task!.clientId);
     final filterMatch = filter != null && filter!.isNotEmpty
         ? (task!.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))
@@ -66,14 +66,14 @@ class TaskListItem extends StatelessWidget {
         ? localization!.invoiced
         : task!.isRunning
             ? localization!.running
-            : status!.name.isNotEmpty
+            : status.name.isNotEmpty
                 ? status.name
                 : localization!.logged;
     final statusColor = task!.isInvoiced
         ? state.prefState.colorThemeModel!.colorSuccess
         : task!.isRunning
             ? state.prefState.colorThemeModel!.colorInfo
-            : status!.color.isNotEmpty && status.color != '#fff'
+            : status.color.isNotEmpty && status.color != '#fff'
                 ? convertHexStringToColor(status.color)
                 : TaskStatusColors(state.prefState.colorThemeModel)
                     .colors[task!.calculateStatusId];
@@ -81,7 +81,7 @@ class TaskListItem extends StatelessWidget {
     String subtitle = client.displayName;
     if (task!.projectId.isNotEmpty) {
       subtitle +=
-          ' • ' + state.projectState.get(task!.projectId)!.listDisplayName;
+          ' • ' + state.projectState.get(task!.projectId).listDisplayName;
     }
 
     final duration = LiveText(() {

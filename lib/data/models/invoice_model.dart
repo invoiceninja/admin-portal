@@ -282,13 +282,13 @@ abstract class InvoiceEntity extends Object
 
   InvoiceEntity recreateInvitations(AppState state) {
     if (entityType == EntityType.purchaseOrder) {
-      final vendor = state.vendorState.get(vendorId)!;
+      final vendor = state.vendorState.get(vendorId);
       final BuiltList<InvitationEntity> invitations = vendor.contacts
           .map((contact) => InvitationEntity(vendorContactId: contact.id))
           .toBuiltList();
       return rebuild((b) => b..invitations.replace(invitations));
     } else {
-      final client = state.clientState.get(clientId)!;
+      final client = state.clientState.get(clientId);
       final BuiltList<InvitationEntity> invitations = client.contacts
           .map((contact) => InvitationEntity(clientContactId: contact.id))
           .toBuiltList();

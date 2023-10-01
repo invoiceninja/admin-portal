@@ -125,7 +125,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           final clientId = invoice.clientId;
           for (int i = 0; i < invoice.lineItems.length; i++) {
             final lineItem = invoice.lineItems[i]!;
-            final task = state.taskState.get(lineItem.taskId ?? '')!;
+            final task = state.taskState.get(lineItem.taskId ?? '');
             if ((task.clientId ?? '').isNotEmpty && task.clientId != clientId) {
               showDialog<ErrorDialog>(
                   context: navigatorKey.currentContext!,
@@ -134,7 +134,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
                   });
               return null;
             }
-            final expense = state.expenseState.get(lineItem.expenseId ?? '')!;
+            final expense = state.expenseState.get(lineItem.expenseId ?? '');
             if ((expense.clientId ?? '').isNotEmpty &&
                 expense.clientId != clientId) {
               showDialog<ErrorDialog>(
@@ -206,8 +206,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           store.dispatch(UpdateInvoice(invoice.rebuild((b) => b
             ..clientId = clientId ?? ''
             ..projectId = projectId ?? ''
-            ..invitations.replace(BuiltList<InvitationEntity>(client!
-                .emailContacts
+            ..invitations.replace(BuiltList<InvitationEntity>(client.emailContacts
                 .map(
                     (contact) => InvitationEntity(clientContactId: contact!.id))
                 .toList())))));

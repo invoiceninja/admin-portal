@@ -212,7 +212,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
 
     // TODO: remove this code
     // hide email option on web to prevent dialog problem
-    if (kIsWeb && !client!.hasEmailAddress) {
+    if (kIsWeb && !client.hasEmailAddress) {
       showEmail = false;
     }
 

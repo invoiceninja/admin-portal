@@ -31,9 +31,9 @@ abstract class ExpenseCategoryState
 
   BuiltMap<String, ExpenseCategoryEntity> get map;
 
-  ExpenseCategoryEntity? get(String categoryId) {
+  ExpenseCategoryEntity get(String categoryId) {
     if (map.containsKey(categoryId)) {
-      return map[categoryId];
+      return map[categoryId]!;
     } else {
       return ExpenseCategoryEntity(id: categoryId);
     }

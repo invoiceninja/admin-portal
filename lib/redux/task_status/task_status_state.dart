@@ -31,9 +31,9 @@ abstract class TaskStatusState
 
   BuiltMap<String, TaskStatusEntity> get map;
 
-  TaskStatusEntity? get(String statusId) {
+  TaskStatusEntity get(String statusId) {
     if (map.containsKey(statusId)) {
-      return map[statusId];
+      return map[statusId]!;
     } else {
       return TaskStatusEntity(id: statusId);
     }

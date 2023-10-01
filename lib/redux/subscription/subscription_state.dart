@@ -33,9 +33,9 @@ abstract class SubscriptionState
 
   BuiltList<String> get list;
 
-  SubscriptionEntity? get(String subscriptionId) {
+  SubscriptionEntity get(String subscriptionId) {
     if (map.containsKey(subscriptionId)) {
-      return map[subscriptionId];
+      return map[subscriptionId]!;
     } else {
       return SubscriptionEntity(id: subscriptionId);
     }

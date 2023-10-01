@@ -53,9 +53,9 @@ class ProjectPresenter extends EntityPresenter {
       case ProjectFields.client:
         return LinkTextRelatedEntity(entity: client, relation: project);
       case ProjectFields.clientIdNumber:
-        return Text(client!.idNumber);
+        return Text(client.idNumber);
       case ProjectFields.clientNumber:
-        return Text(client!.number);
+        return Text(client.number);
       case ProjectFields.taskRate:
         return Text(formatNumber(project.taskRate, context,
             clientId: project.clientId)!);

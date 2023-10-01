@@ -125,7 +125,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
 
     final company = state.company!;
     final settings = company.settings;
-    final client = state.clientState.get(task.clientId)!;
+    final client = state.clientState.get(task.clientId);
     final showEndDate = company.showTaskEndDate;
     final taskTimes = task.getTaskTimes(sort: false);
 
@@ -193,9 +193,9 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                         final project =
                             store.state.projectState.get(selectedId);
                         viewModel.onChanged(task.rebuild((b) => b
-                          ..projectId = project?.id
-                          ..clientId = (project?.clientId ?? '').isNotEmpty
-                              ? project!.clientId
+                          ..projectId = project.id
+                          ..clientId = (project.clientId ?? '').isNotEmpty
+                              ? project.clientId
                               : task.clientId));
                       },
                       onAddPressed: (completer) {

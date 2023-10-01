@@ -39,7 +39,7 @@ class TokenListItem extends StatelessWidget {
     final listUIState = tokenUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
-    final user = state.userState.get(token!.createdUserId!)!;
+    final user = state.userState.get(token!.createdUserId!);
 
     final filterMatch = filter != null && filter!.isNotEmpty
         ? token!.matchesFilterValue(filter)

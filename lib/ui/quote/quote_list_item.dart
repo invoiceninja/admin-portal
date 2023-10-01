@@ -42,7 +42,7 @@ class QuoteListItem extends StatelessWidget {
     final textColor = Theme.of(context).textTheme.bodyLarge!.color;
     final filterMatch = filter != null && filter!.isNotEmpty
         ? (quote!.matchesFilterValue(filter) ??
-            client!.matchesFilterValue(filter))
+            client.matchesFilterValue(filter))
         : null;
 
     String subtitle = '';
@@ -129,7 +129,7 @@ class QuoteListItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                  client!.displayName +
+                                  client.displayName +
                                       (quote!.documents.isNotEmpty
                                           ? '  📎'
                                           : ''),
@@ -186,7 +186,7 @@ class QuoteListItem extends StatelessWidget {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            client!.displayName,
+                            client.displayName,
                             style: Theme.of(context).textTheme.titleMedium,
                             overflow: TextOverflow.ellipsis,
                           ),

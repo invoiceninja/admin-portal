@@ -24,9 +24,9 @@ abstract class CreditState implements Built<CreditState, CreditStateBuilder> {
 
   CreditState._();
 
-  InvoiceEntity? get(String creditId) {
+  InvoiceEntity get(String creditId) {
     if (map.containsKey(creditId)) {
-      return map[creditId];
+      return map[creditId]!;
     } else {
       return InvoiceEntity(id: creditId, entityType: EntityType.credit);
     }

@@ -113,7 +113,7 @@ class TaskEditVM {
                   ? localization!.createdTask
                   : localization!.updatedTask);
 
-              if (origTask!.statusId != savedTask.statusId) {
+              if (origTask.statusId != savedTask.statusId) {
                 store.dispatch(UpdateKanban());
               }
 

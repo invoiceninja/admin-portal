@@ -46,7 +46,7 @@ class RecurringExpenseListItem extends StatelessWidget {
     final category = state.expenseCategoryState.get(expense!.categoryId);
     final filterMatch = filter != null && filter!.isNotEmpty
         ? (expense!.matchesFilterValue(filter) ??
-            client!.matchesFilterValue(filter))
+            client.matchesFilterValue(filter))
         : null;
     final listUIState = expenseUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
@@ -65,13 +65,13 @@ class RecurringExpenseListItem extends StatelessWidget {
       if (expense!.nextSendDate.isNotEmpty) {
         parts.add(formatDate(expense!.nextSendDate, context));
       }
-      if (category != null && category.isOld) {
+      if (category.isOld) {
         parts.add(category.name);
       }
-      if (vendor != null && vendor.isOld) {
+      if (vendor.isOld) {
         parts.add(vendor.name);
       }
-      if (client != null && client.isOld) {
+      if (client.isOld) {
         parts.add(client.displayName);
       }
       subtitle = parts.join(' • ');

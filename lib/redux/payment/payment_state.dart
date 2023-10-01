@@ -34,9 +34,9 @@ abstract class PaymentState
 
   BuiltList<String> get list;
 
-  PaymentEntity? get(String paymentId) {
+  PaymentEntity get(String paymentId) {
     if (map.containsKey(paymentId)) {
-      return map[paymentId];
+      return map[paymentId]!;
     } else {
       return PaymentEntity(id: paymentId);
     }

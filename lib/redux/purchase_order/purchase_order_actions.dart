@@ -714,7 +714,7 @@ void handlePurchaseOrderAction(BuildContext? context,
       purchaseOrders.forEach((purchaseOrder) {
         final vendor = state.vendorState.get(
           (purchaseOrder as InvoiceEntity).vendorId,
-        )!;
+        );
         if (!vendor.hasEmailAddress) {
           emailValid = false;
         }
@@ -729,7 +729,7 @@ void handlePurchaseOrderAction(BuildContext? context,
                     Navigator.of(context).pop();
                     editEntity(
                         entity:
-                            state.vendorState.get(purchaseOrder!.vendorId)!);
+                            state.vendorState.get(purchaseOrder!.vendorId));
                   },
                   child: Text(localization.editVendor.toUpperCase()))
             ]);

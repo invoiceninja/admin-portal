@@ -251,7 +251,7 @@ class InvoiceOverview extends StatelessWidget {
         EntityListTile(
           isFilter: isFilter,
           entity: vendor,
-          subtitle: vendor!.primaryContact!.email,
+          subtitle: vendor.primaryContact!.email,
         ),
       );
     } else {

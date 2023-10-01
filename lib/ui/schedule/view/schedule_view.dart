@@ -77,8 +77,7 @@ class _ScheduleViewState extends State<ScheduleView> {
                   ? localization.allClients
                   : parameters.clients!.length == 1
                       ? state.clientState
-                          .get(parameters.clients!.first)!
-                          .displayName
+                          .get(parameters.clients!.first).displayName
                       : '${parameters.clients!.length} ${localization.clients}',
               localization.dateRange: localization.lookup(parameters.dateRange),
               localization.showAgingTable: parameters.showAgingTable!

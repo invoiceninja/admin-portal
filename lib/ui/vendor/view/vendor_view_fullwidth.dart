@@ -60,7 +60,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final company = state.company;
-    final vendor = state.vendorState.get(state.uiState.filterEntityId!)!;
+    final vendor = state.vendorState.get(state.uiState.filterEntityId!);
     final documents = vendor.documents;
     final viewModel = widget.viewModel;
     final billingAddress = formatAddress(state, object: vendor);

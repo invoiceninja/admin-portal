@@ -534,7 +534,7 @@ void changeTaskStatusDialog({
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: statusIds.map((statusId) {
-              final status = state.taskStatusState.get(statusId)!;
+              final status = state.taskStatusState.get(statusId);
               return ListTile(
                 title: Text(status.name),
                 leading: Icon(Icons.check_circle),

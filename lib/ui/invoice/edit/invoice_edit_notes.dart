@@ -86,7 +86,7 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
     final viewModel = widget.viewModel;
     final state = viewModel.state!;
     final invoice = viewModel.invoice!;
-    final client = state.clientState.get(invoice.clientId)!;
+    final client = state.clientState.get(invoice.clientId);
     final settings = getClientSettings(state, client);
 
     return ScrollableListView(

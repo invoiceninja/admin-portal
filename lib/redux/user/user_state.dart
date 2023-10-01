@@ -24,9 +24,9 @@ abstract class UserState implements Built<UserState, UserStateBuilder> {
 
   UserState._();
 
-  UserEntity? get(String userId) {
+  UserEntity get(String userId) {
     if (map.containsKey(userId)) {
-      return map[userId];
+      return map[userId]!;
     } else {
       return UserEntity(id: userId);
     }

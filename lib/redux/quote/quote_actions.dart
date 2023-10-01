@@ -576,7 +576,7 @@ Future handleQuoteAction(BuildContext context, List<BaseEntity?> quotes,
       quotes.forEach((quote) {
         final client = state.clientState.get(
           (quote as InvoiceEntity).clientId,
-        )!;
+        );
         if (!client.hasEmailAddress) {
           emailValid = false;
         }
@@ -589,7 +589,7 @@ Future handleQuoteAction(BuildContext context, List<BaseEntity?> quotes,
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    editEntity(entity: state.clientState.get(quote!.clientId)!);
+                    editEntity(entity: state.clientState.get(quote!.clientId));
                   },
                   child: Text(localization.editClient.toUpperCase()))
             ]);

@@ -113,7 +113,7 @@ class InvoiceViewVM extends AbstractInvoiceViewVM {
 
   factory InvoiceViewVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final invoice = state.invoiceState.get(state.invoiceUIState.selectedId!)!;
+    final invoice = state.invoiceState.get(state.invoiceUIState.selectedId!);
     final client = state.clientState.get(invoice.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {

@@ -26,9 +26,9 @@ abstract class TransactionState
   BuiltMap<String, TransactionEntity> get map;
   BuiltList<String> get list;
 
-  TransactionEntity? get(String transactionId) {
+  TransactionEntity get(String transactionId) {
     if (map.containsKey(transactionId)) {
-      return map[transactionId];
+      return map[transactionId]!;
     } else {
       return TransactionEntity(id: transactionId);
     }

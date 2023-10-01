@@ -84,7 +84,7 @@ class KanbanVM {
         ));
       },
       onSaveStatusPressed: (completer, statusId, name, statusOrder) {
-        TaskStatusEntity status = state.taskStatusState.get(statusId)!;
+        TaskStatusEntity status = state.taskStatusState.get(statusId);
         status = status.rebuild((b) => b
           ..name = name
           ..statusOrder = status.isNew ? statusOrder : status.statusOrder);
@@ -96,7 +96,7 @@ class KanbanVM {
       },
       onSaveTaskPressed:
           (completer, taskId, statusId, description, statusOrder) {
-        TaskEntity task = state.taskState.get(taskId)!;
+        TaskEntity task = state.taskState.get(taskId);
         task = task.rebuild((b) => b
           ..description = description
           ..statusOrder = task.isNew ? statusOrder : task.statusOrder
@@ -109,7 +109,7 @@ class KanbanVM {
             final project = state.projectState.get(uiState.filterEntityId!);
             task = task.rebuild((b) => b
               ..projectId = uiState.filterEntityId
-              ..clientId = project!.clientId);
+              ..clientId = project.clientId);
           } else if (uiState.filterEntityType == EntityType.user) {
             task =
                 task.rebuild((b) => b..assignedUserId = uiState.filterEntityId);

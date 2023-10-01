@@ -61,7 +61,7 @@ class KanbanViewState extends State<KanbanView> {
 
     viewModel.taskList.forEach((taskId) {
       final task = state.taskState.map[taskId]!;
-      final status = state.taskStatusState.get(task.statusId)!;
+      final status = state.taskStatusState.get(task.statusId);
       final statusId = status.isNew ? '' : status.id;
       if (!_tasks!.containsKey(statusId)) {
         _tasks![statusId] = [];
@@ -71,8 +71,8 @@ class KanbanViewState extends State<KanbanView> {
 
     _tasks!.forEach((key, value) {
       _tasks![key]!.sort((taskIdA, taskIdB) {
-        final taskA = state.taskState.get(taskIdA)!;
-        final taskB = state.taskState.get(taskIdB)!;
+        final taskA = state.taskState.get(taskIdA);
+        final taskB = state.taskState.get(taskIdB);
         if (taskA.statusOrder == taskB.statusOrder) {
           return taskB.updatedAt.compareTo(taskA.updatedAt);
         } else {
@@ -140,7 +140,7 @@ class KanbanViewState extends State<KanbanView> {
     }).toList();
 
     final boardList = filteredStatusIds.map((statusId) {
-      final status = state.taskStatusState.get(statusId)!;
+      final status = state.taskStatusState.get(statusId);
       final hasCorectOrder = statusId.isEmpty ||
           status.statusOrder == filteredStatusIds.indexOf(status.id);
 
@@ -220,7 +220,7 @@ class KanbanViewState extends State<KanbanView> {
             .map(
           (task) {
             final isVisible =
-                widget.viewModel.filteredTaskList.contains(task!.id) ||
+                widget.viewModel.filteredTaskList.contains(task.id) ||
                     task.isNew;
             return BoardItem(
               draggable: task.isOld,

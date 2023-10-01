@@ -29,9 +29,9 @@ abstract class TaskState implements Built<TaskState, TaskStateBuilder> {
   @memoized
   int get hashCode;
 
-  TaskEntity? get(String taskId) {
+  TaskEntity get(String taskId) {
     if (map.containsKey(taskId)) {
-      return map[taskId];
+      return map[taskId]!;
     } else {
       return TaskEntity(id: taskId);
     }

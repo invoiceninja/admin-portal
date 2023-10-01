@@ -129,18 +129,18 @@ class PurchaseOrderPresenter extends EntityPresenter {
         final vendor = state.vendorState.get(purchaseOrder.vendorId);
         return LinkTextRelatedEntity(entity: vendor, relation: purchaseOrder);
       case PurchaseOrderFields.vendorState:
-        return Text(vendor!.state);
+        return Text(vendor.state);
       case PurchaseOrderFields.vendorCity:
-        return Text(vendor!.city);
+        return Text(vendor.city);
       case PurchaseOrderFields.vendorPostalCode:
-        return Text(vendor!.postalCode);
+        return Text(vendor.postalCode);
       case PurchaseOrderFields.vendorCountry:
         return Text(
-            state.staticState.countryMap[client!.countryId]?.name ?? '');
+            state.staticState.countryMap[client.countryId]?.name ?? '');
       case PurchaseOrderFields.contactName:
       case PurchaseOrderFields.contactEmail:
         final contact = purchaseOrderContactSelector(
-            purchaseOrder, state.vendorState.get(purchaseOrder.vendorId)!);
+            purchaseOrder, state.vendorState.get(purchaseOrder.vendorId));
         if (contact == null) {
           return SizedBox();
         }

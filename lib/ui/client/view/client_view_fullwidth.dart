@@ -65,7 +65,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final company = state.company;
-    final client = state.clientState.get(state.uiState.filterEntityId!)!;
+    final client = state.clientState.get(state.uiState.filterEntityId!);
     final documents = client.documents;
     final viewModel = widget.viewModel;
     final billingAddress = formatAddress(state, object: client);
@@ -85,7 +85,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
 
     client.gatewayTokens.forEach((gatewayToken) {
       final companyGateway =
-          state.companyGatewayState.get(gatewayToken.companyGatewayId)!;
+          state.companyGatewayState.get(gatewayToken.companyGatewayId);
       if (companyGateway.isOld && !companyGateway.isDeleted!) {
         final customerReference = gatewayToken.customerReference;
         gatewayMap[customerReference] = companyGateway;

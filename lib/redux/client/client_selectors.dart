@@ -137,7 +137,7 @@ SettingsEntity getClientSettings(AppState? state, ClientEntity? client) {
 
   client ??= ClientEntity();
   final company = state.company!;
-  final group = state.groupState.get(client.groupId)!;
+  final group = state.groupState.get(client.groupId);
 
   return SettingsEntity(
     clientSettings: client.settings,

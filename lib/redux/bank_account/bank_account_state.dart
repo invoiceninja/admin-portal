@@ -27,9 +27,9 @@ abstract class BankAccountState
 
   BuiltList<String> get list;
 
-  BankAccountEntity? get(String bankAccountId) {
+  BankAccountEntity get(String bankAccountId) {
     if (map.containsKey(bankAccountId)) {
-      return map[bankAccountId];
+      return map[bankAccountId]!;
     } else {
       return BankAccountEntity(id: bankAccountId);
     }

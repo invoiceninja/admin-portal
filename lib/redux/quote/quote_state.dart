@@ -34,9 +34,9 @@ abstract class QuoteState implements Built<QuoteState, QuoteStateBuilder> {
 
   BuiltList<String> get list;
 
-  InvoiceEntity? get(String quoteId) {
+  InvoiceEntity get(String quoteId) {
     if (map.containsKey(quoteId)) {
-      return map[quoteId];
+      return map[quoteId]!;
     } else {
       return InvoiceEntity(id: quoteId, entityType: EntityType.quote);
     }

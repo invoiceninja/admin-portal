@@ -54,10 +54,10 @@ InvoiceItemEntity convertExpenseToInvoiceItem({
     company.getCustomFieldLabel(CustomFieldType.expense3): expense.customValue3,
     company.getCustomFieldLabel(CustomFieldType.expense4): expense.customValue4,
     localization.category:
-        state.expenseCategoryState.get(expense.categoryId)!.name,
-    localization.vendor: state.vendorState.get(expense.vendorId!)!.name,
+        state.expenseCategoryState.get(expense.categoryId).name,
+    localization.vendor: state.vendorState.get(expense.vendorId!).name,
     localization.date: formatDate(expense.date, context),
-    localization.project: state.projectState.get(expense.projectId!)!.name,
+    localization.project: state.projectState.get(expense.projectId!).name,
   };
 
   for (var label in customValues.keys) {

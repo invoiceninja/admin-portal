@@ -122,7 +122,7 @@ class PaymentPresenter extends EntityPresenter {
             formatNumberType: FormatNumberType.percent)!);
       case PaymentFields.gateway:
         final companyGateway =
-            state.companyGatewayState.get(payment!.companyGatewayId)!;
+            state.companyGatewayState.get(payment!.companyGatewayId);
         return Text(companyGateway.label);
       case PaymentFields.gatewayType:
         return Text(

@@ -32,9 +32,9 @@ abstract class ClientState implements Built<ClientState, ClientStateBuilder> {
 
   BuiltList<String> get list;
 
-  ClientEntity? get(String clientId) {
+  ClientEntity get(String clientId) {
     if (map.containsKey(clientId)) {
-      return map[clientId];
+      return map[clientId]!;
     } else {
       return ClientEntity(id: clientId);
     }

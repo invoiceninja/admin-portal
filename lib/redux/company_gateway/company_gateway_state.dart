@@ -30,9 +30,9 @@ abstract class CompanyGatewayState
   @memoized
   int get hashCode;
 
-  CompanyGatewayEntity? get(String companyGatewayId) {
+  CompanyGatewayEntity get(String companyGatewayId) {
     if (map.containsKey(companyGatewayId)) {
-      return map[companyGatewayId];
+      return map[companyGatewayId]!;
     } else {
       return CompanyGatewayEntity(id: companyGatewayId);
     }

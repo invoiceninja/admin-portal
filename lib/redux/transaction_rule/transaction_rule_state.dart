@@ -26,9 +26,9 @@ abstract class TransactionRuleState
   BuiltMap<String, TransactionRuleEntity> get map;
   BuiltList<String> get list;
 
-  TransactionRuleEntity? get(String transactionRuleId) {
+  TransactionRuleEntity get(String transactionRuleId) {
     if (map.containsKey(transactionRuleId)) {
-      return map[transactionRuleId];
+      return map[transactionRuleId]!;
     } else {
       return TransactionRuleEntity(id: transactionRuleId);
     }

@@ -32,9 +32,9 @@ abstract class RecurringExpenseState
   BuiltMap<String, ExpenseEntity> get map;
   BuiltList<String> get list;
 
-  ExpenseEntity? get(String recurringExpenseId) {
+  ExpenseEntity get(String recurringExpenseId) {
     if (map.containsKey(recurringExpenseId)) {
-      return map[recurringExpenseId];
+      return map[recurringExpenseId]!;
     } else {
       return ExpenseEntity(id: recurringExpenseId);
     }

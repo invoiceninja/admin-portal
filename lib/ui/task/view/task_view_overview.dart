@@ -114,7 +114,7 @@ class _TaskOverviewState extends State<TaskOverview> {
       final widgets = <Widget>[
         EntityHeader(
           entity: task,
-          statusLabel: state.taskStatusState.get(task.statusId)!.name,
+          statusLabel: state.taskStatusState.get(task.statusId).name,
           statusColor: task.isInvoiced
               ? Colors.green
               : task.isRunning
@@ -158,14 +158,12 @@ class _TaskOverviewState extends State<TaskOverview> {
         ]);
       }
 
-      if (status != null) {
-        widgets.addAll([
-          EntityListTile(
-            entity: status,
-            isFilter: widget.isFilter,
-          ),
-        ]);
-      }
+      widgets.addAll([
+        EntityListTile(
+          entity: status,
+          isFilter: widget.isFilter,
+        ),
+      ]);
 
       if (user != null) {
         widgets.addAll([

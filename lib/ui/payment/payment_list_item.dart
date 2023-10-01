@@ -45,7 +45,7 @@ class PaymentListItem extends StatelessWidget {
     final localization = AppLocalization.of(context);
     final filterMatch = filter != null && filter!.isNotEmpty
         ? (payment!.matchesFilterValue(filter) ??
-            client!.matchesFilterValue(filter))
+            client.matchesFilterValue(filter))
         : null;
     final mobileSubtitle = filterMatch ??
         (payment!.number ?? '') + ' • ' + formatDate(payment!.date, context);
@@ -134,7 +134,7 @@ class PaymentListItem extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Text(client!.displayName, style: textStyle),
+                            Text(client.displayName, style: textStyle),
                             Text(
                               filterMatch ?? desktopSubtitle,
                               maxLines: 2,
@@ -187,7 +187,7 @@ class PaymentListItem extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: Text(
-                          client!.displayName,
+                          client.displayName,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       ),

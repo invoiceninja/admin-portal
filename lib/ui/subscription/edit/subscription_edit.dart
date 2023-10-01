@@ -274,7 +274,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       .where((element) => element.isNotEmpty)
                       .map((productId) => ListTile(
                             title: Text(
-                                state.productState.get(productId)!.productKey),
+                                state.productState.get(productId).productKey),
                             trailing: IconButton(
                               icon: Icon(Icons.clear),
                               onPressed: () {
@@ -316,7 +316,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       .where((element) => element.isNotEmpty)
                       .map((productId) => ListTile(
                             title: Text(
-                                state.productState.get(productId)!.productKey),
+                                state.productState.get(productId).productKey),
                             trailing: IconButton(
                               icon: Icon(Icons.clear),
                               onPressed: () {
@@ -364,7 +364,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       .where((element) => element.isNotEmpty)
                       .map((productId) => ListTile(
                             title: Text(
-                                state.productState.get(productId)!.productKey),
+                                state.productState.get(productId).productKey),
                             trailing: IconButton(
                               icon: Icon(Icons.clear),
                               onPressed: () {
@@ -411,7 +411,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       .where((element) => element.isNotEmpty)
                       .map((productId) => ListTile(
                             title: Text(
-                                state.productState.get(productId)!.productKey),
+                                state.productState.get(productId).productKey),
                             trailing: IconButton(
                               icon: Icon(Icons.clear),
                               onPressed: () {

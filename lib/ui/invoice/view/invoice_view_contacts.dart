@@ -50,7 +50,7 @@ class _InvitationListTile extends StatelessWidget {
     String contactName = '';
 
     if (viewModel.invoice!.isPurchaseOrder) {
-      final contact = vendor!.contacts.firstWhere(
+      final contact = vendor.contacts.firstWhere(
           (contact) => contact.id == invitation.vendorContactId,
           orElse: () => VendorContactEntity());
       if (contact.isNew) {
@@ -61,7 +61,7 @@ class _InvitationListTile extends StatelessWidget {
         contactName = vendor.name;
       }
     } else {
-      final contact = client!.contacts.firstWhere(
+      final contact = client.contacts.firstWhere(
           (contact) => contact.id == invitation.clientContactId,
           orElse: () => ClientContactEntity());
       if (contact.isNew) {

@@ -71,7 +71,7 @@ class TaskPresenter extends EntityPresenter {
           client: client,
           company: state.company,
           project: state.projectState.get(task.projectId),
-          group: state.groupState.get(client!.groupId),
+          group: state.groupState.get(client.groupId),
         );
         return Text(formatNumber(rate, context, clientId: task.clientId)!);
       case TaskFields.project:
@@ -127,11 +127,11 @@ class TaskPresenter extends EntityPresenter {
               project: state.projectState.map[task.projectId],
               client: state.clientState.map[task.clientId],
               task: task,
-              group: state.groupState.map[client?.groupId],
+              group: state.groupState.map[client.groupId],
             )!,
           ),
           context,
-          clientId: client?.id,
+          clientId: client.id,
         )!);
     }
 

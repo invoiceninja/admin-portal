@@ -97,7 +97,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
 
     final state = viewModel.state;
     final companyGateway =
-        state.companyGatewayState.get(payment.companyGatewayId)!;
+        state.companyGatewayState.get(payment.companyGatewayId);
     final GatewayEntity gateway =
         state.staticState.gatewayMap[companyGateway.gatewayId] ??
             GatewayEntity();

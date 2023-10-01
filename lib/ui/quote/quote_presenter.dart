@@ -125,18 +125,18 @@ class QuotePresenter extends EntityPresenter {
         final vendor = state.vendorState.get(quote.vendorId);
         return LinkTextRelatedEntity(entity: vendor, relation: quote);
       case QuoteFields.clientState:
-        return Text(client!.state);
+        return Text(client.state);
       case QuoteFields.clientCity:
-        return Text(client!.city);
+        return Text(client.city);
       case QuoteFields.clientPostalCode:
-        return Text(client!.postalCode);
+        return Text(client.postalCode);
       case QuoteFields.clientCountry:
         return Text(
-            state.staticState.countryMap[client!.countryId]?.name ?? '');
+            state.staticState.countryMap[client.countryId]?.name ?? '');
       case QuoteFields.contactName:
       case QuoteFields.contactEmail:
         final contact =
-            quoteContactSelector(quote, state.clientState.get(quote.clientId)!);
+            quoteContactSelector(quote, state.clientState.get(quote.clientId));
         if (contact == null) {
           return SizedBox();
         }

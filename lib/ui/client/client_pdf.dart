@@ -398,7 +398,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                                         Navigator.of(context).pop();
                                         editEntity(
                                             entity: state.clientState
-                                                .get(client.id)!);
+                                                .get(client.id));
                                       },
                                       child: Text(localization.editClient
                                           .toUpperCase()))

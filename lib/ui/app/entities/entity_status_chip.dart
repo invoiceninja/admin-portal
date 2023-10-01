@@ -90,7 +90,7 @@ class EntityStatusChip extends StatelessWidget {
           break;
         case EntityType.expense:
           final expense = entity as ExpenseEntity;
-          final category = state.expenseCategoryState.get(expense.categoryId)!;
+          final category = state.expenseCategoryState.get(expense.categoryId);
           label = kExpenseStatuses[expense.calculatedStatusId];
           color = category.color.isNotEmpty && category.color != '#fff'
               ? convertHexStringToColor(category.color)
@@ -111,14 +111,14 @@ class EntityStatusChip extends StatelessWidget {
               ? localization!.invoiced
               : task.isRunning
                   ? localization!.running
-                  : status!.name.isNotEmpty
+                  : status.name.isNotEmpty
                       ? status.name
                       : localization!.logged;
           color = task.isInvoiced
               ? state.prefState.colorThemeModel!.colorSuccess
               : task.isRunning
                   ? state.prefState.colorThemeModel!.colorInfo
-                  : status!.color.isNotEmpty && status.color != '#fff'
+                  : status.color.isNotEmpty && status.color != '#fff'
                       ? convertHexStringToColor(status.color)
                       : TaskStatusColors(state.prefState.colorThemeModel)
                           .colors[task.calculateStatusId];

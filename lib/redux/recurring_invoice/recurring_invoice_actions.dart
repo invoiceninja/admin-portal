@@ -582,7 +582,7 @@ void handleRecurringInvoiceAction(BuildContext? context,
         if (!link.contains('?')) {
           link += '?';
         }
-        link += '&client_hash=${client!.clientHash}';
+        link += '&client_hash=${client.clientHash}';
         launchUrl(Uri.parse(link));
       }
       break;

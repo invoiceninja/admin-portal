@@ -32,9 +32,9 @@ abstract class RecurringInvoiceState
 
   BuiltMap<String, InvoiceEntity> get map;
 
-  InvoiceEntity? get(String invoiceId) {
+  InvoiceEntity get(String invoiceId) {
     if (map.containsKey(invoiceId)) {
-      return map[invoiceId];
+      return map[invoiceId]!;
     } else {
       return InvoiceEntity(id: invoiceId);
     }

@@ -230,7 +230,7 @@ class _BottomBar extends StatelessWidget {
                               ),
                               context,
                               clientId:
-                                  state.clientState.get(task.clientId)!.id,
+                                  state.clientState.get(task.clientId).id,
                             )!;
                       }
 

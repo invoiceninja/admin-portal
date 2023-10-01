@@ -60,14 +60,14 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
         final activityId = history.activityId ?? '';
 
         final state = viewModel.state!;
-        final client = state.clientState.get(activity.clientId!)!;
+        final client = state.clientState.get(activity.clientId!);
         final contact = client.getContact(activity.contactId);
         final user = state.userState.get(activity.userId);
 
         String? personName;
         if (contact != null) {
           personName = contact.fullNameOrEmail;
-        } else if (user!.isOld) {
+        } else if (user.isOld) {
           personName = user.fullName;
           if (personName.isEmpty) {
             personName = AppLocalization.of(context)!.system;

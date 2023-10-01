@@ -48,7 +48,7 @@ class _PaymentViewState extends State<PaymentView> {
     final localization = AppLocalization.of(context);
 
     final companyGateway =
-        state.companyGatewayState.get(payment.companyGatewayId)!;
+        state.companyGatewayState.get(payment.companyGatewayId);
     final companyGatewayLink = GatewayEntity.getPaymentUrl(
       gatewayId: companyGateway.gatewayId,
       transactionReference: payment.transactionReference,

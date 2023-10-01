@@ -33,9 +33,9 @@ abstract class ProductState
 
   BuiltList<String> get list;
 
-  ProductEntity? get(String productId) {
+  ProductEntity get(String productId) {
     if (map.containsKey(productId)) {
-      return map[productId];
+      return map[productId]!;
     } else {
       return ProductEntity(id: productId);
     }

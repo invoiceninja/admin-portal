@@ -287,7 +287,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     final company = state.company!;
 
     final invoice = viewModel.invoice!;
-    final client = state.clientState.get(invoice.clientId)!;
+    final client = state.clientState.get(invoice.clientId);
     final precision =
         state.staticState.currencyMap[client.currencyId]?.precision ?? 2;
     final lineItems = invoice.lineItems.toList();
@@ -685,7 +685,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               onSelected: (product) {
                                 final item = lineItems[index];
                                 final client =
-                                    state.clientState.get(invoice.clientId)!;
+                                    state.clientState.get(invoice.clientId);
                                 final currency = state
                                     .staticState.currencyMap[client.currencyId];
 

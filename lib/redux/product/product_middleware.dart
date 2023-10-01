@@ -194,7 +194,7 @@ Middleware<AppState> _saveProduct(ProductRepository repository) {
     final action = dynamicAction as SaveProductRequest;
 
     final product = action.product!;
-    final origProduct = store.state.productState.get(product.id)!;
+    final origProduct = store.state.productState.get(product.id);
     final changedStock = product.stockQuantity != origProduct.stockQuantity;
 
     repository

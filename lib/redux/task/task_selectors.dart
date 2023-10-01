@@ -21,7 +21,7 @@ InvoiceItemEntity convertTaskToInvoiceItem({
 }) {
   final state = StoreProvider.of<AppState>(context).state;
   final project = state.projectState.get(task.projectId);
-  final client = state.clientState.get(task.clientId)!;
+  final client = state.clientState.get(task.clientId);
   final group = state.groupState.get(client.groupId);
   final localization = AppLocalization.of(context)!;
   final company = state.company!;
@@ -36,7 +36,7 @@ InvoiceItemEntity convertTaskToInvoiceItem({
   lineBreak += '\n';
 
   if (company.invoiceTaskProjectHeader &&
-      project!.isOld &&
+      project.isOld &&
       includeProjectHeader) {
     if (state.company!.markdownEnabled) {
       notes += '## ${project.name}\n';
@@ -144,7 +144,7 @@ InvoiceItemEntity convertTaskToInvoiceItem({
     company.getCustomFieldLabel(CustomFieldType.task2): task.customValue2,
     company.getCustomFieldLabel(CustomFieldType.task3): task.customValue3,
     company.getCustomFieldLabel(CustomFieldType.task4): task.customValue4,
-    localization.project: state.projectState.get(task.projectId)!.name,
+    localization.project: state.projectState.get(task.projectId).name,
   };
 
   for (var label in customValues.keys) {
@@ -165,7 +165,7 @@ InvoiceItemEntity convertTaskToInvoiceItem({
     ..taskId = task.id
     ..productKey =
         company.invoiceTaskProject && !company.invoiceTaskProjectHeader
-            ? project!.name
+            ? project.name
             : ''
     ..notes = notes
     ..cost = taskRateSelector(

@@ -59,7 +59,7 @@ class ClientOverview extends StatelessWidget {
 
     client.gatewayTokens.forEach((gatewayToken) {
       final companyGateway =
-          state.companyGatewayState.get(gatewayToken.companyGatewayId)!;
+          state.companyGatewayState.get(gatewayToken.companyGatewayId);
       if (companyGateway.isOld && !companyGateway.isDeleted!) {
         final customerReference = gatewayToken.customerReference;
         gatewayMap[customerReference] = companyGateway;

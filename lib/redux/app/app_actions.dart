@@ -800,7 +800,7 @@ void createEntityByType({
               break;
             case EntityType.project:
               project = state.projectState.get(filterEntityId!);
-              client = state.clientState.get(project!.clientId);
+              client = state.clientState.get(project.clientId);
               break;
             case EntityType.vendor:
               vendor = state.vendorState.get(filterEntityId!);

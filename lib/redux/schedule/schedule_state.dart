@@ -26,9 +26,9 @@ abstract class ScheduleState
   BuiltMap<String, ScheduleEntity> get map;
   BuiltList<String> get list;
 
-  ScheduleEntity? get(String scheduleId) {
+  ScheduleEntity get(String scheduleId) {
     if (map.containsKey(scheduleId)) {
-      return map[scheduleId];
+      return map[scheduleId]!;
     } else {
       return ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_STATEMENT,
           id: scheduleId);

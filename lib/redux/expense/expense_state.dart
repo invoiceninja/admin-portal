@@ -30,9 +30,9 @@ abstract class ExpenseState
   @memoized
   int get hashCode;
 
-  ExpenseEntity? get(String expenseId) {
+  ExpenseEntity get(String expenseId) {
     if (map.containsKey(expenseId)) {
-      return map[expenseId];
+      return map[expenseId]!;
     } else {
       return ExpenseEntity(id: expenseId);
     }

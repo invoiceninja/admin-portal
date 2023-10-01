@@ -269,10 +269,10 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                           child: LiveText(
                             () {
                               return formatDuration(task.calculateDuration()) +
-                                  (client!.isOld
+                                  (client.isOld
                                       ? ' • ' + client.displayName
                                       : '') +
-                                  (project!.isOld ? ' • ' + project.name : '');
+                                  (project.isOld ? ' • ' + project.name : '');
                             },
                             style: TextStyle(
                               fontSize: 12,

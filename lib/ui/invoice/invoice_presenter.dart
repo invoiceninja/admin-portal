@@ -158,18 +158,18 @@ class InvoicePresenter extends EntityPresenter {
         return Text(localization!.lookup(
             invoice.autoBillEnabled ? localization.yes : localization.no)!);
       case InvoiceFields.clientState:
-        return Text(client!.state);
+        return Text(client.state);
       case InvoiceFields.clientCity:
-        return Text(client!.city);
+        return Text(client.city);
       case InvoiceFields.clientPostalCode:
-        return Text(client!.postalCode);
+        return Text(client.postalCode);
       case InvoiceFields.clientCountry:
         return Text(
-            state.staticState.countryMap[client!.countryId]?.name ?? '');
+            state.staticState.countryMap[client.countryId]?.name ?? '');
       case InvoiceFields.contactName:
       case InvoiceFields.contactEmail:
         final contact = invoiceContactSelector(
-            invoice, state.clientState.get(invoice.clientId)!);
+            invoice, state.clientState.get(invoice.clientId));
         if (contact == null) {
           return SizedBox();
         }

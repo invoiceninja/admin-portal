@@ -299,8 +299,8 @@ void handleExpenseAction(
         }
         if (expense.projectId!.isNotEmpty) {
           if (projectId!.isEmpty &&
-              state.projectState.get(expense.projectId!)!.clientId ==
-                  client!.id) {
+              state.projectState.get(expense.projectId!).clientId ==
+                  client.id) {
             projectId = expense.projectId;
           }
         }

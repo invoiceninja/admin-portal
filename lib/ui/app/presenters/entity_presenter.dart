@@ -31,7 +31,7 @@ class EntityPresenter {
     var name = entity.listDisplayName;
 
     // TODO replace with this: https://github.com/flutter/flutter/issues/45336
-    if ((name).isEmpty) {
+    if (name.isEmpty) {
       name = localization.pending;
     }
 

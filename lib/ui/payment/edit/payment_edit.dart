@@ -146,7 +146,7 @@ class _PaymentEditState extends State<PaymentEdit> {
     final state = viewModel.state;
     double exchangeRate = 1;
     if (currency != null) {
-      final client = state.clientState.get(payment.clientId)!;
+      final client = state.clientState.get(payment.clientId);
       exchangeRate = getExchangeRate(state.staticState.currencyMap,
           fromCurrencyId: client.currencyId, toCurrencyId: currency.id);
     }

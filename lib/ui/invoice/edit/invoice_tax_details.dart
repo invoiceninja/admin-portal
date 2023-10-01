@@ -19,7 +19,7 @@ class InvoiceTaxDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context)!;
     final state = StoreProvider.of<AppState>(context).state;
-    final client = state.clientState.get(invoice.clientId)!;
+    final client = state.clientState.get(invoice.clientId);
     final taxData = invoice.isNew ? client.taxData : invoice.taxData;
 
     return AlertDialog(

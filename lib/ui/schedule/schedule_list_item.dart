@@ -51,11 +51,11 @@ class ScheduleListItem extends StatelessWidget {
 
       if (entityType == EntityType.purchaseOrder) {
         final vendor =
-            state.vendorState.get((entity as BelongsToVendor).vendorId)!;
+            state.vendorState.get((entity as BelongsToVendor).vendorId);
         title += ': ' + vendor.name;
       } else {
         final client =
-            state.clientState.get((entity as BelongsToClient).clientId!)!;
+            state.clientState.get((entity as BelongsToClient).clientId!);
         title += ': ' + client.displayName;
       }
 
@@ -68,7 +68,7 @@ class ScheduleListItem extends StatelessWidget {
         title += ': ' + localization.allClients!;
       } else if (schedule!.parameters.clients!.length == 1) {
         final clientId = schedule!.parameters.clients!.first;
-        title += ': ' + state.clientState.get(clientId)!.displayName;
+        title += ': ' + state.clientState.get(clientId).displayName;
       } else {
         title +=
             ': ${schedule!.parameters.clients!.length} ${localization.clients}';

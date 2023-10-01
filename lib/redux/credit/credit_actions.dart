@@ -501,7 +501,7 @@ Future handleCreditAction(BuildContext context, List<BaseEntity?> credits,
       credits.forEach((credit) {
         final client = state.clientState.get(
           (credit as InvoiceEntity).clientId,
-        )!;
+        );
         if (!client.hasEmailAddress) {
           emailValid = false;
         }
@@ -514,7 +514,7 @@ Future handleCreditAction(BuildContext context, List<BaseEntity?> credits,
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    editEntity(entity: client!);
+                    editEntity(entity: client);
                   },
                   child: Text(localization.editClient.toUpperCase()))
             ]);

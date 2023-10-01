@@ -32,7 +32,7 @@ class _TokenViewState extends State<TokenView> {
     final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final token = viewModel.token;
-    final user = viewModel.state.userState.get(token.createdUserId!)!;
+    final user = viewModel.state.userState.get(token.createdUserId!);
 
     return ViewScaffold(
       isFilter: widget.isFilter,
