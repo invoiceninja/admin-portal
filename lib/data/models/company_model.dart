@@ -973,7 +973,6 @@ abstract class GatewayEntity extends Object
           return 'https://dashboard.stripe.com/sources/$transactionReference';
         else
           return 'https://dashboard.stripe.com/payments/$transactionReference';
-        break;
       default:
         return null;
     }

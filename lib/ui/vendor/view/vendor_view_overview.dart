@@ -98,10 +98,10 @@ class VendorOverview extends StatelessWidget {
               memoizedCalculateVendorBalance(vendor.id, vendor.currencyId,
                   state.expenseState.map, state.expenseState.list),
               context,
-              currencyId: vendor.currencyId ?? company.currencyId),
+              currencyId: vendor.currencyId),
         ),
         ListDivider(),
-        if ((vendor.privateNotes ?? '').isNotEmpty) ...[
+        if (vendor.privateNotes.isNotEmpty) ...[
           IconMessage(vendor.privateNotes,
               iconData: Icons.lock, copyToClipboard: true),
           ListDivider()

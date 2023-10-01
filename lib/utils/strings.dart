@@ -43,7 +43,7 @@ String toSpaceCase(String value) {
 }
 
 String toTitleCase(String text) {
-  if ((text ?? '').isEmpty) {
+  if (text.isEmpty) {
     return '';
   }
 

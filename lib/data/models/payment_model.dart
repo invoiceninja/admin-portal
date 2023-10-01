@@ -329,7 +329,7 @@ abstract class PaymentEntity extends Object
       case PaymentFields.type:
         final typeA = paymentTypeMap![paymentA!.typeId] ?? PaymentTypeEntity();
         final typeB = paymentTypeMap[paymentB!.typeId] ?? PaymentTypeEntity();
-        return typeA.name.toLowerCase().compareTo(typeB.name.toLowerCase());
+        response = typeA.name.toLowerCase().compareTo(typeB.name.toLowerCase());
         break;
       case EntityFields.assignedTo:
         final userA = userMap![paymentA!.assignedUserId] ?? UserEntity();

@@ -1447,12 +1447,13 @@ abstract class InvoiceEntity extends Object
     return taxes;
   }
 
-  void _calculateTax(Map<String, Map<String, dynamic>> map, String name,
-      double rate, double amount, double paid) {
-    if (amount == null) {
-      return;
-    }
-
+  void _calculateTax(
+    Map<String, Map<String, dynamic>> map,
+    String name,
+    double rate,
+    double amount,
+    double paid,
+  ) {
     final key = rate.toString() + ' ' + name;
 
     map.putIfAbsent(
