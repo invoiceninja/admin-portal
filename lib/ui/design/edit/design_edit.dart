@@ -140,7 +140,7 @@ class _DesignEditState extends State<DesignEdit>
         kDesignBody: _bodyController.text.trim(),
         kDesignFooter: _footerController.text.trim(),
         kDesignProducts: _productsController.text.trim(),
-        kDesignTasks: _tasksController.text.trim() ?? '',
+        kDesignTasks: _tasksController.text.trim(),
         kDesignIncludes: _includesController.text.trim()
       })));
 

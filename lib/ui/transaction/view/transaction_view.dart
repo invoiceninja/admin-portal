@@ -1047,7 +1047,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                 separatorBuilder: (context, index) => ListDivider(),
                 itemCount: _expenses.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final expense = _expenses[index];
+                  final expense = _expenses[index]!;
                   return ExpenseListItem(
                     expense: expense,
                     showCheckbox: true,

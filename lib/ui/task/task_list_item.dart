@@ -190,7 +190,7 @@ class TaskListItem extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style: textStyle),
                             Text(
-                              subtitle ?? filterMatch!,
+                              subtitle,
                               maxLines: 3,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)

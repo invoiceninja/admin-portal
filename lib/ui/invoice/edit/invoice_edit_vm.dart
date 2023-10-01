@@ -126,7 +126,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           for (int i = 0; i < invoice.lineItems.length; i++) {
             final lineItem = invoice.lineItems[i]!;
             final task = state.taskState.get(lineItem.taskId ?? '');
-            if ((task.clientId ?? '').isNotEmpty && task.clientId != clientId) {
+            if (task.clientId.isNotEmpty && task.clientId != clientId) {
               showDialog<ErrorDialog>(
                   context: navigatorKey.currentContext!,
                   builder: (BuildContext context) {
@@ -204,8 +204,8 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
         if ((clientId ?? '').isNotEmpty || (projectId ?? '').isNotEmpty) {
           final client = state.clientState.get(clientId!);
           store.dispatch(UpdateInvoice(invoice.rebuild((b) => b
-            ..clientId = clientId ?? ''
-            ..projectId = projectId ?? ''
+            ..clientId = clientId
+            ..projectId = projectId
             ..invitations.replace(BuiltList<InvitationEntity>(client
                 .emailContacts
                 .map(

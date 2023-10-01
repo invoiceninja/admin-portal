@@ -236,18 +236,17 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     AppDropdownButton<String>(
                       labelText: localization.captureCard,
                       value: companyGateway.tokenBilling,
-                      selectedItemBuilder:
-                          (companyGateway.tokenBilling ?? '').isEmpty
-                              ? null
-                              : (context) => [
-                                    SettingsEntity.AUTO_BILL_ALWAYS,
-                                    SettingsEntity.AUTO_BILL_OPT_OUT,
-                                    SettingsEntity.AUTO_BILL_OPT_IN,
-                                    SettingsEntity.AUTO_BILL_OFF,
-                                  ]
-                                      .map((type) =>
-                                          Text(localization.lookup(type)!))
-                                      .toList(),
+                      selectedItemBuilder: companyGateway.tokenBilling.isEmpty
+                          ? null
+                          : (context) => [
+                                SettingsEntity.AUTO_BILL_ALWAYS,
+                                SettingsEntity.AUTO_BILL_OPT_OUT,
+                                SettingsEntity.AUTO_BILL_OPT_IN,
+                                SettingsEntity.AUTO_BILL_OFF,
+                              ]
+                                  .map((type) =>
+                                      Text(localization.lookup(type)!))
+                                  .toList(),
                       onChanged: (dynamic value) => viewModel.onChanged(
                           companyGateway
                               .rebuild((b) => b..tokenBilling = value)),
@@ -767,11 +766,11 @@ class _LimitEditorState extends State<LimitEditor> {
 
     _minController!.text = settings.minLimit == -1
         ? ''
-        : formatNumber((settings.minLimit ?? 0).toDouble(), context,
+        : formatNumber(settings.minLimit.toDouble(), context,
             formatNumberType: FormatNumberType.inputMoney)!;
     _maxController!.text = settings.maxLimit == -1
         ? ''
-        : formatNumber((settings.maxLimit ?? 0).toDouble(), context,
+        : formatNumber(settings.maxLimit.toDouble(), context,
             formatNumberType: FormatNumberType.inputMoney)!;
 
     _minController!.addListener(_onTextChange);

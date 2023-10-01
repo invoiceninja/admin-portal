@@ -116,7 +116,7 @@ class CreditListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              (credit.number ?? '').isEmpty
+                              credit.number.isEmpty
                                   ? localization!.pending
                                   : credit.number,
                               style: textStyle,
@@ -211,7 +211,7 @@ class CreditListItem extends StatelessWidget {
                       children: <Widget>[
                         Expanded(
                           child: filterMatch == null
-                              ? Text((((credit.number ?? '').isEmpty
+                              ? Text(((credit.number.isEmpty
                                           ? localization!.pending
                                           : credit.number) +
                                       ' • ' +

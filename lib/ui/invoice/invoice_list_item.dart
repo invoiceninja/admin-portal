@@ -134,7 +134,7 @@ class InvoiceListItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                (invoice.number ?? '').isEmpty
+                                invoice.number.isEmpty
                                     ? localization.pending
                                     : invoice.number,
                                 style: textStyle,
@@ -236,7 +236,7 @@ class InvoiceListItem extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: filterMatch == null
-                                ? Text((((invoice.number ?? '').isEmpty
+                                ? Text(((invoice.number.isEmpty
                                             ? localization.pending
                                             : invoice.number) +
                                         ' • ' +

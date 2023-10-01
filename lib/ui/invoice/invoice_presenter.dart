@@ -79,9 +79,8 @@ class InvoicePresenter extends EntityPresenter {
       case InvoiceFields.status:
         return EntityStatusChip(entity: invoice, showState: true);
       case InvoiceFields.number:
-        return Text((invoice.number ?? '').isEmpty
-            ? localization!.pending
-            : invoice.number);
+        return Text(
+            invoice.number.isEmpty ? localization!.pending : invoice.number);
       case InvoiceFields.client:
         return LinkTextRelatedEntity(entity: client, relation: invoice);
       case InvoiceFields.project:
@@ -203,7 +202,7 @@ class InvoicePresenter extends EntityPresenter {
           return Text(localization!.secondReminder);
         } else if ((invoice.reminder1Sent ?? '').isNotEmpty) {
           return Text(localization!.firstReminder);
-        } else if ((invoice.lastSentDate ?? '').isNotEmpty) {
+        } else if (invoice.lastSentDate.isNotEmpty) {
           return Text(localization!.initialEmail);
         } else {
           return Text('');

@@ -706,28 +706,28 @@ class _ReportDataTableState extends State<ReportDataTable> {
 
 class TotalsDataTable extends StatelessWidget {
   const TotalsDataTable({
-    this.reportSettings,
-    this.reportResult,
-    this.viewModel,
+    required this.reportSettings,
+    required this.reportResult,
+    required this.viewModel,
   });
 
-  final ReportsScreenVM? viewModel;
-  final ReportSettingsEntity? reportSettings;
-  final ReportResult? reportResult;
+  final ReportsScreenVM viewModel;
+  final ReportSettingsEntity reportSettings;
+  final ReportResult reportResult;
 
   @override
   Widget build(BuildContext context) {
     return mt.DataTable(
       sortColumnIndex:
-          reportResult!.columns.length > reportSettings!.sortTotalsIndex
-              ? reportSettings!.sortTotalsIndex
+          reportResult.columns.length > reportSettings.sortTotalsIndex
+              ? reportSettings.sortTotalsIndex
               : null,
-      sortAscending: reportSettings!.sortTotalsAscending ?? true,
-      columns: reportResult!.totalColumns(
+      sortAscending: reportSettings.sortTotalsAscending ?? true,
+      columns: reportResult.totalColumns(
           context,
           (index, ascending) =>
-              viewModel!.onReportTotalsSorted(index, ascending)),
-      rows: reportResult!.totalRows(context),
+              viewModel.onReportTotalsSorted(index, ascending)),
+      rows: reportResult.totalRows(context),
     );
   }
 }

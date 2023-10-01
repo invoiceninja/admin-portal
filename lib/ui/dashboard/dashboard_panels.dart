@@ -865,7 +865,7 @@ class __DashboardPanelState extends State<_DashboardPanel> {
       title: widget.title,
       onDateSelected: widget.onDateSelected,
       onSelected: widget.onSelected as dynamic Function(),
-      currencyId: (settings.currencyId ?? '').isNotEmpty
+      currencyId: settings.currencyId.isNotEmpty
           ? settings.currencyId
           : state.company!.currencyId,
     );
@@ -996,7 +996,7 @@ class __OverviewPanelState extends State<_OverviewPanel> {
       title: widget.title,
       onSelected: () => null,
       onDateSelected: widget.onDateSelected,
-      currencyId: (settings.currencyId ?? '').isNotEmpty
+      currencyId: settings.currencyId.isNotEmpty
           ? settings.currencyId
           : state.company!.currencyId,
       isOverview: true,

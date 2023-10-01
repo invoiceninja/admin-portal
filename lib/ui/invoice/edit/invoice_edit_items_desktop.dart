@@ -456,19 +456,19 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 overflow: TextOverflow.ellipsis,
                               );
                             } else if (column == COLUMN_CUSTOM1) {
-                              return Text(item.customValue1 ?? '');
+                              return Text(item.customValue1);
                             } else if (column == COLUMN_CUSTOM2) {
-                              return Text(item.customValue2 ?? '');
+                              return Text(item.customValue2);
                             } else if (column == COLUMN_CUSTOM3) {
-                              return Text(item.customValue3 ?? '');
+                              return Text(item.customValue3);
                             } else if (column == COLUMN_CUSTOM4) {
-                              return Text(item.customValue4 ?? '');
+                              return Text(item.customValue4);
                             } else if (column == COLUMN_TAX1) {
-                              return Text(item.taxName1 ?? '');
+                              return Text(item.taxName1);
                             } else if (column == COLUMN_TAX2) {
-                              return Text(item.taxName2 ?? '');
+                              return Text(item.taxName2);
                             } else if (column == COLUMN_TAX3) {
-                              return Text(item.taxName3 ?? '');
+                              return Text(item.taxName3);
                             } else if (column == COLUMN_TAX_CATEGORY) {
                               return Text(localization
                                   .lookup(kTaxCategories[item.taxCategoryId])!);

@@ -70,9 +70,8 @@ class CreditPresenter extends EntityPresenter {
       case CreditFields.status:
         return EntityStatusChip(entity: credit, showState: true);
       case CreditFields.number:
-        return Text((credit.number ?? '').isEmpty
-            ? localization!.pending
-            : credit.number);
+        return Text(
+            credit.number.isEmpty ? localization!.pending : credit.number);
       case CreditFields.client:
         return LinkTextRelatedEntity(entity: client, relation: credit);
       case CreditFields.date:
@@ -146,7 +145,7 @@ class CreditPresenter extends EntityPresenter {
           return SizedBox();
         }
         if (field == CreditFields.contactName) {
-          return Text(contact.fullName ?? '');
+          return Text(contact.fullName);
         }
         return CopyToClipboard(
           value: contact.email,

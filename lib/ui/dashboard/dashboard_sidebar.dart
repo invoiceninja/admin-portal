@@ -405,7 +405,7 @@ class ExpenseSidbar extends StatelessWidget {
               itemCount: recentExpenses.length,
               itemBuilder: (BuildContext context, int index) {
                 return ExpenseListItem(
-                  expense: recentExpenses[index],
+                  expense: recentExpenses[index]!,
                   showCheckbox: false,
                   showSelected: false,
                 );

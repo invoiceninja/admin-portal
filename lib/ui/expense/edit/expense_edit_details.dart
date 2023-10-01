@@ -180,7 +180,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                       (client as ClientEntity).settings.currencyId ??
                           company.currencyId;
                   viewModel.onChanged!(expense.rebuild((b) => b
-                    ..clientId = client.id ?? ''
+                    ..clientId = client.id
                     ..invoiceCurrencyId = currencyId));
                 },
                 onAddPressed: (completer) {
@@ -195,7 +195,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                   final project = store.state.projectState.get(selectedId);
                   viewModel.onChanged!(expense.rebuild((b) => b
                     ..projectId = project.id
-                    ..clientId = (project.clientId ?? '').isNotEmpty
+                    ..clientId = project.clientId.isNotEmpty
                         ? project.clientId
                         : expense.clientId));
                 },
@@ -361,7 +361,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                           ))
                       .toList()),
               DatePicker(
-                labelText: (expense.lastSentDate ?? '').isNotEmpty
+                labelText: expense.lastSentDate.isNotEmpty
                     ? localization.nextSendDate
                     : localization.startDate,
                 onSelected: (date, _) {

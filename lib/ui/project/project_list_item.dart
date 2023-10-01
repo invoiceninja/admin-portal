@@ -133,7 +133,7 @@ class ProjectListItem extends StatelessWidget {
                                         ? '  📎'
                                         : ''),
                                 style: textStyle),
-                            Text(subtitle ?? filterMatch!,
+                            Text(subtitle,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
