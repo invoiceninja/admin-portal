@@ -382,13 +382,14 @@ abstract class FeesAndLimitsSettings
   double calculateSampleFee(double amount) {
     double fee = 0;
 
-    fee += feeAmount;
-
-    if (feePercent != 0) {
+    if (feePercent == 0) {
+      fee = feeAmount;
+    } else {
       if (adjustFeePercent) {
-        fee += round((amount / (1 - feePercent / 100)) - amount, 2);
+        fee +=
+            round(((feeAmount + amount) / (1 - feePercent / 100)) - amount, 2);
       } else {
-        fee += round(amount * feePercent / 100, 2);
+        fee = round(feeAmount + (amount * feePercent / 100), 2);
       }
     }
 
