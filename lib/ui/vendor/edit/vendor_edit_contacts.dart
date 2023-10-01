@@ -45,8 +45,8 @@ class _VendorEditContactsState extends State<VendorEditContacts> {
             key: Key(contact!.entityKey),
             contact: contact,
             isDialog: vendor.contacts.length > 1,
-            index: vendor.contacts.indexOf(
-                vendor.contacts.firstWhere((c) => c.id == contact.id)),
+            index: vendor.contacts
+                .indexOf(vendor.contacts.firstWhere((c) => c.id == contact.id)),
           );
         });
   }

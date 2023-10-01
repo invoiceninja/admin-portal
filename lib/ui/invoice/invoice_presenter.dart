@@ -164,8 +164,7 @@ class InvoicePresenter extends EntityPresenter {
       case InvoiceFields.clientPostalCode:
         return Text(client.postalCode);
       case InvoiceFields.clientCountry:
-        return Text(
-            state.staticState.countryMap[client.countryId]?.name ?? '');
+        return Text(state.staticState.countryMap[client.countryId]?.name ?? '');
       case InvoiceFields.contactName:
       case InvoiceFields.contactEmail:
         final contact = invoiceContactSelector(

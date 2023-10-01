@@ -315,10 +315,12 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             InkWell(
                               onLongPress: () => editEntity(
                                   entity: invoice.isPurchaseOrder
-                                      ? vendor: client),
+                                      ? vendor
+                                      : client),
                               onTap: () => viewEntity(
                                   entity: invoice.isPurchaseOrder
-                                      ? vendor: client),
+                                      ? vendor
+                                      : client),
                               child: ConstrainedBox(
                                 constraints: BoxConstraints(
                                     minWidth: double.infinity, minHeight: 40),
@@ -328,7 +330,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                     EntityPresenter()
                                         .initialize(
                                             invoice.isPurchaseOrder
-                                                ? vendor: client,
+                                                ? vendor
+                                                : client,
                                             context)
                                         .title()!,
                                     style:

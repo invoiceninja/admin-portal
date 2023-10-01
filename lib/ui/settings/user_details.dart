@@ -277,23 +277,23 @@ class _UserDetailsState extends State<UserDetails>
               .toUpperCase(),
           textAlign: TextAlign.center,
         ),
-        onPressed: state.user.isConnectedToGoogle ||
-                state.user.isConnectedToMicrosoft
-            ? null
-            : () {
-                if (state.settingsUIState.isChanged) {
-                  showMessageDialog(
-                      context: context,
-                      message: localization.errorUnsavedChanges);
-                  return;
-                }
+        onPressed:
+            state.user.isConnectedToGoogle || state.user.isConnectedToMicrosoft
+                ? null
+                : () {
+                    if (state.settingsUIState.isChanged) {
+                      showMessageDialog(
+                          context: context,
+                          message: localization.errorUnsavedChanges);
+                      return;
+                    }
 
-                if (state.user.isConnectedToApple) {
-                  viewModel.onDisconnectApplePressed(context);
-                } else {
-                  // do nothing
-                }
-              },
+                    if (state.user.isConnectedToApple) {
+                      viewModel.onDisconnectApplePressed(context);
+                    } else {
+                      // do nothing
+                    }
+                  },
       ),
     );
 

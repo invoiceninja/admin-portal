@@ -368,8 +368,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                       data: data.copyWith(
                         textScaleFactor: state.prefState.textScaleFactor,
                         alwaysUse24HourFormat:
-                            state.company?.settings.enableMilitaryTime ??
-                                false,
+                            state.company?.settings.enableMilitaryTime ?? false,
                       ),
                       child: child!,
                     );

@@ -646,9 +646,10 @@ class _ReportDataTableState extends State<ReportDataTable> {
     final reportResult = viewModel.reportResult!;
     final reportState = viewModel.reportState;
     final settings = state.userCompany.settings;
-    final reportSettings = settings.reportSettings.containsKey(reportState.report)
-        ? settings.reportSettings[reportState.report]!
-        : ReportSettingsEntity();
+    final reportSettings =
+        settings.reportSettings.containsKey(reportState.report)
+            ? settings.reportSettings[reportState.report]!
+            : ReportSettingsEntity();
     final sortedColumns = reportResult.sortedColumns(reportState);
 
     return Column(
@@ -714,9 +715,10 @@ class TotalsDataTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return mt.DataTable(
-      sortColumnIndex: reportResult!.columns.length > reportSettings!.sortTotalsIndex
-          ? reportSettings!.sortTotalsIndex
-          : null,
+      sortColumnIndex:
+          reportResult!.columns.length > reportSettings!.sortTotalsIndex
+              ? reportSettings!.sortTotalsIndex
+              : null,
       sortAscending: reportSettings!.sortTotalsAscending ?? true,
       columns: reportResult!.totalColumns(
           context,
@@ -1481,9 +1483,10 @@ class ReportResult {
     final state = store.state;
     final reportState = state.uiState.reportsUIState;
     final settings = state.userCompany.settings;
-    final reportSettings = settings.reportSettings.containsKey(reportState.report)
-        ? settings.reportSettings[reportState.report]!
-        : ReportSettingsEntity();
+    final reportSettings =
+        settings.reportSettings.containsKey(reportState.report)
+            ? settings.reportSettings[reportState.report]!
+            : ReportSettingsEntity();
 
     final Map<String, Map<String?, double>> totals = {};
 

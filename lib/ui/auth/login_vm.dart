@@ -248,8 +248,7 @@ class LoginVM {
               provider: UserEntity.OAUTH_PROVIDER_MICROSOFT,
               oneTimePassword: oneTimePassword,
             ));
-            completer.future
-                .then<Null>((_) => _handleLogin(context: context));
+            completer.future.then<Null>((_) => _handleLogin(context: context));
           }, (dynamic error) {
             completer.completeError(error);
           });
@@ -359,8 +358,8 @@ class LoginVM {
           email: email.trim(),
           password: password.trim(),
         ));
-        completer.future.then<Null>(
-            (_) => _handleLogin(context: context, isSignUp: true));
+        completer.future
+            .then<Null>((_) => _handleLogin(context: context, isSignUp: true));
       },
       onRecoverPressed: (
         BuildContext context,

@@ -46,8 +46,8 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
             key: Key(contact!.entityKey),
             contact: contact,
             isDialog: client.contacts.length > 1,
-            index: client.contacts.indexOf(
-                client.contacts.firstWhere((c) => c.id == contact.id)),
+            index: client.contacts
+                .indexOf(client.contacts.firstWhere((c) => c.id == contact.id)),
           );
         });
   }

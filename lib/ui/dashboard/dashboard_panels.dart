@@ -607,7 +607,8 @@ class DashboardPanels extends StatelessWidget {
                         child: StaggeredGrid.count(
                           crossAxisCount: isMobile(context)
                               ? userCompanySettings.dashboardFieldsPerRowMobile
-                              : userCompanySettings.dashboardFieldsPerRowDesktop,
+                              : userCompanySettings
+                                  .dashboardFieldsPerRowDesktop,
                           crossAxisSpacing: 8,
                           mainAxisSpacing: 12,
                           children: state.userCompany.settings.dashboardFields
@@ -1121,7 +1122,8 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
             onPressed: () {
               final completer = snackBarCompleter<Null>(
                   context, AppLocalization.of(context)!.savedSettings);
-              final user = state.user.rebuild((b) => b..userCompany.replace(state.userCompany));
+              final user = state.user
+                  .rebuild((b) => b..userCompany.replace(state.userCompany));
               store.dispatch(
                 SaveUserSettingsRequest(
                   completer: completer,

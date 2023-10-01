@@ -343,7 +343,7 @@ class InvoiceOverview extends StatelessWidget {
           EntityListTile(
             isFilter: isFilter,
             entity: payment,
-            subtitle: amount+ ' • ' + formatDate(payment.date, context),
+            subtitle: amount + ' • ' + formatDate(payment.date, context),
           ),
         );
       });
@@ -373,7 +373,7 @@ class InvoiceOverview extends StatelessWidget {
           EntityListTile(
             isFilter: isFilter,
             entity: credit,
-            subtitle: amount+ ' • ' + formatDate(credit.date, context),
+            subtitle: amount + ' • ' + formatDate(credit.date, context),
           ),
         );
       });

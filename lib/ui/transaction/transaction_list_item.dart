@@ -120,7 +120,8 @@ class TransactionListItem extends StatelessWidget {
                                     style: textStyle),
                                 Text(
                                   state.bankAccountState
-                                      .get(transaction!.bankAccountId).name,
+                                      .get(transaction!.bankAccountId)
+                                      .name,
                                   maxLines: 3,
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context)
@@ -212,7 +213,8 @@ class TransactionListItem extends StatelessWidget {
                         Expanded(
                           child: filterMatch == null
                               ? Text(state.bankAccountState
-                                      .get(transaction!.bankAccountId).name +
+                                      .get(transaction!.bankAccountId)
+                                      .name +
                                   ' • ' +
                                   (transaction!.isDeposit
                                       ? localization!.deposit!

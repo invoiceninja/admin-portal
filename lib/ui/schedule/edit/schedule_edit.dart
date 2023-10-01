@@ -324,8 +324,8 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                         HelpText(localization.allClients),
                       for (var clientId in parameters.clients!)
                         ListTile(
-                          title: Text(
-                              state.clientState.get(clientId).displayName),
+                          title:
+                              Text(state.clientState.get(clientId).displayName),
                           trailing: IconButton(
                             icon: Icon(Icons.clear),
                             onPressed: () {

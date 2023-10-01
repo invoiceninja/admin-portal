@@ -137,8 +137,7 @@ class CreditPresenter extends EntityPresenter {
       case CreditFields.clientPostalCode:
         return Text(client.postalCode);
       case CreditFields.clientCountry:
-        return Text(
-            state.staticState.countryMap[client.countryId]?.name ?? '');
+        return Text(state.staticState.countryMap[client.countryId]?.name ?? '');
       case CreditFields.contactName:
       case CreditFields.contactEmail:
         final contact = creditContactSelector(

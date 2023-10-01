@@ -491,24 +491,24 @@ void handleDocumentAction(
                           .dispatch(LoadCredit(creditId: document.parentId)));
                       break;
                     case EntityType.expense:
-                      completer.future.then<Null>((_) => store.dispatch(
-                          LoadExpense(expenseId: document.parentId)));
+                      completer.future.then<Null>((_) => store
+                          .dispatch(LoadExpense(expenseId: document.parentId)));
                       break;
                     case EntityType.group:
                       completer.future.then<Null>((_) => store
                           .dispatch(LoadGroup(groupId: document.parentId)));
                       break;
                     case EntityType.invoice:
-                      completer.future.then<Null>((_) => store.dispatch(
-                          LoadInvoice(invoiceId: document.parentId)));
+                      completer.future.then<Null>((_) => store
+                          .dispatch(LoadInvoice(invoiceId: document.parentId)));
                       break;
                     case EntityType.product:
-                      completer.future.then<Null>((_) => store.dispatch(
-                          LoadProduct(productId: document.parentId)));
+                      completer.future.then<Null>((_) => store
+                          .dispatch(LoadProduct(productId: document.parentId)));
                       break;
                     case EntityType.project:
-                      completer.future.then<Null>((_) => store.dispatch(
-                          LoadProject(projectId: document.parentId)));
+                      completer.future.then<Null>((_) => store
+                          .dispatch(LoadProject(projectId: document.parentId)));
                       break;
                     case EntityType.purchaseOrder:
                       completer.future.then<Null>((_) => store.dispatch(

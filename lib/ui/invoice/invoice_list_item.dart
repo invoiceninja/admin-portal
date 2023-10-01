@@ -190,8 +190,7 @@ class InvoiceListItem extends StatelessWidget {
               : ListTile(
                   onTap: () => onTap != null
                       ? onTap!()
-                      : selectEntity(
-                          entity: invoice, forceView: !showCheckbox),
+                      : selectEntity(entity: invoice, forceView: !showCheckbox),
                   onLongPress: () => onTap != null
                       ? null
                       : selectEntity(entity: invoice, longPress: true),

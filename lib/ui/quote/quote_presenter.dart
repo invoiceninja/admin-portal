@@ -131,8 +131,7 @@ class QuotePresenter extends EntityPresenter {
       case QuoteFields.clientPostalCode:
         return Text(client.postalCode);
       case QuoteFields.clientCountry:
-        return Text(
-            state.staticState.countryMap[client.countryId]?.name ?? '');
+        return Text(state.staticState.countryMap[client.countryId]?.name ?? '');
       case QuoteFields.contactName:
       case QuoteFields.contactEmail:
         final contact =

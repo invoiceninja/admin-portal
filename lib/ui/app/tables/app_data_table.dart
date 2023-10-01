@@ -98,7 +98,7 @@ class DataRow {
     this.selected = false,
     this.onSelectChanged,
     required this.cells,
-  })  : key = ValueKey<int?>(index);
+  }) : key = ValueKey<int?>(index);
 
   /// A [Key] that uniquely identifies this row. This is used to
   /// ensure that if a row is added or removed, any stateful widgets

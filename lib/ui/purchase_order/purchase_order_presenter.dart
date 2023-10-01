@@ -135,8 +135,7 @@ class PurchaseOrderPresenter extends EntityPresenter {
       case PurchaseOrderFields.vendorPostalCode:
         return Text(vendor.postalCode);
       case PurchaseOrderFields.vendorCountry:
-        return Text(
-            state.staticState.countryMap[client.countryId]?.name ?? '');
+        return Text(state.staticState.countryMap[client.countryId]?.name ?? '');
       case PurchaseOrderFields.contactName:
       case PurchaseOrderFields.contactEmail:
         final contact = purchaseOrderContactSelector(
