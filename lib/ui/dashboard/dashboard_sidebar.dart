@@ -243,7 +243,7 @@ class QuoteSidebar extends StatelessWidget {
               itemCount: upcomingQuotes.length,
               itemBuilder: (BuildContext context, int index) {
                 return QuoteListItem(
-                  quote: upcomingQuotes[index],
+                  quote: upcomingQuotes[index]!,
                   showCheckbox: false,
                 );
               },
@@ -257,7 +257,7 @@ class QuoteSidebar extends StatelessWidget {
               itemCount: expriedQuotes.length,
               itemBuilder: (BuildContext context, int index) {
                 return QuoteListItem(
-                  quote: expriedQuotes[index],
+                  quote: expriedQuotes[index]!,
                   showCheckbox: false,
                 );
               },

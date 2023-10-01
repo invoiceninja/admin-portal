@@ -44,7 +44,7 @@ class QuoteListBuilder extends StatelessWidget {
             onSortColumn: viewModel.onSortColumn,
             itemBuilder: (BuildContext context, index) {
               final invoiceId = viewModel.invoiceList[index];
-              final invoice = viewModel.invoiceMap[invoiceId];
+              final invoice = viewModel.invoiceMap[invoiceId]!;
 
               return QuoteListItem(
                 filter: viewModel.filter,

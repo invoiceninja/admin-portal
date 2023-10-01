@@ -93,7 +93,7 @@ class _ClientViewDetailsState extends State<ClientViewDetails> {
           subtitle: subtitleParts.join('\n'),
           copyValue: contact.email,
           onLongPress: () => setState(() {
-            if ((contact.email ?? '').isEmpty) {
+            if (contact.email.isEmpty) {
               return;
             }
 
