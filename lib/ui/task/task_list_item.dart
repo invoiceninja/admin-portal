@@ -79,8 +79,10 @@ class TaskListItem extends StatelessWidget {
 
     String subtitle = client.displayName;
     if (task.projectId.isNotEmpty) {
-      subtitle +=
-          ' • ' + state.projectState.get(task.projectId).listDisplayName;
+      if (client.isOld) {
+        subtitle += ' • ';
+      }
+      subtitle += state.projectState.get(task.projectId).listDisplayName;
     }
 
     final duration = LiveText(() {
