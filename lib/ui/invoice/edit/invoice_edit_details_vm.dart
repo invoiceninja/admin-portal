@@ -126,14 +126,15 @@ class InvoiceEditDetailsVM extends EntityEditDetailsVM {
       },
       onAddClientPressed: (context, completer) {
         createEntity(
-            context: context,
-            entity: ClientEntity(state: state),
-            force: true,
-            completer: completer,
-            cancelCompleter: Completer<Null>()
-              ..future.then<Null>((_) {
-                store.dispatch(UpdateCurrentRoute(InvoiceEditScreen.route));
-              }));
+          context: context,
+          entity: ClientEntity(state: state),
+          force: true,
+          completer: completer,
+          cancelCompleter: Completer<Null>()
+            ..future.then<Null>((_) {
+              store.dispatch(UpdateCurrentRoute(InvoiceEditScreen.route));
+            }),
+        );
         completer.future.then((SelectableEntity client) {
           store.dispatch(UpdateCurrentRoute(InvoiceEditScreen.route));
         });

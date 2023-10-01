@@ -16,16 +16,16 @@ import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 EntityUIState projectUIReducer(ProjectUIState state, dynamic action) {
-  return state.rebuild((b) => b
-    ..listUIState.replace(projectListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action)!)
-    ..selectedId = selectedIdReducer(state.selectedId, action)
-    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
-    ..tabIndex = tabIndexReducer(state.tabIndex, action)
-    ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
-    ..cancelCompleter = cancelCompleterReducer(
-            state.cancelCompleter as Completer<SelectableEntity>?, action)
-        as Completer<Null>?);
+  return state.rebuild(
+    (b) => b
+      ..listUIState.replace(projectListReducer(state.listUIState, action))
+      ..editing.replace(editingReducer(state.editing, action)!)
+      ..selectedId = selectedIdReducer(state.selectedId, action)
+      ..forceSelected = forceSelectedReducer(state.forceSelected, action)
+      ..tabIndex = tabIndexReducer(state.tabIndex, action)
+      ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
+      ..cancelCompleter = cancelCompleterReducer(state.cancelCompleter, action),
+  );
 }
 
 final forceSelectedReducer = combineReducers<bool?>([
@@ -54,9 +54,9 @@ final saveCompleterReducer = combineReducers<Completer<SelectableEntity>?>([
   }),
 ]);
 
-final cancelCompleterReducer = combineReducers<Completer<SelectableEntity>?>([
-  TypedReducer<Completer<SelectableEntity>?, EditProject>((completer, action) {
-    return action.cancelCompleter as Completer<SelectableEntity>?;
+final cancelCompleterReducer = combineReducers<Completer<Null>?>([
+  TypedReducer<Completer<Null>?, EditProject>((completer, action) {
+    return action.cancelCompleter as Completer<Null>?;
   }),
 ]);
 

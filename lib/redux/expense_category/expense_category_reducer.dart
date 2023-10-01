@@ -15,15 +15,16 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 EntityUIState expenseCategoryUIReducer(
     ExpenseCategoryUIState state, dynamic action) {
-  return state.rebuild((b) => b
-    ..listUIState.replace(expenseCategoryListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action)!)
-    ..selectedId = selectedIdReducer(state.selectedId, action)
-    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
-    ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
-    ..cancelCompleter = cancelCompleterReducer(
-            state.cancelCompleter as Completer<SelectableEntity>?, action)
-        as Completer<Null>?);
+  return state.rebuild(
+    (b) => b
+      ..listUIState
+          .replace(expenseCategoryListReducer(state.listUIState, action))
+      ..editing.replace(editingReducer(state.editing, action)!)
+      ..selectedId = selectedIdReducer(state.selectedId, action)
+      ..forceSelected = forceSelectedReducer(state.forceSelected, action)
+      ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
+      ..cancelCompleter = cancelCompleterReducer(state.cancelCompleter, action),
+  );
 }
 
 final saveCompleterReducer = combineReducers<Completer<SelectableEntity>?>([
@@ -33,10 +34,9 @@ final saveCompleterReducer = combineReducers<Completer<SelectableEntity>?>([
   }),
 ]);
 
-final cancelCompleterReducer = combineReducers<Completer<SelectableEntity>?>([
-  TypedReducer<Completer<SelectableEntity>?, EditExpenseCategory>(
-      (completer, action) {
-    return action.cancelCompleter as Completer<SelectableEntity>?;
+final cancelCompleterReducer = combineReducers<Completer<Null>?>([
+  TypedReducer<Completer<Null>?, EditExpenseCategory>((completer, action) {
+    return action.cancelCompleter as Completer<Null>?;
   }),
 ]);
 

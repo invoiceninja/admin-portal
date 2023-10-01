@@ -15,18 +15,18 @@ import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 EntityUIState clientUIReducer(ClientUIState state, dynamic action) {
-  return state.rebuild((b) => b
-    ..listUIState.replace(clientListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action)!)
-    ..editingContact
-        .replace(editingContactReducer(state.editingContact, action)!)
-    ..selectedId = selectedIdReducer(state.selectedId, action)
-    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
-    ..tabIndex = tabIndexReducer(state.tabIndex, action)
-    ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
-    ..cancelCompleter = cancelCompleterReducer(
-            state.cancelCompleter as Completer<SelectableEntity>?, action)
-        as Completer<Null>?);
+  return state.rebuild(
+    (b) => b
+      ..listUIState.replace(clientListReducer(state.listUIState, action))
+      ..editing.replace(editingReducer(state.editing, action)!)
+      ..editingContact
+          .replace(editingContactReducer(state.editingContact, action)!)
+      ..selectedId = selectedIdReducer(state.selectedId, action)
+      ..forceSelected = forceSelectedReducer(state.forceSelected, action)
+      ..tabIndex = tabIndexReducer(state.tabIndex, action)
+      ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
+      ..cancelCompleter = cancelCompleterReducer(state.cancelCompleter, action),
+  );
 }
 
 final forceSelectedReducer = combineReducers<bool?>([
@@ -55,9 +55,9 @@ final saveCompleterReducer = combineReducers<Completer<SelectableEntity>?>([
   }),
 ]);
 
-final cancelCompleterReducer = combineReducers<Completer<SelectableEntity>?>([
-  TypedReducer<Completer<SelectableEntity>?, EditClient>((completer, action) {
-    return action.cancelCompleter as Completer<SelectableEntity>?;
+final cancelCompleterReducer = combineReducers<Completer<Null>?>([
+  TypedReducer<Completer<Null>?, EditClient>((completer, action) {
+    return action.cancelCompleter as Completer<Null>?;
   }),
 ]);
 
@@ -137,7 +137,8 @@ final editingReducer = combineReducers<ClientEntity?>([
   }),
   TypedReducer<ClientEntity?, UpdateContact>((client, action) {
     return client!.rebuild((b) => b
-      ..contacts[action.index] = action.contact..isChanged = true);
+      ..contacts[action.index] = action.contact
+      ..isChanged = true);
   }),
   TypedReducer<ClientEntity?, ViewClient>((client, action) {
     return ClientEntity();

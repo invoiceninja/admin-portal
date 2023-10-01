@@ -15,18 +15,18 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
 
 EntityUIState vendorUIReducer(VendorUIState state, dynamic action) {
-  return state.rebuild((b) => b
-    ..listUIState.replace(vendorListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action)!)
-    ..editingContact
-        .replace(editingVendorContactReducer(state.editingContact, action)!)
-    ..selectedId = selectedIdReducer(state.selectedId, action)
-    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
-    ..tabIndex = tabIndexReducer(state.tabIndex, action)
-    ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
-    ..cancelCompleter = cancelCompleterReducer(
-            state.cancelCompleter as Completer<SelectableEntity>?, action)
-        as Completer<Null>?);
+  return state.rebuild(
+    (b) => b
+      ..listUIState.replace(vendorListReducer(state.listUIState, action))
+      ..editing.replace(editingReducer(state.editing, action)!)
+      ..editingContact
+          .replace(editingVendorContactReducer(state.editingContact, action)!)
+      ..selectedId = selectedIdReducer(state.selectedId, action)
+      ..forceSelected = forceSelectedReducer(state.forceSelected, action)
+      ..tabIndex = tabIndexReducer(state.tabIndex, action)
+      ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
+      ..cancelCompleter = cancelCompleterReducer(state.cancelCompleter, action),
+  );
 }
 
 final forceSelectedReducer = combineReducers<bool?>([
@@ -55,9 +55,9 @@ final saveCompleterReducer = combineReducers<Completer<SelectableEntity>?>([
   }),
 ]);
 
-final cancelCompleterReducer = combineReducers<Completer<SelectableEntity>?>([
-  TypedReducer<Completer<SelectableEntity>?, EditVendor>((completer, action) {
-    return action.cancelCompleter as Completer<SelectableEntity>?;
+final cancelCompleterReducer = combineReducers<Completer<Null>?>([
+  TypedReducer<Completer<Null>?, EditVendor>((completer, action) {
+    return action.cancelCompleter as Completer<Null>?;
   }),
 ]);
 
@@ -141,7 +141,8 @@ VendorEntity _removeContact(VendorEntity? vendor, DeleteVendorContact action) {
 
 VendorEntity _updateContact(VendorEntity? vendor, UpdateVendorContact action) {
   return vendor!.rebuild((b) => b
-    ..contacts[action.index] = action.contact..isChanged = true);
+    ..contacts[action.index] = action.contact
+    ..isChanged = true);
 }
 
 final vendorListReducer = combineReducers<ListUIState>([
