@@ -230,8 +230,10 @@ class ReportsScreen extends StatelessWidget {
                               filterColumns.first: ''
                           }
                         : {
-                            value: (reportState.filters[value] ?? '').isNotEmpty
-                                ? reportState.filters[value]
+                            value: reportState.filters.containsKey(value) &&
+                                    (reportState.filters[value] ?? '')
+                                        .isNotEmpty
+                                ? reportState.filters[value]!
                                 : DateRange.thisQuarter.toString(),
                             if (filterColumns.isNotEmpty &&
                                 filterColumns.first != value)
@@ -552,9 +554,9 @@ class ReportDataTable extends StatefulWidget {
 }
 
 class _ReportDataTableState extends State<ReportDataTable> {
-  final Map<String, Map<String?, TextEditingController>>
+  final Map<String, Map<String, TextEditingController>>
       _textEditingControllers = {};
-  final Map<String, Map<String?, FocusNode>> _textEditingFocusNodes = {};
+  final Map<String, Map<String, FocusNode>> _textEditingFocusNodes = {};
   late ReportDataTableSource dataTableSource;
 
   @override
@@ -621,7 +623,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
     super.didChangeDependencies();
   }
 
-  void _onChanged(String? column, String value) {
+  void _onChanged(String column, String value) {
     widget.viewModel.onReportFiltersChanged(
         context,
         widget.viewModel.reportState.filters
@@ -804,9 +806,9 @@ class ReportDataTableSource extends AppDataTableSource {
 
   ReportsScreenVM viewModel;
   final BuildContext context;
-  final Map<String, Map<String?, TextEditingController>> textEditingControllers;
-  final Map<String, Map<String?, FocusNode>> textEditingFocusNodes;
-  final Function(String?, String) onFilterChanged;
+  final Map<String, Map<String, TextEditingController>> textEditingControllers;
+  final Map<String, Map<String, FocusNode>> textEditingFocusNodes;
+  final Function(String, String) onFilterChanged;
 
   @override
   int get selectedRowCount => 0;
@@ -1023,7 +1025,7 @@ class ReportResult {
     return true;
   }
 
-  List<String?> sortedColumns(ReportsUIState reportState) {
+  List<String> sortedColumns(ReportsUIState reportState) {
     final data = columns.toList();
     final group = reportState.group;
 
@@ -1078,16 +1080,16 @@ class ReportResult {
 
   DataRow tableFilters(
       BuildContext context,
-      Map<String?, TextEditingController>? textEditingControllers,
-      Map<String?, FocusNode>? textEditingFocusNodes,
-      Function(String?, String) onFilterChanged) {
+      Map<String, TextEditingController>? textEditingControllers,
+      Map<String, FocusNode>? textEditingFocusNodes,
+      Function(String, String) onFilterChanged) {
     final localization = AppLocalization.of(context);
     final theme = Theme.of(context);
     final store = StoreProvider.of<AppState>(context);
     final reportState = store.state.uiState.reportsUIState;
 
     return DataRow(cells: [
-      for (String? column in sortedColumns(reportState))
+      for (String column in sortedColumns(reportState))
         if (textEditingControllers == null ||
             !textEditingControllers.containsKey(column))
           DataCell(Text(''))
@@ -1214,7 +1216,7 @@ class ReportResult {
               focusNode: textEditingFocusNodes![column],
               optionsBuilder: (TextEditingValue textEditingValue) {
                 final filter = textEditingValue.text.toLowerCase();
-                final index = columns.indexOf(column!);
+                final index = columns.indexOf(column);
                 final options = data
                     .where((row) =>
                         row[index]
@@ -1329,7 +1331,7 @@ class ReportResult {
       final row = data[index - 1];
       final cells = <DataCell>[];
       for (var j = 0; j < row.length; j++) {
-        final index = columns.indexOf(sorted[j]!);
+        final index = columns.indexOf(sorted[j]);
         final cell = row[index];
         final column = sorted[j];
         cells.add(
@@ -1372,7 +1374,7 @@ class ReportResult {
         } else if (columnType == ReportColumnType.number) {
           final currencyId = values!['${column}_currency_id'];
           value = formatNumber(values[column], context,
-              formatNumberType: column!.toLowerCase().contains('quantity')
+              formatNumberType: column.toLowerCase().contains('quantity')
                   ? FormatNumberType.double
                   : FormatNumberType.money,
               currencyId:
@@ -1386,8 +1388,8 @@ class ReportResult {
             return;
           }
           if (column == groupBy) {
-            String? filter = group;
-            String? customStartDate = '';
+            String filter = group;
+            String customStartDate = '';
             String customEndDate = '';
             if (getReportColumnType(column, context) ==
                     ReportColumnType.dateTime ||

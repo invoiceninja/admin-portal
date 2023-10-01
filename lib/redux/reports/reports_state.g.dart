@@ -43,10 +43,8 @@ class _$ReportsUIStateSerializer
           specifiedType: const FullType(String)),
       'filters',
       serializers.serialize(object.filters,
-          specifiedType: const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(String)
-          ])),
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(String)])),
     ];
 
     return result;
@@ -94,10 +92,8 @@ class _$ReportsUIStateSerializer
           break;
         case 'filters':
           result.filters.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltMap, const [
-                const FullType.nullable(String),
-                const FullType.nullable(String)
-              ]))!);
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(String), const FullType(String)]))!);
           break;
       }
     }
@@ -122,7 +118,7 @@ class _$ReportsUIState extends ReportsUIState {
   @override
   final String customEndDate;
   @override
-  final BuiltMap<String?, String?> filters;
+  final BuiltMap<String, String> filters;
 
   factory _$ReportsUIState([void Function(ReportsUIStateBuilder)? updates]) =>
       (new ReportsUIStateBuilder()..update(updates))._build();
@@ -241,11 +237,10 @@ class ReportsUIStateBuilder
   set customEndDate(String? customEndDate) =>
       _$this._customEndDate = customEndDate;
 
-  MapBuilder<String?, String?>? _filters;
-  MapBuilder<String?, String?> get filters =>
-      _$this._filters ??= new MapBuilder<String?, String?>();
-  set filters(MapBuilder<String?, String?>? filters) =>
-      _$this._filters = filters;
+  MapBuilder<String, String>? _filters;
+  MapBuilder<String, String> get filters =>
+      _$this._filters ??= new MapBuilder<String, String>();
+  set filters(MapBuilder<String, String>? filters) => _$this._filters = filters;
 
   ReportsUIStateBuilder();
 

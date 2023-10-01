@@ -891,6 +891,10 @@ Serializers _$serializers = (new Serializers().toBuilder()
               BuiltMap, const [const FullType(String), const FullType(String)]),
           () => new MapBuilder<String, String>())
       ..addBuilderFactory(
+          const FullType(
+              BuiltMap, const [const FullType(String), const FullType(String)]),
+          () => new MapBuilder<String, String>())
+      ..addBuilderFactory(
           const FullType(BuiltMap, const [
             const FullType(String),
             const FullType(SubscriptionEntity)
@@ -1006,13 +1010,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
             const FullType(String),
             const FullType(BuiltList, const [const FullType(String)])
           ]),
-          () => new MapBuilder<String, BuiltList<String>>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType.nullable(String),
-            const FullType.nullable(String)
-          ]),
-          () => new MapBuilder<String?, String?>()))
+          () => new MapBuilder<String, BuiltList<String>>()))
     .build();
 
 // ignore_for_file: deprecated_member_use_from_same_package,type=lint
