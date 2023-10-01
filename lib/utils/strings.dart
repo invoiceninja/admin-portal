@@ -51,7 +51,8 @@ String toTitleCase(String text) {
     return text.toUpperCase();
   }
 
-  text = toSpaceCase(text.toLowerCase());
+  text = toSpaceCase(text);
+
   final words = text.split(' ');
   final capitalized = words.map((word) {
     if (word == 'url') {
@@ -63,7 +64,7 @@ String toTitleCase(String text) {
     }
 
     final first = word.substring(0, 1).toUpperCase();
-    final rest = word.substring(1);
+    final rest = word.substring(1).toLowerCase();
     return '$first$rest';
   });
 

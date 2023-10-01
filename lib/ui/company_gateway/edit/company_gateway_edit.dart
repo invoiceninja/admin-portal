@@ -265,8 +265,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                           .toList(),
                     ),
                   SizedBox(height: 16),
-                  for (var gatewayTypeId
-                      in gateway?.options.keys ?? <String>[])
+                  for (var gatewayTypeId in gateway?.options.keys ?? <String>[])
                     SwitchListTile(
                         title: Text(kGatewayTypes.containsKey(gatewayTypeId)
                             ? localization
