@@ -82,18 +82,18 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     final company = state.company;
 
     final includedLineItems = lineItems.where((lineItem) {
-      return (lineItem!.typeId == InvoiceItemEntity.TYPE_TASK &&
+      return (lineItem.typeId == InvoiceItemEntity.TYPE_TASK &&
               widget.isTasks) ||
           (lineItem.typeId != InvoiceItemEntity.TYPE_TASK && !widget.isTasks) ||
           lineItem.isEmpty;
     }).toList();
 
     final hasTax1 = company.enableFirstItemTaxRate ||
-        includedLineItems.any((item) => item!.taxName1.isNotEmpty);
+        includedLineItems.any((item) => item.taxName1.isNotEmpty);
     final hasTax2 = company.enableSecondItemTaxRate ||
-        includedLineItems.any((item) => item!.taxName2.isNotEmpty);
+        includedLineItems.any((item) => item.taxName2.isNotEmpty);
     final hasTax3 = company.enableThirdItemTaxRate ||
-        includedLineItems.any((item) => item!.taxName3.isNotEmpty);
+        includedLineItems.any((item) => item.taxName3.isNotEmpty);
     final hasAnyTax = hasTax1 || hasTax2 || hasTax3;
 
     final customField1 =
@@ -292,7 +292,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
         state.staticState.currencyMap[client.currencyId]?.precision ?? 2;
     final lineItems = invoice.lineItems.toList();
     final includedLineItems = lineItems.where((lineItem) {
-      return (lineItem!.typeId == InvoiceItemEntity.TYPE_TASK &&
+      return (lineItem.typeId == InvoiceItemEntity.TYPE_TASK &&
               widget.isTasks) ||
           (lineItem.typeId != InvoiceItemEntity.TYPE_TASK && !widget.isTasks) ||
           lineItem.isEmpty;
@@ -429,7 +429,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
             buildDefaultDragHandles: false,
             itemCount: lineItems.length,
             itemBuilder: (context, index) {
-              final item = lineItems[index]!;
+              final item = lineItems[index];
 
               if ((item.typeId == InvoiceItemEntity.TYPE_TASK &&
                       !widget.isTasks) ||
@@ -577,7 +577,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       );
     }
 
-    if (lineItems.where((item) => item!.isEmpty).isEmpty) {
+    if (lineItems.where((item) => item.isEmpty).isEmpty) {
       lineItems.add(InvoiceItemEntity(
           quantity: company.defaultQuantity || !company.enableProductQuantity
               ? 1
@@ -594,7 +594,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
         color: tableFontColor.isNotEmpty
             ? convertHexStringToColor(tableFontColor)
             : null,
-        onPressed: includedLineItems.where((item) => !item!.isEmpty).length < 2
+        onPressed: includedLineItems.where((item) => !item.isEmpty).length < 2
             ? null
             : () {
                 setState(() => _isReordering = !_isReordering);
@@ -623,14 +623,14 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                 : BoxDecoration(),
           ),
           for (var index = 0; index < lineItems.length; index++)
-            if ((lineItems[index]!.typeId == InvoiceItemEntity.TYPE_TASK &&
+            if ((lineItems[index].typeId == InvoiceItemEntity.TYPE_TASK &&
                     widget.isTasks) ||
-                (lineItems[index]!.typeId != InvoiceItemEntity.TYPE_TASK &&
+                (lineItems[index].typeId != InvoiceItemEntity.TYPE_TASK &&
                     !widget.isTasks) ||
-                lineItems[index]!.isEmpty)
+                lineItems[index].isEmpty)
               TableRow(
                   key: ValueKey(
-                      '__line_item_${index}_${lineItems[index]!.createdAt}__'),
+                      '__line_item_${index}_${lineItems[index].createdAt}__'),
                   children: [
                     ..._columns.map((column) {
                       if (column == COLUMN_ITEM) {
@@ -647,7 +647,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               key: ValueKey('__line_item_${index}_name__'),
                               textEditingController: _textEditingController,
                               initialValue: TextEditingValue(
-                                  text: lineItems[index]!.productKey),
+                                  text: lineItems[index].productKey),
                               optionsBuilder:
                                   (TextEditingValue textEditingValue) {
                                 final options = productIds
@@ -672,8 +672,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
 
                                 if (options.length == 1 &&
                                     options[0].productKey.toLowerCase() ==
-                                        lineItems[index]!
-                                            .productKey
+                                        lineItems[index].productKey
                                             .toLowerCase()) {
                                   return <ProductEntity>[];
                                 }
@@ -706,7 +705,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 }
 
                                 final updatedItem = company.fillProducts
-                                    ? item!.rebuild((b) => b
+                                    ? item.rebuild((b) => b
                                       ..productKey = product.productKey
                                       ..notes = item.isTask
                                           ? item.notes
@@ -756,7 +755,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                                   product.taxName3.isNotEmpty
                                               ? product.taxRate3
                                               : item.taxRate3)
-                                    : item!.rebuild((b) =>
+                                    : item.rebuild((b) =>
                                         b..productKey = product.productKey);
 
                                 _onChanged(updatedItem, index, debounce: false);
@@ -777,7 +776,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                   },
                                   onChanged: (value) {
                                     _onChanged(
-                                        lineItems[index]!.rebuild(
+                                        lineItems[index].rebuild(
                                             (b) => b..productKey = value),
                                         index);
                                   },
@@ -865,10 +864,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               key: ValueKey(
                                   '__line_item_${index}_description__'),
                               autofocus: _autocompleteFocusIndex == index,
-                              initialValue: lineItems[index]!.notes,
+                              initialValue: lineItems[index].notes,
                               onChanged: (value) => _onChanged(
-                                  lineItems[index]!
-                                      .rebuild((b) => b..notes = value),
+                                  lineItems[index].rebuild((b) => b..notes = value),
                                   index),
                             ),
                           ),
@@ -882,11 +880,10 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 const EdgeInsets.only(right: kTableColumnGap),
                             child: CustomField(
                               field: customField1,
-                              value: lineItems[index]!.customValue1,
+                              value: lineItems[index].customValue1,
                               hideFieldLabel: true,
                               onChanged: (value) => _onChanged(
-                                  lineItems[index]!
-                                      .rebuild((b) => b..customValue1 = value),
+                                  lineItems[index].rebuild((b) => b..customValue1 = value),
                                   index),
                               onSavePressed:
                                   widget.entityViewModel.onSavePressed,
@@ -902,11 +899,10 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 const EdgeInsets.only(right: kTableColumnGap),
                             child: CustomField(
                               field: customField2,
-                              value: lineItems[index]!.customValue2,
+                              value: lineItems[index].customValue2,
                               hideFieldLabel: true,
                               onChanged: (value) => _onChanged(
-                                  lineItems[index]!
-                                      .rebuild((b) => b..customValue2 = value),
+                                  lineItems[index].rebuild((b) => b..customValue2 = value),
                                   index),
                               onSavePressed:
                                   widget.entityViewModel.onSavePressed,
@@ -922,11 +918,10 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 const EdgeInsets.only(right: kTableColumnGap),
                             child: CustomField(
                               field: customField3,
-                              value: lineItems[index]!.customValue3,
+                              value: lineItems[index].customValue3,
                               hideFieldLabel: true,
                               onChanged: (value) => _onChanged(
-                                  lineItems[index]!
-                                      .rebuild((b) => b..customValue3 = value),
+                                  lineItems[index].rebuild((b) => b..customValue3 = value),
                                   index),
                               onSavePressed:
                                   widget.entityViewModel.onSavePressed,
@@ -942,11 +937,10 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 const EdgeInsets.only(right: kTableColumnGap),
                             child: CustomField(
                               field: customField4,
-                              value: lineItems[index]!.customValue4,
+                              value: lineItems[index].customValue4,
                               hideFieldLabel: true,
                               onChanged: (value) => _onChanged(
-                                  lineItems[index]!
-                                      .rebuild((b) => b..customValue4 = value),
+                                  lineItems[index].rebuild((b) => b..customValue4 = value),
                                   index),
                               onSavePressed:
                                   widget.entityViewModel.onSavePressed,
@@ -954,7 +948,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           ),
                         );
                       } else if (column == COLUMN_TAX_CATEGORY &&
-                          !lineItems[index]!.hasOverrideTax) {
+                          !lineItems[index].hasOverrideTax) {
                         return Focus(
                           onFocusChange: (hasFocus) => _onFocusChange(),
                           skipTraversal: true,
@@ -963,9 +957,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 const EdgeInsets.only(right: kTableColumnGap),
                             child: AppDropdownButton<String>(
                                 labelText: '',
-                                value: lineItems[index]!.taxCategoryId,
+                                value: lineItems[index].taxCategoryId,
                                 onChanged: (dynamic value) => _onChanged(
-                                    lineItems[index]!.rebuild(
+                                    lineItems[index].rebuild(
                                         (b) => b..taxCategoryId = value),
                                     index),
                                 items: kTaxCategories.keys
@@ -980,7 +974,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         );
                       } else if (column == COLUMN_TAX1 ||
                           (column == COLUMN_TAX_CATEGORY &&
-                              lineItems[index]!.hasOverrideTax)) {
+                              lineItems[index].hasOverrideTax)) {
                         Widget child = Focus(
                           onFocusChange: (hasFocus) => _onFocusChange(),
                           skipTraversal: true,
@@ -989,27 +983,27 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 const EdgeInsets.only(right: kTableColumnGap),
                             child: TaxRateDropdown(
                               onSelected: (taxRate) => _onChanged(
-                                lineItems[index]!.rebuild((b) => b
+                                lineItems[index].rebuild((b) => b
                                   ..taxName1 = taxRate.name
                                   ..taxRate1 = taxRate.rate),
                                 index,
                                 debounce: false,
                               ),
                               labelText: null,
-                              initialTaxName: lineItems[index]!.taxName1,
-                              initialTaxRate: lineItems[index]!.taxRate1,
+                              initialTaxName: lineItems[index].taxName1,
+                              initialTaxRate: lineItems[index].taxRate1,
                             ),
                           ),
                         );
 
-                        if (lineItems[index]!.hasOverrideTax) {
+                        if (lineItems[index].hasOverrideTax) {
                           child = Row(
                             children: [
                               Expanded(child: child),
                               IconButton(
                                   visualDensity: VisualDensity.compact,
                                   onPressed: () => _onChanged(
-                                      lineItems[index]!.rebuild((b) => b
+                                      lineItems[index].rebuild((b) => b
                                         ..taxName1 = ''
                                         ..taxRate1 = 0
                                         ..taxCategoryId = kTaxCategoryPhysical),
@@ -1029,15 +1023,15 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 const EdgeInsets.only(right: kTableColumnGap),
                             child: TaxRateDropdown(
                               onSelected: (taxRate) => _onChanged(
-                                lineItems[index]!.rebuild((b) => b
+                                lineItems[index].rebuild((b) => b
                                   ..taxName2 = taxRate.name
                                   ..taxRate2 = taxRate.rate),
                                 index,
                                 debounce: false,
                               ),
                               labelText: null,
-                              initialTaxName: lineItems[index]!.taxName2,
-                              initialTaxRate: lineItems[index]!.taxRate2,
+                              initialTaxName: lineItems[index].taxName2,
+                              initialTaxRate: lineItems[index].taxRate2,
                             ),
                           ),
                         );
@@ -1050,15 +1044,15 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 const EdgeInsets.only(right: kTableColumnGap),
                             child: TaxRateDropdown(
                               onSelected: (taxRate) => _onChanged(
-                                lineItems[index]!.rebuild((b) => b
+                                lineItems[index].rebuild((b) => b
                                   ..taxName3 = taxRate.name
                                   ..taxRate3 = taxRate.rate),
                                 index,
                                 debounce: false,
                               ),
                               labelText: null,
-                              initialTaxName: lineItems[index]!.taxName3,
-                              initialTaxRate: lineItems[index]!.taxRate3,
+                              initialTaxName: lineItems[index].taxName3,
+                              initialTaxRate: lineItems[index].taxRate3,
                             ),
                           ),
                         );
@@ -1073,7 +1067,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               key: ValueKey('__line_item_${index}_cost__'),
                               textAlign: TextAlign.right,
                               initialValue: formatNumber(
-                                lineItems[index]!.cost,
+                                lineItems[index].cost,
                                 context,
                                 formatNumberType: FormatNumberType.inputMoney,
                                 clientId: invoice.isPurchaseOrder
@@ -1084,7 +1078,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                     : null,
                               ),
                               onChanged: (value) => _onChanged(
-                                lineItems[index]!.rebuild(
+                                lineItems[index].rebuild(
                                     (b) => b..cost = parseDouble(value)),
                                 index,
                                 debounce: false,
@@ -1107,7 +1101,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               key: ValueKey('__line_item_${index}_quantity__'),
                               textAlign: TextAlign.right,
                               initialValue: formatNumber(
-                                lineItems[index]!.quantity,
+                                lineItems[index].quantity,
                                 context,
                                 formatNumberType: FormatNumberType.inputAmount,
                                 clientId: invoice.isPurchaseOrder
@@ -1118,7 +1112,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                     : null,
                               ),
                               onChanged: (value) => _onChanged(
-                                lineItems[index]!.rebuild(
+                                lineItems[index].rebuild(
                                     (b) => b..quantity = parseDouble(value)),
                                 index,
                                 debounce: false,
@@ -1141,7 +1135,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               key: ValueKey('__line_item_${index}_discount__'),
                               textAlign: TextAlign.right,
                               initialValue: formatNumber(
-                                lineItems[index]!.discount,
+                                lineItems[index].discount,
                                 context,
                                 formatNumberType: FormatNumberType.inputAmount,
                                 clientId: invoice.isPurchaseOrder
@@ -1152,7 +1146,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                     : null,
                               ),
                               onChanged: (value) => _onChanged(
-                                  lineItems[index]!.rebuild(
+                                  lineItems[index].rebuild(
                                       (b) => b..discount = parseDouble(value)),
                                   index),
                               keyboardType: TextInputType.numberWithOptions(
@@ -1170,11 +1164,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       padding: const EdgeInsets.only(right: kTableColumnGap),
                       child: TextFormField(
                         key: ValueKey(
-                            '__total_${index}_${lineItems[index]!.total(invoice, precision)}_${invoice.clientId}__'),
+                            '__total_${index}_${lineItems[index].total(invoice, precision)}_${invoice.clientId}__'),
                         readOnly: true,
                         enabled: false,
                         initialValue: formatNumber(
-                          lineItems[index]!.total(invoice, precision),
+                          lineItems[index].total(invoice, precision),
                           context,
                           clientId:
                               invoice.isPurchaseOrder ? null : invoice.clientId,
@@ -1186,13 +1180,13 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     ),
                     PopupMenuButton<String>(
                       icon: Icon(Icons.more_vert),
-                      enabled: !lineItems[index]!.isEmpty,
+                      enabled: !lineItems[index].isEmpty,
                       itemBuilder: (BuildContext context) {
                         final sectionIndex =
                             includedLineItems.indexOf(lineItems[index]);
                         final options = {
                           if (widget.isTasks &&
-                              (lineItems[index]!.taskId ?? '').isNotEmpty)
+                              (lineItems[index].taskId ?? '').isNotEmpty)
                             localization.viewTask: MdiIcons.chevronDoubleRight,
                           if (sectionIndex > 0)
                             localization.moveTop: MdiIcons.chevronDoubleUp,
@@ -1218,7 +1212,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       onSelected: (String action) {
                         if (action == localization.viewTask) {
                           viewEntityById(
-                              entityId: lineItems[index]!.taskId,
+                              entityId: lineItems[index].taskId,
                               entityType: EntityType.task);
                         } else if (action == localization.moveTop) {
                           viewModel.onMovedInvoiceItem!(index, 0);

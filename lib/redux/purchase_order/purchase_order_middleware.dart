@@ -391,7 +391,7 @@ Middleware<AppState> _savePurchaseOrder(PurchaseOrderRepository repository) {
     // remove any empty line items
     final updatedPurchaseOrder = action.purchaseOrder.rebuild((b) => b
       ..lineItems.replace(
-          action.purchaseOrder.lineItems.where((item) => !item!.isEmpty)));
+          action.purchaseOrder.lineItems.where((item) => !item.isEmpty)));
 
     repository
         .saveData(

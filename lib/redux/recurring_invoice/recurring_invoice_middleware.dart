@@ -335,7 +335,7 @@ Middleware<AppState> _saveRecurringInvoice(
     // remove any empty line items
     final updatedInvoice = action.recurringInvoice!.rebuild((b) => b
       ..lineItems.replace(
-          action.recurringInvoice!.lineItems.where((item) => !item!.isEmpty)));
+          action.recurringInvoice!.lineItems.where((item) => !item.isEmpty)));
 
     repository
         .saveData(store.state.credentials, updatedInvoice,

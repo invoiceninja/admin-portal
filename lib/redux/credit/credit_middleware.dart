@@ -284,7 +284,7 @@ Middleware<AppState> _saveCredit(CreditRepository repository) {
     // remove any empty line items
     final updatedCredit = action.credit.rebuild((b) => b
       ..lineItems
-          .replace(action.credit.lineItems.where((item) => !item!.isEmpty)));
+          .replace(action.credit.lineItems.where((item) => !item.isEmpty)));
 
     repository
         .saveData(store.state.credentials, updatedCredit, action.action)

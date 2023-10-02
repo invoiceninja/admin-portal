@@ -189,10 +189,13 @@ class AddCreditItems implements PersistUI {
 }
 
 class UpdateCreditItem implements PersistUI {
-  UpdateCreditItem({this.index, this.creditItem});
+  UpdateCreditItem({
+    required this.index,
+    required this.creditItem,
+  });
 
-  final int? index;
-  final InvoiceItemEntity? creditItem;
+  final int index;
+  final InvoiceItemEntity creditItem;
 }
 
 class DeleteCreditItem implements PersistUI {

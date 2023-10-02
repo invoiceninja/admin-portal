@@ -46,7 +46,7 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
             viewModel: viewModel,
             entityViewModel: widget.entityViewModel,
             key: ValueKey('__${lineItemIndex}__'),
-            invoiceItem: invoice.lineItems[lineItemIndex!]!,
+            invoiceItem: invoice.lineItems[lineItemIndex!],
             index: lineItemIndex,
           );
         });

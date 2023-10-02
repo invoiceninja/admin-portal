@@ -182,11 +182,11 @@ InvoiceEntity? _removeInvoiceItem(
 
 InvoiceEntity? _updateInvoiceItem(
     InvoiceEntity? invoice, UpdateInvoiceItem action) {
-  if (invoice!.lineItems.length <= action.index!) {
+  if (invoice!.lineItems.length <= action.index) {
     return invoice;
   }
   return invoice
-      .rebuild((b) => b..lineItems[action.index!] = action.invoiceItem);
+      .rebuild((b) => b..lineItems[action.index] = action.invoiceItem);
 }
 
 final invoiceListReducer = combineReducers<ListUIState>([

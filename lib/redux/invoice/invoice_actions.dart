@@ -193,10 +193,13 @@ class AddInvoiceItems implements PersistUI {
 }
 
 class UpdateInvoiceItem implements PersistUI {
-  UpdateInvoiceItem({this.index, this.invoiceItem});
+  UpdateInvoiceItem({
+    required this.index,
+    required this.invoiceItem,
+  });
 
-  final int? index;
-  final InvoiceItemEntity? invoiceItem;
+  final int index;
+  final InvoiceItemEntity invoiceItem;
 }
 
 class DeleteInvoiceItem implements PersistUI {
@@ -700,7 +703,8 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity?> invoices,
               title: Text(
                 invoiceIds.length == 1
                     ? localization.emailInvoice
-                    : localization.emailCountInvoices.replaceFirst(':count', '${invoiceIds.length}'),
+                    : localization.emailCountInvoices
+                        .replaceFirst(':count', '${invoiceIds.length}'),
               ),
               children: templates.keys
                   .map((template) => SimpleDialogOption(

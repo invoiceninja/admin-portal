@@ -381,7 +381,7 @@ Middleware<AppState> _saveInvoice(InvoiceRepository repository) {
     // remove any empty line items
     final updatedInvoice = action.invoice.rebuild((b) => b
       ..lineItems
-          .replace(action.invoice.lineItems.where((item) => !item!.isEmpty)));
+          .replace(action.invoice.lineItems.where((item) => !item.isEmpty)));
 
     repository
         .saveData(

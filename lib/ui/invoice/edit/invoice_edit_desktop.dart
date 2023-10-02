@@ -243,11 +243,11 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
 
     final countProducts = invoice.lineItems
         .where((item) =>
-            !item!.isEmpty && item.typeId != InvoiceItemEntity.TYPE_TASK)
+            !item.isEmpty && item.typeId != InvoiceItemEntity.TYPE_TASK)
         .length;
     final countTasks = invoice.lineItems
         .where((item) =>
-            !item!.isEmpty && item.typeId == InvoiceItemEntity.TYPE_TASK)
+            !item.isEmpty && item.typeId == InvoiceItemEntity.TYPE_TASK)
         .length;
 
     final showTasksTable = (invoice.hasTasks || company.showTasksTable) &&

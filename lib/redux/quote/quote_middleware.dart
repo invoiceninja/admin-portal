@@ -329,7 +329,7 @@ Middleware<AppState> _saveQuote(QuoteRepository repository) {
     // remove any empty line items
     final updatedQuote = action.quote.rebuild((b) => b
       ..lineItems
-          .replace(action.quote.lineItems.where((item) => !item!.isEmpty)));
+          .replace(action.quote.lineItems.where((item) => !item.isEmpty)));
 
     repository
         .saveData(store.state.credentials, updatedQuote, action.action)

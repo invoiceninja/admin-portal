@@ -488,10 +488,13 @@ class AddPurchaseOrderItems implements PersistUI {
 }
 
 class UpdatePurchaseOrderItem implements PersistUI {
-  UpdatePurchaseOrderItem({this.index, this.purchaseOrderItem});
+  UpdatePurchaseOrderItem({
+    required this.index,
+    required this.purchaseOrderItem,
+  });
 
-  final int? index;
-  final InvoiceItemEntity? purchaseOrderItem;
+  final int index;
+  final InvoiceItemEntity purchaseOrderItem;
 }
 
 class DeletePurchaseOrderItem implements PersistUI {

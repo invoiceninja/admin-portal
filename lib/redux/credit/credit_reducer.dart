@@ -178,10 +178,10 @@ InvoiceEntity? _removeCreditItem(
 
 InvoiceEntity? _updateCreditItem(
     InvoiceEntity? credit, UpdateCreditItem action) {
-  if (credit!.lineItems.length <= action.index!) {
+  if (credit!.lineItems.length <= action.index) {
     return credit;
   }
-  return credit.rebuild((b) => b..lineItems[action.index!] = action.creditItem);
+  return credit.rebuild((b) => b..lineItems[action.index] = action.creditItem);
 }
 
 final creditListReducer = combineReducers<ListUIState>([

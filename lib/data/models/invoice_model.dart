@@ -318,9 +318,8 @@ abstract class InvoiceEntity extends Object
         ..documents.clear()
         ..lineItems.replace(lineItems
             .where((lineItem) =>
-                lineItem!.typeId != InvoiceItemEntity.TYPE_UNPAID_FEE)
-            .map((lineItem) => lineItem!
-                .rebuild((b) => b..typeId = InvoiceItemEntity.TYPE_STANDARD))
+                lineItem.typeId != InvoiceItemEntity.TYPE_UNPAID_FEE)
+            .map((lineItem) => lineItem.rebuild((b) => b..typeId = InvoiceItemEntity.TYPE_STANDARD))
             .toList())
         ..invitations.replace(
           invitations
@@ -561,7 +560,7 @@ abstract class InvoiceEntity extends Object
 
   @override
   @BuiltValueField(wireName: 'line_items')
-  BuiltList<InvoiceItemEntity?> get lineItems;
+  BuiltList<InvoiceItemEntity> get lineItems;
 
   BuiltList<InvitationEntity> get invitations;
 
@@ -645,11 +644,11 @@ abstract class InvoiceEntity extends Object
         kMillisecondsToRefreshActivities;
   }
 
-  bool get hasTasks => lineItems.any((item) => item!.isTask);
+  bool get hasTasks => lineItems.any((item) => item.isTask);
 
-  bool get hasProducts => lineItems.any((item) => !item!.isTask);
+  bool get hasProducts => lineItems.any((item) => !item.isTask);
 
-  bool get hasExpenses => lineItems.any((item) => item!.isExpense);
+  bool get hasExpenses => lineItems.any((item) => item.isExpense);
 
   @override
   bool get isEditable {
@@ -915,7 +914,7 @@ abstract class InvoiceEntity extends Object
   @override
   bool matchesFilter(String? filter) {
     for (var i = 0; i < lineItems.length; i++) {
-      final lineItem = lineItems[i]!;
+      final lineItem = lineItems[i];
       final isMatch = matchesStrings(
         haystacks: [
           lineItem.productKey,
@@ -1409,7 +1408,7 @@ abstract class InvoiceEntity extends Object
     }
 
     for (final item in lineItems) {
-      final itemTaxable = getItemTaxable(item!, amount, precision);
+      final itemTaxable = getItemTaxable(item, amount, precision);
 
       if (item.taxName1.isNotEmpty) {
         final itemTaxAmount = calculateAmount(itemTaxable, item.taxRate1);

@@ -161,8 +161,8 @@ class _PurchaseOrderEditState extends State<PurchaseOrderEdit>
                   invoice: invoice,
                   showTasksAndExpenses: false,
                   excluded: invoice.lineItems
-                      .where((item) => item!.isTask || item.isExpense)
-                      .map((item) => item!.isTask
+                      .where((item) => item.isTask || item.isExpense)
+                      .map((item) => item.isTask
                           ? viewModel.state!.taskState.map[item.taskId]
                           : viewModel.state!.expenseState.map[item.expenseId])
                       .toList(),

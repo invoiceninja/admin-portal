@@ -115,7 +115,7 @@ ReportResult lineItemReport(
 
       for (var column in columns) {
         dynamic value = '';
-        final productId = productKeyMap[lineItem!.productKey];
+        final productId = productKeyMap[lineItem.productKey];
 
         switch (column) {
           case PurchaseOrderItemReportFields.price:

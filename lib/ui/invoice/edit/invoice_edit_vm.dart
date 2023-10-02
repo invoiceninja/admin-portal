@@ -124,7 +124,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
           final state = store.state;
           final clientId = invoice.clientId;
           for (int i = 0; i < invoice.lineItems.length; i++) {
-            final lineItem = invoice.lineItems[i]!;
+            final lineItem = invoice.lineItems[i];
             final task = state.taskState.get(lineItem.taskId ?? '');
             if (task.clientId.isNotEmpty && task.clientId != clientId) {
               showDialog<ErrorDialog>(

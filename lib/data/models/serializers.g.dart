@@ -511,9 +511,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
               BuiltList, const [const FullType(InvoiceScheduleEntity)]),
           () => new ListBuilder<InvoiceScheduleEntity>())
       ..addBuilderFactory(
-          const FullType(
-              BuiltList, const [const FullType.nullable(InvoiceItemEntity)]),
-          () => new ListBuilder<InvoiceItemEntity?>())
+          const FullType(BuiltList, const [const FullType(InvoiceItemEntity)]),
+          () => new ListBuilder<InvoiceItemEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(InvitationEntity)]),
           () => new ListBuilder<InvitationEntity>())

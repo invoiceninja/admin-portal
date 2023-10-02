@@ -217,11 +217,11 @@ InvoiceEntity? _removeRecurringInvoiceItem(
 
 InvoiceEntity? _updateRecurringInvoiceItem(
     InvoiceEntity? recurringInvoice, UpdateRecurringInvoiceItem action) {
-  if (recurringInvoice!.lineItems.length <= action.index!) {
+  if (recurringInvoice!.lineItems.length <= action.index) {
     return recurringInvoice;
   }
   return recurringInvoice
-      .rebuild((b) => b..lineItems[action.index!] = action.item);
+      .rebuild((b) => b..lineItems[action.index] = action.item);
 }
 
 final recurringInvoiceListReducer = combineReducers<ListUIState>([

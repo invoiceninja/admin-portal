@@ -173,8 +173,8 @@ class _InvoiceEditState extends State<InvoiceEdit>
                   invoice: invoice,
                   showTasksAndExpenses: true,
                   excluded: invoice.lineItems
-                      .where((item) => item!.isTask || item.isExpense)
-                      .map((item) => item!.isTask
+                      .where((item) => item.isTask || item.isExpense)
+                      .map((item) => item.isTask
                           ? viewModel.state!.taskState.map[item.taskId]
                           : viewModel.state!.expenseState.map[item.expenseId])
                       .toList(),

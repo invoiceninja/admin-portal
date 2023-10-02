@@ -177,10 +177,10 @@ InvoiceEntity? _removeQuoteItem(InvoiceEntity? quote, DeleteQuoteItem action) {
 }
 
 InvoiceEntity? _updateQuoteItem(InvoiceEntity? quote, UpdateQuoteItem action) {
-  if (quote!.lineItems.length <= action.index!) {
+  if (quote!.lineItems.length <= action.index) {
     return quote;
   }
-  return quote.rebuild((b) => b..lineItems[action.index!] = action.quoteItem);
+  return quote.rebuild((b) => b..lineItems[action.index] = action.quoteItem);
 }
 
 final quoteListReducer = combineReducers<ListUIState>([

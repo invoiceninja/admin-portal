@@ -206,11 +206,11 @@ InvoiceEntity? _removePurchaseOrderItem(
 
 InvoiceEntity? _updatePurchaseOrderItem(
     InvoiceEntity? purchaseOrder, UpdatePurchaseOrderItem action) {
-  if (purchaseOrder!.lineItems.length <= action.index!) {
+  if (purchaseOrder!.lineItems.length <= action.index) {
     return purchaseOrder;
   }
   return purchaseOrder
-      .rebuild((b) => b..lineItems[action.index!] = action.purchaseOrderItem);
+      .rebuild((b) => b..lineItems[action.index] = action.purchaseOrderItem);
 }
 
 final purchaseOrderListReducer = combineReducers<ListUIState>([

@@ -269,7 +269,7 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
       'line_items',
       serializers.serialize(object.lineItems,
           specifiedType: const FullType(
-              BuiltList, const [const FullType.nullable(InvoiceItemEntity)])),
+              BuiltList, const [const FullType(InvoiceItemEntity)])),
       'invitations',
       serializers.serialize(object.invitations,
           specifiedType: const FullType(
@@ -689,9 +689,9 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
           break;
         case 'line_items':
           result.lineItems.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType.nullable(InvoiceItemEntity)
-              ]))! as BuiltList<Object?>);
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(InvoiceItemEntity)]))!
+              as BuiltList<Object?>);
           break;
         case 'invitations':
           result.invitations.replace(serializers.deserialize(value,
@@ -1571,7 +1571,7 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final BuiltList<InvoiceScheduleEntity>? recurringDates;
   @override
-  final BuiltList<InvoiceItemEntity?> lineItems;
+  final BuiltList<InvoiceItemEntity> lineItems;
   @override
   final BuiltList<InvitationEntity> invitations;
   @override
@@ -2313,10 +2313,10 @@ class InvoiceEntityBuilder
   set recurringDates(ListBuilder<InvoiceScheduleEntity>? recurringDates) =>
       _$this._recurringDates = recurringDates;
 
-  ListBuilder<InvoiceItemEntity?>? _lineItems;
-  ListBuilder<InvoiceItemEntity?> get lineItems =>
-      _$this._lineItems ??= new ListBuilder<InvoiceItemEntity?>();
-  set lineItems(ListBuilder<InvoiceItemEntity?>? lineItems) =>
+  ListBuilder<InvoiceItemEntity>? _lineItems;
+  ListBuilder<InvoiceItemEntity> get lineItems =>
+      _$this._lineItems ??= new ListBuilder<InvoiceItemEntity>();
+  set lineItems(ListBuilder<InvoiceItemEntity>? lineItems) =>
       _$this._lineItems = lineItems;
 
   ListBuilder<InvitationEntity>? _invitations;

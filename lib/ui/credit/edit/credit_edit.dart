@@ -158,8 +158,8 @@ class _CreditEditState extends State<CreditEdit>
                   invoice: invoice,
                   showTasksAndExpenses: false,
                   excluded: invoice.lineItems
-                      .where((item) => item!.isTask || item.isExpense)
-                      .map((item) => item!.isTask
+                      .where((item) => item.isTask || item.isExpense)
+                      .map((item) => item.isTask
                           ? viewModel.state!.taskState.map[item.taskId]
                           : viewModel.state!.expenseState.map[item.expenseId])
                       .toList(),

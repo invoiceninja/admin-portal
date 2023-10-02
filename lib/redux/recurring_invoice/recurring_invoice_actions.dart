@@ -223,10 +223,13 @@ class AddRecurringInvoiceItems implements PersistUI {
 }
 
 class UpdateRecurringInvoiceItem implements PersistUI {
-  UpdateRecurringInvoiceItem({this.index, this.item});
+  UpdateRecurringInvoiceItem({
+    required this.index,
+    required this.item,
+  });
 
-  final int? index;
-  final InvoiceItemEntity? item;
+  final int index;
+  final InvoiceItemEntity item;
 }
 
 class DeleteRecurringInvoiceItem implements PersistUI {

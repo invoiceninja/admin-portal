@@ -190,10 +190,13 @@ class AddQuoteItems implements PersistUI {
 }
 
 class UpdateQuoteItem implements PersistUI {
-  UpdateQuoteItem({this.index, this.quoteItem});
+  UpdateQuoteItem({
+    required this.index,
+    required this.quoteItem,
+  });
 
-  final int? index;
-  final InvoiceItemEntity? quoteItem;
+  final int index;
+  final InvoiceItemEntity quoteItem;
 }
 
 class DeleteQuoteItem implements PersistUI {
@@ -553,7 +556,8 @@ Future handleQuoteAction(BuildContext context, List<BaseEntity?> quotes,
       break;
     case EntityAction.approve:
       final message = quoteIds.length > 1
-          ? localization!.approvedQuotes.replaceFirst(':value', ':count')
+          ? localization!.approvedQuotes
+              .replaceFirst(':value', ':count')
               .replaceFirst(':count', quoteIds.length.toString())
           : localization!.approveQuote;
       store.dispatch(
