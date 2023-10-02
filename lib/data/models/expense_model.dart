@@ -302,7 +302,7 @@ abstract class ExpenseEntity extends Object
 
   // TODO remove this
   @BuiltValueField(wireName: 'recurring_expense_id')
-  String? get recurringExpenseId;
+  String get recurringExpenseId;
 
   @BuiltValueField(wireName: 'frequency_id')
   String get frequencyId;
@@ -849,6 +849,7 @@ abstract class ExpenseEntity extends Object
     ..frequencyId = ''
     ..lastSentDate = ''
     ..nextSendDate = ''
+    ..recurringExpenseId = ''
     ..remainingCycles = -1;
 
   static Serializer<ExpenseEntity> get serializer => _$expenseEntitySerializer;
