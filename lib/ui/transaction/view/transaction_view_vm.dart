@@ -66,7 +66,7 @@ class TransactionViewVM {
     transactionIds.forEach((String transactionId) {
       transactions.add(state.transactionState.map[transactionId] ??
           TransactionEntity(id: transactionId));
-    } as void Function(String?));
+    });
 
     Future<Null>? _handleRefresh(BuildContext context) {
       if (transactions.isEmpty) {
