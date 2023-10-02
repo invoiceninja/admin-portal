@@ -521,7 +521,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                             child: AppButton(
                               width: double.infinity,
                               color: Colors.redAccent,
-                              label: localization.delete,
+                              label: localization.delete.toUpperCase(),
                               iconData: Icons.delete,
                               onPressed: () {
                                 if (state.settingsUIState.isChanged) {
@@ -610,7 +610,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
                             state.paymentTermState.map[paymentTermId]!;
                         return DropdownMenuItem<String>(
                           child: Text(paymentTerm.numDays == 0
-                              ? localization.dueOnReceipt: paymentTerm.name),
+                              ? localization.dueOnReceipt
+                              : paymentTerm.name),
                           value: paymentTerm.numDays.toString(),
                         );
                       }).toList(),
@@ -633,7 +634,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
                             state.paymentTermState.map[paymentTermId]!;
                         return DropdownMenuItem<String>(
                           child: Text(paymentTerm.numDays == 0
-                              ? localization.dueOnReceipt: paymentTerm.name),
+                              ? localization.dueOnReceipt
+                              : paymentTerm.name),
                           value: paymentTerm.numDays.toString(),
                         );
                       }).toList(),
