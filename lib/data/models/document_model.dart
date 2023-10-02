@@ -186,6 +186,11 @@ abstract class DocumentEntity extends Object
     return fileName.endsWith('.pdf');
   }
 
+  bool get isTxt {
+    final fileName = name.toLowerCase();
+    return fileName.endsWith('.txt');
+  }
+
   int compareTo(DocumentEntity? document,
       [String? sortField, bool sortAscending = true]) {
     int response = 0;
