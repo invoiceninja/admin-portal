@@ -145,7 +145,7 @@ final editingReducer = combineReducers<InvoiceEntity?>([
       ..isChanged = true
       ..vendorId = vendor?.id ?? ''
       ..invitations.replace((vendor?.emailContacts ?? <VendorContactEntity>[])
-          .map((contact) => InvitationEntity(vendorContactId: contact!.id))
+          .map((contact) => InvitationEntity(vendorContactId: contact.id))
           .toList()));
   }),
   TypedReducer<InvoiceEntity?, RestorePurchaseOrdersSuccess>(

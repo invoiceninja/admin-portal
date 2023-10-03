@@ -16,8 +16,8 @@ VendorContactEntity? purchaseOrderContactSelector(
   var contactIds = purchaseOrder.invitations
       .map((invitation) => invitation.clientContactId)
       .toList();
-  if (contactIds.contains(vendor.primaryContact!.id)) {
-    contactIds = [vendor.primaryContact!.id];
+  if (contactIds.contains(vendor.primaryContact.id)) {
+    contactIds = [vendor.primaryContact.id];
   }
   return vendor.contacts
       .firstWhere((contact) => contactIds.contains(contact.id), orElse: null);

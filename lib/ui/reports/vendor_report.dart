@@ -256,45 +256,45 @@ ReportResult vendorReport(
           value = userMap[vendor.createdUserId]?.listDisplayName ?? '';
           break;
         case VendorReportFields.contact_full_name:
-          value = contact!.fullName;
+          value = contact.fullName;
           break;
         case VendorReportFields.contact_first_name:
-          value = contact!.firstName;
+          value = contact.firstName;
           break;
         case VendorReportFields.contact_last_name:
-          value = contact!.lastName;
+          value = contact.lastName;
           break;
         case VendorReportFields.contact_email:
-          value = contact!.email;
+          value = contact.email;
           break;
         case VendorReportFields.contact_phone:
-          value = contact!.phone;
+          value = contact.phone;
           break;
 
         case VendorReportFields.contact1:
           value = presentCustomField(
-            value: contact!.customValue1,
+            value: contact.customValue1,
             customFieldType: CustomFieldType.vendorContact1,
             company: userCompany.company,
           );
           break;
         case VendorReportFields.contact2:
           value = presentCustomField(
-            value: contact!.customValue2,
+            value: contact.customValue2,
             customFieldType: CustomFieldType.vendorContact2,
             company: userCompany.company,
           );
           break;
         case VendorReportFields.contact3:
           value = presentCustomField(
-            value: contact!.customValue3,
+            value: contact.customValue3,
             customFieldType: CustomFieldType.vendorContact3,
             company: userCompany.company,
           );
           break;
         case VendorReportFields.contact4:
           value = presentCustomField(
-            value: contact!.customValue4,
+            value: contact.customValue4,
             customFieldType: CustomFieldType.vendorContact4,
             company: userCompany.company,
           );

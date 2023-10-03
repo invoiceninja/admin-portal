@@ -482,17 +482,17 @@ abstract class VendorEntity extends Object
     if (name.isNotEmpty) {
       return name;
     } else {
-      return primaryContact!.fullNameOrEmail;
+      return primaryContact.fullNameOrEmail;
     }
   }
 
-  List<VendorContactEntity?> get emailContacts {
+  List<VendorContactEntity> get emailContacts {
     final list = contacts.where((contact) => contact.sendEmail).toList();
 
     return list.isEmpty ? [primaryContact] : list;
   }
 
-  VendorContactEntity? get primaryContact =>
+  VendorContactEntity get primaryContact =>
       contacts.firstWhere((contact) => contact.isPrimary,
           orElse: () => VendorContactEntity());
 

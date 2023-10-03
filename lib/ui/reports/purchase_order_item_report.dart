@@ -175,7 +175,7 @@ ReportResult lineItemReport(
             value = vendor.name;
             break;
           case PurchaseOrderItemReportFields.vendorEmail:
-            value = vendor.primaryContact!.email;
+            value = vendor.primaryContact.email;
             break;
           case PurchaseOrderItemReportFields.dueDate:
             value = invoice.dueDate;

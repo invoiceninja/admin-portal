@@ -149,7 +149,7 @@ class _$TransactionRuleEntitySerializer
       'rules',
       serializers.serialize(object.rules,
           specifiedType: const FullType(BuiltList,
-              const [const FullType.nullable(TransactionRuleCriteriaEntity)])),
+              const [const FullType(TransactionRuleCriteriaEntity)])),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -233,7 +233,7 @@ class _$TransactionRuleEntitySerializer
         case 'rules':
           result.rules.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltList, const [
-                const FullType.nullable(TransactionRuleCriteriaEntity)
+                const FullType(TransactionRuleCriteriaEntity)
               ]))! as BuiltList<Object?>);
           break;
         case 'isChanged':
@@ -553,7 +553,7 @@ class _$TransactionRuleEntity extends TransactionRuleEntity {
   @override
   final String categoryId;
   @override
-  final BuiltList<TransactionRuleCriteriaEntity?> rules;
+  final BuiltList<TransactionRuleCriteriaEntity> rules;
   @override
   final bool? isChanged;
   @override
@@ -719,10 +719,10 @@ class TransactionRuleEntityBuilder
   String? get categoryId => _$this._categoryId;
   set categoryId(String? categoryId) => _$this._categoryId = categoryId;
 
-  ListBuilder<TransactionRuleCriteriaEntity?>? _rules;
-  ListBuilder<TransactionRuleCriteriaEntity?> get rules =>
-      _$this._rules ??= new ListBuilder<TransactionRuleCriteriaEntity?>();
-  set rules(ListBuilder<TransactionRuleCriteriaEntity?>? rules) =>
+  ListBuilder<TransactionRuleCriteriaEntity>? _rules;
+  ListBuilder<TransactionRuleCriteriaEntity> get rules =>
+      _$this._rules ??= new ListBuilder<TransactionRuleCriteriaEntity>();
+  set rules(ListBuilder<TransactionRuleCriteriaEntity>? rules) =>
       _$this._rules = rules;
 
   bool? _isChanged;

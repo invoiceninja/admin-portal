@@ -180,7 +180,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                             children: [
                               Expanded(
                                 child:
-                                    Text(localization.lookup(rule!.searchKey)!),
+                                    Text(localization.lookup(rule.searchKey)!),
                               ),
                               Expanded(
                                 child:
@@ -201,12 +201,14 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                                             context: context,
                                             builder: (context) =>
                                                 _RuleCriteria(criteria: rule));
-                                        final index =
-                                            transactionRule.rules.indexOf(rule);
-                                        viewModel.onChanged(
-                                            transactionRule.rebuild((b) => b
-                                              ..rules.replaceRange(index,
-                                                  index + 1, [updatedRule])));
+                                        if (updatedRule != null) {
+                                          final index = transactionRule.rules
+                                              .indexOf(rule);
+                                          viewModel.onChanged(
+                                              transactionRule.rebuild((b) => b
+                                                ..rules.replaceRange(index,
+                                                    index + 1, [updatedRule])));
+                                        }
                                       },
                                       icon: Icon(MdiIcons.circleEditOutline),
                                     ),
@@ -234,8 +236,10 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                                 context: context,
                                 builder: (context) => _RuleCriteria());
 
-                        viewModel.onChanged(
-                            transactionRule.rebuild((b) => b..rules.add(rule)));
+                        if (rule != null) {
+                          viewModel.onChanged(transactionRule
+                              .rebuild((b) => b..rules.add(rule)));
+                        }
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8),

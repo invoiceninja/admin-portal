@@ -102,7 +102,7 @@ class _TransactionRuleViewState extends State<TransactionRuleView> {
                 child: Row(
                   children: [
                     Expanded(
-                      child: Text(localization.lookup(rule!.searchKey)!),
+                      child: Text(localization.lookup(rule.searchKey)!),
                     ),
                     Expanded(
                       child: Text(localization.lookup(rule.operator)!),

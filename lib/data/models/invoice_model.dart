@@ -223,12 +223,12 @@ abstract class InvoiceEntity extends Object
       activities: BuiltList<ActivityEntity>(),
       invitations: client != null
           ? BuiltList(client.emailContacts
-              .map((contact) => InvitationEntity(clientContactId: contact!.id))
+              .map((contact) => InvitationEntity(clientContactId: contact.id))
               .toList())
           : vendor != null
               ? BuiltList(vendor.emailContacts
                   .map((contact) =>
-                      InvitationEntity(vendorContactId: contact!.id))
+                      InvitationEntity(vendorContactId: contact.id))
                   .toList())
               : BuiltList(<InvitationEntity>[InvitationEntity()]),
       updatedAt: 0,
@@ -319,7 +319,8 @@ abstract class InvoiceEntity extends Object
         ..lineItems.replace(lineItems
             .where((lineItem) =>
                 lineItem.typeId != InvoiceItemEntity.TYPE_UNPAID_FEE)
-            .map((lineItem) => lineItem.rebuild((b) => b..typeId = InvoiceItemEntity.TYPE_STANDARD))
+            .map((lineItem) => lineItem
+                .rebuild((b) => b..typeId = InvoiceItemEntity.TYPE_STANDARD))
             .toList())
         ..invitations.replace(
           invitations
@@ -625,12 +626,13 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(compare: false)
   int? get loadedAt;
 
-  List<InvoiceHistoryEntity?> get history => activities
+  List<InvoiceHistoryEntity> get history => activities
       .where((activity) =>
           activity.history != null &&
           activity.history!.id.isNotEmpty &&
           activity.history!.createdAt > 0)
       .map((activity) => activity.history)
+      .whereType<InvoiceHistoryEntity>()
       .toList();
 
   bool get isLoaded => loadedAt != null && loadedAt! > 0;

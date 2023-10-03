@@ -165,7 +165,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                       items: invoice.history
                           .map((history) => DropdownMenuItem(
                                 child: Text(formatNumber(
-                                        history!.amount, context,
+                                        history.amount, context,
                                         clientId: invoice.clientId)! +
                                     ' • ' +
                                     formatDate(

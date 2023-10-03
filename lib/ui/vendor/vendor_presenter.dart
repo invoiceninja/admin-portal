@@ -117,10 +117,10 @@ class VendorPresenter extends EntityPresenter {
         );
       case VendorFields.contactEmail:
         return CopyToClipboard(
-          value: vendor!.primaryContact!.email,
+          value: vendor!.primaryContact.email,
           showBorder: true,
           onLongPress: () =>
-              launchUrl(Uri.parse('mailto:${vendor.primaryContact!.email}')),
+              launchUrl(Uri.parse('mailto:${vendor.primaryContact.email}')),
         );
       case VendorFields.lastLoginAt:
         return Text(vendor!.lastLogin == 0

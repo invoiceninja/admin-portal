@@ -96,7 +96,7 @@ abstract class TransactionRuleEntity extends Object
   @BuiltValueField(wireName: 'category_id')
   String get categoryId;
 
-  BuiltList<TransactionRuleCriteriaEntity?> get rules;
+  BuiltList<TransactionRuleCriteriaEntity> get rules;
 
   @override
   EntityType get entityType => EntityType.transactionRule;

@@ -595,6 +595,10 @@ Serializers _$serializers = (new Serializers().toBuilder()
           () => new ListBuilder<TransactionEntity>())
       ..addBuilderFactory(
           const FullType(
+              BuiltList, const [const FullType(TransactionRuleCriteriaEntity)]),
+          () => new ListBuilder<TransactionRuleCriteriaEntity>())
+      ..addBuilderFactory(
+          const FullType(
               BuiltList, const [const FullType(TransactionRuleEntity)]),
           () => new ListBuilder<TransactionRuleEntity>())
       ..addBuilderFactory(
@@ -622,10 +626,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(WebhookEntity)]),
           () => new ListBuilder<WebhookEntity>())
-      ..addBuilderFactory(
-          const FullType(BuiltList,
-              const [const FullType.nullable(TransactionRuleCriteriaEntity)]),
-          () => new ListBuilder<TransactionRuleCriteriaEntity?>())
       ..addBuilderFactory(
           const FullType(BuiltMap,
               const [const FullType(EntityType), const FullType(bool)]),
