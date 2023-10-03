@@ -60,22 +60,22 @@ class ReportCharts extends StatelessWidget {
       case ReportColumnType.duration:
         child = charts.BarChart(
           [
-            charts.Series<dynamic, String?>(
+            charts.Series<dynamic, String>(
                 id: 'chart',
                 colorFn: (dynamic _, __) =>
                     charts.ColorUtil.fromDartColor(state.accentColor!),
                 domainFn: (dynamic item, _) =>
                     columnType == ReportColumnType.age
                         ? localization!.lookup(item['name'])
-                        : item['name'],
+                        : item['name']!,
                 measureFn: (dynamic item, _) => item['value'],
                 data: viewModel.groupTotals.rows!.map((key) {
                   return {
                     'name': key,
                     'value':
-                        viewModel.groupTotals.totals![key]![reportState.chart]
+                        viewModel.groupTotals.totals![key]![reportState.chart]!
                   };
-                }).toList()) as Series<dynamic, String>
+                }).toList())
           ],
           animate: true,
           primaryMeasureAxis: numericAxis,
