@@ -1885,6 +1885,14 @@ int? sortReportTableRows(dynamic rowA, dynamic rowB,
   final dynamic valueA = rowA[index].value;
   final dynamic valueB = rowB[index].value;
 
+  if (valueA is bool) {
+    if (reportSettings.sortAscending) {
+      return valueA ? 1 : -1;
+    } else {
+      return valueA ? -1 : 1;
+    }
+  }
+
   if (reportSettings.sortAscending) {
     return valueA.compareTo(valueB);
   } else {
