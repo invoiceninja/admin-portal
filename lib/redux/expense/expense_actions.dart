@@ -256,12 +256,12 @@ class FilterExpensesByCustom4 implements PersistUI {
 }
 
 void handleExpenseAction(
-    BuildContext context, List<BaseEntity?> expenses, EntityAction? action) {
+    BuildContext context, List<BaseEntity> expenses, EntityAction? action) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
   final expense = expenses.first as ExpenseEntity;
-  final expenseIds = expenses.map((expense) => expense!.id).toList();
+  final expenseIds = expenses.map((expense) => expense.id).toList();
   final client = state.clientState.get(expense.clientId!);
 
   switch (action) {
@@ -369,7 +369,7 @@ void handleExpenseAction(
       }
 
       for (final expense in expenses) {
-        if (!store.state.expenseListState.isSelected(expense!.id)) {
+        if (!store.state.expenseListState.isSelected(expense.id)) {
           store.dispatch(AddToExpenseMultiselect(entity: expense));
         } else {
           store.dispatch(RemoveFromExpenseMultiselect(entity: expense));

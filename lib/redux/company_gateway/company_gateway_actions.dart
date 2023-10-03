@@ -264,7 +264,7 @@ class FilterCompanyGatewaysByCustom4 implements PersistUI {
 }
 
 void handleCompanyGatewayAction(BuildContext? context,
-    List<BaseEntity?> companyGateways, EntityAction? action) {
+    List<BaseEntity> companyGateways, EntityAction? action) {
   if (companyGateways.isEmpty) {
     return;
   }
@@ -273,11 +273,11 @@ void handleCompanyGatewayAction(BuildContext? context,
   final localization = AppLocalization.of(context);
   final companyGateway = companyGateways.first;
   final companyGatewayIds =
-      companyGateways.map((companyGateway) => companyGateway!.id).toList();
+      companyGateways.map((companyGateway) => companyGateway.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: companyGateway!);
+      editEntity(entity: companyGateway);
       break;
     case EntityAction.restore:
       final message = companyGatewayIds.length > 1
@@ -321,7 +321,7 @@ void handleCompanyGatewayAction(BuildContext? context,
                 store.dispatch(
                   DisconnectCompanyGatewayRequest(
                     completer: completer,
-                    companyGatewayId: companyGateway!.id,
+                    companyGatewayId: companyGateway.id,
                     password: password,
                     idToken: idToken,
                   ),
@@ -341,7 +341,7 @@ void handleCompanyGatewayAction(BuildContext? context,
 
       for (final companyGateway in companyGateways) {
         if (!store.state.companyGatewayListState
-            .isSelected(companyGateway!.id)) {
+            .isSelected(companyGateway.id)) {
           store
               .dispatch(AddToCompanyGatewayMultiselect(entity: companyGateway));
         } else {

@@ -31,7 +31,7 @@ class EntityListTile extends StatefulWidget {
   });
 
   final String? subtitle;
-  final BaseEntity? entity;
+  final BaseEntity entity;
   final bool isFilter;
   final ClientEntity? client;
   final Function(BuildContext, BaseEntity?, EntityAction)?
@@ -46,14 +46,14 @@ class _EntityListTileState extends State<EntityListTile> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.entity == null || widget.entity!.isNew) {
+    if (widget.entity.isNew) {
       return SizedBox();
     }
 
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final isFilteredBy = state.uiState.filterEntityId == widget.entity!.id &&
-        state.uiState.filterEntityType == widget.entity!.entityType;
+    final isFilteredBy = state.uiState.filterEntityId == widget.entity.id &&
+        state.uiState.filterEntityType == widget.entity.entityType;
 
     final entityClient = widget.client ??
         (widget.entity is BelongsToClient
@@ -67,9 +67,9 @@ class _EntityListTileState extends State<EntityListTile> {
     final leading = ActionMenuButton(
       iconData: isHovered
           ? Icons.more_vert
-          : getEntityIcon(widget.entity!.entityType),
+          : getEntityIcon(widget.entity.entityType),
       iconSize: isHovered ? null : 18,
-      entityActions: widget.entity!.getActions(
+      entityActions: widget.entity.getActions(
           userCompany: state.userCompany,
           includeEdit: true,
           client: entityClient),
@@ -82,14 +82,14 @@ class _EntityListTileState extends State<EntityListTile> {
 
     // we may have the id (so it's not considered new) but it hasn't yet been
     // created in the backend. ie, the invoice after converting a quote
-    final trailing = widget.entity!.createdAt == 0
+    final trailing = widget.entity.createdAt == 0
         ? null
         : IgnorePointer(
             ignoring: !isHovered ||
                 widget.isFilter ||
-                widget.entity!.entityType == EntityType.company,
+                widget.entity.entityType == EntityType.company,
             child: IconButton(
-              icon: Icon(widget.entity!.entityType != EntityType.company &&
+              icon: Icon(widget.entity.entityType != EntityType.company &&
                       (isHovered ||
                           widget.isFilter ||
                           isMobile(context) ||
@@ -97,7 +97,7 @@ class _EntityListTileState extends State<EntityListTile> {
                   ? Icons.chevron_right
                   : Icons.filter_list),
               onPressed: () => viewEntity(
-                entity: widget.entity!,
+                entity: widget.entity,
                 addToStack: isDesktop(context) && !widget.isFilter,
               ),
             ),
@@ -141,20 +141,20 @@ class _EntityListTileState extends State<EntityListTile> {
               contentPadding: const EdgeInsets.symmetric(horizontal: 16),
               onTap: () {
                 if (state.prefState
-                    .isViewerFullScreen(widget.entity!.entityType))
-                  store.dispatch(ToggleViewerLayout(widget.entity!.entityType));
+                    .isViewerFullScreen(widget.entity.entityType))
+                  store.dispatch(ToggleViewerLayout(widget.entity.entityType));
                 inspectEntity(entity: widget.entity);
               },
               onLongPress: () =>
                   inspectEntity(entity: widget.entity, longPress: true),
               title: Text(
-                EntityPresenter().initialize(widget.entity!, context).title()!,
+                EntityPresenter().initialize(widget.entity, context).title()!,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               subtitle: ((widget.subtitle ?? '').isNotEmpty ||
                       defaultSubtitle.isNotEmpty ||
-                      !entity!.isActive)
+                      !entity.isActive)
                   ? Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -162,14 +162,14 @@ class _EntityListTileState extends State<EntityListTile> {
                           Text(widget.subtitle!)
                         else if (defaultSubtitle.isNotEmpty)
                           Text(defaultSubtitle),
-                        if (!entity!.isActive) EntityStateLabel(widget.entity),
+                        if (!entity.isActive) EntityStateLabel(widget.entity),
                       ],
                     )
                   : null,
               leading: leading,
               trailing: trailing,
               isThreeLine: (widget.subtitle ?? '').isNotEmpty &&
-                  !widget.entity!.isActive,
+                  !widget.entity.isActive,
             ),
           ),
           ListDivider(),

@@ -59,9 +59,11 @@ class _WebhookViewState extends State<WebhookView> {
 }
 
 class TargetListTile extends StatelessWidget {
-  const TargetListTile({this.webhook});
+  const TargetListTile({
+    required this.webhook,
+  });
 
-  final WebhookEntity? webhook;
+  final WebhookEntity webhook;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +71,7 @@ class TargetListTile extends StatelessWidget {
       contentPadding: const EdgeInsets.all(22),
       title: Padding(
         padding: const EdgeInsets.only(right: 16),
-        child: Text(webhook!.targetUrl),
+        child: Text(webhook.targetUrl),
       ),
       trailing: Icon(Icons.content_copy),
       onTap: () {

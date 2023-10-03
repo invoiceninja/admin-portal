@@ -165,6 +165,7 @@ class _PurchaseOrderEditState extends State<PurchaseOrderEdit>
                       .map((item) => item.isTask
                           ? viewModel.state!.taskState.map[item.taskId]
                           : viewModel.state!.expenseState.map[item.expenseId])
+                      .whereType<BaseEntity>()
                       .toList(),
                   clientId: invoice.clientId,
                   onItemsSelected: (items, [clientId, projectId]) {

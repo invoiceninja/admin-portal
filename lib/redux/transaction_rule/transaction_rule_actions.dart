@@ -263,20 +263,20 @@ class UpdateTransactionRuleTab implements PersistUI {
 }
 
 void handleTransactionRuleAction(BuildContext? context,
-    List<BaseEntity?> transactionRules, EntityAction? action) {
+    List<BaseEntity> transactionRules, EntityAction? action) {
   if (transactionRules.isEmpty) {
     return;
   }
 
   final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
-  final transactionRule = transactionRules.first as TransactionRuleEntity?;
+  final transactionRule = transactionRules.first as TransactionRuleEntity;
   final transactionRuleIds =
-      transactionRules.map((transactionRule) => transactionRule!.id).toList();
+      transactionRules.map((transactionRule) => transactionRule.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: transactionRule!);
+      editEntity(entity: transactionRule);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreTransactionRulesRequest(
@@ -307,7 +307,7 @@ void handleTransactionRuleAction(BuildContext? context,
 
       for (final transactionRule in transactionRules) {
         if (!store.state.transactionRuleListState
-            .isSelected(transactionRule!.id)) {
+            .isSelected(transactionRule.id)) {
           store.dispatch(
               AddToTransactionRuleMultiselect(entity: transactionRule));
         } else {

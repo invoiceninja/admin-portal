@@ -24,7 +24,7 @@ class ExpenseCategoryListItem extends StatelessWidget {
 
   final GestureTapCallback? onTap;
   final GestureTapCallback? onLongPress;
-  final ExpenseCategoryEntity? expenseCategory;
+  final ExpenseCategoryEntity expenseCategory;
   final String? filter;
   final bool isChecked;
   final bool showCheck;
@@ -37,7 +37,7 @@ class ExpenseCategoryListItem extends StatelessWidget {
     final expenseCategoryUIState = uiState.expenseCategoryUIState;
 
     final filterMatch = filter != null && filter!.isNotEmpty
-        ? expenseCategory!.matchesFilterValue(filter)
+        ? expenseCategory.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch;
 
@@ -45,17 +45,17 @@ class ExpenseCategoryListItem extends StatelessWidget {
       userCompany: state.userCompany,
       entity: expenseCategory,
       isSelected: !showCheck &&
-          expenseCategory!.id ==
+          expenseCategory.id ==
               (uiState.isEditing
                   ? expenseCategoryUIState.editing!.id
                   : expenseCategoryUIState.selectedId),
       showMultiselect: showCheck,
       child: ListTile(
         onTap: () =>
-            onTap != null ? onTap!() : selectEntity(entity: expenseCategory!),
+            onTap != null ? onTap!() : selectEntity(entity: expenseCategory),
         onLongPress: () => onLongPress != null
             ? onLongPress!()
-            : selectEntity(entity: expenseCategory!, longPress: true),
+            : selectEntity(entity: expenseCategory, longPress: true),
         leading: showCheck
             ? IgnorePointer(
                 child: Checkbox(
@@ -72,11 +72,11 @@ class ExpenseCategoryListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  expenseCategory!.name,
+                  expenseCategory.name,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Text(formatNumber(expenseCategory!.listDisplayAmount, context)!,
+              Text(formatNumber(expenseCategory.listDisplayAmount, context)!,
                   style: Theme.of(context).textTheme.titleMedium),
             ],
           ),

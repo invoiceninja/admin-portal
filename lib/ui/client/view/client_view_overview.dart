@@ -171,7 +171,7 @@ class ClientOverview extends StatelessWidget {
         ],
         if (client.hasGroup)
           EntityListTile(
-            entity: group,
+            entity: group!,
             isFilter: isFilter,
           ),
         for (var customerReference in tokenMap.keys) ...[
@@ -208,7 +208,7 @@ class ClientOverview extends StatelessWidget {
         ],
         if (client.hasUser)
           EntityListTile(
-            entity: user,
+            entity: user!,
             isFilter: isFilter,
           ),
         FieldGrid(fields),

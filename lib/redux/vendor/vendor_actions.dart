@@ -283,7 +283,7 @@ class FilterVendorsByCustom4 implements PersistUI {
 }
 
 void handleVendorAction(
-    BuildContext? context, List<BaseEntity?> vendors, EntityAction? action) {
+    BuildContext? context, List<BaseEntity> vendors, EntityAction? action) {
   if (vendors.isEmpty) {
     return;
   }
@@ -291,15 +291,15 @@ void handleVendorAction(
   final store = StoreProvider.of<AppState>(context!);
   final state = store.state;
   final localization = AppLocalization.of(context);
-  final vendor = vendors.first as VendorEntity?;
-  final vendorIds = vendors.map((vendor) => vendor!.id).toList();
+  final vendor = vendors.first as VendorEntity;
+  final vendorIds = vendors.map((vendor) => vendor.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: vendor!);
+      editEntity(entity: vendor);
       break;
     case EntityAction.vendorPortal:
-      final contact = vendor!.contacts.firstWhere((contact) {
+      final contact = vendor.contacts.firstWhere((contact) {
         return (contact.link).isNotEmpty;
       }, orElse: null);
       launchUrl(Uri.parse(contact.silentLink));
@@ -366,7 +366,7 @@ void handleVendorAction(
       }
 
       for (final vendor in vendors) {
-        if (!store.state.vendorListState.isSelected(vendor!.id)) {
+        if (!store.state.vendorListState.isSelected(vendor.id)) {
           store.dispatch(AddToVendorMultiselect(entity: vendor));
         } else {
           store.dispatch(RemoveFromVendorMultiselect(entity: vendor));

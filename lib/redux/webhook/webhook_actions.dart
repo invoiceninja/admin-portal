@@ -249,23 +249,23 @@ class FilterWebhooksByCustom4 implements PersistUI {
 }
 
 void handleWebhookAction(
-    BuildContext? context, List<BaseEntity?> webhooks, EntityAction? action) {
+    BuildContext? context, List<BaseEntity> webhooks, EntityAction? action) {
   if (webhooks.isEmpty) {
     return;
   }
 
   final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
-  final webhook = webhooks.first as WebhookEntity?;
-  final webhookIds = webhooks.map((webhook) => webhook!.id).toList();
+  final webhook = webhooks.first as WebhookEntity;
+  final webhookIds = webhooks.map((webhook) => webhook.id).toList();
 
   switch (action) {
     case EntityAction.copy:
-      Clipboard.setData(ClipboardData(text: webhook!.targetUrl));
+      Clipboard.setData(ClipboardData(text: webhook.targetUrl));
       showToast(localization!.copiedToClipboard.replaceFirst(':value ', ''));
       break;
     case EntityAction.edit:
-      editEntity(entity: webhook!);
+      editEntity(entity: webhook);
       break;
     case EntityAction.restore:
       final message = webhookIds.length > 1
@@ -304,7 +304,7 @@ void handleWebhookAction(
       }
 
       for (final webhook in webhooks) {
-        if (!store.state.webhookListState.isSelected(webhook!.id)) {
+        if (!store.state.webhookListState.isSelected(webhook.id)) {
           store.dispatch(AddToWebhookMultiselect(entity: webhook));
         } else {
           store.dispatch(RemoveFromWebhookMultiselect(entity: webhook));

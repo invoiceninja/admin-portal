@@ -267,7 +267,7 @@ class FilterProductDropdown {
 }
 
 void handleProductAction(
-    BuildContext? context, List<BaseEntity?> products, EntityAction? action) {
+    BuildContext? context, List<BaseEntity> products, EntityAction? action) {
   if (products.isEmpty) {
     return;
   }
@@ -275,7 +275,7 @@ void handleProductAction(
   final store = StoreProvider.of<AppState>(context!);
   final state = store.state;
   final localization = AppLocalization.of(context);
-  final productIds = products.map((product) => product!.id).toList();
+  final productIds = products.map((product) => product.id).toList();
   final product = products.first;
 
   switch (action) {
@@ -319,7 +319,7 @@ void handleProductAction(
       );
       break;
     case EntityAction.edit:
-      editEntity(entity: product!);
+      editEntity(entity: product);
       break;
     case EntityAction.clone:
       createEntity(context: context, entity: (product as ProductEntity).clone);
@@ -361,7 +361,7 @@ void handleProductAction(
       }
 
       for (final product in products) {
-        if (!store.state.productListState.isSelected(product!.id)) {
+        if (!store.state.productListState.isSelected(product.id)) {
           store.dispatch(AddToProductMultiselect(entity: product));
         } else {
           store.dispatch(RemoveFromProductMultiselect(entity: product));

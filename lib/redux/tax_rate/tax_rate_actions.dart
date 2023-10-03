@@ -215,7 +215,7 @@ class FilterTaxRatesByState implements PersistUI {
 }
 
 void handleTaxRateAction(
-    BuildContext? context, List<BaseEntity?> taxRates, EntityAction? action) {
+    BuildContext? context, List<BaseEntity> taxRates, EntityAction? action) {
   if (taxRates.isEmpty) {
     return;
   }
@@ -223,11 +223,11 @@ void handleTaxRateAction(
   final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
   final taxRate = taxRates.first;
-  final taxRateIds = taxRates.map((taxRate) => taxRate!.id).toList();
+  final taxRateIds = taxRates.map((taxRate) => taxRate.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: taxRate!);
+      editEntity(entity: taxRate);
       break;
     case EntityAction.restore:
       final message = taxRateIds.length > 1
@@ -266,7 +266,7 @@ void handleTaxRateAction(
       }
 
       for (final taxRate in taxRates) {
-        if (!store.state.taxRateListState.isSelected(taxRate!.id)) {
+        if (!store.state.taxRateListState.isSelected(taxRate.id)) {
           store.dispatch(AddToTaxRateMultiselect(entity: taxRate));
         } else {
           store.dispatch(RemoveFromTaxRateMultiselect(entity: taxRate));

@@ -510,7 +510,7 @@ class StopRecurringInvoicesFailure implements StopSaving {
 }
 
 void handleRecurringInvoiceAction(BuildContext? context,
-    List<BaseEntity?> recurringInvoices, EntityAction? action) async {
+    List<BaseEntity> recurringInvoices, EntityAction? action) async {
   if (recurringInvoices.isEmpty) {
     return;
   }
@@ -520,7 +520,7 @@ void handleRecurringInvoiceAction(BuildContext? context,
   final localization = AppLocalization.of(context);
   final recurringInvoice = recurringInvoices.first as InvoiceEntity;
   final recurringInvoiceIds = recurringInvoices
-      .map((recurringInvoice) => recurringInvoice!.id)
+      .map((recurringInvoice) => recurringInvoice.id)
       .toList();
   final client = state.clientState.get(recurringInvoice.clientId);
 
@@ -690,7 +690,7 @@ void handleRecurringInvoiceAction(BuildContext? context,
 
       for (final recurringInvoice in recurringInvoices) {
         if (!store.state.recurringInvoiceListState
-            .isSelected(recurringInvoice!.id)) {
+            .isSelected(recurringInvoice.id)) {
           store.dispatch(
               AddToRecurringInvoiceMultiselect(entity: recurringInvoice));
         } else {

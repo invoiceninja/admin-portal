@@ -25,7 +25,7 @@ class ScheduleListItem extends StatelessWidget {
   final UserEntity? user;
   final GestureTapCallback? onTap;
   final GestureTapCallback? onLongPress;
-  final ScheduleEntity? schedule;
+  final ScheduleEntity schedule;
   final String? filter;
   final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
@@ -41,13 +41,13 @@ class ScheduleListItem extends StatelessWidget {
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
     final localization = AppLocalization.of(context)!;
 
-    String subtitle = formatDate(schedule!.nextRun, context);
+    String subtitle = formatDate(schedule.nextRun, context);
 
-    String title = localization.lookup(schedule!.template) ?? '';
-    if (schedule!.template == ScheduleEntity.TEMPLATE_EMAIL_RECORD) {
-      final entityType = EntityType.valueOf(schedule!.parameters.entityType!);
+    String title = localization.lookup(schedule.template) ?? '';
+    if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_RECORD) {
+      final entityType = EntityType.valueOf(schedule.parameters.entityType!);
       final entity =
-          state.getEntityMap(entityType)![schedule!.parameters.entityId];
+          state.getEntityMap(entityType)![schedule.parameters.entityId];
 
       if (entityType == EntityType.purchaseOrder) {
         final vendor =
@@ -60,27 +60,27 @@ class ScheduleListItem extends StatelessWidget {
       }
 
       subtitle += ' • ' +
-          localization.lookup(schedule!.parameters.entityType)! +
+          localization.lookup(schedule.parameters.entityType)! +
           ' ' +
           (entity?.listDisplayName ?? '');
-    } else if (schedule!.template == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT) {
-      if (schedule!.parameters.clients!.isEmpty) {
+    } else if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT) {
+      if (schedule.parameters.clients!.isEmpty) {
         title += ': ' + localization.allClients;
-      } else if (schedule!.parameters.clients!.length == 1) {
-        final clientId = schedule!.parameters.clients!.first;
+      } else if (schedule.parameters.clients!.length == 1) {
+        final clientId = schedule.parameters.clients!.first;
         title += ': ' + state.clientState.get(clientId).displayName;
       } else {
         title +=
-            ': ${schedule!.parameters.clients!.length} ${localization.clients}';
+            ': ${schedule.parameters.clients!.length} ${localization.clients}';
       }
       subtitle +=
-          ' • ' + localization.lookup(kFrequencies[schedule!.frequencyId])!;
+          ' • ' + localization.lookup(kFrequencies[schedule.frequencyId])!;
     }
 
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: schedule,
-      isSelected: schedule!.id ==
+      isSelected: schedule.id ==
           (uiState.isEditing
               ? scheduleUIState.editing!.id
               : scheduleUIState.selectedId),
@@ -88,10 +88,10 @@ class ScheduleListItem extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         child: ListTile(
           onTap: () =>
-              onTap != null ? onTap!() : selectEntity(entity: schedule!),
+              onTap != null ? onTap!() : selectEntity(entity: schedule),
           onLongPress: () => onLongPress != null
               ? onLongPress!()
-              : selectEntity(entity: schedule!, longPress: true),
+              : selectEntity(entity: schedule, longPress: true),
           leading: showCheckbox
               ? IgnorePointer(
                   ignoring: listUIState.isInMultiselect(),
@@ -105,7 +105,7 @@ class ScheduleListItem extends StatelessWidget {
               : null,
           title: Text(title),
           trailing: Text(timeago.format(
-            convertSqlDateToDateTime(schedule!.nextRun),
+            convertSqlDateToDateTime(schedule.nextRun),
             locale: localeSelector(state, twoLetter: true),
             allowFromNow: true,
           )),

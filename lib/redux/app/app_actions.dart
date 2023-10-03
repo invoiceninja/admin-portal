@@ -556,8 +556,8 @@ void viewEntityById({
             store.dispatch(ToggleViewerLayout(entityType));
           final filterEntity =
               store.state.getEntityMap(entityType)![entityId] as BaseEntity;
-          final entityTypes = filterEntity.entityType!.relatedTypes.where(
-              (entityType) => state.company.isModuleEnabled(entityType));
+          final entityTypes = filterEntity.entityType!.relatedTypes
+              .where((entityType) => state.company.isModuleEnabled(entityType));
           if (entityTypes.isNotEmpty) {
             viewEntitiesByType(
                 entityType: entityTypes.first, filterEntity: filterEntity);
@@ -1504,12 +1504,12 @@ void editEntity({
       });
 }
 
-void handleEntityAction(BaseEntity? entity, EntityAction? action,
+void handleEntityAction(BaseEntity entity, EntityAction? action,
     {bool autoPop = false}) {
   handleEntitiesActions([entity], action, autoPop: autoPop);
 }
 
-void handleEntitiesActions(List<BaseEntity?> entities, EntityAction? action,
+void handleEntitiesActions(List<BaseEntity> entities, EntityAction? action,
     {bool autoPop = false}) {
   if (entities.isEmpty) {
     return;
@@ -1523,9 +1523,9 @@ void handleEntitiesActions(List<BaseEntity?> entities, EntityAction? action,
       autoPop) {
     if (isMobile(navigatorKey.currentContext!)) {
       navigatorKey.currentState!.pop();
-    } else if (entities.first!.entityType!.isSetting) {
+    } else if (entities.first.entityType!.isSetting) {
       final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
-      switch (entities.first!.entityType) {
+      switch (entities.first.entityType) {
         case EntityType.paymentTerm:
           store.dispatch(UpdateCurrentRoute(PaymentTermScreen.route));
           break;
@@ -1570,13 +1570,13 @@ void handleEntitiesActions(List<BaseEntity?> entities, EntityAction? action,
           break;
         default:
           print(
-              '## ERROR: ${entities.first!.entityType} entity type not supported');
+              '## ERROR: ${entities.first.entityType} entity type not supported');
       }
     }
   }
 
   final context = navigatorKey.currentContext;
-  switch (entities.first!.entityType) {
+  switch (entities.first.entityType) {
     case EntityType.client:
       handleClientAction(context, entities, action);
       break;
@@ -1672,7 +1672,7 @@ void handleEntitiesActions(List<BaseEntity?> entities, EntityAction? action,
       break;
     default:
       print(
-          'Error: unhandled type ${entities.first!.entityType} in handleEntitiesActions');
+          'Error: unhandled type ${entities.first.entityType} in handleEntitiesActions');
   }
 }
 
@@ -1733,7 +1733,7 @@ void selectEntity({
 }
 
 void inspectEntity({
-  BaseEntity? entity,
+  required BaseEntity entity,
   bool longPress = false,
 }) {
   final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
@@ -1742,7 +1742,7 @@ void inspectEntity({
 
   if (isDesktop(navigatorKey.currentContext!)) {
     if (longPress) {
-      viewEntity(entity: entity!);
+      viewEntity(entity: entity);
     } else if (previewStack.isNotEmpty) {
       final entityType = previewStack.last;
       viewEntityById(
@@ -1757,7 +1757,7 @@ void inspectEntity({
     if (longPress) {
       showEntityActionsDialog(entities: [entity]);
     } else {
-      viewEntity(entity: entity!);
+      viewEntity(entity: entity);
     }
   }
 }

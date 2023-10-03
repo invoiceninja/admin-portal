@@ -584,7 +584,7 @@ class UpdatePurchaseOrderTab implements PersistUI {
 }
 
 void handlePurchaseOrderAction(BuildContext? context,
-    List<BaseEntity?> purchaseOrders, EntityAction? action) async {
+    List<BaseEntity> purchaseOrders, EntityAction? action) async {
   if (purchaseOrders.isEmpty) {
     return;
   }
@@ -592,13 +592,13 @@ void handlePurchaseOrderAction(BuildContext? context,
   final store = StoreProvider.of<AppState>(context!);
   final state = store.state;
   final localization = AppLocalization.of(context);
-  final purchaseOrder = purchaseOrders.first as InvoiceEntity?;
+  final purchaseOrder = purchaseOrders.first as InvoiceEntity;
   final purchaseOrderIds =
-      purchaseOrders.map((purchaseOrder) => purchaseOrder!.id).toList();
+      purchaseOrders.map((purchaseOrder) => purchaseOrder.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: purchaseOrder!);
+      editEntity(entity: purchaseOrder);
       break;
     case EntityAction.viewPdf:
       store.dispatch(
@@ -620,7 +620,7 @@ void handlePurchaseOrderAction(BuildContext? context,
           purchaseOrderIds));
       break;
     case EntityAction.printPdf:
-      final invitation = purchaseOrder!.invitations.first;
+      final invitation = purchaseOrder.invitations.first;
       final url = invitation.downloadLink;
       store.dispatch(StartSaving());
       final http.Response? response =
@@ -660,7 +660,7 @@ void handlePurchaseOrderAction(BuildContext? context,
       break;
     case EntityAction.viewExpense:
       viewEntityById(
-          entityId: purchaseOrder!.expenseId, entityType: EntityType.expense);
+          entityId: purchaseOrder.expenseId, entityType: EntityType.expense);
       break;
     case EntityAction.markSent:
       store.dispatch(MarkPurchaseOrdersSentRequest(
@@ -699,7 +699,7 @@ void handlePurchaseOrderAction(BuildContext? context,
       }
 
       for (final purchaseOrder in purchaseOrders) {
-        if (!store.state.purchaseOrderListState.isSelected(purchaseOrder!.id)) {
+        if (!store.state.purchaseOrderListState.isSelected(purchaseOrder.id)) {
           store.dispatch(AddToPurchaseOrderMultiselect(entity: purchaseOrder));
         } else {
           store.dispatch(
@@ -708,7 +708,7 @@ void handlePurchaseOrderAction(BuildContext? context,
       }
       break;
     case EntityAction.vendorPortal:
-      launchUrl(Uri.parse(purchaseOrder!.invitationSilentLink));
+      launchUrl(Uri.parse(purchaseOrder.invitationSilentLink));
       break;
     case EntityAction.sendEmail:
     case EntityAction.bulkSendEmail:
@@ -731,7 +731,7 @@ void handlePurchaseOrderAction(BuildContext? context,
                   onPressed: () {
                     Navigator.of(context).pop();
                     editEntity(
-                        entity: state.vendorState.get(purchaseOrder!.vendorId));
+                        entity: state.vendorState.get(purchaseOrder.vendorId));
                   },
                   child: Text(localization.editVendor.toUpperCase()))
             ]);
@@ -765,7 +765,7 @@ void handlePurchaseOrderAction(BuildContext? context,
             entity: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_RECORD)
                 .rebuild((b) => b
                   ..parameters.entityType = EntityType.purchaseOrder.apiValue
-                  ..parameters.entityId = purchaseOrder!.id));
+                  ..parameters.entityId = purchaseOrder.id));
       } else {
         confirmCallback(
             context: context,
@@ -785,7 +785,7 @@ void handlePurchaseOrderAction(BuildContext? context,
     case EntityAction.cloneToQuote:
       final designId = getDesignIdForClientByEntity(
           state: state,
-          clientId: purchaseOrder!.clientId,
+          clientId: purchaseOrder.clientId,
           entityType: EntityType.purchaseOrder);
       createEntity(
           context: context,
@@ -801,7 +801,7 @@ void handlePurchaseOrderAction(BuildContext? context,
     case EntityAction.cloneToInvoice:
       final designId = getDesignIdForClientByEntity(
           state: state,
-          clientId: purchaseOrder!.clientId,
+          clientId: purchaseOrder.clientId,
           entityType: EntityType.invoice);
       createEntity(
           context: context,
@@ -813,12 +813,12 @@ void handlePurchaseOrderAction(BuildContext? context,
       break;
     case EntityAction.clone:
     case EntityAction.cloneToPurchaseOrder:
-      createEntity(context: context, entity: purchaseOrder!.clone);
+      createEntity(context: context, entity: purchaseOrder.clone);
       break;
     case EntityAction.cloneToCredit:
       final designId = getDesignIdForClientByEntity(
           state: state,
-          clientId: purchaseOrder!.clientId,
+          clientId: purchaseOrder.clientId,
           entityType: EntityType.credit);
       createEntity(
           context: context,
@@ -831,7 +831,7 @@ void handlePurchaseOrderAction(BuildContext? context,
     case EntityAction.cloneToRecurring:
       final designId = getDesignIdForClientByEntity(
           state: state,
-          clientId: purchaseOrder!.clientId,
+          clientId: purchaseOrder.clientId,
           entityType: EntityType.invoice);
       createEntity(
           context: context,
@@ -842,7 +842,7 @@ void handlePurchaseOrderAction(BuildContext? context,
               .recreateInvitations(state));
       break;
     case EntityAction.download:
-      launchUrl(Uri.parse(purchaseOrder!.invitationDownloadLink));
+      launchUrl(Uri.parse(purchaseOrder.invitationDownloadLink));
       break;
     case EntityAction.bulkDownload:
       store.dispatch(DownloadPurchaseOrdersRequest(

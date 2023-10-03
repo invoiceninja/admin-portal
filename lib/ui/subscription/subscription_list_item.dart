@@ -26,7 +26,7 @@ class SubscriptionListItem extends StatelessWidget {
   final UserEntity? user;
   final GestureTapCallback? onTap;
   final GestureTapCallback? onLongPress;
-  final SubscriptionEntity? subscription;
+  final SubscriptionEntity subscription;
   final String? filter;
   final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
@@ -42,23 +42,23 @@ class SubscriptionListItem extends StatelessWidget {
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     final filterMatch = filter != null && filter!.isNotEmpty
-        ? subscription!.matchesFilterValue(filter)
+        ? subscription.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch;
 
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: subscription,
-      isSelected: subscription!.id ==
+      isSelected: subscription.id ==
           (uiState.isEditing
               ? subscriptionUIState.editing!.id
               : subscriptionUIState.selectedId),
       child: ListTile(
         onTap: () =>
-            onTap != null ? onTap!() : selectEntity(entity: subscription!),
+            onTap != null ? onTap!() : selectEntity(entity: subscription),
         onLongPress: () => onLongPress != null
             ? onLongPress!()
-            : selectEntity(entity: subscription!, longPress: true),
+            : selectEntity(entity: subscription, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),
@@ -76,11 +76,11 @@ class SubscriptionListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  subscription!.name,
+                  subscription.name,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Text(formatNumber(subscription!.price, context)!,
+              Text(formatNumber(subscription.price, context)!,
                   style: Theme.of(context).textTheme.titleMedium),
             ],
           ),

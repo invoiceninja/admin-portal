@@ -96,7 +96,7 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
         return ListTile(
           onTap: () => viewEntity(entity: entity as BaseEntity),
           onLongPress: () =>
-              showEntityActionsDialog(entities: [entity as BaseEntity?]),
+              showEntityActionsDialog(entities: [entity as BaseEntity]),
           title: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

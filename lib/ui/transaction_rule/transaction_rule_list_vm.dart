@@ -37,7 +37,7 @@ class TransactionRuleListBuilder extends StatelessWidget {
               final state = viewModel.state;
               final transactionRuleId = viewModel.transactionRuleList[index];
               final transactionRule =
-                  viewModel.transactionRuleMap[transactionRuleId];
+                  viewModel.transactionRuleMap[transactionRuleId]!;
               final listState = state.getListState(EntityType.transactionRule);
               final isInMultiselect = listState.isInMultiselect();
 
@@ -46,7 +46,7 @@ class TransactionRuleListBuilder extends StatelessWidget {
                 filter: viewModel.filter,
                 transactionRule: transactionRule,
                 isChecked: isInMultiselect &&
-                    listState.isSelected(transactionRule!.id),
+                    listState.isSelected(transactionRule.id),
               );
             });
       },

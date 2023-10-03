@@ -473,13 +473,13 @@ class SaveCreditDocumentFailure implements StopSaving {
   final Object error;
 }
 
-Future handleCreditAction(BuildContext context, List<BaseEntity?> credits,
+Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
     EntityAction? action) async {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
   final credit = credits.first as InvoiceEntity;
-  final creditIds = credits.map((credit) => credit!.id).toList();
+  final creditIds = credits.map((credit) => credit.id).toList();
   final client = state.clientState.get(credit.clientId);
 
   switch (action) {
@@ -680,7 +680,7 @@ Future handleCreditAction(BuildContext context, List<BaseEntity?> credits,
         store.dispatch(StartCreditMultiselect());
       }
       for (final credit in credits) {
-        if (!store.state.creditListState.isSelected(credit!.id)) {
+        if (!store.state.creditListState.isSelected(credit.id)) {
           store.dispatch(AddToCreditMultiselect(entity: credit));
         } else {
           store.dispatch(RemoveFromCreditMultiselect(entity: credit));

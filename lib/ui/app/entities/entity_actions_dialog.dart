@@ -42,13 +42,13 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 Future<void> showEntityActionsDialog(
-    {required List<BaseEntity?> entities,
+    {required List<BaseEntity> entities,
     Completer? completer,
     bool multiselect = false}) async {
   final mainContext = navigatorKey.currentContext;
   final state = StoreProvider.of<AppState>(navigatorKey.currentContext!).state;
   final actions = <Widget>[];
-  final first = entities[0]!;
+  final first = entities[0];
   final ClientEntity? client = first is BelongsToClient
       ? state.clientState.get((first as BelongsToClient).clientId!)
       : null;
@@ -93,7 +93,7 @@ class EntityActionListTile extends StatelessWidget {
     this.completer,
   });
 
-  final List<BaseEntity?>? entities;
+  final List<BaseEntity>? entities;
   final EntityAction? action;
   final BuildContext? mainContext;
   final Completer? completer;
@@ -114,7 +114,7 @@ class EntityActionListTile extends StatelessWidget {
           completer!.complete(null);
         }
         Navigator.of(context).pop();
-        final first = entities!.first!;
+        final first = entities!.first;
         switch (first.entityType) {
           case EntityType.client:
             handleClientAction(mainContext, entities!, action);

@@ -43,7 +43,7 @@ class GroupListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final groupId = viewModel.groupList[index];
-              final group = viewModel.groupMap[groupId];
+              final group = viewModel.groupMap[groupId]!;
               final listState = state.getListState(EntityType.group);
               final isInMultiselect = listState.isInMultiselect();
 
@@ -51,7 +51,7 @@ class GroupListBuilder extends StatelessWidget {
                 user: viewModel.userCompany!.user,
                 filter: viewModel.filter,
                 group: group,
-                isChecked: isInMultiselect && listState.isSelected(group!.id),
+                isChecked: isInMultiselect && listState.isSelected(group.id),
               );
             });
       },

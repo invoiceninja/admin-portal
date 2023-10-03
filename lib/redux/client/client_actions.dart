@@ -346,7 +346,7 @@ class FilterClientsByCustom4 implements PersistUI {
   final String value;
 }
 
-void handleClientAction(BuildContext? context, List<BaseEntity?> clients,
+void handleClientAction(BuildContext? context, List<BaseEntity> clients,
     EntityAction? action) async {
   if (clients.isEmpty) {
     return;
@@ -355,18 +355,18 @@ void handleClientAction(BuildContext? context, List<BaseEntity?> clients,
   final store = StoreProvider.of<AppState>(context!);
   final state = store.state;
   final localization = AppLocalization.of(context);
-  final clientIds = clients.map((client) => client!.id).toList();
-  final client = clients[0] as ClientEntity?;
+  final clientIds = clients.map((client) => client.id).toList();
+  final client = clients[0] as ClientEntity;
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: client!);
+      editEntity(entity: client);
       break;
     case EntityAction.viewStatement:
       store.dispatch(ShowPdfClient(client: client, context: context));
       break;
     case EntityAction.clientPortal:
-      final contact = client!.primaryContact;
+      final contact = client.primaryContact;
       var link = contact.silentLink;
       if (link.isNotEmpty) {
         if (!link.contains('?')) {
@@ -389,7 +389,7 @@ void handleClientAction(BuildContext? context, List<BaseEntity?> clients,
       createEntity(
           context: context,
           entity: TaskEntity(state: state)
-              .rebuild((b) => b..clientId = client!.id));
+              .rebuild((b) => b..clientId = client.id));
       break;
     case EntityAction.newInvoice:
       createEntity(
@@ -441,14 +441,14 @@ void handleClientAction(BuildContext? context, List<BaseEntity?> clients,
       createEntity(
         context: context,
         entity: PaymentEntity(state: state, client: client)
-            .rebuild((b) => b.clientId = client!.id),
+            .rebuild((b) => b.clientId = client.id),
       );
       break;
     case EntityAction.newProject:
       createEntity(
         context: context,
         entity:
-            ProjectEntity(state: state).rebuild((b) => b.clientId = client!.id),
+            ProjectEntity(state: state).rebuild((b) => b.clientId = client.id),
       );
       break;
     case EntityAction.restore:
@@ -481,7 +481,7 @@ void handleClientAction(BuildContext? context, List<BaseEntity?> clients,
     case EntityAction.purge:
       confirmCallback(
           context: context,
-          message: '${localization!.purge} - ${client!.displayName}',
+          message: '${localization!.purge} - ${client.displayName}',
           callback: (_) {
             passwordCallback(
                 alwaysRequire: true,
@@ -510,7 +510,7 @@ void handleClientAction(BuildContext? context, List<BaseEntity?> clients,
       }
 
       for (final client in clients) {
-        if (!state.clientListState.isSelected(client!.id)) {
+        if (!state.clientListState.isSelected(client.id)) {
           store.dispatch(AddToClientMultiselect(entity: client));
         } else {
           store.dispatch(RemoveFromClientMultiselect(entity: client));

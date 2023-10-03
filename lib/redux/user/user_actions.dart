@@ -333,7 +333,7 @@ class FilterUsersByCustom4 implements PersistUI {
 }
 
 void handleUserAction(
-    BuildContext? context, List<BaseEntity?> users, EntityAction? action) {
+    BuildContext? context, List<BaseEntity> users, EntityAction? action) {
   if (users.isEmpty) {
     return;
   }
@@ -341,31 +341,31 @@ void handleUserAction(
   final store = StoreProvider.of<AppState>(context!);
   final state = store.state;
   final localization = AppLocalization.of(context);
-  final user = users.first as UserEntity?;
-  final userIds = users.map((user) => user!.id).toList();
+  final user = users.first as UserEntity;
+  final userIds = users.map((user) => user.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: user!);
+      editEntity(entity: user);
       break;
     case EntityAction.newClient:
       createEntity(
           context: context,
           entity: ClientEntity(state: state)
-              .rebuild((b) => b.assignedUserId = user!.id));
+              .rebuild((b) => b.assignedUserId = user.id));
       break;
     case EntityAction.newInvoice:
       createEntity(
           context: context,
           entity: InvoiceEntity(state: state)
-              .rebuild((b) => b.assignedUserId = user!.id));
+              .rebuild((b) => b.assignedUserId = user.id));
       break;
     case EntityAction.newRecurringInvoice:
       createEntity(
           context: context,
           entity: InvoiceEntity(
                   state: state, entityType: EntityType.recurringInvoice)
-              .rebuild((b) => b.assignedUserId = user!.id));
+              .rebuild((b) => b.assignedUserId = user.id));
       break;
     case EntityAction.newQuote:
       createEntity(
@@ -373,7 +373,7 @@ void handleUserAction(
         entity: InvoiceEntity(
           state: state,
           entityType: EntityType.quote,
-        ).rebuild((b) => b.assignedUserId = user!.id),
+        ).rebuild((b) => b.assignedUserId = user.id),
       );
       break;
     case EntityAction.newCredit:
@@ -382,42 +382,42 @@ void handleUserAction(
         entity: InvoiceEntity(
           state: state,
           entityType: EntityType.credit,
-        ).rebuild((b) => b.assignedUserId = user!.id),
+        ).rebuild((b) => b.assignedUserId = user.id),
       );
       break;
     case EntityAction.newExpense:
       createEntity(
         context: context,
         entity: ExpenseEntity(state: state)
-            .rebuild((b) => b.assignedUserId = user!.id),
+            .rebuild((b) => b.assignedUserId = user.id),
       );
       break;
     case EntityAction.newPayment:
       createEntity(
         context: context,
         entity: PaymentEntity(state: state)
-            .rebuild((b) => b.assignedUserId = user!.id),
+            .rebuild((b) => b.assignedUserId = user.id),
       );
       break;
     case EntityAction.newProject:
       createEntity(
         context: context,
         entity: ProjectEntity(state: state)
-            .rebuild((b) => b.assignedUserId = user!.id),
+            .rebuild((b) => b.assignedUserId = user.id),
       );
       break;
     case EntityAction.newTask:
       createEntity(
         context: context,
         entity: TaskEntity(state: state)
-            .rebuild((b) => b.assignedUserId = user!.id),
+            .rebuild((b) => b.assignedUserId = user.id),
       );
       break;
     case EntityAction.newVendor:
       createEntity(
         context: context,
         entity: VendorEntity(state: state)
-            .rebuild((b) => b.assignedUserId = user!.id),
+            .rebuild((b) => b.assignedUserId = user.id),
       );
       break;
     case EntityAction.restore:
@@ -500,7 +500,7 @@ void handleUserAction(
       ]) =>
           store.dispatch(RemoveUserRequest(
             completer: snackBarCompleter<Null>(context, message),
-            userId: user!.id,
+            userId: user.id,
             password: password,
             idToken: idToken,
           ));
@@ -524,7 +524,7 @@ void handleUserAction(
       }
 
       for (final user in users) {
-        if (!store.state.userListState.isSelected(user!.id)) {
+        if (!store.state.userListState.isSelected(user.id)) {
           store.dispatch(AddToUserMultiselect(entity: user));
         } else {
           store.dispatch(RemoveFromUserMultiselect(entity: user));
@@ -536,7 +536,7 @@ void handleUserAction(
           context: context,
           callback: (password, idToken) {
             store.dispatch(ResendInviteRequest(
-              userId: user!.id,
+              userId: user.id,
               password: password,
               idToken: idToken,
               completer: snackBarCompleter<Null>(

@@ -356,21 +356,20 @@ class SaveRecurringExpenseDocumentFailure implements StopSaving {
 }
 
 void handleRecurringExpenseAction(BuildContext? context,
-    List<BaseEntity?> recurringExpenses, EntityAction? action) {
+    List<BaseEntity> recurringExpenses, EntityAction? action) {
   if (recurringExpenses.isEmpty) {
     return;
   }
 
   final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
-  final recurringExpense = recurringExpenses.first as ExpenseEntity?;
-  final recurringExpenseIds = recurringExpenses
-      .map((recurringExpense) => recurringExpense!.id)
-      .toList();
+  final recurringExpense = recurringExpenses.first as ExpenseEntity;
+  final recurringExpenseIds =
+      recurringExpenses.map((recurringExpense) => recurringExpense.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: recurringExpense!);
+      editEntity(entity: recurringExpense);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreRecurringExpensesRequest(
@@ -394,7 +393,7 @@ void handleRecurringExpenseAction(BuildContext? context,
       store.dispatch(StartRecurringExpensesRequest(
         completer: snackBarCompleter<Null>(
             context,
-            (recurringExpense!.lastSentDate).isEmpty
+            (recurringExpense.lastSentDate).isEmpty
                 ? localization!.startedRecurringInvoice
                 : localization!.resumedRecurringInvoice),
         expenseIds: recurringExpenseIds,
@@ -410,7 +409,7 @@ void handleRecurringExpenseAction(BuildContext? context,
     case EntityAction.cloneToExpense:
       createEntity(
         context: context,
-        entity: recurringExpense!.clone
+        entity: recurringExpense.clone
             .rebuild((b) => b..entityType = EntityType.expense),
       );
       break;
@@ -418,7 +417,7 @@ void handleRecurringExpenseAction(BuildContext? context,
     case EntityAction.cloneToRecurring:
       createEntity(
         context: context,
-        entity: recurringExpense!.clone
+        entity: recurringExpense.clone
             .rebuild((b) => b..entityType = EntityType.recurringExpense),
       );
       break;
@@ -433,7 +432,7 @@ void handleRecurringExpenseAction(BuildContext? context,
 
       for (final recurringExpense in recurringExpenses) {
         if (!store.state.recurringExpenseListState
-            .isSelected(recurringExpense!.id)) {
+            .isSelected(recurringExpense.id)) {
           store.dispatch(
               AddToRecurringExpenseMultiselect(entity: recurringExpense));
         } else {

@@ -42,7 +42,7 @@ class UserListBuilder extends StatelessWidget {
             onSortColumn: viewModel.onSortColumn,
             itemBuilder: (BuildContext context, index) {
               final userId = viewModel.userList[index];
-              final user = viewModel.userMap[userId];
+              final user = viewModel.userMap[userId]!;
 
               void showDialog() => showEntityActionsDialog(
                     entities: [user],

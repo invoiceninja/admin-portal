@@ -219,7 +219,7 @@ class FilterGroupsByState implements PersistUI {
 }
 
 void handleGroupAction(
-    BuildContext? context, List<BaseEntity?> groups, EntityAction? action) {
+    BuildContext? context, List<BaseEntity> groups, EntityAction? action) {
   if (groups.isEmpty) {
     return;
   }
@@ -228,11 +228,11 @@ void handleGroupAction(
   final state = store.state;
   final localization = AppLocalization.of(context);
   final group = groups.first;
-  final groupIds = groups.map((group) => group!.id).toList();
+  final groupIds = groups.map((group) => group.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: group!);
+      editEntity(entity: group);
       break;
     case EntityAction.settings:
       store.dispatch(ViewSettings(
@@ -246,7 +246,7 @@ void handleGroupAction(
     case EntityAction.newClient:
       createEntity(
           context: context,
-          entity: ClientEntity().rebuild((b) => b..groupId = group!.id));
+          entity: ClientEntity().rebuild((b) => b..groupId = group.id));
       break;
     case EntityAction.restore:
       final message = groupIds.length > 1
@@ -285,7 +285,7 @@ void handleGroupAction(
       }
 
       for (final group in groups) {
-        if (!store.state.groupListState.isSelected(group!.id)) {
+        if (!store.state.groupListState.isSelected(group.id)) {
           store.dispatch(AddToGroupMultiselect(entity: group));
         } else {
           store.dispatch(RemoveFromGroupMultiselect(entity: group));

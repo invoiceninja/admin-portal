@@ -22,7 +22,7 @@ class BottomButtons extends StatelessWidget {
     this.action2Enabled = true,
   });
 
-  final BaseEntity? entity;
+  final BaseEntity entity;
   final EntityAction action1;
   final EntityAction action2;
   final bool action1Enabled;
@@ -48,7 +48,7 @@ class BottomButtons extends StatelessWidget {
             Expanded(
               child: InkWell(
                 onTap: action1Enabled &&
-                        (!entity!.isDeleted! || action1 == EntityAction.viewPdf)
+                        (!entity.isDeleted! || action1 == EntityAction.viewPdf)
                     ? () {
                         handleEntityAction(entity, action1);
                       }
@@ -63,7 +63,7 @@ class BottomButtons extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: textColor.withOpacity(
-                              action1Enabled && !entity!.isDeleted! ? 1 : .5)),
+                              action1Enabled && !entity.isDeleted! ? 1 : .5)),
                     ),
                   ],
                 ),
@@ -73,7 +73,7 @@ class BottomButtons extends StatelessWidget {
               child: AppBorder(
                 isLeft: true,
                 child: InkWell(
-                  onTap: action2Enabled && !entity!.isDeleted!
+                  onTap: action2Enabled && !entity.isDeleted!
                       ? () {
                           handleEntityAction(entity, action2);
                         }
@@ -88,7 +88,7 @@ class BottomButtons extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: textColor.withOpacity(
-                                action2Enabled && !entity!.isDeleted!
+                                action2Enabled && !entity.isDeleted!
                                     ? 1
                                     : .6)),
                       ),

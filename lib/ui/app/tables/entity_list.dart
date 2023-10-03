@@ -256,10 +256,10 @@ class _EntityListState extends State<EntityList> {
                           min(_firstRowIndex + rowsPerPage, entityList.length);
                       final entities = entityList
                           .sublist(startIndex, endIndex)
-                          .map<BaseEntity?>((String? entityId) =>
-                              entityMap![entityId] as BaseEntity?)
+                          .map<BaseEntity>((String? entityId) =>
+                              entityMap![entityId] as BaseEntity)
                           .where((invoice) =>
-                              value != listUIState.isSelected(invoice!.id))
+                              value != listUIState.isSelected(invoice.id))
                           .toList();
                       handleEntitiesActions(
                           entities, EntityAction.toggleMultiselect);
@@ -322,7 +322,7 @@ class _EntityListState extends State<EntityList> {
     final entities = listUIState.selectedIds == null
         ? <BaseEntity>[]
         : listUIState.selectedIds!
-            .map<BaseEntity?>((entityId) => entityMap![entityId] as BaseEntity?)
+            .map<BaseEntity>((entityId) => entityMap![entityId] as BaseEntity)
             .toList();
     final firstEntity = entities.isEmpty ? null : entities.first;
     final actions = (firstEntity?.getActions(
@@ -362,8 +362,8 @@ class _EntityListState extends State<EntityList> {
                               min(entityList.length, kMaxEntitiesPerBulkAction);
                           final entities = entityList
                               .sublist(0, endIndex)
-                              .map<BaseEntity?>((entityId) =>
-                                  entityMap![entityId] as BaseEntity?)
+                              .map<BaseEntity>((entityId) =>
+                                  entityMap![entityId] as BaseEntity)
                               .toList();
                           handleEntitiesActions(
                               entities, EntityAction.toggleMultiselect);

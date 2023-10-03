@@ -516,23 +516,23 @@ class SaveQuoteDocumentFailure implements StopSaving {
   final Object error;
 }
 
-Future handleQuoteAction(BuildContext context, List<BaseEntity?> quotes,
-    EntityAction? action) async {
+Future handleQuoteAction(
+    BuildContext context, List<BaseEntity> quotes, EntityAction? action) async {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
-  final quote = quotes.first as InvoiceEntity?;
-  final quoteIds = quotes.map((quote) => quote!.id).toList();
+  final quote = quotes.first as InvoiceEntity;
+  final quoteIds = quotes.map((quote) => quote.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: quote!);
+      editEntity(entity: quote);
       break;
     case EntityAction.viewPdf:
       store.dispatch(ShowPdfQuote(quote: quote, context: context));
       break;
     case EntityAction.clientPortal:
-      launchUrl(Uri.parse(quote!.invitationSilentLink));
+      launchUrl(Uri.parse(quote.invitationSilentLink));
       break;
     case EntityAction.convertToInvoice:
       confirmCallback(
@@ -565,7 +565,7 @@ Future handleQuoteAction(BuildContext context, List<BaseEntity?> quotes,
       break;
     case EntityAction.viewInvoice:
       viewEntityById(
-          entityId: quote!.invoiceId, entityType: EntityType.invoice);
+          entityId: quote.invoiceId, entityType: EntityType.invoice);
       break;
     case EntityAction.markSent:
       store.dispatch(MarkSentQuotesRequest(
@@ -592,7 +592,7 @@ Future handleQuoteAction(BuildContext context, List<BaseEntity?> quotes,
               TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
-                    editEntity(entity: state.clientState.get(quote!.clientId));
+                    editEntity(entity: state.clientState.get(quote.clientId));
                   },
                   child: Text(localization.editClient.toUpperCase()))
             ]);
@@ -626,7 +626,7 @@ Future handleQuoteAction(BuildContext context, List<BaseEntity?> quotes,
             entity: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_RECORD)
                 .rebuild((b) => b
                   ..parameters.entityType = EntityType.quote.apiValue
-                  ..parameters.entityId = quote!.id));
+                  ..parameters.entityId = quote.id));
       } else {
         confirmCallback(
             context: context,
@@ -645,7 +645,7 @@ Future handleQuoteAction(BuildContext context, List<BaseEntity?> quotes,
     case EntityAction.cloneToPurchaseOrder:
       final designId = getDesignIdForVendorByEntity(
           state: state,
-          vendorId: quote!.vendorId,
+          vendorId: quote.vendorId,
           entityType: EntityType.purchaseOrder);
       createEntity(
           context: context,
@@ -659,7 +659,7 @@ Future handleQuoteAction(BuildContext context, List<BaseEntity?> quotes,
     case EntityAction.cloneToInvoice:
       final designId = getDesignIdForClientByEntity(
           state: state,
-          clientId: quote!.clientId,
+          clientId: quote.clientId,
           entityType: EntityType.invoice);
       createEntity(
           context: context,
@@ -669,12 +669,12 @@ Future handleQuoteAction(BuildContext context, List<BaseEntity?> quotes,
       break;
     case EntityAction.clone:
     case EntityAction.cloneToQuote:
-      createEntity(context: context, entity: quote!.clone);
+      createEntity(context: context, entity: quote.clone);
       break;
     case EntityAction.cloneToCredit:
       final designId = getDesignIdForClientByEntity(
           state: state,
-          clientId: quote!.clientId,
+          clientId: quote.clientId,
           entityType: EntityType.credit);
       createEntity(
           context: context,
@@ -685,7 +685,7 @@ Future handleQuoteAction(BuildContext context, List<BaseEntity?> quotes,
     case EntityAction.cloneToRecurring:
       final designId = getDesignIdForClientByEntity(
           state: state,
-          clientId: quote!.clientId,
+          clientId: quote.clientId,
           entityType: EntityType.invoice);
       createEntity(
           context: context,
@@ -694,7 +694,7 @@ Future handleQuoteAction(BuildContext context, List<BaseEntity?> quotes,
             ..designId = designId));
       break;
     case EntityAction.download:
-      launchUrl(Uri.parse(quote!.invitationDownloadLink));
+      launchUrl(Uri.parse(quote.invitationDownloadLink));
       break;
     case EntityAction.bulkDownload:
       store.dispatch(DownloadQuotesRequest(
@@ -733,7 +733,7 @@ Future handleQuoteAction(BuildContext context, List<BaseEntity?> quotes,
         store.dispatch(StartQuoteMultiselect());
       }
       for (final quote in quotes) {
-        if (!store.state.quoteListState.isSelected(quote!.id)) {
+        if (!store.state.quoteListState.isSelected(quote.id)) {
           store.dispatch(AddToQuoteMultiselect(entity: quote));
         } else {
           store.dispatch(RemoveFromQuoteMultiselect(entity: quote));
@@ -741,7 +741,7 @@ Future handleQuoteAction(BuildContext context, List<BaseEntity?> quotes,
       }
       break;
     case EntityAction.printPdf:
-      final invitation = quote!.invitations.first;
+      final invitation = quote.invitations.first;
       final url = invitation.downloadLink;
       store.dispatch(StartSaving());
       final http.Response? response =

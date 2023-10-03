@@ -254,12 +254,12 @@ class InvoiceOverview extends StatelessWidget {
           subtitle: vendor.primaryContact!.email,
         ),
       );
-    } else {
+    } else if (client != null) {
       widgets.add(
         EntityListTile(
           isFilter: isFilter,
           entity: client,
-          subtitle: client!.primaryContact.email,
+          subtitle: client.primaryContact.email,
         ),
       );
     }

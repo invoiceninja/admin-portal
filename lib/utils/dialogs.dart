@@ -441,7 +441,7 @@ class _FieldConfirmationState extends State<FieldConfirmation> {
 
 void cloneToDialog({
   required BuildContext context,
-  required InvoiceEntity? invoice,
+  required InvoiceEntity invoice,
 }) {
   final localization = AppLocalization.of(context);
   final store = StoreProvider.of<AppState>(context);

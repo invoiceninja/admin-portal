@@ -64,8 +64,9 @@ class CompanyGatewayScreen extends StatelessWidget {
                 ? null
                 : (context) async {
                     final companyGateways = listUIState.selectedIds!
-                        .map<CompanyGatewayEntity?>((companyGatewayId) =>
-                            viewModel.companyGatewayMap[companyGatewayId])
+                        .map<CompanyGatewayEntity>((companyGatewayId) =>
+                            viewModel.companyGatewayMap[companyGatewayId]!)
+                        .whereType<CompanyGatewayEntity>()
                         .toList();
 
                     await showEntityActionsDialog(

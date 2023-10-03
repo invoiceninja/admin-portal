@@ -272,20 +272,20 @@ class UpdateSubscriptionTab implements PersistUI {
 }
 
 void handleSubscriptionAction(BuildContext? context,
-    List<BaseEntity?> subscriptions, EntityAction? action) {
+    List<BaseEntity> subscriptions, EntityAction? action) {
   if (subscriptions.isEmpty) {
     return;
   }
 
   final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
-  final subscription = subscriptions.first as SubscriptionEntity?;
+  final subscription = subscriptions.first as SubscriptionEntity;
   final subscriptionIds =
-      subscriptions.map((subscription) => subscription!.id).toList();
+      subscriptions.map((subscription) => subscription.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: subscription!);
+      editEntity(entity: subscription);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreSubscriptionsRequest(
@@ -312,7 +312,7 @@ void handleSubscriptionAction(BuildContext? context,
       }
 
       for (final subscription in subscriptions) {
-        if (!store.state.subscriptionListState.isSelected(subscription!.id)) {
+        if (!store.state.subscriptionListState.isSelected(subscription.id)) {
           store.dispatch(AddToSubscriptionMultiselect(entity: subscription));
         } else {
           store.dispatch(

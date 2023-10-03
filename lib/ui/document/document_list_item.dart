@@ -28,14 +28,14 @@ class DocumentListItem extends StatelessWidget {
     this.isChecked = false,
   });
 
-  final UserCompanyEntity? userCompany;
+  final UserCompanyEntity userCompany;
   final GestureTapCallback? onTap;
   final GestureTapCallback? onLongPress;
   final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
 
   //final ValueChanged<bool> onCheckboxChanged;
-  final DocumentEntity? document;
+  final DocumentEntity document;
   final String? filter;
 
   @override
@@ -45,7 +45,7 @@ class DocumentListItem extends StatelessWidget {
     final uiState = state.uiState;
     final documentUIState = uiState.documentUIState;
     final filterMatch = filter != null && filter!.isNotEmpty
-        ? document!.matchesFilterValue(filter)
+        ? document.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch;
     final listUIState = documentUIState.listUIState;
@@ -54,7 +54,7 @@ class DocumentListItem extends StatelessWidget {
 
     return DismissibleEntity(
       isSelected: isDesktop(context) &&
-          document!.id ==
+          document.id ==
               (uiState.isEditing
                   ? documentUIState.editing!.id
                   : documentUIState.selectedId),
@@ -64,10 +64,10 @@ class DocumentListItem extends StatelessWidget {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
                 onTap: () =>
-                    onTap != null ? onTap!() : selectEntity(entity: document!),
+                    onTap != null ? onTap!() : selectEntity(entity: document),
                 onLongPress: () => onLongPress != null
                     ? onLongPress!()
-                    : selectEntity(entity: document!, longPress: true),
+                    : selectEntity(entity: document, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 10,
@@ -93,7 +93,7 @@ class DocumentListItem extends StatelessWidget {
                                   ),
                                 )
                               : ActionMenuButton(
-                                  entityActions: document!.getActions(
+                                  entityActions: document.getActions(
                                     userCompany: state.userCompany,
                                     includeEdit: true,
                                   ),
@@ -107,15 +107,15 @@ class DocumentListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              document!.name,
+                              document.name,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             Text(
                               formatDate(
                                       convertTimestampToDateString(
-                                          document!.createdAt),
+                                          document.createdAt),
                                       context) +
-                                  (!document!.isPublic
+                                  (!document.isPublic
                                       ? ' • ${AppLocalization.of(context)!.private}'
                                       : ''),
                               style: Theme.of(context).textTheme.bodySmall,
@@ -123,7 +123,7 @@ class DocumentListItem extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Text(document!.prettySize,
+                      Text(document.prettySize,
                           style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),
@@ -131,10 +131,10 @@ class DocumentListItem extends StatelessWidget {
               )
             : ListTile(
                 onTap: () =>
-                    onTap != null ? onTap!() : selectEntity(entity: document!),
+                    onTap != null ? onTap!() : selectEntity(entity: document),
                 onLongPress: () => onLongPress != null
                     ? onLongPress!()
-                    : selectEntity(entity: document!, longPress: true),
+                    : selectEntity(entity: document, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
                         ignoring: listUIState.isInMultiselect(),
@@ -156,15 +156,15 @@ class DocumentListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              document!.name,
+                              document.name,
                               style: Theme.of(context).textTheme.titleMedium,
                             ),
                             Text(
                               formatDate(
                                       convertTimestampToDateString(
-                                          document!.createdAt),
+                                          document.createdAt),
                                       context) +
-                                  (!document!.isPublic
+                                  (!document.isPublic
                                       ? ' • ${AppLocalization.of(context)!.private}'
                                       : ''),
                               style: Theme.of(context).textTheme.bodySmall,
@@ -172,7 +172,7 @@ class DocumentListItem extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Text(document!.prettySize,
+                      Text(document.prettySize,
                           style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),

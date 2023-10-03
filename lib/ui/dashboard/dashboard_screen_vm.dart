@@ -124,7 +124,7 @@ class DashboardVM {
   final DashboardUIState dashboardUIState;
   final BuiltMap<String, CurrencyEntity> currencyMap;
   final String? filter;
-  final List<BaseEntity?> filteredList;
+  final List<BaseEntity> filteredList;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(DashboardSettings) onSettingsChanged;

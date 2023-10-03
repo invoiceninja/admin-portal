@@ -23,7 +23,7 @@ class UserListItem extends StatelessWidget {
     this.isChecked = false,
   });
 
-  final UserEntity? user;
+  final UserEntity user;
   final GestureTapCallback? onTap;
   final GestureTapCallback? onLongPress;
   final String? filter;
@@ -41,8 +41,8 @@ class UserListItem extends StatelessWidget {
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     final filterMatch = filter != null && filter!.isNotEmpty
-        ? user!.matchesFilterValue(filter)
-        : user!.email;
+        ? user.matchesFilterValue(filter)
+        : user.email;
     final subtitle = filterMatch;
 
     return DismissibleEntity(
@@ -50,10 +50,10 @@ class UserListItem extends StatelessWidget {
       entity: user,
       isSelected: false,
       child: ListTile(
-        onTap: () => onTap != null ? onTap!() : selectEntity(entity: user!),
+        onTap: () => onTap != null ? onTap!() : selectEntity(entity: user),
         onLongPress: () => onLongPress != null
             ? onLongPress!()
-            : selectEntity(entity: user!, longPress: true),
+            : selectEntity(entity: user, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),
@@ -71,11 +71,11 @@ class UserListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  user!.listDisplayName,
+                  user.listDisplayName,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Text(formatNumber(user!.listDisplayAmount, context)!,
+              Text(formatNumber(user.listDisplayAmount, context)!,
                   style: Theme.of(context).textTheme.titleMedium),
             ],
           ),

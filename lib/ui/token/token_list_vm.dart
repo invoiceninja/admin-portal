@@ -43,7 +43,7 @@ class TokenListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final tokenId = viewModel.tokenList[index];
-              final token = viewModel.tokenMap[tokenId];
+              final token = viewModel.tokenMap[tokenId]!;
               final listState = state.getListState(EntityType.token);
               final isInMultiselect = listState.isInMultiselect();
 
@@ -51,7 +51,7 @@ class TokenListBuilder extends StatelessWidget {
                 user: viewModel.state.user,
                 filter: viewModel.filter,
                 token: token,
-                isChecked: isInMultiselect && listState.isSelected(token!.id),
+                isChecked: isInMultiselect && listState.isSelected(token.id),
               );
             });
       },

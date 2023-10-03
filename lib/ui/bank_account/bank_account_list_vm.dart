@@ -36,7 +36,7 @@ class BankAccountListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final bankAccountId = viewModel.bankAccountList[index];
-              final bankAccount = viewModel.bankAccountMap[bankAccountId];
+              final bankAccount = viewModel.bankAccountMap[bankAccountId]!;
               final listState = state.getListState(EntityType.bankAccount);
               final isInMultiselect = listState.isInMultiselect();
 
@@ -45,7 +45,7 @@ class BankAccountListBuilder extends StatelessWidget {
                 filter: viewModel.filter,
                 bankAccount: bankAccount,
                 isChecked:
-                    isInMultiselect && listState.isSelected(bankAccount!.id),
+                    isInMultiselect && listState.isSelected(bankAccount.id),
               );
             });
       },

@@ -352,7 +352,7 @@ class FilterTasksByCustom4 implements PersistUI {
 class UpdateKanban {}
 
 void handleTaskAction(
-    BuildContext? context, List<BaseEntity?> tasks, EntityAction? action) {
+    BuildContext? context, List<BaseEntity> tasks, EntityAction? action) {
   if (tasks.isEmpty) {
     return;
   }
@@ -362,7 +362,7 @@ void handleTaskAction(
   final localization = AppLocalization.of(context);
   final task = tasks.first as TaskEntity;
   final client = state.clientState.get(task.clientId);
-  final taskIds = tasks.map((task) => task!.id).toList();
+  final taskIds = tasks.map((task) => task.id).toList();
 
   switch (action) {
     case EntityAction.edit:
@@ -371,7 +371,8 @@ void handleTaskAction(
     case EntityAction.start:
     case EntityAction.resume:
       final message = taskIds.length > 1
-          ? localization!.startedTasks.replaceFirst(':value', ':count')
+          ? localization!.startedTasks
+              .replaceFirst(':value', ':count')
               .replaceFirst(':count', taskIds.length.toString())
           : localization!.startedTask;
       store.dispatch(StartTasksRequest(
@@ -379,7 +380,8 @@ void handleTaskAction(
       break;
     case EntityAction.stop:
       final message = taskIds.length > 1
-          ? localization!.stoppedTasks.replaceFirst(':value', ':count')
+          ? localization!.stoppedTasks
+              .replaceFirst(':value', ':count')
               .replaceFirst(':count', taskIds.length.toString())
           : localization!.stoppedTask;
       store.dispatch(
@@ -510,7 +512,7 @@ void handleTaskAction(
       }
 
       for (final task in tasks) {
-        if (!store.state.taskListState.isSelected(task!.id)) {
+        if (!store.state.taskListState.isSelected(task.id)) {
           store.dispatch(AddToTaskMultiselect(entity: task));
         } else {
           store.dispatch(RemoveFromTaskMultiselect(entity: task));

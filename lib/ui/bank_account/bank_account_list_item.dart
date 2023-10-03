@@ -23,7 +23,7 @@ class BankAccountListItem extends StatelessWidget {
   final UserEntity? user;
   final GestureTapCallback? onTap;
   final GestureTapCallback? onLongPress;
-  final BankAccountEntity? bankAccount;
+  final BankAccountEntity bankAccount;
   final String? filter;
   final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
@@ -42,16 +42,16 @@ class BankAccountListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: bankAccount,
-      isSelected: bankAccount!.id ==
+      isSelected: bankAccount.id ==
           (uiState.isEditing
               ? bankAccountUIState.editing!.id
               : bankAccountUIState.selectedId),
       child: ListTile(
         onTap: () =>
-            onTap != null ? onTap!() : selectEntity(entity: bankAccount!),
+            onTap != null ? onTap!() : selectEntity(entity: bankAccount),
         onLongPress: () => onLongPress != null
             ? onLongPress!()
-            : selectEntity(entity: bankAccount!, longPress: true),
+            : selectEntity(entity: bankAccount, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),
@@ -69,12 +69,12 @@ class BankAccountListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  bankAccount!.name,
+                  bankAccount.name,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              if (bankAccount!.isConnected)
-                Text(formatNumber(bankAccount!.balance, context)!,
+              if (bankAccount.isConnected)
+                Text(formatNumber(bankAccount.balance, context)!,
                     style: Theme.of(context).textTheme.titleMedium),
             ],
           ),
@@ -82,8 +82,8 @@ class BankAccountListItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(toTitleCase(bankAccount!.type) +
-                (bankAccount!.disabledUpstream
+            Text(toTitleCase(bankAccount.type) +
+                (bankAccount.disabledUpstream
                     ? ' • ${localization!.disabled}'
                     : '')),
             EntityStateLabel(bankAccount),

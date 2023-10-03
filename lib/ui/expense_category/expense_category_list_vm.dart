@@ -44,7 +44,7 @@ class ExpenseCategoryListBuilder extends StatelessWidget {
               final state = viewModel.state;
               final expenseCategoryId = viewModel.expenseCategoryList[index];
               final expenseCategory =
-                  viewModel.expenseCategoryMap[expenseCategoryId];
+                  viewModel.expenseCategoryMap[expenseCategoryId]!;
               final listState = state.getListState(EntityType.expenseCategory);
               final isInMultiselect = listState.isInMultiselect();
 
@@ -52,7 +52,7 @@ class ExpenseCategoryListBuilder extends StatelessWidget {
                 filter: viewModel.filter,
                 expenseCategory: expenseCategory,
                 isChecked: isInMultiselect &&
-                    listState.isSelected(expenseCategory!.id),
+                    listState.isSelected(expenseCategory.id),
               );
             });
       },

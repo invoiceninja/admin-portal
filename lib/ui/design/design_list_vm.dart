@@ -43,14 +43,14 @@ class DesignListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final designId = viewModel.designList[index];
-              final design = viewModel.designMap[designId];
+              final design = viewModel.designMap[designId]!;
               final listState = state.getListState(EntityType.design);
               final isInMultiselect = listState.isInMultiselect();
 
               return DesignListItem(
                 filter: viewModel.filter,
                 design: design,
-                isChecked: isInMultiselect && listState.isSelected(design!.id),
+                isChecked: isInMultiselect && listState.isSelected(design.id),
               );
             });
       },

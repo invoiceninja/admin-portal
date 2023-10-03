@@ -413,20 +413,20 @@ class UpdateTransactionTab implements PersistUI {
 }
 
 void handleTransactionAction(BuildContext? context,
-    List<BaseEntity?> transactions, EntityAction? action) {
+    List<BaseEntity> transactions, EntityAction? action) {
   if (transactions.isEmpty) {
     return;
   }
 
   final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
-  final transaction = transactions.first as TransactionEntity?;
+  final transaction = transactions.first as TransactionEntity;
   final transactionIds =
-      transactions.map((transaction) => transaction!.id).toList();
+      transactions.map((transaction) => transaction.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: transaction!);
+      editEntity(entity: transaction);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreTransactionsRequest(
@@ -454,7 +454,8 @@ void handleTransactionAction(BuildContext? context,
               context,
               transactionIds.length == 1
                   ? localization!.unlinkedTransaction
-                  : localization!.unlinkedTransactions.replaceFirst(':count', '${transactionIds.length}')),
+                  : localization!.unlinkedTransactions
+                      .replaceFirst(':count', '${transactionIds.length}')),
           transactionIds));
       break;
     case EntityAction.toggleMultiselect:
@@ -467,7 +468,7 @@ void handleTransactionAction(BuildContext? context,
       }
 
       for (final transaction in transactions) {
-        if (!store.state.transactionListState.isSelected(transaction!.id)) {
+        if (!store.state.transactionListState.isSelected(transaction.id)) {
           store.dispatch(AddToTransactionMultiselect(entity: transaction));
         } else {
           store.dispatch(RemoveFromTransactionMultiselect(entity: transaction));

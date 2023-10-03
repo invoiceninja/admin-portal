@@ -70,8 +70,8 @@ class TaskStatusScreen extends StatelessWidget {
             isInHeader: true,
             onPressed: () async {
               final taskStatusIds = listUIState.selectedIds!
-                  .map<TaskStatusEntity?>(
-                      (taskStatusId) => viewModel.taskStatusMap[taskStatusId])
+                  .map<TaskStatusEntity>(
+                      (taskStatusId) => viewModel.taskStatusMap[taskStatusId]!)
                   .toList();
 
               await showEntityActionsDialog(

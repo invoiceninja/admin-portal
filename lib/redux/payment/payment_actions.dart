@@ -322,7 +322,7 @@ class UpdatePaymentTab implements PersistUI {
 }
 
 void handlePaymentAction(
-    BuildContext? context, List<BaseEntity?> payments, EntityAction? action) {
+    BuildContext? context, List<BaseEntity> payments, EntityAction? action) {
   if (payments.isEmpty) {
     return;
   }
@@ -330,30 +330,30 @@ void handlePaymentAction(
   final store = StoreProvider.of<AppState>(context!);
   final company = store.state.company;
   final localization = AppLocalization.of(context);
-  final paymentIds = payments.map((payment) => payment!.id).toList();
-  var payment = payments.first as PaymentEntity?;
+  final paymentIds = payments.map((payment) => payment.id).toList();
+  var payment = payments.first as PaymentEntity;
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: payment!);
+      editEntity(entity: payment);
       break;
     case EntityAction.applyPayment:
-      viewEntity(entity: payment!);
+      viewEntity(entity: payment);
       WidgetsBinding.instance.addPostFrameCallback((duration) {
-        editEntity(entity: payment!.rebuild((b) => b..isApplying = true));
+        editEntity(entity: payment.rebuild((b) => b..isApplying = true));
       });
       break;
     case EntityAction.refundPayment:
-      viewEntity(entity: payment!);
+      viewEntity(entity: payment);
       WidgetsBinding.instance.addPostFrameCallback((duration) {
-        if (payment!.invoicePaymentables.length == 1) {
-          payment = payment!.rebuild((b) => b
+        if (payment.invoicePaymentables.length == 1) {
+          payment = payment.rebuild((b) => b
             ..invoices.add(PaymentableEntity(
-                invoiceId: payment!.invoiceId,
-                amount: payment!.completedAmount)));
+                invoiceId: payment.invoiceId,
+                amount: payment.completedAmount)));
         }
         store.dispatch(ViewRefundPayment(
-          payment: payment!.rebuild((b) =>
+          payment: payment.rebuild((b) =>
               b..sendEmail = company.settings.clientManualPaymentNotification),
         ));
       });
@@ -400,7 +400,7 @@ void handlePaymentAction(
       }
 
       for (final payment in payments) {
-        if (!store.state.paymentListState.isSelected(payment!.id)) {
+        if (!store.state.paymentListState.isSelected(payment.id)) {
           store.dispatch(AddToPaymentMultiselect(entity: payment));
         } else {
           store.dispatch(RemoveFromPaymentMultiselect(entity: payment));

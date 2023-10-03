@@ -10,7 +10,6 @@ import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/document/view/document_view_vm.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
 import 'package:printing/printing.dart';
 import 'dart:convert' show utf8;
@@ -45,10 +44,11 @@ class _DocumentViewState extends State<DocumentView> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           ListDivider(),
-          EntityListTile(
-            isFilter: widget.isFilter,
-            entity: entity,
-          ),
+          if (entity != null)
+            EntityListTile(
+              isFilter: widget.isFilter,
+              entity: entity,
+            ),
           Expanded(
             child: document.data == null
                 ? LoadingIndicator()

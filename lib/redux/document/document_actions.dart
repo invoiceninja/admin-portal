@@ -315,19 +315,19 @@ class FilterDocumentsByCustom4 implements PersistUI {
 }
 
 void handleDocumentAction(
-    BuildContext? context, List<BaseEntity?> documents, EntityAction? action) {
+    BuildContext? context, List<BaseEntity> documents, EntityAction? action) {
   if (documents.isEmpty) {
     return;
   }
 
   final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
-  final documentIds = documents.map((document) => document!.id).toList();
-  final document = store.state.documentState.map[documentIds.first];
+  final documentIds = documents.map((document) => document.id).toList();
+  final document = store.state.documentState.map[documentIds.first]!;
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: document!);
+      editEntity(entity: document);
       break;
     case EntityAction.restore:
       final message = documentIds.length > 1
@@ -369,7 +369,7 @@ void handleDocumentAction(
       }
 
       for (final document in documents) {
-        if (!store.state.documentListState.isSelected(document!.id)) {
+        if (!store.state.documentListState.isSelected(document.id)) {
           store.dispatch(AddToDocumentMultiselect(entity: document));
         } else {
           store.dispatch(RemoveFromDocumentMultiselect(entity: document));
@@ -423,7 +423,7 @@ void handleDocumentAction(
               );
             });
       }
-      if (document!.data == null) {
+      if (document.data == null) {
         store.dispatch(LoadDocumentData(
             documentId: document.id,
             completer: Completer<void>()
@@ -456,13 +456,14 @@ void handleDocumentAction(
           await File(filePath).writeAsBytes(document.data!);
 
           if (isDesktopOS()) {
-            showToast(localization!.fileSavedInPath.replaceFirst(':path', directory.path));
+            showToast(localization!.fileSavedInPath
+                .replaceFirst(':path', directory.path));
           } else {
             await Share.shareXFiles([XFile(filePath)]);
           }
         }
       }
-      if (document!.data == null) {
+      if (document.data == null) {
         store.dispatch(LoadDocumentData(
             documentId: document.id,
             completer: Completer<void>()
@@ -480,7 +481,7 @@ void handleDocumentAction(
                 callback: (password, idToken) {
                   final completer = snackBarCompleter<Null>(
                       context, AppLocalization.of(context)!.deletedDocument);
-                  switch (document!.parentType) {
+                  switch (document.parentType) {
                     case EntityType.client:
                       completer.future.then<Null>((_) => store
                           .dispatch(LoadClient(clientId: document.parentId)));

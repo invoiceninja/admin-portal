@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -30,7 +31,7 @@ class InvoiceItemSelector extends StatefulWidget {
   final InvoiceEntity invoice;
   final Function(List<InvoiceItemEntity>, [String?, String?])? onItemsSelected;
   final String clientId;
-  final List<BaseEntity?>? excluded;
+  final List<BaseEntity>? excluded;
   final bool showTasksAndExpenses;
 
   @override
@@ -42,7 +43,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
   String? _filter;
   String? _filterClientId;
   TabController? _tabController;
-  final List<BaseEntity?> _selected = [];
+  final List<BaseEntity> _selected = [];
 
   final _textController = TextEditingController();
 
@@ -76,7 +77,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     String? projectId;
 
     _selected.forEach((entity) {
-      if (entity!.entityType == EntityType.product) {
+      if (entity.entityType == EntityType.product) {
         items.add(
           convertProductToInvoiceItem(
             company: company,
@@ -105,7 +106,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     Navigator.pop(context);
   }
 
-  void _toggleEntity(BaseEntity? entity) {
+  void _toggleEntity(BaseEntity entity) {
     setState(() {
       _filter = '';
       _textController.text = '';
@@ -120,11 +121,9 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
   }
 
   void _updateClientId() {
-    final selected = _selected.firstWhere(
-        (entity) =>
-            entity is BelongsToClient &&
-            (((entity as BelongsToClient).clientId ?? '').isNotEmpty),
-        orElse: () => null);
+    final selected = _selected.firstWhereOrNull((entity) =>
+        entity is BelongsToClient &&
+        (((entity as BelongsToClient).clientId ?? '').isNotEmpty));
 
     if (selected != null) {
       _filterClientId = (selected as BelongsToClient).clientId;
@@ -181,12 +180,12 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
         itemCount: products.length,
         itemBuilder: (BuildContext context, int index) {
           final String? entityId = products[index];
-          final product = state.productState.map[entityId];
+          final product = state.productState.map[entityId]!;
           return ProductListItem(
             isDismissible: false,
             showCost: widget.invoice.isPurchaseOrder &&
                 company.enableProductCost &&
-                product!.cost != 0,
+                product.cost != 0,
             onCheckboxChanged: (checked) => _toggleEntity(product),
             product: product,
             filter: _filter,

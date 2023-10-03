@@ -253,7 +253,7 @@ class FilterProjectsByCustom4 implements PersistUI {
 }
 
 void handleProjectAction(
-    BuildContext? context, List<BaseEntity?> projects, EntityAction? action) {
+    BuildContext? context, List<BaseEntity> projects, EntityAction? action) {
   if (projects.isEmpty) {
     return;
   }
@@ -261,7 +261,7 @@ void handleProjectAction(
   final store = StoreProvider.of<AppState>(context!);
   final state = store.state;
   final project = projects.first as ProjectEntity;
-  final projectIds = projects.map((project) => project!.id).toList();
+  final projectIds = projects.map((project) => project.id).toList();
   final client = state.clientState.get(project.clientId);
   final localization = AppLocalization.of(context);
 
@@ -356,7 +356,7 @@ void handleProjectAction(
       }
 
       for (final project in projects) {
-        if (!store.state.projectListState.isSelected(project!.id)) {
+        if (!store.state.projectListState.isSelected(project.id)) {
           store.dispatch(AddToProjectMultiselect(entity: project));
         } else {
           store.dispatch(RemoveFromProjectMultiselect(entity: project));

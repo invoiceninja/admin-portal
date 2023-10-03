@@ -57,7 +57,7 @@ class DocumentListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final documentId = viewModel.documentList[index];
-              final document = viewModel.documentMap[documentId];
+              final document = viewModel.documentMap[documentId]!;
               final listState = state.getListState(EntityType.document);
               final isInMultiselect = listState.isInMultiselect();
 
@@ -66,7 +66,7 @@ class DocumentListBuilder extends StatelessWidget {
                 filter: viewModel.filter,
                 document: document,
                 isChecked:
-                    isInMultiselect && listState.isSelected(document!.id),
+                    isInMultiselect && listState.isSelected(document.id),
               );
             });
       },

@@ -106,7 +106,7 @@ class VendorOverview extends StatelessWidget {
               iconData: Icons.lock, copyToClipboard: true),
           ListDivider()
         ],
-        if (vendor.hasUser)
+        if (vendor.hasUser && user != null)
           EntityListTile(
             entity: user,
             isFilter: isFilter,

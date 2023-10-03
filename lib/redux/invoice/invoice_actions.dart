@@ -538,7 +538,7 @@ class UpdateInvoiceTab implements PersistUI {
   final int? tabIndex;
 }
 
-void handleInvoiceAction(BuildContext? context, List<BaseEntity?> invoices,
+void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
     EntityAction? action) async {
   if (invoices.isEmpty) {
     return;
@@ -548,7 +548,7 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity?> invoices,
   final state = store.state;
   final localization = AppLocalization.of(context);
   final invoice = invoices.first as InvoiceEntity;
-  final invoiceIds = invoices.map((invoice) => invoice!.id).toList();
+  final invoiceIds = invoices.map((invoice) => invoice.id).toList();
   final client = state.clientState.get(invoice.clientId);
 
   switch (action) {
@@ -834,7 +834,7 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity?> invoices,
         store.dispatch(StartInvoiceMultiselect());
       }
       for (final invoice in invoices) {
-        if (!store.state.invoiceListState.isSelected(invoice!.id)) {
+        if (!store.state.invoiceListState.isSelected(invoice.id)) {
           store.dispatch(AddToInvoiceMultiselect(entity: invoice));
         } else {
           store.dispatch(RemoveFromInvoiceMultiselect(entity: invoice));

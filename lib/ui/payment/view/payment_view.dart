@@ -112,7 +112,8 @@ class _PaymentViewState extends State<PaymentView> {
                       for (final paymentable in payment.invoicePaymentables)
                         EntityListTile(
                           isFilter: widget.isFilter,
-                          entity: state.invoiceState.map[paymentable.invoiceId],
+                          entity:
+                              state.invoiceState.map[paymentable.invoiceId]!,
                           subtitle: formatNumber(paymentable.amount, context,
                                   clientId: payment.clientId)! +
                               ' • ' +
@@ -124,7 +125,7 @@ class _PaymentViewState extends State<PaymentView> {
                       for (final paymentable in payment.creditPaymentables)
                         EntityListTile(
                           isFilter: widget.isFilter,
-                          entity: state.creditState.map[paymentable.creditId],
+                          entity: state.creditState.map[paymentable.creditId]!,
                           subtitle: formatNumber(paymentable.amount, context,
                                   clientId: payment.clientId)! +
                               ' • ' +

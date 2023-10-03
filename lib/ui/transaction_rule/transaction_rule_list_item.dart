@@ -21,7 +21,7 @@ class TransactionRuleListItem extends StatelessWidget {
   final UserEntity? user;
   final GestureTapCallback? onTap;
   final GestureTapCallback? onLongPress;
-  final TransactionRuleEntity? transactionRule;
+  final TransactionRuleEntity transactionRule;
   final String? filter;
   final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
@@ -37,7 +37,7 @@ class TransactionRuleListItem extends StatelessWidget {
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     final filterMatch = filter != null && filter!.isNotEmpty
-        ? transactionRule!.matchesFilterValue(filter)
+        ? transactionRule.matchesFilterValue(filter)
         : null;
 
     var subtitle = '';
@@ -45,9 +45,9 @@ class TransactionRuleListItem extends StatelessWidget {
     if (filterMatch != null) {
       subtitle = filterMatch;
     } else {
-      final vendor = state.vendorState.map[transactionRule!.vendorId];
+      final vendor = state.vendorState.map[transactionRule.vendorId];
       final category =
-          state.expenseCategoryState.map[transactionRule!.categoryId];
+          state.expenseCategoryState.map[transactionRule.categoryId];
 
       if (vendor != null) {
         subtitle += vendor.name;
@@ -65,16 +65,16 @@ class TransactionRuleListItem extends StatelessWidget {
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: transactionRule,
-      isSelected: transactionRule!.id ==
+      isSelected: transactionRule.id ==
           (uiState.isEditing
               ? transactionRuleUIState.editing!.id
               : transactionRuleUIState.selectedId),
       child: ListTile(
         onTap: () =>
-            onTap != null ? onTap!() : selectEntity(entity: transactionRule!),
+            onTap != null ? onTap!() : selectEntity(entity: transactionRule),
         onLongPress: () => onLongPress != null
             ? onLongPress!()
-            : selectEntity(entity: transactionRule!, longPress: true),
+            : selectEntity(entity: transactionRule, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),
@@ -92,11 +92,11 @@ class TransactionRuleListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  transactionRule!.name,
+                  transactionRule.name,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Text(formatNumber(transactionRule!.listDisplayAmount, context)!,
+              Text(formatNumber(transactionRule.listDisplayAmount, context)!,
                   style: Theme.of(context).textTheme.titleMedium),
             ],
           ),

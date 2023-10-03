@@ -204,7 +204,8 @@ class ExpenseOverview extends StatelessWidget {
           entity: invoice,
           isFilter: isFilter,
         ),
-        EntityListTile(entity: purchaseOrder, isFilter: isFilter),
+        if (purchaseOrder != null)
+          EntityListTile(entity: purchaseOrder, isFilter: isFilter),
         EntityListTile(
           entity: transaction,
           isFilter: isFilter,

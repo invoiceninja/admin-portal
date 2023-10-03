@@ -25,7 +25,7 @@ class TokenListItem extends StatelessWidget {
   final UserEntity? user;
   final GestureTapCallback? onTap;
   final GestureTapCallback? onLongPress;
-  final TokenEntity? token;
+  final TokenEntity token;
   final String? filter;
   final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
@@ -39,25 +39,25 @@ class TokenListItem extends StatelessWidget {
     final listUIState = tokenUIState.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
-    final user = state.userState.get(token!.createdUserId!);
+    final user = state.userState.get(token.createdUserId!);
 
     final filterMatch = filter != null && filter!.isNotEmpty
-        ? token!.matchesFilterValue(filter)
+        ? token.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch;
 
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: token,
-      isSelected: token!.id ==
+      isSelected: token.id ==
           (uiState.isEditing
               ? tokenUIState.editing!.id
               : tokenUIState.selectedId),
       child: ListTile(
-        onTap: () => onTap != null ? onTap!() : selectEntity(entity: token!),
+        onTap: () => onTap != null ? onTap!() : selectEntity(entity: token),
         onLongPress: () => onLongPress != null
             ? onLongPress!()
-            : selectEntity(entity: token!, longPress: true),
+            : selectEntity(entity: token, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),
@@ -70,7 +70,7 @@ class TokenListItem extends StatelessWidget {
               )
             : null,
         title: Text(
-          token!.name,
+          token.name,
           style: Theme.of(context).textTheme.titleMedium,
         ),
         subtitle: Column(

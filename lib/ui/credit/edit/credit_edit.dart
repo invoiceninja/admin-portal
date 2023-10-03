@@ -162,6 +162,7 @@ class _CreditEditState extends State<CreditEdit>
                       .map((item) => item.isTask
                           ? viewModel.state!.taskState.map[item.taskId]
                           : viewModel.state!.expenseState.map[item.expenseId])
+                      .whereType<BaseEntity>()
                       .toList(),
                   clientId: invoice.clientId,
                   onItemsSelected: (items, [clientId, projectId]) {

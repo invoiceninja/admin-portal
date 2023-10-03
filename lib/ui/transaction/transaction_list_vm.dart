@@ -36,7 +36,7 @@ class TransactionListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final transactionId = viewModel.transactionList[index];
-              final transaction = viewModel.transactionMap[transactionId];
+              final transaction = viewModel.transactionMap[transactionId]!;
               final listState = state.getListState(EntityType.transaction);
               final isInMultiselect = listState.isInMultiselect();
 
@@ -45,7 +45,7 @@ class TransactionListBuilder extends StatelessWidget {
                 filter: viewModel.filter,
                 transaction: transaction,
                 isChecked:
-                    isInMultiselect && listState.isSelected(transaction!.id),
+                    isInMultiselect && listState.isSelected(transaction.id),
               );
             });
       },

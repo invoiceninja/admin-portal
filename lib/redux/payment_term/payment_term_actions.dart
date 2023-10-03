@@ -247,7 +247,7 @@ class FilterPaymentTermsByCustom4 implements PersistUI {
 }
 
 void handlePaymentTermAction(BuildContext? context,
-    List<BaseEntity?> paymentTerms, EntityAction? action) {
+    List<BaseEntity> paymentTerms, EntityAction? action) {
   if (paymentTerms.isEmpty) {
     return;
   }
@@ -256,13 +256,13 @@ void handlePaymentTermAction(BuildContext? context,
   //final state = store.state;
   //final CompanyEntity company = state.company;
   final localization = AppLocalization.of(context);
-  final paymentTerm = paymentTerms.first as PaymentTermEntity?;
+  final paymentTerm = paymentTerms.first as PaymentTermEntity;
   final paymentTermIds =
-      paymentTerms.map((paymentTerm) => paymentTerm!.id).toList();
+      paymentTerms.map((paymentTerm) => paymentTerm.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: paymentTerm!);
+      editEntity(entity: paymentTerm);
       break;
     case EntityAction.restore:
       final message = paymentTermIds.length > 1
@@ -301,7 +301,7 @@ void handlePaymentTermAction(BuildContext? context,
       }
 
       for (final paymentTerm in paymentTerms) {
-        if (!store.state.paymentTermListState.isSelected(paymentTerm!.id)) {
+        if (!store.state.paymentTermListState.isSelected(paymentTerm.id)) {
           store.dispatch(AddToPaymentTermMultiselect(entity: paymentTerm));
         } else {
           store.dispatch(RemoveFromPaymentTermMultiselect(entity: paymentTerm));

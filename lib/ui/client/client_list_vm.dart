@@ -42,15 +42,15 @@ class ClientListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final clientId = viewModel.clientList[index];
-              final client = viewModel.clientMap[clientId];
+              final client = viewModel.clientMap[clientId]!;
               final listState = state.getListState(EntityType.client);
               final isInMultiselect = listState.isInMultiselect();
 
               return ClientListItem(
                 user: viewModel.state.user,
                 filter: viewModel.filter,
-                client: client as ClientEntity?,
-                isChecked: isInMultiselect && listState.isSelected(client!.id),
+                client: client as ClientEntity,
+                isChecked: isInMultiselect && listState.isSelected(client.id),
               );
             });
       },

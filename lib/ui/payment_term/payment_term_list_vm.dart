@@ -42,7 +42,7 @@ class PaymentTermListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final paymentTermId = viewModel.paymentTermList[index];
-              final paymentTerm = viewModel.paymentTermMap[paymentTermId];
+              final paymentTerm = viewModel.paymentTermMap[paymentTermId]!;
               final listState = state.getListState(EntityType.paymentTerm);
               final isInMultiselect = listState.isInMultiselect();
 
@@ -51,7 +51,7 @@ class PaymentTermListBuilder extends StatelessWidget {
                 filter: viewModel.filter,
                 paymentTerm: paymentTerm,
                 isChecked:
-                    isInMultiselect && listState.isSelected(paymentTerm!.id),
+                    isInMultiselect && listState.isSelected(paymentTerm.id),
               );
             });
       },

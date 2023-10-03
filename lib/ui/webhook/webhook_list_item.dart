@@ -27,7 +27,7 @@ class WebhookListItem extends StatelessWidget {
   final UserEntity? user;
   final GestureTapCallback? onTap;
   final GestureTapCallback? onLongPress;
-  final WebhookEntity? webhook;
+  final WebhookEntity webhook;
   final String? filter;
   final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
@@ -44,22 +44,22 @@ class WebhookListItem extends StatelessWidget {
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
     final filterMatch = filter != null && filter!.isNotEmpty
-        ? webhook!.matchesFilterValue(filter)
+        ? webhook.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch;
 
     return DismissibleEntity(
       userCompany: state.userCompany,
       entity: webhook,
-      isSelected: webhook!.id ==
+      isSelected: webhook.id ==
           (uiState.isEditing
               ? webhookUIState.editing!.id
               : webhookUIState.selectedId),
       child: ListTile(
-        onTap: () => onTap != null ? onTap!() : selectEntity(entity: webhook!),
+        onTap: () => onTap != null ? onTap!() : selectEntity(entity: webhook),
         onLongPress: () => onLongPress != null
             ? onLongPress!()
-            : selectEntity(entity: webhook!, longPress: true),
+            : selectEntity(entity: webhook, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),
@@ -77,11 +77,11 @@ class WebhookListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  webhook!.targetUrl,
+                  webhook.targetUrl,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Text(formatNumber(webhook!.listDisplayAmount, context)!,
+              Text(formatNumber(webhook.listDisplayAmount, context)!,
                   style: Theme.of(context).textTheme.titleMedium),
             ],
           ),
@@ -89,7 +89,7 @@ class WebhookListItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(localization.lookup(webhook!.eventType)!),
+            Text(localization.lookup(webhook.eventType)!),
             subtitle != null && subtitle.isNotEmpty
                 ? Text(
                     subtitle,

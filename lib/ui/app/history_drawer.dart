@@ -258,7 +258,7 @@ class _HistoryListTileState extends State<HistoryListTile> {
             ? null
             : () {
                 showEntityActionsDialog(
-                  entities: [entity],
+                  entities: [entity!],
                   completer: state.prefState.isHistoryFloated
                       ? (Completer<Null>()
                         ..future.then<Null>((_) {

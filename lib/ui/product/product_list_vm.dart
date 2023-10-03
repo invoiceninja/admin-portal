@@ -48,8 +48,8 @@ class ProductListBuilder extends StatelessWidget {
 
               return ProductListItem(
                 filter: viewModel.filter,
-                product: product as ProductEntity?,
-                isChecked: isInMultiselect && listState.isSelected(product!.id),
+                product: product as ProductEntity,
+                isChecked: isInMultiselect && listState.isSelected(product.id),
               );
             });
       },

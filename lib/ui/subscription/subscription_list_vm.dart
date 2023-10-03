@@ -43,7 +43,7 @@ class SubscriptionListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final subscriptionId = viewModel.subscriptionList[index];
-              final subscription = viewModel.subscriptionMap[subscriptionId];
+              final subscription = viewModel.subscriptionMap[subscriptionId]!;
               final listState = state.getListState(EntityType.subscription);
               final isInMultiselect = listState.isInMultiselect();
 
@@ -52,7 +52,7 @@ class SubscriptionListBuilder extends StatelessWidget {
                 filter: viewModel.filter,
                 subscription: subscription,
                 isChecked:
-                    isInMultiselect && listState.isSelected(subscription!.id),
+                    isInMultiselect && listState.isSelected(subscription.id),
               );
             });
       },

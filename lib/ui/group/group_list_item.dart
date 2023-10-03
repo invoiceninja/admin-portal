@@ -27,7 +27,7 @@ class GroupListItem extends StatelessWidget {
   final UserEntity? user;
   final GestureTapCallback? onTap;
   final GestureTapCallback? onLongPress;
-  final GroupEntity? group;
+  final GroupEntity group;
   final String? filter;
   final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
@@ -37,7 +37,7 @@ class GroupListItem extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final filterMatch = filter != null && filter!.isNotEmpty
-        ? group!.matchesFilterValue(filter)
+        ? group.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch;
     final uiState = store.state.uiState;
@@ -51,10 +51,10 @@ class GroupListItem extends StatelessWidget {
       entity: group,
       isSelected: false,
       child: ListTile(
-        onTap: () => onTap != null ? onTap!() : selectEntity(entity: group!),
+        onTap: () => onTap != null ? onTap!() : selectEntity(entity: group),
         onLongPress: () => onLongPress != null
             ? onLongPress!()
-            : selectEntity(entity: group!, longPress: true),
+            : selectEntity(entity: group, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
                 ignoring: listUIState.isInMultiselect(),
@@ -72,11 +72,11 @@ class GroupListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  group!.name,
+                  group.name,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Text(formatNumber(group!.listDisplayAmount, context)!,
+              Text(formatNumber(group.listDisplayAmount, context)!,
                   style: Theme.of(context).textTheme.titleMedium),
             ],
           ),

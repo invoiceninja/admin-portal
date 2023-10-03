@@ -266,7 +266,7 @@ class ClearExpenseCategoryMultiselect {
 }
 
 void handleExpenseCategoryAction(BuildContext? context,
-    List<BaseEntity?> expenseCategories, EntityAction? action) {
+    List<BaseEntity> expenseCategories, EntityAction? action) {
   if (expenseCategories.isEmpty) {
     return;
   }
@@ -274,13 +274,13 @@ void handleExpenseCategoryAction(BuildContext? context,
   final store = StoreProvider.of<AppState>(context!);
   final state = store.state;
   final localization = AppLocalization.of(context);
-  final expenseCategory = expenseCategories.first as ExpenseCategoryEntity?;
+  final expenseCategory = expenseCategories.first as ExpenseCategoryEntity;
   final expenseCategoryIds =
-      expenseCategories.map((expenseCategory) => expenseCategory!.id).toList();
+      expenseCategories.map((expenseCategory) => expenseCategory.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: expenseCategory!);
+      editEntity(entity: expenseCategory);
       break;
     case EntityAction.restore:
       final message = expenseCategoryIds.length > 1
@@ -313,14 +313,14 @@ void handleExpenseCategoryAction(BuildContext? context,
       createEntity(
         context: context,
         entity: ExpenseEntity(state: state)
-            .rebuild((b) => b..categoryId = expenseCategory!.id),
+            .rebuild((b) => b..categoryId = expenseCategory.id),
       );
       break;
     case EntityAction.newTransaction:
       createEntity(
         context: context,
         entity: TransactionEntity(state: state)
-            .rebuild((b) => b..categoryId = expenseCategory!.id),
+            .rebuild((b) => b..categoryId = expenseCategory.id),
       );
       break;
     case EntityAction.toggleMultiselect:
@@ -334,7 +334,7 @@ void handleExpenseCategoryAction(BuildContext? context,
 
       for (final expenseCategory in expenseCategories) {
         if (!store.state.expenseCategoryListState
-            .isSelected(expenseCategory!.id)) {
+            .isSelected(expenseCategory.id)) {
           store.dispatch(
               AddToExpenseCategoryMultiselect(entity: expenseCategory));
         } else {

@@ -81,42 +81,42 @@ List<String> getCurrencyIds(
 var memoizedFilteredSelector = memo2((String? filter, UserCompanyState state) =>
     filteredSelector(filter, state));
 
-List<BaseEntity?> filteredSelector(String? filter, UserCompanyState state) {
-  final List<BaseEntity?> list = []
+List<BaseEntity> filteredSelector(String? filter, UserCompanyState state) {
+  final List<BaseEntity> list = []
     ..addAll(state.productState.list
-        .map((productId) => state.productState.map[productId])
+        .map((productId) => state.productState.map[productId]!)
         .where((product) {
-      return product!.matchesFilter(filter);
+      return product.matchesFilter(filter);
     }).toList())
     ..addAll(state.clientState.list
-        .map((clientId) => state.clientState.map[clientId])
+        .map((clientId) => state.clientState.map[clientId]!)
         .where((client) {
-      return client!.matchesFilter(filter);
+      return client.matchesFilter(filter);
     }).toList())
     ..addAll(state.quoteState.list
-        .map((quoteId) => state.quoteState.map[quoteId])
+        .map((quoteId) => state.quoteState.map[quoteId]!)
         .where((quote) {
-      return quote!.matchesFilter(filter);
+      return quote.matchesFilter(filter);
     }).toList())
     ..addAll(state.paymentState.list
-        .map((paymentId) => state.paymentState.map[paymentId])
+        .map((paymentId) => state.paymentState.map[paymentId]!)
         .where((payment) {
-      return payment!.matchesFilter(filter);
+      return payment.matchesFilter(filter);
     }).toList())
     ..addAll(state.projectState.list
-        .map((projectId) => state.projectState.map[projectId])
+        .map((projectId) => state.projectState.map[projectId]!)
         .where((project) {
-      return project!.matchesFilter(filter);
+      return project.matchesFilter(filter);
     }).toList())
     ..addAll(state.taskState.list
-        .map((taskId) => state.taskState.map[taskId])
+        .map((taskId) => state.taskState.map[taskId]!)
         .where((task) {
-      return task!.matchesFilter(filter);
+      return task.matchesFilter(filter);
     }).toList())
     ..addAll(state.invoiceState.list
-        .map((invoiceId) => state.invoiceState.map[invoiceId])
+        .map((invoiceId) => state.invoiceState.map[invoiceId]!)
         .where((invoice) {
-      return invoice!.matchesFilter(filter);
+      return invoice.matchesFilter(filter);
     }).toList());
 
   list.sort((BaseEntity? entityA, BaseEntity? entityB) {
@@ -127,8 +127,8 @@ List<BaseEntity?> filteredSelector(String? filter, UserCompanyState state) {
 }
 
 String localeSelector(AppState state, {bool twoLetter = false}) {
-  final locale = state.staticState
-          .languageMap[state.company.settings.languageId]?.locale ??
+  final locale = state
+          .staticState.languageMap[state.company.settings.languageId]?.locale ??
       'en';
 
   // https://github.com/flutter/flutter/issues/32090

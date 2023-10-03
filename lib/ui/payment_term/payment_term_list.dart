@@ -46,14 +46,14 @@ class _PaymentTermListState extends State<PaymentTermList> {
           itemCount: viewModel.paymentTermList.length,
           itemBuilder: (BuildContext context, index) {
             final paymentTermId = viewModel.paymentTermList[index];
-            final paymentTerm = viewModel.paymentTermMap[paymentTermId];
+            final paymentTerm = viewModel.paymentTermMap[paymentTermId]!;
 
             return PaymentTermListItem(
               user: viewModel.state.user,
               filter: viewModel.filter,
               paymentTerm: paymentTerm,
               isChecked:
-                  isInMultiselect && listUIState.isSelected(paymentTerm!.id),
+                  isInMultiselect && listUIState.isSelected(paymentTerm.id),
             );
           }),
     );

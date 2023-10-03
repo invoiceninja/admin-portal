@@ -43,7 +43,7 @@ class WebhookListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final webhookId = viewModel.webhookList[index];
-              final webhook = viewModel.webhookMap[webhookId];
+              final webhook = viewModel.webhookMap[webhookId]!;
               final listState = state.getListState(EntityType.webhook);
               final isInMultiselect = listState.isInMultiselect();
 
@@ -51,7 +51,7 @@ class WebhookListBuilder extends StatelessWidget {
                 user: viewModel.state.user,
                 filter: viewModel.filter,
                 webhook: webhook,
-                isChecked: isInMultiselect && listState.isSelected(webhook!.id),
+                isChecked: isInMultiselect && listState.isSelected(webhook.id),
               );
             });
       },

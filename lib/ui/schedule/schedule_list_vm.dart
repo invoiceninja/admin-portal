@@ -36,7 +36,7 @@ class ScheduleListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final scheduleId = viewModel.scheduleList[index];
-              final schedule = viewModel.scheduleMap[scheduleId];
+              final schedule = viewModel.scheduleMap[scheduleId]!;
               final listState = state.getListState(EntityType.schedule);
               final isInMultiselect = listState.isInMultiselect();
 
@@ -45,7 +45,7 @@ class ScheduleListBuilder extends StatelessWidget {
                 filter: viewModel.filter,
                 schedule: schedule,
                 isChecked:
-                    isInMultiselect && listState.isSelected(schedule!.id),
+                    isInMultiselect && listState.isSelected(schedule.id),
               );
             });
       },

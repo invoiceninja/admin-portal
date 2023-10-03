@@ -160,7 +160,7 @@ class EntityTopFilter extends StatelessWidget {
                                       },
                                       onLongPress: () {
                                         handleEntityAction(
-                                            filterEntity as BaseEntity?,
+                                            filterEntity as BaseEntity,
                                             EntityAction.newEntityType(
                                                 relatedTypes[i]));
                                       },
@@ -217,7 +217,8 @@ class EntityTopFilter extends StatelessWidget {
                                       filterEntityType!.relatedTypes
                                           .sublist(
                                               relatedTypes.length - remaining)
-                                          .where((element) => state.company.isModuleEnabled(element))
+                                          .where((element) => state.company
+                                              .isModuleEnabled(element))
                                           .map((type) =>
                                               PopupMenuItem<EntityType>(
                                                 value: type,

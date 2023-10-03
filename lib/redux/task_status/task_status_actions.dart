@@ -266,7 +266,7 @@ class ClearTaskStatusMultiselect {
 }
 
 void handleTaskStatusAction(BuildContext? context,
-    List<BaseEntity?> taskStatuses, EntityAction? action) {
+    List<BaseEntity> taskStatuses, EntityAction? action) {
   if (taskStatuses.isEmpty) {
     return;
   }
@@ -274,13 +274,13 @@ void handleTaskStatusAction(BuildContext? context,
   final store = StoreProvider.of<AppState>(context!);
   final state = store.state;
   final localization = AppLocalization.of(context);
-  final taskStatus = taskStatuses.first as TaskStatusEntity?;
+  final taskStatus = taskStatuses.first as TaskStatusEntity;
   final taskStatusIds =
-      taskStatuses.map((taskStatus) => taskStatus!.id).toList();
+      taskStatuses.map((taskStatus) => taskStatus.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: taskStatus!);
+      editEntity(entity: taskStatus);
       break;
     case EntityAction.restore:
       final message = taskStatusIds.length > 1
@@ -313,7 +313,7 @@ void handleTaskStatusAction(BuildContext? context,
       createEntity(
           context: context,
           entity: TaskEntity(state: state)
-              .rebuild((b) => b..statusId = taskStatus!.id));
+              .rebuild((b) => b..statusId = taskStatus.id));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.taskStatusListState.isInMultiselect()) {
@@ -325,7 +325,7 @@ void handleTaskStatusAction(BuildContext? context,
       }
 
       for (final taskStatus in taskStatuses) {
-        if (!store.state.taskStatusListState.isSelected(taskStatus!.id)) {
+        if (!store.state.taskStatusListState.isSelected(taskStatus.id)) {
           store.dispatch(AddToTaskStatusMultiselect(entity: taskStatus));
         } else {
           store.dispatch(RemoveFromTaskStatusMultiselect(entity: taskStatus));

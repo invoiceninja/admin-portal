@@ -409,7 +409,7 @@ class _CustomTabBarView extends StatelessWidget {
           itemCount: viewModel.filteredList.length,
           itemBuilder: (BuildContext context, index) {
             final localization = AppLocalization.of(context);
-            final entity = viewModel.filteredList[index]!;
+            final entity = viewModel.filteredList[index];
             final subtitle = entity.matchesFilterValue(viewModel.filter);
 
             return ListTile(

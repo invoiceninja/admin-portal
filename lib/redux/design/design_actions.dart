@@ -246,7 +246,7 @@ class FilterDesignsByCustom4 implements PersistUI {
 }
 
 void handleDesignAction(
-    BuildContext? context, List<BaseEntity?> designs, EntityAction? action) {
+    BuildContext? context, List<BaseEntity> designs, EntityAction? action) {
   if (designs.isEmpty) {
     return;
   }
@@ -254,28 +254,28 @@ void handleDesignAction(
   final store = StoreProvider.of<AppState>(context!);
   final state = store.state;
   final localization = AppLocalization.of(context);
-  final design = designs.first as DesignEntity?;
-  final designIds = designs.map((design) => design!.id).toList();
+  final design = designs.first as DesignEntity;
+  final designIds = designs.map((design) => design.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: design!);
+      editEntity(entity: design);
       break;
     case EntityAction.clone:
-      createEntity(context: context, entity: design!.clone);
+      createEntity(context: context, entity: design.clone);
       break;
     case EntityAction.newInvoice:
       createEntity(
           context: context,
           entity: InvoiceEntity(state: state)
-              .rebuild((b) => b.designId = design!.id));
+              .rebuild((b) => b.designId = design.id));
       break;
     case EntityAction.newRecurringInvoice:
       createEntity(
           context: context,
           entity: InvoiceEntity(
                   state: state, entityType: EntityType.recurringInvoice)
-              .rebuild((b) => b.designId = design!.id));
+              .rebuild((b) => b.designId = design.id));
       break;
     case EntityAction.newQuote:
       createEntity(
@@ -283,7 +283,7 @@ void handleDesignAction(
           entity: InvoiceEntity(
             state: state,
             entityType: EntityType.quote,
-          ).rebuild((b) => b.designId = design!.id));
+          ).rebuild((b) => b.designId = design.id));
       break;
     case EntityAction.newCredit:
       createEntity(
@@ -291,7 +291,7 @@ void handleDesignAction(
           entity: InvoiceEntity(
             state: state,
             entityType: EntityType.credit,
-          ).rebuild((b) => b.designId = design!.id));
+          ).rebuild((b) => b.designId = design.id));
       break;
     case EntityAction.restore:
       final message = designIds.length > 1
@@ -330,7 +330,7 @@ void handleDesignAction(
       }
 
       for (final design in designs) {
-        if (!store.state.designListState.isSelected(design!.id)) {
+        if (!store.state.designListState.isSelected(design.id)) {
           store.dispatch(AddToDesignMultiselect(entity: design));
         } else {
           store.dispatch(RemoveFromDesignMultiselect(entity: design));

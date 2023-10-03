@@ -262,7 +262,7 @@ class UpdateBankAccountTab implements PersistUI {
 }
 
 void handleBankAccountAction(BuildContext? context,
-    List<BaseEntity?> bankAccounts, EntityAction? action) {
+    List<BaseEntity> bankAccounts, EntityAction? action) {
   if (bankAccounts.isEmpty) {
     return;
   }
@@ -270,13 +270,13 @@ void handleBankAccountAction(BuildContext? context,
   final store = StoreProvider.of<AppState>(context!);
   final state = store.state;
   final localization = AppLocalization.of(context);
-  final bankAccount = bankAccounts.first as BankAccountEntity?;
+  final bankAccount = bankAccounts.first as BankAccountEntity;
   final bankAccountIds =
-      bankAccounts.map((bankAccount) => bankAccount!.id).toList();
+      bankAccounts.map((bankAccount) => bankAccount.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: bankAccount!);
+      editEntity(entity: bankAccount);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreBankAccountsRequest(
@@ -297,7 +297,7 @@ void handleBankAccountAction(BuildContext? context,
       createEntity(
           context: context,
           entity: TransactionEntity(state: state)
-              .rebuild((b) => b..bankAccountId = bankAccount!.id));
+              .rebuild((b) => b..bankAccountId = bankAccount.id));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.bankAccountListState.isInMultiselect()) {
@@ -309,7 +309,7 @@ void handleBankAccountAction(BuildContext? context,
       }
 
       for (final bankAccount in bankAccounts) {
-        if (!store.state.bankAccountListState.isSelected(bankAccount!.id)) {
+        if (!store.state.bankAccountListState.isSelected(bankAccount.id)) {
           store.dispatch(AddToBankAccountMultiselect(entity: bankAccount));
         } else {
           store.dispatch(RemoveFromBankAccountMultiselect(entity: bankAccount));

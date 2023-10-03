@@ -259,23 +259,23 @@ class FilterTokensByCustom4 implements PersistUI {
 }
 
 void handleTokenAction(
-    BuildContext? context, List<BaseEntity?> tokens, EntityAction? action) {
+    BuildContext? context, List<BaseEntity> tokens, EntityAction? action) {
   if (tokens.isEmpty) {
     return;
   }
 
   final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
-  final token = tokens.first as TokenEntity?;
-  final tokenIds = tokens.map((token) => token!.id).toList();
+  final token = tokens.first as TokenEntity;
+  final tokenIds = tokens.map((token) => token.id).toList();
 
   switch (action) {
     case EntityAction.copy:
-      Clipboard.setData(ClipboardData(text: token!.token));
+      Clipboard.setData(ClipboardData(text: token.token));
       showToast(localization!.copiedToClipboard.replaceFirst(':value ', ''));
       break;
     case EntityAction.edit:
-      editEntity(entity: token!);
+      editEntity(entity: token);
       break;
     case EntityAction.restore:
       final message = tokenIds.length > 1
@@ -314,7 +314,7 @@ void handleTokenAction(
       }
 
       for (final token in tokens) {
-        if (!store.state.tokenListState.isSelected(token!.id)) {
+        if (!store.state.tokenListState.isSelected(token.id)) {
           store.dispatch(AddToTokenMultiselect(entity: token));
         } else {
           store.dispatch(RemoveFromTokenMultiselect(entity: token));

@@ -263,19 +263,19 @@ class UpdateScheduleTab implements PersistUI {
 }
 
 void handleScheduleAction(
-    BuildContext? context, List<BaseEntity?> schedules, EntityAction? action) {
+    BuildContext? context, List<BaseEntity> schedules, EntityAction? action) {
   if (schedules.isEmpty) {
     return;
   }
 
   final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
-  final schedule = schedules.first as ScheduleEntity?;
-  final scheduleIds = schedules.map((schedule) => schedule!.id).toList();
+  final schedule = schedules.first as ScheduleEntity;
+  final scheduleIds = schedules.map((schedule) => schedule.id).toList();
 
   switch (action) {
     case EntityAction.edit:
-      editEntity(entity: schedule!);
+      editEntity(entity: schedule);
       break;
     case EntityAction.restore:
       store.dispatch(RestoreSchedulesRequest(
@@ -302,7 +302,7 @@ void handleScheduleAction(
       }
 
       for (final schedule in schedules) {
-        if (!store.state.scheduleListState.isSelected(schedule!.id)) {
+        if (!store.state.scheduleListState.isSelected(schedule.id)) {
           store.dispatch(AddToScheduleMultiselect(entity: schedule));
         } else {
           store.dispatch(RemoveFromScheduleMultiselect(entity: schedule));

@@ -42,7 +42,7 @@ class TaxRateListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final taxRateId = viewModel.taxRateList[index];
-              final taxRate = viewModel.taxRateMap[taxRateId];
+              final taxRate = viewModel.taxRateMap[taxRateId]!;
               final listState = state.getListState(EntityType.taxRate);
               final isInMultiselect = listState.isInMultiselect();
 
@@ -50,7 +50,7 @@ class TaxRateListBuilder extends StatelessWidget {
                 user: viewModel.userCompany!.user,
                 filter: viewModel.filter,
                 taxRate: taxRate,
-                isChecked: isInMultiselect && listState.isSelected(taxRate!.id),
+                isChecked: isInMultiselect && listState.isSelected(taxRate.id),
               );
             });
       },
