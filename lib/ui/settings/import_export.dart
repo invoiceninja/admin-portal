@@ -866,7 +866,7 @@ class _FieldMapper extends StatelessWidget {
                       1
               ? localization!.duplicateColumnMapping
               : null,
-          onChanged: (_) => onMappedToChanged(),
+          onChanged: (value) => onMappedToChanged(value),
           items: [
             DropdownMenuItem<String>(
               child: SizedBox(),
