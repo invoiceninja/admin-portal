@@ -48,7 +48,7 @@ class EntityType extends EnumClass {
   static const EntityType bankAccount = _$bankAccount;
   static const EntityType recurringExpense = _$recurringExpense;
   static const EntityType recurringQuote = _$recurringQuote;
-  static const EntityType subscription = _$subscription;
+  static const EntityType paymentLink = _$paymentLink;
   static const EntityType webhook = _$webhook;
   static const EntityType token = _$token;
   static const EntityType paymentTerm = _$paymentTerm;
@@ -88,7 +88,7 @@ class EntityType extends EnumClass {
         EntityType.webhook,
         EntityType.expenseCategory,
         EntityType.taskStatus,
-        EntityType.subscription,
+        EntityType.paymentLink,
         EntityType.bankAccount,
         EntityType.transactionRule,
         EntityType.schedule,
@@ -244,7 +244,7 @@ class EntityType extends EnumClass {
   }
 
   String get readableValue {
-    if (this == EntityType.subscription) {
+    if (this == EntityType.paymentLink) {
       return 'payment_link';
     }
 
@@ -851,7 +851,7 @@ abstract class ActivityEntity
       kActivityDeleteSubscription,
       kActivityRestoreSubscription,
     ].contains(activityTypeId)) {
-      return EntityType.subscription;
+      return EntityType.paymentLink;
     } else if ([
       kActivityCreateRecurringInvoice,
       kActivityUpdateRecurringInvoice,

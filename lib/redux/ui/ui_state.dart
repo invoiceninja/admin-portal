@@ -70,7 +70,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       clientUIState: ClientUIState(sortFields[EntityType.client]),
       invoiceUIState: InvoiceUIState(sortFields[EntityType.invoice]),
       subscriptionUIState:
-          SubscriptionUIState(sortFields[EntityType.subscription]),
+          SubscriptionUIState(sortFields[EntityType.paymentLink]),
       taskStatusUIState: TaskStatusUIState(sortFields[EntityType.taskStatus]),
       expenseCategoryUIState:
           ExpenseCategoryUIState(sortFields[EntityType.expenseCategory]),

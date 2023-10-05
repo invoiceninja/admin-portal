@@ -302,7 +302,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
         return purchaseOrderState.map;
       case EntityType.recurringExpense:
         return recurringExpenseState.map;
-      case EntityType.subscription:
+      case EntityType.paymentLink:
         return subscriptionState.map;
       case EntityType.taskStatus:
         return taskStatusState.map;
@@ -403,7 +403,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       case EntityType.recurringExpense:
         return recurringExpenseState.list;
 
-      case EntityType.subscription:
+      case EntityType.paymentLink:
         return subscriptionState.list;
 
       case EntityType.taskStatus:
@@ -486,7 +486,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
       case EntityType.recurringExpense:
         return recurringExpenseUIState;
-      case EntityType.subscription:
+      case EntityType.paymentLink:
         return subscriptionUIState;
       case EntityType.taskStatus:
         return taskStatusUIState;

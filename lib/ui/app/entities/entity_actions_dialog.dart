@@ -179,7 +179,7 @@ class EntityActionListTile extends StatelessWidget {
           case EntityType.taskStatus:
             handleTaskStatusAction(mainContext, entities!, action);
             break;
-          case EntityType.subscription:
+          case EntityType.paymentLink:
             handleSubscriptionAction(mainContext, entities!, action);
             break;
           case EntityType.bankAccount:

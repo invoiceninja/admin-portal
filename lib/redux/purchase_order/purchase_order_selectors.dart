@@ -114,7 +114,7 @@ List<String> filteredPurchaseOrdersSelector(
     } else if (filterEntityType == EntityType.recurringInvoice &&
         invoice.recurringId != filterEntityId) {
       return false;
-    } else if (filterEntityType == EntityType.subscription &&
+    } else if (filterEntityType == EntityType.paymentLink &&
         invoice.subscriptionId != filterEntityId) {
       return false;
     } else if (filterEntityType == EntityType.design &&

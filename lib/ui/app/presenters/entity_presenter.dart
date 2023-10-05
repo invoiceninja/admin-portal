@@ -44,6 +44,7 @@ class EntityPresenter {
           EntityType.product,
           EntityType.transaction,
           EntityType.document,
+          EntityType.paymentLink,
         ].contains(entity.entityType) ||
         isNarrow) {
       return name;

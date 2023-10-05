@@ -104,7 +104,7 @@ abstract class SubscriptionEntity extends Object
   int get hashCode;
 
   @override
-  EntityType get entityType => EntityType.subscription;
+  EntityType get entityType => EntityType.paymentLink;
 
   String get name;
 

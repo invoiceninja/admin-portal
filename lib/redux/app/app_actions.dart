@@ -435,7 +435,7 @@ void viewEntitiesByType({
           case EntityType.recurringExpense:
             action = ViewRecurringExpenseList(page: page);
             break;
-          case EntityType.subscription:
+          case EntityType.paymentLink:
             action = ViewSubscriptionList();
             break;
           case EntityType.taskStatus:
@@ -692,7 +692,7 @@ void viewEntityById({
               force: force,
             ));
             break;
-          case EntityType.subscription:
+          case EntityType.paymentLink:
             store.dispatch(ViewSubscription(
               subscriptionId: entityId,
               force: force,
@@ -963,7 +963,7 @@ void createEntityByType({
                   entityType: EntityType.recurringExpense),
             ));
             break;
-          case EntityType.subscription:
+          case EntityType.paymentLink:
             store.dispatch(EditSubscription(
               force: force,
               subscription: SubscriptionEntity(state: state),
@@ -1210,7 +1210,7 @@ void createEntity({
               completer: completer,
             ));
             break;
-          case EntityType.subscription:
+          case EntityType.paymentLink:
             store.dispatch(EditSubscription(
               subscription: entity as SubscriptionEntity,
               force: force,
@@ -1433,7 +1433,7 @@ void editEntity({
                 recurringExpense: entity as ExpenseEntity,
                 completer: completer));
             break;
-          case EntityType.subscription:
+          case EntityType.paymentLink:
             store.dispatch(EditSubscription(
                 subscription: entity as SubscriptionEntity,
                 completer: completer));
@@ -1556,7 +1556,7 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction? action,
         case EntityType.taskStatus:
           store.dispatch(UpdateCurrentRoute(TaskStatusScreen.route));
           break;
-        case EntityType.subscription:
+        case EntityType.paymentLink:
           store.dispatch(UpdateCurrentRoute(SubscriptionScreen.route));
           break;
         case EntityType.bankAccount:
@@ -1643,7 +1643,7 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction? action,
     case EntityType.recurringExpense:
       handleRecurringExpenseAction(context, entities, action);
       break;
-    case EntityType.subscription:
+    case EntityType.paymentLink:
       handleSubscriptionAction(context, entities, action);
       break;
     case EntityType.taskStatus:

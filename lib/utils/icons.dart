@@ -183,7 +183,7 @@ IconData getEntityIcon(EntityType? entityType) {
     case EntityType.expenseCategory:
     case EntityType.taskStatus:
       return MdiIcons.label;
-    case EntityType.subscription:
+    case EntityType.paymentLink:
       return MdiIcons.shopping;
     case EntityType.purchaseOrder:
       return MdiIcons.fileDocument;
@@ -279,7 +279,7 @@ IconData? getSettingIcon(String section) {
     case kSettingsTaskStatuses:
       return getEntityIcon(EntityType.task);
     case kSettingsPaymentLinks:
-      return getEntityIcon(EntityType.subscription);
+      return getEntityIcon(EntityType.paymentLink);
     case kSettingsSchedules:
       return getEntityIcon(EntityType.schedule);
     case kSettingsBankAccounts:

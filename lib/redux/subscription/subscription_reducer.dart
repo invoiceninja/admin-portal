@@ -48,7 +48,7 @@ Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, ArchiveSubscriptionsSuccess>((completer, action) => ''),
   TypedReducer<String?, DeleteSubscriptionsSuccess>((completer, action) => ''),
   TypedReducer<String?, PreviewEntity>((selectedId, action) =>
-      action.entityType == EntityType.subscription
+      action.entityType == EntityType.paymentLink
           ? action.entityId
           : selectedId),
   TypedReducer<String?, ViewSubscription>(
@@ -72,7 +72,7 @@ Reducer<String?> selectedIdReducer = combineReducers([
   TypedReducer<String?, FilterByEntity>(
       (selectedId, action) => action.clearSelection
           ? ''
-          : action.entityType == EntityType.subscription
+          : action.entityType == EntityType.paymentLink
               ? action.entityId
               : selectedId),
 ]);

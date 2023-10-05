@@ -183,7 +183,7 @@ Reducer<BuiltMap<EntityType, PrefStateSortField>> sortFieldsReducer =
           _resortFields(value, EntityType.taskStatus, action.field)),
   TypedReducer<BuiltMap<EntityType, PrefStateSortField>, SortSubscriptions>(
       (value, action) =>
-          _resortFields(value, EntityType.subscription, action.field)),
+          _resortFields(value, EntityType.paymentLink, action.field)),
   // TODO add to starter.sh
 ]);
 
@@ -773,16 +773,15 @@ Reducer<BuiltList<HistoryRecord>> historyReducer = combineReducers([
       (historyList, action) => _addToHistory(
           historyList,
           HistoryRecord(
-              id: action.subscriptionId, entityType: EntityType.subscription))),
+              id: action.subscriptionId, entityType: EntityType.paymentLink))),
   TypedReducer<BuiltList<HistoryRecord>, ViewSubscriptionList>(
       (historyList, action) => _addToHistory(
-          historyList, HistoryRecord(entityType: EntityType.subscription))),
+          historyList, HistoryRecord(entityType: EntityType.paymentLink))),
   TypedReducer<BuiltList<HistoryRecord>, EditSubscription>(
       (historyList, action) => _addToHistory(
           historyList,
           HistoryRecord(
-              id: action.subscription.id,
-              entityType: EntityType.subscription))),
+              id: action.subscription.id, entityType: EntityType.paymentLink))),
 
   TypedReducer<BuiltList<HistoryRecord>, ViewTaskStatus>(
       (historyList, action) => _addToHistory(

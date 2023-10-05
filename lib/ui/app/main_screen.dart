@@ -580,7 +580,7 @@ class EntityScreens extends StatelessWidget {
           case EntityType.group:
             child = GroupViewScreen();
             break;
-          case EntityType.subscription:
+          case EntityType.paymentLink:
             child = SubscriptionViewScreen();
             break;
           case EntityType.companyGateway:
@@ -643,7 +643,7 @@ class EntityScreens extends StatelessWidget {
           case EntityType.group:
             leftFilterChild = GroupViewScreen(isFilter: true);
             break;
-          case EntityType.subscription:
+          case EntityType.paymentLink:
             leftFilterChild = SubscriptionViewScreen(isFilter: true);
             break;
           case EntityType.companyGateway:

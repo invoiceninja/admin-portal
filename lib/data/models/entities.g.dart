@@ -36,7 +36,7 @@ const EntityType _$transaction = const EntityType._('transaction');
 const EntityType _$bankAccount = const EntityType._('bankAccount');
 const EntityType _$recurringExpense = const EntityType._('recurringExpense');
 const EntityType _$recurringQuote = const EntityType._('recurringQuote');
-const EntityType _$subscription = const EntityType._('subscription');
+const EntityType _$paymentLink = const EntityType._('paymentLink');
 const EntityType _$webhook = const EntityType._('webhook');
 const EntityType _$token = const EntityType._('token');
 const EntityType _$paymentTerm = const EntityType._('paymentTerm');
@@ -117,8 +117,8 @@ EntityType _$typeValueOf(String name) {
       return _$recurringExpense;
     case 'recurringQuote':
       return _$recurringQuote;
-    case 'subscription':
-      return _$subscription;
+    case 'paymentLink':
+      return _$paymentLink;
     case 'webhook':
       return _$webhook;
     case 'token':
@@ -190,7 +190,7 @@ final BuiltSet<EntityType> _$typeValues =
   _$bankAccount,
   _$recurringExpense,
   _$recurringQuote,
-  _$subscription,
+  _$paymentLink,
   _$webhook,
   _$token,
   _$paymentTerm,

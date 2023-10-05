@@ -36,13 +36,13 @@ class SubscriptionScreen extends StatelessWidget {
     final localization = AppLocalization.of(context);
 
     return ListScaffold(
-      entityType: EntityType.subscription,
+      entityType: EntityType.paymentLink,
       onHamburgerLongPress: () =>
           store.dispatch(StartSubscriptionMultiselect()),
       appBarTitle: ListFilter(
         key: ValueKey(
             '__filter_${state.subscriptionListState.filterClearedAt}__'),
-        entityType: EntityType.subscription,
+        entityType: EntityType.paymentLink,
         entityIds: viewModel.subscriptionList,
         filter: state.subscriptionListState.filter,
         onFilterChanged: (value) {
@@ -61,7 +61,7 @@ class SubscriptionScreen extends StatelessWidget {
       },
       body: SubscriptionListBuilder(),
       bottomNavigationBar: AppBottomBar(
-        entityType: EntityType.subscription,
+        entityType: EntityType.paymentLink,
         tableColumns: SubscriptionPresenter.getAllTableFields(userCompany),
         defaultTableColumns:
             SubscriptionPresenter.getDefaultTableFields(userCompany),
@@ -92,13 +92,13 @@ class SubscriptionScreen extends StatelessWidget {
             store.dispatch(FilterSubscriptionsByCustom4(value)),
       ),
       floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany.canCreate(EntityType.subscription)
+              userCompany.canCreate(EntityType.paymentLink)
           ? FloatingActionButton(
               heroTag: 'subscription_fab',
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntityByType(
-                    context: context, entityType: EntityType.subscription);
+                    context: context, entityType: EntityType.paymentLink);
               },
               child: Icon(
                 Icons.add,

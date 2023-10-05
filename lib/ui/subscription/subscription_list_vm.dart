@@ -32,7 +32,7 @@ class SubscriptionListBuilder extends StatelessWidget {
       converter: SubscriptionListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            entityType: EntityType.subscription,
+            entityType: EntityType.paymentLink,
             presenter: SubscriptionPresenter(),
             state: viewModel.state,
             entityList: viewModel.subscriptionList,
@@ -44,7 +44,7 @@ class SubscriptionListBuilder extends StatelessWidget {
               final state = viewModel.state;
               final subscriptionId = viewModel.subscriptionList[index];
               final subscription = viewModel.subscriptionMap[subscriptionId]!;
-              final listState = state.getListState(EntityType.subscription);
+              final listState = state.getListState(EntityType.paymentLink);
               final isInMultiselect = listState.isInMultiselect();
 
               return SubscriptionListItem(
@@ -94,7 +94,7 @@ class SubscriptionListVM {
       userCompany: state.userCompany,
       listState: state.subscriptionListState,
       subscriptionList: memoizedFilteredSubscriptionList(
-        state.getUISelection(EntityType.subscription),
+        state.getUISelection(EntityType.paymentLink),
         state.subscriptionState.map,
         state.subscriptionState.list,
         state.subscriptionListState,
@@ -107,7 +107,7 @@ class SubscriptionListVM {
           handleSubscriptionAction(context, subscriptions, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
-          state.userCompany.settings.getTableColumns(EntityType.subscription) ??
+          state.userCompany.settings.getTableColumns(EntityType.paymentLink) ??
               SubscriptionPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortSubscriptions(field)),
       onClearMultielsect: () => store.dispatch(ClearSubscriptionMultiselect()),

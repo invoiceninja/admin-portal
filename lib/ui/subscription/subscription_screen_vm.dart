@@ -51,7 +51,7 @@ class SubscriptionScreenVM {
     return SubscriptionScreenVM(
       subscriptionMap: state.subscriptionState.map,
       subscriptionList: memoizedFilteredSubscriptionList(
-        state.getUISelection(EntityType.subscription),
+        state.getUISelection(EntityType.paymentLink),
         state.subscriptionState.map,
         state.subscriptionState.list,
         state.subscriptionListState,
