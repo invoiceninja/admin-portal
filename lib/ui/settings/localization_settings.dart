@@ -113,7 +113,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
     final customLabels =
         kCustomLabels.where((key) => !translations.keys.contains(key)).toList();
     customLabels.sort(
-        (a, b) => localization.lookup(a)!.compareTo(localization.lookup(b)!));
+        (a, b) => localization.lookup(a).compareTo(localization.lookup(b)));
 
     return EditScaffold(
       title: localization.localization,
@@ -257,7 +257,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                                 MapEntry<String, DropdownMenuItem<String>>(
                                     id,
                                     DropdownMenuItem<String>(
-                                      child: Text(localization.lookup(month)!),
+                                      child: Text(localization.lookup(month)),
                                       value: id,
                                     )))
                             .values
@@ -280,7 +280,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                         child: DropdownButton<String>(
                           items: customLabels
                               .map((key) => DropdownMenuItem(
-                                    child: Text(localization.lookup(key)!),
+                                    child: Text(localization.lookup(key)),
                                     value: key,
                                   ))
                               .toList(),
@@ -348,7 +348,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                             child: Text(
                           key!.startsWith('country_')
                               ? key.split('_')[1]
-                              : localization.lookup(key)!,
+                              : localization.lookup(key),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         )),

@@ -247,7 +247,7 @@ class ExpenseListItem extends StatelessWidget {
                     ),
                     Text(
                         localization!.lookup(
-                            kExpenseStatuses[expense.calculatedStatusId])!,
+                            kExpenseStatuses[expense.calculatedStatusId]),
                         style: TextStyle(
                             color: category.color.isNotEmpty &&
                                     category.color != '#fff'

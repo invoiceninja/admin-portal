@@ -68,7 +68,7 @@ class _DashboardDateRangePickerState extends State<DashboardDateRangePicker> {
                               .where((value) => value != DateRange.allTime)
                               .map((dateRange) => DropdownMenuItem<DateRange>(
                                     child: Text(localization
-                                        .lookup(dateRange.toString())!),
+                                        .lookup(dateRange.toString())),
                                     value: dateRange,
                                   ))
                               .toList(),
@@ -134,7 +134,7 @@ class _DashboardDateRangePickerState extends State<DashboardDateRangePicker> {
                                         .map((dateRange) => DropdownMenuItem<
                                                 DateRangeComparison>(
                                               child: Text(localization.lookup(
-                                                  dateRange.toString())!),
+                                                  dateRange.toString())),
                                               value: dateRange,
                                             ))
                                         .toList(),

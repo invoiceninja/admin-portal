@@ -393,7 +393,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   },
                   items: kTaxClassifications
                       .map((classification) => DropdownMenuItem(
-                            child: Text(localization.lookup(classification)!),
+                            child: Text(localization.lookup(classification)),
                             value: classification,
                           ))
                       .toList(),

@@ -16,9 +16,9 @@ class AutobillDropdownMenuItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(localization.lookup(type)!),
+        Text(localization.lookup(type)),
         Text(
-          localization.lookup('auto_bill_help_' + type)!,
+          localization.lookup('auto_bill_help_' + type),
           style: Theme.of(context).textTheme.bodySmall,
         ),
       ],

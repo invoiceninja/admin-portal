@@ -229,7 +229,7 @@ class _ProductEditState extends State<ProductEdit> {
                       items: kTaxCategories.keys
                           .map((key) => DropdownMenuItem<String>(
                                 child: Text(
-                                    localization.lookup(kTaxCategories[key])!),
+                                    localization.lookup(kTaxCategories[key])),
                                 value: key,
                               ))
                           .toList()),

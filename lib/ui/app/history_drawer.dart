@@ -120,20 +120,20 @@ class _HistoryListTileState extends State<HistoryListTile> {
       EntityType.reports,
       EntityType.settings,
     ].contains(history.entityType)) {
-      title = Text(localization!.lookup(history.entityType.toString())!);
+      title = Text(localization!.lookup(history.entityType.toString()));
       if (history.entityType == EntityType.reports) {
         subtitle = Text(
-          localization.lookup(state.uiState.reportsUIState.report)!,
+          localization.lookup(state.uiState.reportsUIState.report),
           style: Theme.of(context).textTheme.bodySmall,
         );
       } else if (history.entityType == EntityType.settings) {
         subtitle = Text(
-          localization.lookup(history.id ?? kSettingsCompanyDetails)!,
+          localization.lookup(history.id ?? kSettingsCompanyDetails),
           style: Theme.of(context).textTheme.bodySmall,
         );
       }
     } else if (history.id == null) {
-      title = Text(localization!.lookup(history.entityType.plural)!);
+      title = Text(localization!.lookup(history.entityType.plural));
     } else {
       entity =
           state.getEntityMap(history.entityType)![history.id] as BaseEntity?;
@@ -153,7 +153,7 @@ class _HistoryListTileState extends State<HistoryListTile> {
           : entity.listDisplayName);
 
       subtitle = Text(
-        localization!.lookup('${history.entityType}')!,
+        localization!.lookup('${history.entityType}'),
         style: Theme.of(context).textTheme.bodySmall,
       );
     }

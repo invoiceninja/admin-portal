@@ -128,7 +128,7 @@ class VendorPresenter extends EntityPresenter {
             : formatDate(
                 convertTimestampToDateString(vendor.lastLogin), context));
       case VendorFields.classification:
-        return Text(localization!.lookup(vendor!.classification)!);
+        return Text(localization!.lookup(vendor!.classification));
     }
 
     return super.getField(field: field, context: context);

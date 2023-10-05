@@ -418,7 +418,7 @@ class _CustomTabBarView extends StatelessWidget {
               trailing: Icon(Icons.navigate_next),
               subtitle: Text(subtitle != null
                   ? subtitle
-                  : localization!.lookup('${entity.entityType}')!),
+                  : localization!.lookup('${entity.entityType}')),
               onTap: () => viewEntity(entity: entity),
             );
           });

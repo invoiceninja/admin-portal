@@ -474,12 +474,12 @@ class ReportsScreenVM {
             columns
                 .sort((String? str1, String? str2) => str1!.compareTo(str2!));
 
-            csvData += localization!.lookup(reportState.group)! +
+            csvData += localization!.lookup(reportState.group)+
                 ',' +
                 localization.count;
 
             columns.forEach((column) {
-              csvData += ',' + localization.lookup(column)!;
+              csvData += ',' + localization.lookup(column);
             });
 
             csvData += '\n';

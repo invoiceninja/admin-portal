@@ -234,7 +234,7 @@ class PurchaseOrderListItem extends StatelessWidget {
                         ),
                         Text(
                             localization!.lookup(kPurchaseOrderStatuses[
-                                purchaseOrder.calculatedStatusId])!,
+                                purchaseOrder.calculatedStatusId]),
                             style: TextStyle(
                               color: !purchaseOrder.isSent
                                   ? textColor

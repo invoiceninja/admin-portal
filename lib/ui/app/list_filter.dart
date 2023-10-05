@@ -79,7 +79,7 @@ class _ListFilterState extends State<ListFilter> {
 
     return isSingle
         ? placeholder
-        : placeholder!.replaceFirst(
+        : placeholder.replaceFirst(
             ':count',
             formatNumber(count.toDouble(), context,
                 formatNumberType: FormatNumberType.int)!);
@@ -184,7 +184,7 @@ class _ListFilterState extends State<ListFilter> {
                   menuItembuilder: (dynamic value) {
                     final state = value as EntityState;
                     return Text(
-                      localization.lookup(state.name)!,
+                      localization.lookup(state.name),
                       overflow: TextOverflow.clip,
                       maxLines: 1,
                     );
@@ -244,7 +244,7 @@ class _ListFilterState extends State<ListFilter> {
                   whenEmpty: localization!.all,
                   menuItembuilder: (dynamic value) {
                     final state = value as EntityStatus;
-                    return Text(localization.lookup(state.name)!);
+                    return Text(localization.lookup(state.name));
                   },
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),

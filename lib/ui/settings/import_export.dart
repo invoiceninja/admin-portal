@@ -221,7 +221,7 @@ class _ImportExportState extends State<ImportExport> {
                               .map((importType) => DropdownMenuItem<ImportType>(
                                   value: importType,
                                   child: Text(
-                                      localization.lookup('$importType')!)))
+                                      localization.lookup('$importType'))))
                               .toList()),
                     ),
                   ),
@@ -237,7 +237,7 @@ class _ImportExportState extends State<ImportExport> {
                       items: ExportType.values
                           .map((importType) => DropdownMenuItem<ExportType>(
                               value: importType,
-                              child: Text(localization.lookup('$importType')!)))
+                              child: Text(localization.lookup('$importType'))))
                           .toList(),
                     ),
                     if (DATE_FIELDS.containsKey(_exportType)) ...[
@@ -254,7 +254,7 @@ class _ImportExportState extends State<ImportExport> {
                             .map((dateField) => DropdownMenuItem<String>(
                                 value: dateField,
                                 child:
-                                    Text(localization.lookup('$dateField')!)))
+                                    Text(localization.lookup('$dateField'))))
                             .toList(),
                       ),
                       if (_exportDate.isNotEmpty)
@@ -278,7 +278,7 @@ class _ImportExportState extends State<ImportExport> {
                               }
                               return DropdownMenuItem<String>(
                                 value: dateRange,
-                                child: Text(label!),
+                                child: Text(label),
                               );
                             },
                           ).toList(),
@@ -494,7 +494,7 @@ class _FileImportState extends State<_FileImport> {
               ]
                   .map((importType) => DropdownMenuItem<ImportType>(
                       value: importType,
-                      child: Text(localization.lookup('$importType')!)))
+                      child: Text(localization.lookup('$importType'))))
                   .toList()),
         ),
       )
@@ -666,7 +666,7 @@ class __FileMapperState extends State<_FileMapper> {
       children.addAll([
         SizedBox(height: 25),
         Text(
-          localization!.lookup(entry.key)!,
+          localization!.lookup(entry.key),
           style: Theme.of(context).textTheme.titleMedium,
           overflow: TextOverflow.clip,
           maxLines: 1,
@@ -845,13 +845,11 @@ class _FieldMapper extends StatelessWidget {
       final partsB = fieldB.split('.');
       if (partsA[0] == partsB[0]) {
         return localization!
-            .lookup(partsA[1])!
-            .compareTo(localization.lookup(partsB[1])!);
+            .lookup(partsA[1]).compareTo(localization.lookup(partsB[1]));
       }
 
       return localization!
-          .lookup(partsA[0])!
-          .compareTo(localization.lookup(partsB[0])!);
+          .lookup(partsA[0]).compareTo(localization.lookup(partsB[0]));
     });
 
     return Row(

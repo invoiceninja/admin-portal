@@ -146,7 +146,7 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                         SettingsEntity.LOCK_INVOICES_PAID,
                       ]
                           .map((option) => DropdownMenuItem(
-                                child: Text(localization.lookup(option)!),
+                                child: Text(localization.lookup(option)),
                                 value: option,
                               ))
                           .toList(),

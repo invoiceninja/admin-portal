@@ -76,7 +76,8 @@ class EditScaffold extends StatelessWidget {
       if (account.trialDaysLeft <= 1) {
         upgradeMessage = localization.freeTrialEndsToday;
       } else {
-        upgradeMessage = localization.freeTrialEndsInDays.replaceFirst(':count', account.trialDaysLeft.toString());
+        upgradeMessage = localization.freeTrialEndsInDays
+            .replaceFirst(':count', account.trialDaysLeft.toString());
       }
     }
 
@@ -306,9 +307,7 @@ class EditScaffold extends StatelessWidget {
                                                     .secondary),
                                             SizedBox(width: 16.0),
                                             Text(AppLocalization.of(context)!
-                                                    .lookup(
-                                                        action.toString()) ??
-                                                ''),
+                                                .lookup(action.toString())),
                                           ],
                                         ),
                                       );
@@ -451,8 +450,7 @@ class EditScaffold extends StatelessWidget {
                                                 SizedBox(width: 16.0),
                                                 Text(AppLocalization.of(
                                                         context)!
-                                                    .lookup(
-                                                        action.toString())!),
+                                                    .lookup(action.toString())),
                                               ],
                                             ),
                                             value: action,

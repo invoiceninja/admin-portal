@@ -274,7 +274,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                   SettingsEntity.PORTAL_TASKS_ALL,
                 ]
                     .map((value) => DropdownMenuItem(
-                          child: Text(localization.lookup(value)!),
+                          child: Text(localization.lookup(value)),
                           value: value,
                         ))
                     .toList(),

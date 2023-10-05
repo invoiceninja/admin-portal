@@ -397,7 +397,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                     }
 
                     return DropdownMenuItem<EmailTemplate>(
-                      child: Text(name!),
+                      child: Text(name),
                       value: item,
                     );
                   }).toList(),
@@ -509,7 +509,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                                     id,
                                     DropdownMenuItem<String>(
                                       child:
-                                          Text(localization.lookup(frequency)!),
+                                          Text(localization.lookup(frequency)),
                                       value: id,
                                     )))
                             .values

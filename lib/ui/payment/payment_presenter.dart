@@ -126,7 +126,7 @@ class PaymentPresenter extends EntityPresenter {
         return Text(companyGateway.label);
       case PaymentFields.gatewayType:
         return Text(
-            localization!.lookup(kGatewayTypes[payment!.gatewayTypeId])!);
+            localization!.lookup(kGatewayTypes[payment!.gatewayTypeId]));
     }
 
     return super.getField(field: field, context: context);

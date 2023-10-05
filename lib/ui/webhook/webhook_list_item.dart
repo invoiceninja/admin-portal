@@ -89,7 +89,7 @@ class WebhookListItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(localization.lookup(webhook.eventType)!),
+            Text(localization.lookup(webhook.eventType)),
             subtitle != null && subtitle.isNotEmpty
                 ? Text(
                     subtitle,

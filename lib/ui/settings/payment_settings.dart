@@ -133,7 +133,7 @@ class _PaymentSettingsState extends State<PaymentSettings> {
                             SettingsEntity.AUTO_BILL_OPT_IN,
                             SettingsEntity.AUTO_BILL_OFF,
                           ]
-                              .map((type) => Text(localization.lookup(type)!))
+                              .map((type) => Text(localization.lookup(type)))
                               .toList(),
                   items: [
                     SettingsEntity.AUTO_BILL_ALWAYS,

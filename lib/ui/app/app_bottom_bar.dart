@@ -156,9 +156,9 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   children: EntityState.values.map<Widget>((state) {
                     return CheckboxListTile(
                       key: ValueKey('state_' +
-                          AppLocalization.of(context)!.lookup('$state')!),
+                          AppLocalization.of(context)!.lookup('$state')),
                       title:
-                          Text(AppLocalization.of(context)!.lookup('$state')!),
+                          Text(AppLocalization.of(context)!.lookup('$state')),
                       controlAffinity: ListTileControlAffinity.leading,
                       value: stateFilters.contains(state),
                       activeColor: Theme.of(context).colorScheme.secondary,
@@ -199,7 +199,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                     return CheckboxListTile(
                       key: Key(status.toString()),
                       title: Text(
-                          AppLocalization.of(context)!.lookup(status.name)!),
+                          AppLocalization.of(context)!.lookup(status.name)),
                       controlAffinity: ListTileControlAffinity.leading,
                       value: statusFilters.contains(status),
                       activeColor: Theme.of(context).colorScheme.secondary,
@@ -245,7 +245,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                         child: RadioListTile<String>(
                           dense: true,
                           title: Text(
-                              AppLocalization.of(context)!.lookup(sortField)!),
+                              AppLocalization.of(context)!.lookup(sortField)),
                           subtitle: sortField == listUIState.sortField
                               ? Text(listUIState.sortAscending
                                   ? AppLocalization.of(context)!.ascending

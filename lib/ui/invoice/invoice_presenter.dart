@@ -155,7 +155,7 @@ class InvoicePresenter extends EntityPresenter {
         return Text(invoice.isViewed ? localization!.yes : localization!.no);
       case InvoiceFields.autoBillEnabled:
         return Text(localization!.lookup(
-            invoice.autoBillEnabled ? localization.yes : localization.no)!);
+            invoice.autoBillEnabled ? localization.yes : localization.no));
       case InvoiceFields.clientState:
         return Text(client.state);
       case InvoiceFields.clientCity:

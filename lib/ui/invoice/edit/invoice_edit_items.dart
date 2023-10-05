@@ -334,7 +334,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                       .map((key) => DropdownMenuItem<String>(
                             child: Text(localization.lookup(
                               kTaxCategories[key],
-                            )!),
+                            )),
                             value: key,
                           ))
                       .toList()),

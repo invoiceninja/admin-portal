@@ -232,7 +232,7 @@ class _CompanyGatewayOverview extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 20, left: 20),
           child: Text(
-            localization.lookup(kGatewayTypes[entry.key])!,
+            localization.lookup(kGatewayTypes[entry.key]),
             style: Theme.of(context).textTheme.titleLarge,
           ),
         ),

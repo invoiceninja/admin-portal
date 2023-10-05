@@ -426,7 +426,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                               .map((pageLayout) => DropdownMenuItem<String>(
                                     value: pageLayout,
                                     child:
-                                        Text(localization.lookup(pageLayout)!),
+                                        Text(localization.lookup(pageLayout)),
                                   ))
                               .toList(),
                         ),
@@ -439,7 +439,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           items: kPageSizes
                               .map((pageSize) => DropdownMenuItem<String>(
                                     value: pageSize,
-                                    child: Text(localization.lookup(pageSize)!),
+                                    child: Text(localization.lookup(pageSize)),
                                   ))
                               .toList(),
                         ),

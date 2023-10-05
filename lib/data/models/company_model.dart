@@ -950,7 +950,7 @@ abstract class GatewayEntity extends Object
 
     for (var i = 0; i < gatewayIds.length; i++) {
       final gatewayTypeId = gatewayIds[i];
-      final gatewayType = localization!.lookup(kGatewayTypes[gatewayTypeId])!;
+      final gatewayType = localization!.lookup(kGatewayTypes[gatewayTypeId]);
 
       if (gatewayType.toLowerCase().contains(filter)) {
         return true;
@@ -978,7 +978,7 @@ abstract class GatewayEntity extends Object
 
     for (var i = 0; i < gatewayIds.length; i++) {
       final gatewayTypeId = gatewayIds[i];
-      final gatewayType = localization!.lookup(kGatewayTypes[gatewayTypeId])!;
+      final gatewayType = localization!.lookup(kGatewayTypes[gatewayTypeId]);
 
       if (gatewayType.toLowerCase().contains(filter)) {
         return gatewayType;

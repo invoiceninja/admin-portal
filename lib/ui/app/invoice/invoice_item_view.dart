@@ -65,7 +65,7 @@ class InvoiceItemListTile extends StatelessWidget {
 
     if (company.calculateTaxes) {
       subtitle += ' • ' +
-          localization!.lookup(kTaxCategories[invoiceItem!.taxCategoryId])!;
+          localization!.lookup(kTaxCategories[invoiceItem!.taxCategoryId]);
     }
 
     if (invoiceItem!.taxRate1 != 0) {

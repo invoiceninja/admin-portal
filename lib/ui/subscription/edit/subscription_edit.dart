@@ -446,7 +446,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       items: kFrequencies.entries
                           .map((entry) => DropdownMenuItem(
                                 value: entry.key,
-                                child: Text(localization.lookup(entry.value)!),
+                                child: Text(localization.lookup(entry.value)),
                               ))
                           .toList()),
                   AppDropdownButton<String>(
@@ -461,7 +461,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                       SettingsEntity.AUTO_BILL_OPT_OUT,
                       SettingsEntity.AUTO_BILL_OPT_IN,
                       SettingsEntity.AUTO_BILL_OFF,
-                    ].map((type) => Text(localization.lookup(type)!)).toList(),
+                    ].map((type) => Text(localization.lookup(type))).toList(),
                     items: [
                       SettingsEntity.AUTO_BILL_ALWAYS,
                       SettingsEntity.AUTO_BILL_OPT_OUT,

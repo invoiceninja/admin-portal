@@ -60,7 +60,7 @@ class RecurringInvoiceListItem extends StatelessWidget {
     if (subtitle.isNotEmpty) {
       subtitle += ' • ';
     }
-    subtitle += localization.lookup(kFrequencies[invoice.frequencyId])!;
+    subtitle += localization.lookup(kFrequencies[invoice.frequencyId]);
 
     return DismissibleEntity(
         isSelected: isDesktop(context) &&
@@ -235,7 +235,7 @@ class RecurringInvoiceListItem extends StatelessWidget {
                                     overflow: TextOverflow.ellipsis,
                                   ),
                           ),
-                          Text(statusLabel!,
+                          Text(statusLabel,
                               style: TextStyle(
                                 color:
                                     !invoice.isSent ? textColor : statusColor,

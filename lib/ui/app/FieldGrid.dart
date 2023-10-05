@@ -44,7 +44,7 @@ class FieldGrid extends StatelessWidget {
                 children: <Widget>[
                   Flexible(
                     child: Text(
-                      localization!.lookup(field)!,
+                      localization!.lookup(field),
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: textColor!.withOpacity(.65),

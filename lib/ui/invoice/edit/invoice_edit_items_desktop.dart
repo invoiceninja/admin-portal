@@ -471,7 +471,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               return Text(item.taxName3);
                             } else if (column == COLUMN_TAX_CATEGORY) {
                               return Text(localization
-                                  .lookup(kTaxCategories[item.taxCategoryId])!);
+                                  .lookup(kTaxCategories[item.taxCategoryId]));
                             } else if (column == COLUMN_UNIT_COST) {
                               return Text(
                                 formatNumber(
@@ -966,7 +966,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                     .map((key) => DropdownMenuItem<String>(
                                           child: Text(localization.lookup(
                                             kTaxCategories[key],
-                                          )!),
+                                          )),
                                           value: key,
                                         ))
                                     .toList()),

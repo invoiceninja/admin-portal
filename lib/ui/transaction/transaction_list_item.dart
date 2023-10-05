@@ -227,7 +227,7 @@ class TransactionListItem extends StatelessWidget {
                         ),
                         Text(
                             localization!.lookup(
-                                kPurchaseOrderStatuses[transaction.statusId])!,
+                                kPurchaseOrderStatuses[transaction.statusId]),
                             style: TextStyle(
                                 color: TransactionStatusColors(
                                         state.prefState.colorThemeModel)

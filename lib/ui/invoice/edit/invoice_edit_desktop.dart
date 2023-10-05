@@ -371,7 +371,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                     .map((entry) => DropdownMenuItem(
                                           value: entry.key,
                                           child: Text(localization
-                                              .lookup(entry.value)!),
+                                              .lookup(entry.value)),
                                         ))
                                     .toList()),
                             DatePicker(
@@ -568,7 +568,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                         SettingsEntity.AUTO_BILL_OFF,
                                       ]
                                           .map((type) =>
-                                              Text(localization.lookup(type)!))
+                                              Text(localization.lookup(type)))
                                           .toList(),
                               onChanged: (dynamic value) => viewModel
                                       .onChanged!(

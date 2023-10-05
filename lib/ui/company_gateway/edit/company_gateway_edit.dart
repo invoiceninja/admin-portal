@@ -245,7 +245,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                                 SettingsEntity.AUTO_BILL_OFF,
                               ]
                                   .map((type) =>
-                                      Text(localization.lookup(type)!))
+                                      Text(localization.lookup(type)))
                                   .toList(),
                       onChanged: (dynamic value) => viewModel.onChanged(
                           companyGateway
@@ -267,8 +267,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     SwitchListTile(
                         title: Text(kGatewayTypes.containsKey(gatewayTypeId)
                             ? localization
-                                .lookup(kGatewayTypes[gatewayTypeId] ?? '')!
-                            : '$gatewayTypeId'),
+                                .lookup(kGatewayTypes[gatewayTypeId] ?? ''): '$gatewayTypeId'),
                         activeColor: Theme.of(context).colorScheme.secondary,
                         value: companyGateway
                             .getSettingsForGatewayTypeId(gatewayTypeId)
@@ -466,7 +465,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                       items: enabledGatewayIds
                           .map((gatewayTypeId) => DropdownMenuItem(
                                 child: Text(localization.lookup(
-                                    kGatewayTypes[gatewayTypeId] ?? '')!),
+                                    kGatewayTypes[gatewayTypeId] ?? '')),
                                 value: gatewayTypeId,
                               ))
                           .toList(),

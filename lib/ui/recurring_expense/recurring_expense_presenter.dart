@@ -151,7 +151,7 @@ class RecurringExpensePresenter extends EntityPresenter {
       case RecurringExpenseFields.remainingCycles:
         return Text('${expense!.remainingCycles}');
       case RecurringExpenseFields.frequency:
-        return Text(localization!.lookup(kFrequencies[expense!.frequencyId])!);
+        return Text(localization!.lookup(kFrequencies[expense!.frequencyId]));
     }
 
     return super.getField(field: field, context: context);

@@ -310,7 +310,7 @@ class _SettingsListTileState extends State<SettingsListTile> {
               child: Icon(icon ?? icon, size: 22),
             ),
             title: Text(
-              localization.lookup(widget.section)!,
+              localization.lookup(widget.section),
               style:
                   Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 14),
             ),
@@ -331,7 +331,7 @@ class SettingsSearch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final company = store.state.company;
 
@@ -417,7 +417,7 @@ class SettingsSearch extends StatelessWidget {
           'online_payment_email',
           'manual_payment_email',
           'use_available_credits',
-          'enable_applying_payments_later#2022-06-06',
+          'admin_initiated_payments#2022-06-06',
           'allow_over_payment',
           'allow_under_payment',
           'auto_bill_standard_invoices#2023-01-17',
@@ -696,8 +696,8 @@ class SettingsSearch extends StatelessWidget {
         for (var parts
             in sections.map((section) => section.split('#').toList()))
           if ((filter ?? '').trim().isEmpty ||
-              localization!
-                  .lookup(parts[1])!
+              localization
+                  .lookup(parts[1])
                   .toLowerCase()
                   .contains(filter!.toLowerCase()))
             ListTile(
@@ -708,9 +708,9 @@ class SettingsSearch extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(localization!.lookup(parts[1])!),
+                        Text(localization.lookup(parts[1])),
                         Text(
-                          localization.lookup(parts[2])!,
+                          localization.lookup(parts[2]),
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ],
@@ -739,17 +739,17 @@ class SettingsSearch extends StatelessWidget {
           for (var section in map.keys)
             for (int i = 0; i < map[section]!.length; i++)
               for (var field in map[section]![i])
-                if (localization!
-                    .lookup(field.split('#')[0])!
+                if (localization
+                    .lookup(field.split('#')[0])
                     .toLowerCase()
                     .contains(filter!.toLowerCase()))
                   ListTile(
-                    title: Text(localization.lookup(field.split('#')[0])!),
+                    title: Text(localization.lookup(field.split('#')[0])),
                     leading: Padding(
                       padding: const EdgeInsets.only(left: 6, top: 10),
                       child: Icon(getSettingIcon(section), size: 22),
                     ),
-                    subtitle: Text(localization.lookup(section)!),
+                    subtitle: Text(localization.lookup(section)),
                     onTap: () => viewModel!.loadSection(context, section, i),
                   ),
         ],

@@ -431,7 +431,7 @@ class _UserEditState extends State<UserEdit>
                           final editPermission = 'edit_' + type.apiValue;
                           final viewPermission = 'view_' + type.apiValue;
                           return DataRow(cells: [
-                            DataCell(Text(localization.lookup('$type')!),
+                            DataCell(Text(localization.lookup('$type')),
                                 onTap: () {
                               _togglePermission(createPermission);
                               WidgetsBinding.instance

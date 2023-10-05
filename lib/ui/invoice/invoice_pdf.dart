@@ -259,7 +259,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                                     Uri.parse(invoice.invitationDownloadLink));
                               } else {
                                 final fileName = localization
-                                        .lookup('${invoice.entityType}')! +
+                                        .lookup('${invoice.entityType}')+
                                     '_' +
                                     (invoice.number.isEmpty
                                         ? localization.pending
@@ -322,7 +322,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                     canDebug: false,
                     maxPageWidth: 800,
                     pdfFileName:
-                        localization.lookup(invoice.entityType!.snakeCase)! +
+                        localization.lookup(invoice.entityType!.snakeCase)+
                             '_' +
                             invoice.number +
                             '.pdf',

@@ -404,7 +404,7 @@ void handleProductAction(
               children: kTaxCategories.keys.map((taxCategoryId) {
                 final taxCategory = kTaxCategories[taxCategoryId];
                 return SimpleDialogOption(
-                  child: Text(localization.lookup(taxCategory)!),
+                  child: Text(localization.lookup(taxCategory)),
                   onPressed: () {
                     Navigator.of(context).pop();
                     store.dispatch(SetTaxCategoryProductsRequest(

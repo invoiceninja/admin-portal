@@ -130,7 +130,7 @@ class _WebhookEditState extends State<WebhookEdit> {
                       items: WebhookEntity.EVENT_MAP.keys
                           .map((eventId) => DropdownMenuItem(
                                 child: Text(localization
-                                    .lookup(WebhookEntity.EVENT_MAP[eventId])!),
+                                    .lookup(WebhookEntity.EVENT_MAP[eventId])),
                                 value: eventId,
                               ))
                           .toList(),

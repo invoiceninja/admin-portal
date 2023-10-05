@@ -141,7 +141,7 @@ class ReportsScreen extends StatelessWidget {
         items: reports
             .map((report) => DropdownMenuItem(
                   value: report,
-                  child: Text(localization.lookup(report)!),
+                  child: Text(localization.lookup(report)),
                 ))
             .toList(),
       ),
@@ -160,8 +160,7 @@ class ReportsScreen extends StatelessWidget {
           final columnTitle = state.company.getCustomFieldLabel(column);
           return DropdownMenuItem(
             child: Text(columnTitle.isEmpty
-                ? localization.lookup(column)!
-                : columnTitle),
+                ? localization.lookup(column): columnTitle),
             value: column,
           );
         }).toList(),
@@ -246,7 +245,7 @@ class ReportsScreen extends StatelessWidget {
                 .map((column) => DropdownMenuItem<String>(
                       value: column,
                       child: Text(
-                        localization.lookup(column)!,
+                        localization.lookup(column),
                       ),
                     ))
                 .toList()),
@@ -269,7 +268,7 @@ class ReportsScreen extends StatelessWidget {
         items: DateRange.values
             .where((value) => value != DateRange.allTime)
             .map((dateRange) => DropdownMenuItem<DateRange>(
-                  child: Text(localization.lookup(dateRange.toString())!),
+                  child: Text(localization.lookup(dateRange.toString())),
                   value: dateRange,
                 ))
             .toList(),
@@ -314,7 +313,7 @@ class ReportsScreen extends StatelessWidget {
                   ReportColumnType.duration,
                 ].contains(getReportColumnType(column, context)))
             .map((column) => DropdownMenuItem(
-                  child: Text(localization.lookup(column)!),
+                  child: Text(localization.lookup(column)),
                   value: column,
                 ))
             .toList(),
@@ -396,7 +395,7 @@ class ReportsScreen extends StatelessWidget {
                               : reportResult.entities!;
                           confirmCallback(
                               context: context,
-                              message: localization.lookup(action.toString())! +
+                              message: localization.lookup(action.toString())+
                                   ' • ' +
                                   (entities.length == 1
                                       ? '1 ${localization.lookup(firstEntity!.entityType.toString())}'
@@ -949,7 +948,7 @@ class ReportResult {
     }
 
     final localization = AppLocalization.of(navigatorKey.currentContext!)!;
-    if (localization.lookup(value)!.toLowerCase().contains(filter)) {
+    if (localization.lookup(value).toLowerCase().contains(filter)) {
       return true;
     }
 
@@ -1054,7 +1053,7 @@ class ReportResult {
                 Text(
                   (company.getCustomFieldLabel(column!).isNotEmpty
                           ? company.getCustomFieldLabel(column)
-                          : localization!.lookup(column))! +
+                          : localization!.lookup(column))+
                       '   ',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -1136,7 +1135,7 @@ class ReportResult {
             },
             items: kAgeGroups.keys
                 .map((ageGroup) => DropdownMenuItem(
-                      child: Text(localization!.lookup(ageGroup)!),
+                      child: Text(localization!.lookup(ageGroup)),
                       value: ageGroup,
                     ))
                 .toList(),
@@ -1186,7 +1185,7 @@ class ReportResult {
             items: DateRange.values
                 .where((value) => value != DateRange.allTime)
                 .map((dateRange) => DropdownMenuItem<DateRange>(
-                      child: Text(localization!.lookup(dateRange.toString())!),
+                      child: Text(localization!.lookup(dateRange.toString())),
                       value: dateRange,
                     ))
                 .toList(),
@@ -1370,7 +1369,7 @@ class ReportResult {
           } else {
             value = group == 'null' ? localization!.blank : group;
           }
-          value = value! + ' (' + values!['count']!.floor().toString() + ')';
+          value = value+ ' (' + values!['count']!.floor().toString() + ')';
         } else if (columnType == ReportColumnType.number) {
           final currencyId = values!['${column}_currency_id'];
           value = formatNumber(values[column], context,
@@ -1465,8 +1464,7 @@ class ReportResult {
           mt.DataColumn(
             label: Text(
               company.getCustomFieldLabel(column!).isEmpty
-                  ? localization.lookup(column)!
-                  : company.getCustomFieldLabel(column),
+                  ? localization.lookup(column): company.getCustomFieldLabel(column),
               overflow: TextOverflow.ellipsis,
             ),
             numeric: true,

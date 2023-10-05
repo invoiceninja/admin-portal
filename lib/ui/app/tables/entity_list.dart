@@ -277,7 +277,7 @@ class _EntityListState extends State<EntityList> {
                         return DataColumn(
                             label: Container(
                               child: Text(
-                                label!,
+                                label,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -442,9 +442,7 @@ class _EntityListState extends State<EntityList> {
                                                     .secondary),
                                             SizedBox(width: 16.0),
                                             Text(AppLocalization.of(context)!
-                                                    .lookup(
-                                                        action.toString()) ??
-                                                ''),
+                                                .lookup(action.toString())),
                                           ],
                                         ),
                                       );

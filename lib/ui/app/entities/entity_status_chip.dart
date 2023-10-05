@@ -127,7 +127,7 @@ class EntityStatusChip extends StatelessWidget {
           return SizedBox();
       }
 
-      label = localization!.lookup(label) ?? '';
+      label = localization!.lookup(label);
 
       if (label.isEmpty) {
         label = localization.logged;

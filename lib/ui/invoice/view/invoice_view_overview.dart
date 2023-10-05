@@ -190,7 +190,7 @@ class InvoiceOverview extends StatelessWidget {
             ? localization.endless
             : '${invoice.remainingCycles}',
         RecurringInvoiceFields.autoBill:
-            localization.lookup(invoice.autoBill)! +
+            localization.lookup(invoice.autoBill)+
                 ([
                   SettingsEntity.AUTO_BILL_OPT_IN,
                   SettingsEntity.AUTO_BILL_OPT_OUT

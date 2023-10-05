@@ -180,11 +180,11 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                             children: [
                               Expanded(
                                 child:
-                                    Text(localization.lookup(rule.searchKey)!),
+                                    Text(localization.lookup(rule.searchKey)),
                               ),
                               Expanded(
                                 child:
-                                    Text(localization.lookup(rule.operator)!),
+                                    Text(localization.lookup(rule.operator)),
                               ),
                               Expanded(
                                 child: Text(rule.value),

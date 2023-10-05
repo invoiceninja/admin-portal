@@ -59,7 +59,7 @@ class BottomButtons extends StatelessWidget {
                     Icon(getEntityActionIcon(action1)),
                     SizedBox(width: 12),
                     Text(
-                      localization.lookup('$action1')!,
+                      localization.lookup('$action1'),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: textColor.withOpacity(
@@ -84,7 +84,7 @@ class BottomButtons extends StatelessWidget {
                       Icon(getEntityActionIcon(action2)),
                       SizedBox(width: 12),
                       Text(
-                        localization.lookup('$action2')!,
+                        localization.lookup('$action2'),
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: textColor.withOpacity(

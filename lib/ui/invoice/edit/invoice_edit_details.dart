@@ -219,7 +219,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                   items: kFrequencies.entries
                       .map((entry) => DropdownMenuItem(
                             value: entry.key,
-                            child: Text(localization.lookup(entry.value)!),
+                            child: Text(localization.lookup(entry.value)),
                           ))
                       .toList()),
               DatePicker(
@@ -357,7 +357,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                             SettingsEntity.AUTO_BILL_OPT_IN,
                             SettingsEntity.AUTO_BILL_OFF,
                           ]
-                              .map((type) => Text(localization.lookup(type)!))
+                              .map((type) => Text(localization.lookup(type)))
                               .toList(),
                   onChanged: (dynamic value) => viewModel
                       .onChanged!(invoice.rebuild((b) => b..autoBill = value)),

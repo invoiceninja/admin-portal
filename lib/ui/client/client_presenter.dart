@@ -164,7 +164,7 @@ class ClientPresenter extends EntityPresenter {
             client!.contacts.map((contact) => contact.fullName).join('\n');
         return TableTooltip(message: contacts);
       case ClientFields.classification:
-        return Text(localization!.lookup(client!.classification)!);
+        return Text(localization!.lookup(client!.classification));
     }
 
     return super.getField(field: field, context: context);

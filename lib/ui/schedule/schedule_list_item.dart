@@ -43,7 +43,7 @@ class ScheduleListItem extends StatelessWidget {
 
     String subtitle = formatDate(schedule.nextRun, context);
 
-    String title = localization.lookup(schedule.template) ?? '';
+    String title = localization.lookup(schedule.template);
     if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_RECORD) {
       final entityType = EntityType.valueOf(schedule.parameters.entityType!);
       final entity =
@@ -60,7 +60,7 @@ class ScheduleListItem extends StatelessWidget {
       }
 
       subtitle += ' • ' +
-          localization.lookup(schedule.parameters.entityType)! +
+          localization.lookup(schedule.parameters.entityType) +
           ' ' +
           (entity?.listDisplayName ?? '');
     } else if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT) {
@@ -74,7 +74,7 @@ class ScheduleListItem extends StatelessWidget {
             ': ${schedule.parameters.clients!.length} ${localization.clients}';
       }
       subtitle +=
-          ' • ' + localization.lookup(kFrequencies[schedule.frequencyId])!;
+          ' • ' + localization.lookup(kFrequencies[schedule.frequencyId]);
     }
 
     return DismissibleEntity(

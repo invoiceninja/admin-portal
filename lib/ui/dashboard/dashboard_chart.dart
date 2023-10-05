@@ -186,7 +186,7 @@ class _DashboardChartState extends State<DashboardChart> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(localization!.lookup(dataGroup.name)!,
+                        Text(localization!.lookup(dataGroup.name),
                             style: theme.textTheme.titleLarge!.copyWith(
                               color: isSelected ? Colors.white : null,
                             )),

@@ -357,7 +357,7 @@ class ExpenseEditDetailsState extends State<ExpenseEditDetails> {
                   items: kFrequencies.entries
                       .map((entry) => DropdownMenuItem(
                             value: entry.key,
-                            child: Text(localization.lookup(entry.value)!),
+                            child: Text(localization.lookup(entry.value)),
                           ))
                       .toList()),
               DatePicker(

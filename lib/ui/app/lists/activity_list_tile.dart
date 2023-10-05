@@ -140,7 +140,7 @@ class ActivityListTile extends StatelessWidget {
         children: <Widget>[
           Flexible(
             child: Text(((activity.notes).isNotEmpty
-                    ? localization.lookup(activity.notes)!.trim() + '\n'
+                    ? localization.lookup(activity.notes).trim() + '\n'
                     : '') +
                 formatDate(
                     convertTimestampToDateString(activity.createdAt), context,

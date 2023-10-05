@@ -227,7 +227,7 @@ class QuoteListItem extends StatelessWidget {
                           ),
                           Text(
                               localization!.lookup(
-                                  kQuoteStatuses[quote.calculatedStatusId])!,
+                                  kQuoteStatuses[quote.calculatedStatusId]),
                               style: TextStyle(
                                 color: !quote.isSent
                                     ? textColor

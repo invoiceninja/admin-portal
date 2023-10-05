@@ -118,7 +118,7 @@ class RecurringInvoicePresenter extends EntityPresenter {
                 showTime: true, showSeconds: false)
             : formatDate(invoice.nextSendDate, context));
       case RecurringInvoiceFields.frequency:
-        return Text(localization!.lookup(kFrequencies[invoice.frequencyId])!);
+        return Text(localization!.lookup(kFrequencies[invoice.frequencyId]));
       case RecurringInvoiceFields.dueDateDays:
         return Text(invoice.dueDateDays == 'terms'
             ? localization!.paymentTerm
@@ -130,7 +130,7 @@ class RecurringInvoicePresenter extends EntityPresenter {
                         : localization!.dayCount
                             .replaceFirst(':count', '${invoice.dueDateDays}'));
       case RecurringInvoiceFields.autoBill:
-        return Text(localization!.lookup(invoice.autoBill)!);
+        return Text(localization!.lookup(invoice.autoBill));
     }
 
     return super.getField(field: field, context: context);

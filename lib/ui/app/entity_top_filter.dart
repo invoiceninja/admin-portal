@@ -141,7 +141,7 @@ class EntityTopFilter extends StatelessWidget {
                                     child: TextButton(
                                       child: Text(
                                         localization!.lookup(
-                                            '${relatedTypes[i].plural}')!,
+                                            '${relatedTypes[i].plural}'),
                                         style: TextStyle(
                                           color: state.headerTextColor,
                                         ),
@@ -434,8 +434,7 @@ class EntityTopFilterHeader extends StatelessWidget {
                                           .secondary),
                                   SizedBox(width: 16.0),
                                   Text(AppLocalization.of(context)!
-                                          .lookup(action.toString()) ??
-                                      ''),
+                                      .lookup(action.toString())),
                                 ],
                               ),
                             );

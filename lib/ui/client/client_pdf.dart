@@ -268,7 +268,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                             .where((value) => value != DateRange.allTime)
                             .map((dateRange) => DropdownMenuItem<DateRange>(
                                   child: Text(localization
-                                      .lookup(dateRange.toString())!),
+                                      .lookup(dateRange.toString())),
                                   value: dateRange,
                                 ))
                             .toList(),
@@ -298,7 +298,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                             kStatementStatusUnpaid,
                           ]
                               .map((value) => DropdownMenuItem<String>(
-                                    child: Text(localization.lookup(value)!),
+                                    child: Text(localization.lookup(value)),
                                     value: value,
                                   ))
                               .toList()),
@@ -321,7 +321,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                         selectedValues:
                             state.prefState.statementIncludes.toList(),
                         menuItembuilder: (dynamic option) => Text(
-                          localization.lookup(option)!,
+                          localization.lookup(option),
                           style: TextStyle(fontSize: 14),
                         ),
                         isDense: true,

@@ -177,7 +177,7 @@ abstract class ScheduleEntity extends Object
   @override
   String get listDisplayName {
     final localization = AppLocalization.of(navigatorKey.currentContext!)!;
-    return localization.lookup(template) ?? '';
+    return localization.lookup(template);
   }
 
   @override

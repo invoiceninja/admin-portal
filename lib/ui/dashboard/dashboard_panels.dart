@@ -164,7 +164,7 @@ class DashboardPanels extends StatelessWidget {
             .map((dateRange) => PopupMenuItem(
                   child: Text(dateRange == DateRange.custom
                       ? '${localization.more}...'
-                      : localization.lookup(dateRange.toString())!),
+                      : localization.lookup(dateRange.toString())),
                   value: dateRange,
                 ))
             .toList(),
@@ -634,7 +634,7 @@ class DashboardPanels extends StatelessWidget {
                               padding: const EdgeInsets.all(0),
                               children: [
                                 Text(
-                                    localization!.lookup(dashboardField.field)!,
+                                    localization!.lookup(dashboardField.field),
                                     style: textTheme.titleMedium,
                                     textAlign: TextAlign.center),
                                 SizedBox(height: 6),
@@ -649,7 +649,7 @@ class DashboardPanels extends StatelessWidget {
                                     textAlign: TextAlign.center),
                                 SizedBox(height: 6),
                                 Text(
-                                    localization.lookup(dashboardField.period)!,
+                                    localization.lookup(dashboardField.period),
                                     style: textTheme.bodySmall,
                                     textAlign: TextAlign.center),
                               ],
@@ -1192,9 +1192,9 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
                     ListTile(
                       key: ValueKey(
                           '__${dashboardField.field}_${dashboardField.period}_'),
-                      title: Text(localization.lookup(dashboardField.field)!),
+                      title: Text(localization.lookup(dashboardField.field)),
                       subtitle:
-                          Text(localization.lookup(dashboardField.period)!),
+                          Text(localization.lookup(dashboardField.period)),
                       leading: IconButton(
                         icon: Icon(Icons.close),
                         onPressed: () {
@@ -1297,7 +1297,7 @@ class _DashboardFieldState extends State<_DashboardField> {
       fields.forEach((field) {
         if (company.isModuleEnabled(entityType)) {
           items.add(DropdownMenuItem<String>(
-            child: Text(localization.lookup(field)!),
+            child: Text(localization.lookup(field)),
             value: field,
           ));
         }

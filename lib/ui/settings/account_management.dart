@@ -205,7 +205,7 @@ class _AccountManagementState extends State<AccountManagement>
                   children: kModules.keys.map((module) {
                 return CheckboxListTile(
                   controlAffinity: ListTileControlAffinity.leading,
-                  title: Text(localization.lookup(kModules[module])!),
+                  title: Text(localization.lookup(kModules[module])),
                   value: company.enabledModules & module != 0,
                   activeColor: Theme.of(context).colorScheme.secondary,
                   onChanged: (value) {

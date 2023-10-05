@@ -559,7 +559,7 @@ class _ClientPortalState extends State<ClientPortal>
                     return Row(
                       children: [
                         Expanded(
-                          child: Text(localization.lookup(field.key)!),
+                          child: Text(localization.lookup(field.key)),
                         ),
                         Expanded(
                           child: AppDropdownButton<String>(

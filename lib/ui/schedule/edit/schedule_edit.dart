@@ -164,7 +164,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                         items: ScheduleEntity.TEMPLATES
                             .map((entry) => DropdownMenuItem(
                                   value: entry,
-                                  child: Text(localization.lookup(entry)!),
+                                  child: Text(localization.lookup(entry)),
                                 ))
                             .toList()),
                     DatePicker(
@@ -203,7 +203,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                               .map((entry) => DropdownMenuItem(
                                     value: entry.key,
                                     child:
-                                        Text(localization.lookup(entry.value)!),
+                                        Text(localization.lookup(entry.value)),
                                   ))
                               .toList()),
                       if (schedule.frequencyId.isNotEmpty)
@@ -249,7 +249,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           .where((value) => value != DateRange.custom)
                           .map((dateRange) => DropdownMenuItem<DateRange>(
                                 child: Text(
-                                    localization.lookup(dateRange.toString())!),
+                                    localization.lookup(dateRange.toString())),
                                 value: dateRange,
                               ))
                           .toList(),
@@ -268,7 +268,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                         kStatementStatusUnpaid,
                       ]
                           .map((value) => DropdownMenuItem<String>(
-                                child: Text(localization.lookup(value)!),
+                                child: Text(localization.lookup(value)),
                                 value: value,
                               ))
                           .toList(),
@@ -357,7 +357,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                               .map((entityType) => DropdownMenuItem<String>(
                                     value: entityType.apiValue,
                                     child: Text(
-                                      localization.lookup(entityType.apiValue)!,
+                                      localization.lookup(entityType.apiValue),
                                     ),
                                   ))
                               .toList()),
