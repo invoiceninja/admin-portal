@@ -486,8 +486,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                                       child: ListTile(
                                         tileColor: Colors.orange.shade800,
                                         subtitle: Text(
-                                          localization
-                                              .verifyPhoneNumber2faHelp,
+                                          localization.verifyPhoneNumber2faHelp,
                                           style: TextStyle(color: Colors.white),
                                         ),
                                         onTap: () {

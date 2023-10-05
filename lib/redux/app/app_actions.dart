@@ -374,7 +374,9 @@ void viewEntitiesByType({
               company: store.state.company,
               user: store.state.user,
               clearFilter: true,
-              section: kSettingsCompanyDetails,
+              section: store.state.prefState.isMobile
+                  ? null
+                  : kSettingsCompanyDetails,
             );
             break;
           case EntityType.client:
