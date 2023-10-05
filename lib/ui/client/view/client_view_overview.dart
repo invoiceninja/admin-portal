@@ -169,9 +169,9 @@ class ClientOverview extends StatelessWidget {
           IconMessage(client.privateNotes, iconData: Icons.lock),
           ListDivider()
         ],
-        if (client.hasGroup)
+        if (client.hasGroup && group != null)
           EntityListTile(
-            entity: group!,
+            entity: group,
             isFilter: isFilter,
           ),
         for (var customerReference in tokenMap.keys) ...[

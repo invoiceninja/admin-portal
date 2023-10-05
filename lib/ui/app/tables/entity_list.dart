@@ -100,7 +100,7 @@ class _EntityListState extends State<EntityList> {
         if (selectedIndex >= 0) {
           _firstRowIndex = (selectedIndex / rowsPerPage).floor() * rowsPerPage;
         }
-      } else {
+      } else if (state.historyList.isNotEmpty) {
         final history = state.historyList.first;
         if (history.page != null) {
           _firstRowIndex = history.page! * rowsPerPage;
