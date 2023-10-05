@@ -46,7 +46,7 @@ class VendorPicker extends StatelessWidget {
       entityList: memoizedDropdownVendorList(vendorState.map, vendorState.list,
           state.userState.map, state.staticState),
       entityMap: vendorState.map,
-      validator: (String val) => val.trim().isEmpty
+      validator: (String? val) => (val ?? '').trim().isEmpty
           ? AppLocalization.of(context)!.pleaseSelectAVendor
           : null,
       onSelected: onSelected,

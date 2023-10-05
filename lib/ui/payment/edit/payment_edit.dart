@@ -211,7 +211,7 @@ class _PaymentEditState extends State<PaymentEdit> {
                   entityType: EntityType.client,
                   labelText: AppLocalization.of(context)!.client,
                   entityId: payment.clientId,
-                  validator: (String val) => val.trim().isEmpty
+                  validator: (String? val) => (val ?? '').trim().isEmpty
                       ? AppLocalization.of(context)!.pleaseSelectAClient
                       : null,
                   onSelected: (client) {

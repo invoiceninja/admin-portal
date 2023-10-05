@@ -51,7 +51,7 @@ class EntityDropdown extends StatefulWidget {
   final bool? autofocus;
   final BuiltMap<String?, SelectableEntity?>? entityMap;
   final Function(SelectableEntity?) onSelected;
-  final Function? validator;
+  final String? Function(String?)? validator;
   final bool autoValidate;
   final bool allowClearing;
   final Function(String?)? onFieldSubmitted;
@@ -331,7 +331,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
             FocusNode focusNode,
             VoidCallback onFieldSubmitted) {
           return DecoratedFormField(
-            validator: widget.validator as dynamic Function(String)?,
+            validator: widget.validator,
             showClear: showClear,
             label: widget.labelText,
             autofocus:
@@ -424,7 +424,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
             child: TextFormField(
               focusNode: _focusNode,
               readOnly: true,
-              validator: widget.validator as String? Function(String?)?,
+              validator: widget.validator,
               autovalidateMode: widget.autoValidate
                   ? AutovalidateMode.always
                   : AutovalidateMode.onUserInteraction,
