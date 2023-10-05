@@ -220,8 +220,8 @@ class _ImportExportState extends State<ImportExport> {
                           ]
                               .map((importType) => DropdownMenuItem<ImportType>(
                                   value: importType,
-                                  child: Text(
-                                      localization.lookup('$importType'))))
+                                  child:
+                                      Text(localization.lookup('$importType'))))
                               .toList()),
                     ),
                   ),
@@ -253,8 +253,7 @@ class _ImportExportState extends State<ImportExport> {
                         items: DATE_FIELDS[_exportType]!
                             .map((dateField) => DropdownMenuItem<String>(
                                 value: dateField,
-                                child:
-                                    Text(localization.lookup('$dateField'))))
+                                child: Text(localization.lookup('$dateField'))))
                             .toList(),
                       ),
                       if (_exportDate.isNotEmpty)
@@ -845,11 +844,13 @@ class _FieldMapper extends StatelessWidget {
       final partsB = fieldB.split('.');
       if (partsA[0] == partsB[0]) {
         return localization!
-            .lookup(partsA[1]).compareTo(localization.lookup(partsB[1]));
+            .lookup(partsA[1])
+            .compareTo(localization.lookup(partsB[1]));
       }
 
       return localization!
-          .lookup(partsA[0]).compareTo(localization.lookup(partsB[0]));
+          .lookup(partsA[0])
+          .compareTo(localization.lookup(partsB[0]));
     });
 
     return Row(
@@ -865,7 +866,7 @@ class _FieldMapper extends StatelessWidget {
                       1
               ? localization!.duplicateColumnMapping
               : null,
-          onChanged: onMappedToChanged as void Function(String?)?,
+          onChanged: (_) => onMappedToChanged(),
           items: [
             DropdownMenuItem<String>(
               child: SizedBox(),
