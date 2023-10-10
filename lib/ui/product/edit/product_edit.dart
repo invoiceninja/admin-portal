@@ -314,7 +314,7 @@ class _ProductEditState extends State<ProductEdit> {
                       DecoratedFormField(
                         keyboardType: TextInputType.number,
                         controller: _notificationThresholdController,
-                        label: localization.notificationThreshold+
+                        label: localization.notificationThreshold +
                             ((company.stockNotification &&
                                     company.stockNotificationThreshold != 0)
                                 ? ' • ${localization.defaultWord} ${company.stockNotificationThreshold}'

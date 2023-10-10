@@ -295,7 +295,7 @@ class _EntityListState extends State<EntityList> {
                       _firstRowIndex = row;
                       store.dispatch(UpdateLastHistory(
                           (row / state.prefState.rowsPerPage).floor()));
-                                        },
+                    },
                     initialFirstRowIndex: _firstRowIndex,
                     availableRowsPerPage: [
                       10,

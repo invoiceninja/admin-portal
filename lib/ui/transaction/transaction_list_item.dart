@@ -116,8 +116,7 @@ class TransactionListItem extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(transaction.description,
-                                    style: textStyle),
+                                Text(transaction.description, style: textStyle),
                                 Text(
                                   state.bankAccountState
                                       .get(transaction.bankAccountId)

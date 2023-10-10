@@ -98,7 +98,7 @@ class MultiSelectListState extends State<MultiSelectList> {
     if (parts.length == 1 || parts[0] == widget.prefix) {
       return localization!.lookup(parts.last);
     } else {
-      return localization!.lookup(parts[0])+
+      return localization!.lookup(parts[0]) +
           ' ' +
           localization.lookup(parts[1]);
     }

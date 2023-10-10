@@ -65,9 +65,8 @@ class _EntityListTileState extends State<EntityListTile> {
             _isHovered;
 
     final leading = ActionMenuButton(
-      iconData: isHovered
-          ? Icons.more_vert
-          : getEntityIcon(widget.entity.entityType),
+      iconData:
+          isHovered ? Icons.more_vert : getEntityIcon(widget.entity.entityType),
       iconSize: isHovered ? null : 18,
       entityActions: widget.entity.getActions(
           userCompany: state.userCompany,
@@ -168,8 +167,8 @@ class _EntityListTileState extends State<EntityListTile> {
                   : null,
               leading: leading,
               trailing: trailing,
-              isThreeLine: (widget.subtitle ?? '').isNotEmpty &&
-                  !widget.entity.isActive,
+              isThreeLine:
+                  (widget.subtitle ?? '').isNotEmpty && !widget.entity.isActive,
             ),
           ),
           ListDivider(),

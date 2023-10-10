@@ -22,9 +22,7 @@ class SubscriptionPresenter extends EntityPresenter {
     //final state = StoreProvider.of<AppState>(context).state;
     //final subscription = entity as InvoiceEntity;
 
-    switch (field) {
-      
-    }
+    switch (field) {}
 
     return super.getField(field: field, context: context);
   }

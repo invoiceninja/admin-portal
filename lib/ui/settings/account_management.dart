@@ -384,7 +384,8 @@ class _AccountOverview extends StatelessWidget {
                       text: (account.isEligibleForTrial &&
                                   !supportsInAppPurchase()
                               ? localization.startFreeTrial
-                              : localization.changePlan).toUpperCase(),
+                              : localization.changePlan)
+                          .toUpperCase(),
                     ),
                   ),
                   onPressed: () {

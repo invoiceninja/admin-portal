@@ -19,9 +19,7 @@ class SchedulePresenter extends EntityPresenter {
     //final state = StoreProvider.of<AppState>(context).state;
     //final schedule = entity as ScheduleEntity;
 
-    switch (field) {
-      
-    }
+    switch (field) {}
 
     return super.getField(field: field, context: context);
   }

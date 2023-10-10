@@ -21,9 +21,7 @@ class PaymentTermPresenter extends EntityPresenter {
     //final state = StoreProvider.of<AppState>(context).state;
     //final paymentTerm = entity as InvoiceEntity;
 
-    switch (field) {
-      
-    }
+    switch (field) {}
 
     return super.getField(field: field, context: context);
   }

@@ -268,7 +268,8 @@ class _DashboardScreenState extends State<DashboardScreen>
                 tooltip: localization!.enableReactApp,
                 onPressed: () async {
                   final credentials = state.credentials;
-                  final account = state.account.rebuild((b) => b..setReactAsDefaultAP = true);
+                  final account = state.account
+                      .rebuild((b) => b..setReactAsDefaultAP = true);
                   final url = '${credentials.url}/accounts/${account.id}';
                   final data = serializers.serializeWith(
                       AccountEntity.serializer, account);

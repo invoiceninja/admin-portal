@@ -626,7 +626,8 @@ class _LoginState extends State<LoginView> {
                                   SizedBox(width: 10),
                                   Text(
                                     _disable2FA
-                                        ? localization!.sendCode: _recoverPassword
+                                        ? localization!.sendCode
+                                        : _recoverPassword
                                             ? localization!.recoverPassword
                                             : _createAccount
                                                 ? (_loginType ==
@@ -635,7 +636,8 @@ class _LoginState extends State<LoginView> {
                                                     : _loginType ==
                                                             LOGIN_TYPE_MICROSOFT
                                                         ? localization!
-                                                            .microsoftSignUp: localization!
+                                                            .microsoftSignUp
+                                                        : localization!
                                                             .googleSignUp)
                                                 : (_loginType ==
                                                         LOGIN_TYPE_EMAIL
@@ -643,7 +645,8 @@ class _LoginState extends State<LoginView> {
                                                     : _loginType ==
                                                             LOGIN_TYPE_MICROSOFT
                                                         ? localization!
-                                                            .microsoftSignIn: localization!
+                                                            .microsoftSignIn
+                                                        : localization!
                                                             .googleSignIn),
                                     style: TextStyle(
                                         fontSize: 18, color: Colors.white),
@@ -660,7 +663,8 @@ class _LoginState extends State<LoginView> {
                           child: TextButton(
                             child: Text(
                               _createAccount
-                                  ? localization!.loginLabel: localization!.registerLabel,
+                                  ? localization!.loginLabel
+                                  : localization!.registerLabel,
                               textAlign: TextAlign.center,
                             ),
                             onPressed: () {

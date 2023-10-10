@@ -183,8 +183,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                                     Text(localization.lookup(rule.searchKey)),
                               ),
                               Expanded(
-                                child:
-                                    Text(localization.lookup(rule.operator)),
+                                child: Text(localization.lookup(rule.operator)),
                               ),
                               Expanded(
                                 child: Text(rule.value),

@@ -781,7 +781,8 @@ class __DesignImportDialogState extends State<_DesignImportDialog> {
                 kDesignIncludes
               ]) {
                 if (!map!.containsKey(field)) {
-                  throw localization.invalidDesign.replaceFirst(':value', field);
+                  throw localization.invalidDesign
+                      .replaceFirst(':value', field);
                 }
               }
               Navigator.of(context).pop(value);

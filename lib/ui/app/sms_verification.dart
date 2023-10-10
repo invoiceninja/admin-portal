@@ -312,7 +312,8 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
 
     return AlertDialog(
       title: Text(widget.email == null
-          ? localization.verifyPhoneNumber: localization.disableTwoFactor),
+          ? localization.verifyPhoneNumber
+          : localization.disableTwoFactor),
       content: _isLoading
           ? LoadingIndicator(height: 80)
           : AppForm(
@@ -322,7 +323,8 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(localization.codeWasSentTo.replaceFirst(':number', state.user.phone)),
+                  Text(localization.codeWasSentTo
+                      .replaceFirst(':number', state.user.phone)),
                   SizedBox(height: 20),
                   AppPinput(
                     onCompleted: (code) => _code = code,

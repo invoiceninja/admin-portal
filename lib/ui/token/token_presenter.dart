@@ -22,9 +22,7 @@ class TokenPresenter extends EntityPresenter {
     //final state = StoreProvider.of<AppState>(context).state;
     //final token = entity as InvoiceEntity;
 
-    switch (field) {
-      
-    }
+    switch (field) {}
 
     return super.getField(field: field, context: context);
   }

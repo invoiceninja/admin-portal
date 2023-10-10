@@ -672,7 +672,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
 
                                 if (options.length == 1 &&
                                     options[0].productKey.toLowerCase() ==
-                                        lineItems[index].productKey
+                                        lineItems[index]
+                                            .productKey
                                             .toLowerCase()) {
                                   return <ProductEntity>[];
                                 }
@@ -717,7 +718,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                       ..quantity =
                                           item.isTask || item.quantity != 0
                                               ? item.quantity
-                                              : viewModel.state!.company.defaultQuantity
+                                              : viewModel.state!.company
+                                                      .defaultQuantity
                                                   ? 1
                                                   : product.quantity
                                       ..customValue1 = product.customValue1
@@ -866,7 +868,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               autofocus: _autocompleteFocusIndex == index,
                               initialValue: lineItems[index].notes,
                               onChanged: (value) => _onChanged(
-                                  lineItems[index].rebuild((b) => b..notes = value),
+                                  lineItems[index]
+                                      .rebuild((b) => b..notes = value),
                                   index),
                             ),
                           ),
@@ -883,7 +886,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               value: lineItems[index].customValue1,
                               hideFieldLabel: true,
                               onChanged: (value) => _onChanged(
-                                  lineItems[index].rebuild((b) => b..customValue1 = value),
+                                  lineItems[index]
+                                      .rebuild((b) => b..customValue1 = value),
                                   index),
                               onSavePressed:
                                   widget.entityViewModel.onSavePressed,
@@ -902,7 +906,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               value: lineItems[index].customValue2,
                               hideFieldLabel: true,
                               onChanged: (value) => _onChanged(
-                                  lineItems[index].rebuild((b) => b..customValue2 = value),
+                                  lineItems[index]
+                                      .rebuild((b) => b..customValue2 = value),
                                   index),
                               onSavePressed:
                                   widget.entityViewModel.onSavePressed,
@@ -921,7 +926,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               value: lineItems[index].customValue3,
                               hideFieldLabel: true,
                               onChanged: (value) => _onChanged(
-                                  lineItems[index].rebuild((b) => b..customValue3 = value),
+                                  lineItems[index]
+                                      .rebuild((b) => b..customValue3 = value),
                                   index),
                               onSavePressed:
                                   widget.entityViewModel.onSavePressed,
@@ -940,7 +946,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               value: lineItems[index].customValue4,
                               hideFieldLabel: true,
                               onChanged: (value) => _onChanged(
-                                  lineItems[index].rebuild((b) => b..customValue4 = value),
+                                  lineItems[index]
+                                      .rebuild((b) => b..customValue4 = value),
                                   index),
                               onSavePressed:
                                   widget.entityViewModel.onSavePressed,

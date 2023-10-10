@@ -67,11 +67,11 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
               headerBuilder: (BuildContext context, bool isExpanded) {
                 return ListTile(
                   leading: Icon(getActivityIcon(systemLog.categoryId)),
-                  title: Text(localization!.lookup(systemLog.category)+
+                  title: Text(localization!.lookup(systemLog.category) +
                       '  ›  ' +
                       localization.lookup(systemLog.type)),
                   isThreeLine: true,
-                  subtitle: Text(localization.lookup(systemLog.event)+
+                  subtitle: Text(localization.lookup(systemLog.event) +
                       (client.isOld ? ' • ${client.displayName}' : '') +
                       '\n' +
                       formatDate(

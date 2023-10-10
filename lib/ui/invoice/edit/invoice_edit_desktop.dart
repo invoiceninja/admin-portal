@@ -370,8 +370,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                 items: kFrequencies.entries
                                     .map((entry) => DropdownMenuItem(
                                           value: entry.key,
-                                          child: Text(localization
-                                              .lookup(entry.value)),
+                                          child: Text(
+                                              localization.lookup(entry.value)),
                                         ))
                                     .toList()),
                             DatePicker(

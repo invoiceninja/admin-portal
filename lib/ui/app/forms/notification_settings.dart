@@ -102,7 +102,8 @@ class NotificationSettings extends StatelessWidget {
                           kNotificationsPurchaseOrderViewed,
                           kNotificationsPurchaseOrderAccepted,
                         ].contains(eventType) &&
-                        !state.company.isModuleEnabled(EntityType.purchaseOrder)) {
+                        !state.company
+                            .isModuleEnabled(EntityType.purchaseOrder)) {
                       return false;
                     } else if ([
                           kNotificationsInventoryThreshold,
@@ -134,7 +135,8 @@ class NotificationSettings extends StatelessWidget {
                     return DataRow(cells: [
                       // workaround for mistake in translations
                       DataCell(Text(eventType == kNotificationsInvoiceSent
-                          ? localization.invoiceSentNotificationLabel: localization.lookup(eventType))),
+                          ? localization.invoiceSentNotificationLabel
+                          : localization.lookup(eventType))),
                       DataCell(isAllEnabled
                           ? value == NOTIFY_ALL
                               ? IconText(

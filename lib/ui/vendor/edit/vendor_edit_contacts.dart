@@ -105,7 +105,8 @@ class _VendorEditContactsState extends State<VendorEditContacts> {
         child: AppButton(
           label: (vendor.contacts.length == 1
                   ? localization!.addSecondContact
-                  : localization!.addContact).toUpperCase(),
+                  : localization!.addContact)
+              .toUpperCase(),
           onPressed: () => viewModel.onAddContactPressed(),
         ),
       ));

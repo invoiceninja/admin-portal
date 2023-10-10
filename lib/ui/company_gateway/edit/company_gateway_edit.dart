@@ -244,8 +244,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                                 SettingsEntity.AUTO_BILL_OPT_IN,
                                 SettingsEntity.AUTO_BILL_OFF,
                               ]
-                                  .map((type) =>
-                                      Text(localization.lookup(type)))
+                                  .map(
+                                      (type) => Text(localization.lookup(type)))
                                   .toList(),
                       onChanged: (dynamic value) => viewModel.onChanged(
                           companyGateway
@@ -267,7 +267,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     SwitchListTile(
                         title: Text(kGatewayTypes.containsKey(gatewayTypeId)
                             ? localization
-                                .lookup(kGatewayTypes[gatewayTypeId] ?? ''): '$gatewayTypeId'),
+                                .lookup(kGatewayTypes[gatewayTypeId] ?? '')
+                            : '$gatewayTypeId'),
                         activeColor: Theme.of(context).colorScheme.secondary,
                         value: companyGateway
                             .getSettingsForGatewayTypeId(gatewayTypeId)
@@ -976,7 +977,8 @@ class _FeesEditorState extends State<FeesEditor> {
     const double amount = 100;
     final fee = settings.calculateSampleFee(100);
 
-    return localization.feesSample.replaceFirst(':amount', formatNumber(amount, context)!)
+    return localization.feesSample
+        .replaceFirst(':amount', formatNumber(amount, context)!)
         .replaceFirst(':total', formatNumber(fee, context)!);
   }
 

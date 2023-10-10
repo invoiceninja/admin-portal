@@ -124,9 +124,7 @@ class ClientListItem extends StatelessWidget {
                           children: <Widget>[
                             Text(
                                 client.displayName +
-                                    (client.documents.isNotEmpty
-                                        ? '  📎'
-                                        : ''),
+                                    (client.documents.isNotEmpty ? '  📎' : ''),
                                 style: textStyle),
                             if (filterMatch != null)
                               Text(

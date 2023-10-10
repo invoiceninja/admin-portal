@@ -123,7 +123,8 @@ class RecurringInvoicePresenter extends EntityPresenter {
         return Text(invoice.dueDateDays == 'terms'
             ? localization!.paymentTerm
             : invoice.dueDateDays == 'on_receipt'
-                ? localization!.dueOnReceipt: invoice.dueDateDays == '1'
+                ? localization!.dueOnReceipt
+                : invoice.dueDateDays == '1'
                     ? localization!.firstDayOfTheMonth
                     : invoice.dueDateDays == '31'
                         ? localization!.lastDayOfTheMonth

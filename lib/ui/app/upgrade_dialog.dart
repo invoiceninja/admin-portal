@@ -258,7 +258,8 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
                   }
                 },
                 child: Text(previousPurchase != null
-                    ? AppLocalization.of(context)!.activate: productDetails.price),
+                    ? AppLocalization.of(context)!.activate
+                    : productDetails.price),
               ),
               SizedBox(height: 20),
             ],
@@ -349,7 +350,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       } else {
         showErrorDialog(
             message: priceChangeConfirmationResult.debugMessage ??
-                localization!.priceChangeFailed+
+                localization!.priceChangeFailed +
                     ' ${priceChangeConfirmationResult.responseCode}');
       }
     }

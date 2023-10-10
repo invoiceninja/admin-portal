@@ -615,7 +615,8 @@ class _EmailSettingsState extends State<EmailSettings> {
                             Flexible(
                               child: Text(
                                 company.hasEInvoiceCertificate
-                                    ? localization.certificateSet: localization.certificateNotSet,
+                                    ? localization.certificateSet
+                                    : localization.certificateNotSet,
                                 maxLines: 2,
                               ),
                             ),
@@ -651,7 +652,8 @@ class _EmailSettingsState extends State<EmailSettings> {
                           Flexible(
                             child: Text(
                               company.hasEInvoiceCertificatePassphrase
-                                  ? localization.passphraseSet: localization.passphraseNotSet,
+                                  ? localization.passphraseSet
+                                  : localization.passphraseNotSet,
                               maxLines: 2,
                             ),
                           ),

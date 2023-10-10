@@ -90,8 +90,7 @@ abstract class DesignEntity extends Object
       {String? id, AppState? state, BuiltMap<String, String>? design}) {
     if (design == null && state != null) {
       final designMap = state.designState.map;
-      design =
-          designMap[state.company.settings.defaultInvoiceDesignId]?.design;
+      design = designMap[state.company.settings.defaultInvoiceDesignId]?.design;
     }
 
     return _$DesignEntity._(

@@ -301,8 +301,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
                               MapEntry<String, DropdownMenuItem<String>>(
                                   id,
                                   DropdownMenuItem<String>(
-                                    child:
-                                        Text(localization.lookup(frequency)),
+                                    child: Text(localization.lookup(frequency)),
                                     value: id,
                                   )))
                           .values

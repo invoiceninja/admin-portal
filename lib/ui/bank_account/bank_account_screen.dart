@@ -150,7 +150,8 @@ class BankAccountScreen extends StatelessWidget {
                   child: AppButton(
                     label: (state.isHosted
                             ? localization!.rules
-                            : localization!.manageRules).toUpperCase(),
+                            : localization!.manageRules)
+                        .toUpperCase(),
                     onPressed: () {
                       store.dispatch(
                           ViewSettings(section: kSettingsTransactionRules));

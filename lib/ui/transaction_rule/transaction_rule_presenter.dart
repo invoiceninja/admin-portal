@@ -19,9 +19,7 @@ class TransactionRulePresenter extends EntityPresenter {
     //final state = StoreProvider.of<AppState>(context).state;
     //final transactionRule = entity as TransactionRuleEntity;
 
-    switch (field) {
-      
-    }
+    switch (field) {}
 
     return super.getField(field: field, context: context);
   }

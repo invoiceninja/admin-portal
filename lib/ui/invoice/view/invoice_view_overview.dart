@@ -189,17 +189,14 @@ class InvoiceOverview extends StatelessWidget {
         RecurringInvoiceFields.remainingCycles: invoice.remainingCycles == -1
             ? localization.endless
             : '${invoice.remainingCycles}',
-        RecurringInvoiceFields.autoBill:
-            localization.lookup(invoice.autoBill)+
-                ([
-                  SettingsEntity.AUTO_BILL_OPT_IN,
-                  SettingsEntity.AUTO_BILL_OPT_OUT
-                ].contains(invoice.autoBill)
-                    ? (' - ' +
-                        (invoice.autoBillEnabled
-                            ? localization.yes
-                            : localization.no))
-                    : ''),
+        RecurringInvoiceFields.autoBill: localization.lookup(invoice.autoBill) +
+            ([SettingsEntity.AUTO_BILL_OPT_IN, SettingsEntity.AUTO_BILL_OPT_OUT]
+                    .contains(invoice.autoBill)
+                ? (' - ' +
+                    (invoice.autoBillEnabled
+                        ? localization.yes
+                        : localization.no))
+                : ''),
         InvoiceFields.dueDate: invoice.dueDateDays == 'terms'
             ? localization.paymentTerm
             : invoice.dueDateDays == 'on_receipt'

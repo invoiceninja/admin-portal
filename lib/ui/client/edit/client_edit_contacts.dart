@@ -106,7 +106,8 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
         child: AppButton(
           label: (client.contacts.length == 1
                   ? localization!.addSecondContact
-                  : localization!.addContact).toUpperCase(),
+                  : localization!.addContact)
+              .toUpperCase(),
           onPressed: () => viewModel.onAddContactPressed(),
         ),
       ));
