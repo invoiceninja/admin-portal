@@ -107,7 +107,7 @@ class PurchaseOrderViewVM extends AbstractInvoiceViewVM {
         editEntity(
             entity: purchaseOrder,
             subIndex: index,
-            completer: snackBarCompleter<ClientEntity>(
+            completer: snackBarCompleter<InvoiceEntity>(
                 AppLocalization.of(context)!.updatedPurchaseOrder));
       },
       onRefreshed: (context) => _handleRefresh(context),

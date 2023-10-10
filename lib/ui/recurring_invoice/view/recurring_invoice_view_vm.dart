@@ -105,7 +105,7 @@ class RecurringInvoiceViewVM extends AbstractInvoiceViewVM {
         editEntity(
             entity: invoice,
             subIndex: index,
-            completer: snackBarCompleter<ClientEntity>(
+            completer: snackBarCompleter<InvoiceEntity>(
                 AppLocalization.of(context)!.updatedRecurringInvoice));
       },
       onRefreshed: (context) => _handleRefresh(context),

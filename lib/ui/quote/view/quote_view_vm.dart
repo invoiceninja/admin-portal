@@ -104,7 +104,7 @@ class QuoteViewVM extends AbstractInvoiceViewVM {
         editEntity(
             entity: quote,
             subIndex: index,
-            completer: snackBarCompleter<ClientEntity>(
+            completer: snackBarCompleter<InvoiceEntity>(
                 AppLocalization.of(context)!.updatedQuote));
       },
       onRefreshed: (context) => _handleRefresh(context),

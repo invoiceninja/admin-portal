@@ -11,12 +11,9 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
-import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class EntityDataTableSource extends DataTableSource {
   EntityDataTableSource(
@@ -56,6 +53,8 @@ class EntityDataTableSource extends DataTableSource {
     entityPresenter!.initialize(entity, context);
 
     final listState = state.getListState(entityType);
+
+    /*
     final uIState = state.getUIState(entityType);
 
     bool isSelected = false;
@@ -68,6 +67,7 @@ class EntityDataTableSource extends DataTableSource {
       }
     }
 
+    
     Color? backgroundColor;
     final rowColor = state.prefState.activeCustomColors[
             PrefState.THEME_TABLE_ALTERNATE_ROW_BACKGROUND_COLOR] ??
@@ -80,6 +80,7 @@ class EntityDataTableSource extends DataTableSource {
     } else if (rowColor.isNotEmpty && index % 2 == 0) {
       backgroundColor = convertHexStringToColor(rowColor);
     }
+    */
 
     final wideFields = [
       'public_notes',

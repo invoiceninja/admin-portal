@@ -109,7 +109,7 @@ class TaskViewVM {
         editEntity(
             entity: task,
             subIndex: task.getTaskTimes().indexOf(taskTime),
-            completer: snackBarCompleter<ClientEntity>(
+            completer: snackBarCompleter<TaskEntity>(
                 AppLocalization.of(context)!.updatedTask));
       },
       onRefreshed: (context) => _handleRefresh(context),

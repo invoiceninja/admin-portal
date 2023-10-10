@@ -134,7 +134,7 @@ class InvoiceViewVM extends AbstractInvoiceViewVM {
         editEntity(
             entity: invoice,
             subIndex: index,
-            completer: snackBarCompleter<ClientEntity>(
+            completer: snackBarCompleter<InvoiceEntity>(
                 AppLocalization.of(context)!.updatedInvoice));
       },
       onRefreshed: (context) => _handleRefresh(context),
