@@ -229,8 +229,14 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
     }
 
     final brightness = MediaQuery.of(context).platformBrightness;
-    widget.store!.dispatch(UpdateUserPreferences(
-        enableDarkModeSystem: brightness == Brightness.dark));
+    final enableDarkModeSystem = brightness == Brightness.dark;
+    final store = widget.store!;
+    final prefState = store.state.prefState;
+
+    if (prefState.enableDarkModeSystem != enableDarkModeSystem) {
+      store.dispatch(
+          UpdateUserPreferences(enableDarkModeSystem: enableDarkModeSystem));
+    }
 
     super.didChangeDependencies();
   }

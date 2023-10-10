@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -720,13 +721,14 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
       }
       if (documentIds.isEmpty) {
         showMessageDialog(
-            context: context, message: localization!.noDocumentsToDownload);
+            context: navigatorKey.currentContext!,
+            message: localization!.noDocumentsToDownload);
       } else {
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
             completer: snackBarCompleter<Null>(
-              context,
+              navigatorKey.currentContext!,
               localization!.exportedData,
             ),
           ),

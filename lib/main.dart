@@ -239,6 +239,7 @@ Future<AppState> _initialState(bool isTesting) async {
       print('## Error: Failed to load prefs: $e');
     }
   }
+
   prefState = prefState!.rebuild((b) => b
     ..enableDarkModeSystem =
         WidgetsBinding.instance.window.platformBrightness == Brightness.dark);
