@@ -98,7 +98,6 @@ class CreditEditDetailsVM extends EntityEditDetailsVM {
       },
       onAddClientPressed: (context, completer) {
         createEntity(
-            context: context,
             entity: ClientEntity(),
             force: true,
             completer: completer,

@@ -69,8 +69,8 @@ class ProjectViewVM {
         ClientEntity(id: project.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context)!.refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadProject(completer: completer, projectId: project.id));
       return completer.future;
     }
@@ -98,7 +98,6 @@ class ProjectViewVM {
       },
       onAddTaskPressed: (context) {
         createEntity(
-            context: context,
             entity: TaskEntity(state: state).rebuild((b) => b
               ..projectId = project.id
               ..clientId = project.clientId),

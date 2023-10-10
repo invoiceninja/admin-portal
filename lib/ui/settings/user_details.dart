@@ -166,9 +166,7 @@ class _UserDetailsState extends State<UserDetails>
             ? null
             : () {
                 if (state.settingsUIState.isChanged) {
-                  showMessageDialog(
-                      context: context,
-                      message: localization.errorUnsavedChanges);
+                  showMessageDialog(message: localization.errorUnsavedChanges);
                   return;
                 }
 
@@ -194,9 +192,7 @@ class _UserDetailsState extends State<UserDetails>
             ? null
             : () async {
                 if (state.settingsUIState.isChanged) {
-                  showMessageDialog(
-                      context: context,
-                      message: localization.errorUnsavedChanges);
+                  showMessageDialog(message: localization.errorUnsavedChanges);
                   return;
                 }
 
@@ -214,7 +210,8 @@ class _UserDetailsState extends State<UserDetails>
         child: Text(
           (state.user.isConnectedToMicrosoft
                   ? localization.disconnectMicrosoft
-                  : localization.connectMicrosoft).toUpperCase(),
+                  : localization.connectMicrosoft)
+              .toUpperCase(),
           textAlign: TextAlign.center,
         ),
         onPressed: state.user.isConnectedToEmail ||
@@ -223,9 +220,7 @@ class _UserDetailsState extends State<UserDetails>
             ? null
             : () {
                 if (state.settingsUIState.isChanged) {
-                  showMessageDialog(
-                      context: context,
-                      message: localization.errorUnsavedChanges);
+                  showMessageDialog(message: localization.errorUnsavedChanges);
                   return;
                 }
 
@@ -243,16 +238,15 @@ class _UserDetailsState extends State<UserDetails>
         child: Text(
           (state.user.isConnectedToEmail
                   ? localization.disconnectEmail
-                  : localization.connectEmail).toUpperCase(),
+                  : localization.connectEmail)
+              .toUpperCase(),
           textAlign: TextAlign.center,
         ),
         onPressed: !state.user.isConnectedToMicrosoft
             ? null
             : () async {
                 if (state.settingsUIState.isChanged) {
-                  showMessageDialog(
-                      context: context,
-                      message: localization.errorUnsavedChanges);
+                  showMessageDialog(message: localization.errorUnsavedChanges);
                   return;
                 }
 
@@ -271,26 +265,25 @@ class _UserDetailsState extends State<UserDetails>
         child: Text(
           (state.user.isConnectedToApple
                   ? localization.disconnectApple
-                  : localization.connectApple).toUpperCase(),
+                  : localization.connectApple)
+              .toUpperCase(),
           textAlign: TextAlign.center,
         ),
-        onPressed:
-            state.user.isConnectedToGoogle || state.user.isConnectedToMicrosoft
-                ? null
-                : () {
-                    if (state.settingsUIState.isChanged) {
-                      showMessageDialog(
-                          context: context,
-                          message: localization.errorUnsavedChanges);
-                      return;
-                    }
+        onPressed: state.user.isConnectedToGoogle ||
+                state.user.isConnectedToMicrosoft
+            ? null
+            : () {
+                if (state.settingsUIState.isChanged) {
+                  showMessageDialog(message: localization.errorUnsavedChanges);
+                  return;
+                }
 
-                    if (state.user.isConnectedToApple) {
-                      viewModel.onDisconnectApplePressed(context);
-                    } else {
-                      // do nothing
-                    }
-                  },
+                if (state.user.isConnectedToApple) {
+                  viewModel.onDisconnectApplePressed(context);
+                } else {
+                  // do nothing
+                }
+              },
       ),
     );
 
@@ -394,7 +387,6 @@ class _UserDetailsState extends State<UserDetails>
                         onPressed: () async {
                           if (state.settingsUIState.isChanged) {
                             showMessageDialog(
-                                context: context,
                                 message: localization.errorUnsavedChanges);
                             return;
                           }
@@ -405,7 +397,6 @@ class _UserDetailsState extends State<UserDetails>
                             if (state.user.phone.isEmpty ||
                                 user.phone.isEmpty) {
                               showMessageDialog(
-                                  context: context,
                                   message:
                                       localization.enterPhoneToEnableTwoFactor);
                               return;

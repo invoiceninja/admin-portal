@@ -245,7 +245,6 @@ void handleGroupAction(
       break;
     case EntityAction.newClient:
       createEntity(
-          context: context,
           entity: ClientEntity().rebuild((b) => b..groupId = group.id));
       break;
     case EntityAction.restore:
@@ -254,8 +253,8 @@ void handleGroupAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', groupIds.length.toString())
           : localization!.restoredGroup;
-      store.dispatch(RestoreGroupRequest(
-          snackBarCompleter<Null>(context, message), groupIds));
+      store.dispatch(
+          RestoreGroupRequest(snackBarCompleter<Null>(message), groupIds));
       break;
     case EntityAction.archive:
       final message = groupIds.length > 1
@@ -263,8 +262,8 @@ void handleGroupAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', groupIds.length.toString())
           : localization!.archivedGroup;
-      store.dispatch(ArchiveGroupRequest(
-          snackBarCompleter<Null>(context, message), groupIds));
+      store.dispatch(
+          ArchiveGroupRequest(snackBarCompleter<Null>(message), groupIds));
       break;
     case EntityAction.delete:
       final message = groupIds.length > 1
@@ -272,8 +271,8 @@ void handleGroupAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', groupIds.length.toString())
           : localization!.deletedGroup;
-      store.dispatch(DeleteGroupRequest(
-          snackBarCompleter<Null>(context, message), groupIds));
+      store.dispatch(
+          DeleteGroupRequest(snackBarCompleter<Null>(message), groupIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.groupListState.isInMultiselect()) {

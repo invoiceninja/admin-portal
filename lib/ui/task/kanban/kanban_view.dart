@@ -119,8 +119,7 @@ class KanbanViewState extends State<KanbanView> {
 
   void _onBoardChanged() {
     final localization = AppLocalization.of(context)!;
-    final completer =
-        snackBarCompleter<Null>(context, localization.updatedTaskStatus);
+    final completer = snackBarCompleter<Null>(localization.updatedTaskStatus);
     completer.future.catchError((Object error) {
       _initBoard();
     });

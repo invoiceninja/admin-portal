@@ -374,7 +374,8 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                             await pdfData.writeAsBytes(_response!.bodyBytes);
 
                             if (isDesktopOS()) {
-                              showToast(localization.fileSavedInPath.replaceFirst(':path', directory.path));
+                              showToast(localization.fileSavedInPath
+                                  .replaceFirst(':path', directory.path));
                             } else {
                               await Share.shareXFiles([XFile(filePath)]);
                             }
@@ -389,7 +390,6 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                       : () async {
                           if (!client!.hasEmailAddress) {
                             showMessageDialog(
-                                context: context,
                                 message: localization.clientEmailNotSet,
                                 secondaryActions: [
                                   TextButton(
@@ -415,7 +415,6 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                     onPressed: () {
                       if (!state.isProPlan) {
                         showMessageDialog(
-                            context: context,
                             message: localization.upgradeToPaidPlanToSchedule,
                             secondaryActions: [
                               TextButton(
@@ -432,7 +431,6 @@ class _ClientPdfViewState extends State<ClientPdfView> {
 
                       final includes = state.prefState.statementIncludes;
                       createEntity(
-                          context: context,
                           entity: ScheduleEntity(
                                   ScheduleEntity.TEMPLATE_EMAIL_STATEMENT)
                               .rebuild((b) => b

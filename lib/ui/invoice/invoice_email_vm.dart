@@ -109,7 +109,7 @@ class EmailInvoiceVM extends EmailEntityVM {
           ClientEntity(id: invoice.clientId),
       onSendPressed: (context, template, subject, body, ccEmail) {
         final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context)!.emailedInvoice,
+            AppLocalization.of(context)!.emailedInvoice,
             shouldPop: isMobile(context));
         if (!isMobile(context)) {
           completer.future.then<Null>((_) {

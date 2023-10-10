@@ -70,7 +70,7 @@ class DeviceSettingsVM {
           showRefreshDataDialog(context: context, includeStatic: true),
       onLogoutTap: (BuildContext context) {
         final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context)!.endedAllSessions);
+            AppLocalization.of(context)!.endedAllSessions);
         store.dispatch(UserLogoutAll(completer: completer));
       },
       onDarkModeChanged: (BuildContext context, String value) async {

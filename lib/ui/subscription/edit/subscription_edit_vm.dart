@@ -70,8 +70,7 @@ class SubscriptionEditVM {
         store.dispatch(UpdateSubscription(subscription));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(
-            context: context, entity: SubscriptionEntity(), force: true);
+        createEntity(entity: SubscriptionEntity(), force: true);
         if (state.subscriptionUIState.cancelCompleter != null) {
           state.subscriptionUIState.cancelCompleter!.complete();
         } else {

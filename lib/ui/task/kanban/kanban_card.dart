@@ -114,7 +114,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                           ? null
                           : () {
                               final completer = snackBarCompleter<TaskEntity>(
-                                  context, localization.updatedTask);
+                                  localization.updatedTask);
                               completer.future.then((value) {
                                 setState(() {
                                   _isEditing = false;
@@ -297,8 +297,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                                 startLabel,
                               ]
                                   .map((value) => PopupMenuItem<String>(
-                                        child:
-                                            Text(localization.lookup(value)),
+                                        child: Text(localization.lookup(value)),
                                         value: value,
                                       ))
                                   .toList();

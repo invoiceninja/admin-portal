@@ -44,8 +44,7 @@ class ScheduleListBuilder extends StatelessWidget {
                 user: viewModel.state.user,
                 filter: viewModel.filter,
                 schedule: schedule,
-                isChecked:
-                    isInMultiselect && listState.isSelected(schedule.id),
+                isChecked: isInMultiselect && listState.isSelected(schedule.id),
               );
             });
       },
@@ -74,8 +73,8 @@ class ScheduleListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context)!.refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }

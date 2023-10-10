@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
-import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -495,7 +494,7 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
       break;
     case EntityAction.markSent:
       store.dispatch(MarkSentCreditRequest(
-          snackBarCompleter<Null>(context, localization!.markedCreditAsSent),
+          snackBarCompleter<Null>(localization!.markedCreditAsSent),
           creditIds));
       break;
     case EntityAction.sendEmail:
@@ -512,7 +511,6 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
       });
       if (!emailValid) {
         showMessageDialog(
-            context: context,
             message: localization!.clientEmailNotSet,
             secondaryActions: [
               TextButton(
@@ -526,14 +524,12 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
       }
       if (action == EntityAction.sendEmail) {
         store.dispatch(ShowEmailCredit(
-            completer:
-                snackBarCompleter<Null>(context, localization!.emailedCredit),
+            completer: snackBarCompleter<Null>(localization!.emailedCredit),
             credit: credit,
             context: context));
       } else if (action == EntityAction.schedule) {
         if (!state.isProPlan) {
           showMessageDialog(
-              context: context,
               message: localization!.upgradeToPaidPlanToSchedule,
               secondaryActions: [
                 TextButton(
@@ -548,7 +544,6 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
         }
 
         createEntity(
-            context: context,
             entity: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_RECORD)
                 .rebuild((b) => b
                   ..parameters.entityType = EntityType.credit.apiValue
@@ -559,11 +554,9 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
             message: localization!.bulkEmailCredits,
             callback: (_) {
               store.dispatch(BulkEmailCreditsRequest(
-                completer: snackBarCompleter<Null>(
-                    context,
-                    creditIds.length == 1
-                        ? localization.emailedCredit
-                        : localization.emailedCredits),
+                completer: snackBarCompleter<Null>(creditIds.length == 1
+                    ? localization.emailedCredit
+                    : localization.emailedCredits),
                 creditIds: creditIds,
               ));
             });
@@ -575,13 +568,12 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
           vendorId: credit.vendorId,
           entityType: EntityType.purchaseOrder);
       createEntity(
-          context: context,
           entity: credit.clone.rebuild((b) => b
             ..entityType = EntityType.purchaseOrder
             ..designId = designId));
       break;
     case EntityAction.cloneToOther:
-      cloneToDialog(context: context, invoice: credit);
+      cloneToDialog(invoice: credit);
       break;
     case EntityAction.cloneToInvoice:
       final designId = getDesignIdForClientByEntity(
@@ -589,7 +581,6 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
           clientId: credit.clientId,
           entityType: EntityType.invoice);
       createEntity(
-          context: context,
           entity: credit.clone.rebuild((b) => b
             ..entityType = EntityType.invoice
             ..designId = designId));
@@ -600,14 +591,13 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
           clientId: credit.clientId,
           entityType: EntityType.quote);
       createEntity(
-          context: context,
           entity: credit.clone.rebuild((b) => b
             ..entityType = EntityType.quote
             ..designId = designId));
       break;
     case EntityAction.clone:
     case EntityAction.cloneToCredit:
-      createEntity(context: context, entity: credit.clone);
+      createEntity(entity: credit.clone);
       break;
     case EntityAction.cloneToRecurring:
       final designId = getDesignIdForClientByEntity(
@@ -615,23 +605,19 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
           clientId: credit.clientId,
           entityType: EntityType.invoice);
       createEntity(
-          context: context,
           entity: credit.clone.rebuild((b) => b
             ..entityType = EntityType.recurringInvoice
             ..designId = designId));
       break;
     case EntityAction.markPaid:
       store.dispatch(MarkCreditsPaidRequest(
-          snackBarCompleter<Null>(
-              context,
-              credits.length == 1
-                  ? localization!.markedCreditAsPaid
-                  : localization!.markedCreditsAsPaid),
+          snackBarCompleter<Null>(credits.length == 1
+              ? localization!.markedCreditAsPaid
+              : localization!.markedCreditsAsPaid),
           creditIds));
       break;
     case EntityAction.applyCredit:
       createEntity(
-        context: context,
         entity: PaymentEntity(state: state, client: client).rebuild((b) => b
           ..typeId = kPaymentTypeCredit
           ..credits.addAll(credits
@@ -646,8 +632,7 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
       break;
     case EntityAction.bulkDownload:
       store.dispatch(DownloadCreditsRequest(
-          snackBarCompleter<Null>(context, localization!.exportedData),
-          creditIds));
+          snackBarCompleter<Null>(localization!.exportedData), creditIds));
       break;
     case EntityAction.restore:
       final message = creditIds.length > 1
@@ -655,8 +640,8 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', creditIds.length.toString())
           : localization!.restoredCredit;
-      store.dispatch(RestoreCreditsRequest(
-          snackBarCompleter<Null>(context, message), creditIds));
+      store.dispatch(
+          RestoreCreditsRequest(snackBarCompleter<Null>(message), creditIds));
       break;
     case EntityAction.archive:
       final message = creditIds.length > 1
@@ -664,8 +649,8 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', creditIds.length.toString())
           : localization!.archivedCredit;
-      store.dispatch(ArchiveCreditsRequest(
-          snackBarCompleter<Null>(context, message), creditIds));
+      store.dispatch(
+          ArchiveCreditsRequest(snackBarCompleter<Null>(message), creditIds));
       break;
     case EntityAction.delete:
       final message = creditIds.length > 1
@@ -673,8 +658,8 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', creditIds.length.toString())
           : localization!.deletedCredit;
-      store.dispatch(DeleteCreditsRequest(
-          snackBarCompleter<Null>(context, message), creditIds));
+      store.dispatch(
+          DeleteCreditsRequest(snackBarCompleter<Null>(message), creditIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.creditListState.isInMultiselect()) {
@@ -720,15 +705,12 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
         }
       }
       if (documentIds.isEmpty) {
-        showMessageDialog(
-            context: navigatorKey.currentContext!,
-            message: localization!.noDocumentsToDownload);
+        showMessageDialog(message: localization!.noDocumentsToDownload);
       } else {
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
             completer: snackBarCompleter<Null>(
-              navigatorKey.currentContext!,
               localization!.exportedData,
             ),
           ),

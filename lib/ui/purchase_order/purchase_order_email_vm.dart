@@ -86,7 +86,7 @@ class EmailPurchaseOrderVM extends EmailEntityVM {
       vendor: state.vendorState.map[purchaseOrder.vendorId],
       onSendPressed: (context, template, subject, body, ccEmail) {
         final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context)!.emailedPurchaseOrder,
+            AppLocalization.of(context)!.emailedPurchaseOrder,
             shouldPop: isMobile(context));
         if (!isMobile(context)) {
           completer.future.then<Null>((_) {

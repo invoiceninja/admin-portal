@@ -117,8 +117,8 @@ class InvoiceViewVM extends AbstractInvoiceViewVM {
     final client = state.clientState.get(invoice.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context)!.refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadInvoice(completer: completer, invoiceId: invoice.id));
       return completer.future;
     }
@@ -135,7 +135,7 @@ class InvoiceViewVM extends AbstractInvoiceViewVM {
             entity: invoice,
             subIndex: index,
             completer: snackBarCompleter<ClientEntity>(
-                context, AppLocalization.of(context)!.updatedInvoice));
+                AppLocalization.of(context)!.updatedInvoice));
       },
       onRefreshed: (context) => _handleRefresh(context),
       onPaymentsPressed: (BuildContext context) {

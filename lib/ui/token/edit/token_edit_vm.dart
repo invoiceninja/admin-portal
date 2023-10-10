@@ -71,7 +71,7 @@ class TokenEditVM {
         store.dispatch(UpdateToken(token));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: TokenEntity(), force: true);
+        createEntity(entity: TokenEntity(), force: true);
         if (state.tokenUIState.cancelCompleter != null) {
           state.tokenUIState.cancelCompleter!.complete();
         } else {

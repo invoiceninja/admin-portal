@@ -85,7 +85,6 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
       },
       onAddClientPressed: (context, completer) {
         createEntity(
-            context: context,
             entity: ClientEntity(),
             force: true,
             completer: completer,
@@ -100,7 +99,6 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
       },
       onAddVendorPressed: (context, completer) {
         createEntity(
-            context: context,
             entity: VendorEntity(),
             force: true,
             completer: completer,
@@ -115,7 +113,6 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
       },
       onCancelPressed: (BuildContext context) {
         createEntity(
-            context: context,
             entity: ExpenseEntity(entityType: EntityType.recurringExpense),
             force: true);
         if (state.recurringExpenseUIState.cancelCompleter != null) {

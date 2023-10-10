@@ -100,7 +100,7 @@ class EntityTopFilter extends StatelessWidget {
                                   isFilterVisible: !prefState.isFilterVisible));
                             },
                             onLongPress: () {
-                              editEntity(entity: filterEntity as BaseEntity);
+                              editEntity(entity: filterEntity);
                             },
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.center,

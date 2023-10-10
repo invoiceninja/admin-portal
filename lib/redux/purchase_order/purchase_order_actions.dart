@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
@@ -606,17 +607,17 @@ void handlePurchaseOrderAction(BuildContext? context,
       break;
     case EntityAction.restore:
       store.dispatch(RestorePurchaseOrdersRequest(
-          snackBarCompleter<Null>(context, localization!.restoredPurchaseOrder),
+          snackBarCompleter<Null>(localization!.restoredPurchaseOrder),
           purchaseOrderIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchivePurchaseOrdersRequest(
-          snackBarCompleter<Null>(context, localization!.archivedPurchaseOrder),
+          snackBarCompleter<Null>(localization!.archivedPurchaseOrder),
           purchaseOrderIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeletePurchaseOrdersRequest(
-          snackBarCompleter<Null>(context, localization!.deletedPurchaseOrder),
+          snackBarCompleter<Null>(localization!.deletedPurchaseOrder),
           purchaseOrderIds));
       break;
     case EntityAction.printPdf:
@@ -642,20 +643,16 @@ void handlePurchaseOrderAction(BuildContext? context,
       break;
     case EntityAction.addToInventory:
       store.dispatch(AddPurchaseOrdersToInventoryRequest(
-          snackBarCompleter<Null>(
-              context,
-              purchaseOrders.length == 1
-                  ? localization!.addedPurchaseOrderToInventory
-                  : localization!.addedPurchaseOrdersToInventory),
+          snackBarCompleter<Null>(purchaseOrders.length == 1
+              ? localization!.addedPurchaseOrderToInventory
+              : localization!.addedPurchaseOrdersToInventory),
           purchaseOrderIds));
       break;
     case EntityAction.convertToExpense:
       store.dispatch(ConvertPurchaseOrdersToExpensesRequest(
-          snackBarCompleter<Null>(
-              context,
-              purchaseOrders.length == 1
-                  ? localization!.convertedToExpense
-                  : localization!.convertedToExpenses),
+          snackBarCompleter<Null>(purchaseOrders.length == 1
+              ? localization!.convertedToExpense
+              : localization!.convertedToExpenses),
           purchaseOrderIds));
       break;
     case EntityAction.viewExpense:
@@ -664,29 +661,23 @@ void handlePurchaseOrderAction(BuildContext? context,
       break;
     case EntityAction.markSent:
       store.dispatch(MarkPurchaseOrdersSentRequest(
-          snackBarCompleter<Null>(
-              context,
-              purchaseOrders.length == 1
-                  ? localization!.markedPurchaseOrderAsSent
-                  : localization!.markedPurchaseOrdersAsSent),
+          snackBarCompleter<Null>(purchaseOrders.length == 1
+              ? localization!.markedPurchaseOrderAsSent
+              : localization!.markedPurchaseOrdersAsSent),
           purchaseOrderIds));
       break;
     case EntityAction.cancelInvoice:
       store.dispatch(CancelPurchaseOrdersRequest(
-          snackBarCompleter<Null>(
-              context,
-              purchaseOrders.length == 1
-                  ? localization!.cancelledPurchaseOrder
-                  : localization!.cancelledPurchaseOrders),
+          snackBarCompleter<Null>(purchaseOrders.length == 1
+              ? localization!.cancelledPurchaseOrder
+              : localization!.cancelledPurchaseOrders),
           purchaseOrderIds));
       break;
     case EntityAction.accept:
       store.dispatch(AcceptPurchaseOrdersRequest(
-          snackBarCompleter<Null>(
-              context,
-              purchaseOrders.length == 1
-                  ? localization!.acceptedPurchaseOrder
-                  : localization!.acceptedPurchaseOrders),
+          snackBarCompleter<Null>(purchaseOrders.length == 1
+              ? localization!.acceptedPurchaseOrder
+              : localization!.acceptedPurchaseOrders),
           purchaseOrderIds));
       break;
     case EntityAction.toggleMultiselect:
@@ -724,7 +715,6 @@ void handlePurchaseOrderAction(BuildContext? context,
       });
       if (!emailValid) {
         showMessageDialog(
-            context: context,
             message: localization!.vendorEmailNotSet,
             secondaryActions: [
               TextButton(
@@ -738,15 +728,17 @@ void handlePurchaseOrderAction(BuildContext? context,
         return;
       }
       if (action == EntityAction.sendEmail) {
-        store.dispatch(ShowEmailPurchaseOrder(
-            completer: snackBarCompleter<Null>(
-                context, localization!.emailedPurchaseOrder),
+        store.dispatch(
+          ShowEmailPurchaseOrder(
+            completer:
+                snackBarCompleter<Null>(localization!.emailedPurchaseOrder),
             purchaseOrder: purchaseOrder,
-            context: context));
+            context: navigatorKey.currentContext!,
+          ),
+        );
       } else if (action == EntityAction.schedule) {
         if (!state.isProPlan) {
           showMessageDialog(
-              context: context,
               message: localization!.upgradeToPaidPlanToSchedule,
               secondaryActions: [
                 TextButton(
@@ -761,22 +753,19 @@ void handlePurchaseOrderAction(BuildContext? context,
         }
 
         createEntity(
-            context: context,
             entity: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_RECORD)
                 .rebuild((b) => b
                   ..parameters.entityType = EntityType.purchaseOrder.apiValue
                   ..parameters.entityId = purchaseOrder.id));
       } else {
         confirmCallback(
-            context: context,
+            context: navigatorKey.currentContext!,
             message: localization!.bulkEmailPurchaseOrders,
             callback: (_) {
               store.dispatch(BulkEmailPurchaseOrdersRequest(
-                completer: snackBarCompleter<Null>(
-                    context,
-                    purchaseOrderIds.length == 1
-                        ? localization.emailedPurchaseOrder
-                        : localization.emailedPurchaseOrders),
+                completer: snackBarCompleter<Null>(purchaseOrderIds.length == 1
+                    ? localization.emailedPurchaseOrder
+                    : localization.emailedPurchaseOrders),
                 purchaseOrderIds: purchaseOrderIds,
               ));
             });
@@ -788,7 +777,6 @@ void handlePurchaseOrderAction(BuildContext? context,
           clientId: purchaseOrder.clientId,
           entityType: EntityType.purchaseOrder);
       createEntity(
-          context: context,
           entity: purchaseOrder.clone
               .rebuild((b) => b
                 ..entityType = EntityType.quote
@@ -796,7 +784,7 @@ void handlePurchaseOrderAction(BuildContext? context,
               .recreateInvitations(state));
       break;
     case EntityAction.cloneToOther:
-      cloneToDialog(context: context, invoice: purchaseOrder);
+      cloneToDialog(invoice: purchaseOrder);
       break;
     case EntityAction.cloneToInvoice:
       final designId = getDesignIdForClientByEntity(
@@ -804,7 +792,6 @@ void handlePurchaseOrderAction(BuildContext? context,
           clientId: purchaseOrder.clientId,
           entityType: EntityType.invoice);
       createEntity(
-          context: context,
           entity: purchaseOrder.clone
               .rebuild((b) => b
                 ..entityType = EntityType.invoice
@@ -813,7 +800,7 @@ void handlePurchaseOrderAction(BuildContext? context,
       break;
     case EntityAction.clone:
     case EntityAction.cloneToPurchaseOrder:
-      createEntity(context: context, entity: purchaseOrder.clone);
+      createEntity(entity: purchaseOrder.clone);
       break;
     case EntityAction.cloneToCredit:
       final designId = getDesignIdForClientByEntity(
@@ -821,7 +808,6 @@ void handlePurchaseOrderAction(BuildContext? context,
           clientId: purchaseOrder.clientId,
           entityType: EntityType.credit);
       createEntity(
-          context: context,
           entity: purchaseOrder.clone
               .rebuild((b) => b
                 ..entityType = EntityType.credit
@@ -834,7 +820,6 @@ void handlePurchaseOrderAction(BuildContext? context,
           clientId: purchaseOrder.clientId,
           entityType: EntityType.invoice);
       createEntity(
-          context: context,
           entity: purchaseOrder.clone
               .rebuild((b) => b
                 ..entityType = EntityType.recurringInvoice
@@ -846,7 +831,7 @@ void handlePurchaseOrderAction(BuildContext? context,
       break;
     case EntityAction.bulkDownload:
       store.dispatch(DownloadPurchaseOrdersRequest(
-          snackBarCompleter<Null>(context, localization!.exportedData),
+          snackBarCompleter<Null>(localization!.exportedData),
           purchaseOrderIds));
       break;
     case EntityAction.more:

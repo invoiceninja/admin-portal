@@ -159,7 +159,7 @@ class CreditEditVM extends AbstractInvoiceEditVM {
         if (['pdf', 'email'].contains(state.uiState.previousSubRoute)) {
           viewEntitiesByType(entityType: EntityType.credit);
         } else {
-          createEntity(context: context, entity: InvoiceEntity(), force: true);
+          createEntity(entity: InvoiceEntity(), force: true);
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
       },

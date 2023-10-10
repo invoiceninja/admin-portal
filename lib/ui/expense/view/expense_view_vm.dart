@@ -100,8 +100,8 @@ class ExpenseViewVM extends AbstractExpenseViewVM {
         ExpenseEntity(id: state.expenseUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context)!.refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadExpense(completer: completer, expenseId: expense.id));
       return completer.future;
     }

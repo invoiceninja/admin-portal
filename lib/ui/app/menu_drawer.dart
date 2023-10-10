@@ -244,16 +244,13 @@ class _MenuDrawerState extends State<MenuDrawer> {
         if (companyId == 'logout') {
           widget.viewModel.onLogoutTap(context);
         } else if (state.isLoading) {
-          showMessageDialog(
-              context: context, message: localization.waitForLoading);
+          showMessageDialog(message: localization.waitForLoading);
           return;
         } else if (state.isSaving) {
-          showMessageDialog(
-              context: context, message: localization.waitForSaving);
+          showMessageDialog(message: localization.waitForSaving);
           return;
         } else if (!state.isLoaded) {
-          showMessageDialog(
-              context: context, message: localization.waitForData);
+          showMessageDialog(message: localization.waitForData);
           return;
         } else if (companyId == 'company') {
           widget.viewModel.onAddCompany(context);
@@ -317,16 +314,13 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 if (value == 'logout' && !state.isLoading && !state.isSaving) {
                   widget.viewModel.onLogoutTap(context);
                 } else if (state.isLoading) {
-                  showMessageDialog(
-                      context: context, message: localization.waitForLoading);
+                  showMessageDialog(message: localization.waitForLoading);
                   return;
                 } else if (state.isSaving) {
-                  showMessageDialog(
-                      context: context, message: localization.waitForSaving);
+                  showMessageDialog(message: localization.waitForSaving);
                   return;
                 } else if (!state.isLoaded) {
-                  showMessageDialog(
-                      context: context, message: localization.waitForData);
+                  showMessageDialog(message: localization.waitForData);
                   return;
                 } else if (value == 'company') {
                   widget.viewModel.onAddCompany(context);
@@ -1058,7 +1052,6 @@ class SidebarFooter extends StatelessWidget {
                     color: Colors.red,
                   ),
                   onPressed: () => showMessageDialog(
-                      context: context,
                       message: localization!.cronsNotEnabled,
                       secondaryActions: [
                         TextButton(
@@ -1114,7 +1107,6 @@ class SidebarFooter extends StatelessWidget {
                   !state.prefState.hideDesktopWarning)
                 IconButton(
                   onPressed: () => showMessageDialog(
-                    context: context,
                     message: isMobileOS()
                         ? localization!.recommendMobile
                         : localization!.recommendDesktop,
@@ -1348,7 +1340,6 @@ void _showUpdate(BuildContext context) {
 void _showConnectStripe(BuildContext context) {
   final localization = AppLocalization.of(context)!;
   showMessageDialog(
-      context: context,
       message: localization.unauthorizedStripeWarning,
       secondaryActions: [
         TextButton(
@@ -1431,7 +1422,6 @@ void _showAbout(BuildContext context) async {
                     onLongPress: () async {
                       if (kReleaseMode) {
                         showMessageDialog(
-                            context: context,
                             message: FLUTTER_VERSION['channel']!.toUpperCase() +
                                 ' • ' +
                                 FLUTTER_VERSION['frameworkVersion']!,

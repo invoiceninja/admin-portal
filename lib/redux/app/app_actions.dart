@@ -1042,13 +1042,13 @@ void createEntityByType({
 }
 
 void createEntity({
-  required BuildContext context,
   required BaseEntity entity,
   bool force = false,
   Completer? completer,
   Completer? cancelCompleter,
   BaseEntity? filterEntity,
 }) {
+  final context = navigatorKey.currentContext!;
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final uiState = state.uiState;
@@ -1346,15 +1346,11 @@ void editEntity({
 
             if (settings.lockInvoices == SettingsEntity.LOCK_INVOICES_PAID &&
                 invoice.isPaid) {
-              showMessageDialog(
-                  context: context,
-                  message: localization!.paidInvoicesArelocked);
+              showMessageDialog(message: localization!.paidInvoicesArelocked);
             } else if (settings.lockInvoices ==
                     SettingsEntity.LOCK_INVOICES_SENT &&
                 invoice.isSent) {
-              showMessageDialog(
-                  context: context,
-                  message: localization!.sentInvoicesArelocked);
+              showMessageDialog(message: localization!.sentInvoicesArelocked);
             } else {
               store.dispatch(EditInvoice(
                 invoice: entity,

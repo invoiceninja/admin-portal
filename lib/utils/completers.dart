@@ -13,11 +13,11 @@ import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 
 Completer<T> snackBarCompleter<T>(
-  BuildContext context,
   String? message, {
   bool shouldPop = false,
   VoidCallback? callback,
 }) {
+  final context = navigatorKey.currentContext!;
   final Completer<T> completer = Completer<T>();
   final navigator = Navigator.of(context);
 

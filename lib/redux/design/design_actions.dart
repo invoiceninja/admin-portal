@@ -262,36 +262,32 @@ void handleDesignAction(
       editEntity(entity: design);
       break;
     case EntityAction.clone:
-      createEntity(context: context, entity: design.clone);
+      createEntity(entity: design.clone);
       break;
     case EntityAction.newInvoice:
       createEntity(
-          context: context,
           entity: InvoiceEntity(state: state)
               .rebuild((b) => b.designId = design.id));
       break;
     case EntityAction.newRecurringInvoice:
       createEntity(
-          context: context,
           entity: InvoiceEntity(
                   state: state, entityType: EntityType.recurringInvoice)
               .rebuild((b) => b.designId = design.id));
       break;
     case EntityAction.newQuote:
       createEntity(
-          context: context,
           entity: InvoiceEntity(
-            state: state,
-            entityType: EntityType.quote,
-          ).rebuild((b) => b.designId = design.id));
+        state: state,
+        entityType: EntityType.quote,
+      ).rebuild((b) => b.designId = design.id));
       break;
     case EntityAction.newCredit:
       createEntity(
-          context: context,
           entity: InvoiceEntity(
-            state: state,
-            entityType: EntityType.credit,
-          ).rebuild((b) => b.designId = design.id));
+        state: state,
+        entityType: EntityType.credit,
+      ).rebuild((b) => b.designId = design.id));
       break;
     case EntityAction.restore:
       final message = designIds.length > 1
@@ -299,8 +295,8 @@ void handleDesignAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', designIds.length.toString())
           : localization!.restoredDesign;
-      store.dispatch(RestoreDesignsRequest(
-          snackBarCompleter<Null>(context, message), designIds));
+      store.dispatch(
+          RestoreDesignsRequest(snackBarCompleter<Null>(message), designIds));
       break;
     case EntityAction.archive:
       final message = designIds.length > 1
@@ -308,8 +304,8 @@ void handleDesignAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', designIds.length.toString())
           : localization!.archivedDesign;
-      store.dispatch(ArchiveDesignsRequest(
-          snackBarCompleter<Null>(context, message), designIds));
+      store.dispatch(
+          ArchiveDesignsRequest(snackBarCompleter<Null>(message), designIds));
       break;
     case EntityAction.delete:
       final message = designIds.length > 1
@@ -317,8 +313,8 @@ void handleDesignAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', designIds.length.toString())
           : localization!.deletedDesign;
-      store.dispatch(DeleteDesignsRequest(
-          snackBarCompleter<Null>(context, message), designIds));
+      store.dispatch(
+          DeleteDesignsRequest(snackBarCompleter<Null>(message), designIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.designListState.isInMultiselect()) {

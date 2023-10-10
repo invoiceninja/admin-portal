@@ -360,8 +360,7 @@ void handlePaymentAction(
       break;
     case EntityAction.sendEmail:
       store.dispatch(EmailPaymentRequest(
-          snackBarCompleter<Null>(context, localization!.emailedPayment),
-          paymentIds));
+          snackBarCompleter<Null>(localization!.emailedPayment), paymentIds));
       break;
     case EntityAction.restore:
       final message = paymentIds.length > 1
@@ -369,8 +368,8 @@ void handlePaymentAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', paymentIds.length.toString())
           : localization!.restoredPayment;
-      store.dispatch(RestorePaymentsRequest(
-          snackBarCompleter<Null>(context, message), paymentIds));
+      store.dispatch(
+          RestorePaymentsRequest(snackBarCompleter<Null>(message), paymentIds));
       break;
     case EntityAction.archive:
       final message = paymentIds.length > 1
@@ -378,8 +377,8 @@ void handlePaymentAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', paymentIds.length.toString())
           : localization!.archivedPayment;
-      store.dispatch(ArchivePaymentsRequest(
-          snackBarCompleter<Null>(context, message), paymentIds));
+      store.dispatch(
+          ArchivePaymentsRequest(snackBarCompleter<Null>(message), paymentIds));
       break;
     case EntityAction.delete:
       final message = paymentIds.length > 1
@@ -387,8 +386,8 @@ void handlePaymentAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', paymentIds.length.toString())
           : localization!.deletedPayment;
-      store.dispatch(DeletePaymentsRequest(
-          snackBarCompleter<Null>(context, message), paymentIds));
+      store.dispatch(
+          DeletePaymentsRequest(snackBarCompleter<Null>(message), paymentIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.paymentListState.isInMultiselect()) {

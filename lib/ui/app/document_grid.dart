@@ -374,7 +374,6 @@ class DocumentTile extends StatelessWidget {
                                       SaveDocumentRequest(
                                           completer:
                                               snackBarCompleter<DocumentEntity>(
-                                                  context,
                                                   localization.renamedDocument)
                                                 ..future.then((value) {
                                                   onRenamedDocument();

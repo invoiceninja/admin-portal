@@ -412,7 +412,7 @@ class ReportsScreenVM {
           final user =
               state.user.rebuild((b) => b..userCompany.replace(userCompany));
           final completer = snackBarCompleter<Null>(
-              context, AppLocalization.of(context)!.savedSettings);
+              AppLocalization.of(context)!.savedSettings);
           store.dispatch(
             SaveUserSettingsRequest(
               completer: completer,
@@ -474,7 +474,7 @@ class ReportsScreenVM {
             columns
                 .sort((String? str1, String? str2) => str1!.compareTo(str2!));
 
-            csvData += localization!.lookup(reportState.group)+
+            csvData += localization!.lookup(reportState.group) +
                 ',' +
                 localization.count;
 
@@ -525,7 +525,8 @@ class ReportsScreenVM {
             await csvFile.writeAsString(csvData);
 
             if (isDesktopOS()) {
-              showToast(localization!.fileSavedInPath.replaceFirst(':path', directory.path));
+              showToast(localization!.fileSavedInPath
+                  .replaceFirst(':path', directory.path));
             } else {
               await Share.shareXFiles([XFile(filePath)]);
             }

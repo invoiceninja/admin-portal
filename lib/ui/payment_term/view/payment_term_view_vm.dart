@@ -64,8 +64,8 @@ class PaymentTermViewVM {
             PaymentTermEntity(id: state.paymentTermUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context)!.refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(
           LoadPaymentTerm(completer: completer, paymentTermId: paymentTerm.id));
       return completer.future;

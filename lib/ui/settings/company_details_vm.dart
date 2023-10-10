@@ -76,7 +76,7 @@ class CompanyDetailsVM {
         switch (settingsUIState.entityType) {
           case EntityType.company:
             final completer = snackBarCompleter<Null>(
-                context, AppLocalization.of(context)!.deletedLogo);
+                AppLocalization.of(context)!.deletedLogo);
             store.dispatch(SaveCompanyRequest(
               completer: completer,
               company: settingsUIState.company
@@ -85,7 +85,7 @@ class CompanyDetailsVM {
             break;
           case EntityType.group:
             final completer = snackBarCompleter<GroupEntity>(
-                context, AppLocalization.of(context)!.deletedLogo);
+                AppLocalization.of(context)!.deletedLogo);
             store.dispatch(SaveGroupRequest(
               completer: completer,
               group: settingsUIState.group
@@ -94,7 +94,7 @@ class CompanyDetailsVM {
             break;
           case EntityType.client:
             final completer = snackBarCompleter<ClientEntity>(
-                context, AppLocalization.of(context)!.deletedLogo);
+                AppLocalization.of(context)!.deletedLogo);
             store.dispatch(SaveClientRequest(
               completer: completer,
               client: settingsUIState.client
@@ -115,19 +115,19 @@ class CompanyDetailsVM {
           switch (settingsUIState.entityType) {
             case EntityType.company:
               final completer = snackBarCompleter<Null>(
-                  context, AppLocalization.of(context)!.savedSettings);
+                  AppLocalization.of(context)!.savedSettings);
               store.dispatch(SaveCompanyRequest(
                   completer: completer, company: settingsUIState.company));
               break;
             case EntityType.group:
               final completer = snackBarCompleter<GroupEntity>(
-                  context, AppLocalization.of(context)!.savedSettings);
+                  AppLocalization.of(context)!.savedSettings);
               store.dispatch(SaveGroupRequest(
                   completer: completer, group: settingsUIState.group));
               break;
             case EntityType.client:
               final completer = snackBarCompleter<ClientEntity>(
-                  context, AppLocalization.of(context)!.savedSettings);
+                  AppLocalization.of(context)!.savedSettings);
               store.dispatch(SaveClientRequest(
                   completer: completer, client: settingsUIState.client));
               break;
@@ -136,8 +136,8 @@ class CompanyDetailsVM {
       },
       onUploadLogo: (context, multipartFile) {
         final type = state.uiState.settingsUIState.entityType;
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context)!.uploadedLogo);
+        final completer =
+            snackBarCompleter<Null>(AppLocalization.of(context)!.uploadedLogo);
         store.dispatch(UploadLogoRequest(
             completer: completer, multipartFile: multipartFile, type: type));
       },

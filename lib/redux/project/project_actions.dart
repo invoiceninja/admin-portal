@@ -271,14 +271,12 @@ void handleProjectAction(
       break;
     case EntityAction.newTask:
       createEntity(
-          context: context,
           entity: TaskEntity(state: state).rebuild((b) => b
             ..projectId = project.id
             ..clientId = project.clientId));
       break;
     case EntityAction.newInvoice:
       createEntity(
-          context: context,
           entity: InvoiceEntity(state: state, client: client)
               .rebuild((b) => b..projectId = project.id));
       break;
@@ -305,19 +303,17 @@ void handleProjectAction(
             project: project as ProjectEntity?, context: context));
       });
       createEntity(
-          context: context,
           entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
             ..lineItems.addAll(items)
             ..projectId = project.id));
       break;
     case EntityAction.newExpense:
       createEntity(
-          context: context,
           entity: ExpenseEntity(state: state, client: client)
               .rebuild((b) => b..projectId = project.id));
       break;
     case EntityAction.clone:
-      createEntity(context: context, entity: project.clone);
+      createEntity(entity: project.clone);
       break;
     case EntityAction.restore:
       final message = projectIds.length > 1
@@ -325,8 +321,8 @@ void handleProjectAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', projectIds.length.toString())
           : localization!.restoredProject;
-      store.dispatch(RestoreProjectRequest(
-          snackBarCompleter<Null>(context, message), projectIds));
+      store.dispatch(
+          RestoreProjectRequest(snackBarCompleter<Null>(message), projectIds));
       break;
     case EntityAction.archive:
       final message = projectIds.length > 1
@@ -334,8 +330,8 @@ void handleProjectAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', projectIds.length.toString())
           : localization!.archivedProject;
-      store.dispatch(ArchiveProjectRequest(
-          snackBarCompleter<Null>(context, message), projectIds));
+      store.dispatch(
+          ArchiveProjectRequest(snackBarCompleter<Null>(message), projectIds));
       break;
     case EntityAction.delete:
       final message = projectIds.length > 1
@@ -343,8 +339,8 @@ void handleProjectAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', projectIds.length.toString())
           : localization!.deletedProject;
-      store.dispatch(DeleteProjectRequest(
-          snackBarCompleter<Null>(context, message), projectIds));
+      store.dispatch(
+          DeleteProjectRequest(snackBarCompleter<Null>(message), projectIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.projectListState.isInMultiselect()) {
@@ -376,14 +372,12 @@ void handleProjectAction(
         }
       }
       if (documentIds.isEmpty) {
-        showMessageDialog(
-            context: context, message: localization!.noDocumentsToDownload);
+        showMessageDialog(message: localization!.noDocumentsToDownload);
       } else {
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
             completer: snackBarCompleter<Null>(
-              context,
               localization!.exportedData,
             ),
           ),

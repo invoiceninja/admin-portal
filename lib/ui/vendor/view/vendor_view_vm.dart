@@ -70,8 +70,8 @@ class VendorViewVM {
         VendorEntity(id: state.vendorUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context)!.refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadVendor(completer: completer, vendorId: vendor.id));
       return completer.future;
     }
@@ -89,9 +89,7 @@ class VendorViewVM {
         switch (entityType) {
           case EntityType.expense:
             if (longPress && vendor.isActive) {
-              createEntity(
-                  context: context,
-                  entity: ExpenseEntity(state: state, vendor: vendor));
+              createEntity(entity: ExpenseEntity(state: state, vendor: vendor));
             } else {
               viewEntitiesByType(
                   entityType: EntityType.expense, filterEntity: vendor);
@@ -100,9 +98,7 @@ class VendorViewVM {
         }
       },
       onAddExpensePressed: (context) {
-        createEntity(
-            context: context,
-            entity: ExpenseEntity(state: state, vendor: vendor));
+        createEntity(entity: ExpenseEntity(state: state, vendor: vendor));
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([vendor], action, autoPop: true),

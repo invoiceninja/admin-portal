@@ -375,8 +375,8 @@ void handleTaskAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', taskIds.length.toString())
           : localization!.startedTask;
-      store.dispatch(StartTasksRequest(
-          snackBarCompleter<Null>(context, message), taskIds));
+      store.dispatch(
+          StartTasksRequest(snackBarCompleter<Null>(message), taskIds));
       break;
     case EntityAction.stop:
       final message = taskIds.length > 1
@@ -385,7 +385,7 @@ void handleTaskAction(
               .replaceFirst(':count', taskIds.length.toString())
           : localization!.stoppedTask;
       store.dispatch(
-          StopTasksRequest(snackBarCompleter<Null>(context, message), taskIds));
+          StopTasksRequest(snackBarCompleter<Null>(message), taskIds));
       break;
     case EntityAction.invoiceTask:
     case EntityAction.addToInvoice:
@@ -455,7 +455,6 @@ void handleTaskAction(
       if (items.isNotEmpty) {
         if (action == EntityAction.invoiceTask) {
           createEntity(
-              context: context,
               entity:
                   InvoiceEntity(state: state, client: client).rebuild((b) => b
                     ..lineItems.addAll(items)
@@ -470,7 +469,7 @@ void handleTaskAction(
       }
       break;
     case EntityAction.clone:
-      createEntity(context: context, entity: task.clone);
+      createEntity(entity: task.clone);
       break;
     case EntityAction.changeStatus:
       changeTaskStatusDialog(context: context, task: task);
@@ -481,8 +480,8 @@ void handleTaskAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', taskIds.length.toString())
           : localization!.restoredTask;
-      store.dispatch(RestoreTaskRequest(
-          snackBarCompleter<Null>(context, message), taskIds));
+      store.dispatch(
+          RestoreTaskRequest(snackBarCompleter<Null>(message), taskIds));
       break;
     case EntityAction.archive:
       final message = taskIds.length > 1
@@ -490,8 +489,8 @@ void handleTaskAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', taskIds.length.toString())
           : localization!.archivedTask;
-      store.dispatch(ArchiveTaskRequest(
-          snackBarCompleter<Null>(context, message), taskIds));
+      store.dispatch(
+          ArchiveTaskRequest(snackBarCompleter<Null>(message), taskIds));
       break;
     case EntityAction.delete:
       final message = taskIds.length > 1
@@ -499,8 +498,8 @@ void handleTaskAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', taskIds.length.toString())
           : localization!.deletedTask;
-      store.dispatch(DeleteTaskRequest(
-          snackBarCompleter<Null>(context, message), taskIds));
+      store.dispatch(
+          DeleteTaskRequest(snackBarCompleter<Null>(message), taskIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.taskListState.isInMultiselect()) {
@@ -532,14 +531,12 @@ void handleTaskAction(
         }
       }
       if (documentIds.isEmpty) {
-        showMessageDialog(
-            context: context, message: localization!.noDocumentsToDownload);
+        showMessageDialog(message: localization!.noDocumentsToDownload);
       } else {
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
             completer: snackBarCompleter<Null>(
-              context,
               localization!.exportedData,
             ),
           ),

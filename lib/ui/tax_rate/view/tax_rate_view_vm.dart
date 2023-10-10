@@ -64,8 +64,8 @@ class TaxRateViewVM {
         TaxRateEntity(id: state.taxRateUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context)!.refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadTaxRate(completer: completer, taxRateId: taxRate.id));
       return completer.future;
     }

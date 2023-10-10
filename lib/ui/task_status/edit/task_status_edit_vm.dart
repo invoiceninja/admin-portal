@@ -70,7 +70,7 @@ class TaskStatusEditVM {
         store.dispatch(UpdateTaskStatus(taskStatus));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: TaskStatusEntity(), force: true);
+        createEntity(entity: TaskStatusEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {

@@ -35,7 +35,7 @@ void showRefreshDataDialog(
   final store = StoreProvider.of<AppState>(context);
   store.dispatch(RefreshData(
     completer: snackBarCompleter<Null>(
-        context, AppLocalization.of(context)!.refreshComplete,
+        AppLocalization.of(context)!.refreshComplete,
         shouldPop: true),
     clearData: true,
     includeStatic: includeStatic,
@@ -63,11 +63,11 @@ void showErrorDialog({
 }
 
 void showMessageDialog({
-  required BuildContext context,
   required String? message,
   List<TextButton>? secondaryActions,
   Function? onDismiss,
 }) {
+  final context = navigatorKey.currentContext!;
   showDialog<MessageDialog>(
       context: context,
       builder: (BuildContext context) {
@@ -109,7 +109,6 @@ void confirmCallback({
           callback(_reason);
         } else {
           showMessageDialog(
-              context: context,
               message: localization!.pleaseTypeToConfirm
                   .replaceFirst(':value', typeToConfirm));
         }
@@ -192,7 +191,6 @@ void passwordCallback({
 
   if (alwaysRequire && !user.hasPassword) {
     showMessageDialog(
-        context: context,
         message: localization!.pleaseSetAPassword,
         secondaryActions: [
           TextButton(
@@ -440,9 +438,9 @@ class _FieldConfirmationState extends State<FieldConfirmation> {
 }
 
 void cloneToDialog({
-  required BuildContext context,
   required InvoiceEntity invoice,
 }) {
+  final context = navigatorKey.currentContext!;
   final localization = AppLocalization.of(context);
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
@@ -542,7 +540,6 @@ void changeTaskStatusDialog({
                   store.dispatch(SaveTaskRequest(
                     task: task.rebuild((b) => b..statusId = statusId),
                     completer: snackBarCompleter<TaskEntity>(
-                      context,
                       localization.changedStatus,
                     ),
                   ));
@@ -579,7 +576,7 @@ void addToInvoiceDialog({
   });
 
   if (invoices.isEmpty) {
-    showMessageDialog(context: context, message: localization!.noInvoicesFound);
+    showMessageDialog(message: localization!.noInvoicesFound);
     return;
   }
 

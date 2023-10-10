@@ -92,7 +92,6 @@ class DesignScreen extends StatelessWidget {
               backgroundColor: Theme.of(context).primaryColorDark,
               onPressed: () {
                 createEntity(
-                  context: context,
                   entity: DesignEntity(
                       design: state.designState.cleanDesign.design),
                 );

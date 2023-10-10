@@ -85,7 +85,7 @@ class EmailQuoteVM extends EmailEntityVM {
       vendor: state.vendorState.map[quote.vendorId],
       onSendPressed: (context, template, subject, body, ccEmail) {
         final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context)!.emailedQuote,
+            AppLocalization.of(context)!.emailedQuote,
             shouldPop: isMobile(context));
         if (!isMobile(context)) {
           completer.future.then<Null>((_) {

@@ -73,7 +73,7 @@ class UserEditVM {
         store.dispatch(UpdateUser(user));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: UserEntity(), force: true);
+        createEntity(entity: UserEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {

@@ -242,7 +242,7 @@ Future<AppState> _initialState(bool isTesting) async {
 
   prefState = prefState!.rebuild((b) => b
     ..enableDarkModeSystem =
-        WidgetsBinding.instance.window.platformBrightness == Brightness.dark);
+        PlatformDispatcher.instance.platformBrightness == Brightness.dark);
 
   String? browserRoute;
   if (kIsWeb && prefState.isDesktop) {

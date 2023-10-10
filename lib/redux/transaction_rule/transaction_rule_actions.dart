@@ -280,20 +280,17 @@ void handleTransactionRuleAction(BuildContext? context,
       break;
     case EntityAction.restore:
       store.dispatch(RestoreTransactionRulesRequest(
-          snackBarCompleter<Null>(
-              context, localization!.restoredTransactionRule),
+          snackBarCompleter<Null>(localization!.restoredTransactionRule),
           transactionRuleIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveTransactionRulesRequest(
-          snackBarCompleter<Null>(
-              context, localization!.archivedTransactionRule),
+          snackBarCompleter<Null>(localization!.archivedTransactionRule),
           transactionRuleIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteTransactionRulesRequest(
-          snackBarCompleter<Null>(
-              context, localization!.deletedTransactionRule),
+          snackBarCompleter<Null>(localization!.deletedTransactionRule),
           transactionRuleIds));
       break;
     case EntityAction.toggleMultiselect:

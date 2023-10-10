@@ -51,8 +51,8 @@ class ExpenseCategoryListBuilder extends StatelessWidget {
               return ExpenseCategoryListItem(
                 filter: viewModel.filter,
                 expenseCategory: expenseCategory,
-                isChecked: isInMultiselect &&
-                    listState.isSelected(expenseCategory.id),
+                isChecked:
+                    isInMultiselect && listState.isSelected(expenseCategory.id),
               );
             });
       },
@@ -81,8 +81,8 @@ class ExpenseCategoryListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context)!.refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }

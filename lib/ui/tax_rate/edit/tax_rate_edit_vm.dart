@@ -70,7 +70,7 @@ class TaxRateEditVM {
         store.dispatch(UpdateTaxRate(taxRate));
       },
       onCancelPressed: (context) {
-        createEntity(context: context, entity: TaxRateEntity(), force: true);
+        createEntity(entity: TaxRateEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {

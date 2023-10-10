@@ -89,8 +89,8 @@ class CreditViewVM extends AbstractInvoiceViewVM {
         ClientEntity(id: credit.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context)!.refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadCredit(completer: completer, creditId: credit.id));
       return completer.future;
     }
@@ -107,7 +107,7 @@ class CreditViewVM extends AbstractInvoiceViewVM {
             entity: credit,
             subIndex: index,
             completer: snackBarCompleter<ClientEntity>(
-                context, AppLocalization.of(context)!.updatedCredit));
+                AppLocalization.of(context)!.updatedCredit));
       },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>

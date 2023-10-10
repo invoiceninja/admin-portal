@@ -208,8 +208,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
             ..projectId = projectId
             ..invitations.replace(BuiltList<InvitationEntity>(client
                 .emailContacts
-                .map(
-                    (contact) => InvitationEntity(clientContactId: contact.id))
+                .map((contact) => InvitationEntity(clientContactId: contact.id))
                 .toList())))));
         }
         store.dispatch(AddInvoiceItems(items));
@@ -223,7 +222,7 @@ class InvoiceEditVM extends AbstractInvoiceEditVM {
         if (['pdf', 'email'].contains(state.uiState.previousSubRoute)) {
           viewEntitiesByType(entityType: EntityType.invoice);
         } else {
-          createEntity(context: context, entity: InvoiceEntity(), force: true);
+          createEntity(entity: InvoiceEntity(), force: true);
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
       },

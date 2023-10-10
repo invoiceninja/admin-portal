@@ -280,22 +280,21 @@ void handleBankAccountAction(BuildContext? context,
       break;
     case EntityAction.restore:
       store.dispatch(RestoreBankAccountsRequest(
-          snackBarCompleter<Null>(context, localization!.restoredBankAccount),
+          snackBarCompleter<Null>(localization!.restoredBankAccount),
           bankAccountIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveBankAccountsRequest(
-          snackBarCompleter<Null>(context, localization!.archivedBankAccount),
+          snackBarCompleter<Null>(localization!.archivedBankAccount),
           bankAccountIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteBankAccountsRequest(
-          snackBarCompleter<Null>(context, localization!.deletedBankAccount),
+          snackBarCompleter<Null>(localization!.deletedBankAccount),
           bankAccountIds));
       break;
     case EntityAction.newTransaction:
       createEntity(
-          context: context,
           entity: TransactionEntity(state: state)
               .rebuild((b) => b..bankAccountId = bankAccount.id));
       break;

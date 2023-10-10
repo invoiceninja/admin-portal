@@ -88,7 +88,7 @@ class EmailSettingsVM {
             switch (settingsUIState.entityType) {
               case EntityType.company:
                 final completer = snackBarCompleter<Null>(
-                    context, AppLocalization.of(context)!.savedSettings);
+                    AppLocalization.of(context)!.savedSettings);
                 store.dispatch(SaveCompanyRequest(
                   completer: completer,
                   company: settingsUIState.company,
@@ -96,13 +96,13 @@ class EmailSettingsVM {
                 break;
               case EntityType.group:
                 final completer = snackBarCompleter<GroupEntity>(
-                    context, AppLocalization.of(context)!.savedSettings);
+                    AppLocalization.of(context)!.savedSettings);
                 store.dispatch(SaveGroupRequest(
                     completer: completer, group: settingsUIState.group));
                 break;
               case EntityType.client:
                 final completer = snackBarCompleter<ClientEntity>(
-                    context, AppLocalization.of(context)!.savedSettings);
+                    AppLocalization.of(context)!.savedSettings);
                 store.dispatch(SaveClientRequest(
                     completer: completer, client: settingsUIState.client));
                 break;
@@ -111,7 +111,6 @@ class EmailSettingsVM {
         },
         onEInvoiceCertificateSelected: (eInvoiceCertificate) {
           final completer = snackBarCompleter<Null>(
-              navigatorKey.currentContext!,
               AppLocalization.of(navigatorKey.currentContext!)!
                   .uploadedCertificate);
           store.dispatch(

@@ -289,7 +289,7 @@ void handleTaskStatusAction(BuildContext? context,
               .replaceFirst(':count', taskStatusIds.length.toString())
           : localization!.restoredTaskStatus;
       store.dispatch(RestoreTaskStatusesRequest(
-          snackBarCompleter<Null>(context, message), taskStatusIds));
+          snackBarCompleter<Null>(message), taskStatusIds));
       break;
     case EntityAction.archive:
       final message = taskStatusIds.length > 1
@@ -298,7 +298,7 @@ void handleTaskStatusAction(BuildContext? context,
               .replaceFirst(':count', taskStatusIds.length.toString())
           : localization!.archivedTaskStatus;
       store.dispatch(ArchiveTaskStatusesRequest(
-          snackBarCompleter<Null>(context, message), taskStatusIds));
+          snackBarCompleter<Null>(message), taskStatusIds));
       break;
     case EntityAction.delete:
       final message = taskStatusIds.length > 1
@@ -307,11 +307,10 @@ void handleTaskStatusAction(BuildContext? context,
               .replaceFirst(':count', taskStatusIds.length.toString())
           : localization!.deletedTaskStatus;
       store.dispatch(DeleteTaskStatusesRequest(
-          snackBarCompleter<Null>(context, message), taskStatusIds));
+          snackBarCompleter<Null>(message), taskStatusIds));
       break;
     case EntityAction.newTask:
       createEntity(
-          context: context,
           entity: TaskEntity(state: state)
               .rebuild((b) => b..statusId = taskStatus.id));
       break;

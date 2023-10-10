@@ -88,7 +88,7 @@ class ClientEditVM {
               ..postalCode = client.shippingPostalCode
               ..countryId = client.shippingCountryId))),
         onCancelPressed: (BuildContext context) {
-          createEntity(context: context, entity: ClientEntity(), force: true);
+          createEntity(entity: ClientEntity(), force: true);
           if (state.clientUIState.cancelCompleter != null) {
             state.clientUIState.cancelCompleter!.complete();
           } else {

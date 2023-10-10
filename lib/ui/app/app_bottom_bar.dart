@@ -383,7 +383,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
             final user =
                 state.user.rebuild((b) => b..userCompany.replace(userCompany));
             final completer = snackBarCompleter<Null>(
-                context, AppLocalization.of(context)!.savedSettings);
+                AppLocalization.of(context)!.savedSettings);
             store.dispatch(
               SaveUserSettingsRequest(
                 completer: completer,

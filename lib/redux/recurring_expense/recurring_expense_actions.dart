@@ -373,26 +373,22 @@ void handleRecurringExpenseAction(BuildContext? context,
       break;
     case EntityAction.restore:
       store.dispatch(RestoreRecurringExpensesRequest(
-          snackBarCompleter<Null>(
-              context, localization!.restoredRecurringExpense),
+          snackBarCompleter<Null>(localization!.restoredRecurringExpense),
           recurringExpenseIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveRecurringExpensesRequest(
-          snackBarCompleter<Null>(
-              context, localization!.archivedRecurringExpense),
+          snackBarCompleter<Null>(localization!.archivedRecurringExpense),
           recurringExpenseIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteRecurringExpensesRequest(
-          snackBarCompleter<Null>(
-              context, localization!.deletedRecurringExpense),
+          snackBarCompleter<Null>(localization!.deletedRecurringExpense),
           recurringExpenseIds));
       break;
     case EntityAction.start:
       store.dispatch(StartRecurringExpensesRequest(
         completer: snackBarCompleter<Null>(
-            context,
             (recurringExpense.lastSentDate).isEmpty
                 ? localization!.startedRecurringInvoice
                 : localization!.resumedRecurringInvoice),
@@ -401,14 +397,13 @@ void handleRecurringExpenseAction(BuildContext? context,
       break;
     case EntityAction.stop:
       store.dispatch(StopRecurringExpensesRequest(
-        completer: snackBarCompleter<Null>(
-            context, localization!.stoppedRecurringInvoice),
+        completer:
+            snackBarCompleter<Null>(localization!.stoppedRecurringInvoice),
         expenseIds: recurringExpenseIds,
       ));
       break;
     case EntityAction.cloneToExpense:
       createEntity(
-        context: context,
         entity: recurringExpense.clone
             .rebuild((b) => b..entityType = EntityType.expense),
       );
@@ -416,7 +411,6 @@ void handleRecurringExpenseAction(BuildContext? context,
     case EntityAction.clone:
     case EntityAction.cloneToRecurring:
       createEntity(
-        context: context,
         entity: recurringExpense.clone
             .rebuild((b) => b..entityType = EntityType.recurringExpense),
       );
@@ -454,14 +448,12 @@ void handleRecurringExpenseAction(BuildContext? context,
         }
       }
       if (documentIds.isEmpty) {
-        showMessageDialog(
-            context: context, message: localization!.noDocumentsToDownload);
+        showMessageDialog(message: localization!.noDocumentsToDownload);
       } else {
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
             completer: snackBarCompleter<Null>(
-              context,
               localization!.exportedData,
             ),
           ),

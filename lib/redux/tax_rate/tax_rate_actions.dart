@@ -235,8 +235,8 @@ void handleTaxRateAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', taxRateIds.length.toString())
           : localization!.restoredTaxRate;
-      store.dispatch(RestoreTaxRateRequest(
-          snackBarCompleter<Null>(context, message), taxRateIds));
+      store.dispatch(
+          RestoreTaxRateRequest(snackBarCompleter<Null>(message), taxRateIds));
       break;
     case EntityAction.archive:
       final message = taxRateIds.length > 1
@@ -244,8 +244,8 @@ void handleTaxRateAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', taxRateIds.length.toString())
           : localization!.archivedTaxRate;
-      store.dispatch(ArchiveTaxRateRequest(
-          snackBarCompleter<Null>(context, message), taxRateIds));
+      store.dispatch(
+          ArchiveTaxRateRequest(snackBarCompleter<Null>(message), taxRateIds));
       break;
     case EntityAction.delete:
       final message = taxRateIds.length > 1
@@ -253,8 +253,8 @@ void handleTaxRateAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', taxRateIds.length.toString())
           : localization!.deletedTaxRate;
-      store.dispatch(DeleteTaxRateRequest(
-          snackBarCompleter<Null>(context, message), taxRateIds));
+      store.dispatch(
+          DeleteTaxRateRequest(snackBarCompleter<Null>(message), taxRateIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.taxRateListState.isInMultiselect()) {

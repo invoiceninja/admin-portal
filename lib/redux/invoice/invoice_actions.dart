@@ -10,7 +10,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -570,11 +569,9 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
       break;
     case EntityAction.markSent:
       store.dispatch(MarkInvoicesSentRequest(
-          snackBarCompleter<Null>(
-              context,
-              invoiceIds.length == 1
-                  ? localization!.markedInvoiceAsSent
-                  : localization!.markedInvoicesAsSent),
+          snackBarCompleter<Null>(invoiceIds.length == 1
+              ? localization!.markedInvoiceAsSent
+              : localization!.markedInvoicesAsSent),
           invoiceIds));
       break;
     case EntityAction.reverse:
@@ -583,7 +580,6 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
           clientId: invoice.clientId,
           entityType: EntityType.credit);
       createEntity(
-          context: context,
           entity: invoice.clone.rebuild((b) => b
             ..invoiceId = invoice.id
             ..entityType = EntityType.credit
@@ -595,21 +591,17 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
           message: localization!.cancelInvoice,
           callback: (_) {
             store.dispatch(CancelInvoicesRequest(
-                snackBarCompleter<Null>(
-                    context,
-                    invoiceIds.length == 1
-                        ? localization.cancelledInvoice
-                        : localization.cancelledInvoices),
+                snackBarCompleter<Null>(invoiceIds.length == 1
+                    ? localization.cancelledInvoice
+                    : localization.cancelledInvoices),
                 invoiceIds));
           });
       break;
     case EntityAction.markPaid:
       store.dispatch(MarkInvoicesPaidRequest(
-          snackBarCompleter<Null>(
-              context,
-              invoiceIds.length == 1
-                  ? localization!.markedInvoiceAsPaid
-                  : localization!.markedInvoicesAsPaid),
+          snackBarCompleter<Null>(invoiceIds.length == 1
+              ? localization!.markedInvoiceAsPaid
+              : localization!.markedInvoicesAsPaid),
           invoiceIds));
       break;
     case EntityAction.autoBill:
@@ -618,11 +610,9 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
           message: localization!.autoBill,
           callback: (_) {
             store.dispatch(AutoBillInvoicesRequest(
-                snackBarCompleter<Null>(
-                    context,
-                    invoiceIds.length == 1
-                        ? localization.autoBilledInvoice
-                        : localization.autoBilledInvoices),
+                snackBarCompleter<Null>(invoiceIds.length == 1
+                    ? localization.autoBilledInvoice
+                    : localization.autoBilledInvoices),
                 invoiceIds));
           });
       break;
@@ -640,7 +630,6 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
       });
       if (!emailValid) {
         showMessageDialog(
-            context: context,
             message: localization!.clientEmailNotSet,
             secondaryActions: [
               TextButton(
@@ -654,14 +643,12 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
       }
       if (action == EntityAction.sendEmail) {
         store.dispatch(ShowEmailInvoice(
-            completer:
-                snackBarCompleter<Null>(context, localization!.emailedInvoice),
+            completer: snackBarCompleter<Null>(localization!.emailedInvoice),
             invoice: invoice,
             context: context));
       } else if (action == EntityAction.schedule) {
         if (!state.isProPlan) {
           showMessageDialog(
-              context: context,
               message: localization!.upgradeToPaidPlanToSchedule,
               secondaryActions: [
                 TextButton(
@@ -676,7 +663,6 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
         }
 
         createEntity(
-            context: context,
             entity: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_RECORD)
                 .rebuild((b) => b
                   ..parameters.entityType = EntityType.invoice.apiValue
@@ -720,11 +706,9 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
 
         if (template != null) {
           store.dispatch(BulkEmailInvoicesRequest(
-            completer: snackBarCompleter<Null>(
-                navigatorKey.currentContext!,
-                invoiceIds.length == 1
-                    ? localization!.emailedInvoice
-                    : localization!.emailedInvoices),
+            completer: snackBarCompleter<Null>(invoiceIds.length == 1
+                ? localization!.emailedInvoice
+                : localization!.emailedInvoices),
             invoiceIds: invoiceIds,
             template: template,
           ));
@@ -732,11 +716,11 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
       }
       break;
     case EntityAction.cloneToOther:
-      cloneToDialog(context: context, invoice: invoice);
+      cloneToDialog(invoice: invoice);
       break;
     case EntityAction.clone:
     case EntityAction.cloneToInvoice:
-      createEntity(context: context, entity: invoice.clone);
+      createEntity(entity: invoice.clone);
       break;
     case EntityAction.cloneToQuote:
       final designId = getDesignIdForClientByEntity(
@@ -744,7 +728,6 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
           clientId: invoice.clientId,
           entityType: EntityType.quote);
       createEntity(
-          context: context,
           entity: invoice.clone.rebuild((b) => b
             ..entityType = EntityType.quote
             ..designId = designId));
@@ -755,7 +738,6 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
           clientId: invoice.clientId,
           entityType: EntityType.credit);
       createEntity(
-          context: context,
           entity: invoice.clone.rebuild((b) => b
             ..entityType = EntityType.credit
             ..designId = designId));
@@ -766,7 +748,6 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
           vendorId: invoice.vendorId,
           entityType: EntityType.purchaseOrder);
       createEntity(
-          context: context,
           entity: invoice.clone
               .rebuild((b) => b
                 ..entityType = EntityType.purchaseOrder
@@ -775,13 +756,11 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
       break;
     case EntityAction.cloneToRecurring:
       createEntity(
-          context: context,
           entity: invoice.clone
               .rebuild((b) => b..entityType = EntityType.recurringInvoice));
       break;
     case EntityAction.newPayment:
       createEntity(
-        context: context,
         entity: PaymentEntity(state: state, client: client).rebuild((b) => b
           ..invoices.addAll(invoices
               .where((invoice) => !(invoice as InvoiceEntity).isPaid)
@@ -799,8 +778,7 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
       break;
     case EntityAction.bulkDownload:
       store.dispatch(DownloadInvoicesRequest(
-          snackBarCompleter<Null>(context, localization!.exportedData),
-          invoiceIds));
+          snackBarCompleter<Null>(localization!.exportedData), invoiceIds));
       break;
     case EntityAction.restore:
       final message = invoiceIds.length > 1
@@ -808,8 +786,8 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', invoiceIds.length.toString())
           : localization!.restoredInvoice;
-      store.dispatch(RestoreInvoicesRequest(
-          snackBarCompleter<Null>(context, message), invoiceIds));
+      store.dispatch(
+          RestoreInvoicesRequest(snackBarCompleter<Null>(message), invoiceIds));
       break;
     case EntityAction.archive:
       final message = invoiceIds.length > 1
@@ -817,8 +795,8 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', invoiceIds.length.toString())
           : localization!.archivedInvoice;
-      store.dispatch(ArchiveInvoicesRequest(
-          snackBarCompleter<Null>(context, message), invoiceIds));
+      store.dispatch(
+          ArchiveInvoicesRequest(snackBarCompleter<Null>(message), invoiceIds));
       break;
     case EntityAction.delete:
       final message = invoiceIds.length > 1
@@ -826,8 +804,8 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', invoiceIds.length.toString())
           : localization!.deletedInvoice;
-      store.dispatch(DeleteInvoicesRequest(
-          snackBarCompleter<Null>(context, message), invoiceIds));
+      store.dispatch(
+          DeleteInvoicesRequest(snackBarCompleter<Null>(message), invoiceIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.invoiceListState.isInMultiselect()) {
@@ -873,14 +851,12 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
         }
       }
       if (documentIds.isEmpty) {
-        showMessageDialog(
-            context: context, message: localization!.noDocumentsToDownload);
+        showMessageDialog(message: localization!.noDocumentsToDownload);
       } else {
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
             completer: snackBarCompleter<Null>(
-              context,
               localization!.exportedData,
             ),
           ),

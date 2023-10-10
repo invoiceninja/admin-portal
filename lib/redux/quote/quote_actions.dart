@@ -540,7 +540,7 @@ Future handleQuoteAction(
           message: localization!.convertToInvoice,
           callback: (_) {
             store.dispatch(ConvertQuotesToInvoices(
-                snackBarCompleter<Null>(context, localization.convertedQuote),
+                snackBarCompleter<Null>(localization.convertedQuote),
                 quoteIds));
           });
       break;
@@ -550,7 +550,7 @@ Future handleQuoteAction(
           message: localization!.convertToProject,
           callback: (_) {
             store.dispatch(ConvertQuotesToProjects(
-                snackBarCompleter<Null>(context, localization.convertedQuote),
+                snackBarCompleter<Null>(localization.convertedQuote),
                 quoteIds));
           });
       break;
@@ -560,17 +560,14 @@ Future handleQuoteAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', quoteIds.length.toString())
           : localization!.approveQuote;
-      store.dispatch(
-          ApproveQuotes(snackBarCompleter<Null>(context, message), quoteIds));
+      store.dispatch(ApproveQuotes(snackBarCompleter<Null>(message), quoteIds));
       break;
     case EntityAction.viewInvoice:
-      viewEntityById(
-          entityId: quote.invoiceId, entityType: EntityType.invoice);
+      viewEntityById(entityId: quote.invoiceId, entityType: EntityType.invoice);
       break;
     case EntityAction.markSent:
       store.dispatch(MarkSentQuotesRequest(
-          snackBarCompleter<Null>(context, localization!.markedQuoteAsSent),
-          quoteIds));
+          snackBarCompleter<Null>(localization!.markedQuoteAsSent), quoteIds));
       break;
     case EntityAction.sendEmail:
     case EntityAction.bulkSendEmail:
@@ -586,7 +583,6 @@ Future handleQuoteAction(
       });
       if (!emailValid) {
         showMessageDialog(
-            context: context,
             message: localization!.clientEmailNotSet,
             secondaryActions: [
               TextButton(
@@ -600,14 +596,12 @@ Future handleQuoteAction(
       }
       if (action == EntityAction.sendEmail) {
         store.dispatch(ShowEmailQuote(
-            completer:
-                snackBarCompleter<Null>(context, localization!.emailedQuote),
+            completer: snackBarCompleter<Null>(localization!.emailedQuote),
             quote: quote,
             context: context));
       } else if (action == EntityAction.schedule) {
         if (!state.isProPlan) {
           showMessageDialog(
-              context: context,
               message: localization!.upgradeToPaidPlanToSchedule,
               secondaryActions: [
                 TextButton(
@@ -622,7 +616,6 @@ Future handleQuoteAction(
         }
 
         createEntity(
-            context: context,
             entity: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_RECORD)
                 .rebuild((b) => b
                   ..parameters.entityType = EntityType.quote.apiValue
@@ -633,11 +626,9 @@ Future handleQuoteAction(
             message: localization!.bulkEmailQuotes,
             callback: (_) {
               store.dispatch(BulkEmailQuotesRequest(
-                  completer: snackBarCompleter<Null>(
-                      context,
-                      quoteIds.length == 1
-                          ? localization.emailedQuote
-                          : localization.emailedQuotes),
+                  completer: snackBarCompleter<Null>(quoteIds.length == 1
+                      ? localization.emailedQuote
+                      : localization.emailedQuotes),
                   quoteIds: quoteIds));
             });
       }
@@ -648,13 +639,12 @@ Future handleQuoteAction(
           vendorId: quote.vendorId,
           entityType: EntityType.purchaseOrder);
       createEntity(
-          context: context,
           entity: quote.clone.rebuild((b) => b
             ..entityType = EntityType.purchaseOrder
             ..designId = designId));
       break;
     case EntityAction.cloneToOther:
-      cloneToDialog(context: context, invoice: quote);
+      cloneToDialog(invoice: quote);
       break;
     case EntityAction.cloneToInvoice:
       final designId = getDesignIdForClientByEntity(
@@ -662,14 +652,13 @@ Future handleQuoteAction(
           clientId: quote.clientId,
           entityType: EntityType.invoice);
       createEntity(
-          context: context,
           entity: quote.clone.rebuild((b) => b
             ..entityType = EntityType.invoice
             ..designId = designId));
       break;
     case EntityAction.clone:
     case EntityAction.cloneToQuote:
-      createEntity(context: context, entity: quote.clone);
+      createEntity(entity: quote.clone);
       break;
     case EntityAction.cloneToCredit:
       final designId = getDesignIdForClientByEntity(
@@ -677,7 +666,6 @@ Future handleQuoteAction(
           clientId: quote.clientId,
           entityType: EntityType.credit);
       createEntity(
-          context: context,
           entity: quote.clone.rebuild((b) => b
             ..entityType = EntityType.credit
             ..designId = designId));
@@ -688,7 +676,6 @@ Future handleQuoteAction(
           clientId: quote.clientId,
           entityType: EntityType.invoice);
       createEntity(
-          context: context,
           entity: quote.clone.rebuild((b) => b
             ..entityType = EntityType.recurringInvoice
             ..designId = designId));
@@ -698,8 +685,7 @@ Future handleQuoteAction(
       break;
     case EntityAction.bulkDownload:
       store.dispatch(DownloadQuotesRequest(
-          snackBarCompleter<Null>(context, localization!.exportedData),
-          quoteIds));
+          snackBarCompleter<Null>(localization!.exportedData), quoteIds));
       break;
     case EntityAction.restore:
       final message = quoteIds.length > 1
@@ -707,8 +693,8 @@ Future handleQuoteAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', quoteIds.length.toString())
           : localization!.restoredQuote;
-      store.dispatch(RestoreQuotesRequest(
-          snackBarCompleter<Null>(context, message), quoteIds));
+      store.dispatch(
+          RestoreQuotesRequest(snackBarCompleter<Null>(message), quoteIds));
       break;
     case EntityAction.archive:
       final message = quoteIds.length > 1
@@ -716,8 +702,8 @@ Future handleQuoteAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', quoteIds.length.toString())
           : localization!.archivedQuote;
-      store.dispatch(ArchiveQuotesRequest(
-          snackBarCompleter<Null>(context, message), quoteIds));
+      store.dispatch(
+          ArchiveQuotesRequest(snackBarCompleter<Null>(message), quoteIds));
       break;
     case EntityAction.delete:
       final message = quoteIds.length > 1
@@ -725,8 +711,8 @@ Future handleQuoteAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', quoteIds.length.toString())
           : localization!.deletedQuote;
-      store.dispatch(DeleteQuotesRequest(
-          snackBarCompleter<Null>(context, message), quoteIds));
+      store.dispatch(
+          DeleteQuotesRequest(snackBarCompleter<Null>(message), quoteIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.quoteListState.isInMultiselect()) {
@@ -772,14 +758,12 @@ Future handleQuoteAction(
         }
       }
       if (documentIds.isEmpty) {
-        showMessageDialog(
-            context: context, message: localization!.noDocumentsToDownload);
+        showMessageDialog(message: localization!.noDocumentsToDownload);
       } else {
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
             completer: snackBarCompleter<Null>(
-              context,
               localization!.exportedData,
             ),
           ),

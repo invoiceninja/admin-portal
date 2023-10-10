@@ -387,18 +387,14 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
       break;
     case EntityAction.newTask:
       createEntity(
-          context: context,
-          entity: TaskEntity(state: state)
-              .rebuild((b) => b..clientId = client.id));
+          entity:
+              TaskEntity(state: state).rebuild((b) => b..clientId = client.id));
       break;
     case EntityAction.newInvoice:
-      createEntity(
-          context: context,
-          entity: InvoiceEntity(state: state, client: client));
+      createEntity(entity: InvoiceEntity(state: state, client: client));
       break;
     case EntityAction.newRecurringInvoice:
       createEntity(
-          context: context,
           entity: InvoiceEntity(
               state: state,
               client: client,
@@ -406,7 +402,6 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
       break;
     case EntityAction.newRecurringExpense:
       createEntity(
-          context: context,
           entity: ExpenseEntity(
               state: state,
               client: client,
@@ -414,16 +409,14 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
       break;
     case EntityAction.newQuote:
       createEntity(
-          context: context,
           entity: InvoiceEntity(
-            state: state,
-            client: client,
-            entityType: EntityType.quote,
-          ));
+        state: state,
+        client: client,
+        entityType: EntityType.quote,
+      ));
       break;
     case EntityAction.newCredit:
       createEntity(
-        context: context,
         entity: InvoiceEntity(
           state: state,
           client: client,
@@ -433,20 +426,17 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
       break;
     case EntityAction.newExpense:
       createEntity(
-        context: context,
         entity: ExpenseEntity(state: state, client: client),
       );
       break;
     case EntityAction.newPayment:
       createEntity(
-        context: context,
         entity: PaymentEntity(state: state, client: client)
             .rebuild((b) => b.clientId = client.id),
       );
       break;
     case EntityAction.newProject:
       createEntity(
-        context: context,
         entity:
             ProjectEntity(state: state).rebuild((b) => b.clientId = client.id),
       );
@@ -457,8 +447,8 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', clientIds.length.toString())
           : localization!.restoredClient;
-      store.dispatch(RestoreClientsRequest(
-          snackBarCompleter<Null>(context, message), clientIds));
+      store.dispatch(
+          RestoreClientsRequest(snackBarCompleter<Null>(message), clientIds));
       break;
     case EntityAction.archive:
       final message = clientIds.length > 1
@@ -466,8 +456,8 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', clientIds.length.toString())
           : localization!.archivedClient;
-      store.dispatch(ArchiveClientsRequest(
-          snackBarCompleter<Null>(context, message), clientIds));
+      store.dispatch(
+          ArchiveClientsRequest(snackBarCompleter<Null>(message), clientIds));
       break;
     case EntityAction.delete:
       final message = clientIds.length > 1
@@ -475,8 +465,8 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', clientIds.length.toString())
           : localization!.deletedClient;
-      store.dispatch(DeleteClientsRequest(
-          snackBarCompleter<Null>(context, message), clientIds));
+      store.dispatch(
+          DeleteClientsRequest(snackBarCompleter<Null>(message), clientIds));
       break;
     case EntityAction.purge:
       confirmCallback(
@@ -490,7 +480,7 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
                   store.dispatch(
                     PurgeClientRequest(
                         completer: snackBarCompleter<Null>(
-                            context, localization.purgedClient, callback: () {
+                            localization.purgedClient, callback: () {
                           viewEntitiesByType(entityType: EntityType.client);
                         }),
                         clientId: client.id,
@@ -530,14 +520,12 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
         }
       }
       if (documentIds.isEmpty) {
-        showMessageDialog(
-            context: context, message: localization!.noDocumentsToDownload);
+        showMessageDialog(message: localization!.noDocumentsToDownload);
       } else {
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
             completer: snackBarCompleter<Null>(
-              context,
               localization!.exportedData,
             ),
           ),
@@ -656,7 +644,6 @@ class __MergClientPickerState extends State<_MergClientPicker> {
                     password: password,
                     mergeIntoClientId: _mergeIntoClientId,
                     completer: snackBarCompleter<Null>(
-                      context,
                       localization.mergedClients,
                     ),
                   ));

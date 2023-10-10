@@ -12,7 +12,6 @@ import 'package:http/http.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
@@ -271,14 +270,12 @@ void handleExpenseAction(
     case EntityAction.clone:
     case EntityAction.cloneToExpense:
       createEntity(
-        context: context,
         entity:
             expense.clone.rebuild((b) => b..entityType = EntityType.expense),
       );
       break;
     case EntityAction.cloneToRecurring:
       createEntity(
-        context: context,
         entity: expense.clone
             .rebuild((b) => b..entityType = EntityType.recurringExpense),
       );
@@ -315,7 +312,6 @@ void handleExpenseAction(
       if (items.isNotEmpty) {
         if (action == EntityAction.invoiceExpense) {
           createEntity(
-            context: navigatorKey.currentContext!,
             entity: InvoiceEntity(state: state, client: client).rebuild(
               (b) => b
                 ..lineItems.addAll(items)
@@ -338,8 +334,8 @@ void handleExpenseAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', expenseIds.length.toString())
           : localization!.restoredExpense;
-      store.dispatch(RestoreExpenseRequest(
-          snackBarCompleter<Null>(context, message), expenseIds));
+      store.dispatch(
+          RestoreExpenseRequest(snackBarCompleter<Null>(message), expenseIds));
       break;
     case EntityAction.archive:
       final message = expenseIds.length > 1
@@ -347,8 +343,8 @@ void handleExpenseAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', expenseIds.length.toString())
           : localization!.archivedExpense;
-      store.dispatch(ArchiveExpenseRequest(
-          snackBarCompleter<Null>(context, message), expenseIds));
+      store.dispatch(
+          ArchiveExpenseRequest(snackBarCompleter<Null>(message), expenseIds));
       break;
     case EntityAction.delete:
       final message = expenseIds.length > 1
@@ -356,8 +352,8 @@ void handleExpenseAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', expenseIds.length.toString())
           : localization!.deletedExpense;
-      store.dispatch(DeleteExpenseRequest(
-          snackBarCompleter<Null>(context, message), expenseIds));
+      store.dispatch(
+          DeleteExpenseRequest(snackBarCompleter<Null>(message), expenseIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.expenseListState.isInMultiselect()) {
@@ -389,14 +385,12 @@ void handleExpenseAction(
         }
       }
       if (documentIds.isEmpty) {
-        showMessageDialog(
-            context: context, message: localization!.noDocumentsToDownload);
+        showMessageDialog(message: localization!.noDocumentsToDownload);
       } else {
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
             completer: snackBarCompleter<Null>(
-              context,
               localization!.exportedData,
             ),
           ),

@@ -71,8 +71,7 @@ class UserDetailsVM {
       onChanged: (user) => store.dispatch(UpdateUserSettings(user: user)),
       onConnectGmailPressed: (context, completer, password) async {
         /*
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).connectedGmail);
+        final completer = snackBarCompleter<Null>( AppLocalization.of(context).connectedGmail);
         try {
           final signedIn = await GoogleOAuth.grantOfflineAccess(
               (idToken, accessToken, serverAuthCode) {
@@ -109,7 +108,7 @@ class UserDetailsVM {
               passwordCallback(
                   context: context,
                   callback: (password, idToken) {
-                    final completer = snackBarCompleter<Null>(context,
+                    final completer = snackBarCompleter<Null>(
                         AppLocalization.of(context)!.disconnectedEmail);
                     store.dispatch(
                       DisconnectOAuthMailerRequest(
@@ -128,7 +127,7 @@ class UserDetailsVM {
               passwordCallback(
                   context: context,
                   callback: (password, idToken) {
-                    final completer = snackBarCompleter<Null>(context,
+                    final completer = snackBarCompleter<Null>(
                         AppLocalization.of(context)!.disconnectedGmail);
                     store.dispatch(
                       DisconnectOAuthMailerRequest(
@@ -142,7 +141,7 @@ class UserDetailsVM {
       },
       onDisableTwoFactorPressed: (context) {
         final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context)!.disabledTwoFactor);
+            AppLocalization.of(context)!.disabledTwoFactor);
 
         confirmCallback(
             context: context,
@@ -174,7 +173,7 @@ class UserDetailsVM {
                   context: context,
                   skipOAuth: true,
                   callback: (password, idToken) {
-                    final completer = snackBarCompleter<Null>(context,
+                    final completer = snackBarCompleter<Null>(
                         AppLocalization.of(context)!.disconnectedGoogle);
                     completer.future.then<Null>((_) {
                       GoogleOAuth.disconnect();
@@ -192,7 +191,7 @@ class UserDetailsVM {
       },
       onConnectGooglePressed: (context) {
         final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context)!.connectedGoogle);
+            AppLocalization.of(context)!.connectedGoogle);
 
         passwordCallback(
             context: context,
@@ -241,7 +240,7 @@ class UserDetailsVM {
               passwordCallback(
                   context: context,
                   callback: (password, idToken) {
-                    final completer = snackBarCompleter<Null>(context,
+                    final completer = snackBarCompleter<Null>(
                         AppLocalization.of(context)!.disconnectedMicrosoft);
                     store.dispatch(
                       DisconnecOAuthUserRequest(
@@ -268,7 +267,7 @@ class UserDetailsVM {
                   context: context,
                   skipOAuth: true,
                   callback: (password, idToken) {
-                    final completer = snackBarCompleter<Null>(context,
+                    final completer = snackBarCompleter<Null>(
                         AppLocalization.of(context)!.disconnectedApple);
                     store.dispatch(
                       DisconnecOAuthUserRequest(
@@ -283,7 +282,7 @@ class UserDetailsVM {
       },
       onConnectMicrosoftPressed: (context) {
         final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context)!.connectedMicrosoft);
+            AppLocalization.of(context)!.connectedMicrosoft);
 
         passwordCallback(
             context: context,
@@ -310,8 +309,7 @@ class UserDetailsVM {
       onSavePressed: (context) {
         Debouncer.runOnComplete(() {
           final localization = AppLocalization.of(context)!;
-          final completer =
-              snackBarCompleter<Null>(context, localization.updatedUser);
+          final completer = snackBarCompleter<Null>(localization.updatedUser);
           final appBuilder = AppBuilder.of(context);
           final origUserSettings = state.userCompany.settings;
 
@@ -322,8 +320,7 @@ class UserDetailsVM {
                 origUserSettings.numberYearsActive !=
                     newUserSettings.numberYearsActive) {
               store.dispatch(RefreshData(
-                completer: snackBarCompleter<Null>(
-                    navigatorKey.currentContext!, localization.refreshComplete,
+                completer: snackBarCompleter<Null>(localization.refreshComplete,
                     shouldPop: true),
                 clearData: true,
                 includeStatic: true,

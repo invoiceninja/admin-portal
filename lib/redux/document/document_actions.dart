@@ -336,7 +336,7 @@ void handleDocumentAction(
               .replaceFirst(':count', documentIds.length.toString())
           : localization!.restoredDocument;
       store.dispatch(RestoreDocumentRequest(
-          snackBarCompleter<Null>(context, message), documentIds));
+          snackBarCompleter<Null>(message), documentIds));
       break;
     case EntityAction.archive:
       final message = documentIds.length > 1
@@ -345,7 +345,7 @@ void handleDocumentAction(
               .replaceFirst(':count', documentIds.length.toString())
           : localization!.archivedDocument;
       store.dispatch(ArchiveDocumentRequest(
-          snackBarCompleter<Null>(context, message), documentIds));
+          snackBarCompleter<Null>(message), documentIds));
       break;
     /*
     case EntityAction.delete:
@@ -354,7 +354,7 @@ void handleDocumentAction(
               .replaceFirst(':value', ':count').replaceFirst(':count', documentIds.length.toString())
           : localization.deletedDocument;
       store.dispatch(DeleteDocumentRequest(
-        completer: snackBarCompleter<Null>(context, message),
+        completer: snackBarCompleter<Null>( message),
         documentIds: documentIds,      
       ));
       break;
@@ -386,7 +386,6 @@ void handleDocumentAction(
         DownloadDocumentsRequest(
           documentIds: documentIds,
           completer: snackBarCompleter<Null>(
-            context,
             localization!.exportedData,
           ),
         ),
@@ -480,7 +479,7 @@ void handleDocumentAction(
                 context: context,
                 callback: (password, idToken) {
                   final completer = snackBarCompleter<Null>(
-                      context, AppLocalization.of(context)!.deletedDocument);
+                      AppLocalization.of(context)!.deletedDocument);
                   switch (document.parentType) {
                     case EntityType.client:
                       completer.future.then<Null>((_) => store

@@ -63,8 +63,7 @@ class TransactionEditVM {
         store.dispatch(UpdateTransaction(transaction));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(
-            context: context, entity: TransactionEntity(), force: true);
+        createEntity(entity: TransactionEntity(), force: true);
         if (state.transactionUIState.cancelCompleter != null) {
           state.transactionUIState.cancelCompleter!.complete();
         } else {
@@ -105,7 +104,6 @@ class TransactionEditVM {
       },
       onAddBankAccountPressed: (context, completer) {
         createEntity(
-            context: context,
             entity: BankAccountEntity(state: state),
             force: true,
             completer: completer,

@@ -64,8 +64,8 @@ class TaskStatusViewVM {
             TaskStatusEntity(id: state.taskStatusUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context)!.refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(
           LoadTaskStatus(completer: completer, taskStatusId: taskStatus.id));
       return completer.future;

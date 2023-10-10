@@ -71,8 +71,7 @@ class ExpenseCategoryEditVM {
         store.dispatch(UpdateExpenseCategory(expenseCategory));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(
-            context: context, entity: ExpenseCategoryEntity(), force: true);
+        createEntity(entity: ExpenseCategoryEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {

@@ -64,8 +64,7 @@ class TransactionRuleEditVM {
         store.dispatch(UpdateTransactionRule(transactionRule));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(
-            context: context, entity: TransactionRuleEntity(), force: true);
+        createEntity(entity: TransactionRuleEntity(), force: true);
         if (state.transactionRuleUIState.cancelCompleter != null) {
           state.transactionRuleUIState.cancelCompleter!.complete();
         } else {

@@ -282,7 +282,6 @@ void handleProductAction(
     case EntityAction.newInvoice:
       final invoice = InvoiceEntity(state: state);
       createEntity(
-        context: context,
         entity: invoice.rebuild(
           (b) => b
             ..lineItems.addAll(
@@ -302,7 +301,6 @@ void handleProductAction(
       final invoice =
           InvoiceEntity(state: state, entityType: EntityType.purchaseOrder);
       createEntity(
-        context: context,
         entity: invoice.rebuild(
           (b) => b
             ..lineItems.addAll(
@@ -322,7 +320,7 @@ void handleProductAction(
       editEntity(entity: product);
       break;
     case EntityAction.clone:
-      createEntity(context: context, entity: (product as ProductEntity).clone);
+      createEntity(entity: (product as ProductEntity).clone);
       break;
     case EntityAction.restore:
       final message = productIds.length > 1
@@ -330,8 +328,8 @@ void handleProductAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', productIds.length.toString())
           : localization!.restoredProduct;
-      store.dispatch(RestoreProductsRequest(
-          snackBarCompleter<Null>(context, message), productIds));
+      store.dispatch(
+          RestoreProductsRequest(snackBarCompleter<Null>(message), productIds));
       break;
     case EntityAction.archive:
       final message = productIds.length > 1
@@ -339,8 +337,8 @@ void handleProductAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', productIds.length.toString())
           : localization!.archivedProduct;
-      store.dispatch(ArchiveProductsRequest(
-          snackBarCompleter<Null>(context, message), productIds));
+      store.dispatch(
+          ArchiveProductsRequest(snackBarCompleter<Null>(message), productIds));
       break;
     case EntityAction.delete:
       final message = productIds.length > 1
@@ -348,8 +346,8 @@ void handleProductAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', productIds.length.toString())
           : localization!.deletedProduct;
-      store.dispatch(DeleteProductsRequest(
-          snackBarCompleter<Null>(context, message), productIds));
+      store.dispatch(
+          DeleteProductsRequest(snackBarCompleter<Null>(message), productIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.productListState.isInMultiselect()) {
@@ -381,14 +379,12 @@ void handleProductAction(
         }
       }
       if (documentIds.isEmpty) {
-        showMessageDialog(
-            context: context, message: localization!.noDocumentsToDownload);
+        showMessageDialog(message: localization!.noDocumentsToDownload);
       } else {
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
             completer: snackBarCompleter<Null>(
-              context,
               localization!.exportedData,
             ),
           ),
@@ -411,7 +407,6 @@ void handleProductAction(
                         productIds: productIds,
                         taxCategoryId: taxCategoryId,
                         completer: snackBarCompleter<Null>(
-                            context,
                             productIds.length == 1
                                 ? localization.updatedTaxCategory
                                 : localization.updatedTaxCategories)));

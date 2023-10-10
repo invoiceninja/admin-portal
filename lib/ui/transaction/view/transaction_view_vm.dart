@@ -72,8 +72,8 @@ class TransactionViewVM {
       if (transactions.isEmpty) {
         return null;
       }
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context)!.refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadTransaction(
           completer: completer, transactionId: transactions.first.id));
       return completer.future;
@@ -92,7 +92,7 @@ class TransactionViewVM {
         store.dispatch(
           LinkTransactionToPaymentRequest(
               snackBarCompleter<Null>(
-                  context, AppLocalization.of(context)!.convertedTransaction),
+                  AppLocalization.of(context)!.convertedTransaction),
               transactionIds.first,
               paymentId),
         );
@@ -101,7 +101,7 @@ class TransactionViewVM {
         store.dispatch(
           LinkTransactionToExpenseRequest(
               snackBarCompleter<Null>(
-                  context, AppLocalization.of(context)!.convertedTransaction),
+                  AppLocalization.of(context)!.convertedTransaction),
               transactionIds.first,
               expenseId),
         );
@@ -110,7 +110,7 @@ class TransactionViewVM {
         store.dispatch(
           ConvertTransactionToPaymentRequest(
               snackBarCompleter<Null>(
-                  context, AppLocalization.of(context)!.convertedTransaction),
+                  AppLocalization.of(context)!.convertedTransaction),
               transactionIds.first,
               invoiceIds),
         );
@@ -119,7 +119,7 @@ class TransactionViewVM {
         store.dispatch(
           ConvertTransactionsToExpensesRequest(
             snackBarCompleter<Null>(
-                context, AppLocalization.of(context)!.convertedTransaction)
+                AppLocalization.of(context)!.convertedTransaction)
               ..future.then<Null>((_) {
                 if (state.transactionListState.isInMultiselect()) {
                   store.dispatch(ClearTransactionMultiselect());

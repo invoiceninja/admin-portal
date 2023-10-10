@@ -88,7 +88,7 @@ class EmailCreditVM extends EmailEntityVM {
       },
       onSendPressed: (context, template, subject, body, ccEmail) {
         final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context)!.emailedCredit,
+            AppLocalization.of(context)!.emailedCredit,
             shouldPop: isMobile(context));
         if (!isMobile(context)) {
           completer.future.then<Null>((_) {

@@ -340,9 +340,7 @@ class _ImportExportState extends State<ImportExport> {
                           .post(url, credentials.token, data: json.encode(data))
                           .then((dynamic result) {
                         setState(() => _isExporting = false);
-                        showMessageDialog(
-                            context: context,
-                            message: localization.exportedData);
+                        showMessageDialog(message: localization.exportedData);
                       }).catchError((dynamic error) {
                         setState(() => _isExporting = false);
                         showErrorDialog(message: '$error');

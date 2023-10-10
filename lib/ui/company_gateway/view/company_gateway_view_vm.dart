@@ -71,8 +71,8 @@ class CompanyGatewayViewVM {
             CompanyGatewayEntity(id: state.companyGatewayUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context)!.refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadCompanyGateway(
           completer: completer, companyGatewayId: companyGateway.id));
       return completer.future;
@@ -168,8 +168,7 @@ class CompanyGatewayViewVM {
                       password: password, idToken: idToken)
                   .then((dynamic response) {
                 store.dispatch(StopSaving());
-                showMessageDialog(
-                    context: context, message: localization!.importedCustomers);
+                showMessageDialog(message: localization!.importedCustomers);
               }).catchError((dynamic error) {
                 store.dispatch(StopSaving());
                 showErrorDialog(message: error);

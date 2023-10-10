@@ -69,7 +69,7 @@ class VendorEditVM {
         store.dispatch(UpdateVendor(vendor));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: VendorEntity(), force: true);
+        createEntity(entity: VendorEntity(), force: true);
         if (state.vendorUIState.cancelCompleter != null) {
           state.vendorUIState.cancelCompleter!.complete();
         } else {

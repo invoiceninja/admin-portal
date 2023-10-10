@@ -526,7 +526,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                               onPressed: () {
                                 if (state.settingsUIState.isChanged) {
                                   showMessageDialog(
-                                      context: context,
                                       message:
                                           localization.errorUnsavedChanges);
                                   return;
@@ -549,7 +548,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                             onPressed: () async {
                               if (state.settingsUIState.isChanged) {
                                 showMessageDialog(
-                                    context: context,
                                     message: localization.errorUnsavedChanges);
                                 return;
                               }

@@ -283,8 +283,8 @@ void handleTokenAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', tokenIds.length.toString())
           : localization!.restoredToken;
-      store.dispatch(RestoreTokensRequest(
-          snackBarCompleter<Null>(context, message), tokenIds));
+      store.dispatch(
+          RestoreTokensRequest(snackBarCompleter<Null>(message), tokenIds));
       break;
     case EntityAction.archive:
       final message = tokenIds.length > 1
@@ -292,8 +292,8 @@ void handleTokenAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', tokenIds.length.toString())
           : localization!.archivedToken;
-      store.dispatch(ArchiveTokensRequest(
-          snackBarCompleter<Null>(context, message), tokenIds));
+      store.dispatch(
+          ArchiveTokensRequest(snackBarCompleter<Null>(message), tokenIds));
       break;
     case EntityAction.delete:
       final message = tokenIds.length > 1
@@ -301,8 +301,8 @@ void handleTokenAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', tokenIds.length.toString())
           : localization!.deletedToken;
-      store.dispatch(DeleteTokensRequest(
-          snackBarCompleter<Null>(context, message), tokenIds));
+      store.dispatch(
+          DeleteTokensRequest(snackBarCompleter<Null>(message), tokenIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.tokenListState.isInMultiselect()) {

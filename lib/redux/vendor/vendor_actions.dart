@@ -306,7 +306,6 @@ void handleVendorAction(
       break;
     case EntityAction.newPurchaseOrder:
       createEntity(
-        context: context,
         entity: InvoiceEntity(
           state: state,
           vendor: vendor,
@@ -316,13 +315,11 @@ void handleVendorAction(
       break;
     case EntityAction.newExpense:
       createEntity(
-        context: context,
         entity: ExpenseEntity(state: state, vendor: vendor),
       );
       break;
     case EntityAction.newRecurringExpense:
       createEntity(
-        context: context,
         entity: ExpenseEntity(
             state: state,
             vendor: vendor,
@@ -335,8 +332,8 @@ void handleVendorAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', vendorIds.length.toString())
           : localization!.restoredVendor;
-      store.dispatch(RestoreVendorRequest(
-          snackBarCompleter<Null>(context, message), vendorIds));
+      store.dispatch(
+          RestoreVendorRequest(snackBarCompleter<Null>(message), vendorIds));
       break;
     case EntityAction.archive:
       final message = vendorIds.length > 1
@@ -344,8 +341,8 @@ void handleVendorAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', vendorIds.length.toString())
           : localization!.archivedVendor;
-      store.dispatch(ArchiveVendorRequest(
-          snackBarCompleter<Null>(context, message), vendorIds));
+      store.dispatch(
+          ArchiveVendorRequest(snackBarCompleter<Null>(message), vendorIds));
       break;
     case EntityAction.delete:
       final message = vendorIds.length > 1
@@ -353,8 +350,8 @@ void handleVendorAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', vendorIds.length.toString())
           : localization!.deletedVendor;
-      store.dispatch(DeleteVendorRequest(
-          snackBarCompleter<Null>(context, message), vendorIds));
+      store.dispatch(
+          DeleteVendorRequest(snackBarCompleter<Null>(message), vendorIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.vendorListState.isInMultiselect()) {
@@ -386,14 +383,12 @@ void handleVendorAction(
         }
       }
       if (documentIds.isEmpty) {
-        showMessageDialog(
-            context: context, message: localization!.noDocumentsToDownload);
+        showMessageDialog(message: localization!.noDocumentsToDownload);
       } else {
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
             completer: snackBarCompleter<Null>(
-              context,
               localization!.exportedData,
             ),
           ),

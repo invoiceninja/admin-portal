@@ -71,7 +71,7 @@ class GroupEditVM {
         store.dispatch(UpdateGroup(group));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: GroupEntity(), force: true);
+        createEntity(entity: GroupEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {

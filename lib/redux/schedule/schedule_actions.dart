@@ -279,18 +279,17 @@ void handleScheduleAction(
       break;
     case EntityAction.restore:
       store.dispatch(RestoreSchedulesRequest(
-          snackBarCompleter<Null>(context, localization!.restoredSchedule),
+          snackBarCompleter<Null>(localization!.restoredSchedule),
           scheduleIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveSchedulesRequest(
-          snackBarCompleter<Null>(context, localization!.archivedSchedule),
+          snackBarCompleter<Null>(localization!.archivedSchedule),
           scheduleIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteSchedulesRequest(
-          snackBarCompleter<Null>(context, localization!.deletedSchedule),
-          scheduleIds));
+          snackBarCompleter<Null>(localization!.deletedSchedule), scheduleIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.scheduleListState.isInMultiselect()) {

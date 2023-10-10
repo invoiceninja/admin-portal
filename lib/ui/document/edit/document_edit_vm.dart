@@ -65,7 +65,7 @@ class DocumentEditVM {
       document: document,
       company: state.company,
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: DocumentEntity(), force: true);
+        createEntity(entity: DocumentEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onChanged: (DocumentEntity document) {

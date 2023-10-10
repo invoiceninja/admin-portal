@@ -126,7 +126,6 @@ class MenuDrawerVM {
             !state.isPaidAccount &&
             state.companies.length >= state.account.hostedCompanyCount) {
           showMessageDialog(
-            context: context,
             message: AppLocalization.of(context)!.upgradeToAddCompany,
           );
           return;
@@ -137,7 +136,7 @@ class MenuDrawerVM {
             message: AppLocalization.of(context)!.addCompany,
             callback: (_) async {
               final completer = snackBarCompleter<Null>(
-                  context, AppLocalization.of(context)!.addedCompany,
+                  AppLocalization.of(context)!.addedCompany,
                   shouldPop: true)
                 ..future.then<Null>((_) {
                   AppBuilder.of(navigatorKey.currentContext!)!.rebuild();

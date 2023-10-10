@@ -430,32 +430,30 @@ void handleTransactionAction(BuildContext? context,
       break;
     case EntityAction.restore:
       store.dispatch(RestoreTransactionsRequest(
-          snackBarCompleter<Null>(context, localization!.restoredTransaction),
+          snackBarCompleter<Null>(localization!.restoredTransaction),
           transactionIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveTransactionsRequest(
-          snackBarCompleter<Null>(context, localization!.archivedTransaction),
+          snackBarCompleter<Null>(localization!.archivedTransaction),
           transactionIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteTransactionsRequest(
-          snackBarCompleter<Null>(context, localization!.deletedTransaction),
+          snackBarCompleter<Null>(localization!.deletedTransaction),
           transactionIds));
       break;
     case EntityAction.convertMatched:
       store.dispatch(ConvertTransactionsRequest(
-          snackBarCompleter<Null>(context, localization!.convertedTransactions),
+          snackBarCompleter<Null>(localization!.convertedTransactions),
           transactionIds));
       break;
     case EntityAction.unlink:
       store.dispatch(UnlinkTransactionsRequest(
-          snackBarCompleter<Null>(
-              context,
-              transactionIds.length == 1
-                  ? localization!.unlinkedTransaction
-                  : localization!.unlinkedTransactions
-                      .replaceFirst(':count', '${transactionIds.length}')),
+          snackBarCompleter<Null>(transactionIds.length == 1
+              ? localization!.unlinkedTransaction
+              : localization!.unlinkedTransactions
+                  .replaceFirst(':count', '${transactionIds.length}')),
           transactionIds));
       break;
     case EntityAction.toggleMultiselect:

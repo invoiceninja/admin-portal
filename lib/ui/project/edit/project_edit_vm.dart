@@ -74,7 +74,7 @@ class ProjectEditVM {
         store.dispatch(UpdateProject(project));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: ProjectEntity(), force: true);
+        createEntity(entity: ProjectEntity(), force: true);
         if (state.projectUIState.cancelCompleter != null) {
           state.projectUIState.cancelCompleter!.complete();
         } else {
@@ -83,7 +83,6 @@ class ProjectEditVM {
       },
       onAddClientPressed: (context, completer) {
         createEntity(
-            context: context,
             entity: ClientEntity(),
             force: true,
             completer: completer,

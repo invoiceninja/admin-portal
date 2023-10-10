@@ -110,12 +110,11 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
         store.dispatch(UpdateExpense(expense));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: ExpenseEntity(), force: true);
+        createEntity(entity: ExpenseEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onAddClientPressed: (context, completer) {
         createEntity(
-            context: context,
             entity: ClientEntity(),
             force: true,
             completer: completer,
@@ -129,7 +128,6 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
       },
       onAddVendorPressed: (context, completer) {
         createEntity(
-            context: context,
             entity: VendorEntity(),
             force: true,
             completer: completer,

@@ -271,7 +271,7 @@ void handlePaymentTermAction(BuildContext? context,
               .replaceFirst(':count', paymentTermIds.length.toString())
           : localization!.restoredPaymentTerm;
       store.dispatch(RestorePaymentTermsRequest(
-          snackBarCompleter<Null>(context, message), paymentTermIds));
+          snackBarCompleter<Null>(message), paymentTermIds));
       break;
     case EntityAction.archive:
       final message = paymentTermIds.length > 1
@@ -280,7 +280,7 @@ void handlePaymentTermAction(BuildContext? context,
               .replaceFirst(':count', paymentTermIds.length.toString())
           : localization!.archivedPaymentTerm;
       store.dispatch(ArchivePaymentTermsRequest(
-          snackBarCompleter<Null>(context, message), paymentTermIds));
+          snackBarCompleter<Null>(message), paymentTermIds));
       break;
     case EntityAction.delete:
       final message = paymentTermIds.length > 1
@@ -289,7 +289,7 @@ void handlePaymentTermAction(BuildContext? context,
               .replaceFirst(':count', paymentTermIds.length.toString())
           : localization!.deletedPaymentTerm;
       store.dispatch(DeletePaymentTermsRequest(
-          snackBarCompleter<Null>(context, message), paymentTermIds));
+          snackBarCompleter<Null>(message), paymentTermIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.paymentTermListState.isInMultiselect()) {

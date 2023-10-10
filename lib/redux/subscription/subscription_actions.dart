@@ -289,17 +289,17 @@ void handleSubscriptionAction(BuildContext? context,
       break;
     case EntityAction.restore:
       store.dispatch(RestoreSubscriptionsRequest(
-          snackBarCompleter<Null>(context, localization!.restoredPaymentLink),
+          snackBarCompleter<Null>(localization!.restoredPaymentLink),
           subscriptionIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveSubscriptionsRequest(
-          snackBarCompleter<Null>(context, localization!.archivedPaymentLink),
+          snackBarCompleter<Null>(localization!.archivedPaymentLink),
           subscriptionIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteSubscriptionsRequest(
-          snackBarCompleter<Null>(context, localization!.deletedPaymentLink),
+          snackBarCompleter<Null>(localization!.deletedPaymentLink),
           subscriptionIds));
       break;
     case EntityAction.toggleMultiselect:

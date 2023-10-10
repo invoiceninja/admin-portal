@@ -77,7 +77,6 @@ class TaskEditDetailsVM {
       },
       onAddClientPressed: (context, completer) {
         createEntity(
-            context: context,
             entity: ClientEntity(),
             force: true,
             completer: completer,
@@ -101,7 +100,6 @@ class TaskEditDetailsVM {
       },
       onAddProjectPressed: (context, completer) {
         createEntity(
-            context: context,
             entity: ProjectEntity().rebuild((b) => b..clientId = task.clientId),
             force: true,
             completer: completer,

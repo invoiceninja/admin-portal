@@ -53,7 +53,7 @@ class ProductSettingsVM {
           Debouncer.runOnComplete(() {
             final settingsUIState = store.state.uiState.settingsUIState;
             final completer = snackBarCompleter<Null>(
-                context, AppLocalization.of(context)!.savedSettings);
+                AppLocalization.of(context)!.savedSettings);
             store.dispatch(SaveCompanyRequest(
                 completer: completer, company: settingsUIState.company));
           });

@@ -148,7 +148,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
           final completer = Completer<Null>();
           completer.future.then<Null>((_) {
             final toastCompleter =
-                snackBarCompleter<Null>(context, localization!.savedSettings);
+                snackBarCompleter<Null>(localization!.savedSettings);
             toastCompleter.future.then<Null>((_) {
               setState(() {
                 _isSaving = false;

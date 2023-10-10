@@ -286,7 +286,7 @@ void handleCompanyGatewayAction(BuildContext? context,
               .replaceFirst(':count', companyGatewayIds.length.toString())
           : localization!.restoredCompanyGateway;
       store.dispatch(RestoreCompanyGatewayRequest(
-          snackBarCompleter<Null>(context, message), companyGatewayIds));
+          snackBarCompleter<Null>(message), companyGatewayIds));
       break;
     case EntityAction.archive:
       final message = companyGatewayIds.length > 1
@@ -295,7 +295,7 @@ void handleCompanyGatewayAction(BuildContext? context,
               .replaceFirst(':count', companyGatewayIds.length.toString())
           : localization!.archivedCompanyGateway;
       store.dispatch(ArchiveCompanyGatewayRequest(
-          snackBarCompleter<Null>(context, message), companyGatewayIds));
+          snackBarCompleter<Null>(message), companyGatewayIds));
       break;
     case EntityAction.delete:
       final message = companyGatewayIds.length > 1
@@ -304,11 +304,11 @@ void handleCompanyGatewayAction(BuildContext? context,
               .replaceFirst(':count', companyGatewayIds.length.toString())
           : localization!.deletedCompanyGateway;
       store.dispatch(DeleteCompanyGatewayRequest(
-          snackBarCompleter<Null>(context, message), companyGatewayIds));
+          snackBarCompleter<Null>(message), companyGatewayIds));
       break;
     case EntityAction.disconnect:
       final completer =
-          snackBarCompleter<Null>(context, localization!.disconnectedGateway);
+          snackBarCompleter<Null>(localization!.disconnectedGateway);
       completer.future.then<Null>((_) {
         store.dispatch(RefreshData());
       });

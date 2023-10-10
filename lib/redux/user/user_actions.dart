@@ -350,26 +350,22 @@ void handleUserAction(
       break;
     case EntityAction.newClient:
       createEntity(
-          context: context,
           entity: ClientEntity(state: state)
               .rebuild((b) => b.assignedUserId = user.id));
       break;
     case EntityAction.newInvoice:
       createEntity(
-          context: context,
           entity: InvoiceEntity(state: state)
               .rebuild((b) => b.assignedUserId = user.id));
       break;
     case EntityAction.newRecurringInvoice:
       createEntity(
-          context: context,
           entity: InvoiceEntity(
                   state: state, entityType: EntityType.recurringInvoice)
               .rebuild((b) => b.assignedUserId = user.id));
       break;
     case EntityAction.newQuote:
       createEntity(
-        context: context,
         entity: InvoiceEntity(
           state: state,
           entityType: EntityType.quote,
@@ -378,7 +374,6 @@ void handleUserAction(
       break;
     case EntityAction.newCredit:
       createEntity(
-        context: context,
         entity: InvoiceEntity(
           state: state,
           entityType: EntityType.credit,
@@ -387,35 +382,30 @@ void handleUserAction(
       break;
     case EntityAction.newExpense:
       createEntity(
-        context: context,
         entity: ExpenseEntity(state: state)
             .rebuild((b) => b.assignedUserId = user.id),
       );
       break;
     case EntityAction.newPayment:
       createEntity(
-        context: context,
         entity: PaymentEntity(state: state)
             .rebuild((b) => b.assignedUserId = user.id),
       );
       break;
     case EntityAction.newProject:
       createEntity(
-        context: context,
         entity: ProjectEntity(state: state)
             .rebuild((b) => b.assignedUserId = user.id),
       );
       break;
     case EntityAction.newTask:
       createEntity(
-        context: context,
-        entity: TaskEntity(state: state)
-            .rebuild((b) => b.assignedUserId = user.id),
+        entity:
+            TaskEntity(state: state).rebuild((b) => b.assignedUserId = user.id),
       );
       break;
     case EntityAction.newVendor:
       createEntity(
-        context: context,
         entity: VendorEntity(state: state)
             .rebuild((b) => b.assignedUserId = user.id),
       );
@@ -428,7 +418,7 @@ void handleUserAction(
           : localization!.restoredUser;
       final dispatch = ([String? password, String? idToken]) =>
           store.dispatch(RestoreUserRequest(
-            completer: snackBarCompleter<Null>(context, message),
+            completer: snackBarCompleter<Null>(message),
             userIds: userIds,
             password: password,
             idToken: idToken,
@@ -447,7 +437,7 @@ void handleUserAction(
           : localization!.archivedUser;
       final dispatch = ([String? password, String? idToken]) =>
           store.dispatch(ArchiveUserRequest(
-            completer: snackBarCompleter<Null>(context, message),
+            completer: snackBarCompleter<Null>(message),
             userIds: userIds,
             password: password,
             idToken: idToken,
@@ -469,7 +459,7 @@ void handleUserAction(
         String? idToken,
       ]) =>
           store.dispatch(DeleteUserRequest(
-            completer: snackBarCompleter<Null>(context, message),
+            completer: snackBarCompleter<Null>(message),
             userIds: userIds,
             password: password,
             idToken: idToken,
@@ -482,7 +472,6 @@ void handleUserAction(
       break;
     case EntityAction.newRecurringExpense:
       createEntity(
-          context: context,
           entity: ExpenseEntity(
               state: state,
               user: user,
@@ -499,7 +488,7 @@ void handleUserAction(
         String? idToken,
       ]) =>
           store.dispatch(RemoveUserRequest(
-            completer: snackBarCompleter<Null>(context, message),
+            completer: snackBarCompleter<Null>(message),
             userId: user.id,
             password: password,
             idToken: idToken,
@@ -540,7 +529,7 @@ void handleUserAction(
               password: password,
               idToken: idToken,
               completer: snackBarCompleter<Null>(
-                  context, localization!.emailSentToConfirmEmail),
+                  localization!.emailSentToConfirmEmail),
             ));
           });
       break;

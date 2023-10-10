@@ -69,8 +69,8 @@ class TaskViewVM {
     final project = state.projectState.map[task.projectId];
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context)!.refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadTask(completer: completer, taskId: task.id));
       return completer.future;
     }
@@ -110,7 +110,7 @@ class TaskViewVM {
             entity: task,
             subIndex: task.getTaskTimes().indexOf(taskTime),
             completer: snackBarCompleter<ClientEntity>(
-                context, AppLocalization.of(context)!.updatedTask));
+                AppLocalization.of(context)!.updatedTask));
       },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>

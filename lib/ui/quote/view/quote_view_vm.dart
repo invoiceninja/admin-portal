@@ -87,8 +87,8 @@ class QuoteViewVM extends AbstractInvoiceViewVM {
         ClientEntity(id: quote.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context)!.refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadQuote(completer: completer, quoteId: quote.id));
       return completer.future;
     }
@@ -105,7 +105,7 @@ class QuoteViewVM extends AbstractInvoiceViewVM {
             entity: quote,
             subIndex: index,
             completer: snackBarCompleter<ClientEntity>(
-                context, AppLocalization.of(context)!.updatedQuote));
+                AppLocalization.of(context)!.updatedQuote));
       },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>

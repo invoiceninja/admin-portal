@@ -481,8 +481,8 @@ class DashboardPanels extends StatelessWidget {
                             child: Row(
                               children: [
                                 Expanded(
-                                  child: Text(
-                                      localization!.addGatewayHelpMessage),
+                                  child:
+                                      Text(localization!.addGatewayHelpMessage),
                                 ),
                                 if (isDesktop(context))
                                   TextButton(
@@ -633,8 +633,7 @@ class DashboardPanels extends StatelessWidget {
                             return FormCard(
                               padding: const EdgeInsets.all(0),
                               children: [
-                                Text(
-                                    localization!.lookup(dashboardField.field),
+                                Text(localization!.lookup(dashboardField.field),
                                     style: textTheme.titleMedium,
                                     textAlign: TextAlign.center),
                                 SizedBox(height: 6),
@@ -648,8 +647,7 @@ class DashboardPanels extends StatelessWidget {
                                     style: textTheme.headlineSmall,
                                     textAlign: TextAlign.center),
                                 SizedBox(height: 6),
-                                Text(
-                                    localization.lookup(dashboardField.period),
+                                Text(localization.lookup(dashboardField.period),
                                     style: textTheme.bodySmall,
                                     textAlign: TextAlign.center),
                               ],
@@ -1119,7 +1117,7 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
             child: Text(localization.save.toUpperCase()),
             onPressed: () {
               final completer = snackBarCompleter<Null>(
-                  context, AppLocalization.of(context)!.savedSettings);
+                  AppLocalization.of(context)!.savedSettings);
               final user = state.user
                   .rebuild((b) => b..userCompany.replace(state.userCompany));
               store.dispatch(

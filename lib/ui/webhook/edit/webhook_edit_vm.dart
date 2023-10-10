@@ -71,7 +71,7 @@ class WebhookEditVM {
         store.dispatch(UpdateWebhook(webhook));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: WebhookEntity(), force: true);
+        createEntity(entity: WebhookEntity(), force: true);
         if (state.webhookUIState.cancelCompleter != null) {
           state.webhookUIState.cancelCompleter!.complete();
         } else {

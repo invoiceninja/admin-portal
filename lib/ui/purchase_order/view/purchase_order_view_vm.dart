@@ -89,8 +89,8 @@ class PurchaseOrderViewVM extends AbstractInvoiceViewVM {
         ClientEntity(id: purchaseOrder.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context)!.refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadPurchaseOrder(
           completer: completer, purchaseOrderId: purchaseOrder.id));
       return completer.future;
@@ -108,7 +108,7 @@ class PurchaseOrderViewVM extends AbstractInvoiceViewVM {
             entity: purchaseOrder,
             subIndex: index,
             completer: snackBarCompleter<ClientEntity>(
-                context, AppLocalization.of(context)!.updatedPurchaseOrder));
+                AppLocalization.of(context)!.updatedPurchaseOrder));
       },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>

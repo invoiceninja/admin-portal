@@ -120,14 +120,14 @@ class AccountManagementVM {
           Debouncer.runOnComplete(() {
             final settingsUIState = store.state.uiState.settingsUIState;
             final completer = snackBarCompleter<Null>(
-                context, AppLocalization.of(context)!.savedSettings);
+                AppLocalization.of(context)!.savedSettings);
             store.dispatch(SaveCompanyRequest(
                 completer: completer, company: settingsUIState.company));
           });
         },
         onPurgeData: (context, password, idToken) {
           final completer = snackBarCompleter<Null>(
-              context, AppLocalization.of(context)!.purgeSuccessful);
+              AppLocalization.of(context)!.purgeSuccessful);
           store.dispatch(PurgeDataRequest(
             completer: completer,
             password: password,
@@ -139,7 +139,7 @@ class AccountManagementVM {
         },
         onSetPrimaryCompany: (context) {
           final completer = snackBarCompleter<Null>(
-              context, AppLocalization.of(context)!.updatedCompany);
+              AppLocalization.of(context)!.updatedCompany);
           store.dispatch(SetDefaultCompanyRequest(completer: completer));
         });
   }

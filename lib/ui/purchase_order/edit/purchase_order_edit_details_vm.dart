@@ -97,7 +97,6 @@ class PurchaseOrderEditDetailsVM extends EntityEditDetailsVM {
       },
       onAddVendorPressed: (context, completer) {
         createEntity(
-            context: context,
             entity: VendorEntity(state: state),
             force: true,
             completer: completer,

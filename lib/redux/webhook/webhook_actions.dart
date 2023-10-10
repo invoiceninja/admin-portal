@@ -273,8 +273,8 @@ void handleWebhookAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', webhookIds.length.toString())
           : localization!.restoredWebhook;
-      store.dispatch(RestoreWebhooksRequest(
-          snackBarCompleter<Null>(context, message), webhookIds));
+      store.dispatch(
+          RestoreWebhooksRequest(snackBarCompleter<Null>(message), webhookIds));
       break;
     case EntityAction.archive:
       final message = webhookIds.length > 1
@@ -282,8 +282,8 @@ void handleWebhookAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', webhookIds.length.toString())
           : localization!.archivedWebhook;
-      store.dispatch(ArchiveWebhooksRequest(
-          snackBarCompleter<Null>(context, message), webhookIds));
+      store.dispatch(
+          ArchiveWebhooksRequest(snackBarCompleter<Null>(message), webhookIds));
       break;
     case EntityAction.delete:
       final message = webhookIds.length > 1
@@ -291,8 +291,8 @@ void handleWebhookAction(
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', webhookIds.length.toString())
           : localization!.deletedWebhook;
-      store.dispatch(DeleteWebhooksRequest(
-          snackBarCompleter<Null>(context, message), webhookIds));
+      store.dispatch(
+          DeleteWebhooksRequest(snackBarCompleter<Null>(message), webhookIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.webhookListState.isInMultiselect()) {

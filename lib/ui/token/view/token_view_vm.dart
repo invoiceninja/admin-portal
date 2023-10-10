@@ -63,8 +63,8 @@ class TokenViewVM {
         TokenEntity(id: state.tokenUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context)!.refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadToken(completer: completer, tokenId: token.id));
       return completer.future;
     }

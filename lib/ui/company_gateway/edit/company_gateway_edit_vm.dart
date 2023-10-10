@@ -78,8 +78,7 @@ class CompanyGatewayEditVM {
           store.dispatch(UpdateCompanyGateway(companyGateway));
         },
         onCancelPressed: (BuildContext context) {
-          createEntity(
-              context: context, entity: CompanyGatewayEntity(), force: true);
+          createEntity(entity: CompanyGatewayEntity(), force: true);
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         },
         onSavePressed: (BuildContext context) {

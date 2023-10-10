@@ -64,8 +64,8 @@ class DesignViewVM {
         DesignEntity(id: state.designUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context)!.refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadDesign(completer: completer, designId: design.id));
       return completer.future;
     }

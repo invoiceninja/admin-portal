@@ -65,8 +65,7 @@ class DocumentListBuilder extends StatelessWidget {
                 userCompany: state.userCompany,
                 filter: viewModel.filter,
                 document: document,
-                isChecked:
-                    isInMultiselect && listState.isSelected(document.id),
+                isChecked: isInMultiselect && listState.isSelected(document.id),
               );
             });
       },
@@ -94,8 +93,8 @@ class DocumentListVM {
       if (store.state.isLoading) {
         return Future<Null>.value();
       }
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context)!.refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer, clearData: clearData));
       return completer.future;
     }

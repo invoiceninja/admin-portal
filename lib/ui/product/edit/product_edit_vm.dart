@@ -71,7 +71,7 @@ class ProductEditVM {
         store.dispatch(UpdateProduct(product));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: ProductEntity(), force: true);
+        createEntity(entity: ProductEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {

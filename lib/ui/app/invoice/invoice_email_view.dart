@@ -452,8 +452,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
               _ccEmailController.text.trim(),
             );
           } else {
-            showMessageDialog(
-                context: context, message: localization.verifyPhoneNumberHelp);
+            showMessageDialog(message: localization.verifyPhoneNumberHelp);
           }
         },
         body: Row(

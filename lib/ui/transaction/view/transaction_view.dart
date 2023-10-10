@@ -1102,9 +1102,8 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                     IconButton(
                       onPressed: () {
                         final completer = snackBarCompleter<VendorEntity>(
-                            context, localization.createdVendor);
+                            localization.createdVendor);
                         createEntity(
-                            context: context,
                             entity: VendorEntity(state: viewModel.state),
                             force: true,
                             completer: completer,
@@ -1177,16 +1176,16 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                                 updateCategoryList();
                               });
                             },
-                            placeholder: localization.searchCategories.replaceFirst(':count ', '')),
+                            placeholder: localization.searchCategories
+                                .replaceFirst(':count ', '')),
                       ),
                     ),
                     IconButton(
                       onPressed: () {
                         final completer =
                             snackBarCompleter<ExpenseCategoryEntity>(
-                                context, localization.createdExpenseCategory);
+                                localization.createdExpenseCategory);
                         createEntity(
-                            context: context,
                             entity:
                                 ExpenseCategoryEntity(state: viewModel.state),
                             force: true,
