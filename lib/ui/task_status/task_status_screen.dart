@@ -79,7 +79,7 @@ class TaskStatusScreen extends StatelessWidget {
                 multiselect: true,
                 completer: Completer<Null>()
                   ..future.then<Null>(
-                      ((_) => store.dispatch(ClearTaskStatusMultiselect()))),
+                      (_) => store.dispatch(ClearTaskStatusMultiselect())),
               );
             },
             label: localization!.actions,

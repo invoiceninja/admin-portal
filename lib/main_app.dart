@@ -172,14 +172,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
   void initState() {
     super.initState();
 
-    final window = WidgetsBinding.instance.window;
-    window.onPlatformBrightnessChanged = () {
-      WidgetsBinding.instance.handlePlatformBrightnessChanged();
-      widget.store!.dispatch(UpdateUserPreferences(
-          enableDarkModeSystem: window.platformBrightness == Brightness.dark));
-      setState(() {});
-    };
-
     if (kIsWeb) {
       WebUtils.warnChanges(widget.store);
     }
@@ -235,6 +227,11 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
     if (state.prefState.requireAuthentication && !_authenticated) {
       _authenticate();
     }
+
+    final brightness = MediaQuery.of(context).platformBrightness;
+    widget.store!.dispatch(UpdateUserPreferences(
+        enableDarkModeSystem: brightness == Brightness.dark));
+
     super.didChangeDependencies();
   }
 

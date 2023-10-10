@@ -280,7 +280,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
               items: [
                 ...state.companies
                     .map((CompanyEntity company) => DropdownMenuItem<String>(
-                        value: (state.companies.indexOf(company)).toString(),
+                        value: state.companies.indexOf(company).toString(),
                         child: _companyListItem(company)))
                     .toList(),
                 if (state.canAddCompany)

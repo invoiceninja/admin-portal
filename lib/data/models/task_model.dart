@@ -520,13 +520,13 @@ abstract class TaskEntity extends Object
       if (taskItem[0] == false || taskItem[0] == null) {
         startDate = 0;
       } else {
-        startDate = (taskItem[0]).round();
+        startDate = taskItem[0].round();
       }
 
       if (taskItem[1] == false || taskItem[1] == null) {
         endDate = 0;
       } else {
-        endDate = (taskItem[1]).round();
+        endDate = taskItem[1].round();
       }
 
       final taskTime = TaskTime(

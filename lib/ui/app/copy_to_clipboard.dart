@@ -33,21 +33,23 @@ class CopyToClipboard extends StatelessWidget {
           )
         : child;
     final localization = AppLocalization.of(context);
-    final onTap = () {
-      Clipboard.setData(ClipboardData(text: value));
+    final onTap = value == null
+        ? null
+        : () {
+            Clipboard.setData(ClipboardData(text: value!));
 
-      var valueStr = value!.replaceAll('\n', ' ');
-      if (value!.length > 20) {
-        valueStr = value!.substring(0, 20) + '...';
-      }
+            var valueStr = value!.replaceAll('\n', ' ');
+            if (value!.length > 20) {
+              valueStr = value!.substring(0, 20) + '...';
+            }
 
-      showToast(
-        localization!.copiedToClipboard.replaceFirst(
-          ':value',
-          '"$valueStr"',
-        ),
-      );
-    };
+            showToast(
+              localization!.copiedToClipboard.replaceFirst(
+                ':value',
+                '"$valueStr"',
+              ),
+            );
+          };
 
     if (showBorder) {
       return ConstrainedBox(

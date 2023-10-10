@@ -1,5 +1,4 @@
 // Dart imports:
-import 'dart:convert';
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
@@ -59,12 +58,17 @@ class _MobileWebViewState extends State<_MobileWebView>
     super.didUpdateWidget(oldWidget);
 
     if (widget.html != oldWidget.html) {
+      _webViewController.loadHtmlString(widget.html!);
+
+      /*
       _webViewController.loadUrl(Uri.dataFromString(widget.html!,
               mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
           .toString());
+          */
     }
   }
 
+  /*
   @override
   Widget build(BuildContext context) {
     super.build(context);
@@ -79,4 +83,5 @@ class _MobileWebViewState extends State<_MobileWebView>
       javascriptMode: JavascriptMode.disabled,
     );
   }
+  */
 }

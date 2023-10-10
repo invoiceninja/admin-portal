@@ -315,7 +315,7 @@ class UserPermission extends EnumClass {
   static UserPermission valueOf(String name) => _$permissionValueOf(name);
 }
 
-abstract class EntityStatus {
+abstract mixin class EntityStatus {
   String get id;
 
   String get name;
@@ -352,7 +352,7 @@ class EntityStats {
   }
 }
 
-abstract class SelectableEntity {
+abstract mixin class SelectableEntity {
   String get id;
 
   bool matchesFilter(String? filter) => true;
@@ -376,7 +376,7 @@ class EntityFields {
   static const String isDeleted = 'is_deleted';
 }
 
-abstract class BaseEntity implements SelectableEntity {
+abstract mixin class BaseEntity implements SelectableEntity {
   static int counter = 0;
 
   static String get nextId => '${--counter}';
@@ -534,7 +534,7 @@ abstract class BaseEntity implements SelectableEntity {
   }
 }
 
-abstract class HasActivities {
+abstract mixin class HasActivities {
   BuiltList<ActivityEntity> get activities;
 
   Iterable<ActivityEntity> getActivities({String? invoiceId, String? typeId}) {
@@ -550,11 +550,11 @@ abstract class HasActivities {
   }
 }
 
-abstract class BelongsToClient {
+abstract mixin class BelongsToClient {
   String? get clientId;
 }
 
-abstract class BelongsToVendor {
+abstract mixin class BelongsToVendor {
   String get vendorId;
 }
 

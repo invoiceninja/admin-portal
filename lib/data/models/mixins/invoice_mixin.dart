@@ -7,7 +7,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
-abstract class CalculateInvoiceTotal {
+abstract mixin class CalculateInvoiceTotal {
   bool get isAmountDiscount;
 
   String get taxName1;

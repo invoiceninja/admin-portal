@@ -440,7 +440,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
       return EditScaffold(
         entity: invoice,
         title: localization!.sendEmail,
-        onCancelPressed: (context) => viewEntity(entity: invoice!),
+        onCancelPressed: (context) => viewEntity(entity: invoice),
         saveLabel: localization.send,
         onSavePressed: (context) {
           if (state!.account.accountSmsVerified || state.isSelfHosted) {
@@ -522,7 +522,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
       child: EditScaffold(
         entity: invoice,
         title: localization!.sendEmail,
-        onCancelPressed: (context) => viewEntity(entity: invoice!),
+        onCancelPressed: (context) => viewEntity(entity: invoice),
         appBarBottom: TabBar(
           controller: _controller,
           isScrollable: true,

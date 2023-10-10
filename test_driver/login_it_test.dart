@@ -1,8 +1,5 @@
 // Import Flutter Driver API
 
-// Dart imports:
-import 'dart:async';
-
 // Package imports:
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
@@ -15,7 +12,7 @@ void main() {
   group('LOGIN TEST', () {
     late TestLocalization localization;
     FlutterDriver? driver;
-    StreamSubscription? streamSubscription;
+    //StreamSubscription? streamSubscription;
 
     setUpAll(() async {
       localization = TestLocalization('en');
@@ -35,9 +32,12 @@ void main() {
       if (driver != null) {
         driver!.close();
       }
+
+      /*
       if (streamSubscription != null) {
         streamSubscription.cancel();
       }
+      */
     });
 
     group('SELF-HOSTED', () {

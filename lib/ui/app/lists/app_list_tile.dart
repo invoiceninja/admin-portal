@@ -34,7 +34,7 @@ class AppListTile extends StatelessWidget {
       return;
     }
 
-    Clipboard.setData(ClipboardData(text: copyValue ?? title));
+    Clipboard.setData(ClipboardData(text: copyValue ?? title ?? ''));
     showToast(AppLocalization.of(context)!
         .copiedToClipboard
         .replaceFirst(':value', copyValue ?? title!));

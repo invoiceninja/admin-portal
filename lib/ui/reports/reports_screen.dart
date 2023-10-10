@@ -1,8 +1,8 @@
 // Flutter imports:
 
 import 'package:collection/collection.dart' show IterableNullableExtension;
-import 'package:flutter/material.dart' hide DataRow, DataCell, DataColumn;
 import 'package:flutter/material.dart' as mt;
+import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
@@ -33,9 +33,6 @@ import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
-import 'package:invoiceninja_flutter/ui/app/tables/app_data_table.dart';
-import 'package:invoiceninja_flutter/ui/app/tables/app_data_table_source.dart';
-import 'package:invoiceninja_flutter/ui/app/tables/app_paginated_data_table.dart';
 import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/ui/reports/report_charts.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
@@ -160,7 +157,8 @@ class ReportsScreen extends StatelessWidget {
           final columnTitle = state.company.getCustomFieldLabel(column);
           return DropdownMenuItem(
             child: Text(columnTitle.isEmpty
-                ? localization.lookup(column): columnTitle),
+                ? localization.lookup(column)
+                : columnTitle),
             value: column,
           );
         }).toList(),
@@ -395,7 +393,7 @@ class ReportsScreen extends StatelessWidget {
                               : reportResult.entities!;
                           confirmCallback(
                               context: context,
-                              message: localization.lookup(action.toString())+
+                              message: localization.lookup(action.toString()) +
                                   ' • ' +
                                   (entities.length == 1
                                       ? '1 ${localization.lookup(firstEntity!.entityType.toString())}'
@@ -590,7 +588,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
     */
 
     // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
-    dataTableSource.notifyListeners();
+    //dataTableSource.notifyListeners();
   }
 
   @override
@@ -685,9 +683,9 @@ class _ReportDataTableState extends State<ReportDataTable> {
           ),
         SingleChildScrollView(
           padding: const EdgeInsets.all(12),
-          child: AppPaginatedDataTable(
+          child: PaginatedDataTable(
             //showFirstLastButtons: true,
-            subtractOneFromCount: true,
+            //subtractOneFromCount: true,
             header: SizedBox(),
             sortColumnIndex: sortedColumns.contains(reportSettings.sortColumn)
                 ? sortedColumns.indexOf(reportSettings.sortColumn)
@@ -794,7 +792,7 @@ ReportColumnType getReportColumnType(String? column, BuildContext context) {
   }
 }
 
-class ReportDataTableSource extends AppDataTableSource {
+class ReportDataTableSource extends DataTableSource {
   ReportDataTableSource({
     required this.context,
     required this.textEditingControllers,
@@ -1053,7 +1051,7 @@ class ReportResult {
                 Text(
                   (company.getCustomFieldLabel(column!).isNotEmpty
                           ? company.getCustomFieldLabel(column)
-                          : localization!.lookup(column))+
+                          : localization!.lookup(column)) +
                       '   ',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -1124,7 +1122,7 @@ class ReportResult {
           ))
         else if (getReportColumnType(column, context) == ReportColumnType.age)
           DataCell(AppDropdownButton<String>(
-            value: (textEditingControllers[column]!.text).isNotEmpty &&
+            value: textEditingControllers[column]!.text.isNotEmpty &&
                     textEditingControllers[column]!.text != 'null'
                 ? textEditingControllers[column]!.text
                 : null,
@@ -1369,7 +1367,7 @@ class ReportResult {
           } else {
             value = group == 'null' ? localization!.blank : group;
           }
-          value = value+ ' (' + values!['count']!.floor().toString() + ')';
+          value = value + ' (' + values!['count']!.floor().toString() + ')';
         } else if (columnType == ReportColumnType.number) {
           final currencyId = values!['${column}_currency_id'];
           value = formatNumber(values[column], context,
@@ -1464,7 +1462,8 @@ class ReportResult {
           mt.DataColumn(
             label: Text(
               company.getCustomFieldLabel(column!).isEmpty
-                  ? localization.lookup(column): company.getCustomFieldLabel(column),
+                  ? localization.lookup(column)
+                  : company.getCustomFieldLabel(column),
               overflow: TextOverflow.ellipsis,
             ),
             numeric: true,

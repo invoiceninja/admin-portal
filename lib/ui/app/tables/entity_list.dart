@@ -5,7 +5,7 @@ import 'dart:math';
 // Flutter imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:collection/collection.dart' show IterableNullableExtension;
-import 'package:flutter/material.dart' hide DataRow, DataCell, DataColumn;
+import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
@@ -26,8 +26,6 @@ import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
-import 'package:invoiceninja_flutter/ui/app/tables/app_data_table.dart';
-import 'package:invoiceninja_flutter/ui/app/tables/app_paginated_data_table.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -247,8 +245,8 @@ class _EntityListState extends State<EntityList> {
                 primary: true,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: AppPaginatedDataTable(
-                    hasActionsColumn: true,
+                  child: PaginatedDataTable(
+                    //hasActionsColumn: true,
                     onSelectAll: (value) {
                       final startIndex =
                           min(_firstRowIndex, entityList.length - 1);
@@ -294,12 +292,10 @@ class _EntityListState extends State<EntityList> {
                     sortAscending: listUIState.sortAscending,
                     rowsPerPage: state.prefState.rowsPerPage,
                     onPageChanged: (row) {
-                      if (row != null) {
-                        _firstRowIndex = row;
-                        store.dispatch(UpdateLastHistory(
-                            (row / state.prefState.rowsPerPage).floor()));
-                      }
-                    },
+                      _firstRowIndex = row;
+                      store.dispatch(UpdateLastHistory(
+                          (row / state.prefState.rowsPerPage).floor()));
+                                        },
                     initialFirstRowIndex: _firstRowIndex,
                     availableRowsPerPage: [
                       10,
@@ -469,7 +465,7 @@ class _EntityListState extends State<EntityList> {
                             multiselect: true,
                             completer: Completer<Null>()
                               ..future.then<Null>(
-                                  ((_) => widget.onClearMultiselect())),
+                                  (_) => widget.onClearMultiselect()),
                           );
                         },
                         onCancelPressed: (_) => widget.onClearMultiselect(),

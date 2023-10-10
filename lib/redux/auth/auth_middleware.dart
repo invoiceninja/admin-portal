@@ -262,7 +262,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
 
     String token;
     bool hasToken = false;
-    if ((state.userCompany.token.token).isNotEmpty) {
+    if (state.userCompany.token.token.isNotEmpty) {
       token = state.userCompany.token.token;
       hasToken = true;
     } else {

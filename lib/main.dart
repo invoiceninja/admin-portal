@@ -193,10 +193,12 @@ void main({bool isTesting = false}) async {
 
           event = event.copyWith(
             environment: '${store.state.environment}'.split('.').last,
+            /*
             extra: <String, dynamic>{
               'server_version': account.currentVersion,
               'route': state.uiState.currentRoute,
             },
+            */
           );
 
           return event;

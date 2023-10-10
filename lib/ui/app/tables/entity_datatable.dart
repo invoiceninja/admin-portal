@@ -1,8 +1,8 @@
 // Flutter imports:
-import 'package:flutter/material.dart' hide DataRow, DataCell, DataColumn;
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -14,13 +14,11 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/actions_menu_button.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
-import 'package:invoiceninja_flutter/ui/app/tables/app_data_table.dart';
-import 'package:invoiceninja_flutter/ui/app/tables/app_data_table_source.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-class EntityDataTableSource extends AppDataTableSource {
+class EntityDataTableSource extends DataTableSource {
   EntityDataTableSource(
       {required this.context,
       required this.editingId,
@@ -129,7 +127,7 @@ class EntityDataTableSource extends AppDataTableSource {
               ],
             ),
             onTap: () => onTap(entity),
-            backgroundColor: backgroundColor,
+            //backgroundColor: backgroundColor,
           ),
         ...tableColumns!.map(
           (field) => DataCell(
@@ -146,7 +144,7 @@ class EntityDataTableSource extends AppDataTableSource {
             ),
             onTap: () => onTap(entity),
             //onLongPress: () => selectEntity(entity: entity, context: context, longPress: true),
-            backgroundColor: backgroundColor,
+            //backgroundColor: backgroundColor,
           ),
         )
       ],
