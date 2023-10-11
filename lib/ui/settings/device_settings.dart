@@ -1,12 +1,15 @@
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart' hide LiveText;
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -26,6 +29,7 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
+import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 
 class DeviceSettings extends StatefulWidget {
   const DeviceSettings({
@@ -316,7 +320,6 @@ class _DeviceSettingsState extends State<DeviceSettings>
                     return ListTile(
                       leading: Icon(Icons.refresh),
                       title: Text(localization.refreshData),
-                      /*
                       subtitle: LiveText(() {
                         if (state.userCompanyState.lastUpdated == 0) {
                           return '';
@@ -333,7 +336,6 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       onTap: () {
                         viewModel.onRefreshTap(context);
                       },
-                      */
                     );
                   }),
                   ListTile(
