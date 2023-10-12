@@ -581,14 +581,8 @@ class _ReportDataTableState extends State<ReportDataTable> {
     final viewModel = widget.viewModel;
     dataTableSource.viewModel = viewModel;
 
-    /*
-    dataTableSource.editingId = viewModel.state.productUIState.editing.id;
-    dataTableSource.entityList = viewModel.productList;
-    dataTableSource.entityMap = viewModel.productMap;
-    */
-
     // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
-    //dataTableSource.notifyListeners();
+    dataTableSource.notifyListeners();
   }
 
   @override
