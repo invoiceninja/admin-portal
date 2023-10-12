@@ -246,7 +246,6 @@ class _EntityListState extends State<EntityList> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: PaginatedDataTable(
-                    //hasActionsColumn: true,
                     onSelectAll: (value) {
                       final startIndex =
                           min(_firstRowIndex, entityList.length - 1);
@@ -287,7 +286,8 @@ class _EntityListState extends State<EntityList> {
                     source: dataTableSource,
                     sortColumnIndex: widget.tableColumns!
                             .contains(listUIState.sortField)
-                        ? widget.tableColumns!.indexOf(listUIState.sortField)
+                        ? widget.tableColumns!.indexOf(listUIState.sortField) +
+                            1
                         : 0,
                     sortAscending: listUIState.sortAscending,
                     rowsPerPage: state.prefState.rowsPerPage,
