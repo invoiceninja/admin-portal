@@ -4,6 +4,9 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
+import 'package:invoiceninja_flutter/utils/colors.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
@@ -53,8 +56,6 @@ class EntityDataTableSource extends DataTableSource {
     entityPresenter!.initialize(entity, context);
 
     final listState = state.getListState(entityType);
-
-    /*
     final uIState = state.getUIState(entityType);
 
     bool isSelected = false;
@@ -67,7 +68,6 @@ class EntityDataTableSource extends DataTableSource {
       }
     }
 
-    
     Color? backgroundColor;
     final rowColor = state.prefState.activeCustomColors[
             PrefState.THEME_TABLE_ALTERNATE_ROW_BACKGROUND_COLOR] ??
@@ -80,7 +80,6 @@ class EntityDataTableSource extends DataTableSource {
     } else if (rowColor.isNotEmpty && index % 2 == 0) {
       backgroundColor = convertHexStringToColor(rowColor);
     }
-    */
 
     final wideFields = [
       'public_notes',
@@ -93,6 +92,9 @@ class EntityDataTableSource extends DataTableSource {
     ];
 
     return DataRow(
+      color: backgroundColor == null
+          ? null
+          : MaterialStateProperty.all<Color>(backgroundColor),
       selected: (listState.selectedIds ?? <String>[]).contains(entity.id),
       onSelectChanged:
           listState.isInMultiselect() ? (value) => onTap(entity) : null,
@@ -128,7 +130,6 @@ class EntityDataTableSource extends DataTableSource {
               ],
             ),
             onTap: () => onTap(entity),
-            //backgroundColor: backgroundColor,
           ),
         ...tableColumns!.map(
           (field) => DataCell(
@@ -144,8 +145,7 @@ class EntityDataTableSource extends DataTableSource {
               ),
             ),
             onTap: () => onTap(entity),
-            //onLongPress: () => selectEntity(entity: entity, context: context, longPress: true),
-            //backgroundColor: backgroundColor,
+            onLongPress: () => selectEntity(entity: entity, longPress: true),
           ),
         )
       ],
