@@ -1,28 +1,18 @@
-/*
 // Copyright 2014 The Flutter Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Dart imports:
 import 'dart:math' as math;
 
-// Flutter imports:
 import 'package:flutter/gestures.dart' show DragStartBehavior;
-import 'package:flutter/material.dart' hide DataRow, DataCell, DataColumn;
+import 'package:flutter/material.dart';
 
-// Project imports:
-import 'package:invoiceninja_flutter/ui/app/tables/app_data_table.dart';
-import 'package:invoiceninja_flutter/ui/app/tables/app_data_table_source.dart';
-
-// TODO remove this class, it's needed to fix this issue:
-// https://github.com/flutter/flutter/issues/21864
-
-/// A material design data table that shows data using multiple pages.
+/// A Material Design data table that shows data using multiple pages.
 ///
 /// A paginated data table shows [rowsPerPage] rows of data per page and
 /// provides controls for showing other pages.
 ///
-/// Data is read lazily from from a [DataTableSource]. The widget is presented
+/// Data is read lazily from a [DataTableSource]. The widget is presented
 /// as a [Card].
 ///
 /// See also:
@@ -32,8 +22,7 @@ import 'package:invoiceninja_flutter/ui/app/tables/app_data_table_source.dart';
 class AppPaginatedDataTable extends StatefulWidget {
   /// Creates a widget describing a paginated [DataTable] on a [Card].
   ///
-  /// The [header] should give the card's header, typically a [Text] widget. It
-  /// must not be null.
+  /// The [header] should give the card's header, typically a [Text] widget.
   ///
   /// The [columns] argument must be a list of as many [DataColumn] objects as
   /// the table is to have columns, ignoring the leading checkbox column if any.
@@ -57,24 +46,33 @@ class AppPaginatedDataTable extends StatefulWidget {
   ///
   /// The [rowsPerPage] and [availableRowsPerPage] must not be null (they
   /// both have defaults, though, so don't have to be specified).
+  ///
+  /// Themed by [DataTableTheme]. [DataTableThemeData.decoration] is ignored.
+  /// To modify the border or background color of the [PaginatedDataTable], use
+  /// [CardTheme], since a [Card] wraps the inner [DataTable].
   AppPaginatedDataTable({
-    Key? key,
+    super.key,
     this.header,
     this.actions,
     required this.columns,
     this.sortColumnIndex,
     this.sortAscending = true,
     this.onSelectAll,
-    this.dataRowHeight = kMinInteractiveDimension,
+    @Deprecated(
+      'Migrate to use dataRowMinHeight and dataRowMaxHeight instead. '
+      'This feature was deprecated after v3.7.0-5.0.pre.',
+    )
+    double? dataRowHeight,
+    double? dataRowMinHeight,
+    double? dataRowMaxHeight,
     this.headingRowHeight = 56.0,
     this.horizontalMargin = 24.0,
     this.columnSpacing = 56.0,
     this.showCheckboxColumn = true,
+    this.showFirstLastButtons = false,
     this.initialFirstRowIndex = 0,
     this.onPageChanged,
     this.rowsPerPage = defaultRowsPerPage,
-    this.subtractOneFromCount = false,
-    this.hasActionsColumn = false,
     this.availableRowsPerPage = const <int>[
       defaultRowsPerPage,
       defaultRowsPerPage * 2,
@@ -83,29 +81,52 @@ class AppPaginatedDataTable extends StatefulWidget {
     ],
     this.onRowsPerPageChanged,
     this.dragStartBehavior = DragStartBehavior.start,
+    this.arrowHeadColor,
     required this.source,
-  })  : assert(columns.isNotEmpty),
+    this.checkboxHorizontalMargin,
+    this.controller,
+    this.primary,
+  })  : assert(actions == null || (header != null)),
+        assert(columns.isNotEmpty),
         assert(sortColumnIndex == null ||
             (sortColumnIndex >= 0 && sortColumnIndex < columns.length)),
+        assert(dataRowMinHeight == null ||
+            dataRowMaxHeight == null ||
+            dataRowMaxHeight >= dataRowMinHeight),
+        assert(
+            dataRowHeight == null ||
+                (dataRowMinHeight == null && dataRowMaxHeight == null),
+            'dataRowHeight ($dataRowHeight) must not be set if dataRowMinHeight ($dataRowMinHeight) or dataRowMaxHeight ($dataRowMaxHeight) are set.'),
+        dataRowMinHeight =
+            dataRowHeight ?? dataRowMinHeight ?? kMinInteractiveDimension,
+        dataRowMaxHeight =
+            dataRowHeight ?? dataRowMaxHeight ?? kMinInteractiveDimension,
         assert(rowsPerPage > 0),
         assert(() {
-          if (onRowsPerPageChanged != null)
+          if (onRowsPerPageChanged != null) {
             assert(availableRowsPerPage.contains(rowsPerPage));
+          }
           return true;
         }()),
-        super(key: key);
+        assert(
+          !(controller != null && (primary ?? false)),
+          'Primary ScrollViews obtain their ScrollController via inheritance from a PrimaryScrollController widget. '
+          'You cannot both set primary to true and pass an explicit controller.',
+        );
 
-  /// The table card's header.
+  /// The table card's optional header.
   ///
-  /// This is typically a [Text] widget, but can also be a [ButtonBar] with
-  /// [TextButton]s. Suitable defaults are automatically provided for the font,
-  /// button color, button padding, and so forth.
+  /// This is typically a [Text] widget, but can also be a [Row] of
+  /// [TextButton]s. To show icon buttons at the top end side of the table with
+  /// a header, set the [actions] property.
   ///
   /// If items in the table are selectable, then, when the selection is not
-  /// empty, the header is replaced by a count of the selected items.
+  /// empty, the header is replaced by a count of the selected items. The
+  /// [actions] are still visible when items are selected.
   final Widget? header;
 
-  /// Icon buttons to show at the top right of the table.
+  /// Icon buttons to show at the top end side of the table. The [header] must
+  /// not be null to show the actions.
   ///
   /// Typically, the exact actions included in this list will vary based on
   /// whether any rows are selected or not.
@@ -137,7 +158,24 @@ class AppPaginatedDataTable extends StatefulWidget {
   ///
   /// This value is optional and defaults to kMinInteractiveDimension if not
   /// specified.
-  final double dataRowHeight;
+  @Deprecated(
+    'Migrate to use dataRowMinHeight and dataRowMaxHeight instead. '
+    'This feature was deprecated after v3.7.0-5.0.pre.',
+  )
+  double? get dataRowHeight =>
+      dataRowMinHeight == dataRowMaxHeight ? dataRowMinHeight : null;
+
+  /// The minimum height of each row (excluding the row that contains column headings).
+  ///
+  /// This value is optional and defaults to [kMinInteractiveDimension] if not
+  /// specified.
+  final double dataRowMinHeight;
+
+  /// The maximum height of each row (excluding the row that contains column headings).
+  ///
+  /// This value is optional and defaults to kMinInteractiveDimension if not
+  /// specified.
+  final double dataRowMaxHeight;
 
   /// The height of the heading row.
   ///
@@ -151,6 +189,10 @@ class AppPaginatedDataTable extends StatefulWidget {
   /// the content in the first data column.
   ///
   /// This value defaults to 24.0 to adhere to the Material Design specifications.
+  ///
+  /// If [checkboxHorizontalMargin] is null, then [horizontalMargin] is also the
+  /// margin between the edge of the table and the checkbox, as well as the
+  /// margin between the checkbox and the content in the first data column.
   final double horizontalMargin;
 
   /// The horizontal margin between the contents of each data column.
@@ -161,13 +203,16 @@ class AppPaginatedDataTable extends StatefulWidget {
   /// {@macro flutter.material.dataTable.showCheckboxColumn}
   final bool showCheckboxColumn;
 
+  /// Flag to display the pagination buttons to go to the first and last pages.
+  final bool showFirstLastButtons;
+
   /// The index of the first row to display when the widget is first created.
-  final int initialFirstRowIndex;
+  final int? initialFirstRowIndex;
 
   /// Invoked when the user switches to another page.
   ///
   /// The value is the index of the first row on the currently displayed page.
-  final ValueChanged<int?>? onPageChanged;
+  final ValueChanged<int>? onPageChanged;
 
   /// The number of rows to show on each page.
   ///
@@ -201,13 +246,26 @@ class AppPaginatedDataTable extends StatefulWidget {
   /// This object should generally have a lifetime longer than the
   /// [PaginatedDataTable] widget itself; it should be reused each time the
   /// [PaginatedDataTable] constructor is called.
-  final AppDataTableSource source;
+  final DataTableSource source;
 
   /// {@macro flutter.widgets.scrollable.dragStartBehavior}
   final DragStartBehavior dragStartBehavior;
 
-  final bool subtractOneFromCount;
-  final bool hasActionsColumn;
+  /// Horizontal margin around the checkbox, if it is displayed.
+  ///
+  /// If null, then [horizontalMargin] is used as the margin between the edge
+  /// of the table and the checkbox, as well as the margin between the checkbox
+  /// and the content in the first data column. This value defaults to 24.0.
+  final double? checkboxHorizontalMargin;
+
+  /// Defines the color of the arrow heads in the footer.
+  final Color? arrowHeadColor;
+
+  /// {@macro flutter.widgets.scroll_view.controller}
+  final ScrollController? controller;
+
+  /// {@macro flutter.widgets.scroll_view.primary}
+  final bool? primary;
 
   @override
   AppPaginatedDataTableState createState() => AppPaginatedDataTableState();
@@ -217,18 +275,18 @@ class AppPaginatedDataTable extends StatefulWidget {
 ///
 /// The table can be programmatically paged using the [pageTo] method.
 class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
-  int? _firstRowIndex;
+  late int _firstRowIndex;
   late int _rowCount;
   late bool _rowCountApproximate;
-  ScrollController? _controller;
-  final Map<int, DataRow> _rows = <int, DataRow>{};
+  int _selectedRowCount = 0;
+  final Map<int, DataRow?> _rows = <int, DataRow?>{};
 
   @override
   void initState() {
     super.initState();
-    _controller = ScrollController();
-    _firstRowIndex = PageStorage.of(context).readState(context) as int? ??
-        widget.initialFirstRowIndex;
+    _firstRowIndex = PageStorage.maybeOf(context)?.readState(context) as int? ??
+        widget.initialFirstRowIndex ??
+        0;
     widget.source.addListener(_handleDataSourceChanged);
     _handleDataSourceChanged();
   }
@@ -245,7 +303,6 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
 
   @override
   void dispose() {
-    _controller!.dispose();
     widget.source.removeListener(_handleDataSourceChanged);
     super.dispose();
   }
@@ -254,22 +311,24 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
     setState(() {
       _rowCount = widget.source.rowCount;
       _rowCountApproximate = widget.source.isRowCountApproximate;
+      _selectedRowCount = widget.source.selectedRowCount;
       _rows.clear();
     });
   }
 
   /// Ensures that the given row is visible.
   void pageTo(int rowIndex) {
-    final int? oldFirstRowIndex = _firstRowIndex;
+    final int oldFirstRowIndex = _firstRowIndex;
     setState(() {
       final int rowsPerPage = widget.rowsPerPage;
       _firstRowIndex = (rowIndex ~/ rowsPerPage) * rowsPerPage;
     });
-    if ((widget.onPageChanged != null) && (oldFirstRowIndex != _firstRowIndex))
+    if ((widget.onPageChanged != null) &&
+        (oldFirstRowIndex != _firstRowIndex)) {
       widget.onPageChanged!(_firstRowIndex);
+    }
   }
 
-  /*
   DataRow _getProgressIndicatorRowFor(int index) {
     bool haveProgressIndicator = false;
     final List<DataCell> cells =
@@ -289,22 +348,19 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
       cells: cells,
     );
   }
-  */
 
   List<DataRow> _getRows(int firstRowIndex, int rowsPerPage) {
     final List<DataRow> result = <DataRow>[];
     final int nextPageFirstRowIndex = firstRowIndex + rowsPerPage;
-    //final bool haveProgressIndicator = false;
+    bool haveProgressIndicator = false;
     for (int index = firstRowIndex; index < nextPageFirstRowIndex; index += 1) {
       DataRow? row;
       if (index < _rowCount || _rowCountApproximate) {
         row = _rows.putIfAbsent(index, () => widget.source.getRow(index));
-        /*
-        if (!haveProgressIndicator) {
-          row = _getProgressIndicatorRowFor(index);
+        if (row == null && !haveProgressIndicator) {
+          row ??= _getProgressIndicatorRowFor(index);
           haveProgressIndicator = true;
         }
-        */
       }
       if (row != null) {
         result.add(row);
@@ -313,13 +369,25 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
     return result;
   }
 
+  void _handleFirst() {
+    pageTo(0);
+  }
+
   void _handlePrevious() {
-    pageTo(math.max(_firstRowIndex! - widget.rowsPerPage, 0));
+    pageTo(math.max(_firstRowIndex - widget.rowsPerPage, 0));
   }
 
   void _handleNext() {
-    pageTo(_firstRowIndex! + widget.rowsPerPage);
+    pageTo(_firstRowIndex + widget.rowsPerPage);
   }
+
+  void _handleLast() {
+    pageTo(((_rowCount - 1) / widget.rowsPerPage).floor() * widget.rowsPerPage);
+  }
+
+  bool _isNextPageUnavailable() =>
+      !_rowCountApproximate &&
+      (_firstRowIndex + widget.rowsPerPage >= _rowCount);
 
   final GlobalKey _tableKey = GlobalKey();
 
@@ -331,53 +399,43 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
     final MaterialLocalizations localizations =
         MaterialLocalizations.of(context);
     // HEADER
-    /*
     final List<Widget> headerWidgets = <Widget>[];
-    double startPadding = 24.0;
-    if (_selectedRowCount == 0) {
-      headerWidgets.add(Expanded(child: widget.header));
-      if (widget.header is ButtonBar) {
-        // We adjust the padding when a button bar is present, because the
-        // ButtonBar introduces 2 pixels of outside padding, plus 2 pixels
-        // around each button on each side, and the button itself will have 8
-        // pixels internally on each side, yet we want the left edge of the
-        // inside of the button to line up with the 24.0 left inset.
-        startPadding = 12.0;
-      }
-    } else {
+    if (_selectedRowCount == 0 && widget.header != null) {
+      headerWidgets.add(Expanded(child: widget.header!));
+    } else if (widget.header != null) {
       headerWidgets.add(Expanded(
         child: Text(localizations.selectedRowCountTitle(_selectedRowCount)),
       ));
     }
     if (widget.actions != null) {
-      headerWidgets.addAll(widget.actions.map<Widget>((Widget action) {
-        return Padding(
-          // 8.0 is the default padding of an icon button
-          padding: const EdgeInsetsDirectional.only(start: 24.0 - 8.0 * 2.0),
-          child: action,
-        );
-      }).toList());
+      headerWidgets.addAll(
+        widget.actions!.map<Widget>((Widget action) {
+          return Padding(
+            // 8.0 is the default padding of an icon button
+            padding: const EdgeInsetsDirectional.only(start: 24.0 - 8.0 * 2.0),
+            child: action,
+          );
+        }).toList(),
+      );
     }
-     */
 
     // FOOTER
     final TextStyle? footerTextStyle = themeData.textTheme.bodySmall;
     final List<Widget> footerWidgets = <Widget>[];
-    final realRowCount =
-        widget.subtractOneFromCount ? _rowCount - 1 : _rowCount;
     if (widget.onRowsPerPageChanged != null) {
       final List<Widget> availableRowsPerPage = widget.availableRowsPerPage
-          //.where((int value) => value <= _rowCount || value == widget.rowsPerPage)
+          .where(
+              (int value) => value <= _rowCount || value == widget.rowsPerPage)
           .map<DropdownMenuItem<int>>((int value) {
         return DropdownMenuItem<int>(
           value: value,
           child: Text('$value'),
         );
       }).toList();
-
       footerWidgets.addAll(<Widget>[
-        Container(width: 14.0),
-        // to match trailing padding in case we overflow and end up scrolling
+        Container(
+            width:
+                14.0), // to match trailing padding in case we overflow and end up scrolling
         Text(localizations.rowsPerPageTitle),
         ConstrainedBox(
           constraints: const BoxConstraints(
@@ -390,7 +448,6 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
                 value: widget.rowsPerPage,
                 onChanged: widget.onRowsPerPageChanged,
                 style: footerTextStyle,
-                iconSize: 24.0,
               ),
             ),
           ),
@@ -401,103 +458,119 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
       Container(width: 32.0),
       Text(
         localizations.pageRowsInfoTitle(
-          realRowCount > 0 ? _firstRowIndex! + 1 : 0,
-          _firstRowIndex! + math.min(widget.rowsPerPage, realRowCount),
-          realRowCount,
+          _firstRowIndex + 1,
+          _firstRowIndex + widget.rowsPerPage,
+          _rowCount,
           _rowCountApproximate,
         ),
       ),
       Container(width: 32.0),
+      if (widget.showFirstLastButtons)
+        IconButton(
+          icon: Icon(Icons.skip_previous, color: widget.arrowHeadColor),
+          padding: EdgeInsets.zero,
+          tooltip: localizations.firstPageTooltip,
+          onPressed: _firstRowIndex <= 0 ? null : _handleFirst,
+        ),
       IconButton(
-        icon: const Icon(Icons.chevron_left),
+        icon: Icon(Icons.chevron_left, color: widget.arrowHeadColor),
         padding: EdgeInsets.zero,
         tooltip: localizations.previousPageTooltip,
-        onPressed: _firstRowIndex! <= 0 ? null : _handlePrevious,
+        onPressed: _firstRowIndex <= 0 ? null : _handlePrevious,
       ),
       Container(width: 24.0),
       IconButton(
-        icon: const Icon(Icons.chevron_right),
+        icon: Icon(Icons.chevron_right, color: widget.arrowHeadColor),
         padding: EdgeInsets.zero,
         tooltip: localizations.nextPageTooltip,
-        onPressed: (!_rowCountApproximate &&
-                (_firstRowIndex! + widget.rowsPerPage >= _rowCount))
-            ? null
-            : _handleNext,
+        onPressed: _isNextPageUnavailable() ? null : _handleNext,
       ),
+      if (widget.showFirstLastButtons)
+        IconButton(
+          icon: Icon(Icons.skip_next, color: widget.arrowHeadColor),
+          padding: EdgeInsets.zero,
+          tooltip: localizations.lastPageTooltip,
+          onPressed: _isNextPageUnavailable() ? null : _handleLast,
+        ),
       Container(width: 14.0),
     ]);
 
     // CARD
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        return Card(
-          semanticContainer: false,
-          child: Column(
+    return Card(
+      semanticContainer: false,
+      child: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              SizedBox(height: 4),
-              /*
-              Semantics(
-                container: true,
-                child: DefaultTextStyle(
-                  // These typographic styles aren't quite the regular ones. We pick the closest ones from the regular
-                  // list and then tweak them appropriately.
-                  // See https://material.io/design/components/data-tables.html#tables-within-cards
-                  style: _selectedRowCount > 0
-                      ? themeData.textTheme.subtitle1
-                          .copyWith(color: themeData.accentColor)
-                      : themeData.textTheme.headline6
-                          .copyWith(fontWeight: FontWeight.w400),
-                  child: IconTheme.merge(
-                    data: const IconThemeData(opacity: 0.54),
-                    child: Ink(
-                      height: 64.0,
-                      color: _selectedRowCount > 0
-                          ? themeData.secondaryHeaderColor
-                          : null,
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.only(
-                            start: startPadding, end: 14.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: headerWidgets,
+              if (headerWidgets.isNotEmpty)
+                Semantics(
+                  container: true,
+                  child: DefaultTextStyle(
+                    // These typographic styles aren't quite the regular ones. We pick the closest ones from the regular
+                    // list and then tweak them appropriately.
+                    // See https://material.io/design/components/data-tables.html#tables-within-cards
+                    style: _selectedRowCount > 0
+                        ? themeData.textTheme.titleMedium!
+                            .copyWith(color: themeData.colorScheme.secondary)
+                        : themeData.textTheme.titleLarge!
+                            .copyWith(fontWeight: FontWeight.w400),
+                    child: IconTheme.merge(
+                      data: const IconThemeData(
+                        opacity: 0.54,
+                      ),
+                      child: Ink(
+                        height: 64.0,
+                        color: _selectedRowCount > 0
+                            ? themeData.secondaryHeaderColor
+                            : null,
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.only(
+                              start: 24, end: 14.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: headerWidgets,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-               */
-              Scrollbar(
-                controller: _controller,
-                child: SingleChildScrollView(
-                  controller: _controller,
-                  scrollDirection: Axis.horizontal,
-                  dragStartBehavior: widget.dragStartBehavior,
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(minWidth: constraints.minWidth),
-                    child: AppDataTable(
-                      key: _tableKey,
-                      columns: widget.columns,
-                      sortColumnIndex: widget.sortColumnIndex,
-                      sortAscending: widget.sortAscending,
-                      onSelectAll: widget.onSelectAll,
-                      dataRowHeight: widget.dataRowHeight,
-                      headingRowHeight: widget.headingRowHeight,
-                      horizontalMargin: widget.horizontalMargin,
-                      columnSpacing: widget.columnSpacing,
-                      showCheckboxColumn: widget.showCheckboxColumn,
-                      rows: _getRows(_firstRowIndex!, widget.rowsPerPage),
-                      hasActionsColumn: widget.hasActionsColumn,
-                    ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                primary: widget.primary,
+                controller: widget.controller,
+                dragStartBehavior: widget.dragStartBehavior,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(minWidth: constraints.minWidth),
+                  child: DataTable(
+                    key: _tableKey,
+                    columns: widget.columns,
+                    sortColumnIndex: widget.sortColumnIndex,
+                    sortAscending: widget.sortAscending,
+                    onSelectAll: widget.onSelectAll,
+                    // Make sure no decoration is set on the DataTable
+                    // from the theme, as its already wrapped in a Card.
+                    decoration: const BoxDecoration(),
+                    dataRowMinHeight: widget.dataRowMinHeight,
+                    dataRowMaxHeight: widget.dataRowMaxHeight,
+                    headingRowHeight: widget.headingRowHeight,
+                    horizontalMargin: widget.horizontalMargin,
+                    checkboxHorizontalMargin: widget.checkboxHorizontalMargin,
+                    columnSpacing: widget.columnSpacing,
+                    showCheckboxColumn: widget.showCheckboxColumn,
+                    showBottomBorder: true,
+                    rows: _getRows(_firstRowIndex, widget.rowsPerPage),
                   ),
                 ),
               ),
               DefaultTextStyle(
                 style: footerTextStyle!,
                 child: IconTheme.merge(
-                  data: const IconThemeData(opacity: 0.54),
-                  child: Container(
+                  data: const IconThemeData(
+                    opacity: 0.54,
+                  ),
+                  child: SizedBox(
                     // TODO(bkonyi): this won't handle text zoom correctly,
                     //  https://github.com/flutter/flutter/issues/48522
                     height: 56.0,
@@ -513,10 +586,9 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
                 ),
               ),
             ],
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
-*/

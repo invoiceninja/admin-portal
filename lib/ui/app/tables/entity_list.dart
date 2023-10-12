@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/ui/app/tables/app_paginated_data_table.dart';
 import 'package:overflow_view/overflow_view.dart';
 
 // Project imports:
@@ -245,7 +246,7 @@ class _EntityListState extends State<EntityList> {
                 primary: true,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: PaginatedDataTable(
+                  child: AppPaginatedDataTable(
                     onSelectAll: (value) {
                       final startIndex =
                           min(_firstRowIndex, entityList.length - 1);

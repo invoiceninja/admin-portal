@@ -33,6 +33,7 @@ import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
+import 'package:invoiceninja_flutter/ui/app/tables/app_paginated_data_table.dart';
 import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/ui/reports/report_charts.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
@@ -677,9 +678,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
           ),
         SingleChildScrollView(
           padding: const EdgeInsets.all(12),
-          child: PaginatedDataTable(
-            //showFirstLastButtons: true,
-            //subtractOneFromCount: true,
+          child: AppPaginatedDataTable(
             header: SizedBox(),
             sortColumnIndex: sortedColumns.contains(reportSettings.sortColumn)
                 ? sortedColumns.indexOf(reportSettings.sortColumn)
