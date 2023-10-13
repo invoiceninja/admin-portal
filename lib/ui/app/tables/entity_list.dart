@@ -292,6 +292,7 @@ class _EntityListState extends State<EntityList> {
                         : 0,
                     sortAscending: listUIState.sortAscending,
                     rowsPerPage: state.prefState.rowsPerPage,
+                    showFirstLastButtons: true,
                     onPageChanged: (row) {
                       _firstRowIndex = row;
                       store.dispatch(UpdateLastHistory(

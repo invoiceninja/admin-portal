@@ -689,6 +689,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
                 (index, ascending) => widget.viewModel
                     .onReportSorted(sortedColumns[index], ascending)),
             source: dataTableSource,
+            showFirstLastButtons: true,
           ),
         )
       ],
