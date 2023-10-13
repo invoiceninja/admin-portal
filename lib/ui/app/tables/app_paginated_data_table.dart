@@ -281,6 +281,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
   late int _firstRowIndex;
   late int _rowCount;
   late bool _rowCountApproximate;
+  late ScrollController _controller;
   int _selectedRowCount = 0;
   final Map<int, DataRow?> _rows = <int, DataRow?>{};
 
@@ -292,6 +293,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
         0;
     widget.source.addListener(_handleDataSourceChanged);
     _handleDataSourceChanged();
+    _controller = widget.controller ?? ScrollController();
   }
 
   @override
@@ -307,6 +309,9 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
   @override
   void dispose() {
     widget.source.removeListener(_handleDataSourceChanged);
+    if (widget.controller == null) {
+      _controller.dispose();
+    }
     super.dispose();
   }
 
@@ -543,31 +548,34 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
                     ),
                   ),
                 ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                primary: widget.primary,
-                controller: widget.controller,
-                dragStartBehavior: widget.dragStartBehavior,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minWidth: constraints.minWidth),
-                  child: DataTable(
-                    key: _tableKey,
-                    columns: widget.columns,
-                    sortColumnIndex: widget.sortColumnIndex,
-                    sortAscending: widget.sortAscending,
-                    onSelectAll: widget.onSelectAll,
-                    // Make sure no decoration is set on the DataTable
-                    // from the theme, as its already wrapped in a Card.
-                    decoration: const BoxDecoration(),
-                    dataRowMinHeight: widget.dataRowMinHeight,
-                    dataRowMaxHeight: widget.dataRowMaxHeight,
-                    headingRowHeight: widget.headingRowHeight,
-                    horizontalMargin: widget.horizontalMargin,
-                    checkboxHorizontalMargin: widget.checkboxHorizontalMargin,
-                    columnSpacing: widget.columnSpacing,
-                    showCheckboxColumn: widget.showCheckboxColumn,
-                    showBottomBorder: true,
-                    rows: _getRows(_firstRowIndex, widget.rowsPerPage),
+              Scrollbar(
+                controller: _controller,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  primary: widget.primary,
+                  controller: _controller,
+                  dragStartBehavior: widget.dragStartBehavior,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minWidth: constraints.minWidth),
+                    child: DataTable(
+                      key: _tableKey,
+                      columns: widget.columns,
+                      sortColumnIndex: widget.sortColumnIndex,
+                      sortAscending: widget.sortAscending,
+                      onSelectAll: widget.onSelectAll,
+                      // Make sure no decoration is set on the DataTable
+                      // from the theme, as its already wrapped in a Card.
+                      decoration: const BoxDecoration(),
+                      dataRowMinHeight: widget.dataRowMinHeight,
+                      dataRowMaxHeight: widget.dataRowMaxHeight,
+                      headingRowHeight: widget.headingRowHeight,
+                      horizontalMargin: widget.horizontalMargin,
+                      checkboxHorizontalMargin: widget.checkboxHorizontalMargin,
+                      columnSpacing: widget.columnSpacing,
+                      showCheckboxColumn: widget.showCheckboxColumn,
+                      showBottomBorder: true,
+                      rows: _getRows(_firstRowIndex, widget.rowsPerPage),
+                    ),
                   ),
                 ),
               ),
