@@ -57,6 +57,7 @@ class AppPaginatedDataTable extends StatefulWidget {
     required this.columns,
     this.sortColumnIndex,
     this.sortAscending = true,
+    this.subtractOne = false,
     this.onSelectAll,
     @Deprecated(
       'Migrate to use dataRowMinHeight and dataRowMaxHeight instead. '
@@ -267,6 +268,8 @@ class AppPaginatedDataTable extends StatefulWidget {
   /// {@macro flutter.widgets.scroll_view.primary}
   final bool? primary;
 
+  final bool subtractOne;
+
   @override
   AppPaginatedDataTableState createState() => AppPaginatedDataTableState();
 }
@@ -422,6 +425,8 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
     // FOOTER
     final TextStyle? footerTextStyle = themeData.textTheme.bodySmall;
     final List<Widget> footerWidgets = <Widget>[];
+    final displayRowCount =
+        math.min(_rowCount, _firstRowIndex + widget.rowsPerPage);
     if (widget.onRowsPerPageChanged != null) {
       final List<Widget> availableRowsPerPage = widget.availableRowsPerPage
           .where(
@@ -458,9 +463,11 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
       Container(width: 32.0),
       Text(
         localizations.pageRowsInfoTitle(
-          _firstRowIndex + 1,
-          math.min(_rowCount, _firstRowIndex + widget.rowsPerPage),
-          _rowCount,
+          _firstRowIndex +
+              1 -
+              (widget.subtractOne && _firstRowIndex != 0 ? 1 : 0),
+          displayRowCount - (widget.subtractOne ? 1 : 0),
+          _rowCount - (widget.subtractOne ? 1 : 0),
           _rowCountApproximate,
         ),
       ),

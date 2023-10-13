@@ -679,7 +679,6 @@ class _ReportDataTableState extends State<ReportDataTable> {
         SingleChildScrollView(
           padding: const EdgeInsets.all(12),
           child: AppPaginatedDataTable(
-            header: SizedBox(),
             sortColumnIndex: sortedColumns.contains(reportSettings.sortColumn)
                 ? sortedColumns.indexOf(reportSettings.sortColumn)
                 : null,
@@ -690,6 +689,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
                     .onReportSorted(sortedColumns[index], ascending)),
             source: dataTableSource,
             showFirstLastButtons: true,
+            subtractOne: true,
           ),
         )
       ],
