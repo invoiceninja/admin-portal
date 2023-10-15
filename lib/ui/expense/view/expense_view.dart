@@ -130,6 +130,8 @@ class _ExpenseViewState extends State<ExpenseView>
                         RefreshIndicator(
                           onRefresh: () => viewModel.onRefreshed!(context),
                           child: ExpenseOverview(
+                            key: ValueKey(
+                                '${viewModel.expense.id}-${viewModel.expense.loadedAt}'),
                             viewModel: viewModel,
                             isFilter: widget.isFilter,
                           ),
@@ -138,13 +140,18 @@ class _ExpenseViewState extends State<ExpenseView>
                           RefreshIndicator(
                             onRefresh: () => viewModel.onRefreshed!(context),
                             child: ExpenseViewDocuments(
+                                key: ValueKey(
+                                    '${viewModel.expense.id}-${viewModel.expense.loadedAt}'),
                                 viewModel: viewModel,
                                 expense: viewModel.expense),
                           ),
                         if (expense.isRecurring)
                           RefreshIndicator(
                             onRefresh: () => viewModel.onRefreshed!(context),
-                            child: ExpenseViewSchedule(viewModel: viewModel),
+                            child: ExpenseViewSchedule(
+                                key: ValueKey(
+                                    '${viewModel.expense.id}-${viewModel.expense.loadedAt}'),
+                                viewModel: viewModel),
                           ),
                       ],
                     )
