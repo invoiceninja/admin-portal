@@ -303,6 +303,9 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'oauth_provider_id',
       serializers.serialize(object.oauthProvider,
           specifiedType: const FullType(String)),
+      'language_id',
+      serializers.serialize(object.languageId,
+          specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -438,6 +441,10 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
           break;
         case 'oauth_provider_id':
           result.oauthProvider = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'language_id':
+          result.languageId = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
         case 'isChanged':
@@ -1013,6 +1020,8 @@ class _$UserEntity extends UserEntity {
   @override
   final String oauthProvider;
   @override
+  final String languageId;
+  @override
   final bool? isChanged;
   @override
   final int createdAt;
@@ -1050,6 +1059,7 @@ class _$UserEntity extends UserEntity {
       required this.oauthUserToken,
       this.userCompany,
       required this.oauthProvider,
+      required this.languageId,
       this.isChanged,
       required this.createdAt,
       required this.updatedAt,
@@ -1085,6 +1095,8 @@ class _$UserEntity extends UserEntity {
         oauthUserToken, r'UserEntity', 'oauthUserToken');
     BuiltValueNullFieldError.checkNotNull(
         oauthProvider, r'UserEntity', 'oauthProvider');
+    BuiltValueNullFieldError.checkNotNull(
+        languageId, r'UserEntity', 'languageId');
     BuiltValueNullFieldError.checkNotNull(
         createdAt, r'UserEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
@@ -1122,6 +1134,7 @@ class _$UserEntity extends UserEntity {
         oauthUserToken == other.oauthUserToken &&
         userCompany == other.userCompany &&
         oauthProvider == other.oauthProvider &&
+        languageId == other.languageId &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1154,6 +1167,7 @@ class _$UserEntity extends UserEntity {
     _$hash = $jc(_$hash, oauthUserToken.hashCode);
     _$hash = $jc(_$hash, userCompany.hashCode);
     _$hash = $jc(_$hash, oauthProvider.hashCode);
+    _$hash = $jc(_$hash, languageId.hashCode);
     _$hash = $jc(_$hash, isChanged.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
@@ -1186,6 +1200,7 @@ class _$UserEntity extends UserEntity {
           ..add('oauthUserToken', oauthUserToken)
           ..add('userCompany', userCompany)
           ..add('oauthProvider', oauthProvider)
+          ..add('languageId', languageId)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1277,6 +1292,10 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   set oauthProvider(String? oauthProvider) =>
       _$this._oauthProvider = oauthProvider;
 
+  String? _languageId;
+  String? get languageId => _$this._languageId;
+  set languageId(String? languageId) => _$this._languageId = languageId;
+
   bool? _isChanged;
   bool? get isChanged => _$this._isChanged;
   set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
@@ -1335,6 +1354,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
       _oauthUserToken = $v.oauthUserToken;
       _userCompany = $v.userCompany?.toBuilder();
       _oauthProvider = $v.oauthProvider;
+      _languageId = $v.languageId;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -1386,14 +1406,14 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
                   customValue2, r'UserEntity', 'customValue2'),
               customValue3: BuiltValueNullFieldError.checkNotNull(
                   customValue3, r'UserEntity', 'customValue3'),
-              customValue4:
-                  BuiltValueNullFieldError.checkNotNull(customValue4, r'UserEntity', 'customValue4'),
+              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'UserEntity', 'customValue4'),
               isTwoFactorEnabled: BuiltValueNullFieldError.checkNotNull(isTwoFactorEnabled, r'UserEntity', 'isTwoFactorEnabled'),
               hasPassword: BuiltValueNullFieldError.checkNotNull(hasPassword, r'UserEntity', 'hasPassword'),
               lastEmailAddress: BuiltValueNullFieldError.checkNotNull(lastEmailAddress, r'UserEntity', 'lastEmailAddress'),
               oauthUserToken: BuiltValueNullFieldError.checkNotNull(oauthUserToken, r'UserEntity', 'oauthUserToken'),
               userCompany: _userCompany?.build(),
               oauthProvider: BuiltValueNullFieldError.checkNotNull(oauthProvider, r'UserEntity', 'oauthProvider'),
+              languageId: BuiltValueNullFieldError.checkNotNull(languageId, r'UserEntity', 'languageId'),
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'UserEntity', 'createdAt'),
               updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'UserEntity', 'updatedAt'),

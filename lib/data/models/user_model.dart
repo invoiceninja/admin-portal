@@ -140,6 +140,7 @@ abstract class UserEntity extends Object
       oauthUserToken: '',
       password: '',
       phoneVerified: false,
+      languageId: '',
       userCompany: userCompany,
     );
   }
@@ -206,6 +207,9 @@ abstract class UserEntity extends Object
 
   @BuiltValueField(wireName: 'oauth_provider_id')
   String get oauthProvider;
+
+  @BuiltValueField(wireName: 'language_id')
+  String get languageId;
 
   String get fullName => (firstName + ' ' + lastName).trim();
 
@@ -337,7 +341,8 @@ abstract class UserEntity extends Object
     ..phoneVerified = false
     ..password = ''
     ..lastEmailAddress = ''
-    ..oauthUserToken = '';
+    ..oauthUserToken = ''
+    ..languageId = '';
 
   static Serializer<UserEntity> get serializer => _$userEntitySerializer;
 }
