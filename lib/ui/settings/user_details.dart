@@ -10,6 +10,8 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/sms_verification.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -442,6 +444,23 @@ class _UserDetailsState extends State<UserDetails>
                         ..userCompany.settings.accentColor =
                             value ?? '#ffffff'));
                     },
+                  ),
+                  EntityDropdown(
+                    entityType: EntityType.language,
+                    entityList:
+                        memoizedLanguageList(state.staticState.languageMap),
+                    labelText: localization.language +
+                        (user.languageId.isNotEmpty
+                            ? ''
+                            : ' - ' +
+                                state
+                                    .staticState
+                                    .languageMap[state.company.languageId]!
+                                    .name),
+                    entityId: user.languageId,
+                    onSelected: (SelectableEntity? language) =>
+                        viewModel.onChanged(user.rebuild(
+                            (b) => b..languageId = language?.id ?? '')),
                   ),
                   if (state.company.isLarge || !kReleaseMode) ...[
                     AppDropdownButton<int>(
