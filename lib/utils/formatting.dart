@@ -227,7 +227,7 @@ String? formatNumber(
       formatter = NumberFormat('#,##0.0####', 'custom');
     } else if (currency.precision == 2) {
       formatter = NumberFormat('#,##0.00###', 'custom');
-    } else if (currency.precision == 3) {
+    } else {
       formatter = NumberFormat('#,##0.000##', 'custom');
     }
 
