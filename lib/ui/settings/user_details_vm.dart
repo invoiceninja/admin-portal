@@ -311,9 +311,11 @@ class UserDetailsVM {
           final localization = AppLocalization.of(context)!;
           final completer = snackBarCompleter<Null>(localization.updatedUser);
           final appBuilder = AppBuilder.of(context);
+          final origUser = state.user;
           final origUserSettings = state.userCompany.settings;
 
           completer.future.then<Null>((_) async {
+            final newUser = store.state.user;
             final newUserSettings = store.state.userCompany.settings;
             if (origUserSettings.includeDeletedClients !=
                     newUserSettings.includeDeletedClients ||
@@ -332,6 +334,12 @@ class UserDetailsVM {
                   builder: (BuildContext context) => SimpleDialog(
                         children: <Widget>[LoadingDialog()],
                       ));
+            } else if (origUser.languageId != newUser.languageId) {
+              store.dispatch(RefreshData(
+                includeStatic: true,
+                completer: Completer<dynamic>()
+                  ..future.then((dynamic value) => appBuilder!.rebuild()),
+              ));
             }
 
             appBuilder!.rebuild();
