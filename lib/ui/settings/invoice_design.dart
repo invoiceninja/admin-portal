@@ -562,6 +562,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 .rebuild((b) => b..showShippingAddress = value),
                           ),
                         ),
+                        if (company.isModuleEnabled(EntityType.document))
+                          BoolDropdownButton(
+                            label: localization.invoiceEmbedDocuments,
+                            //helpLabel: localization.invoiceEmbedDocumentsHelp,
+                            value: settings.embedDocuments ?? false,
+                            iconData: MdiIcons.image,
+                            onChanged: (value) => viewModel.onSettingsChanged(
+                                settings
+                                    .rebuild((b) => b..embedDocuments = value)),
+                          ),
                       ],
                     ),
                     FormCard(
@@ -660,14 +670,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           iconData: MdiIcons.fileInvoiceDollar,
                           onChanged: (value) => viewModel.onSettingsChanged(
                               settings.rebuild((b) => b..hidePaidToDate = value)),
-                        ),
-                        BoolDropdownButton(
-                          label: localization.invoiceEmbedDocuments,
-                          helpLabel: localization.invoiceEmbedDocumentsHelp,
-                          value: settings.embedDocuments,
-                          iconData: MdiIcons.image,
-                          onChanged: (value) => viewModel.onSettingsChanged(
-                              settings.rebuild((b) => b..embedDocuments = value)),
                         ),
                       ],
                     ),               
