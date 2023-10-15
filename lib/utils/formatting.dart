@@ -139,6 +139,11 @@ String? formatNumber(
 
   final CountryEntity country =
       state.staticState.countryMap[countryId] ?? CountryEntity();
+  /*
+  final CountryEntity companyCountry =
+      state.staticState.countryMap[company.settings.countryId] ??
+          CountryEntity();
+  */
 
   if (currency == null) {
     return '';
@@ -153,6 +158,7 @@ String? formatNumber(
   bool swapCurrencySymbol = companyCurrency!.swapCurrencySymbol;
 
   if (currency.id == kCurrencyEuro) {
+    //swapCurrencySymbol = companyCountry.swapCurrencySymbol;
     swapCurrencySymbol = country.swapCurrencySymbol;
     if (country.thousandSeparator.isNotEmpty) {
       thousandSeparator = country.thousandSeparator;
