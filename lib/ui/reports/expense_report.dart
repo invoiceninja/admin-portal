@@ -53,6 +53,7 @@ enum ExpenseReportFields {
   created_at,
   updated_at,
   converted_amount,
+  status,
 }
 
 var memoizedExpenseReport = memo10((
@@ -273,6 +274,8 @@ ReportResult expenseReport(
         case ExpenseReportFields.converted_amount:
           value = round(expense.convertedAmount, 2);
           break;
+        case ExpenseReportFields.status:
+          value = kExpenseStatuses[expense.calculatedStatusId];
       }
 
       if (!ReportResult.matchField(
