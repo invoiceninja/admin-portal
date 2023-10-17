@@ -18,7 +18,7 @@ class WebUtils {
 
   static void downloadTextFile(String filename, String data) {}
 
-  static void downloadBinaryFile(String filename, Uint8List? data) {}
+  static void downloadBinaryFile(String filename, Uint8List data) {}
 
   static void reloadBrowser() {}
 

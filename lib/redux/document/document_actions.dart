@@ -436,7 +436,9 @@ void handleDocumentAction(
         final DocumentEntity? document =
             store.state.documentState.map[documentIds.first];
         if (kIsWeb) {
-          WebUtils.downloadBinaryFile(document!.name, document.data);
+          if (document?.data != null) {
+            WebUtils.downloadBinaryFile(document!.name, document.data!);
+          }
         } else {
           final directory = await (isDesktopOS()
               ? getDownloadsDirectory() as FutureOr<file.Directory>

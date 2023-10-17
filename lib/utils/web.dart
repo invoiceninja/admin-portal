@@ -53,18 +53,18 @@ class WebUtils {
 
   static void reloadBrowser() => window.location.reload();
 
-  static void registerWebView(String html) {
+  static void registerWebView(String? html) {
     // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory(
-        html,
+        html ?? '',
         (int viewId) => IFrameElement()
           ..src = html
           ..style.border = 'none');
   }
 
-  static void warnChanges(Store<AppState> store) {
+  static void warnChanges(Store<AppState>? store) {
     window.onBeforeUnload.listen((Event e) {
-      if (store.state.hasChanges()) {
+      if (store!.state.hasChanges()) {
         (e as BeforeUnloadEvent).returnValue =
             'Changes you made may not be saved.';
       }
