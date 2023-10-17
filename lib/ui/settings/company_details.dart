@@ -338,23 +338,21 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     onSavePressed: viewModel.onSavePressed,
                     keyboardType: TextInputType.text,
                   ),
-                  if (state.company.calculateTaxes)
-                    AppDropdownButton<String>(
-                      labelText: localization.classification,
-                      showBlank: true,
-                      value: settings.classification,
-                      onChanged: (dynamic value) {
-                        viewModel.onSettingsChanged(
-                            settings.rebuild((b) => b..classification = value));
-                      },
-                      items: kTaxClassifications
-                          .map((classification) => DropdownMenuItem(
-                                child:
-                                    Text(localization.lookup(classification)),
-                                value: classification,
-                              ))
-                          .toList(),
-                    ),
+                  AppDropdownButton<String>(
+                    labelText: localization.classification,
+                    showBlank: true,
+                    value: settings.classification,
+                    onChanged: (dynamic value) {
+                      viewModel.onSettingsChanged(
+                          settings.rebuild((b) => b..classification = value));
+                    },
+                    items: kTaxClassifications
+                        .map((classification) => DropdownMenuItem(
+                              child: Text(localization.lookup(classification)),
+                              value: classification,
+                            ))
+                        .toList(),
+                  ),
                   DecoratedFormField(
                     label: localization.website,
                     controller: _websiteController,
