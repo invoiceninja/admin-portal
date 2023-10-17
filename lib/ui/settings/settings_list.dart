@@ -341,6 +341,7 @@ class SettingsSearch extends StatelessWidget {
           'name',
           'id_number',
           'vat_number',
+          'classification#2023-10-17',
           'website',
           'email',
           'phone',
@@ -550,6 +551,7 @@ class SettingsSearch extends StatelessWidget {
           'show_paid_stamp#2023-01-29',
           'show_shipping_address#2023-01-29',
           'share_invoice_quote_columns#2023-03-20',
+          'invoice_embed_documents#2023-10-27'
         ],
       ],
       kSettingsCustomDesigns: [
@@ -716,6 +718,7 @@ class SettingsSearch extends StatelessWidget {
                       ],
                     ),
                   ),
+                  /*
                   SizedBox(width: 8),
                   if (parts[0].isNotEmpty)
                     Flexible(
@@ -723,6 +726,7 @@ class SettingsSearch extends StatelessWidget {
                             locale:
                                 localeSelector(store.state, twoLetter: true) +
                                     '_short'))),
+                                    */
                 ],
               ),
               leading: Padding(
