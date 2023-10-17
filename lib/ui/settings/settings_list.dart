@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
