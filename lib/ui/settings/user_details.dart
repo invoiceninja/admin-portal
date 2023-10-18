@@ -496,6 +496,15 @@ class _UserDetailsState extends State<UserDetails>
                       },
                     )
                   ],
+                  BoolDropdownButton(
+                    label: localization.userLoggedInNotification,
+                    helpLabel: localization.userLoggedInNotificationHelp,
+                    value: user.userLoggedInNotification,
+                    onChanged: (value) {
+                      widget.viewModel.onChanged(user
+                          .rebuild((b) => b..userLoggedInNotification = value));
+                    },
+                  )
                 ],
               ),
             ],
