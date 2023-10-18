@@ -306,6 +306,9 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'language_id',
       serializers.serialize(object.languageId,
           specifiedType: const FullType(String)),
+      'user_logged_in_notification',
+      serializers.serialize(object.userLoggedInNotification,
+          specifiedType: const FullType(bool)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -446,6 +449,10 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
         case 'language_id':
           result.languageId = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
+          break;
+        case 'user_logged_in_notification':
+          result.userLoggedInNotification = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -1022,6 +1029,8 @@ class _$UserEntity extends UserEntity {
   @override
   final String languageId;
   @override
+  final bool userLoggedInNotification;
+  @override
   final bool? isChanged;
   @override
   final int createdAt;
@@ -1060,6 +1069,7 @@ class _$UserEntity extends UserEntity {
       this.userCompany,
       required this.oauthProvider,
       required this.languageId,
+      required this.userLoggedInNotification,
       this.isChanged,
       required this.createdAt,
       required this.updatedAt,
@@ -1098,6 +1108,8 @@ class _$UserEntity extends UserEntity {
     BuiltValueNullFieldError.checkNotNull(
         languageId, r'UserEntity', 'languageId');
     BuiltValueNullFieldError.checkNotNull(
+        userLoggedInNotification, r'UserEntity', 'userLoggedInNotification');
+    BuiltValueNullFieldError.checkNotNull(
         createdAt, r'UserEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
         updatedAt, r'UserEntity', 'updatedAt');
@@ -1135,6 +1147,7 @@ class _$UserEntity extends UserEntity {
         userCompany == other.userCompany &&
         oauthProvider == other.oauthProvider &&
         languageId == other.languageId &&
+        userLoggedInNotification == other.userLoggedInNotification &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1168,6 +1181,7 @@ class _$UserEntity extends UserEntity {
     _$hash = $jc(_$hash, userCompany.hashCode);
     _$hash = $jc(_$hash, oauthProvider.hashCode);
     _$hash = $jc(_$hash, languageId.hashCode);
+    _$hash = $jc(_$hash, userLoggedInNotification.hashCode);
     _$hash = $jc(_$hash, isChanged.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
@@ -1201,6 +1215,7 @@ class _$UserEntity extends UserEntity {
           ..add('userCompany', userCompany)
           ..add('oauthProvider', oauthProvider)
           ..add('languageId', languageId)
+          ..add('userLoggedInNotification', userLoggedInNotification)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1296,6 +1311,11 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   String? get languageId => _$this._languageId;
   set languageId(String? languageId) => _$this._languageId = languageId;
 
+  bool? _userLoggedInNotification;
+  bool? get userLoggedInNotification => _$this._userLoggedInNotification;
+  set userLoggedInNotification(bool? userLoggedInNotification) =>
+      _$this._userLoggedInNotification = userLoggedInNotification;
+
   bool? _isChanged;
   bool? get isChanged => _$this._isChanged;
   set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
@@ -1355,6 +1375,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
       _userCompany = $v.userCompany?.toBuilder();
       _oauthProvider = $v.oauthProvider;
       _languageId = $v.languageId;
+      _userLoggedInNotification = $v.userLoggedInNotification;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -1414,6 +1435,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
               userCompany: _userCompany?.build(),
               oauthProvider: BuiltValueNullFieldError.checkNotNull(oauthProvider, r'UserEntity', 'oauthProvider'),
               languageId: BuiltValueNullFieldError.checkNotNull(languageId, r'UserEntity', 'languageId'),
+              userLoggedInNotification: BuiltValueNullFieldError.checkNotNull(userLoggedInNotification, r'UserEntity', 'userLoggedInNotification'),
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'UserEntity', 'createdAt'),
               updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'UserEntity', 'updatedAt'),
