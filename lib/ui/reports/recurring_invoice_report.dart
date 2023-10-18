@@ -84,6 +84,8 @@ enum RecurringInvoiceReportFields {
   start_date,
   remaining_cycles,
   due_on,
+  next_send_date,
+  last_sent_date,
 }
 
 var memoizedRecurringInvoiceReport = memo8((
@@ -368,7 +370,11 @@ ReportResult recurringInvoiceReport(
           value = localization!.lookup(kFrequencies[invoice.frequencyId]);
           break;
         case RecurringInvoiceReportFields.start_date:
+        case RecurringInvoiceReportFields.next_send_date:
           value = invoice.nextSendDate;
+          break;
+        case RecurringInvoiceReportFields.last_sent_date:
+          value = invoice.lastSentDate;
           break;
         case RecurringInvoiceReportFields.remaining_cycles:
           value = invoice.remainingCycles == -1
