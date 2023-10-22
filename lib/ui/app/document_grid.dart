@@ -299,7 +299,7 @@ class DocumentTile extends StatelessWidget {
           child: Card(
             elevation: 4,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 InkWell(
                   onTap: (document.isImage || document.isPdf)
@@ -446,7 +446,11 @@ class DocumentPreview extends StatelessWidget {
 
     if (document.isImage) {
       if (repoDocument!.data != null) {
-        return Image.memory(repoDocument.data!);
+        return Image.memory(
+          repoDocument.data!,
+          height: height,
+          fit: BoxFit.cover,
+        );
       } else {
         return CachedNetworkImage(
             height: height,
