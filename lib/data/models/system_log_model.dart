@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
@@ -17,6 +18,7 @@ abstract class SystemLogEntity
       log: '',
       typeId: 0,
       userId: '',
+      history: EmailHistoryEntity(),
     );
   }
 
@@ -57,6 +59,8 @@ abstract class SystemLogEntity
 
   @BuiltValueField(wireName: 'created_at')
   int get createdAt;
+
+  EmailHistoryEntity get history;
 
   String get category {
     switch (categoryId) {
@@ -182,6 +186,97 @@ abstract class SystemLogEntity
     return 'Unknown $typeId';
   }
 
+  // ignore: unused_element
+  static void _initializeBuilder(SystemLogEntityBuilder builder) =>
+      builder..history.replace(EmailHistoryEntity());
+
   static Serializer<SystemLogEntity> get serializer =>
       _$systemLogEntitySerializer;
+}
+
+abstract class EmailHistoryEntity
+    implements Built<EmailHistoryEntity, EmailHistoryEntityBuilder> {
+  factory EmailHistoryEntity() {
+    return _$EmailHistoryEntity._(
+      recipients: '',
+      subject: '',
+      entity: '',
+      entityId: '',
+      events: BuiltList<EmailHistoryEventEntity>(),
+    );
+  }
+
+  EmailHistoryEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  String get recipients;
+
+  String get subject;
+
+  String get entity;
+
+  @BuiltValueField(wireName: 'entity_id')
+  String get entityId;
+
+  BuiltList<EmailHistoryEventEntity> get events;
+
+  // ignore: unused_element
+  static void _initializeBuilder(EmailHistoryEntityBuilder builder) => builder
+    ..recipients = ''
+    ..subject = ''
+    ..entity = ''
+    ..entityId = ''
+    ..events.replace(BuiltList<EmailHistoryEventEntity>());
+
+  static Serializer<EmailHistoryEntity> get serializer =>
+      _$emailHistoryEntitySerializer;
+}
+
+abstract class EmailHistoryEventEntity
+    implements Built<EmailHistoryEventEntity, EmailHistoryEventEntityBuilder> {
+  factory EmailHistoryEventEntity() {
+    return _$EmailHistoryEventEntity._(
+      recipient: '',
+      status: '',
+      deliveryMessage: '',
+      server: '',
+      serverIp: '',
+      date: '',
+    );
+  }
+
+  EmailHistoryEventEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  String get recipient;
+
+  String get status;
+
+  @BuiltValueField(wireName: 'delivery_message')
+  String get deliveryMessage;
+
+  String get server;
+
+  @BuiltValueField(wireName: 'server_ip')
+  String get serverIp;
+
+  String get date;
+
+  // ignore: unused_element
+  static void _initializeBuilder(EmailHistoryEventEntityBuilder builder) =>
+      builder
+        ..recipient = ''
+        ..status = ''
+        ..deliveryMessage = ''
+        ..server = ''
+        ..serverIp = '';
+
+  static Serializer<EmailHistoryEventEntity> get serializer =>
+      _$emailHistoryEventEntitySerializer;
 }
