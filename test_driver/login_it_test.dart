@@ -1,8 +1,5 @@
 // Import Flutter Driver API
 
-// Dart imports:
-import 'dart:async';
-
 // Package imports:
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
@@ -13,9 +10,9 @@ import 'utils/localizations.dart';
 
 void main() {
   group('LOGIN TEST', () {
-    TestLocalization localization;
-    FlutterDriver driver;
-    StreamSubscription streamSubscription;
+    late TestLocalization localization;
+    FlutterDriver? driver;
+    //StreamSubscription? streamSubscription;
 
     setUpAll(() async {
       localization = TestLocalization('en');
@@ -33,29 +30,32 @@ void main() {
 
     tearDownAll(() async {
       if (driver != null) {
-        driver.close();
+        driver!.close();
       }
+
+      /*
       if (streamSubscription != null) {
         streamSubscription.cancel();
       }
+      */
     });
 
     group('SELF-HOSTED', () {
       test('No input provided by user', () async {
-        await login(driver,
+        await login(driver!,
             loginEmail: '', loginPassword: '', loginUrl: '', loginSecret: '');
 
-        await driver.waitFor(find.text(localization.pleaseEnterYourEmail));
-        await driver.waitFor(find.text(localization.pleaseEnterYourPassword));
-        await driver.waitFor(find.text(localization.pleaseEnterYourUrl));
+        await driver!.waitFor(find.text(localization.pleaseEnterYourEmail));
+        await driver!.waitFor(find.text(localization.pleaseEnterYourPassword));
+        await driver!.waitFor(find.text(localization.pleaseEnterYourUrl));
       });
 
       test('Details filled by user and login', () async {
-        await login(driver, retype: true);
+        await login(driver!, retype: true);
       });
 
       test('Logout from a logged in user', () async {
-        await logout(driver, localization);
+        await logout(driver!, localization);
       });
     });
   });

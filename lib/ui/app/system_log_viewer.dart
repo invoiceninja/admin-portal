@@ -20,7 +20,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class SystemLogViewer extends StatefulWidget {
   const SystemLogViewer({this.systemLogs});
 
-  final BuiltList<SystemLogEntity> systemLogs;
+  final BuiltList<SystemLogEntity>? systemLogs;
 
   @override
   _SystemLogViewerState createState() => _SystemLogViewerState();
@@ -34,7 +34,7 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
 
-    var systemLogs = widget.systemLogs.where((log) {
+    var systemLogs = widget.systemLogs!.where((log) {
       return log.typeId != 800;
     }).toList();
     if (systemLogs.length > 25) {
@@ -54,7 +54,7 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
               .where((systemLog) => systemLog.isVisible)
               .map((systemLog) {
             final client = state.clientState.get(systemLog.clientId);
-            Map<String, dynamic> logs;
+            Map<String, dynamic>? logs;
             if (_isExpanded[systemLog.id] == true && systemLog.log.isNotEmpty) {
               try {
                 logs = json.decode(systemLog.log);
@@ -67,7 +67,7 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
               headerBuilder: (BuildContext context, bool isExpanded) {
                 return ListTile(
                   leading: Icon(getActivityIcon(systemLog.categoryId)),
-                  title: Text(localization.lookup(systemLog.category) +
+                  title: Text(localization!.lookup(systemLog.category) +
                       '  ›  ' +
                       localization.lookup(systemLog.type)),
                   isThreeLine: true,
@@ -82,7 +82,7 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
                     setState(() {
                       _isExpanded[systemLog.id] =
                           _isExpanded.containsKey(systemLog.id)
-                              ? !_isExpanded[systemLog.id]
+                              ? !_isExpanded[systemLog.id]!
                               : true;
                     });
                   },

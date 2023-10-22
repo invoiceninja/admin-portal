@@ -19,8 +19,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class UserScreen extends StatelessWidget {
   const UserScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsUserManagement';
@@ -97,7 +97,7 @@ class UserScreen extends StatelessWidget {
                     Icons.add,
                     color: Colors.white,
                   ),
-                  tooltip: localization.newUser,
+                  tooltip: localization!.newUser,
                 )
               : null,
     );

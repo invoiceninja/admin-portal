@@ -17,7 +17,7 @@ List<String> dropdownTaxRatesSelector(
     BuiltList<String> taxRateList,
     String clientId) {
   final list = taxRateList.where((taxRateId) {
-    final taxRate = taxRateMap[taxRateId];
+    final taxRate = taxRateMap[taxRateId]!;
     /*
     if (clientId != null && clientId > 0 && taxRate.clientId != clientId) {
       return false;
@@ -27,7 +27,7 @@ List<String> dropdownTaxRatesSelector(
   }).toList();
 
   list.sort((taxRateAId, taxRateBId) {
-    final taxRateA = taxRateMap[taxRateAId];
+    final taxRateA = taxRateMap[taxRateAId]!;
     final taxRateB = taxRateMap[taxRateBId];
     return taxRateA.compareTo(taxRateB, TaxRateFields.name, true);
   });
@@ -36,7 +36,7 @@ List<String> dropdownTaxRatesSelector(
 }
 
 var memoizedFilteredTaxRateList = memo4((SelectionState selectionState,
-        BuiltMap<String, TaxRateEntity> taxRateMap,
+        BuiltMap<String?, TaxRateEntity?> taxRateMap,
         BuiltList<String> taxRateList,
         ListUIState taxRateListState) =>
     filteredTaxRatesSelector(
@@ -44,11 +44,11 @@ var memoizedFilteredTaxRateList = memo4((SelectionState selectionState,
 
 List<String> filteredTaxRatesSelector(
     SelectionState selectionState,
-    BuiltMap<String, TaxRateEntity> taxRateMap,
+    BuiltMap<String?, TaxRateEntity?> taxRateMap,
     BuiltList<String> taxRateList,
     ListUIState taxRateListState) {
   final list = taxRateList.where((taxRateId) {
-    final taxRate = taxRateMap[taxRateId];
+    final taxRate = taxRateMap[taxRateId]!;
 
     if (taxRate.id == selectionState.selectedId) {
       return true;
@@ -61,7 +61,7 @@ List<String> filteredTaxRatesSelector(
   }).toList();
 
   list.sort((taxRateAId, taxRateBId) {
-    final taxRateA = taxRateMap[taxRateAId];
+    final taxRateA = taxRateMap[taxRateAId]!;
     final taxRateB = taxRateMap[taxRateBId];
     return taxRateA.compareTo(
         taxRateB, taxRateListState.sortField, taxRateListState.sortAscending);

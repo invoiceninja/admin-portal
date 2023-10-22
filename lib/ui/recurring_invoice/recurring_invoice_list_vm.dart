@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class RecurringInvoiceListBuilder extends StatelessWidget {
-  const RecurringInvoiceListBuilder({Key key}) : super(key: key);
+  const RecurringInvoiceListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class RecurringInvoiceListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final recurringInvoiceId = viewModel.recurringInvoiceList[index];
               final recurringInvoice =
-                  viewModel.recurringInvoiceMap[recurringInvoiceId];
+                  viewModel.recurringInvoiceMap[recurringInvoiceId]!;
 
               return RecurringInvoiceListItem(
                 filter: viewModel.filter,
@@ -57,27 +57,27 @@ class RecurringInvoiceListBuilder extends StatelessWidget {
 
 class RecurringInvoiceListVM {
   RecurringInvoiceListVM({
-    @required this.state,
-    @required this.userCompany,
-    @required this.recurringInvoiceList,
-    @required this.recurringInvoiceMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.onEntityAction,
-    @required this.tableColumns,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.userCompany,
+    required this.recurringInvoiceList,
+    required this.recurringInvoiceMap,
+    required this.filter,
+    required this.isLoading,
+    required this.listState,
+    required this.onRefreshed,
+    required this.onEntityAction,
+    required this.tableColumns,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
   });
 
   static RecurringInvoiceListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
       if (store.state.isLoading) {
-        return Future<Null>(null);
+        return Future<Null>.value();
       }
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -104,7 +104,7 @@ class RecurringInvoiceListVM {
           handleRecurringInvoiceAction(context, recurringInvoices, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns: state.userCompany.settings
-              ?.getTableColumns(EntityType.recurringInvoice) ??
+              .getTableColumns(EntityType.recurringInvoice) ??
           RecurringInvoicePresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortRecurringInvoices(field)),
       onClearMultielsect: () =>
@@ -113,11 +113,11 @@ class RecurringInvoiceListVM {
   }
 
   final AppState state;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> recurringInvoiceList;
   final BuiltMap<String, InvoiceEntity> recurringInvoiceMap;
   final ListUIState listState;
-  final String filter;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;

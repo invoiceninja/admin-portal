@@ -32,8 +32,8 @@ class WebUtils {
 
   static String get browserRoute => window.location.hash.replaceFirst('#', '');
 
-  static String getHtmlValue(String field) =>
-      window.document.documentElement.dataset[field];
+  static String? getHtmlValue(String field) =>
+      window.document.documentElement!.dataset[field];
 
   static void downloadTextFile(String filename, String data) {
     final encodedFileContents = Uri.encodeComponent(data);
@@ -53,18 +53,18 @@ class WebUtils {
 
   static void reloadBrowser() => window.location.reload();
 
-  static void registerWebView(String html) {
+  static void registerWebView(String? html) {
     // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory(
-        html,
+        html ?? '',
         (int viewId) => IFrameElement()
           ..src = html
           ..style.border = 'none');
   }
 
-  static void warnChanges(Store<AppState> store) {
+  static void warnChanges(Store<AppState>? store) {
     window.onBeforeUnload.listen((Event e) {
-      if (store.state.hasChanges()) {
+      if (store!.state.hasChanges()) {
         (e as BeforeUnloadEvent).returnValue =
             'Changes you made may not be saved.';
       }
@@ -84,7 +84,10 @@ class WebUtils {
     final loginRequest = PopupRequest()..scopes = ['user.read'];
 
     publicClientApp.loginPopup(loginRequest).then((result) {
-      succesCallback(result?.idToken, result?.accessToken);
+      succesCallback(
+        result.idToken,
+        result.accessToken,
+      );
     }).catchError((dynamic error) {
       failureCallback(error);
     });

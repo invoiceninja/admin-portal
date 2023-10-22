@@ -15,44 +15,52 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 EntityUIState taskStatusUIReducer(TaskStatusUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(taskStatusListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
+    ..editing.replace(editingReducer(state.editing, action)!)
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
 
-final forceSelectedReducer = combineReducers<bool>([
-  TypedReducer<bool, ViewTaskStatus>((completer, action) => true),
-  TypedReducer<bool, ViewTaskStatusList>((completer, action) => false),
-  TypedReducer<bool, FilterTaskStatusesByState>((completer, action) => false),
-  TypedReducer<bool, FilterTaskStatuses>((completer, action) => false),
-  TypedReducer<bool, FilterTaskStatusesByCustom1>((completer, action) => false),
-  TypedReducer<bool, FilterTaskStatusesByCustom2>((completer, action) => false),
-  TypedReducer<bool, FilterTaskStatusesByCustom3>((completer, action) => false),
-  TypedReducer<bool, FilterTaskStatusesByCustom4>((completer, action) => false),
+final forceSelectedReducer = combineReducers<bool?>([
+  TypedReducer<bool?, ViewTaskStatus>((completer, action) => true),
+  TypedReducer<bool?, ViewTaskStatusList>((completer, action) => false),
+  TypedReducer<bool?, FilterTaskStatusesByState>((completer, action) => false),
+  TypedReducer<bool?, FilterTaskStatuses>((completer, action) => false),
+  TypedReducer<bool?, FilterTaskStatusesByCustom1>(
+      (completer, action) => false),
+  TypedReducer<bool?, FilterTaskStatusesByCustom2>(
+      (completer, action) => false),
+  TypedReducer<bool?, FilterTaskStatusesByCustom3>(
+      (completer, action) => false),
+  TypedReducer<bool?, FilterTaskStatusesByCustom4>(
+      (completer, action) => false),
 ]);
 
-Reducer<String> selectedIdReducer = combineReducers([
-  TypedReducer<String, ArchiveTaskStatusesSuccess>((completer, action) => ''),
-  TypedReducer<String, DeleteTaskStatusesSuccess>((completer, action) => ''),
-  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+Reducer<String?> selectedIdReducer = combineReducers([
+  TypedReducer<String?, ArchiveTaskStatusesSuccess>((completer, action) => ''),
+  TypedReducer<String?, DeleteTaskStatusesSuccess>((completer, action) => ''),
+  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.taskStatus
           ? action.entityId
           : selectedId),
-  TypedReducer<String, ViewTaskStatus>(
-      (String selectedId, dynamic action) => action.taskStatusId),
-  TypedReducer<String, AddTaskStatusSuccess>(
-      (String selectedId, dynamic action) => action.taskStatus.id),
-  TypedReducer<String, SelectCompany>(
+  TypedReducer<String?, ViewTaskStatus>(
+      (String? selectedId, dynamic action) => action.taskStatusId),
+  TypedReducer<String?, AddTaskStatusSuccess>(
+      (String? selectedId, dynamic action) => action.taskStatus.id),
+  TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, SortTaskStatuses>((selectedId, action) => ''),
-  TypedReducer<String, FilterTaskStatuses>((selectedId, action) => ''),
-  TypedReducer<String, FilterTaskStatusesByState>((selectedId, action) => ''),
-  TypedReducer<String, FilterTaskStatusesByCustom1>((selectedId, action) => ''),
-  TypedReducer<String, FilterTaskStatusesByCustom2>((selectedId, action) => ''),
-  TypedReducer<String, FilterTaskStatusesByCustom3>((selectedId, action) => ''),
-  TypedReducer<String, FilterTaskStatusesByCustom4>((selectedId, action) => ''),
-  TypedReducer<String, FilterByEntity>(
+  TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String?, SortTaskStatuses>((selectedId, action) => ''),
+  TypedReducer<String?, FilterTaskStatuses>((selectedId, action) => ''),
+  TypedReducer<String?, FilterTaskStatusesByState>((selectedId, action) => ''),
+  TypedReducer<String?, FilterTaskStatusesByCustom1>(
+      (selectedId, action) => ''),
+  TypedReducer<String?, FilterTaskStatusesByCustom2>(
+      (selectedId, action) => ''),
+  TypedReducer<String?, FilterTaskStatusesByCustom3>(
+      (selectedId, action) => ''),
+  TypedReducer<String?, FilterTaskStatusesByCustom4>(
+      (selectedId, action) => ''),
+  TypedReducer<String?, FilterByEntity>(
       (selectedId, action) => action.clearSelection
           ? ''
           : action.entityType == EntityType.taskStatus
@@ -60,33 +68,33 @@ Reducer<String> selectedIdReducer = combineReducers([
               : selectedId),
 ]);
 
-final editingReducer = combineReducers<TaskStatusEntity>([
-  TypedReducer<TaskStatusEntity, SaveTaskStatusSuccess>(_updateEditing),
-  TypedReducer<TaskStatusEntity, AddTaskStatusSuccess>(_updateEditing),
-  TypedReducer<TaskStatusEntity, RestoreTaskStatusesSuccess>(
+final editingReducer = combineReducers<TaskStatusEntity?>([
+  TypedReducer<TaskStatusEntity?, SaveTaskStatusSuccess>(_updateEditing),
+  TypedReducer<TaskStatusEntity?, AddTaskStatusSuccess>(_updateEditing),
+  TypedReducer<TaskStatusEntity?, RestoreTaskStatusesSuccess>(
       (taskStatuses, action) {
     return action.taskStatuses[0];
   }),
-  TypedReducer<TaskStatusEntity, ArchiveTaskStatusesSuccess>(
+  TypedReducer<TaskStatusEntity?, ArchiveTaskStatusesSuccess>(
       (taskStatuses, action) {
     return action.taskStatuses[0];
   }),
-  TypedReducer<TaskStatusEntity, DeleteTaskStatusesSuccess>(
+  TypedReducer<TaskStatusEntity?, DeleteTaskStatusesSuccess>(
       (taskStatuses, action) {
     return action.taskStatuses[0];
   }),
-  TypedReducer<TaskStatusEntity, EditTaskStatus>(_updateEditing),
-  TypedReducer<TaskStatusEntity, UpdateTaskStatus>((taskStatus, action) {
+  TypedReducer<TaskStatusEntity?, EditTaskStatus>(_updateEditing),
+  TypedReducer<TaskStatusEntity?, UpdateTaskStatus>((taskStatus, action) {
     return action.taskStatus.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<TaskStatusEntity, DiscardChanges>(_clearEditing),
+  TypedReducer<TaskStatusEntity?, DiscardChanges>(_clearEditing),
 ]);
 
-TaskStatusEntity _clearEditing(TaskStatusEntity taskStatus, dynamic action) {
+TaskStatusEntity _clearEditing(TaskStatusEntity? taskStatus, dynamic action) {
   return TaskStatusEntity();
 }
 
-TaskStatusEntity _updateEditing(TaskStatusEntity taskStatus, dynamic action) {
+TaskStatusEntity? _updateEditing(TaskStatusEntity? taskStatus, dynamic action) {
   return action.taskStatus;
 }
 
@@ -164,7 +172,7 @@ ListUIState _filterTaskStatuses(
 ListUIState _sortTaskStatuses(
     ListUIState taskStatusListState, SortTaskStatuses action) {
   return taskStatusListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortAscending = b.sortField != action.field || !b.sortAscending!
     ..sortField = action.field);
 }
 
@@ -175,13 +183,13 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState productListState, AddToTaskStatusMultiselect action) {
-  return productListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+  return productListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState productListState, RemoveFromTaskStatusMultiselect action) {
   return productListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(
@@ -208,9 +216,9 @@ final taskStatusesReducer = combineReducers<TaskStatusState>([
 TaskStatusState _sortTaskStatusSuccess(
     TaskStatusState taskStatusState, SortTasksSuccess action) {
   return taskStatusState.rebuild((b) {
-    for (final statusId in action.statusIds) {
-      b.map[statusId] = taskStatusState.map[statusId]
-          .rebuild((b) => b..statusOrder = action.statusIds.indexOf(statusId));
+    for (final statusId in action.statusIds!) {
+      b.map[statusId] = taskStatusState.map[statusId]!
+          .rebuild((b) => b..statusOrder = action.statusIds!.indexOf(statusId));
     }
   });
 }

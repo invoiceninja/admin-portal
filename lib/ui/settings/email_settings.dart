@@ -26,8 +26,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class EmailSettings extends StatefulWidget {
   const EmailSettings({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final EmailSettingsVM viewModel;
@@ -40,7 +40,7 @@ class _EmailSettingsState extends State<EmailSettings> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_emailSettings');
 
-  FocusScopeNode _focusNode;
+  FocusScopeNode? _focusNode;
 
   final _fromNameController = TextEditingController();
   final _replyToEmailController = TextEditingController();
@@ -65,7 +65,7 @@ class _EmailSettingsState extends State<EmailSettings> {
 
   @override
   void dispose() {
-    _focusNode.dispose();
+    _focusNode!.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -96,16 +96,16 @@ class _EmailSettingsState extends State<EmailSettings> {
     final company = viewModel.company;
     final settings = viewModel.settings;
 
-    _fromNameController.text = settings.emailFromName;
-    _replyToEmailController.text = settings.replyToEmail;
-    _replyToNameController.text = settings.replyToName;
-    _bccEmailController.text = settings.bccEmail;
-    _emailStyleCustomController.text = settings.emailStyleCustom;
-    _emailSignatureController.text = settings.emailSignature;
-    _postmarkSecretController.text = settings.postmarkSecret;
-    _customSendingEmailController.text = settings.customSendingEmail;
-    _mailgunSecretController.text = settings.mailgunSecret;
-    _mailgunDomainController.text = settings.mailgunDomain;
+    _fromNameController.text = settings.emailFromName ?? '';
+    _replyToEmailController.text = settings.replyToEmail ?? '';
+    _replyToNameController.text = settings.replyToName ?? '';
+    _bccEmailController.text = settings.bccEmail ?? '';
+    _emailStyleCustomController.text = settings.emailStyleCustom ?? '';
+    _emailSignatureController.text = settings.emailSignature ?? '';
+    _postmarkSecretController.text = settings.postmarkSecret ?? '';
+    _customSendingEmailController.text = settings.customSendingEmail ?? '';
+    _mailgunSecretController.text = settings.mailgunSecret ?? '';
+    _mailgunDomainController.text = settings.mailgunDomain ?? '';
     _eInvoiceCertificatePassphraseController.text =
         company.eInvoiceCertificatePassphrase;
 
@@ -164,7 +164,7 @@ class _EmailSettingsState extends State<EmailSettings> {
   }
 
   void _onSavePressed(BuildContext context) {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -175,7 +175,7 @@ class _EmailSettingsState extends State<EmailSettings> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final company = viewModel.state.company;
@@ -399,7 +399,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                   items: List<int>.generate(24, (i) => i).map((value) {
                     final hour = value + 1;
                     String timeLabel;
-                    if (viewModel.state.company.settings.enableMilitaryTime) {
+                    if (viewModel.state.company.settings.enableMilitaryTime!) {
                       timeLabel = '$hour:00';
                     } else {
                       if (hour > 12) {

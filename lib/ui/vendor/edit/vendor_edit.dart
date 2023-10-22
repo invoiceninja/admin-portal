@@ -17,8 +17,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorEdit extends StatefulWidget {
   const VendorEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final VendorEditVM viewModel;
@@ -29,7 +29,7 @@ class VendorEdit extends StatefulWidget {
 
 class _VendorEditState extends State<VendorEdit>
     with SingleTickerProviderStateMixin {
-  TabController _controller;
+  TabController? _controller;
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_vendorEdit');
 
@@ -41,13 +41,13 @@ class _VendorEditState extends State<VendorEdit>
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final vendor = viewModel.vendor;
     final state = viewModel.state;
@@ -60,7 +60,7 @@ class _VendorEditState extends State<VendorEdit>
       title: vendor.isNew ? localization.newVendor : localization.editVendor,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) {
-        final bool isValid = _formKey.currentState.validate();
+        final bool isValid = _formKey.currentState!.validate();
 
         /*
         setState(() {

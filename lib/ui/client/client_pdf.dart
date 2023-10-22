@@ -21,8 +21,8 @@ import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/multiselect.dart';
+import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:printing/printing.dart';
 
 // Project imports:
@@ -45,8 +45,8 @@ import 'package:share_plus/share_plus.dart';
 
 class ClientPdfView extends StatefulWidget {
   const ClientPdfView({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
     this.showAppBar = true,
   }) : super(key: key);
 
@@ -59,14 +59,14 @@ class ClientPdfView extends StatefulWidget {
 
 class _ClientPdfViewState extends State<ClientPdfView> {
   bool _isLoading = false;
-  http.Response _response;
+  http.Response? _response;
   //int _pageCount = 1;
   //int _currentPage = 1;
 
   DateRange _dateRange = DateRange.thisQuarter;
-  String _startDate =
+  String? _startDate =
       convertDateTimeToSqlDate(DateTime.now().subtract(Duration(days: 365)));
-  String _endDate = convertDateTimeToSqlDate();
+  String? _endDate = convertDateTimeToSqlDate();
   String _status = kStatementStatusAll;
 
   @override
@@ -99,8 +99,8 @@ class _ClientPdfViewState extends State<ClientPdfView> {
     _loadPDF(sendEmail: sendEmail).then((response) {
       setState(() {
         if (sendEmail) {
-          if (response.statusCode >= 200) {
-            showToast(localization.emailedStatement);
+          if (response!.statusCode >= 200) {
+            showToast(localization!.emailedStatement);
           }
         } else {
           _response = response;
@@ -114,16 +114,16 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       });
 
       showDialog<void>(
-          context: navigatorKey.currentContext,
+          context: navigatorKey.currentContext!,
           builder: (BuildContext context) {
             return ErrorDialog(error);
           });
     });
   }
 
-  Future<Response> _loadPDF({bool sendEmail = false}) async {
-    final client = widget.viewModel.client;
-    http.Response response;
+  Future<Response?> _loadPDF({bool sendEmail = false}) async {
+    final client = widget.viewModel.client!;
+    http.Response? response;
 
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
@@ -134,21 +134,19 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       url += '?send_email=true';
     }
 
-    String startDate = '';
-    String endDate = '';
+    String? startDate = '';
+    String? endDate = '';
 
-    if (_dateRange != null) {
-      startDate = calculateStartDate(
-          company: state.company,
-          dateRange: _dateRange,
-          customStartDate: _startDate,
-          customEndDate: _endDate);
-      endDate = calculateEndDate(
-          company: state.company,
-          dateRange: _dateRange,
-          customStartDate: _startDate,
-          customEndDate: _endDate);
-    }
+    startDate = calculateStartDate(
+        company: state.company,
+        dateRange: _dateRange,
+        customStartDate: _startDate,
+        customEndDate: _endDate);
+    endDate = calculateEndDate(
+        company: state.company,
+        dateRange: _dateRange,
+        customStartDate: _startDate,
+        customEndDate: _endDate);
 
     if (_dateRange != DateRange.custom) {
       _startDate = startDate;
@@ -173,7 +171,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       rawResponse: true,
     );
 
-    if (response.statusCode >= 400) {
+    if (response!.statusCode >= 400) {
       String errorMessage =
           '${response.statusCode}: ${response.reasonPhrase}\n\n';
 
@@ -253,7 +251,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                               ? ThemeData.dark()
                               : ThemeData.light(),
                       child: AppDropdownButton<DateRange>(
-                        labelText: localization.dateRange,
+                        labelText: localization!.dateRange,
                         blankValue: null,
                         //showBlank: true,
                         value: _dateRange,
@@ -348,17 +346,20 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                       : () async {
                           final fileName = localization.statement +
                               '_' +
-                              (client.number) +
+                              (client!.number) +
                               '.pdf';
                           if (kIsWeb) {
                             WebUtils.downloadBinaryFile(
-                                fileName, _response.bodyBytes);
+                                fileName, _response!.bodyBytes);
                           } else {
-                            final directory = await (isDesktopOS()
-                                ? getDownloadsDirectory()
-                                : getApplicationDocumentsDirectory());
+                            final directory = await getAppDownloadDirectory();
+
+                            if (directory == null) {
+                              return;
+                            }
+
                             String filePath =
-                                '${directory.path}${file.Platform.pathSeparator}$fileName';
+                                '$directory${file.Platform.pathSeparator}$fileName';
 
                             if (file.File(filePath).existsSync()) {
                               final timestamp =
@@ -368,11 +369,11 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                             }
 
                             final pdfData = file.File(filePath);
-                            await pdfData.writeAsBytes(_response.bodyBytes);
+                            await pdfData.writeAsBytes(_response!.bodyBytes);
 
                             if (isDesktopOS()) {
                               showToast(localization.fileSavedInPath
-                                  .replaceFirst(':path', directory.path));
+                                  .replaceFirst(':path', directory));
                             } else {
                               await Share.shareXFiles([XFile(filePath)]);
                             }
@@ -385,9 +386,8 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                   onPressed: _response == null
                       ? null
                       : () async {
-                          if (!client.hasEmailAddress) {
+                          if (!client!.hasEmailAddress) {
                             showMessageDialog(
-                                context: context,
                                 message: localization.clientEmailNotSet,
                                 secondaryActions: [
                                   TextButton(
@@ -413,7 +413,6 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                     onPressed: () {
                       if (!state.isProPlan) {
                         showMessageDialog(
-                            context: context,
                             message: localization.upgradeToPaidPlanToSchedule,
                             secondaryActions: [
                               TextButton(
@@ -430,11 +429,10 @@ class _ClientPdfViewState extends State<ClientPdfView> {
 
                       final includes = state.prefState.statementIncludes;
                       createEntity(
-                          context: context,
                           entity: ScheduleEntity(
                                   ScheduleEntity.TEMPLATE_EMAIL_STATEMENT)
                               .rebuild((b) => b
-                                ..parameters.clients.add(client.id)
+                                ..parameters.clients.add(client!.id)
                                 ..parameters.showAgingTable =
                                     includes.contains(localization.aging)
                                 ..parameters.showPaymentsTable =
@@ -451,7 +449,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                     child: Text(localization.close,
                         style: TextStyle(color: state.headerTextColor)),
                     onPressed: () {
-                      viewEntity(entity: client);
+                      viewEntity(entity: client!);
                     },
                   ),
               ],
@@ -471,7 +469,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: DatePicker(
-                      labelText: localization.startDate,
+                      labelText: localization!.startDate,
                       onSelected: (value, _) {
                         setState(() {
                           _startDate = value;
@@ -508,13 +506,13 @@ class _ClientPdfViewState extends State<ClientPdfView> {
             child: _isLoading || _response == null
                 ? LoadingIndicator()
                 : PdfPreview(
-                    build: (format) => _response.bodyBytes,
+                    build: (format) => _response!.bodyBytes,
                     canChangeOrientation: false,
                     canChangePageFormat: false,
                     canDebug: false,
                     maxPageWidth: 800,
                     pdfFileName:
-                        localization.statement + '_' + client.number + '.pdf',
+                        localization!.statement + '_' + client!.number + '.pdf',
                   ),
           ),
         ],

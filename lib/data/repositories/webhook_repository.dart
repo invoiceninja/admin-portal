@@ -20,23 +20,23 @@ class WebhookRepository {
   final WebClient webClient;
 
   Future<WebhookEntity> loadItem(
-      Credentials credentials, String entityId) async {
+      Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/webhooks/$entityId', credentials.token);
 
     final WebhookItemResponse webhookResponse =
-        serializers.deserializeWith(WebhookItemResponse.serializer, response);
+        serializers.deserializeWith(WebhookItemResponse.serializer, response)!;
 
     return webhookResponse.data;
   }
 
   Future<BuiltList<WebhookEntity>> loadList(Credentials credentials) async {
-    final url = credentials.url + '/webhooks?';
+    final url = credentials.url! + '/webhooks?';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
     final WebhookListResponse webhookResponse =
-        serializers.deserializeWith(WebhookListResponse.serializer, response);
+        serializers.deserializeWith(WebhookListResponse.serializer, response)!;
 
     return webhookResponse.data;
   }
@@ -48,12 +48,12 @@ class WebhookRepository {
     }
 
     final url =
-        credentials.url + '/webhooks/bulk?per_page=$kMaxEntitiesPerBulkAction';
+        credentials.url! + '/webhooks/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final WebhookListResponse webhookResponse =
-        serializers.deserializeWith(WebhookListResponse.serializer, response);
+        serializers.deserializeWith(WebhookListResponse.serializer, response)!;
 
     return webhookResponse.data.toList();
   }
@@ -65,7 +65,7 @@ class WebhookRepository {
 
     if (webhook.isNew) {
       response = await webClient.post(
-          credentials.url + '/webhooks', credentials.token,
+          credentials.url! + '/webhooks', credentials.token,
           data: json.encode(data));
     } else {
       final url = '${credentials.url}/webhooks/${webhook.id}';
@@ -74,7 +74,7 @@ class WebhookRepository {
     }
 
     final WebhookItemResponse webhookResponse =
-        serializers.deserializeWith(WebhookItemResponse.serializer, response);
+        serializers.deserializeWith(WebhookItemResponse.serializer, response)!;
 
     return webhookResponse.data;
   }

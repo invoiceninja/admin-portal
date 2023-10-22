@@ -127,18 +127,18 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
 final navigatorKey = GlobalKey<NavigatorState>();
 
 extension NavigatorKeyUtils on GlobalKey<NavigatorState> {
-  AppLocalization get localization {
-    return AppLocalization.of(currentContext);
+  AppLocalization? get localization {
+    return AppLocalization.of(currentContext!);
   }
 
   Store<AppState> get store {
-    return StoreProvider.of<AppState>(currentContext);
+    return StoreProvider.of<AppState>(currentContext!);
   }
 }
 
 class InvoiceNinjaApp extends StatefulWidget {
-  const InvoiceNinjaApp({Key key, this.store}) : super(key: key);
-  final Store<AppState> store;
+  const InvoiceNinjaApp({Key? key, this.store}) : super(key: key);
+  final Store<AppState>? store;
 
   @override
   InvoiceNinjaAppState createState() => InvoiceNinjaAppState();
@@ -172,21 +172,13 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
   void initState() {
     super.initState();
 
-    final window = WidgetsBinding.instance.window;
-    window.onPlatformBrightnessChanged = () {
-      WidgetsBinding.instance.handlePlatformBrightnessChanged();
-      widget.store.dispatch(UpdateUserPreferences(
-          enableDarkModeSystem: window.platformBrightness == Brightness.dark));
-      setState(() {});
-    };
-
     if (kIsWeb) {
       WebUtils.warnChanges(widget.store);
     }
 
     Timer.periodic(Duration(milliseconds: kMillisecondsToTimerRefreshData),
         (_) {
-      final store = widget.store;
+      final store = widget.store!;
       final state = store.state;
 
       if (!state.authState.isAuthenticated) {
@@ -231,10 +223,21 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
 
   @override
   void didChangeDependencies() {
-    final state = widget.store.state;
+    final state = widget.store!.state;
     if (state.prefState.requireAuthentication && !_authenticated) {
       _authenticate();
     }
+
+    final brightness = MediaQuery.of(context).platformBrightness;
+    final enableDarkModeSystem = brightness == Brightness.dark;
+    final store = widget.store!;
+    final prefState = store.state.prefState;
+
+    if (prefState.enableDarkModeSystem != enableDarkModeSystem) {
+      store.dispatch(
+          UpdateUserPreferences(enableDarkModeSystem: enableDarkModeSystem));
+    }
+
     super.didChangeDependencies();
   }
 
@@ -254,7 +257,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
   }
 
   void _initTimeago() {
-    final locale = localeSelector(widget.store.state, twoLetter: true);
+    final locale = localeSelector(widget.store!.state, twoLetter: true);
     if (locale == 'ar') {
       timeago.setLocaleMessages('ar', timeago.ArMessages());
       timeago.setLocaleMessages('ar_short', timeago.ArMessages());
@@ -320,10 +323,10 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
   @override
   Widget build(BuildContext context) {
     return StoreProvider<AppState>(
-      store: widget.store,
+      store: widget.store!,
       child: WebSessionTimeout(
         child: AppBuilder(builder: (context) {
-          final store = widget.store;
+          final store = widget.store!;
           final state = store.state;
           final hasAccentColor = state.hasAccentColor;
           final accentColor = state.accentColor;
@@ -359,19 +362,18 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   : Colors.white,
             ),
             child: WebSocketRefresh(
-              companyId: state.company?.id,
+              companyId: state.company.id,
               child: WindowManager(
                 child: MaterialApp(
-                  builder: (BuildContext context, Widget child) {
+                  builder: (BuildContext context, Widget? child) {
                     final MediaQueryData data = MediaQuery.of(context);
                     return MediaQuery(
                       data: data.copyWith(
                         textScaleFactor: state.prefState.textScaleFactor,
                         alwaysUse24HourFormat:
-                            state.company?.settings?.enableMilitaryTime ??
-                                false,
+                            state.company.settings.enableMilitaryTime ?? false,
                       ),
-                      child: child,
+                      child: child!,
                     );
                   },
                   scrollBehavior: state.prefState.enableTouchEvents &&

@@ -20,7 +20,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class PaymentListItem extends StatelessWidget {
   const PaymentListItem({
-    @required this.payment,
+    required this.payment,
     this.filter,
     this.showCheckbox = false,
     this.isChecked = false,
@@ -29,10 +29,10 @@ class PaymentListItem extends StatelessWidget {
   });
 
   final PaymentEntity payment;
-  final String filter;
+  final String? filter;
   final bool showCheckbox;
   final bool isChecked;
-  final Function onTap;
+  final Function? onTap;
   final bool showSelected;
 
   @override
@@ -43,13 +43,13 @@ class PaymentListItem extends StatelessWidget {
     final textStyle = TextStyle(fontSize: 16);
     final client = state.clientState.get(payment.clientId);
     final localization = AppLocalization.of(context);
-    final filterMatch = filter != null && filter.isNotEmpty
+    final filterMatch = filter != null && filter!.isNotEmpty
         ? (payment.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))
         : null;
     final mobileSubtitle = filterMatch ??
-        (payment.number ?? '') + ' • ' + formatDate(payment.date, context);
-    final textColor = Theme.of(context).textTheme.bodyLarge.color;
+        payment.number + ' • ' + formatDate(payment.date, context);
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
     String desktopSubtitle = '';
     if (payment.date.isNotEmpty) {
@@ -67,7 +67,7 @@ class PaymentListItem extends StatelessWidget {
           showSelected &&
           payment.id ==
               (uiState.isEditing
-                  ? paymentUIState.editing.id
+                  ? paymentUIState.editing!.id
                   : paymentUIState.selectedId),
       showMultiselect: showSelected,
       userCompany: state.userCompany,
@@ -77,7 +77,7 @@ class PaymentListItem extends StatelessWidget {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
                 onTap: () => onTap != null
-                    ? onTap()
+                    ? onTap!()
                     : selectEntity(entity: payment, forceView: !showCheckbox),
                 onLongPress: () => onTap != null
                     ? null
@@ -141,10 +141,10 @@ class PaymentListItem extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
                                   .textTheme
-                                  .titleSmall
+                                  .titleSmall!
                                   .copyWith(
                                     color:
-                                        textColor.withOpacity(kLighterOpacity),
+                                        textColor!.withOpacity(kLighterOpacity),
                                   ),
                             ),
                           ],
@@ -153,7 +153,7 @@ class PaymentListItem extends StatelessWidget {
                       SizedBox(width: 10),
                       Text(
                         formatNumber(payment.amount, context,
-                            clientId: client.id),
+                            clientId: client.id)!,
                         style: textStyle,
                         textAlign: TextAlign.end,
                       ),
@@ -165,7 +165,7 @@ class PaymentListItem extends StatelessWidget {
               )
             : ListTile(
                 onTap: () => onTap != null
-                    ? onTap()
+                    ? onTap!()
                     : selectEntity(entity: payment, forceView: !showCheckbox),
                 onLongPress: () => onTap != null
                     ? null
@@ -193,7 +193,7 @@ class PaymentListItem extends StatelessWidget {
                       ),
                       Text(
                           formatNumber(payment.amount, context,
-                              clientId: payment.clientId),
+                              clientId: payment.clientId)!,
                           style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),
@@ -204,8 +204,7 @@ class PaymentListItem extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         Expanded(
-                          child: mobileSubtitle != null &&
-                                  mobileSubtitle.isNotEmpty
+                          child: mobileSubtitle.isNotEmpty
                               ? Text(
                                   mobileSubtitle,
                                   maxLines: 3,
@@ -214,7 +213,7 @@ class PaymentListItem extends StatelessWidget {
                               : Container(),
                         ),
                         Text(
-                            localization.lookup(
+                            localization!.lookup(
                                 'payment_status_${payment.calculatedStatusId}'),
                             style: TextStyle(
                               color: PaymentStatusColors(

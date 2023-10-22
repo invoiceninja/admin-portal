@@ -17,7 +17,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class InvoicePresenter extends EntityPresenter {
-  static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
+  static List<String> getDefaultTableFields(UserCompanyEntity? userCompany) {
     return [
       InvoiceFields.status,
       InvoiceFields.number,
@@ -29,7 +29,7 @@ class InvoicePresenter extends EntityPresenter {
     ];
   }
 
-  static List<String> getAllTableFields(UserCompanyEntity userCompany) {
+  static List<String> getAllTableFields(UserCompanyEntity? userCompany) {
     return [
       ...getDefaultTableFields(userCompany),
       ...EntityPresenter.getBaseFields(),
@@ -69,7 +69,7 @@ class InvoicePresenter extends EntityPresenter {
   }
 
   @override
-  Widget getField({String field, BuildContext context}) {
+  Widget getField({String? field, required BuildContext context}) {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final invoice = entity as InvoiceEntity;
@@ -79,9 +79,8 @@ class InvoicePresenter extends EntityPresenter {
       case InvoiceFields.status:
         return EntityStatusChip(entity: invoice, showState: true);
       case InvoiceFields.number:
-        return Text((invoice.number ?? '').isEmpty
-            ? localization.pending
-            : invoice.number);
+        return Text(
+            invoice.number.isEmpty ? localization!.pending : invoice.number);
       case InvoiceFields.client:
         return LinkTextRelatedEntity(entity: client, relation: invoice);
       case InvoiceFields.project:
@@ -113,24 +112,24 @@ class InvoicePresenter extends EntityPresenter {
         return Align(
           alignment: Alignment.centerRight,
           child: Text(formatNumber(invoice.amount, context,
-              clientId: invoice.clientId)),
+              clientId: invoice.clientId)!),
         );
       case InvoiceFields.balance:
         return Align(
           alignment: Alignment.centerRight,
           child: Text(formatNumber(invoice.balanceOrAmount, context,
-              clientId: invoice.clientId)),
+              clientId: invoice.clientId)!),
         );
       case InvoiceFields.dueDate:
         return Text(formatDate(invoice.dueDate, context));
       case InvoiceFields.customValue1:
-        return Text(presentCustomField(context, invoice.customValue1));
+        return Text(presentCustomField(context, invoice.customValue1)!);
       case InvoiceFields.customValue2:
-        return Text(presentCustomField(context, invoice.customValue2));
+        return Text(presentCustomField(context, invoice.customValue2)!);
       case InvoiceFields.customValue3:
-        return Text(presentCustomField(context, invoice.customValue3));
+        return Text(presentCustomField(context, invoice.customValue3)!);
       case InvoiceFields.customValue4:
-        return Text(presentCustomField(context, invoice.customValue4));
+        return Text(presentCustomField(context, invoice.customValue4)!);
       case InvoiceFields.publicNotes:
         return TableTooltip(message: invoice.publicNotes);
       case InvoiceFields.privateNotes:
@@ -139,23 +138,23 @@ class InvoicePresenter extends EntityPresenter {
         return Text(invoice.isAmountDiscount
             ? formatNumber(invoice.discount, context,
                 formatNumberType: FormatNumberType.money,
-                clientId: invoice.clientId)
+                clientId: invoice.clientId)!
             : formatNumber(invoice.discount, context,
-                formatNumberType: FormatNumberType.percent));
+                formatNumberType: FormatNumberType.percent)!);
       case InvoiceFields.poNumber:
         return Text(invoice.poNumber);
       case InvoiceFields.documents:
         return Text('${invoice.documents.length}');
       case InvoiceFields.taxAmount:
         return Text(formatNumber(invoice.taxAmount, context,
-            clientId: invoice.clientId));
+            clientId: invoice.clientId)!);
       case InvoiceFields.exchangeRate:
         return Text(formatNumber(invoice.exchangeRate, context,
-            formatNumberType: FormatNumberType.double));
+            formatNumberType: FormatNumberType.double)!);
       case InvoiceFields.isViewed:
-        return Text(invoice.isViewed ? localization.yes : localization.no);
+        return Text(invoice.isViewed ? localization!.yes : localization!.no);
       case InvoiceFields.autoBillEnabled:
-        return Text(localization.lookup(
+        return Text(localization!.lookup(
             invoice.autoBillEnabled ? localization.yes : localization.no));
       case InvoiceFields.clientState:
         return Text(client.state);
@@ -181,7 +180,7 @@ class InvoicePresenter extends EntityPresenter {
           onLongPress: () => launchUrl(Uri.parse('mailto:${contact.email}')),
         );
       case InvoiceFields.partial:
-        return Text(formatNumber(invoice.partial, context));
+        return Text(formatNumber(invoice.partial, context)!);
       case InvoiceFields.partialDueDate:
         return Text(formatDate(invoice.partialDueDate, context));
       case InvoiceFields.quote:
@@ -190,21 +189,21 @@ class InvoicePresenter extends EntityPresenter {
         return LinkTextRelatedEntity(entity: quote, relation: invoice);
       case InvoiceFields.recurringInvoice:
         final recurringInvoice =
-            state.recurringInvoiceState.get(invoice.recurringId);
+            state.recurringInvoiceState.get(invoice.recurringId!);
         return LinkTextRelatedEntity(
             entity: recurringInvoice, relation: invoice);
       case InvoiceFields.lastSentTemplate:
-        if (invoice.reminderLastSent.isNotEmpty &&
+        if (invoice.reminderLastSent!.isNotEmpty &&
             invoice.reminderLastSent != invoice.reminder3Sent) {
-          return Text(localization.endlessReminder);
+          return Text(localization!.endlessReminder);
         } else if ((invoice.reminder3Sent ?? '').isNotEmpty) {
-          return Text(localization.thirdReminder);
+          return Text(localization!.thirdReminder);
         } else if ((invoice.reminder2Sent ?? '').isNotEmpty) {
-          return Text(localization.secondReminder);
+          return Text(localization!.secondReminder);
         } else if ((invoice.reminder1Sent ?? '').isNotEmpty) {
-          return Text(localization.firstReminder);
-        } else if ((invoice.lastSentDate ?? '').isNotEmpty) {
-          return Text(localization.initialEmail);
+          return Text(localization!.firstReminder);
+        } else if (invoice.lastSentDate.isNotEmpty) {
+          return Text(localization!.initialEmail);
         } else {
           return Text('');
         }

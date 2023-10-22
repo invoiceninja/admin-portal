@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/redux/quote/quote_selectors.dart';
 import 'quote_screen.dart';
 
 class QuoteScreenBuilder extends StatelessWidget {
-  const QuoteScreenBuilder({Key key}) : super(key: key);
+  const QuoteScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +31,14 @@ class QuoteScreenBuilder extends StatelessWidget {
 
 class QuoteScreenVM {
   QuoteScreenVM({
-    @required this.isInMultiselect,
-    @required this.quoteList,
-    @required this.userCompany,
-    @required this.quoteMap,
+    required this.isInMultiselect,
+    required this.quoteList,
+    required this.userCompany,
+    required this.quoteMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> quoteList;
   final BuiltMap<String, InvoiceEntity> quoteMap;
 

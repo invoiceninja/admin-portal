@@ -55,14 +55,14 @@ List<Middleware<AppState>> createStoreCompanyGatewaysMiddleware([
 
 Middleware<AppState> _editCompanyGateway() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditCompanyGateway;
+    final action = dynamicAction as EditCompanyGateway?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(CompanyGatewayEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(CompanyGatewayEditScreen.route);
+      navigatorKey.currentState!.pushNamed(CompanyGatewayEditScreen.route);
     }
   };
 }
@@ -70,21 +70,21 @@ Middleware<AppState> _editCompanyGateway() {
 Middleware<AppState> _viewCompanyGateway() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ViewCompanyGateway;
+    final action = dynamicAction as ViewCompanyGateway?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(CompanyGatewayViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(CompanyGatewayViewScreen.route);
+      navigatorKey.currentState!.pushNamed(CompanyGatewayViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewCompanyGatewayList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewCompanyGatewayList;
+    final action = dynamicAction as ViewCompanyGatewayList?;
 
     next(action);
 
@@ -95,7 +95,7 @@ Middleware<AppState> _viewCompanyGatewayList() {
     store.dispatch(UpdateCurrentRoute(CompanyGatewayScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           CompanyGatewayScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -114,15 +114,11 @@ Middleware<AppState> _archiveCompanyGateway(
             EntityAction.archive)
         .then((List<CompanyGatewayEntity> companyGateways) {
       store.dispatch(ArchiveCompanyGatewaySuccess(companyGateways));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveCompanyGatewayFailure(prevCompanyGateways));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -141,15 +137,11 @@ Middleware<AppState> _deleteCompanyGateway(
             EntityAction.delete)
         .then((List<CompanyGatewayEntity> companyGateways) {
       store.dispatch(DeleteCompanyGatewaySuccess(companyGateways));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteCompanyGatewayFailure(prevCompanyGateways));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -169,15 +161,11 @@ Middleware<AppState> _restoreCompanyGateway(
             EntityAction.restore)
         .then((List<CompanyGatewayEntity> companyGateways) {
       store.dispatch(RestoreCompanyGatewaySuccess(companyGateways));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreCompanyGatewayFailure(prevCompanyGateways));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -193,15 +181,11 @@ Middleware<AppState> _disconnectCompanyGateway(
             action.password, action.idToken)
         .then((_) {
       store.dispatch(DisconnectCompanyGatewaySuccess());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DisconnectCompanyGatewayFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -212,14 +196,14 @@ Middleware<AppState> _saveCompanyGateway(CompanyGatewayRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveCompanyGatewayRequest;
     repository
-        .saveData(store.state.credentials, action.companyGateway)
+        .saveData(store.state.credentials, action.companyGateway!)
         .then((CompanyGatewayEntity companyGateway) {
-      if (action.companyGateway.isNew) {
+      if (action.companyGateway!.isNew) {
         store.dispatch(AddCompanyGatewaySuccess(companyGateway));
       } else {
         store.dispatch(SaveCompanyGatewaySuccess(companyGateway));
       }
-      action.completer.complete(companyGateway);
+      action.completer!.complete(companyGateway);
     }).catchError((Object error) {
       print(error);
       dev.log(
@@ -229,7 +213,7 @@ Middleware<AppState> _saveCompanyGateway(CompanyGatewayRepository repository) {
         error: error,
       );
       store.dispatch(SaveCompanyGatewayFailure(error));
-      action.completer.completeError(error);
+      action.completer!.completeError(error);
     });
 
     next(action);
@@ -248,13 +232,13 @@ Middleware<AppState> _loadCompanyGateway(CompanyGatewayRepository repository) {
       store.dispatch(LoadCompanyGatewaySuccess(companyGateway));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadCompanyGatewayFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -264,15 +248,15 @@ Middleware<AppState> _loadCompanyGateway(CompanyGatewayRepository repository) {
 
 Middleware<AppState> _loadCompanyGateways(CompanyGatewayRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as LoadCompanyGateways;
+    final action = dynamicAction as LoadCompanyGateways?;
     final AppState state = store.state;
 
     store.dispatch(LoadCompanyGatewaysRequest());
     repository.loadList(state.credentials).then((data) {
       store.dispatch(LoadCompanyGatewaysSuccess(data));
 
-      if (action.completer != null) {
-        action.completer.complete(null);
+      if (action!.completer != null) {
+        action.completer!.complete(null);
       }
       /*
       if (state.productState.isStale) {
@@ -282,8 +266,8 @@ Middleware<AppState> _loadCompanyGateways(CompanyGatewayRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadCompanyGatewaysFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
+      if (action!.completer != null) {
+        action.completer!.completeError(error);
       }
     });
 

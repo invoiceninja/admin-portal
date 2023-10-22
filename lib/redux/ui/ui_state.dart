@@ -52,8 +52,8 @@ part 'ui_state.g.dart';
 
 abstract class UIState implements Built<UIState, UIStateBuilder> {
   factory UIState({
-    String currentRoute,
-    BuiltMap<EntityType, PrefStateSortField> sortFields,
+    String? currentRoute,
+    required BuiltMap<EntityType, PrefStateSortField> sortFields,
   }) {
     return _$UIState._(
       selectedCompanyIndex: 0,
@@ -70,7 +70,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       clientUIState: ClientUIState(sortFields[EntityType.client]),
       invoiceUIState: InvoiceUIState(sortFields[EntityType.invoice]),
       subscriptionUIState:
-          SubscriptionUIState(sortFields[EntityType.subscription]),
+          SubscriptionUIState(sortFields[EntityType.paymentLink]),
       taskStatusUIState: TaskStatusUIState(sortFields[EntityType.taskStatus]),
       expenseCategoryUIState:
           ExpenseCategoryUIState(sortFields[EntityType.expenseCategory]),
@@ -126,8 +126,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   String get previousRoute;
 
-  @nullable
-  EntityType get loadingEntityType;
+  EntityType? get loadingEntityType;
 
   BuiltList<EntityType> get previewStack;
 
@@ -135,13 +134,12 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
 
   BaseEntity get filterEntity => filterStack.last;
 
-  String get filterEntityId => filterStack.isEmpty ? null : filterEntity.id;
+  String? get filterEntityId => filterStack.isEmpty ? null : filterEntity.id;
 
-  EntityType get filterEntityType =>
+  EntityType? get filterEntityType =>
       filterStack.isEmpty ? null : filterEntity.entityType;
 
-  @nullable
-  String get filter;
+  String? get filter;
 
   int get filterClearedAt;
 
@@ -213,7 +211,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   ReportsUIState get reportsUIState;
 
   bool containsRoute(String route) {
-    if (route == null || route.isEmpty) {
+    if (route.isEmpty) {
       return false;
     }
     return currentRoute.contains(route);

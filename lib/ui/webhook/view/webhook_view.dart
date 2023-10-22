@@ -14,9 +14,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class WebhookView extends StatefulWidget {
   const WebhookView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final WebhookViewVM viewModel;
@@ -29,7 +29,7 @@ class WebhookView extends StatefulWidget {
 class _WebhookViewState extends State<WebhookView> {
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final webhook = viewModel.webhook;
 
@@ -59,7 +59,9 @@ class _WebhookViewState extends State<WebhookView> {
 }
 
 class TargetListTile extends StatelessWidget {
-  const TargetListTile({this.webhook});
+  const TargetListTile({
+    required this.webhook,
+  });
 
   final WebhookEntity webhook;
 

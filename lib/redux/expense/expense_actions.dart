@@ -12,7 +12,6 @@ import 'package:http/http.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
-import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
@@ -29,24 +28,24 @@ class ViewExpenseList implements PersistUI {
   });
 
   final bool force;
-  final int page;
+  final int? page;
 }
 
 class ViewExpense implements PersistUI, PersistPrefs {
   ViewExpense({
-    @required this.expenseId,
+    required this.expenseId,
     this.force = false,
   });
 
-  final String expenseId;
+  final String? expenseId;
   final bool force;
 }
 
 class EditExpense implements PersistUI, PersistPrefs {
-  EditExpense({@required this.expense, this.completer, this.force = false});
+  EditExpense({required this.expense, this.completer, this.force = false});
 
   final ExpenseEntity expense;
-  final Completer completer;
+  final Completer? completer;
   final bool force;
 }
 
@@ -59,21 +58,21 @@ class UpdateExpense implements PersistUI {
 class LoadExpense {
   LoadExpense({this.completer, this.expenseId});
 
-  final Completer completer;
-  final String expenseId;
+  final Completer? completer;
+  final String? expenseId;
 }
 
 class LoadExpenseActivity {
   LoadExpenseActivity({this.completer, this.expenseId});
 
-  final Completer completer;
-  final String expenseId;
+  final Completer? completer;
+  final String? expenseId;
 }
 
 class LoadExpenses {
   LoadExpenses({this.completer, this.page = 1});
 
-  final Completer completer;
+  final Completer? completer;
   final int page;
 }
 
@@ -128,8 +127,8 @@ class LoadExpensesSuccess implements StopLoading {
 class SaveExpenseRequest implements StartSaving {
   SaveExpenseRequest({this.completer, this.expense});
 
-  final Completer completer;
-  final ExpenseEntity expense;
+  final Completer? completer;
+  final ExpenseEntity? expense;
 }
 
 class SaveExpenseSuccess implements StopSaving, PersistData, PersistUI {
@@ -166,7 +165,7 @@ class ArchiveExpenseSuccess implements StopSaving, PersistData {
 class ArchiveExpenseFailure implements StopSaving {
   ArchiveExpenseFailure(this.expenses);
 
-  final List<ExpenseEntity> expenses;
+  final List<ExpenseEntity?> expenses;
 }
 
 class DeleteExpenseRequest implements StartSaving {
@@ -185,7 +184,7 @@ class DeleteExpenseSuccess implements StopSaving, PersistData {
 class DeleteExpenseFailure implements StopSaving {
   DeleteExpenseFailure(this.expenses);
 
-  final List<ExpenseEntity> expenses;
+  final List<ExpenseEntity?> expenses;
 }
 
 class RestoreExpenseRequest implements StartSaving {
@@ -204,13 +203,13 @@ class RestoreExpenseSuccess implements StopSaving, PersistData {
 class RestoreExpenseFailure implements StopSaving {
   RestoreExpenseFailure(this.expenses);
 
-  final List<ExpenseEntity> expenses;
+  final List<ExpenseEntity?> expenses;
 }
 
 class FilterExpenses implements PersistUI {
   FilterExpenses(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortExpenses implements PersistUI, PersistPrefs {
@@ -256,13 +255,13 @@ class FilterExpensesByCustom4 implements PersistUI {
 }
 
 void handleExpenseAction(
-    BuildContext context, List<BaseEntity> expenses, EntityAction action) {
+    BuildContext context, List<BaseEntity> expenses, EntityAction? action) {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
   final expense = expenses.first as ExpenseEntity;
   final expenseIds = expenses.map((expense) => expense.id).toList();
-  final client = state.clientState.get(expense.clientId);
+  final client = state.clientState.get(expense.clientId!);
 
   switch (action) {
     case EntityAction.edit:
@@ -271,14 +270,12 @@ void handleExpenseAction(
     case EntityAction.clone:
     case EntityAction.cloneToExpense:
       createEntity(
-        context: context,
         entity:
             expense.clone.rebuild((b) => b..entityType = EntityType.expense),
       );
       break;
     case EntityAction.cloneToRecurring:
       createEntity(
-        context: context,
         entity: expense.clone
             .rebuild((b) => b..entityType = EntityType.recurringExpense),
       );
@@ -287,19 +284,20 @@ void handleExpenseAction(
     case EntityAction.addToInvoice:
       final availableExpenses = expenses.where((entity) {
         final expense = entity as ExpenseEntity;
-        return !expense.isDeleted && !expense.isInvoiced;
+        return !expense.isDeleted! && !expense.isInvoiced;
       });
 
-      String projectId = '';
-      String vendorId = '';
+      String? projectId = '';
+      String? vendorId = '';
       for (var each in availableExpenses) {
         final expense = each as ExpenseEntity;
-        if (expense.vendorId.isNotEmpty) {
+        if (expense.vendorId!.isNotEmpty) {
           vendorId = expense.vendorId;
         }
-        if (expense.projectId.isNotEmpty) {
-          if (projectId.isEmpty &&
-              state.projectState.get(expense.projectId).clientId == client.id) {
+        if (expense.projectId!.isNotEmpty) {
+          if (projectId!.isEmpty &&
+              state.projectState.get(expense.projectId!).clientId ==
+                  client.id) {
             projectId = expense.projectId;
           }
         }
@@ -307,14 +305,13 @@ void handleExpenseAction(
 
       final items = availableExpenses
           .map((expense) => convertExpenseToInvoiceItem(
-                expense: expense,
+                expense: expense as ExpenseEntity,
                 context: context,
               ))
           .toList();
       if (items.isNotEmpty) {
         if (action == EntityAction.invoiceExpense) {
           createEntity(
-            context: navigatorKey.currentContext,
             entity: InvoiceEntity(state: state, client: client).rebuild(
               (b) => b
                 ..lineItems.addAll(items)
@@ -333,30 +330,30 @@ void handleExpenseAction(
       break;
     case EntityAction.restore:
       final message = expenseIds.length > 1
-          ? localization.restoredExpenses
+          ? localization!.restoredExpenses
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', expenseIds.length.toString())
-          : localization.restoredExpense;
-      store.dispatch(RestoreExpenseRequest(
-          snackBarCompleter<Null>(context, message), expenseIds));
+          : localization!.restoredExpense;
+      store.dispatch(
+          RestoreExpenseRequest(snackBarCompleter<Null>(message), expenseIds));
       break;
     case EntityAction.archive:
       final message = expenseIds.length > 1
-          ? localization.archivedExpenses
+          ? localization!.archivedExpenses
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', expenseIds.length.toString())
-          : localization.archivedExpense;
-      store.dispatch(ArchiveExpenseRequest(
-          snackBarCompleter<Null>(context, message), expenseIds));
+          : localization!.archivedExpense;
+      store.dispatch(
+          ArchiveExpenseRequest(snackBarCompleter<Null>(message), expenseIds));
       break;
     case EntityAction.delete:
       final message = expenseIds.length > 1
-          ? localization.deletedExpenses
+          ? localization!.deletedExpenses
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', expenseIds.length.toString())
-          : localization.deletedExpense;
-      store.dispatch(DeleteExpenseRequest(
-          snackBarCompleter<Null>(context, message), expenseIds));
+          : localization!.deletedExpense;
+      store.dispatch(
+          DeleteExpenseRequest(snackBarCompleter<Null>(message), expenseIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.expenseListState.isInMultiselect()) {
@@ -388,15 +385,13 @@ void handleExpenseAction(
         }
       }
       if (documentIds.isEmpty) {
-        showMessageDialog(
-            context: context, message: localization.noDocumentsToDownload);
+        showMessageDialog(message: localization!.noDocumentsToDownload);
       } else {
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
             completer: snackBarCompleter<Null>(
-              context,
-              localization.exportedData,
+              localization!.exportedData,
             ),
           ),
         );
@@ -411,28 +406,28 @@ void handleExpenseAction(
 class StartExpenseMultiselect {}
 
 class AddToExpenseMultiselect {
-  AddToExpenseMultiselect({@required this.entity});
+  AddToExpenseMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromExpenseMultiselect {
-  RemoveFromExpenseMultiselect({@required this.entity});
+  RemoveFromExpenseMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearExpenseMultiselect {}
 
 class SaveExpenseDocumentRequest implements StartSaving {
   SaveExpenseDocumentRequest({
-    @required this.isPrivate,
-    @required this.completer,
-    @required this.multipartFiles,
-    @required this.expense,
+    required this.isPrivate,
+    required this.completer,
+    required this.multipartFiles,
+    required this.expense,
   });
 
-  final bool isPrivate;
+  final bool? isPrivate;
   final Completer completer;
   final List<MultipartFile> multipartFiles;
   final ExpenseEntity expense;
@@ -453,5 +448,5 @@ class SaveExpenseDocumentFailure implements StopSaving {
 class UpdateExpenseTab implements PersistUI {
   UpdateExpenseTab({this.tabIndex});
 
-  final int tabIndex;
+  final int? tabIndex;
 }

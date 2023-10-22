@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:memoize/memoize.dart';
@@ -37,7 +38,7 @@ enum ProfitAndLossReportFields {
 }
 
 var memoizedProfitAndLossReport = memo9((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, PaymentEntity> paymentMap,
@@ -48,7 +49,7 @@ var memoizedProfitAndLossReport = memo9((
   StaticState staticState,
 ) =>
     profitAndLossReport(
-      userCompany,
+      userCompany!,
       reportsUIState,
       clientMap,
       paymentMap,
@@ -73,10 +74,10 @@ ReportResult profitAndLossReport(
   final List<List<ReportElement>> data = [];
   BuiltList<ProfitAndLossReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
+  final reportSettings = userCompany.settings.reportSettings;
   final profitAndLossReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportProfitAndLoss)
-          ? reportSettings[kReportProfitAndLoss]
+      reportSettings.containsKey(kReportProfitAndLoss)
+          ? reportSettings[kReportProfitAndLoss]!
           : ReportSettingsEntity();
 
   final defaultColumns = [
@@ -92,18 +93,18 @@ ReportResult profitAndLossReport(
   if (profitAndLossReportSettings.columns.isNotEmpty) {
     columns = BuiltList(profitAndLossReportSettings.columns
         .map((e) => EnumUtils.fromString(ProfitAndLossReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
   }
 
   for (var paymentId in paymentMap.keys) {
-    final payment = paymentMap[paymentId];
+    final payment = paymentMap[paymentId]!;
     final client = clientMap[payment.clientId] ?? ClientEntity();
     final vendor = vendorMap[payment.vendorId] ?? VendorEntity();
 
-    bool skip = payment.isDeleted || client.isDeleted;
+    bool skip = payment.isDeleted! || client.isDeleted!;
     final List<ReportElement> row = [];
 
     for (var column in columns) {
@@ -111,64 +112,64 @@ ReportResult profitAndLossReport(
 
       switch (column) {
         case ProfitAndLossReportFields.type:
-          value = AppLocalization.of(navigatorKey.currentContext).payment;
+          value = AppLocalization.of(navigatorKey.currentContext!)!.payment;
           break;
         case ProfitAndLossReportFields.client:
-          value = client?.displayName;
+          value = client.displayName;
           break;
         case ProfitAndLossReportFields.client_address1:
-          value = client?.address1;
+          value = client.address1;
           break;
         case ProfitAndLossReportFields.client_address2:
-          value = client?.address2;
+          value = client.address2;
           break;
         case ProfitAndLossReportFields.client_city:
-          value = client?.city;
+          value = client.city;
           break;
         case ProfitAndLossReportFields.client_state:
-          value = client?.state;
+          value = client.state;
           break;
         case ProfitAndLossReportFields.client_country:
-          value = staticState.countryMap[client?.countryId]?.name ?? '';
+          value = staticState.countryMap[client.countryId]?.name ?? '';
           break;
         case ProfitAndLossReportFields.vendor:
-          value = vendor?.listDisplayName;
+          value = vendor.listDisplayName;
           break;
         case ProfitAndLossReportFields.vendor_address1:
-          value = vendor?.address1;
+          value = vendor.address1;
           break;
         case ProfitAndLossReportFields.vendor_address2:
-          value = vendor?.address2;
+          value = vendor.address2;
           break;
         case ProfitAndLossReportFields.vendor_city:
-          value = vendor?.city;
+          value = vendor.city;
           break;
         case ProfitAndLossReportFields.vendor_state:
-          value = vendor?.state;
+          value = vendor.state;
           break;
         case ProfitAndLossReportFields.vendor_country:
-          value = staticState.countryMap[vendor?.countryId]?.name ?? '';
+          value = staticState.countryMap[vendor.countryId]?.name ?? '';
           break;
         case ProfitAndLossReportFields.amount:
-          value = payment?.completedAmount;
+          value = payment.completedAmount;
           break;
         case ProfitAndLossReportFields.payment:
-          value = payment?.completedAmount;
+          value = payment.completedAmount;
           break;
         case ProfitAndLossReportFields.expense:
           value = 0.0;
           break;
         case ProfitAndLossReportFields.profit:
-          value = payment?.completedAmount;
+          value = payment.completedAmount;
           break;
         case ProfitAndLossReportFields.date:
-          value = payment?.date;
+          value = payment.date;
           break;
         case ProfitAndLossReportFields.category:
           value = '';
           break;
         case ProfitAndLossReportFields.currency:
-          value = staticState.currencyMap[client.currencyId].name;
+          value = staticState.currencyMap[client.currencyId]!.name;
           break;
         case ProfitAndLossReportFields.transaction_reference:
           value = payment.transactionReference;
@@ -180,7 +181,7 @@ ReportResult profitAndLossReport(
         userCompany: userCompany,
         reportsUIState: reportsUIState,
         column: EnumUtils.parse(column),
-      )) {
+      )!) {
         skip = true;
       }
 
@@ -202,11 +203,11 @@ ReportResult profitAndLossReport(
   }
 
   for (var expenseId in expenseMap.keys) {
-    final expense = expenseMap[expenseId];
+    final expense = expenseMap[expenseId]!;
     final client = clientMap[expense.clientId] ?? ClientEntity();
     final vendor = vendorMap[expense.vendorId] ?? VendorEntity();
 
-    bool skip = expense.isDeleted || (client?.isDeleted ?? false);
+    bool skip = expense.isDeleted! || (client.isDeleted ?? false);
     final List<ReportElement> row = [];
 
     for (var column in columns) {
@@ -214,43 +215,43 @@ ReportResult profitAndLossReport(
 
       switch (column) {
         case ProfitAndLossReportFields.type:
-          value = AppLocalization.of(navigatorKey.currentContext).expense;
+          value = AppLocalization.of(navigatorKey.currentContext!)!.expense;
           break;
         case ProfitAndLossReportFields.client:
-          value = client?.displayName;
+          value = client.displayName;
           break;
         case ProfitAndLossReportFields.client_address1:
-          value = client?.address1;
+          value = client.address1;
           break;
         case ProfitAndLossReportFields.client_address2:
-          value = client?.address2;
+          value = client.address2;
           break;
         case ProfitAndLossReportFields.client_city:
-          value = client?.city;
+          value = client.city;
           break;
         case ProfitAndLossReportFields.client_state:
-          value = client?.state;
+          value = client.state;
           break;
         case ProfitAndLossReportFields.client_country:
-          value = staticState.countryMap[client?.countryId]?.name ?? '';
+          value = staticState.countryMap[client.countryId]?.name ?? '';
           break;
         case ProfitAndLossReportFields.vendor:
-          value = vendor?.listDisplayName;
+          value = vendor.listDisplayName;
           break;
         case ProfitAndLossReportFields.vendor_address1:
-          value = vendor?.address1;
+          value = vendor.address1;
           break;
         case ProfitAndLossReportFields.vendor_address2:
-          value = vendor?.address2;
+          value = vendor.address2;
           break;
         case ProfitAndLossReportFields.vendor_city:
-          value = vendor?.city;
+          value = vendor.city;
           break;
         case ProfitAndLossReportFields.vendor_state:
-          value = vendor?.state;
+          value = vendor.state;
           break;
         case ProfitAndLossReportFields.vendor_country:
-          value = staticState.countryMap[vendor?.countryId];
+          value = staticState.countryMap[vendor.countryId];
           break;
         case ProfitAndLossReportFields.amount:
           value = -expense.grossAmount;
@@ -271,7 +272,7 @@ ReportResult profitAndLossReport(
           value = expenseCategoryMap[expense.categoryId]?.name ?? '';
           break;
         case ProfitAndLossReportFields.currency:
-          value = staticState.currencyMap[expense.currencyId].name;
+          value = staticState.currencyMap[expense.currencyId]!.name;
           break;
         case ProfitAndLossReportFields.transaction_reference:
           value = expense.transactionReference;
@@ -283,7 +284,7 @@ ReportResult profitAndLossReport(
         userCompany: userCompany,
         reportsUIState: reportsUIState,
         column: EnumUtils.parse(column),
-      )) {
+      )!) {
         skip = true;
       }
 
@@ -306,7 +307,7 @@ ReportResult profitAndLossReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) => sortReportTableRows(
-      rowA, rowB, profitAndLossReportSettings, selectedColumns));
+      rowA, rowB, profitAndLossReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns: ProfitAndLossReportFields.values

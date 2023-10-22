@@ -21,8 +21,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class VendorViewFullwidth extends StatefulWidget {
   const VendorViewFullwidth({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final VendorViewVM viewModel;
@@ -33,9 +33,9 @@ class VendorViewFullwidth extends StatefulWidget {
 
 class _VendorViewFullwidthState extends State<VendorViewFullwidth>
     with TickerProviderStateMixin {
-  ScrollController _scrollController1;
-  ScrollController _scrollController2;
-  ScrollController _scrollController3;
+  ScrollController? _scrollController1;
+  ScrollController? _scrollController2;
+  ScrollController? _scrollController3;
 
   @override
   void initState() {
@@ -48,9 +48,9 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
 
   @override
   void dispose() {
-    _scrollController1.dispose();
-    _scrollController2.dispose();
-    _scrollController3.dispose();
+    _scrollController1!.dispose();
+    _scrollController2!.dispose();
+    _scrollController3!.dispose();
     super.dispose();
   }
 
@@ -60,7 +60,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final company = state.company;
-    final vendor = state.vendorState.get(state.uiState.filterEntityId);
+    final vendor = state.vendorState.get(state.uiState.filterEntityId!);
     final documents = vendor.documents;
     final viewModel = widget.viewModel;
     final billingAddress = formatAddress(state, object: vendor);
@@ -88,7 +88,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                   left: kMobileDialogPadding),
               child: ListView(controller: _scrollController1, children: [
                 Text(
-                  localization.details,
+                  localization!.details,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 SizedBox(height: 8),
@@ -137,7 +137,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                if ((vendor.languageId ?? '').isNotEmpty &&
+                if (vendor.languageId.isNotEmpty &&
                     vendor.languageId != state.company.languageId)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 1),
@@ -373,8 +373,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                                             state.expenseState.map,
                                             state.expenseState.list),
                                         context,
-                                        currencyId: vendor.currencyId ??
-                                            state.company.currencyId),
+                                        currencyId: vendor.currencyId),
                                   ),
                                   if (vendor.privateNotes.isNotEmpty)
                                     IconText(

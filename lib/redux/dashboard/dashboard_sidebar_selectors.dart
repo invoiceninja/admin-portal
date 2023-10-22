@@ -14,14 +14,14 @@ var memoizedUpcomingInvoices = memo2((
       clientMap: clientMap,
     ));
 
-List<InvoiceEntity> _upcomingInvoices({
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, ClientEntity> clientMap,
+List<InvoiceEntity?> _upcomingInvoices({
+  required BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, ClientEntity>? clientMap,
 }) {
-  final invoices = <InvoiceEntity>[];
+  final invoices = <InvoiceEntity?>[];
   invoiceMap.forEach((index, invoice) {
     final client =
-        clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
+        clientMap![invoice.clientId] ?? ClientEntity(id: invoice.clientId);
     if (invoice.isNotActive ||
         invoice.isCancelledOrReversed ||
         client.isNotActive) {
@@ -32,7 +32,7 @@ List<InvoiceEntity> _upcomingInvoices({
   });
 
   invoices.sort((invoiceA, invoiceB) =>
-      invoiceA.primaryDate.compareTo(invoiceB.primaryDate));
+      invoiceA!.primaryDate.compareTo(invoiceB!.primaryDate));
 
   return invoices;
 }
@@ -46,14 +46,14 @@ var memoizedPastDueInvoices = memo2((
       clientMap: clientMap,
     ));
 
-List<InvoiceEntity> _pastDueInvoices({
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, ClientEntity> clientMap,
+List<InvoiceEntity?> _pastDueInvoices({
+  required BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, ClientEntity>? clientMap,
 }) {
-  final invoices = <InvoiceEntity>[];
+  final invoices = <InvoiceEntity?>[];
   invoiceMap.forEach((index, invoice) {
     final client =
-        clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
+        clientMap![invoice.clientId] ?? ClientEntity(id: invoice.clientId);
     if (invoice.isNotActive ||
         invoice.isCancelledOrReversed ||
         client.isNotActive) {
@@ -64,7 +64,7 @@ List<InvoiceEntity> _pastDueInvoices({
   });
 
   invoices.sort((invoiceA, invoiceB) =>
-      invoiceA.primaryDate.compareTo(invoiceB.primaryDate));
+      invoiceA!.primaryDate.compareTo(invoiceB!.primaryDate));
 
   return invoices;
 }
@@ -78,18 +78,18 @@ var memoizedRecentPayments = memo2((
       clientMap: clientMap,
     ));
 
-List<PaymentEntity> _recentPayments({
-  BuiltMap<String, PaymentEntity> paymentMap,
-  BuiltMap<String, ClientEntity> clientMap,
+List<PaymentEntity?> _recentPayments({
+  required BuiltMap<String, PaymentEntity> paymentMap,
+  BuiltMap<String, ClientEntity>? clientMap,
 }) {
-  final payments = <PaymentEntity>[];
+  final payments = <PaymentEntity?>[];
   final threeMonthsAgo =
       (DateTime.now().subtract(Duration(days: 60)).millisecondsSinceEpoch /
               1000)
           .round();
   paymentMap.forEach((index, payment) {
     final client =
-        clientMap[payment.clientId] ?? ClientEntity(id: payment.clientId);
+        clientMap![payment.clientId] ?? ClientEntity(id: payment.clientId);
     if (payment.isNotActive || client.isNotActive) {
       // do noting
     } else if (payment.isActive && payment.createdAt > threeMonthsAgo) {
@@ -98,7 +98,7 @@ List<PaymentEntity> _recentPayments({
   });
 
   payments.sort((paymentA, paymentB) {
-    if (paymentA.date == paymentB.date) {
+    if (paymentA!.date == paymentB!.date) {
       return paymentB.createdAt.compareTo(paymentA.createdAt);
     } else {
       return paymentB.date.compareTo(paymentA.date);
@@ -117,14 +117,14 @@ var memoizedUpcomingQuotes = memo2((
       clientMap: clientMap,
     ));
 
-List<InvoiceEntity> _upcomingQuotes({
-  BuiltMap<String, InvoiceEntity> quoteMap,
-  BuiltMap<String, ClientEntity> clientMap,
+List<InvoiceEntity?> _upcomingQuotes({
+  required BuiltMap<String, InvoiceEntity> quoteMap,
+  BuiltMap<String, ClientEntity>? clientMap,
 }) {
-  final quotes = <InvoiceEntity>[];
+  final quotes = <InvoiceEntity?>[];
   quoteMap.forEach((index, quote) {
     final client =
-        clientMap[quote.clientId] ?? ClientEntity(id: quote.clientId);
+        clientMap![quote.clientId] ?? ClientEntity(id: quote.clientId);
     if (quote.isNotActive || client.isNotActive) {
       // do noting
     } else if (quote.isUpcoming) {
@@ -133,7 +133,7 @@ List<InvoiceEntity> _upcomingQuotes({
   });
 
   quotes.sort(
-      (quoteA, quoteB) => quoteA.primaryDate.compareTo(quoteB.primaryDate));
+      (quoteA, quoteB) => quoteA!.primaryDate.compareTo(quoteB!.primaryDate));
 
   return quotes;
 }
@@ -147,14 +147,14 @@ var memoizedExpiredQuotes = memo2((
       clientMap: clientMap,
     ));
 
-List<InvoiceEntity> _expiredQuotes({
-  BuiltMap<String, InvoiceEntity> quoteMap,
-  BuiltMap<String, ClientEntity> clientMap,
+List<InvoiceEntity?> _expiredQuotes({
+  required BuiltMap<String, InvoiceEntity> quoteMap,
+  BuiltMap<String, ClientEntity>? clientMap,
 }) {
-  final quotes = <InvoiceEntity>[];
+  final quotes = <InvoiceEntity?>[];
   quoteMap.forEach((index, quote) {
     final client =
-        clientMap[quote.clientId] ?? ClientEntity(id: quote.clientId);
+        clientMap![quote.clientId] ?? ClientEntity(id: quote.clientId);
     if (quote.isNotActive || client.isNotActive) {
       // do noting
     } else if (quote.isPastDue) {
@@ -163,7 +163,7 @@ List<InvoiceEntity> _expiredQuotes({
   });
 
   quotes.sort(
-      (quoteA, quoteB) => quoteA.primaryDate.compareTo(quoteB.primaryDate));
+      (quoteA, quoteB) => quoteA!.primaryDate.compareTo(quoteB!.primaryDate));
 
   return quotes;
 }
@@ -177,9 +177,9 @@ var memoizedRunningTasks = memo2((
       clientMap: clientMap,
     ));
 
-List<TaskEntity> _runningTasks({
-  BuiltMap<String, TaskEntity> taskMap,
-  BuiltMap<String, ClientEntity> clientMap,
+List<TaskEntity?> _runningTasks({
+  required BuiltMap<String, TaskEntity> taskMap,
+  required BuiltMap<String, ClientEntity> clientMap,
 }) {
   final tasks = <TaskEntity>[];
   taskMap.forEach((index, task) {
@@ -191,8 +191,7 @@ List<TaskEntity> _runningTasks({
     }
   });
 
-  tasks.sort(
-      (taskA, taskB) => (taskB.updatedAt ?? 0).compareTo(taskA.updatedAt ?? 0));
+  tasks.sort((taskA, taskB) => (taskB.updatedAt).compareTo(taskA.updatedAt));
 
   return tasks;
 }
@@ -207,8 +206,8 @@ var memoizedRecentTasks = memo2((
     ));
 
 List<TaskEntity> _recentTasks({
-  BuiltMap<String, TaskEntity> taskMap,
-  BuiltMap<String, ClientEntity> clientMap,
+  required BuiltMap<String, TaskEntity> taskMap,
+  required BuiltMap<String, ClientEntity> clientMap,
 }) {
   final tasks = <TaskEntity>[];
   taskMap.forEach((index, task) {
@@ -220,8 +219,7 @@ List<TaskEntity> _recentTasks({
     }
   });
 
-  tasks.sort(
-      (taskA, taskB) => (taskB.updatedAt ?? 0).compareTo(taskA.updatedAt ?? 0));
+  tasks.sort((taskA, taskB) => (taskB.updatedAt).compareTo(taskA.updatedAt));
 
   return tasks;
 }
@@ -267,14 +265,14 @@ var memoizedRecentExpenses = memo2((
       clientMap: clientMap,
     ));
 
-List<ExpenseEntity> _recentExpenses({
-  BuiltMap<String, ExpenseEntity> expenseMap,
-  BuiltMap<String, ClientEntity> clientMap,
+List<ExpenseEntity?> _recentExpenses({
+  required BuiltMap<String, ExpenseEntity> expenseMap,
+  BuiltMap<String, ClientEntity>? clientMap,
 }) {
-  final expenses = <ExpenseEntity>[];
+  final expenses = <ExpenseEntity?>[];
   expenseMap.forEach((index, expense) {
     final client =
-        clientMap[expense.clientId] ?? ClientEntity(id: expense.clientId);
+        clientMap![expense.clientId] ?? ClientEntity(id: expense.clientId);
     if (client.isNotActive || expense.isNotActive || expense.isInvoiced) {
       // do noting
     } else {
@@ -283,8 +281,8 @@ List<ExpenseEntity> _recentExpenses({
   });
 
   expenses.sort((expenseA, expenseB) {
-    final expenseAdate = expenseA.date ?? '';
-    final expenseBdate = expenseB.date ?? '';
+    final expenseAdate = expenseA!.date ?? '';
+    final expenseBdate = expenseB!.date ?? '';
 
     if (expenseAdate == expenseBdate) {
       return expenseB.number.compareTo(expenseA.number);

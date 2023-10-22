@@ -40,7 +40,7 @@ abstract class DocumentState
 abstract class DocumentUIState extends Object
     with EntityUIState
     implements Built<DocumentUIState, DocumentUIStateBuilder> {
-  factory DocumentUIState(PrefStateSortField sortField) {
+  factory DocumentUIState(PrefStateSortField? sortField) {
     return _$DocumentUIState._(
       listUIState: ListUIState(sortField?.field ?? DocumentFields.name,
           sortAscending: sortField?.ascending),
@@ -56,14 +56,13 @@ abstract class DocumentUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  DocumentEntity get editing;
+  DocumentEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<DocumentUIState> get serializer =>
       _$documentUIStateSerializer;

@@ -22,10 +22,10 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class SidebarScaffold extends StatelessWidget {
   const SidebarScaffold({
-    @required this.tabController,
+    required this.tabController,
   });
 
-  final TabController tabController;
+  final TabController? tabController;
 
   @override
   Widget build(BuildContext context) {
@@ -46,23 +46,23 @@ class SidebarScaffold extends StatelessWidget {
                 tabs: [
                   if (company.isModuleEnabled(EntityType.invoice))
                     Tab(
-                      text: localization.invoices,
+                      text: localization!.invoices,
                     ),
                   if (company.isModuleEnabled(EntityType.payment))
                     Tab(
-                      text: localization.payments,
+                      text: localization!.payments,
                     ),
                   if (company.isModuleEnabled(EntityType.quote))
                     Tab(
-                      text: localization.quotes,
+                      text: localization!.quotes,
                     ),
                   if (company.isModuleEnabled(EntityType.task))
                     Tab(
-                      text: localization.tasks,
+                      text: localization!.tasks,
                     ),
                   if (company.isModuleEnabled(EntityType.expense))
                     Tab(
-                      text: localization.expenses,
+                      text: localization!.expenses,
                     ),
                 ],
               ),
@@ -95,7 +95,7 @@ class InvoiceSidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final upcomingInvoices = memoizedUpcomingInvoices(
@@ -119,7 +119,7 @@ class InvoiceSidebar extends StatelessWidget {
               itemCount: upcomingInvoices.length,
               itemBuilder: (BuildContext context, int index) {
                 return InvoiceListItem(
-                  invoice: upcomingInvoices[index],
+                  invoice: upcomingInvoices[index]!,
                   showSelected: false,
                 );
               },
@@ -133,7 +133,7 @@ class InvoiceSidebar extends StatelessWidget {
               itemCount: pastDueInvoices.length,
               itemBuilder: (BuildContext context, int index) {
                 return InvoiceListItem(
-                  invoice: pastDueInvoices[index],
+                  invoice: pastDueInvoices[index]!,
                   showSelected: false,
                 );
               },
@@ -141,13 +141,13 @@ class InvoiceSidebar extends StatelessWidget {
             ),
       label3: (selectedIds ?? <String>[]).isEmpty
           ? null
-          : localization.selectedInvoices + ' (${selectedIds.length})',
+          : localization.selectedInvoices + ' (${selectedIds!.length})',
       list3: (selectedIds ?? <String>[]).isEmpty
           ? null
           : ScrollableListViewBuilder(
               itemCount: selectedIds?.length,
               itemBuilder: (BuildContext context, int index) {
-                final invoice = state.invoiceState.map[selectedIds[index]];
+                final invoice = state.invoiceState.map[selectedIds![index]];
                 return invoice == null
                     ? SizedBox()
                     : InvoiceListItem(
@@ -166,7 +166,7 @@ class PaymentSidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final recentPayments = memoizedRecentPayments(
@@ -186,7 +186,7 @@ class PaymentSidebar extends StatelessWidget {
               itemCount: recentPayments.length,
               itemBuilder: (BuildContext context, int index) {
                 return PaymentListItem(
-                  payment: recentPayments[index],
+                  payment: recentPayments[index]!,
                   showSelected: false,
                 );
               },
@@ -194,13 +194,13 @@ class PaymentSidebar extends StatelessWidget {
             ),
       label3: (selectedIds ?? <String>[]).isEmpty
           ? null
-          : localization.selectedPayments + ' (${selectedIds.length})',
+          : localization.selectedPayments + ' (${selectedIds!.length})',
       list3: (selectedIds ?? <String>[]).isEmpty
           ? null
           : ScrollableListViewBuilder(
               itemCount: selectedIds?.length,
               itemBuilder: (BuildContext context, int index) {
-                final payment = state.paymentState.map[selectedIds[index]];
+                final payment = state.paymentState.map[selectedIds![index]];
                 return payment == null
                     ? SizedBox()
                     : PaymentListItem(
@@ -219,7 +219,7 @@ class QuoteSidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final upcomingQuotes = memoizedUpcomingQuotes(
@@ -243,7 +243,7 @@ class QuoteSidebar extends StatelessWidget {
               itemCount: upcomingQuotes.length,
               itemBuilder: (BuildContext context, int index) {
                 return QuoteListItem(
-                  quote: upcomingQuotes[index],
+                  quote: upcomingQuotes[index]!,
                   showCheckbox: false,
                 );
               },
@@ -257,7 +257,7 @@ class QuoteSidebar extends StatelessWidget {
               itemCount: expriedQuotes.length,
               itemBuilder: (BuildContext context, int index) {
                 return QuoteListItem(
-                  quote: expriedQuotes[index],
+                  quote: expriedQuotes[index]!,
                   showCheckbox: false,
                 );
               },
@@ -265,13 +265,13 @@ class QuoteSidebar extends StatelessWidget {
             ),
       label3: (selectedIds ?? <String>[]).isEmpty
           ? null
-          : localization.selectedQuotes + ' (${selectedIds.length})',
+          : localization.selectedQuotes + ' (${selectedIds!.length})',
       list3: (selectedIds ?? <String>[]).isEmpty
           ? null
           : ScrollableListViewBuilder(
               itemCount: selectedIds?.length,
               itemBuilder: (BuildContext context, int index) {
-                final quote = state.quoteState.map[selectedIds[index]];
+                final quote = state.quoteState.map[selectedIds![index]];
                 return quote == null
                     ? SizedBox()
                     : QuoteListItem(
@@ -290,7 +290,7 @@ class TaskSidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final runningTasks = memoizedRunningTasks(
@@ -314,7 +314,7 @@ class TaskSidebar extends StatelessWidget {
               itemCount: runningTasks.length,
               itemBuilder: (BuildContext context, int index) {
                 return TaskListItem(
-                  task: runningTasks[index],
+                  task: runningTasks[index]!,
                   showCheckbox: false,
                 );
               },
@@ -336,13 +336,13 @@ class TaskSidebar extends StatelessWidget {
             ),
       label3: (selectedIds ?? <String>[]).isEmpty
           ? null
-          : localization.selectedTasks + ' (${selectedIds.length})',
+          : localization.selectedTasks + ' (${selectedIds!.length})',
       list3: (selectedIds ?? <String>[]).isEmpty
           ? null
           : ScrollableListViewBuilder(
               itemCount: selectedIds?.length,
               itemBuilder: (BuildContext context, int index) {
-                final task = state.taskState.map[selectedIds[index]];
+                final task = state.taskState.map[selectedIds![index]];
                 return task == null
                     ? SizedBox()
                     : TaskListItem(
@@ -361,7 +361,7 @@ class ExpenseSidbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
@@ -405,7 +405,7 @@ class ExpenseSidbar extends StatelessWidget {
               itemCount: recentExpenses.length,
               itemBuilder: (BuildContext context, int index) {
                 return ExpenseListItem(
-                  expense: recentExpenses[index],
+                  expense: recentExpenses[index]!,
                   showCheckbox: false,
                   showSelected: false,
                 );
@@ -414,13 +414,13 @@ class ExpenseSidbar extends StatelessWidget {
             ),
       label3: (selectedIds ?? <String>[]).isEmpty
           ? null
-          : localization.selectedExpenses + ' (${selectedIds.length})',
+          : localization.selectedExpenses + ' (${selectedIds!.length})',
       list3: (selectedIds ?? <String>[]).isEmpty
           ? null
           : ScrollableListViewBuilder(
               itemCount: selectedIds?.length,
               itemBuilder: (BuildContext context, int index) {
-                final expense = state.expenseState.map[selectedIds[index]];
+                final expense = state.expenseState.map[selectedIds![index]];
                 return expense == null
                     ? SizedBox()
                     : ExpenseListItem(
@@ -437,9 +437,9 @@ class ExpenseSidbar extends StatelessWidget {
 
 class _DashboardSidebar extends StatelessWidget {
   const _DashboardSidebar({
-    @required this.entityType,
-    @required this.label1,
-    @required this.list1,
+    required this.entityType,
+    required this.label1,
+    required this.list1,
     this.label2,
     this.list2,
     this.label3,
@@ -448,11 +448,11 @@ class _DashboardSidebar extends StatelessWidget {
 
   final EntityType entityType;
   final String label1;
-  final String label2;
-  final String label3;
-  final ScrollableListViewBuilder list1;
-  final ScrollableListViewBuilder list2;
-  final ScrollableListViewBuilder list3;
+  final String? label2;
+  final String? label3;
+  final ScrollableListViewBuilder? list1;
+  final ScrollableListViewBuilder? list2;
+  final ScrollableListViewBuilder? list3;
 
   @override
   Widget build(BuildContext context) {
@@ -476,7 +476,7 @@ class _DashboardSidebar extends StatelessWidget {
           ),
           Expanded(
             child: list1 == null
-                ? HelpText(localization.noRecordsFound)
+                ? HelpText(localization!.noRecordsFound)
                 : ClipRRect(child: list1),
           ),
           if (label2 != null) ...[
@@ -484,7 +484,7 @@ class _DashboardSidebar extends StatelessWidget {
               elevation: 4,
               color: Theme.of(context).scaffoldBackgroundColor,
               child: Container(
-                child: Text(label2, style: textTheme.bodyMedium),
+                child: Text(label2!, style: textTheme.bodyMedium),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 width: double.infinity,
@@ -492,7 +492,7 @@ class _DashboardSidebar extends StatelessWidget {
             ),
             Expanded(
               child: list2 == null
-                  ? HelpText(localization.noRecordsFound)
+                  ? HelpText(localization!.noRecordsFound)
                   : ClipRRect(child: list2),
             ),
           ],

@@ -12,7 +12,7 @@ import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
 
 class PurchaseOrderPdfScreen extends StatelessWidget {
-  const PurchaseOrderPdfScreen({Key key, this.showAppBar = true})
+  const PurchaseOrderPdfScreen({Key? key, this.showAppBar = true})
       : super(key: key);
 
   final bool showAppBar;
@@ -27,7 +27,7 @@ class PurchaseOrderPdfScreen extends StatelessWidget {
       },
       builder: (context, vm) {
         return InvoicePdfView(
-          key: ValueKey('__purchase_order_pdf_${vm.invoice.id}__'),
+          key: ValueKey('__purchase_order_pdf_${vm.invoice!.id}__'),
           viewModel: vm,
           showAppBar: showAppBar,
         );
@@ -38,9 +38,9 @@ class PurchaseOrderPdfScreen extends StatelessWidget {
 
 class PurchaseOrderPdfVM extends EntityPdfVM {
   PurchaseOrderPdfVM({
-    AppState state,
-    InvoiceEntity invoice,
-    String activityId,
+    AppState? state,
+    InvoiceEntity? invoice,
+    String? activityId,
   }) : super(
           state: state,
           invoice: invoice,
@@ -50,7 +50,7 @@ class PurchaseOrderPdfVM extends EntityPdfVM {
   factory PurchaseOrderPdfVM.fromStore(Store<AppState> store) {
     final state = store.state;
     final purchaseOrderUIState = state.uiState.purchaseOrderUIState;
-    final invoiceId = purchaseOrderUIState.selectedId;
+    final invoiceId = purchaseOrderUIState.selectedId!;
     final invoice = state.purchaseOrderState.get(invoiceId);
 
     return PurchaseOrderPdfVM(

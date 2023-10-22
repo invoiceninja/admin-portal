@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 */
 
 class AppTitleBar extends StatelessWidget {
-  const AppTitleBar({Key key}) : super(key: key);
+  const AppTitleBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

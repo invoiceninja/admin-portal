@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -25,9 +26,9 @@ enum TaxRateReportFields {
 }
 
 var memoizedInvoiceTaxReport = memo9((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, TaxRateEntity> taxRateMap,
+  BuiltMap<String?, TaxRateEntity?> taxRateMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, InvoiceEntity> creditMap,
   BuiltMap<String, ClientEntity> clientMap,
@@ -35,13 +36,13 @@ var memoizedInvoiceTaxReport = memo9((
   BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) =>
-    taxReport(userCompany, reportsUIState, taxRateMap, invoiceMap, creditMap,
+    taxReport(userCompany!, reportsUIState, taxRateMap, invoiceMap, creditMap,
         clientMap, paymentMap, userMap, staticState));
 
 ReportResult taxReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, TaxRateEntity> taxRateMap,
+  BuiltMap<String?, TaxRateEntity?> taxRateMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, InvoiceEntity> creditMap,
   BuiltMap<String, ClientEntity> clientMap,
@@ -52,11 +53,10 @@ ReportResult taxReport(
   final List<List<ReportElement>> data = [];
   BuiltList<TaxRateReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
-  final taxRateReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportInvoiceTax)
-          ? reportSettings[kReportInvoiceTax]
-          : ReportSettingsEntity();
+  final reportSettings = userCompany.settings.reportSettings;
+  final taxRateReportSettings = reportSettings.containsKey(kReportInvoiceTax)
+      ? reportSettings[kReportInvoiceTax]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     TaxRateReportFields.tax_name,
@@ -70,7 +70,7 @@ ReportResult taxReport(
   if (taxRateReportSettings.columns.isNotEmpty) {
     columns = BuiltList(taxRateReportSettings.columns
         .map((e) => EnumUtils.fromString(TaxRateReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
@@ -79,11 +79,11 @@ ReportResult taxReport(
   for (var invoiceId in invoiceMap.keys) {
     final invoice = invoiceMap[invoiceId];
 
-    if (!userCompany.company.reportIncludeDrafts && invoice.isDraft) {
+    if (!userCompany.company.reportIncludeDrafts && invoice!.isDraft) {
       continue;
     }
 
-    if (!invoice.isDeleted && invoice.isSent) {
+    if (!invoice!.isDeleted! && invoice.isSent) {
       final client = clientMap[invoice.clientId] ?? ClientEntity();
       final precision =
           staticState.currencyMap[client.currencyId]?.precision ?? 2;
@@ -93,8 +93,8 @@ ReportResult taxReport(
         bool skip = false;
 
         final List<ReportElement> row = [];
-        final String taxName = taxes[key]['name'];
-        final double taxRate = taxes[key]['rate'];
+        final String? taxName = taxes[key]!['name'];
+        final double? taxRate = taxes[key]!['rate'];
 
         for (var column in columns) {
           dynamic value = '';
@@ -122,10 +122,10 @@ ReportResult taxReport(
               value = taxRate;
               break;
             case TaxRateReportFields.tax_amount:
-              value = taxes[key]['amount'] ?? 0.0;
+              value = taxes[key]!['amount'] ?? 0.0;
               break;
             case TaxRateReportFields.tax_paid:
-              value = taxes[key]['paid'] ?? 0.0;
+              value = taxes[key]!['paid'] ?? 0.0;
               break;
             case TaxRateReportFields.currency:
               value = staticState.currencyMap[client.currencyId]?.name ??
@@ -141,7 +141,7 @@ ReportResult taxReport(
             userCompany: userCompany,
             reportsUIState: reportsUIState,
             column: EnumUtils.parse(column),
-          )) {
+          )!) {
             skip = true;
           }
 
@@ -163,8 +163,8 @@ ReportResult taxReport(
   }
 
   for (var creditId in creditMap.keys) {
-    final credit = creditMap[creditId];
-    if (!credit.isDeleted && credit.isSent) {
+    final credit = creditMap[creditId]!;
+    if (!credit.isDeleted! && credit.isSent) {
       final client =
           clientMap[credit.clientId] ?? ClientEntity(id: credit.clientId);
       final precision =
@@ -175,8 +175,8 @@ ReportResult taxReport(
         bool skip = false;
 
         final List<ReportElement> row = [];
-        final String taxName = taxes[key]['name'];
-        final double taxRate = taxes[key]['rate'];
+        final String? taxName = taxes[key]!['name'];
+        final double? taxRate = taxes[key]!['rate'];
 
         for (var column in columns) {
           dynamic value = '';
@@ -204,10 +204,10 @@ ReportResult taxReport(
               value = taxRate;
               break;
             case TaxRateReportFields.tax_amount:
-              value = (taxes[key]['amount'] ?? 0.0) * -1;
+              value = (taxes[key]!['amount'] ?? 0.0) * -1;
               break;
             case TaxRateReportFields.tax_paid:
-              value = (taxes[key]['paid'] ?? 0.0) * -1;
+              value = (taxes[key]!['paid'] ?? 0.0) * -1;
               break;
             case TaxRateReportFields.currency:
               value = staticState.currencyMap[client.currencyId]?.name ??
@@ -223,7 +223,7 @@ ReportResult taxReport(
             userCompany: userCompany,
             reportsUIState: reportsUIState,
             column: EnumUtils.parse(column),
-          )) {
+          )!) {
             skip = true;
           }
 
@@ -246,7 +246,7 @@ ReportResult taxReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, taxRateReportSettings, selectedColumns));
+      sortReportTableRows(rowA, rowB, taxRateReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns:

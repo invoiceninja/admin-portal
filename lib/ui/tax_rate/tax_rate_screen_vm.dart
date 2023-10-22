@@ -17,7 +17,7 @@ import 'package:invoiceninja_flutter/ui/tax_rate/tax_rate_screen.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TaxRateScreenBuilder extends StatelessWidget {
-  const TaxRateScreenBuilder({Key key}) : super(key: key);
+  const TaxRateScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,18 +34,18 @@ class TaxRateScreenBuilder extends StatelessWidget {
 
 class TaxRateScreenVM {
   TaxRateScreenVM({
-    @required this.isInMultiselect,
-    @required this.taxRateList,
-    @required this.userCompany,
-    @required this.onBackPressed,
-    @required this.taxRateMap,
+    required this.isInMultiselect,
+    required this.taxRateList,
+    required this.userCompany,
+    required this.onBackPressed,
+    required this.taxRateMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> taxRateList;
   final Function(BuildContext) onBackPressed;
-  final BuiltMap<String, TaxRateEntity> taxRateMap;
+  final BuiltMap<String?, TaxRateEntity?> taxRateMap;
 
   static TaxRateScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

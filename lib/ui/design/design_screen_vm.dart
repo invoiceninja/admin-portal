@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
 import 'design_screen.dart';
 
 class DesignScreenBuilder extends StatelessWidget {
-  const DesignScreenBuilder({Key key}) : super(key: key);
+  const DesignScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +32,15 @@ class DesignScreenBuilder extends StatelessWidget {
 
 class DesignScreenVM {
   DesignScreenVM({
-    @required this.isInMultiselect,
-    @required this.designList,
-    @required this.userCompany,
-    @required this.onEntityAction,
-    @required this.designMap,
+    required this.isInMultiselect,
+    required this.designList,
+    required this.userCompany,
+    required this.onEntityAction,
+    required this.designMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> designList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final BuiltMap<String, DesignEntity> designMap;

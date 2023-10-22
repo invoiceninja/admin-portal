@@ -25,9 +25,9 @@ class FormColorPicker extends StatefulWidget {
     this.showClear = true,
   });
 
-  final String labelText;
-  final String initialValue;
-  final Function(String) onSelected;
+  final String? labelText;
+  final String? initialValue;
+  final Function(String?)? onSelected;
   final bool showClear;
 
   @override
@@ -37,11 +37,11 @@ class FormColorPicker extends StatefulWidget {
 class _FormColorPickerState extends State<FormColorPicker> {
   final _textController = TextEditingController();
 
-  String _pendingColor;
-  String _selectedColor;
+  String? _pendingColor;
+  String? _selectedColor;
 
   final _debouncer = Debouncer();
-  List<TextEditingController> _controllers;
+  late List<TextEditingController> _controllers;
 
   final _defaultColors = [
     Colors.red,
@@ -80,7 +80,7 @@ class _FormColorPickerState extends State<FormColorPicker> {
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    _selectedColor = _textController.text = widget.initialValue;
+    _selectedColor = _textController.text = widget.initialValue ?? '';
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -94,14 +94,14 @@ class _FormColorPickerState extends State<FormColorPicker> {
     });
   }
 
-  void _selectColor(String color) {
+  void _selectColor(String? color) {
     if (color != null && color.length != 7) {
       return;
     }
 
     setState(() {
       _selectedColor = color;
-      widget.onSelected(color);
+      widget.onSelected!(color);
     });
   }
 
@@ -117,7 +117,7 @@ class _FormColorPickerState extends State<FormColorPicker> {
     _selectedColor = null;
 
     Color color = Colors.black;
-    if (widget.initialValue != null && widget.initialValue.isNotEmpty) {
+    if (widget.initialValue != null && widget.initialValue!.isNotEmpty) {
       color = convertHexStringToColor(widget.initialValue) ?? Colors.black;
     }
 
@@ -133,12 +133,12 @@ class _FormColorPickerState extends State<FormColorPicker> {
           content: SingleChildScrollView(
             child: BlockPicker(
               availableColors: [
-                ..._defaultColors,
-                colors.colorInfo,
-                colors.colorPrimary,
-                colors.colorSuccess,
-                colors.colorWarning,
-                colors.colorDanger,
+                ..._defaultColors as Iterable<Color>,
+                colors!.colorInfo!,
+                colors.colorPrimary!,
+                colors.colorSuccess!,
+                colors.colorWarning!,
+                colors.colorDanger!,
               ],
               pickerColor: color,
               onColorChanged: (color) {
@@ -148,14 +148,14 @@ class _FormColorPickerState extends State<FormColorPicker> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text(localization.cancel.toUpperCase()),
+              child: Text(localization!.cancel.toUpperCase()),
               onPressed: () => Navigator.of(context).pop(),
             ),
             TextButton(
               child: Text(localization.done.toUpperCase()),
               onPressed: () {
                 _selectColor(_pendingColor);
-                _textController.text = _pendingColor;
+                _textController.text = _pendingColor!;
                 Navigator.of(context).pop();
               },
             ),
@@ -172,7 +172,7 @@ class _FormColorPickerState extends State<FormColorPicker> {
       children: <Widget>[
         DecoratedFormField(
           controller: _textController,
-          label: widget.labelText ?? AppLocalization.of(context).color,
+          label: widget.labelText ?? AppLocalization.of(context)!.color,
           hint: '#000000',
           keyboardType: TextInputType.text,
         ),

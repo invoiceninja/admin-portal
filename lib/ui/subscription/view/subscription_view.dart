@@ -21,9 +21,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class SubscriptionView extends StatefulWidget {
   const SubscriptionView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final SubscriptionViewVM viewModel;
@@ -38,7 +38,7 @@ class _SubscriptionViewState extends State<SubscriptionView> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final subscription = viewModel.subscription;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final state = viewModel.state;
     final company = state.company;
 

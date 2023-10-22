@@ -34,9 +34,9 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
 import 'package:printing/printing.dart';
 
@@ -57,8 +57,8 @@ class ViewDocumentList implements PersistUI {
 class ViewDocument implements PersistUI {
   ViewDocument({this.documentId, this.force});
 
-  final String documentId;
-  final bool force;
+  final String? documentId;
+  final bool? force;
 }
 
 class EditDocument implements PersistUI {
@@ -67,8 +67,8 @@ class EditDocument implements PersistUI {
     this.completer,
   });
 
-  final DocumentEntity document;
-  final Completer completer;
+  final DocumentEntity? document;
+  final Completer? completer;
 }
 
 class UpdateDocument implements PersistUI {
@@ -80,28 +80,28 @@ class UpdateDocument implements PersistUI {
 class LoadDocument {
   LoadDocument({this.completer, this.documentId});
 
-  final Completer completer;
-  final String documentId;
+  final Completer? completer;
+  final String? documentId;
 }
 
 class LoadDocumentData {
   LoadDocumentData({this.completer, this.documentId});
 
-  final Completer completer;
-  final String documentId;
+  final Completer? completer;
+  final String? documentId;
 }
 
 class LoadDocumentActivity {
   LoadDocumentActivity({this.completer, this.documentId});
 
-  final Completer completer;
-  final String documentId;
+  final Completer? completer;
+  final String? documentId;
 }
 
 class LoadDocuments {
   LoadDocuments({this.completer});
 
-  final Completer completer;
+  final Completer? completer;
 }
 
 class LoadDocumentRequest implements StartLoading {}
@@ -156,12 +156,12 @@ class LoadDocumentsSuccess implements StopLoading {
 
 class SaveDocumentRequest implements StartSaving {
   SaveDocumentRequest({
-    @required this.completer,
-    @required this.document,
+    required this.completer,
+    required this.document,
   });
 
   final Completer completer;
-  final DocumentEntity document;
+  final DocumentEntity? document;
 }
 
 class SaveDocumentSuccess implements StopSaving, PersistData, PersistUI {
@@ -187,8 +187,8 @@ class SaveDocumentFailure implements StopSaving {
 class DownloadDocumentsRequest implements StartSaving {
   DownloadDocumentsRequest({this.completer, this.documentIds});
 
-  final Completer completer;
-  final List<String> documentIds;
+  final Completer? completer;
+  final List<String>? documentIds;
 }
 
 class DownloadDocumentsSuccess implements StopSaving {}
@@ -215,28 +215,28 @@ class ArchiveDocumentSuccess implements StopSaving, PersistData {
 class ArchiveDocumentFailure implements StopSaving {
   ArchiveDocumentFailure(this.documents);
 
-  final List<DocumentEntity> documents;
+  final List<DocumentEntity?> documents;
 }
 
 class DeleteDocumentRequest implements StartSaving {
   DeleteDocumentRequest({
-    @required this.completer,
-    @required this.documentIds,
-    @required this.password,
-    @required this.idToken,
+    required this.completer,
+    required this.documentIds,
+    required this.password,
+    required this.idToken,
   });
 
   final Completer completer;
   final List<String> documentIds;
-  final String password;
-  final String idToken;
+  final String? password;
+  final String? idToken;
 }
 
 class DeleteDocumentSuccess
     implements StopSaving, PersistData, UserVerifiedPassword {
   DeleteDocumentSuccess({this.documentId});
 
-  final String documentId;
+  final String? documentId;
 
 //DeleteDocumentSuccess(this.documents);
 //final List<DocumentEntity> documents;
@@ -263,13 +263,13 @@ class RestoreDocumentSuccess implements StopSaving, PersistData {
 class RestoreDocumentFailure implements StopSaving {
   RestoreDocumentFailure(this.documents);
 
-  final List<DocumentEntity> documents;
+  final List<DocumentEntity?> documents;
 }
 
 class FilterDocuments implements PersistUI {
   FilterDocuments(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class FilterDocumentsByStatus implements PersistUI {
@@ -315,15 +315,15 @@ class FilterDocumentsByCustom4 implements PersistUI {
 }
 
 void handleDocumentAction(
-    BuildContext context, List<BaseEntity> documents, EntityAction action) {
+    BuildContext? context, List<BaseEntity> documents, EntityAction? action) {
   if (documents.isEmpty) {
     return;
   }
 
-  final store = StoreProvider.of<AppState>(context);
-  final localization = AppLocalization.of(context);
+  final store = StoreProvider.of<AppState>(context!);
+  final localization = AppLocalization.of(context)!;
   final documentIds = documents.map((document) => document.id).toList();
-  final document = store.state.documentState.map[documentIds.first];
+  final document = store.state.documentState.map[documentIds.first]!;
 
   switch (action) {
     case EntityAction.edit:
@@ -336,7 +336,7 @@ void handleDocumentAction(
               .replaceFirst(':count', documentIds.length.toString())
           : localization.restoredDocument;
       store.dispatch(RestoreDocumentRequest(
-          snackBarCompleter<Null>(context, message), documentIds));
+          snackBarCompleter<Null>(message), documentIds));
       break;
     case EntityAction.archive:
       final message = documentIds.length > 1
@@ -345,7 +345,7 @@ void handleDocumentAction(
               .replaceFirst(':count', documentIds.length.toString())
           : localization.archivedDocument;
       store.dispatch(ArchiveDocumentRequest(
-          snackBarCompleter<Null>(context, message), documentIds));
+          snackBarCompleter<Null>(message), documentIds));
       break;
     /*
     case EntityAction.delete:
@@ -354,7 +354,7 @@ void handleDocumentAction(
               .replaceFirst(':value', ':count').replaceFirst(':count', documentIds.length.toString())
           : localization.deletedDocument;
       store.dispatch(DeleteDocumentRequest(
-        completer: snackBarCompleter<Null>(context, message),
+        completer: snackBarCompleter<Null>( message),
         documentIds: documentIds,      
       ));
       break;
@@ -386,7 +386,6 @@ void handleDocumentAction(
         DownloadDocumentsRequest(
           documentIds: documentIds,
           completer: snackBarCompleter<Null>(
-            context,
             localization.exportedData,
           ),
         ),
@@ -395,10 +394,10 @@ void handleDocumentAction(
     case EntityAction.viewDocument:
       void showDocument() {
         showDialog<void>(
-            context: navigatorKey.currentContext,
+            context: navigatorKey.currentContext!,
             builder: (context) {
               final DocumentEntity document =
-                  store.state.documentState.map[documentIds.first];
+                  store.state.documentState.map[documentIds.first]!;
               return AlertDialog(
                 actions: [
                   TextButton(
@@ -407,12 +406,12 @@ void handleDocumentAction(
                 ],
                 content: document.isImage
                     ? PinchZoom(
-                        child: Image.memory(document.data),
+                        child: Image.memory(document.data!),
                       )
                     : SizedBox(
                         width: 600,
                         child: PdfPreview(
-                          build: (format) => document.data,
+                          build: (format) => document.data!,
                           canChangeOrientation: false,
                           canChangePageFormat: false,
                           allowPrinting: false,
@@ -434,32 +433,33 @@ void handleDocumentAction(
       break;
     case EntityAction.download:
       void downloadDocument() async {
-        final DocumentEntity document =
+        final DocumentEntity? document =
             store.state.documentState.map[documentIds.first];
         if (kIsWeb) {
-          WebUtils.downloadBinaryFile(document.name, document.data);
-        } else {
-          final directory = await (isDesktopOS()
-              ? getDownloadsDirectory()
-              : getApplicationDocumentsDirectory());
-
-          String filePath =
-              '${directory.path}${file.Platform.pathSeparator}${document.name}';
-
-          if (file.File(filePath).existsSync()) {
-            final extension = document.name.split('.').last;
-            final timestamp = DateTime.now().millisecondsSinceEpoch;
-            filePath =
-                filePath.replaceFirst('.$extension', '_$timestamp.$extension');
+          if (document?.data != null) {
+            WebUtils.downloadBinaryFile(document!.name, document.data!);
           }
+        } else {
+          final directory = await getAppDownloadDirectory();
+          if (directory != null) {
+            String filePath =
+                '$directory/${file.Platform.pathSeparator}${document!.name}';
 
-          await File(filePath).writeAsBytes(document.data);
+            if (file.File(filePath).existsSync()) {
+              final extension = document.name.split('.').last;
+              final timestamp = DateTime.now().millisecondsSinceEpoch;
+              filePath = filePath.replaceFirst(
+                  '.$extension', '_$timestamp.$extension');
+            }
 
-          if (isDesktopOS()) {
-            showToast(localization.fileSavedInPath
-                .replaceFirst(':path', directory.path));
-          } else {
-            await Share.shareXFiles([XFile(filePath)]);
+            await File(filePath).writeAsBytes(document.data!);
+
+            if (isDesktopOS()) {
+              showToast(localization.fileSavedInPath
+                  .replaceFirst(':path', directory));
+            } else {
+              await Share.shareXFiles([XFile(filePath)]);
+            }
           }
         }
       }
@@ -480,70 +480,70 @@ void handleDocumentAction(
                 context: context,
                 callback: (password, idToken) {
                   final completer = snackBarCompleter<Null>(
-                      context, AppLocalization.of(context).deletedDocument);
+                      AppLocalization.of(context)!.deletedDocument);
                   switch (document.parentType) {
                     case EntityType.client:
-                      completer.future.then<Null>((value) => store
+                      completer.future.then<Null>((_) => store
                           .dispatch(LoadClient(clientId: document.parentId)));
                       break;
                     case EntityType.credit:
-                      completer.future.then<Null>((value) => store
+                      completer.future.then<Null>((_) => store
                           .dispatch(LoadCredit(creditId: document.parentId)));
                       break;
                     case EntityType.expense:
-                      completer.future.then<Null>((value) => store
+                      completer.future.then<Null>((_) => store
                           .dispatch(LoadExpense(expenseId: document.parentId)));
                       break;
                     case EntityType.group:
-                      completer.future.then<Null>((value) => store
+                      completer.future.then<Null>((_) => store
                           .dispatch(LoadGroup(groupId: document.parentId)));
                       break;
                     case EntityType.invoice:
-                      completer.future.then<Null>((value) => store
+                      completer.future.then<Null>((_) => store
                           .dispatch(LoadInvoice(invoiceId: document.parentId)));
                       break;
                     case EntityType.product:
-                      completer.future.then<Null>((value) => store
+                      completer.future.then<Null>((_) => store
                           .dispatch(LoadProduct(productId: document.parentId)));
                       break;
                     case EntityType.project:
-                      completer.future.then<Null>((value) => store
+                      completer.future.then<Null>((_) => store
                           .dispatch(LoadProject(projectId: document.parentId)));
                       break;
                     case EntityType.purchaseOrder:
-                      completer.future.then<Null>((value) => store.dispatch(
+                      completer.future.then<Null>((_) => store.dispatch(
                           LoadPurchaseOrder(
                               purchaseOrderId: document.parentId)));
                       break;
                     case EntityType.quote:
-                      completer.future.then<Null>((value) => store
+                      completer.future.then<Null>((_) => store
                           .dispatch(LoadQuote(quoteId: document.parentId)));
                       break;
                     case EntityType.recurringExpense:
-                      completer.future.then<Null>((value) => store.dispatch(
+                      completer.future.then<Null>((_) => store.dispatch(
                           LoadRecurringExpense(
                               recurringExpenseId: document.parentId)));
                       break;
                     case EntityType.recurringInvoice:
-                      completer.future.then<Null>((value) => store.dispatch(
+                      completer.future.then<Null>((_) => store.dispatch(
                           LoadRecurringInvoice(
                               recurringInvoiceId: document.parentId)));
                       break;
                     case EntityType.task:
-                      completer.future.then<Null>((value) =>
+                      completer.future.then<Null>((_) =>
                           store.dispatch(LoadTask(taskId: document.parentId)));
                       break;
                     case EntityType.vendor:
-                      completer.future.then<Null>((value) => store
+                      completer.future.then<Null>((_) => store
                           .dispatch(LoadVendor(vendorId: document.parentId)));
                       break;
                     default:
                       completer.future
-                          .then<Null>((value) => store.dispatch(RefreshData()));
+                          .then<Null>((_) => store.dispatch(RefreshData()));
                   }
 
                   completer.future
-                      .then<Null>((value) => store.dispatch(RefreshData()));
+                      .then<Null>((_) => store.dispatch(RefreshData()));
                   store.dispatch(DeleteDocumentRequest(
                     completer: completer,
                     documentIds: [document.id],
@@ -562,15 +562,15 @@ void handleDocumentAction(
 class StartDocumentMultiselect {}
 
 class AddToDocumentMultiselect {
-  AddToDocumentMultiselect({@required this.entity});
+  AddToDocumentMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromDocumentMultiselect {
-  RemoveFromDocumentMultiselect({@required this.entity});
+  RemoveFromDocumentMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearDocumentMultiselect {}

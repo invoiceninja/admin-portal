@@ -26,29 +26,29 @@ class ViewRecurringExpenseList implements PersistUI {
   });
 
   final bool force;
-  final int page;
+  final int? page;
 }
 
 class ViewRecurringExpense implements PersistUI, PersistPrefs {
   ViewRecurringExpense({
-    @required this.recurringExpenseId,
+    required this.recurringExpenseId,
     this.force = false,
   });
 
-  final String recurringExpenseId;
+  final String? recurringExpenseId;
   final bool force;
 }
 
 class EditRecurringExpense implements PersistUI, PersistPrefs {
   EditRecurringExpense(
-      {@required this.recurringExpense,
+      {required this.recurringExpense,
       this.completer,
       this.cancelCompleter,
       this.force = false});
 
   final ExpenseEntity recurringExpense;
-  final Completer completer;
-  final Completer cancelCompleter;
+  final Completer? completer;
+  final Completer? cancelCompleter;
   final bool force;
 }
 
@@ -61,21 +61,21 @@ class UpdateRecurringExpense implements PersistUI {
 class LoadRecurringExpense {
   LoadRecurringExpense({this.completer, this.recurringExpenseId});
 
-  final Completer completer;
-  final String recurringExpenseId;
+  final Completer? completer;
+  final String? recurringExpenseId;
 }
 
 class LoadRecurringExpenseActivity {
   LoadRecurringExpenseActivity({this.completer, this.recurringExpenseId});
 
-  final Completer completer;
-  final String recurringExpenseId;
+  final Completer? completer;
+  final String? recurringExpenseId;
 }
 
 class LoadRecurringExpenses {
   LoadRecurringExpenses({this.completer});
 
-  final Completer completer;
+  final Completer? completer;
 }
 
 class LoadRecurringExpenseRequest implements StartLoading {}
@@ -133,9 +133,9 @@ class SaveRecurringExpenseRequest implements StartSaving {
     this.action,
   });
 
-  final Completer completer;
-  final ExpenseEntity recurringExpense;
-  final EntityAction action;
+  final Completer? completer;
+  final ExpenseEntity? recurringExpense;
+  final EntityAction? action;
 }
 
 class SaveRecurringExpenseSuccess
@@ -173,7 +173,7 @@ class ArchiveRecurringExpensesSuccess implements StopSaving, PersistData {
 class ArchiveRecurringExpensesFailure implements StopSaving {
   ArchiveRecurringExpensesFailure(this.recurringExpenses);
 
-  final List<ExpenseEntity> recurringExpenses;
+  final List<ExpenseEntity?> recurringExpenses;
 }
 
 class DeleteRecurringExpensesRequest implements StartSaving {
@@ -192,7 +192,7 @@ class DeleteRecurringExpensesSuccess implements StopSaving, PersistData {
 class DeleteRecurringExpensesFailure implements StopSaving {
   DeleteRecurringExpensesFailure(this.recurringExpenses);
 
-  final List<ExpenseEntity> recurringExpenses;
+  final List<ExpenseEntity?> recurringExpenses;
 }
 
 class RestoreRecurringExpensesRequest implements StartSaving {
@@ -211,13 +211,13 @@ class RestoreRecurringExpensesSuccess implements StopSaving, PersistData {
 class RestoreRecurringExpensesFailure implements StopSaving {
   RestoreRecurringExpensesFailure(this.recurringExpenses);
 
-  final List<ExpenseEntity> recurringExpenses;
+  final List<ExpenseEntity?> recurringExpenses;
 }
 
 class FilterRecurringExpenses implements PersistUI {
   FilterRecurringExpenses(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortRecurringExpenses implements PersistUI, PersistPrefs {
@@ -267,15 +267,15 @@ class StartRecurringExpenseMultiselect {
 }
 
 class AddToRecurringExpenseMultiselect {
-  AddToRecurringExpenseMultiselect({@required this.entity});
+  AddToRecurringExpenseMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromRecurringExpenseMultiselect {
-  RemoveFromRecurringExpenseMultiselect({@required this.entity});
+  RemoveFromRecurringExpenseMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearRecurringExpenseMultiselect {
@@ -285,14 +285,14 @@ class ClearRecurringExpenseMultiselect {
 class UpdateRecurringExpenseTab implements PersistUI {
   UpdateRecurringExpenseTab({this.tabIndex});
 
-  final int tabIndex;
+  final int? tabIndex;
 }
 
 class StartRecurringExpensesRequest implements StartSaving {
   StartRecurringExpensesRequest({this.completer, this.expenseIds});
 
-  final Completer completer;
-  final List<String> expenseIds;
+  final Completer? completer;
+  final List<String>? expenseIds;
 }
 
 class StartRecurringExpensesSuccess
@@ -311,8 +311,8 @@ class StartRecurringExpensesFailure implements StopSaving {
 class StopRecurringExpensesRequest implements StartSaving {
   StopRecurringExpensesRequest({this.completer, this.expenseIds});
 
-  final Completer completer;
-  final List<String> expenseIds;
+  final Completer? completer;
+  final List<String>? expenseIds;
 }
 
 class StopRecurringExpensesSuccess
@@ -330,10 +330,10 @@ class StopRecurringExpensesFailure implements StopSaving {
 
 class SaveRecurringExpenseDocumentRequest implements StartSaving {
   SaveRecurringExpenseDocumentRequest({
-    @required this.isPrivate,
-    @required this.completer,
-    @required this.multipartFile,
-    @required this.expense,
+    required this.isPrivate,
+    required this.completer,
+    required this.multipartFile,
+    required this.expense,
   });
 
   final bool isPrivate;
@@ -355,13 +355,13 @@ class SaveRecurringExpenseDocumentFailure implements StopSaving {
   final Object error;
 }
 
-void handleRecurringExpenseAction(BuildContext context,
-    List<BaseEntity> recurringExpenses, EntityAction action) {
+void handleRecurringExpenseAction(BuildContext? context,
+    List<BaseEntity> recurringExpenses, EntityAction? action) {
   if (recurringExpenses.isEmpty) {
     return;
   }
 
-  final store = StoreProvider.of<AppState>(context);
+  final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
   final recurringExpense = recurringExpenses.first as ExpenseEntity;
   final recurringExpenseIds =
@@ -373,42 +373,37 @@ void handleRecurringExpenseAction(BuildContext context,
       break;
     case EntityAction.restore:
       store.dispatch(RestoreRecurringExpensesRequest(
-          snackBarCompleter<Null>(
-              context, localization.restoredRecurringExpense),
+          snackBarCompleter<Null>(localization!.restoredRecurringExpense),
           recurringExpenseIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveRecurringExpensesRequest(
-          snackBarCompleter<Null>(
-              context, localization.archivedRecurringExpense),
+          snackBarCompleter<Null>(localization!.archivedRecurringExpense),
           recurringExpenseIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteRecurringExpensesRequest(
-          snackBarCompleter<Null>(
-              context, localization.deletedRecurringExpense),
+          snackBarCompleter<Null>(localization!.deletedRecurringExpense),
           recurringExpenseIds));
       break;
     case EntityAction.start:
       store.dispatch(StartRecurringExpensesRequest(
         completer: snackBarCompleter<Null>(
-            context,
-            (recurringExpense.lastSentDate ?? '').isEmpty
-                ? localization.startedRecurringInvoice
-                : localization.resumedRecurringInvoice),
+            (recurringExpense.lastSentDate).isEmpty
+                ? localization!.startedRecurringInvoice
+                : localization!.resumedRecurringInvoice),
         expenseIds: recurringExpenseIds,
       ));
       break;
     case EntityAction.stop:
       store.dispatch(StopRecurringExpensesRequest(
-        completer: snackBarCompleter<Null>(
-            context, localization.stoppedRecurringInvoice),
+        completer:
+            snackBarCompleter<Null>(localization!.stoppedRecurringInvoice),
         expenseIds: recurringExpenseIds,
       ));
       break;
     case EntityAction.cloneToExpense:
       createEntity(
-        context: context,
         entity: recurringExpense.clone
             .rebuild((b) => b..entityType = EntityType.expense),
       );
@@ -416,7 +411,6 @@ void handleRecurringExpenseAction(BuildContext context,
     case EntityAction.clone:
     case EntityAction.cloneToRecurring:
       createEntity(
-        context: context,
         entity: recurringExpense.clone
             .rebuild((b) => b..entityType = EntityType.recurringExpense),
       );
@@ -454,15 +448,13 @@ void handleRecurringExpenseAction(BuildContext context,
         }
       }
       if (documentIds.isEmpty) {
-        showMessageDialog(
-            context: context, message: localization.noDocumentsToDownload);
+        showMessageDialog(message: localization!.noDocumentsToDownload);
       } else {
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
             completer: snackBarCompleter<Null>(
-              context,
-              localization.exportedData,
+              localization!.exportedData,
             ),
           ),
         );

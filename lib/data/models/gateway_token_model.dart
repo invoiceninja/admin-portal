@@ -57,7 +57,7 @@ class GatewayTokenFields {
 abstract class GatewayTokenEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<GatewayTokenEntity, GatewayTokenEntityBuilder> {
-  factory GatewayTokenEntity({String id}) {
+  factory GatewayTokenEntity({String? id}) {
     return _$GatewayTokenEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
@@ -132,7 +132,7 @@ abstract class GatewayTokenEntity extends Object
   }
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     return matchesStrings(
       haystacks: [customerReference],
       needle: filter,
@@ -140,7 +140,7 @@ abstract class GatewayTokenEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     return matchesStringsValue(
       haystacks: [customerReference],
       needle: filter,
@@ -148,16 +148,16 @@ abstract class GatewayTokenEntity extends Object
   }
 
   @override
-  List<EntityAction> getActions(
-      {UserCompanyEntity userCompany,
-      ClientEntity client,
+  List<EntityAction?> getActions(
+      {UserCompanyEntity? userCompany,
+      ClientEntity? client,
       bool includeEdit = false,
       bool includePreview = false,
       bool multiselect = false}) {
-    final actions = <EntityAction>[];
+    final actions = <EntityAction?>[];
 
-    if (!isDeleted && !multiselect) {
-      if (includeEdit && userCompany.canEditEntity(this)) {
+    if (!isDeleted! && !multiselect) {
+      if (includeEdit && userCompany!.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
     }
@@ -170,10 +170,10 @@ abstract class GatewayTokenEntity extends Object
   }
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
   @override
-  FormatNumberType get listDisplayAmountType => null;
+  FormatNumberType? get listDisplayAmountType => null;
 
   static Serializer<GatewayTokenEntity> get serializer =>
       _$gatewayTokenEntitySerializer;
@@ -191,22 +191,17 @@ abstract class GatewayTokenMetaEntity
   @memoized
   int get hashCode;
 
-  @nullable
-  String get brand;
+  String? get brand;
 
-  @nullable
-  String get last4;
+  String? get last4;
 
-  @nullable
-  int get type;
+  int? get type;
 
-  @nullable
   @BuiltValueField(wireName: 'exp_month')
-  String get expMonth;
+  String? get expMonth;
 
-  @nullable
   @BuiltValueField(wireName: 'exp_year')
-  String get expYear;
+  String? get expYear;
 
   static Serializer<GatewayTokenMetaEntity> get serializer =>
       _$gatewayTokenMetaEntitySerializer;

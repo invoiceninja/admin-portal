@@ -33,8 +33,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class SubscriptionEdit extends StatefulWidget {
   const SubscriptionEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final SubscriptionEditVM viewModel;
@@ -48,8 +48,8 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_subscriptionEdit');
   final _debouncer = Debouncer();
-  FocusScopeNode _focusNode;
-  TabController _controller;
+  FocusScopeNode? _focusNode;
+  TabController? _controller;
 
   final _nameController = TextEditingController();
   final _promoCodeController = TextEditingController();
@@ -70,12 +70,12 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
         vsync: this, length: 3, initialIndex: settingsUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller!.index));
   }
 
   @override
@@ -99,10 +99,10 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
     _promoCodeController.text = subscription.promoCode;
     _promoDiscountController.text = formatNumber(
         subscription.promoDiscount, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
     _maxSeatsLimitController.text = formatNumber(
         subscription.maxSeatsLimit.toDouble(), context,
-        formatNumberType: FormatNumberType.inputAmount);
+        formatNumberType: FormatNumberType.inputAmount)!;
     _returnUrlController.text = webhookConfiguration.returnUrl;
     _postPurchaseUrlController.text = webhookConfiguration.postPurchaseUrl;
 
@@ -113,9 +113,9 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
 
   @override
   void dispose() {
-    _focusNode.dispose();
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
+    _focusNode!.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
     _controllers.forEach((controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -140,7 +140,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
   }
 
   void _onSavePressed(BuildContext context) {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -153,7 +153,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final subscription = viewModel.subscription;
     final webhookConfiguration = subscription.webhookConfiguration;
 
@@ -252,15 +252,18 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     entityMap: state.productState.map,
                     labelText: localization.oneTimeProducts,
                     onSelected: (value) {
-                      final parts = subscription.productIds.split(',');
-                      viewModel.onChanged(subscription.rebuild((b) => b
-                        ..productIds = <String>[...parts, value.id]
-                            .where((part) => part.isNotEmpty)
-                            .join(',')));
+                      if (value != null) {
+                        final parts = subscription.productIds.split(',');
+                        viewModel.onChanged(subscription.rebuild((b) => b
+                          ..productIds = <String>[...parts, value.id]
+                              .where((part) => part.isNotEmpty)
+                              .join(',')));
 
-                      WidgetsBinding.instance.addPostFrameCallback((duration) {
-                        FocusScope.of(context).unfocus();
-                      });
+                        WidgetsBinding.instance
+                            .addPostFrameCallback((duration) {
+                          FocusScope.of(context).unfocus();
+                        });
+                      }
                     },
                   ),
                   SizedBox(
@@ -296,7 +299,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     onSelected: (value) {
                       final parts = subscription.recurringProductIds.split(',');
                       viewModel.onChanged(subscription.rebuild((b) => b
-                        ..recurringProductIds = <String>[...parts, value.id]
+                        ..recurringProductIds = <String>[...parts, value!.id]
                             .where((part) => part.isNotEmpty)
                             .join(',')));
 
@@ -338,15 +341,19 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     entityMap: state.productState.map,
                     labelText: localization.optionalOneTimeProducts,
                     onSelected: (value) {
-                      final parts = subscription.optionalProductIds.split(',');
-                      viewModel.onChanged(subscription.rebuild((b) => b
-                        ..optionalProductIds = <String>[...parts, value.id]
-                            .where((part) => part.isNotEmpty)
-                            .join(',')));
+                      if (value != null) {
+                        final parts =
+                            subscription.optionalProductIds.split(',');
+                        viewModel.onChanged(subscription.rebuild((b) => b
+                          ..optionalProductIds = <String>[...parts, value.id]
+                              .where((part) => part.isNotEmpty)
+                              .join(',')));
 
-                      WidgetsBinding.instance.addPostFrameCallback((duration) {
-                        FocusScope.of(context).unfocus();
-                      });
+                        WidgetsBinding.instance
+                            .addPostFrameCallback((duration) {
+                          FocusScope.of(context).unfocus();
+                        });
+                      }
                     },
                   ),
                   SizedBox(
@@ -380,17 +387,20 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                     entityMap: state.productState.map,
                     labelText: localization.optionalRecurringProducts,
                     onSelected: (value) {
-                      final parts =
-                          subscription.optionalRecurringProductIds.split(',');
-                      viewModel.onChanged(subscription.rebuild((b) => b
-                        ..optionalRecurringProductIds = <String>[
-                          ...parts,
-                          value.id
-                        ].where((part) => part.isNotEmpty).join(',')));
+                      if (value != null) {
+                        final parts =
+                            subscription.optionalRecurringProductIds.split(',');
+                        viewModel.onChanged(subscription.rebuild((b) => b
+                          ..optionalRecurringProductIds = <String>[
+                            ...parts,
+                            value.id
+                          ].where((part) => part.isNotEmpty).join(',')));
 
-                      WidgetsBinding.instance.addPostFrameCallback((duration) {
-                        FocusScope.of(context).unfocus();
-                      });
+                        WidgetsBinding.instance
+                            .addPostFrameCallback((duration) {
+                          FocusScope.of(context).unfocus();
+                        });
+                      }
                     },
                   ),
                   SizedBox(
@@ -661,7 +671,7 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                           SizedBox(width: kTableColumnGap),
                           Expanded(
                             child: Text(
-                                webhookConfiguration.postPurchaseHeaders[key]),
+                                webhookConfiguration.postPurchaseHeaders[key]!),
                           )
                         ],
                       ),

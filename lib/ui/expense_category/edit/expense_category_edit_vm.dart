@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/ui/expense_category/view/expense_category_v
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class ExpenseCategoryEditScreen extends StatelessWidget {
-  const ExpenseCategoryEditScreen({Key key}) : super(key: key);
+  const ExpenseCategoryEditScreen({Key? key}) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsExpenseCategoryEdit';
 
@@ -45,20 +45,20 @@ class ExpenseCategoryEditScreen extends StatelessWidget {
 
 class ExpenseCategoryEditVM {
   ExpenseCategoryEditVM({
-    @required this.state,
-    @required this.expenseCategory,
-    @required this.company,
-    @required this.onChanged,
-    @required this.isSaving,
-    @required this.origExpenseCategory,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
-    @required this.isLoading,
+    required this.state,
+    required this.expenseCategory,
+    required this.company,
+    required this.onChanged,
+    required this.isSaving,
+    required this.origExpenseCategory,
+    required this.onSavePressed,
+    required this.onCancelPressed,
+    required this.isLoading,
   });
 
   factory ExpenseCategoryEditVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final expenseCategory = state.expenseCategoryUIState.editing;
+    final expenseCategory = state.expenseCategoryUIState.editing!;
 
     return ExpenseCategoryEditVM(
       state: state,
@@ -71,8 +71,7 @@ class ExpenseCategoryEditVM {
         store.dispatch(UpdateExpenseCategory(expenseCategory));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(
-            context: context, entity: ExpenseCategoryEntity(), force: true);
+        createEntity(entity: ExpenseCategoryEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
@@ -85,25 +84,26 @@ class ExpenseCategoryEditVM {
           store.dispatch(SaveExpenseCategoryRequest(
               completer: completer, expenseCategory: expenseCategory));
           return completer.future.then((savedExpenseCategory) {
-            showToast(expenseCategory.isNew
-                ? localization.createdExpenseCategory
-                : localization.updatedExpenseCategory);
+            showToast(expenseCategory!.isNew
+                ? localization!.createdExpenseCategory
+                : localization!.updatedExpenseCategory);
 
             if (state.prefState.isMobile) {
               store.dispatch(
                   UpdateCurrentRoute(ExpenseCategoryViewScreen.route));
               if (expenseCategory.isNew &&
                   state.expenseCategoryUIState.saveCompleter == null) {
-                navigator.pushReplacementNamed(ExpenseCategoryViewScreen.route);
+                navigator!
+                    .pushReplacementNamed(ExpenseCategoryViewScreen.route);
               } else {
-                navigator.pop(savedExpenseCategory);
+                navigator!.pop(savedExpenseCategory);
               }
             } else if (state.expenseCategoryUIState.saveCompleter == null) {
               viewEntity(entity: savedExpenseCategory, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
                   return ErrorDialog(error);
                 });
@@ -114,12 +114,12 @@ class ExpenseCategoryEditVM {
   }
 
   final ExpenseCategoryEntity expenseCategory;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(ExpenseCategoryEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final bool isLoading;
   final bool isSaving;
-  final ExpenseCategoryEntity origExpenseCategory;
+  final ExpenseCategoryEntity? origExpenseCategory;
   final AppState state;
 }

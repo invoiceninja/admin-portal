@@ -21,14 +21,14 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 class VendorViewDetails extends StatefulWidget {
   const VendorViewDetails({this.vendor});
 
-  final VendorEntity vendor;
+  final VendorEntity? vendor;
 
   @override
   _VendorViewDetailsState createState() => _VendorViewDetailsState();
 }
 
 class _VendorViewDetailsState extends State<VendorViewDetails> {
-  Future<Null> _launched;
+  Future<Null>? _launched;
 
   Future<Null> _launchURL(BuildContext context, String url) async {
     await launchUrl(Uri.parse(url));
@@ -37,7 +37,7 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
   Widget _launchStatus(BuildContext context, AsyncSnapshot<Null> snapshot) {
     final localization = AppLocalization.of(context);
     if (snapshot.hasError) {
-      return Text('${localization.error}: ${snapshot.error}');
+      return Text('${localization!.error}: ${snapshot.error}');
     } else {
       return const Text('');
     }
@@ -52,7 +52,7 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
 
     List<Widget> _buildDetailsList() {
       final listTiles = <Widget>[];
-      final contacts = vendor.contacts;
+      final contacts = vendor!.contacts;
 
       contacts.forEach((contact) {
         final subtitleParts = <String>[];
@@ -88,12 +88,12 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
           ),
           icon: Icons.email,
           title: contact.fullName.isEmpty
-              ? localization.blankContact
+              ? localization!.blankContact
               : contact.fullName,
           subtitle: subtitleParts.join('\n'),
           copyValue: contact.email,
           onLongPress: () => setState(() {
-            if ((contact.email ?? '').isEmpty) {
+            if (contact.email.isEmpty) {
               return;
             }
 
@@ -101,12 +101,12 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
           }),
         ));
 
-        if ((contact.phone ?? '').isNotEmpty) {
+        if (contact.phone.isNotEmpty) {
           listTiles.add(AppListTile(
             icon: Icons.phone,
             title: contact.fullName + '\n' + contact.phone,
             copyValue: contact.phone,
-            subtitle: localization.phone,
+            subtitle: localization!.phone,
             /*
             trailing: isApple() || isAndroid()
                 ? IconButton(
@@ -130,22 +130,22 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
         }
       });
 
-      if ((vendor.website ?? '').isNotEmpty) {
+      if (vendor.website.isNotEmpty) {
         listTiles.add(AppListTile(
           icon: Icons.link,
           title: vendor.website,
-          subtitle: localization.website,
+          subtitle: localization!.website,
           onLongPress: () => setState(() {
             _launched = _launchURL(context, formatURL(vendor.website));
           }),
         ));
       }
 
-      if ((vendor.phone ?? '').isNotEmpty) {
+      if (vendor.phone.isNotEmpty) {
         listTiles.add(AppListTile(
           icon: Icons.phone,
           title: vendor.phone,
-          subtitle: localization.phone,
+          subtitle: localization!.phone,
           /*
           trailing: isApple() || isAndroid()
               ? IconButton(
@@ -168,19 +168,19 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
         ));
       }
 
-      if ((vendor.vatNumber ?? '').isNotEmpty) {
+      if (vendor.vatNumber.isNotEmpty) {
         listTiles.add(AppListTile(
           icon: Icons.location_city,
           title: vendor.vatNumber,
-          subtitle: localization.vatNumber,
+          subtitle: localization!.vatNumber,
         ));
       }
 
-      if ((vendor.idNumber ?? '').isNotEmpty) {
+      if (vendor.idNumber.isNotEmpty) {
         listTiles.add(AppListTile(
           icon: Icons.business,
           title: vendor.idNumber,
-          subtitle: localization.idNumber,
+          subtitle: localization!.idNumber,
         ));
       }
 
@@ -192,7 +192,7 @@ class _VendorViewDetailsState extends State<VendorViewDetails> {
         listTiles.add(AppListTile(
             icon: Icons.pin_drop,
             title: address,
-            subtitle: localization.billingAddress,
+            subtitle: localization!.billingAddress,
             onLongPress: () {
               _launched = _launchURL(
                   context,

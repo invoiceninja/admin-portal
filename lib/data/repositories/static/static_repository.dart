@@ -18,10 +18,10 @@ class StaticRepository {
 
   Future<StaticDataEntity> loadList(Credentials credentials) async {
     final dynamic response =
-        await webClient.get(credentials.url + '/static', credentials.token);
+        await webClient.get(credentials.url! + '/static', credentials.token);
 
     final StaticDataItemResponse staticDataResponse = serializers
-        .deserializeWith(StaticDataItemResponse.serializer, response);
+        .deserializeWith(StaticDataItemResponse.serializer, response)!;
 
     return staticDataResponse.data;
   }

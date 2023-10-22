@@ -24,11 +24,12 @@ abstract class BankAccountState
   int get hashCode;
 
   BuiltMap<String, BankAccountEntity> get map;
+
   BuiltList<String> get list;
 
   BankAccountEntity get(String bankAccountId) {
     if (map.containsKey(bankAccountId)) {
-      return map[bankAccountId];
+      return map[bankAccountId]!;
     } else {
       return BankAccountEntity(id: bankAccountId);
     }
@@ -53,7 +54,7 @@ abstract class BankAccountState
 abstract class BankAccountUIState extends Object
     with EntityUIState
     implements Built<BankAccountUIState, BankAccountUIStateBuilder> {
-  factory BankAccountUIState(PrefStateSortField sortField) {
+  factory BankAccountUIState(PrefStateSortField? sortField) {
     return _$BankAccountUIState._(
       listUIState: ListUIState(sortField?.field ?? BankAccountFields.name,
           sortAscending: sortField?.ascending),
@@ -68,14 +69,13 @@ abstract class BankAccountUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  BankAccountEntity get editing;
+  BankAccountEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<BankAccountUIState> get serializer =>
       _$bankAccountUIStateSerializer;

@@ -22,7 +22,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseCategoryViewScreen extends StatelessWidget {
   const ExpenseCategoryViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
 
@@ -47,15 +47,15 @@ class ExpenseCategoryViewScreen extends StatelessWidget {
 
 class ExpenseCategoryViewVM {
   ExpenseCategoryViewVM({
-    @required this.state,
-    @required this.expenseCategory,
-    @required this.company,
-    @required this.onEntityAction,
-    @required this.onBackPressed,
-    @required this.onRefreshed,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.isDirty,
+    required this.state,
+    required this.expenseCategory,
+    required this.company,
+    required this.onEntityAction,
+    required this.onBackPressed,
+    required this.onRefreshed,
+    required this.isSaving,
+    required this.isLoading,
+    required this.isDirty,
   });
 
   factory ExpenseCategoryViewVM.fromStore(Store<AppState> store) {
@@ -65,8 +65,8 @@ class ExpenseCategoryViewVM {
         ExpenseCategoryEntity(id: state.expenseCategoryUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadExpenseCategory(
           completer: completer, expenseCategoryId: expenseCategory.id));
       return completer.future;
@@ -89,7 +89,7 @@ class ExpenseCategoryViewVM {
 
   final AppState state;
   final ExpenseCategoryEntity expenseCategory;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
   final Function onBackPressed;

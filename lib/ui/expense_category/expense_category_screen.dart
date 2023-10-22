@@ -20,8 +20,8 @@ import 'expense_category_screen_vm.dart';
 
 class ExpenseCategoryScreen extends StatelessWidget {
   const ExpenseCategoryScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsExpenseCategories';
@@ -105,7 +105,7 @@ class ExpenseCategoryScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newExpenseCategory,
+              tooltip: localization!.newExpenseCategory,
             )
           : null,
     );

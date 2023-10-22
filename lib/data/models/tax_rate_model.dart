@@ -56,7 +56,8 @@ class TaxRateFields {
 abstract class TaxRateEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<TaxRateEntity, TaxRateEntityBuilder> {
-  factory TaxRateEntity({String id, String name, double rate, AppState state}) {
+  factory TaxRateEntity(
+      {String? id, String? name, double? rate, AppState? state}) {
     return _$TaxRateEntity._(
       id: BaseEntity.nextId,
       isChanged: false,
@@ -93,18 +94,19 @@ abstract class TaxRateEntity extends Object
 
   bool get isEmpty => rate == 0 && name.isEmpty;
 
-  int compareTo(TaxRateEntity taxRate, String sortField, bool sortAscending) {
+  int compareTo(TaxRateEntity? taxRate, String sortField, bool sortAscending) {
     int response = 0;
-    final TaxRateEntity taxRateA = sortAscending ? this : taxRate;
-    final TaxRateEntity taxRateB = sortAscending ? taxRate : this;
+    final TaxRateEntity? taxRateA = sortAscending ? this : taxRate;
+    final TaxRateEntity? taxRateB = sortAscending ? taxRate : this;
 
     switch (sortField) {
       case TaxRateFields.name:
-        response =
-            taxRateA.name.toLowerCase().compareTo(taxRateB.name.toLowerCase());
+        response = taxRateA!.name
+            .toLowerCase()
+            .compareTo(taxRateB!.name.toLowerCase());
         break;
       case TaxRateFields.rate:
-        response = taxRateA.rate.compareTo(taxRateB.rate);
+        response = taxRateA!.rate.compareTo(taxRateB!.rate);
         break;
       default:
         print('## ERROR: sort by .$sortField is not implemented');
@@ -115,7 +117,7 @@ abstract class TaxRateEntity extends Object
   }
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     return matchesStrings(
       haystacks: [name],
       needle: filter,
@@ -123,7 +125,7 @@ abstract class TaxRateEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     return matchesStringsValue(
       haystacks: [name],
       needle: filter,
@@ -131,16 +133,16 @@ abstract class TaxRateEntity extends Object
   }
 
   @override
-  List<EntityAction> getActions(
-      {UserCompanyEntity userCompany,
-      ClientEntity client,
+  List<EntityAction?> getActions(
+      {UserCompanyEntity? userCompany,
+      ClientEntity? client,
       bool includeEdit = false,
       bool includePreview = false,
       bool multiselect = false}) {
-    final actions = <EntityAction>[];
+    final actions = <EntityAction?>[];
 
-    if (!isDeleted && !multiselect) {
-      if (includeEdit && userCompany.canEditEntity(this)) {
+    if (!isDeleted! && !multiselect) {
+      if (includeEdit && userCompany!.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
     }
@@ -153,10 +155,10 @@ abstract class TaxRateEntity extends Object
   }
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
   @override
-  FormatNumberType get listDisplayAmountType => null;
+  FormatNumberType? get listDisplayAmountType => null;
 
   static Serializer<TaxRateEntity> get serializer => _$taxRateEntitySerializer;
 }

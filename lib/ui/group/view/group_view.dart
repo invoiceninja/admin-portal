@@ -20,9 +20,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class GroupView extends StatefulWidget {
   const GroupView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final GroupViewVM viewModel;
@@ -34,7 +34,7 @@ class GroupView extends StatefulWidget {
 
 class _GroupViewState extends State<GroupView>
     with SingleTickerProviderStateMixin {
-  TabController _controller;
+  TabController? _controller;
 
   @override
   void initState() {
@@ -44,14 +44,14 @@ class _GroupViewState extends State<GroupView>
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final group = viewModel.group;
@@ -121,8 +121,8 @@ class _GroupViewState extends State<GroupView>
 
 class SettingsViewer extends StatelessWidget {
   const SettingsViewer({
-    @required this.settings,
-    @required this.state,
+    required this.settings,
+    required this.state,
   });
 
   final SettingsEntity settings;
@@ -130,7 +130,7 @@ class SettingsViewer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final staticState = state.staticState;
 
     return FieldGrid({
@@ -266,7 +266,7 @@ class SettingsViewer extends StatelessWidget {
       localization.autoEmailInvoice: settings.autoEmailInvoice?.toString(),
       localization.autoConvertQuote: settings.autoConvertQuote?.toString(),
       localization.inclusiveTaxes: settings.enableInclusiveTaxes?.toString(),
-      localization.translations: settings.translations?.keys?.join(', '),
+      localization.translations: settings.translations?.keys.join(', '),
       localization.taskNumberPattern: settings.taskNumberPattern,
       localization.taskNumberCounter: settings.taskNumberCounter?.toString(),
       localization.expenseNumberPattern: settings.expenseNumberPattern,

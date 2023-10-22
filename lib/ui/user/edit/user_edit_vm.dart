@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 
 class UserEditScreen extends StatelessWidget {
-  const UserEditScreen({Key key}) : super(key: key);
+  const UserEditScreen({Key? key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsUserManagementEdit';
 
   @override
@@ -45,21 +45,21 @@ class UserEditScreen extends StatelessWidget {
 
 class UserEditVM {
   UserEditVM({
-    @required this.state,
-    @required this.user,
-    @required this.userCompany,
-    @required this.company,
-    @required this.onUserChanged,
-    @required this.isSaving,
-    @required this.origUser,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
-    @required this.isLoading,
+    required this.state,
+    required this.user,
+    required this.userCompany,
+    required this.company,
+    required this.onUserChanged,
+    required this.isSaving,
+    required this.origUser,
+    required this.onSavePressed,
+    required this.onCancelPressed,
+    required this.isLoading,
   });
 
   factory UserEditVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final user = state.userUIState.editing;
+    final user = state.userUIState.editing!;
 
     return UserEditVM(
       state: state,
@@ -73,7 +73,7 @@ class UserEditVM {
         store.dispatch(UpdateUser(user));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: UserEntity(), force: true);
+        createEntity(entity: UserEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
@@ -93,23 +93,23 @@ class UserEditVM {
                 ));
               });
           return completer.future.then((savedUser) {
-            showToast(user.isNew
-                ? localization.createdUser
-                : localization.updatedUser);
+            showToast(user!.isNew
+                ? localization!.createdUser
+                : localization!.updatedUser);
 
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(UserViewScreen.route));
               if (user.isNew) {
-                navigator.pushReplacementNamed(UserViewScreen.route);
+                navigator!.pushReplacementNamed(UserViewScreen.route);
               } else {
-                navigator.pop(savedUser);
+                navigator!.pop(savedUser);
               }
             } else {
               viewEntity(entity: savedUser, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
                   return ErrorDialog(error);
                 });
@@ -120,13 +120,13 @@ class UserEditVM {
   }
 
   final UserEntity user;
-  final UserCompanyEntity userCompany;
-  final CompanyEntity company;
+  final UserCompanyEntity? userCompany;
+  final CompanyEntity? company;
   final Function(UserEntity) onUserChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final bool isLoading;
   final bool isSaving;
-  final UserEntity origUser;
+  final UserEntity? origUser;
   final AppState state;
 }

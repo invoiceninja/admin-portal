@@ -3,12 +3,6 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:io';
 
-// Flutter imports:
-import 'package:flutter/foundation.dart';
-
-// Package imports:
-import 'package:meta/meta.dart';
-
 // Project imports:
 import 'package:invoiceninja_flutter/data/file_storage.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
@@ -23,7 +17,7 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
 
 class PersistenceRepository {
   const PersistenceRepository({
-    @required this.fileStorage,
+    required this.fileStorage,
   });
 
   final FileStorage fileStorage;
@@ -48,13 +42,13 @@ class PersistenceRepository {
   }
    */
 
-  Future<File> saveCompanyState(UserCompanyState state) async {
+  Future<File?> saveCompanyState(UserCompanyState state) async {
     final data = serializers.serializeWith(UserCompanyState.serializer, state);
 
     return await fileStorage.save(json.encode(data));
   }
 
-  Future<UserCompanyState> loadCompanyState(int index) async {
+  Future<UserCompanyState?> loadCompanyState(int index) async {
     final String data = await fileStorage.load();
     final companyState = serializers.deserializeWith(
         UserCompanyState.serializer, json.decode(data));
@@ -64,12 +58,12 @@ class PersistenceRepository {
     //return compute(_deserialize, data);
   }
 
-  Future<File> saveAuthState(AuthState state) async {
+  Future<File?> saveAuthState(AuthState state) async {
     final data = serializers.serializeWith(AuthState.serializer, state);
     return await fileStorage.save(json.encode(data));
   }
 
-  Future<AuthState> loadAuthState() async {
+  Future<AuthState?> loadAuthState() async {
     if (await fileStorage.exists()) {
       final String data = await fileStorage.load();
       return serializers.deserializeWith(
@@ -79,23 +73,23 @@ class PersistenceRepository {
     }
   }
 
-  Future<File> saveStaticState(StaticState state) async {
+  Future<File?> saveStaticState(StaticState state) async {
     final data = serializers.serializeWith(StaticState.serializer, state);
     return await fileStorage.save(json.encode(data));
   }
 
-  Future<StaticState> loadStaticState() async {
+  Future<StaticState?> loadStaticState() async {
     final String data = await fileStorage.load();
     return serializers.deserializeWith(
         StaticState.serializer, json.decode(data));
   }
 
-  Future<File> saveUIState(UIState state) async {
+  Future<File?> saveUIState(UIState state) async {
     final data = serializers.serializeWith(UIState.serializer, state);
     return await fileStorage.save(json.encode(data));
   }
 
-  Future<UIState> loadUIState() async {
+  Future<UIState?> loadUIState() async {
     final String data = await fileStorage.load();
     return serializers.deserializeWith(UIState.serializer, json.decode(data));
   }

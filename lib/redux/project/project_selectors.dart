@@ -14,37 +14,37 @@ import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 List<InvoiceItemEntity> convertProjectToInvoiceItem({
-  BuildContext context,
-  ProjectEntity project,
+  required BuildContext context,
+  ProjectEntity? project,
 }) {
   final List<InvoiceItemEntity> items = [];
   final state = StoreProvider.of<AppState>(context).state;
 
-  final tasks = <TaskEntity>[];
+  final tasks = <TaskEntity?>[];
   state.taskState.map.forEach((index, task) {
     if (task.isActive &&
         task.isStopped &&
         !task.isInvoiced &&
-        task.projectId == project.id) {
+        task.projectId == project!.id) {
       tasks.add(task);
     }
   });
 
-  final expenses = <ExpenseEntity>[];
+  final expenses = <ExpenseEntity?>[];
   state.expenseState.map.forEach((index, expense) {
     if (expense.isActive &&
-        expense.projectId == project.id &&
+        expense.projectId == project!.id &&
         expense.isPending) {
       expenses.add(expense);
     }
   });
 
   tasks.sort((taskA, taskB) {
-    final taskTimesA = taskA.getTaskTimes();
-    final taskTimesB = taskB.getTaskTimes();
+    final taskTimesA = taskA!.getTaskTimes();
+    final taskTimesB = taskB!.getTaskTimes();
 
-    final taskADate = taskTimesA.isEmpty ? null : taskTimesA.first.startDate;
-    final taskBDate = taskTimesB.isEmpty ? null : taskTimesB.first.startDate;
+    final taskADate = taskTimesA.isEmpty ? null : taskTimesA.first!.startDate;
+    final taskBDate = taskTimesB.isEmpty ? null : taskTimesB.first!.startDate;
 
     if (taskADate == null) {
       return 1;
@@ -56,21 +56,21 @@ List<InvoiceItemEntity> convertProjectToInvoiceItem({
   });
 
   expenses.sort((expenseA, expenseB) {
-    return expenseA.date.compareTo(expenseB.date);
+    return expenseA!.date!.compareTo(expenseB!.date!);
   });
 
   bool hasShownNotes = false;
 
   for (var i = 0; i < expenses.length; i++) {
-    final expense = expenses[i];
+    final expense = expenses[i]!;
     var item = convertExpenseToInvoiceItem(expense: expense, context: context);
 
     if (i == 0) {
       var notes = '';
       if (state.company.markdownEnabled) {
-        notes = '## ${project.name}\n';
+        notes = '## ${project!.name}\n';
       } else {
-        notes = '<div class="project-header">${project.name}</div>\n';
+        notes = '<div class="project-header">${project!.name}</div>\n';
       }
 
       if (project.publicNotes.isNotEmpty) {
@@ -85,15 +85,15 @@ List<InvoiceItemEntity> convertProjectToInvoiceItem({
   }
 
   for (var i = 0; i < tasks.length; i++) {
-    final task = tasks[i];
+    final task = tasks[i]!;
     var item = convertTaskToInvoiceItem(task: task, context: context);
 
     if (i == 0) {
       var notes = '';
       if (state.company.markdownEnabled) {
-        notes = '## ${project.name}\n';
+        notes = '## ${project!.name}\n';
       } else {
-        notes = '<div class="project-header">${project.name}</div>\n';
+        notes = '<div class="project-header">${project!.name}</div>\n';
       }
 
       if (project.publicNotes.isNotEmpty && !hasShownNotes) {
@@ -115,7 +115,7 @@ var memoizedDropdownProjectList = memo5(
             BuiltList<String> projectList,
             BuiltMap<String, ClientEntity> clientMap,
             BuiltMap<String, UserEntity> userMap,
-            String clientId) =>
+            String? clientId) =>
         dropdownProjectsSelector(
             projectMap, projectList, clientMap, userMap, clientId));
 
@@ -124,25 +124,25 @@ List<String> dropdownProjectsSelector(
     BuiltList<String> projectList,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, UserEntity> userMap,
-    String clientId) {
+    String? clientId) {
   final list = projectList.where((projectId) {
     final project = projectMap[projectId];
     if (clientId != null &&
         clientId.isNotEmpty &&
-        project.clientId != clientId) {
+        project!.clientId != clientId) {
       return false;
     }
-    if (project.hasClient &&
+    if (project!.hasClient &&
         clientMap.containsKey(project.clientId) &&
-        !clientMap[project.clientId].isActive) {
+        !clientMap[project.clientId]!.isActive) {
       return false;
     }
     return project.isActive;
   }).toList();
 
   list.sort((projectAId, projectBId) {
-    final projectA = projectMap[projectAId];
-    final projectB = projectMap[projectBId];
+    final projectA = projectMap[projectAId]!;
+    final projectB = projectMap[projectBId]!;
     return projectA.compareTo(
         projectB, ProjectFields.name, true, userMap, clientMap);
   });
@@ -170,7 +170,7 @@ List<String> filteredProjectsSelector(
   final filterEntityType = selectionState.filterEntityType;
 
   final list = projectList.where((projectId) {
-    final project = projectMap[projectId];
+    final project = projectMap[projectId]!;
     final client =
         clientMap[project.clientId] ?? ClientEntity(id: project.clientId);
     final user = userMap[project.assignedUserId] ??
@@ -222,8 +222,8 @@ List<String> filteredProjectsSelector(
   }).toList();
 
   list.sort((projectAId, projectBId) {
-    final projectA = projectMap[projectAId];
-    final projectB = projectMap[projectBId];
+    final projectA = projectMap[projectAId]!;
+    final projectB = projectMap[projectBId]!;
     return projectA.compareTo(projectB, projectListState.sortField,
         projectListState.sortAscending, userMap, clientMap);
   });
@@ -237,7 +237,7 @@ Duration taskDurationForProject(
 ) {
   int total = 0;
   taskMap.forEach((index, task) {
-    if (!task.isDeleted && task.projectId == project.id) {
+    if (!task.isDeleted! && task.projectId == project.id) {
       total += task.calculateDuration().inSeconds;
     }
   });

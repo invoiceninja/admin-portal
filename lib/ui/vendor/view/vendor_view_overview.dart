@@ -24,9 +24,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorOverview extends StatelessWidget {
   const VendorOverview({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final VendorViewVM viewModel;
@@ -34,23 +34,23 @@ class VendorOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final vendor = viewModel.vendor;
-    final company = viewModel.company;
+    final company = viewModel.company!;
     final state = StoreProvider.of<AppState>(context).state;
     final statics = state.staticState;
-    final fields = <String, String>{};
+    final fields = <String, String?>{};
     final user =
-        vendor.hasUser ? state.userState.get(vendor.assignedUserId) : null;
+        vendor.hasUser ? state.userState.get(vendor.assignedUserId!) : null;
 
     if (vendor.hasCurrency && vendor.currencyId != company.currencyId) {
       fields[VendorFields.currencyId] =
-          statics.currencyMap[vendor.currencyId].name;
+          statics.currencyMap[vendor.currencyId]!.name;
     }
 
     if (vendor.hasLanguage && vendor.languageId != company.languageId) {
       fields[VendorFields.languageId] =
-          statics.languageMap[vendor.currencyId].name;
+          statics.languageMap[vendor.currencyId]!.name;
     }
 
     if (company.hasCustomField(CustomFieldType.vendor1) &&
@@ -98,15 +98,15 @@ class VendorOverview extends StatelessWidget {
               memoizedCalculateVendorBalance(vendor.id, vendor.currencyId,
                   state.expenseState.map, state.expenseState.list),
               context,
-              currencyId: vendor.currencyId ?? company.currencyId),
+              currencyId: vendor.currencyId),
         ),
         ListDivider(),
-        if ((vendor.privateNotes ?? '').isNotEmpty) ...[
+        if (vendor.privateNotes.isNotEmpty) ...[
           IconMessage(vendor.privateNotes,
               iconData: Icons.lock, copyToClipboard: true),
           ListDivider()
         ],
-        if (vendor.hasUser)
+        if (vendor.hasUser && user != null)
           EntityListTile(
             entity: user,
             isFilter: isFilter,
@@ -152,7 +152,7 @@ class VendorOverview extends StatelessWidget {
                     vendor.id, state.transactionState.map)
                 .present(localization.active, localization.archived),
           ),
-        if ((vendor.publicNotes ?? '').isNotEmpty) ...[
+        if (vendor.publicNotes.isNotEmpty) ...[
           IconMessage(vendor.publicNotes, copyToClipboard: true),
           ListDivider()
         ],

@@ -198,7 +198,7 @@ class EntityAction extends EnumClass {
     return value;
   }
 
-  static EntityAction newEntityType(EntityType entityType) {
+  static EntityAction? newEntityType(EntityType? entityType) {
     switch (entityType) {
       case EntityType.client:
         return EntityAction.newClient;

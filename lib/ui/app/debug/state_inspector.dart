@@ -20,7 +20,7 @@ class StateInspector extends StatefulWidget {
 class _StateInspectorState extends State<StateInspector> {
   String _filter = '';
 
-  dynamic filterJson({dynamic data, String filter}) {
+  dynamic filterJson({dynamic data, required String filter}) {
     filter.split('.')
       ..removeLast()
       ..forEach((part) {
@@ -60,7 +60,7 @@ class _StateInspectorState extends State<StateInspector> {
                 autofocus: true,
                 autocorrect: false,
                 decoration: InputDecoration(
-                  labelText: AppLocalization.of(context).filter,
+                  labelText: AppLocalization.of(context)!.filter,
                 ),
                 onChanged: (value) {
                   setState(() {

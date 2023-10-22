@@ -37,7 +37,7 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
   final FocusScopeNode _focusNode = FocusScopeNode();
 
   void _sendCode() {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -71,7 +71,7 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
   }
 
   void _verifyCode() {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -96,7 +96,7 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
       if (navigator.canPop()) {
         navigator.pop();
       }
-      showToast(localization.verifiedPhoneNumber);
+      showToast(localization!.verifiedPhoneNumber);
       store.dispatch(RefreshData());
     }).catchError((dynamic error) {
       setState(() {
@@ -114,7 +114,7 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     var countryId = state.company.settings.countryId;
@@ -149,9 +149,9 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
                           RegExp(r'[0-9]'),
                         ),
                       ],
-                      initialCountryCode: country.iso2.toUpperCase(),
+                      initialCountryCode: country!.iso2.toUpperCase(),
                       onChanged: (phone) => _phone = phone.completeNumber,
-                      validator: (value) => value.number.isEmpty
+                      validator: (value) => value!.number.isEmpty
                           ? localization.pleaseEnterAValue
                           : null,
                     ),
@@ -193,13 +193,13 @@ class _AccountSmsVerificationState extends State<AccountSmsVerification> {
 
 class UserSmsVerification extends StatefulWidget {
   const UserSmsVerification({
-    Key key,
+    Key? key,
     this.email,
     this.showChangeNumber = false,
   }) : super(key: key);
 
   final bool showChangeNumber;
-  final String email;
+  final String? email;
 
   @override
   State<UserSmsVerification> createState() => _UserSmsVerificationState();
@@ -251,7 +251,7 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
   }
 
   void _verifyCode() {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -287,8 +287,8 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
         navigator.pop();
       }
       showToast(widget.email == null
-          ? localization.verifiedPhoneNumber
-          : localization.disabledTwoFactor);
+          ? localization!.verifiedPhoneNumber
+          : localization!.disabledTwoFactor);
       store.dispatch(RefreshData());
     }).catchError((dynamic error) {
       setState(() {
@@ -306,7 +306,7 @@ class _UserSmsVerificationState extends State<UserSmsVerification> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 

@@ -17,24 +17,24 @@ class ViewScheduleList implements PersistUI {
 
 class ViewSchedule implements PersistUI, PersistPrefs {
   ViewSchedule({
-    @required this.scheduleId,
+    required this.scheduleId,
     this.force = false,
   });
 
-  final String scheduleId;
+  final String? scheduleId;
   final bool force;
 }
 
 class EditSchedule implements PersistUI, PersistPrefs {
   EditSchedule(
-      {@required this.schedule,
+      {required this.schedule,
       this.completer,
       this.cancelCompleter,
       this.force = false});
 
   final ScheduleEntity schedule;
-  final Completer completer;
-  final Completer cancelCompleter;
+  final Completer? completer;
+  final Completer? cancelCompleter;
   final bool force;
 }
 
@@ -47,21 +47,21 @@ class UpdateSchedule implements PersistUI {
 class LoadSchedule {
   LoadSchedule({this.completer, this.scheduleId});
 
-  final Completer completer;
-  final String scheduleId;
+  final Completer? completer;
+  final String? scheduleId;
 }
 
 class LoadScheduleActivity {
   LoadScheduleActivity({this.completer, this.scheduleId});
 
-  final Completer completer;
-  final String scheduleId;
+  final Completer? completer;
+  final String? scheduleId;
 }
 
 class LoadSchedules {
   LoadSchedules({this.completer});
 
-  final Completer completer;
+  final Completer? completer;
 }
 
 class LoadScheduleRequest implements StartLoading {}
@@ -115,8 +115,8 @@ class LoadSchedulesSuccess implements StopLoading {
 class SaveScheduleRequest implements StartSaving {
   SaveScheduleRequest({this.completer, this.schedule});
 
-  final Completer completer;
-  final ScheduleEntity schedule;
+  final Completer? completer;
+  final ScheduleEntity? schedule;
 }
 
 class SaveScheduleSuccess implements StopSaving, PersistData, PersistUI {
@@ -153,7 +153,7 @@ class ArchiveSchedulesSuccess implements StopSaving, PersistData {
 class ArchiveSchedulesFailure implements StopSaving {
   ArchiveSchedulesFailure(this.schedules);
 
-  final List<ScheduleEntity> schedules;
+  final List<ScheduleEntity?> schedules;
 }
 
 class DeleteSchedulesRequest implements StartSaving {
@@ -172,7 +172,7 @@ class DeleteSchedulesSuccess implements StopSaving, PersistData {
 class DeleteSchedulesFailure implements StopSaving {
   DeleteSchedulesFailure(this.schedules);
 
-  final List<ScheduleEntity> schedules;
+  final List<ScheduleEntity?> schedules;
 }
 
 class RestoreSchedulesRequest implements StartSaving {
@@ -191,13 +191,13 @@ class RestoreSchedulesSuccess implements StopSaving, PersistData {
 class RestoreSchedulesFailure implements StopSaving {
   RestoreSchedulesFailure(this.schedules);
 
-  final List<ScheduleEntity> schedules;
+  final List<ScheduleEntity?> schedules;
 }
 
 class FilterSchedules implements PersistUI {
   FilterSchedules(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortSchedules implements PersistUI, PersistPrefs {
@@ -241,15 +241,15 @@ class StartScheduleMultiselect {
 }
 
 class AddToScheduleMultiselect {
-  AddToScheduleMultiselect({@required this.entity});
+  AddToScheduleMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromScheduleMultiselect {
-  RemoveFromScheduleMultiselect({@required this.entity});
+  RemoveFromScheduleMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearScheduleMultiselect {
@@ -259,16 +259,16 @@ class ClearScheduleMultiselect {
 class UpdateScheduleTab implements PersistUI {
   UpdateScheduleTab({this.tabIndex});
 
-  final int tabIndex;
+  final int? tabIndex;
 }
 
 void handleScheduleAction(
-    BuildContext context, List<BaseEntity> schedules, EntityAction action) {
+    BuildContext? context, List<BaseEntity> schedules, EntityAction? action) {
   if (schedules.isEmpty) {
     return;
   }
 
-  final store = StoreProvider.of<AppState>(context);
+  final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
   final schedule = schedules.first as ScheduleEntity;
   final scheduleIds = schedules.map((schedule) => schedule.id).toList();
@@ -279,18 +279,17 @@ void handleScheduleAction(
       break;
     case EntityAction.restore:
       store.dispatch(RestoreSchedulesRequest(
-          snackBarCompleter<Null>(context, localization.restoredSchedule),
+          snackBarCompleter<Null>(localization!.restoredSchedule),
           scheduleIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchiveSchedulesRequest(
-          snackBarCompleter<Null>(context, localization.archivedSchedule),
+          snackBarCompleter<Null>(localization!.archivedSchedule),
           scheduleIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeleteSchedulesRequest(
-          snackBarCompleter<Null>(context, localization.deletedSchedule),
-          scheduleIds));
+          snackBarCompleter<Null>(localization!.deletedSchedule), scheduleIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.scheduleListState.isInMultiselect()) {

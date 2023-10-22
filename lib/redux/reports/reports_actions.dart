@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
@@ -14,12 +13,12 @@ class ViewReports implements PersistUI {
   });
 
   final bool force;
-  final String report;
+  final String? report;
 }
 
 class UpdateReportSettings implements PersistUI {
   UpdateReportSettings({
-    @required this.report,
+    required this.report,
     this.filters,
     this.chart,
     this.group,
@@ -32,13 +31,13 @@ class UpdateReportSettings implements PersistUI {
   });
 
   final String report;
-  final BuiltMap<String, String> filters;
-  final String group;
-  final String selectedGroup;
-  final String chart;
-  final String subgroup;
-  final String sortColumn;
-  final int sortTotalsIndex;
-  final String customStartDate;
-  final String customEndDate;
+  final BuiltMap<String?, String?>? filters;
+  final String? group;
+  final String? selectedGroup;
+  final String? chart;
+  final String? subgroup;
+  final String? sortColumn;
+  final int? sortTotalsIndex;
+  final String? customStartDate;
+  final String? customEndDate;
 }

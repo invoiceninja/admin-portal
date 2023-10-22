@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 
 class ScrollableListView extends StatefulWidget {
   const ScrollableListView({
-    Key key,
-    @required this.children,
+    Key? key,
+    required this.children,
     this.scrollController,
     this.padding,
     this.primary,
     this.showScrollbar = false,
   }) : super(key: key);
 
-  final List<Widget> children;
-  final ScrollController scrollController;
-  final EdgeInsetsGeometry padding;
-  final bool primary;
+  final List<Widget>? children;
+  final ScrollController? scrollController;
+  final EdgeInsetsGeometry? padding;
+  final bool? primary;
   final bool showScrollbar;
 
   @override
@@ -22,7 +22,7 @@ class ScrollableListView extends StatefulWidget {
 }
 
 class _ScrollableListViewState extends State<ScrollableListView> {
-  ScrollController _scrollController;
+  ScrollController? _scrollController;
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _ScrollableListViewState extends State<ScrollableListView> {
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    _scrollController!.dispose();
     super.dispose();
   }
 
@@ -43,7 +43,7 @@ class _ScrollableListViewState extends State<ScrollableListView> {
         : widget.scrollController ?? _scrollController;
     Widget child = ListView(
       padding: widget.padding,
-      children: widget.children,
+      children: widget.children!,
       controller: controller,
       shrinkWrap: true,
       primary: widget.primary,
@@ -63,9 +63,9 @@ class _ScrollableListViewState extends State<ScrollableListView> {
 
 class ScrollableListViewBuilder extends StatefulWidget {
   const ScrollableListViewBuilder({
-    Key key,
-    @required this.itemBuilder,
-    @required this.itemCount,
+    Key? key,
+    required this.itemBuilder,
+    required this.itemCount,
     this.separatorBuilder,
     this.scrollController,
     this.padding,
@@ -73,10 +73,10 @@ class ScrollableListViewBuilder extends StatefulWidget {
   }) : super(key: key);
 
   final IndexedWidgetBuilder itemBuilder;
-  final IndexedWidgetBuilder separatorBuilder;
-  final int itemCount;
-  final ScrollController scrollController;
-  final EdgeInsetsGeometry padding;
+  final IndexedWidgetBuilder? separatorBuilder;
+  final int? itemCount;
+  final ScrollController? scrollController;
+  final EdgeInsetsGeometry? padding;
   final bool primary;
 
   @override
@@ -85,7 +85,7 @@ class ScrollableListViewBuilder extends StatefulWidget {
 }
 
 class _ScrollableListViewBuilderState extends State<ScrollableListViewBuilder> {
-  ScrollController _scrollController;
+  ScrollController? _scrollController;
 
   @override
   void initState() {
@@ -95,7 +95,7 @@ class _ScrollableListViewBuilderState extends State<ScrollableListViewBuilder> {
 
   @override
   void dispose() {
-    _scrollController.dispose();
+    _scrollController!.dispose();
     super.dispose();
   }
 
@@ -104,10 +104,10 @@ class _ScrollableListViewBuilderState extends State<ScrollableListViewBuilder> {
     return widget.separatorBuilder != null
         ? ListView.separated(
             primary: widget.primary,
-            separatorBuilder: widget.separatorBuilder,
+            separatorBuilder: widget.separatorBuilder!,
             padding: widget.padding,
             itemBuilder: widget.itemBuilder,
-            itemCount: widget.itemCount,
+            itemCount: widget.itemCount!,
             controller: widget.primary
                 ? null
                 : widget.scrollController ?? _scrollController,

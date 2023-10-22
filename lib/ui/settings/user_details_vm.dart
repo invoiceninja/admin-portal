@@ -27,7 +27,7 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class UserDetailsScreen extends StatelessWidget {
-  const UserDetailsScreen({Key key}) : super(key: key);
+  const UserDetailsScreen({Key? key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsUserDetails';
 
   @override
@@ -47,19 +47,19 @@ class UserDetailsScreen extends StatelessWidget {
 
 class UserDetailsVM {
   UserDetailsVM({
-    @required this.user,
-    @required this.state,
-    @required this.onChanged,
-    @required this.onSavePressed,
-    @required this.onConnectGooglePressed,
-    @required this.onDisconnectGooglePressed,
-    @required this.onConnectGmailPressed,
-    @required this.onDisconnectGmailPressed,
-    @required this.onDisableTwoFactorPressed,
-    @required this.onConnectMicrosoftPressed,
-    @required this.onDisconnectMicrosoftPressed,
-    @required this.onDisconnectMicrosoftEmailPressed,
-    @required this.onDisconnectApplePressed,
+    required this.user,
+    required this.state,
+    required this.onChanged,
+    required this.onSavePressed,
+    required this.onConnectGooglePressed,
+    required this.onDisconnectGooglePressed,
+    required this.onConnectGmailPressed,
+    required this.onDisconnectGmailPressed,
+    required this.onDisableTwoFactorPressed,
+    required this.onConnectMicrosoftPressed,
+    required this.onDisconnectMicrosoftPressed,
+    required this.onDisconnectMicrosoftEmailPressed,
+    required this.onDisconnectApplePressed,
   });
 
   static UserDetailsVM fromStore(Store<AppState> store) {
@@ -71,8 +71,7 @@ class UserDetailsVM {
       onChanged: (user) => store.dispatch(UpdateUserSettings(user: user)),
       onConnectGmailPressed: (context, completer, password) async {
         /*
-        final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).connectedGmail);
+        final completer = snackBarCompleter<Null>( AppLocalization.of(context).connectedGmail);
         try {
           final signedIn = await GoogleOAuth.grantOfflineAccess(
               (idToken, accessToken, serverAuthCode) {
@@ -110,7 +109,7 @@ class UserDetailsVM {
                   context: context,
                   callback: (password, idToken) {
                     final completer = snackBarCompleter<Null>(
-                        context, AppLocalization.of(context).disconnectedEmail);
+                        AppLocalization.of(context)!.disconnectedEmail);
                     store.dispatch(
                       DisconnectOAuthMailerRequest(
                           user: state.user,
@@ -129,7 +128,7 @@ class UserDetailsVM {
                   context: context,
                   callback: (password, idToken) {
                     final completer = snackBarCompleter<Null>(
-                        context, AppLocalization.of(context).disconnectedGmail);
+                        AppLocalization.of(context)!.disconnectedGmail);
                     store.dispatch(
                       DisconnectOAuthMailerRequest(
                           user: state.user,
@@ -142,7 +141,7 @@ class UserDetailsVM {
       },
       onDisableTwoFactorPressed: (context) {
         final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).disabledTwoFactor);
+            AppLocalization.of(context)!.disabledTwoFactor);
 
         confirmCallback(
             context: context,
@@ -163,7 +162,7 @@ class UserDetailsVM {
       onDisconnectGooglePressed: (context) {
         if (!state.user.hasPassword) {
           showErrorDialog(
-              message: AppLocalization.of(context).pleaseFirstSetAPassword);
+              message: AppLocalization.of(context)!.pleaseFirstSetAPassword);
           return;
         }
 
@@ -174,9 +173,9 @@ class UserDetailsVM {
                   context: context,
                   skipOAuth: true,
                   callback: (password, idToken) {
-                    final completer = snackBarCompleter<Null>(context,
-                        AppLocalization.of(context).disconnectedGoogle);
-                    completer.future.then((value) {
+                    final completer = snackBarCompleter<Null>(
+                        AppLocalization.of(context)!.disconnectedGoogle);
+                    completer.future.then<Null>((_) {
                       GoogleOAuth.disconnect();
                     });
                     store.dispatch(
@@ -192,7 +191,7 @@ class UserDetailsVM {
       },
       onConnectGooglePressed: (context) {
         final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).connectedGoogle);
+            AppLocalization.of(context)!.connectedGoogle);
 
         passwordCallback(
             context: context,
@@ -203,7 +202,7 @@ class UserDetailsVM {
                   if (idToken.isEmpty || accessToken.isEmpty) {
                     GoogleOAuth.signOut();
                     showErrorDialog(
-                        message: AppLocalization.of(context)
+                        message: AppLocalization.of(context)!
                             .anErrorOccurredTryAgain);
                   } else {
                     store.dispatch(
@@ -219,18 +218,18 @@ class UserDetailsVM {
                 });
                 if (!signedIn) {
                   showErrorDialog(
-                      message: AppLocalization.of(navigatorKey.currentContext)
+                      message: AppLocalization.of(navigatorKey.currentContext!)!
                           .anErrorOccurredTryAgain);
                 }
               } catch (error) {
-                showErrorDialog(message: error);
+                showErrorDialog(message: '$error');
               }
             });
       },
       onDisconnectMicrosoftPressed: (context) {
         if (!state.user.hasPassword) {
           showErrorDialog(
-              message: AppLocalization.of(context).pleaseFirstSetAPassword);
+              message: AppLocalization.of(context)!.pleaseFirstSetAPassword);
           return;
         }
 
@@ -241,8 +240,8 @@ class UserDetailsVM {
               passwordCallback(
                   context: context,
                   callback: (password, idToken) {
-                    final completer = snackBarCompleter<Null>(context,
-                        AppLocalization.of(context).disconnectedMicrosoft);
+                    final completer = snackBarCompleter<Null>(
+                        AppLocalization.of(context)!.disconnectedMicrosoft);
                     store.dispatch(
                       DisconnecOAuthUserRequest(
                         user: state.user,
@@ -257,7 +256,7 @@ class UserDetailsVM {
       onDisconnectApplePressed: (context) {
         if (!state.user.hasPassword) {
           showErrorDialog(
-              message: AppLocalization.of(context).pleaseFirstSetAPassword);
+              message: AppLocalization.of(context)!.pleaseFirstSetAPassword);
           return;
         }
 
@@ -269,7 +268,7 @@ class UserDetailsVM {
                   skipOAuth: true,
                   callback: (password, idToken) {
                     final completer = snackBarCompleter<Null>(
-                        context, AppLocalization.of(context).disconnectedApple);
+                        AppLocalization.of(context)!.disconnectedApple);
                     store.dispatch(
                       DisconnecOAuthUserRequest(
                         user: state.user,
@@ -283,7 +282,7 @@ class UserDetailsVM {
       },
       onConnectMicrosoftPressed: (context) {
         final completer = snackBarCompleter<Null>(
-            context, AppLocalization.of(context).connectedMicrosoft);
+            AppLocalization.of(context)!.connectedMicrosoft);
 
         passwordCallback(
             context: context,
@@ -303,41 +302,47 @@ class UserDetailsVM {
                   showErrorDialog(message: error);
                 });
               } catch (error) {
-                showErrorDialog(message: error);
+                showErrorDialog(message: '$error');
               }
             });
       },
       onSavePressed: (context) {
         Debouncer.runOnComplete(() {
-          final localization = AppLocalization.of(context);
-          final completer =
-              snackBarCompleter<Null>(context, localization.updatedUser);
+          final localization = AppLocalization.of(context)!;
+          final completer = snackBarCompleter<Null>(localization.updatedUser);
           final appBuilder = AppBuilder.of(context);
+          final origUser = state.user;
           final origUserSettings = state.userCompany.settings;
 
-          completer.future.then((_) async {
+          completer.future.then<Null>((_) async {
+            final newUser = store.state.user;
             final newUserSettings = store.state.userCompany.settings;
             if (origUserSettings.includeDeletedClients !=
                     newUserSettings.includeDeletedClients ||
                 origUserSettings.numberYearsActive !=
                     newUserSettings.numberYearsActive) {
               store.dispatch(RefreshData(
-                completer: snackBarCompleter<Null>(
-                    navigatorKey.currentContext, localization.refreshComplete,
+                completer: snackBarCompleter<Null>(localization.refreshComplete,
                     shouldPop: true),
                 clearData: true,
                 includeStatic: true,
               ));
 
               await showDialog<AlertDialog>(
-                  context: navigatorKey.currentContext,
+                  context: navigatorKey.currentContext!,
                   barrierDismissible: false,
                   builder: (BuildContext context) => SimpleDialog(
                         children: <Widget>[LoadingDialog()],
                       ));
+            } else if (origUser.languageId != newUser.languageId) {
+              store.dispatch(RefreshData(
+                includeStatic: true,
+                completer: Completer<dynamic>()
+                  ..future.then((dynamic value) => appBuilder!.rebuild()),
+              ));
             }
 
-            appBuilder.rebuild();
+            appBuilder!.rebuild();
           });
 
           confirmCallback(

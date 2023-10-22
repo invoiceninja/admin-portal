@@ -7,7 +7,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-ClientContactEntity creditContactSelector(
+ClientContactEntity? creditContactSelector(
     InvoiceEntity credit, ClientEntity client) {
   var contactIds = credit.invitations
       .map((invitation) => invitation.clientContactId)
@@ -26,7 +26,7 @@ var memoizedDropdownCreditList = memo7(
             BuiltList<String> creditList,
             String clientId,
             BuiltMap<String, UserEntity> userMap,
-            List<String> excludedIds) =>
+            List<String?> excludedIds) =>
         dropdownCreditSelector(
           creditMap,
           clientMap,
@@ -44,19 +44,17 @@ List<String> dropdownCreditSelector(
     BuiltList<String> creditList,
     String clientId,
     BuiltMap<String, UserEntity> userMap,
-    List<String> excludedIds) {
+    List<String?> excludedIds) {
   final list = creditList.where((creditId) {
     final credit = creditMap[creditId];
     if (excludedIds.contains(creditId)) {
       return false;
     }
-    if (clientId != null &&
-        clientId.isNotEmpty &&
-        credit.clientId != clientId) {
+    if (clientId.isNotEmpty && credit!.clientId != clientId) {
       return false;
     }
-    if (!clientMap.containsKey(credit.clientId) ||
-        !clientMap[credit.clientId].isActive) {
+    if (!clientMap.containsKey(credit!.clientId) ||
+        !clientMap[credit.clientId]!.isActive) {
       return false;
     }
     if (credit.balanceOrAmount == 0) {
@@ -66,7 +64,7 @@ List<String> dropdownCreditSelector(
   }).toList();
 
   list.sort((creditAId, creditBId) {
-    final creditA = creditMap[creditAId];
+    final creditA = creditMap[creditAId]!;
     final creditB = creditMap[creditBId];
     return creditA.compareTo(
         invoice: creditB,
@@ -80,7 +78,7 @@ List<String> dropdownCreditSelector(
   return list;
 }
 
-ClientEntity creditClientSelector(
+ClientEntity? creditClientSelector(
     InvoiceEntity credit, BuiltMap<String, ClientEntity> clientMap) {
   return clientMap[credit.clientId];
 }
@@ -108,7 +106,7 @@ List<String> filteredCreditsSelector(
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;
 
-  final Map<String, List<String>> creditPaymentMap = {};
+  final Map<String?, List<String>> creditPaymentMap = {};
   if (filterEntityType == EntityType.payment) {
     paymentMap.forEach((paymentId, payment) {
       payment.creditPaymentables.forEach((creditPaymentable) {
@@ -121,7 +119,7 @@ List<String> filteredCreditsSelector(
   }
 
   final list = creditList.where((creditId) {
-    final credit = creditMap[creditId];
+    final credit = creditMap[creditId]!;
     final client =
         clientMap[credit.clientId] ?? ClientEntity(id: credit.clientId);
 
@@ -190,7 +188,7 @@ List<String> filteredCreditsSelector(
   }).toList();
 
   list.sort((creditAId, creditBId) {
-    return creditMap[creditAId].compareTo(
+    return creditMap[creditAId]!.compareTo(
         invoice: creditMap[creditBId],
         sortField: creditListState.sortField,
         sortAscending: creditListState.sortAscending,

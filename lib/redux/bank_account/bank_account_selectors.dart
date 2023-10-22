@@ -10,7 +10,7 @@ var memoizedDropdownBankAccountList = memo5(
             BuiltList<String> bankAccountList,
             StaticState staticState,
             BuiltMap<String, UserEntity> userMap,
-            String bankAccountId) =>
+            String? bankAccountId) =>
         dropdownBankAccountsSelector(bankAccountMap, bankAccountList,
             staticState, userMap, bankAccountId));
 
@@ -19,9 +19,9 @@ List<String> dropdownBankAccountsSelector(
     BuiltList<String> bankAccountList,
     StaticState staticState,
     BuiltMap<String, UserEntity> userMap,
-    String bankAccountId) {
+    String? bankAccountId) {
   final list = bankAccountList.where((bankAccountId) {
-    final bankAccount = bankAccountMap[bankAccountId];
+    final bankAccount = bankAccountMap[bankAccountId]!;
     /*
     if (clientId != null && clientId > 0 && bankAccount.clientId != clientId) {
       return false;
@@ -31,7 +31,7 @@ List<String> dropdownBankAccountsSelector(
   }).toList();
 
   list.sort((bankAccountAId, bankAccountBId) {
-    final bankAccountA = bankAccountMap[bankAccountAId];
+    final bankAccountA = bankAccountMap[bankAccountAId]!;
     final bankAccountB = bankAccountMap[bankAccountBId];
     return bankAccountA.compareTo(bankAccountB, BankAccountFields.name, true);
   });
@@ -56,11 +56,11 @@ List<String> filteredBankAccountsSelector(
 
   final list = bankAccountList.where((bankAccountId) {
     final bankAccount = bankAccountMap[bankAccountId];
-    if (filterEntityId != null && bankAccount.id != filterEntityId) {
+    if (filterEntityId != null && bankAccount!.id != filterEntityId) {
       return false;
     } else {}
 
-    if (!bankAccount.matchesStates(bankAccountListState.stateFilters)) {
+    if (!bankAccount!.matchesStates(bankAccountListState.stateFilters)) {
       return false;
     }
 
@@ -68,7 +68,7 @@ List<String> filteredBankAccountsSelector(
   }).toList();
 
   list.sort((bankAccountAId, bankAccountBId) {
-    final bankAccountA = bankAccountMap[bankAccountAId];
+    final bankAccountA = bankAccountMap[bankAccountAId]!;
     final bankAccountB = bankAccountMap[bankAccountBId];
     return bankAccountA.compareTo(bankAccountB, bankAccountListState.sortField,
         bankAccountListState.sortAscending);
@@ -77,7 +77,7 @@ List<String> filteredBankAccountsSelector(
   return list;
 }
 
-bool hasBankAccountChanges(BankAccountEntity bankAccount,
+bool? hasBankAccountChanges(BankAccountEntity bankAccount,
         BuiltMap<String, BankAccountEntity> bankAccountMap) =>
     bankAccount.isNew
         ? bankAccount.isChanged

@@ -16,9 +16,9 @@ import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class DatePicker extends StatefulWidget {
   const DatePicker({
-    Key key,
-    @required this.onSelected,
-    @required this.selectedDate,
+    Key? key,
+    required this.onSelected,
+    required this.selectedDate,
     this.labelText,
     this.validator,
     this.autoValidate = false,
@@ -29,16 +29,16 @@ class DatePicker extends StatefulWidget {
     this.hint,
   }) : super(key: key);
 
-  final String labelText;
-  final String selectedDate;
+  final String? labelText;
+  final String? selectedDate;
   final Function(String, bool) onSelected;
-  final Function(String) validator;
+  final Function(String)? validator;
   final bool autoValidate;
   final bool allowClearing;
-  final String message;
-  final DateTime firstDate;
+  final String? message;
+  final DateTime? firstDate;
   final bool autofocus;
-  final String hint;
+  final String? hint;
 
   @override
   _DatePickerState createState() => new _DatePickerState();
@@ -47,7 +47,7 @@ class DatePicker extends StatefulWidget {
 class _DatePickerState extends State<DatePicker> {
   final _textController = TextEditingController();
   final _focusNode = FocusNode();
-  String _pendingValue;
+  String? _pendingValue;
 
   @override
   void initState() {
@@ -86,8 +86,8 @@ class _DatePickerState extends State<DatePicker> {
   void _showDatePicker() async {
     DateTime firstDate = DateTime.now();
     final DateTime initialDate =
-        widget.selectedDate != null && widget.selectedDate.isNotEmpty
-            ? DateTime.tryParse(widget.selectedDate)
+        widget.selectedDate != null && widget.selectedDate!.isNotEmpty
+            ? DateTime.tryParse(widget.selectedDate!)!
             : DateTime.now();
 
     if (widget.firstDate != null) {
@@ -99,7 +99,7 @@ class _DatePickerState extends State<DatePicker> {
     }
 
     final store = StoreProvider.of<AppState>(context);
-    final DateTime selectedDate = await showDatePicker(
+    final DateTime? selectedDate = await showDatePicker(
       context: context,
       initialDate: initialDate,
       firstDate: firstDate,
@@ -117,7 +117,7 @@ class _DatePickerState extends State<DatePicker> {
 
   @override
   Widget build(BuildContext context) {
-    var label = widget.labelText;
+    var label = widget.labelText ?? '';
     if (widget.message != null && (widget.selectedDate ?? '').isEmpty) {
       label += ' • ${widget.message}';
     }
@@ -130,7 +130,7 @@ class _DatePickerState extends State<DatePicker> {
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         hintText: widget.hint ?? '',
-        labelText: _pendingValue ?? label ?? '',
+        labelText: _pendingValue ?? label,
         suffixIcon:
             widget.allowClearing && (widget.selectedDate ?? '').isNotEmpty
                 ? IconButton(
@@ -153,11 +153,11 @@ class _DatePickerState extends State<DatePicker> {
           final dateAsNumber = value.replaceAll('/', '').replaceAll('\\', '');
           if (value.startsWith('+') || value.startsWith('-')) {
             date = convertDateTimeToSqlDate(
-                DateTime.now().add(Duration(days: parseInt(value))));
+                DateTime.now().add(Duration(days: parseInt(value)!)));
           } else if (isAllDigits(dateAsNumber) || value.length <= 5) {
             String firstPart = '01';
             String secondPart = '01';
-            int year = DateTime.now().year;
+            int? year = DateTime.now().year;
             if (value.contains('/')) {
               final parts = value.split('/');
               if (parts[0].length == 1) {
@@ -172,7 +172,7 @@ class _DatePickerState extends State<DatePicker> {
               }
               if (parts.length == 3) {
                 year = parseInt(parts[2]);
-                if (year < 100) {
+                if (year! < 100) {
                   year += 2000;
                 }
               }
@@ -190,7 +190,7 @@ class _DatePickerState extends State<DatePicker> {
               }
               if (parts.length == 3) {
                 year = parseInt(parts[2]);
-                if (year < 100) {
+                if (year! < 100) {
                   year += 2000;
                 }
               }
@@ -221,7 +221,7 @@ class _DatePickerState extends State<DatePicker> {
 
                 if (value.length == 6) {
                   year = int.tryParse(value.substring(4, 6));
-                  if (year < 30) {
+                  if (year! < 30) {
                     year += 2000;
                   } else {
                     year += 1900;
@@ -265,7 +265,7 @@ class _DatePickerState extends State<DatePicker> {
             }
           }
 
-          if ((date ?? '').isNotEmpty) {
+          if (date.isNotEmpty) {
             widget.onSelected(date, true);
           }
 

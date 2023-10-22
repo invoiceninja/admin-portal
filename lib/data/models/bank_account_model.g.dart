@@ -24,10 +24,10 @@ class _$BankAccountListResponseSerializer
   final String wireName = 'BankAccountListResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, BankAccountListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(
@@ -39,21 +39,21 @@ class _$BankAccountListResponseSerializer
 
   @override
   BankAccountListResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new BankAccountListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(BankAccountEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(BankAccountEntity)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -73,10 +73,10 @@ class _$BankAccountItemResponseSerializer
   final String wireName = 'BankAccountItemResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, BankAccountItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(BankAccountEntity)),
@@ -87,19 +87,19 @@ class _$BankAccountItemResponseSerializer
 
   @override
   BankAccountItemResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new BankAccountItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(BankAccountEntity))
+                  specifiedType: const FullType(BankAccountEntity))!
               as BankAccountEntity);
           break;
       }
@@ -117,9 +117,9 @@ class _$BankAccountEntitySerializer
   final String wireName = 'BankAccountEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, BankAccountEntity object,
+  Iterable<Object?> serialize(Serializers serializers, BankAccountEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'bank_account_name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'bank_account_status',
@@ -157,7 +157,7 @@ class _$BankAccountEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.isChanged;
     if (value != null) {
       result
@@ -191,83 +191,83 @@ class _$BankAccountEntitySerializer
 
   @override
   BankAccountEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new BankAccountEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'bank_account_name':
           result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'bank_account_status':
           result.status = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'bank_account_type':
           result.type = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'provider_name':
           result.provider = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'from_date':
           result.fromDate = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'auto_sync':
           result.autoSync = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'disabled_upstream':
           result.disabledUpstream = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'balance':
           result.balance = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'currency':
           result.currency = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'archived_at':
           result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'user_id':
           result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -281,10 +281,10 @@ class _$BankAccountListResponse extends BankAccountListResponse {
   final BuiltList<BankAccountEntity> data;
 
   factory _$BankAccountListResponse(
-          [void Function(BankAccountListResponseBuilder) updates]) =>
+          [void Function(BankAccountListResponseBuilder)? updates]) =>
       (new BankAccountListResponseBuilder()..update(updates))._build();
 
-  _$BankAccountListResponse._({this.data}) : super._() {
+  _$BankAccountListResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
         data, r'BankAccountListResponse', 'data');
   }
@@ -304,10 +304,10 @@ class _$BankAccountListResponse extends BankAccountListResponse {
     return other is BankAccountListResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -325,12 +325,12 @@ class _$BankAccountListResponse extends BankAccountListResponse {
 class BankAccountListResponseBuilder
     implements
         Builder<BankAccountListResponse, BankAccountListResponseBuilder> {
-  _$BankAccountListResponse _$v;
+  _$BankAccountListResponse? _$v;
 
-  ListBuilder<BankAccountEntity> _data;
+  ListBuilder<BankAccountEntity>? _data;
   ListBuilder<BankAccountEntity> get data =>
       _$this._data ??= new ListBuilder<BankAccountEntity>();
-  set data(ListBuilder<BankAccountEntity> data) => _$this._data = data;
+  set data(ListBuilder<BankAccountEntity>? data) => _$this._data = data;
 
   BankAccountListResponseBuilder();
 
@@ -350,7 +350,7 @@ class BankAccountListResponseBuilder
   }
 
   @override
-  void update(void Function(BankAccountListResponseBuilder) updates) {
+  void update(void Function(BankAccountListResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -362,7 +362,7 @@ class BankAccountListResponseBuilder
     try {
       _$result = _$v ?? new _$BankAccountListResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -382,10 +382,10 @@ class _$BankAccountItemResponse extends BankAccountItemResponse {
   final BankAccountEntity data;
 
   factory _$BankAccountItemResponse(
-          [void Function(BankAccountItemResponseBuilder) updates]) =>
+          [void Function(BankAccountItemResponseBuilder)? updates]) =>
       (new BankAccountItemResponseBuilder()..update(updates))._build();
 
-  _$BankAccountItemResponse._({this.data}) : super._() {
+  _$BankAccountItemResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
         data, r'BankAccountItemResponse', 'data');
   }
@@ -405,10 +405,10 @@ class _$BankAccountItemResponse extends BankAccountItemResponse {
     return other is BankAccountItemResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -426,12 +426,12 @@ class _$BankAccountItemResponse extends BankAccountItemResponse {
 class BankAccountItemResponseBuilder
     implements
         Builder<BankAccountItemResponse, BankAccountItemResponseBuilder> {
-  _$BankAccountItemResponse _$v;
+  _$BankAccountItemResponse? _$v;
 
-  BankAccountEntityBuilder _data;
+  BankAccountEntityBuilder? _data;
   BankAccountEntityBuilder get data =>
       _$this._data ??= new BankAccountEntityBuilder();
-  set data(BankAccountEntityBuilder data) => _$this._data = data;
+  set data(BankAccountEntityBuilder? data) => _$this._data = data;
 
   BankAccountItemResponseBuilder();
 
@@ -451,7 +451,7 @@ class BankAccountItemResponseBuilder
   }
 
   @override
-  void update(void Function(BankAccountItemResponseBuilder) updates) {
+  void update(void Function(BankAccountItemResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -463,7 +463,7 @@ class BankAccountItemResponseBuilder
     try {
       _$result = _$v ?? new _$BankAccountItemResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -498,7 +498,7 @@ class _$BankAccountEntity extends BankAccountEntity {
   @override
   final String currency;
   @override
-  final bool isChanged;
+  final bool? isChanged;
   @override
   final int createdAt;
   @override
@@ -506,36 +506,36 @@ class _$BankAccountEntity extends BankAccountEntity {
   @override
   final int archivedAt;
   @override
-  final bool isDeleted;
+  final bool? isDeleted;
   @override
-  final String createdUserId;
+  final String? createdUserId;
   @override
-  final String assignedUserId;
+  final String? assignedUserId;
   @override
   final String id;
 
   factory _$BankAccountEntity(
-          [void Function(BankAccountEntityBuilder) updates]) =>
+          [void Function(BankAccountEntityBuilder)? updates]) =>
       (new BankAccountEntityBuilder()..update(updates))._build();
 
   _$BankAccountEntity._(
-      {this.name,
-      this.status,
-      this.type,
-      this.provider,
-      this.fromDate,
-      this.autoSync,
-      this.disabledUpstream,
-      this.balance,
-      this.currency,
+      {required this.name,
+      required this.status,
+      required this.type,
+      required this.provider,
+      required this.fromDate,
+      required this.autoSync,
+      required this.disabledUpstream,
+      required this.balance,
+      required this.currency,
       this.isChanged,
-      this.createdAt,
-      this.updatedAt,
-      this.archivedAt,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.archivedAt,
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.id})
+      required this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'BankAccountEntity', 'name');
     BuiltValueNullFieldError.checkNotNull(
@@ -593,10 +593,10 @@ class _$BankAccountEntity extends BankAccountEntity {
         id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, status.hashCode);
@@ -645,78 +645,78 @@ class _$BankAccountEntity extends BankAccountEntity {
 
 class BankAccountEntityBuilder
     implements Builder<BankAccountEntity, BankAccountEntityBuilder> {
-  _$BankAccountEntity _$v;
+  _$BankAccountEntity? _$v;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
 
-  String _status;
-  String get status => _$this._status;
-  set status(String status) => _$this._status = status;
+  String? _status;
+  String? get status => _$this._status;
+  set status(String? status) => _$this._status = status;
 
-  String _type;
-  String get type => _$this._type;
-  set type(String type) => _$this._type = type;
+  String? _type;
+  String? get type => _$this._type;
+  set type(String? type) => _$this._type = type;
 
-  String _provider;
-  String get provider => _$this._provider;
-  set provider(String provider) => _$this._provider = provider;
+  String? _provider;
+  String? get provider => _$this._provider;
+  set provider(String? provider) => _$this._provider = provider;
 
-  String _fromDate;
-  String get fromDate => _$this._fromDate;
-  set fromDate(String fromDate) => _$this._fromDate = fromDate;
+  String? _fromDate;
+  String? get fromDate => _$this._fromDate;
+  set fromDate(String? fromDate) => _$this._fromDate = fromDate;
 
-  bool _autoSync;
-  bool get autoSync => _$this._autoSync;
-  set autoSync(bool autoSync) => _$this._autoSync = autoSync;
+  bool? _autoSync;
+  bool? get autoSync => _$this._autoSync;
+  set autoSync(bool? autoSync) => _$this._autoSync = autoSync;
 
-  bool _disabledUpstream;
-  bool get disabledUpstream => _$this._disabledUpstream;
-  set disabledUpstream(bool disabledUpstream) =>
+  bool? _disabledUpstream;
+  bool? get disabledUpstream => _$this._disabledUpstream;
+  set disabledUpstream(bool? disabledUpstream) =>
       _$this._disabledUpstream = disabledUpstream;
 
-  double _balance;
-  double get balance => _$this._balance;
-  set balance(double balance) => _$this._balance = balance;
+  double? _balance;
+  double? get balance => _$this._balance;
+  set balance(double? balance) => _$this._balance = balance;
 
-  String _currency;
-  String get currency => _$this._currency;
-  set currency(String currency) => _$this._currency = currency;
+  String? _currency;
+  String? get currency => _$this._currency;
+  set currency(String? currency) => _$this._currency = currency;
 
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+  bool? _isChanged;
+  bool? get isChanged => _$this._isChanged;
+  set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
 
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+  int? _archivedAt;
+  int? get archivedAt => _$this._archivedAt;
+  set archivedAt(int? archivedAt) => _$this._archivedAt = archivedAt;
 
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+  bool? _isDeleted;
+  bool? get isDeleted => _$this._isDeleted;
+  set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
 
-  String _createdUserId;
-  String get createdUserId => _$this._createdUserId;
-  set createdUserId(String createdUserId) =>
+  String? _createdUserId;
+  String? get createdUserId => _$this._createdUserId;
+  set createdUserId(String? createdUserId) =>
       _$this._createdUserId = createdUserId;
 
-  String _assignedUserId;
-  String get assignedUserId => _$this._assignedUserId;
-  set assignedUserId(String assignedUserId) =>
+  String? _assignedUserId;
+  String? get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String? assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   BankAccountEntityBuilder() {
     BankAccountEntity._initializeBuilder(this);
@@ -754,7 +754,7 @@ class BankAccountEntityBuilder
   }
 
   @override
-  void update(void Function(BankAccountEntityBuilder) updates) {
+  void update(void Function(BankAccountEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

@@ -18,9 +18,9 @@ class _$ProductStateSerializer implements StructuredSerializer<ProductState> {
   final String wireName = 'ProductState';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, ProductState object,
+  Iterable<Object?> serialize(Serializers serializers, ProductState object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'map',
       serializers.serialize(object.map,
           specifiedType: const FullType(BuiltMap,
@@ -35,28 +35,29 @@ class _$ProductStateSerializer implements StructuredSerializer<ProductState> {
   }
 
   @override
-  ProductState deserialize(Serializers serializers, Iterable<Object> serialized,
+  ProductState deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ProductStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(ProductEntity)
-              ])));
+              ]))!);
           break;
         case 'list':
           result.list.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList<Object>);
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -73,9 +74,9 @@ class _$ProductUIStateSerializer
   final String wireName = 'ProductUIState';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, ProductUIState object,
+  Iterable<Object?> serialize(Serializers serializers, ProductUIState object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'listUIState',
       serializers.serialize(object.listUIState,
           specifiedType: const FullType(ListUIState)),
@@ -83,7 +84,7 @@ class _$ProductUIStateSerializer
       serializers.serialize(object.tabIndex,
           specifiedType: const FullType(int)),
     ];
-    Object value;
+    Object? value;
     value = object.editing;
     if (value != null) {
       result
@@ -110,35 +111,35 @@ class _$ProductUIStateSerializer
 
   @override
   ProductUIState deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ProductUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'editing':
           result.editing.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ProductEntity)) as ProductEntity);
+              specifiedType: const FullType(ProductEntity))! as ProductEntity);
           break;
         case 'listUIState':
           result.listUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ListUIState)) as ListUIState);
+              specifiedType: const FullType(ListUIState))! as ListUIState);
           break;
         case 'selectedId':
           result.selectedId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'forceSelected':
           result.forceSelected = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'tabIndex':
           result.tabIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
       }
     }
@@ -153,10 +154,10 @@ class _$ProductState extends ProductState {
   @override
   final BuiltList<String> list;
 
-  factory _$ProductState([void Function(ProductStateBuilder) updates]) =>
+  factory _$ProductState([void Function(ProductStateBuilder)? updates]) =>
       (new ProductStateBuilder()..update(updates))._build();
 
-  _$ProductState._({this.map, this.list}) : super._() {
+  _$ProductState._({required this.map, required this.list}) : super._() {
     BuiltValueNullFieldError.checkNotNull(map, r'ProductState', 'map');
     BuiltValueNullFieldError.checkNotNull(list, r'ProductState', 'list');
   }
@@ -174,10 +175,10 @@ class _$ProductState extends ProductState {
     return other is ProductState && map == other.map && list == other.list;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, map.hashCode);
     _$hash = $jc(_$hash, list.hashCode);
@@ -196,16 +197,16 @@ class _$ProductState extends ProductState {
 
 class ProductStateBuilder
     implements Builder<ProductState, ProductStateBuilder> {
-  _$ProductState _$v;
+  _$ProductState? _$v;
 
-  MapBuilder<String, ProductEntity> _map;
+  MapBuilder<String, ProductEntity>? _map;
   MapBuilder<String, ProductEntity> get map =>
       _$this._map ??= new MapBuilder<String, ProductEntity>();
-  set map(MapBuilder<String, ProductEntity> map) => _$this._map = map;
+  set map(MapBuilder<String, ProductEntity>? map) => _$this._map = map;
 
-  ListBuilder<String> _list;
+  ListBuilder<String>? _list;
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
-  set list(ListBuilder<String> list) => _$this._list = list;
+  set list(ListBuilder<String>? list) => _$this._list = list;
 
   ProductStateBuilder();
 
@@ -226,7 +227,7 @@ class ProductStateBuilder
   }
 
   @override
-  void update(void Function(ProductStateBuilder) updates) {
+  void update(void Function(ProductStateBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -239,7 +240,7 @@ class ProductStateBuilder
       _$result =
           _$v ?? new _$ProductState._(map: map.build(), list: list.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'map';
         map.build();
@@ -258,29 +259,29 @@ class ProductStateBuilder
 
 class _$ProductUIState extends ProductUIState {
   @override
-  final ProductEntity editing;
+  final ProductEntity? editing;
   @override
   final ListUIState listUIState;
   @override
-  final String selectedId;
+  final String? selectedId;
   @override
-  final bool forceSelected;
+  final bool? forceSelected;
   @override
   final int tabIndex;
   @override
-  final Completer<SelectableEntity> saveCompleter;
+  final Completer<SelectableEntity>? saveCompleter;
   @override
-  final Completer<Null> cancelCompleter;
+  final Completer<Null>? cancelCompleter;
 
-  factory _$ProductUIState([void Function(ProductUIStateBuilder) updates]) =>
+  factory _$ProductUIState([void Function(ProductUIStateBuilder)? updates]) =>
       (new ProductUIStateBuilder()..update(updates))._build();
 
   _$ProductUIState._(
       {this.editing,
-      this.listUIState,
+      required this.listUIState,
       this.selectedId,
       this.forceSelected,
-      this.tabIndex,
+      required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
       : super._() {
@@ -311,10 +312,10 @@ class _$ProductUIState extends ProductUIState {
         cancelCompleter == other.cancelCompleter;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, editing.hashCode);
     _$hash = $jc(_$hash, listUIState.hashCode);
@@ -343,40 +344,40 @@ class _$ProductUIState extends ProductUIState {
 
 class ProductUIStateBuilder
     implements Builder<ProductUIState, ProductUIStateBuilder> {
-  _$ProductUIState _$v;
+  _$ProductUIState? _$v;
 
-  ProductEntityBuilder _editing;
+  ProductEntityBuilder? _editing;
   ProductEntityBuilder get editing =>
       _$this._editing ??= new ProductEntityBuilder();
-  set editing(ProductEntityBuilder editing) => _$this._editing = editing;
+  set editing(ProductEntityBuilder? editing) => _$this._editing = editing;
 
-  ListUIStateBuilder _listUIState;
+  ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
       _$this._listUIState ??= new ListUIStateBuilder();
-  set listUIState(ListUIStateBuilder listUIState) =>
+  set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
-  String _selectedId;
-  String get selectedId => _$this._selectedId;
-  set selectedId(String selectedId) => _$this._selectedId = selectedId;
+  String? _selectedId;
+  String? get selectedId => _$this._selectedId;
+  set selectedId(String? selectedId) => _$this._selectedId = selectedId;
 
-  bool _forceSelected;
-  bool get forceSelected => _$this._forceSelected;
-  set forceSelected(bool forceSelected) =>
+  bool? _forceSelected;
+  bool? get forceSelected => _$this._forceSelected;
+  set forceSelected(bool? forceSelected) =>
       _$this._forceSelected = forceSelected;
 
-  int _tabIndex;
-  int get tabIndex => _$this._tabIndex;
-  set tabIndex(int tabIndex) => _$this._tabIndex = tabIndex;
+  int? _tabIndex;
+  int? get tabIndex => _$this._tabIndex;
+  set tabIndex(int? tabIndex) => _$this._tabIndex = tabIndex;
 
-  Completer<SelectableEntity> _saveCompleter;
-  Completer<SelectableEntity> get saveCompleter => _$this._saveCompleter;
-  set saveCompleter(Completer<SelectableEntity> saveCompleter) =>
+  Completer<SelectableEntity>? _saveCompleter;
+  Completer<SelectableEntity>? get saveCompleter => _$this._saveCompleter;
+  set saveCompleter(Completer<SelectableEntity>? saveCompleter) =>
       _$this._saveCompleter = saveCompleter;
 
-  Completer<Null> _cancelCompleter;
-  Completer<Null> get cancelCompleter => _$this._cancelCompleter;
-  set cancelCompleter(Completer<Null> cancelCompleter) =>
+  Completer<Null>? _cancelCompleter;
+  Completer<Null>? get cancelCompleter => _$this._cancelCompleter;
+  set cancelCompleter(Completer<Null>? cancelCompleter) =>
       _$this._cancelCompleter = cancelCompleter;
 
   ProductUIStateBuilder();
@@ -403,7 +404,7 @@ class ProductUIStateBuilder
   }
 
   @override
-  void update(void Function(ProductUIStateBuilder) updates) {
+  void update(void Function(ProductUIStateBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -424,7 +425,7 @@ class ProductUIStateBuilder
               saveCompleter: saveCompleter,
               cancelCompleter: cancelCompleter);
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'editing';
         _editing?.build();

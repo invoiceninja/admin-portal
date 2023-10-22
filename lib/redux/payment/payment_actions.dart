@@ -24,33 +24,33 @@ class ViewPaymentList implements PersistUI {
   });
 
   final bool force;
-  final int page;
+  final int? page;
 }
 
 class ViewPayment implements PersistUI, PersistPrefs {
   ViewPayment({
-    @required this.paymentId,
+    required this.paymentId,
     this.force = false,
   });
 
-  final String paymentId;
+  final String? paymentId;
   final bool force;
 }
 
 class EditPayment implements PersistUI, PersistPrefs {
-  EditPayment({@required this.payment, this.completer, this.force = false});
+  EditPayment({required this.payment, this.completer, this.force = false});
 
   final PaymentEntity payment;
-  final Completer completer;
+  final Completer? completer;
   final bool force;
 }
 
 class ViewRefundPayment implements PersistUI, PersistPrefs {
   ViewRefundPayment(
-      {@required this.payment, this.completer, this.force = false});
+      {required this.payment, this.completer, this.force = false});
 
   final PaymentEntity payment;
-  final Completer completer;
+  final Completer? completer;
   final bool force;
 }
 
@@ -63,21 +63,21 @@ class UpdatePayment implements PersistUI {
 class LoadPayment {
   LoadPayment({this.completer, this.paymentId});
 
-  final Completer completer;
-  final String paymentId;
+  final Completer? completer;
+  final String? paymentId;
 }
 
 class LoadPaymentActivity {
   LoadPaymentActivity({this.completer, this.paymentId});
 
-  final Completer completer;
-  final String paymentId;
+  final Completer? completer;
+  final String? paymentId;
 }
 
 class LoadPayments {
   LoadPayments({this.completer, this.page = 1});
 
-  final Completer completer;
+  final Completer? completer;
   final int page;
 }
 
@@ -131,8 +131,8 @@ class LoadPaymentsSuccess implements StopLoading {
 
 class SavePaymentRequest implements StartSaving {
   SavePaymentRequest({
-    @required this.completer,
-    @required this.payment,
+    required this.completer,
+    required this.payment,
   });
 
   final Completer completer;
@@ -159,8 +159,8 @@ class SavePaymentFailure implements StopSaving {
 
 class RefundPaymentRequest implements StartSaving {
   RefundPaymentRequest({
-    @required this.completer,
-    @required this.payment,
+    required this.completer,
+    required this.payment,
   });
 
   final Completer completer;
@@ -195,7 +195,7 @@ class ArchivePaymentsSuccess implements StopSaving, PersistData {
 class ArchivePaymentsFailure implements StopSaving {
   ArchivePaymentsFailure(this.payments);
 
-  final List<PaymentEntity> payments;
+  final List<PaymentEntity?> payments;
 }
 
 class DeletePaymentsRequest implements StartSaving {
@@ -214,7 +214,7 @@ class DeletePaymentsSuccess implements StopSaving {
 class DeletePaymentsFailure implements StopSaving {
   DeletePaymentsFailure(this.payments);
 
-  final List<PaymentEntity> payments;
+  final List<PaymentEntity?> payments;
 }
 
 class RestorePaymentsRequest implements StartSaving {
@@ -233,7 +233,7 @@ class RestorePaymentsSuccess implements StopSaving {
 class RestorePaymentsFailure implements StopSaving {
   RestorePaymentsFailure(this.payments);
 
-  final List<PaymentEntity> payments;
+  final List<PaymentEntity?> payments;
 }
 
 class EmailPaymentRequest implements StartSaving {
@@ -254,7 +254,7 @@ class EmailPaymentFailure implements StopSaving {
 class FilterPayments implements PersistUI {
   FilterPayments(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortPayments implements PersistUI, PersistPrefs {
@@ -302,15 +302,15 @@ class FilterPaymentsByCustom4 implements PersistUI {
 class StartPaymentMultiselect {}
 
 class AddToPaymentMultiselect {
-  AddToPaymentMultiselect({@required this.entity});
+  AddToPaymentMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromPaymentMultiselect {
-  RemoveFromPaymentMultiselect({@required this.entity});
+  RemoveFromPaymentMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearPaymentMultiselect {}
@@ -318,16 +318,16 @@ class ClearPaymentMultiselect {}
 class UpdatePaymentTab implements PersistUI {
   UpdatePaymentTab({this.tabIndex});
 
-  final int tabIndex;
+  final int? tabIndex;
 }
 
 void handlePaymentAction(
-    BuildContext context, List<BaseEntity> payments, EntityAction action) {
+    BuildContext? context, List<BaseEntity> payments, EntityAction? action) {
   if (payments.isEmpty) {
     return;
   }
 
-  final store = StoreProvider.of<AppState>(context);
+  final store = StoreProvider.of<AppState>(context!);
   final company = store.state.company;
   final localization = AppLocalization.of(context);
   final paymentIds = payments.map((payment) => payment.id).toList();
@@ -360,35 +360,34 @@ void handlePaymentAction(
       break;
     case EntityAction.sendEmail:
       store.dispatch(EmailPaymentRequest(
-          snackBarCompleter<Null>(context, localization.emailedPayment),
-          paymentIds));
+          snackBarCompleter<Null>(localization!.emailedPayment), paymentIds));
       break;
     case EntityAction.restore:
       final message = paymentIds.length > 1
-          ? localization.restoredPayments
+          ? localization!.restoredPayments
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', paymentIds.length.toString())
-          : localization.restoredPayment;
-      store.dispatch(RestorePaymentsRequest(
-          snackBarCompleter<Null>(context, message), paymentIds));
+          : localization!.restoredPayment;
+      store.dispatch(
+          RestorePaymentsRequest(snackBarCompleter<Null>(message), paymentIds));
       break;
     case EntityAction.archive:
       final message = paymentIds.length > 1
-          ? localization.archivedPayments
+          ? localization!.archivedPayments
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', paymentIds.length.toString())
-          : localization.archivedPayment;
-      store.dispatch(ArchivePaymentsRequest(
-          snackBarCompleter<Null>(context, message), paymentIds));
+          : localization!.archivedPayment;
+      store.dispatch(
+          ArchivePaymentsRequest(snackBarCompleter<Null>(message), paymentIds));
       break;
     case EntityAction.delete:
       final message = paymentIds.length > 1
-          ? localization.deletedPayments
+          ? localization!.deletedPayments
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', paymentIds.length.toString())
-          : localization.deletedPayment;
-      store.dispatch(DeletePaymentsRequest(
-          snackBarCompleter<Null>(context, message), paymentIds));
+          : localization!.deletedPayment;
+      store.dispatch(
+          DeletePaymentsRequest(snackBarCompleter<Null>(message), paymentIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.paymentListState.isInMultiselect()) {

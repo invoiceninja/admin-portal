@@ -22,7 +22,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class WebhookViewScreen extends StatelessWidget {
   const WebhookViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
 
@@ -47,15 +47,15 @@ class WebhookViewScreen extends StatelessWidget {
 
 class WebhookViewVM {
   WebhookViewVM({
-    @required this.state,
-    @required this.webhook,
-    @required this.company,
-    @required this.onEntityAction,
-    @required this.onBackPressed,
-    @required this.onRefreshed,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.isDirty,
+    required this.state,
+    required this.webhook,
+    required this.company,
+    required this.onEntityAction,
+    required this.onBackPressed,
+    required this.onRefreshed,
+    required this.isSaving,
+    required this.isLoading,
+    required this.isDirty,
   });
 
   factory WebhookViewVM.fromStore(Store<AppState> store) {
@@ -64,8 +64,8 @@ class WebhookViewVM {
         WebhookEntity(id: state.webhookUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadWebhook(completer: completer, webhookId: webhook.id));
       return completer.future;
     }
@@ -88,7 +88,7 @@ class WebhookViewVM {
 
   final AppState state;
   final WebhookEntity webhook;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
   final Function onBackPressed;

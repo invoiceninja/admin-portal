@@ -26,19 +26,19 @@ class ViewUserList implements PersistUI {
 
 class ViewUser implements PersistUI, PersistPrefs {
   ViewUser({
-    @required this.userId,
+    required this.userId,
     this.force = false,
   });
 
-  final String userId;
+  final String? userId;
   final bool force;
 }
 
 class EditUser implements PersistUI, PersistPrefs {
-  EditUser({@required this.user, this.completer, this.force = false});
+  EditUser({required this.user, this.completer, this.force = false});
 
   final UserEntity user;
-  final Completer completer;
+  final Completer? completer;
   final bool force;
 }
 
@@ -58,21 +58,21 @@ class UpdateUserCompany implements PersistUI {
 class LoadUser {
   LoadUser({this.completer, this.userId});
 
-  final Completer completer;
-  final String userId;
+  final Completer? completer;
+  final String? userId;
 }
 
 class LoadUserActivity {
   LoadUserActivity({this.completer, this.userId});
 
-  final Completer completer;
-  final String userId;
+  final Completer? completer;
+  final String? userId;
 }
 
 class LoadUsers {
   LoadUsers({this.completer});
 
-  final Completer completer;
+  final Completer? completer;
 }
 
 class LoadUserRequest implements StartLoading {}
@@ -125,16 +125,16 @@ class LoadUsersSuccess implements StopLoading {
 
 class SaveUserRequest implements StartSaving {
   SaveUserRequest({
-    @required this.completer,
-    @required this.user,
+    required this.completer,
+    required this.user,
     this.password,
     this.idToken,
   });
 
   final Completer completer;
-  final UserEntity user;
-  final String password;
-  final String idToken;
+  final UserEntity? user;
+  final String? password;
+  final String? idToken;
 }
 
 class SaveUserSuccess
@@ -165,10 +165,10 @@ class ArchiveUserRequest implements StartSaving {
     this.idToken,
   });
 
-  final Completer completer;
-  final List<String> userIds;
-  final String password;
-  final String idToken;
+  final Completer? completer;
+  final List<String>? userIds;
+  final String? password;
+  final String? idToken;
 }
 
 class ArchiveUserSuccess
@@ -181,7 +181,7 @@ class ArchiveUserSuccess
 class ArchiveUserFailure implements StopSaving {
   ArchiveUserFailure(this.users);
 
-  final List<UserEntity> users;
+  final List<UserEntity?> users;
 }
 
 class DeleteUserRequest implements StartSaving {
@@ -192,10 +192,10 @@ class DeleteUserRequest implements StartSaving {
     this.idToken,
   });
 
-  final Completer completer;
-  final List<String> userIds;
-  final String password;
-  final String idToken;
+  final Completer? completer;
+  final List<String>? userIds;
+  final String? password;
+  final String? idToken;
 }
 
 class DeleteUserSuccess
@@ -208,7 +208,7 @@ class DeleteUserSuccess
 class DeleteUserFailure implements StopSaving {
   DeleteUserFailure(this.users);
 
-  final List<UserEntity> users;
+  final List<UserEntity?> users;
 }
 
 class RestoreUserRequest implements StartSaving {
@@ -219,10 +219,10 @@ class RestoreUserRequest implements StartSaving {
     this.idToken,
   });
 
-  final Completer completer;
-  final List<String> userIds;
-  final String password;
-  final String idToken;
+  final Completer? completer;
+  final List<String>? userIds;
+  final String? password;
+  final String? idToken;
 }
 
 class RestoreUserSuccess
@@ -235,7 +235,7 @@ class RestoreUserSuccess
 class RestoreUserFailure implements StopSaving {
   RestoreUserFailure(this.users);
 
-  final List<UserEntity> users;
+  final List<UserEntity?> users;
 }
 
 class RemoveUserRequest implements StartSaving {
@@ -246,16 +246,16 @@ class RemoveUserRequest implements StartSaving {
     this.idToken,
   });
 
-  final Completer completer;
-  final String userId;
-  final String password;
-  final String idToken;
+  final Completer? completer;
+  final String? userId;
+  final String? password;
+  final String? idToken;
 }
 
 class RemoveUserSuccess implements StopSaving, PersistData {
   RemoveUserSuccess(this.userId);
 
-  final String userId;
+  final String? userId;
 }
 
 class RemoveUserFailure implements StopSaving {
@@ -272,16 +272,16 @@ class ResendInviteRequest implements StartSaving {
     this.idToken,
   });
 
-  final Completer completer;
-  final String userId;
-  final String password;
-  final String idToken;
+  final Completer? completer;
+  final String? userId;
+  final String? password;
+  final String? idToken;
 }
 
 class ResendInviteSuccess implements StopSaving, PersistData {
   ResendInviteSuccess(this.userId);
 
-  final String userId;
+  final String? userId;
 }
 
 class ResendInviteFailure implements StopSaving {
@@ -293,7 +293,7 @@ class ResendInviteFailure implements StopSaving {
 class FilterUsers {
   FilterUsers(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortUsers implements PersistUI, PersistPrefs {
@@ -333,12 +333,12 @@ class FilterUsersByCustom4 implements PersistUI {
 }
 
 void handleUserAction(
-    BuildContext context, List<BaseEntity> users, EntityAction action) {
+    BuildContext? context, List<BaseEntity> users, EntityAction? action) {
   if (users.isEmpty) {
     return;
   }
 
-  final store = StoreProvider.of<AppState>(context);
+  final store = StoreProvider.of<AppState>(context!);
   final state = store.state;
   final localization = AppLocalization.of(context);
   final user = users.first as UserEntity;
@@ -350,26 +350,22 @@ void handleUserAction(
       break;
     case EntityAction.newClient:
       createEntity(
-          context: context,
           entity: ClientEntity(state: state)
               .rebuild((b) => b.assignedUserId = user.id));
       break;
     case EntityAction.newInvoice:
       createEntity(
-          context: context,
           entity: InvoiceEntity(state: state)
               .rebuild((b) => b.assignedUserId = user.id));
       break;
     case EntityAction.newRecurringInvoice:
       createEntity(
-          context: context,
           entity: InvoiceEntity(
                   state: state, entityType: EntityType.recurringInvoice)
               .rebuild((b) => b.assignedUserId = user.id));
       break;
     case EntityAction.newQuote:
       createEntity(
-        context: context,
         entity: InvoiceEntity(
           state: state,
           entityType: EntityType.quote,
@@ -378,7 +374,6 @@ void handleUserAction(
       break;
     case EntityAction.newCredit:
       createEntity(
-        context: context,
         entity: InvoiceEntity(
           state: state,
           entityType: EntityType.credit,
@@ -387,48 +382,43 @@ void handleUserAction(
       break;
     case EntityAction.newExpense:
       createEntity(
-        context: context,
         entity: ExpenseEntity(state: state)
             .rebuild((b) => b.assignedUserId = user.id),
       );
       break;
     case EntityAction.newPayment:
       createEntity(
-        context: context,
         entity: PaymentEntity(state: state)
             .rebuild((b) => b.assignedUserId = user.id),
       );
       break;
     case EntityAction.newProject:
       createEntity(
-        context: context,
         entity: ProjectEntity(state: state)
             .rebuild((b) => b.assignedUserId = user.id),
       );
       break;
     case EntityAction.newTask:
       createEntity(
-        context: context,
         entity:
             TaskEntity(state: state).rebuild((b) => b.assignedUserId = user.id),
       );
       break;
     case EntityAction.newVendor:
       createEntity(
-        context: context,
         entity: VendorEntity(state: state)
             .rebuild((b) => b.assignedUserId = user.id),
       );
       break;
     case EntityAction.restore:
       final message = userIds.length > 1
-          ? localization.restoredUsers
+          ? localization!.restoredUsers
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', userIds.length.toString())
-          : localization.restoredUser;
-      final dispatch = ([String password, String idToken]) =>
+          : localization!.restoredUser;
+      final dispatch = ([String? password, String? idToken]) =>
           store.dispatch(RestoreUserRequest(
-            completer: snackBarCompleter<Null>(context, message),
+            completer: snackBarCompleter<Null>(message),
             userIds: userIds,
             password: password,
             idToken: idToken,
@@ -441,13 +431,13 @@ void handleUserAction(
       break;
     case EntityAction.archive:
       final message = userIds.length > 1
-          ? localization.archivedUsers
+          ? localization!.archivedUsers
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', userIds.length.toString())
-          : localization.archivedUser;
-      final dispatch = ([String password, String idToken]) =>
+          : localization!.archivedUser;
+      final dispatch = ([String? password, String? idToken]) =>
           store.dispatch(ArchiveUserRequest(
-            completer: snackBarCompleter<Null>(context, message),
+            completer: snackBarCompleter<Null>(message),
             userIds: userIds,
             password: password,
             idToken: idToken,
@@ -460,16 +450,16 @@ void handleUserAction(
       break;
     case EntityAction.delete:
       final message = userIds.length > 1
-          ? localization.deletedUsers
+          ? localization!.deletedUsers
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', userIds.length.toString())
-          : localization.deletedUser;
+          : localization!.deletedUser;
       final dispatch = ([
-        String password,
-        String idToken,
+        String? password,
+        String? idToken,
       ]) =>
           store.dispatch(DeleteUserRequest(
-            completer: snackBarCompleter<Null>(context, message),
+            completer: snackBarCompleter<Null>(message),
             userIds: userIds,
             password: password,
             idToken: idToken,
@@ -482,7 +472,6 @@ void handleUserAction(
       break;
     case EntityAction.newRecurringExpense:
       createEntity(
-          context: context,
           entity: ExpenseEntity(
               state: state,
               user: user,
@@ -490,16 +479,16 @@ void handleUserAction(
       break;
     case EntityAction.remove:
       final message = userIds.length > 1
-          ? localization.removedUsers
+          ? localization!.removedUsers
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', userIds.length.toString())
-          : localization.removedUser;
+          : localization!.removedUser;
       final dispatch = ([
-        String password,
-        String idToken,
+        String? password,
+        String? idToken,
       ]) =>
           store.dispatch(RemoveUserRequest(
-            completer: snackBarCompleter<Null>(context, message),
+            completer: snackBarCompleter<Null>(message),
             userId: user.id,
             password: password,
             idToken: idToken,
@@ -540,7 +529,7 @@ void handleUserAction(
               password: password,
               idToken: idToken,
               completer: snackBarCompleter<Null>(
-                  context, localization.emailSentToConfirmEmail),
+                  localization!.emailSentToConfirmEmail),
             ));
           });
       break;
@@ -555,15 +544,15 @@ void handleUserAction(
 class StartUserMultiselect {}
 
 class AddToUserMultiselect {
-  AddToUserMultiselect({@required this.entity});
+  AddToUserMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromUserMultiselect {
-  RemoveFromUserMultiselect({@required this.entity});
+  RemoveFromUserMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearUserMultiselect {}

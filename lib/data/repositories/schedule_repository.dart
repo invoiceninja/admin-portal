@@ -15,22 +15,22 @@ class ScheduleRepository {
   final WebClient webClient;
 
   Future<ScheduleEntity> loadItem(
-      Credentials credentials, String entityId) async {
+      Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/task_schedulers/$entityId', credentials.token);
 
     final ScheduleItemResponse scheduleResponse =
-        serializers.deserializeWith(ScheduleItemResponse.serializer, response);
+        serializers.deserializeWith(ScheduleItemResponse.serializer, response)!;
 
     return scheduleResponse.data;
   }
 
   Future<BuiltList<ScheduleEntity>> loadList(Credentials credentials) async {
-    final String url = credentials.url + '/task_schedulers?';
+    final String url = credentials.url! + '/task_schedulers?';
     final dynamic response = await webClient.get(url, credentials.token);
 
     final ScheduleListResponse scheduleResponse =
-        serializers.deserializeWith(ScheduleListResponse.serializer, response);
+        serializers.deserializeWith(ScheduleListResponse.serializer, response)!;
 
     return scheduleResponse.data;
   }
@@ -41,13 +41,13 @@ class ScheduleRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url +
+    final url = credentials.url! +
         '/task_schedulers/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final ScheduleListResponse scheduleResponse =
-        serializers.deserializeWith(ScheduleListResponse.serializer, response);
+        serializers.deserializeWith(ScheduleListResponse.serializer, response)!;
 
     return scheduleResponse.data.toList();
   }
@@ -59,7 +59,7 @@ class ScheduleRepository {
 
     if (schedule.isNew) {
       response = await webClient.post(
-          credentials.url + '/task_schedulers', credentials.token,
+          credentials.url! + '/task_schedulers', credentials.token,
           data: json.encode(data));
     } else {
       final url = '${credentials.url}/task_schedulers/${schedule.id}';
@@ -68,7 +68,7 @@ class ScheduleRepository {
     }
 
     final ScheduleItemResponse scheduleResponse =
-        serializers.deserializeWith(ScheduleItemResponse.serializer, response);
+        serializers.deserializeWith(ScheduleItemResponse.serializer, response)!;
 
     return scheduleResponse.data;
   }

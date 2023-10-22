@@ -12,13 +12,11 @@ ReportsUIState reportsUIReducer(ReportsUIState state, dynamic action) {
       ..selectedGroup = ''
       ..chart = '');
   } else if (action is UpdateReportSettings) {
-    if (action.report != null &&
-        action.report.isNotEmpty &&
-        action.report != state.report) {
+    if (action.report.isNotEmpty && action.report != state.report) {
       return ReportsUIState().rebuild((b) => b..report = action.report);
     } else {
       return state.rebuild((b) => b
-        ..report = action.report ?? state.report
+        ..report = action.report
         ..group = action.group ?? state.group
         ..selectedGroup = action.selectedGroup ?? state.selectedGroup
         ..subgroup = action.subgroup ?? state.subgroup

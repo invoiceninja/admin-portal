@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class VendorEditFooter extends StatelessWidget {
-  const VendorEditFooter({@required this.vendor});
+  const VendorEditFooter({required this.vendor});
 
   final VendorEntity vendor;
 
@@ -42,8 +42,8 @@ class VendorEditFooter extends StatelessWidget {
               if (showLayoutToggle)
                 Tooltip(
                   message: useSidebarEditor
-                      ? localization.fullscreenEditor
-                      : localization.sidebarEditor,
+                      ? localization!.fullscreenEditor
+                      : localization!.sidebarEditor,
                   child: InkWell(
                     onTap: () =>
                         store.dispatch(ToggleEditorLayout(EntityType.vendor)),

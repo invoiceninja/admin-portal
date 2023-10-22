@@ -10,8 +10,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ActionMenuButton extends StatelessWidget {
   const ActionMenuButton({
-    @required this.entity,
-    @required this.onSelected,
+    required this.entity,
+    required this.onSelected,
     this.isSaving = false,
     this.entityActions,
     this.color,
@@ -19,13 +19,13 @@ class ActionMenuButton extends StatelessWidget {
     this.iconSize,
   });
 
-  final BaseEntity entity;
-  final List<EntityAction> entityActions;
+  final BaseEntity? entity;
+  final List<EntityAction?>? entityActions;
   final Function(BuildContext, EntityAction) onSelected;
   final bool isSaving;
-  final Color color;
-  final IconData iconData;
-  final double iconSize;
+  final Color? color;
+  final IconData? iconData;
+  final double? iconSize;
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +58,7 @@ class ActionMenuButton extends StatelessWidget {
               SizedBox(width: 16.0),
               Expanded(
                 child: Text(
-                    AppLocalization.of(context).lookup(action.toString()) ??
-                        ''),
+                    AppLocalization.of(context)!.lookup(action.toString())),
               ),
             ],
           ),
@@ -87,14 +86,14 @@ class ActionMenuButton extends StatelessWidget {
 /// during tests
 class ViewActionMenuButton extends StatelessWidget {
   const ViewActionMenuButton({
-    @required this.entity,
-    @required this.onSelected,
+    required this.entity,
+    required this.onSelected,
     this.isSaving = false,
     this.entityActions,
   });
 
-  final BaseEntity entity;
-  final List<EntityAction> entityActions;
+  final BaseEntity? entity;
+  final List<EntityAction?>? entityActions;
   final Function(BuildContext, EntityAction) onSelected;
   final bool isSaving;
 

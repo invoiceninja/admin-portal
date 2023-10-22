@@ -26,7 +26,7 @@ abstract class UserState implements Built<UserState, UserStateBuilder> {
 
   UserEntity get(String userId) {
     if (map.containsKey(userId)) {
-      return map[userId];
+      return map[userId]!;
     } else {
       return UserEntity(id: userId);
     }
@@ -46,7 +46,7 @@ abstract class UserState implements Built<UserState, UserStateBuilder> {
 abstract class UserUIState extends Object
     with EntityUIState
     implements Built<UserUIState, UserUIStateBuilder> {
-  factory UserUIState(PrefStateSortField sortField) {
+  factory UserUIState(PrefStateSortField? sortField) {
     return _$UserUIState._(
       listUIState: ListUIState(sortField?.field ?? UserFields.firstName,
           sortAscending: sortField?.ascending),
@@ -62,14 +62,13 @@ abstract class UserUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  UserEntity get editing;
+  UserEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<UserUIState> get serializer => _$userUIStateSerializer;
 }

@@ -22,8 +22,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProductScreen extends StatelessWidget {
   const ProductScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/product';
@@ -122,7 +122,7 @@ class ProductScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newProduct,
+              tooltip: localization!.newProduct,
             )
           : null,
     );

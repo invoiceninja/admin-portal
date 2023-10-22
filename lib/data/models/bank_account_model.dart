@@ -53,7 +53,7 @@ class BankAccountFields {
 abstract class BankAccountEntity extends Object
     with BaseEntity
     implements Built<BankAccountEntity, BankAccountEntityBuilder> {
-  factory BankAccountEntity({String id, AppState state}) {
+  factory BankAccountEntity({String? id, AppState? state}) {
     return _$BankAccountEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
@@ -118,15 +118,15 @@ abstract class BankAccountEntity extends Object
   bool get isConnected => type.isNotEmpty;
 
   @override
-  List<EntityAction> getActions(
-      {UserCompanyEntity userCompany,
-      ClientEntity client,
+  List<EntityAction?> getActions(
+      {UserCompanyEntity? userCompany,
+      ClientEntity? client,
       bool includeEdit = false,
       bool multiselect = false}) {
-    final actions = <EntityAction>[];
+    final actions = <EntityAction?>[];
 
-    if (!isDeleted) {
-      if (!multiselect && includeEdit && userCompany.canEditEntity(this)) {
+    if (!isDeleted!) {
+      if (!multiselect && includeEdit && userCompany!.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
     }
@@ -135,7 +135,7 @@ abstract class BankAccountEntity extends Object
   }
 
   int compareTo(
-      BankAccountEntity bankAccount, String sortField, bool sortAscending) {
+      BankAccountEntity? bankAccount, String sortField, bool sortAscending) {
     int response = 0;
     final bankAccountA = sortAscending ? this : bankAccount;
     final bankAccountB = sortAscending ? bankAccount : this;
@@ -143,17 +143,17 @@ abstract class BankAccountEntity extends Object
     switch (sortField) {
       // STARTER: sort switch - do not remove comment
       case BankAccountFields.name:
-        response = bankAccountA.name
+        response = bankAccountA!.name
             .toLowerCase()
-            .compareTo(bankAccountB.name.toLowerCase());
+            .compareTo(bankAccountB!.name.toLowerCase());
         break;
       case BankAccountFields.balance:
-        response = bankAccountA.balance.compareTo(bankAccountB.balance);
+        response = bankAccountA!.balance.compareTo(bankAccountB!.balance);
         break;
       case BankAccountFields.type:
-        response = bankAccountA.type
+        response = bankAccountA!.type
             .toLowerCase()
-            .compareTo(bankAccountB.type.toLowerCase());
+            .compareTo(bankAccountB!.type.toLowerCase());
         break;
       default:
         print('## ERROR: sort by bankAccount.$sortField is not implemented');
@@ -162,14 +162,14 @@ abstract class BankAccountEntity extends Object
 
     if (response == 0) {
       // STARTER: sort default - do not remove comment
-      return bankAccountA.name.compareTo(bankAccountB.name);
+      return bankAccountA!.name.compareTo(bankAccountB!.name);
     } else {
       return response;
     }
   }
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     return matchesStrings(
       haystacks: [
         name,
@@ -180,7 +180,7 @@ abstract class BankAccountEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     return matchesStringsValue(
       haystacks: [
         name,

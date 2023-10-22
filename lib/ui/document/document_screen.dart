@@ -21,8 +21,8 @@ import 'document_screen_vm.dart';
 
 class DocumentScreen extends StatelessWidget {
   const DocumentScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/document';
@@ -40,27 +40,27 @@ class DocumentScreen extends StatelessWidget {
       DocumentStatusEntity().rebuild(
         (b) => b
           ..id = kDocumentStatusPublic
-          ..name = localization.public,
+          ..name = localization!.public,
       ),
       DocumentStatusEntity().rebuild(
         (b) => b
           ..id = kDocumentStatusPrivate
-          ..name = localization.private,
+          ..name = localization!.private,
       ),
       DocumentStatusEntity().rebuild(
         (b) => b
           ..id = kDocumentStatusImage
-          ..name = localization.image,
+          ..name = localization!.image,
       ),
       DocumentStatusEntity().rebuild(
         (b) => b
           ..id = kDocumentStatusPDF
-          ..name = localization.pdf,
+          ..name = localization!.pdf,
       ),
       DocumentStatusEntity().rebuild(
         (b) => b
           ..id = kDocumentStatusOther
-          ..name = localization.other,
+          ..name = localization!.other,
       ),
     ];
 
@@ -132,7 +132,7 @@ class DocumentScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newDocument,
+              tooltip: localization!.newDocument,
             )
           : null,
     );

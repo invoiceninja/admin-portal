@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -26,9 +27,9 @@ enum TaxRateReportFields {
 }
 
 var memoizedPaymentTaxReport = memo9((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, TaxRateEntity> taxRateMap,
+  BuiltMap<String?, TaxRateEntity?> taxRateMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, InvoiceEntity> creditMap,
   BuiltMap<String, ClientEntity> clientMap,
@@ -36,13 +37,13 @@ var memoizedPaymentTaxReport = memo9((
   BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) =>
-    paymentTaxReport(userCompany, reportsUIState, taxRateMap, invoiceMap,
+    paymentTaxReport(userCompany!, reportsUIState, taxRateMap, invoiceMap,
         creditMap, clientMap, paymentMap, userMap, staticState));
 
 ReportResult paymentTaxReport(
   UserCompanyEntity userCompany,
   ReportsUIState reportsUIState,
-  BuiltMap<String, TaxRateEntity> taxRateMap,
+  BuiltMap<String?, TaxRateEntity?> taxRateMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, InvoiceEntity> creditMap,
   BuiltMap<String, ClientEntity> clientMap,
@@ -53,11 +54,10 @@ ReportResult paymentTaxReport(
   final List<List<ReportElement>> data = [];
   BuiltList<TaxRateReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
-  final taxRateReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportPaymentTax)
-          ? reportSettings[kReportPaymentTax]
-          : ReportSettingsEntity();
+  final reportSettings = userCompany.settings.reportSettings;
+  final taxRateReportSettings = reportSettings.containsKey(kReportPaymentTax)
+      ? reportSettings[kReportPaymentTax]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     TaxRateReportFields.tax_name,
@@ -72,7 +72,7 @@ ReportResult paymentTaxReport(
   if (taxRateReportSettings.columns.isNotEmpty) {
     columns = BuiltList(taxRateReportSettings.columns
         .map((e) => EnumUtils.fromString(TaxRateReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
@@ -81,8 +81,8 @@ ReportResult paymentTaxReport(
   for (var paymentId in paymentMap.keys) {
     final payment = paymentMap[paymentId] ?? PaymentEntity();
 
-    if (!payment.isDeleted) {
-      final client = clientMap[payment.clientId];
+    if (!payment.isDeleted!) {
+      final client = clientMap[payment.clientId]!;
       final precision =
           staticState.currencyMap[client.currencyId]?.precision ?? 2;
 
@@ -96,15 +96,15 @@ ReportResult paymentTaxReport(
           multiplier = -1;
         }
 
-        if (invoice.isSent && !invoice.isDeleted) {
+        if (invoice.isSent && !invoice.isDeleted!) {
           final taxes = invoice.getTaxes(precision);
 
           for (final key in taxes.keys) {
             bool skip = false;
 
             final List<ReportElement> row = [];
-            final String taxName = taxes[key]['name'];
-            final double taxRate = taxes[key]['rate'];
+            final String? taxName = taxes[key]!['name'];
+            final double? taxRate = taxes[key]!['rate'];
 
             for (var column in columns) {
               dynamic value = '';
@@ -135,13 +135,13 @@ ReportResult paymentTaxReport(
                   value = taxRate;
                   break;
                 case TaxRateReportFields.tax_amount:
-                  value = (taxes[key]['amount'] ?? 0.0) *
+                  value = (taxes[key]!['amount'] ?? 0.0) *
                       paymentable.amount /
                       invoice.amount *
                       multiplier;
                   break;
                 case TaxRateReportFields.tax_paid:
-                  value = (taxes[key]['paid'] ?? 0.0) *
+                  value = (taxes[key]!['paid'] ?? 0.0) *
                       paymentable.amount /
                       invoice.amount *
                       multiplier;
@@ -163,7 +163,7 @@ ReportResult paymentTaxReport(
                 userCompany: userCompany,
                 reportsUIState: reportsUIState,
                 column: EnumUtils.parse(column),
-              )) {
+              )!) {
                 skip = true;
               }
 
@@ -189,7 +189,7 @@ ReportResult paymentTaxReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, taxRateReportSettings, selectedColumns));
+      sortReportTableRows(rowA, rowB, taxRateReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns:

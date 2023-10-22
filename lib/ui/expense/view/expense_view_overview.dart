@@ -20,9 +20,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseOverview extends StatelessWidget {
   const ExpenseOverview({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final AbstractExpenseViewVM viewModel;
@@ -32,25 +32,25 @@ class ExpenseOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final expense = viewModel.expense;
-    final company = viewModel.company;
-    final state = viewModel.state;
-    final vendor = state.vendorState.get(expense.vendorId);
-    final client = state.clientState.get(expense.clientId);
-    final invoice = state.invoiceState.get(expense.invoiceId);
-    final project = state.projectState.get(expense.projectId);
+    final company = viewModel.company!;
+    final state = viewModel.state!;
+    final vendor = state.vendorState.get(expense.vendorId!);
+    final client = state.clientState.get(expense.clientId!);
+    final invoice = state.invoiceState.get(expense.invoiceId!);
+    final project = state.projectState.get(expense.projectId!);
     final category = state.expenseCategoryState.get(expense.categoryId);
     final transaction = state.transactionState.get(expense.transactionId);
-    final user = state.userState.get(expense.assignedUserId);
+    final user = state.userState.get(expense.assignedUserId!);
     final recurringExpense =
         state.recurringExpenseState.get(expense.recurringExpenseId);
 
-    InvoiceEntity purchaseOrder;
+    InvoiceEntity? purchaseOrder;
     if (state.company.isModuleEnabled(EntityType.purchaseOrder)) {
       purchaseOrder = memoizedExpensePurchaseOrderSelector(
           expense, state.purchaseOrderState.map);
     }
 
-    final fields = <String, String>{};
+    final fields = <String, String?>{};
     if (company.hasCustomField(CustomFieldType.expense1) &&
         expense.customValue1.isNotEmpty) {
       final label1 = company.getCustomFieldLabel(CustomFieldType.expense1);
@@ -86,62 +86,62 @@ class ExpenseOverview extends StatelessWidget {
 
     List<Widget> _buildDetailsList() {
       String tax = '';
-      if (expense.calculateTaxByAmount) {
+      if (expense.calculateTaxByAmount!) {
         if (expense.taxName1.isNotEmpty) {
-          tax += formatNumber(expense.taxAmount1, context) +
+          tax += formatNumber(expense.taxAmount1, context)! +
               ' ' +
               expense.taxName1;
         }
         if (expense.taxName2.isNotEmpty) {
           tax += ' ' +
-              formatNumber(expense.taxAmount2, context) +
+              formatNumber(expense.taxAmount2, context)! +
               ' ' +
               expense.taxName2;
         }
         if (expense.taxName3.isNotEmpty) {
           tax += ' ' +
-              formatNumber(expense.taxAmount3, context) +
+              formatNumber(expense.taxAmount3, context)! +
               ' ' +
               expense.taxName3;
         }
       } else {
         if (expense.taxName1.isNotEmpty) {
           tax += formatNumber(expense.taxRate1, context,
-                  formatNumberType: FormatNumberType.percent) +
+                  formatNumberType: FormatNumberType.percent)! +
               ' ' +
               expense.taxName1;
         }
         if (expense.taxName2.isNotEmpty) {
           tax += ' ' +
               formatNumber(expense.taxRate2, context,
-                  formatNumberType: FormatNumberType.percent) +
+                  formatNumberType: FormatNumberType.percent)! +
               ' ' +
               expense.taxName2;
         }
         if (expense.taxName3.isNotEmpty) {
           tax += ' ' +
               formatNumber(expense.taxRate3, context,
-                  formatNumberType: FormatNumberType.percent) +
+                  formatNumberType: FormatNumberType.percent)! +
               ' ' +
               expense.taxName3;
         }
       }
 
-      final fields = <String, String>{
+      final fields = <String?, String?>{
         if (expense.isRecurring)
-          localization.frequency:
+          localization!.frequency:
               localization.lookup(kFrequencies[expense.frequencyId]),
         if (expense.isRecurring)
-          localization.remainingCycles: expense.remainingCycles == -1
+          localization!.remainingCycles: expense.remainingCycles == -1
               ? localization.endless
               : '${expense.remainingCycles}',
         if (expense.isRecurring) ...{
-          localization.lastSentDate: formatDate(expense.lastSentDate, context),
+          localization!.lastSentDate: formatDate(expense.lastSentDate, context),
           localization.nextSendDate: formatDate(expense.nextSendDate, context),
         },
         if (!expense.isRecurring)
-          localization.date: formatDate(expense.date, context),
-        localization.transactionReference: expense.transactionReference,
+          localization!.date: formatDate(expense.date, context),
+        localization!.transactionReference: expense.transactionReference,
         localization.tax: tax,
         localization.paymentDate: formatDate(expense.paymentDate, context),
         localization.paymentType:
@@ -167,7 +167,7 @@ class ExpenseOverview extends StatelessWidget {
                 statusColor:
                     ExpenseStatusColors(state.prefState.colorThemeModel)
                         .colors[expense.calculatedStatusId],
-                statusLabel: localization
+                statusLabel: localization!
                     .lookup('expense_status_${expense.calculatedStatusId}'),
                 label: localization.amount,
                 value: formatNumber(expense.grossAmount, context,
@@ -182,14 +182,14 @@ class ExpenseOverview extends StatelessWidget {
                 statusColor:
                     ExpenseStatusColors(state.prefState.colorThemeModel)
                         .colors[expense.calculatedStatusId],
-                statusLabel: localization
+                statusLabel: localization!
                     .lookup('expense_status_${expense.calculatedStatusId}'),
                 label: localization.amount,
                 value: formatNumber(expense.grossAmount, context,
                     currencyId: expense.currencyId),
               ),
         ListDivider(),
-        if ((expense.privateNotes ?? '').isNotEmpty) ...[
+        if (expense.privateNotes.isNotEmpty) ...[
           IconMessage(expense.privateNotes,
               iconData: Icons.lock, copyToClipboard: true),
           ListDivider(),
@@ -204,12 +204,13 @@ class ExpenseOverview extends StatelessWidget {
           entity: invoice,
           isFilter: isFilter,
         ),
-        EntityListTile(entity: purchaseOrder, isFilter: isFilter),
+        if (purchaseOrder != null)
+          EntityListTile(entity: purchaseOrder, isFilter: isFilter),
         EntityListTile(
           entity: transaction,
           isFilter: isFilter,
         ),
-        if ((expense.recurringExpenseId ?? '').isNotEmpty)
+        if (expense.recurringExpenseId.isNotEmpty)
           EntityListTile(entity: recurringExpense, isFilter: isFilter),
         if (expense.isRecurring)
           EntitiesListTile(
@@ -223,7 +224,7 @@ class ExpenseOverview extends StatelessWidget {
                 .present(localization.active, localization.archived),
           ),
         ..._buildDetailsList(),
-        if ((expense.publicNotes ?? '').isNotEmpty) ...[
+        if (expense.publicNotes.isNotEmpty) ...[
           IconMessage(expense.publicNotes, copyToClipboard: true),
           ListDivider()
         ],

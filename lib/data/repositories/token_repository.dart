@@ -19,23 +19,24 @@ class TokenRepository {
 
   final WebClient webClient;
 
-  Future<TokenEntity> loadItem(Credentials credentials, String entityId) async {
+  Future<TokenEntity> loadItem(
+      Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/tokens/$entityId', credentials.token);
 
     final TokenItemResponse tokenResponse =
-        serializers.deserializeWith(TokenItemResponse.serializer, response);
+        serializers.deserializeWith(TokenItemResponse.serializer, response)!;
 
     return tokenResponse.data;
   }
 
   Future<BuiltList<TokenEntity>> loadList(Credentials credentials) async {
-    final url = credentials.url + '/tokens?';
+    final url = credentials.url! + '/tokens?';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
     final TokenListResponse tokenResponse =
-        serializers.deserializeWith(TokenListResponse.serializer, response);
+        serializers.deserializeWith(TokenListResponse.serializer, response)!;
 
     return tokenResponse.data;
   }
@@ -47,12 +48,12 @@ class TokenRepository {
     }
 
     final url =
-        credentials.url + '/tokens/bulk?per_page=$kMaxEntitiesPerBulkAction';
+        credentials.url! + '/tokens/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final TokenListResponse tokenResponse =
-        serializers.deserializeWith(TokenListResponse.serializer, response);
+        serializers.deserializeWith(TokenListResponse.serializer, response)!;
 
     return tokenResponse.data.toList();
   }
@@ -60,15 +61,15 @@ class TokenRepository {
   Future<TokenEntity> saveData(
     Credentials credentials,
     TokenEntity token,
-    String password,
-    String idToken,
+    String? password,
+    String? idToken,
   ) async {
     final data = serializers.serializeWith(TokenEntity.serializer, token);
     dynamic response;
 
     if (token.isNew) {
       response = await webClient.post(
-        credentials.url + '/tokens',
+        credentials.url! + '/tokens',
         credentials.token,
         data: json.encode(data),
         password: password,
@@ -86,7 +87,7 @@ class TokenRepository {
     }
 
     final TokenItemResponse tokenResponse =
-        serializers.deserializeWith(TokenItemResponse.serializer, response);
+        serializers.deserializeWith(TokenItemResponse.serializer, response)!;
 
     return tokenResponse.data;
   }

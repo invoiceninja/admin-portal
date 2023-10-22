@@ -94,7 +94,7 @@ abstract class CurrencyEntity extends Object
   double get exchangeRate;
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     if (filter == null || filter.isEmpty) {
       return true;
     }
@@ -111,7 +111,7 @@ abstract class CurrencyEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     if (filter == null || filter.isEmpty) {
       return null;
     }
@@ -131,7 +131,7 @@ abstract class CurrencyEntity extends Object
   }
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
   static Serializer<CurrencyEntity> get serializer =>
       _$currencyEntitySerializer;

@@ -12,9 +12,9 @@ class LiveText extends StatefulWidget {
     this.maxLines = 1,
   });
 
-  final Duration duration;
+  final Duration? duration;
   final Function value;
-  final TextStyle style;
+  final TextStyle? style;
   final int maxLines;
 
   @override
@@ -22,7 +22,7 @@ class LiveText extends StatefulWidget {
 }
 
 class _LiveTextState extends State<LiveText> {
-  Timer _timer;
+  Timer? _timer;
 
   @override
   void initState() {
@@ -35,7 +35,7 @@ class _LiveTextState extends State<LiveText> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    _timer!.cancel();
     _timer = null;
     super.dispose();
   }

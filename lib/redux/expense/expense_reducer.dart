@@ -15,79 +15,79 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 EntityUIState expenseUIReducer(ExpenseUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(expenseListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
+    ..editing.replace(editingReducer(state.editing, action)!)
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..forceSelected = forceSelectedReducer(state.forceSelected, action)
     ..tabIndex = tabIndexReducer(state.tabIndex, action));
 }
 
-final forceSelectedReducer = combineReducers<bool>([
-  TypedReducer<bool, ViewExpense>((completer, action) => true),
-  TypedReducer<bool, ViewExpenseList>((completer, action) => false),
-  TypedReducer<bool, FilterExpensesByState>((completer, action) => false),
-  TypedReducer<bool, FilterExpensesByStatus>((completer, action) => false),
-  TypedReducer<bool, FilterExpenses>((completer, action) => false),
-  TypedReducer<bool, FilterExpensesByCustom1>((completer, action) => false),
-  TypedReducer<bool, FilterExpensesByCustom2>((completer, action) => false),
-  TypedReducer<bool, FilterExpensesByCustom3>((completer, action) => false),
-  TypedReducer<bool, FilterExpensesByCustom4>((completer, action) => false),
+final forceSelectedReducer = combineReducers<bool?>([
+  TypedReducer<bool?, ViewExpense>((completer, action) => true),
+  TypedReducer<bool?, ViewExpenseList>((completer, action) => false),
+  TypedReducer<bool?, FilterExpensesByState>((completer, action) => false),
+  TypedReducer<bool?, FilterExpensesByStatus>((completer, action) => false),
+  TypedReducer<bool?, FilterExpenses>((completer, action) => false),
+  TypedReducer<bool?, FilterExpensesByCustom1>((completer, action) => false),
+  TypedReducer<bool?, FilterExpensesByCustom2>((completer, action) => false),
+  TypedReducer<bool?, FilterExpensesByCustom3>((completer, action) => false),
+  TypedReducer<bool?, FilterExpensesByCustom4>((completer, action) => false),
 ]);
 
-final tabIndexReducer = combineReducers<int>([
-  TypedReducer<int, UpdateExpenseTab>((completer, action) {
+final int? Function(int, dynamic) tabIndexReducer = combineReducers<int?>([
+  TypedReducer<int?, UpdateExpenseTab>((completer, action) {
     return action.tabIndex;
   }),
-  TypedReducer<int, PreviewEntity>((completer, action) {
+  TypedReducer<int?, PreviewEntity>((completer, action) {
     return 0;
   }),
 ]);
 
-Reducer<String> selectedIdReducer = combineReducers([
-  TypedReducer<String, ArchiveExpenseSuccess>((completer, action) => ''),
-  TypedReducer<String, DeleteExpenseSuccess>((completer, action) => ''),
-  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+Reducer<String?> selectedIdReducer = combineReducers([
+  TypedReducer<String?, ArchiveExpenseSuccess>((completer, action) => ''),
+  TypedReducer<String?, DeleteExpenseSuccess>((completer, action) => ''),
+  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.expense ? action.entityId : selectedId),
-  TypedReducer<String, ViewExpense>((selectedId, action) => action.expenseId),
-  TypedReducer<String, AddExpenseSuccess>(
+  TypedReducer<String?, ViewExpense>((selectedId, action) => action.expenseId),
+  TypedReducer<String?, AddExpenseSuccess>(
       (selectedId, action) => action.expense.id),
-  TypedReducer<String, SelectCompany>(
+  TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, SortExpenses>((selectedId, action) => ''),
-  TypedReducer<String, FilterExpenses>((selectedId, action) => ''),
-  TypedReducer<String, FilterExpensesByState>((selectedId, action) => ''),
-  TypedReducer<String, FilterExpensesByStatus>((selectedId, action) => ''),
-  TypedReducer<String, FilterExpensesByCustom1>((selectedId, action) => ''),
-  TypedReducer<String, FilterExpensesByCustom2>((selectedId, action) => ''),
-  TypedReducer<String, FilterExpensesByCustom3>((selectedId, action) => ''),
-  TypedReducer<String, FilterExpensesByCustom4>((selectedId, action) => ''),
+  TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String?, SortExpenses>((selectedId, action) => ''),
+  TypedReducer<String?, FilterExpenses>((selectedId, action) => ''),
+  TypedReducer<String?, FilterExpensesByState>((selectedId, action) => ''),
+  TypedReducer<String?, FilterExpensesByStatus>((selectedId, action) => ''),
+  TypedReducer<String?, FilterExpensesByCustom1>((selectedId, action) => ''),
+  TypedReducer<String?, FilterExpensesByCustom2>((selectedId, action) => ''),
+  TypedReducer<String?, FilterExpensesByCustom3>((selectedId, action) => ''),
+  TypedReducer<String?, FilterExpensesByCustom4>((selectedId, action) => ''),
 ]);
 
-final editingReducer = combineReducers<ExpenseEntity>([
-  TypedReducer<ExpenseEntity, LoadExpenseSuccess>(_updateEditing),
-  TypedReducer<ExpenseEntity, SaveExpenseSuccess>(_updateEditing),
-  TypedReducer<ExpenseEntity, AddExpenseSuccess>(_updateEditing),
-  TypedReducer<ExpenseEntity, RestoreExpenseSuccess>((expenses, action) {
+final editingReducer = combineReducers<ExpenseEntity?>([
+  TypedReducer<ExpenseEntity?, LoadExpenseSuccess>(_updateEditing),
+  TypedReducer<ExpenseEntity?, SaveExpenseSuccess>(_updateEditing),
+  TypedReducer<ExpenseEntity?, AddExpenseSuccess>(_updateEditing),
+  TypedReducer<ExpenseEntity?, RestoreExpenseSuccess>((expenses, action) {
     return action.expenses[0];
   }),
-  TypedReducer<ExpenseEntity, ArchiveExpenseSuccess>((expenses, action) {
+  TypedReducer<ExpenseEntity?, ArchiveExpenseSuccess>((expenses, action) {
     return action.expenses[0];
   }),
-  TypedReducer<ExpenseEntity, DeleteExpenseSuccess>((expenses, action) {
+  TypedReducer<ExpenseEntity?, DeleteExpenseSuccess>((expenses, action) {
     return action.expenses[0];
   }),
-  TypedReducer<ExpenseEntity, EditExpense>(_updateEditing),
-  TypedReducer<ExpenseEntity, UpdateExpense>((expense, action) {
+  TypedReducer<ExpenseEntity?, EditExpense>(_updateEditing),
+  TypedReducer<ExpenseEntity?, UpdateExpense>((expense, action) {
     return action.expense.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<ExpenseEntity, DiscardChanges>(_clearEditing),
+  TypedReducer<ExpenseEntity?, DiscardChanges>(_clearEditing),
 ]);
 
-ExpenseEntity _clearEditing(ExpenseEntity expense, dynamic action) {
+ExpenseEntity _clearEditing(ExpenseEntity? expense, dynamic action) {
   return ExpenseEntity();
 }
 
-ExpenseEntity _updateEditing(ExpenseEntity expense, dynamic action) {
+ExpenseEntity? _updateEditing(ExpenseEntity? expense, dynamic action) {
   return action.expense;
 }
 
@@ -191,7 +191,7 @@ ListUIState _filterExpenses(
 
 ListUIState _sortExpenses(ListUIState expenseListState, SortExpenses action) {
   return expenseListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortAscending = b.sortField != action.field || !b.sortAscending!
     ..sortField = action.field);
 }
 
@@ -202,13 +202,13 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState expenseListState, AddToExpenseMultiselect action) {
-  return expenseListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+  return expenseListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState expenseListState, RemoveFromExpenseMultiselect action) {
   return expenseListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(

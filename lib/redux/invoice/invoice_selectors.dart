@@ -18,7 +18,7 @@ bool hasActiveUnpaidInvoices(
   final invoiceIds = invoiceMap.keys.toList();
   for (var i = 0; i < invoiceIds.length; i++) {
     final invoiceId = invoiceIds[i];
-    final invoice = invoiceMap[invoiceId];
+    final invoice = invoiceMap[invoiceId]!;
 
     if (invoice.clientId == clientId && invoice.isUnpaid) {
       hasUnapid = true;
@@ -32,9 +32,9 @@ var memoizedInvoiceQuoteSelector = memo2(
     (InvoiceEntity invoice, BuiltMap<String, InvoiceEntity> quoteMap) =>
         invoiceQuoteSelector(invoice, quoteMap));
 
-InvoiceEntity invoiceQuoteSelector(
+InvoiceEntity? invoiceQuoteSelector(
     InvoiceEntity invoice, BuiltMap<String, InvoiceEntity> quoteMap) {
-  InvoiceEntity invoiceQuote;
+  InvoiceEntity? invoiceQuote;
   quoteMap.forEach((quoteId, quote) {
     if (quote.invoiceId == invoice.id) {
       invoiceQuote = quote;
@@ -43,7 +43,7 @@ InvoiceEntity invoiceQuoteSelector(
   return invoiceQuote;
 }
 
-ClientContactEntity invoiceContactSelector(
+ClientContactEntity? invoiceContactSelector(
     InvoiceEntity invoice, ClientEntity client) {
   var contactIds = invoice.invitations
       .map((invitation) => invitation.clientContactId)
@@ -62,8 +62,8 @@ var memoizedDropdownInvoiceList = memo8(
             BuiltList<String> invoiceList,
             String clientId,
             BuiltMap<String, UserEntity> userMap,
-            List<String> excludedIds,
-            String recurringPrefix) =>
+            List<String?> excludedIds,
+            String? recurringPrefix) =>
         dropdownInvoiceSelector(
           invoiceMap,
           clientMap,
@@ -82,21 +82,19 @@ List<String> dropdownInvoiceSelector(
   BuiltList<String> invoiceList,
   String clientId,
   BuiltMap<String, UserEntity> userMap,
-  List<String> excludedIds,
-  String recurringPrefix,
+  List<String?> excludedIds,
+  String? recurringPrefix,
 ) {
   final list = invoiceList.where((invoiceId) {
     final invoice = invoiceMap[invoiceId];
     if (excludedIds.contains(invoiceId)) {
       return false;
     }
-    if (clientId != null &&
-        clientId.isNotEmpty &&
-        invoice.clientId != clientId) {
+    if (clientId.isNotEmpty && invoice!.clientId != clientId) {
       return false;
     }
-    if (!clientMap.containsKey(invoice.clientId) ||
-        !clientMap[invoice.clientId].isActive) {
+    if (!clientMap.containsKey(invoice!.clientId) ||
+        !clientMap[invoice.clientId]!.isActive) {
       return false;
     }
     return invoice.isActive &&
@@ -105,7 +103,7 @@ List<String> dropdownInvoiceSelector(
   }).toList();
 
   list.sort((invoiceAId, invoiceBId) {
-    final invoiceA = invoiceMap[invoiceAId];
+    final invoiceA = invoiceMap[invoiceAId]!;
     final invoiceB = invoiceMap[invoiceBId];
     return invoiceA.compareTo(
       invoice: invoiceB,
@@ -129,7 +127,7 @@ var memoizedFilteredInvoiceList = memo9((SelectionState selectionState,
         BuiltMap<String, PaymentEntity> paymentMap,
         ListUIState invoiceListState,
         BuiltMap<String, UserEntity> userMap,
-        String recurringPrefix) =>
+        String? recurringPrefix) =>
     filteredInvoicesSelector(
       selectionState,
       invoiceMap,
@@ -151,12 +149,12 @@ List<String> filteredInvoicesSelector(
   BuiltMap<String, PaymentEntity> paymentMap,
   ListUIState invoiceListState,
   BuiltMap<String, UserEntity> userMap,
-  String recurringPrefix,
+  String? recurringPrefix,
 ) {
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;
 
-  final Map<String, List<String>> invoicePaymentMap = {};
+  final Map<String?, List<String>> invoicePaymentMap = {};
   if (filterEntityType == EntityType.payment) {
     paymentMap.forEach((paymentId, payment) {
       payment.invoicePaymentables.forEach((invoicePaymentable) {
@@ -169,7 +167,7 @@ List<String> filteredInvoicesSelector(
   }
 
   final list = invoiceList.where((invoiceId) {
-    final invoice = invoiceMap[invoiceId];
+    final invoice = invoiceMap[invoiceId]!;
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
 
@@ -190,7 +188,7 @@ List<String> filteredInvoicesSelector(
     } else if (filterEntityType == EntityType.recurringInvoice &&
         invoice.recurringId != filterEntityId) {
       return false;
-    } else if (filterEntityType == EntityType.subscription &&
+    } else if (filterEntityType == EntityType.paymentLink &&
         invoice.subscriptionId != filterEntityId) {
       return false;
     } else if (filterEntityType == EntityType.design &&
@@ -245,7 +243,7 @@ List<String> filteredInvoicesSelector(
   }).toList();
 
   list.sort((invoiceAId, invoiceBId) {
-    return invoiceMap[invoiceAId].compareTo(
+    return invoiceMap[invoiceAId]!.compareTo(
       invoice: invoiceMap[invoiceBId],
       sortField: invoiceListState.sortField,
       sortAscending: invoiceListState.sortAscending,
@@ -357,7 +355,7 @@ EntityStats invoiceStatsForUser(
     if (invoice.assignedUserId == userId) {
       if (invoice.isActive) {
         countActive++;
-      } else if (invoice.isDeleted) {
+      } else if (invoice.isDeleted!) {
         countArchived++;
       }
     }

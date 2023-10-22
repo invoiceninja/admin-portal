@@ -20,7 +20,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class InvoiceListItem extends StatelessWidget {
   const InvoiceListItem({
-    @required this.invoice,
+    required this.invoice,
     this.filter,
     this.onTap,
     this.isChecked = false,
@@ -29,10 +29,10 @@ class InvoiceListItem extends StatelessWidget {
   });
 
   final InvoiceEntity invoice;
-  final String filter;
+  final String? filter;
   final bool showCheckbox;
   final bool isChecked;
-  final Function onTap;
+  final Function? onTap;
   final bool showSelected;
 
   @override
@@ -43,8 +43,8 @@ class InvoiceListItem extends StatelessWidget {
     final uiState = state.uiState;
     final invoiceUIState = uiState.invoiceUIState;
     final textStyle = TextStyle(fontSize: 16);
-    final localization = AppLocalization.of(context);
-    final filterMatch = filter != null && filter.isNotEmpty
+    final localization = AppLocalization.of(context)!;
+    final filterMatch = filter != null && filter!.isNotEmpty
         ? (invoice.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))
         : null;
@@ -53,7 +53,7 @@ class InvoiceListItem extends StatelessWidget {
         localization.lookup(kInvoiceStatuses[invoice.calculatedStatusId]);
     final statusColor = InvoiceStatusColors(state.prefState.colorThemeModel)
         .colors[invoice.calculatedStatusId];
-    final textColor = Theme.of(context).textTheme.bodyLarge.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
     String subtitle = '';
     if (invoice.date.isNotEmpty) {
@@ -76,7 +76,7 @@ class InvoiceListItem extends StatelessWidget {
             showSelected &&
             invoice.id ==
                 (uiState.isEditing
-                    ? invoiceUIState.editing.id
+                    ? invoiceUIState.editing!.id
                     : invoiceUIState.selectedId),
         showMultiselect: showSelected,
         userCompany: state.userCompany,
@@ -86,7 +86,7 @@ class InvoiceListItem extends StatelessWidget {
           return constraints.maxWidth > kTableListWidthCutoff
               ? InkWell(
                   onTap: () => onTap != null
-                      ? onTap()
+                      ? onTap!()
                       : selectEntity(
                           entity: invoice,
                           forceView: !showCheckbox,
@@ -134,7 +134,7 @@ class InvoiceListItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                (invoice.number ?? '').isEmpty
+                                invoice.number.isEmpty
                                     ? localization.pending
                                     : invoice.number,
                                 style: textStyle,
@@ -161,9 +161,9 @@ class InvoiceListItem extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .titleSmall
+                                    .titleSmall!
                                     .copyWith(
-                                      color: textColor
+                                      color: textColor!
                                           .withOpacity(kLighterOpacity),
                                     ),
                               ),
@@ -177,7 +177,7 @@ class InvoiceListItem extends StatelessWidget {
                                   ? invoice.balance
                                   : invoice.amount,
                               context,
-                              clientId: client.id),
+                              clientId: client.id)!,
                           style: textStyle,
                           textAlign: TextAlign.end,
                         ),
@@ -189,7 +189,7 @@ class InvoiceListItem extends StatelessWidget {
                 )
               : ListTile(
                   onTap: () => onTap != null
-                      ? onTap()
+                      ? onTap!()
                       : selectEntity(entity: invoice, forceView: !showCheckbox),
                   onLongPress: () => onTap != null
                       ? null
@@ -224,7 +224,7 @@ class InvoiceListItem extends StatelessWidget {
                                     ? invoice.balance
                                     : invoice.amount,
                                 context,
-                                clientId: invoice.clientId),
+                                clientId: invoice.clientId)!,
                             style: Theme.of(context).textTheme.titleMedium),
                       ],
                     ),
@@ -236,7 +236,7 @@ class InvoiceListItem extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: filterMatch == null
-                                ? Text((((invoice.number ?? '').isEmpty
+                                ? Text(((invoice.number.isEmpty
                                             ? localization.pending
                                             : invoice.number) +
                                         ' • ' +

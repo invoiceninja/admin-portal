@@ -13,8 +13,8 @@ void main() {
 
 void runTestSuite({bool batchMode = false}) {
   group('Product Tests', () {
-    TestLocalization localization;
-    FlutterDriver driver;
+    late TestLocalization localization;
+    FlutterDriver? driver;
 
     final productKey = makeUnique(faker.food.cuisine());
     final description = faker.food.dish();
@@ -29,48 +29,48 @@ void runTestSuite({bool batchMode = false}) {
       driver = await FlutterDriver.connect();
 
       print('Login to app');
-      await login(driver, retype: batchMode);
+      await login(driver!, retype: batchMode);
 
       print('View products');
-      await viewSection(driver: driver, name: localization.products);
+      await viewSection(driver: driver!, name: localization.products);
     });
 
     tearDownAll(() async {
-      await logout(driver, localization);
+      await logout(driver!, localization);
 
       if (driver != null) {
-        driver.close();
+        driver!.close();
       }
     });
 
     // Create an empty product
     test('Try to add an empty product', () async {
       print('Tap new product');
-      await driver.tap(find.byTooltip(localization.newProduct));
+      await driver!.tap(find.byTooltip(localization.newProduct));
 
       print('Tap save');
-      await driver.tap(find.text(localization.save));
+      await driver!.tap(find.text(localization.save));
 
       print('Check for error');
-      await driver.waitFor(find.text(localization.pleaseEnterAProductKey));
+      await driver!.waitFor(find.text(localization.pleaseEnterAProductKey));
 
-      if (await isMobile(driver)) {
+      if (await isMobile(driver!)) {
         print('Click back');
-        await driver.tap(find.pageBack());
-        await driver.waitFor(find.byTooltip(localization.newProduct));
+        await driver!.tap(find.pageBack());
+        await driver!.waitFor(find.byTooltip(localization.newProduct));
       } else {
         print('Click cancel');
-        await driver.tap(find.text(localization.cancel));
+        await driver!.tap(find.text(localization.cancel));
       }
     });
 
     // Create a new product
     test('Add a new product', () async {
       print('Tap new product');
-      await driver.tap(find.byTooltip(localization.newProduct));
+      await driver!.tap(find.byTooltip(localization.newProduct));
 
       print('Fill form: $productKey');
-      await fillAndSaveForm(driver, <String, dynamic>{
+      await fillAndSaveForm(driver!, <String, dynamic>{
         localization.product: productKey,
         localization.description: description,
         //localization.cost: cost,
@@ -80,27 +80,27 @@ void runTestSuite({bool batchMode = false}) {
         //localization.cost
       ]);
 
-      if (await isMobile(driver)) {
+      if (await isMobile(driver!)) {
         print('Click back');
-        await driver.tap(find.pageBack());
-        await driver.waitFor(find.byTooltip(localization.newProduct));
+        await driver!.tap(find.pageBack());
+        await driver!.waitFor(find.byTooltip(localization.newProduct));
       }
     });
 
     // Edit the newly created product
     test('Edit an existing product', () async {
-      if (await isMobile(driver)) {
+      if (await isMobile(driver!)) {
         print('Select product: $productKey');
-        await driver.scrollUntilVisible(
+        await driver!.scrollUntilVisible(
             find.byType('ListView'), find.text(productKey),
             dyScroll: -300);
-        await driver.tap(find.text(productKey));
+        await driver!.tap(find.text(productKey));
       }
 
       print('Tap edit');
-      await driver.tap(find.text(localization.edit));
+      await driver!.tap(find.text(localization.edit));
 
-      await fillAndSaveForm(driver, <String, dynamic>{
+      await fillAndSaveForm(driver!, <String, dynamic>{
         localization.product: updatedProductKey,
         localization.description: updatedDescription,
         //localization.cost: updatedCost,
@@ -113,14 +113,14 @@ void runTestSuite({bool batchMode = false}) {
     // Archive the edited product
     test('Archive/delete product test', () async {
       await testArchiveAndDelete(
-          driver: driver,
+          driver: driver!,
           rowText: updatedProductKey,
           archivedMessage: localization.archivedProduct,
           deletedMessage: localization.deletedProduct,
           restoredMessage: localization.restoredProduct);
 
-      if (await isMobile(driver)) {
-        await driver.tap(find.pageBack());
+      if (await isMobile(driver!)) {
+        await driver!.tap(find.pageBack());
       }
     });
   });

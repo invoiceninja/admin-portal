@@ -20,13 +20,13 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class RecurringInvoiceListItem extends StatelessWidget {
   const RecurringInvoiceListItem({
-    @required this.invoice,
+    required this.invoice,
     this.filter,
     this.showCheckbox = true,
   });
 
   final InvoiceEntity invoice;
-  final String filter;
+  final String? filter;
   final bool showCheckbox;
 
   @override
@@ -36,12 +36,12 @@ class RecurringInvoiceListItem extends StatelessWidget {
     final client = state.clientState.get(invoice.clientId);
     final uiState = state.uiState;
     final invoiceUIState = uiState.recurringInvoiceUIState;
-    final listUIState = state.getUIState(invoice.entityType).listUIState;
+    final listUIState = state.getUIState(invoice.entityType)!.listUIState;
     final isInMultiselect = showCheckbox && listUIState.isInMultiselect();
     final isChecked = isInMultiselect && listUIState.isSelected(invoice.id);
     final textStyle = TextStyle(fontSize: 16);
-    final localization = AppLocalization.of(context);
-    final filterMatch = filter != null && filter.isNotEmpty
+    final localization = AppLocalization.of(context)!;
+    final filterMatch = filter != null && filter!.isNotEmpty
         ? (invoice.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))
         : null;
@@ -51,7 +51,7 @@ class RecurringInvoiceListItem extends StatelessWidget {
     final statusColor =
         RecurringInvoiceStatusColors(state.prefState.colorThemeModel)
             .colors[invoice.calculatedStatusId];
-    final textColor = Theme.of(context).textTheme.bodyLarge.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
     String subtitle = '';
     if (invoice.nextSendDate.isNotEmpty) {
@@ -66,7 +66,7 @@ class RecurringInvoiceListItem extends StatelessWidget {
         isSelected: isDesktop(context) &&
             invoice.id ==
                 (uiState.isEditing
-                    ? invoiceUIState.editing.id
+                    ? invoiceUIState.editing!.id
                     : invoiceUIState.selectedId),
         showMultiselect: showCheckbox,
         userCompany: state.userCompany,
@@ -122,7 +122,7 @@ class RecurringInvoiceListItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                (invoice.number ?? '').isEmpty
+                                (invoice.number).isEmpty
                                     ? localization.pending
                                     : invoice.number,
                                 style: textStyle,
@@ -149,9 +149,9 @@ class RecurringInvoiceListItem extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .titleSmall
+                                    .titleSmall!
                                     .copyWith(
-                                      color: textColor
+                                      color: textColor!
                                           .withOpacity(kLighterOpacity),
                                     ),
                               ),
@@ -161,7 +161,7 @@ class RecurringInvoiceListItem extends StatelessWidget {
                         SizedBox(width: 10),
                         Text(
                           formatNumber(invoice.amount, context,
-                              clientId: client.id),
+                              clientId: client.id)!,
                           style: textStyle,
                           textAlign: TextAlign.end,
                         ),
@@ -203,7 +203,7 @@ class RecurringInvoiceListItem extends StatelessWidget {
                         SizedBox(width: 4),
                         Text(
                             formatNumber(invoice.amount, context,
-                                clientId: invoice.clientId),
+                                clientId: invoice.clientId)!,
                             style: Theme.of(context).textTheme.titleMedium),
                       ],
                     ),
@@ -216,7 +216,7 @@ class RecurringInvoiceListItem extends StatelessWidget {
                           Expanded(
                             child: filterMatch == null
                                 ? Text(
-                                    (((invoice.number ?? '').isEmpty
+                                    ((invoice.number.isEmpty
                                                 ? localization.pending
                                                 : invoice.number) +
                                             (invoice.nextSendDate.isNotEmpty

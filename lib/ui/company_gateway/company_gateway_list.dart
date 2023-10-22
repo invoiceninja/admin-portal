@@ -14,8 +14,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CompanyGatewayList extends StatefulWidget {
   const CompanyGatewayList({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final CompanyGatewayListVM viewModel;
@@ -26,7 +26,7 @@ class CompanyGatewayList extends StatefulWidget {
 
 class _CompanyGatewayListState extends State<CompanyGatewayList> {
   // TODO remove this https://github.com/flutter/flutter/issues/71946
-  ScrollController _controller;
+  ScrollController? _controller;
 
   @override
   void initState() {
@@ -36,7 +36,7 @@ class _CompanyGatewayListState extends State<CompanyGatewayList> {
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
@@ -54,7 +54,7 @@ class _CompanyGatewayListState extends State<CompanyGatewayList> {
 
     if (viewModel.companyGatewayList.isEmpty) {
       return Center(
-          child: HelpText(AppLocalization.of(context).noRecordsFound));
+          child: HelpText(AppLocalization.of(context)!.noRecordsFound));
     }
 
     return Stack(
@@ -94,7 +94,7 @@ class _CompanyGatewayListState extends State<CompanyGatewayList> {
                             widget.viewModel.onRemovePressed(companyGatewayId)
                         : null,
                     isChecked: isInMultiselect &&
-                        listUIState.isSelected(companyGateway.id));
+                        listUIState.isSelected(companyGateway!.id));
               }).toList(),
             ),
           ),

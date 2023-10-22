@@ -9,9 +9,9 @@ import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 
 class ClientViewActivity extends StatefulWidget {
-  const ClientViewActivity({Key key, this.viewModel}) : super(key: key);
+  const ClientViewActivity({Key? key, this.viewModel}) : super(key: key);
 
-  final ClientViewVM viewModel;
+  final ClientViewVM? viewModel;
 
   @override
   _ClientViewActivityState createState() => _ClientViewActivityState();
@@ -20,15 +20,15 @@ class ClientViewActivity extends StatefulWidget {
 class _ClientViewActivityState extends State<ClientViewActivity> {
   @override
   void didChangeDependencies() {
-    if (widget.viewModel.client.isStale) {
-      widget.viewModel.onRefreshed(context);
+    if (widget.viewModel!.client.isStale) {
+      widget.viewModel!.onRefreshed(context);
     }
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    final client = widget.viewModel.client;
+    final client = widget.viewModel!.client;
     final activities = client.activities;
 
     if (!client.isLoaded) {

@@ -86,21 +86,21 @@ List<Middleware<AppState>> createStorePurchaseOrdersMiddleware([
 Middleware<AppState> _viewPurchaseOrder() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ViewPurchaseOrder;
+    final action = dynamicAction as ViewPurchaseOrder?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(PurchaseOrderViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      await navigatorKey.currentState.pushNamed(PurchaseOrderViewScreen.route);
+      await navigatorKey.currentState!.pushNamed(PurchaseOrderViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewPurchaseOrderList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewPurchaseOrderList;
+    final action = dynamicAction as ViewPurchaseOrderList?;
 
     next(action);
 
@@ -111,7 +111,7 @@ Middleware<AppState> _viewPurchaseOrderList() {
     store.dispatch(UpdateCurrentRoute(PurchaseOrderScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           PurchaseOrderScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -119,14 +119,14 @@ Middleware<AppState> _viewPurchaseOrderList() {
 
 Middleware<AppState> _editPurchaseOrder() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditPurchaseOrder;
+    final action = dynamicAction as EditPurchaseOrder?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(PurchaseOrderEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(PurchaseOrderEditScreen.route);
+      navigatorKey.currentState!.pushNamed(PurchaseOrderEditScreen.route);
     }
   };
 }
@@ -134,18 +134,20 @@ Middleware<AppState> _editPurchaseOrder() {
 Middleware<AppState> _showEmailPurchaseOrder() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ShowEmailPurchaseOrder;
+    final action = dynamicAction as ShowEmailPurchaseOrder?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(PurchaseOrderEmailScreen.route));
 
     if (store.state.prefState.isMobile) {
-      final emailWasSent = await navigatorKey.currentState
+      final emailWasSent = await navigatorKey.currentState!
           .pushNamed(PurchaseOrderEmailScreen.route);
 
-      if (action.completer != null && emailWasSent != null && emailWasSent) {
-        action.completer.complete(null);
+      if (action!.completer != null &&
+          emailWasSent != null &&
+          emailWasSent as bool) {
+        action.completer!.complete(null);
       }
     }
   };
@@ -154,14 +156,14 @@ Middleware<AppState> _showEmailPurchaseOrder() {
 Middleware<AppState> _showPdfPurchaseOrder() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ShowPdfPurchaseOrder;
+    final action = dynamicAction as ShowPdfPurchaseOrder?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(PurchaseOrderPdfScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(PurchaseOrderPdfScreen.route);
+      navigatorKey.currentState!.pushNamed(PurchaseOrderPdfScreen.route);
     }
   };
 }
@@ -177,15 +179,11 @@ Middleware<AppState> _archivePurchaseOrder(PurchaseOrderRepository repository) {
             EntityAction.archive)
         .then((List<InvoiceEntity> purchaseOrders) {
       store.dispatch(ArchivePurchaseOrdersSuccess(purchaseOrders));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchivePurchaseOrdersFailure(prevPurchaseOrders));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -204,15 +202,11 @@ Middleware<AppState> _deletePurchaseOrder(PurchaseOrderRepository repository) {
             EntityAction.delete)
         .then((List<InvoiceEntity> purchaseOrders) {
       store.dispatch(DeletePurchaseOrdersSuccess(purchaseOrders));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeletePurchaseOrdersFailure(prevPurchaseOrders));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -231,15 +225,11 @@ Middleware<AppState> _restorePurchaseOrder(PurchaseOrderRepository repository) {
             EntityAction.restore)
         .then((List<InvoiceEntity> purchaseOrders) {
       store.dispatch(RestorePurchaseOrdersSuccess(purchaseOrders));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestorePurchaseOrdersFailure(prevPurchaseOrders));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -276,15 +266,11 @@ Middleware<AppState> _markSentPurchaseOrder(
             EntityAction.markSent)
         .then((purchaseOrders) {
       store.dispatch(MarkPurchaseOrderSentSuccess(purchaseOrders));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(MarkPurchaseOrderSentFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -301,15 +287,11 @@ Middleware<AppState> _convertPurchaseOrdersToExpense(
         .then((purchaseOrders) {
       store.dispatch(ConvertPurchaseOrdersToExpensesSuccess(purchaseOrders));
       store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ConvertPurchaseOrdersToExpensesFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -326,15 +308,11 @@ Middleware<AppState> _addPurchaseOrdersToInventory(
         .then((purchaseOrders) {
       store.dispatch(AddPurchaseOrdersToInventorySuccess(purchaseOrders));
       store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(AddPurchaseOrdersToInventoryFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -349,15 +327,11 @@ Middleware<AppState> _acceptPurchaseOrders(PurchaseOrderRepository repository) {
             EntityAction.accept)
         .then((purchaseOrders) {
       store.dispatch(AcceptPurchaseOrderSuccess(purchaseOrders));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(AcceptPurchaseOrderFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -372,15 +346,11 @@ Middleware<AppState> _cancelPurchaseOrders(PurchaseOrderRepository repository) {
             store.state.credentials, action.purchaseOrderIds, EntityAction.back)
         .then((purchaseOrders) {
       store.dispatch(CancelPurchaseOrderSuccess(purchaseOrders));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(CancelPurchaseOrderFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -391,7 +361,7 @@ Middleware<AppState> _emailPurchaseOrder(PurchaseOrderRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EmailPurchaseOrderRequest;
     final origPurchaseOrder =
-        store.state.purchaseOrderState.map[action.purchaseOrderId];
+        store.state.purchaseOrderState.map[action.purchaseOrderId]!;
     repository
         .emailPurchaseOrder(
       store.state.credentials,
@@ -403,15 +373,11 @@ Middleware<AppState> _emailPurchaseOrder(PurchaseOrderRepository repository) {
     )
         .then((purchaseOrder) {
       store.dispatch(EmailPurchaseOrderSuccess(purchaseOrder));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(EmailPurchaseOrderFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -464,13 +430,13 @@ Middleware<AppState> _loadPurchaseOrder(PurchaseOrderRepository repository) {
       store.dispatch(LoadPurchaseOrderSuccess(purchaseOrder));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadPurchaseOrderFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -487,15 +453,11 @@ Middleware<AppState> _downloadPurchaseOrders(
             EntityAction.bulkDownload)
         .then((invoices) {
       store.dispatch(DownloadPurchaseOrdersSuccess());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DownloadPurchaseOrdersFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -508,18 +470,18 @@ Middleware<AppState> _bulkEmailPurchaseOrders(
     final action = dynamicAction as BulkEmailPurchaseOrdersRequest;
 
     repository
-        .bulkAction(store.state.credentials, action.purchaseOrderIds,
+        .bulkAction(store.state.credentials, action.purchaseOrderIds!,
             EntityAction.sendEmail)
         .then((List<InvoiceEntity> purchaseOrders) {
       store.dispatch(BulkEmailPurchaseOrdersSuccess(purchaseOrders));
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(BulkEmailPurchaseOrdersFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -560,7 +522,7 @@ Middleware<AppState> _loadPurchaseOrders(PurchaseOrderRepository repository) {
         ));
       } else {
         if (action.completer != null) {
-          action.completer.complete(null);
+          action.completer!.complete(null);
         }
         store.dispatch(LoadExpenses());
       }
@@ -568,7 +530,7 @@ Middleware<AppState> _loadPurchaseOrders(PurchaseOrderRepository repository) {
       print(error);
       store.dispatch(LoadPurchaseOrdersFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -578,14 +540,14 @@ Middleware<AppState> _loadPurchaseOrders(PurchaseOrderRepository repository) {
 
 Middleware<AppState> _saveDocument(PurchaseOrderRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as SavePurchaseOrderDocumentRequest;
+    final action = dynamicAction as SavePurchaseOrderDocumentRequest?;
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
         store.state.credentials,
-        action.purchaseOrder,
+        action!.purchaseOrder,
         action.multipartFiles,
-        action.isPrivate,
+        action.isPrivate!,
       )
           .then((purchaseOrder) {
         store.dispatch(SavePurchaseOrderSuccess(purchaseOrder));
@@ -597,8 +559,7 @@ Middleware<AppState> _saveDocument(PurchaseOrderRepository repository) {
             ..parentType = EntityType.purchaseOrder));
         });
         store.dispatch(LoadDocumentsSuccess(documents));
-
-        action.completer.complete(null);
+        action.completer.complete(documents);
       }).catchError((Object error) {
         print(error);
         store.dispatch(SavePurchaseOrderDocumentFailure(error));
@@ -607,7 +568,7 @@ Middleware<AppState> _saveDocument(PurchaseOrderRepository repository) {
     } else {
       const error = 'Uploading documents requires an enterprise plan';
       store.dispatch(SavePurchaseOrderDocumentFailure(error));
-      action.completer.completeError(error);
+      action!.completer.completeError(error);
     }
 
     next(action);

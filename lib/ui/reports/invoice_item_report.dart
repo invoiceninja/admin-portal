@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 
@@ -43,14 +44,14 @@ enum InvoiceItemReportFields {
 }
 
 var memoizedInvoiceItemReport = memo6((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, ProductEntity> productMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
   StaticState staticState,
 ) =>
-    lineItemReport(userCompany, reportsUIState, productMap, invoiceMap,
+    lineItemReport(userCompany!, reportsUIState, productMap, invoiceMap,
         clientMap, staticState));
 
 ReportResult lineItemReport(
@@ -64,11 +65,10 @@ ReportResult lineItemReport(
   final List<List<ReportElement>> data = [];
   BuiltList<InvoiceItemReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
-  final lineItemReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportInvoiceItem)
-          ? reportSettings[kReportInvoiceItem]
-          : ReportSettingsEntity();
+  final reportSettings = userCompany.settings.reportSettings;
+  final lineItemReportSettings = reportSettings.containsKey(kReportInvoiceItem)
+      ? reportSettings[kReportInvoiceItem]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     InvoiceItemReportFields.invoiceNumber,
@@ -81,7 +81,7 @@ ReportResult lineItemReport(
   if (lineItemReportSettings.columns.isNotEmpty) {
     columns = BuiltList(lineItemReportSettings.columns
         .map((e) => EnumUtils.fromString(InvoiceItemReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
@@ -98,8 +98,8 @@ ReportResult lineItemReport(
     final precision =
         staticState.currencyMap[client.currencyId]?.precision ?? 2;
 
-    if ((invoice.isDeleted && !userCompany.company.reportIncludeDeleted) ||
-        client.isDeleted) {
+    if ((invoice.isDeleted! && !userCompany.company.reportIncludeDeleted) ||
+        client.isDeleted!) {
       continue;
     }
 
@@ -126,7 +126,7 @@ ReportResult lineItemReport(
             if (lineItem.productCost != 0) {
               value = lineItem.productCost;
             } else {
-              value = productId == null ? 0.0 : productMap[productId].cost;
+              value = productId == null ? 0.0 : productMap[productId]!.cost;
             }
             break;
           case InvoiceItemReportFields.profit:
@@ -135,7 +135,7 @@ ReportResult lineItemReport(
             if (lineItem.productCost != 0) {
               cost = lineItem.productCost;
             } else {
-              cost = productId == null ? 0.0 : productMap[productId].cost;
+              cost = productId == null ? 0.0 : productMap[productId]!.cost;
             }
             value = lineItem.netTotal(invoice, precision) - cost;
             if (column == InvoiceItemReportFields.markup && cost != 0) {
@@ -211,7 +211,7 @@ ReportResult lineItemReport(
           userCompany: userCompany,
           reportsUIState: reportsUIState,
           column: EnumUtils.parse(column),
-        )) {
+        )!) {
           skip = true;
         }
 
@@ -235,8 +235,8 @@ ReportResult lineItemReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, lineItemReportSettings, selectedColumns));
+  data.sort((rowA, rowB) => sortReportTableRows(
+      rowA, rowB, lineItemReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns: InvoiceItemReportFields.values

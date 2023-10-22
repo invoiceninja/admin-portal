@@ -26,8 +26,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class GeneratedNumbers extends StatefulWidget {
   const GeneratedNumbers({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final GeneratedNumbersVM viewModel;
@@ -41,8 +41,8 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_generatedNumbers');
 
-  FocusScopeNode _focusNode;
-  TabController _controller;
+  FocusScopeNode? _focusNode;
+  TabController? _controller;
 
   bool autoValidate = false;
 
@@ -81,19 +81,19 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
         vsync: this, length: tabs, initialIndex: settingsUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller!.index));
   }
 
   @override
   void dispose() {
-    _focusNode.dispose();
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
+    _focusNode!.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -111,7 +111,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     final settings = widget.viewModel.settings;
-    _recurringPrefixController.text = settings.recurringNumberPrefix;
+    _recurringPrefixController.text = settings.recurringNumberPrefix ?? '';
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -166,7 +166,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
       showDialog<ErrorDialog>(
           context: context,
           builder: (BuildContext context) {
-            return ErrorDialog(AppLocalization.of(context)
+            return ErrorDialog(AppLocalization.of(context)!
                 .counterPatternError
                 .replaceAll(':', '\$'));
           });
@@ -179,7 +179,7 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final settings = viewModel.settings;
     final state = viewModel.state;
@@ -469,16 +469,16 @@ class _GeneratedNumbersState extends State<GeneratedNumbers>
 
 class EntityNumberSettings extends StatefulWidget {
   const EntityNumberSettings({
-    @required this.counterValue,
-    @required this.patternValue,
-    @required this.onChanged,
+    required this.counterValue,
+    required this.patternValue,
+    required this.onChanged,
     this.showVendorFields = false,
     this.showClientFields = true,
   });
 
-  final int counterValue;
-  final String patternValue;
-  final Function(int, String) onChanged;
+  final int? counterValue;
+  final String? patternValue;
+  final Function(int?, String) onChanged;
   final bool showVendorFields;
   final bool showClientFields;
 
@@ -513,7 +513,7 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
     _counterController.text = '${widget.counterValue ?? ''}';
-    _patternController.text = widget.patternValue;
+    _patternController.text = widget.patternValue ?? '';
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -523,7 +523,7 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
 
   void _onChanged() {
     _debouncer.run(() {
-      final int counter =
+      final int? counter =
           parseInt(_counterController.text.trim(), zeroIsNull: true);
       final String pattern = _patternController.text.trim();
 
@@ -535,7 +535,7 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     return ScrollableListView(
       children: [
@@ -597,7 +597,7 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
 
 class HelpPanel extends StatelessWidget {
   const HelpPanel({
-    @required this.onFieldPressed,
+    required this.onFieldPressed,
     this.showVendorFields = false,
     this.showClientFields = true,
   });

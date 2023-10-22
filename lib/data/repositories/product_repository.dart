@@ -25,7 +25,7 @@ class ProductRepository {
   final WebClient webClient;
 
   Future<ProductEntity> loadItem(
-      Credentials credentials, String entityId) async {
+      Credentials credentials, String? entityId) async {
     final String url = '${credentials.url}/products/$entityId';
 
     final dynamic response = await webClient.get(url, credentials.token);
@@ -40,7 +40,7 @@ class ProductRepository {
   Future<BuiltList<ProductEntity>> loadList(
       Credentials credentials, int page) async {
     final url =
-        credentials.url + '/products?per_page=$kMaxRecordsPerPage&page=$page';
+        credentials.url! + '/products?per_page=$kMaxRecordsPerPage&page=$page';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
@@ -62,7 +62,7 @@ class ProductRepository {
     }
 
     final url =
-        credentials.url + '/products/bulk?per_page=$kMaxEntitiesPerBulkAction';
+        credentials.url! + '/products/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(
       url,
       credentials.token,
@@ -76,7 +76,7 @@ class ProductRepository {
     );
 
     final ProductListResponse productResponse =
-        serializers.deserializeWith(ProductListResponse.serializer, response);
+        serializers.deserializeWith(ProductListResponse.serializer, response)!;
 
     return productResponse.data.toList();
   }
@@ -89,10 +89,10 @@ class ProductRepository {
 
     if (product.isNew) {
       response = await webClient.post(
-          credentials.url + '/products', credentials.token,
+          credentials.url! + '/products', credentials.token,
           data: json.encode(data));
     } else {
-      var url = credentials.url + '/products/${product.id}';
+      var url = credentials.url! + '/products/${product.id}';
       if (changedStock) {
         url += '?update_in_stock_quantity=true';
       }
@@ -101,7 +101,7 @@ class ProductRepository {
     }
 
     final ProductItemResponse productResponse =
-        serializers.deserializeWith(ProductItemResponse.serializer, response);
+        serializers.deserializeWith(ProductItemResponse.serializer, response)!;
 
     return productResponse.data;
   }
@@ -121,7 +121,7 @@ class ProductRepository {
         data: fields, multipartFiles: multipartFiles);
 
     final ProductItemResponse productResponse =
-        serializers.deserializeWith(ProductItemResponse.serializer, response);
+        serializers.deserializeWith(ProductItemResponse.serializer, response)!;
 
     return productResponse.data;
   }

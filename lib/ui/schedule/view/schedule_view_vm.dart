@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class ScheduleViewScreen extends StatelessWidget {
   const ScheduleViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
   static const String route = '/$kSettings/$kSettingsSchedulesView';
@@ -40,15 +40,15 @@ class ScheduleViewScreen extends StatelessWidget {
 
 class ScheduleViewVM {
   ScheduleViewVM({
-    @required this.state,
-    @required this.schedule,
-    @required this.company,
-    @required this.onEntityAction,
-    @required this.onRefreshed,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.isDirty,
-    @required this.onBackPressed,
+    required this.state,
+    required this.schedule,
+    required this.company,
+    required this.onEntityAction,
+    required this.onRefreshed,
+    required this.isSaving,
+    required this.isLoading,
+    required this.isDirty,
+    required this.onBackPressed,
   });
 
   factory ScheduleViewVM.fromStore(Store<AppState> store) {
@@ -59,8 +59,8 @@ class ScheduleViewVM {
                 id: state.scheduleUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(
           LoadSchedule(completer: completer, scheduleId: schedule.id));
       return completer.future;
@@ -84,7 +84,7 @@ class ScheduleViewVM {
 
   final AppState state;
   final ScheduleEntity schedule;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
   final Function onBackPressed;

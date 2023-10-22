@@ -10,7 +10,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class FormCard extends StatelessWidget {
   const FormCard({
-    Key key,
+    Key? key,
     this.children,
     this.child,
     this.crossAxisAlignment,
@@ -22,19 +22,19 @@ class FormCard extends StatelessWidget {
     this.constraints,
   }) : super(key: key);
 
-  final Widget child;
-  final List<Widget> children;
-  final CrossAxisAlignment crossAxisAlignment;
+  final Widget? child;
+  final List<Widget>? children;
+  final CrossAxisAlignment? crossAxisAlignment;
   final bool forceNarrow;
-  final EdgeInsets padding;
-  final EdgeInsets internalPadding;
+  final EdgeInsets? padding;
+  final EdgeInsets? internalPadding;
   final bool isLast;
   final double elevation;
-  final BoxConstraints constraints;
+  final BoxConstraints? constraints;
 
   @override
   Widget build(BuildContext context) {
-    if (child == null && (children == null || children.isEmpty)) {
+    if (child == null && (children == null || children!.isEmpty)) {
       return SizedBox();
     }
 
@@ -70,7 +70,7 @@ class FormCard extends StatelessWidget {
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment:
                             crossAxisAlignment ?? CrossAxisAlignment.center,
-                        children: children,
+                        children: children!,
                       ),
                     ),
             ),

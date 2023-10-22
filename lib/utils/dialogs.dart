@@ -31,11 +31,11 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 void showRefreshDataDialog(
-    {@required BuildContext context, bool includeStatic = false}) async {
+    {required BuildContext context, bool includeStatic = false}) async {
   final store = StoreProvider.of<AppState>(context);
   store.dispatch(RefreshData(
     completer: snackBarCompleter<Null>(
-        context, AppLocalization.of(context).refreshComplete,
+        AppLocalization.of(context)!.refreshComplete,
         shouldPop: true),
     clearData: true,
     includeStatic: includeStatic,
@@ -48,26 +48,26 @@ void showRefreshDataDialog(
             children: <Widget>[LoadingDialog()],
           ));
 
-  AppBuilder.of(navigatorKey.currentContext).rebuild();
+  AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
 }
 
 void showErrorDialog({
-  String message,
+  String? message,
   bool clearErrorOnDismiss = false,
 }) {
   showDialog<ErrorDialog>(
-      context: navigatorKey.currentContext,
+      context: navigatorKey.currentContext!,
       builder: (BuildContext context) {
         return ErrorDialog(message, clearErrorOnDismiss: clearErrorOnDismiss);
       });
 }
 
 void showMessageDialog({
-  @required BuildContext context,
-  @required String message,
-  List<TextButton> secondaryActions,
-  Function onDismiss,
+  required String? message,
+  List<TextButton>? secondaryActions,
+  Function? onDismiss,
 }) {
+  final context = navigatorKey.currentContext!;
   showDialog<MessageDialog>(
       context: context,
       builder: (BuildContext context) {
@@ -80,10 +80,10 @@ void showMessageDialog({
 }
 
 void confirmCallback({
-  @required BuildContext context,
-  @required Function(String) callback,
-  String message,
-  String typeToConfirm,
+  required BuildContext? context,
+  required Function(String?) callback,
+  String? message,
+  String? typeToConfirm,
   bool askForReason = false,
   bool skip = false,
 }) {
@@ -92,9 +92,9 @@ void confirmCallback({
     return;
   }
 
-  final localization = AppLocalization.of(context);
-  final title = message == null ? localization.areYouSure : message;
-  final content = message == null ? null : localization.areYouSure;
+  final localization = AppLocalization.of(context!);
+  final title = message == null ? localization!.areYouSure : message;
+  final content = message == null ? null : localization!.areYouSure;
 
   showDialog<AlertDialog>(
     context: context,
@@ -109,15 +109,14 @@ void confirmCallback({
           callback(_reason);
         } else {
           showMessageDialog(
-              context: context,
-              message: localization.pleaseTypeToConfirm
+              message: localization!.pleaseTypeToConfirm
                   .replaceFirst(':value', typeToConfirm));
         }
       }
 
       return PointerInterceptor(
         child: AlertDialog(
-          semanticLabel: localization.areYouSure,
+          semanticLabel: localization!.areYouSure,
           title: typeToConfirm != null ? null : Text(title),
           content: typeToConfirm != null
               ? Column(
@@ -177,8 +176,8 @@ void confirmCallback({
 }
 
 void passwordCallback({
-  @required BuildContext context,
-  @required Function(String, String) callback,
+  required BuildContext context,
+  required Function(String?, String?) callback,
   bool alwaysRequire = false,
   bool skipOAuth = false,
 }) {
@@ -192,8 +191,7 @@ void passwordCallback({
 
   if (alwaysRequire && !user.hasPassword) {
     showMessageDialog(
-        context: context,
-        message: localization.pleaseSetAPassword,
+        message: localization!.pleaseSetAPassword,
         secondaryActions: [
           TextButton(
               onPressed: () {
@@ -283,7 +281,7 @@ void passwordCallback({
 }
 
 class PasswordConfirmation extends StatefulWidget {
-  const PasswordConfirmation({@required this.callback, this.idToken = ''});
+  const PasswordConfirmation({required this.callback, this.idToken = ''});
 
   final Function(String, String) callback;
   final String idToken;
@@ -293,7 +291,7 @@ class PasswordConfirmation extends StatefulWidget {
 }
 
 class _PasswordConfirmationState extends State<PasswordConfirmation> {
-  String _password;
+  String? _password;
   bool _isPasswordObscured = true;
 
   void _submit() {
@@ -307,7 +305,7 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     return AlertDialog(
       title: Text(localization.verifyPassword),
@@ -346,13 +344,13 @@ class _PasswordConfirmationState extends State<PasswordConfirmation> {
 }
 
 void fieldCallback({
-  BuildContext context,
-  String title,
-  String field,
+  required BuildContext context,
+  String? title,
+  String? field,
   String value = '',
-  Function(String) callback,
-  int maxLength,
-  List<TextButton> secondaryActions,
+  Function(String)? callback,
+  int? maxLength,
+  List<TextButton>? secondaryActions,
 }) {
   showDialog<AlertDialog>(
     context: context,
@@ -372,27 +370,27 @@ void fieldCallback({
 
 class FieldConfirmation extends StatefulWidget {
   const FieldConfirmation({
-    @required this.callback,
-    @required this.title,
-    @required this.field,
+    required this.callback,
+    required this.title,
+    required this.field,
     this.value = '',
     this.maxLength,
     this.secondaryActions,
   });
 
-  final Function(String) callback;
-  final String title;
-  final String field;
+  final Function(String)? callback;
+  final String? title;
+  final String? field;
   final String value;
-  final int maxLength;
-  final List<TextButton> secondaryActions;
+  final int? maxLength;
+  final List<TextButton>? secondaryActions;
 
   @override
   _FieldConfirmationState createState() => _FieldConfirmationState();
 }
 
 class _FieldConfirmationState extends State<FieldConfirmation> {
-  String _field;
+  String? _field;
 
   void _submit() {
     final value = (_field ?? '').trim();
@@ -402,15 +400,15 @@ class _FieldConfirmationState extends State<FieldConfirmation> {
     }
 
     Navigator.pop(context);
-    widget.callback(value);
+    widget.callback!(value);
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     return AlertDialog(
-      title: Text(widget.title),
+      title: Text(widget.title!),
       content: TextFormField(
         initialValue: widget.value,
         autofocus: true,
@@ -419,7 +417,7 @@ class _FieldConfirmationState extends State<FieldConfirmation> {
         maxLengthEnforcement: widget.maxLength != null
             ? MaxLengthEnforcement.enforced
             : MaxLengthEnforcement.none,
-        buildCounter: (_, {currentLength, maxLength, isFocused}) => null,
+        //buildCounter: (_, {currentLength, maxLength, isFocused}) => null,
         decoration: InputDecoration(
           labelText: widget.field,
         ),
@@ -440,9 +438,9 @@ class _FieldConfirmationState extends State<FieldConfirmation> {
 }
 
 void cloneToDialog({
-  @required BuildContext context,
-  @required InvoiceEntity invoice,
+  required InvoiceEntity invoice,
 }) {
+  final context = navigatorKey.currentContext!;
   final localization = AppLocalization.of(context);
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
@@ -452,7 +450,7 @@ void cloneToDialog({
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(localization.cloneTo),
+          title: Text(localization!.cloneTo),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -515,8 +513,8 @@ void cloneToDialog({
 }
 
 void changeTaskStatusDialog({
-  @required BuildContext context,
-  @required TaskEntity task,
+  required BuildContext context,
+  required TaskEntity task,
 }) {
   final localization = AppLocalization.of(context);
   final store = StoreProvider.of<AppState>(context);
@@ -530,7 +528,7 @@ void changeTaskStatusDialog({
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(localization.changeStatus),
+          title: Text(localization!.changeStatus),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: statusIds.map((statusId) {
@@ -542,7 +540,6 @@ void changeTaskStatusDialog({
                   store.dispatch(SaveTaskRequest(
                     task: task.rebuild((b) => b..statusId = statusId),
                     completer: snackBarCompleter<TaskEntity>(
-                      context,
                       localization.changedStatus,
                     ),
                   ));
@@ -562,9 +559,9 @@ void changeTaskStatusDialog({
 }
 
 void addToInvoiceDialog({
-  @required BuildContext context,
-  @required String clientId,
-  @required List<InvoiceItemEntity> items,
+  required BuildContext context,
+  required String? clientId,
+  required List<InvoiceItemEntity> items,
 }) {
   final localization = AppLocalization.of(context);
   final store = StoreProvider.of<AppState>(context);
@@ -579,7 +576,7 @@ void addToInvoiceDialog({
   });
 
   if (invoices.isEmpty) {
-    showMessageDialog(context: context, message: localization.noInvoicesFound);
+    showMessageDialog(message: localization!.noInvoicesFound);
     return;
   }
 
@@ -587,14 +584,14 @@ void addToInvoiceDialog({
       context: context,
       builder: (BuildContext context) {
         return SimpleDialog(
-          title: Text(localization.addToInvoice),
+          title: Text(localization!.addToInvoice),
           children: invoices.map((invoice) {
             return SimpleDialogOption(
               child: Row(children: [
                 Expanded(child: Text(invoice.number)),
                 Text(
                   formatNumber(invoice.amount, context,
-                      clientId: invoice.clientId),
+                      clientId: invoice.clientId)!,
                 ),
               ]),
               onPressed: () {

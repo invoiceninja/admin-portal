@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CreditListBuilder extends StatelessWidget {
-  const CreditListBuilder({Key key}) : super(key: key);
+  const CreditListBuilder({Key? key}) : super(key: key);
 
   static const String route = '/credits/edit';
 
@@ -45,7 +45,7 @@ class CreditListBuilder extends StatelessWidget {
               itemBuilder: (BuildContext context, index) {
                 final state = viewModel.state;
                 final invoiceId = viewModel.invoiceList[index];
-                final invoice = viewModel.invoiceMap[invoiceId];
+                final invoice = viewModel.invoiceMap[invoiceId]!;
                 final listUIState = state.getListState(EntityType.credit);
                 final isInMultiselect = listUIState.isInMultiselect();
 
@@ -65,20 +65,19 @@ class CreditListBuilder extends StatelessWidget {
 
 class CreditListVM extends EntityListVM {
   CreditListVM({
-    @required AppState state,
-    @required List<String> invoiceList,
-    @required BuiltMap<String, InvoiceEntity> invoiceMap,
-    @required BuiltMap<String, ClientEntity> clientMap,
-    @required String filter,
-    @required bool isLoading,
-    @required Function(BuildContext) onRefreshed,
-    @required
-        Function(BuildContext, List<InvoiceEntity>, EntityAction)
-            onEntityAction,
-    @required List<String> tableColumns,
-    @required EntityType entityType,
-    @required Function(String) onSortColumn,
-    @required Function onClearMultiselect,
+    required AppState state,
+    required List<String> invoiceList,
+    required BuiltMap<String, InvoiceEntity> invoiceMap,
+    required BuiltMap<String, ClientEntity> clientMap,
+    required String? filter,
+    required bool isLoading,
+    required Function(BuildContext) onRefreshed,
+    required Function(BuildContext, List<InvoiceEntity>, EntityAction)
+        onEntityAction,
+    required List<String> tableColumns,
+    required EntityType entityType,
+    required Function(String) onSortColumn,
+    required Function onClearMultiselect,
   }) : super(
           state: state,
           invoiceList: invoiceList,
@@ -96,10 +95,10 @@ class CreditListVM extends EntityListVM {
   static CreditListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
       if (store.state.isLoading) {
-        return Future<Null>(null);
+        return Future<Null>.value();
       }
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -126,7 +125,7 @@ class CreditListVM extends EntityListVM {
               EntityAction action) =>
           handleCreditAction(context, credits, action),
       tableColumns:
-          state.userCompany.settings?.getTableColumns(EntityType.credit) ??
+          state.userCompany.settings.getTableColumns(EntityType.credit) ??
               CreditPresenter.getDefaultTableFields(state.userCompany),
       entityType: EntityType.credit,
       onSortColumn: (field) => store.dispatch(SortCredits(field)),

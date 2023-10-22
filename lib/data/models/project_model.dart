@@ -73,10 +73,10 @@ abstract class ProjectEntity extends Object
     with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<ProjectEntity, ProjectEntityBuilder> {
   factory ProjectEntity({
-    String id,
-    AppState state,
-    ClientEntity client,
-    UserEntity user,
+    String? id,
+    AppState? state,
+    ClientEntity? client,
+    UserEntity? user,
   }) {
     return _$ProjectEntity._(
       id: id ?? BaseEntity.nextId,
@@ -166,21 +166,21 @@ abstract class ProjectEntity extends Object
   BuiltList<DocumentEntity> get documents;
 
   @override
-  List<EntityAction> getActions(
-      {UserCompanyEntity userCompany,
-      ClientEntity client,
+  List<EntityAction?> getActions(
+      {UserCompanyEntity? userCompany,
+      ClientEntity? client,
       bool includeEdit = false,
       bool includePreview = false,
       bool multiselect = false}) {
-    final actions = <EntityAction>[];
+    final actions = <EntityAction?>[];
 
-    if (!multiselect && !isDeleted) {
-      if (includeEdit && userCompany.canEditEntity(this)) {
+    if (!multiselect && !isDeleted!) {
+      if (includeEdit && userCompany!.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
 
       if (isActive) {
-        if (userCompany.canCreate(EntityType.task)) {
+        if (userCompany!.canCreate(EntityType.task)) {
           actions.add(EntityAction.newTask);
         }
         if (userCompany.canCreate(EntityType.expense)) {
@@ -189,7 +189,7 @@ abstract class ProjectEntity extends Object
       }
     }
 
-    if (userCompany.canCreate(EntityType.invoice) && !isDeleted) {
+    if (userCompany!.canCreate(EntityType.invoice) && !isDeleted!) {
       actions.add(EntityAction.invoiceProject);
     }
 
@@ -197,7 +197,7 @@ abstract class ProjectEntity extends Object
       actions.add(EntityAction.clone);
     }
 
-    if (!isDeleted && multiselect) {
+    if (!isDeleted! && multiselect) {
       actions.add(EntityAction.documents);
     }
 
@@ -263,10 +263,8 @@ abstract class ProjectEntity extends Object
         response = projectA.totalHours.compareTo(projectB.totalHours);
         break;
       case EntityFields.state:
-        final stateA =
-            EntityState.valueOf(projectA.entityState) ?? EntityState.active;
-        final stateB =
-            EntityState.valueOf(projectB.entityState) ?? EntityState.active;
+        final stateA = EntityState.valueOf(projectA.entityState);
+        final stateB = EntityState.valueOf(projectB.entityState);
         response =
             stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
         break;
@@ -298,7 +296,7 @@ abstract class ProjectEntity extends Object
             projectA.documents.length.compareTo(projectB.documents.length);
         break;
       case ProjectFields.number:
-        response = (projectA.number ?? '').compareTo(projectB.number ?? '');
+        response = projectA.number.compareTo(projectB.number);
         break;
       case ProjectFields.customValue1:
         response = projectA.customValue1.compareTo(projectB.customValue1);
@@ -328,7 +326,7 @@ abstract class ProjectEntity extends Object
       name.toLowerCase().contains(filter.toLowerCase());
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     return matchesStrings(
       haystacks: [
         name,
@@ -345,7 +343,7 @@ abstract class ProjectEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     return matchesStringsValue(
       haystacks: [
         name,
@@ -367,9 +365,9 @@ abstract class ProjectEntity extends Object
   }
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
-  bool get hasClient => clientId != null && clientId.isNotEmpty;
+  bool get hasClient => clientId.isNotEmpty;
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;

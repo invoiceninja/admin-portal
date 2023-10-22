@@ -45,14 +45,14 @@ List<Middleware<AppState>> createStoreSubscriptionsMiddleware([
 
 Middleware<AppState> _editSubscription() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditSubscription;
+    final action = dynamicAction as EditSubscription?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(SubscriptionEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(SubscriptionEditScreen.route);
+      navigatorKey.currentState!.pushNamed(SubscriptionEditScreen.route);
     }
   };
 }
@@ -60,21 +60,21 @@ Middleware<AppState> _editSubscription() {
 Middleware<AppState> _viewSubscription() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ViewSubscription;
+    final action = dynamicAction as ViewSubscription?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(SubscriptionViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(SubscriptionViewScreen.route);
+      navigatorKey.currentState!.pushNamed(SubscriptionViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewSubscriptionList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewSubscriptionList;
+    final action = dynamicAction as ViewSubscriptionList?;
 
     next(action);
 
@@ -85,7 +85,7 @@ Middleware<AppState> _viewSubscriptionList() {
     store.dispatch(UpdateCurrentRoute(SubscriptionScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           SubscriptionScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -102,15 +102,11 @@ Middleware<AppState> _archiveSubscription(SubscriptionRepository repository) {
             EntityAction.archive)
         .then((List<SubscriptionEntity> subscriptions) {
       store.dispatch(ArchiveSubscriptionsSuccess(subscriptions));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveSubscriptionsFailure(prevSubscriptions));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -128,15 +124,11 @@ Middleware<AppState> _deleteSubscription(SubscriptionRepository repository) {
             EntityAction.delete)
         .then((List<SubscriptionEntity> subscriptions) {
       store.dispatch(DeleteSubscriptionsSuccess(subscriptions));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteSubscriptionsFailure(prevSubscriptions));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -154,15 +146,11 @@ Middleware<AppState> _restoreSubscription(SubscriptionRepository repository) {
             EntityAction.restore)
         .then((List<SubscriptionEntity> subscriptions) {
       store.dispatch(RestoreSubscriptionsSuccess(subscriptions));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreSubscriptionsFailure(prevSubscriptions));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -173,19 +161,19 @@ Middleware<AppState> _saveSubscription(SubscriptionRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveSubscriptionRequest;
     repository
-        .saveData(store.state.credentials, action.subscription)
+        .saveData(store.state.credentials, action.subscription!)
         .then((SubscriptionEntity subscription) {
-      if (action.subscription.isNew) {
+      if (action.subscription!.isNew) {
         store.dispatch(AddSubscriptionSuccess(subscription));
       } else {
         store.dispatch(SaveSubscriptionSuccess(subscription));
       }
 
-      action.completer.complete(subscription);
+      action.completer!.complete(subscription);
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveSubscriptionFailure(error));
-      action.completer.completeError(error);
+      action.completer!.completeError(error);
     });
 
     next(action);
@@ -204,13 +192,13 @@ Middleware<AppState> _loadSubscription(SubscriptionRepository repository) {
       store.dispatch(LoadSubscriptionSuccess(subscription));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadSubscriptionFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -220,15 +208,15 @@ Middleware<AppState> _loadSubscription(SubscriptionRepository repository) {
 
 Middleware<AppState> _loadSubscriptions(SubscriptionRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as LoadSubscriptions;
+    final action = dynamicAction as LoadSubscriptions?;
     final AppState state = store.state;
 
     store.dispatch(LoadSubscriptionsRequest());
     repository.loadList(state.credentials).then((data) {
       store.dispatch(LoadSubscriptionsSuccess(data));
 
-      if (action.completer != null) {
-        action.completer.complete(null);
+      if (action!.completer != null) {
+        action.completer!.complete(null);
       }
       /*
       if (state.productState.isStale) {
@@ -238,8 +226,8 @@ Middleware<AppState> _loadSubscriptions(SubscriptionRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadSubscriptionsFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
+      if (action!.completer != null) {
+        action.completer!.completeError(error);
       }
     });
 

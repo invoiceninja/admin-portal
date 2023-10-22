@@ -19,8 +19,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaxRateSettingsScreen extends StatelessWidget {
   const TaxRateSettingsScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsTaxRates';
@@ -87,7 +87,7 @@ class TaxRateSettingsScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newTaxRate,
+              tooltip: localization!.newTaxRate,
             )
           : null,
     );

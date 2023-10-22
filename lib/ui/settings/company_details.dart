@@ -38,8 +38,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CompanyDetails extends StatefulWidget {
   const CompanyDetails({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final CompanyDetailsVM viewModel;
@@ -54,7 +54,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
       GlobalKey<FormState>(debugLabel: '_companyDetails');
 
   final FocusScopeNode _focusNode = FocusScopeNode();
-  TabController _controller;
+  TabController? _controller;
   final _debouncer = Debouncer();
 
   final _nameController = TextEditingController();
@@ -96,12 +96,12 @@ class _CompanyDetailsState extends State<CompanyDetails>
         vsync: this,
         length: state.settingsUIState.isFiltered ? 4 : 5,
         initialIndex: settingsUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller!.index));
   }
 
   @override
@@ -140,31 +140,33 @@ class _CompanyDetailsState extends State<CompanyDetails>
     final viewModel = widget.viewModel;
     final settings = viewModel.settings;
 
-    _nameController.text = settings.name;
-    _idNumberController.text = settings.idNumber;
-    _vatNumberController.text = settings.vatNumber;
-    _emailController.text = settings.email;
-    _websiteController.text = settings.website;
-    _phoneController.text = settings.phone;
-    _address1Controller.text = settings.address1;
-    _address2Controller.text = settings.address2;
-    _cityController.text = settings.city;
-    _stateController.text = settings.state;
-    _postalCodeController.text = settings.postalCode;
-    _custom1Controller.text = settings.customValue1;
-    _custom2Controller.text = settings.customValue2;
-    _custom3Controller.text = settings.customValue3;
-    _custom4Controller.text = settings.customValue4;
-    _invoiceTermsController.text = settings.defaultInvoiceTerms;
-    _invoiceFooterController.text = settings.defaultInvoiceFooter;
-    _quoteTermsController.text = settings.defaultQuoteTerms;
-    _quoteFooterController.text = settings.defaultQuoteFooter;
-    _creditFooterController.text = settings.defaultCreditFooter;
-    _creditTermsController.text = settings.defaultCreditTerms;
-    _purchaseOrderFooterController.text = settings.defaultPurchaseOrderFooter;
-    _purchaseOrderTermsController.text = settings.defaultPurchaseOrderTerms;
-    _qrIbanController.text = settings.qrIban;
-    _besrIdController.text = settings.besrId;
+    _nameController.text = settings.name ?? '';
+    _idNumberController.text = settings.idNumber ?? '';
+    _vatNumberController.text = settings.vatNumber ?? '';
+    _emailController.text = settings.email ?? '';
+    _websiteController.text = settings.website ?? '';
+    _phoneController.text = settings.phone ?? '';
+    _address1Controller.text = settings.address1 ?? '';
+    _address2Controller.text = settings.address2 ?? '';
+    _cityController.text = settings.city ?? '';
+    _stateController.text = settings.state ?? '';
+    _postalCodeController.text = settings.postalCode ?? '';
+    _custom1Controller.text = settings.customValue1 ?? '';
+    _custom2Controller.text = settings.customValue2 ?? '';
+    _custom3Controller.text = settings.customValue3 ?? '';
+    _custom4Controller.text = settings.customValue4 ?? '';
+    _invoiceTermsController.text = settings.defaultInvoiceTerms ?? '';
+    _invoiceFooterController.text = settings.defaultInvoiceFooter ?? '';
+    _quoteTermsController.text = settings.defaultQuoteTerms ?? '';
+    _quoteFooterController.text = settings.defaultQuoteFooter ?? '';
+    _creditFooterController.text = settings.defaultCreditFooter ?? '';
+    _creditTermsController.text = settings.defaultCreditTerms ?? '';
+    _purchaseOrderFooterController.text =
+        settings.defaultPurchaseOrderFooter ?? '';
+    _purchaseOrderTermsController.text =
+        settings.defaultPurchaseOrderTerms ?? '';
+    _qrIbanController.text = settings.qrIban ?? '';
+    _besrIdController.text = settings.besrId ?? '';
 
     _controllers.forEach(
         (dynamic controller) => controller.addListener(_onSettingsChanged));
@@ -175,8 +177,8 @@ class _CompanyDetailsState extends State<CompanyDetails>
   @override
   void dispose() {
     _focusNode.dispose();
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onSettingsChanged);
       controller.dispose();
@@ -274,7 +276,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
     }
 
     return EditScaffold(
-      title: localization.companyDetails,
+      title: localization!.companyDetails,
       onSavePressed: viewModel.onSavePressed,
       appBarBottom: TabBar(
         key: ValueKey(state.settingsUIState.updatedAt),
@@ -336,6 +338,21 @@ class _CompanyDetailsState extends State<CompanyDetails>
                     onSavePressed: viewModel.onSavePressed,
                     keyboardType: TextInputType.text,
                   ),
+                  AppDropdownButton<String>(
+                    labelText: localization.classification,
+                    showBlank: true,
+                    value: settings.classification,
+                    onChanged: (dynamic value) {
+                      viewModel.onSettingsChanged(
+                          settings.rebuild((b) => b..classification = value));
+                    },
+                    items: kTaxClassifications
+                        .map((classification) => DropdownMenuItem(
+                              child: Text(localization.lookup(classification)),
+                              value: classification,
+                            ))
+                        .toList(),
+                  ),
                   DecoratedFormField(
                     label: localization.website,
                     controller: _websiteController,
@@ -380,22 +397,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                   ),
                 ],
               ),
-              if (state.company.calculateTaxes)
-                AppDropdownButton<String>(
-                  labelText: localization.classification,
-                  showBlank: true,
-                  value: settings.classification,
-                  onChanged: (dynamic value) {
-                    viewModel.onSettingsChanged(
-                        settings.rebuild((b) => b..classification = value));
-                  },
-                  items: kTaxClassifications
-                      .map((classification) => DropdownMenuItem(
-                            child: Text(localization.lookup(classification)),
-                            value: classification,
-                          ))
-                      .toList(),
-                ),
               if (company.supportsQrIban)
                 FormCard(
                   children: [
@@ -423,7 +424,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       items: memoizedSizeList(state.staticState.sizeMap)
                           .map((sizeId) => DropdownMenuItem(
                                 child: Text(
-                                    state.staticState.sizeMap[sizeId].name),
+                                    state.staticState.sizeMap[sizeId]!.name),
                                 value: sizeId,
                               ))
                           .toList(),
@@ -438,7 +439,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                           memoizedIndustryList(state.staticState.industryMap),
                       labelText: localization.industry,
                       entityId: company.industryId,
-                      onSelected: (SelectableEntity industry) =>
+                      onSelected: (SelectableEntity? industry) =>
                           viewModel.onCompanyChanged(
                         company
                             .rebuild((b) => b..industryId = industry?.id ?? ''),
@@ -496,7 +497,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                           memoizedCountryList(state.staticState.countryMap),
                       labelText: localization.country,
                       entityId: settings.countryId,
-                      onSelected: (SelectableEntity country) =>
+                      onSelected: (SelectableEntity? country) =>
                           viewModel.onSettingsChanged(settings
                               .rebuild((b) => b..countryId = country?.id)),
                     ),
@@ -519,12 +520,11 @@ class _CompanyDetailsState extends State<CompanyDetails>
                             child: AppButton(
                               width: double.infinity,
                               color: Colors.redAccent,
-                              label: localization.delete,
+                              label: localization.delete.toUpperCase(),
                               iconData: Icons.delete,
                               onPressed: () {
                                 if (state.settingsUIState.isChanged) {
                                   showMessageDialog(
-                                      context: context,
                                       message:
                                           localization.errorUnsavedChanges);
                                   return;
@@ -547,7 +547,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                             onPressed: () async {
                               if (state.settingsUIState.isChanged) {
                                 showMessageDialog(
-                                    context: context,
                                     message: localization.errorUnsavedChanges);
                                 return;
                               }
@@ -560,7 +559,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                               if (multipartFiles != null &&
                                   multipartFiles.isNotEmpty) {
                                 viewModel.onUploadLogo(
-                                    navigatorKey.currentContext,
+                                    navigatorKey.currentContext!,
                                     multipartFiles.first);
                               }
                             },
@@ -577,7 +576,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       child: (state.isHosted && kIsWeb)
                           ? CachedImage(
                               width: double.infinity,
-                              url: state.credentials.url +
+                              url: state.credentials.url! +
                                   '/companies/' +
                                   company.id +
                                   '/logo',
@@ -605,7 +604,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                               state.paymentTermState.list)
                           .map((paymentTermId) {
                         final paymentTerm =
-                            state.paymentTermState.map[paymentTermId];
+                            state.paymentTermState.map[paymentTermId]!;
                         return DropdownMenuItem<String>(
                           child: Text(paymentTerm.numDays == 0
                               ? localization.dueOnReceipt
@@ -629,7 +628,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                               state.paymentTermState.list)
                           .map((paymentTermId) {
                         final paymentTerm =
-                            state.paymentTermState.map[paymentTermId];
+                            state.paymentTermState.map[paymentTermId]!;
                         return DropdownMenuItem<String>(
                           child: Text(paymentTerm.numDays == 0
                               ? localization.dueOnReceipt
@@ -692,19 +691,20 @@ class _CompanyDetailsState extends State<CompanyDetails>
                               b..defaultPurchaseOrderDesignId = value.id)),
                     ),
                 ]),
-              FormCard(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    BoolDropdownButton(
-                      value: company.useQuoteTermsOnConversion,
-                      onChanged: (value) => viewModel.onCompanyChanged(
-                          company.rebuild(
-                              (b) => b..useQuoteTermsOnConversion = value)),
-                      label: localization.useQuoteTerms,
-                      helpLabel: localization.useQuoteTermsHelp,
-                      iconData: getEntityIcon(EntityType.quote),
-                    ),
-                  ]),
+              if (!state.settingsUIState.isFiltered)
+                FormCard(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      BoolDropdownButton(
+                        value: company.useQuoteTermsOnConversion,
+                        onChanged: (value) => viewModel.onCompanyChanged(
+                            company.rebuild(
+                                (b) => b..useQuoteTermsOnConversion = value)),
+                        label: localization.useQuoteTerms,
+                        helpLabel: localization.useQuoteTermsHelp,
+                        iconData: getEntityIcon(EntityType.quote),
+                      ),
+                    ]),
               FormCard(
                 isLast: true,
                 children: <Widget>[

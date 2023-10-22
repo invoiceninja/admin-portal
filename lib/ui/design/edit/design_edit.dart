@@ -39,8 +39,8 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
 
 class DesignEdit extends StatefulWidget {
   const DesignEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final DesignEditVM viewModel;
@@ -66,14 +66,14 @@ class _DesignEditState extends State<DesignEdit>
   final _tasksController = TextEditingController();
   final _includesController = TextEditingController();
 
-  FocusScopeNode _focusNode;
-  TabController _tabController;
-  Uint8List _pdfBytes;
+  FocusScopeNode? _focusNode;
+  TabController? _tabController;
+  Uint8List? _pdfBytes;
   String _html = '';
   bool _isLoading = false;
   bool _isDraftMode = false;
 
-  List<TextEditingController> _controllers;
+  late List<TextEditingController> _controllers;
 
   @override
   void initState() {
@@ -100,12 +100,12 @@ class _DesignEditState extends State<DesignEdit>
 
     final design = widget.viewModel.design;
     _nameController.text = design.name;
-    _headerController.text = design.getSection(kDesignHeader);
-    _footerController.text = design.getSection(kDesignFooter);
-    _bodyController.text = design.getSection(kDesignBody);
-    _productsController.text = design.getSection(kDesignProducts);
-    _tasksController.text = design.getSection(kDesignTasks);
-    _includesController.text = design.getSection(kDesignIncludes);
+    _headerController.text = design.getSection(kDesignHeader)!;
+    _footerController.text = design.getSection(kDesignFooter)!;
+    _bodyController.text = design.getSection(kDesignBody)!;
+    _productsController.text = design.getSection(kDesignProducts)!;
+    _tasksController.text = design.getSection(kDesignTasks)!;
+    _includesController.text = design.getSection(kDesignIncludes)!;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -118,8 +118,8 @@ class _DesignEditState extends State<DesignEdit>
 
   @override
   void dispose() {
-    _focusNode.dispose();
-    _tabController.dispose();
+    _focusNode!.dispose();
+    _tabController!.dispose();
 
     _htmlController.removeListener(_onHtmlChanged);
     _htmlController.dispose();
@@ -140,7 +140,7 @@ class _DesignEditState extends State<DesignEdit>
         kDesignBody: _bodyController.text.trim(),
         kDesignFooter: _footerController.text.trim(),
         kDesignProducts: _productsController.text.trim(),
-        kDesignTasks: _tasksController.text.trim() ?? '',
+        kDesignTasks: _tasksController.text.trim(),
         kDesignIncludes: _includesController.text.trim()
       })));
 
@@ -169,12 +169,12 @@ class _DesignEditState extends State<DesignEdit>
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
 
     final htmlDesign = design.design;
-    _headerController.text = htmlDesign[kDesignHeader];
-    _bodyController.text = htmlDesign[kDesignBody];
-    _footerController.text = htmlDesign[kDesignFooter];
-    _productsController.text = htmlDesign[kDesignProducts];
-    _tasksController.text = htmlDesign[kDesignTasks];
-    _includesController.text = htmlDesign[kDesignIncludes];
+    _headerController.text = htmlDesign[kDesignHeader]!;
+    _bodyController.text = htmlDesign[kDesignBody]!;
+    _footerController.text = htmlDesign[kDesignFooter]!;
+    _productsController.text = htmlDesign[kDesignProducts]!;
+    _tasksController.text = htmlDesign[kDesignTasks]!;
+    _includesController.text = htmlDesign[kDesignIncludes]!;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -230,7 +230,8 @@ class _DesignEditState extends State<DesignEdit>
     return EditScaffold(
         entity: design,
         isFullscreen: true,
-        title: design.isNew ? localization.newDesign : localization.editDesign,
+        title:
+            design.isNew ? localization!.newDesign : localization!.editDesign,
         onCancelPressed: (context) => viewModel.onCancelPressed(context),
         appBarBottom: isMobile(context)
             ? TabBar(
@@ -252,7 +253,7 @@ class _DesignEditState extends State<DesignEdit>
         onSavePressed: _isLoading
             ? null
             : (context) {
-                final bool isValid = _formKey.currentState.validate();
+                final bool isValid = _formKey.currentState!.validate();
 
                 if (!isValid) {
                   return;
@@ -359,7 +360,7 @@ class _DesignEditState extends State<DesignEdit>
 }
 
 class DesignSection extends StatelessWidget {
-  const DesignSection({@required this.textController});
+  const DesignSection({required this.textController});
 
   final TextEditingController textController;
 
@@ -402,13 +403,13 @@ class DesignSection extends StatelessWidget {
 
 class DesignSettings extends StatefulWidget {
   const DesignSettings({
-    @required this.viewModel,
-    @required this.nameController,
-    @required this.htmlController,
-    @required this.onLoadDesign,
-    @required this.draftMode,
-    @required this.onDraftModeChanged,
-    @required this.isLoading,
+    required this.viewModel,
+    required this.nameController,
+    required this.htmlController,
+    required this.onLoadDesign,
+    required this.draftMode,
+    required this.onDraftModeChanged,
+    required this.isLoading,
   });
 
   final DesignEditVM viewModel;
@@ -424,7 +425,7 @@ class DesignSettings extends StatefulWidget {
 }
 
 class _DesignSettingsState extends State<DesignSettings> {
-  DesignEntity _selectedDesign;
+  DesignEntity? _selectedDesign;
 
   @override
   void initState() {
@@ -445,7 +446,7 @@ class _DesignSettingsState extends State<DesignSettings> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     return ScrollableListView(
       children: <Widget>[
@@ -513,7 +514,7 @@ class _DesignSettingsState extends State<DesignSettings> {
 
                     widget.onLoadDesign(design.rebuild((b) => b
                       ..design.replace(
-                          BuiltMap<String, String>(jsonDecode(designStr)))));
+                          BuiltMap<String, String>(jsonDecode(designStr!)))));
                     showToast(localization.importedDesign);
                   },
                 ),
@@ -593,11 +594,11 @@ class _DesignSettingsState extends State<DesignSettings> {
 
 class PdfDesignPreview extends StatefulWidget {
   const PdfDesignPreview({
-    @required this.pdfBytes,
-    @required this.isLoading,
+    required this.pdfBytes,
+    required this.isLoading,
   });
 
-  final Uint8List pdfBytes;
+  final Uint8List? pdfBytes;
 
   final bool isLoading;
 
@@ -611,7 +612,7 @@ class _PdfDesignPreviewState extends State<PdfDesignPreview> {
       return '';
     }
 
-    return 'data:application/pdf;base64,' + base64Encode(widget.pdfBytes);
+    return 'data:application/pdf;base64,' + base64Encode(widget.pdfBytes!);
   }
 
   @override
@@ -644,7 +645,7 @@ class _PdfDesignPreviewState extends State<PdfDesignPreview> {
             HtmlElementView(viewType: _pdfString)
           else if (widget.pdfBytes != null)
             PdfPreview(
-              build: (format) => widget.pdfBytes,
+              build: (format) => widget.pdfBytes!,
               canChangeOrientation: false,
               canChangePageFormat: false,
               allowPrinting: false,
@@ -672,8 +673,8 @@ class _PdfDesignPreviewState extends State<PdfDesignPreview> {
 
 class HtmlDesignPreview extends StatelessWidget {
   const HtmlDesignPreview({
-    @required this.html,
-    @required this.isLoading,
+    required this.html,
+    required this.isLoading,
   });
 
   final String html;
@@ -740,7 +741,7 @@ class InsertTabAction extends Action {
 }
 
 class _DesignImportDialog extends StatefulWidget {
-  const _DesignImportDialog({Key key}) : super(key: key);
+  const _DesignImportDialog({Key? key}) : super(key: key);
 
   @override
   State<_DesignImportDialog> createState() => __DesignImportDialogState();
@@ -751,7 +752,7 @@ class __DesignImportDialogState extends State<_DesignImportDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     return AlertDialog(
       title: Text(localization.importDesign),
@@ -772,14 +773,14 @@ class __DesignImportDialogState extends State<_DesignImportDialog> {
           onPressed: () {
             final value = _design.trim();
             try {
-              final Map<String, dynamic> map = jsonDecode(value);
+              final Map<String, dynamic>? map = jsonDecode(value);
               for (var field in [
                 kDesignBody,
                 kDesignFooter,
                 kDesignHeader,
                 kDesignIncludes
               ]) {
-                if (!map.containsKey(field)) {
+                if (!map!.containsKey(field)) {
                   throw localization.invalidDesign
                       .replaceFirst(':value', field);
                 }

@@ -11,7 +11,7 @@ import 'package:redux/redux.dart';
 import 'transaction_rule_screen.dart';
 
 class TransactionRuleScreenBuilder extends StatelessWidget {
-  const TransactionRuleScreenBuilder({Key key}) : super(key: key);
+  const TransactionRuleScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,18 +28,18 @@ class TransactionRuleScreenBuilder extends StatelessWidget {
 
 class TransactionRuleScreenVM {
   TransactionRuleScreenVM({
-    @required this.isInMultiselect,
-    @required this.transactionRuleList,
-    @required this.userCompany,
-    @required this.onEntityAction,
-    @required this.transactionRuleMap,
+    required this.isInMultiselect,
+    required this.transactionRuleList,
+    required this.userCompany,
+    required this.onEntityAction,
+    required this.transactionRuleMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> transactionRuleList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final BuiltMap<String, TransactionRuleEntity> transactionRuleMap;
+  final BuiltMap<String?, TransactionRuleEntity?> transactionRuleMap;
 
   static TransactionRuleScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

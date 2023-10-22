@@ -19,8 +19,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorScreen extends StatelessWidget {
   const VendorScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/vendor';
@@ -108,7 +108,7 @@ class VendorScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newVendor,
+              tooltip: localization!.newVendor,
             )
           : null,
     );

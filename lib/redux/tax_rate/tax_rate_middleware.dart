@@ -45,14 +45,14 @@ List<Middleware<AppState>> createStoreTaxRatesMiddleware([
 
 Middleware<AppState> _editTaxRate() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditTaxRate;
+    final action = dynamicAction as EditTaxRate?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TaxRateEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(TaxRateEditScreen.route);
+      navigatorKey.currentState!.pushNamed(TaxRateEditScreen.route);
     }
   };
 }
@@ -60,21 +60,21 @@ Middleware<AppState> _editTaxRate() {
 Middleware<AppState> _viewTaxRate() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ViewTaxRate;
+    final action = dynamicAction as ViewTaxRate?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(TaxRateViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(TaxRateViewScreen.route);
+      navigatorKey.currentState!.pushNamed(TaxRateViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewTaxRateList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewTaxRateList;
+    final action = dynamicAction as ViewTaxRateList?;
 
     next(action);
 
@@ -85,7 +85,7 @@ Middleware<AppState> _viewTaxRateList() {
     store.dispatch(UpdateCurrentRoute(TaxRateSettingsScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           TaxRateSettingsScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -103,15 +103,11 @@ Middleware<AppState> _archiveTaxRate(TaxRateRepository repository) {
             store.state.credentials, action.taxRateIds, EntityAction.archive)
         .then((List<TaxRateEntity> taxRates) {
       store.dispatch(ArchiveTaxRatesSuccess(taxRates));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveTaxRateFailure(prevTaxRates));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -130,15 +126,11 @@ Middleware<AppState> _deleteTaxRate(TaxRateRepository repository) {
             store.state.credentials, action.taxRateIds, EntityAction.delete)
         .then((List<TaxRateEntity> taxRates) {
       store.dispatch(DeleteTaxRatesSuccess(taxRates));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteTaxRateFailure(prevTaxRates));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -157,15 +149,11 @@ Middleware<AppState> _restoreTaxRate(TaxRateRepository repository) {
             store.state.credentials, action.taxRateIds, EntityAction.restore)
         .then((List<TaxRateEntity> taxRates) {
       store.dispatch(RestoreTaxRatesSuccess(taxRates));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreTaxRateFailure(prevTaxRates));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -176,18 +164,18 @@ Middleware<AppState> _saveTaxRate(TaxRateRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveTaxRateRequest;
     repository
-        .saveData(store.state.credentials, action.taxRate)
+        .saveData(store.state.credentials, action.taxRate!)
         .then((TaxRateEntity taxRate) {
-      if (action.taxRate.isNew) {
+      if (action.taxRate!.isNew) {
         store.dispatch(AddTaxRateSuccess(taxRate));
       } else {
         store.dispatch(SaveTaxRateSuccess(taxRate));
       }
-      action.completer.complete(taxRate);
+      action.completer!.complete(taxRate);
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveTaxRateFailure(error));
-      action.completer.completeError(error);
+      action.completer!.completeError(error);
     });
 
     next(action);
@@ -204,13 +192,13 @@ Middleware<AppState> _loadTaxRate(TaxRateRepository repository) {
       store.dispatch(LoadTaxRateSuccess(taxRate));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadTaxRateFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -220,15 +208,15 @@ Middleware<AppState> _loadTaxRate(TaxRateRepository repository) {
 
 Middleware<AppState> _loadTaxRates(TaxRateRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as LoadTaxRates;
+    final action = dynamicAction as LoadTaxRates?;
     final AppState state = store.state;
 
     store.dispatch(LoadTaxRatesRequest());
     repository.loadList(state.credentials).then((data) {
       store.dispatch(LoadTaxRatesSuccess(data));
 
-      if (action.completer != null) {
-        action.completer.complete(null);
+      if (action!.completer != null) {
+        action.completer!.complete(null);
       }
       /*
       if (state.taxRateState.isStale) {
@@ -238,8 +226,8 @@ Middleware<AppState> _loadTaxRates(TaxRateRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadTaxRatesFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
+      if (action!.completer != null) {
+        action.completer!.completeError(error);
       }
     });
 

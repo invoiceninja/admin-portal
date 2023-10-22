@@ -13,8 +13,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentTermList extends StatefulWidget {
   const PaymentTermList({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final PaymentTermListVM viewModel;
@@ -24,7 +24,7 @@ class PaymentTermList extends StatefulWidget {
 }
 
 class _PaymentTermListState extends State<PaymentTermList> {
-  EntityDataTableSource dataTableSource;
+  EntityDataTableSource? dataTableSource;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class _PaymentTermListState extends State<PaymentTermList> {
     if (!viewModel.state.isLoaded) {
       return viewModel.isLoading ? LoadingIndicator() : SizedBox();
     } else if (viewModel.paymentTermMap.isEmpty) {
-      return HelpText(AppLocalization.of(context).noRecordsFound);
+      return HelpText(AppLocalization.of(context)!.noRecordsFound);
     }
 
     return RefreshIndicator(
@@ -46,7 +46,7 @@ class _PaymentTermListState extends State<PaymentTermList> {
           itemCount: viewModel.paymentTermList.length,
           itemBuilder: (BuildContext context, index) {
             final paymentTermId = viewModel.paymentTermList[index];
-            final paymentTerm = viewModel.paymentTermMap[paymentTermId];
+            final paymentTerm = viewModel.paymentTermMap[paymentTermId]!;
 
             return PaymentTermListItem(
               user: viewModel.state.user,

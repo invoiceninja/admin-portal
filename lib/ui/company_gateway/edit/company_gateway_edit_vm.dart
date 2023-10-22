@@ -30,7 +30,7 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class CompanyGatewayEditScreen extends StatelessWidget {
-  const CompanyGatewayEditScreen({Key key}) : super(key: key);
+  const CompanyGatewayEditScreen({Key? key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsCompanyGatewaysEdit';
 
   @override
@@ -51,20 +51,20 @@ class CompanyGatewayEditScreen extends StatelessWidget {
 
 class CompanyGatewayEditVM {
   CompanyGatewayEditVM({
-    @required this.state,
-    @required this.companyGateway,
-    @required this.company,
-    @required this.onChanged,
-    @required this.isSaving,
-    @required this.origCompanyGateway,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
-    @required this.isLoading,
-    @required this.onGatewaySignUpPressed,
+    required this.state,
+    required this.companyGateway,
+    required this.company,
+    required this.onChanged,
+    required this.isSaving,
+    required this.origCompanyGateway,
+    required this.onSavePressed,
+    required this.onCancelPressed,
+    required this.isLoading,
+    required this.onGatewaySignUpPressed,
   });
 
   factory CompanyGatewayEditVM.fromStore(Store<AppState> store) {
-    final companyGateway = store.state.companyGatewayUIState.editing;
+    final companyGateway = store.state.companyGatewayUIState.editing!;
     final state = store.state;
 
     return CompanyGatewayEditVM(
@@ -78,8 +78,7 @@ class CompanyGatewayEditVM {
           store.dispatch(UpdateCompanyGateway(companyGateway));
         },
         onCancelPressed: (BuildContext context) {
-          createEntity(
-              context: context, entity: CompanyGatewayEntity(), force: true);
+          createEntity(entity: CompanyGatewayEntity(), force: true);
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         },
         onSavePressed: (BuildContext context) {
@@ -92,27 +91,29 @@ class CompanyGatewayEditVM {
             store.dispatch(SaveCompanyGatewayRequest(
                 completer: completer, companyGateway: companyGateway));
             return completer.future.then((savedCompanyGateway) {
-              showToast(companyGateway.isNew
-                  ? localization.createdCompanyGateway
-                  : localization.updatedCompanyGateway);
+              showToast(companyGateway!.isNew
+                  ? localization!.createdCompanyGateway
+                  : localization!.updatedCompanyGateway);
 
               final company = store.state.company;
               if ((company.settings.companyGatewayIds ?? '').isNotEmpty) {
                 store.dispatch(SaveCompanyRequest(
                     completer: Completer<Null>(),
                     company: company.rebuild((b) => b
-                      ..settings.companyGatewayIds +=
-                          ',' + savedCompanyGateway.id)));
+                      ..settings.companyGatewayIds =
+                          company.settings.companyGatewayIds! +
+                              ',' +
+                              savedCompanyGateway.id)));
               }
 
               if (state.prefState.isMobile) {
                 store.dispatch(
                     UpdateCurrentRoute(CompanyGatewayViewScreen.route));
                 if (companyGateway.isNew) {
-                  navigator
+                  navigator!
                       .pushReplacementNamed(CompanyGatewayViewScreen.route);
                 } else {
-                  navigator.pop(savedCompanyGateway);
+                  navigator!.pop(savedCompanyGateway);
                 }
               } else {
                 viewEntityById(
@@ -122,7 +123,7 @@ class CompanyGatewayEditVM {
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext,
+                  context: navigatorKey.currentContext!,
                   builder: (BuildContext context) {
                     return ErrorDialog(error);
                   });
@@ -161,13 +162,13 @@ class CompanyGatewayEditVM {
   }
 
   final CompanyGatewayEntity companyGateway;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(CompanyGatewayEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final bool isLoading;
   final bool isSaving;
-  final CompanyGatewayEntity origCompanyGateway;
+  final CompanyGatewayEntity? origCompanyGateway;
   final AppState state;
   final Function(String) onGatewaySignUpPressed;
 }

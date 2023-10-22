@@ -33,8 +33,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class TemplatesAndReminders extends StatefulWidget {
   const TemplatesAndReminders({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final TemplatesAndRemindersVM viewModel;
@@ -49,12 +49,12 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       GlobalKey<FormState>(debugLabel: '_templatesAndReminders');
   final _debouncer = Debouncer();
 
-  EmailTemplate _selectedTemplate;
+  EmailTemplate? _selectedTemplate;
   int _selectedIndex = 0;
   String _bodyMarkdown = '';
 
-  String _lastSubject;
-  String _lastBody;
+  String? _lastSubject;
+  String? _lastBody;
   String _subjectPreview = '';
   String _bodyPreview = '';
   String _emailPreview = '';
@@ -62,8 +62,8 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   String _defaultBody = '';
 
   bool _isLoading = false;
-  FocusScopeNode _focusNode;
-  TabController _controller;
+  FocusScopeNode? _focusNode;
+  TabController? _controller;
   bool _updateReminders = false;
 
   final _subjectController = TextEditingController();
@@ -83,7 +83,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     _focusNode = FocusScopeNode();
     _controller = TabController(
         vsync: this, length: length, initialIndex: settingsUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
 
     _controllers = [
       _subjectController,
@@ -109,9 +109,9 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
   @override
   void dispose() {
-    _focusNode.dispose();
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
+    _focusNode!.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onTextChanged);
       controller.dispose();
@@ -174,11 +174,11 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
   void _onChanged() {
     final viewModel = widget.viewModel;
     final templateMap = viewModel.state.staticState.templateMap;
-    final template = templateMap[_selectedTemplate.name] ?? TemplateEntity();
+    final template = templateMap[_selectedTemplate!.name] ?? TemplateEntity();
 
     SettingsEntity settings = widget.viewModel.settings;
-    String body = _bodyController.text.trim();
-    String subject = _subjectController.text.trim();
+    String? body = _bodyController.text.trim();
+    String? subject = _subjectController.text.trim();
 
     if (subject.isEmpty || subject == template.subject) {
       subject = null;
@@ -255,16 +255,16 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
   void _onTabChanged() {
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller!.index));
 
     setState(() {
       _bodyMarkdown = _bodyController.text;
-      _selectedIndex = _controller.index;
+      _selectedIndex = _controller!.index;
     });
 
     final previewIndex = store.state.company.markdownEmailEnabled ? 2 : 1;
 
-    if (_controller.index != previewIndex) {
+    if (_controller!.index != previewIndex) {
       return;
     }
 
@@ -298,16 +298,16 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
           setState(() {
             _isLoading = false;
-            _subjectPreview = subject.trim();
-            _bodyPreview = body.trim();
-            _emailPreview = email.trim();
+            _subjectPreview = subject!.trim();
+            _bodyPreview = body!.trim();
+            _emailPreview = email!.trim();
           });
         });
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final settings = viewModel.settings;
@@ -585,23 +585,23 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
 
 class ReminderSettings extends StatefulWidget {
   const ReminderSettings({
-    Key key,
-    @required this.viewModel,
-    @required this.enabled,
-    @required this.schedule,
-    @required this.onChanged,
-    @required this.numDays,
-    @required this.feeAmount,
-    @required this.feePercent,
+    Key? key,
+    required this.viewModel,
+    required this.enabled,
+    required this.schedule,
+    required this.onChanged,
+    required this.numDays,
+    required this.feeAmount,
+    required this.feePercent,
   }) : super(key: key);
 
   final TemplatesAndRemindersVM viewModel;
-  final bool enabled;
-  final int numDays;
-  final double feeAmount;
-  final double feePercent;
-  final String schedule;
-  final Function(bool, int, String, double, double) onChanged;
+  final bool? enabled;
+  final int? numDays;
+  final double? feeAmount;
+  final double? feePercent;
+  final String? schedule;
+  final Function(bool?, int?, String?, double?, double?) onChanged;
 
   @override
   _ReminderSettingsState createState() => _ReminderSettingsState();
@@ -612,8 +612,8 @@ class _ReminderSettingsState extends State<ReminderSettings> {
   final _feeAmountController = TextEditingController();
   final _feePercentController = TextEditingController();
 
-  bool _enabled;
-  String _schedule;
+  bool? _enabled;
+  String? _schedule;
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
@@ -643,9 +643,9 @@ class _ReminderSettingsState extends State<ReminderSettings> {
 
     _daysController.text = '${widget.numDays ?? ''}';
     _feeAmountController.text = formatNumber(widget.feeAmount, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
     _feePercentController.text = formatNumber(widget.feePercent, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
 
     _controllers.forEach(
         (dynamic controller) => controller.addListener(_onTextChanged));
@@ -660,7 +660,7 @@ class _ReminderSettingsState extends State<ReminderSettings> {
   }
 
   void _onChanged() {
-    final int days = parseInt(_daysController.text.trim(), zeroIsNull: true);
+    final int? days = parseInt(_daysController.text.trim(), zeroIsNull: true);
     final feeAmount =
         parseDouble(_feeAmountController.text.trim(), zeroIsNull: true);
     final feePercent =
@@ -672,7 +672,7 @@ class _ReminderSettingsState extends State<ReminderSettings> {
   @override
   Widget build(BuildContext context) {
     final state = widget.viewModel.state;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     return Column(
       children: <Widget>[
@@ -743,9 +743,9 @@ class _ReminderSettingsState extends State<ReminderSettings> {
 
 class EmailPreview extends StatelessWidget {
   const EmailPreview({
-    @required this.subject,
-    @required this.body,
-    @required this.isLoading,
+    required this.subject,
+    required this.body,
+    required this.isLoading,
   });
 
   final String subject;
@@ -771,7 +771,7 @@ class EmailPreview extends StatelessWidget {
                   subject,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyLarge
+                      .bodyLarge!
                       .copyWith(color: Colors.black),
                 ),
               ),

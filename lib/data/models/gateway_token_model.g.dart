@@ -26,10 +26,10 @@ class _$GatewayTokenListResponseSerializer
   final String wireName = 'GatewayTokenListResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, GatewayTokenListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(
@@ -41,21 +41,21 @@ class _$GatewayTokenListResponseSerializer
 
   @override
   GatewayTokenListResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new GatewayTokenListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(GatewayTokenEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(GatewayTokenEntity)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -75,10 +75,10 @@ class _$GatewayTokenItemResponseSerializer
   final String wireName = 'GatewayTokenItemResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, GatewayTokenItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(GatewayTokenEntity)),
@@ -89,19 +89,19 @@ class _$GatewayTokenItemResponseSerializer
 
   @override
   GatewayTokenItemResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new GatewayTokenItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(GatewayTokenEntity))
+                  specifiedType: const FullType(GatewayTokenEntity))!
               as GatewayTokenEntity);
           break;
       }
@@ -119,9 +119,10 @@ class _$GatewayTokenEntitySerializer
   final String wireName = 'GatewayTokenEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, GatewayTokenEntity object,
+  Iterable<Object?> serialize(
+      Serializers serializers, GatewayTokenEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'token',
       serializers.serialize(object.token,
           specifiedType: const FullType(String)),
@@ -152,7 +153,7 @@ class _$GatewayTokenEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.isChanged;
     if (value != null) {
       result
@@ -186,72 +187,72 @@ class _$GatewayTokenEntitySerializer
 
   @override
   GatewayTokenEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new GatewayTokenEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'token':
           result.token = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'gateway_customer_reference':
           result.customerReference = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'company_gateway_id':
           result.companyGatewayId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'gateway_type_id':
           result.gatewayTypeId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'is_default':
           result.isDefault = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'meta':
           result.meta.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(GatewayTokenMetaEntity))
+                  specifiedType: const FullType(GatewayTokenMetaEntity))!
               as GatewayTokenMetaEntity);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'archived_at':
           result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'user_id':
           result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -271,11 +272,11 @@ class _$GatewayTokenMetaEntitySerializer
   final String wireName = 'GatewayTokenMetaEntity';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, GatewayTokenMetaEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[];
-    Object value;
+    final result = <Object?>[];
+    Object? value;
     value = object.brand;
     if (value != null) {
       result
@@ -315,35 +316,35 @@ class _$GatewayTokenMetaEntitySerializer
 
   @override
   GatewayTokenMetaEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new GatewayTokenMetaEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'brand':
           result.brand = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'last4':
           result.last4 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'type':
           result.type = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'exp_month':
           result.expMonth = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'exp_year':
           result.expYear = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
       }
     }
@@ -357,10 +358,10 @@ class _$GatewayTokenListResponse extends GatewayTokenListResponse {
   final BuiltList<GatewayTokenEntity> data;
 
   factory _$GatewayTokenListResponse(
-          [void Function(GatewayTokenListResponseBuilder) updates]) =>
+          [void Function(GatewayTokenListResponseBuilder)? updates]) =>
       (new GatewayTokenListResponseBuilder()..update(updates))._build();
 
-  _$GatewayTokenListResponse._({this.data}) : super._() {
+  _$GatewayTokenListResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
         data, r'GatewayTokenListResponse', 'data');
   }
@@ -380,10 +381,10 @@ class _$GatewayTokenListResponse extends GatewayTokenListResponse {
     return other is GatewayTokenListResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -401,12 +402,12 @@ class _$GatewayTokenListResponse extends GatewayTokenListResponse {
 class GatewayTokenListResponseBuilder
     implements
         Builder<GatewayTokenListResponse, GatewayTokenListResponseBuilder> {
-  _$GatewayTokenListResponse _$v;
+  _$GatewayTokenListResponse? _$v;
 
-  ListBuilder<GatewayTokenEntity> _data;
+  ListBuilder<GatewayTokenEntity>? _data;
   ListBuilder<GatewayTokenEntity> get data =>
       _$this._data ??= new ListBuilder<GatewayTokenEntity>();
-  set data(ListBuilder<GatewayTokenEntity> data) => _$this._data = data;
+  set data(ListBuilder<GatewayTokenEntity>? data) => _$this._data = data;
 
   GatewayTokenListResponseBuilder();
 
@@ -426,7 +427,7 @@ class GatewayTokenListResponseBuilder
   }
 
   @override
-  void update(void Function(GatewayTokenListResponseBuilder) updates) {
+  void update(void Function(GatewayTokenListResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -438,7 +439,7 @@ class GatewayTokenListResponseBuilder
     try {
       _$result = _$v ?? new _$GatewayTokenListResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -458,10 +459,10 @@ class _$GatewayTokenItemResponse extends GatewayTokenItemResponse {
   final GatewayTokenEntity data;
 
   factory _$GatewayTokenItemResponse(
-          [void Function(GatewayTokenItemResponseBuilder) updates]) =>
+          [void Function(GatewayTokenItemResponseBuilder)? updates]) =>
       (new GatewayTokenItemResponseBuilder()..update(updates))._build();
 
-  _$GatewayTokenItemResponse._({this.data}) : super._() {
+  _$GatewayTokenItemResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
         data, r'GatewayTokenItemResponse', 'data');
   }
@@ -481,10 +482,10 @@ class _$GatewayTokenItemResponse extends GatewayTokenItemResponse {
     return other is GatewayTokenItemResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -502,12 +503,12 @@ class _$GatewayTokenItemResponse extends GatewayTokenItemResponse {
 class GatewayTokenItemResponseBuilder
     implements
         Builder<GatewayTokenItemResponse, GatewayTokenItemResponseBuilder> {
-  _$GatewayTokenItemResponse _$v;
+  _$GatewayTokenItemResponse? _$v;
 
-  GatewayTokenEntityBuilder _data;
+  GatewayTokenEntityBuilder? _data;
   GatewayTokenEntityBuilder get data =>
       _$this._data ??= new GatewayTokenEntityBuilder();
-  set data(GatewayTokenEntityBuilder data) => _$this._data = data;
+  set data(GatewayTokenEntityBuilder? data) => _$this._data = data;
 
   GatewayTokenItemResponseBuilder();
 
@@ -527,7 +528,7 @@ class GatewayTokenItemResponseBuilder
   }
 
   @override
-  void update(void Function(GatewayTokenItemResponseBuilder) updates) {
+  void update(void Function(GatewayTokenItemResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -539,7 +540,7 @@ class GatewayTokenItemResponseBuilder
     try {
       _$result = _$v ?? new _$GatewayTokenItemResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -568,7 +569,7 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
   @override
   final GatewayTokenMetaEntity meta;
   @override
-  final bool isChanged;
+  final bool? isChanged;
   @override
   final int createdAt;
   @override
@@ -576,33 +577,33 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
   @override
   final int archivedAt;
   @override
-  final bool isDeleted;
+  final bool? isDeleted;
   @override
-  final String createdUserId;
+  final String? createdUserId;
   @override
-  final String assignedUserId;
+  final String? assignedUserId;
   @override
   final String id;
 
   factory _$GatewayTokenEntity(
-          [void Function(GatewayTokenEntityBuilder) updates]) =>
+          [void Function(GatewayTokenEntityBuilder)? updates]) =>
       (new GatewayTokenEntityBuilder()..update(updates))._build();
 
   _$GatewayTokenEntity._(
-      {this.token,
-      this.customerReference,
-      this.companyGatewayId,
-      this.gatewayTypeId,
-      this.isDefault,
-      this.meta,
+      {required this.token,
+      required this.customerReference,
+      required this.companyGatewayId,
+      required this.gatewayTypeId,
+      required this.isDefault,
+      required this.meta,
       this.isChanged,
-      this.createdAt,
-      this.updatedAt,
-      this.archivedAt,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.archivedAt,
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.id})
+      required this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         token, r'GatewayTokenEntity', 'token');
@@ -653,10 +654,10 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
         id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, token.hashCode);
     _$hash = $jc(_$hash, customerReference.hashCode);
@@ -699,69 +700,69 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
 
 class GatewayTokenEntityBuilder
     implements Builder<GatewayTokenEntity, GatewayTokenEntityBuilder> {
-  _$GatewayTokenEntity _$v;
+  _$GatewayTokenEntity? _$v;
 
-  String _token;
-  String get token => _$this._token;
-  set token(String token) => _$this._token = token;
+  String? _token;
+  String? get token => _$this._token;
+  set token(String? token) => _$this._token = token;
 
-  String _customerReference;
-  String get customerReference => _$this._customerReference;
-  set customerReference(String customerReference) =>
+  String? _customerReference;
+  String? get customerReference => _$this._customerReference;
+  set customerReference(String? customerReference) =>
       _$this._customerReference = customerReference;
 
-  String _companyGatewayId;
-  String get companyGatewayId => _$this._companyGatewayId;
-  set companyGatewayId(String companyGatewayId) =>
+  String? _companyGatewayId;
+  String? get companyGatewayId => _$this._companyGatewayId;
+  set companyGatewayId(String? companyGatewayId) =>
       _$this._companyGatewayId = companyGatewayId;
 
-  String _gatewayTypeId;
-  String get gatewayTypeId => _$this._gatewayTypeId;
-  set gatewayTypeId(String gatewayTypeId) =>
+  String? _gatewayTypeId;
+  String? get gatewayTypeId => _$this._gatewayTypeId;
+  set gatewayTypeId(String? gatewayTypeId) =>
       _$this._gatewayTypeId = gatewayTypeId;
 
-  bool _isDefault;
-  bool get isDefault => _$this._isDefault;
-  set isDefault(bool isDefault) => _$this._isDefault = isDefault;
+  bool? _isDefault;
+  bool? get isDefault => _$this._isDefault;
+  set isDefault(bool? isDefault) => _$this._isDefault = isDefault;
 
-  GatewayTokenMetaEntityBuilder _meta;
+  GatewayTokenMetaEntityBuilder? _meta;
   GatewayTokenMetaEntityBuilder get meta =>
       _$this._meta ??= new GatewayTokenMetaEntityBuilder();
-  set meta(GatewayTokenMetaEntityBuilder meta) => _$this._meta = meta;
+  set meta(GatewayTokenMetaEntityBuilder? meta) => _$this._meta = meta;
 
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+  bool? _isChanged;
+  bool? get isChanged => _$this._isChanged;
+  set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
 
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+  int? _archivedAt;
+  int? get archivedAt => _$this._archivedAt;
+  set archivedAt(int? archivedAt) => _$this._archivedAt = archivedAt;
 
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+  bool? _isDeleted;
+  bool? get isDeleted => _$this._isDeleted;
+  set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
 
-  String _createdUserId;
-  String get createdUserId => _$this._createdUserId;
-  set createdUserId(String createdUserId) =>
+  String? _createdUserId;
+  String? get createdUserId => _$this._createdUserId;
+  set createdUserId(String? createdUserId) =>
       _$this._createdUserId = createdUserId;
 
-  String _assignedUserId;
-  String get assignedUserId => _$this._assignedUserId;
-  set assignedUserId(String assignedUserId) =>
+  String? _assignedUserId;
+  String? get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String? assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   GatewayTokenEntityBuilder();
 
@@ -794,7 +795,7 @@ class GatewayTokenEntityBuilder
   }
 
   @override
-  void update(void Function(GatewayTokenEntityBuilder) updates) {
+  void update(void Function(GatewayTokenEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -829,7 +830,7 @@ class GatewayTokenEntityBuilder
               assignedUserId: assignedUserId,
               id: BuiltValueNullFieldError.checkNotNull(id, r'GatewayTokenEntity', 'id'));
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'meta';
         meta.build();
@@ -846,18 +847,18 @@ class GatewayTokenEntityBuilder
 
 class _$GatewayTokenMetaEntity extends GatewayTokenMetaEntity {
   @override
-  final String brand;
+  final String? brand;
   @override
-  final String last4;
+  final String? last4;
   @override
-  final int type;
+  final int? type;
   @override
-  final String expMonth;
+  final String? expMonth;
   @override
-  final String expYear;
+  final String? expYear;
 
   factory _$GatewayTokenMetaEntity(
-          [void Function(GatewayTokenMetaEntityBuilder) updates]) =>
+          [void Function(GatewayTokenMetaEntityBuilder)? updates]) =>
       (new GatewayTokenMetaEntityBuilder()..update(updates))._build();
 
   _$GatewayTokenMetaEntity._(
@@ -884,10 +885,10 @@ class _$GatewayTokenMetaEntity extends GatewayTokenMetaEntity {
         expYear == other.expYear;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, brand.hashCode);
     _$hash = $jc(_$hash, last4.hashCode);
@@ -912,27 +913,27 @@ class _$GatewayTokenMetaEntity extends GatewayTokenMetaEntity {
 
 class GatewayTokenMetaEntityBuilder
     implements Builder<GatewayTokenMetaEntity, GatewayTokenMetaEntityBuilder> {
-  _$GatewayTokenMetaEntity _$v;
+  _$GatewayTokenMetaEntity? _$v;
 
-  String _brand;
-  String get brand => _$this._brand;
-  set brand(String brand) => _$this._brand = brand;
+  String? _brand;
+  String? get brand => _$this._brand;
+  set brand(String? brand) => _$this._brand = brand;
 
-  String _last4;
-  String get last4 => _$this._last4;
-  set last4(String last4) => _$this._last4 = last4;
+  String? _last4;
+  String? get last4 => _$this._last4;
+  set last4(String? last4) => _$this._last4 = last4;
 
-  int _type;
-  int get type => _$this._type;
-  set type(int type) => _$this._type = type;
+  int? _type;
+  int? get type => _$this._type;
+  set type(int? type) => _$this._type = type;
 
-  String _expMonth;
-  String get expMonth => _$this._expMonth;
-  set expMonth(String expMonth) => _$this._expMonth = expMonth;
+  String? _expMonth;
+  String? get expMonth => _$this._expMonth;
+  set expMonth(String? expMonth) => _$this._expMonth = expMonth;
 
-  String _expYear;
-  String get expYear => _$this._expYear;
-  set expYear(String expYear) => _$this._expYear = expYear;
+  String? _expYear;
+  String? get expYear => _$this._expYear;
+  set expYear(String? expYear) => _$this._expYear = expYear;
 
   GatewayTokenMetaEntityBuilder();
 
@@ -956,7 +957,7 @@ class GatewayTokenMetaEntityBuilder
   }
 
   @override
-  void update(void Function(GatewayTokenMetaEntityBuilder) updates) {
+  void update(void Function(GatewayTokenMetaEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

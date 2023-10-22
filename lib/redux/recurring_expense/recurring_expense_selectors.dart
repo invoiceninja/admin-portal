@@ -41,7 +41,7 @@ List<String> dropdownRecurringExpensesSelector(
     StaticState staticState,
     String clientId) {
   final list = recurringExpenseList.where((recurringExpenseId) {
-    final recurringExpense = recurringExpenseMap[recurringExpenseId];
+    final recurringExpense = recurringExpenseMap[recurringExpenseId]!;
     /*
     if (clientId != null && clientId > 0 && recurringExpense.clientId != clientId) {
       return false;
@@ -51,7 +51,7 @@ List<String> dropdownRecurringExpensesSelector(
   }).toList();
 
   list.sort((recurringExpenseAId, recurringExpenseBId) {
-    final recurringExpenseA = recurringExpenseMap[recurringExpenseAId];
+    final recurringExpenseA = recurringExpenseMap[recurringExpenseAId]!;
     final recurringExpenseB = recurringExpenseMap[recurringExpenseBId];
     return recurringExpenseA.compareTo(
         recurringExpenseB,
@@ -88,7 +88,7 @@ var memoizedFilteredRecurringExpenseList = memo9((SelectionState selectionState,
         expenseCategoryMap,
         staticState));
 
-List<String> filteredRecurringExpensesSelector(
+List<String?> filteredRecurringExpensesSelector(
     SelectionState selectionState,
     BuiltMap<String, ExpenseEntity> expenseMap,
     BuiltMap<String, ClientEntity> clientMap,
@@ -102,7 +102,7 @@ List<String> filteredRecurringExpensesSelector(
   final filterEntityType = selectionState.filterEntityType;
 
   final list = expenseMap.keys.where((expenseId) {
-    final expense = expenseMap[expenseId];
+    final expense = expenseMap[expenseId]!;
     final expenseCategory =
         expenseCategoryMap[expense.categoryId] ?? ExpenseCategoryEntity();
     final vendor =
@@ -174,7 +174,7 @@ List<String> filteredRecurringExpensesSelector(
   }).toList();
 
   list.sort((expenseAId, expenseBId) {
-    final expenseA = expenseMap[expenseAId];
+    final expenseA = expenseMap[expenseAId]!;
     final expenseB = expenseMap[expenseBId];
     return expenseA.compareTo(
         expenseB,
@@ -266,7 +266,7 @@ EntityStats recurringExpenseStatsForUser(
     if (expense.assignedUserId == userId) {
       if (expense.isActive) {
         countActive++;
-      } else if (expense.isDeleted) {
+      } else if (expense.isDeleted!) {
         countArchived++;
       }
     }
@@ -287,7 +287,7 @@ EntityStats recurringExpenseStatsForExpense(
     if (expense.recurringExpenseId == recurrigExpenseId) {
       if (expense.isActive) {
         countActive++;
-      } else if (expense.isDeleted) {
+      } else if (expense.isDeleted!) {
         countArchived++;
       }
     }

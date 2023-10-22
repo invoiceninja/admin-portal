@@ -17,8 +17,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProductListItem extends StatelessWidget {
   const ProductListItem({
-    @required this.product,
-    @required this.filter,
+    required this.product,
+    required this.filter,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
@@ -27,18 +27,18 @@ class ProductListItem extends StatelessWidget {
     this.showCost = false,
   });
 
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
-  final Function(bool) onCheckboxChanged;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onLongPress;
+  final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
   final bool isDismissible;
   final ProductEntity product;
-  final String filter;
+  final String? filter;
   final bool showCost;
 
   @override
   Widget build(BuildContext context) {
-    final filterMatch = filter != null && filter.isNotEmpty
+    final filterMatch = filter != null && filter!.isNotEmpty
         ? product.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch ?? product.notes;
@@ -56,7 +56,7 @@ class ProductListItem extends StatelessWidget {
       isSelected: isDesktop(context) &&
           product.id ==
               (uiState.isEditing
-                  ? productUIState.editing.id
+                  ? productUIState.editing!.id
                   : productUIState.selectedId),
       userCompany: state.userCompany,
       entity: product,
@@ -65,9 +65,9 @@ class ProductListItem extends StatelessWidget {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: product),
+                    onTap != null ? onTap!() : selectEntity(entity: product),
                 onLongPress: () => onLongPress != null
-                    ? onLongPress()
+                    ? onLongPress!()
                     : selectEntity(entity: product, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -88,7 +88,7 @@ class ProductListItem extends StatelessWidget {
                                     materialTapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
                                     onChanged: (value) =>
-                                        onCheckboxChanged(value),
+                                        onCheckboxChanged!(value),
                                     activeColor:
                                         Theme.of(context).colorScheme.secondary,
                                   ),
@@ -142,7 +142,7 @@ class ProductListItem extends StatelessWidget {
                       Text(
                         formatNumber(
                             showCost ? product.cost : product.price, context,
-                            roundToPrecision: false),
+                            roundToPrecision: false)!,
                         style: textStyle,
                         textAlign: TextAlign.end,
                       ),
@@ -152,9 +152,9 @@ class ProductListItem extends StatelessWidget {
               )
             : ListTile(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: product),
+                    onTap != null ? onTap!() : selectEntity(entity: product),
                 onLongPress: () => onLongPress != null
-                    ? onLongPress()
+                    ? onLongPress!()
                     : selectEntity(entity: product, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
@@ -163,7 +163,7 @@ class ProductListItem extends StatelessWidget {
                           value: isChecked,
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => onCheckboxChanged(value),
+                          onChanged: (value) => onCheckboxChanged!(value),
                           activeColor: Theme.of(context).colorScheme.secondary,
                         ),
                       )
@@ -182,7 +182,7 @@ class ProductListItem extends StatelessWidget {
                       Text(
                           formatNumber(
                               showCost ? product.cost : product.price, context,
-                              roundToPrecision: false),
+                              roundToPrecision: false)!,
                           style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),
@@ -190,7 +190,7 @@ class ProductListItem extends StatelessWidget {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    subtitle != null && subtitle.isNotEmpty
+                    subtitle.isNotEmpty
                         ? Text(
                             subtitle,
                             maxLines: 3,

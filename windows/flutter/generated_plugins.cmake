@@ -4,7 +4,9 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   desktop_drop
+  file_selector_windows
   local_auth_windows
+  permission_handler_windows
   printing
   screen_retriever
   sentry_flutter

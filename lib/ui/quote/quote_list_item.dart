@@ -19,13 +19,13 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class QuoteListItem extends StatelessWidget {
   const QuoteListItem({
-    @required this.quote,
+    required this.quote,
     this.filter,
     this.showCheckbox = true,
   });
 
   final InvoiceEntity quote;
-  final String filter;
+  final String? filter;
   final bool showCheckbox;
 
   @override
@@ -34,13 +34,13 @@ class QuoteListItem extends StatelessWidget {
     final client = state.clientState.get(quote.clientId);
     final uiState = state.uiState;
     final quoteUIState = uiState.quoteUIState;
-    final listUIState = state.getUIState(quote.entityType).listUIState;
+    final listUIState = state.getUIState(quote.entityType)!.listUIState;
     final isInMultiselect = showCheckbox && listUIState.isInMultiselect();
     final isChecked = isInMultiselect && listUIState.isSelected(quote.id);
     final textStyle = TextStyle(fontSize: 16);
     final localization = AppLocalization.of(context);
-    final textColor = Theme.of(context).textTheme.bodyLarge.color;
-    final filterMatch = filter != null && filter.isNotEmpty
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color;
+    final filterMatch = filter != null && filter!.isNotEmpty
         ? (quote.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))
         : null;
@@ -59,7 +59,7 @@ class QuoteListItem extends StatelessWidget {
     return DismissibleEntity(
         isSelected: quote.id ==
             (uiState.isEditing
-                ? quoteUIState.editing.id
+                ? quoteUIState.editing!.id
                 : quoteUIState.selectedId),
         userCompany: state.userCompany,
         showMultiselect: showCheckbox,
@@ -113,8 +113,8 @@ class QuoteListItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                (quote.number ?? '').isEmpty
-                                    ? localization.pending
+                                (quote.number).isEmpty
+                                    ? localization!.pending
                                     : quote.number,
                                 style: textStyle,
                                 overflow: TextOverflow.ellipsis,
@@ -140,9 +140,9 @@ class QuoteListItem extends StatelessWidget {
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .titleSmall
+                                    .titleSmall!
                                     .copyWith(
-                                      color: textColor
+                                      color: textColor!
                                           .withOpacity(kLighterOpacity),
                                     ),
                               ),
@@ -152,7 +152,7 @@ class QuoteListItem extends StatelessWidget {
                         SizedBox(width: 10),
                         Text(
                           formatNumber(quote.amount, context,
-                              clientId: client.id),
+                              clientId: client.id)!,
                           style: textStyle,
                           textAlign: TextAlign.end,
                         ),
@@ -194,7 +194,7 @@ class QuoteListItem extends StatelessWidget {
                         SizedBox(width: 4),
                         Text(
                             formatNumber(quote.amount, context,
-                                clientId: quote.clientId),
+                                clientId: quote.clientId)!,
                             style: Theme.of(context).textTheme.titleMedium),
                       ],
                     ),
@@ -206,8 +206,8 @@ class QuoteListItem extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: filterMatch == null
-                                ? Text((((quote.number ?? '').isEmpty
-                                            ? localization.pending
+                                ? Text(((quote.number.isEmpty
+                                            ? localization!.pending
                                             : quote.number) +
                                         ' • ' +
                                         formatDate(
@@ -226,7 +226,7 @@ class QuoteListItem extends StatelessWidget {
                                   ),
                           ),
                           Text(
-                              localization.lookup(
+                              localization!.lookup(
                                   kQuoteStatuses[quote.calculatedStatusId]),
                               style: TextStyle(
                                 color: !quote.isSent

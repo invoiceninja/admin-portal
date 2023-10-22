@@ -65,21 +65,21 @@ List<Middleware<AppState>> createStoreCreditsMiddleware([
 Middleware<AppState> _viewCredit() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ViewCredit;
+    final action = dynamicAction as ViewCredit?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(CreditViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      await navigatorKey.currentState.pushNamed(CreditViewScreen.route);
+      await navigatorKey.currentState!.pushNamed(CreditViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewCreditList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewCreditList;
+    final action = dynamicAction as ViewCreditList?;
 
     next(action);
 
@@ -90,7 +90,7 @@ Middleware<AppState> _viewCreditList() {
     store.dispatch(UpdateCurrentRoute(CreditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           CreditScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -98,14 +98,14 @@ Middleware<AppState> _viewCreditList() {
 
 Middleware<AppState> _editCredit() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditCredit;
+    final action = dynamicAction as EditCredit?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(CreditEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(CreditEditScreen.route);
+      navigatorKey.currentState!.pushNamed(CreditEditScreen.route);
     }
   };
 }
@@ -113,7 +113,7 @@ Middleware<AppState> _editCredit() {
 Middleware<AppState> _showEmailCredit() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ShowEmailCredit;
+    final action = dynamicAction as ShowEmailCredit?;
 
     next(action);
 
@@ -121,10 +121,12 @@ Middleware<AppState> _showEmailCredit() {
 
     if (store.state.prefState.isMobile) {
       final emailWasSent =
-          await navigatorKey.currentState.pushNamed(CreditEmailScreen.route);
+          await navigatorKey.currentState!.pushNamed(CreditEmailScreen.route);
 
-      if (action.completer != null && emailWasSent != null && emailWasSent) {
-        action.completer.complete(null);
+      if (action!.completer != null &&
+          emailWasSent != null &&
+          emailWasSent as bool) {
+        action.completer!.complete(null);
       }
     }
   };
@@ -133,14 +135,14 @@ Middleware<AppState> _showEmailCredit() {
 Middleware<AppState> _showPdfCredit() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ShowPdfCredit;
+    final action = dynamicAction as ShowPdfCredit?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(CreditPdfScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(CreditPdfScreen.route);
+      navigatorKey.currentState!.pushNamed(CreditPdfScreen.route);
     }
   };
 }
@@ -155,15 +157,11 @@ Middleware<AppState> _archiveCredit(CreditRepository repository) {
             store.state.credentials, action.creditIds, EntityAction.archive)
         .then((List<InvoiceEntity> credits) {
       store.dispatch(ArchiveCreditsSuccess(credits));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveCreditsFailure(prevCredits));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -181,15 +179,11 @@ Middleware<AppState> _deleteCredit(CreditRepository repository) {
             store.state.credentials, action.creditIds, EntityAction.delete)
         .then((List<InvoiceEntity> credits) {
       store.dispatch(DeleteCreditsSuccess(credits));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteCreditsFailure(prevCredits));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -207,15 +201,11 @@ Middleware<AppState> _restoreCredit(CreditRepository repository) {
             store.state.credentials, action.creditIds, EntityAction.restore)
         .then((List<InvoiceEntity> credits) {
       store.dispatch(RestoreCreditsSuccess(credits));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreCreditsFailure(prevCredits));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -230,15 +220,11 @@ Middleware<AppState> _markSentCredit(CreditRepository repository) {
             store.state.credentials, action.creditIds, EntityAction.markSent)
         .then((credits) {
       store.dispatch(MarkSentCreditSuccess(credits));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(MarkSentCreditFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -254,15 +240,11 @@ Middleware<AppState> _markPaidCredit(CreditRepository repository) {
         .then((invoices) {
       store.dispatch(MarkCreditsPaidSuccess(invoices));
       store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(MarkCreditsPaidFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -272,7 +254,7 @@ Middleware<AppState> _markPaidCredit(CreditRepository repository) {
 Middleware<AppState> _emailCredit(CreditRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EmailCreditRequest;
-    final origCredit = store.state.creditState.map[action.creditId];
+    final origCredit = store.state.creditState.map[action.creditId]!;
     repository
         .emailCredit(
       store.state.credentials,
@@ -284,15 +266,11 @@ Middleware<AppState> _emailCredit(CreditRepository repository) {
     )
         .then((void _) {
       store.dispatch(EmailCreditSuccess());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(EmailCreditFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -338,13 +316,13 @@ Middleware<AppState> _loadCredit(CreditRepository repository) {
       store.dispatch(LoadCreditSuccess(credit));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadCreditFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -354,7 +332,7 @@ Middleware<AppState> _loadCredit(CreditRepository repository) {
 
 Middleware<AppState> _loadCredits(CreditRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as LoadCredits;
+    final action = dynamicAction as LoadCredits?;
     final state = store.state;
 
     store.dispatch(LoadCreditsRequest());
@@ -374,15 +352,15 @@ Middleware<AppState> _loadCredits(CreditRepository repository) {
       });
       store.dispatch(LoadDocumentsSuccess(documents));
 
-      if (action.completer != null) {
-        action.completer.complete(null);
+      if (action!.completer != null) {
+        action.completer!.complete(documents.firstOrNull);
       }
       store.dispatch(LoadProjects());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadCreditsFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
+      if (action!.completer != null) {
+        action.completer!.completeError(error);
       }
     });
 
@@ -398,15 +376,11 @@ Middleware<AppState> _downloadCredits(CreditRepository repository) {
             EntityAction.bulkDownload)
         .then((invoices) {
       store.dispatch(DownloadCreditsSuccess());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DownloadCreditsFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -419,17 +393,17 @@ Middleware<AppState> _bulkEmailCredits(CreditRepository repository) {
 
     repository
         .bulkAction(
-            store.state.credentials, action.creditIds, EntityAction.sendEmail)
+            store.state.credentials, action.creditIds!, EntityAction.sendEmail)
         .then((List<InvoiceEntity> credits) {
       store.dispatch(BulkEmailCreditsSuccess(credits));
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(BulkEmailCreditsFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -439,14 +413,14 @@ Middleware<AppState> _bulkEmailCredits(CreditRepository repository) {
 
 Middleware<AppState> _saveDocument(CreditRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as SaveCreditDocumentRequest;
+    final action = dynamicAction as SaveCreditDocumentRequest?;
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocuments(
         store.state.credentials,
-        action.credit,
+        action!.credit,
         action.multipartFiles,
-        action.isPrivate,
+        action.isPrivate!,
       )
           .then((credit) {
         store.dispatch(SaveCreditSuccess(credit));
@@ -458,8 +432,7 @@ Middleware<AppState> _saveDocument(CreditRepository repository) {
             ..parentType = EntityType.credit));
         });
         store.dispatch(LoadDocumentsSuccess(documents));
-
-        action.completer.complete(null);
+        action.completer.complete(documents);
       }).catchError((Object error) {
         print(error);
         store.dispatch(SaveCreditDocumentFailure(error));
@@ -468,7 +441,7 @@ Middleware<AppState> _saveDocument(CreditRepository repository) {
     } else {
       const error = 'Uploading documents requires an enterprise plan';
       store.dispatch(SaveCreditDocumentFailure(error));
-      action.completer.completeError(error);
+      action!.completer.completeError(error);
     }
 
     next(action);

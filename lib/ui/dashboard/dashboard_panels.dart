@@ -53,15 +53,15 @@ enum DashboardSections {
 
 class DashboardPanels extends StatelessWidget {
   const DashboardPanels({
-    Key key,
-    @required this.viewModel,
-    @required this.scrollController,
-    @required this.tabController,
+    Key? key,
+    required this.viewModel,
+    required this.scrollController,
+    required this.tabController,
   }) : super(key: key);
 
   final DashboardVM viewModel;
-  final ScrollController scrollController;
-  final TabController tabController;
+  final ScrollController? scrollController;
+  final TabController? tabController;
 
   void _showDateOptions(BuildContext context) {
     showDialog<DashboardDateRangePicker>(
@@ -99,7 +99,7 @@ class DashboardPanels extends StatelessWidget {
           child: DropdownButton<String>(
             items: [
               DropdownMenuItem(
-                child: Text(localization.day),
+                child: Text(localization!.day),
                 value: kReportGroupDay,
               ),
               DropdownMenuItem(
@@ -149,8 +149,8 @@ class DashboardPanels extends StatelessWidget {
             children: <Widget>[
               Flexible(
                 child: Text(
-                  formatDateRange(settings.startDate(company),
-                      settings.endDate(company), context),
+                  formatDateRange(settings.startDate(company)!,
+                      settings.endDate(company)!, context),
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
@@ -189,9 +189,9 @@ class DashboardPanels extends StatelessWidget {
             child: DropdownButton<String>(
               items: memoizedGetCurrencyIds(company, clientMap, groupMap)
                   .map((currencyId) => DropdownMenuItem<String>(
-                        child: Text(currencyId == kCurrencyAll
+                        child: Text((currencyId == kCurrencyAll
                             ? localization.all
-                            : viewModel.currencyMap[currencyId]?.code),
+                            : viewModel.currencyMap[currencyId]?.code)!),
                         value: currencyId,
                       ))
                   .toList(),
@@ -263,7 +263,7 @@ class DashboardPanels extends StatelessWidget {
     });
   }
 
-  Widget _runningTasks(BuildContext context) {
+  Widget? _runningTasks(BuildContext context) {
     final state = viewModel.state;
 
     final runningTasks =
@@ -278,7 +278,7 @@ class DashboardPanels extends StatelessWidget {
       child: Wrap(
           spacing: 8,
           children: runningTasks.map((task) {
-            final client = state.clientState.map[task.clientId];
+            final client = state.clientState.map[task!.clientId];
             return Card(
               elevation: 4,
               shape: RoundedRectangleBorder(
@@ -345,7 +345,7 @@ class DashboardPanels extends StatelessWidget {
     final previousInvoiceData = memoizedPreviousChartInvoices(
       state.staticState.currencyMap,
       state.company,
-      settings.rebuild((b) => b..offset += 1),
+      settings.rebuild((b) => b..offset = settings.offset + 1),
       state.invoiceState.map,
       state.clientState.map,
     );
@@ -361,7 +361,7 @@ class DashboardPanels extends StatelessWidget {
     final previousPaymentData = memoizedPreviousChartPayments(
         state.staticState.currencyMap,
         state.company,
-        settings.rebuild((b) => b..offset += 1),
+        settings.rebuild((b) => b..offset = settings.offset + 1),
         state.invoiceState.map,
         state.clientState.map,
         state.paymentState.map);
@@ -377,7 +377,7 @@ class DashboardPanels extends StatelessWidget {
     final previousQuoteData = memoizedPreviousChartQuotes(
       state.staticState.currencyMap,
       state.company,
-      settings.rebuild((b) => b..offset += 1),
+      settings.rebuild((b) => b..offset = settings.offset + 1),
       state.quoteState.map,
       state.clientState.map,
     );
@@ -396,7 +396,7 @@ class DashboardPanels extends StatelessWidget {
     final previousTaskData = memoizedPreviousChartTasks(
       state.staticState.currencyMap,
       state.company,
-      settings.rebuild((b) => b..offset += 1),
+      settings.rebuild((b) => b..offset = settings.offset + 1),
       state.taskState.map,
       state.invoiceState.map,
       state.projectState.map,
@@ -414,7 +414,7 @@ class DashboardPanels extends StatelessWidget {
     final previousExpenseData = memoizedPreviousChartExpenses(
         state.staticState.currencyMap,
         state.company,
-        settings.rebuild((b) => b..offset += 1),
+        settings.rebuild((b) => b..offset = settings.offset + 1),
         state.invoiceState.map,
         state.expenseState.map);
 
@@ -482,7 +482,7 @@ class DashboardPanels extends StatelessWidget {
                               children: [
                                 Expanded(
                                   child:
-                                      Text(localization.addGatewayHelpMessage),
+                                      Text(localization!.addGatewayHelpMessage),
                                 ),
                                 if (isDesktop(context))
                                   TextButton(
@@ -617,23 +617,23 @@ class DashboardPanels extends StatelessWidget {
                             if (dashboardField.period ==
                                 DashboardUISettings.PERIOD_CURRENT) {
                               final data =
-                                  currentFieldMap[dashboardField.field];
+                                  currentFieldMap[dashboardField.field]!;
                               value = data.periodTotal;
                             } else if (dashboardField.period ==
                                 DashboardUISettings.PERIOD_PREVIOUS) {
                               final data =
-                                  previousFieldMap[dashboardField.field];
+                                  previousFieldMap[dashboardField.field]!;
                               value = data.periodTotal;
                             } else if (dashboardField.period ==
                                 DashboardUISettings.PERIOD_TOTAL) {
                               final data =
-                                  currentFieldMap[dashboardField.field];
+                                  currentFieldMap[dashboardField.field]!;
                               value = data.total;
                             }
                             return FormCard(
                               padding: const EdgeInsets.all(0),
                               children: [
-                                Text(localization.lookup(dashboardField.field),
+                                Text(localization!.lookup(dashboardField.field),
                                     style: textTheme.titleMedium,
                                     textAlign: TextAlign.center),
                                 SizedBox(height: 6),
@@ -643,7 +643,7 @@ class DashboardPanels extends StatelessWidget {
                                       context,
                                       currencyId: state
                                           .dashboardUIState.settings.currencyId,
-                                    ),
+                                    )!,
                                     style: textTheme.headlineSmall,
                                     textAlign: TextAlign.center),
                                 SizedBox(height: 6),
@@ -657,7 +657,7 @@ class DashboardPanels extends StatelessWidget {
                       ),
                       _OverviewPanel(
                           viewModel: viewModel,
-                          title: localization.overview,
+                          title: localization!.overview,
                           invoiceData: invoiceData,
                           paymentData: paymentData,
                           expenseData: expenseData,
@@ -672,11 +672,11 @@ class DashboardPanels extends StatelessWidget {
                       previousData: previousInvoiceData,
                       isLoaded:
                           state.isLoaded || state.invoiceState.list.isNotEmpty,
-                      title: AppLocalization.of(context).invoices,
-                      onSelected: () => tabController
+                      title: AppLocalization.of(context)!.invoices,
+                      onSelected: () => tabController!
                           .animateTo(sidebarTabs.indexOf(EntityType.invoice)),
                       onDateSelected: (index, date) {
-                        tabController
+                        tabController!
                             .animateTo(sidebarTabs.indexOf(EntityType.invoice));
                         viewModel.onSelectionChanged(EntityType.invoice,
                             currentInvoiceData[index].entityMap[date]);
@@ -688,11 +688,11 @@ class DashboardPanels extends StatelessWidget {
                       previousData: previousPaymentData,
                       isLoaded:
                           state.isLoaded || state.paymentState.list.isNotEmpty,
-                      title: AppLocalization.of(context).payments,
-                      onSelected: () => tabController
+                      title: AppLocalization.of(context)!.payments,
+                      onSelected: () => tabController!
                           .animateTo(sidebarTabs.indexOf(EntityType.payment)),
                       onDateSelected: (index, date) {
-                        tabController
+                        tabController!
                             .animateTo(sidebarTabs.indexOf(EntityType.payment));
 
                         viewModel.onSelectionChanged(EntityType.payment,
@@ -705,11 +705,11 @@ class DashboardPanels extends StatelessWidget {
                       previousData: previousQuoteData,
                       isLoaded:
                           state.isLoaded || state.quoteState.list.isNotEmpty,
-                      title: AppLocalization.of(context).quotes,
-                      onSelected: () => tabController
+                      title: AppLocalization.of(context)!.quotes,
+                      onSelected: () => tabController!
                           .animateTo(sidebarTabs.indexOf(EntityType.quote)),
                       onDateSelected: (index, date) {
-                        tabController
+                        tabController!
                             .animateTo(sidebarTabs.indexOf(EntityType.quote));
 
                         viewModel.onSelectionChanged(EntityType.quote,
@@ -722,11 +722,11 @@ class DashboardPanels extends StatelessWidget {
                       previousData: previousTaskData,
                       isLoaded:
                           state.isLoaded || state.taskState.list.isNotEmpty,
-                      title: AppLocalization.of(context).tasks,
-                      onSelected: () => tabController
+                      title: AppLocalization.of(context)!.tasks,
+                      onSelected: () => tabController!
                           .animateTo(sidebarTabs.indexOf(EntityType.task)),
                       onDateSelected: (index, date) {
-                        tabController
+                        tabController!
                             .animateTo(sidebarTabs.indexOf(EntityType.task));
 
                         viewModel.onSelectionChanged(EntityType.task,
@@ -739,20 +739,18 @@ class DashboardPanels extends StatelessWidget {
                       previousData: previousExpenseData,
                       isLoaded:
                           state.isLoaded || state.expenseState.list.isNotEmpty,
-                      title: AppLocalization.of(context).expenses,
-                      onSelected: () => tabController
+                      title: AppLocalization.of(context)!.expenses,
+                      onSelected: () => tabController!
                           .animateTo(sidebarTabs.indexOf(EntityType.expense)),
                       onDateSelected: (index, date) {
-                        tabController
+                        tabController!
                             .animateTo(sidebarTabs.indexOf(EntityType.expense));
                         viewModel.onSelectionChanged(EntityType.expense,
                             currentExpenseData[index].entityMap[date]);
                       });
                 case DashboardSections.runningTasks:
-                  return runningTasks;
+                  return runningTasks!;
               }
-
-              return SizedBox();
             },
           ),
         ),
@@ -765,13 +763,13 @@ class DashboardPanels extends StatelessWidget {
 
 class _DashboardPanel extends StatefulWidget {
   const _DashboardPanel({
-    @required this.viewModel,
-    @required this.title,
-    @required this.currentData,
-    @required this.previousData,
-    @required this.isLoaded,
-    @required this.onDateSelected,
-    @required this.onSelected,
+    required this.viewModel,
+    required this.title,
+    required this.currentData,
+    required this.previousData,
+    required this.isLoaded,
+    required this.onDateSelected,
+    required this.onSelected,
   });
 
   final DashboardVM viewModel;
@@ -787,9 +785,9 @@ class _DashboardPanel extends StatefulWidget {
 }
 
 class __DashboardPanelState extends State<_DashboardPanel> {
-  List<ChartDataGroup> _currentData;
-  List<ChartDataGroup> _previousData;
-  Widget _chart;
+  List<ChartDataGroup>? _currentData;
+  List<ChartDataGroup>? _previousData;
+  Widget? _chart;
 
   @override
   Widget build(BuildContext context) {
@@ -807,7 +805,7 @@ class __DashboardPanelState extends State<_DashboardPanel> {
     if (_chart != null &&
         _currentData == widget.currentData &&
         _previousData == widget.previousData) {
-      return _chart;
+      return _chart!;
     }
 
     _currentData = widget.currentData;
@@ -839,7 +837,7 @@ class __DashboardPanelState extends State<_DashboardPanel> {
                 charts.MaterialPalette.gray.shadeDefault,
             strokeWidthPxFn: (_a, _b) => 2.5,
             id: DashboardChart.PERIOD_PREVIOUS,
-            displayName: localization.previous,
+            displayName: localization!.previous,
             data: previous,
           ),
         );
@@ -849,11 +847,11 @@ class __DashboardPanelState extends State<_DashboardPanel> {
         domainFn: (ChartMoneyData chartData, _) => chartData.date,
         measureFn: (ChartMoneyData chartData, _) => chartData.amount,
         colorFn: (ChartMoneyData chartData, _) =>
-            charts.ColorUtil.fromDartColor(state.accentColor),
+            charts.ColorUtil.fromDartColor(state.accentColor!),
         strokeWidthPxFn: (_a, _b) => 2.5,
         id: DashboardChart.PERIOD_CURRENT,
         displayName:
-            settings.enableComparison ? localization.current : widget.title,
+            settings.enableComparison ? localization!.current : widget.title,
         data: dataGroup.rawSeries,
       ));
     });
@@ -862,25 +860,25 @@ class __DashboardPanelState extends State<_DashboardPanel> {
       data: widget.currentData,
       title: widget.title,
       onDateSelected: widget.onDateSelected,
-      onSelected: widget.onSelected,
-      currencyId: (settings.currencyId ?? '').isNotEmpty
+      onSelected: widget.onSelected as dynamic Function(),
+      currencyId: settings.currencyId.isNotEmpty
           ? settings.currencyId
           : state.company.currencyId,
     );
 
-    return _chart;
+    return _chart!;
   }
 }
 
 class _OverviewPanel extends StatefulWidget {
   const _OverviewPanel({
-    @required this.viewModel,
-    @required this.title,
-    @required this.invoiceData,
-    @required this.paymentData,
-    @required this.expenseData,
-    @required this.isLoaded,
-    @required this.onDateSelected,
+    required this.viewModel,
+    required this.title,
+    required this.invoiceData,
+    required this.paymentData,
+    required this.expenseData,
+    required this.isLoaded,
+    required this.onDateSelected,
   });
 
   final DashboardVM viewModel;
@@ -889,17 +887,17 @@ class _OverviewPanel extends StatefulWidget {
   final List<ChartDataGroup> paymentData;
   final List<ChartDataGroup> expenseData;
   final bool isLoaded;
-  final Function(int, String) onDateSelected;
+  final Function(int, String)? onDateSelected;
 
   @override
   __OverviewPanelState createState() => __OverviewPanelState();
 }
 
 class __OverviewPanelState extends State<_OverviewPanel> {
-  List<ChartDataGroup> invoiceData;
-  List<ChartDataGroup> paymentData;
-  List<ChartDataGroup> expenseData;
-  Widget chart;
+  List<ChartDataGroup>? invoiceData;
+  List<ChartDataGroup>? paymentData;
+  List<ChartDataGroup>? expenseData;
+  Widget? chart;
 
   @override
   Widget build(BuildContext context) {
@@ -918,7 +916,7 @@ class __OverviewPanelState extends State<_OverviewPanel> {
         widget.invoiceData == invoiceData &&
         widget.paymentData == paymentData &&
         widget.expenseData == expenseData) {
-      return chart;
+      return chart!;
     }
 
     invoiceData = widget.invoiceData;
@@ -928,13 +926,13 @@ class __OverviewPanelState extends State<_OverviewPanel> {
     widget.invoiceData.forEach((dataGroup) {
       dataGroup.chartSeries = <Series<dynamic, DateTime>>[];
 
-      final index = invoiceData.indexOf(dataGroup);
+      final index = invoiceData!.indexOf(dataGroup);
       final invoiceSeries = dataGroup.rawSeries;
 
       if (state.company.isModuleEnabled(EntityType.expense)) {
         final List<ChartMoneyData> expenses = [];
-        final expenseSeries = expenseData[index].rawSeries;
-        dataGroup.previousTotal = expenseData[index].periodTotal;
+        final expenseSeries = expenseData![index].rawSeries;
+        dataGroup.previousTotal = expenseData![index].periodTotal;
 
         for (int i = 0;
             i < min(invoiceSeries.length, expenseSeries.length);
@@ -950,14 +948,14 @@ class __OverviewPanelState extends State<_OverviewPanel> {
               charts.ColorUtil.fromDartColor(Colors.grey),
           strokeWidthPxFn: (_a, _b) => 2.5,
           id: DashboardChart.PERIOD_EXPENSES,
-          displayName: localization.expenses,
+          displayName: localization!.expenses,
           data: expenses,
         ));
       }
 
       final List<ChartMoneyData> payments = [];
-      final paymentSeries = paymentData[index].rawSeries;
-      dataGroup.previousTotal = paymentData[index].periodTotal;
+      final paymentSeries = paymentData![index].rawSeries;
+      dataGroup.previousTotal = paymentData![index].periodTotal;
 
       for (int i = 0;
           i < min(invoiceSeries.length, paymentSeries.length);
@@ -973,7 +971,7 @@ class __OverviewPanelState extends State<_OverviewPanel> {
             charts.ColorUtil.fromDartColor(Colors.green),
         strokeWidthPxFn: (_a, _b) => 2.5,
         id: DashboardChart.PERIOD_PAYMENTS,
-        displayName: localization.payments,
+        displayName: localization!.payments,
         data: payments,
       ));
 
@@ -981,7 +979,7 @@ class __OverviewPanelState extends State<_OverviewPanel> {
         domainFn: (ChartMoneyData chartData, _) => chartData.date,
         measureFn: (ChartMoneyData chartData, _) => chartData.amount,
         colorFn: (ChartMoneyData chartData, _) =>
-            charts.ColorUtil.fromDartColor(state.accentColor),
+            charts.ColorUtil.fromDartColor(state.accentColor!),
         strokeWidthPxFn: (_a, _b) => 2.5,
         id: DashboardChart.PERIOD_INVOICES,
         displayName: localization.invoices,
@@ -994,21 +992,21 @@ class __OverviewPanelState extends State<_OverviewPanel> {
       title: widget.title,
       onSelected: () => null,
       onDateSelected: widget.onDateSelected,
-      currencyId: (settings.currencyId ?? '').isNotEmpty
+      currencyId: settings.currencyId.isNotEmpty
           ? settings.currencyId
           : state.company.currencyId,
       isOverview: true,
     );
 
-    return chart;
+    return chart!;
   }
 }
 
 class _DashboardSettings extends StatefulWidget {
   const _DashboardSettings({
-    Key key,
-    @required this.viewModel,
-    @required this.isWide,
+    Key? key,
+    required this.viewModel,
+    required this.isWide,
   }) : super(key: key);
 
   final bool isWide;
@@ -1021,7 +1019,7 @@ class _DashboardSettings extends StatefulWidget {
 class __DashboardSettingsState extends State<_DashboardSettings> {
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final viewModel = widget.viewModel;
     final state = store.state;
@@ -1092,9 +1090,9 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
           child: DropdownButton<String>(
             items: memoizedGetCurrencyIds(company, clientMap, groupMap)
                 .map((currencyId) => DropdownMenuItem<String>(
-                      child: Text(currencyId == kCurrencyAll
+                      child: Text((currencyId == kCurrencyAll
                           ? localization.all
-                          : viewModel.currencyMap[currencyId]?.code),
+                          : viewModel.currencyMap[currencyId]?.code)!),
                       value: currencyId,
                     ))
                 .toList(),
@@ -1119,7 +1117,7 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
             child: Text(localization.save.toUpperCase()),
             onPressed: () {
               final completer = snackBarCompleter<Null>(
-                  context, AppLocalization.of(context).savedSettings);
+                  AppLocalization.of(context)!.savedSettings);
               final user = state.user
                   .rebuild((b) => b..userCompany.replace(state.userCompany));
               store.dispatch(
@@ -1247,7 +1245,7 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
 }
 
 class _DashboardField extends StatefulWidget {
-  const _DashboardField({Key key}) : super(key: key);
+  const _DashboardField({Key? key}) : super(key: key);
 
   @override
   State<_DashboardField> createState() => _DashboardFieldState();
@@ -1259,7 +1257,7 @@ class _DashboardFieldState extends State<_DashboardField> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final List<DropdownMenuItem<String>> items = [];
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;

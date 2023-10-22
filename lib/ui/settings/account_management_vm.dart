@@ -26,7 +26,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/oauth.dart';
 
 class AccountManagementScreen extends StatelessWidget {
-  const AccountManagementScreen({Key key}) : super(key: key);
+  const AccountManagementScreen({Key? key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsAccountManagement';
 
   @override
@@ -45,14 +45,14 @@ class AccountManagementScreen extends StatelessWidget {
 
 class AccountManagementVM {
   AccountManagementVM({
-    @required this.state,
-    @required this.company,
-    @required this.onCompanyChanged,
-    @required this.onSetPrimaryCompany,
-    @required this.onSavePressed,
-    @required this.onCompanyDelete,
-    @required this.onPurgeData,
-    @required this.onAppliedLicense,
+    required this.state,
+    required this.company,
+    required this.onCompanyChanged,
+    required this.onSetPrimaryCompany,
+    required this.onSavePressed,
+    required this.onCompanyDelete,
+    required this.onPurgeData,
+    required this.onAppliedLicense,
   });
 
   static AccountManagementVM fromStore(Store<AppState> store) {
@@ -73,7 +73,7 @@ class AccountManagementVM {
 
           final companyLength = state.companies.length;
           final deleteCompleter = Completer<Null>()
-            ..future.then((value) {
+            ..future.then<Null>((_) {
               final context = navigatorKey.currentContext;
               final state = store.state;
               if (companyLength == 1) {
@@ -86,12 +86,12 @@ class AccountManagementVM {
                 final index = selectedCompanyIndex == 0 ? 1 : 0;
                 store.dispatch(SelectCompany(companyIndex: index));
                 final refreshCompleter = Completer<Null>()
-                  ..future.then((value) {
+                  ..future.then<Null>((_) {
                     store.dispatch(SelectCompany(companyIndex: 0));
                     store.dispatch(ViewDashboard());
-                    AppBuilder.of(navigatorKey.currentContext).rebuild();
+                    AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
 
-                    if (Navigator.of(context).canPop()) {
+                    if (Navigator.of(context!).canPop()) {
                       Navigator.of(context).pop();
                     }
                   });
@@ -99,12 +99,12 @@ class AccountManagementVM {
                     RefreshData(clearData: true, completer: refreshCompleter));
               }
             }).catchError((Object error) {
-              if (Navigator.of(navigatorKey.currentContext).canPop()) {
-                Navigator.of(navigatorKey.currentContext).pop();
+              if (Navigator.of(navigatorKey.currentContext!).canPop()) {
+                Navigator.of(navigatorKey.currentContext!).pop();
               }
 
               showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext,
+                  context: navigatorKey.currentContext!,
                   builder: (BuildContext context) {
                     return ErrorDialog(error);
                   });
@@ -120,14 +120,14 @@ class AccountManagementVM {
           Debouncer.runOnComplete(() {
             final settingsUIState = store.state.uiState.settingsUIState;
             final completer = snackBarCompleter<Null>(
-                context, AppLocalization.of(context).savedSettings);
+                AppLocalization.of(context)!.savedSettings);
             store.dispatch(SaveCompanyRequest(
                 completer: completer, company: settingsUIState.company));
           });
         },
         onPurgeData: (context, password, idToken) {
           final completer = snackBarCompleter<Null>(
-              context, AppLocalization.of(context).purgeSuccessful);
+              AppLocalization.of(context)!.purgeSuccessful);
           store.dispatch(PurgeDataRequest(
             completer: completer,
             password: password,
@@ -139,7 +139,7 @@ class AccountManagementVM {
         },
         onSetPrimaryCompany: (context) {
           final completer = snackBarCompleter<Null>(
-              context, AppLocalization.of(context).updatedCompany);
+              AppLocalization.of(context)!.updatedCompany);
           store.dispatch(SetDefaultCompanyRequest(completer: completer));
         });
   }

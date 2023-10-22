@@ -24,10 +24,10 @@ class _$CountryListResponseSerializer
   final String wireName = 'CountryListResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, CountryListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType:
@@ -39,21 +39,21 @@ class _$CountryListResponseSerializer
 
   @override
   CountryListResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CountryListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(CountryEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(CountryEntity)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -73,10 +73,10 @@ class _$CountryItemResponseSerializer
   final String wireName = 'CountryItemResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, CountryItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(CountryEntity)),
@@ -87,19 +87,19 @@ class _$CountryItemResponseSerializer
 
   @override
   CountryItemResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CountryItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(CountryEntity)) as CountryEntity);
+              specifiedType: const FullType(CountryEntity))! as CountryEntity);
           break;
       }
     }
@@ -115,9 +115,9 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
   final String wireName = 'CountryEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, CountryEntity object,
+  Iterable<Object?> serialize(Serializers serializers, CountryEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'swap_postal_code',
@@ -145,47 +145,47 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
 
   @override
   CountryEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CountryEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'swap_postal_code':
           result.swapPostalCode = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'swap_currency_symbol':
           result.swapCurrencySymbol = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'thousand_separator':
           result.thousandSeparator = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'decimal_separator':
           result.decimalSeparator = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'iso_3166_2':
           result.iso2 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'iso_3166_3':
           result.iso3 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -199,10 +199,10 @@ class _$CountryListResponse extends CountryListResponse {
   final BuiltList<CountryEntity> data;
 
   factory _$CountryListResponse(
-          [void Function(CountryListResponseBuilder) updates]) =>
+          [void Function(CountryListResponseBuilder)? updates]) =>
       (new CountryListResponseBuilder()..update(updates))._build();
 
-  _$CountryListResponse._({this.data}) : super._() {
+  _$CountryListResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'CountryListResponse', 'data');
   }
 
@@ -221,10 +221,10 @@ class _$CountryListResponse extends CountryListResponse {
     return other is CountryListResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -241,12 +241,12 @@ class _$CountryListResponse extends CountryListResponse {
 
 class CountryListResponseBuilder
     implements Builder<CountryListResponse, CountryListResponseBuilder> {
-  _$CountryListResponse _$v;
+  _$CountryListResponse? _$v;
 
-  ListBuilder<CountryEntity> _data;
+  ListBuilder<CountryEntity>? _data;
   ListBuilder<CountryEntity> get data =>
       _$this._data ??= new ListBuilder<CountryEntity>();
-  set data(ListBuilder<CountryEntity> data) => _$this._data = data;
+  set data(ListBuilder<CountryEntity>? data) => _$this._data = data;
 
   CountryListResponseBuilder();
 
@@ -266,7 +266,7 @@ class CountryListResponseBuilder
   }
 
   @override
-  void update(void Function(CountryListResponseBuilder) updates) {
+  void update(void Function(CountryListResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -278,7 +278,7 @@ class CountryListResponseBuilder
     try {
       _$result = _$v ?? new _$CountryListResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -298,10 +298,10 @@ class _$CountryItemResponse extends CountryItemResponse {
   final CountryEntity data;
 
   factory _$CountryItemResponse(
-          [void Function(CountryItemResponseBuilder) updates]) =>
+          [void Function(CountryItemResponseBuilder)? updates]) =>
       (new CountryItemResponseBuilder()..update(updates))._build();
 
-  _$CountryItemResponse._({this.data}) : super._() {
+  _$CountryItemResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'CountryItemResponse', 'data');
   }
 
@@ -320,10 +320,10 @@ class _$CountryItemResponse extends CountryItemResponse {
     return other is CountryItemResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -340,11 +340,11 @@ class _$CountryItemResponse extends CountryItemResponse {
 
 class CountryItemResponseBuilder
     implements Builder<CountryItemResponse, CountryItemResponseBuilder> {
-  _$CountryItemResponse _$v;
+  _$CountryItemResponse? _$v;
 
-  CountryEntityBuilder _data;
+  CountryEntityBuilder? _data;
   CountryEntityBuilder get data => _$this._data ??= new CountryEntityBuilder();
-  set data(CountryEntityBuilder data) => _$this._data = data;
+  set data(CountryEntityBuilder? data) => _$this._data = data;
 
   CountryItemResponseBuilder();
 
@@ -364,7 +364,7 @@ class CountryItemResponseBuilder
   }
 
   @override
-  void update(void Function(CountryItemResponseBuilder) updates) {
+  void update(void Function(CountryItemResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -376,7 +376,7 @@ class CountryItemResponseBuilder
     try {
       _$result = _$v ?? new _$CountryItemResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -409,18 +409,18 @@ class _$CountryEntity extends CountryEntity {
   @override
   final String id;
 
-  factory _$CountryEntity([void Function(CountryEntityBuilder) updates]) =>
+  factory _$CountryEntity([void Function(CountryEntityBuilder)? updates]) =>
       (new CountryEntityBuilder()..update(updates))._build();
 
   _$CountryEntity._(
-      {this.name,
-      this.swapPostalCode,
-      this.swapCurrencySymbol,
-      this.thousandSeparator,
-      this.decimalSeparator,
-      this.iso2,
-      this.iso3,
-      this.id})
+      {required this.name,
+      required this.swapPostalCode,
+      required this.swapCurrencySymbol,
+      required this.thousandSeparator,
+      required this.decimalSeparator,
+      required this.iso2,
+      required this.iso3,
+      required this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'CountryEntity', 'name');
     BuiltValueNullFieldError.checkNotNull(
@@ -457,10 +457,10 @@ class _$CountryEntity extends CountryEntity {
         id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, swapPostalCode.hashCode);
@@ -491,43 +491,43 @@ class _$CountryEntity extends CountryEntity {
 
 class CountryEntityBuilder
     implements Builder<CountryEntity, CountryEntityBuilder> {
-  _$CountryEntity _$v;
+  _$CountryEntity? _$v;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
 
-  bool _swapPostalCode;
-  bool get swapPostalCode => _$this._swapPostalCode;
-  set swapPostalCode(bool swapPostalCode) =>
+  bool? _swapPostalCode;
+  bool? get swapPostalCode => _$this._swapPostalCode;
+  set swapPostalCode(bool? swapPostalCode) =>
       _$this._swapPostalCode = swapPostalCode;
 
-  bool _swapCurrencySymbol;
-  bool get swapCurrencySymbol => _$this._swapCurrencySymbol;
-  set swapCurrencySymbol(bool swapCurrencySymbol) =>
+  bool? _swapCurrencySymbol;
+  bool? get swapCurrencySymbol => _$this._swapCurrencySymbol;
+  set swapCurrencySymbol(bool? swapCurrencySymbol) =>
       _$this._swapCurrencySymbol = swapCurrencySymbol;
 
-  String _thousandSeparator;
-  String get thousandSeparator => _$this._thousandSeparator;
-  set thousandSeparator(String thousandSeparator) =>
+  String? _thousandSeparator;
+  String? get thousandSeparator => _$this._thousandSeparator;
+  set thousandSeparator(String? thousandSeparator) =>
       _$this._thousandSeparator = thousandSeparator;
 
-  String _decimalSeparator;
-  String get decimalSeparator => _$this._decimalSeparator;
-  set decimalSeparator(String decimalSeparator) =>
+  String? _decimalSeparator;
+  String? get decimalSeparator => _$this._decimalSeparator;
+  set decimalSeparator(String? decimalSeparator) =>
       _$this._decimalSeparator = decimalSeparator;
 
-  String _iso2;
-  String get iso2 => _$this._iso2;
-  set iso2(String iso2) => _$this._iso2 = iso2;
+  String? _iso2;
+  String? get iso2 => _$this._iso2;
+  set iso2(String? iso2) => _$this._iso2 = iso2;
 
-  String _iso3;
-  String get iso3 => _$this._iso3;
-  set iso3(String iso3) => _$this._iso3 = iso3;
+  String? _iso3;
+  String? get iso3 => _$this._iso3;
+  set iso3(String? iso3) => _$this._iso3 = iso3;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   CountryEntityBuilder();
 
@@ -554,7 +554,7 @@ class CountryEntityBuilder
   }
 
   @override
-  void update(void Function(CountryEntityBuilder) updates) {
+  void update(void Function(CountryEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

@@ -26,7 +26,7 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EmailSettingsScreen extends StatelessWidget {
-  const EmailSettingsScreen({Key key}) : super(key: key);
+  const EmailSettingsScreen({Key? key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsEmailSettings';
 
   @override
@@ -45,13 +45,13 @@ class EmailSettingsScreen extends StatelessWidget {
 
 class EmailSettingsVM {
   EmailSettingsVM({
-    @required this.state,
-    @required this.company,
-    @required this.onCompanyChanged,
-    @required this.settings,
-    @required this.onSettingsChanged,
-    @required this.onSavePressed,
-    @required this.onEInvoiceCertificateSelected,
+    required this.state,
+    required this.company,
+    required this.onCompanyChanged,
+    required this.settings,
+    required this.onSettingsChanged,
+    required this.onSavePressed,
+    required this.onEInvoiceCertificateSelected,
   });
 
   static EmailSettingsVM fromStore(Store<AppState> store) {
@@ -77,9 +77,9 @@ class EmailSettingsVM {
             final settingsUIState = store.state.uiState.settingsUIState;
             final settings = settingsUIState.settings;
             if (settings.emailStyle == kEmailDesignCustom &&
-                !settings.emailStyleCustom.contains('\$body')) {
+                !settings.emailStyleCustom!.contains('\$body')) {
               showErrorDialog(
-                  message: AppLocalization.of(context)
+                  message: AppLocalization.of(context)!
                       .bodyVariableMissing
                       .replaceFirst(':body', '\$body'));
               return;
@@ -88,7 +88,7 @@ class EmailSettingsVM {
             switch (settingsUIState.entityType) {
               case EntityType.company:
                 final completer = snackBarCompleter<Null>(
-                    context, AppLocalization.of(context).savedSettings);
+                    AppLocalization.of(context)!.savedSettings);
                 store.dispatch(SaveCompanyRequest(
                   completer: completer,
                   company: settingsUIState.company,
@@ -96,13 +96,13 @@ class EmailSettingsVM {
                 break;
               case EntityType.group:
                 final completer = snackBarCompleter<GroupEntity>(
-                    context, AppLocalization.of(context).savedSettings);
+                    AppLocalization.of(context)!.savedSettings);
                 store.dispatch(SaveGroupRequest(
                     completer: completer, group: settingsUIState.group));
                 break;
               case EntityType.client:
                 final completer = snackBarCompleter<ClientEntity>(
-                    context, AppLocalization.of(context).savedSettings);
+                    AppLocalization.of(context)!.savedSettings);
                 store.dispatch(SaveClientRequest(
                     completer: completer, client: settingsUIState.client));
                 break;
@@ -111,8 +111,7 @@ class EmailSettingsVM {
         },
         onEInvoiceCertificateSelected: (eInvoiceCertificate) {
           final completer = snackBarCompleter<Null>(
-              navigatorKey.currentContext,
-              AppLocalization.of(navigatorKey.currentContext)
+              AppLocalization.of(navigatorKey.currentContext!)!
                   .uploadedCertificate);
           store.dispatch(
             SaveEInvoiceCertificateRequest(

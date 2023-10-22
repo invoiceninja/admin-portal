@@ -19,9 +19,9 @@ import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientViewLedger extends StatefulWidget {
-  const ClientViewLedger({Key key, this.viewModel}) : super(key: key);
+  const ClientViewLedger({Key? key, this.viewModel}) : super(key: key);
 
-  final ClientViewVM viewModel;
+  final ClientViewVM? viewModel;
 
   @override
   _ClientViewLedgerState createState() => _ClientViewLedgerState();
@@ -30,15 +30,15 @@ class ClientViewLedger extends StatefulWidget {
 class _ClientViewLedgerState extends State<ClientViewLedger> {
   @override
   void didChangeDependencies() {
-    if (widget.viewModel.client.isStale) {
-      widget.viewModel.onRefreshed(context);
+    if (widget.viewModel!.client.isStale) {
+      widget.viewModel!.onRefreshed(context);
     }
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    final client = widget.viewModel.client;
+    final client = widget.viewModel!.client;
     final ledgers =
         client.ledger.where((ledger) => ledger.adjustment != 0).toList();
 
@@ -62,7 +62,7 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Flexible(child: Text(localization.clientCreated)),
+                  Flexible(child: Text(localization!.clientCreated)),
                   Padding(
                     padding: const EdgeInsets.only(right: 2),
                     child: Text(
@@ -70,7 +70,7 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
                         0,
                         context,
                         clientId: client.id,
-                      ),
+                      )!,
                       textAlign: TextAlign.end,
                     ),
                   ),
@@ -86,7 +86,7 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
         }
 
         final ledger = ledgers[index];
-        final entity = state.getEntityMap(ledger.entityType)[ledger.entityId];
+        final entity = state.getEntityMap(ledger.entityType)![ledger.entityId];
 
         if (entity == null) {
           print('Error: unable to find entity $ledger');
@@ -94,15 +94,16 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
         }
 
         return ListTile(
-          onTap: () => viewEntity(entity: entity),
-          onLongPress: () => showEntityActionsDialog(entities: [entity]),
+          onTap: () => viewEntity(entity: entity as BaseEntity),
+          onLongPress: () =>
+              showEntityActionsDialog(entities: [entity as BaseEntity]),
           title: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
                 child: Text(
-                  '${localization.lookup('${ledger.entityType}')}  ›  ${entity.listDisplayName}',
+                  '${localization!.lookup('${ledger.entityType}')}  ›  ${entity.listDisplayName}',
                 ),
               ),
               Padding(
@@ -112,7 +113,7 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
                     ledger.balance,
                     context,
                     clientId: client.id,
-                  ),
+                  )!,
                   textAlign: TextAlign.end,
                 ),
               ),
@@ -136,8 +137,8 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                     color: ledger.adjustment <= 0
-                        ? state.prefState.colorThemeModel.colorSuccess
-                        : state.prefState.colorThemeModel.colorDanger,
+                        ? state.prefState.colorThemeModel!.colorSuccess
+                        : state.prefState.colorThemeModel!.colorDanger,
                     borderRadius:
                         BorderRadius.all(Radius.circular(kBorderRadius)),
                   ),
@@ -149,7 +150,7 @@ class _ClientViewLedgerState extends State<ClientViewLedger> {
                             ledger.adjustment,
                             context,
                             clientId: client.id,
-                          ),
+                          )!,
                       style: TextStyle(color: Colors.white),
                       textAlign: TextAlign.end,
                     ),

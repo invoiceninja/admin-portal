@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
@@ -69,14 +70,14 @@ enum VendorReportFields {
 }
 
 var memoizedVendorReport = memo6((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, VendorEntity> vendorMap,
   BuiltMap<String, UserEntity> userMap,
   BuiltMap<String, GroupEntity> groupMap,
   StaticState staticState,
 ) =>
-    vendorReport(userCompany, reportsUIState, vendorMap, userMap, groupMap,
+    vendorReport(userCompany!, reportsUIState, vendorMap, userMap, groupMap,
         staticState));
 
 ReportResult vendorReport(
@@ -91,11 +92,10 @@ ReportResult vendorReport(
   final List<BaseEntity> entities = [];
   BuiltList<VendorReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
-  final vendorReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportVendor)
-          ? reportSettings[kReportVendor]
-          : ReportSettingsEntity();
+  final reportSettings = userCompany.settings.reportSettings;
+  final vendorReportSettings = reportSettings.containsKey(kReportVendor)
+      ? reportSettings[kReportVendor]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     VendorReportFields.name,
@@ -110,16 +110,16 @@ ReportResult vendorReport(
   if (vendorReportSettings.columns.isNotEmpty) {
     columns = BuiltList(vendorReportSettings.columns
         .map((e) => EnumUtils.fromString(VendorReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
   }
 
   for (var vendorId in vendorMap.keys) {
-    final vendor = vendorMap[vendorId];
+    final vendor = vendorMap[vendorId]!;
     final contact = vendor.primaryContact;
-    if (vendor.isDeleted && !userCompany.company.reportIncludeDeleted) {
+    if (vendor.isDeleted! && !userCompany.company.reportIncludeDeleted) {
       continue;
     }
 
@@ -320,7 +320,7 @@ ReportResult vendorReport(
           value = vendor.documents.length;
           break;
         case VendorReportFields.classification:
-          value = AppLocalization.of(navigatorKey.currentContext)
+          value = AppLocalization.of(navigatorKey.currentContext!)!
               .lookup(vendor.classification);
           break;
       }
@@ -330,7 +330,7 @@ ReportResult vendorReport(
         userCompany: userCompany,
         reportsUIState: reportsUIState,
         column: EnumUtils.parse(column),
-      )) {
+      )!) {
         skip = true;
       }
 
@@ -357,7 +357,7 @@ ReportResult vendorReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, vendorReportSettings, selectedColumns));
+      sortReportTableRows(rowA, rowB, vendorReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns:

@@ -7,9 +7,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:in_app_purchase_android/billing_client_wrappers.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:in_app_purchase_storekit/store_kit_wrappers.dart';
@@ -17,7 +15,6 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -30,13 +27,13 @@ class UpgradeDialog extends StatefulWidget {
 class _UpgradeDialogState extends State<UpgradeDialog> {
   final _scrollController = ScrollController();
   final InAppPurchase _inAppPurchase = InAppPurchase.instance;
-  StreamSubscription<List<PurchaseDetails>> _subscription;
+  late StreamSubscription<List<PurchaseDetails>> _subscription;
   List<ProductDetails> _products = <ProductDetails>[];
   List<PurchaseDetails> _purchases = <PurchaseDetails>[];
   bool _isAvailable = false;
   bool _purchasePending = false;
   bool _loading = true;
-  String _queryProductError;
+  String? _queryProductError;
 
   @override
   void initState() {
@@ -78,7 +75,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
         await _inAppPurchase.queryProductDetails(kProductPlans.toSet());
     if (productDetailResponse.error != null) {
       setState(() {
-        _queryProductError = productDetailResponse.error.message;
+        _queryProductError = productDetailResponse.error!.message;
         _isAvailable = isAvailable;
         _products = productDetailResponse.productDetails;
         _purchases = <PurchaseDetails>[];
@@ -123,7 +120,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final List<Widget> stack = <Widget>[];
     if (_queryProductError == null) {
       stack.add(
@@ -151,7 +148,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       );
     } else {
       stack.add(Center(
-        child: Text(_queryProductError),
+        child: Text(_queryProductError!),
       ));
     }
     if (_purchasePending) {
@@ -221,7 +218,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     _products.sort((p1, p2) => p1.rawPrice.compareTo(p2.rawPrice));
     productList.addAll(_products.map(
       (ProductDetails productDetails) {
-        final PurchaseDetails previousPurchase = purchases[productDetails.id];
+        final PurchaseDetails? previousPurchase = purchases[productDetails.id];
 
         return ListTile(
           title: Text(productDetails.description),
@@ -258,7 +255,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
                   }
                 },
                 child: Text(previousPurchase != null
-                    ? AppLocalization.of(context).activate
+                    ? AppLocalization.of(context)!.activate
                     : productDetails.price),
               ),
               SizedBox(height: 20),
@@ -294,7 +291,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
       'inapp_transaction_id': purchaseDetails.purchaseID,
       'key': state.account.key,
       'plan': purchaseDetails.productID.replaceAll('-', '_'),
-      'plan_paid': (int.parse(purchaseDetails.transactionDate) / 1000).floor(),
+      'plan_paid': (int.parse(purchaseDetails.transactionDate!) / 1000).floor(),
     };
 
     await WebClient()
@@ -309,7 +306,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
      */
   }
 
-  void handleError(IAPError error) {
+  void handleError(IAPError? error) {
     setState(() {
       _purchasePending = false;
     });
@@ -335,25 +332,6 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
   }
 
   Future<void> confirmPriceChange(BuildContext context) async {
-    if (Platform.isAndroid) {
-      final localization = AppLocalization.of(context);
-      final InAppPurchaseAndroidPlatformAddition androidAddition =
-          _inAppPurchase
-              .getPlatformAddition<InAppPurchaseAndroidPlatformAddition>();
-      final BillingResultWrapper priceChangeConfirmationResult =
-          await androidAddition.launchPriceChangeConfirmationFlow(
-        sku: 'purchaseId',
-      );
-
-      if (priceChangeConfirmationResult.responseCode == BillingResponse.ok) {
-        showToast(localization.priceChangeAccepted);
-      } else {
-        showErrorDialog(
-            message: priceChangeConfirmationResult.debugMessage ??
-                localization.priceChangeFailed +
-                    ' ${priceChangeConfirmationResult.responseCode}');
-      }
-    }
     if (Platform.isIOS) {
       final InAppPurchaseStoreKitPlatformAddition iapStoreKitPlatformAddition =
           _inAppPurchase

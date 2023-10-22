@@ -15,11 +15,11 @@ class ColorTheme {
     this.colorDarkGray = const Color(0xff444444),
   });
 
-  Color colorPrimary;
-  Color colorInfo;
-  Color colorSuccess;
-  Color colorWarning;
-  Color colorDanger;
+  Color? colorPrimary;
+  Color? colorInfo;
+  Color? colorSuccess;
+  Color? colorWarning;
+  Color? colorDanger;
   Color colorLightGray;
   Color colorDarkGray;
 }

@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:intl/intl.dart';
 import 'package:memoize/memoize.dart';
 
@@ -26,13 +27,13 @@ enum DocumentReportFields {
 }
 
 var memoizedDocumentReport = memo4((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, DocumentEntity> documentMap,
   BuiltMap<String, UserEntity> userMap,
 ) =>
     documentReport(
-      userCompany,
+      userCompany!,
       reportsUIState,
       documentMap,
       userMap,
@@ -50,11 +51,10 @@ ReportResult documentReport(
 
   final localization =
       AppLocalization(AppLocalization.createLocale(Intl.defaultLocale));
-  final reportSettings = userCompany.settings?.reportSettings;
-  final documentReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportDocument)
-          ? reportSettings[kReportDocument]
-          : ReportSettingsEntity();
+  final reportSettings = userCompany.settings.reportSettings;
+  final documentReportSettings = reportSettings.containsKey(kReportDocument)
+      ? reportSettings[kReportDocument]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     DocumentReportFields.record_type,
@@ -69,7 +69,7 @@ ReportResult documentReport(
   if (documentReportSettings.columns.isNotEmpty) {
     columns = BuiltList(documentReportSettings.columns
         .map((e) => EnumUtils.fromString(DocumentReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
@@ -121,7 +121,7 @@ ReportResult documentReport(
         reportsUIState: reportsUIState,
         column: EnumUtils.parse(column),
         localization: localization,
-      )) {
+      )!) {
         skip = true;
       }
 
@@ -148,8 +148,8 @@ ReportResult documentReport(
   });
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, documentReportSettings, selectedColumns));
+  data.sort((rowA, rowB) => sortReportTableRows(
+      rowA, rowB, documentReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns:

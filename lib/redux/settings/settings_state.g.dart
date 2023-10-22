@@ -17,9 +17,9 @@ class _$SettingsUIStateSerializer
   final String wireName = 'SettingsUIState';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, SettingsUIState object,
+  Iterable<Object?> serialize(Serializers serializers, SettingsUIState object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'company',
       serializers.serialize(object.company,
           specifiedType: const FullType(CompanyEntity)),
@@ -72,7 +72,7 @@ class _$SettingsUIStateSerializer
       serializers.serialize(object.showPdfPreview,
           specifiedType: const FullType(bool)),
     ];
-    Object value;
+    Object? value;
     value = object.filter;
     if (value != null) {
       result
@@ -85,87 +85,87 @@ class _$SettingsUIStateSerializer
 
   @override
   SettingsUIState deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new SettingsUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'company':
           result.company.replace(serializers.deserialize(value,
-              specifiedType: const FullType(CompanyEntity)) as CompanyEntity);
+              specifiedType: const FullType(CompanyEntity))! as CompanyEntity);
           break;
         case 'origCompany':
           result.origCompany.replace(serializers.deserialize(value,
-              specifiedType: const FullType(CompanyEntity)) as CompanyEntity);
+              specifiedType: const FullType(CompanyEntity))! as CompanyEntity);
           break;
         case 'client':
           result.client.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ClientEntity)) as ClientEntity);
+              specifiedType: const FullType(ClientEntity))! as ClientEntity);
           break;
         case 'origClient':
           result.origClient.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ClientEntity)) as ClientEntity);
+              specifiedType: const FullType(ClientEntity))! as ClientEntity);
           break;
         case 'group':
           result.group.replace(serializers.deserialize(value,
-              specifiedType: const FullType(GroupEntity)) as GroupEntity);
+              specifiedType: const FullType(GroupEntity))! as GroupEntity);
           break;
         case 'origGroup':
           result.origGroup.replace(serializers.deserialize(value,
-              specifiedType: const FullType(GroupEntity)) as GroupEntity);
+              specifiedType: const FullType(GroupEntity))! as GroupEntity);
           break;
         case 'user':
           result.user.replace(serializers.deserialize(value,
-              specifiedType: const FullType(UserEntity)) as UserEntity);
+              specifiedType: const FullType(UserEntity))! as UserEntity);
           break;
         case 'origUser':
           result.origUser.replace(serializers.deserialize(value,
-              specifiedType: const FullType(UserEntity)) as UserEntity);
+              specifiedType: const FullType(UserEntity))! as UserEntity);
           break;
         case 'entityType':
           result.entityType = serializers.deserialize(value,
-              specifiedType: const FullType(EntityType)) as EntityType;
+              specifiedType: const FullType(EntityType))! as EntityType;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'updatedAt':
           result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'section':
           result.section = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'tabIndex':
           result.tabIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'selectedTemplate':
           result.selectedTemplate = serializers.deserialize(value,
-              specifiedType: const FullType(EmailTemplate)) as EmailTemplate;
+              specifiedType: const FullType(EmailTemplate))! as EmailTemplate;
           break;
         case 'filter':
           result.filter = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'filterClearedAt':
           result.filterClearedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'showNewSettings':
           result.showNewSettings = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'showPdfPreview':
           result.showPdfPreview = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
       }
     }
@@ -204,7 +204,7 @@ class _$SettingsUIState extends SettingsUIState {
   @override
   final EmailTemplate selectedTemplate;
   @override
-  final String filter;
+  final String? filter;
   @override
   final int filterClearedAt;
   @override
@@ -212,28 +212,28 @@ class _$SettingsUIState extends SettingsUIState {
   @override
   final bool showPdfPreview;
 
-  factory _$SettingsUIState([void Function(SettingsUIStateBuilder) updates]) =>
+  factory _$SettingsUIState([void Function(SettingsUIStateBuilder)? updates]) =>
       (new SettingsUIStateBuilder()..update(updates))._build();
 
   _$SettingsUIState._(
-      {this.company,
-      this.origCompany,
-      this.client,
-      this.origClient,
-      this.group,
-      this.origGroup,
-      this.user,
-      this.origUser,
-      this.entityType,
-      this.isChanged,
-      this.updatedAt,
-      this.section,
-      this.tabIndex,
-      this.selectedTemplate,
+      {required this.company,
+      required this.origCompany,
+      required this.client,
+      required this.origClient,
+      required this.group,
+      required this.origGroup,
+      required this.user,
+      required this.origUser,
+      required this.entityType,
+      required this.isChanged,
+      required this.updatedAt,
+      required this.section,
+      required this.tabIndex,
+      required this.selectedTemplate,
       this.filter,
-      this.filterClearedAt,
-      this.showNewSettings,
-      this.showPdfPreview})
+      required this.filterClearedAt,
+      required this.showNewSettings,
+      required this.showPdfPreview})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         company, r'SettingsUIState', 'company');
@@ -300,10 +300,10 @@ class _$SettingsUIState extends SettingsUIState {
         showPdfPreview == other.showPdfPreview;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, company.hashCode);
     _$hash = $jc(_$hash, origCompany.hashCode);
@@ -354,90 +354,90 @@ class _$SettingsUIState extends SettingsUIState {
 
 class SettingsUIStateBuilder
     implements Builder<SettingsUIState, SettingsUIStateBuilder> {
-  _$SettingsUIState _$v;
+  _$SettingsUIState? _$v;
 
-  CompanyEntityBuilder _company;
+  CompanyEntityBuilder? _company;
   CompanyEntityBuilder get company =>
       _$this._company ??= new CompanyEntityBuilder();
-  set company(CompanyEntityBuilder company) => _$this._company = company;
+  set company(CompanyEntityBuilder? company) => _$this._company = company;
 
-  CompanyEntityBuilder _origCompany;
+  CompanyEntityBuilder? _origCompany;
   CompanyEntityBuilder get origCompany =>
       _$this._origCompany ??= new CompanyEntityBuilder();
-  set origCompany(CompanyEntityBuilder origCompany) =>
+  set origCompany(CompanyEntityBuilder? origCompany) =>
       _$this._origCompany = origCompany;
 
-  ClientEntityBuilder _client;
+  ClientEntityBuilder? _client;
   ClientEntityBuilder get client =>
       _$this._client ??= new ClientEntityBuilder();
-  set client(ClientEntityBuilder client) => _$this._client = client;
+  set client(ClientEntityBuilder? client) => _$this._client = client;
 
-  ClientEntityBuilder _origClient;
+  ClientEntityBuilder? _origClient;
   ClientEntityBuilder get origClient =>
       _$this._origClient ??= new ClientEntityBuilder();
-  set origClient(ClientEntityBuilder origClient) =>
+  set origClient(ClientEntityBuilder? origClient) =>
       _$this._origClient = origClient;
 
-  GroupEntityBuilder _group;
+  GroupEntityBuilder? _group;
   GroupEntityBuilder get group => _$this._group ??= new GroupEntityBuilder();
-  set group(GroupEntityBuilder group) => _$this._group = group;
+  set group(GroupEntityBuilder? group) => _$this._group = group;
 
-  GroupEntityBuilder _origGroup;
+  GroupEntityBuilder? _origGroup;
   GroupEntityBuilder get origGroup =>
       _$this._origGroup ??= new GroupEntityBuilder();
-  set origGroup(GroupEntityBuilder origGroup) => _$this._origGroup = origGroup;
+  set origGroup(GroupEntityBuilder? origGroup) => _$this._origGroup = origGroup;
 
-  UserEntityBuilder _user;
+  UserEntityBuilder? _user;
   UserEntityBuilder get user => _$this._user ??= new UserEntityBuilder();
-  set user(UserEntityBuilder user) => _$this._user = user;
+  set user(UserEntityBuilder? user) => _$this._user = user;
 
-  UserEntityBuilder _origUser;
+  UserEntityBuilder? _origUser;
   UserEntityBuilder get origUser =>
       _$this._origUser ??= new UserEntityBuilder();
-  set origUser(UserEntityBuilder origUser) => _$this._origUser = origUser;
+  set origUser(UserEntityBuilder? origUser) => _$this._origUser = origUser;
 
-  EntityType _entityType;
-  EntityType get entityType => _$this._entityType;
-  set entityType(EntityType entityType) => _$this._entityType = entityType;
+  EntityType? _entityType;
+  EntityType? get entityType => _$this._entityType;
+  set entityType(EntityType? entityType) => _$this._entityType = entityType;
 
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+  bool? _isChanged;
+  bool? get isChanged => _$this._isChanged;
+  set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
 
-  String _section;
-  String get section => _$this._section;
-  set section(String section) => _$this._section = section;
+  String? _section;
+  String? get section => _$this._section;
+  set section(String? section) => _$this._section = section;
 
-  int _tabIndex;
-  int get tabIndex => _$this._tabIndex;
-  set tabIndex(int tabIndex) => _$this._tabIndex = tabIndex;
+  int? _tabIndex;
+  int? get tabIndex => _$this._tabIndex;
+  set tabIndex(int? tabIndex) => _$this._tabIndex = tabIndex;
 
-  EmailTemplate _selectedTemplate;
-  EmailTemplate get selectedTemplate => _$this._selectedTemplate;
-  set selectedTemplate(EmailTemplate selectedTemplate) =>
+  EmailTemplate? _selectedTemplate;
+  EmailTemplate? get selectedTemplate => _$this._selectedTemplate;
+  set selectedTemplate(EmailTemplate? selectedTemplate) =>
       _$this._selectedTemplate = selectedTemplate;
 
-  String _filter;
-  String get filter => _$this._filter;
-  set filter(String filter) => _$this._filter = filter;
+  String? _filter;
+  String? get filter => _$this._filter;
+  set filter(String? filter) => _$this._filter = filter;
 
-  int _filterClearedAt;
-  int get filterClearedAt => _$this._filterClearedAt;
-  set filterClearedAt(int filterClearedAt) =>
+  int? _filterClearedAt;
+  int? get filterClearedAt => _$this._filterClearedAt;
+  set filterClearedAt(int? filterClearedAt) =>
       _$this._filterClearedAt = filterClearedAt;
 
-  bool _showNewSettings;
-  bool get showNewSettings => _$this._showNewSettings;
-  set showNewSettings(bool showNewSettings) =>
+  bool? _showNewSettings;
+  bool? get showNewSettings => _$this._showNewSettings;
+  set showNewSettings(bool? showNewSettings) =>
       _$this._showNewSettings = showNewSettings;
 
-  bool _showPdfPreview;
-  bool get showPdfPreview => _$this._showPdfPreview;
-  set showPdfPreview(bool showPdfPreview) =>
+  bool? _showPdfPreview;
+  bool? get showPdfPreview => _$this._showPdfPreview;
+  set showPdfPreview(bool? showPdfPreview) =>
       _$this._showPdfPreview = showPdfPreview;
 
   SettingsUIStateBuilder() {
@@ -477,7 +477,7 @@ class SettingsUIStateBuilder
   }
 
   @override
-  void update(void Function(SettingsUIStateBuilder) updates) {
+  void update(void Function(SettingsUIStateBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -517,7 +517,7 @@ class SettingsUIStateBuilder
               showPdfPreview:
                   BuiltValueNullFieldError.checkNotNull(showPdfPreview, r'SettingsUIState', 'showPdfPreview'));
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'company';
         company.build();

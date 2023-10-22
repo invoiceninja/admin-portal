@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class SubscriptionListBuilder extends StatelessWidget {
-  const SubscriptionListBuilder({Key key}) : super(key: key);
+  const SubscriptionListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class SubscriptionListBuilder extends StatelessWidget {
       converter: SubscriptionListVM.fromStore,
       builder: (context, viewModel) {
         return EntityList(
-            entityType: EntityType.subscription,
+            entityType: EntityType.paymentLink,
             presenter: SubscriptionPresenter(),
             state: viewModel.state,
             entityList: viewModel.subscriptionList,
@@ -43,8 +43,8 @@ class SubscriptionListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final subscriptionId = viewModel.subscriptionList[index];
-              final subscription = viewModel.subscriptionMap[subscriptionId];
-              final listState = state.getListState(EntityType.subscription);
+              final subscription = viewModel.subscriptionMap[subscriptionId]!;
+              final listState = state.getListState(EntityType.paymentLink);
               final isInMultiselect = listState.isInMultiselect();
 
               return SubscriptionListItem(
@@ -62,27 +62,27 @@ class SubscriptionListBuilder extends StatelessWidget {
 
 class SubscriptionListVM {
   SubscriptionListVM({
-    @required this.state,
-    @required this.userCompany,
-    @required this.subscriptionList,
-    @required this.subscriptionMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.onEntityAction,
-    @required this.tableColumns,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.userCompany,
+    required this.subscriptionList,
+    required this.subscriptionMap,
+    required this.filter,
+    required this.isLoading,
+    required this.listState,
+    required this.onRefreshed,
+    required this.onEntityAction,
+    required this.tableColumns,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
   });
 
   static SubscriptionListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
       if (store.state.isLoading) {
-        return Future<Null>(null);
+        return Future<Null>.value();
       }
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -94,7 +94,7 @@ class SubscriptionListVM {
       userCompany: state.userCompany,
       listState: state.subscriptionListState,
       subscriptionList: memoizedFilteredSubscriptionList(
-        state.getUISelection(EntityType.subscription),
+        state.getUISelection(EntityType.paymentLink),
         state.subscriptionState.map,
         state.subscriptionState.list,
         state.subscriptionListState,
@@ -106,20 +106,20 @@ class SubscriptionListVM {
               EntityAction action) =>
           handleSubscriptionAction(context, subscriptions, action),
       onRefreshed: (context) => _handleRefresh(context),
-      tableColumns: state.userCompany.settings
-              ?.getTableColumns(EntityType.subscription) ??
-          SubscriptionPresenter.getDefaultTableFields(state.userCompany),
+      tableColumns:
+          state.userCompany.settings.getTableColumns(EntityType.paymentLink) ??
+              SubscriptionPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortSubscriptions(field)),
       onClearMultielsect: () => store.dispatch(ClearSubscriptionMultiselect()),
     );
   }
 
   final AppState state;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> subscriptionList;
-  final BuiltMap<String, SubscriptionEntity> subscriptionMap;
+  final BuiltMap<String?, SubscriptionEntity?> subscriptionMap;
   final ListUIState listState;
-  final String filter;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;

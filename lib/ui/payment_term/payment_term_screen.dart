@@ -20,8 +20,8 @@ import 'payment_term_screen_vm.dart';
 
 class PaymentTermScreen extends StatelessWidget {
   const PaymentTermScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsPaymentTerms';
@@ -101,7 +101,7 @@ class PaymentTermScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newPaymentTerm,
+              tooltip: localization!.newPaymentTerm,
             )
           : null,
     );

@@ -6,9 +6,9 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 
 class GrowableFormField extends StatefulWidget {
   const GrowableFormField({
-    Key key,
-    @required this.initialValue,
-    @required this.onChanged,
+    Key? key,
+    required this.initialValue,
+    required this.onChanged,
     this.autofocus = false,
     this.label,
   }) : super(key: key);
@@ -16,7 +16,7 @@ class GrowableFormField extends StatefulWidget {
   final String initialValue;
   final ValueChanged<String> onChanged;
   final bool autofocus;
-  final String label;
+  final String? label;
 
   @override
   _GrowableFormFieldState createState() => _GrowableFormFieldState();

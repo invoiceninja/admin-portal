@@ -11,10 +11,10 @@ class IconMessage extends StatelessWidget {
     this.copyToClipboard = false,
   });
 
-  final String text;
-  final IconData iconData;
-  final Color color;
-  final Widget trailing;
+  final String? text;
+  final IconData? iconData;
+  final Color? color;
+  final Widget? trailing;
   final bool copyToClipboard;
 
   @override
@@ -36,7 +36,7 @@ class IconMessage extends StatelessWidget {
                   ? CopyToClipboard(
                       value: text,
                       child: Text(
-                        text,
+                        text!,
                         maxLines: null,
                         style: TextStyle(
                           color: Colors.white,
@@ -44,7 +44,7 @@ class IconMessage extends StatelessWidget {
                       ),
                     )
                   : Text(
-                      text,
+                      text!,
                       maxLines: null,
                       style: TextStyle(
                         color: Colors.white,
@@ -53,7 +53,7 @@ class IconMessage extends StatelessWidget {
             ),
             if (trailing != null) ...[
               SizedBox(width: 16),
-              trailing,
+              trailing!,
             ]
           ],
         ),

@@ -24,8 +24,8 @@ import 'task_status_screen_vm.dart';
 
 class TaskStatusScreen extends StatelessWidget {
   const TaskStatusScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsTaskStatuses';
@@ -69,20 +69,20 @@ class TaskStatusScreen extends StatelessWidget {
           AppTextButton(
             isInHeader: true,
             onPressed: () async {
-              final taskStatusIds = listUIState.selectedIds
+              final taskStatusIds = listUIState.selectedIds!
                   .map<TaskStatusEntity>(
-                      (taskStatusId) => viewModel.taskStatusMap[taskStatusId])
+                      (taskStatusId) => viewModel.taskStatusMap[taskStatusId]!)
                   .toList();
 
               await showEntityActionsDialog(
                 entities: taskStatusIds,
                 multiselect: true,
                 completer: Completer<Null>()
-                  ..future.then<dynamic>(
+                  ..future.then<Null>(
                       (_) => store.dispatch(ClearTaskStatusMultiselect())),
               );
             },
-            label: localization.actions,
+            label: localization!.actions,
           ),
       ],
       body: TaskStatusListBuilder(),
@@ -127,7 +127,7 @@ class TaskStatusScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newTaskStatus,
+              tooltip: localization!.newTaskStatus,
             )
           : null,
     );

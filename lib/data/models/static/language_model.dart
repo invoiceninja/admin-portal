@@ -65,7 +65,7 @@ abstract class LanguageEntity extends Object
   String get locale;
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     if (filter == null || filter.isEmpty) {
       return true;
     }
@@ -82,7 +82,7 @@ abstract class LanguageEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     if (filter == null || filter.isEmpty) {
       return null;
     }
@@ -100,7 +100,7 @@ abstract class LanguageEntity extends Object
   String get listDisplayName => name;
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
   static Serializer<LanguageEntity> get serializer =>
       _$languageEntitySerializer;

@@ -22,8 +22,8 @@ import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class ScheduleEdit extends StatefulWidget {
   const ScheduleEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final ScheduleEditVM viewModel;
@@ -75,7 +75,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
   }
 
   void _onSavePressed() {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -129,8 +129,9 @@ class _ScheduleEditState extends State<ScheduleEdit> {
         '');
 
     return EditScaffold(
-      title:
-          schedule.isNew ? localization.newSchedule : localization.editSchedule,
+      title: schedule.isNew
+          ? localization!.newSchedule
+          : localization!.editSchedule,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) => _onSavePressed(),
       body: Form(
@@ -235,8 +236,9 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                     AppDropdownButton<DateRange>(
                       labelText: localization.dateRange,
                       blankValue: null,
-                      value: parameters.dateRange.isNotEmpty
-                          ? DateRange.valueOf(toCamelCase(parameters.dateRange))
+                      value: parameters.dateRange!.isNotEmpty
+                          ? DateRange.valueOf(
+                              toCamelCase(parameters.dateRange!))
                           : null,
                       onChanged: (dynamic value) {
                         viewModel.onChanged(schedule.rebuild((b) => b
@@ -290,8 +292,8 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                         label: localization.onlyClientsWithInvoices,
                         value: parameters.onlyClientsWithInvoices,
                         onChanged: (value) {
-                          viewModel.onChanged(schedule.rebuild(
-                                  (b) => b..parameters.onlyClientsWithInvoices = value));
+                          viewModel.onChanged(schedule.rebuild((b) =>
+                              b..parameters.onlyClientsWithInvoices = value));
                         }),
                   ]),
                   FormCard(
@@ -303,9 +305,12 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           isRequired: false,
                           clientId: null,
                           clientState: state.clientState,
-                          excludeIds: parameters.clients.toList(),
+                          excludeIds: parameters.clients!.toList(),
                           onSelected: (value) {
-                            if (!parameters.clients.contains(value.id)) {
+                            if (value == null) {
+                              return;
+                            }
+                            if (!parameters.clients!.contains(value.id)) {
                               viewModel.onChanged(schedule.rebuild(
                                   (b) => b..parameters.clients.add(value.id)));
                             }
@@ -315,9 +320,9 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                             });
                           }),
                       SizedBox(height: 20),
-                      if (parameters.clients.isEmpty)
+                      if (parameters.clients!.isEmpty)
                         HelpText(localization.allClients),
-                      for (var clientId in parameters.clients)
+                      for (var clientId in parameters.clients!)
                         ListTile(
                           title:
                               Text(state.clientState.get(clientId).displayName),

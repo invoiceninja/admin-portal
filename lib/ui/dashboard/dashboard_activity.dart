@@ -9,8 +9,8 @@ import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 
 class DashboardActivity extends StatelessWidget {
   const DashboardActivity({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final DashboardVM viewModel;

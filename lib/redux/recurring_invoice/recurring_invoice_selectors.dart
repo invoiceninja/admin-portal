@@ -39,7 +39,7 @@ List<String> filteredRecurringInvoicesSelector(
   final filterEntityType = selectionState.filterEntityType;
 
   final list = recurringInvoiceList.where((recurringInvoiceId) {
-    final invoice = recurringInvoiceMap[recurringInvoiceId];
+    final invoice = recurringInvoiceMap[recurringInvoiceId]!;
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
 
@@ -57,7 +57,7 @@ List<String> filteredRecurringInvoicesSelector(
     } else if (filterEntityType == EntityType.user &&
         invoice.assignedUserId != filterEntityId) {
       return false;
-    } else if (filterEntityType == EntityType.subscription &&
+    } else if (filterEntityType == EntityType.paymentLink &&
         invoice.subscriptionId != filterEntityId) {
       return false;
     } else if (filterEntityType == EntityType.design &&
@@ -98,7 +98,7 @@ List<String> filteredRecurringInvoicesSelector(
   }).toList();
 
   list.sort((recurringInvoiceAId, recurringInvoiceBId) {
-    final recurringInvoiceA = recurringInvoiceMap[recurringInvoiceAId];
+    final recurringInvoiceA = recurringInvoiceMap[recurringInvoiceAId]!;
     final recurringInvoiceB = recurringInvoiceMap[recurringInvoiceBId];
 
     return recurringInvoiceA.compareTo(
@@ -147,7 +147,7 @@ EntityStats recurringInvoiceStatsForUser(
     if (invoice.assignedUserId == userId) {
       if (invoice.isActive) {
         countActive++;
-      } else if (invoice.isDeleted) {
+      } else if (invoice.isDeleted!) {
         countArchived++;
       }
     }
@@ -168,7 +168,7 @@ EntityStats recurringInvoiceStatsForInvoice(
     if (invoice.recurringId == recurrinInvoiceId) {
       if (invoice.isActive) {
         countActive++;
-      } else if (invoice.isDeleted) {
+      } else if (invoice.isDeleted!) {
         countArchived++;
       }
     }

@@ -110,9 +110,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
   final String wireName = 'PrefState';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, PrefState object,
+  Iterable<Object?> serialize(Serializers serializers, PrefState object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'appLayout',
       serializers.serialize(object.appLayout,
           specifiedType: const FullType(AppLayout)),
@@ -247,183 +247,183 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
   }
 
   @override
-  PrefState deserialize(Serializers serializers, Iterable<Object> serialized,
+  PrefState deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new PrefStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'appLayout':
           result.appLayout = serializers.deserialize(value,
-              specifiedType: const FullType(AppLayout)) as AppLayout;
+              specifiedType: const FullType(AppLayout))! as AppLayout;
           break;
         case 'moduleLayout':
           result.moduleLayout = serializers.deserialize(value,
-              specifiedType: const FullType(ModuleLayout)) as ModuleLayout;
+              specifiedType: const FullType(ModuleLayout))! as ModuleLayout;
           break;
         case 'menuSidebarMode':
           result.menuSidebarMode = serializers.deserialize(value,
-              specifiedType: const FullType(AppSidebarMode)) as AppSidebarMode;
+              specifiedType: const FullType(AppSidebarMode))! as AppSidebarMode;
           break;
         case 'historySidebarMode':
           result.historySidebarMode = serializers.deserialize(value,
-              specifiedType: const FullType(AppSidebarMode)) as AppSidebarMode;
+              specifiedType: const FullType(AppSidebarMode))! as AppSidebarMode;
           break;
         case 'useSidebarEditor':
           result.useSidebarEditor.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap,
-                  const [const FullType(EntityType), const FullType(bool)])));
+                  const [const FullType(EntityType), const FullType(bool)]))!);
           break;
         case 'useSidebarViewer':
           result.useSidebarViewer.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap,
-                  const [const FullType(EntityType), const FullType(bool)])));
+                  const [const FullType(EntityType), const FullType(bool)]))!);
           break;
         case 'customColors':
           result.customColors.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap,
-                  const [const FullType(String), const FullType(String)])));
+                  const [const FullType(String), const FullType(String)]))!);
           break;
         case 'darkCustomColors':
           result.darkCustomColors.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap,
-                  const [const FullType(String), const FullType(String)])));
+                  const [const FullType(String), const FullType(String)]))!);
           break;
         case 'statementIncludes':
           result.statementIncludes.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList<Object>);
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
           break;
         case 'isPreviewVisible':
           result.isPreviewVisible = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'isMenuVisible':
           result.isMenuVisible = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'showKanban':
           result.showKanban = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'showPdfPreview':
           result.showPdfPreview = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'showPdfPreviewSideBySide':
           result.showPdfPreviewSideBySide = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'enableTouchEvents':
           result.enableTouchEvents = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'enableFlexibleSearch':
           result.enableFlexibleSearch = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'isHistoryVisible':
           result.isHistoryVisible = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'darkModeType':
           result.darkModeType = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'enableDarkModeSystem':
           result.enableDarkModeSystem = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'isFilterVisible':
           result.isFilterVisible = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'persistData':
           result.persistData = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'persistUI':
           result.persistUI = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'longPressSelectionIsDefault':
           result.longPressSelectionIsDefault = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'requireAuthentication':
           result.requireAuthentication = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'tapSelectedToEdit':
           result.tapSelectedToEdit = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'rowsPerPage':
           result.rowsPerPage = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'enableTooltips':
           result.enableTooltips = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'colorTheme':
           result.colorTheme = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'darkColorTheme':
           result.darkColorTheme = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'hideDesktopWarning':
           result.hideDesktopWarning = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'hideGatewayWarning':
           result.hideGatewayWarning = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'hideReviewApp':
           result.hideReviewApp = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'hideOneYearReviewApp':
           result.hideOneYearReviewApp = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'hideTwoYearReviewApp':
           result.hideTwoYearReviewApp = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'editAfterSaving':
           result.editAfterSaving = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'enableNativeBrowser':
           result.enableNativeBrowser = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'textScaleFactor':
           result.textScaleFactor = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'sortFields':
           result.sortFields.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(EntityType),
                 const FullType(PrefStateSortField)
-              ])));
+              ]))!);
           break;
         case 'companyPrefs':
           result.companyPrefs.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(CompanyPrefState)
-              ])));
+              ]))!);
           break;
       }
     }
@@ -440,9 +440,10 @@ class _$PrefStateSortFieldSerializer
   final String wireName = 'PrefStateSortField';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, PrefStateSortField object,
+  Iterable<Object?> serialize(
+      Serializers serializers, PrefStateSortField object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'field',
       serializers.serialize(object.field,
           specifiedType: const FullType(String)),
@@ -456,23 +457,23 @@ class _$PrefStateSortFieldSerializer
 
   @override
   PrefStateSortField deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new PrefStateSortFieldBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'field':
           result.field = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'ascending':
           result.ascending = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
       }
     }
@@ -489,9 +490,9 @@ class _$CompanyPrefStateSerializer
   final String wireName = 'CompanyPrefState';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, CompanyPrefState object,
+  Iterable<Object?> serialize(Serializers serializers, CompanyPrefState object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'historyList',
       serializers.serialize(object.historyList,
           specifiedType:
@@ -503,21 +504,21 @@ class _$CompanyPrefStateSerializer
 
   @override
   CompanyPrefState deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CompanyPrefStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'historyList':
           result.historyList.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(HistoryRecord)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(HistoryRecord)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -602,9 +603,9 @@ class _$HistoryRecordSerializer implements StructuredSerializer<HistoryRecord> {
   final String wireName = 'HistoryRecord';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, HistoryRecord object,
+  Iterable<Object?> serialize(Serializers serializers, HistoryRecord object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'entityType',
       serializers.serialize(object.entityType,
           specifiedType: const FullType(EntityType)),
@@ -612,7 +613,7 @@ class _$HistoryRecordSerializer implements StructuredSerializer<HistoryRecord> {
       serializers.serialize(object.timestamp,
           specifiedType: const FullType(int)),
     ];
-    Object value;
+    Object? value;
     value = object.id;
     if (value != null) {
       result
@@ -631,31 +632,31 @@ class _$HistoryRecordSerializer implements StructuredSerializer<HistoryRecord> {
 
   @override
   HistoryRecord deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new HistoryRecordBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'entityType':
           result.entityType = serializers.deserialize(value,
-              specifiedType: const FullType(EntityType)) as EntityType;
+              specifiedType: const FullType(EntityType))! as EntityType;
           break;
         case 'page':
           result.page = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'timestamp':
           result.timestamp = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
       }
     }
@@ -744,49 +745,49 @@ class _$PrefState extends PrefState {
   @override
   final BuiltMap<String, CompanyPrefState> companyPrefs;
 
-  factory _$PrefState([void Function(PrefStateBuilder) updates]) =>
+  factory _$PrefState([void Function(PrefStateBuilder)? updates]) =>
       (new PrefStateBuilder()..update(updates))._build();
 
   _$PrefState._(
-      {this.appLayout,
-      this.moduleLayout,
-      this.menuSidebarMode,
-      this.historySidebarMode,
-      this.useSidebarEditor,
-      this.useSidebarViewer,
-      this.customColors,
-      this.darkCustomColors,
-      this.statementIncludes,
-      this.isPreviewVisible,
-      this.isMenuVisible,
-      this.showKanban,
-      this.showPdfPreview,
-      this.showPdfPreviewSideBySide,
-      this.enableTouchEvents,
-      this.enableFlexibleSearch,
-      this.isHistoryVisible,
-      this.darkModeType,
-      this.enableDarkModeSystem,
-      this.isFilterVisible,
-      this.persistData,
-      this.persistUI,
-      this.longPressSelectionIsDefault,
-      this.requireAuthentication,
-      this.tapSelectedToEdit,
-      this.rowsPerPage,
-      this.enableTooltips,
-      this.colorTheme,
-      this.darkColorTheme,
-      this.hideDesktopWarning,
-      this.hideGatewayWarning,
-      this.hideReviewApp,
-      this.hideOneYearReviewApp,
-      this.hideTwoYearReviewApp,
-      this.editAfterSaving,
-      this.enableNativeBrowser,
-      this.textScaleFactor,
-      this.sortFields,
-      this.companyPrefs})
+      {required this.appLayout,
+      required this.moduleLayout,
+      required this.menuSidebarMode,
+      required this.historySidebarMode,
+      required this.useSidebarEditor,
+      required this.useSidebarViewer,
+      required this.customColors,
+      required this.darkCustomColors,
+      required this.statementIncludes,
+      required this.isPreviewVisible,
+      required this.isMenuVisible,
+      required this.showKanban,
+      required this.showPdfPreview,
+      required this.showPdfPreviewSideBySide,
+      required this.enableTouchEvents,
+      required this.enableFlexibleSearch,
+      required this.isHistoryVisible,
+      required this.darkModeType,
+      required this.enableDarkModeSystem,
+      required this.isFilterVisible,
+      required this.persistData,
+      required this.persistUI,
+      required this.longPressSelectionIsDefault,
+      required this.requireAuthentication,
+      required this.tapSelectedToEdit,
+      required this.rowsPerPage,
+      required this.enableTooltips,
+      required this.colorTheme,
+      required this.darkColorTheme,
+      required this.hideDesktopWarning,
+      required this.hideGatewayWarning,
+      required this.hideReviewApp,
+      required this.hideOneYearReviewApp,
+      required this.hideTwoYearReviewApp,
+      required this.editAfterSaving,
+      required this.enableNativeBrowser,
+      required this.textScaleFactor,
+      required this.sortFields,
+      required this.companyPrefs})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(appLayout, r'PrefState', 'appLayout');
     BuiltValueNullFieldError.checkNotNull(
@@ -918,10 +919,10 @@ class _$PrefState extends PrefState {
         companyPrefs == other.companyPrefs;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, appLayout.hashCode);
     _$hash = $jc(_$hash, moduleLayout.hashCode);
@@ -1013,201 +1014,201 @@ class _$PrefState extends PrefState {
 }
 
 class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
-  _$PrefState _$v;
+  _$PrefState? _$v;
 
-  AppLayout _appLayout;
-  AppLayout get appLayout => _$this._appLayout;
-  set appLayout(AppLayout appLayout) => _$this._appLayout = appLayout;
+  AppLayout? _appLayout;
+  AppLayout? get appLayout => _$this._appLayout;
+  set appLayout(AppLayout? appLayout) => _$this._appLayout = appLayout;
 
-  ModuleLayout _moduleLayout;
-  ModuleLayout get moduleLayout => _$this._moduleLayout;
-  set moduleLayout(ModuleLayout moduleLayout) =>
+  ModuleLayout? _moduleLayout;
+  ModuleLayout? get moduleLayout => _$this._moduleLayout;
+  set moduleLayout(ModuleLayout? moduleLayout) =>
       _$this._moduleLayout = moduleLayout;
 
-  AppSidebarMode _menuSidebarMode;
-  AppSidebarMode get menuSidebarMode => _$this._menuSidebarMode;
-  set menuSidebarMode(AppSidebarMode menuSidebarMode) =>
+  AppSidebarMode? _menuSidebarMode;
+  AppSidebarMode? get menuSidebarMode => _$this._menuSidebarMode;
+  set menuSidebarMode(AppSidebarMode? menuSidebarMode) =>
       _$this._menuSidebarMode = menuSidebarMode;
 
-  AppSidebarMode _historySidebarMode;
-  AppSidebarMode get historySidebarMode => _$this._historySidebarMode;
-  set historySidebarMode(AppSidebarMode historySidebarMode) =>
+  AppSidebarMode? _historySidebarMode;
+  AppSidebarMode? get historySidebarMode => _$this._historySidebarMode;
+  set historySidebarMode(AppSidebarMode? historySidebarMode) =>
       _$this._historySidebarMode = historySidebarMode;
 
-  MapBuilder<EntityType, bool> _useSidebarEditor;
+  MapBuilder<EntityType, bool>? _useSidebarEditor;
   MapBuilder<EntityType, bool> get useSidebarEditor =>
       _$this._useSidebarEditor ??= new MapBuilder<EntityType, bool>();
-  set useSidebarEditor(MapBuilder<EntityType, bool> useSidebarEditor) =>
+  set useSidebarEditor(MapBuilder<EntityType, bool>? useSidebarEditor) =>
       _$this._useSidebarEditor = useSidebarEditor;
 
-  MapBuilder<EntityType, bool> _useSidebarViewer;
+  MapBuilder<EntityType, bool>? _useSidebarViewer;
   MapBuilder<EntityType, bool> get useSidebarViewer =>
       _$this._useSidebarViewer ??= new MapBuilder<EntityType, bool>();
-  set useSidebarViewer(MapBuilder<EntityType, bool> useSidebarViewer) =>
+  set useSidebarViewer(MapBuilder<EntityType, bool>? useSidebarViewer) =>
       _$this._useSidebarViewer = useSidebarViewer;
 
-  MapBuilder<String, String> _customColors;
+  MapBuilder<String, String>? _customColors;
   MapBuilder<String, String> get customColors =>
       _$this._customColors ??= new MapBuilder<String, String>();
-  set customColors(MapBuilder<String, String> customColors) =>
+  set customColors(MapBuilder<String, String>? customColors) =>
       _$this._customColors = customColors;
 
-  MapBuilder<String, String> _darkCustomColors;
+  MapBuilder<String, String>? _darkCustomColors;
   MapBuilder<String, String> get darkCustomColors =>
       _$this._darkCustomColors ??= new MapBuilder<String, String>();
-  set darkCustomColors(MapBuilder<String, String> darkCustomColors) =>
+  set darkCustomColors(MapBuilder<String, String>? darkCustomColors) =>
       _$this._darkCustomColors = darkCustomColors;
 
-  ListBuilder<String> _statementIncludes;
+  ListBuilder<String>? _statementIncludes;
   ListBuilder<String> get statementIncludes =>
       _$this._statementIncludes ??= new ListBuilder<String>();
-  set statementIncludes(ListBuilder<String> statementIncludes) =>
+  set statementIncludes(ListBuilder<String>? statementIncludes) =>
       _$this._statementIncludes = statementIncludes;
 
-  bool _isPreviewVisible;
-  bool get isPreviewVisible => _$this._isPreviewVisible;
-  set isPreviewVisible(bool isPreviewVisible) =>
+  bool? _isPreviewVisible;
+  bool? get isPreviewVisible => _$this._isPreviewVisible;
+  set isPreviewVisible(bool? isPreviewVisible) =>
       _$this._isPreviewVisible = isPreviewVisible;
 
-  bool _isMenuVisible;
-  bool get isMenuVisible => _$this._isMenuVisible;
-  set isMenuVisible(bool isMenuVisible) =>
+  bool? _isMenuVisible;
+  bool? get isMenuVisible => _$this._isMenuVisible;
+  set isMenuVisible(bool? isMenuVisible) =>
       _$this._isMenuVisible = isMenuVisible;
 
-  bool _showKanban;
-  bool get showKanban => _$this._showKanban;
-  set showKanban(bool showKanban) => _$this._showKanban = showKanban;
+  bool? _showKanban;
+  bool? get showKanban => _$this._showKanban;
+  set showKanban(bool? showKanban) => _$this._showKanban = showKanban;
 
-  bool _showPdfPreview;
-  bool get showPdfPreview => _$this._showPdfPreview;
-  set showPdfPreview(bool showPdfPreview) =>
+  bool? _showPdfPreview;
+  bool? get showPdfPreview => _$this._showPdfPreview;
+  set showPdfPreview(bool? showPdfPreview) =>
       _$this._showPdfPreview = showPdfPreview;
 
-  bool _showPdfPreviewSideBySide;
-  bool get showPdfPreviewSideBySide => _$this._showPdfPreviewSideBySide;
-  set showPdfPreviewSideBySide(bool showPdfPreviewSideBySide) =>
+  bool? _showPdfPreviewSideBySide;
+  bool? get showPdfPreviewSideBySide => _$this._showPdfPreviewSideBySide;
+  set showPdfPreviewSideBySide(bool? showPdfPreviewSideBySide) =>
       _$this._showPdfPreviewSideBySide = showPdfPreviewSideBySide;
 
-  bool _enableTouchEvents;
-  bool get enableTouchEvents => _$this._enableTouchEvents;
-  set enableTouchEvents(bool enableTouchEvents) =>
+  bool? _enableTouchEvents;
+  bool? get enableTouchEvents => _$this._enableTouchEvents;
+  set enableTouchEvents(bool? enableTouchEvents) =>
       _$this._enableTouchEvents = enableTouchEvents;
 
-  bool _enableFlexibleSearch;
-  bool get enableFlexibleSearch => _$this._enableFlexibleSearch;
-  set enableFlexibleSearch(bool enableFlexibleSearch) =>
+  bool? _enableFlexibleSearch;
+  bool? get enableFlexibleSearch => _$this._enableFlexibleSearch;
+  set enableFlexibleSearch(bool? enableFlexibleSearch) =>
       _$this._enableFlexibleSearch = enableFlexibleSearch;
 
-  bool _isHistoryVisible;
-  bool get isHistoryVisible => _$this._isHistoryVisible;
-  set isHistoryVisible(bool isHistoryVisible) =>
+  bool? _isHistoryVisible;
+  bool? get isHistoryVisible => _$this._isHistoryVisible;
+  set isHistoryVisible(bool? isHistoryVisible) =>
       _$this._isHistoryVisible = isHistoryVisible;
 
-  String _darkModeType;
-  String get darkModeType => _$this._darkModeType;
-  set darkModeType(String darkModeType) => _$this._darkModeType = darkModeType;
+  String? _darkModeType;
+  String? get darkModeType => _$this._darkModeType;
+  set darkModeType(String? darkModeType) => _$this._darkModeType = darkModeType;
 
-  bool _enableDarkModeSystem;
-  bool get enableDarkModeSystem => _$this._enableDarkModeSystem;
-  set enableDarkModeSystem(bool enableDarkModeSystem) =>
+  bool? _enableDarkModeSystem;
+  bool? get enableDarkModeSystem => _$this._enableDarkModeSystem;
+  set enableDarkModeSystem(bool? enableDarkModeSystem) =>
       _$this._enableDarkModeSystem = enableDarkModeSystem;
 
-  bool _isFilterVisible;
-  bool get isFilterVisible => _$this._isFilterVisible;
-  set isFilterVisible(bool isFilterVisible) =>
+  bool? _isFilterVisible;
+  bool? get isFilterVisible => _$this._isFilterVisible;
+  set isFilterVisible(bool? isFilterVisible) =>
       _$this._isFilterVisible = isFilterVisible;
 
-  bool _persistData;
-  bool get persistData => _$this._persistData;
-  set persistData(bool persistData) => _$this._persistData = persistData;
+  bool? _persistData;
+  bool? get persistData => _$this._persistData;
+  set persistData(bool? persistData) => _$this._persistData = persistData;
 
-  bool _persistUI;
-  bool get persistUI => _$this._persistUI;
-  set persistUI(bool persistUI) => _$this._persistUI = persistUI;
+  bool? _persistUI;
+  bool? get persistUI => _$this._persistUI;
+  set persistUI(bool? persistUI) => _$this._persistUI = persistUI;
 
-  bool _longPressSelectionIsDefault;
-  bool get longPressSelectionIsDefault => _$this._longPressSelectionIsDefault;
-  set longPressSelectionIsDefault(bool longPressSelectionIsDefault) =>
+  bool? _longPressSelectionIsDefault;
+  bool? get longPressSelectionIsDefault => _$this._longPressSelectionIsDefault;
+  set longPressSelectionIsDefault(bool? longPressSelectionIsDefault) =>
       _$this._longPressSelectionIsDefault = longPressSelectionIsDefault;
 
-  bool _requireAuthentication;
-  bool get requireAuthentication => _$this._requireAuthentication;
-  set requireAuthentication(bool requireAuthentication) =>
+  bool? _requireAuthentication;
+  bool? get requireAuthentication => _$this._requireAuthentication;
+  set requireAuthentication(bool? requireAuthentication) =>
       _$this._requireAuthentication = requireAuthentication;
 
-  bool _tapSelectedToEdit;
-  bool get tapSelectedToEdit => _$this._tapSelectedToEdit;
-  set tapSelectedToEdit(bool tapSelectedToEdit) =>
+  bool? _tapSelectedToEdit;
+  bool? get tapSelectedToEdit => _$this._tapSelectedToEdit;
+  set tapSelectedToEdit(bool? tapSelectedToEdit) =>
       _$this._tapSelectedToEdit = tapSelectedToEdit;
 
-  int _rowsPerPage;
-  int get rowsPerPage => _$this._rowsPerPage;
-  set rowsPerPage(int rowsPerPage) => _$this._rowsPerPage = rowsPerPage;
+  int? _rowsPerPage;
+  int? get rowsPerPage => _$this._rowsPerPage;
+  set rowsPerPage(int? rowsPerPage) => _$this._rowsPerPage = rowsPerPage;
 
-  bool _enableTooltips;
-  bool get enableTooltips => _$this._enableTooltips;
-  set enableTooltips(bool enableTooltips) =>
+  bool? _enableTooltips;
+  bool? get enableTooltips => _$this._enableTooltips;
+  set enableTooltips(bool? enableTooltips) =>
       _$this._enableTooltips = enableTooltips;
 
-  String _colorTheme;
-  String get colorTheme => _$this._colorTheme;
-  set colorTheme(String colorTheme) => _$this._colorTheme = colorTheme;
+  String? _colorTheme;
+  String? get colorTheme => _$this._colorTheme;
+  set colorTheme(String? colorTheme) => _$this._colorTheme = colorTheme;
 
-  String _darkColorTheme;
-  String get darkColorTheme => _$this._darkColorTheme;
-  set darkColorTheme(String darkColorTheme) =>
+  String? _darkColorTheme;
+  String? get darkColorTheme => _$this._darkColorTheme;
+  set darkColorTheme(String? darkColorTheme) =>
       _$this._darkColorTheme = darkColorTheme;
 
-  bool _hideDesktopWarning;
-  bool get hideDesktopWarning => _$this._hideDesktopWarning;
-  set hideDesktopWarning(bool hideDesktopWarning) =>
+  bool? _hideDesktopWarning;
+  bool? get hideDesktopWarning => _$this._hideDesktopWarning;
+  set hideDesktopWarning(bool? hideDesktopWarning) =>
       _$this._hideDesktopWarning = hideDesktopWarning;
 
-  bool _hideGatewayWarning;
-  bool get hideGatewayWarning => _$this._hideGatewayWarning;
-  set hideGatewayWarning(bool hideGatewayWarning) =>
+  bool? _hideGatewayWarning;
+  bool? get hideGatewayWarning => _$this._hideGatewayWarning;
+  set hideGatewayWarning(bool? hideGatewayWarning) =>
       _$this._hideGatewayWarning = hideGatewayWarning;
 
-  bool _hideReviewApp;
-  bool get hideReviewApp => _$this._hideReviewApp;
-  set hideReviewApp(bool hideReviewApp) =>
+  bool? _hideReviewApp;
+  bool? get hideReviewApp => _$this._hideReviewApp;
+  set hideReviewApp(bool? hideReviewApp) =>
       _$this._hideReviewApp = hideReviewApp;
 
-  bool _hideOneYearReviewApp;
-  bool get hideOneYearReviewApp => _$this._hideOneYearReviewApp;
-  set hideOneYearReviewApp(bool hideOneYearReviewApp) =>
+  bool? _hideOneYearReviewApp;
+  bool? get hideOneYearReviewApp => _$this._hideOneYearReviewApp;
+  set hideOneYearReviewApp(bool? hideOneYearReviewApp) =>
       _$this._hideOneYearReviewApp = hideOneYearReviewApp;
 
-  bool _hideTwoYearReviewApp;
-  bool get hideTwoYearReviewApp => _$this._hideTwoYearReviewApp;
-  set hideTwoYearReviewApp(bool hideTwoYearReviewApp) =>
+  bool? _hideTwoYearReviewApp;
+  bool? get hideTwoYearReviewApp => _$this._hideTwoYearReviewApp;
+  set hideTwoYearReviewApp(bool? hideTwoYearReviewApp) =>
       _$this._hideTwoYearReviewApp = hideTwoYearReviewApp;
 
-  bool _editAfterSaving;
-  bool get editAfterSaving => _$this._editAfterSaving;
-  set editAfterSaving(bool editAfterSaving) =>
+  bool? _editAfterSaving;
+  bool? get editAfterSaving => _$this._editAfterSaving;
+  set editAfterSaving(bool? editAfterSaving) =>
       _$this._editAfterSaving = editAfterSaving;
 
-  bool _enableNativeBrowser;
-  bool get enableNativeBrowser => _$this._enableNativeBrowser;
-  set enableNativeBrowser(bool enableNativeBrowser) =>
+  bool? _enableNativeBrowser;
+  bool? get enableNativeBrowser => _$this._enableNativeBrowser;
+  set enableNativeBrowser(bool? enableNativeBrowser) =>
       _$this._enableNativeBrowser = enableNativeBrowser;
 
-  double _textScaleFactor;
-  double get textScaleFactor => _$this._textScaleFactor;
-  set textScaleFactor(double textScaleFactor) =>
+  double? _textScaleFactor;
+  double? get textScaleFactor => _$this._textScaleFactor;
+  set textScaleFactor(double? textScaleFactor) =>
       _$this._textScaleFactor = textScaleFactor;
 
-  MapBuilder<EntityType, PrefStateSortField> _sortFields;
+  MapBuilder<EntityType, PrefStateSortField>? _sortFields;
   MapBuilder<EntityType, PrefStateSortField> get sortFields =>
       _$this._sortFields ??= new MapBuilder<EntityType, PrefStateSortField>();
-  set sortFields(MapBuilder<EntityType, PrefStateSortField> sortFields) =>
+  set sortFields(MapBuilder<EntityType, PrefStateSortField>? sortFields) =>
       _$this._sortFields = sortFields;
 
-  MapBuilder<String, CompanyPrefState> _companyPrefs;
+  MapBuilder<String, CompanyPrefState>? _companyPrefs;
   MapBuilder<String, CompanyPrefState> get companyPrefs =>
       _$this._companyPrefs ??= new MapBuilder<String, CompanyPrefState>();
-  set companyPrefs(MapBuilder<String, CompanyPrefState> companyPrefs) =>
+  set companyPrefs(MapBuilder<String, CompanyPrefState>? companyPrefs) =>
       _$this._companyPrefs = companyPrefs;
 
   PrefStateBuilder() {
@@ -1268,7 +1269,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   }
 
   @override
-  void update(void Function(PrefStateBuilder) updates) {
+  void update(void Function(PrefStateBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -1328,7 +1329,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               sortFields: sortFields.build(),
               companyPrefs: companyPrefs.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'useSidebarEditor';
         useSidebarEditor.build();
@@ -1363,10 +1364,11 @@ class _$PrefStateSortField extends PrefStateSortField {
   final bool ascending;
 
   factory _$PrefStateSortField(
-          [void Function(PrefStateSortFieldBuilder) updates]) =>
+          [void Function(PrefStateSortFieldBuilder)? updates]) =>
       (new PrefStateSortFieldBuilder()..update(updates))._build();
 
-  _$PrefStateSortField._({this.field, this.ascending}) : super._() {
+  _$PrefStateSortField._({required this.field, required this.ascending})
+      : super._() {
     BuiltValueNullFieldError.checkNotNull(
         field, r'PrefStateSortField', 'field');
     BuiltValueNullFieldError.checkNotNull(
@@ -1390,10 +1392,10 @@ class _$PrefStateSortField extends PrefStateSortField {
         ascending == other.ascending;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, field.hashCode);
     _$hash = $jc(_$hash, ascending.hashCode);
@@ -1412,15 +1414,15 @@ class _$PrefStateSortField extends PrefStateSortField {
 
 class PrefStateSortFieldBuilder
     implements Builder<PrefStateSortField, PrefStateSortFieldBuilder> {
-  _$PrefStateSortField _$v;
+  _$PrefStateSortField? _$v;
 
-  String _field;
-  String get field => _$this._field;
-  set field(String field) => _$this._field = field;
+  String? _field;
+  String? get field => _$this._field;
+  set field(String? field) => _$this._field = field;
 
-  bool _ascending;
-  bool get ascending => _$this._ascending;
-  set ascending(bool ascending) => _$this._ascending = ascending;
+  bool? _ascending;
+  bool? get ascending => _$this._ascending;
+  set ascending(bool? ascending) => _$this._ascending = ascending;
 
   PrefStateSortFieldBuilder();
 
@@ -1441,7 +1443,7 @@ class PrefStateSortFieldBuilder
   }
 
   @override
-  void update(void Function(PrefStateSortFieldBuilder) updates) {
+  void update(void Function(PrefStateSortFieldBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -1465,10 +1467,10 @@ class _$CompanyPrefState extends CompanyPrefState {
   final BuiltList<HistoryRecord> historyList;
 
   factory _$CompanyPrefState(
-          [void Function(CompanyPrefStateBuilder) updates]) =>
+          [void Function(CompanyPrefStateBuilder)? updates]) =>
       (new CompanyPrefStateBuilder()..update(updates))._build();
 
-  _$CompanyPrefState._({this.historyList}) : super._() {
+  _$CompanyPrefState._({required this.historyList}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
         historyList, r'CompanyPrefState', 'historyList');
   }
@@ -1487,10 +1489,10 @@ class _$CompanyPrefState extends CompanyPrefState {
     return other is CompanyPrefState && historyList == other.historyList;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, historyList.hashCode);
     _$hash = $jf(_$hash);
@@ -1507,12 +1509,12 @@ class _$CompanyPrefState extends CompanyPrefState {
 
 class CompanyPrefStateBuilder
     implements Builder<CompanyPrefState, CompanyPrefStateBuilder> {
-  _$CompanyPrefState _$v;
+  _$CompanyPrefState? _$v;
 
-  ListBuilder<HistoryRecord> _historyList;
+  ListBuilder<HistoryRecord>? _historyList;
   ListBuilder<HistoryRecord> get historyList =>
       _$this._historyList ??= new ListBuilder<HistoryRecord>();
-  set historyList(ListBuilder<HistoryRecord> historyList) =>
+  set historyList(ListBuilder<HistoryRecord>? historyList) =>
       _$this._historyList = historyList;
 
   CompanyPrefStateBuilder();
@@ -1533,7 +1535,7 @@ class CompanyPrefStateBuilder
   }
 
   @override
-  void update(void Function(CompanyPrefStateBuilder) updates) {
+  void update(void Function(CompanyPrefStateBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -1546,7 +1548,7 @@ class CompanyPrefStateBuilder
       _$result =
           _$v ?? new _$CompanyPrefState._(historyList: historyList.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'historyList';
         historyList.build();
@@ -1563,18 +1565,19 @@ class CompanyPrefStateBuilder
 
 class _$HistoryRecord extends HistoryRecord {
   @override
-  final String id;
+  final String? id;
   @override
   final EntityType entityType;
   @override
-  final int page;
+  final int? page;
   @override
   final int timestamp;
 
-  factory _$HistoryRecord([void Function(HistoryRecordBuilder) updates]) =>
+  factory _$HistoryRecord([void Function(HistoryRecordBuilder)? updates]) =>
       (new HistoryRecordBuilder()..update(updates))._build();
 
-  _$HistoryRecord._({this.id, this.entityType, this.page, this.timestamp})
+  _$HistoryRecord._(
+      {this.id, required this.entityType, this.page, required this.timestamp})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         entityType, r'HistoryRecord', 'entityType');
@@ -1599,10 +1602,10 @@ class _$HistoryRecord extends HistoryRecord {
         timestamp == other.timestamp;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, entityType.hashCode);
@@ -1625,23 +1628,23 @@ class _$HistoryRecord extends HistoryRecord {
 
 class HistoryRecordBuilder
     implements Builder<HistoryRecord, HistoryRecordBuilder> {
-  _$HistoryRecord _$v;
+  _$HistoryRecord? _$v;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
-  EntityType _entityType;
-  EntityType get entityType => _$this._entityType;
-  set entityType(EntityType entityType) => _$this._entityType = entityType;
+  EntityType? _entityType;
+  EntityType? get entityType => _$this._entityType;
+  set entityType(EntityType? entityType) => _$this._entityType = entityType;
 
-  int _page;
-  int get page => _$this._page;
-  set page(int page) => _$this._page = page;
+  int? _page;
+  int? get page => _$this._page;
+  set page(int? page) => _$this._page = page;
 
-  int _timestamp;
-  int get timestamp => _$this._timestamp;
-  set timestamp(int timestamp) => _$this._timestamp = timestamp;
+  int? _timestamp;
+  int? get timestamp => _$this._timestamp;
+  set timestamp(int? timestamp) => _$this._timestamp = timestamp;
 
   HistoryRecordBuilder();
 
@@ -1664,7 +1667,7 @@ class HistoryRecordBuilder
   }
 
   @override
-  void update(void Function(HistoryRecordBuilder) updates) {
+  void update(void Function(HistoryRecordBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

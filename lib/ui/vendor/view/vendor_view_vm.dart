@@ -22,7 +22,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorViewScreen extends StatelessWidget {
   const VendorViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
     this.isTopFilter = false,
   }) : super(key: key);
@@ -51,17 +51,17 @@ class VendorViewScreen extends StatelessWidget {
 
 class VendorViewVM {
   VendorViewVM({
-    @required this.state,
-    @required this.vendor,
-    @required this.company,
-    @required this.onAddExpensePressed,
-    @required this.onEntityAction,
-    @required this.onEntityPressed,
-    @required this.onRefreshed,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.isDirty,
-    @required this.onUploadDocuments,
+    required this.state,
+    required this.vendor,
+    required this.company,
+    required this.onAddExpensePressed,
+    required this.onEntityAction,
+    required this.onEntityPressed,
+    required this.onRefreshed,
+    required this.isSaving,
+    required this.isLoading,
+    required this.isDirty,
+    required this.onUploadDocuments,
   });
 
   factory VendorViewVM.fromStore(Store<AppState> store) {
@@ -70,8 +70,8 @@ class VendorViewVM {
         VendorEntity(id: state.vendorUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadVendor(completer: completer, vendorId: vendor.id));
       return completer.future;
     }
@@ -89,9 +89,7 @@ class VendorViewVM {
         switch (entityType) {
           case EntityType.expense:
             if (longPress && vendor.isActive) {
-              createEntity(
-                  context: context,
-                  entity: ExpenseEntity(state: state, vendor: vendor));
+              createEntity(entity: ExpenseEntity(state: state, vendor: vendor));
             } else {
               viewEntitiesByType(
                   entityType: EntityType.expense, filterEntity: vendor);
@@ -100,22 +98,20 @@ class VendorViewVM {
         }
       },
       onAddExpensePressed: (context) {
-        createEntity(
-            context: context,
-            entity: ExpenseEntity(state: state, vendor: vendor));
+        createEntity(entity: ExpenseEntity(state: state, vendor: vendor));
       },
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([vendor], action, autoPop: true),
       onUploadDocuments: (BuildContext context,
           List<MultipartFile> multipartFile, bool isPrivate) {
-        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        final completer = Completer<List<DocumentEntity>>();
         store.dispatch(SaveVendorDocumentRequest(
             isPrivate: isPrivate,
             multipartFiles: multipartFile,
             vendor: vendor,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context).uploadedDocument);
+          showToast(AppLocalization.of(context)!.uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,
@@ -129,7 +125,7 @@ class VendorViewVM {
 
   final AppState state;
   final VendorEntity vendor;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext, EntityType, [bool]) onEntityPressed;
   final Function(BuildContext) onRefreshed;

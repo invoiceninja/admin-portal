@@ -15,24 +15,24 @@ class TransactionRepository {
   final WebClient webClient;
 
   Future<TransactionEntity> loadItem(
-      Credentials credentials, String entityId) async {
+      Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/bank_transactions/$entityId', credentials.token);
 
     final TransactionItemResponse transactionResponse = serializers
-        .deserializeWith(TransactionItemResponse.serializer, response);
+        .deserializeWith(TransactionItemResponse.serializer, response)!;
 
     return transactionResponse.data;
   }
 
   Future<BuiltList<TransactionEntity>> loadList(
       Credentials credentials, int page, int createdAt) async {
-    final String url = credentials.url +
+    final String url = credentials.url! +
         '/bank_transactions?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
     final dynamic response = await webClient.get(url, credentials.token);
 
     final TransactionListResponse transactionResponse = serializers
-        .deserializeWith(TransactionListResponse.serializer, response);
+        .deserializeWith(TransactionListResponse.serializer, response)!;
 
     return transactionResponse.data;
   }
@@ -43,20 +43,20 @@ class TransactionRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url +
+    final url = credentials.url! +
         '/bank_transactions/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final TransactionListResponse transactionResponse = serializers
-        .deserializeWith(TransactionListResponse.serializer, response);
+        .deserializeWith(TransactionListResponse.serializer, response)!;
 
     return transactionResponse.data.toList();
   }
 
   Future<TransactionEntity> convertToPayment(Credentials credentials,
-      String transactionId, List<String> invoiceIds) async {
-    final url = credentials.url + '/bank_transactions/match';
+      String? transactionId, List<String> invoiceIds) async {
+    final url = credentials.url! + '/bank_transactions/match';
     final dynamic response = await webClient.post(
       url,
       credentials.token,
@@ -73,7 +73,7 @@ class TransactionRepository {
     );
 
     final TransactionListResponse transactionResponse = serializers
-        .deserializeWith(TransactionListResponse.serializer, response);
+        .deserializeWith(TransactionListResponse.serializer, response)!;
 
     return transactionResponse.data.first;
   }
@@ -84,7 +84,7 @@ class TransactionRepository {
     String vendorId,
     String categoryId,
   ) async {
-    final url = credentials.url + '/bank_transactions/match';
+    final url = credentials.url! + '/bank_transactions/match';
     final dynamic response = await webClient.post(
       url,
       credentials.token,
@@ -93,9 +93,8 @@ class TransactionRepository {
           'transactions': transactionIds
               .map((transactionId) => {
                     'id': transactionId,
-                    if ((vendorId ?? '').isNotEmpty) 'vendor_id': vendorId,
-                    if ((categoryId ?? '').isNotEmpty)
-                      'ninja_category_id': categoryId,
+                    if (vendorId.isNotEmpty) 'vendor_id': vendorId,
+                    if (categoryId.isNotEmpty) 'ninja_category_id': categoryId,
                   })
               .toList()
         },
@@ -103,14 +102,14 @@ class TransactionRepository {
     );
 
     final TransactionListResponse transactionResponse = serializers
-        .deserializeWith(TransactionListResponse.serializer, response);
+        .deserializeWith(TransactionListResponse.serializer, response)!;
 
     return transactionResponse.data;
   }
 
   Future<TransactionEntity> linkToPayment(
-      Credentials credentials, String transactionId, String paymentId) async {
-    final url = credentials.url + '/bank_transactions/match';
+      Credentials credentials, String? transactionId, String paymentId) async {
+    final url = credentials.url! + '/bank_transactions/match';
     final dynamic response = await webClient.post(
       url,
       credentials.token,
@@ -127,14 +126,14 @@ class TransactionRepository {
     );
 
     final TransactionListResponse transactionResponse = serializers
-        .deserializeWith(TransactionListResponse.serializer, response);
+        .deserializeWith(TransactionListResponse.serializer, response)!;
 
     return transactionResponse.data.first;
   }
 
   Future<TransactionEntity> linkToExpense(
-      Credentials credentials, String transactionId, String expenseId) async {
-    final url = credentials.url + '/bank_transactions/match';
+      Credentials credentials, String? transactionId, String expenseId) async {
+    final url = credentials.url! + '/bank_transactions/match';
     final dynamic response = await webClient.post(
       url,
       credentials.token,
@@ -151,7 +150,7 @@ class TransactionRepository {
     );
 
     final TransactionListResponse transactionResponse = serializers
-        .deserializeWith(TransactionListResponse.serializer, response);
+        .deserializeWith(TransactionListResponse.serializer, response)!;
 
     return transactionResponse.data.first;
   }
@@ -164,7 +163,7 @@ class TransactionRepository {
 
     if (transaction.isNew) {
       response = await webClient.post(
-          credentials.url + '/bank_transactions', credentials.token,
+          credentials.url! + '/bank_transactions', credentials.token,
           data: json.encode(data));
     } else {
       final url = '${credentials.url}/bank_transactions/${transaction.id}';
@@ -173,7 +172,7 @@ class TransactionRepository {
     }
 
     final TransactionItemResponse transactionResponse = serializers
-        .deserializeWith(TransactionItemResponse.serializer, response);
+        .deserializeWith(TransactionItemResponse.serializer, response)!;
 
     return transactionResponse.data;
   }

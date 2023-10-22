@@ -15,17 +15,17 @@ class AppTextButton extends StatelessWidget {
     this.color,
   });
 
-  final String label;
-  final Function onPressed;
+  final String? label;
+  final Function? onPressed;
   final bool isInHeader;
-  final Color color;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
-    Color primaryColor;
+    Color? primaryColor;
     if (onPressed == null) {
       //
     } else if (color != null) {
@@ -43,8 +43,8 @@ class AppTextButton extends StatelessWidget {
 
     return TextButton(
       style: flatButtonStyle,
-      onPressed: onPressed,
-      child: Text(label),
+      onPressed: onPressed as void Function()?,
+      child: Text(label!),
     );
   }
 }

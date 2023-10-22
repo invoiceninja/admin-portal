@@ -36,8 +36,8 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
 
 class LoginView extends StatefulWidget {
   const LoginView({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final LoginVM viewModel;
@@ -71,7 +71,7 @@ class _LoginState extends State<LoginView> {
   String _loginError = '';
   String _loginType = LOGIN_TYPE_EMAIL;
 
-  List<String> _loginTypes;
+  List<String>? _loginTypes;
 
   bool _tokenLogin = false;
   bool _isSelfHosted = false;
@@ -79,8 +79,8 @@ class _LoginState extends State<LoginView> {
 
   bool _recoverPassword = false;
   bool _disable2FA = false;
-  bool _termsChecked = false;
-  bool _privacyChecked = false;
+  bool? _termsChecked = false;
+  bool? _privacyChecked = false;
 
   @override
   void initState() {
@@ -145,7 +145,7 @@ class _LoginState extends State<LoginView> {
   }
 
   void _submitSignUpForm() {
-    final isValid = _formKey.currentState.validate();
+    final isValid = _formKey.currentState!.validate();
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final url = _getUrl();
@@ -159,21 +159,21 @@ class _LoginState extends State<LoginView> {
       return;
     }
 
-    if (_createAccount && (!_termsChecked || !_privacyChecked)) {
+    if (_createAccount && (!_termsChecked! || !_privacyChecked!)) {
       _buttonController.reset();
       showDialog<AlertDialog>(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text(!_termsChecked
-                  ? localization.termsOfService
-                  : localization.privacyPolicy),
+              title: Text(!_termsChecked!
+                  ? localization!.termsOfService
+                  : localization!.privacyPolicy),
               content: Text(localization.pleaseAgreeToTermsAndPrivacy),
               actions: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(right: 8),
                   child: TextButton(
-                    child: Text(AppLocalization.of(context).close),
+                    child: Text(AppLocalization.of(context)!.close),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                 )
@@ -184,7 +184,7 @@ class _LoginState extends State<LoginView> {
     }
 
     final Completer<Null> completer = Completer<Null>();
-    completer.future.then((_) {
+    completer.future.then<Null>((_) {
       setState(() {
         _loginError = '';
       });
@@ -212,7 +212,7 @@ class _LoginState extends State<LoginView> {
   }
 
   void _submitLoginForm() {
-    final isValid = _formKey.currentState.validate();
+    final isValid = _formKey.currentState!.validate();
     final viewModel = widget.viewModel;
 
     setState(() {
@@ -225,7 +225,7 @@ class _LoginState extends State<LoginView> {
     }
 
     final Completer<Null> completer = Completer<Null>();
-    completer.future.then((_) {
+    completer.future.then<Null>((_) {
       setState(() {
         _loginError = '';
         if (_recoverPassword) {
@@ -236,7 +236,7 @@ class _LoginState extends State<LoginView> {
               context: context,
               builder: (BuildContext context) {
                 return MessageDialog(
-                    AppLocalization.of(context).recoverPasswordEmailSent);
+                    AppLocalization.of(context)!.recoverPasswordEmailSent);
               });
         }
       });
@@ -326,8 +326,8 @@ class _LoginState extends State<LoginView> {
     final state = viewModel.state;
 
     final ThemeData themeData = Theme.of(context);
-    final TextStyle aboutTextStyle = themeData.textTheme.bodyMedium;
-    final TextStyle linkStyle = themeData.textTheme.bodyMedium
+    final TextStyle? aboutTextStyle = themeData.textTheme.bodyMedium;
+    final TextStyle linkStyle = themeData.textTheme.bodyMedium!
         .copyWith(color: convertHexStringToColor(kDefaultAccentColor));
 
     final double horizontalPadding =
@@ -374,7 +374,7 @@ class _LoginState extends State<LoginView> {
               children: [
                 DecoratedFormField(
                   autofocus: true,
-                  label: localization.token,
+                  label: localization!.token,
                   controller: _tokenController,
                   keyboardType: TextInputType.text,
                 ),
@@ -403,7 +403,7 @@ class _LoginState extends State<LoginView> {
                         SizedBox(height: 20),
                         if (!_recoverPassword &&
                             (!kIsWeb || !kReleaseMode)) ...[
-                          RuledText(localization.selectPlatform),
+                          RuledText(localization!.selectPlatform),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 20),
                             child: AppToggleButtons(
@@ -425,16 +425,16 @@ class _LoginState extends State<LoginView> {
                             ),
                           ),
                         ],
-                        if (!_isSelfHosted && _loginTypes.length > 1) ...[
-                          RuledText(localization.selectMethod),
+                        if (!_isSelfHosted && _loginTypes!.length > 1) ...[
+                          RuledText(localization!.selectMethod),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 20),
                             child: AppToggleButtons(
                               tabLabels: _loginTypes,
-                              selectedIndex: _loginTypes.indexOf(_loginType),
+                              selectedIndex: _loginTypes!.indexOf(_loginType),
                               onTabChanged: (index) {
                                 setState(() {
-                                  _loginType = _loginTypes[index];
+                                  _loginType = _loginTypes![index];
                                   _loginError = '';
                                 });
                               },
@@ -449,15 +449,12 @@ class _LoginState extends State<LoginView> {
                               if (_loginType == LOGIN_TYPE_EMAIL)
                                 DecoratedFormField(
                                   controller: _emailController,
-                                  label: localization.email,
                                   keyboardType: TextInputType.emailAddress,
+                                  label: localization!.email,
                                   validator: (val) =>
                                       val.isEmpty || val.trim().isEmpty
                                           ? localization.pleaseEnterYourEmail
                                           : null,
-                                  autofillHints: [AutofillHints.email],
-                                  autofocus: _loginType == LOGIN_TYPE_EMAIL,
-                                  onSavePressed: (_) => _submitForm(),
                                 ),
                               if (_loginType == LOGIN_TYPE_EMAIL &&
                                   !_recoverPassword)
@@ -470,7 +467,7 @@ class _LoginState extends State<LoginView> {
                                 DecoratedFormField(
                                   controller: _oneTimePasswordController,
                                   label:
-                                      '2FA - ${localization.oneTimePassword} (${localization.optional})',
+                                      '2FA - ${localization!.oneTimePassword} (${localization.optional})',
                                   onSavePressed: (_) => _submitForm(),
                                   keyboardType: TextInputType.number,
                                   autofillHints: [AutofillHints.oneTimeCode],
@@ -478,7 +475,7 @@ class _LoginState extends State<LoginView> {
                               if (_isSelfHosted && !kIsWeb)
                                 DecoratedFormField(
                                   controller: _urlController,
-                                  label: localization.url,
+                                  label: localization!.url,
                                   validator: (val) =>
                                       val.isEmpty || val.trim().isEmpty
                                           ? localization.pleaseEnterYourUrl
@@ -489,7 +486,7 @@ class _LoginState extends State<LoginView> {
                               if (_isSelfHosted && !_recoverPassword)
                                 PasswordFormField(
                                   labelText:
-                                      '${localization.secret} (${localization.optional})',
+                                      '${localization!.secret} (${localization.optional})',
                                   controller: _secretController,
                                   validate: false,
                                   onSavePressed: (_) => _submitForm(),
@@ -512,8 +509,9 @@ class _LoginState extends State<LoginView> {
                                             children: <TextSpan>[
                                               TextSpan(
                                                 style: aboutTextStyle,
-                                                text: localization.iAgreeToThe +
-                                                    ' ',
+                                                text:
+                                                    localization!.iAgreeToThe +
+                                                        ' ',
                                               ),
                                               LinkTextSpan(
                                                 style: linkStyle,
@@ -578,7 +576,7 @@ class _LoginState extends State<LoginView> {
                             ),
                             IconButton(
                                 icon: Icon(Icons.content_copy),
-                                tooltip: localization.copyError,
+                                tooltip: localization!.copyError,
                                 onPressed: () {
                                   Clipboard.setData(
                                       ClipboardData(text: _loginError));
@@ -628,27 +626,27 @@ class _LoginState extends State<LoginView> {
                                   SizedBox(width: 10),
                                   Text(
                                     _disable2FA
-                                        ? localization.sendCode
+                                        ? localization!.sendCode
                                         : _recoverPassword
-                                            ? localization.recoverPassword
+                                            ? localization!.recoverPassword
                                             : _createAccount
                                                 ? (_loginType ==
                                                         LOGIN_TYPE_EMAIL
-                                                    ? localization.emailSignUp
+                                                    ? localization!.emailSignUp
                                                     : _loginType ==
                                                             LOGIN_TYPE_MICROSOFT
-                                                        ? localization
+                                                        ? localization!
                                                             .microsoftSignUp
-                                                        : localization
+                                                        : localization!
                                                             .googleSignUp)
                                                 : (_loginType ==
                                                         LOGIN_TYPE_EMAIL
-                                                    ? localization.emailSignIn
+                                                    ? localization!.emailSignIn
                                                     : _loginType ==
                                                             LOGIN_TYPE_MICROSOFT
-                                                        ? localization
+                                                        ? localization!
                                                             .microsoftSignIn
-                                                        : localization
+                                                        : localization!
                                                             .googleSignIn),
                                     style: TextStyle(
                                         fontSize: 18, color: Colors.white),
@@ -665,8 +663,8 @@ class _LoginState extends State<LoginView> {
                           child: TextButton(
                             child: Text(
                               _createAccount
-                                  ? localization.loginLabel
-                                  : localization.registerLabel,
+                                  ? localization!.loginLabel
+                                  : localization!.registerLabel,
                               textAlign: TextAlign.center,
                             ),
                             onPressed: () {
@@ -710,7 +708,7 @@ class _LoginState extends State<LoginView> {
                               children: <Widget>[
                                 Icon(Icons.lock, size: 16),
                                 SizedBox(width: 8),
-                                Text(localization.disable2fa),
+                                Text(localization!.disable2fa),
                               ]),
                         ),
                       ),
@@ -732,7 +730,7 @@ class _LoginState extends State<LoginView> {
                             children: <Widget>[
                               Icon(Icons.cancel, size: 16),
                               SizedBox(width: 8),
-                              Text(localization.cancel),
+                              Text(localization!.cancel),
                             ]),
                       ),
                     ),
@@ -754,8 +752,8 @@ class _LoginState extends State<LoginView> {
                                   Icon(MdiIcons.lock, size: 16),
                                 SizedBox(width: 8),
                                 Text(_recoverPassword
-                                    ? localization.cancel
-                                    : localization.recoverPassword),
+                                    ? localization!.cancel
+                                    : localization!.recoverPassword),
                               ]),
                         ),
                       ),
@@ -772,7 +770,7 @@ class _LoginState extends State<LoginView> {
                             children: [
                               Icon(Icons.security, size: 16),
                               SizedBox(width: 8),
-                              Text(localization.checkStatus)
+                              Text(localization!.checkStatus)
                             ],
                           ),
                         ),
@@ -790,7 +788,7 @@ class _LoginState extends State<LoginView> {
                               children: [
                                 Icon(getNativeAppIcon(platform), size: 16),
                                 SizedBox(width: 8),
-                                Text('$platform ${localization.app}')
+                                Text('$platform ${localization!.app}')
                               ],
                             ),
                           ),
@@ -806,7 +804,7 @@ class _LoginState extends State<LoginView> {
                               children: [
                                 Icon(Icons.book, size: 16),
                                 SizedBox(width: 8),
-                                Text(localization.documentation)
+                                Text(localization!.documentation)
                               ],
                             ),
                           ),
@@ -826,7 +824,7 @@ class _LoginState extends State<LoginView> {
 class RuledText extends StatelessWidget {
   const RuledText(this.text);
 
-  final String text;
+  final String? text;
 
   @override
   Widget build(BuildContext context) {
@@ -851,7 +849,7 @@ class RuledText extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
-              text,
+              text!,
               style: TextStyle(
                 color: Colors.grey,
                 fontSize: 15,

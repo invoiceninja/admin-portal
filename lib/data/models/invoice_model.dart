@@ -135,12 +135,12 @@ abstract class InvoiceEntity extends Object
         BelongsToVendor
     implements Built<InvoiceEntity, InvoiceEntityBuilder> {
   factory InvoiceEntity({
-    String id,
-    AppState state,
-    ClientEntity client,
-    VendorEntity vendor,
-    UserEntity user,
-    EntityType entityType,
+    String? id,
+    AppState? state,
+    ClientEntity? client,
+    VendorEntity? vendor,
+    UserEntity? user,
+    EntityType? entityType,
   }) {
     final company = state?.company;
     final settings = getClientSettings(state, client);
@@ -148,9 +148,9 @@ abstract class InvoiceEntity extends Object
     double exchangeRate = 1;
     if ((client?.currencyId ?? '').isNotEmpty) {
       exchangeRate = getExchangeRate(
-        state.staticState.currencyMap,
+        state!.staticState.currencyMap,
         fromCurrencyId: state.company.currencyId,
-        toCurrencyId: client.currencyId,
+        toCurrencyId: client!.currencyId,
       );
     }
     return _$InvoiceEntity._(
@@ -218,7 +218,7 @@ abstract class InvoiceEntity extends Object
       subscriptionId: '',
       recurringDates: BuiltList<InvoiceScheduleEntity>(),
       lineItems: BuiltList<InvoiceItemEntity>(),
-      usesInclusiveTaxes: company?.settings?.enableInclusiveTaxes ?? false,
+      usesInclusiveTaxes: company?.settings.enableInclusiveTaxes ?? false,
       documents: BuiltList<DocumentEntity>(),
       activities: BuiltList<ActivityEntity>(),
       invitations: client != null
@@ -261,19 +261,18 @@ abstract class InvoiceEntity extends Object
   @memoized
   int get hashCode;
 
-  @nullable
   @BuiltValueField(wireName: 'idempotency_key')
-  String get idempotencyKey;
+  String? get idempotencyKey;
 
-  InvoiceEntity moveLineItem(int oldIndex, int newIndex) {
+  InvoiceEntity moveLineItem(int oldIndex, int? newIndex) {
     final lineItem = lineItems[oldIndex];
     InvoiceEntity invoice = rebuild((b) => b..lineItems.removeAt(oldIndex));
     invoice = invoice.rebuild((b) => b
-      ..lineItems.replace(<InvoiceItemEntity>[
+      ..lineItems.replace(<InvoiceItemEntity?>[
         ...invoice.lineItems.sublist(0, newIndex),
         lineItem,
         ...invoice.lineItems.sublist(
-          newIndex,
+          newIndex!,
           invoice.lineItems.length,
         )
       ])
@@ -284,13 +283,13 @@ abstract class InvoiceEntity extends Object
   InvoiceEntity recreateInvitations(AppState state) {
     if (entityType == EntityType.purchaseOrder) {
       final vendor = state.vendorState.get(vendorId);
-      final invitations = vendor.contacts
+      final BuiltList<InvitationEntity> invitations = vendor.contacts
           .map((contact) => InvitationEntity(vendorContactId: contact.id))
           .toBuiltList();
       return rebuild((b) => b..invitations.replace(invitations));
     } else {
       final client = state.clientState.get(clientId);
-      final invitations = client.contacts
+      final BuiltList<InvitationEntity> invitations = client.contacts
           .map((contact) => InvitationEntity(clientContactId: contact.id))
           .toBuiltList();
       return rebuild((b) => b..invitations.replace(invitations));
@@ -335,49 +334,10 @@ abstract class InvoiceEntity extends Object
   }
 
   InvoiceEntity applyClient(AppState state, ClientEntity client) {
-    client ??= ClientEntity();
-
     final exchangeRate = getExchangeRate(state.staticState.currencyMap,
         fromCurrencyId: state.company.currencyId,
         toCurrencyId: client.currencyId);
     final settings = getClientSettings(state, client);
-
-    return rebuild((b) => b
-      ..exchangeRate = exchangeRate
-      ..taxName1 = state.company.numberOfInvoiceTaxRates >= 1 &&
-              (settings.defaultTaxName1 ?? '').isNotEmpty
-          ? settings.defaultTaxName1
-          : taxName1
-      ..taxRate1 = state.company.numberOfInvoiceTaxRates >= 1 &&
-              (settings.defaultTaxName1 ?? '').isNotEmpty
-          ? settings.defaultTaxRate1
-          : taxRate1
-      ..taxName2 = state.company.numberOfInvoiceTaxRates >= 2 &&
-              (settings.defaultTaxName2 ?? '').isNotEmpty
-          ? settings.defaultTaxName2
-          : taxName2
-      ..taxRate2 = state.company.numberOfInvoiceTaxRates >= 2 &&
-              (settings.defaultTaxName2 ?? '').isNotEmpty
-          ? settings.defaultTaxRate2
-          : taxRate2
-      ..taxName3 = state.company.numberOfInvoiceTaxRates >= 3 &&
-              (settings.defaultTaxName3 ?? '').isNotEmpty
-          ? settings.defaultTaxName3
-          : taxName3
-      ..taxRate3 = state.company.numberOfInvoiceTaxRates >= 3 &&
-              (settings.defaultTaxName3 ?? '').isNotEmpty
-          ? settings.defaultTaxRate3
-          : taxRate3);
-  }
-
-  InvoiceEntity applyVendor(AppState state, VendorEntity vendor) {
-    vendor ??= VendorEntity();
-
-    final exchangeRate = getExchangeRate(state.staticState.currencyMap,
-        fromCurrencyId: state.company.currencyId,
-        toCurrencyId: vendor.currencyId);
-
-    final settings = state.company.settings;
 
     return rebuild((b) => b
       ..exchangeRate = exchangeRate
@@ -505,9 +465,8 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'partial_due_date')
   String get partialDueDate;
 
-  @nullable
   @BuiltValueField(wireName: 'auto_bill')
-  String get autoBill;
+  String? get autoBill;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
@@ -556,25 +515,20 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'exchange_rate')
   double get exchangeRate;
 
-  @nullable
   @BuiltValueField(wireName: 'reminder1_sent')
-  String get reminder1Sent;
+  String? get reminder1Sent;
 
-  @nullable
   @BuiltValueField(wireName: 'reminder2_sent')
-  String get reminder2Sent;
+  String? get reminder2Sent;
 
-  @nullable
   @BuiltValueField(wireName: 'reminder3_sent')
-  String get reminder3Sent;
+  String? get reminder3Sent;
 
-  @nullable
   @BuiltValueField(wireName: 'reminder_last_sent')
-  String get reminderLastSent;
+  String? get reminderLastSent;
 
-  @nullable
   @BuiltValueField(wireName: 'frequency_id')
-  String get frequencyId;
+  String? get frequencyId;
 
   @BuiltValueField(wireName: 'last_sent_date')
   String get lastSentDate;
@@ -585,31 +539,25 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'next_send_datetime')
   String get nextSendDatetime;
 
-  @nullable
   @BuiltValueField(wireName: 'remaining_cycles')
-  int get remainingCycles;
+  int? get remainingCycles;
 
-  @nullable
   @BuiltValueField(wireName: 'due_date_days')
-  String get dueDateDays;
+  String? get dueDateDays;
 
-  @nullable
   @BuiltValueField(wireName: 'invoice_id')
-  String get invoiceId;
+  String? get invoiceId;
 
-  @nullable
   @BuiltValueField(wireName: 'recurring_id')
-  String get recurringId;
+  String? get recurringId;
 
   @BuiltValueField(wireName: 'auto_bill_enabled')
   bool get autoBillEnabled;
 
-  @nullable
-  String get filename;
+  String? get filename;
 
-  @nullable
   @BuiltValueField(wireName: 'recurring_dates')
-  BuiltList<InvoiceScheduleEntity> get recurringDates;
+  BuiltList<InvoiceScheduleEntity>? get recurringDates;
 
   @override
   @BuiltValueField(wireName: 'line_items')
@@ -651,9 +599,9 @@ abstract class InvoiceEntity extends Object
     return false;
   }
 
-  bool get hasClient => '${clientId ?? ''}'.isNotEmpty;
+  bool get hasClient => clientId.isNotEmpty;
 
-  bool get hasVendor => '${vendorId ?? ''}'.isNotEmpty;
+  bool get hasVendor => vendorId.isNotEmpty;
 
   bool get hasInvoice => '${invoiceId ?? ''}'.isNotEmpty;
 
@@ -675,26 +623,26 @@ abstract class InvoiceEntity extends Object
     return balanceOrAmount - (taxAmount * balanceOrAmount / amount);
   }
 
-  @nullable
   @BuiltValueField(compare: false)
-  int get loadedAt;
+  int? get loadedAt;
 
   List<InvoiceHistoryEntity> get history => activities
       .where((activity) =>
           activity.history != null &&
-          (activity.history.id ?? '').isNotEmpty &&
-          activity.history.createdAt > 0)
+          activity.history!.id.isNotEmpty &&
+          activity.history!.createdAt > 0)
       .map((activity) => activity.history)
+      .whereType<InvoiceHistoryEntity>()
       .toList();
 
-  bool get isLoaded => loadedAt != null && loadedAt > 0;
+  bool get isLoaded => loadedAt != null && loadedAt! > 0;
 
   bool get isStale {
     if (!isLoaded) {
       return true;
     }
 
-    return DateTime.now().millisecondsSinceEpoch - loadedAt >
+    return DateTime.now().millisecondsSinceEpoch - loadedAt! >
         kMillisecondsToRefreshActivities;
   }
 
@@ -706,7 +654,7 @@ abstract class InvoiceEntity extends Object
 
   @override
   bool get isEditable {
-    if (isDeleted) {
+    if (isDeleted!) {
       return false;
     }
 
@@ -724,9 +672,7 @@ abstract class InvoiceEntity extends Object
     if (isPastDue) {
       final now = DateTime.now();
       final dueDate = DateTime.tryParse(
-          partialDueDate == null || partialDueDate.isEmpty
-              ? this.dueDate
-              : partialDueDate);
+          partialDueDate.isEmpty ? this.dueDate : partialDueDate);
 
       if (dueDate != null) {
         ageInDays = now.difference(dueDate).inDays;
@@ -740,17 +686,17 @@ abstract class InvoiceEntity extends Object
   //String get custom_messages;
 
   int compareTo({
-    InvoiceEntity invoice,
-    String sortField,
-    bool sortAscending,
-    BuiltMap<String, ClientEntity> clientMap,
-    BuiltMap<String, VendorEntity> vendorMap,
-    BuiltMap<String, UserEntity> userMap,
-    String recurringPrefix = '',
+    InvoiceEntity? invoice,
+    String? sortField,
+    required bool sortAscending,
+    required BuiltMap<String, ClientEntity> clientMap,
+    required BuiltMap<String, VendorEntity> vendorMap,
+    BuiltMap<String, UserEntity>? userMap,
+    String? recurringPrefix = '',
   }) {
     int response = 0;
-    final InvoiceEntity invoiceA = sortAscending ? this : invoice;
-    final InvoiceEntity invoiceB = sortAscending ? invoice : this;
+    final InvoiceEntity invoiceA = sortAscending ? this : invoice!;
+    final InvoiceEntity invoiceB = sortAscending ? invoice! : this;
     final clientA = clientMap[invoiceA.clientId] ?? ClientEntity();
     final clientB = clientMap[invoiceB.clientId] ?? ClientEntity();
     final vendorA = vendorMap[invoiceA.vendorId] ?? VendorEntity();
@@ -758,15 +704,15 @@ abstract class InvoiceEntity extends Object
     switch (sortField) {
       case InvoiceFields.number:
         var invoiceANumber =
-            (invoiceA.number ?? '').isEmpty ? 'ZZZZZZZZZZ' : invoiceA.number;
+            invoiceA.number.isEmpty ? 'ZZZZZZZZZZ' : invoiceA.number;
         var invoiceBNumber =
-            (invoiceB.number ?? '').isEmpty ? 'ZZZZZZZZZZ' : invoiceB.number;
+            invoiceB.number.isEmpty ? 'ZZZZZZZZZZ' : invoiceB.number;
         invoiceANumber = (recurringPrefix ?? '').isNotEmpty &&
-                invoiceANumber.startsWith(recurringPrefix)
+                invoiceANumber.startsWith(recurringPrefix!)
             ? invoiceANumber.replaceFirst(recurringPrefix, '')
             : invoiceANumber;
         invoiceBNumber = (recurringPrefix ?? '').isNotEmpty &&
-                invoiceBNumber.startsWith(recurringPrefix)
+                invoiceBNumber.startsWith(recurringPrefix!)
             ? invoiceBNumber.replaceFirst(recurringPrefix, '')
             : invoiceBNumber;
         response = compareNatural(
@@ -791,17 +737,17 @@ abstract class InvoiceEntity extends Object
         response = invoiceA.lastSentDate.compareTo(invoiceB.lastSentDate);
         break;
       case InvoiceFields.reminder1Sent:
-        response = invoiceA.reminder1Sent.compareTo(invoiceB.reminder1Sent);
+        response = invoiceA.reminder1Sent!.compareTo(invoiceB.reminder1Sent!);
         break;
       case InvoiceFields.reminder2Sent:
-        response = invoiceA.reminder2Sent.compareTo(invoiceB.reminder2Sent);
+        response = invoiceA.reminder2Sent!.compareTo(invoiceB.reminder2Sent!);
         break;
       case InvoiceFields.reminder3Sent:
-        response = invoiceA.reminder3Sent.compareTo(invoiceB.reminder3Sent);
+        response = invoiceA.reminder3Sent!.compareTo(invoiceB.reminder3Sent!);
         break;
       case InvoiceFields.reminderLastSent:
         response =
-            invoiceA.reminderLastSent.compareTo(invoiceB.reminderLastSent);
+            invoiceA.reminderLastSent!.compareTo(invoiceB.reminderLastSent!);
         break;
       case InvoiceFields.balance:
         response = invoiceA.balanceOrAmount.compareTo(invoiceB.balanceOrAmount);
@@ -821,10 +767,8 @@ abstract class InvoiceEntity extends Object
             invoiceA.calculatedStatusId.compareTo(invoiceB.calculatedStatusId);
         break;
       case EntityFields.state:
-        final stateA =
-            EntityState.valueOf(invoiceA.entityState) ?? EntityState.active;
-        final stateB =
-            EntityState.valueOf(invoiceB.entityState) ?? EntityState.active;
+        final stateA = EntityState.valueOf(invoiceA.entityState);
+        final stateB = EntityState.valueOf(invoiceB.entityState);
         response =
             stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
         break;
@@ -842,14 +786,14 @@ abstract class InvoiceEntity extends Object
         }
         break;
       case EntityFields.assignedTo:
-        final userA = userMap[invoiceA.assignedUserId] ?? UserEntity();
+        final userA = userMap![invoiceA.assignedUserId] ?? UserEntity();
         final userB = userMap[invoiceB.assignedUserId] ?? UserEntity();
         response = userA.listDisplayName
             .toLowerCase()
             .compareTo(userB.listDisplayName.toLowerCase());
         break;
       case EntityFields.createdBy:
-        final userA = userMap[invoiceA.createdUserId] ?? UserEntity();
+        final userA = userMap![invoiceA.createdUserId] ?? UserEntity();
         final userB = userMap[invoiceB.createdUserId] ?? UserEntity();
         response = userA.listDisplayName
             .toLowerCase()
@@ -894,13 +838,14 @@ abstract class InvoiceEntity extends Object
         response = invoiceB.isViewed ? 1 : -1;
         break;
       case RecurringInvoiceFields.remainingCycles:
-        response = invoiceA.remainingCycles.compareTo(invoiceB.remainingCycles);
+        response =
+            invoiceA.remainingCycles!.compareTo(invoiceB.remainingCycles!);
         break;
       case RecurringInvoiceFields.frequency:
-        response = invoiceA.frequencyId.compareTo(invoiceB.frequencyId);
+        response = invoiceA.frequencyId!.compareTo(invoiceB.frequencyId!);
         break;
       case RecurringInvoiceFields.autoBill:
-        response = invoiceA.autoBill.compareTo(invoiceB.autoBill);
+        response = invoiceA.autoBill!.compareTo(invoiceB.autoBill!);
         break;
       case InvoiceFields.clientCity:
         response = clientA.city.compareTo(clientB.city);
@@ -925,7 +870,7 @@ abstract class InvoiceEntity extends Object
             vendorA.name.toLowerCase().compareTo(vendorB.name.toLowerCase());
         break;
       case InvoiceFields.dueDateDays:
-        response = invoiceA.dueDateDays.compareTo(invoiceB.dueDateDays);
+        response = invoiceA.dueDateDays!.compareTo(invoiceB.dueDateDays!);
         break;
       default:
         print('## ERROR: sort by invoice.$sortField is not implemented');
@@ -933,7 +878,7 @@ abstract class InvoiceEntity extends Object
     }
 
     if (response == 0) {
-      response = invoice.number.toLowerCase().compareTo(number.toLowerCase());
+      response = invoice!.number.toLowerCase().compareTo(number.toLowerCase());
     }
 
     return response;
@@ -969,7 +914,7 @@ abstract class InvoiceEntity extends Object
   }
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     for (var i = 0; i < lineItems.length; i++) {
       final lineItem = lineItems[i];
       final isMatch = matchesStrings(
@@ -1007,7 +952,7 @@ abstract class InvoiceEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     return matchesStringsValue(
       haystacks: [
         poNumber,
@@ -1025,18 +970,18 @@ abstract class InvoiceEntity extends Object
   }
 
   @override
-  List<EntityAction> getActions(
-      {UserCompanyEntity userCompany,
-      ClientEntity client,
+  List<EntityAction?> getActions(
+      {UserCompanyEntity? userCompany,
+      ClientEntity? client,
       bool includeEdit = false,
       bool includePreview = false,
       bool multiselect = false}) {
-    final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
+    final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
     final state = store.state;
-    final actions = <EntityAction>[];
+    final actions = <EntityAction?>[];
 
-    if (!isDeleted) {
-      if (userCompany.canEditEntity(this)) {
+    if (!isDeleted!) {
+      if (userCompany!.canEditEntity(this)) {
         if (includeEdit && !multiselect) {
           actions.add(EntityAction.edit);
         }
@@ -1139,7 +1084,7 @@ abstract class InvoiceEntity extends Object
             actions.add(EntityAction.viewInvoice);
           }
 
-          if ((projectId ?? '').isEmpty) {
+          if (projectId.isEmpty) {
             actions.add(EntityAction.convertToProject);
           }
         } else if (isPurchaseOrder) {
@@ -1158,7 +1103,7 @@ abstract class InvoiceEntity extends Object
       }
     }
 
-    if (!isDeleted && multiselect) {
+    if (!isDeleted! && multiselect) {
       actions.add(EntityAction.documents);
     }
 
@@ -1168,7 +1113,7 @@ abstract class InvoiceEntity extends Object
 
     if (!multiselect && isOld) {
       int countOtherTypes = 0;
-      if (userCompany.canCreate(EntityType.invoice)) {
+      if (userCompany!.canCreate(EntityType.invoice)) {
         countOtherTypes++;
         if (isInvoice) {
           actions.add(EntityAction.cloneToInvoice);
@@ -1221,8 +1166,8 @@ abstract class InvoiceEntity extends Object
       }
     }
 
-    if (userCompany.canEditEntity(this) &&
-        !isDeleted &&
+    if (userCompany!.canEditEntity(this) &&
+        !isDeleted! &&
         !isCancelledOrReversed) {
       if (isInvoice && isSent) {
         if (!isPaid) {
@@ -1261,7 +1206,7 @@ abstract class InvoiceEntity extends Object
 
   @override
   String get listDisplayName {
-    return number ?? id;
+    return number;
   }
 
   @override
@@ -1280,8 +1225,8 @@ abstract class InvoiceEntity extends Object
     }
   }
 
-  bool isBetween(String startDate, String endDate) {
-    return startDate.compareTo(date) <= 0 && endDate.compareTo(date) >= 0;
+  bool isBetween(String startDate, String? endDate) {
+    return startDate.compareTo(date) <= 0 && endDate!.compareTo(date) >= 0;
   }
 
   bool get isInvoice => entityType == EntityType.invoice;
@@ -1355,10 +1300,10 @@ abstract class InvoiceEntity extends Object
   bool get isPending =>
       isRecurring &&
       statusId == kRecurringInvoiceStatusActive &&
-      (lastSentDate ?? '').isEmpty;
+      lastSentDate.isEmpty;
 
-  String get calculateRemainingCycles =>
-      remainingCycles == -1 ? 'endless' : remainingCycles;
+  String? get calculateRemainingCycles =>
+      remainingCycles == -1 ? 'endless' : remainingCycles as String?;
 
   String get calculatedStatusId {
     if (isRecurring) {
@@ -1404,24 +1349,24 @@ abstract class InvoiceEntity extends Object
       return false;
     }
 
-    return !isDeleted &&
+    return !isDeleted! &&
         !isRecurring &&
         isSent &&
         isUnpaid &&
-        DateTime.tryParse(date)
+        DateTime.tryParse(date)!
             .isBefore(DateTime.now().subtract(Duration(days: 1)));
   }
 
-  InvitationEntity getInvitationForClientContact(ClientContactEntity contact) {
-    return invitations.firstWhere(
-        (invitation) => invitation.clientContactId == contact.id,
-        orElse: () => null);
+  InvitationEntity? getInvitationForClientContact(
+      ClientContactEntity? contact) {
+    return invitations.firstWhereOrNull(
+        (invitation) => invitation.clientContactId == contact!.id);
   }
 
-  InvitationEntity getInvitationForVendorContact(VendorContactEntity contact) {
-    return invitations.firstWhere(
-        (invitation) => invitation.vendorContactId == contact.id,
-        orElse: () => null);
+  InvitationEntity? getInvitationForVendorContact(
+      VendorContactEntity? contact) {
+    return invitations.firstWhereOrNull(
+        (invitation) => invitation.vendorContactId == contact!.id);
   }
 
   /// Gets taxes in the form { taxName1: { amount: 0, paid: 0} , ... }
@@ -1469,9 +1414,7 @@ abstract class InvoiceEntity extends Object
 
       if (item.taxName1.isNotEmpty) {
         final itemTaxAmount = calculateAmount(itemTaxable, item.taxRate1);
-        final itemPaidAmount = amount != null &&
-                itemTaxAmount != null &&
-                amount * itemTaxAmount != 0
+        final itemPaidAmount = amount * itemTaxAmount != 0
             ? (paidToDate / amount * itemTaxAmount)
             : 0.0;
 
@@ -1481,9 +1424,7 @@ abstract class InvoiceEntity extends Object
 
       if (item.taxName2.isNotEmpty) {
         final itemTaxAmount = calculateAmount(itemTaxable, item.taxRate2);
-        final itemPaidAmount = amount != null &&
-                itemTaxAmount != null &&
-                amount * itemTaxAmount != 0
+        final itemPaidAmount = amount * itemTaxAmount != 0
             ? (paidToDate / amount * itemTaxAmount)
             : 0.0;
         _calculateTax(
@@ -1492,9 +1433,7 @@ abstract class InvoiceEntity extends Object
 
       if (item.taxName3.isNotEmpty) {
         final itemTaxAmount = calculateAmount(itemTaxable, item.taxRate3);
-        final itemPaidAmount = amount != null &&
-                itemTaxAmount != null &&
-                amount * itemTaxAmount != 0
+        final itemPaidAmount = amount * itemTaxAmount != 0
             ? (paidToDate / amount * itemTaxAmount)
             : 0.0;
         _calculateTax(
@@ -1509,12 +1448,13 @@ abstract class InvoiceEntity extends Object
     return taxes;
   }
 
-  void _calculateTax(Map<String, Map<String, dynamic>> map, String name,
-      double rate, double amount, double paid) {
-    if (amount == null) {
-      return;
-    }
-
+  void _calculateTax(
+    Map<String, Map<String, dynamic>> map,
+    String name,
+    double rate,
+    double amount,
+    double paid,
+  ) {
     final key = rate.toString() + ' ' + name;
 
     map.putIfAbsent(
@@ -1526,8 +1466,8 @@ abstract class InvoiceEntity extends Object
               'paid': 0.0
             });
 
-    map[key]['amount'] += amount;
-    map[key]['paid'] += paid;
+    map[key]!['amount'] += amount;
+    map[key]!['paid'] += paid;
   }
 
   String get invitationLink =>
@@ -1610,7 +1550,7 @@ class TaskItemFields {
 
 abstract class InvoiceItemEntity
     implements Built<InvoiceItemEntity, InvoiceItemEntityBuilder> {
-  factory InvoiceItemEntity({String productKey, double quantity}) {
+  factory InvoiceItemEntity({String? productKey, double? quantity}) {
     return _$InvoiceItemEntity._(
       productKey: productKey ?? '',
       notes: '',
@@ -1677,9 +1617,8 @@ abstract class InvoiceItemEntity
   @BuiltValueField(wireName: 'tax_rate3')
   double get taxRate3;
 
-  @nullable
   @BuiltValueField(wireName: 'type_id')
-  String get typeId;
+  String? get typeId;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
@@ -1695,16 +1634,13 @@ abstract class InvoiceItemEntity
 
   double get discount;
 
-  @nullable
   @BuiltValueField(wireName: 'task_id')
-  String get taskId;
+  String? get taskId;
 
-  @nullable
   @BuiltValueField(wireName: 'expense_id')
-  String get expenseId;
+  String? get expenseId;
 
-  @nullable
-  int get createdAt;
+  int? get createdAt;
 
   @BuiltValueField(wireName: 'tax_id')
   String get taxCategoryId;
@@ -1793,21 +1729,21 @@ abstract class InvoiceItemEntity
     return parts.join(', ');
   }
 
-  InvoiceItemEntity applyTax(TaxRateEntity taxRate,
+  InvoiceItemEntity applyTax(TaxRateEntity? taxRate,
       {bool isSecond = false, bool isThird = false}) {
     InvoiceItemEntity item;
 
     if (isThird) {
       item = rebuild((b) => b
-        ..taxRate3 = taxRate.rate
+        ..taxRate3 = taxRate!.rate
         ..taxName3 = taxRate.name);
     } else if (isSecond) {
       item = rebuild((b) => b
-        ..taxRate2 = taxRate.rate
+        ..taxRate2 = taxRate!.rate
         ..taxName2 = taxRate.name);
     } else {
       item = rebuild((b) => b
-        ..taxRate1 = taxRate.rate
+        ..taxRate1 = taxRate!.rate
         ..taxName1 = taxRate.name);
     }
 
@@ -1827,8 +1763,8 @@ abstract class InvitationEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<InvitationEntity, InvitationEntityBuilder> {
   factory InvitationEntity({
-    String clientContactId,
-    String vendorContactId,
+    String? clientContactId,
+    String? vendorContactId,
   }) {
     return _$InvitationEntity._(
       id: BaseEntity.nextId,
@@ -1876,9 +1812,8 @@ abstract class InvitationEntity extends Object
   @BuiltValueField(wireName: 'opened_date', compare: false)
   String get openedDate;
 
-  @nullable
   @BuiltValueField(wireName: 'email_status', compare: false)
-  String get emailStatus;
+  String? get emailStatus;
 
   String get downloadLink =>
       '$link/download?t=${DateTime.now().millisecondsSinceEpoch}';
@@ -1891,7 +1826,7 @@ abstract class InvitationEntity extends Object
   String get borderlessLink => '$silentLink&borderless=true';
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     if (filter == null || filter.isEmpty) {
       return true;
     }
@@ -1900,7 +1835,7 @@ abstract class InvitationEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     if (filter == null || filter.isEmpty) {
       return null;
     }
@@ -1914,7 +1849,7 @@ abstract class InvitationEntity extends Object
   }
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
@@ -1955,7 +1890,7 @@ abstract class InvoiceScheduleEntity
 
 abstract class InvoiceHistoryEntity
     implements Built<InvoiceHistoryEntity, InvoiceHistoryEntityBuilder> {
-  factory InvoiceHistoryEntity({String contactId}) {
+  factory InvoiceHistoryEntity({String? contactId}) {
     return _$InvoiceHistoryEntity._(
       id: '',
       createdAt: 0,

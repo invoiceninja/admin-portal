@@ -24,11 +24,11 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientView extends StatefulWidget {
   const ClientView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
-    @required this.isTopFilter,
-    @required this.tabIndex,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
+    required this.isTopFilter,
+    required this.tabIndex,
   }) : super(key: key);
 
   final ClientViewVM viewModel;
@@ -42,7 +42,7 @@ class ClientView extends StatefulWidget {
 
 class _ClientViewState extends State<ClientView>
     with SingleTickerProviderStateMixin {
-  TabController _controller;
+  TabController? _controller;
 
   @override
   void initState() {
@@ -53,7 +53,7 @@ class _ClientViewState extends State<ClientView>
         vsync: this,
         length: state.company.isModuleEnabled(EntityType.document) ? 6 : 5,
         initialIndex: widget.isFilter ? 0 : state.clientUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
@@ -62,7 +62,7 @@ class _ClientViewState extends State<ClientView>
     }
 
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateClientTab(tabIndex: _controller.index));
+    store.dispatch(UpdateClientTab(tabIndex: _controller!.index));
   }
 
   @override
@@ -70,14 +70,14 @@ class _ClientViewState extends State<ClientView>
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.tabIndex != widget.tabIndex) {
-      _controller.index = widget.tabIndex;
+      _controller!.index = widget.tabIndex;
     }
   }
 
   @override
   void dispose() {
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
     super.dispose();
   }
 
@@ -118,7 +118,7 @@ class _ClientViewState extends State<ClientView>
         isScrollable: true,
         tabs: [
           Tab(
-            text: localization.overview,
+            text: localization!.overview,
           ),
           Tab(
             text: localization.details,

@@ -14,7 +14,7 @@ class FontFields {
 abstract class FontEntity extends Object
     with SelectableEntity
     implements Built<FontEntity, FontEntityBuilder> {
-  factory FontEntity({String id, String name}) {
+  factory FontEntity({String? id, String? name}) {
     return _$FontEntity._(
       id: id ?? '',
       name: name ?? '',
@@ -29,7 +29,7 @@ abstract class FontEntity extends Object
   String get name;
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     if (filter == null || filter.isEmpty) {
       return true;
     }
@@ -44,7 +44,7 @@ abstract class FontEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     if (filter == null || filter.isEmpty) {
       return null;
     }
@@ -60,7 +60,7 @@ abstract class FontEntity extends Object
   }
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
   static Serializer<FontEntity> get serializer => _$fontEntitySerializer;
 }

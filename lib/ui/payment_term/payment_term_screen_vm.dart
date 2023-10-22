@@ -16,7 +16,7 @@ import 'package:invoiceninja_flutter/redux/payment_term/payment_term_selectors.d
 import 'payment_term_screen.dart';
 
 class PaymentTermScreenBuilder extends StatelessWidget {
-  const PaymentTermScreenBuilder({Key key}) : super(key: key);
+  const PaymentTermScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,15 +33,15 @@ class PaymentTermScreenBuilder extends StatelessWidget {
 
 class PaymentTermScreenVM {
   PaymentTermScreenVM({
-    @required this.isInMultiselect,
-    @required this.paymentTermList,
-    @required this.userCompany,
-    @required this.onEntityAction,
-    @required this.paymentTermMap,
+    required this.isInMultiselect,
+    required this.paymentTermList,
+    required this.userCompany,
+    required this.onEntityAction,
+    required this.paymentTermMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> paymentTermList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final BuiltMap<String, PaymentTermEntity> paymentTermMap;

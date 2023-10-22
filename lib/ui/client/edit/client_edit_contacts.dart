@@ -18,9 +18,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientEditContacts extends StatefulWidget {
   const ClientEditContacts({
-    Key key,
-    @required this.viewModel,
-    @required this.clientViewModel,
+    Key? key,
+    required this.viewModel,
+    required this.clientViewModel,
   }) : super(key: key);
 
   final ClientEditContactsVM viewModel;
@@ -31,19 +31,19 @@ class ClientEditContacts extends StatefulWidget {
 }
 
 class _ClientEditContactsState extends State<ClientEditContacts> {
-  ClientContactEntity selectedContact;
+  ClientContactEntity? selectedContact;
 
-  void _showContactEditor(ClientContactEntity contact, BuildContext context) {
+  void _showContactEditor(ClientContactEntity? contact, BuildContext context) {
     showDialog<ResponsivePadding>(
         context: context,
         builder: (BuildContext context) {
           final viewModel = widget.viewModel;
-          final client = viewModel.client;
+          final client = viewModel.client!;
 
           return ContactEditDetails(
             viewModel: viewModel,
             clientViewModel: widget.clientViewModel,
-            key: Key(contact.entityKey),
+            key: Key(contact!.entityKey),
             contact: contact,
             isDialog: client.contacts.length > 1,
             index: client.contacts
@@ -56,7 +56,7 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final client = viewModel.client;
+    final client = viewModel.client!;
     final state = widget.clientViewModel.state;
     final prefState = state.prefState;
     final isFullscreen = prefState.isEditorFullScreen(EntityType.client);
@@ -105,8 +105,8 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
         ),
         child: AppButton(
           label: (client.contacts.length == 1
-                  ? localization.addSecondContact
-                  : localization.addContact)
+                  ? localization!.addSecondContact
+                  : localization!.addContact)
               .toUpperCase(),
           onPressed: () => viewModel.onAddContactPressed(),
         ),
@@ -125,12 +125,12 @@ class _ClientEditContactsState extends State<ClientEditContacts> {
 
 class ContactListTile extends StatelessWidget {
   const ContactListTile({
-    @required this.contact,
-    @required this.onTap,
+    required this.contact,
+    required this.onTap,
   });
 
   final Function onTap;
-  final ClientContactEntity contact;
+  final ClientContactEntity? contact;
 
   @override
   Widget build(BuildContext context) {
@@ -141,15 +141,16 @@ class ContactListTile extends StatelessWidget {
           child: Column(
             children: <Widget>[
               ListTile(
-                onTap: onTap,
-                title: contact.fullName.isNotEmpty
-                    ? Text(contact.fullName)
-                    : Text(AppLocalization.of(context).blankContact,
+                onTap: onTap as void Function()?,
+                title: contact!.fullName.isNotEmpty
+                    ? Text(contact!.fullName)
+                    : Text(AppLocalization.of(context)!.blankContact,
                         style: TextStyle(
                           fontStyle: FontStyle.italic,
                         )),
-                subtitle: Text(
-                    contact.email.isNotEmpty ? contact.email : contact.phone),
+                subtitle: Text(contact!.email.isNotEmpty
+                    ? contact!.email
+                    : contact!.phone),
                 trailing: Icon(Icons.navigate_next),
               ),
               Divider(
@@ -163,16 +164,16 @@ class ContactListTile extends StatelessWidget {
 
 class ContactEditDetails extends StatefulWidget {
   const ContactEditDetails({
-    Key key,
-    @required this.index,
-    @required this.contact,
-    @required this.viewModel,
-    @required this.clientViewModel,
-    @required this.isDialog,
+    Key? key,
+    required this.index,
+    required this.contact,
+    required this.viewModel,
+    required this.clientViewModel,
+    required this.isDialog,
   }) : super(key: key);
 
   final int index;
-  final ClientContactEntity contact;
+  final ClientContactEntity? contact;
   final ClientEditContactsVM viewModel;
   final ClientEditVM clientViewModel;
   final bool isDialog;
@@ -194,7 +195,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
 
   final _debouncer = Debouncer();
   List<TextEditingController> _controllers = [];
-  ClientContactEntity _contact;
+  ClientContactEntity? _contact;
 
   void _onDoneContactPressed() {
     if (widget.isDialog) {
@@ -227,7 +228,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    final contact = _contact = widget.contact;
+    final contact = (_contact = widget.contact)!;
     _firstNameController.text = contact.firstName;
     _lastNameController.text = contact.lastName;
     _emailController.text = contact.email;
@@ -256,7 +257,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
 
   void _onChanged() {
     final viewModel = widget.viewModel;
-    final contact = _contact = widget.contact.rebuild((b) => b
+    final contact = _contact = widget.contact!.rebuild((b) => b
       ..firstName = _firstNameController.text.trim()
       ..lastName = _lastNameController.text.trim()
       ..email = _emailController.text.trim()
@@ -275,9 +276,9 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
-    final company = viewModel.company;
+    final company = viewModel.company!;
     final state = widget.clientViewModel.state;
     final isFullscreen = state.prefState.isEditorFullScreen(EntityType.client);
 
@@ -288,8 +289,8 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
           autofocus: widget.isDialog,
           controller: _firstNameController,
           validator: (String val) =>
-              val.trim().isEmpty && !viewModel.client.hasNameSet
-                  ? AppLocalization.of(context).pleaseEnterAClientOrContactName
+              val.trim().isEmpty && !viewModel.client!.hasNameSet
+                  ? AppLocalization.of(context)!.pleaseEnterAClientOrContactName
                   : null,
           onSavePressed: (_) => _onDoneContactPressed(),
           label: localization.firstName,
@@ -299,8 +300,8 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
           controller: _lastNameController,
           label: localization.lastName,
           validator: (String val) =>
-              val.trim().isEmpty && !viewModel.client.hasNameSet
-                  ? AppLocalization.of(context).pleaseEnterAClientOrContactName
+              val.trim().isEmpty && !viewModel.client!.hasNameSet
+                  ? AppLocalization.of(context)!.pleaseEnterAClientOrContactName
                   : null,
           onSavePressed: (_) => _onDoneContactPressed(),
           keyboardType: TextInputType.name,
@@ -336,25 +337,25 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
         CustomField(
           controller: _custom1Controller,
           field: CustomFieldType.contact1,
-          value: widget.contact.customValue1,
+          value: widget.contact!.customValue1,
           onSavePressed: (_) => _onDoneContactPressed(),
         ),
         CustomField(
           controller: _custom2Controller,
           field: CustomFieldType.contact2,
-          value: widget.contact.customValue2,
+          value: widget.contact!.customValue2,
           onSavePressed: (_) => _onDoneContactPressed(),
         ),
         CustomField(
           controller: _custom3Controller,
           field: CustomFieldType.contact3,
-          value: widget.contact.customValue3,
+          value: widget.contact!.customValue3,
           onSavePressed: (_) => _onDoneContactPressed(),
         ),
         CustomField(
           controller: _custom4Controller,
           field: CustomFieldType.contact4,
-          value: widget.contact.customValue4,
+          value: widget.contact!.customValue4,
           onSavePressed: (_) => _onDoneContactPressed(),
         ),
         if (widget.isDialog)
@@ -363,13 +364,13 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
             child: SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.addToInvoices),
-                value: _contact.sendEmail,
+                value: _contact!.sendEmail,
                 onChanged: (value) {
-                  setState(() =>
-                      _contact = _contact.rebuild((b) => b..sendEmail = value));
+                  setState(() => _contact =
+                      _contact!.rebuild((b) => b..sendEmail = value));
 
                   viewModel.onChangedContact(
-                    _contact.rebuild((b) => b..sendEmail = value),
+                    _contact!.rebuild((b) => b..sendEmail = value),
                     widget.index,
                   );
                 }),

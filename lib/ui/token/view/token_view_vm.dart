@@ -22,7 +22,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TokenViewScreen extends StatelessWidget {
   const TokenViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
   static const String route = '/$kSettings/$kSettingsTokenView';
@@ -46,15 +46,15 @@ class TokenViewScreen extends StatelessWidget {
 
 class TokenViewVM {
   TokenViewVM({
-    @required this.state,
-    @required this.token,
-    @required this.company,
-    @required this.onEntityAction,
-    @required this.onBackPressed,
-    @required this.onRefreshed,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.isDirty,
+    required this.state,
+    required this.token,
+    required this.company,
+    required this.onEntityAction,
+    required this.onBackPressed,
+    required this.onRefreshed,
+    required this.isSaving,
+    required this.isLoading,
+    required this.isDirty,
   });
 
   factory TokenViewVM.fromStore(Store<AppState> store) {
@@ -63,8 +63,8 @@ class TokenViewVM {
         TokenEntity(id: state.tokenUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadToken(completer: completer, tokenId: token.id));
       return completer.future;
     }
@@ -87,7 +87,7 @@ class TokenViewVM {
 
   final AppState state;
   final TokenEntity token;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
   final Function onBackPressed;

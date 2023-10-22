@@ -46,7 +46,7 @@ abstract class ReportsUIState
   BuiltMap<String, String> get filters;
 
   bool get isGroupByFiltered =>
-      filters.containsKey(group) && filters[group].isNotEmpty;
+      filters.containsKey(group) && filters[group]!.isNotEmpty;
 
   static Serializer<ReportsUIState> get serializer =>
       _$reportsUIStateSerializer;

@@ -13,13 +13,13 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentEditFooter extends StatelessWidget {
-  const PaymentEditFooter({@required this.payment});
+  const PaymentEditFooter({required this.payment});
 
   final PaymentEntity payment;
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
@@ -39,13 +39,13 @@ class PaymentEditFooter extends StatelessWidget {
 
     amountLabel += localization.total +
         ' ' +
-        formatNumber(paymentTotal, context, clientId: payment.clientId);
+        formatNumber(paymentTotal, context, clientId: payment.clientId)!;
 
     if (payment.credits.isNotEmpty) {
       amountLabel += ' • ' +
           localization.credit +
           ' ' +
-          formatNumber(creditTotal, context, clientId: payment.clientId);
+          formatNumber(creditTotal, context, clientId: payment.clientId)!;
     }
 
     return BottomAppBar(

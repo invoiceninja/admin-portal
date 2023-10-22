@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProductListBuilder extends StatelessWidget {
-  const ProductListBuilder({Key key}) : super(key: key);
+  const ProductListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +48,7 @@ class ProductListBuilder extends StatelessWidget {
 
               return ProductListItem(
                 filter: viewModel.filter,
-                product: product,
+                product: product as ProductEntity,
                 isChecked: isInMultiselect && listState.isSelected(product.id),
               );
             });
@@ -59,24 +59,24 @@ class ProductListBuilder extends StatelessWidget {
 
 class ProductListVM {
   ProductListVM({
-    @required this.state,
-    @required this.productList,
-    @required this.productMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.onRefreshed,
-    @required this.tableColumns,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.productList,
+    required this.productMap,
+    required this.filter,
+    required this.isLoading,
+    required this.onRefreshed,
+    required this.tableColumns,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
   });
 
   static ProductListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
       if (store.state.isLoading) {
-        return Future<Null>(null);
+        return Future<Null>.value();
       }
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -96,7 +96,7 @@ class ProductListVM {
       filter: state.productUIState.listUIState.filter,
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
-          state.userCompany.settings?.getTableColumns(EntityType.product) ??
+          state.userCompany.settings.getTableColumns(EntityType.product) ??
               ProductPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortProducts(field)),
       onClearMultielsect: () => store.dispatch(ClearProductMultiselect()),
@@ -105,8 +105,8 @@ class ProductListVM {
 
   final AppState state;
   final List<String> productList;
-  final BuiltMap<String, BaseEntity> productMap;
-  final String filter;
+  final BuiltMap<String?, BaseEntity?> productMap;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final List<String> tableColumns;

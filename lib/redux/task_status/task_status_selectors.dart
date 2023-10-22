@@ -10,7 +10,7 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 var memoizedSortedActiveTaskStatusIds = memo2((
   BuiltList<String> taskStatusList,
-  BuiltMap<String, TaskStatusEntity> taskStatusMap,
+  BuiltMap<String?, TaskStatusEntity?> taskStatusMap,
 ) =>
     sortedActiveTaskStatusIds(
       taskStatusList: taskStatusList,
@@ -18,18 +18,18 @@ var memoizedSortedActiveTaskStatusIds = memo2((
     ));
 
 List<String> sortedActiveTaskStatusIds({
-  BuiltMap<String, TaskStatusEntity> taskStatusMap,
-  BuiltList<String> taskStatusList,
+  BuiltMap<String?, TaskStatusEntity?>? taskStatusMap,
+  required BuiltList<String> taskStatusList,
 }) {
   final statuses = taskStatusList
       .where((statusId) =>
-          taskStatusMap.containsKey(statusId) &&
-          taskStatusMap[statusId].isActive)
+          taskStatusMap!.containsKey(statusId) &&
+          taskStatusMap[statusId]!.isActive)
       .toList();
 
   statuses.sort((statusIdA, statusIdB) {
-    final statusA = taskStatusMap[statusIdA];
-    final statusB = taskStatusMap[statusIdB];
+    final statusA = taskStatusMap![statusIdA]!;
+    final statusB = taskStatusMap[statusIdB]!;
     if (statusA.statusOrder == statusB.statusOrder) {
       return statusB.updatedAt.compareTo(statusA.updatedAt);
     } else {
@@ -42,7 +42,7 @@ List<String> sortedActiveTaskStatusIds({
 }
 
 var memoizedDropdownTaskStatusList = memo4(
-    (BuiltMap<String, TaskStatusEntity> taskStatusMap,
+    (BuiltMap<String?, TaskStatusEntity?> taskStatusMap,
             BuiltList<String> taskStatusList,
             StaticState staticState,
             BuiltMap<String, UserEntity> userMap) =>
@@ -50,17 +50,17 @@ var memoizedDropdownTaskStatusList = memo4(
             taskStatusMap, taskStatusList, staticState, userMap));
 
 List<String> dropdownTaskStatusesSelector(
-    BuiltMap<String, TaskStatusEntity> taskStatusMap,
+    BuiltMap<String?, TaskStatusEntity?> taskStatusMap,
     BuiltList<String> taskStatusList,
     StaticState staticState,
     BuiltMap<String, UserEntity> userMap) {
   final list = taskStatusList.where((taskStatusId) {
-    final taskStatus = taskStatusMap[taskStatusId];
+    final taskStatus = taskStatusMap[taskStatusId]!;
     return taskStatus.isActive;
   }).toList();
 
   list.sort((taskStatusAId, taskStatusBId) {
-    final taskStatusA = taskStatusMap[taskStatusAId];
+    final taskStatusA = taskStatusMap[taskStatusAId]!;
     final taskStatusB = taskStatusMap[taskStatusBId];
     return taskStatusA.compareTo(
       sortAscending: true,
@@ -73,7 +73,7 @@ List<String> dropdownTaskStatusesSelector(
 }
 
 var memoizedFilteredTaskStatusList = memo4((SelectionState selectionState,
-        BuiltMap<String, TaskStatusEntity> taskStatusMap,
+        BuiltMap<String?, TaskStatusEntity?> taskStatusMap,
         BuiltList<String> taskStatusList,
         ListUIState taskStatusListState) =>
     filteredTaskStatusesSelector(
@@ -81,11 +81,11 @@ var memoizedFilteredTaskStatusList = memo4((SelectionState selectionState,
 
 List<String> filteredTaskStatusesSelector(
     SelectionState selectionState,
-    BuiltMap<String, TaskStatusEntity> taskStatusMap,
+    BuiltMap<String?, TaskStatusEntity?> taskStatusMap,
     BuiltList<String> taskStatusList,
     ListUIState taskStatusListState) {
   final list = taskStatusList.where((taskStatusId) {
-    final taskStatus = taskStatusMap[taskStatusId];
+    final taskStatus = taskStatusMap[taskStatusId]!;
 
     if (taskStatus.id == selectionState.selectedId) {
       return true;
@@ -101,7 +101,7 @@ List<String> filteredTaskStatusesSelector(
   }).toList();
 
   list.sort((taskStatusAId, taskStatusBId) {
-    return taskStatusMap[taskStatusAId].compareTo(
+    return taskStatusMap[taskStatusAId]!.compareTo(
       taskStatus: taskStatusMap[taskStatusBId],
       //sortField: taskStatusListState.sortField,
       //sortAscending: taskStatusListState.sortAscending,
@@ -118,8 +118,8 @@ var memoizedCalculateTaskStatusAmount = memo2((String taskStatusId,
     calculateTaskStatusAmount(taskStatusId: taskStatusId, taskMap: taskMap));
 
 int calculateTaskStatusAmount({
-  String taskStatusId,
-  BuiltMap<String, TaskEntity> taskMap,
+  String? taskStatusId,
+  required BuiltMap<String, TaskEntity> taskMap,
 }) {
   int total = 0;
 
@@ -155,15 +155,16 @@ EntityStats taskStatsForTaskStatus(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
-String defaultTaskStatusId(BuiltMap<String, TaskStatusEntity> taskStatusMap) {
+String? defaultTaskStatusId(
+    BuiltMap<String?, TaskStatusEntity?> taskStatusMap) {
   final statusIds = taskStatusMap.keys.where((statusId) {
-    final status = taskStatusMap[statusId];
+    final status = taskStatusMap[statusId]!;
     return status.isActive;
   }).toList();
 
   statusIds.sort((statusIdA, statusIdB) {
-    final statusA = taskStatusMap[statusIdA];
-    final statusB = taskStatusMap[statusIdB];
+    final statusA = taskStatusMap[statusIdA]!;
+    final statusB = taskStatusMap[statusIdB]!;
 
     return (statusA.statusOrder ?? 9999).compareTo(statusB.statusOrder ?? 9999);
   });

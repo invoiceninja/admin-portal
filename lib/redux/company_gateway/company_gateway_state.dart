@@ -32,7 +32,7 @@ abstract class CompanyGatewayState
 
   CompanyGatewayEntity get(String companyGatewayId) {
     if (map.containsKey(companyGatewayId)) {
-      return map[companyGatewayId];
+      return map[companyGatewayId]!;
     } else {
       return CompanyGatewayEntity(id: companyGatewayId);
     }
@@ -49,7 +49,7 @@ abstract class CompanyGatewayState
 abstract class CompanyGatewayUIState extends Object
     with EntityUIState
     implements Built<CompanyGatewayUIState, CompanyGatewayUIStateBuilder> {
-  factory CompanyGatewayUIState(PrefStateSortField sortField) {
+  factory CompanyGatewayUIState(PrefStateSortField? sortField) {
     return _$CompanyGatewayUIState._(
       listUIState: ListUIState(sortField?.field ?? CompanyGatewayFields.name,
           sortAscending: sortField?.ascending),
@@ -65,14 +65,13 @@ abstract class CompanyGatewayUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  CompanyGatewayEntity get editing;
+  CompanyGatewayEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<CompanyGatewayUIState> get serializer =>
       _$companyGatewayUIStateSerializer;

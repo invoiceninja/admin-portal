@@ -22,10 +22,10 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class AppBottomBar extends StatefulWidget {
   const AppBottomBar({
-    @required this.entityType,
-    @required this.sortFields,
-    @required this.onSelectedSortField,
-    @required this.onCheckboxPressed,
+    required this.entityType,
+    required this.sortFields,
+    required this.onSelectedSortField,
+    required this.onCheckboxPressed,
     this.onSelectedState,
     this.defaultTableColumns,
     this.tableColumns,
@@ -49,37 +49,37 @@ class AppBottomBar extends StatefulWidget {
   final List<String> sortFields;
   final List<EntityStatus> statuses;
   final Function onCheckboxPressed;
-  final Function(String) onSelectedSortField;
-  final Function(EntityState, bool) onSelectedState;
-  final Function(EntityStatus, bool) onSelectedStatus;
-  final Function(String) onSelectedCustom1;
-  final Function(String) onSelectedCustom2;
-  final Function(String) onSelectedCustom3;
-  final Function(String) onSelectedCustom4;
+  final Function(String)? onSelectedSortField;
+  final Function(EntityState, bool?)? onSelectedState;
+  final Function(EntityStatus, bool?)? onSelectedStatus;
+  final Function(String)? onSelectedCustom1;
+  final Function(String)? onSelectedCustom2;
+  final Function(String)? onSelectedCustom3;
+  final Function(String)? onSelectedCustom4;
   final List<String> customValues1;
   final List<String> customValues2;
   final List<String> customValues3;
   final List<String> customValues4;
-  final List<String> tableColumns;
-  final List<String> defaultTableColumns;
+  final List<String>? tableColumns;
+  final List<String>? defaultTableColumns;
   final bool hideListOptions;
   final List<IconButton> iconButtons;
   final List<PaymentTypeEntity> paymentTypes;
-  final Function onPaymentTypeChanged;
+  final Function? onPaymentTypeChanged;
 
   @override
   _AppBottomBarState createState() => _AppBottomBarState();
 }
 
 class _AppBottomBarState extends State<AppBottomBar> {
-  PersistentBottomSheetController _sortController;
-  PersistentBottomSheetController _filterStateController;
-  PersistentBottomSheetController _filterStatusController;
-  PersistentBottomSheetController _filterPaymentTypeController;
-  PersistentBottomSheetController _filterCustom1Controller;
-  PersistentBottomSheetController _filterCustom2Controller;
-  PersistentBottomSheetController _filterCustom3Controller;
-  PersistentBottomSheetController _filterCustom4Controller;
+  PersistentBottomSheetController? _sortController;
+  PersistentBottomSheetController? _filterStateController;
+  PersistentBottomSheetController? _filterStatusController;
+  PersistentBottomSheetController? _filterPaymentTypeController;
+  PersistentBottomSheetController? _filterCustom1Controller;
+  PersistentBottomSheetController? _filterCustom2Controller;
+  PersistentBottomSheetController? _filterCustom3Controller;
+  PersistentBottomSheetController? _filterCustom4Controller;
 
   int kSortPanel = 0;
   int kFilterStatePanel = 1;
@@ -90,44 +90,44 @@ class _AppBottomBarState extends State<AppBottomBar> {
   int kCustom3Panel = 6;
   int kCustom4Panel = 7;
 
-  int closeBottomSheet() {
+  int? closeBottomSheet() {
     if (_filterStateController != null) {
-      _filterStateController.close();
+      _filterStateController!.close();
       return kFilterStatePanel;
     }
 
     if (_filterStatusController != null) {
-      _filterStatusController.close();
+      _filterStatusController!.close();
       return kFilterStatusPanel;
     }
 
     if (_filterPaymentTypeController != null) {
-      _filterPaymentTypeController.close();
+      _filterPaymentTypeController!.close();
       return kFilterPaymentTypePanel;
     }
 
     if (_sortController != null) {
-      _sortController.close();
+      _sortController!.close();
       return kSortPanel;
     }
 
     if (_filterCustom1Controller != null) {
-      _filterCustom1Controller.close();
+      _filterCustom1Controller!.close();
       return kCustom1Panel;
     }
 
     if (_filterCustom2Controller != null) {
-      _filterCustom2Controller.close();
+      _filterCustom2Controller!.close();
       return kCustom2Panel;
     }
 
     if (_filterCustom3Controller != null) {
-      _filterCustom3Controller.close();
+      _filterCustom3Controller!.close();
       return kCustom3Panel;
     }
 
     if (_filterCustom4Controller != null) {
-      _filterCustom4Controller.close();
+      _filterCustom4Controller!.close();
       return kCustom4Panel;
     }
 
@@ -156,14 +156,15 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   children: EntityState.values.map<Widget>((state) {
                     return CheckboxListTile(
                       key: ValueKey('state_' +
-                          AppLocalization.of(context).lookup('$state')),
-                      title: Text(AppLocalization.of(context).lookup('$state')),
+                          AppLocalization.of(context)!.lookup('$state')),
+                      title:
+                          Text(AppLocalization.of(context)!.lookup('$state')),
                       controlAffinity: ListTileControlAffinity.leading,
                       value: stateFilters.contains(state),
                       activeColor: Theme.of(context).colorScheme.secondary,
                       dense: true,
                       onChanged: (value) {
-                        widget.onSelectedState(state, value);
+                        widget.onSelectedState!(state, value);
                       },
                     );
                   }).toList(),
@@ -174,7 +175,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
         );
       });
 
-      _filterStateController.closed.whenComplete(() {
+      _filterStateController!.closed.whenComplete(() {
         _filterStateController = null;
       });
     };
@@ -197,14 +198,14 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   children: widget.statuses.map((status) {
                     return CheckboxListTile(
                       key: Key(status.toString()),
-                      title:
-                          Text(AppLocalization.of(context).lookup(status.name)),
+                      title: Text(
+                          AppLocalization.of(context)!.lookup(status.name)),
                       controlAffinity: ListTileControlAffinity.leading,
                       value: statusFilters.contains(status),
                       activeColor: Theme.of(context).colorScheme.secondary,
                       dense: true,
                       onChanged: (value) {
-                        widget.onSelectedStatus(status, value);
+                        widget.onSelectedStatus!(status, value);
                       },
                     );
                   }).toList(),
@@ -215,7 +216,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
         );
       });
 
-      _filterStatusController.closed.whenComplete(() {
+      _filterStatusController!.closed.whenComplete(() {
         _filterStatusController = null;
       });
     };
@@ -239,26 +240,26 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   children: widget.sortFields.map((sortField) {
                     final field = sortField;
                     return InkWell(
-                      onTap: () => widget.onSelectedSortField(sortField),
+                      onTap: () => widget.onSelectedSortField!(sortField),
                       child: IgnorePointer(
                         child: RadioListTile<String>(
                           dense: true,
                           title: Text(
-                              AppLocalization.of(context).lookup(sortField)),
+                              AppLocalization.of(context)!.lookup(sortField)),
                           subtitle: sortField == listUIState.sortField
                               ? Text(listUIState.sortAscending
-                                  ? AppLocalization.of(context).ascending
-                                  : AppLocalization.of(context).descending)
+                                  ? AppLocalization.of(context)!.ascending
+                                  : AppLocalization.of(context)!.descending)
                               : null,
                           groupValue: listUIState.sortField,
                           activeColor: Theme.of(context).colorScheme.secondary,
-                          onChanged: (String value) {
+                          onChanged: (String? value) {
                             if (value == null &&
                                 listUIState.sortField == field) {
                               // Is re-selecting
-                              widget.onSelectedSortField(field);
-                            } else {
-                              widget.onSelectedSortField(value);
+                              widget.onSelectedSortField!(field);
+                            } else if (value != null) {
+                              widget.onSelectedSortField!(value);
                             }
                           },
                           value: field,
@@ -272,7 +273,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
         );
       });
 
-      _sortController.closed.whenComplete(() {
+      _sortController!.closed.whenComplete(() {
         _sortController = null;
       });
     };
@@ -288,12 +289,12 @@ class _AppBottomBarState extends State<AppBottomBar> {
           customNumber: 1,
           entityType: widget.entityType,
           customFilters: state.getListState(widget.entityType).custom1Filters,
-          onSelected: (field) => widget.onSelectedCustom1(field),
+          onSelected: (field) => widget.onSelectedCustom1!(field),
           customValues: widget.customValues1,
         );
       });
 
-      _filterCustom1Controller.closed.whenComplete(() {
+      _filterCustom1Controller!.closed.whenComplete(() {
         _filterCustom1Controller = null;
       });
     };
@@ -308,12 +309,12 @@ class _AppBottomBarState extends State<AppBottomBar> {
           customNumber: 2,
           entityType: widget.entityType,
           customFilters: state.getListState(widget.entityType).custom2Filters,
-          onSelected: (field) => widget.onSelectedCustom2(field),
+          onSelected: (field) => widget.onSelectedCustom2!(field),
           customValues: widget.customValues2,
         );
       });
 
-      _filterCustom2Controller.closed.whenComplete(() {
+      _filterCustom2Controller!.closed.whenComplete(() {
         _filterCustom2Controller = null;
       });
     };
@@ -329,12 +330,12 @@ class _AppBottomBarState extends State<AppBottomBar> {
           customNumber: 3,
           entityType: widget.entityType,
           customFilters: state.getListState(widget.entityType).custom3Filters,
-          onSelected: (field) => widget.onSelectedCustom3(field),
+          onSelected: (field) => widget.onSelectedCustom3!(field),
           customValues: widget.customValues3,
         );
       });
 
-      _filterCustom3Controller.closed.whenComplete(() {
+      _filterCustom3Controller!.closed.whenComplete(() {
         _filterCustom3Controller = null;
       });
     };
@@ -350,12 +351,12 @@ class _AppBottomBarState extends State<AppBottomBar> {
           customNumber: 4,
           entityType: widget.entityType,
           customFilters: state.getListState(widget.entityType).custom4Filters,
-          onSelected: (field) => widget.onSelectedCustom4(field),
+          onSelected: (field) => widget.onSelectedCustom4!(field),
           customValues: widget.customValues4,
         );
       });
 
-      _filterCustom4Controller.closed.whenComplete(() {
+      _filterCustom4Controller!.closed.whenComplete(() {
         _filterCustom4Controller = null;
       });
     };
@@ -372,7 +373,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
           onSelected: (selected) {
             final listUIState = store.state.getListState(widget.entityType);
             if (!selected.contains(listUIState.sortField)) {
-              widget.onSelectedSortField(selected.isEmpty ? '' : selected[0]);
+              widget.onSelectedSortField!(selected.isEmpty ? '' : selected[0]);
             }
             final settings = state.userCompany.settings.rebuild((b) => b
               ..tableColumns['${widget.entityType}'] =
@@ -382,7 +383,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
             final user =
                 state.user.rebuild((b) => b..userCompany.replace(userCompany));
             final completer = snackBarCompleter<Null>(
-                context, AppLocalization.of(context).savedSettings);
+                AppLocalization.of(context)!.savedSettings);
             store.dispatch(
               SaveUserSettingsRequest(
                 completer: completer,
@@ -390,11 +391,12 @@ class _AppBottomBarState extends State<AppBottomBar> {
               ),
             );
           },
-          options: widget.tableColumns,
-          defaultSelected: widget.defaultTableColumns,
+          options: widget.tableColumns ?? [],
+          defaultSelected: widget.defaultTableColumns ?? [],
           selected: state
-              .userCompany.settings.tableColumns['${widget.entityType}']
-              ?.toList(),
+                  .userCompany.settings.tableColumns['${widget.entityType}']
+                  ?.toList() ??
+              [],
         );
       }
 
@@ -413,8 +415,8 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   IconButton(
                     tooltip: prefState.enableTooltips
                         ? (isList
-                            ? localization.showTable
-                            : localization.showList)
+                            ? localization!.showTable
+                            : localization!.showList)
                         : null,
                     icon: Icon(isList ? Icons.table_chart : Icons.view_list),
                     onPressed: () {
@@ -426,7 +428,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   if (isMobile(context))
                     IconButton(
                       tooltip: prefState.enableTooltips
-                          ? localization.multiselect
+                          ? localization!.multiselect
                           : null,
                       icon: Icon(Icons.check_box),
                       onPressed: () => widget.onCheckboxPressed(),
@@ -436,7 +438,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                     widget.entityType == EntityType.companyGateway &&
                         widget.onSelectedState != null)
                   IconButton(
-                    tooltip: localization.filter,
+                    tooltip: localization!.filter,
                     icon: Icon(Icons.filter_list),
                     onPressed: _showFilterStateSheet,
                     color: store.state
@@ -448,7 +450,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 if (widget.statuses.isNotEmpty && isList)
                   IconButton(
                     tooltip:
-                        prefState.enableTooltips ? localization.status : null,
+                        prefState.enableTooltips ? localization!.status : null,
                     icon: Icon(Icons.filter),
                     onPressed: _showFilterStatusSheet,
                     color: store.state
@@ -460,7 +462,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 if (widget.customValues1.isNotEmpty)
                   IconButton(
                     tooltip: prefState.enableTooltips
-                        ? localization.filteredBy.replaceFirst(
+                        ? localization!.filteredBy.replaceFirst(
                             ':value', widget.customValues1.join(', '))
                         : null,
                     icon: Icon(Icons.looks_one),
@@ -474,7 +476,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 if (widget.customValues2.isNotEmpty)
                   IconButton(
                     tooltip: prefState.enableTooltips
-                        ? localization.filteredBy.replaceFirst(
+                        ? localization!.filteredBy.replaceFirst(
                             ':value', widget.customValues2.join(', '))
                         : null,
                     icon: Icon(Icons.looks_two),
@@ -488,7 +490,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 if (widget.customValues3.isNotEmpty)
                   IconButton(
                     tooltip: prefState.enableTooltips
-                        ? localization.filteredBy.replaceFirst(
+                        ? localization!.filteredBy.replaceFirst(
                             ':value', widget.customValues3.join(', '))
                         : '',
                     icon: Icon(Icons.looks_3),
@@ -502,7 +504,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                 if (widget.customValues4.isNotEmpty)
                   IconButton(
                     tooltip: prefState.enableTooltips
-                        ? localization.filteredBy.replaceFirst(
+                        ? localization!.filteredBy.replaceFirst(
                             ':value', widget.customValues4.join(', '))
                         : '',
                     icon: Icon(Icons.looks_4),
@@ -517,7 +519,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                   if (isList && widget.sortFields.isNotEmpty)
                     IconButton(
                       tooltip:
-                          prefState.enableTooltips ? localization.sort : null,
+                          prefState.enableTooltips ? localization!.sort : null,
                       icon: Icon(Icons.sort_by_alpha),
                       onPressed: _showSortSheet,
                     ),
@@ -528,14 +530,14 @@ class _AppBottomBarState extends State<AppBottomBar> {
                     !widget.hideListOptions)
                   if (state.prefState.isDesktop)
                     AppTextButton(
-                      label: localization.columns,
+                      label: localization!.columns,
                       onPressed: _onColumnsPressed,
                     )
                   else
                     IconButton(
                       icon: Icon(Icons.view_week),
                       tooltip: prefState.enableTooltips
-                          ? localization.columns
+                          ? localization!.columns
                           : null,
                       onPressed: _onColumnsPressed,
                     ),
@@ -544,7 +546,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
                     isLeft: true,
                     child: Tooltip(
                       message: prefState.enableTooltips
-                          ? localization.refreshData
+                          ? localization!.refreshData
                           : '',
                       child: InkWell(
                         onTap: () => store.dispatch(RefreshData()),
@@ -566,12 +568,12 @@ class _AppBottomBarState extends State<AppBottomBar> {
 
 class CustomFieldSelector extends StatelessWidget {
   const CustomFieldSelector({
-    Key key,
-    @required this.customNumber,
-    @required this.entityType,
-    @required this.customValues,
-    @required this.onSelected,
-    @required this.customFilters,
+    Key? key,
+    required this.customNumber,
+    required this.entityType,
+    required this.customValues,
+    required this.onSelected,
+    required this.customFilters,
   }) : super(key: key);
 
   final int customNumber;
@@ -582,7 +584,7 @@ class CustomFieldSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, BuiltList<String>>(
+    return StoreConnector<AppState, BuiltList<String>?>(
       converter: (Store<AppState> store) =>
           store.state.getListState(entityType).getCustomFilters(customNumber),
       builder: (BuildContext context, customFilters) {
@@ -595,7 +597,7 @@ class CustomFieldSelector extends StatelessWidget {
                   key: Key(customField.toString()),
                   title: Text(customField),
                   controlAffinity: ListTileControlAffinity.leading,
-                  value: customFilters.contains(customField),
+                  value: customFilters!.contains(customField),
                   activeColor: Theme.of(context).colorScheme.secondary,
                   dense: true,
                   onChanged: (value) => onSelected(customField),

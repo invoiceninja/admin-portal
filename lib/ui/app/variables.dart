@@ -29,7 +29,7 @@ class VariablesHelp extends StatefulWidget {
 
 class _VariablesHelpState extends State<VariablesHelp>
     with SingleTickerProviderStateMixin {
-  TabController _controller;
+  TabController? _controller;
 
   @override
   void initState() {
@@ -39,13 +39,13 @@ class _VariablesHelpState extends State<VariablesHelp>
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final company = state.company;
@@ -211,11 +211,11 @@ class _VariablesHelpState extends State<VariablesHelp>
 class _VariableGrid extends StatelessWidget {
   const _VariableGrid({this.fields});
 
-  final List<String> fields;
+  final List<String>? fields;
 
   @override
   Widget build(BuildContext context) {
-    fields.sort((a, b) => a.compareTo(b));
+    fields!.sort((a, b) => a.compareTo(b));
 
     return Padding(
       padding: const EdgeInsets.only(top: 16),
@@ -227,7 +227,7 @@ class _VariableGrid extends StatelessWidget {
           primary: true,
           crossAxisCount: 2,
           childAspectRatio: ((constraints.maxWidth / 2) - 8) / 50,
-          children: fields
+          children: fields!
               .map(
                 (field) => TextButton(
                   child: Align(
@@ -241,7 +241,7 @@ class _VariableGrid extends StatelessWidget {
                   ),
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: '\$$field'));
-                    showToast(AppLocalization.of(context)
+                    showToast(AppLocalization.of(context)!
                         .copiedToClipboard
                         .replaceFirst(':value', '\$$field'));
                   },

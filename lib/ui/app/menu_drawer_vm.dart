@@ -1,4 +1,5 @@
 // Flutter imports:
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +26,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/oauth.dart';
 
 class MenuDrawerBuilder extends StatelessWidget {
-  const MenuDrawerBuilder({Key key}) : super(key: key);
+  const MenuDrawerBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,19 +41,19 @@ class MenuDrawerBuilder extends StatelessWidget {
 
 class MenuDrawerVM {
   MenuDrawerVM({
-    @required this.state,
-    @required this.selectedCompany,
-    @required this.user,
-    @required this.selectedCompanyIndex,
-    @required this.onCompanyChanged,
-    @required this.isLoading,
-    @required this.onAddCompany,
-    @required this.onLogoutTap,
+    required this.state,
+    required this.selectedCompany,
+    required this.user,
+    required this.selectedCompanyIndex,
+    required this.onCompanyChanged,
+    required this.isLoading,
+    required this.onAddCompany,
+    required this.onLogoutTap,
   });
 
   final AppState state;
-  final CompanyEntity selectedCompany;
-  final UserEntity user;
+  final CompanyEntity? selectedCompany;
+  final UserEntity? user;
   final String selectedCompanyIndex;
   final Function(BuildContext context, int, CompanyEntity) onCompanyChanged;
   final Function(BuildContext context) onAddCompany;
@@ -74,7 +75,7 @@ class MenuDrawerVM {
           return;
         }
         confirmCallback(
-            message: AppLocalization.of(context).logout,
+            message: AppLocalization.of(context)!.logout,
             context: context,
             callback: (_) async {
               store.dispatch(UserLogout());
@@ -102,7 +103,7 @@ class MenuDrawerVM {
               } else if (store.state.isStale) {
                 store.dispatch(RefreshData());
               }
-              AppBuilder.of(context).rebuild();
+              AppBuilder.of(context)!.rebuild();
 
               final uiState = state.uiState;
               if (uiState.isInSettings) {
@@ -125,21 +126,20 @@ class MenuDrawerVM {
             !state.isPaidAccount &&
             state.companies.length >= state.account.hostedCompanyCount) {
           showMessageDialog(
-            context: context,
-            message: AppLocalization.of(context).upgradeToAddCompany,
+            message: AppLocalization.of(context)!.upgradeToAddCompany,
           );
           return;
         }
 
         confirmCallback(
             context: context,
-            message: AppLocalization.of(context).addCompany,
+            message: AppLocalization.of(context)!.addCompany,
             callback: (_) async {
               final completer = snackBarCompleter<Null>(
-                  context, AppLocalization.of(context).addedCompany,
+                  AppLocalization.of(context)!.addedCompany,
                   shouldPop: true)
-                ..future.then((value) {
-                  AppBuilder.of(navigatorKey.currentContext).rebuild();
+                ..future.then<Null>((_) {
+                  AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
                 });
 
               store

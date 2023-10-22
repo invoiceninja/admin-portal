@@ -18,7 +18,7 @@ import 'package:invoiceninja_flutter/ui/task/edit/task_edit_desktop.dart';
 import 'package:invoiceninja_flutter/ui/task/edit/task_edit_details.dart';
 
 class TaskEditDetailsScreen extends StatelessWidget {
-  const TaskEditDetailsScreen({Key key}) : super(key: key);
+  const TaskEditDetailsScreen({Key? key}) : super(key: key);
   static const String route = '/task/edit';
 
   @override
@@ -46,22 +46,22 @@ class TaskEditDetailsScreen extends StatelessWidget {
 
 class TaskEditDetailsVM {
   TaskEditDetailsVM({
-    @required this.state,
-    @required this.task,
-    @required this.taskTimeIndex,
-    @required this.company,
-    @required this.onChanged,
-    @required this.onAddClientPressed,
-    @required this.onAddProjectPressed,
-    @required this.onUpdatedTaskTime,
-    @required this.onRemoveTaskTime,
-    @required this.isSaving,
-    @required this.origTask,
-    @required this.isLoading,
+    required this.state,
+    required this.task,
+    required this.taskTimeIndex,
+    required this.company,
+    required this.onChanged,
+    required this.onAddClientPressed,
+    required this.onAddProjectPressed,
+    required this.onUpdatedTaskTime,
+    required this.onRemoveTaskTime,
+    required this.isSaving,
+    required this.origTask,
+    required this.isLoading,
   });
 
   factory TaskEditDetailsVM.fromStore(Store<AppState> store) {
-    final task = store.state.taskUIState.editing;
+    final task = store.state.taskUIState.editing!;
     final state = store.state;
 
     return TaskEditDetailsVM(
@@ -77,12 +77,11 @@ class TaskEditDetailsVM {
       },
       onAddClientPressed: (context, completer) {
         createEntity(
-            context: context,
             entity: ClientEntity(),
             force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()
-              ..future.then((_) {
+              ..future.then<Null>((_) {
                 store.dispatch(UpdateCurrentRoute(TaskEditDetailsScreen.route));
               }));
         completer.future.then((SelectableEntity client) {
@@ -101,13 +100,11 @@ class TaskEditDetailsVM {
       },
       onAddProjectPressed: (context, completer) {
         createEntity(
-            context: context,
-            entity: ProjectEntity()
-                .rebuild((b) => b..clientId = task.clientId ?? ''),
+            entity: ProjectEntity().rebuild((b) => b..clientId = task.clientId),
             force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()
-              ..future.then((_) {
+              ..future.then<Null>((_) {
                 store.dispatch(UpdateCurrentRoute(TaskEditDetailsScreen.route));
               }));
         completer.future.then((SelectableEntity client) {
@@ -118,12 +115,12 @@ class TaskEditDetailsVM {
   }
 
   final TaskEntity task;
-  final int taskTimeIndex;
-  final CompanyEntity company;
+  final int? taskTimeIndex;
+  final CompanyEntity? company;
   final Function(TaskEntity) onChanged;
   final bool isLoading;
   final bool isSaving;
-  final TaskEntity origTask;
+  final TaskEntity? origTask;
   final AppState state;
   final Function(BuildContext context, Completer<SelectableEntity> completer)
       onAddClientPressed;

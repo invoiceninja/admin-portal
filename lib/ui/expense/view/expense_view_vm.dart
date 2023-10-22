@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseViewScreen extends StatelessWidget {
   const ExpenseViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
 
@@ -40,7 +40,7 @@ class ExpenseViewScreen extends StatelessWidget {
         return ExpenseView(
           viewModel: vm,
           isFilter: isFilter,
-          tabIndex: vm.state.expenseUIState.tabIndex,
+          tabIndex: vm.state!.expenseUIState.tabIndex,
         );
       },
     );
@@ -49,39 +49,39 @@ class ExpenseViewScreen extends StatelessWidget {
 
 class AbstractExpenseViewVM {
   AbstractExpenseViewVM({
-    @required this.state,
-    @required this.expense,
-    @required this.company,
-    @required this.onEntityAction,
-    @required this.onRefreshed,
-    @required this.onUploadDocuments,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.isDirty,
+    required this.state,
+    required this.expense,
+    required this.company,
+    required this.onEntityAction,
+    required this.onRefreshed,
+    required this.onUploadDocuments,
+    required this.isSaving,
+    required this.isLoading,
+    required this.isDirty,
   });
 
-  final AppState state;
+  final AppState? state;
   final ExpenseEntity expense;
-  final CompanyEntity company;
-  final Function(BuildContext, EntityAction) onEntityAction;
-  final Function(BuildContext) onRefreshed;
-  final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;
-  final bool isSaving;
-  final bool isLoading;
-  final bool isDirty;
+  final CompanyEntity? company;
+  final Function(BuildContext, EntityAction)? onEntityAction;
+  final Function(BuildContext)? onRefreshed;
+  final Function(BuildContext, List<MultipartFile>, bool)? onUploadDocuments;
+  final bool? isSaving;
+  final bool? isLoading;
+  final bool? isDirty;
 }
 
 class ExpenseViewVM extends AbstractExpenseViewVM {
   ExpenseViewVM({
-    AppState state,
-    ExpenseEntity expense,
-    CompanyEntity company,
-    Function(BuildContext, EntityAction) onEntityAction,
-    Function(BuildContext) onRefreshed,
-    Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
-    bool isSaving,
-    bool isLoading,
-    bool isDirty,
+    required ExpenseEntity expense,
+    AppState? state,
+    CompanyEntity? company,
+    Function(BuildContext, EntityAction)? onEntityAction,
+    Function(BuildContext)? onRefreshed,
+    Function(BuildContext, List<MultipartFile>, bool)? onUploadDocuments,
+    bool? isSaving,
+    bool? isLoading,
+    bool? isDirty,
   }) : super(
           state: state,
           expense: expense,
@@ -100,8 +100,8 @@ class ExpenseViewVM extends AbstractExpenseViewVM {
         ExpenseEntity(id: state.expenseUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadExpense(completer: completer, expenseId: expense.id));
       return completer.future;
     }
@@ -118,17 +118,17 @@ class ExpenseViewVM extends AbstractExpenseViewVM {
           handleEntitiesActions([expense], action, autoPop: true),
       onUploadDocuments: (BuildContext context,
           List<MultipartFile> multipartFiles, bool isPrivate) {
-        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        final completer = Completer<List<DocumentEntity>>();
         store.dispatch(SaveExpenseDocumentRequest(
             isPrivate: isPrivate,
             multipartFiles: multipartFiles,
             expense: expense,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context).uploadedDocument);
+          showToast(AppLocalization.of(context)!.uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
-              context: navigatorKey.currentContext,
+              context: navigatorKey.currentContext!,
               builder: (BuildContext context) {
                 return ErrorDialog(error);
               });

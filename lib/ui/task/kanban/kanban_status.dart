@@ -13,10 +13,10 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class KanbanStatusCard extends StatefulWidget {
   const KanbanStatusCard({
-    @required this.status,
-    @required this.onSavePressed,
-    @required this.isCorrectOrder,
-    @required this.isSaving,
+    required this.status,
+    required this.onSavePressed,
+    required this.isCorrectOrder,
+    required this.isSaving,
   });
 
   final TaskStatusEntity status;
@@ -41,9 +41,9 @@ class _KanbanStatusCardState extends State<KanbanStatusCard> {
   }
 
   void _onSavePressed() {
-    final localization = AppLocalization.of(context);
-    final completer = snackBarCompleter<TaskStatusEntity>(
-        context, localization.updatedTaskStatus);
+    final localization = AppLocalization.of(context)!;
+    final completer =
+        snackBarCompleter<TaskStatusEntity>(localization.updatedTaskStatus);
     completer.future.then((value) {
       setState(() {
         _isEditing = false;
@@ -82,7 +82,7 @@ class _KanbanStatusCardState extends State<KanbanStatusCard> {
                       _isEditing = false;
                     });
                   },
-                  label: localization.cancel,
+                  label: localization!.cancel,
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 8),
@@ -104,7 +104,7 @@ class _KanbanStatusCardState extends State<KanbanStatusCard> {
         child: Opacity(
           opacity: widget.isCorrectOrder ? 1 : .7,
           child: Text(
-            status.isNew ? localization.unassigned : status.name,
+            status.isNew ? localization!.unassigned : status.name,
             style: TextStyle(fontWeight: FontWeight.w600),
           ),
         ),

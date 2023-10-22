@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/redux/task/task_selectors.dart';
 import 'task_screen.dart';
 
 class TaskScreenBuilder extends StatelessWidget {
-  const TaskScreenBuilder({Key key}) : super(key: key);
+  const TaskScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +31,14 @@ class TaskScreenBuilder extends StatelessWidget {
 
 class TaskScreenVM {
   TaskScreenVM({
-    @required this.isInMultiselect,
-    @required this.taskList,
-    @required this.userCompany,
-    @required this.taskMap,
+    required this.isInMultiselect,
+    required this.taskList,
+    required this.userCompany,
+    required this.taskMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> taskList;
   final BuiltMap<String, TaskEntity> taskMap;
 

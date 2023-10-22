@@ -25,9 +25,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceOverview extends StatelessWidget {
   const InvoiceOverview({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final AbstractInvoiceViewVM viewModel;
@@ -35,15 +35,15 @@ class InvoiceOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
-    final state = viewModel.state;
-    final invoice = viewModel.invoice;
+    final localization = AppLocalization.of(context)!;
+    final state = viewModel.state!;
+    final invoice = viewModel.invoice!;
     final client = viewModel.client;
     final vendor = state.vendorState.get(invoice.vendorId);
-    final company = viewModel.company;
+    final company = viewModel.company!;
 
-    final creditMap = <PaymentableEntity, PaymentEntity>{};
-    final paymentMap = <PaymentableEntity, PaymentEntity>{};
+    final creditMap = <PaymentableEntity, PaymentEntity?>{};
+    final paymentMap = <PaymentableEntity, PaymentEntity?>{};
     final payments = invoice.isInvoice
         ? memoizedPaymentsByInvoice(
             invoice.id, state.paymentState.map, state.paymentState.list)
@@ -53,7 +53,7 @@ class InvoiceOverview extends StatelessWidget {
             : <PaymentEntity>[];
 
     payments.forEach((payment) {
-      payment.invoicePaymentables.forEach((paymentable) {
+      payment!.invoicePaymentables.forEach((paymentable) {
         if (paymentable.invoiceId == invoice.id) {
           paymentMap[paymentable] = payment;
         }
@@ -66,7 +66,7 @@ class InvoiceOverview extends StatelessWidget {
     });
 
     Map<String, String> statuses;
-    Map<String, Color> colors;
+    Map<String, Color?> colors;
     if (invoice.entityType == EntityType.quote) {
       statuses = kQuoteStatuses;
       colors = QuoteStatusColors(state.prefState.colorThemeModel).colors;
@@ -137,7 +137,7 @@ class InvoiceOverview extends StatelessWidget {
       ListDivider(),
     ]);
 
-    if ((invoice.privateNotes ?? '').isNotEmpty) {
+    if (invoice.privateNotes.isNotEmpty) {
       widgets.addAll([
         IconMessage(invoice.privateNotes,
             iconData: Icons.lock, copyToClipboard: true),
@@ -150,7 +150,7 @@ class InvoiceOverview extends StatelessWidget {
       dueDateField = QuoteFields.validUntil;
     }
 
-    final Map<String, String> fields = {
+    final Map<String, String?> fields = {
       if (invoice.isQuote)
         QuoteFields.date: formatDate(invoice.date, context)
       else if (invoice.isCredit)
@@ -251,7 +251,7 @@ class InvoiceOverview extends StatelessWidget {
           subtitle: vendor.primaryContact.email,
         ),
       );
-    } else {
+    } else if (client != null) {
       widgets.add(
         EntityListTile(
           isFilter: isFilter,
@@ -261,18 +261,18 @@ class InvoiceOverview extends StatelessWidget {
       );
     }
 
-    if ((invoice.projectId ?? '').isNotEmpty) {
+    if (invoice.projectId.isNotEmpty) {
       final project = state.projectState.get(invoice.projectId);
       widgets.add(EntityListTile(entity: project, isFilter: isFilter));
     }
 
-    if ((invoice.expenseId ?? '').isNotEmpty) {
+    if (invoice.expenseId.isNotEmpty) {
       final expense = state.vendorState.get(invoice.expenseId);
       widgets.add(EntityListTile(entity: expense, isFilter: isFilter));
     }
 
     if ((invoice.assignedUserId ?? '').isNotEmpty) {
-      final assignedUser = state.userState.get(invoice.assignedUserId);
+      final assignedUser = state.userState.get(invoice.assignedUserId!);
       widgets.add(EntityListTile(
         isFilter: isFilter,
         entity: assignedUser,
@@ -281,7 +281,7 @@ class InvoiceOverview extends StatelessWidget {
 
     if ((invoice.recurringId ?? '').isNotEmpty) {
       final recurringInvoice =
-          state.recurringInvoiceState.get(invoice.recurringId);
+          state.recurringInvoiceState.get(invoice.recurringId!);
       widgets.add(EntityListTile(entity: recurringInvoice, isFilter: isFilter));
     } else if (invoice.isRecurring) {
       widgets.add(EntitiesListTile(
@@ -318,22 +318,22 @@ class InvoiceOverview extends StatelessWidget {
 
     if (paymentMap.isNotEmpty) {
       paymentMap.entries.forEach((entry) {
-        final payment = entry.value;
+        final payment = entry.value!;
         final paymentable = entry.key;
         String amount = formatNumber(
           paymentable.amount,
           context,
-          clientId: invoice.isPurchaseOrder ? null : client.id,
+          clientId: invoice.isPurchaseOrder ? null : client!.id,
           vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
-        );
+        )!;
         if (paymentable.amount != payment.amount) {
           amount += '/' +
               formatNumber(
                 payment.amount,
                 context,
-                clientId: invoice.isPurchaseOrder ? null : client.id,
+                clientId: invoice.isPurchaseOrder ? null : client!.id,
                 vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
-              );
+              )!;
         }
 
         widgets.add(
@@ -348,22 +348,22 @@ class InvoiceOverview extends StatelessWidget {
 
     if (creditMap.isNotEmpty) {
       creditMap.entries.forEach((entry) {
-        final credit = entry.value;
+        final credit = entry.value!;
         final paymentable = entry.key;
         String amount = formatNumber(
           paymentable.amount,
           context,
-          clientId: invoice.isPurchaseOrder ? null : client.id,
+          clientId: invoice.isPurchaseOrder ? null : client!.id,
           vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
-        );
+        )!;
         if (paymentable.amount != credit.amount) {
           amount += '/' +
               formatNumber(
                 credit.amount,
                 context,
-                clientId: invoice.isPurchaseOrder ? null : client.id,
+                clientId: invoice.isPurchaseOrder ? null : client!.id,
                 vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null,
-              );
+              )!;
         }
 
         widgets.add(
@@ -393,7 +393,7 @@ class InvoiceOverview extends StatelessWidget {
                 invoice: invoice,
                 invoiceItem: invoiceItem,
                 onTap: () => userCompany.canEditEntity(invoice)
-                    ? viewModel.onEditPressed(
+                    ? viewModel.onEditPressed!(
                         context, invoice.lineItems.indexOf(invoiceItem))
                     : null,
               );
@@ -428,7 +428,7 @@ class InvoiceOverview extends StatelessWidget {
                           invoice.isPurchaseOrder ? null : invoice.clientId,
                       vendorId:
                           invoice.isPurchaseOrder ? invoice.vendorId : null,
-                    ),
+                    )!,
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
@@ -513,7 +513,7 @@ class InvoiceOverview extends StatelessWidget {
       widgets.add(surchargeRow(localization.partialDue, invoice.partial));
     }
 
-    if ((invoice.publicNotes ?? '').isNotEmpty) {
+    if (invoice.publicNotes.isNotEmpty) {
       widgets.addAll([
         ListDivider(),
         IconMessage(invoice.publicNotes, copyToClipboard: true),

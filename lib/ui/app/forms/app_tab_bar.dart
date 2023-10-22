@@ -15,10 +15,10 @@ class AppTabBar extends StatelessWidget {
     this.onTap,
   });
 
-  final List<Widget> tabs;
-  final TabController controller;
+  final List<Widget>? tabs;
+  final TabController? controller;
   final bool isScrollable;
-  final Function(int) onTap;
+  final Function(int)? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class AppTabBar extends StatelessWidget {
     final state = store.state;
 
     final tabBar = TabBar(
-      tabs: tabs,
+      tabs: tabs!,
       controller: controller,
       isScrollable: isScrollable,
       indicatorColor: Theme.of(context).colorScheme.secondary,

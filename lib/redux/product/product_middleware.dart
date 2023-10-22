@@ -53,14 +53,14 @@ List<Middleware<AppState>> createStoreProductsMiddleware([
 
 Middleware<AppState> _editProduct() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditProduct;
+    final action = dynamicAction as EditProduct?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProductEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(ProductEditScreen.route);
+      navigatorKey.currentState!.pushNamed(ProductEditScreen.route);
     }
   };
 }
@@ -68,21 +68,21 @@ Middleware<AppState> _editProduct() {
 Middleware<AppState> _viewProduct() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ViewProduct;
+    final action = dynamicAction as ViewProduct?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ProductViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(ProductViewScreen.route);
+      navigatorKey.currentState!.pushNamed(ProductViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewProductList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewProductList;
+    final action = dynamicAction as ViewProductList?;
 
     next(action);
 
@@ -93,7 +93,7 @@ Middleware<AppState> _viewProductList() {
     store.dispatch(UpdateCurrentRoute(ProductScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           ProductScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -110,15 +110,11 @@ Middleware<AppState> _archiveProduct(ProductRepository repository) {
             store.state.credentials, action.productIds, EntityAction.archive)
         .then((List<ProductEntity> products) {
       store.dispatch(ArchiveProductsSuccess(products));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((dynamic error) {
       print(error);
       store.dispatch(ArchiveProductsFailure(prevProducts));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -129,19 +125,19 @@ Middleware<AppState> _setTaxCategoryProducts(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SetTaxCategoryProductsRequest;
     repository
-        .bulkAction(store.state.credentials, action.productIds,
+        .bulkAction(store.state.credentials, action.productIds!,
             EntityAction.setTaxCategory,
-            taxCategoryId: action.taxCategoryId)
+            taxCategoryId: action.taxCategoryId!)
         .then((List<ProductEntity> products) {
       store.dispatch(SetTaxCategoryProductsSuccess(products));
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((dynamic error) {
       print(error);
       store.dispatch(SetTaxCategoryProductsFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -160,15 +156,11 @@ Middleware<AppState> _deleteProduct(ProductRepository repository) {
             store.state.credentials, action.productIds, EntityAction.delete)
         .then((List<ProductEntity> products) {
       store.dispatch(DeleteProductsSuccess(products));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteProductsFailure(prevProducts));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -186,15 +178,11 @@ Middleware<AppState> _restoreProduct(ProductRepository repository) {
             store.state.credentials, action.productIds, EntityAction.restore)
         .then((List<ProductEntity> products) {
       store.dispatch(RestoreProductsSuccess(products));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreProductsFailure(prevProducts));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -205,7 +193,7 @@ Middleware<AppState> _saveProduct(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveProductRequest;
 
-    final product = action.product;
+    final product = action.product!;
     final origProduct = store.state.productState.get(product.id);
     final changedStock = product.stockQuantity != origProduct.stockQuantity;
 
@@ -216,16 +204,16 @@ Middleware<AppState> _saveProduct(ProductRepository repository) {
       changedStock: changedStock,
     )
         .then((ProductEntity product) {
-      if (action.product.isNew) {
+      if (action.product!.isNew) {
         store.dispatch(AddProductSuccess(product));
       } else {
         store.dispatch(SaveProductSuccess(product));
       }
-      action.completer.complete(product);
+      action.completer!.complete(product);
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveProductFailure(error));
-      action.completer.completeError(error);
+      action.completer!.completeError(error);
     });
 
     next(action);
@@ -234,7 +222,7 @@ Middleware<AppState> _saveProduct(ProductRepository repository) {
 
 Middleware<AppState> _loadProduct(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as LoadProduct;
+    final action = dynamicAction as LoadProduct?;
 
     if (Config.DEMO_MODE) {
       next(action);
@@ -243,18 +231,18 @@ Middleware<AppState> _loadProduct(ProductRepository repository) {
 
     store.dispatch(LoadProductRequest());
     repository
-        .loadItem(store.state.credentials, action.productId)
+        .loadItem(store.state.credentials, action!.productId)
         .then((product) {
       store.dispatch(LoadProductSuccess(product));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadProductFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -288,7 +276,7 @@ Middleware<AppState> _loadProducts(ProductRepository repository) {
         ));
       } else {
         if (action.completer != null) {
-          action.completer.complete(null);
+          action.completer!.complete(null);
         }
         store.dispatch(LoadInvoices());
       }
@@ -296,7 +284,7 @@ Middleware<AppState> _loadProducts(ProductRepository repository) {
       print(error);
       store.dispatch(LoadProductsFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -306,12 +294,12 @@ Middleware<AppState> _loadProducts(ProductRepository repository) {
 
 Middleware<AppState> _saveDocument(ProductRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as SaveProductDocumentRequest;
+    final action = dynamicAction as SaveProductDocumentRequest?;
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
         store.state.credentials,
-        action.product,
+        action!.product,
         action.multipartFiles,
         action.isPrivate,
       )
@@ -325,8 +313,7 @@ Middleware<AppState> _saveDocument(ProductRepository repository) {
             ..parentType = EntityType.product));
         });
         store.dispatch(LoadDocumentsSuccess(documents));
-
-        action.completer.complete(null);
+        action.completer.complete(documents);
       }).catchError((Object error) {
         print(error);
         store.dispatch(SaveProductDocumentFailure(error));
@@ -335,7 +322,7 @@ Middleware<AppState> _saveDocument(ProductRepository repository) {
     } else {
       const error = 'Uploading documents requires an enterprise plan';
       store.dispatch(SaveProductDocumentFailure(error));
-      action.completer.completeError(error);
+      action!.completer.completeError(error);
     }
 
     next(action);

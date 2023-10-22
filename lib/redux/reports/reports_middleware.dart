@@ -36,10 +36,10 @@ Middleware<AppState> _viewReports() {
 
           if (store.state.prefState.isMobile) {
             if (action.report == null) {
-              navigatorKey.currentState.pushNamedAndRemoveUntil(
+              navigatorKey.currentState!.pushNamedAndRemoveUntil(
                   ReportsScreen.route, (Route<dynamic> route) => false);
             } else {
-              navigatorKey.currentState.pushNamed(route);
+              navigatorKey.currentState!.pushNamed(route);
             }
           }
         });

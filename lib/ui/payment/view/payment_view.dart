@@ -24,9 +24,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentView extends StatefulWidget {
   const PaymentView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final PaymentViewVM viewModel;
@@ -54,7 +54,7 @@ class _PaymentViewState extends State<PaymentView> {
       transactionReference: payment.transactionReference,
     );
 
-    final fields = <String, String>{};
+    final fields = <String, String?>{};
     /*
     fields[PaymentFields.paymentStatusId] =
         localization.lookup('payment_status_${payment.statusId}');
@@ -62,7 +62,7 @@ class _PaymentViewState extends State<PaymentView> {
     if (payment.date.isNotEmpty) {
       fields[PaymentFields.date] = formatDate(payment.date, context);
     }
-    if ((payment.typeId ?? '').isNotEmpty) {
+    if (payment.typeId.isNotEmpty) {
       final paymentType = state.staticState.paymentTypeMap[payment.typeId];
       if (paymentType != null) {
         fields[PaymentFields.typeId] = paymentType.name;
@@ -93,7 +93,7 @@ class _PaymentViewState extends State<PaymentView> {
                         statusColor:
                             PaymentStatusColors(state.prefState.colorThemeModel)
                                 .colors[payment.statusId],
-                        statusLabel: localization
+                        statusLabel: localization!
                             .lookup('payment_status_${payment.statusId}'),
                         label: localization.amount,
                         value: formatNumber(
@@ -112,9 +112,10 @@ class _PaymentViewState extends State<PaymentView> {
                       for (final paymentable in payment.invoicePaymentables)
                         EntityListTile(
                           isFilter: widget.isFilter,
-                          entity: state.invoiceState.map[paymentable.invoiceId],
+                          entity:
+                              state.invoiceState.map[paymentable.invoiceId]!,
                           subtitle: formatNumber(paymentable.amount, context,
-                                  clientId: payment.clientId) +
+                                  clientId: payment.clientId)! +
                               ' • ' +
                               formatDate(
                                   convertTimestampToDateString(
@@ -124,16 +125,16 @@ class _PaymentViewState extends State<PaymentView> {
                       for (final paymentable in payment.creditPaymentables)
                         EntityListTile(
                           isFilter: widget.isFilter,
-                          entity: state.creditState.map[paymentable.creditId],
+                          entity: state.creditState.map[paymentable.creditId]!,
                           subtitle: formatNumber(paymentable.amount, context,
-                                  clientId: payment.clientId) +
+                                  clientId: payment.clientId)! +
                               ' • ' +
                               formatDate(
                                   convertTimestampToDateString(
                                       paymentable.createdAt),
                                   context),
                         ),
-                      if ((payment.companyGatewayId ?? '').isNotEmpty) ...[
+                      if (payment.companyGatewayId.isNotEmpty) ...[
                         ListTile(
                           title: Text(
                               '${localization.gateway}  ›  ${companyGateway.label}'),
@@ -162,8 +163,7 @@ class _PaymentViewState extends State<PaymentView> {
                           isFilter: widget.isFilter,
                           entity: transaction,
                         ),
-                      payment.privateNotes != null &&
-                              payment.privateNotes.isNotEmpty
+                      payment.privateNotes.isNotEmpty
                           ? Column(
                               children: <Widget>[
                                 IconMessage(payment.privateNotes,

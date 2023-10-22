@@ -24,10 +24,10 @@ class _$LanguageListResponseSerializer
   final String wireName = 'LanguageListResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, LanguageListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(
@@ -39,21 +39,21 @@ class _$LanguageListResponseSerializer
 
   @override
   LanguageListResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new LanguageListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(LanguageEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(LanguageEntity)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -73,10 +73,10 @@ class _$LanguageItemResponseSerializer
   final String wireName = 'LanguageItemResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, LanguageItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(LanguageEntity)),
@@ -87,19 +87,20 @@ class _$LanguageItemResponseSerializer
 
   @override
   LanguageItemResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new LanguageItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(LanguageEntity)) as LanguageEntity);
+                  specifiedType: const FullType(LanguageEntity))!
+              as LanguageEntity);
           break;
       }
     }
@@ -116,9 +117,9 @@ class _$LanguageEntitySerializer
   final String wireName = 'LanguageEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, LanguageEntity object,
+  Iterable<Object?> serialize(Serializers serializers, LanguageEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'locale',
@@ -133,27 +134,27 @@ class _$LanguageEntitySerializer
 
   @override
   LanguageEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new LanguageEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'locale':
           result.locale = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -167,10 +168,10 @@ class _$LanguageListResponse extends LanguageListResponse {
   final BuiltList<LanguageEntity> data;
 
   factory _$LanguageListResponse(
-          [void Function(LanguageListResponseBuilder) updates]) =>
+          [void Function(LanguageListResponseBuilder)? updates]) =>
       (new LanguageListResponseBuilder()..update(updates))._build();
 
-  _$LanguageListResponse._({this.data}) : super._() {
+  _$LanguageListResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
         data, r'LanguageListResponse', 'data');
   }
@@ -190,10 +191,10 @@ class _$LanguageListResponse extends LanguageListResponse {
     return other is LanguageListResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -210,12 +211,12 @@ class _$LanguageListResponse extends LanguageListResponse {
 
 class LanguageListResponseBuilder
     implements Builder<LanguageListResponse, LanguageListResponseBuilder> {
-  _$LanguageListResponse _$v;
+  _$LanguageListResponse? _$v;
 
-  ListBuilder<LanguageEntity> _data;
+  ListBuilder<LanguageEntity>? _data;
   ListBuilder<LanguageEntity> get data =>
       _$this._data ??= new ListBuilder<LanguageEntity>();
-  set data(ListBuilder<LanguageEntity> data) => _$this._data = data;
+  set data(ListBuilder<LanguageEntity>? data) => _$this._data = data;
 
   LanguageListResponseBuilder();
 
@@ -235,7 +236,7 @@ class LanguageListResponseBuilder
   }
 
   @override
-  void update(void Function(LanguageListResponseBuilder) updates) {
+  void update(void Function(LanguageListResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -247,7 +248,7 @@ class LanguageListResponseBuilder
     try {
       _$result = _$v ?? new _$LanguageListResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -267,10 +268,10 @@ class _$LanguageItemResponse extends LanguageItemResponse {
   final LanguageEntity data;
 
   factory _$LanguageItemResponse(
-          [void Function(LanguageItemResponseBuilder) updates]) =>
+          [void Function(LanguageItemResponseBuilder)? updates]) =>
       (new LanguageItemResponseBuilder()..update(updates))._build();
 
-  _$LanguageItemResponse._({this.data}) : super._() {
+  _$LanguageItemResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
         data, r'LanguageItemResponse', 'data');
   }
@@ -290,10 +291,10 @@ class _$LanguageItemResponse extends LanguageItemResponse {
     return other is LanguageItemResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -310,12 +311,12 @@ class _$LanguageItemResponse extends LanguageItemResponse {
 
 class LanguageItemResponseBuilder
     implements Builder<LanguageItemResponse, LanguageItemResponseBuilder> {
-  _$LanguageItemResponse _$v;
+  _$LanguageItemResponse? _$v;
 
-  LanguageEntityBuilder _data;
+  LanguageEntityBuilder? _data;
   LanguageEntityBuilder get data =>
       _$this._data ??= new LanguageEntityBuilder();
-  set data(LanguageEntityBuilder data) => _$this._data = data;
+  set data(LanguageEntityBuilder? data) => _$this._data = data;
 
   LanguageItemResponseBuilder();
 
@@ -335,7 +336,7 @@ class LanguageItemResponseBuilder
   }
 
   @override
-  void update(void Function(LanguageItemResponseBuilder) updates) {
+  void update(void Function(LanguageItemResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -347,7 +348,7 @@ class LanguageItemResponseBuilder
     try {
       _$result = _$v ?? new _$LanguageItemResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -370,10 +371,12 @@ class _$LanguageEntity extends LanguageEntity {
   @override
   final String id;
 
-  factory _$LanguageEntity([void Function(LanguageEntityBuilder) updates]) =>
+  factory _$LanguageEntity([void Function(LanguageEntityBuilder)? updates]) =>
       (new LanguageEntityBuilder()..update(updates))._build();
 
-  _$LanguageEntity._({this.name, this.locale, this.id}) : super._() {
+  _$LanguageEntity._(
+      {required this.name, required this.locale, required this.id})
+      : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'LanguageEntity', 'name');
     BuiltValueNullFieldError.checkNotNull(locale, r'LanguageEntity', 'locale');
     BuiltValueNullFieldError.checkNotNull(id, r'LanguageEntity', 'id');
@@ -396,10 +399,10 @@ class _$LanguageEntity extends LanguageEntity {
         id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, locale.hashCode);
@@ -420,19 +423,19 @@ class _$LanguageEntity extends LanguageEntity {
 
 class LanguageEntityBuilder
     implements Builder<LanguageEntity, LanguageEntityBuilder> {
-  _$LanguageEntity _$v;
+  _$LanguageEntity? _$v;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
 
-  String _locale;
-  String get locale => _$this._locale;
-  set locale(String locale) => _$this._locale = locale;
+  String? _locale;
+  String? get locale => _$this._locale;
+  set locale(String? locale) => _$this._locale = locale;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   LanguageEntityBuilder();
 
@@ -454,7 +457,7 @@ class LanguageEntityBuilder
   }
 
   @override
-  void update(void Function(LanguageEntityBuilder) updates) {
+  void update(void Function(LanguageEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

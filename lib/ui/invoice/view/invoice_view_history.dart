@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceViewHistory extends StatefulWidget {
-  const InvoiceViewHistory({Key key, @required this.viewModel})
+  const InvoiceViewHistory({Key? key, required this.viewModel})
       : super(key: key);
 
   final AbstractInvoiceViewVM viewModel;
@@ -27,8 +27,8 @@ class InvoiceViewHistory extends StatefulWidget {
 class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
   @override
   void didChangeDependencies() {
-    if (widget.viewModel.invoice.isStale) {
-      widget.viewModel.onRefreshed(context);
+    if (widget.viewModel.invoice!.isStale) {
+      widget.viewModel.onRefreshed!(context);
     }
     super.didChangeDependencies();
   }
@@ -36,10 +36,10 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
-    final invoice = viewModel.invoice;
+    final invoice = viewModel.invoice!;
 
     // TODO remove this null check, it shouldn't be needed
-    if (invoice.isStale || invoice.history == null) {
+    if (invoice.isStale) {
       return LoadingIndicator();
     }
 
@@ -49,28 +49,28 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
     activityList.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
 
     if (activityList.isEmpty) {
-      return HelpText(AppLocalization.of(context).noHistory);
+      return HelpText(AppLocalization.of(context)!.noHistory);
     }
 
     return ScrollableListViewBuilder(
       padding: const EdgeInsets.symmetric(vertical: 16),
       itemBuilder: (BuildContext context, index) {
         final activity = activityList[index];
-        final history = activity.history;
-        final activityId = history.activityId ?? '';
+        final history = activity.history!;
+        final activityId = history.activityId;
 
-        final state = viewModel.state;
-        final client = state.clientState.get(activity.clientId);
+        final state = viewModel.state!;
+        final client = state.clientState.get(activity.clientId!);
         final contact = client.getContact(activity.contactId);
         final user = state.userState.get(activity.userId);
 
-        String personName;
-        if (contact != null) {
+        String? personName;
+        if (contact.isOld) {
           personName = contact.fullNameOrEmail;
         } else if (user.isOld) {
           personName = user.fullName;
           if (personName.isEmpty) {
-            personName = AppLocalization.of(context).system;
+            personName = AppLocalization.of(context)!.system;
           }
         } else {
           personName = client.name;
@@ -78,7 +78,7 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
 
         return ListTile(
           title: Text(
-            formatNumber(history.amount, context, clientId: invoice.clientId) +
+            formatNumber(history.amount, context, clientId: invoice.clientId)! +
                 ' • ' +
                 personName,
           ),
@@ -92,7 +92,7 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
                   locale: localeSelector(state, twoLetter: true))),
           trailing: activityId.isNotEmpty ? Icon(Icons.chevron_right) : null,
           onTap: activityId.isNotEmpty
-              ? () => viewModel.onViewPdf(context, invoice, history.activityId)
+              ? () => viewModel.onViewPdf!(context, invoice, history.activityId)
               : null,
         );
       },

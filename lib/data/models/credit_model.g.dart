@@ -19,9 +19,10 @@ class _$CreditListResponseSerializer
   final String wireName = 'CreditListResponse';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, CreditListResponse object,
+  Iterable<Object?> serialize(
+      Serializers serializers, CreditListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType:
@@ -33,21 +34,21 @@ class _$CreditListResponseSerializer
 
   @override
   CreditListResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CreditListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(InvoiceEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(InvoiceEntity)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -64,9 +65,10 @@ class _$CreditItemResponseSerializer
   final String wireName = 'CreditItemResponse';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, CreditItemResponse object,
+  Iterable<Object?> serialize(
+      Serializers serializers, CreditItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(InvoiceEntity)),
@@ -77,19 +79,19 @@ class _$CreditItemResponseSerializer
 
   @override
   CreditItemResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new CreditItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(InvoiceEntity)) as InvoiceEntity);
+              specifiedType: const FullType(InvoiceEntity))! as InvoiceEntity);
           break;
       }
     }
@@ -103,10 +105,10 @@ class _$CreditListResponse extends CreditListResponse {
   final BuiltList<InvoiceEntity> data;
 
   factory _$CreditListResponse(
-          [void Function(CreditListResponseBuilder) updates]) =>
+          [void Function(CreditListResponseBuilder)? updates]) =>
       (new CreditListResponseBuilder()..update(updates))._build();
 
-  _$CreditListResponse._({this.data}) : super._() {
+  _$CreditListResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'CreditListResponse', 'data');
   }
 
@@ -125,10 +127,10 @@ class _$CreditListResponse extends CreditListResponse {
     return other is CreditListResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -145,12 +147,12 @@ class _$CreditListResponse extends CreditListResponse {
 
 class CreditListResponseBuilder
     implements Builder<CreditListResponse, CreditListResponseBuilder> {
-  _$CreditListResponse _$v;
+  _$CreditListResponse? _$v;
 
-  ListBuilder<InvoiceEntity> _data;
+  ListBuilder<InvoiceEntity>? _data;
   ListBuilder<InvoiceEntity> get data =>
       _$this._data ??= new ListBuilder<InvoiceEntity>();
-  set data(ListBuilder<InvoiceEntity> data) => _$this._data = data;
+  set data(ListBuilder<InvoiceEntity>? data) => _$this._data = data;
 
   CreditListResponseBuilder();
 
@@ -170,7 +172,7 @@ class CreditListResponseBuilder
   }
 
   @override
-  void update(void Function(CreditListResponseBuilder) updates) {
+  void update(void Function(CreditListResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -182,7 +184,7 @@ class CreditListResponseBuilder
     try {
       _$result = _$v ?? new _$CreditListResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -202,10 +204,10 @@ class _$CreditItemResponse extends CreditItemResponse {
   final InvoiceEntity data;
 
   factory _$CreditItemResponse(
-          [void Function(CreditItemResponseBuilder) updates]) =>
+          [void Function(CreditItemResponseBuilder)? updates]) =>
       (new CreditItemResponseBuilder()..update(updates))._build();
 
-  _$CreditItemResponse._({this.data}) : super._() {
+  _$CreditItemResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'CreditItemResponse', 'data');
   }
 
@@ -224,10 +226,10 @@ class _$CreditItemResponse extends CreditItemResponse {
     return other is CreditItemResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -244,11 +246,11 @@ class _$CreditItemResponse extends CreditItemResponse {
 
 class CreditItemResponseBuilder
     implements Builder<CreditItemResponse, CreditItemResponseBuilder> {
-  _$CreditItemResponse _$v;
+  _$CreditItemResponse? _$v;
 
-  InvoiceEntityBuilder _data;
+  InvoiceEntityBuilder? _data;
   InvoiceEntityBuilder get data => _$this._data ??= new InvoiceEntityBuilder();
-  set data(InvoiceEntityBuilder data) => _$this._data = data;
+  set data(InvoiceEntityBuilder? data) => _$this._data = data;
 
   CreditItemResponseBuilder();
 
@@ -268,7 +270,7 @@ class CreditItemResponseBuilder
   }
 
   @override
-  void update(void Function(CreditItemResponseBuilder) updates) {
+  void update(void Function(CreditItemResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -280,7 +282,7 @@ class CreditItemResponseBuilder
     try {
       _$result = _$v ?? new _$CreditItemResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();

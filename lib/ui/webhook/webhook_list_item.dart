@@ -15,26 +15,26 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class WebhookListItem extends StatelessWidget {
   const WebhookListItem({
-    @required this.user,
-    @required this.webhook,
-    @required this.filter,
+    required this.user,
+    required this.webhook,
+    required this.filter,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
 
-  final UserEntity user;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
+  final UserEntity? user;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onLongPress;
   final WebhookEntity webhook;
-  final String filter;
-  final Function(bool) onCheckboxChanged;
+  final String? filter;
+  final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final uiState = state.uiState;
@@ -43,7 +43,7 @@ class WebhookListItem extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
-    final filterMatch = filter != null && filter.isNotEmpty
+    final filterMatch = filter != null && filter!.isNotEmpty
         ? webhook.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch;
@@ -53,12 +53,12 @@ class WebhookListItem extends StatelessWidget {
       entity: webhook,
       isSelected: webhook.id ==
           (uiState.isEditing
-              ? webhookUIState.editing.id
+              ? webhookUIState.editing!.id
               : webhookUIState.selectedId),
       child: ListTile(
-        onTap: () => onTap != null ? onTap() : selectEntity(entity: webhook),
+        onTap: () => onTap != null ? onTap!() : selectEntity(entity: webhook),
         onLongPress: () => onLongPress != null
-            ? onLongPress()
+            ? onLongPress!()
             : selectEntity(entity: webhook, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
@@ -66,7 +66,7 @@ class WebhookListItem extends StatelessWidget {
                 child: Checkbox(
                   value: isChecked,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  onChanged: (value) => onCheckboxChanged(value),
+                  onChanged: (value) => onCheckboxChanged!(value),
                   activeColor: Theme.of(context).colorScheme.secondary,
                 ),
               )
@@ -81,7 +81,7 @@ class WebhookListItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Text(formatNumber(webhook.listDisplayAmount, context),
+              Text(formatNumber(webhook.listDisplayAmount, context)!,
                   style: Theme.of(context).textTheme.titleMedium),
             ],
           ),

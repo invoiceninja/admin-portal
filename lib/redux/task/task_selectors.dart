@@ -15,15 +15,15 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 InvoiceItemEntity convertTaskToInvoiceItem({
-  BuildContext context,
-  TaskEntity task,
+  required BuildContext context,
+  required TaskEntity task,
   bool includeProjectHeader = false,
 }) {
   final state = StoreProvider.of<AppState>(context).state;
   final project = state.projectState.get(task.projectId);
   final client = state.clientState.get(task.clientId);
   final group = state.groupState.get(client.groupId);
-  final localization = AppLocalization.of(context);
+  final localization = AppLocalization.of(context)!;
   final company = state.company;
 
   var notes = '';
@@ -58,17 +58,17 @@ InvoiceItemEntity convertTaskToInvoiceItem({
     task
         .getTaskTimes()
         .where((time) =>
-            time.startDate != null && time.endDate != null && time.isBillable)
+            time!.startDate != null && time.endDate != null && time.isBillable)
         .forEach((time) {
-      final hours = round(time.duration.inSeconds / 3600, 3);
+      final hours = round(time!.duration.inSeconds / 3600, 3);
       final hoursStr = hours == 1
           ? ' • 1 ${localization.hour}'
           : ' • $hours ${localization.hours}';
 
       if (company.invoiceTaskDatelog && company.invoiceTaskTimelog) {
-        final start = formatDate(time.startDate.toIso8601String(), context,
+        final start = formatDate(time.startDate!.toIso8601String(), context,
             showTime: true);
-        final end = formatDate(time.endDate.toIso8601String(), context,
+        final end = formatDate(time.endDate!.toIso8601String(), context,
             showTime: true, showDate: false, showSeconds: true);
         notes += '$start - $end';
         if (company.invoiceTaskHours) {
@@ -79,17 +79,17 @@ InvoiceItemEntity convertTaskToInvoiceItem({
           notes += time.description + lineBreak;
         }
       } else if (company.invoiceTaskDatelog) {
-        final date = formatDate(time.startDate.toIso8601String(), context,
+        final date = formatDate(time.startDate!.toIso8601String(), context,
             showTime: false);
         if (dates.containsKey(date)) {
-          dates[date] += hours;
+          dates[date] = dates[date]! + hours;
         } else {
           dates[date] = hours;
         }
       } else if (company.invoiceTaskTimelog) {
-        final start = formatDate(time.startDate.toIso8601String(), context,
+        final start = formatDate(time.startDate!.toIso8601String(), context,
             showTime: true, showDate: false);
-        final end = formatDate(time.endDate.toIso8601String(), context,
+        final end = formatDate(time.endDate!.toIso8601String(), context,
             showTime: true, showDate: false, showSeconds: true);
         notes += '$start - $end';
         if (company.invoiceTaskHours) {
@@ -129,10 +129,10 @@ InvoiceItemEntity convertTaskToInvoiceItem({
     notes = notes.trim();
   }
 
-  String customValue1 = '';
-  String customValue2 = '';
-  String customValue3 = '';
-  String customValue4 = '';
+  String? customValue1 = '';
+  String? customValue2 = '';
+  String? customValue3 = '';
+  String? customValue4 = '';
 
   final fieldLabel1 = company.getCustomFieldLabel(CustomFieldType.task1);
   final fieldLabel2 = company.getCustomFieldLabel(CustomFieldType.task2);
@@ -184,30 +184,30 @@ InvoiceItemEntity convertTaskToInvoiceItem({
 }
 
 var memoizedTaskList = memo5((BuiltMap<String, TaskEntity> taskMap,
-        String clientId,
+        String? clientId,
         BuiltMap<String, UserEntity> userMap,
         BuiltMap<String, ClientEntity> clientMap,
         BuiltMap<String, ProjectEntity> projectMap) =>
     taskList(taskMap, clientId, userMap, clientMap, projectMap));
 
-List<String> taskList(
+List<String?> taskList(
     BuiltMap<String, TaskEntity> taskMap,
-    String clientId,
+    String? clientId,
     BuiltMap<String, UserEntity> userMap,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, ProjectEntity> projectMap) {
   final list = taskMap.keys.where((taskId) {
     final task = taskMap[taskId];
     if ((clientId ?? '').isNotEmpty &&
-        (task.clientId ?? '').isNotEmpty &&
+        task!.clientId.isNotEmpty &&
         task.clientId != clientId) {
       return false;
     }
-    return task.isActive && task.isStopped && !task.isInvoiced;
+    return task!.isActive && task.isStopped && !task.isInvoiced;
   }).toList();
 
   list.sort((idA, idB) =>
-      taskMap[idA].listDisplayName.compareTo(taskMap[idB].listDisplayName));
+      taskMap[idA]!.listDisplayName.compareTo(taskMap[idB]!.listDisplayName));
 
   return list;
 }
@@ -240,11 +240,11 @@ List<String> dropdownTasksSelector(
   BuiltMap<String, ProjectEntity> projectMap,
   BuiltMap<String, TaskStatusEntity> taskStatusMap,
 ) {
-  final list = taskList.where((taskId) => taskMap[taskId].isActive).toList();
+  final list = taskList.where((taskId) => taskMap[taskId]!.isActive).toList();
 
   list.sort((taskAId, taskBId) {
-    final taskA = taskMap[taskAId];
-    final taskB = taskMap[taskBId];
+    final taskA = taskMap[taskAId]!;
+    final taskB = taskMap[taskBId]!;
     return taskA.compareTo(
       taskB,
       TaskFields.updatedAt,
@@ -286,7 +286,7 @@ List<String> kanbanTasksSelector(
   final filterEntityType = selectionState.filterEntityType;
 
   final list = taskList.where((taskId) {
-    final task = taskMap[taskId];
+    final task = taskMap[taskId]!;
     final client = clientMap[task.clientId] ?? ClientEntity(id: task.clientId);
 
     if (!client.isActive &&
@@ -302,8 +302,8 @@ List<String> kanbanTasksSelector(
   }).toList();
 
   list.sort((taskAId, taskBId) {
-    final taskA = taskMap[taskAId];
-    final taskB = taskMap[taskBId];
+    final taskA = taskMap[taskAId]!;
+    final taskB = taskMap[taskBId]!;
     return taskA.compareTo(
       taskB,
       taskListState.sortField,
@@ -356,7 +356,7 @@ List<String> filteredTasksSelector(
   final filterEntityType = selectionState.filterEntityType;
 
   final list = taskList.where((taskId) {
-    final task = taskMap[taskId];
+    final task = taskMap[taskId]!;
     final client = clientMap[task.clientId] ?? ClientEntity(id: task.clientId);
     final project =
         projectMap[task.projectId] ?? ProjectEntity(id: task.projectId);
@@ -372,7 +372,7 @@ List<String> filteredTasksSelector(
 
     if (!task.matchesFilter(taskListState.filter) &&
         !client.matchesNameOrEmail(taskListState.filter) &&
-        !project.matchesName(taskListState.filter)) {
+        !project.matchesName(taskListState.filter!)) {
       return false;
     }
 
@@ -403,7 +403,7 @@ List<String> filteredTasksSelector(
           client.groupId != filterEntityId) {
         return false;
       }
-    } else if (task.clientId != null && !client.isActive) {
+    } else if (!client.isActive) {
       return false;
     }
 
@@ -425,8 +425,8 @@ List<String> filteredTasksSelector(
   }).toList();
 
   list.sort((taskAId, taskBId) {
-    final taskA = taskMap[taskAId];
-    final taskB = taskMap[taskBId];
+    final taskA = taskMap[taskAId]!;
+    final taskB = taskMap[taskBId]!;
     return taskA.compareTo(
       taskB,
       taskListState.sortField,
@@ -442,12 +442,12 @@ List<String> filteredTasksSelector(
   return list;
 }
 
-double taskRateSelector({
-  @required CompanyEntity company,
-  @required ProjectEntity project,
-  @required ClientEntity client,
-  @required TaskEntity task,
-  @required GroupEntity group,
+double? taskRateSelector({
+  required CompanyEntity? company,
+  required ProjectEntity? project,
+  required ClientEntity? client,
+  required TaskEntity? task,
+  required GroupEntity? group,
 }) {
   if (task != null && task.rate > 0) {
     return task.rate;

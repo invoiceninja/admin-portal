@@ -16,7 +16,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class RecurringInvoicePresenter extends EntityPresenter {
-  static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
+  static List<String> getDefaultTableFields(UserCompanyEntity? userCompany) {
     return [
       RecurringInvoiceFields.status,
       RecurringInvoiceFields.number,
@@ -30,7 +30,7 @@ class RecurringInvoicePresenter extends EntityPresenter {
     ];
   }
 
-  static List<String> getAllTableFields(UserCompanyEntity userCompany) {
+  static List<String> getAllTableFields(UserCompanyEntity? userCompany) {
     return [
       ...getDefaultTableFields(userCompany),
       ...EntityPresenter.getBaseFields(),
@@ -49,7 +49,7 @@ class RecurringInvoicePresenter extends EntityPresenter {
   }
 
   @override
-  Widget getField({String field, BuildContext context}) {
+  Widget getField({String? field, required BuildContext context}) {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final invoice = entity as InvoiceEntity;
@@ -58,9 +58,8 @@ class RecurringInvoicePresenter extends EntityPresenter {
       case RecurringInvoiceFields.status:
         return EntityStatusChip(entity: invoice, showState: true);
       case RecurringInvoiceFields.number:
-        return Text((invoice.number ?? '').isEmpty
-            ? localization.pending
-            : invoice.number);
+        return Text(
+            invoice.number.isEmpty ? localization!.pending : invoice.number);
       case RecurringInvoiceFields.client:
         final client = state.clientState.get(invoice.clientId);
         return LinkTextRelatedEntity(entity: client, relation: invoice);
@@ -78,16 +77,16 @@ class RecurringInvoicePresenter extends EntityPresenter {
         return Align(
           alignment: Alignment.centerRight,
           child: Text(formatNumber(invoice.amount, context,
-              clientId: invoice.clientId)),
+              clientId: invoice.clientId)!),
         );
       case RecurringInvoiceFields.customValue1:
-        return Text(presentCustomField(context, invoice.customValue1));
+        return Text(presentCustomField(context, invoice.customValue1)!);
       case RecurringInvoiceFields.customValue2:
-        return Text(presentCustomField(context, invoice.customValue2));
+        return Text(presentCustomField(context, invoice.customValue2)!);
       case RecurringInvoiceFields.customValue3:
-        return Text(presentCustomField(context, invoice.customValue3));
+        return Text(presentCustomField(context, invoice.customValue3)!);
       case RecurringInvoiceFields.customValue4:
-        return Text(presentCustomField(context, invoice.customValue4));
+        return Text(presentCustomField(context, invoice.customValue4)!);
       case RecurringInvoiceFields.publicNotes:
         return TableTooltip(message: invoice.publicNotes);
       case RecurringInvoiceFields.privateNotes:
@@ -96,22 +95,22 @@ class RecurringInvoicePresenter extends EntityPresenter {
         return Text(invoice.isAmountDiscount
             ? formatNumber(invoice.discount, context,
                 formatNumberType: FormatNumberType.money,
-                clientId: invoice.clientId)
+                clientId: invoice.clientId)!
             : formatNumber(invoice.discount, context,
-                formatNumberType: FormatNumberType.percent));
+                formatNumberType: FormatNumberType.percent)!);
       case RecurringInvoiceFields.poNumber:
         return Text(invoice.poNumber);
       case RecurringInvoiceFields.documents:
         return Text('${invoice.documents.length}');
       case RecurringInvoiceFields.taxAmount:
         return Text(formatNumber(invoice.taxAmount, context,
-            clientId: invoice.clientId));
+            clientId: invoice.clientId)!);
       case RecurringInvoiceFields.exchangeRate:
         return Text(formatNumber(invoice.exchangeRate, context,
-            formatNumberType: FormatNumberType.double));
+            formatNumberType: FormatNumberType.double)!);
       case RecurringInvoiceFields.remainingCycles:
         return Text(invoice.remainingCycles == -1
-            ? localization.endless
+            ? localization!.endless
             : '${invoice.remainingCycles}');
       case RecurringInvoiceFields.nextSendDate:
         return Text(invoice.nextSendDatetime.isNotEmpty
@@ -119,20 +118,20 @@ class RecurringInvoicePresenter extends EntityPresenter {
                 showTime: true, showSeconds: false)
             : formatDate(invoice.nextSendDate, context));
       case RecurringInvoiceFields.frequency:
-        return Text(localization.lookup(kFrequencies[invoice.frequencyId]));
+        return Text(localization!.lookup(kFrequencies[invoice.frequencyId]));
       case RecurringInvoiceFields.dueDateDays:
         return Text(invoice.dueDateDays == 'terms'
-            ? localization.paymentTerm
+            ? localization!.paymentTerm
             : invoice.dueDateDays == 'on_receipt'
-                ? localization.dueOnReceipt
+                ? localization!.dueOnReceipt
                 : invoice.dueDateDays == '1'
-                    ? localization.firstDayOfTheMonth
+                    ? localization!.firstDayOfTheMonth
                     : invoice.dueDateDays == '31'
-                        ? localization.lastDayOfTheMonth
-                        : localization.dayCount
+                        ? localization!.lastDayOfTheMonth
+                        : localization!.dayCount
                             .replaceFirst(':count', '${invoice.dueDateDays}'));
       case RecurringInvoiceFields.autoBill:
-        return Text(localization.lookup(invoice.autoBill));
+        return Text(localization!.lookup(invoice.autoBill));
     }
 
     return super.getField(field: field, context: context);

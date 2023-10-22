@@ -46,14 +46,14 @@ List<Middleware<AppState>> createStorePaymentTermsMiddleware([
 
 Middleware<AppState> _editPaymentTerm() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditPaymentTerm;
+    final action = dynamicAction as EditPaymentTerm?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(PaymentTermEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(PaymentTermEditScreen.route);
+      navigatorKey.currentState!.pushNamed(PaymentTermEditScreen.route);
     }
   };
 }
@@ -61,21 +61,21 @@ Middleware<AppState> _editPaymentTerm() {
 Middleware<AppState> _viewPaymentTerm() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ViewPaymentTerm;
+    final action = dynamicAction as ViewPaymentTerm?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(PaymentTermViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(PaymentTermViewScreen.route);
+      navigatorKey.currentState!.pushNamed(PaymentTermViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewPaymentTermList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewPaymentTermList;
+    final action = dynamicAction as ViewPaymentTermList?;
 
     next(action);
 
@@ -86,7 +86,7 @@ Middleware<AppState> _viewPaymentTermList() {
     store.dispatch(UpdateCurrentRoute(PaymentTermScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           PaymentTermScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -103,15 +103,11 @@ Middleware<AppState> _archivePaymentTerm(PaymentTermRepository repository) {
             EntityAction.archive)
         .then((List<PaymentTermEntity> paymentTerms) {
       store.dispatch(ArchivePaymentTermsSuccess(paymentTerms));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchivePaymentTermsFailure(prevPaymentTerms));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -129,15 +125,11 @@ Middleware<AppState> _deletePaymentTerm(PaymentTermRepository repository) {
             store.state.credentials, action.paymentTermIds, EntityAction.delete)
         .then((List<PaymentTermEntity> paymentTerms) {
       store.dispatch(DeletePaymentTermsSuccess(paymentTerms));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeletePaymentTermsFailure(prevPaymentTerms));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -155,15 +147,11 @@ Middleware<AppState> _restorePaymentTerm(PaymentTermRepository repository) {
             EntityAction.restore)
         .then((List<PaymentTermEntity> paymentTerms) {
       store.dispatch(RestorePaymentTermsSuccess(paymentTerms));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestorePaymentTermsFailure(prevPaymentTerms));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -174,19 +162,19 @@ Middleware<AppState> _savePaymentTerm(PaymentTermRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SavePaymentTermRequest;
     repository
-        .saveData(store.state.credentials, action.paymentTerm)
+        .saveData(store.state.credentials, action.paymentTerm!)
         .then((PaymentTermEntity paymentTerm) {
-      if (action.paymentTerm.isNew) {
+      if (action.paymentTerm!.isNew) {
         store.dispatch(AddPaymentTermSuccess(paymentTerm));
       } else {
         store.dispatch(SavePaymentTermSuccess(paymentTerm));
       }
 
-      action.completer.complete(paymentTerm);
+      action.completer!.complete(paymentTerm);
     }).catchError((Object error) {
       print(error);
       store.dispatch(SavePaymentTermFailure(error));
-      action.completer.completeError(error);
+      action.completer!.completeError(error);
     });
 
     next(action);
@@ -205,13 +193,13 @@ Middleware<AppState> _loadPaymentTerm(PaymentTermRepository repository) {
       store.dispatch(LoadPaymentTermSuccess(paymentTerm));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadPaymentTermFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -221,15 +209,15 @@ Middleware<AppState> _loadPaymentTerm(PaymentTermRepository repository) {
 
 Middleware<AppState> _loadPaymentTerms(PaymentTermRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as LoadPaymentTerms;
+    final action = dynamicAction as LoadPaymentTerms?;
     final AppState state = store.state;
 
     store.dispatch(LoadPaymentTermsRequest());
     repository.loadList(state.credentials).then((data) {
       store.dispatch(LoadPaymentTermsSuccess(data));
 
-      if (action.completer != null) {
-        action.completer.complete(null);
+      if (action!.completer != null) {
+        action.completer!.complete(null);
       }
       /*
       if (state.productState.isStale) {
@@ -239,8 +227,8 @@ Middleware<AppState> _loadPaymentTerms(PaymentTermRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadPaymentTermsFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
+      if (action!.completer != null) {
+        action.completer!.completeError(error);
       }
     });
 

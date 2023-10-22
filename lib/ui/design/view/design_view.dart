@@ -22,9 +22,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DesignView extends StatefulWidget {
   const DesignView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final DesignViewVM viewModel;
@@ -41,28 +41,30 @@ class _DesignViewState extends State<DesignView> {
     final state = viewModel.state;
     final company = state.company;
     final design = viewModel.design;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     int count = 0;
 
     count += state.invoiceState.list
         .map((invoiceId) => state.invoiceState.map[invoiceId])
-        .where((invoice) => !invoice.isDeleted && invoice.designId == design.id)
+        .where(
+            (invoice) => !invoice!.isDeleted! && invoice.designId == design.id)
         .length;
 
     count += state.quoteState.list
         .map((quoteId) => state.quoteState.map[quoteId])
-        .where((quote) => !quote.isDeleted && quote.designId == design.id)
+        .where((quote) => !quote!.isDeleted! && quote.designId == design.id)
         .length;
 
     count += state.creditState.list
         .map((creditId) => state.creditState.map[creditId])
-        .where((credit) => !credit.isDeleted && credit.designId == design.id)
+        .where((credit) => !credit!.isDeleted! && credit.designId == design.id)
         .length;
 
     count += state.recurringInvoiceState.list
         .map((invoiceId) => state.recurringInvoiceState.map[invoiceId])
-        .where((invoice) => !invoice.isDeleted && invoice.designId == design.id)
+        .where(
+            (invoice) => !invoice!.isDeleted! && invoice.designId == design.id)
         .length;
 
     return ViewScaffold(

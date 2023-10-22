@@ -18,10 +18,10 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DocumentListItem extends StatelessWidget {
   const DocumentListItem({
-    @required this.userCompany,
+    required this.userCompany,
     //@required this.onCheckboxChanged,
-    @required this.document,
-    @required this.filter,
+    required this.document,
+    required this.filter,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
@@ -29,14 +29,14 @@ class DocumentListItem extends StatelessWidget {
   });
 
   final UserCompanyEntity userCompany;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
-  final Function(bool) onCheckboxChanged;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onLongPress;
+  final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
 
   //final ValueChanged<bool> onCheckboxChanged;
   final DocumentEntity document;
-  final String filter;
+  final String? filter;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class DocumentListItem extends StatelessWidget {
     final state = store.state;
     final uiState = state.uiState;
     final documentUIState = uiState.documentUIState;
-    final filterMatch = filter != null && filter.isNotEmpty
+    final filterMatch = filter != null && filter!.isNotEmpty
         ? document.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch;
@@ -56,7 +56,7 @@ class DocumentListItem extends StatelessWidget {
       isSelected: isDesktop(context) &&
           document.id ==
               (uiState.isEditing
-                  ? documentUIState.editing.id
+                  ? documentUIState.editing!.id
                   : documentUIState.selectedId),
       userCompany: userCompany,
       entity: document,
@@ -64,9 +64,9 @@ class DocumentListItem extends StatelessWidget {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: document),
+                    onTap != null ? onTap!() : selectEntity(entity: document),
                 onLongPress: () => onLongPress != null
-                    ? onLongPress()
+                    ? onLongPress!()
                     : selectEntity(entity: document, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -87,7 +87,7 @@ class DocumentListItem extends StatelessWidget {
                                     materialTapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
                                     onChanged: (value) =>
-                                        onCheckboxChanged(value),
+                                        onCheckboxChanged!(value),
                                     activeColor:
                                         Theme.of(context).colorScheme.secondary,
                                   ),
@@ -116,7 +116,7 @@ class DocumentListItem extends StatelessWidget {
                                           document.createdAt),
                                       context) +
                                   (!document.isPublic
-                                      ? ' • ${AppLocalization.of(context).private}'
+                                      ? ' • ${AppLocalization.of(context)!.private}'
                                       : ''),
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
@@ -131,9 +131,9 @@ class DocumentListItem extends StatelessWidget {
               )
             : ListTile(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: document),
+                    onTap != null ? onTap!() : selectEntity(entity: document),
                 onLongPress: () => onLongPress != null
-                    ? onLongPress()
+                    ? onLongPress!()
                     : selectEntity(entity: document, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
@@ -142,7 +142,7 @@ class DocumentListItem extends StatelessWidget {
                           value: isChecked,
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => onCheckboxChanged(value),
+                          onChanged: (value) => onCheckboxChanged!(value),
                           activeColor: Theme.of(context).colorScheme.secondary,
                         ),
                       )
@@ -165,7 +165,7 @@ class DocumentListItem extends StatelessWidget {
                                           document.createdAt),
                                       context) +
                                   (!document.isPublic
-                                      ? ' • ${AppLocalization.of(context).private}'
+                                      ? ' • ${AppLocalization.of(context)!.private}'
                                       : ''),
                               style: Theme.of(context).textTheme.bodySmall,
                             ),

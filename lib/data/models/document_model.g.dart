@@ -24,10 +24,10 @@ class _$DocumentListResponseSerializer
   final String wireName = 'DocumentListResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, DocumentListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(
@@ -39,21 +39,21 @@ class _$DocumentListResponseSerializer
 
   @override
   DocumentListResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new DocumentListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(DocumentEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(DocumentEntity)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -73,10 +73,10 @@ class _$DocumentItemResponseSerializer
   final String wireName = 'DocumentItemResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, DocumentItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(DocumentEntity)),
@@ -87,19 +87,20 @@ class _$DocumentItemResponseSerializer
 
   @override
   DocumentItemResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new DocumentItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(DocumentEntity)) as DocumentEntity);
+                  specifiedType: const FullType(DocumentEntity))!
+              as DocumentEntity);
           break;
       }
     }
@@ -116,9 +117,9 @@ class _$DocumentEntitySerializer
   final String wireName = 'DocumentEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, DocumentEntity object,
+  Iterable<Object?> serialize(Serializers serializers, DocumentEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'hash',
@@ -154,7 +155,7 @@ class _$DocumentEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.parentId;
     if (value != null) {
       result
@@ -202,95 +203,95 @@ class _$DocumentEntitySerializer
 
   @override
   DocumentEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new DocumentEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'hash':
           result.hash = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'type':
           result.type = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'url':
           result.url = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'width':
           result.width = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'height':
           result.height = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'size':
           result.size = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'preview':
           result.preview = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'is_default':
           result.isDefault = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'is_public':
           result.isPublic = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'parent_id':
           result.parentId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'parent_type':
           result.parentType = serializers.deserialize(value,
-              specifiedType: const FullType(EntityType)) as EntityType;
+              specifiedType: const FullType(EntityType)) as EntityType?;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'archived_at':
           result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'user_id':
           result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -304,10 +305,10 @@ class _$DocumentListResponse extends DocumentListResponse {
   final BuiltList<DocumentEntity> data;
 
   factory _$DocumentListResponse(
-          [void Function(DocumentListResponseBuilder) updates]) =>
+          [void Function(DocumentListResponseBuilder)? updates]) =>
       (new DocumentListResponseBuilder()..update(updates))._build();
 
-  _$DocumentListResponse._({this.data}) : super._() {
+  _$DocumentListResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
         data, r'DocumentListResponse', 'data');
   }
@@ -327,10 +328,10 @@ class _$DocumentListResponse extends DocumentListResponse {
     return other is DocumentListResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -347,12 +348,12 @@ class _$DocumentListResponse extends DocumentListResponse {
 
 class DocumentListResponseBuilder
     implements Builder<DocumentListResponse, DocumentListResponseBuilder> {
-  _$DocumentListResponse _$v;
+  _$DocumentListResponse? _$v;
 
-  ListBuilder<DocumentEntity> _data;
+  ListBuilder<DocumentEntity>? _data;
   ListBuilder<DocumentEntity> get data =>
       _$this._data ??= new ListBuilder<DocumentEntity>();
-  set data(ListBuilder<DocumentEntity> data) => _$this._data = data;
+  set data(ListBuilder<DocumentEntity>? data) => _$this._data = data;
 
   DocumentListResponseBuilder();
 
@@ -372,7 +373,7 @@ class DocumentListResponseBuilder
   }
 
   @override
-  void update(void Function(DocumentListResponseBuilder) updates) {
+  void update(void Function(DocumentListResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -384,7 +385,7 @@ class DocumentListResponseBuilder
     try {
       _$result = _$v ?? new _$DocumentListResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -404,10 +405,10 @@ class _$DocumentItemResponse extends DocumentItemResponse {
   final DocumentEntity data;
 
   factory _$DocumentItemResponse(
-          [void Function(DocumentItemResponseBuilder) updates]) =>
+          [void Function(DocumentItemResponseBuilder)? updates]) =>
       (new DocumentItemResponseBuilder()..update(updates))._build();
 
-  _$DocumentItemResponse._({this.data}) : super._() {
+  _$DocumentItemResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
         data, r'DocumentItemResponse', 'data');
   }
@@ -427,10 +428,10 @@ class _$DocumentItemResponse extends DocumentItemResponse {
     return other is DocumentItemResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -447,12 +448,12 @@ class _$DocumentItemResponse extends DocumentItemResponse {
 
 class DocumentItemResponseBuilder
     implements Builder<DocumentItemResponse, DocumentItemResponseBuilder> {
-  _$DocumentItemResponse _$v;
+  _$DocumentItemResponse? _$v;
 
-  DocumentEntityBuilder _data;
+  DocumentEntityBuilder? _data;
   DocumentEntityBuilder get data =>
       _$this._data ??= new DocumentEntityBuilder();
-  set data(DocumentEntityBuilder data) => _$this._data = data;
+  set data(DocumentEntityBuilder? data) => _$this._data = data;
 
   DocumentItemResponseBuilder();
 
@@ -472,7 +473,7 @@ class DocumentItemResponseBuilder
   }
 
   @override
-  void update(void Function(DocumentItemResponseBuilder) updates) {
+  void update(void Function(DocumentItemResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -484,7 +485,7 @@ class DocumentItemResponseBuilder
     try {
       _$result = _$v ?? new _$DocumentItemResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -517,17 +518,17 @@ class _$DocumentEntity extends DocumentEntity {
   @override
   final String preview;
   @override
-  final Uint8List data;
+  final Uint8List? data;
   @override
   final bool isDefault;
   @override
   final bool isPublic;
   @override
-  final String parentId;
+  final String? parentId;
   @override
-  final EntityType parentType;
+  final EntityType? parentType;
   @override
-  final bool isChanged;
+  final bool? isChanged;
   @override
   final int createdAt;
   @override
@@ -535,39 +536,39 @@ class _$DocumentEntity extends DocumentEntity {
   @override
   final int archivedAt;
   @override
-  final bool isDeleted;
+  final bool? isDeleted;
   @override
-  final String createdUserId;
+  final String? createdUserId;
   @override
-  final String assignedUserId;
+  final String? assignedUserId;
   @override
   final String id;
 
-  factory _$DocumentEntity([void Function(DocumentEntityBuilder) updates]) =>
+  factory _$DocumentEntity([void Function(DocumentEntityBuilder)? updates]) =>
       (new DocumentEntityBuilder()..update(updates))._build();
 
   _$DocumentEntity._(
-      {this.name,
-      this.hash,
-      this.type,
-      this.url,
-      this.width,
-      this.height,
-      this.size,
-      this.preview,
+      {required this.name,
+      required this.hash,
+      required this.type,
+      required this.url,
+      required this.width,
+      required this.height,
+      required this.size,
+      required this.preview,
       this.data,
-      this.isDefault,
-      this.isPublic,
+      required this.isDefault,
+      required this.isPublic,
       this.parentId,
       this.parentType,
       this.isChanged,
-      this.createdAt,
-      this.updatedAt,
-      this.archivedAt,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.archivedAt,
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.id})
+      required this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'DocumentEntity', 'name');
     BuiltValueNullFieldError.checkNotNull(hash, r'DocumentEntity', 'hash');
@@ -626,10 +627,10 @@ class _$DocumentEntity extends DocumentEntity {
         id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, hash.hashCode);
@@ -686,93 +687,93 @@ class _$DocumentEntity extends DocumentEntity {
 
 class DocumentEntityBuilder
     implements Builder<DocumentEntity, DocumentEntityBuilder> {
-  _$DocumentEntity _$v;
+  _$DocumentEntity? _$v;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
 
-  String _hash;
-  String get hash => _$this._hash;
-  set hash(String hash) => _$this._hash = hash;
+  String? _hash;
+  String? get hash => _$this._hash;
+  set hash(String? hash) => _$this._hash = hash;
 
-  String _type;
-  String get type => _$this._type;
-  set type(String type) => _$this._type = type;
+  String? _type;
+  String? get type => _$this._type;
+  set type(String? type) => _$this._type = type;
 
-  String _url;
-  String get url => _$this._url;
-  set url(String url) => _$this._url = url;
+  String? _url;
+  String? get url => _$this._url;
+  set url(String? url) => _$this._url = url;
 
-  int _width;
-  int get width => _$this._width;
-  set width(int width) => _$this._width = width;
+  int? _width;
+  int? get width => _$this._width;
+  set width(int? width) => _$this._width = width;
 
-  int _height;
-  int get height => _$this._height;
-  set height(int height) => _$this._height = height;
+  int? _height;
+  int? get height => _$this._height;
+  set height(int? height) => _$this._height = height;
 
-  int _size;
-  int get size => _$this._size;
-  set size(int size) => _$this._size = size;
+  int? _size;
+  int? get size => _$this._size;
+  set size(int? size) => _$this._size = size;
 
-  String _preview;
-  String get preview => _$this._preview;
-  set preview(String preview) => _$this._preview = preview;
+  String? _preview;
+  String? get preview => _$this._preview;
+  set preview(String? preview) => _$this._preview = preview;
 
-  Uint8List _data;
-  Uint8List get data => _$this._data;
-  set data(Uint8List data) => _$this._data = data;
+  Uint8List? _data;
+  Uint8List? get data => _$this._data;
+  set data(Uint8List? data) => _$this._data = data;
 
-  bool _isDefault;
-  bool get isDefault => _$this._isDefault;
-  set isDefault(bool isDefault) => _$this._isDefault = isDefault;
+  bool? _isDefault;
+  bool? get isDefault => _$this._isDefault;
+  set isDefault(bool? isDefault) => _$this._isDefault = isDefault;
 
-  bool _isPublic;
-  bool get isPublic => _$this._isPublic;
-  set isPublic(bool isPublic) => _$this._isPublic = isPublic;
+  bool? _isPublic;
+  bool? get isPublic => _$this._isPublic;
+  set isPublic(bool? isPublic) => _$this._isPublic = isPublic;
 
-  String _parentId;
-  String get parentId => _$this._parentId;
-  set parentId(String parentId) => _$this._parentId = parentId;
+  String? _parentId;
+  String? get parentId => _$this._parentId;
+  set parentId(String? parentId) => _$this._parentId = parentId;
 
-  EntityType _parentType;
-  EntityType get parentType => _$this._parentType;
-  set parentType(EntityType parentType) => _$this._parentType = parentType;
+  EntityType? _parentType;
+  EntityType? get parentType => _$this._parentType;
+  set parentType(EntityType? parentType) => _$this._parentType = parentType;
 
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+  bool? _isChanged;
+  bool? get isChanged => _$this._isChanged;
+  set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
 
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+  int? _archivedAt;
+  int? get archivedAt => _$this._archivedAt;
+  set archivedAt(int? archivedAt) => _$this._archivedAt = archivedAt;
 
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+  bool? _isDeleted;
+  bool? get isDeleted => _$this._isDeleted;
+  set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
 
-  String _createdUserId;
-  String get createdUserId => _$this._createdUserId;
-  set createdUserId(String createdUserId) =>
+  String? _createdUserId;
+  String? get createdUserId => _$this._createdUserId;
+  set createdUserId(String? createdUserId) =>
       _$this._createdUserId = createdUserId;
 
-  String _assignedUserId;
-  String get assignedUserId => _$this._assignedUserId;
-  set assignedUserId(String assignedUserId) =>
+  String? _assignedUserId;
+  String? get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String? assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   DocumentEntityBuilder() {
     DocumentEntity._initializeBuilder(this);
@@ -814,7 +815,7 @@ class DocumentEntityBuilder
   }
 
   @override
-  void update(void Function(DocumentEntityBuilder) updates) {
+  void update(void Function(DocumentEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

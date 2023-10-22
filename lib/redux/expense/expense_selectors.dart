@@ -18,9 +18,9 @@ var memoizedExpensePurchaseOrderSelector = memo2(
     (ExpenseEntity expense, BuiltMap<String, InvoiceEntity> purchaseOrderMap) =>
         expensePurchaseOrderSelector(expense, purchaseOrderMap));
 
-InvoiceEntity expensePurchaseOrderSelector(
+InvoiceEntity? expensePurchaseOrderSelector(
     ExpenseEntity expense, BuiltMap<String, InvoiceEntity> purchaseOrderMap) {
-  InvoiceEntity purchaseOrder;
+  InvoiceEntity? purchaseOrder;
   purchaseOrderMap.forEach((purchaseOrderId, purchaseOrder) {
     if (purchaseOrder.expenseId == expense.id) {
       purchaseOrder = purchaseOrder;
@@ -30,18 +30,18 @@ InvoiceEntity expensePurchaseOrderSelector(
 }
 
 InvoiceItemEntity convertExpenseToInvoiceItem({
-  @required ExpenseEntity expense,
-  @required BuildContext context,
+  required ExpenseEntity expense,
+  required BuildContext context,
 }) {
   final state = StoreProvider.of<AppState>(context).state;
   final company = state.company;
   final categoryMap = state.expenseCategoryState.map;
-  final localization = AppLocalization.of(context);
+  final localization = AppLocalization.of(context)!;
 
-  String customValue1 = '';
-  String customValue2 = '';
-  String customValue3 = '';
-  String customValue4 = '';
+  String? customValue1 = '';
+  String? customValue2 = '';
+  String? customValue3 = '';
+  String? customValue4 = '';
 
   final fieldLabel1 = company.getCustomFieldLabel(CustomFieldType.product1);
   final fieldLabel2 = company.getCustomFieldLabel(CustomFieldType.product2);
@@ -55,9 +55,9 @@ InvoiceItemEntity convertExpenseToInvoiceItem({
     company.getCustomFieldLabel(CustomFieldType.expense4): expense.customValue4,
     localization.category:
         state.expenseCategoryState.get(expense.categoryId).name,
-    localization.vendor: state.vendorState.get(expense.vendorId).name,
+    localization.vendor: state.vendorState.get(expense.vendorId!).name,
     localization.date: formatDate(expense.date, context),
-    localization.project: state.projectState.get(expense.projectId).name,
+    localization.project: state.projectState.get(expense.projectId!).name,
   };
 
   for (var label in customValues.keys) {
@@ -79,7 +79,7 @@ InvoiceItemEntity convertExpenseToInvoiceItem({
     ..productKey = categoryMap[expense.categoryId]?.name ?? ''
     ..notes = expense.publicNotes
     ..quantity = 1
-    ..cost = company.settings.enableInclusiveTaxes
+    ..cost = company.settings.enableInclusiveTaxes!
         ? expense.convertedAmount
         : expense.convertedNetAmount
     ..customValue1 = customValue1
@@ -121,7 +121,7 @@ List<String> dropdownExpensesSelector(
     StaticState staticState,
     String clientId) {
   final list = expenseList.where((expenseId) {
-    final expense = expenseMap[expenseId];
+    final expense = expenseMap[expenseId]!;
     /*
     if (clientId != null && clientId > 0 && expense.clientId != clientId) {
       return false;
@@ -131,7 +131,7 @@ List<String> dropdownExpensesSelector(
   }).toList();
 
   list.sort((expenseAId, expenseBId) {
-    final expenseA = expenseMap[expenseAId];
+    final expenseA = expenseMap[expenseAId]!;
     final expenseB = expenseMap[expenseBId];
     return expenseA.compareTo(
         expenseB,
@@ -168,7 +168,7 @@ var memoizedFilteredExpenseList = memo9((SelectionState selectionState,
         expenseCategoryMap,
         staticState));
 
-List<String> filteredExpensesSelector(
+List<String?> filteredExpensesSelector(
     SelectionState selectionState,
     BuiltMap<String, ExpenseEntity> expenseMap,
     BuiltMap<String, ClientEntity> clientMap,
@@ -182,7 +182,7 @@ List<String> filteredExpensesSelector(
   final filterEntityType = selectionState.filterEntityType;
 
   final list = expenseMap.keys.where((expenseId) {
-    final expense = expenseMap[expenseId];
+    final expense = expenseMap[expenseId]!;
     final expenseCategory =
         expenseCategoryMap[expense.categoryId] ?? ExpenseCategoryEntity();
     final vendor =
@@ -257,7 +257,7 @@ List<String> filteredExpensesSelector(
   }).toList();
 
   list.sort((expenseAId, expenseBId) {
-    final expenseA = expenseMap[expenseAId];
+    final expenseA = expenseMap[expenseAId]!;
     final expenseB = expenseMap[expenseBId];
     return expenseA.compareTo(
         expenseB,
@@ -317,24 +317,24 @@ EntityStats expenseStatsForClient(
 }
 
 var memoizedClientExpenseList = memo2(
-    (BuiltMap<String, ExpenseEntity> expenseMap, String clientId) =>
+    (BuiltMap<String, ExpenseEntity> expenseMap, String? clientId) =>
         clientExpenseList(expenseMap, clientId));
 
-List<String> clientExpenseList(
-    BuiltMap<String, ExpenseEntity> expenseMap, String clientId) {
+List<String?> clientExpenseList(
+    BuiltMap<String, ExpenseEntity> expenseMap, String? clientId) {
   final list = expenseMap.keys.where((expenseid) {
     final expense = expenseMap[expenseid];
     if ((clientId ?? '').isNotEmpty &&
-        (expense.clientId ?? '').isNotEmpty &&
+        (expense!.clientId ?? '').isNotEmpty &&
         expense.clientId != clientId) {
       return false;
     }
-    return expense.isActive && !expense.isInvoiced && expense.shouldBeInvoiced;
+    return expense!.isActive && !expense.isInvoiced && expense.shouldBeInvoiced;
   }).toList();
 
-  list.sort((idA, idB) => expenseMap[idA]
+  list.sort((idA, idB) => expenseMap[idA]!
       .listDisplayName
-      .compareTo(expenseMap[idB].listDisplayName));
+      .compareTo(expenseMap[idB]!.listDisplayName));
 
   return list;
 }

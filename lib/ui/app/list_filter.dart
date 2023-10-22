@@ -20,31 +20,31 @@ import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class ListFilter extends StatefulWidget {
   const ListFilter({
-    Key key,
-    @required this.entityType,
-    @required this.filter,
-    @required this.onFilterChanged,
-    @required this.entityIds,
+    Key? key,
+    required this.entityType,
+    required this.filter,
+    required this.onFilterChanged,
+    required this.entityIds,
     this.statuses,
     this.onSelectedStatus,
     this.onSelectedState,
   }) : super(key: key);
 
   final EntityType entityType;
-  final String filter;
-  final Function(String) onFilterChanged;
-  final List<String> entityIds;
-  final List<EntityStatus> statuses;
-  final Function(EntityStatus, bool) onSelectedStatus;
-  final Function(EntityState, bool) onSelectedState;
+  final String? filter;
+  final Function(String?) onFilterChanged;
+  final List<String?> entityIds;
+  final List<EntityStatus>? statuses;
+  final Function(EntityStatus, bool)? onSelectedStatus;
+  final Function(EntityState, bool)? onSelectedState;
 
   @override
   _ListFilterState createState() => new _ListFilterState();
 }
 
 class _ListFilterState extends State<ListFilter> {
-  TextEditingController _filterController;
-  FocusNode _focusNode;
+  TextEditingController? _filterController;
+  FocusNode? _focusNode;
   final _debouncer = Debouncer();
 
   @override
@@ -57,13 +57,13 @@ class _ListFilterState extends State<ListFilter> {
   void onFocusChanged() {
     // Check is needed to prevent the TextField from
     // refocusing when the users tries to tab out
-    if (_focusNode.hasFocus) {
+    if (_focusNode!.hasFocus) {
       setState(() {});
     }
   }
 
-  String get _getPlaceholder {
-    final localization = AppLocalization.of(context);
+  String? get _getPlaceholder {
+    final localization = AppLocalization.of(context)!;
     final count = widget.entityIds.length;
 
     final isDashboardOrSettings =
@@ -82,24 +82,24 @@ class _ListFilterState extends State<ListFilter> {
         : placeholder.replaceFirst(
             ':count',
             formatNumber(count.toDouble(), context,
-                formatNumberType: FormatNumberType.int));
+                formatNumberType: FormatNumberType.int)!);
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _filterController.text = widget.filter;
+    _filterController!.text = widget.filter ?? '';
 
     if (widget.filter != null) {
-      _focusNode.requestFocus();
+      _focusNode!.requestFocus();
     }
   }
 
   @override
   void dispose() {
-    _filterController.dispose();
-    _focusNode.removeListener(onFocusChanged);
-    _focusNode.dispose();
+    _filterController!.dispose();
+    _focusNode!.removeListener(onFocusChanged);
+    _focusNode!.dispose();
     super.dispose();
   }
 
@@ -159,10 +159,10 @@ class _ListFilterState extends State<ListFilter> {
                         .where((dynamic e) => !selected.contains(e));
 
                     for (var state in added) {
-                      widget.onSelectedState(state, true);
+                      widget.onSelectedState!(state, true);
                     }
                     for (var state in removed) {
-                      widget.onSelectedState(state, false);
+                      widget.onSelectedState!(state, false);
                     }
                   },
                   options: EntityState.values.toList(),
@@ -180,7 +180,7 @@ class _ListFilterState extends State<ListFilter> {
                       .getListState(widget.entityType)
                       .stateFilters
                       .toList(),
-                  whenEmpty: localization.all,
+                  whenEmpty: localization!.all,
                   menuItembuilder: (dynamic value) {
                     final state = value as EntityState;
                     return Text(
@@ -196,8 +196,9 @@ class _ListFilterState extends State<ListFilter> {
                           child: Text(
                             selected.isNotEmpty
                                 ? selected
-                                    .map<String>((dynamic value) => localization
-                                        .lookup((value as EntityState).name))
+                                    .map<String?>((dynamic value) =>
+                                        localization.lookup(
+                                            (value as EntityState).name))
                                     .join(', ')
                                 : localization.all,
                             style: TextStyle(fontSize: 15),
@@ -223,16 +224,16 @@ class _ListFilterState extends State<ListFilter> {
                         .contains((e as EntityStatus).id));
 
                     final removed = statusFilters.where((dynamic e) => !selected
-                        .map<String>((dynamic e) => e.id)
+                        .map<String?>((dynamic e) => e.id)
                         .toList()
                         .contains((e as EntityStatus).id));
 
                     for (var status in added) {
-                      widget.onSelectedStatus(status, true);
+                      widget.onSelectedStatus!(status, true);
                     }
 
                     for (var status in removed) {
-                      widget.onSelectedStatus(status, false);
+                      widget.onSelectedStatus!(status, false);
                     }
                   },
                   options: widget.statuses,
@@ -240,7 +241,7 @@ class _ListFilterState extends State<ListFilter> {
                       .getListState(widget.entityType)
                       .statusFilters
                       .toList(),
-                  whenEmpty: localization.all,
+                  whenEmpty: localization!.all,
                   menuItembuilder: (dynamic value) {
                     final state = value as EntityStatus;
                     return Text(localization.lookup(state.name));

@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/ui/subscription/view/subscription_view_vm.d
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class SubscriptionEditScreen extends StatelessWidget {
-  const SubscriptionEditScreen({Key key}) : super(key: key);
+  const SubscriptionEditScreen({Key? key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsPaymentLinksEdit';
 
   @override
@@ -44,20 +44,20 @@ class SubscriptionEditScreen extends StatelessWidget {
 
 class SubscriptionEditVM {
   SubscriptionEditVM({
-    @required this.state,
-    @required this.subscription,
-    @required this.company,
-    @required this.onChanged,
-    @required this.isSaving,
-    @required this.origSubscription,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
-    @required this.isLoading,
+    required this.state,
+    required this.subscription,
+    required this.company,
+    required this.onChanged,
+    required this.isSaving,
+    required this.origSubscription,
+    required this.onSavePressed,
+    required this.onCancelPressed,
+    required this.isLoading,
   });
 
   factory SubscriptionEditVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final subscription = state.subscriptionUIState.editing;
+    final subscription = state.subscriptionUIState.editing!;
 
     return SubscriptionEditVM(
       state: state,
@@ -70,10 +70,9 @@ class SubscriptionEditVM {
         store.dispatch(UpdateSubscription(subscription));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(
-            context: context, entity: SubscriptionEntity(), force: true);
+        createEntity(entity: SubscriptionEntity(), force: true);
         if (state.subscriptionUIState.cancelCompleter != null) {
-          state.subscriptionUIState.cancelCompleter.complete();
+          state.subscriptionUIState.cancelCompleter!.complete();
         } else {
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
@@ -84,14 +83,14 @@ class SubscriptionEditVM {
         }
 
         Debouncer.runOnComplete(() {
-          final subscription = store.state.subscriptionUIState.editing;
+          final subscription = store.state.subscriptionUIState.editing!;
           final localization = navigatorKey.localization;
           final navigator = navigatorKey.currentState;
           if (subscription.name.isEmpty) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
-                  return ErrorDialog(localization.pleaseEnterAName);
+                  return ErrorDialog(localization!.pleaseEnterAName);
                 });
             return null;
           }
@@ -101,21 +100,21 @@ class SubscriptionEditVM {
               completer: completer, subscription: subscription));
           return completer.future.then((savedSubscription) {
             showToast(subscription.isNew
-                ? localization.createdPaymentLink
-                : localization.updatedPaymentLink);
+                ? localization!.createdPaymentLink
+                : localization!.updatedPaymentLink);
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(SubscriptionViewScreen.route));
               if (subscription.isNew) {
-                navigator.pushReplacementNamed(SubscriptionViewScreen.route);
+                navigator!.pushReplacementNamed(SubscriptionViewScreen.route);
               } else {
-                navigator.pop(savedSubscription);
+                navigator!.pop(savedSubscription);
               }
             } else {
               viewEntity(entity: savedSubscription, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
                   return ErrorDialog(error);
                 });
@@ -126,12 +125,12 @@ class SubscriptionEditVM {
   }
 
   final SubscriptionEntity subscription;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(SubscriptionEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final bool isLoading;
   final bool isSaving;
-  final SubscriptionEntity origSubscription;
+  final SubscriptionEntity? origSubscription;
   final AppState state;
 }

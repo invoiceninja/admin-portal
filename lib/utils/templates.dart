@@ -15,12 +15,12 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'dialogs.dart';
 
 void loadEmailTemplate({
-  @required BuildContext context,
-  @required Function(String, String, String, String, String) onComplete,
-  String template,
-  String subject,
-  String body,
-  InvoiceEntity invoice,
+  required BuildContext context,
+  required Function(String?, String?, String?, String?, String?) onComplete,
+  String? template,
+  String? subject,
+  String? body,
+  InvoiceEntity? invoice,
 }) {
   if (Config.DEMO_MODE) {
     onComplete(subject, body, '', '', '');

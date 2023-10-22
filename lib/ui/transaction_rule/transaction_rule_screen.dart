@@ -16,8 +16,8 @@ import 'transaction_rule_screen_vm.dart';
 
 class TransactionRuleScreen extends StatelessWidget {
   const TransactionRuleScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsTransactionRules';
@@ -100,7 +100,7 @@ class TransactionRuleScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newTransactionRule,
+              tooltip: localization!.newTransactionRule,
             )
           : null,
     );

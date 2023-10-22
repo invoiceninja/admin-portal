@@ -40,7 +40,7 @@ List<String> dropdownTransactionsSelector(
     BuiltMap<String, BankAccountEntity> bankAccountMap,
     String clientId) {
   final list = transactionList.where((transactionId) {
-    final transaction = transactionMap[transactionId];
+    final transaction = transactionMap[transactionId]!;
     /*
     if (clientId != null && clientId > 0 && transaction.clientId != clientId) {
       return false;
@@ -50,7 +50,7 @@ List<String> dropdownTransactionsSelector(
   }).toList();
 
   list.sort((transactionAId, transactionBId) {
-    final transactionA = transactionMap[transactionAId];
+    final transactionA = transactionMap[transactionAId]!;
     final transactionB = transactionMap[transactionBId];
     return transactionA.compareTo(transactionB, TransactionFields.date, true,
         vendorMap, invoiceMap, expenseMap, expenseCategoryMap, bankAccountMap);
@@ -93,7 +93,7 @@ List<String> filteredTransactionsSelector(
   final filterEntityType = selectionState.filterEntityType;
 
   final list = transactionList.where((transactionId) {
-    final transaction = transactionMap[transactionId];
+    final transaction = transactionMap[transactionId]!;
 
     if (transaction.id == selectionState.selectedId) {
       return true;
@@ -136,7 +136,7 @@ List<String> filteredTransactionsSelector(
   }).toList();
 
   list.sort((transactionAId, transactionBId) {
-    final transactionA = transactionMap[transactionAId];
+    final transactionA = transactionMap[transactionAId]!;
     final transactionB = transactionMap[transactionBId];
     return transactionA.compareTo(
         transactionB,

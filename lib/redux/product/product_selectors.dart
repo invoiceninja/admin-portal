@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
@@ -12,29 +11,29 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 int productNotificationThreshold({
-  @required ProductEntity product,
-  @required CompanyEntity company,
+  required ProductEntity product,
+  required CompanyEntity? company,
 }) {
   if (product.stockNotificationThreshold != 0) {
     return product.stockNotificationThreshold;
   }
 
-  return company.stockNotificationThreshold;
+  return company!.stockNotificationThreshold;
 }
 
 InvoiceItemEntity convertProductToInvoiceItem({
-  @required ProductEntity product,
-  @required CompanyEntity company,
-  @required InvoiceEntity invoice,
-  @required BuiltMap<String, CurrencyEntity> currencyMap,
-  ClientEntity client,
+  required ProductEntity? product,
+  required CompanyEntity company,
+  required InvoiceEntity invoice,
+  required BuiltMap<String, CurrencyEntity> currencyMap,
+  ClientEntity? client,
 }) {
   if (company.fillProducts) {
     double cost = (invoice.isPurchaseOrder &&
             company.enableProductCost &&
-            product.cost != 0)
+            product!.cost != 0)
         ? product.cost
-        : product.price;
+        : product!.price;
 
     if (company.convertProductExchangeRate &&
         (client?.currencyId ?? '').isNotEmpty) {
@@ -42,8 +41,8 @@ InvoiceItemEntity convertProductToInvoiceItem({
       if (!company.convertRateToClient && exchangeRate != 0) {
         exchangeRate = 1 / exchangeRate;
       }
-      cost =
-          round(cost * exchangeRate, currencyMap[client.currencyId].precision);
+      cost = round(
+          cost * exchangeRate, currencyMap[client!.currencyId]!.precision);
     }
 
     return InvoiceItemEntity().rebuild((b) => b
@@ -64,7 +63,7 @@ InvoiceItemEntity convertProductToInvoiceItem({
       ..taxName3 = company.numberOfItemTaxRates >= 3 ? product.taxName3 : ''
       ..taxRate3 = company.numberOfItemTaxRates >= 3 ? product.taxRate3 : 0);
   } else {
-    return InvoiceItemEntity(productKey: product.productKey);
+    return InvoiceItemEntity(productKey: product!.productKey);
   }
 }
 
@@ -77,11 +76,12 @@ List<String> dropdownProductsSelector(
     BuiltMap<String, ProductEntity> productMap,
     BuiltList<String> productList,
     BuiltMap<String, UserEntity> userMap) {
-  final list =
-      productList.where((productId) => productMap[productId].isActive).toList();
+  final list = productList
+      .where((productId) => productMap[productId]!.isActive)
+      .toList();
 
   list.sort((productAId, productBId) {
-    final productA = productMap[productAId];
+    final productA = productMap[productAId]!;
     final productB = productMap[productBId];
     return productA.compareTo(
         productB, ProductFields.productKey, true, userMap);
@@ -93,14 +93,14 @@ List<String> dropdownProductsSelector(
 var memoizedProductList = memo1(
     (BuiltMap<String, ProductEntity> productMap) => productList(productMap));
 
-List<String> productList(BuiltMap<String, ProductEntity> productMap) {
+List<String?> productList(BuiltMap<String, ProductEntity> productMap) {
   final list = productMap.keys
-      .where((productId) => productMap[productId].isActive)
+      .where((productId) => productMap[productId]!.isActive)
       .toList();
 
-  list.sort((idA, idB) => productMap[idA]
+  list.sort((idA, idB) => productMap[idA]!
       .listDisplayName
-      .compareTo(productMap[idB].listDisplayName));
+      .compareTo(productMap[idB]!.listDisplayName));
 
   return list;
 }
@@ -120,7 +120,7 @@ List<String> filteredProductsSelector(
     ListUIState productListState,
     BuiltMap<String, UserEntity> userMap) {
   final list = productList.where((productId) {
-    final product = productMap[productId];
+    final product = productMap[productId]!;
 
     if (product.id == selectionState.selectedId) {
       return true;
@@ -150,7 +150,7 @@ List<String> filteredProductsSelector(
   }).toList();
 
   list.sort((productAId, productBId) {
-    final productA = productMap[productAId];
+    final productA = productMap[productAId]!;
     final productB = productMap[productBId];
     return productA.compareTo(productB, productListState.sortField,
         productListState.sortAscending, userMap);

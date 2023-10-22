@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:memoize/memoize.dart';
@@ -40,7 +41,7 @@ enum PurchaseOrderItemReportFields {
 }
 
 var memoizedPurchaseOrderItemReport = memo7((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, ProductEntity> productMap,
   BuiltMap<String, InvoiceEntity> purchaseOrderMap,
@@ -48,7 +49,7 @@ var memoizedPurchaseOrderItemReport = memo7((
   BuiltMap<String, VendorEntity> vendorMap,
   StaticState staticState,
 ) =>
-    lineItemReport(userCompany, reportsUIState, productMap, purchaseOrderMap,
+    lineItemReport(userCompany!, reportsUIState, productMap, purchaseOrderMap,
         clientMap, vendorMap, staticState));
 
 ReportResult lineItemReport(
@@ -63,11 +64,11 @@ ReportResult lineItemReport(
   final List<List<ReportElement>> data = [];
   BuiltList<PurchaseOrderItemReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
-  final lineItemReportSettings = reportSettings != null &&
-          reportSettings.containsKey(kReportPurchaseOrderItem)
-      ? reportSettings[kReportPurchaseOrderItem]
-      : ReportSettingsEntity();
+  final reportSettings = userCompany.settings.reportSettings;
+  final lineItemReportSettings =
+      reportSettings.containsKey(kReportPurchaseOrderItem)
+          ? reportSettings[kReportPurchaseOrderItem]!
+          : ReportSettingsEntity();
 
   final defaultColumns = [
     PurchaseOrderItemReportFields.purchaseOrderNumber,
@@ -81,7 +82,7 @@ ReportResult lineItemReport(
     columns = BuiltList(lineItemReportSettings.columns
         .map((e) =>
             EnumUtils.fromString(PurchaseOrderItemReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
@@ -99,8 +100,8 @@ ReportResult lineItemReport(
     final precision =
         staticState.currencyMap[client.currencyId]?.precision ?? 2;
 
-    if ((invoice.isDeleted && !userCompany.company.reportIncludeDeleted) ||
-        client.isDeleted) {
+    if ((invoice.isDeleted! && !userCompany.company.reportIncludeDeleted) ||
+        client.isDeleted!) {
       continue;
     }
 
@@ -127,12 +128,12 @@ ReportResult lineItemReport(
             if (lineItem.productCost != 0) {
               value = lineItem.productCost;
             } else {
-              value = productId == null ? 0.0 : productMap[productId].cost;
+              value = productId == null ? 0.0 : productMap[productId]!.cost;
             }
             break;
           case PurchaseOrderItemReportFields.profit:
             value = lineItem.netTotal(invoice, precision) -
-                (productId == null ? 0.0 : productMap[productId].cost);
+                (productId == null ? 0.0 : productMap[productId]!.cost);
             break;
           case PurchaseOrderItemReportFields.custom1:
             value = lineItem.customValue1;
@@ -197,10 +198,10 @@ ReportResult lineItemReport(
                     '';
             break;
           case PurchaseOrderItemReportFields.clientNumber:
-            value = client?.number ?? '';
+            value = client.number;
             break;
           case PurchaseOrderItemReportFields.clientIdNumber:
-            value = client?.idNumber ?? '';
+            value = client.idNumber;
             break;
         }
 
@@ -209,7 +210,7 @@ ReportResult lineItemReport(
           userCompany: userCompany,
           reportsUIState: reportsUIState,
           column: EnumUtils.parse(column),
-        )) {
+        )!) {
           skip = true;
         }
 
@@ -233,8 +234,8 @@ ReportResult lineItemReport(
   }
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
-  data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, lineItemReportSettings, selectedColumns));
+  data.sort((rowA, rowB) => sortReportTableRows(
+      rowA, rowB, lineItemReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns: PurchaseOrderItemReportFields.values

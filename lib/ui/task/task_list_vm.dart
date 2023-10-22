@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskListBuilder extends StatelessWidget {
-  const TaskListBuilder({Key key}) : super(key: key);
+  const TaskListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class TaskListBuilder extends StatelessWidget {
             onSortColumn: viewModel.onSortColumn,
             itemBuilder: (BuildContext context, index) {
               final taskId = viewModel.taskList[index];
-              final task = viewModel.taskMap[taskId];
+              final task = viewModel.taskMap[taskId]!;
 
               return TaskListItem(
                 filter: viewModel.filter,
@@ -56,27 +56,27 @@ class TaskListBuilder extends StatelessWidget {
 
 class TaskListVM {
   TaskListVM({
-    @required this.state,
-    @required this.user,
-    @required this.taskList,
-    @required this.taskMap,
-    @required this.clientMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.tableColumns,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.user,
+    required this.taskList,
+    required this.taskMap,
+    required this.clientMap,
+    required this.filter,
+    required this.isLoading,
+    required this.listState,
+    required this.onRefreshed,
+    required this.tableColumns,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
   });
 
   static TaskListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
       if (store.state.isLoading) {
-        return Future<Null>(null);
+        return Future<Null>.value();
       }
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -104,19 +104,19 @@ class TaskListVM {
       onSortColumn: (field) => store.dispatch(SortTasks(field)),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
-          state.userCompany.settings?.getTableColumns(EntityType.task) ??
+          state.userCompany.settings.getTableColumns(EntityType.task) ??
               TaskPresenter.getDefaultTableFields(state.userCompany),
       onClearMultielsect: () => store.dispatch(ClearTaskMultiselect()),
     );
   }
 
   final AppState state;
-  final UserEntity user;
+  final UserEntity? user;
   final List<String> taskList;
   final BuiltMap<String, TaskEntity> taskMap;
   final BuiltMap<String, ClientEntity> clientMap;
   final ListUIState listState;
-  final String filter;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final List<String> tableColumns;

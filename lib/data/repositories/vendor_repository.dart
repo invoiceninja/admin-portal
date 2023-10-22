@@ -25,7 +25,7 @@ class VendorRepository {
   final WebClient webClient;
 
   Future<VendorEntity> loadItem(
-      Credentials credentials, String entityId) async {
+      Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/vendors/$entityId?include=activities',
         credentials.token);
@@ -40,7 +40,7 @@ class VendorRepository {
   Future<BuiltList<VendorEntity>> loadList(
       Credentials credentials, int page) async {
     final String url =
-        credentials.url + '/vendors?per_page=$kMaxRecordsPerPage&page=$page';
+        credentials.url! + '/vendors?per_page=$kMaxRecordsPerPage&page=$page';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
@@ -57,13 +57,13 @@ class VendorRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url +
+    final url = credentials.url! +
         '/vendors/bulk?per_page=$kMaxEntitiesPerBulkAction&include=activities';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final VendorListResponse vendorResponse =
-        serializers.deserializeWith(VendorListResponse.serializer, response);
+        serializers.deserializeWith(VendorListResponse.serializer, response)!;
 
     return vendorResponse.data.toList();
   }
@@ -75,16 +75,16 @@ class VendorRepository {
 
     if (vendor.isNew) {
       response = await webClient.post(
-          credentials.url + '/vendors?include=activities', credentials.token,
+          credentials.url! + '/vendors?include=activities', credentials.token,
           data: json.encode(data));
     } else {
-      final url = credentials.url + '/vendors/${vendor.id}?include=activities';
+      final url = credentials.url! + '/vendors/${vendor.id}?include=activities';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }
 
     final VendorItemResponse vendorResponse =
-        serializers.deserializeWith(VendorItemResponse.serializer, response);
+        serializers.deserializeWith(VendorItemResponse.serializer, response)!;
 
     return vendorResponse.data;
   }
@@ -104,7 +104,7 @@ class VendorRepository {
         data: fields, multipartFiles: multipartFiles);
 
     final VendorItemResponse vendorResponse =
-        serializers.deserializeWith(VendorItemResponse.serializer, response);
+        serializers.deserializeWith(VendorItemResponse.serializer, response)!;
 
     return vendorResponse.data;
   }

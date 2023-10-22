@@ -19,8 +19,8 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
 
 class InvoiceEditPDF extends StatefulWidget {
   const InvoiceEditPDF({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final EntityEditPDFVM viewModel;
@@ -31,15 +31,15 @@ class InvoiceEditPDF extends StatefulWidget {
 
 class InvoiceEditPDFState extends State<InvoiceEditPDF> {
   bool _isLoading = false;
-  String _pdfString;
-  http.Response _response;
+  String? _pdfString;
+  http.Response? _response;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     final viewModel = widget.viewModel;
-    if (!viewModel.invoice.hasClient || _isLoading) {
+    if (!viewModel.invoice!.hasClient || _isLoading) {
       return;
     }
 
@@ -47,7 +47,7 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
       _isLoading = true;
     });
 
-    final invoice = viewModel.invoice;
+    final invoice = viewModel.invoice!;
     final state = viewModel.state;
     final credentials = state.credentials;
     final webClient = WebClient();
@@ -63,7 +63,7 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
       url += '/purchase_order';
     }
 
-    url += '?entity=${invoice.entityType.snakeCase}';
+    url += '?entity=${invoice.entityType!.snakeCase}';
 
     if (invoice.isOld) {
       url += '&entity_id=${invoice.id}';
@@ -95,8 +95,8 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
   Widget build(BuildContext context) {
     final state = widget.viewModel.state;
 
-    if (!widget.viewModel.invoice.hasClient) {
-      return HelpText(AppLocalization.of(context).noClientSelected);
+    if (!widget.viewModel.invoice!.hasClient) {
+      return HelpText(AppLocalization.of(context)!.noClientSelected);
     }
 
     if (_response == null) {
@@ -107,9 +107,9 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
 
     return Center(
       child: kIsWeb && state.prefState.enableNativeBrowser
-          ? HtmlElementView(viewType: _pdfString)
+          ? HtmlElementView(viewType: _pdfString!)
           : PdfPreview(
-              build: (format) => _response.bodyBytes,
+              build: (format) => _response!.bodyBytes,
               canChangeOrientation: false,
               canChangePageFormat: false,
               allowPrinting: false,

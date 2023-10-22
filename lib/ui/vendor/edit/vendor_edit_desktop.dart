@@ -13,8 +13,8 @@ import 'package:invoiceninja_flutter/ui/vendor/edit/vendor_edit_vm.dart';
 
 class VendorEditDesktop extends StatelessWidget {
   const VendorEditDesktop({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final VendorEditVM viewModel;

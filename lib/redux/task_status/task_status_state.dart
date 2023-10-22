@@ -33,7 +33,7 @@ abstract class TaskStatusState
 
   TaskStatusEntity get(String statusId) {
     if (map.containsKey(statusId)) {
-      return map[statusId];
+      return map[statusId]!;
     } else {
       return TaskStatusEntity(id: statusId);
     }
@@ -60,7 +60,7 @@ abstract class TaskStatusState
 abstract class TaskStatusUIState extends Object
     with EntityUIState
     implements Built<TaskStatusUIState, TaskStatusUIStateBuilder> {
-  factory TaskStatusUIState(PrefStateSortField sortField) {
+  factory TaskStatusUIState(PrefStateSortField? sortField) {
     return _$TaskStatusUIState._(
       listUIState: ListUIState(sortField?.field ?? TaskStatusFields.order,
           sortAscending: sortField?.ascending),
@@ -76,14 +76,13 @@ abstract class TaskStatusUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  TaskStatusEntity get editing;
+  TaskStatusEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<TaskStatusUIState> get serializer =>
       _$taskStatusUIStateSerializer;

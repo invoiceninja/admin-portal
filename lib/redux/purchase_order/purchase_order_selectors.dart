@@ -6,12 +6,12 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-VendorEntity purchaseOrderClientSelector(
+VendorEntity? purchaseOrderClientSelector(
     InvoiceEntity purchaseOrder, BuiltMap<String, VendorEntity> vendorMap) {
   return vendorMap[purchaseOrder.vendorId];
 }
 
-VendorContactEntity purchaseOrderContactSelector(
+VendorContactEntity? purchaseOrderContactSelector(
     InvoiceEntity purchaseOrder, VendorEntity vendor) {
   var contactIds = purchaseOrder.invitations
       .map((invitation) => invitation.clientContactId)
@@ -43,7 +43,7 @@ List<String> dropdownPurchaseOrdersSelector(
     BuiltMap<String, VendorEntity> vendorMap,
     String clientId) {
   final list = purchaseOrderList.where((purchaseOrderId) {
-    final purchaseOrder = purchaseOrderMap[purchaseOrderId];
+    final purchaseOrder = purchaseOrderMap[purchaseOrderId]!;
     /*
     if (clientId != null && clientId > 0 && purchaseOrder.clientId != clientId) {
       return false;
@@ -53,7 +53,7 @@ List<String> dropdownPurchaseOrdersSelector(
   }).toList();
 
   list.sort((purchaseOrderAId, purchaseOrderBId) {
-    final purchaseOrderA = purchaseOrderMap[purchaseOrderAId];
+    final purchaseOrderA = purchaseOrderMap[purchaseOrderAId]!;
     final purchaseOrderB = purchaseOrderMap[purchaseOrderBId];
     return purchaseOrderA.compareTo(
       invoice: purchaseOrderB,
@@ -93,7 +93,7 @@ List<String> filteredPurchaseOrdersSelector(
   final filterEntityType = selectionState.filterEntityType;
 
   final list = invoiceList.where((invoiceId) {
-    final invoice = invoiceMap[invoiceId];
+    final invoice = invoiceMap[invoiceId]!;
     final vendor =
         vendorMap[invoice.vendorId] ?? VendorEntity(id: invoice.vendorId);
 
@@ -114,7 +114,7 @@ List<String> filteredPurchaseOrdersSelector(
     } else if (filterEntityType == EntityType.recurringInvoice &&
         invoice.recurringId != filterEntityId) {
       return false;
-    } else if (filterEntityType == EntityType.subscription &&
+    } else if (filterEntityType == EntityType.paymentLink &&
         invoice.subscriptionId != filterEntityId) {
       return false;
     } else if (filterEntityType == EntityType.design &&
@@ -164,7 +164,7 @@ List<String> filteredPurchaseOrdersSelector(
   }).toList();
 
   list.sort((invoiceAId, invoiceBId) {
-    return invoiceMap[invoiceAId].compareTo(
+    return invoiceMap[invoiceAId]!.compareTo(
       invoice: invoiceMap[invoiceBId],
       sortField: invoiceListState.sortField,
       sortAscending: invoiceListState.sortAscending,

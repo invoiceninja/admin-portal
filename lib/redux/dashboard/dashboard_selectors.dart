@@ -18,7 +18,7 @@ class ChartDataGroup {
   final String name;
   final List<ChartMoneyData> rawSeries = [];
   Map<String, List<String>> entityMap = {};
-  List<Series<dynamic, DateTime>> chartSeries;
+  late List<Series<dynamic, DateTime>> chartSeries;
   double periodTotal = 0.0;
   double previousTotal = 0.0;
   double total = 0.0;
@@ -29,57 +29,57 @@ class ChartMoneyData {
   ChartMoneyData(this.date, this.amount);
 
   final DateTime date;
-  final double amount;
+  final double? amount;
 }
 
 var memoizedChartInvoices = memo5((
   BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity company,
+  CompanyEntity? company,
   DashboardUISettings settings,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
 ) =>
     _chartInvoices(
         currencyMap: currencyMap,
-        company: company,
+        company: company!,
         settings: settings,
         invoiceMap: invoiceMap,
         clientMap: clientMap));
 
 var memoizedChartOverviewInvoices = memo5((
   BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity company,
+  CompanyEntity? company,
   DashboardUISettings settings,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
 ) =>
     _chartInvoices(
         currencyMap: currencyMap,
-        company: company,
+        company: company!,
         settings: settings,
         invoiceMap: invoiceMap,
         clientMap: clientMap));
 
 var memoizedPreviousChartInvoices = memo5((
   BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity company,
+  CompanyEntity? company,
   DashboardUISettings settings,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
 ) =>
     _chartInvoices(
         currencyMap: currencyMap,
-        company: company,
+        company: company!,
         settings: settings,
         invoiceMap: invoiceMap,
         clientMap: clientMap));
 
 List<ChartDataGroup> _chartInvoices({
-  BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity company,
-  DashboardUISettings settings,
-  BuiltMap<String, InvoiceEntity> invoiceMap,
-  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, CurrencyEntity>? currencyMap,
+  required CompanyEntity company,
+  required DashboardUISettings settings,
+  required BuiltMap<String, InvoiceEntity> invoiceMap,
+  BuiltMap<String, ClientEntity>? clientMap,
 }) {
   const STATUS_ACTIVE = 'active';
   const STATUS_OUTSTANDING = 'outstanding';
@@ -99,7 +99,7 @@ List<ChartDataGroup> _chartInvoices({
 
   invoiceMap.forEach((int, invoice) {
     final client =
-        clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
+        clientMap![invoice.clientId] ?? ClientEntity(id: invoice.clientId);
 
     // Fix for mock data
     var date = invoice.date.split('T')[0];
@@ -112,9 +112,9 @@ List<ChartDataGroup> _chartInvoices({
     }
 
     if (!invoice.isSent ||
-        invoice.isDeleted ||
+        invoice.isDeleted! ||
         invoice.isCancelledOrReversed ||
-        client.isDeleted ||
+        client.isDeleted! ||
         date.isEmpty) {
       // skip it
     } else if (!settings.matchesCurrency(client.currencyId)) {
@@ -141,27 +141,28 @@ List<ChartDataGroup> _chartInvoices({
       outstandingData.total += balance;
 
       if (invoice.isBetween(
-          settings.startDate(company), settings.endDate(company))) {
-        if (totals[STATUS_ACTIVE][date] == null) {
-          totals[STATUS_ACTIVE][date] = 0.0;
-          totals[STATUS_OUTSTANDING][date] = 0.0;
+          settings.startDate(company)!, settings.endDate(company))) {
+        if (totals[STATUS_ACTIVE]![date] == null) {
+          totals[STATUS_ACTIVE]![date] = 0.0;
+          totals[STATUS_OUTSTANDING]![date] = 0.0;
 
           activeData.entityMap[date] = [];
           outstandingData.entityMap[date] = [];
         }
 
-        totals[STATUS_ACTIVE][date] += amount;
-        totals[STATUS_OUTSTANDING][date] += balance;
+        totals[STATUS_ACTIVE]![date] = totals[STATUS_ACTIVE]![date]! + amount;
+        totals[STATUS_OUTSTANDING]![date] =
+            totals[STATUS_OUTSTANDING]![date]! + balance;
 
         activeData.periodTotal += amount;
         outstandingData.periodTotal += balance;
 
-        counts[STATUS_ACTIVE]++;
-        activeData.entityMap[date].add(invoice.id);
+        counts[STATUS_ACTIVE] = counts[STATUS_ACTIVE]! + 1;
+        activeData.entityMap[date]!.add(invoice.id);
 
         if (invoice.balance > 0) {
-          counts[STATUS_OUTSTANDING]++;
-          outstandingData.entityMap[date].add(invoice.id);
+          counts[STATUS_OUTSTANDING] = counts[STATUS_OUTSTANDING]! + 1;
+          outstandingData.entityMap[date]!.add(invoice.id);
         }
       }
     }
@@ -172,11 +173,11 @@ List<ChartDataGroup> _chartInvoices({
 
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
-    if (totals[STATUS_ACTIVE].containsKey(key)) {
+    if (totals[STATUS_ACTIVE]!.containsKey(key)) {
       activeData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_ACTIVE][key]));
+          .add(ChartMoneyData(date, totals[STATUS_ACTIVE]![key]));
       outstandingData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_OUTSTANDING][key]));
+          .add(ChartMoneyData(date, totals[STATUS_OUTSTANDING]![key]));
     } else {
       activeData.rawSeries.add(ChartMoneyData(date, 0.0));
       outstandingData.rawSeries.add(ChartMoneyData(date, 0.0));
@@ -192,10 +193,10 @@ List<ChartDataGroup> _chartInvoices({
   }
 
   activeData.average = (counts[STATUS_ACTIVE] ?? 0) > 0
-      ? round(activeData.periodTotal / counts[STATUS_ACTIVE], 2)
+      ? round(activeData.periodTotal / counts[STATUS_ACTIVE]!, 2)
       : 0;
   outstandingData.average = (counts[STATUS_OUTSTANDING] ?? 0) > 0
-      ? round(outstandingData.periodTotal / counts[STATUS_OUTSTANDING], 2)
+      ? round(outstandingData.periodTotal / counts[STATUS_OUTSTANDING]!, 2)
       : 0;
 
   final List<ChartDataGroup> data = [
@@ -208,14 +209,14 @@ List<ChartDataGroup> _chartInvoices({
 
 var memoizedChartQuotes = memo5((
   BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity company,
+  CompanyEntity? company,
   DashboardUISettings settings,
   BuiltMap<String, InvoiceEntity> quoteMap,
   BuiltMap<String, ClientEntity> clientMap,
 ) =>
     chartQuotes(
       currencyMap: currencyMap,
-      company: company,
+      company: company!,
       settings: settings,
       quoteMap: quoteMap,
       clientMap: clientMap,
@@ -223,25 +224,25 @@ var memoizedChartQuotes = memo5((
 
 var memoizedPreviousChartQuotes = memo5((
   BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity company,
+  CompanyEntity? company,
   DashboardUISettings settings,
   BuiltMap<String, InvoiceEntity> quoteMap,
   BuiltMap<String, ClientEntity> clientMap,
 ) =>
     chartQuotes(
       currencyMap: currencyMap,
-      company: company,
+      company: company!,
       settings: settings,
       quoteMap: quoteMap,
       clientMap: clientMap,
     ));
 
 List<ChartDataGroup> chartQuotes({
-  BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity company,
-  DashboardUISettings settings,
-  BuiltMap<String, InvoiceEntity> quoteMap,
-  BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, CurrencyEntity>? currencyMap,
+  required CompanyEntity company,
+  required DashboardUISettings settings,
+  required BuiltMap<String, InvoiceEntity> quoteMap,
+  BuiltMap<String, ClientEntity>? clientMap,
 }) {
   const STATUS_ACTIVE = 'active';
   const STATUS_APPROVED = 'approved';
@@ -265,7 +266,7 @@ List<ChartDataGroup> chartQuotes({
 
   quoteMap.forEach((int, quote) {
     final client =
-        clientMap[quote.clientId] ?? ClientEntity(id: quote.clientId);
+        clientMap![quote.clientId] ?? ClientEntity(id: quote.clientId);
     var date = quote.date;
     if (date.isNotEmpty) {
       if (settings.groupBy == kReportGroupYear) {
@@ -275,7 +276,10 @@ List<ChartDataGroup> chartQuotes({
       }
     }
 
-    if (!quote.isSent || quote.isDeleted || client.isDeleted || date.isEmpty) {
+    if (!quote.isSent ||
+        quote.isDeleted! ||
+        client.isDeleted! ||
+        date.isEmpty) {
       // skip it
     } else if (!settings.matchesCurrency(client.currencyId)) {
       // skip it
@@ -301,30 +305,32 @@ List<ChartDataGroup> chartQuotes({
       }
 
       if (quote.isBetween(
-          settings.startDate(company), settings.endDate(company))) {
-        if (totals[STATUS_ACTIVE][date] == null) {
-          totals[STATUS_ACTIVE][date] = 0.0;
-          totals[STATUS_APPROVED][date] = 0.0;
-          totals[STATUS_UNAPPROVED][date] = 0.0;
+          settings.startDate(company)!, settings.endDate(company))) {
+        if (totals[STATUS_ACTIVE]![date] == null) {
+          totals[STATUS_ACTIVE]![date] = 0.0;
+          totals[STATUS_APPROVED]![date] = 0.0;
+          totals[STATUS_UNAPPROVED]![date] = 0.0;
 
           activeData.entityMap[date] = [];
           approvedData.entityMap[date] = [];
           unapprovedData.entityMap[date] = [];
         }
 
-        totals[STATUS_ACTIVE][date] += amount;
-        counts[STATUS_ACTIVE]++;
-        activeData.entityMap[date].add(quote.id);
+        totals[STATUS_ACTIVE]![date] = totals[STATUS_ACTIVE]![date]! + amount;
+        counts[STATUS_ACTIVE] = counts[STATUS_ACTIVE]! + 1;
+        activeData.entityMap[date]!.add(quote.id);
 
         if (quote.isApproved) {
-          totals[STATUS_APPROVED][date] += amount;
-          counts[STATUS_APPROVED]++;
-          approvedData.entityMap[date].add(quote.id);
+          totals[STATUS_APPROVED]![date] =
+              totals[STATUS_APPROVED]![date]! + amount;
+          counts[STATUS_APPROVED] = counts[STATUS_APPROVED]! + 1;
+          approvedData.entityMap[date]!.add(quote.id);
           approvedData.periodTotal += amount;
         } else {
-          totals[STATUS_UNAPPROVED][date] += amount;
-          counts[STATUS_UNAPPROVED]++;
-          unapprovedData.entityMap[date].add(quote.id);
+          totals[STATUS_UNAPPROVED]![date] =
+              totals[STATUS_UNAPPROVED]![date]! + amount;
+          counts[STATUS_UNAPPROVED] = counts[STATUS_UNAPPROVED]! + 1;
+          unapprovedData.entityMap[date]!.add(quote.id);
           unapprovedData.periodTotal += amount;
         }
       }
@@ -336,13 +342,13 @@ List<ChartDataGroup> chartQuotes({
 
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
-    if (totals[STATUS_ACTIVE].containsKey(key)) {
+    if (totals[STATUS_ACTIVE]!.containsKey(key)) {
       activeData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_ACTIVE][key]));
+          .add(ChartMoneyData(date, totals[STATUS_ACTIVE]![key]));
       approvedData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_APPROVED][key]));
+          .add(ChartMoneyData(date, totals[STATUS_APPROVED]![key]));
       unapprovedData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_UNAPPROVED][key]));
+          .add(ChartMoneyData(date, totals[STATUS_UNAPPROVED]![key]));
     } else {
       activeData.rawSeries.add(ChartMoneyData(date, 0.0));
       approvedData.rawSeries.add(ChartMoneyData(date, 0.0));
@@ -359,13 +365,13 @@ List<ChartDataGroup> chartQuotes({
   }
 
   activeData.average = (counts[STATUS_ACTIVE] ?? 0) > 0
-      ? round(activeData.periodTotal / counts[STATUS_ACTIVE], 2)
+      ? round(activeData.periodTotal / counts[STATUS_ACTIVE]!, 2)
       : 0;
   approvedData.average = (counts[STATUS_APPROVED] ?? 0) > 0
-      ? round(approvedData.periodTotal / counts[STATUS_APPROVED], 2)
+      ? round(approvedData.periodTotal / counts[STATUS_APPROVED]!, 2)
       : 0;
   unapprovedData.average = (counts[STATUS_UNAPPROVED] ?? 0) > 0
-      ? round(unapprovedData.periodTotal / counts[STATUS_UNAPPROVED], 2)
+      ? round(unapprovedData.periodTotal / counts[STATUS_UNAPPROVED]!, 2)
       : 0;
 
   final List<ChartDataGroup> data = [
@@ -379,7 +385,7 @@ List<ChartDataGroup> chartQuotes({
 
 var memoizedChartPayments = memo6((
   BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity company,
+  CompanyEntity? company,
   DashboardUISettings settings,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
@@ -387,7 +393,7 @@ var memoizedChartPayments = memo6((
 ) =>
     chartPayments(
       currencyMap,
-      company,
+      company!,
       settings,
       invoiceMap,
       clientMap,
@@ -396,7 +402,7 @@ var memoizedChartPayments = memo6((
 
 var memoizedPreviousChartPayments = memo6((
   BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity company,
+  CompanyEntity? company,
   DashboardUISettings settings,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
@@ -404,7 +410,7 @@ var memoizedPreviousChartPayments = memo6((
 ) =>
     chartPayments(
       currencyMap,
-      company,
+      company!,
       settings,
       invoiceMap,
       clientMap,
@@ -447,9 +453,9 @@ List<ChartDataGroup> chartPayments(
       }
     }
 
-    if (payment.isDeleted ||
+    if (payment.isDeleted! ||
         !payment.isCompletedOrPartiallyRefunded ||
-        client.isDeleted ||
+        client.isDeleted! ||
         date.isEmpty) {
       // skip it
     } else if (!settings.matchesCurrency(client.currencyId)) {
@@ -479,31 +485,33 @@ List<ChartDataGroup> chartPayments(
       }
 
       activeData.total += completedAmount;
-      if ((payment.refunded ?? 0) > 0) {
-        refundedData.total += refunded ?? 0;
+      if ((payment.refunded) > 0) {
+        refundedData.total += refunded;
       }
 
       if (payment.isBetween(
-          settings.startDate(company), settings.endDate(company))) {
-        if (totals[STATUS_COMPLETED][date] == null) {
-          totals[STATUS_COMPLETED][date] = 0.0;
-          totals[STATUS_REFUNDED][date] = 0.0;
+          settings.startDate(company)!, settings.endDate(company))) {
+        if (totals[STATUS_COMPLETED]![date] == null) {
+          totals[STATUS_COMPLETED]![date] = 0.0;
+          totals[STATUS_REFUNDED]![date] = 0.0;
 
           activeData.entityMap[date] = [];
           refundedData.entityMap[date] = [];
         }
 
-        totals[STATUS_COMPLETED][date] += completedAmount;
-        totals[STATUS_REFUNDED][date] += refunded ?? 0;
+        totals[STATUS_COMPLETED]![date] =
+            totals[STATUS_COMPLETED]![date]! + completedAmount;
+        totals[STATUS_REFUNDED]![date] =
+            totals[STATUS_REFUNDED]![date]! + refunded;
 
-        counts[STATUS_COMPLETED]++;
-        activeData.entityMap[date].add(payment.id);
+        counts[STATUS_COMPLETED] = counts[STATUS_COMPLETED]! + 1;
+        activeData.entityMap[date]!.add(payment.id);
         activeData.periodTotal += completedAmount;
 
-        if ((payment.refunded ?? 0) > 0) {
-          counts[STATUS_REFUNDED]++;
-          refundedData.entityMap[date].add(payment.id);
-          refundedData.periodTotal += refunded ?? 0;
+        if ((payment.refunded) > 0) {
+          counts[STATUS_REFUNDED] = counts[STATUS_REFUNDED]! + 1;
+          refundedData.entityMap[date]!.add(payment.id);
+          refundedData.periodTotal += refunded;
         }
       }
     }
@@ -514,11 +522,11 @@ List<ChartDataGroup> chartPayments(
 
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
-    if (totals[STATUS_COMPLETED].containsKey(key)) {
+    if (totals[STATUS_COMPLETED]!.containsKey(key)) {
       activeData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_COMPLETED][key]));
+          .add(ChartMoneyData(date, totals[STATUS_COMPLETED]![key]));
       refundedData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_REFUNDED][key]));
+          .add(ChartMoneyData(date, totals[STATUS_REFUNDED]![key]));
     } else {
       activeData.rawSeries.add(ChartMoneyData(date, 0.0));
       refundedData.rawSeries.add(ChartMoneyData(date, 0.0));
@@ -534,10 +542,10 @@ List<ChartDataGroup> chartPayments(
   }
 
   activeData.average = (counts[STATUS_COMPLETED] ?? 0) > 0
-      ? round(activeData.periodTotal / counts[STATUS_COMPLETED], 2)
+      ? round(activeData.periodTotal / counts[STATUS_COMPLETED]!, 2)
       : 0;
   refundedData.average = (counts[STATUS_REFUNDED] ?? 0) > 0
-      ? round(refundedData.periodTotal / counts[STATUS_REFUNDED], 2)
+      ? round(refundedData.periodTotal / counts[STATUS_REFUNDED]!, 2)
       : 0;
 
   final List<ChartDataGroup> data = [
@@ -550,7 +558,7 @@ List<ChartDataGroup> chartPayments(
 
 var memoizedChartTasks = memo8((
   BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity company,
+  CompanyEntity? company,
   DashboardUISettings settings,
   BuiltMap<String, TaskEntity> taskMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
@@ -560,7 +568,7 @@ var memoizedChartTasks = memo8((
 ) =>
     chartTasks(
       currencyMap,
-      company,
+      company!,
       settings,
       taskMap,
       invoiceMap,
@@ -571,7 +579,7 @@ var memoizedChartTasks = memo8((
 
 var memoizedPreviousChartTasks = memo8((
   BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity company,
+  CompanyEntity? company,
   DashboardUISettings settings,
   BuiltMap<String, TaskEntity> taskMap,
   BuiltMap<String, InvoiceEntity> invoiceMap,
@@ -581,7 +589,7 @@ var memoizedPreviousChartTasks = memo8((
 ) =>
     chartTasks(
       currencyMap,
-      company,
+      company!,
       settings,
       taskMap,
       invoiceMap,
@@ -628,13 +636,13 @@ List<ChartDataGroup> chartTasks(
         projectMap[task.projectId] ?? ProjectEntity(id: task.projectId);
     final group = groupMap[client.groupId] ?? GroupEntity(id: client.groupId);
 
-    if (task.isDeleted || client.isDeleted || project.isDeleted) {
+    if (task.isDeleted! || client.isDeleted! || project.isDeleted!) {
       // skip it
     } else if (!settings.matchesCurrency(client.currencyId)) {
       // skip it
     } else {
       task.getTaskTimes().forEach((taskTime) {
-        taskTime.getParts().forEach((date, duration) {
+        taskTime!.getParts().forEach((date, duration) {
           if (settings.groupBy == kReportGroupYear) {
             date = date.substring(0, 4) + '-01-01';
           } else if (settings.groupBy == kReportGroupMonth) {
@@ -647,7 +655,7 @@ List<ChartDataGroup> chartTasks(
             client: client,
             task: task,
             group: group,
-          );
+          )!;
           double amount = taskRate * round(duration.inSeconds / 3600, 3);
 
           // Handle "All"
@@ -663,7 +671,7 @@ List<ChartDataGroup> chartTasks(
 
           if (task.isInvoiced) {
             if (invoiceMap.containsKey(task.invoiceId) &&
-                invoiceMap[task.invoiceId].isPaid) {
+                invoiceMap[task.invoiceId]!.isPaid) {
               paidData.total += amount;
             } else {
               invoicedData.total += amount;
@@ -674,10 +682,10 @@ List<ChartDataGroup> chartTasks(
 
           if (task.isBetween(
               settings.startDate(company), settings.endDate(company))) {
-            if (totals[STATUS_LOGGED][date] == null) {
-              totals[STATUS_LOGGED][date] = 0.0;
-              totals[STATUS_INVOICED][date] = 0.0;
-              totals[STATUS_PAID][date] = 0.0;
+            if (totals[STATUS_LOGGED]![date] == null) {
+              totals[STATUS_LOGGED]![date] = 0.0;
+              totals[STATUS_INVOICED]![date] = 0.0;
+              totals[STATUS_PAID]![date] = 0.0;
 
               loggedData.entityMap[date] = [];
               invoicedData.entityMap[date] = [];
@@ -686,18 +694,21 @@ List<ChartDataGroup> chartTasks(
 
             if (task.isInvoiced) {
               if (invoiceMap.containsKey(task.invoiceId) &&
-                  invoiceMap[task.invoiceId].isPaid) {
-                totals[STATUS_PAID][date] += amount;
-                paidData.entityMap[date].add(task.id);
+                  invoiceMap[task.invoiceId]!.isPaid) {
+                totals[STATUS_PAID]![date] =
+                    totals[STATUS_PAID]![date]! + amount;
+                paidData.entityMap[date]!.add(task.id);
                 paidData.periodTotal += amount;
               } else {
-                totals[STATUS_INVOICED][date] += amount;
-                invoicedData.entityMap[date].add(task.id);
+                totals[STATUS_INVOICED]![date] =
+                    totals[STATUS_INVOICED]![date]! + amount;
+                invoicedData.entityMap[date]!.add(task.id);
                 invoicedData.periodTotal += amount;
               }
             } else {
-              totals[STATUS_LOGGED][date] += amount;
-              loggedData.entityMap[date].add(task.id);
+              totals[STATUS_LOGGED]![date] =
+                  totals[STATUS_LOGGED]![date]! + amount;
+              loggedData.entityMap[date]!.add(task.id);
               loggedData.periodTotal += amount;
             }
           }
@@ -706,13 +717,13 @@ List<ChartDataGroup> chartTasks(
 
       if (task.isInvoiced) {
         if (invoiceMap.containsKey(task.invoiceId) &&
-            invoiceMap[task.invoiceId].isPaid) {
-          counts[STATUS_PAID]++;
+            invoiceMap[task.invoiceId]!.isPaid) {
+          counts[STATUS_PAID] = counts[STATUS_PAID]! + 1;
         } else {
-          counts[STATUS_INVOICED]++;
+          counts[STATUS_INVOICED] = counts[STATUS_INVOICED]! + 1;
         }
       } else {
-        counts[STATUS_LOGGED]++;
+        counts[STATUS_LOGGED] = counts[STATUS_LOGGED]! + 1;
       }
     }
   });
@@ -722,12 +733,12 @@ List<ChartDataGroup> chartTasks(
 
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
-    if (totals[STATUS_LOGGED].containsKey(key)) {
+    if (totals[STATUS_LOGGED]!.containsKey(key)) {
       loggedData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_LOGGED][key]));
+          .add(ChartMoneyData(date, totals[STATUS_LOGGED]![key]));
       invoicedData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_INVOICED][key]));
-      paidData.rawSeries.add(ChartMoneyData(date, totals[STATUS_PAID][key]));
+          .add(ChartMoneyData(date, totals[STATUS_INVOICED]![key]));
+      paidData.rawSeries.add(ChartMoneyData(date, totals[STATUS_PAID]![key]));
     } else {
       loggedData.rawSeries.add(ChartMoneyData(date, 0.0));
       invoicedData.rawSeries.add(ChartMoneyData(date, 0.0));
@@ -744,13 +755,13 @@ List<ChartDataGroup> chartTasks(
   }
 
   loggedData.average = (counts[STATUS_LOGGED] ?? 0) > 0
-      ? round(loggedData.periodTotal / counts[STATUS_LOGGED], 2)
+      ? round(loggedData.periodTotal / counts[STATUS_LOGGED]!, 2)
       : 0;
   invoicedData.average = (counts[STATUS_INVOICED] ?? 0) > 0
-      ? round(invoicedData.periodTotal / counts[STATUS_INVOICED], 2)
+      ? round(invoicedData.periodTotal / counts[STATUS_INVOICED]!, 2)
       : 0;
   paidData.average = (counts[STATUS_PAID] ?? 0) > 0
-      ? round(paidData.periodTotal / counts[STATUS_PAID], 2)
+      ? round(paidData.periodTotal / counts[STATUS_PAID]!, 2)
       : 0;
 
   final List<ChartDataGroup> data = [
@@ -794,7 +805,7 @@ List<ChartDataGroup> chartExpenses(
 
   expenseMap.forEach((int, expense) {
     final currencyId = expense.currencyId;
-    var date = expense.date;
+    var date = expense.date!;
     if (date.isNotEmpty) {
       if (settings.groupBy == kReportGroupYear) {
         date = date.substring(0, 4) + '-01-01';
@@ -806,7 +817,7 @@ List<ChartDataGroup> chartExpenses(
     double amount =
         settings.includeTaxes ? expense.grossAmount : expense.netAmount;
 
-    if (expense.isDeleted || date.isEmpty) {
+    if (expense.isDeleted! || date.isEmpty) {
       // skip it
     } else if (!settings.matchesCurrency(currencyId)) {
       // skip it
@@ -836,11 +847,11 @@ List<ChartDataGroup> chartExpenses(
 
       if (expense.isBetween(
           settings.startDate(company), settings.endDate(company))) {
-        if (totals[STATUS_LOGGED][date] == null) {
-          totals[STATUS_LOGGED][date] = 0.0;
-          totals[STATUS_PENDING][date] = 0.0;
-          totals[STATUS_INVOICED][date] = 0.0;
-          totals[STATUS_PAID][date] = 0.0;
+        if (totals[STATUS_LOGGED]![date] == null) {
+          totals[STATUS_LOGGED]![date] = 0.0;
+          totals[STATUS_PENDING]![date] = 0.0;
+          totals[STATUS_INVOICED]![date] = 0.0;
+          totals[STATUS_PAID]![date] = 0.0;
 
           loggedData.entityMap[date] = [];
           pendingData.entityMap[date] = [];
@@ -851,25 +862,27 @@ List<ChartDataGroup> chartExpenses(
         if (expense.isInvoiced) {
           final invoice = invoiceMap[expense.invoiceId] ?? InvoiceEntity();
           if (invoice.isPaid) {
-            totals[STATUS_PAID][date] += amount;
-            counts[STATUS_PAID]++;
-            paidData.entityMap[date].add(expense.id);
+            totals[STATUS_PAID]![date] = totals[STATUS_PAID]![date]! + amount;
+            counts[STATUS_PAID] = counts[STATUS_PAID]! + 1;
+            paidData.entityMap[date]!.add(expense.id);
             paidData.periodTotal += amount;
           } else {
-            totals[STATUS_INVOICED][date] += amount;
-            counts[STATUS_INVOICED]++;
-            invoicedData.entityMap[date].add(expense.id);
+            totals[STATUS_INVOICED]![date] =
+                totals[STATUS_INVOICED]![date]! + amount;
+            counts[STATUS_INVOICED] = counts[STATUS_INVOICED]! + 1;
+            invoicedData.entityMap[date]!.add(expense.id);
             invoicedData.periodTotal += amount;
           }
         } else if (expense.isPending) {
-          totals[STATUS_PENDING][date] += amount;
-          counts[STATUS_PENDING]++;
-          pendingData.entityMap[date].add(expense.id);
+          totals[STATUS_PENDING]![date] =
+              totals[STATUS_PENDING]![date]! + amount;
+          counts[STATUS_PENDING] = counts[STATUS_PENDING]! + 1;
+          pendingData.entityMap[date]!.add(expense.id);
           pendingData.periodTotal += amount;
         } else {
-          totals[STATUS_LOGGED][date] += amount;
-          counts[STATUS_LOGGED]++;
-          loggedData.entityMap[date].add(expense.id);
+          totals[STATUS_LOGGED]![date] = totals[STATUS_LOGGED]![date]! + amount;
+          counts[STATUS_LOGGED] = counts[STATUS_LOGGED]! + 1;
+          loggedData.entityMap[date]!.add(expense.id);
           loggedData.periodTotal += amount;
         }
       }
@@ -881,14 +894,14 @@ List<ChartDataGroup> chartExpenses(
 
   while (!date.isAfter(endDate)) {
     final key = convertDateTimeToSqlDate(date);
-    if (totals[STATUS_LOGGED].containsKey(key)) {
+    if (totals[STATUS_LOGGED]!.containsKey(key)) {
       loggedData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_LOGGED][key]));
+          .add(ChartMoneyData(date, totals[STATUS_LOGGED]![key]));
       pendingData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_PENDING][key]));
+          .add(ChartMoneyData(date, totals[STATUS_PENDING]![key]));
       invoicedData.rawSeries
-          .add(ChartMoneyData(date, totals[STATUS_INVOICED][key]));
-      paidData.rawSeries.add(ChartMoneyData(date, totals[STATUS_PAID][key]));
+          .add(ChartMoneyData(date, totals[STATUS_INVOICED]![key]));
+      paidData.rawSeries.add(ChartMoneyData(date, totals[STATUS_PAID]![key]));
     } else {
       loggedData.rawSeries.add(ChartMoneyData(date, 0.0));
       pendingData.rawSeries.add(ChartMoneyData(date, 0.0));
@@ -906,16 +919,16 @@ List<ChartDataGroup> chartExpenses(
   }
 
   loggedData.average = (counts[STATUS_LOGGED] ?? 0) > 0
-      ? round(loggedData.periodTotal / counts[STATUS_LOGGED], 2)
+      ? round(loggedData.periodTotal / counts[STATUS_LOGGED]!, 2)
       : 0;
   pendingData.average = (counts[STATUS_PENDING] ?? 0) > 0
-      ? round(pendingData.periodTotal / counts[STATUS_PENDING], 2)
+      ? round(pendingData.periodTotal / counts[STATUS_PENDING]!, 2)
       : 0;
   invoicedData.average = (counts[STATUS_INVOICED] ?? 0) > 0
-      ? round(invoicedData.periodTotal / counts[STATUS_INVOICED], 2)
+      ? round(invoicedData.periodTotal / counts[STATUS_INVOICED]!, 2)
       : 0;
   paidData.average = (counts[STATUS_PAID] ?? 0) > 0
-      ? round(paidData.periodTotal / counts[STATUS_PAID], 2)
+      ? round(paidData.periodTotal / counts[STATUS_PAID]!, 2)
       : 0;
 
   final List<ChartDataGroup> data = [
@@ -929,31 +942,31 @@ List<ChartDataGroup> chartExpenses(
 }
 
 var memoizedChartExpenses = memo5((BuiltMap<String, CurrencyEntity> currencyMap,
-        CompanyEntity company,
+        CompanyEntity? company,
         DashboardUISettings settings,
         BuiltMap<String, InvoiceEntity> invoiceMap,
         BuiltMap<String, ExpenseEntity> expenseMap) =>
-    chartExpenses(currencyMap, company, settings, invoiceMap, expenseMap));
+    chartExpenses(currencyMap, company!, settings, invoiceMap, expenseMap));
 
 var memoizedPreviousChartExpenses = memo5(
     (BuiltMap<String, CurrencyEntity> currencyMap,
-            CompanyEntity company,
+            CompanyEntity? company,
             DashboardUISettings settings,
             BuiltMap<String, InvoiceEntity> invoiceMap,
             BuiltMap<String, ExpenseEntity> expenseMap) =>
-        chartExpenses(currencyMap, company, settings, invoiceMap, expenseMap));
+        chartExpenses(currencyMap, company!, settings, invoiceMap, expenseMap));
 
 var memoizedRunningTasks = memo2(
     (BuiltMap<String, TaskEntity> taskMap, String userId) =>
         runningTasks(taskMap, userId));
 
-List<TaskEntity> runningTasks(
+List<TaskEntity?> runningTasks(
     BuiltMap<String, TaskEntity> taskMap, String userId) {
-  final tasks = <TaskEntity>[];
+  final tasks = <TaskEntity?>[];
 
   taskMap.forEach((taskId, task) {
     if (task.isRunning &&
-        !task.isDeleted &&
+        !task.isDeleted! &&
         (task.createdUserId == userId || task.assignedUserId == userId)) {
       tasks.add(task);
     }

@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProjectListBuilder extends StatelessWidget {
-  const ProjectListBuilder({Key key}) : super(key: key);
+  const ProjectListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class ProjectListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final projectId = viewModel.projectList[index];
-              final project = viewModel.projectMap[projectId];
+              final project = viewModel.projectMap[projectId]!;
               final listState = state.getListState(EntityType.project);
               final isInMultiselect = listState.isInMultiselect();
 
@@ -61,26 +61,26 @@ class ProjectListBuilder extends StatelessWidget {
 
 class ProjectListVM {
   ProjectListVM({
-    @required this.state,
-    @required this.projectList,
-    @required this.projectMap,
-    @required this.clientMap,
-    @required this.listState,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.onRefreshed,
-    @required this.tableColumns,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.projectList,
+    required this.projectMap,
+    required this.clientMap,
+    required this.listState,
+    required this.filter,
+    required this.isLoading,
+    required this.onRefreshed,
+    required this.tableColumns,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
   });
 
   static ProjectListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
       if (store.state.isLoading) {
-        return Future<Null>(null);
+        return Future<Null>.value();
       }
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -104,7 +104,7 @@ class ProjectListVM {
       filter: state.projectUIState.listUIState.filter,
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
-          state.userCompany.settings?.getTableColumns(EntityType.project) ??
+          state.userCompany.settings.getTableColumns(EntityType.project) ??
               ProjectPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortProjects(field)),
       onClearMultielsect: () => store.dispatch(ClearProjectMultiselect()),
@@ -116,7 +116,7 @@ class ProjectListVM {
   final BuiltMap<String, ProjectEntity> projectMap;
   final BuiltMap<String, ClientEntity> clientMap;
   final ListUIState listState;
-  final String filter;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final List<String> tableColumns;

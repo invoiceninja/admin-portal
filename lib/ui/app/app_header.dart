@@ -6,22 +6,22 @@ import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 
 class AppHeader extends StatelessWidget {
   const AppHeader({
-    @required this.label,
-    @required this.value,
+    required this.label,
+    required this.value,
     this.secondLabel,
     this.secondValue,
     this.message,
   });
 
   final String label;
-  final String value;
-  final String secondLabel;
-  final String secondValue;
-  final String message;
+  final String? value;
+  final String? secondLabel;
+  final String? secondValue;
+  final String? message;
 
   @override
   Widget build(BuildContext context) {
-    final textColor = Theme.of(context).textTheme.bodyLarge.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
     Widget _value1() {
       return Column(
@@ -31,14 +31,14 @@ class AppHeader extends StatelessWidget {
           Text(label,
               style: TextStyle(
                 fontSize: 16.0,
-                color: textColor.withOpacity(.65),
+                color: textColor!.withOpacity(.65),
               )),
           SizedBox(
             height: 8,
           ),
           FittedBox(
             child: Text(
-              (value ?? '').isEmpty ? ' ' : value,
+              (value ?? '').isEmpty ? ' ' : value!,
               style: TextStyle(
                 fontSize: 30,
               ),
@@ -53,17 +53,17 @@ class AppHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text(secondLabel,
+          Text(secondLabel!,
               style: TextStyle(
                 fontSize: 16.0,
-                color: textColor.withOpacity(.65),
+                color: textColor!.withOpacity(.65),
               )),
           SizedBox(
             height: 8,
           ),
           FittedBox(
             child: Text(
-              (secondValue ?? '').isEmpty ? ' ' : secondValue,
+              (secondValue ?? '').isEmpty ? ' ' : secondValue!,
               style: TextStyle(
                 fontSize: 30,
               ),
@@ -87,7 +87,7 @@ class AppHeader extends StatelessWidget {
         if (message != null)
           Padding(
             padding: const EdgeInsets.only(top: 16),
-            child: Text(message),
+            child: Text(message!),
           )
       ],
     );

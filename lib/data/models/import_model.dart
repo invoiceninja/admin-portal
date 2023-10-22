@@ -1,6 +1,3 @@
-// Flutter imports:
-import 'package:flutter/foundation.dart';
-
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
@@ -14,7 +11,10 @@ part 'import_model.g.dart';
 abstract class PreImportResponse
     implements Built<PreImportResponse, PreImportResponseBuilder> {
   factory PreImportResponse() {
-    return _$PreImportResponse._();
+    return _$PreImportResponse._(
+      hash: '',
+      mappings: BuiltMap<String, PreImportResponseEntityDetails>(),
+    );
   }
 
   PreImportResponse._();
@@ -36,7 +36,10 @@ abstract class PreImportResponseEntityDetails
         Built<PreImportResponseEntityDetails,
             PreImportResponseEntityDetailsBuilder> {
   factory PreImportResponseEntityDetails() {
-    return _$PreImportResponseEntityDetails._();
+    return _$PreImportResponseEntityDetails._(
+      available: BuiltList<String>(),
+      headers: BuiltList<BuiltList<String>>(),
+    );
   }
 
   PreImportResponseEntityDetails._();
@@ -61,11 +64,11 @@ abstract class PreImportResponseEntityDetails
 abstract class ImportRequest
     implements Built<ImportRequest, ImportRequestBuilder> {
   factory ImportRequest({
-    @required String hash,
-    @required String importType,
-    @required bool skipHeader,
-    @required String bankAccountId,
-    @required BuiltMap<String, ImportRequestMapping> columnMap,
+    required String hash,
+    required String importType,
+    required bool skipHeader,
+    required String bankAccountId,
+    required BuiltMap<String, ImportRequestMapping> columnMap,
   }) {
     return _$ImportRequest._(
       hash: hash,

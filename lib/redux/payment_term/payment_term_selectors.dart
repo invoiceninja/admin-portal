@@ -17,7 +17,7 @@ List<String> dropdownPaymentTermsSelector(
     BuiltList<String> paymentTermList) {
   final Map<int, bool> numDays = {};
   final list = paymentTermList.where((paymentTermId) {
-    final paymentTerm = paymentTermMap[paymentTermId];
+    final paymentTerm = paymentTermMap[paymentTermId]!;
     if (!paymentTerm.isActive) {
       return false;
     }
@@ -29,8 +29,8 @@ List<String> dropdownPaymentTermsSelector(
   }).toList();
 
   list.sort((paymentTermAId, paymentTermBId) {
-    final paymentTermA = paymentTermMap[paymentTermAId];
-    final paymentTermB = paymentTermMap[paymentTermBId];
+    final paymentTermA = paymentTermMap[paymentTermAId]!;
+    final paymentTermB = paymentTermMap[paymentTermBId]!;
     return paymentTermA.compareTo(paymentTermB, PaymentTermFields.name, true);
   });
 
@@ -50,7 +50,7 @@ List<String> filteredPaymentTermsSelector(
     BuiltList<String> paymentTermList,
     ListUIState paymentTermListState) {
   final list = paymentTermList.where((paymentTermId) {
-    final paymentTerm = paymentTermMap[paymentTermId];
+    final paymentTerm = paymentTermMap[paymentTermId]!;
 
     if (paymentTerm.id == selectionState.selectedId) {
       return true;
@@ -63,8 +63,8 @@ List<String> filteredPaymentTermsSelector(
   }).toList();
 
   list.sort((paymentTermAId, paymentTermBId) {
-    final paymentTermA = paymentTermMap[paymentTermAId];
-    final paymentTermB = paymentTermMap[paymentTermBId];
+    final paymentTermA = paymentTermMap[paymentTermAId]!;
+    final paymentTermB = paymentTermMap[paymentTermBId]!;
     return paymentTermA.compareTo(paymentTermB, paymentTermListState.sortField,
         paymentTermListState.sortAscending);
   });

@@ -25,7 +25,7 @@ import 'package:invoiceninja_flutter/ui/recurring_invoice/view/recurring_invoice
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class RecurringInvoiceEditScreen extends StatelessWidget {
-  const RecurringInvoiceEditScreen({Key key}) : super(key: key);
+  const RecurringInvoiceEditScreen({Key? key}) : super(key: key);
 
   static const String route = '/recurring_invoice/edit';
 
@@ -38,7 +38,7 @@ class RecurringInvoiceEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return RecurringInvoiceEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.invoice.updatedAt),
+          key: ValueKey(viewModel.invoice!.updatedAt),
         );
       },
     );
@@ -47,16 +47,16 @@ class RecurringInvoiceEditScreen extends StatelessWidget {
 
 class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
   RecurringInvoiceEditVM({
-    AppState state,
-    CompanyEntity company,
-    InvoiceEntity invoice,
-    int invoiceItemIndex,
-    InvoiceEntity origInvoice,
-    Function(BuildContext) onSavePressed,
-    Function(List<InvoiceItemEntity>, String, String) onItemsAdded,
-    bool isSaving,
-    Function(BuildContext) onCancelPressed,
-    Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
+    AppState? state,
+    CompanyEntity? company,
+    InvoiceEntity? invoice,
+    int? invoiceItemIndex,
+    InvoiceEntity? origInvoice,
+    Function(BuildContext, [EntityAction?])? onSavePressed,
+    Function(List<InvoiceItemEntity>, String?, String?)? onItemsAdded,
+    bool? isSaving,
+    Function(BuildContext)? onCancelPressed,
+    Function(BuildContext, List<MultipartFile>, bool)? onUploadDocuments,
   }) : super(
           state: state,
           company: company,
@@ -72,7 +72,7 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
 
   factory RecurringInvoiceEditVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
-    final recurringInvoice = state.recurringInvoiceUIState.editing;
+    final recurringInvoice = state.recurringInvoiceUIState.editing!;
 
     return RecurringInvoiceEditVM(
       state: state,
@@ -81,17 +81,17 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
       invoice: recurringInvoice,
       invoiceItemIndex: state.recurringInvoiceUIState.editingItemIndex,
       origInvoice: store.state.recurringInvoiceState.map[recurringInvoice.id],
-      onSavePressed: (BuildContext context, [EntityAction action]) {
+      onSavePressed: (BuildContext context, [EntityAction? action]) {
         Debouncer.runOnComplete(() {
-          final recurringInvoice = store.state.recurringInvoiceUIState.editing;
+          final recurringInvoice = store.state.recurringInvoiceUIState.editing!;
           final localization = navigatorKey.localization;
           final navigator = navigatorKey.currentState;
 
           if (recurringInvoice.clientId.isEmpty) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
-                  return ErrorDialog(localization.pleaseSelectAClient);
+                  return ErrorDialog(localization!.pleaseSelectAClient);
                 });
             return null;
           }
@@ -109,17 +109,17 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
                 action: action));
             return completer.future.then((savedRecurringInvoice) {
               showToast(recurringInvoice.isNew
-                  ? localization.createdRecurringInvoice
-                  : localization.updatedRecurringInvoice);
+                  ? localization!.createdRecurringInvoice
+                  : localization!.updatedRecurringInvoice);
 
               if (state.prefState.isMobile) {
                 store.dispatch(
                     UpdateCurrentRoute(RecurringInvoiceViewScreen.route));
                 if (recurringInvoice.isNew) {
-                  navigator
+                  navigator!
                       .pushReplacementNamed(RecurringInvoiceViewScreen.route);
                 } else {
-                  navigator.pop(savedRecurringInvoice);
+                  navigator!.pop(savedRecurringInvoice);
                 }
               } else {
                 if (!state.prefState.isPreviewVisible) {
@@ -142,7 +142,7 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext,
+                  context: navigatorKey.currentContext!,
                   builder: (BuildContext context) {
                     return ErrorDialog(error);
                   });
@@ -161,20 +161,20 @@ class RecurringInvoiceEditVM extends AbstractInvoiceEditVM {
         if (['pdf', 'email'].contains(state.uiState.previousSubRoute)) {
           viewEntitiesByType(entityType: EntityType.recurringInvoice);
         } else {
-          createEntity(context: context, entity: InvoiceEntity(), force: true);
+          createEntity(entity: InvoiceEntity(), force: true);
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
       },
       onUploadDocuments: (BuildContext context,
           List<MultipartFile> multipartFile, bool isPrivate) {
-        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        final completer = Completer<List<DocumentEntity>>();
         store.dispatch(SaveRecurringInvoiceDocumentRequest(
             isPrivate: isPrivate,
             multipartFiles: multipartFile,
             invoice: recurringInvoice,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context).uploadedDocument);
+          showToast(AppLocalization.of(context)!.uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,

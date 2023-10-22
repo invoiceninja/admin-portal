@@ -21,9 +21,9 @@ class _$TaskListResponseSerializer
   final String wireName = 'TaskListResponse';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, TaskListResponse object,
+  Iterable<Object?> serialize(Serializers serializers, TaskListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType:
@@ -35,21 +35,21 @@ class _$TaskListResponseSerializer
 
   @override
   TaskListResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TaskListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(TaskEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(TaskEntity)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -66,9 +66,9 @@ class _$TaskItemResponseSerializer
   final String wireName = 'TaskItemResponse';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, TaskItemResponse object,
+  Iterable<Object?> serialize(Serializers serializers, TaskItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(TaskEntity)),
@@ -79,19 +79,19 @@ class _$TaskItemResponseSerializer
 
   @override
   TaskItemResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TaskItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TaskEntity)) as TaskEntity);
+              specifiedType: const FullType(TaskEntity))! as TaskEntity);
           break;
       }
     }
@@ -107,9 +107,9 @@ class _$TaskTimeSerializer implements StructuredSerializer<TaskTime> {
   final String wireName = 'TaskTime';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, TaskTime object,
+  Iterable<Object?> serialize(Serializers serializers, TaskTime object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'description',
       serializers.serialize(object.description,
           specifiedType: const FullType(String)),
@@ -117,7 +117,7 @@ class _$TaskTimeSerializer implements StructuredSerializer<TaskTime> {
       serializers.serialize(object.isBillable,
           specifiedType: const FullType(bool)),
     ];
-    Object value;
+    Object? value;
     value = object.startDate;
     if (value != null) {
       result
@@ -136,31 +136,31 @@ class _$TaskTimeSerializer implements StructuredSerializer<TaskTime> {
   }
 
   @override
-  TaskTime deserialize(Serializers serializers, Iterable<Object> serialized,
+  TaskTime deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TaskTimeBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'startDate':
           result.startDate = serializers.deserialize(value,
-              specifiedType: const FullType(DateTime)) as DateTime;
+              specifiedType: const FullType(DateTime)) as DateTime?;
           break;
         case 'endDate':
           result.endDate = serializers.deserialize(value,
-              specifiedType: const FullType(DateTime)) as DateTime;
+              specifiedType: const FullType(DateTime)) as DateTime?;
           break;
         case 'description':
           result.description = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'isBillable':
           result.isBillable = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
       }
     }
@@ -176,9 +176,9 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
   final String wireName = 'TaskEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, TaskEntity object,
+  Iterable<Object?> serialize(Serializers serializers, TaskEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'description',
       serializers.serialize(object.description,
           specifiedType: const FullType(String)),
@@ -230,7 +230,7 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.statusOrder;
     if (value != null) {
       result
@@ -269,105 +269,105 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
   }
 
   @override
-  TaskEntity deserialize(Serializers serializers, Iterable<Object> serialized,
+  TaskEntity deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TaskEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'description':
           result.description = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'number':
           result.number = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'invoice_id':
           result.invoiceId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'client_id':
           result.clientId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'rate':
           result.rate = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'project_id':
           result.projectId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'time_log':
           result.timeLog = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value3':
           result.customValue3 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'status_id':
           result.statusId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'status_order':
           result.statusOrder = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'documents':
           result.documents.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(DocumentEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(DocumentEntity)]))!
+              as BuiltList<Object?>);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'archived_at':
           result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'user_id':
           result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -381,10 +381,10 @@ class _$TaskListResponse extends TaskListResponse {
   final BuiltList<TaskEntity> data;
 
   factory _$TaskListResponse(
-          [void Function(TaskListResponseBuilder) updates]) =>
+          [void Function(TaskListResponseBuilder)? updates]) =>
       (new TaskListResponseBuilder()..update(updates))._build();
 
-  _$TaskListResponse._({this.data}) : super._() {
+  _$TaskListResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'TaskListResponse', 'data');
   }
 
@@ -402,10 +402,10 @@ class _$TaskListResponse extends TaskListResponse {
     return other is TaskListResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -421,12 +421,12 @@ class _$TaskListResponse extends TaskListResponse {
 
 class TaskListResponseBuilder
     implements Builder<TaskListResponse, TaskListResponseBuilder> {
-  _$TaskListResponse _$v;
+  _$TaskListResponse? _$v;
 
-  ListBuilder<TaskEntity> _data;
+  ListBuilder<TaskEntity>? _data;
   ListBuilder<TaskEntity> get data =>
       _$this._data ??= new ListBuilder<TaskEntity>();
-  set data(ListBuilder<TaskEntity> data) => _$this._data = data;
+  set data(ListBuilder<TaskEntity>? data) => _$this._data = data;
 
   TaskListResponseBuilder();
 
@@ -446,7 +446,7 @@ class TaskListResponseBuilder
   }
 
   @override
-  void update(void Function(TaskListResponseBuilder) updates) {
+  void update(void Function(TaskListResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -458,7 +458,7 @@ class TaskListResponseBuilder
     try {
       _$result = _$v ?? new _$TaskListResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -478,10 +478,10 @@ class _$TaskItemResponse extends TaskItemResponse {
   final TaskEntity data;
 
   factory _$TaskItemResponse(
-          [void Function(TaskItemResponseBuilder) updates]) =>
+          [void Function(TaskItemResponseBuilder)? updates]) =>
       (new TaskItemResponseBuilder()..update(updates))._build();
 
-  _$TaskItemResponse._({this.data}) : super._() {
+  _$TaskItemResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'TaskItemResponse', 'data');
   }
 
@@ -499,10 +499,10 @@ class _$TaskItemResponse extends TaskItemResponse {
     return other is TaskItemResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -518,11 +518,11 @@ class _$TaskItemResponse extends TaskItemResponse {
 
 class TaskItemResponseBuilder
     implements Builder<TaskItemResponse, TaskItemResponseBuilder> {
-  _$TaskItemResponse _$v;
+  _$TaskItemResponse? _$v;
 
-  TaskEntityBuilder _data;
+  TaskEntityBuilder? _data;
   TaskEntityBuilder get data => _$this._data ??= new TaskEntityBuilder();
-  set data(TaskEntityBuilder data) => _$this._data = data;
+  set data(TaskEntityBuilder? data) => _$this._data = data;
 
   TaskItemResponseBuilder();
 
@@ -542,7 +542,7 @@ class TaskItemResponseBuilder
   }
 
   @override
-  void update(void Function(TaskItemResponseBuilder) updates) {
+  void update(void Function(TaskItemResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -554,7 +554,7 @@ class TaskItemResponseBuilder
     try {
       _$result = _$v ?? new _$TaskItemResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -571,19 +571,22 @@ class TaskItemResponseBuilder
 
 class _$TaskTime extends TaskTime {
   @override
-  final DateTime startDate;
+  final DateTime? startDate;
   @override
-  final DateTime endDate;
+  final DateTime? endDate;
   @override
   final String description;
   @override
   final bool isBillable;
 
-  factory _$TaskTime([void Function(TaskTimeBuilder) updates]) =>
+  factory _$TaskTime([void Function(TaskTimeBuilder)? updates]) =>
       (new TaskTimeBuilder()..update(updates))._build();
 
   _$TaskTime._(
-      {this.startDate, this.endDate, this.description, this.isBillable})
+      {this.startDate,
+      this.endDate,
+      required this.description,
+      required this.isBillable})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         description, r'TaskTime', 'description');
@@ -608,10 +611,10 @@ class _$TaskTime extends TaskTime {
         isBillable == other.isBillable;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, startDate.hashCode);
     _$hash = $jc(_$hash, endDate.hashCode);
@@ -633,23 +636,23 @@ class _$TaskTime extends TaskTime {
 }
 
 class TaskTimeBuilder implements Builder<TaskTime, TaskTimeBuilder> {
-  _$TaskTime _$v;
+  _$TaskTime? _$v;
 
-  DateTime _startDate;
-  DateTime get startDate => _$this._startDate;
-  set startDate(DateTime startDate) => _$this._startDate = startDate;
+  DateTime? _startDate;
+  DateTime? get startDate => _$this._startDate;
+  set startDate(DateTime? startDate) => _$this._startDate = startDate;
 
-  DateTime _endDate;
-  DateTime get endDate => _$this._endDate;
-  set endDate(DateTime endDate) => _$this._endDate = endDate;
+  DateTime? _endDate;
+  DateTime? get endDate => _$this._endDate;
+  set endDate(DateTime? endDate) => _$this._endDate = endDate;
 
-  String _description;
-  String get description => _$this._description;
-  set description(String description) => _$this._description = description;
+  String? _description;
+  String? get description => _$this._description;
+  set description(String? description) => _$this._description = description;
 
-  bool _isBillable;
-  bool get isBillable => _$this._isBillable;
-  set isBillable(bool isBillable) => _$this._isBillable = isBillable;
+  bool? _isBillable;
+  bool? get isBillable => _$this._isBillable;
+  set isBillable(bool? isBillable) => _$this._isBillable = isBillable;
 
   TaskTimeBuilder();
 
@@ -672,7 +675,7 @@ class TaskTimeBuilder implements Builder<TaskTime, TaskTimeBuilder> {
   }
 
   @override
-  void update(void Function(TaskTimeBuilder) updates) {
+  void update(void Function(TaskTimeBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -719,11 +722,11 @@ class _$TaskEntity extends TaskEntity {
   @override
   final String statusId;
   @override
-  final int statusOrder;
+  final int? statusOrder;
   @override
   final BuiltList<DocumentEntity> documents;
   @override
-  final bool isChanged;
+  final bool? isChanged;
   @override
   final int createdAt;
   @override
@@ -731,40 +734,40 @@ class _$TaskEntity extends TaskEntity {
   @override
   final int archivedAt;
   @override
-  final bool isDeleted;
+  final bool? isDeleted;
   @override
-  final String createdUserId;
+  final String? createdUserId;
   @override
-  final String assignedUserId;
+  final String? assignedUserId;
   @override
   final String id;
 
-  factory _$TaskEntity([void Function(TaskEntityBuilder) updates]) =>
+  factory _$TaskEntity([void Function(TaskEntityBuilder)? updates]) =>
       (new TaskEntityBuilder()..update(updates))._build();
 
   _$TaskEntity._(
-      {this.description,
-      this.number,
-      this.invoiceId,
-      this.clientId,
-      this.rate,
-      this.projectId,
-      this.timeLog,
-      this.customValue1,
-      this.customValue2,
-      this.customValue3,
-      this.customValue4,
-      this.statusId,
+      {required this.description,
+      required this.number,
+      required this.invoiceId,
+      required this.clientId,
+      required this.rate,
+      required this.projectId,
+      required this.timeLog,
+      required this.customValue1,
+      required this.customValue2,
+      required this.customValue3,
+      required this.customValue4,
+      required this.statusId,
       this.statusOrder,
-      this.documents,
+      required this.documents,
       this.isChanged,
-      this.createdAt,
-      this.updatedAt,
-      this.archivedAt,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.archivedAt,
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.id})
+      required this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         description, r'TaskEntity', 'description');
@@ -831,10 +834,10 @@ class _$TaskEntity extends TaskEntity {
         id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, description.hashCode);
     _$hash = $jc(_$hash, number.hashCode);
@@ -892,99 +895,99 @@ class _$TaskEntity extends TaskEntity {
 }
 
 class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
-  _$TaskEntity _$v;
+  _$TaskEntity? _$v;
 
-  String _description;
-  String get description => _$this._description;
-  set description(String description) => _$this._description = description;
+  String? _description;
+  String? get description => _$this._description;
+  set description(String? description) => _$this._description = description;
 
-  String _number;
-  String get number => _$this._number;
-  set number(String number) => _$this._number = number;
+  String? _number;
+  String? get number => _$this._number;
+  set number(String? number) => _$this._number = number;
 
-  String _invoiceId;
-  String get invoiceId => _$this._invoiceId;
-  set invoiceId(String invoiceId) => _$this._invoiceId = invoiceId;
+  String? _invoiceId;
+  String? get invoiceId => _$this._invoiceId;
+  set invoiceId(String? invoiceId) => _$this._invoiceId = invoiceId;
 
-  String _clientId;
-  String get clientId => _$this._clientId;
-  set clientId(String clientId) => _$this._clientId = clientId;
+  String? _clientId;
+  String? get clientId => _$this._clientId;
+  set clientId(String? clientId) => _$this._clientId = clientId;
 
-  double _rate;
-  double get rate => _$this._rate;
-  set rate(double rate) => _$this._rate = rate;
+  double? _rate;
+  double? get rate => _$this._rate;
+  set rate(double? rate) => _$this._rate = rate;
 
-  String _projectId;
-  String get projectId => _$this._projectId;
-  set projectId(String projectId) => _$this._projectId = projectId;
+  String? _projectId;
+  String? get projectId => _$this._projectId;
+  set projectId(String? projectId) => _$this._projectId = projectId;
 
-  String _timeLog;
-  String get timeLog => _$this._timeLog;
-  set timeLog(String timeLog) => _$this._timeLog = timeLog;
+  String? _timeLog;
+  String? get timeLog => _$this._timeLog;
+  set timeLog(String? timeLog) => _$this._timeLog = timeLog;
 
-  String _customValue1;
-  String get customValue1 => _$this._customValue1;
-  set customValue1(String customValue1) => _$this._customValue1 = customValue1;
+  String? _customValue1;
+  String? get customValue1 => _$this._customValue1;
+  set customValue1(String? customValue1) => _$this._customValue1 = customValue1;
 
-  String _customValue2;
-  String get customValue2 => _$this._customValue2;
-  set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+  String? _customValue2;
+  String? get customValue2 => _$this._customValue2;
+  set customValue2(String? customValue2) => _$this._customValue2 = customValue2;
 
-  String _customValue3;
-  String get customValue3 => _$this._customValue3;
-  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+  String? _customValue3;
+  String? get customValue3 => _$this._customValue3;
+  set customValue3(String? customValue3) => _$this._customValue3 = customValue3;
 
-  String _customValue4;
-  String get customValue4 => _$this._customValue4;
-  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+  String? _customValue4;
+  String? get customValue4 => _$this._customValue4;
+  set customValue4(String? customValue4) => _$this._customValue4 = customValue4;
 
-  String _statusId;
-  String get statusId => _$this._statusId;
-  set statusId(String statusId) => _$this._statusId = statusId;
+  String? _statusId;
+  String? get statusId => _$this._statusId;
+  set statusId(String? statusId) => _$this._statusId = statusId;
 
-  int _statusOrder;
-  int get statusOrder => _$this._statusOrder;
-  set statusOrder(int statusOrder) => _$this._statusOrder = statusOrder;
+  int? _statusOrder;
+  int? get statusOrder => _$this._statusOrder;
+  set statusOrder(int? statusOrder) => _$this._statusOrder = statusOrder;
 
-  ListBuilder<DocumentEntity> _documents;
+  ListBuilder<DocumentEntity>? _documents;
   ListBuilder<DocumentEntity> get documents =>
       _$this._documents ??= new ListBuilder<DocumentEntity>();
-  set documents(ListBuilder<DocumentEntity> documents) =>
+  set documents(ListBuilder<DocumentEntity>? documents) =>
       _$this._documents = documents;
 
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+  bool? _isChanged;
+  bool? get isChanged => _$this._isChanged;
+  set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
 
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+  int? _archivedAt;
+  int? get archivedAt => _$this._archivedAt;
+  set archivedAt(int? archivedAt) => _$this._archivedAt = archivedAt;
 
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+  bool? _isDeleted;
+  bool? get isDeleted => _$this._isDeleted;
+  set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
 
-  String _createdUserId;
-  String get createdUserId => _$this._createdUserId;
-  set createdUserId(String createdUserId) =>
+  String? _createdUserId;
+  String? get createdUserId => _$this._createdUserId;
+  set createdUserId(String? createdUserId) =>
       _$this._createdUserId = createdUserId;
 
-  String _assignedUserId;
-  String get assignedUserId => _$this._assignedUserId;
-  set assignedUserId(String assignedUserId) =>
+  String? _assignedUserId;
+  String? get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String? assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   TaskEntityBuilder();
 
@@ -1025,7 +1028,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
   }
 
   @override
-  void update(void Function(TaskEntityBuilder) updates) {
+  void update(void Function(TaskEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -1069,7 +1072,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
               assignedUserId: assignedUserId,
               id: BuiltValueNullFieldError.checkNotNull(id, r'TaskEntity', 'id'));
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'documents';
         documents.build();

@@ -9,21 +9,21 @@ import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 
 class TransactionRuleListItem extends StatelessWidget {
   const TransactionRuleListItem({
-    @required this.user,
-    @required this.transactionRule,
-    @required this.filter,
+    required this.user,
+    required this.transactionRule,
+    required this.filter,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
 
-  final UserEntity user;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
+  final UserEntity? user;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onLongPress;
   final TransactionRuleEntity transactionRule;
-  final String filter;
-  final Function(bool) onCheckboxChanged;
+  final String? filter;
+  final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
 
   @override
@@ -36,7 +36,7 @@ class TransactionRuleListItem extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
-    final filterMatch = filter != null && filter.isNotEmpty
+    final filterMatch = filter != null && filter!.isNotEmpty
         ? transactionRule.matchesFilterValue(filter)
         : null;
 
@@ -67,13 +67,13 @@ class TransactionRuleListItem extends StatelessWidget {
       entity: transactionRule,
       isSelected: transactionRule.id ==
           (uiState.isEditing
-              ? transactionRuleUIState.editing.id
+              ? transactionRuleUIState.editing!.id
               : transactionRuleUIState.selectedId),
       child: ListTile(
         onTap: () =>
-            onTap != null ? onTap() : selectEntity(entity: transactionRule),
+            onTap != null ? onTap!() : selectEntity(entity: transactionRule),
         onLongPress: () => onLongPress != null
-            ? onLongPress()
+            ? onLongPress!()
             : selectEntity(entity: transactionRule, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
@@ -81,7 +81,7 @@ class TransactionRuleListItem extends StatelessWidget {
                 child: Checkbox(
                   value: isChecked,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  onChanged: (value) => onCheckboxChanged(value),
+                  onChanged: (value) => onCheckboxChanged!(value),
                   activeColor: Theme.of(context).colorScheme.secondary,
                 ),
               )
@@ -96,7 +96,7 @@ class TransactionRuleListItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Text(formatNumber(transactionRule.listDisplayAmount, context),
+              Text(formatNumber(transactionRule.listDisplayAmount, context)!,
                   style: Theme.of(context).textTheme.titleMedium),
             ],
           ),
@@ -104,7 +104,7 @@ class TransactionRuleListItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            subtitle != null && subtitle.isNotEmpty
+            subtitle.isNotEmpty
                 ? Text(
                     subtitle,
                     maxLines: 3,

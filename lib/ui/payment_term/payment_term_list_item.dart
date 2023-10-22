@@ -15,21 +15,21 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class PaymentTermListItem extends StatelessWidget {
   const PaymentTermListItem({
-    @required this.user,
-    @required this.paymentTerm,
-    @required this.filter,
+    required this.user,
+    required this.paymentTerm,
+    required this.filter,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
 
-  final UserEntity user;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
+  final UserEntity? user;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onLongPress;
   final PaymentTermEntity paymentTerm;
-  final String filter;
-  final Function(bool) onCheckboxChanged;
+  final String? filter;
+  final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
 
   static final paymentTermItemKey =
@@ -45,7 +45,7 @@ class PaymentTermListItem extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
-    final filterMatch = filter != null && filter.isNotEmpty
+    final filterMatch = filter != null && filter!.isNotEmpty
         ? paymentTerm.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch;
@@ -55,13 +55,13 @@ class PaymentTermListItem extends StatelessWidget {
       entity: paymentTerm,
       isSelected: paymentTerm.id ==
           (uiState.isEditing
-              ? paymentTermUIState.editing.id
+              ? paymentTermUIState.editing!.id
               : paymentTermUIState.selectedId),
       child: ListTile(
         onTap: () =>
-            onTap != null ? onTap() : selectEntity(entity: paymentTerm),
+            onTap != null ? onTap!() : selectEntity(entity: paymentTerm),
         onLongPress: () => onLongPress != null
-            ? onLongPress()
+            ? onLongPress!()
             : selectEntity(entity: paymentTerm, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
@@ -69,7 +69,7 @@ class PaymentTermListItem extends StatelessWidget {
                 child: Checkbox(
                   value: isChecked,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  onChanged: (value) => onCheckboxChanged(value),
+                  onChanged: (value) => onCheckboxChanged!(value),
                   activeColor: Theme.of(context).colorScheme.secondary,
                 ),
               )
@@ -84,7 +84,7 @@ class PaymentTermListItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Text(formatNumber(paymentTerm.listDisplayAmount, context),
+              Text(formatNumber(paymentTerm.listDisplayAmount, context)!,
                   style: Theme.of(context).textTheme.titleMedium),
             ],
           ),

@@ -187,14 +187,14 @@ Middleware<AppState> _createLoadState(
   PersistenceRepository staticRepository,
   List<PersistenceRepository> companyRepositories,
 ) {
-  AuthState authState;
-  UIState uiState;
-  StaticState staticState;
-  final List<UserCompanyState> companyStates = [];
+  AuthState? authState;
+  UIState? uiState;
+  StaticState? staticState;
+  final List<UserCompanyState?> companyStates = [];
 
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as LoadStateRequest;
+    final action = dynamicAction as LoadStateRequest?;
 
     try {
       final state = store.state;
@@ -205,7 +205,7 @@ Middleware<AppState> _createLoadState(
       staticState = await staticRepository.loadStaticState();
 
       for (var i = 0; i < companyRepositories.length; i++) {
-        var companyState = UserCompanyState(state.reportErrors);
+        UserCompanyState? companyState = UserCompanyState(state.reportErrors);
         try {
           companyState = await companyRepositories[i].loadCompanyState(i);
         } catch (e) {
@@ -216,7 +216,7 @@ Middleware<AppState> _createLoadState(
 
       // Carry over a deeplink URL on the web
       if (state.uiState.currentRoute != LoginScreen.route) {
-        uiState = uiState
+        uiState = uiState!
             .rebuild((b) => b..currentRoute = state.uiState.currentRoute);
       }
 
@@ -225,31 +225,31 @@ Middleware<AppState> _createLoadState(
               isWhiteLabeled: store.state.isWhiteLabeled,
               reportErrors: store.state.account.reportErrors)
           .rebuild((b) => b
-            ..authState.replace(authState)
-            ..uiState.replace(uiState)
-            ..staticState.replace(staticState)
+            ..authState.replace(authState!)
+            ..uiState.replace(uiState!)
+            ..staticState.replace(staticState!)
             ..userCompanyStates.replace(companyStates));
 
-      AppBuilder.of(navigatorKey.currentContext).rebuild();
+      AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
       store.dispatch(LoadStateSuccess(appState));
       store.dispatch(RefreshData(
           completer: Completer<Null>()
-            ..future.then((value) {
-              AppBuilder.of(navigatorKey.currentContext).rebuild();
+            ..future.then<Null>((_) {
+              AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
               store.dispatch(UpdatedSetting());
             })));
 
-      if (uiState.currentRoute != LoginScreen.route &&
-          uiState.currentRoute.isNotEmpty) {
-        final NavigatorState navigator = navigatorKey.currentState;
+      if (uiState!.currentRoute != LoginScreen.route &&
+          uiState!.currentRoute.isNotEmpty) {
+        final NavigatorState? navigator = navigatorKey.currentState;
         final routes = _getRoutes(appState);
         if (appState.prefState.appLayout == AppLayout.mobile) {
           bool isFirst = true;
           routes.forEach((route) {
             if (isFirst) {
-              navigator.pushReplacementNamed(route);
+              navigator!.pushReplacementNamed(route);
             } else {
-              navigator.pushNamed(route);
+              navigator!.pushNamed(route);
             }
             isFirst = false;
           });
@@ -263,12 +263,12 @@ Middleware<AppState> _createLoadState(
           store.dispatch(ViewMainScreen());
         }
       } else {
-        throw 'Unknown page: ${uiState.currentRoute}';
+        throw 'Unknown page: ${uiState!.currentRoute}';
       }
     } catch (error) {
       print('## ERROR (app_middleware - load state): $error');
 
-      String token;
+      String? token;
 
       if (Config.DEMO_MODE ||
           cleanApiUrl(store.state.authState.url) == kAppDemoUrl) {
@@ -282,8 +282,8 @@ Middleware<AppState> _createLoadState(
         }
       }
 
-      if (token.isNotEmpty) {
-        if (calculateLayout(navigatorKey.currentContext) == AppLayout.mobile) {
+      if (token!.isNotEmpty) {
+        if (calculateLayout(navigatorKey.currentContext!) == AppLayout.mobile) {
           store.dispatch(UpdateUserPreferences(appLayout: AppLayout.mobile));
         } else {
           store.dispatch(ViewMainScreen());
@@ -291,7 +291,7 @@ Middleware<AppState> _createLoadState(
         WidgetsBinding.instance.addPostFrameCallback((duration) {
           store.dispatch(ViewDashboard());
         });
-        AppBuilder.of(navigatorKey.currentContext).rebuild();
+        AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
       } else {
         store.dispatch(UserLogout());
       }
@@ -304,7 +304,7 @@ Middleware<AppState> _createLoadState(
 List<String> _getRoutes(AppState state) {
   final List<String> routes = [];
   var route = '';
-  EntityType entityType;
+  EntityType? entityType;
 
   state.uiState.currentRoute
       .split('/')
@@ -346,7 +346,7 @@ Middleware<AppState> _createUserLoggedIn(
   List<PersistenceRepository> companyRepositories,
 ) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as UserLoginSuccess;
+    final action = dynamicAction as UserLoginSuccess?;
 
     next(action);
 
@@ -367,7 +367,7 @@ Middleware<AppState> _createPersistData(
   List<PersistenceRepository> companyRepositories,
 ) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as PersistData;
+    final action = dynamicAction as PersistData?;
 
     next(action);
 
@@ -384,7 +384,7 @@ Middleware<AppState> _createPersistData(
 final _persistUIDebouncer = PersistDebouncer();
 Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as PersistUI;
+    final action = dynamicAction as PersistUI?;
 
     next(action);
 
@@ -396,7 +396,7 @@ Middleware<AppState> _createPersistUI(PersistenceRepository uiRepository) {
 
 Middleware<AppState> _createPersistPrefs() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as PersistPrefs;
+    final action = dynamicAction as PersistPrefs?;
 
     next(action);
 
@@ -442,7 +442,7 @@ Middleware<AppState> _createAccountLoaded() {
         }
       }
     } catch (error) {
-      action.completer?.completeError(error);
+      action.completer.completeError(error);
       rethrow;
     }
 
@@ -457,9 +457,7 @@ Middleware<AppState> _createAccountLoaded() {
       store.dispatch(LoadClients());
     }
 
-    if (action.completer != null) {
-      action.completer.complete(null);
-    }
+    action.completer.complete(null);
 
     next(action);
 
@@ -471,7 +469,7 @@ Middleware<AppState> _createDataRefreshed() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
     final action = dynamicAction as RefreshDataSuccess;
-    final response = action.data;
+    final response = action.data!;
     final loadedStaticData = response.static.currencies.isNotEmpty;
     final state = store.state;
     final selectedCompanyIndex = state.uiState.selectedCompanyIndex;
@@ -513,7 +511,7 @@ Middleware<AppState> _createDataRefreshed() {
     store.dispatch(PersistData());
 
     if (action.completer != null) {
-      action.completer.complete(null);
+      action.completer!.complete(null);
     }
 
     next(action);
@@ -529,7 +527,7 @@ Middleware<AppState> _createDataRefreshed() {
 Middleware<AppState> _createPersistStatic(
     PersistenceRepository staticRepository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as PersistStatic;
+    final action = dynamicAction as PersistStatic?;
 
     // first process the action so the data is in the state
     next(action);
@@ -560,7 +558,7 @@ Middleware<AppState> _createDeleteState(
 
 Middleware<AppState> _createViewMainScreen() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewMainScreen;
+    final action = dynamicAction as ViewMainScreen?;
 
     if (store.state.uiState.currentRoute == LoginScreen.route) {
       store.dispatch(UpdateCurrentRoute(
@@ -569,12 +567,12 @@ Middleware<AppState> _createViewMainScreen() {
               : ClientScreen.route));
     }
 
-    while (navigatorKey.currentState.canPop()) {
-      navigatorKey.currentState.pop();
+    while (navigatorKey.currentState!.canPop()) {
+      navigatorKey.currentState!.pop();
     }
 
     WidgetsBinding.instance.addPostFrameCallback((duration) {
-      navigatorKey.currentState.pushNamed(MainScreen.route);
+      navigatorKey.currentState!.pushNamed(MainScreen.route);
     });
 
     next(action);

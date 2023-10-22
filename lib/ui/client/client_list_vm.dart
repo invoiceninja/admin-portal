@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientListBuilder extends StatelessWidget {
-  const ClientListBuilder({Key key}) : super(key: key);
+  const ClientListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +42,14 @@ class ClientListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final clientId = viewModel.clientList[index];
-              final client = viewModel.clientMap[clientId];
+              final client = viewModel.clientMap[clientId]!;
               final listState = state.getListState(EntityType.client);
               final isInMultiselect = listState.isInMultiselect();
 
               return ClientListItem(
                 user: viewModel.state.user,
                 filter: viewModel.filter,
-                client: client,
+                client: client as ClientEntity,
                 isChecked: isInMultiselect && listState.isSelected(client.id),
               );
             });
@@ -60,22 +60,22 @@ class ClientListBuilder extends StatelessWidget {
 
 class ClientListVM {
   ClientListVM({
-    @required this.state,
-    @required this.clientList,
-    @required this.clientMap,
-    @required this.isLoading,
-    @required this.filter,
-    @required this.onRefreshed,
-    @required this.tableColumns,
-    @required this.onEntityAction,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.clientList,
+    required this.clientMap,
+    required this.isLoading,
+    required this.filter,
+    required this.onRefreshed,
+    required this.tableColumns,
+    required this.onEntityAction,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
   });
 
   final AppState state;
   final List<String> clientList;
-  final BuiltMap<String, BaseEntity> clientMap;
-  final String filter;
+  final BuiltMap<String?, BaseEntity?> clientMap;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
@@ -86,10 +86,10 @@ class ClientListVM {
   static ClientListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
       if (store.state.isLoading) {
-        return Future<Null>(null);
+        return Future<Null>.value();
       }
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -114,7 +114,7 @@ class ClientListVM {
               EntityAction action) =>
           handleClientAction(context, client, action),
       tableColumns:
-          state.userCompany.settings?.getTableColumns(EntityType.client) ??
+          state.userCompany.settings.getTableColumns(EntityType.client) ??
               ClientPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortClients(field)),
       onClearMultielsect: () => store.dispatch(ClearClientMultiselect()),

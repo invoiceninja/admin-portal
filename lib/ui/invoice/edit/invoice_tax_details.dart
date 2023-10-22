@@ -9,15 +9,15 @@ import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class InvoiceTaxDetails extends StatelessWidget {
   const InvoiceTaxDetails({
-    Key key,
-    @required this.invoice,
+    Key? key,
+    required this.invoice,
   }) : super(key: key);
 
   final InvoiceEntity invoice;
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final state = StoreProvider.of<AppState>(context).state;
     final client = state.clientState.get(invoice.clientId);
     final taxData = invoice.isNew ? client.taxData : invoice.taxData;

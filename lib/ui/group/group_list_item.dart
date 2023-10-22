@@ -15,28 +15,28 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class GroupListItem extends StatelessWidget {
   const GroupListItem({
-    @required this.user,
-    @required this.group,
-    @required this.filter,
+    required this.user,
+    required this.group,
+    required this.filter,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
 
-  final UserEntity user;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
+  final UserEntity? user;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onLongPress;
   final GroupEntity group;
-  final String filter;
-  final Function(bool) onCheckboxChanged;
+  final String? filter;
+  final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
 
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final filterMatch = filter != null && filter.isNotEmpty
+    final filterMatch = filter != null && filter!.isNotEmpty
         ? group.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch;
@@ -51,9 +51,9 @@ class GroupListItem extends StatelessWidget {
       entity: group,
       isSelected: false,
       child: ListTile(
-        onTap: () => onTap != null ? onTap() : selectEntity(entity: group),
+        onTap: () => onTap != null ? onTap!() : selectEntity(entity: group),
         onLongPress: () => onLongPress != null
-            ? onLongPress()
+            ? onLongPress!()
             : selectEntity(entity: group, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
@@ -61,7 +61,7 @@ class GroupListItem extends StatelessWidget {
                 child: Checkbox(
                   value: isChecked,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  onChanged: (value) => onCheckboxChanged(value),
+                  onChanged: (value) => onCheckboxChanged!(value),
                   activeColor: Theme.of(context).colorScheme.secondary,
                 ),
               )
@@ -76,7 +76,7 @@ class GroupListItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Text(formatNumber(group.listDisplayAmount, context),
+              Text(formatNumber(group.listDisplayAmount, context)!,
                   style: Theme.of(context).textTheme.titleMedium),
             ],
           ),

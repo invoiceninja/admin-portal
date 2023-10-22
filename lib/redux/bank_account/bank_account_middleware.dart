@@ -40,14 +40,14 @@ List<Middleware<AppState>> createStoreBankAccountsMiddleware([
 
 Middleware<AppState> _editBankAccount() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditBankAccount;
+    final action = dynamicAction as EditBankAccount?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(BankAccountEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(BankAccountEditScreen.route);
+      navigatorKey.currentState!.pushNamed(BankAccountEditScreen.route);
     }
   };
 }
@@ -55,21 +55,21 @@ Middleware<AppState> _editBankAccount() {
 Middleware<AppState> _viewBankAccount() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ViewBankAccount;
+    final action = dynamicAction as ViewBankAccount?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(BankAccountViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(BankAccountViewScreen.route);
+      navigatorKey.currentState!.pushNamed(BankAccountViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewBankAccountList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewBankAccountList;
+    final action = dynamicAction as ViewBankAccountList?;
 
     next(action);
 
@@ -80,7 +80,7 @@ Middleware<AppState> _viewBankAccountList() {
     store.dispatch(UpdateCurrentRoute(BankAccountScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           BankAccountScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -97,15 +97,11 @@ Middleware<AppState> _archiveBankAccount(BankAccountRepository repository) {
             EntityAction.archive)
         .then((List<BankAccountEntity> bankAccounts) {
       store.dispatch(ArchiveBankAccountsSuccess(bankAccounts));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveBankAccountsFailure(prevBankAccounts));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -123,15 +119,11 @@ Middleware<AppState> _deleteBankAccount(BankAccountRepository repository) {
             store.state.credentials, action.bankAccountIds, EntityAction.delete)
         .then((List<BankAccountEntity> bankAccounts) {
       store.dispatch(DeleteBankAccountsSuccess(bankAccounts));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteBankAccountsFailure(prevBankAccounts));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -149,15 +141,11 @@ Middleware<AppState> _restoreBankAccount(BankAccountRepository repository) {
             EntityAction.restore)
         .then((List<BankAccountEntity> bankAccounts) {
       store.dispatch(RestoreBankAccountsSuccess(bankAccounts));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreBankAccountsFailure(prevBankAccounts));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -168,19 +156,19 @@ Middleware<AppState> _saveBankAccount(BankAccountRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveBankAccountRequest;
     repository
-        .saveData(store.state.credentials, action.bankAccount)
+        .saveData(store.state.credentials, action.bankAccount!)
         .then((BankAccountEntity bankAccount) {
-      if (action.bankAccount.isNew) {
+      if (action.bankAccount!.isNew) {
         store.dispatch(AddBankAccountSuccess(bankAccount));
       } else {
         store.dispatch(SaveBankAccountSuccess(bankAccount));
       }
 
-      action.completer.complete(bankAccount);
+      action.completer!.complete(bankAccount);
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveBankAccountFailure(error));
-      action.completer.completeError(error);
+      action.completer!.completeError(error);
     });
 
     next(action);
@@ -199,13 +187,13 @@ Middleware<AppState> _loadBankAccount(BankAccountRepository repository) {
       store.dispatch(LoadBankAccountSuccess(bankAccount));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadBankAccountFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -215,15 +203,15 @@ Middleware<AppState> _loadBankAccount(BankAccountRepository repository) {
 
 Middleware<AppState> _loadBankAccounts(BankAccountRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as LoadBankAccounts;
+    final action = dynamicAction as LoadBankAccounts?;
     final AppState state = store.state;
 
     store.dispatch(LoadBankAccountsRequest());
     repository.loadList(state.credentials).then((data) {
       store.dispatch(LoadBankAccountsSuccess(data));
 
-      if (action.completer != null) {
-        action.completer.complete(null);
+      if (action!.completer != null) {
+        action.completer!.complete(null);
       }
       /*
       if (state.productState.isStale) {
@@ -233,8 +221,8 @@ Middleware<AppState> _loadBankAccounts(BankAccountRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadBankAccountsFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
+      if (action!.completer != null) {
+        action.completer!.completeError(error);
       }
     });
 

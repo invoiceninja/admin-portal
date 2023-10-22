@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:memoize/memoize.dart';
@@ -83,10 +84,12 @@ enum RecurringInvoiceReportFields {
   start_date,
   remaining_cycles,
   due_on,
+  next_send_date,
+  last_sent_date,
 }
 
 var memoizedRecurringInvoiceReport = memo8((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ClientEntity> clientMap,
@@ -96,7 +99,7 @@ var memoizedRecurringInvoiceReport = memo8((
   StaticState staticState,
 ) =>
     recurringInvoiceReport(
-      userCompany,
+      userCompany!,
       reportsUIState,
       invoiceMap,
       clientMap,
@@ -120,12 +123,12 @@ ReportResult recurringInvoiceReport(
   final List<BaseEntity> entities = [];
   BuiltList<RecurringInvoiceReportFields> columns;
 
-  final localization = AppLocalization.of(navigatorKey.currentContext);
-  final reportSettings = userCompany.settings?.reportSettings;
-  final invoiceReportSettings = reportSettings != null &&
-          reportSettings.containsKey(kReportRecurringInvoice)
-      ? reportSettings[kReportRecurringInvoice]
-      : ReportSettingsEntity();
+  final localization = AppLocalization.of(navigatorKey.currentContext!);
+  final reportSettings = userCompany.settings.reportSettings;
+  final invoiceReportSettings =
+      reportSettings.containsKey(kReportRecurringInvoice)
+          ? reportSettings[kReportRecurringInvoice]!
+          : ReportSettingsEntity();
 
   final defaultColumns = [
     RecurringInvoiceReportFields.number,
@@ -140,14 +143,14 @@ ReportResult recurringInvoiceReport(
     columns = BuiltList(invoiceReportSettings.columns
         .map(
             (e) => EnumUtils.fromString(RecurringInvoiceReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
   }
 
   for (var invoiceId in invoiceMap.keys) {
-    final invoice = invoiceMap[invoiceId];
+    final invoice = invoiceMap[invoiceId]!;
     final client = clientMap[invoice.clientId] ?? ClientEntity();
 
     if (invoice.invitations.isEmpty) {
@@ -157,8 +160,8 @@ ReportResult recurringInvoiceReport(
     final contact =
         client.getContact(invoice.invitations.first.clientContactId);
 
-    if ((invoice.isDeleted && !userCompany.company.reportIncludeDeleted) ||
-        client.isDeleted) {
+    if ((invoice.isDeleted! && !userCompany.company.reportIncludeDeleted) ||
+        client.isDeleted!) {
       continue;
     }
 
@@ -337,13 +340,13 @@ ReportResult recurringInvoiceReport(
           value = client.phone;
           break;
         case RecurringInvoiceReportFields.contact_email:
-          value = contact?.email ?? '';
+          value = contact.email;
           break;
         case RecurringInvoiceReportFields.contact_name:
-          value = contact?.fullName ?? '';
+          value = contact.fullName;
           break;
         case RecurringInvoiceReportFields.contact_phone:
-          value = contact?.phone ?? '';
+          value = contact.phone;
           break;
         case RecurringInvoiceReportFields.client_website:
           value = client.website;
@@ -364,14 +367,18 @@ ReportResult recurringInvoiceReport(
           value = staticState.countryMap[client.shippingCountryId]?.name ?? '';
           break;
         case RecurringInvoiceReportFields.frequency:
-          value = localization.lookup(kFrequencies[invoice.frequencyId]);
+          value = localization!.lookup(kFrequencies[invoice.frequencyId]);
           break;
         case RecurringInvoiceReportFields.start_date:
+        case RecurringInvoiceReportFields.next_send_date:
           value = invoice.nextSendDate;
+          break;
+        case RecurringInvoiceReportFields.last_sent_date:
+          value = invoice.lastSentDate;
           break;
         case RecurringInvoiceReportFields.remaining_cycles:
           value = invoice.remainingCycles == -1
-              ? localization.endless
+              ? localization!.endless
               : '${invoice.remainingCycles}';
           break;
         case RecurringInvoiceReportFields.client_number:
@@ -382,15 +389,15 @@ ReportResult recurringInvoiceReport(
           break;
         case RecurringInvoiceReportFields.due_on:
           if (invoice.dueDateDays == 'terms') {
-            value = localization.usePaymentTerms;
+            value = localization!.usePaymentTerms;
           } else if (invoice.dueDateDays == 'on_receipt') {
-            value = localization.dueOnReceipt;
+            value = localization!.dueOnReceipt;
           } else if (invoice.dueDateDays == '1') {
-            value = localization.firstDayOfTheMonth;
+            value = localization!.firstDayOfTheMonth;
           } else if (invoice.dueDateDays == '31') {
-            value = localization.lastDayOfTheMonth;
+            value = localization!.lastDayOfTheMonth;
           } else {
-            value = localization.dayCount
+            value = localization!.dayCount
                 .replaceFirst(':count', '${invoice.dueDateDays}');
           }
           break;
@@ -401,14 +408,14 @@ ReportResult recurringInvoiceReport(
         userCompany: userCompany,
         reportsUIState: reportsUIState,
         column: EnumUtils.parse(column),
-      )) {
+      )!) {
         skip = true;
       }
 
       if (value.runtimeType == bool) {
         row.add(invoice.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        String currencyId = client.currencyId;
+        String? currencyId = client.currencyId;
         if ([
           RecurringInvoiceReportFields.converted_amount,
         ].contains(column)) {
@@ -432,7 +439,7 @@ ReportResult recurringInvoiceReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, invoiceReportSettings, selectedColumns));
+      sortReportTableRows(rowA, rowB, invoiceReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns: RecurringInvoiceReportFields.values

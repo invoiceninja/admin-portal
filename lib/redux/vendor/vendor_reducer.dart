@@ -15,79 +15,81 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/redux/vendor/vendor_state.dart';
 
 EntityUIState vendorUIReducer(VendorUIState state, dynamic action) {
-  return state.rebuild((b) => b
-    ..listUIState.replace(vendorListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
-    ..editingContact
-        .replace(editingVendorContactReducer(state.editingContact, action))
-    ..selectedId = selectedIdReducer(state.selectedId, action)
-    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
-    ..tabIndex = tabIndexReducer(state.tabIndex, action)
-    ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
-    ..cancelCompleter = cancelCompleterReducer(state.cancelCompleter, action));
+  return state.rebuild(
+    (b) => b
+      ..listUIState.replace(vendorListReducer(state.listUIState, action))
+      ..editing.replace(editingReducer(state.editing, action)!)
+      ..editingContact
+          .replace(editingVendorContactReducer(state.editingContact, action)!)
+      ..selectedId = selectedIdReducer(state.selectedId, action)
+      ..forceSelected = forceSelectedReducer(state.forceSelected, action)
+      ..tabIndex = tabIndexReducer(state.tabIndex, action)
+      ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
+      ..cancelCompleter = cancelCompleterReducer(state.cancelCompleter, action),
+  );
 }
 
-final forceSelectedReducer = combineReducers<bool>([
-  TypedReducer<bool, ViewVendor>((completer, action) => true),
-  TypedReducer<bool, ViewVendorList>((completer, action) => false),
-  TypedReducer<bool, FilterVendorsByState>((completer, action) => false),
-  TypedReducer<bool, FilterVendors>((completer, action) => false),
-  TypedReducer<bool, FilterVendorsByCustom1>((completer, action) => false),
-  TypedReducer<bool, FilterVendorsByCustom2>((completer, action) => false),
-  TypedReducer<bool, FilterVendorsByCustom3>((completer, action) => false),
-  TypedReducer<bool, FilterVendorsByCustom4>((completer, action) => false),
+final forceSelectedReducer = combineReducers<bool?>([
+  TypedReducer<bool?, ViewVendor>((completer, action) => true),
+  TypedReducer<bool?, ViewVendorList>((completer, action) => false),
+  TypedReducer<bool?, FilterVendorsByState>((completer, action) => false),
+  TypedReducer<bool?, FilterVendors>((completer, action) => false),
+  TypedReducer<bool?, FilterVendorsByCustom1>((completer, action) => false),
+  TypedReducer<bool?, FilterVendorsByCustom2>((completer, action) => false),
+  TypedReducer<bool?, FilterVendorsByCustom3>((completer, action) => false),
+  TypedReducer<bool?, FilterVendorsByCustom4>((completer, action) => false),
 ]);
 
-final tabIndexReducer = combineReducers<int>([
-  TypedReducer<int, UpdateVendorTab>((completer, action) {
+final int? Function(int, dynamic) tabIndexReducer = combineReducers<int?>([
+  TypedReducer<int?, UpdateVendorTab>((completer, action) {
     return action.tabIndex;
   }),
-  TypedReducer<int, PreviewEntity>((completer, action) {
+  TypedReducer<int?, PreviewEntity>((completer, action) {
     return 0;
   }),
 ]);
 
-final saveCompleterReducer = combineReducers<Completer<SelectableEntity>>([
-  TypedReducer<Completer<SelectableEntity>, EditVendor>((completer, action) {
-    return action.completer;
+final saveCompleterReducer = combineReducers<Completer<SelectableEntity>?>([
+  TypedReducer<Completer<SelectableEntity>?, EditVendor>((completer, action) {
+    return action.completer as Completer<SelectableEntity>?;
   }),
 ]);
 
-final cancelCompleterReducer = combineReducers<Completer<SelectableEntity>>([
-  TypedReducer<Completer<SelectableEntity>, EditVendor>((completer, action) {
-    return action.cancelCompleter;
+final cancelCompleterReducer = combineReducers<Completer<Null>?>([
+  TypedReducer<Completer<Null>?, EditVendor>((completer, action) {
+    return action.cancelCompleter as Completer<Null>?;
   }),
 ]);
 
-final editingVendorContactReducer = combineReducers<VendorContactEntity>([
-  TypedReducer<VendorContactEntity, EditVendor>(editVendorContact),
-  TypedReducer<VendorContactEntity, EditVendorContact>(editVendorContact),
+final editingVendorContactReducer = combineReducers<VendorContactEntity?>([
+  TypedReducer<VendorContactEntity?, EditVendor>(editVendorContact),
+  TypedReducer<VendorContactEntity?, EditVendorContact>(editVendorContact),
 ]);
 
 VendorContactEntity editVendorContact(
-    VendorContactEntity contact, dynamic action) {
+    VendorContactEntity? contact, dynamic action) {
   return action.contact ?? VendorContactEntity();
 }
 
-Reducer<String> selectedIdReducer = combineReducers([
-  TypedReducer<String, ArchiveVendorSuccess>((completer, action) => ''),
-  TypedReducer<String, DeleteVendorSuccess>((completer, action) => ''),
-  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+Reducer<String?> selectedIdReducer = combineReducers([
+  TypedReducer<String?, ArchiveVendorSuccess>((completer, action) => ''),
+  TypedReducer<String?, DeleteVendorSuccess>((completer, action) => ''),
+  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.vendor ? action.entityId : selectedId),
-  TypedReducer<String, ViewVendor>((selectedId, action) => action.vendorId),
-  TypedReducer<String, AddVendorSuccess>(
+  TypedReducer<String?, ViewVendor>((selectedId, action) => action.vendorId),
+  TypedReducer<String?, AddVendorSuccess>(
       (selectedId, action) => action.vendor.id),
-  TypedReducer<String, SelectCompany>(
+  TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, SortVendors>((selectedId, action) => ''),
-  TypedReducer<String, FilterVendors>((selectedId, action) => ''),
-  TypedReducer<String, FilterVendorsByState>((selectedId, action) => ''),
-  TypedReducer<String, FilterVendorsByCustom1>((selectedId, action) => ''),
-  TypedReducer<String, FilterVendorsByCustom2>((selectedId, action) => ''),
-  TypedReducer<String, FilterVendorsByCustom3>((selectedId, action) => ''),
-  TypedReducer<String, FilterVendorsByCustom4>((selectedId, action) => ''),
-  TypedReducer<String, FilterByEntity>(
+  TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String?, SortVendors>((selectedId, action) => ''),
+  TypedReducer<String?, FilterVendors>((selectedId, action) => ''),
+  TypedReducer<String?, FilterVendorsByState>((selectedId, action) => ''),
+  TypedReducer<String?, FilterVendorsByCustom1>((selectedId, action) => ''),
+  TypedReducer<String?, FilterVendorsByCustom2>((selectedId, action) => ''),
+  TypedReducer<String?, FilterVendorsByCustom3>((selectedId, action) => ''),
+  TypedReducer<String?, FilterVendorsByCustom4>((selectedId, action) => ''),
+  TypedReducer<String?, FilterByEntity>(
       (selectedId, action) => action.clearSelection
           ? ''
           : action.entityType == EntityType.vendor
@@ -95,50 +97,50 @@ Reducer<String> selectedIdReducer = combineReducers([
               : selectedId),
 ]);
 
-final editingReducer = combineReducers<VendorEntity>([
-  TypedReducer<VendorEntity, SaveVendorSuccess>(_updateEditing),
-  TypedReducer<VendorEntity, AddVendorSuccess>(_updateEditing),
-  TypedReducer<VendorEntity, RestoreVendorSuccess>((vendors, action) {
+final editingReducer = combineReducers<VendorEntity?>([
+  TypedReducer<VendorEntity?, SaveVendorSuccess>(_updateEditing),
+  TypedReducer<VendorEntity?, AddVendorSuccess>(_updateEditing),
+  TypedReducer<VendorEntity?, RestoreVendorSuccess>((vendors, action) {
     return action.vendors[0];
   }),
-  TypedReducer<VendorEntity, ArchiveVendorSuccess>((vendors, action) {
+  TypedReducer<VendorEntity?, ArchiveVendorSuccess>((vendors, action) {
     return action.vendors[0];
   }),
-  TypedReducer<VendorEntity, DeleteVendorSuccess>((vendors, action) {
+  TypedReducer<VendorEntity?, DeleteVendorSuccess>((vendors, action) {
     return action.vendors[0];
   }),
-  TypedReducer<VendorEntity, EditVendor>(_updateEditing),
-  TypedReducer<VendorEntity, UpdateVendor>((vendor, action) {
+  TypedReducer<VendorEntity?, EditVendor>(_updateEditing),
+  TypedReducer<VendorEntity?, UpdateVendor>((vendor, action) {
     return action.vendor.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<VendorEntity, AddVendorContact>(_addContact),
-  TypedReducer<VendorEntity, DeleteVendorContact>(_removeContact),
-  TypedReducer<VendorEntity, UpdateVendorContact>(_updateContact),
-  TypedReducer<VendorEntity, DiscardChanges>(_clearEditing),
+  TypedReducer<VendorEntity?, AddVendorContact>(_addContact),
+  TypedReducer<VendorEntity?, DeleteVendorContact>(_removeContact),
+  TypedReducer<VendorEntity?, UpdateVendorContact>(_updateContact),
+  TypedReducer<VendorEntity?, DiscardChanges>(_clearEditing),
 ]);
 
-VendorEntity _clearEditing(VendorEntity vendor, dynamic action) {
+VendorEntity _clearEditing(VendorEntity? vendor, dynamic action) {
   return VendorEntity();
 }
 
-VendorEntity _updateEditing(VendorEntity vendor, dynamic action) {
+VendorEntity? _updateEditing(VendorEntity? vendor, dynamic action) {
   return action.vendor;
 }
 
-VendorEntity _addContact(VendorEntity vendor, AddVendorContact action) {
-  return vendor.rebuild((b) => b
+VendorEntity _addContact(VendorEntity? vendor, AddVendorContact action) {
+  return vendor!.rebuild((b) => b
     ..contacts.add(action.contact ?? VendorContactEntity())
     ..isChanged = true);
 }
 
-VendorEntity _removeContact(VendorEntity vendor, DeleteVendorContact action) {
-  return vendor.rebuild((b) => b
+VendorEntity _removeContact(VendorEntity? vendor, DeleteVendorContact action) {
+  return vendor!.rebuild((b) => b
     ..contacts.removeAt(action.index)
     ..isChanged = true);
 }
 
-VendorEntity _updateContact(VendorEntity vendor, UpdateVendorContact action) {
-  return vendor.rebuild((b) => b
+VendorEntity _updateContact(VendorEntity? vendor, UpdateVendorContact action) {
+  return vendor!.rebuild((b) => b
     ..contacts[action.index] = action.contact
     ..isChanged = true);
 }
@@ -230,7 +232,7 @@ ListUIState _filterVendors(ListUIState vendorListState, FilterVendors action) {
 
 ListUIState _sortVendors(ListUIState vendorListState, SortVendors action) {
   return vendorListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortAscending = b.sortField != action.field || !b.sortAscending!
     ..sortField = action.field);
 }
 
@@ -241,13 +243,13 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState vendorListState, AddToVendorMultiselect action) {
-  return vendorListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+  return vendorListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState vendorListState, RemoveFromVendorMultiselect action) {
   return vendorListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(

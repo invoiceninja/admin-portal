@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'bank_account_screen.dart';
 
 class BankAccountScreenBuilder extends StatelessWidget {
-  const BankAccountScreenBuilder({Key key}) : super(key: key);
+  const BankAccountScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,16 +32,16 @@ class BankAccountScreenBuilder extends StatelessWidget {
 
 class BankAccountScreenVM {
   BankAccountScreenVM({
-    @required this.isInMultiselect,
-    @required this.bankAccountList,
-    @required this.userCompany,
-    @required this.onEntityAction,
-    @required this.bankAccountMap,
-    @required this.onRefreshAccounts,
+    required this.isInMultiselect,
+    required this.bankAccountList,
+    required this.userCompany,
+    required this.onEntityAction,
+    required this.bankAccountMap,
+    required this.onRefreshAccounts,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> bankAccountList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final BuiltMap<String, BankAccountEntity> bankAccountMap;
@@ -74,7 +74,7 @@ class BankAccountScreenVM {
         webClient.post(url, credentials.token).then((dynamic response) {
           store.dispatch(StopSaving());
           store.dispatch(RefreshData());
-          showToast(localization.refreshComplete);
+          showToast(localization!.refreshComplete);
         }).catchError((dynamic error) {
           store.dispatch(StopSaving());
           showErrorDialog(message: '$error');

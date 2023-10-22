@@ -36,7 +36,7 @@ abstract class PaymentState
 
   PaymentEntity get(String paymentId) {
     if (map.containsKey(paymentId)) {
-      return map[paymentId];
+      return map[paymentId]!;
     } else {
       return PaymentEntity(id: paymentId);
     }
@@ -60,7 +60,7 @@ abstract class PaymentState
 abstract class PaymentUIState extends Object
     with EntityUIState
     implements Built<PaymentUIState, PaymentUIStateBuilder> {
-  factory PaymentUIState(PrefStateSortField sortField) {
+  factory PaymentUIState(PrefStateSortField? sortField) {
     return _$PaymentUIState._(
       listUIState: ListUIState(sortField?.field ?? PaymentFields.number,
           sortAscending: sortField?.ascending ?? false),
@@ -76,14 +76,13 @@ abstract class PaymentUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  PaymentEntity get editing;
+  PaymentEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<PaymentUIState> get serializer =>
       _$paymentUIStateSerializer;

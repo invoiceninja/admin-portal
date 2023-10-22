@@ -135,25 +135,25 @@ class StopSaving {}
 class ServerVersionUpdated {
   ServerVersionUpdated({this.version});
 
-  final String version;
+  final String? version;
 }
 
 class LoadStaticSuccess implements PersistStatic {
   LoadStaticSuccess({this.data});
 
-  final StaticDataEntity data;
+  final StaticDataEntity? data;
 }
 
 class ToggleEditorLayout implements PersistPrefs {
   ToggleEditorLayout(this.entityType);
 
-  final EntityType entityType;
+  final EntityType? entityType;
 }
 
 class ToggleViewerLayout implements PersistPrefs {
   ToggleViewerLayout(this.entityType);
 
-  final EntityType entityType;
+  final EntityType? entityType;
 }
 
 class TogglePreviewSidebar {}
@@ -191,41 +191,41 @@ class UpdateUserPreferences implements PersistPrefs {
     this.statementIncludes,
   });
 
-  final AppLayout appLayout;
-  final ModuleLayout moduleLayout;
-  final AppSidebar sidebar;
-  final AppSidebarMode menuMode;
-  final AppSidebarMode historyMode;
-  final String darkModeType;
-  final bool enableDarkModeSystem;
-  final bool longPressSelectionIsDefault;
-  final bool requireAuthentication;
-  final bool isPreviewVisible;
-  final bool isFilterVisible;
-  final bool showKanban;
-  final String accentColor;
-  final int rowsPerPage;
-  final String colorTheme;
-  final String darkColorTheme;
-  final bool persistData;
-  final bool tapSelectedToEdit;
-  final double textScaleFactor;
-  final bool showPdfPreview;
-  final bool showPdfPreviewSideBySide;
-  final BuiltMap<String, String> customColors;
-  final BuiltMap<String, String> darkCustomColors;
-  final bool editAfterSaving;
-  final bool enableTouchEvents;
-  final bool enableTooltips;
-  final bool flexibleSearch;
-  final bool enableNativeBrowser;
-  final BuiltList<String> statementIncludes;
+  final AppLayout? appLayout;
+  final ModuleLayout? moduleLayout;
+  final AppSidebar? sidebar;
+  final AppSidebarMode? menuMode;
+  final AppSidebarMode? historyMode;
+  final String? darkModeType;
+  final bool? enableDarkModeSystem;
+  final bool? longPressSelectionIsDefault;
+  final bool? requireAuthentication;
+  final bool? isPreviewVisible;
+  final bool? isFilterVisible;
+  final bool? showKanban;
+  final String? accentColor;
+  final int? rowsPerPage;
+  final String? colorTheme;
+  final String? darkColorTheme;
+  final bool? persistData;
+  final bool? tapSelectedToEdit;
+  final double? textScaleFactor;
+  final bool? showPdfPreview;
+  final bool? showPdfPreviewSideBySide;
+  final BuiltMap<String, String>? customColors;
+  final BuiltMap<String, String>? darkCustomColors;
+  final bool? editAfterSaving;
+  final bool? enableTouchEvents;
+  final bool? enableTooltips;
+  final bool? flexibleSearch;
+  final bool? enableNativeBrowser;
+  final BuiltList<String>? statementIncludes;
 }
 
 class LoadAccountSuccess implements StopLoading {
   LoadAccountSuccess({
-    @required this.completer,
-    @required this.loginResponse,
+    required this.completer,
+    required this.loginResponse,
   });
 
   final Completer completer;
@@ -250,7 +250,7 @@ class RefreshData implements StartLoading {
     this.allCompanies = false,
   });
 
-  final Completer completer;
+  final Completer? completer;
   final bool clearData;
   final bool includeStatic;
   final bool allCompanies;
@@ -259,8 +259,8 @@ class RefreshData implements StartLoading {
 class RefreshDataSuccess implements StopLoading {
   const RefreshDataSuccess({this.completer, this.data});
 
-  final Completer completer;
-  final LoginResponse data;
+  final Completer? completer;
+  final LoginResponse? data;
 }
 
 class RefreshDataFailure implements StopLoading {
@@ -275,8 +275,8 @@ class PreviewEntity {
     this.entityId,
   });
 
-  final String entityId;
-  final EntityType entityType;
+  final String? entityId;
+  final EntityType? entityType;
 }
 
 class ClearPreviewStack {}
@@ -296,47 +296,47 @@ class ClearEntityFilter {}
 class ClearEntitySelection {
   ClearEntitySelection({this.entityType});
 
-  final EntityType entityType;
+  final EntityType? entityType;
 }
 
 class FilterByEntity implements PersistUI {
   FilterByEntity({
-    @required this.entity,
+    required this.entity,
     this.clearSelection = false,
   });
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
   final bool clearSelection;
 
-  String get entityId => entity.id;
+  String get entityId => entity!.id;
 
-  EntityType get entityType => entity.entityType;
+  EntityType? get entityType => entity!.entityType;
 }
 
 class FilterCompany implements PersistUI {
   FilterCompany(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 void filterByEntity({
-  @required BaseEntity entity,
+  required BaseEntity entity,
 }) {
   if (entity.isNew) {
     return;
   }
 
-  final context = navigatorKey.currentContext;
+  final context = navigatorKey.currentContext!;
   final store = StoreProvider.of<AppState>(context);
   store.dispatch(FilterByEntity(entity: entity));
 }
 
 void viewEntitiesByType({
-  @required EntityType entityType,
-  BaseEntity filterEntity,
-  int page = 0,
+  required EntityType? entityType,
+  BaseEntity? filterEntity,
+  int? page = 0,
 }) {
-  final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
+  final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
   final uiState = store.state.uiState;
   dynamic action;
 
@@ -374,7 +374,9 @@ void viewEntitiesByType({
               company: store.state.company,
               user: store.state.user,
               clearFilter: true,
-              section: kSettingsCompanyDetails,
+              section: store.state.prefState.isMobile
+                  ? null
+                  : kSettingsCompanyDetails,
             );
             break;
           case EntityType.client:
@@ -435,7 +437,7 @@ void viewEntitiesByType({
           case EntityType.recurringExpense:
             action = ViewRecurringExpenseList(page: page);
             break;
-          case EntityType.subscription:
+          case EntityType.paymentLink:
             action = ViewSubscriptionList();
             break;
           case EntityType.taskStatus:
@@ -481,10 +483,10 @@ void viewEntitiesByType({
 }
 
 void viewEntity({
-  @required BaseEntity entity,
+  required BaseEntity entity,
   bool force = false,
   bool addToStack = false,
-  BaseEntity filterEntity,
+  BaseEntity? filterEntity,
 }) =>
     viewEntityById(
       entityId: entity.id,
@@ -495,14 +497,14 @@ void viewEntity({
     );
 
 void viewEntityById({
-  @required String entityId,
-  @required EntityType entityType,
+  required String? entityId,
+  required EntityType? entityType,
   bool force = false,
   bool showError = true,
   bool addToStack = false,
-  BaseEntity filterEntity,
+  BaseEntity? filterEntity,
 }) {
-  final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
+  final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
   final state = store.state;
   final uiState = store.state.uiState;
 
@@ -541,22 +543,22 @@ void viewEntityById({
         }
 
         if (entityId != null &&
-            !store.state.getEntityMap(entityType).containsKey(entityId)) {
+            !store.state.getEntityMap(entityType)!.containsKey(entityId)) {
           if (showError) {
             final localization =
-                AppLocalization.of(navigatorKey.currentContext);
+                AppLocalization.of(navigatorKey.currentContext!)!;
             showErrorDialog(message: localization.failedToFindRecord);
           }
           return;
         }
 
-        if (isDesktop(navigatorKey.currentContext) &&
-            entityType.hasFullWidthViewer) {
+        if (isDesktop(navigatorKey.currentContext!) &&
+            entityType!.hasFullWidthViewer) {
           if (!state.prefState.isViewerFullScreen(entityType))
             store.dispatch(ToggleViewerLayout(entityType));
           final filterEntity =
-              store.state.getEntityMap(entityType)[entityId] as BaseEntity;
-          final entityTypes = filterEntity.entityType.relatedTypes
+              store.state.getEntityMap(entityType)![entityId] as BaseEntity;
+          final entityTypes = filterEntity.entityType!.relatedTypes
               .where((entityType) => state.company.isModuleEnabled(entityType));
           if (entityTypes.isNotEmpty) {
             viewEntitiesByType(
@@ -692,7 +694,7 @@ void viewEntityById({
               force: force,
             ));
             break;
-          case EntityType.subscription:
+          case EntityType.paymentLink:
             store.dispatch(ViewSubscription(
               subscriptionId: entityId,
               force: force,
@@ -760,8 +762,8 @@ void viewEntityById({
 }
 
 void createEntityByType({
-  BuildContext context,
-  EntityType entityType,
+  required BuildContext context,
+  EntityType? entityType,
   bool force = false,
   bool applyFilter = true,
 }) {
@@ -787,29 +789,29 @@ void createEntityByType({
 
         final filterEntityId = state.uiState.filterEntityId;
         final filterEntityType = state.uiState.filterEntityType;
-        ClientEntity client;
-        ProjectEntity project;
-        VendorEntity vendor;
-        UserEntity user;
-        GroupEntity group;
+        ClientEntity? client;
+        ProjectEntity? project;
+        VendorEntity? vendor;
+        UserEntity? user;
+        GroupEntity? group;
 
         if (applyFilter && filterEntityType != null) {
           switch (filterEntityType) {
             case EntityType.client:
-              client = state.clientState.get(filterEntityId);
+              client = state.clientState.get(filterEntityId!);
               break;
             case EntityType.project:
-              project = state.projectState.get(filterEntityId);
+              project = state.projectState.get(filterEntityId!);
               client = state.clientState.get(project.clientId);
               break;
             case EntityType.vendor:
-              vendor = state.vendorState.get(filterEntityId);
+              vendor = state.vendorState.get(filterEntityId!);
               break;
             case EntityType.user:
-              user = state.userState.get(filterEntityId);
+              user = state.userState.get(filterEntityId!);
               break;
             case EntityType.group:
-              group = state.groupState.get(filterEntityId);
+              group = state.groupState.get(filterEntityId!);
               break;
           }
         }
@@ -963,7 +965,7 @@ void createEntityByType({
                   entityType: EntityType.recurringExpense),
             ));
             break;
-          case EntityType.subscription:
+          case EntityType.paymentLink:
             store.dispatch(EditSubscription(
               force: force,
               subscription: SubscriptionEntity(state: state),
@@ -1040,13 +1042,13 @@ void createEntityByType({
 }
 
 void createEntity({
-  BuildContext context,
-  BaseEntity entity,
+  required BaseEntity entity,
   bool force = false,
-  Completer completer,
-  Completer cancelCompleter,
-  BaseEntity filterEntity,
+  Completer? completer,
+  Completer? cancelCompleter,
+  BaseEntity? filterEntity,
 }) {
+  final context = navigatorKey.currentContext!;
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final uiState = state.uiState;
@@ -1079,7 +1081,7 @@ void createEntity({
         switch (entity.entityType) {
           case EntityType.client:
             store.dispatch(EditClient(
-              client: entity,
+              client: entity as ClientEntity,
               force: force,
               completer: completer,
               cancelCompleter: cancelCompleter,
@@ -1087,14 +1089,14 @@ void createEntity({
             break;
           case EntityType.user:
             store.dispatch(EditUser(
-              user: entity,
+              user: entity as UserEntity,
               force: force,
               completer: completer,
             ));
             break;
           case EntityType.project:
             store.dispatch(EditProject(
-              project: entity,
+              project: entity as ProjectEntity,
               force: force,
               completer: completer,
               cancelCompleter: cancelCompleter,
@@ -1102,35 +1104,35 @@ void createEntity({
             break;
           case EntityType.taxRate:
             store.dispatch(EditTaxRate(
-              taxRate: entity,
+              taxRate: entity as TaxRateEntity,
               force: force,
               completer: completer,
             ));
             break;
           case EntityType.companyGateway:
             store.dispatch(EditCompanyGateway(
-              companyGateway: entity,
+              companyGateway: entity as CompanyGatewayEntity,
               force: force,
               completer: completer,
             ));
             break;
           case EntityType.invoice:
             store.dispatch(EditInvoice(
-              invoice: entity,
+              invoice: entity as InvoiceEntity?,
               force: force,
               completer: completer,
             ));
             break;
           case EntityType.quote:
             store.dispatch(EditQuote(
-              quote: entity,
+              quote: entity as InvoiceEntity?,
               force: force,
               completer: completer,
             ));
             break;
           case EntityType.vendor:
             store.dispatch(EditVendor(
-              vendor: entity,
+              vendor: entity as VendorEntity,
               force: force,
               completer: completer,
               cancelCompleter: cancelCompleter,
@@ -1138,35 +1140,35 @@ void createEntity({
             break;
           case EntityType.product:
             store.dispatch(EditProduct(
-              product: entity,
+              product: entity as ProductEntity,
               force: force,
               completer: completer,
             ));
             break;
           case EntityType.task:
             store.dispatch(EditTask(
-              task: entity,
+              task: entity as TaskEntity?,
               force: force,
               completer: completer,
             ));
             break;
           case EntityType.expense:
             store.dispatch(EditExpense(
-              expense: entity,
+              expense: entity as ExpenseEntity,
               force: force,
               completer: completer,
             ));
             break;
           case EntityType.payment:
             store.dispatch(EditPayment(
-              payment: entity,
+              payment: entity as PaymentEntity,
               force: force,
               completer: completer,
             ));
             break;
           case EntityType.group:
             store.dispatch(EditGroup(
-              group: entity,
+              group: entity as GroupEntity,
               force: force,
               completer: completer,
             ));
@@ -1174,7 +1176,7 @@ void createEntity({
           // STARTER: create - do not remove comment
           case EntityType.schedule:
             store.dispatch(EditSchedule(
-              schedule: entity,
+              schedule: entity as ScheduleEntity,
               force: force,
               completer: completer,
             ));
@@ -1182,7 +1184,7 @@ void createEntity({
 
           case EntityType.transactionRule:
             store.dispatch(EditTransactionRule(
-              transactionRule: entity,
+              transactionRule: entity as TransactionRuleEntity,
               force: force,
               completer: completer,
             ));
@@ -1190,7 +1192,7 @@ void createEntity({
 
           case EntityType.transaction:
             store.dispatch(EditTransaction(
-              transaction: entity,
+              transaction: entity as TransactionEntity,
               force: force,
               completer: completer,
             ));
@@ -1198,35 +1200,35 @@ void createEntity({
 
           case EntityType.purchaseOrder:
             store.dispatch(EditPurchaseOrder(
-              purchaseOrder: entity,
+              purchaseOrder: entity as InvoiceEntity,
               force: force,
               completer: completer,
             ));
             break;
           case EntityType.recurringExpense:
             store.dispatch(EditRecurringExpense(
-              recurringExpense: entity,
+              recurringExpense: entity as ExpenseEntity,
               force: force,
               completer: completer,
             ));
             break;
-          case EntityType.subscription:
+          case EntityType.paymentLink:
             store.dispatch(EditSubscription(
-              subscription: entity,
+              subscription: entity as SubscriptionEntity,
               force: force,
               completer: completer,
             ));
             break;
           case EntityType.taskStatus:
             store.dispatch(EditTaskStatus(
-              taskStatus: entity,
+              taskStatus: entity as TaskStatusEntity,
               force: force,
               completer: completer,
             ));
             break;
           case EntityType.expenseCategory:
             store.dispatch(EditExpenseCategory(
-              expenseCategory: entity,
+              expenseCategory: entity as ExpenseCategoryEntity,
               force: force,
               completer: completer,
               cancelCompleter: cancelCompleter,
@@ -1234,49 +1236,49 @@ void createEntity({
             break;
           case EntityType.recurringInvoice:
             store.dispatch(EditRecurringInvoice(
-              recurringInvoice: entity,
+              recurringInvoice: entity as InvoiceEntity,
               force: force,
               completer: completer,
             ));
             break;
           case EntityType.webhook:
             store.dispatch(EditWebhook(
-              webhook: entity,
+              webhook: entity as WebhookEntity,
               force: force,
               completer: completer,
             ));
             break;
           case EntityType.token:
             store.dispatch(EditToken(
-              token: entity,
+              token: entity as TokenEntity,
               force: force,
               completer: completer,
             ));
             break;
           case EntityType.paymentTerm:
             store.dispatch(EditPaymentTerm(
-              paymentTerm: entity,
+              paymentTerm: entity as PaymentTermEntity,
               force: force,
               completer: completer,
             ));
             break;
           case EntityType.design:
             store.dispatch(EditDesign(
-              design: entity,
+              design: entity as DesignEntity,
               force: force,
               completer: completer,
             ));
             break;
           case EntityType.credit:
             store.dispatch(EditCredit(
-              credit: entity,
+              credit: entity as InvoiceEntity?,
               force: force,
               completer: completer,
             ));
             break;
           case EntityType.bankAccount:
             store.dispatch(EditBankAccount(
-              bankAccount: entity,
+              bankAccount: entity as BankAccountEntity,
               force: force,
               completer: completer,
             ));
@@ -1288,13 +1290,13 @@ void createEntity({
 }
 
 void editEntity({
-  @required BaseEntity entity,
-  int subIndex,
+  required BaseEntity entity,
+  int? subIndex,
   bool force = false,
   bool fullScreen = true,
-  Completer completer,
+  Completer? completer,
 }) {
-  final context = navigatorKey.currentContext;
+  final context = navigatorKey.currentContext!;
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
@@ -1314,25 +1316,28 @@ void editEntity({
         switch (entityType) {
           case EntityType.client:
             store.dispatch(EditClient(
-              client: entity,
+              client: entity as ClientEntity,
               completer: completer,
             ));
             break;
           case EntityType.user:
             store.dispatch(EditUser(
-              user: entity,
+              user: entity as UserEntity,
               completer: completer,
             ));
             break;
           case EntityType.project:
-            store.dispatch(EditProject(project: entity, completer: completer));
+            store.dispatch(EditProject(
+                project: entity as ProjectEntity, completer: completer));
             break;
           case EntityType.taxRate:
-            store.dispatch(EditTaxRate(taxRate: entity, completer: completer));
+            store.dispatch(EditTaxRate(
+                taxRate: entity as TaxRateEntity, completer: completer));
             break;
           case EntityType.companyGateway:
             store.dispatch(EditCompanyGateway(
-                companyGateway: entity, completer: completer));
+                companyGateway: entity as CompanyGatewayEntity,
+                completer: completer));
             break;
           case EntityType.invoice:
             final invoice = entity as InvoiceEntity;
@@ -1341,15 +1346,11 @@ void editEntity({
 
             if (settings.lockInvoices == SettingsEntity.LOCK_INVOICES_PAID &&
                 invoice.isPaid) {
-              showMessageDialog(
-                  context: context,
-                  message: localization.paidInvoicesArelocked);
+              showMessageDialog(message: localization!.paidInvoicesArelocked);
             } else if (settings.lockInvoices ==
                     SettingsEntity.LOCK_INVOICES_SENT &&
                 invoice.isSent) {
-              showMessageDialog(
-                  context: context,
-                  message: localization.sentInvoicesArelocked);
+              showMessageDialog(message: localization!.sentInvoicesArelocked);
             } else {
               store.dispatch(EditInvoice(
                 invoice: entity,
@@ -1360,132 +1361,138 @@ void editEntity({
             break;
           case EntityType.quote:
             store.dispatch(EditQuote(
-              quote: entity,
+              quote: entity as InvoiceEntity?,
               completer: completer,
               quoteItemIndex: subIndex,
             ));
             break;
           case EntityType.vendor:
             store.dispatch(EditVendor(
-              vendor: entity,
+              vendor: entity as VendorEntity,
               completer: completer,
             ));
             break;
           case EntityType.product:
-            store.dispatch(EditProduct(product: entity, completer: completer));
+            store.dispatch(EditProduct(
+                product: entity as ProductEntity, completer: completer));
             break;
           case EntityType.task:
             if (!state.company.invoiceTaskLock ||
                 !(entity as TaskEntity).isInvoiced)
               store.dispatch(EditTask(
-                task: entity,
+                task: entity as TaskEntity?,
                 taskTimeIndex: subIndex,
                 completer: completer,
               ));
             break;
           case EntityType.expense:
             store.dispatch(
-              EditExpense(expense: entity, completer: completer),
+              EditExpense(
+                  expense: entity as ExpenseEntity, completer: completer),
             );
             break;
           case EntityType.payment:
             store.dispatch(EditPayment(
-              payment: entity,
+              payment: entity as PaymentEntity,
               completer: completer,
             ));
             break;
           case EntityType.group:
             store.dispatch(EditGroup(
-              group: entity,
+              group: entity as GroupEntity,
               completer: completer,
             ));
             break;
           // STARTER: edit - do not remove comment
           case EntityType.schedule:
-            store
-                .dispatch(EditSchedule(schedule: entity, completer: completer));
+            store.dispatch(EditSchedule(
+                schedule: entity as ScheduleEntity, completer: completer));
             break;
 
           case EntityType.transactionRule:
             store.dispatch(EditTransactionRule(
-                transactionRule: entity, completer: completer));
+                transactionRule: entity as TransactionRuleEntity,
+                completer: completer));
             break;
 
           case EntityType.transaction:
-            store.dispatch(
-                EditTransaction(transaction: entity, completer: completer));
+            store.dispatch(EditTransaction(
+                transaction: entity as TransactionEntity,
+                completer: completer));
             break;
 
           case EntityType.purchaseOrder:
-            store.dispatch(
-                EditPurchaseOrder(purchaseOrder: entity, completer: completer));
+            store.dispatch(EditPurchaseOrder(
+                purchaseOrder: entity as InvoiceEntity, completer: completer));
             break;
 
           case EntityType.recurringExpense:
             store.dispatch(EditRecurringExpense(
-                recurringExpense: entity, completer: completer));
+                recurringExpense: entity as ExpenseEntity,
+                completer: completer));
             break;
-          case EntityType.subscription:
-            store.dispatch(
-                EditSubscription(subscription: entity, completer: completer));
+          case EntityType.paymentLink:
+            store.dispatch(EditSubscription(
+                subscription: entity as SubscriptionEntity,
+                completer: completer));
             break;
           case EntityType.taskStatus:
             store.dispatch(EditTaskStatus(
-              taskStatus: entity,
+              taskStatus: entity as TaskStatusEntity,
               completer: completer,
             ));
             break;
           case EntityType.expenseCategory:
             store.dispatch(EditExpenseCategory(
-              expenseCategory: entity,
+              expenseCategory: entity as ExpenseCategoryEntity,
               completer: completer,
             ));
             break;
           case EntityType.recurringInvoice:
             store.dispatch(EditRecurringInvoice(
-              recurringInvoice: entity,
+              recurringInvoice: entity as InvoiceEntity,
               completer: completer,
             ));
             break;
           case EntityType.webhook:
             store.dispatch(EditWebhook(
-              webhook: entity,
+              webhook: entity as WebhookEntity,
               completer: completer,
             ));
             break;
           case EntityType.token:
             store.dispatch(EditToken(
-              token: entity,
+              token: entity as TokenEntity,
               completer: completer,
             ));
             break;
           case EntityType.paymentTerm:
             store.dispatch(EditPaymentTerm(
-              paymentTerm: entity,
+              paymentTerm: entity as PaymentTermEntity,
               completer: completer,
             ));
             break;
           case EntityType.design:
             store.dispatch(EditDesign(
-              design: entity,
+              design: entity as DesignEntity,
               completer: completer,
             ));
             break;
           case EntityType.credit:
             store.dispatch(EditCredit(
-              credit: entity,
+              credit: entity as InvoiceEntity?,
               completer: completer,
             ));
             break;
           case EntityType.bankAccount:
             store.dispatch(EditBankAccount(
-              bankAccount: entity,
+              bankAccount: entity as BankAccountEntity,
               completer: completer,
             ));
             break;
           case EntityType.document:
             store.dispatch(EditDocument(
-              document: entity,
+              document: entity as DocumentEntity?,
               completer: completer,
             ));
             break;
@@ -1495,12 +1502,12 @@ void editEntity({
       });
 }
 
-void handleEntityAction(BaseEntity entity, EntityAction action,
+void handleEntityAction(BaseEntity entity, EntityAction? action,
     {bool autoPop = false}) {
   handleEntitiesActions([entity], action, autoPop: autoPop);
 }
 
-void handleEntitiesActions(List<BaseEntity> entities, EntityAction action,
+void handleEntitiesActions(List<BaseEntity> entities, EntityAction? action,
     {bool autoPop = false}) {
   if (entities.isEmpty) {
     return;
@@ -1512,10 +1519,10 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction action,
         EntityAction.remove,
       ].contains(action) &&
       autoPop) {
-    if (isMobile(navigatorKey.currentContext)) {
-      navigatorKey.currentState.pop();
-    } else if (entities.first.entityType.isSetting) {
-      final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
+    if (isMobile(navigatorKey.currentContext!)) {
+      navigatorKey.currentState!.pop();
+    } else if (entities.first.entityType!.isSetting) {
+      final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
       switch (entities.first.entityType) {
         case EntityType.paymentTerm:
           store.dispatch(UpdateCurrentRoute(PaymentTermScreen.route));
@@ -1547,7 +1554,7 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction action,
         case EntityType.taskStatus:
           store.dispatch(UpdateCurrentRoute(TaskStatusScreen.route));
           break;
-        case EntityType.subscription:
+        case EntityType.paymentLink:
           store.dispatch(UpdateCurrentRoute(SubscriptionScreen.route));
           break;
         case EntityType.bankAccount:
@@ -1581,7 +1588,7 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction action,
       handlePaymentAction(context, entities, action);
       break;
     case EntityType.quote:
-      handleQuoteAction(context, entities, action);
+      handleQuoteAction(context!, entities, action);
       break;
     case EntityType.task:
       handleTaskAction(context, entities, action);
@@ -1590,7 +1597,7 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction action,
       handleProjectAction(context, entities, action);
       break;
     case EntityType.expense:
-      handleExpenseAction(context, entities, action);
+      handleExpenseAction(context!, entities, action);
       break;
     case EntityType.vendor:
       handleVendorAction(context, entities, action);
@@ -1634,7 +1641,7 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction action,
     case EntityType.recurringExpense:
       handleRecurringExpenseAction(context, entities, action);
       break;
-    case EntityType.subscription:
+    case EntityType.paymentLink:
       handleSubscriptionAction(context, entities, action);
       break;
     case EntityType.taskStatus:
@@ -1659,7 +1666,7 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction action,
       handleDesignAction(context, entities, action);
       break;
     case EntityType.credit:
-      handleCreditAction(context, entities, action);
+      handleCreditAction(context!, entities, action);
       break;
     default:
       print(
@@ -1668,13 +1675,13 @@ void handleEntitiesActions(List<BaseEntity> entities, EntityAction action,
 }
 
 void selectEntity({
-  @required BaseEntity entity,
+  required BaseEntity entity,
   bool longPress = false,
   bool forceView = false,
-  BaseEntity filterEntity,
+  BaseEntity? filterEntity,
 }) {
   final context = navigatorKey.currentContext;
-  final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
+  final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
   final state = store.state;
   final uiState = state.uiState;
   final entityUIState = state.getUIState(entity.entityType);
@@ -1683,7 +1690,7 @@ void selectEntity({
 
   if (longPress == true) {
     final longPressIsSelection =
-        (state.prefState.longPressSelectionIsDefault ?? true) ||
+        (state.prefState.longPressSelectionIsDefault) ||
             state.prefState.moduleLayout == ModuleLayout.table;
     if (longPressIsSelection &&
         state.uiState.currentRoute != DashboardScreenBuilder.route) {
@@ -1693,11 +1700,11 @@ void selectEntity({
     }
   } else if (isInMultiselect && forceView != true) {
     handleEntityAction(entity, EntityAction.toggleMultiselect);
-  } else if (isDesktop(context) && !state.prefState.isPreviewVisible) {
-    if (uiState.isEditing && entityUIState.editingId == entity.id) {
+  } else if (isDesktop(context!) && !state.prefState.isPreviewVisible) {
+    if (uiState.isEditing && entityUIState!.editingId == entity.id) {
       viewEntitiesByType(entityType: entity.entityType);
     } else {
-      if (!entity.entityType.hasFullWidthViewer &&
+      if (!entity.entityType!.hasFullWidthViewer &&
           !state.prefState.isPreviewVisible) {
         store.dispatch(TogglePreviewSidebar());
       }
@@ -1709,8 +1716,8 @@ void selectEntity({
   } else if (isDesktop(context) &&
       !forceView &&
       uiState.isViewing &&
-      !entity.entityType.isSetting &&
-      entityUIState.selectedId == entity.id) {
+      !entity.entityType!.isSetting &&
+      entityUIState!.selectedId == entity.id) {
     if (entityUIState.tabIndex > 0) {
       store.dispatch(PreviewEntity());
     } else if (state.prefState.tapSelectedToEdit) {
@@ -1724,14 +1731,14 @@ void selectEntity({
 }
 
 void inspectEntity({
-  BaseEntity entity,
+  required BaseEntity entity,
   bool longPress = false,
 }) {
-  final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
+  final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
   final state = store.state;
   final previewStack = state.uiState.previewStack;
 
-  if (isDesktop(navigatorKey.currentContext)) {
+  if (isDesktop(navigatorKey.currentContext!)) {
     if (longPress) {
       viewEntity(entity: entity);
     } else if (previewStack.isNotEmpty) {
@@ -1739,7 +1746,7 @@ void inspectEntity({
       viewEntityById(
         filterEntity: entity,
         entityType: entityType,
-        entityId: state.getUIState(entityType).selectedId,
+        entityId: state.getUIState(entityType)!.selectedId,
       );
     } else {
       store.dispatch(FilterByEntity(entity: entity));
@@ -1754,19 +1761,19 @@ void inspectEntity({
 }
 
 void checkForChanges({
-  @required Store<AppState> store,
-  @required Function callback,
+  required Store<AppState> store,
+  required Function callback,
   bool force = false,
 }) {
   final context = navigatorKey.currentContext;
 
   if (force) {
     callback();
-  } else if (store.state.hasChanges() && !isMobile(context)) {
+  } else if (store.state.hasChanges() && !isMobile(context!)) {
     showDialog<MessageDialog>(
         context: context,
         builder: (BuildContext dialogContext) {
-          final localization = AppLocalization.of(context);
+          final localization = AppLocalization.of(context)!;
           return MessageDialog(localization.errorUnsavedChanges,
               dismissLabel: localization.continueEditing, onDiscard: () {
             store.dispatch(DiscardChanges());

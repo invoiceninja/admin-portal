@@ -14,42 +14,42 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 EntityUIState tokenUIReducer(TokenUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(tokenListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
+    ..editing.replace(editingReducer(state.editing, action)!)
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
 
-final forceSelectedReducer = combineReducers<bool>([
-  TypedReducer<bool, ViewToken>((completer, action) => true),
-  TypedReducer<bool, ViewTokenList>((completer, action) => false),
-  TypedReducer<bool, FilterTokensByState>((completer, action) => false),
-  TypedReducer<bool, FilterTokens>((completer, action) => false),
-  TypedReducer<bool, FilterTokensByCustom1>((completer, action) => false),
-  TypedReducer<bool, FilterTokensByCustom2>((completer, action) => false),
-  TypedReducer<bool, FilterTokensByCustom3>((completer, action) => false),
-  TypedReducer<bool, FilterTokensByCustom4>((completer, action) => false),
+final forceSelectedReducer = combineReducers<bool?>([
+  TypedReducer<bool?, ViewToken>((completer, action) => true),
+  TypedReducer<bool?, ViewTokenList>((completer, action) => false),
+  TypedReducer<bool?, FilterTokensByState>((completer, action) => false),
+  TypedReducer<bool?, FilterTokens>((completer, action) => false),
+  TypedReducer<bool?, FilterTokensByCustom1>((completer, action) => false),
+  TypedReducer<bool?, FilterTokensByCustom2>((completer, action) => false),
+  TypedReducer<bool?, FilterTokensByCustom3>((completer, action) => false),
+  TypedReducer<bool?, FilterTokensByCustom4>((completer, action) => false),
 ]);
 
-Reducer<String> selectedIdReducer = combineReducers([
-  TypedReducer<String, ArchiveTokensSuccess>((completer, action) => ''),
-  TypedReducer<String, DeleteTokensSuccess>((completer, action) => ''),
-  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+Reducer<String?> selectedIdReducer = combineReducers([
+  TypedReducer<String?, ArchiveTokensSuccess>((completer, action) => ''),
+  TypedReducer<String?, DeleteTokensSuccess>((completer, action) => ''),
+  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.token ? action.entityId : selectedId),
-  TypedReducer<String, ViewToken>(
-      (String selectedId, dynamic action) => action.tokenId),
-  TypedReducer<String, AddTokenSuccess>(
-      (String selectedId, dynamic action) => action.token.id),
-  TypedReducer<String, SelectCompany>(
+  TypedReducer<String?, ViewToken>(
+      (String? selectedId, dynamic action) => action.tokenId),
+  TypedReducer<String?, AddTokenSuccess>(
+      (String? selectedId, dynamic action) => action.token.id),
+  TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, SortTokens>((selectedId, action) => ''),
-  TypedReducer<String, FilterTokens>((selectedId, action) => ''),
-  TypedReducer<String, FilterTokensByState>((selectedId, action) => ''),
-  TypedReducer<String, FilterTokensByCustom1>((selectedId, action) => ''),
-  TypedReducer<String, FilterTokensByCustom2>((selectedId, action) => ''),
-  TypedReducer<String, FilterTokensByCustom3>((selectedId, action) => ''),
-  TypedReducer<String, FilterTokensByCustom4>((selectedId, action) => ''),
-  TypedReducer<String, FilterByEntity>(
+  TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String?, SortTokens>((selectedId, action) => ''),
+  TypedReducer<String?, FilterTokens>((selectedId, action) => ''),
+  TypedReducer<String?, FilterTokensByState>((selectedId, action) => ''),
+  TypedReducer<String?, FilterTokensByCustom1>((selectedId, action) => ''),
+  TypedReducer<String?, FilterTokensByCustom2>((selectedId, action) => ''),
+  TypedReducer<String?, FilterTokensByCustom3>((selectedId, action) => ''),
+  TypedReducer<String?, FilterTokensByCustom4>((selectedId, action) => ''),
+  TypedReducer<String?, FilterByEntity>(
       (selectedId, action) => action.clearSelection
           ? ''
           : action.entityType == EntityType.token
@@ -57,30 +57,30 @@ Reducer<String> selectedIdReducer = combineReducers([
               : selectedId),
 ]);
 
-final editingReducer = combineReducers<TokenEntity>([
-  TypedReducer<TokenEntity, SaveTokenSuccess>(_updateEditing),
-  TypedReducer<TokenEntity, AddTokenSuccess>(_updateEditing),
-  TypedReducer<TokenEntity, RestoreTokensSuccess>((tokens, action) {
+final editingReducer = combineReducers<TokenEntity?>([
+  TypedReducer<TokenEntity?, SaveTokenSuccess>(_updateEditing),
+  TypedReducer<TokenEntity?, AddTokenSuccess>(_updateEditing),
+  TypedReducer<TokenEntity?, RestoreTokensSuccess>((tokens, action) {
     return action.tokens[0];
   }),
-  TypedReducer<TokenEntity, ArchiveTokensSuccess>((tokens, action) {
+  TypedReducer<TokenEntity?, ArchiveTokensSuccess>((tokens, action) {
     return action.tokens[0];
   }),
-  TypedReducer<TokenEntity, DeleteTokensSuccess>((tokens, action) {
+  TypedReducer<TokenEntity?, DeleteTokensSuccess>((tokens, action) {
     return action.tokens[0];
   }),
-  TypedReducer<TokenEntity, EditToken>(_updateEditing),
-  TypedReducer<TokenEntity, UpdateToken>((token, action) {
+  TypedReducer<TokenEntity?, EditToken>(_updateEditing),
+  TypedReducer<TokenEntity?, UpdateToken>((token, action) {
     return action.token.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<TokenEntity, DiscardChanges>(_clearEditing),
+  TypedReducer<TokenEntity?, DiscardChanges>(_clearEditing),
 ]);
 
-TokenEntity _clearEditing(TokenEntity token, dynamic action) {
+TokenEntity _clearEditing(TokenEntity? token, dynamic action) {
   return TokenEntity();
 }
 
-TokenEntity _updateEditing(TokenEntity token, dynamic action) {
+TokenEntity? _updateEditing(TokenEntity? token, dynamic action) {
   return action.token;
 }
 
@@ -148,7 +148,7 @@ ListUIState _filterTokens(ListUIState tokenListState, FilterTokens action) {
 
 ListUIState _sortTokens(ListUIState tokenListState, SortTokens action) {
   return tokenListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortAscending = b.sortField != action.field || !b.sortAscending!
     ..sortField = action.field);
 }
 
@@ -159,13 +159,13 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState productListState, AddToTokenMultiselect action) {
-  return productListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+  return productListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState productListState, RemoveFromTokenMultiselect action) {
   return productListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(

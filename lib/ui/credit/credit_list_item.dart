@@ -19,23 +19,23 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CreditListItem extends StatelessWidget {
   const CreditListItem({
-    @required this.user,
-    @required this.credit,
-    @required this.client,
-    @required this.filter,
+    required this.user,
+    required this.credit,
+    required this.client,
+    required this.filter,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
 
-  final UserEntity user;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
+  final UserEntity? user;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onLongPress;
   final InvoiceEntity credit;
   final ClientEntity client;
-  final String filter;
-  final Function(bool) onCheckboxChanged;
+  final String? filter;
+  final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
 
   @override
@@ -43,16 +43,16 @@ class CreditListItem extends StatelessWidget {
     final state = StoreProvider.of<AppState>(context).state;
     final uiState = state.uiState;
     final creditUIState = uiState.creditUIState;
-    final listUIState = state.getUIState(credit.entityType).listUIState;
+    final listUIState = state.getUIState(credit.entityType)!.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
     final textStyle = TextStyle(fontSize: 16);
     final localization = AppLocalization.of(context);
-    final filterMatch = filter != null && filter.isNotEmpty
+    final filterMatch = filter != null && filter!.isNotEmpty
         ? (credit.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))
         : null;
-    final textColor = Theme.of(context).textTheme.bodyLarge.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
     String subtitle = '';
     if (credit.date.isNotEmpty) {
@@ -62,7 +62,7 @@ class CreditListItem extends StatelessWidget {
     return DismissibleEntity(
       isSelected: credit.id ==
           (uiState.isEditing
-              ? creditUIState.editing.id
+              ? creditUIState.editing!.id
               : creditUIState.selectedId),
       userCompany: state.userCompany,
       entity: credit,
@@ -71,9 +71,9 @@ class CreditListItem extends StatelessWidget {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: credit),
+                    onTap != null ? onTap!() : selectEntity(entity: credit),
                 onLongPress: () => onLongPress != null
-                    ? onLongPress()
+                    ? onLongPress!()
                     : selectEntity(entity: credit, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -94,7 +94,7 @@ class CreditListItem extends StatelessWidget {
                                     materialTapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
                                     onChanged: (value) =>
-                                        onCheckboxChanged(value),
+                                        onCheckboxChanged!(value),
                                     activeColor:
                                         Theme.of(context).colorScheme.secondary,
                                   ),
@@ -116,8 +116,8 @@ class CreditListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              (credit.number ?? '').isEmpty
-                                  ? localization.pending
+                              credit.number.isEmpty
+                                  ? localization!.pending
                                   : credit.number,
                               style: textStyle,
                               overflow: TextOverflow.ellipsis,
@@ -141,10 +141,10 @@ class CreditListItem extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
                                   .textTheme
-                                  .titleSmall
+                                  .titleSmall!
                                   .copyWith(
                                     color:
-                                        textColor.withOpacity(kLighterOpacity),
+                                        textColor!.withOpacity(kLighterOpacity),
                                   ),
                             ),
                           ],
@@ -153,7 +153,7 @@ class CreditListItem extends StatelessWidget {
                       SizedBox(width: 10),
                       Text(
                         formatNumber(credit.amount, context,
-                            clientId: client.id),
+                            clientId: client.id)!,
                         style: textStyle,
                         textAlign: TextAlign.end,
                       ),
@@ -165,9 +165,9 @@ class CreditListItem extends StatelessWidget {
               )
             : ListTile(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: credit),
+                    onTap != null ? onTap!() : selectEntity(entity: credit),
                 onLongPress: () => onLongPress != null
-                    ? onLongPress()
+                    ? onLongPress!()
                     : selectEntity(entity: credit, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
@@ -176,7 +176,7 @@ class CreditListItem extends StatelessWidget {
                           value: isChecked,
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => onCheckboxChanged(value),
+                          onChanged: (value) => onCheckboxChanged!(value),
                           activeColor: Theme.of(context).colorScheme.secondary,
                         ),
                       )
@@ -199,7 +199,7 @@ class CreditListItem extends StatelessWidget {
                                   ? credit.balance
                                   : credit.amount,
                               context,
-                              clientId: credit.clientId),
+                              clientId: credit.clientId)!,
                           style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),
@@ -211,8 +211,8 @@ class CreditListItem extends StatelessWidget {
                       children: <Widget>[
                         Expanded(
                           child: filterMatch == null
-                              ? Text((((credit.number ?? '').isEmpty
-                                          ? localization.pending
+                              ? Text(((credit.number.isEmpty
+                                          ? localization!.pending
                                           : credit.number) +
                                       ' • ' +
                                       formatDate(credit.date, context) +
@@ -227,7 +227,7 @@ class CreditListItem extends StatelessWidget {
                                 ),
                         ),
                         Text(
-                            localization.lookup(
+                            localization!.lookup(
                                 kCreditStatuses[credit.calculatedStatusId]),
                             style: TextStyle(
                               color: !credit.isSent

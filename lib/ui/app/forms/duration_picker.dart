@@ -7,17 +7,17 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class DurationPicker extends StatefulWidget {
   const DurationPicker({
-    Key key,
-    @required this.selectedDuration,
-    @required this.onSelected,
+    Key? key,
+    required this.selectedDuration,
+    required this.onSelected,
     this.labelText,
     this.allowClearing = false,
   }) : super(key: key);
 
-  final Duration selectedDuration;
+  final Duration? selectedDuration;
   final Function onSelected;
   final bool allowClearing;
-  final String labelText;
+  final String? labelText;
 
   @override
   _DurationPickerState createState() => _DurationPickerState();
@@ -26,7 +26,7 @@ class DurationPicker extends StatefulWidget {
 class _DurationPickerState extends State<DurationPicker> {
   final _textController = TextEditingController();
   final _focusNode = FocusNode();
-  Duration _pendingDuration;
+  Duration? _pendingDuration;
 
   @override
   void initState() {
@@ -77,17 +77,17 @@ class _DurationPickerState extends State<DurationPicker> {
         int seconds = 0;
         if (value.contains(':')) {
           final parts = value.split(':');
-          seconds = parseInt(parts[0]) * 60 * 60;
+          seconds = parseInt(parts[0])! * 60 * 60;
           if (parts[1].length == 1) {
-            seconds += parseInt('${parts[1]}0') * 60;
+            seconds += parseInt('${parts[1]}0')! * 60;
           } else {
-            seconds += parseInt(parts[1]) * 60;
+            seconds += parseInt(parts[1])! * 60;
           }
           if (parts.length > 2) {
-            seconds += parseInt(parts[2]);
+            seconds += parseInt(parts[2])!;
           }
         } else {
-          seconds = (parseDouble(value) * 60 * 60).round();
+          seconds = (parseDouble(value)! * 60 * 60).round();
         }
         final duration = Duration(seconds: seconds);
         if (widget.selectedDuration != null) {
@@ -104,7 +104,7 @@ class _DurationPickerState extends State<DurationPicker> {
               : (widget.labelText ?? ''),
           suffixIcon: widget.allowClearing &&
                   (widget.selectedDuration != null &&
-                      widget.selectedDuration.inSeconds != 0)
+                      widget.selectedDuration!.inSeconds != 0)
               ? IconButton(
                   icon: Icon(Icons.clear),
                   onPressed: () {

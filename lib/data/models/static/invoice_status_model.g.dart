@@ -20,10 +20,10 @@ class _$InvoiceStatusEntitySerializer
   final String wireName = 'InvoiceStatusEntity';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, InvoiceStatusEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
       'name',
@@ -35,23 +35,23 @@ class _$InvoiceStatusEntitySerializer
 
   @override
   InvoiceStatusEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new InvoiceStatusEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'name':
           result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -67,10 +67,10 @@ class _$InvoiceStatusEntity extends InvoiceStatusEntity {
   final String name;
 
   factory _$InvoiceStatusEntity(
-          [void Function(InvoiceStatusEntityBuilder) updates]) =>
+          [void Function(InvoiceStatusEntityBuilder)? updates]) =>
       (new InvoiceStatusEntityBuilder()..update(updates))._build();
 
-  _$InvoiceStatusEntity._({this.id, this.name}) : super._() {
+  _$InvoiceStatusEntity._({required this.id, required this.name}) : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'InvoiceStatusEntity', 'id');
     BuiltValueNullFieldError.checkNotNull(name, r'InvoiceStatusEntity', 'name');
   }
@@ -90,10 +90,10 @@ class _$InvoiceStatusEntity extends InvoiceStatusEntity {
     return other is InvoiceStatusEntity && id == other.id && name == other.name;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, name.hashCode);
@@ -112,15 +112,15 @@ class _$InvoiceStatusEntity extends InvoiceStatusEntity {
 
 class InvoiceStatusEntityBuilder
     implements Builder<InvoiceStatusEntity, InvoiceStatusEntityBuilder> {
-  _$InvoiceStatusEntity _$v;
+  _$InvoiceStatusEntity? _$v;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
 
   InvoiceStatusEntityBuilder();
 
@@ -141,7 +141,7 @@ class InvoiceStatusEntityBuilder
   }
 
   @override
-  void update(void Function(InvoiceStatusEntityBuilder) updates) {
+  void update(void Function(InvoiceStatusEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

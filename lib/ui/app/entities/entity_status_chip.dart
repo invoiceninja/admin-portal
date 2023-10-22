@@ -14,15 +14,15 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EntityStatusChip extends StatelessWidget {
   const EntityStatusChip({
-    @required this.entity,
+    required this.entity,
     this.addGap = false,
     this.width = 105,
     this.showState = false,
   });
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
   final bool addGap;
-  final double width;
+  final double? width;
   final bool showState;
 
   @override
@@ -30,19 +30,19 @@ class EntityStatusChip extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final localization = AppLocalization.of(context);
-    String label = '';
-    Color color;
+    String? label = '';
+    Color? color;
 
-    if (showState && !entity.isActive) {
-      if (entity.isArchived) {
-        label = localization.archived;
+    if (showState && !entity!.isActive) {
+      if (entity!.isArchived) {
+        label = localization!.archived;
         color = Colors.orange;
-      } else if (entity.isDeleted) {
-        label = localization.deleted;
-        color = state.prefState.colorThemeModel.colorDanger;
+      } else if (entity!.isDeleted!) {
+        label = localization!.deleted;
+        color = state.prefState.colorThemeModel!.colorDanger;
       }
     } else {
-      switch (entity.entityType) {
+      switch (entity!.entityType) {
         case EntityType.payment:
           final payment = entity as PaymentEntity;
           label = kPaymentStatuses[payment.calculatedStatusId];
@@ -108,16 +108,16 @@ class EntityStatusChip extends StatelessWidget {
           final task = entity as TaskEntity;
           final status = state.taskStatusState.get(task.statusId);
           label = task.isInvoiced
-              ? localization.invoiced
+              ? localization!.invoiced
               : task.isRunning
-                  ? localization.running
+                  ? localization!.running
                   : status.name.isNotEmpty
                       ? status.name
-                      : localization.logged;
+                      : localization!.logged;
           color = task.isInvoiced
-              ? state.prefState.colorThemeModel.colorSuccess
+              ? state.prefState.colorThemeModel!.colorSuccess
               : task.isRunning
-                  ? state.prefState.colorThemeModel.colorInfo
+                  ? state.prefState.colorThemeModel!.colorInfo
                   : status.color.isNotEmpty && status.color != '#fff'
                       ? convertHexStringToColor(status.color)
                       : TaskStatusColors(state.prefState.colorThemeModel)
@@ -125,10 +125,9 @@ class EntityStatusChip extends StatelessWidget {
           break;
         default:
           return SizedBox();
-          break;
       }
 
-      label = localization.lookup(label) ?? '';
+      label = localization!.lookup(label);
 
       if (label.isEmpty) {
         label = localization.logged;

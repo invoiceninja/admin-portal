@@ -24,8 +24,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskEditDetails extends StatefulWidget {
   const TaskEditDetails({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final TaskEditDetailsVM viewModel;
@@ -63,7 +63,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
     final task = widget.viewModel.task;
     _numberController.text = task.number;
     _rateController.text = formatNumber(task.rate, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
     _descriptionController.text = task.description;
     _custom1Controller.text = task.customValue1;
     _custom2Controller.text = task.customValue2;
@@ -103,9 +103,9 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
+    final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
     final viewModel = widget.viewModel;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final task = viewModel.task;
     final state = viewModel.state;
 
@@ -124,7 +124,7 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
             context,
             currencyId: (client.currencyId ?? '').isNotEmpty
                 ? client.currencyId
-                : company.currencyId);
+                : company.currencyId)!;
 
     return ScrollableListView(
       children: <Widget>[
@@ -157,8 +157,8 @@ class _TaskEditDetailsState extends State<TaskEditDetails> {
                 onChanged: (selectedId) {
                   final project = store.state.projectState.get(selectedId);
                   viewModel.onChanged(task.rebuild((b) => b
-                    ..projectId = project?.id
-                    ..clientId = (project?.clientId ?? '').isNotEmpty
+                    ..projectId = project.id
+                    ..clientId = project.clientId.isNotEmpty
                         ? project.clientId
                         : task.clientId));
                 },

@@ -18,11 +18,11 @@ List<String> dropdownExpenseCategoriesSelector(
     BuiltMap<String, ExpenseCategoryEntity> categoryMap,
     BuiltList<String> categoryList) {
   final list = categoryList
-      .where((categoryId) => categoryMap[categoryId].isActive)
+      .where((categoryId) => categoryMap[categoryId]!.isActive)
       .toList();
 
   list.sort((categoryAId, categoryBId) {
-    final categoryA = categoryMap[categoryAId];
+    final categoryA = categoryMap[categoryAId]!;
     final categoryB = categoryMap[categoryBId];
     return categoryA.compareTo(
         expenseCategory: categoryB,
@@ -33,21 +33,21 @@ List<String> dropdownExpenseCategoriesSelector(
   return list;
 }
 
-var memoizedHasMultipleCurrencies = memo3((CompanyEntity company,
+var memoizedHasMultipleCurrencies = memo3((CompanyEntity? company,
         BuiltMap<String, ClientEntity> clientMap,
         BuiltMap<String, GroupEntity> groupMap) =>
     hasMultipleCurrencies(company, clientMap, groupMap));
 
 bool hasMultipleCurrencies(
-        CompanyEntity company,
+        CompanyEntity? company,
         BuiltMap<String, ClientEntity> clientMap,
         BuiltMap<String, GroupEntity> groupMap) =>
     memoizedGetCurrencyIds(company, clientMap, groupMap).length > 1;
 
-var memoizedGetCurrencyIds = memo3((CompanyEntity company,
+var memoizedGetCurrencyIds = memo3((CompanyEntity? company,
         BuiltMap<String, ClientEntity> clientMap,
         BuiltMap<String, GroupEntity> groupMap) =>
-    getCurrencyIds(company, clientMap, groupMap));
+    getCurrencyIds(company!, clientMap, groupMap));
 
 List<String> getCurrencyIds(
     CompanyEntity company,
@@ -56,8 +56,8 @@ List<String> getCurrencyIds(
   final currencyIds = <String>[company.currencyId];
   clientMap.forEach((clientId, client) {
     final group = groupMap[client.groupId];
-    if (!client.isDeleted) {
-      String currencyId;
+    if (!client.isDeleted!) {
+      String? currencyId;
       if (client.hasCurrency) {
         currencyId = client.currencyId;
       } else if (group != null && group.hasCurrency) {
@@ -78,58 +78,62 @@ List<String> getCurrencyIds(
   }
 }
 
-var memoizedFilteredSelector = memo2(
-    (String filter, UserCompanyState state) => filteredSelector(filter, state));
+var memoizedFilteredSelector = memo2((String? filter, UserCompanyState state) =>
+    filteredSelector(filter, state));
 
-List<BaseEntity> filteredSelector(String filter, UserCompanyState state) {
+List<BaseEntity> filteredSelector(String? filter, UserCompanyState state) {
   final List<BaseEntity> list = []
     ..addAll(state.productState.list
-        .map((productId) => state.productState.map[productId])
+        .map((productId) => state.productState.map[productId]!)
         .where((product) {
       return product.matchesFilter(filter);
     }).toList())
     ..addAll(state.clientState.list
-        .map((clientId) => state.clientState.map[clientId])
+        .map((clientId) => state.clientState.map[clientId]!)
         .where((client) {
       return client.matchesFilter(filter);
     }).toList())
     ..addAll(state.quoteState.list
-        .map((quoteId) => state.quoteState.map[quoteId])
+        .map((quoteId) => state.quoteState.map[quoteId]!)
         .where((quote) {
       return quote.matchesFilter(filter);
     }).toList())
     ..addAll(state.paymentState.list
-        .map((paymentId) => state.paymentState.map[paymentId])
+        .map((paymentId) => state.paymentState.map[paymentId]!)
         .where((payment) {
       return payment.matchesFilter(filter);
     }).toList())
     ..addAll(state.projectState.list
-        .map((projectId) => state.projectState.map[projectId])
+        .map((projectId) => state.projectState.map[projectId]!)
         .where((project) {
       return project.matchesFilter(filter);
     }).toList())
     ..addAll(state.taskState.list
-        .map((taskId) => state.taskState.map[taskId])
+        .map((taskId) => state.taskState.map[taskId]!)
         .where((task) {
       return task.matchesFilter(filter);
     }).toList())
     ..addAll(state.invoiceState.list
-        .map((invoiceId) => state.invoiceState.map[invoiceId])
+        .map((invoiceId) => state.invoiceState.map[invoiceId]!)
         .where((invoice) {
       return invoice.matchesFilter(filter);
     }).toList());
 
-  list.sort((BaseEntity entityA, BaseEntity entityB) {
-    return entityA.listDisplayName.compareTo(entityB.listDisplayName);
+  list.sort((BaseEntity? entityA, BaseEntity? entityB) {
+    return entityA!.listDisplayName.compareTo(entityB!.listDisplayName);
   });
 
   return list;
 }
 
 String localeSelector(AppState state, {bool twoLetter = false}) {
-  final locale = state.staticState
-          ?.languageMap[state.company?.settings?.languageId]?.locale ??
-      'en';
+  var languageId = state.company.languageId;
+  if (state.user.languageId.isNotEmpty) {
+    languageId = state.user.languageId;
+  }
+
+  final languageMap = state.staticState.languageMap;
+  final locale = languageMap[languageId]?.locale ?? 'en';
 
   // https://github.com/flutter/flutter/issues/32090
   if (locale == 'mk_MK' || locale == 'sq') {

@@ -19,8 +19,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProjectScreen extends StatelessWidget {
   const ProjectScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/project';
@@ -107,7 +107,7 @@ class ProjectScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newProject,
+              tooltip: localization!.newProject,
             )
           : null,
     );

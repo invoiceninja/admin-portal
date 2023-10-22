@@ -11,8 +11,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DecoratedFormField extends StatefulWidget {
   const DecoratedFormField({
-    Key key,
-    @required this.keyboardType,
+    Key? key,
+    required this.keyboardType,
     this.controller,
     this.label,
     this.onSavePressed,
@@ -40,32 +40,32 @@ class DecoratedFormField extends StatefulWidget {
     this.inputFormatters,
   }) : super(key: key);
 
-  final TextEditingController controller;
-  final String label;
-  final String hint;
-  final String initialValue;
-  final Function(String) validator;
+  final TextEditingController? controller;
+  final String? label;
+  final String? hint;
+  final String? initialValue;
+  final Function(String)? validator;
   final TextInputType keyboardType;
-  final int maxLines;
-  final int minLines;
-  final bool enabled;
+  final int? maxLines;
+  final int? minLines;
+  final bool? enabled;
   final bool autocorrect;
   final bool obscureText;
   final bool expands;
   final bool autofocus;
-  final ValueChanged<String> onFieldSubmitted;
-  final ValueChanged<String> onChanged;
-  final Icon suffixIcon;
-  final IconButton suffixIconButton;
-  final Iterable<String> autofillHints;
-  final Function(BuildContext) onSavePressed;
+  final ValueChanged<String>? onFieldSubmitted;
+  final ValueChanged<String>? onChanged;
+  final Icon? suffixIcon;
+  final IconButton? suffixIconButton;
+  final Iterable<String>? autofillHints;
+  final Function(BuildContext)? onSavePressed;
   final TextAlign textAlign;
-  final InputDecoration decoration;
-  final FocusNode focusNode;
+  final InputDecoration? decoration;
+  final FocusNode? focusNode;
   final bool isMoney;
   final bool isPercent;
   final bool showClear;
-  final List<TextInputFormatter> inputFormatters;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   _DecoratedFormFieldState createState() => _DecoratedFormFieldState();
@@ -76,7 +76,7 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
 
   @override
   Widget build(BuildContext context) {
-    Widget iconButton = widget.suffixIconButton;
+    Widget? iconButton = widget.suffixIconButton;
 
     final hasValue = (widget.initialValue ?? '').isNotEmpty ||
         (widget.controller?.text ?? '').isNotEmpty;
@@ -92,11 +92,11 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
         widget.controller != null) {
       if (widget.suffixIconButton == null &&
           widget.suffixIcon == null &&
-          widget.enabled) {
+          widget.enabled!) {
         iconButton = IconButton(
           icon: Icon(Icons.clear),
           onPressed: () {
-            widget.controller.text = '';
+            widget.controller!.text = '';
             setState(() {
               _showClear = false;
             });
@@ -105,7 +105,7 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
       }
     }
 
-    InputDecoration inputDecoration;
+    InputDecoration? inputDecoration;
     if (widget.decoration != null) {
       inputDecoration = widget.decoration;
     } else if (widget.label == null && widget.hint == null) {
@@ -138,7 +138,9 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
       controller: widget.controller,
       autofocus: widget.autofocus,
       decoration: inputDecoration,
-      validator: widget.validator,
+      validator: (val) => val == null || widget.validator == null
+          ? null
+          : widget.validator!(val),
       autovalidateMode: AutovalidateMode.onUserInteraction,
       keyboardType: widget.keyboardType,
       maxLines: widget.expands ? null : widget.maxLines ?? 1,
@@ -157,17 +159,17 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
       onChanged: (value) {
         _showClear = true;
         if (widget.onChanged != null) {
-          widget.onChanged(value);
+          widget.onChanged!(value);
         }
       },
       inputFormatters: widget.inputFormatters,
       onFieldSubmitted: (value) {
         if (widget.onFieldSubmitted != null) {
-          return widget.onFieldSubmitted(value);
+          return widget.onFieldSubmitted!(value);
         } else if (widget.keyboardType == TextInputType.multiline) {
           return null;
         } else if (enterShouldSubmit) {
-          widget.onSavePressed(context);
+          widget.onSavePressed!(context);
         }
       },
       enabled: widget.enabled,

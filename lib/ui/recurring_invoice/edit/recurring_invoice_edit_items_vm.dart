@@ -16,8 +16,8 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 
 class RecurringInvoiceEditItemsScreen extends StatelessWidget {
   const RecurringInvoiceEditItemsScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
     this.isTasks = false,
   }) : super(key: key);
 
@@ -31,7 +31,7 @@ class RecurringInvoiceEditItemsScreen extends StatelessWidget {
         return RecurringInvoiceEditItemsVM.fromStore(store, isTasks);
       },
       builder: (context, viewModel) {
-        if (viewModel.state.prefState.isEditorFullScreen(EntityType.invoice)) {
+        if (viewModel.state!.prefState.isEditorFullScreen(EntityType.invoice)) {
           return InvoiceEditItemsDesktop(
             viewModel: viewModel,
             entityViewModel: this.viewModel,
@@ -50,16 +50,16 @@ class RecurringInvoiceEditItemsScreen extends StatelessWidget {
 
 class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
   RecurringInvoiceEditItemsVM({
-    AppState state,
-    CompanyEntity company,
-    InvoiceEntity invoice,
-    int invoiceItemIndex,
-    Function addLineItem,
-    Function deleteLineItem,
-    Function(int) onRemoveInvoiceItemPressed,
-    Function onDoneInvoiceItemPressed,
-    Function(InvoiceItemEntity, int) onChangedInvoiceItem,
-    Function(int, int) onMovedInvoiceItem,
+    AppState? state,
+    CompanyEntity? company,
+    InvoiceEntity? invoice,
+    int? invoiceItemIndex,
+    Function? addLineItem,
+    Function? deleteLineItem,
+    Function(int)? onRemoveInvoiceItemPressed,
+    Function? onDoneInvoiceItemPressed,
+    Function(InvoiceItemEntity, int)? onChangedInvoiceItem,
+    Function(int, int)? onMovedInvoiceItem,
   }) : super(
           state: state,
           company: company,
@@ -87,7 +87,7 @@ class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
         store.dispatch(EditRecurringInvoiceItem());
       },
       onChangedInvoiceItem: (item, index) {
-        final invoice = store.state.recurringInvoiceUIState.editing;
+        final invoice = store.state.recurringInvoiceUIState.editing!;
         if (index == invoice.lineItems.length) {
           store.dispatch(AddRecurringInvoiceItem(
               invoiceItem: item.rebuild((b) => b

@@ -16,7 +16,7 @@ var memoizedDropdownGroupList = memo3((BuiltMap<String, GroupEntity> groupMap,
 List<String> dropdownGroupsSelector(BuiltMap<String, GroupEntity> groupMap,
     BuiltList<String> groupList, String clientId) {
   final list = groupList.where((groupId) {
-    final group = groupMap[groupId];
+    final group = groupMap[groupId]!;
     /*
     if (clientId != null && clientId > 0 && group.clientId != clientId) {
       return false;
@@ -26,7 +26,7 @@ List<String> dropdownGroupsSelector(BuiltMap<String, GroupEntity> groupMap,
   }).toList();
 
   list.sort((groupAId, groupBId) {
-    final groupA = groupMap[groupAId];
+    final groupA = groupMap[groupAId]!;
     final groupB = groupMap[groupBId];
     return groupA.compareTo(groupB, GroupFields.name, true);
   });
@@ -47,7 +47,7 @@ List<String> filteredGroupsSelector(
     BuiltList<String> groupList,
     ListUIState groupListState) {
   final list = groupList.where((groupId) {
-    final group = groupMap[groupId];
+    final group = groupMap[groupId]!;
 
     if (group.id == selectionState.selectedId) {
       return true;
@@ -60,7 +60,7 @@ List<String> filteredGroupsSelector(
   }).toList();
 
   list.sort((groupAId, groupBId) {
-    final groupA = groupMap[groupAId];
+    final groupA = groupMap[groupAId]!;
     final groupB = groupMap[groupBId];
     return groupA.compareTo(
         groupB, groupListState.sortField, groupListState.sortAscending);

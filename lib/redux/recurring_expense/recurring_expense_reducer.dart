@@ -17,70 +17,70 @@ EntityUIState recurringExpenseUIReducer(
   return state.rebuild((b) => b
     ..listUIState
         .replace(recurringExpenseListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
+    ..editing.replace(editingReducer(state.editing, action)!)
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..forceSelected = forceSelectedReducer(state.forceSelected, action)
     ..tabIndex = tabIndexReducer(state.tabIndex, action));
 }
 
-final forceSelectedReducer = combineReducers<bool>([
-  TypedReducer<bool, ViewRecurringExpense>((completer, action) => true),
-  TypedReducer<bool, ViewRecurringExpenseList>((completer, action) => false),
-  TypedReducer<bool, FilterRecurringExpensesByState>(
+final forceSelectedReducer = combineReducers<bool?>([
+  TypedReducer<bool?, ViewRecurringExpense>((completer, action) => true),
+  TypedReducer<bool?, ViewRecurringExpenseList>((completer, action) => false),
+  TypedReducer<bool?, FilterRecurringExpensesByState>(
       (completer, action) => false),
-  TypedReducer<bool, FilterRecurringExpensesByStatus>(
+  TypedReducer<bool?, FilterRecurringExpensesByStatus>(
       (completer, action) => false),
-  TypedReducer<bool, FilterRecurringExpenses>((completer, action) => false),
-  TypedReducer<bool, FilterRecurringExpensesByCustom1>(
+  TypedReducer<bool?, FilterRecurringExpenses>((completer, action) => false),
+  TypedReducer<bool?, FilterRecurringExpensesByCustom1>(
       (completer, action) => false),
-  TypedReducer<bool, FilterRecurringExpensesByCustom2>(
+  TypedReducer<bool?, FilterRecurringExpensesByCustom2>(
       (completer, action) => false),
-  TypedReducer<bool, FilterRecurringExpensesByCustom3>(
+  TypedReducer<bool?, FilterRecurringExpensesByCustom3>(
       (completer, action) => false),
-  TypedReducer<bool, FilterRecurringExpensesByCustom4>(
+  TypedReducer<bool?, FilterRecurringExpensesByCustom4>(
       (completer, action) => false),
 ]);
 
-final tabIndexReducer = combineReducers<int>([
-  TypedReducer<int, UpdateRecurringExpenseTab>((completer, action) {
+final int? Function(int, dynamic) tabIndexReducer = combineReducers<int?>([
+  TypedReducer<int?, UpdateRecurringExpenseTab>((completer, action) {
     return action.tabIndex;
   }),
-  TypedReducer<int, PreviewEntity>((completer, action) {
+  TypedReducer<int?, PreviewEntity>((completer, action) {
     return 0;
   }),
 ]);
 
-Reducer<String> selectedIdReducer = combineReducers([
-  TypedReducer<String, ArchiveRecurringExpensesSuccess>(
+Reducer<String?> selectedIdReducer = combineReducers([
+  TypedReducer<String?, ArchiveRecurringExpensesSuccess>(
       (completer, action) => ''),
-  TypedReducer<String, DeleteRecurringExpensesSuccess>(
+  TypedReducer<String?, DeleteRecurringExpensesSuccess>(
       (completer, action) => ''),
-  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.recurringExpense
           ? action.entityId
           : selectedId),
-  TypedReducer<String, ViewRecurringExpense>(
-      (String selectedId, dynamic action) => action.recurringExpenseId),
-  TypedReducer<String, AddRecurringExpenseSuccess>(
-      (String selectedId, dynamic action) => action.recurringExpense.id),
-  TypedReducer<String, SelectCompany>(
+  TypedReducer<String?, ViewRecurringExpense>(
+      (String? selectedId, dynamic action) => action.recurringExpenseId),
+  TypedReducer<String?, AddRecurringExpenseSuccess>(
+      (String? selectedId, dynamic action) => action.recurringExpense.id),
+  TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, SortRecurringExpenses>((selectedId, action) => ''),
-  TypedReducer<String, FilterRecurringExpenses>((selectedId, action) => ''),
-  TypedReducer<String, FilterRecurringExpensesByState>(
+  TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String?, SortRecurringExpenses>((selectedId, action) => ''),
+  TypedReducer<String?, FilterRecurringExpenses>((selectedId, action) => ''),
+  TypedReducer<String?, FilterRecurringExpensesByState>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterRecurringExpensesByStatus>(
+  TypedReducer<String?, FilterRecurringExpensesByStatus>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterRecurringExpensesByCustom1>(
+  TypedReducer<String?, FilterRecurringExpensesByCustom1>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterRecurringExpensesByCustom2>(
+  TypedReducer<String?, FilterRecurringExpensesByCustom2>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterRecurringExpensesByCustom3>(
+  TypedReducer<String?, FilterRecurringExpensesByCustom3>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterRecurringExpensesByCustom4>(
+  TypedReducer<String?, FilterRecurringExpensesByCustom4>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterByEntity>(
+  TypedReducer<String?, FilterByEntity>(
       (selectedId, action) => action.clearSelection
           ? ''
           : action.entityType == EntityType.recurringExpense
@@ -88,35 +88,35 @@ Reducer<String> selectedIdReducer = combineReducers([
               : selectedId),
 ]);
 
-final editingReducer = combineReducers<ExpenseEntity>([
-  TypedReducer<ExpenseEntity, LoadRecurringExpenseSuccess>(_updateEditing),
-  TypedReducer<ExpenseEntity, SaveRecurringExpenseSuccess>(_updateEditing),
-  TypedReducer<ExpenseEntity, AddRecurringExpenseSuccess>(_updateEditing),
-  TypedReducer<ExpenseEntity, RestoreRecurringExpensesSuccess>(
+final editingReducer = combineReducers<ExpenseEntity?>([
+  TypedReducer<ExpenseEntity?, LoadRecurringExpenseSuccess>(_updateEditing),
+  TypedReducer<ExpenseEntity?, SaveRecurringExpenseSuccess>(_updateEditing),
+  TypedReducer<ExpenseEntity?, AddRecurringExpenseSuccess>(_updateEditing),
+  TypedReducer<ExpenseEntity?, RestoreRecurringExpensesSuccess>(
       (recurringExpenses, action) {
     return action.recurringExpenses[0];
   }),
-  TypedReducer<ExpenseEntity, ArchiveRecurringExpensesSuccess>(
+  TypedReducer<ExpenseEntity?, ArchiveRecurringExpensesSuccess>(
       (recurringExpenses, action) {
     return action.recurringExpenses[0];
   }),
-  TypedReducer<ExpenseEntity, DeleteRecurringExpensesSuccess>(
+  TypedReducer<ExpenseEntity?, DeleteRecurringExpensesSuccess>(
       (recurringExpenses, action) {
     return action.recurringExpenses[0];
   }),
-  TypedReducer<ExpenseEntity, EditRecurringExpense>(_updateEditing),
-  TypedReducer<ExpenseEntity, UpdateRecurringExpense>(
+  TypedReducer<ExpenseEntity?, EditRecurringExpense>(_updateEditing),
+  TypedReducer<ExpenseEntity?, UpdateRecurringExpense>(
       (recurringExpense, action) {
     return action.recurringExpense.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<ExpenseEntity, DiscardChanges>(_clearEditing),
+  TypedReducer<ExpenseEntity?, DiscardChanges>(_clearEditing),
 ]);
 
-ExpenseEntity _clearEditing(ExpenseEntity recurringExpense, dynamic action) {
+ExpenseEntity _clearEditing(ExpenseEntity? recurringExpense, dynamic action) {
   return ExpenseEntity(entityType: EntityType.recurringExpense);
 }
 
-ExpenseEntity _updateEditing(ExpenseEntity recurringExpense, dynamic action) {
+ExpenseEntity? _updateEditing(ExpenseEntity? recurringExpense, dynamic action) {
   return action.recurringExpense;
 }
 
@@ -215,7 +215,7 @@ ListUIState _filterRecurringExpenses(
 ListUIState _sortRecurringExpenses(
     ListUIState recurringExpenseListState, SortRecurringExpenses action) {
   return recurringExpenseListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortAscending = b.sortField != action.field || !b.sortAscending!
     ..sortField = action.field);
 }
 
@@ -226,13 +226,13 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState productListState, AddToRecurringExpenseMultiselect action) {
-  return productListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+  return productListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(ListUIState productListState,
     RemoveFromRecurringExpenseMultiselect action) {
   return productListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(

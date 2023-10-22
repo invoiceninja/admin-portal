@@ -67,7 +67,7 @@ class DocumentFields {
 abstract class DocumentEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<DocumentEntity, DocumentEntityBuilder> {
-  factory DocumentEntity({String id}) {
+  factory DocumentEntity({String? id}) {
     return _$DocumentEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
@@ -107,6 +107,9 @@ abstract class DocumentEntity extends Object
     'pdf',
     'xml',
     'zip',
+    'ods',
+    'odt',
+    'odp',
   ];
 
   @override
@@ -129,9 +132,8 @@ abstract class DocumentEntity extends Object
 
   String get preview;
 
-  @nullable
   @BuiltValueField(serialize: false)
-  Uint8List get data;
+  Uint8List? get data;
 
   @BuiltValueField(wireName: 'is_default')
   bool get isDefault;
@@ -139,13 +141,11 @@ abstract class DocumentEntity extends Object
   @BuiltValueField(wireName: 'is_public')
   bool get isPublic;
 
-  @nullable
   @BuiltValueField(wireName: 'parent_id')
-  String get parentId;
+  String? get parentId;
 
-  @nullable
   @BuiltValueField(wireName: 'parent_type')
-  EntityType get parentType;
+  EntityType? get parentType;
 
   DocumentEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
@@ -163,7 +163,7 @@ abstract class DocumentEntity extends Object
   }
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
@@ -189,42 +189,47 @@ abstract class DocumentEntity extends Object
     return fileName.endsWith('.pdf');
   }
 
-  int compareTo(DocumentEntity document,
-      [String sortField, bool sortAscending = true]) {
+  bool get isTxt {
+    final fileName = name.toLowerCase();
+    return fileName.endsWith('.txt');
+  }
+
+  int compareTo(DocumentEntity? document,
+      [String? sortField, bool sortAscending = true]) {
     int response = 0;
-    final DocumentEntity documentA = sortAscending ? this : document;
-    final DocumentEntity documentB = sortAscending ? document : this;
+    final DocumentEntity? documentA = sortAscending ? this : document;
+    final DocumentEntity? documentB = sortAscending ? document : this;
 
     switch (sortField) {
       case DocumentFields.name:
-        response = documentA.name
+        response = documentA!.name
             .toLowerCase()
-            .compareTo(documentB.name.toLowerCase());
+            .compareTo(documentB!.name.toLowerCase());
         break;
       case DocumentFields.id:
-        response = documentA.id.compareTo(documentB.id);
+        response = documentA!.id.compareTo(documentB!.id);
         break;
       case DocumentFields.createdAt:
-        response = documentA.createdAt.compareTo(documentB.createdAt);
+        response = documentA!.createdAt.compareTo(documentB!.createdAt);
         break;
       case DocumentFields.type:
-        response = documentA.type.compareTo(documentB.type);
+        response = documentA!.type.compareTo(documentB!.type);
         break;
       case DocumentFields.size:
-        response = documentA.size.compareTo(documentB.size);
+        response = documentA!.size.compareTo(documentB!.size);
         break;
       case DocumentFields.width:
-        response = documentA.width.compareTo(documentB.width);
+        response = documentA!.width.compareTo(documentB!.width);
         break;
       case DocumentFields.height:
-        response = documentA.height.compareTo(documentB.height);
+        response = documentA!.height.compareTo(documentB!.height);
         break;
       case DocumentFields.hash:
-        response = documentA.hash.compareTo(documentB.hash);
+        response = documentA!.hash.compareTo(documentB!.hash);
         break;
       case DocumentFields.linkedTo:
-        if (documentA.parentType == documentB.parentType) {
-          response = documentA.parentId.compareTo(documentB.parentId);
+        if (documentA!.parentType == documentB!.parentType) {
+          response = documentA.parentId!.compareTo(documentB.parentId!);
         } else {
           response =
               '${documentA.parentType}'.compareTo('${documentB.parentType}');
@@ -272,7 +277,7 @@ abstract class DocumentEntity extends Object
   }
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     return matchesStrings(
       haystacks: [
         name,
@@ -287,7 +292,7 @@ abstract class DocumentEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     return matchesStringsValue(
       haystacks: [
         name,
@@ -299,16 +304,16 @@ abstract class DocumentEntity extends Object
   }
 
   @override
-  List<EntityAction> getActions(
-      {UserCompanyEntity userCompany,
-      ClientEntity client,
+  List<EntityAction?> getActions(
+      {UserCompanyEntity? userCompany,
+      ClientEntity? client,
       bool includeEdit = false,
       bool includePreview = false,
       bool multiselect = false}) {
-    final actions = <EntityAction>[];
+    final actions = <EntityAction?>[];
 
-    if (!isDeleted && !multiselect) {
-      if (includeEdit && userCompany.canEditEntity(this)) {
+    if (!isDeleted! && !multiselect) {
+      if (includeEdit && userCompany!.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
     }
@@ -317,7 +322,7 @@ abstract class DocumentEntity extends Object
       actions.add(EntityAction.viewDocument);
     }
 
-    if (!isDeleted) {
+    if (!isDeleted!) {
       if (multiselect) {
         actions.add(EntityAction.bulkDownload);
       } else {
@@ -329,7 +334,7 @@ abstract class DocumentEntity extends Object
       actions.add(null);
     }
 
-    if (userCompany.canEditEntity(this) && !multiselect) {
+    if (userCompany!.canEditEntity(this) && !multiselect) {
       actions.add(EntityAction.delete);
     }
 

@@ -17,23 +17,23 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProjectPicker extends StatelessWidget {
   const ProjectPicker({
-    Key key,
+    Key? key,
     this.projectId,
     this.clientId,
     this.onChanged,
     this.onAddPressed,
   }) : super(key: key);
 
-  final String projectId;
-  final String clientId;
-  final Function(String) onChanged;
-  final Function(Completer<SelectableEntity> completer) onAddPressed;
+  final String? projectId;
+  final String? clientId;
+  final Function(String)? onChanged;
+  final Function(Completer<SelectableEntity> completer)? onAddPressed;
 
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     return EntityDropdown(
         entityType: EntityType.project,
@@ -47,7 +47,7 @@ class ProjectPicker extends StatelessWidget {
             state.userState.map,
             clientId),
         onSelected: (entity) {
-          onChanged(entity?.id ?? '');
+          onChanged!(entity?.id ?? '');
         },
         onCreateNew: (clientId ?? '').isNotEmpty
             ? (completer, name) {

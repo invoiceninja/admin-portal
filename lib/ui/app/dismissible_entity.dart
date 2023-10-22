@@ -15,10 +15,10 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class DismissibleEntity extends StatelessWidget {
   const DismissibleEntity({
-    @required this.userCompany,
-    @required this.entity,
-    @required this.child,
-    @required this.isSelected,
+    required this.userCompany,
+    required this.entity,
+    required this.child,
+    required this.isSelected,
     this.showMultiselect = true,
     this.isDismissible = true,
   });
@@ -47,7 +47,7 @@ class DismissibleEntity extends StatelessWidget {
           showMultiselect &&
           isDismissible &&
           !isMultiselect &&
-          !entity.entityType.isSetting,
+          !entity.entityType!.isSetting,
       child: ConstrainedBox(
         constraints: BoxConstraints(
           minHeight: 60,
@@ -70,12 +70,12 @@ class DismissibleEntity extends StatelessWidget {
               onPressed: (context) =>
                   handleEntityAction(entity, EntityAction.toggleMultiselect),
               icon: Icons.check_box,
-              label: localization.select,
+              label: localization!.select,
               backgroundColor: Colors.teal,
               foregroundColor: Colors.white,
             ),
           SlidableAction(
-            label: localization.more,
+            label: localization!.more,
             backgroundColor: Colors.black45,
             foregroundColor: Colors.white,
             icon: Icons.more_vert,
@@ -106,7 +106,7 @@ class DismissibleEntity extends StatelessWidget {
                     onPressed: (context) =>
                         handleEntityAction(entity, EntityAction.restore),
                   ),
-                if (!entity.isDeleted)
+                if (!entity.isDeleted!)
                   SlidableAction(
                     label: localization.delete,
                     backgroundColor: Colors.red,

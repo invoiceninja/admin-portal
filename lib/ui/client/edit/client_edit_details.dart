@@ -25,8 +25,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientEditDetails extends StatefulWidget {
   const ClientEditDetails({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final ClientEditVM viewModel;
@@ -51,7 +51,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_clientEditDetails');
   final _debouncer = Debouncer();
-  List<TextEditingController> _controllers;
+  late List<TextEditingController> _controllers;
 
   @override
   void didChangeDependencies() {
@@ -123,7 +123,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
   }
 
   void _onSavePressed(BuildContext context) {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -137,15 +137,15 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     final client = viewModel.client;
 
     final contactEmail =
-        contact.emails.isNotEmpty ? contact.emails.first : null;
+        contact.emails!.isNotEmpty ? contact.emails!.first : null;
     final contactPhone =
-        contact.phones.isNotEmpty ? contact.phones.first : null;
-    final contactAddress = contact.postalAddresses.isNotEmpty
-        ? contact.postalAddresses.first
+        contact.phones!.isNotEmpty ? contact.phones!.first : null;
+    final contactAddress = contact.postalAddresses!.isNotEmpty
+        ? contact.postalAddresses!.first
         : null;
 
     final countryMap = viewModel.state.staticState.countryMap;
-    String countryId;
+    String? countryId;
 
     countryMap.keys.forEach((countryId) {
       final country = countryMap[countryId] ?? CountryEntity();
@@ -156,15 +156,15 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
     });
 
     widget.viewModel.onChanged(client.rebuild((b) => b
-      ..name = (contact?.company ?? '').trim()
+      ..name = (contact.company ?? '').trim()
       ..address1 = (contactAddress?.street ?? '').trim()
       ..city = (contactAddress?.city ?? '').trim()
       ..state = (contactAddress?.region ?? '').trim()
       ..postalCode = (contactAddress?.postcode ?? '').trim()
       ..countryId = countryId ?? ''
       ..contacts[0] = client.contacts[0].rebuild((b) => b
-        ..firstName = (contact?.givenName ?? '').trim()
-        ..lastName = (contact?.familyName ?? '').trim()
+        ..firstName = (contact.givenName ?? '').trim()
+        ..lastName = (contact.familyName ?? '').trim()
         ..email = (contactEmail?.value ?? '').trim()
         ..phone = (contactPhone?.value ?? '').trim())
       ..updatedAt = DateTime.now().millisecondsSinceEpoch));
@@ -172,7 +172,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final client = viewModel.client;
@@ -194,7 +194,7 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
             autofocus: true,
             controller: _nameController,
             validator: (String val) => val.trim().isEmpty && !client.hasNameSet
-                ? AppLocalization.of(context).pleaseEnterAClientOrContactName
+                ? AppLocalization.of(context)!.pleaseEnterAClientOrContactName
                 : null,
             onSavePressed: _onSavePressed,
             label: localization.name,

@@ -28,29 +28,29 @@ class ViewProjectList implements PersistUI {
   });
 
   final bool force;
-  final int page;
+  final int? page;
 }
 
 class ViewProject implements PersistUI, PersistPrefs {
   ViewProject({
-    @required this.projectId,
+    required this.projectId,
     this.force = false,
   });
 
-  final String projectId;
+  final String? projectId;
   final bool force;
 }
 
 class EditProject implements PersistUI, PersistPrefs {
   EditProject(
-      {@required this.project,
+      {required this.project,
       this.completer,
       this.cancelCompleter,
       this.force = false});
 
   final ProjectEntity project;
-  final Completer completer;
-  final Completer cancelCompleter;
+  final Completer? completer;
+  final Completer? cancelCompleter;
   final bool force;
 }
 
@@ -63,21 +63,21 @@ class UpdateProject implements PersistUI {
 class LoadProject {
   LoadProject({this.completer, this.projectId});
 
-  final Completer completer;
-  final String projectId;
+  final Completer? completer;
+  final String? projectId;
 }
 
 class LoadProjectActivity {
   LoadProjectActivity({this.completer, this.projectId});
 
-  final Completer completer;
-  final String projectId;
+  final Completer? completer;
+  final String? projectId;
 }
 
 class LoadProjects {
   LoadProjects({this.completer});
 
-  final Completer completer;
+  final Completer? completer;
 }
 
 class LoadProjectRequest implements StartLoading {}
@@ -131,8 +131,8 @@ class LoadProjectsSuccess implements StopLoading {
 class SaveProjectRequest implements StartSaving {
   SaveProjectRequest({this.completer, this.project});
 
-  final Completer completer;
-  final ProjectEntity project;
+  final Completer? completer;
+  final ProjectEntity? project;
 }
 
 class SaveProjectSuccess implements StopSaving, PersistData, PersistUI {
@@ -169,7 +169,7 @@ class ArchiveProjectSuccess implements StopSaving, PersistData {
 class ArchiveProjectFailure implements StopSaving {
   ArchiveProjectFailure(this.projects);
 
-  final List<ProjectEntity> projects;
+  final List<ProjectEntity?> projects;
 }
 
 class DeleteProjectRequest implements StartSaving {
@@ -188,7 +188,7 @@ class DeleteProjectSuccess implements StopSaving, PersistData {
 class DeleteProjectFailure implements StopSaving {
   DeleteProjectFailure(this.projects);
 
-  final List<ProjectEntity> projects;
+  final List<ProjectEntity?> projects;
 }
 
 class RestoreProjectRequest implements StartSaving {
@@ -207,13 +207,13 @@ class RestoreProjectSuccess implements StopSaving, PersistData {
 class RestoreProjectFailure implements StopSaving {
   RestoreProjectFailure(this.projects);
 
-  final List<ProjectEntity> projects;
+  final List<ProjectEntity?> projects;
 }
 
 class FilterProjects implements PersistUI {
   FilterProjects(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortProjects implements PersistUI, PersistPrefs {
@@ -253,12 +253,12 @@ class FilterProjectsByCustom4 implements PersistUI {
 }
 
 void handleProjectAction(
-    BuildContext context, List<BaseEntity> projects, EntityAction action) {
+    BuildContext? context, List<BaseEntity> projects, EntityAction? action) {
   if (projects.isEmpty) {
     return;
   }
 
-  final store = StoreProvider.of<AppState>(context);
+  final store = StoreProvider.of<AppState>(context!);
   final state = store.state;
   final project = projects.first as ProjectEntity;
   final projectIds = projects.map((project) => project.id).toList();
@@ -271,14 +271,12 @@ void handleProjectAction(
       break;
     case EntityAction.newTask:
       createEntity(
-          context: context,
           entity: TaskEntity(state: state).rebuild((b) => b
             ..projectId = project.id
             ..clientId = project.clientId));
       break;
     case EntityAction.newInvoice:
       createEntity(
-          context: context,
           entity: InvoiceEntity(state: state, client: client)
               .rebuild((b) => b..projectId = project.id));
       break;
@@ -286,7 +284,7 @@ void handleProjectAction(
       String lastClientId = '';
       bool hasMultipleClients = false;
       projects.forEach((project) {
-        final clientId = (project as ProjectEntity).clientId ?? '';
+        final clientId = (project as ProjectEntity).clientId;
         if (clientId.isNotEmpty) {
           if (lastClientId.isNotEmpty && lastClientId != clientId) {
             hasMultipleClients = true;
@@ -295,56 +293,54 @@ void handleProjectAction(
         }
       });
       if (hasMultipleClients) {
-        showErrorDialog(message: localization.multipleClientError);
+        showErrorDialog(message: localization!.multipleClientError);
         return;
       }
 
       final items = <InvoiceItemEntity>[];
       projects.forEach((project) {
-        items.addAll(
-            convertProjectToInvoiceItem(project: project, context: context));
+        items.addAll(convertProjectToInvoiceItem(
+            project: project as ProjectEntity?, context: context));
       });
       createEntity(
-          context: context,
           entity: InvoiceEntity(state: state, client: client).rebuild((b) => b
             ..lineItems.addAll(items)
             ..projectId = project.id));
       break;
     case EntityAction.newExpense:
       createEntity(
-          context: context,
           entity: ExpenseEntity(state: state, client: client)
               .rebuild((b) => b..projectId = project.id));
       break;
     case EntityAction.clone:
-      createEntity(context: context, entity: project.clone);
+      createEntity(entity: project.clone);
       break;
     case EntityAction.restore:
       final message = projectIds.length > 1
-          ? localization.restoredProjects
+          ? localization!.restoredProjects
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', projectIds.length.toString())
-          : localization.restoredProject;
-      store.dispatch(RestoreProjectRequest(
-          snackBarCompleter<Null>(context, message), projectIds));
+          : localization!.restoredProject;
+      store.dispatch(
+          RestoreProjectRequest(snackBarCompleter<Null>(message), projectIds));
       break;
     case EntityAction.archive:
       final message = projectIds.length > 1
-          ? localization.archivedProjects
+          ? localization!.archivedProjects
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', projectIds.length.toString())
-          : localization.archivedProject;
-      store.dispatch(ArchiveProjectRequest(
-          snackBarCompleter<Null>(context, message), projectIds));
+          : localization!.archivedProject;
+      store.dispatch(
+          ArchiveProjectRequest(snackBarCompleter<Null>(message), projectIds));
       break;
     case EntityAction.delete:
       final message = projectIds.length > 1
-          ? localization.deletedProjects
+          ? localization!.deletedProjects
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', projectIds.length.toString())
-          : localization.deletedProject;
-      store.dispatch(DeleteProjectRequest(
-          snackBarCompleter<Null>(context, message), projectIds));
+          : localization!.deletedProject;
+      store.dispatch(
+          DeleteProjectRequest(snackBarCompleter<Null>(message), projectIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.projectListState.isInMultiselect()) {
@@ -376,15 +372,13 @@ void handleProjectAction(
         }
       }
       if (documentIds.isEmpty) {
-        showMessageDialog(
-            context: context, message: localization.noDocumentsToDownload);
+        showMessageDialog(message: localization!.noDocumentsToDownload);
       } else {
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
             completer: snackBarCompleter<Null>(
-              context,
-              localization.exportedData,
+              localization!.exportedData,
             ),
           ),
         );
@@ -398,25 +392,25 @@ void handleProjectAction(
 class StartProjectMultiselect {}
 
 class AddToProjectMultiselect {
-  AddToProjectMultiselect({@required this.entity});
+  AddToProjectMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromProjectMultiselect {
-  RemoveFromProjectMultiselect({@required this.entity});
+  RemoveFromProjectMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearProjectMultiselect {}
 
 class SaveProjectDocumentRequest implements StartSaving {
   SaveProjectDocumentRequest({
-    @required this.isPrivate,
-    @required this.completer,
-    @required this.multipartFile,
-    @required this.project,
+    required this.isPrivate,
+    required this.completer,
+    required this.multipartFile,
+    required this.project,
   });
 
   final bool isPrivate;
@@ -440,5 +434,5 @@ class SaveProjectDocumentFailure implements StopSaving {
 class UpdateProjectTab implements PersistUI {
   UpdateProjectTab({this.tabIndex});
 
-  final int tabIndex;
+  final int? tabIndex;
 }

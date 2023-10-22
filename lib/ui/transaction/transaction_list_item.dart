@@ -20,21 +20,21 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TransactionListItem extends StatelessWidget {
   const TransactionListItem({
-    @required this.user,
-    @required this.transaction,
-    @required this.filter,
+    required this.user,
+    required this.transaction,
+    required this.filter,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
 
-  final UserEntity user;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
+  final UserEntity? user;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onLongPress;
   final TransactionEntity transaction;
-  final String filter;
-  final Function(bool) onCheckboxChanged;
+  final String? filter;
+  final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
 
   @override
@@ -43,7 +43,7 @@ class TransactionListItem extends StatelessWidget {
     final state = store.state;
     final uiState = state.uiState;
     final transactionUIState = uiState.transactionUIState;
-    final filterMatch = filter != null && filter.isNotEmpty
+    final filterMatch = filter != null && filter!.isNotEmpty
         ? transaction.matchesFilterValue(filter)
         : null;
     final localization = AppLocalization.of(context);
@@ -51,13 +51,13 @@ class TransactionListItem extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
     final textStyle = TextStyle(fontSize: 16);
-    final textColor = Theme.of(context).textTheme.bodyLarge.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
     return DismissibleEntity(
       isSelected: isDesktop(context) &&
           transaction.id ==
               (uiState.isEditing
-                  ? transactionUIState.editing.id
+                  ? transactionUIState.editing!.id
                   : transactionUIState.selectedId),
       userCompany: store.state.userCompany,
       entity: transaction,
@@ -65,10 +65,11 @@ class TransactionListItem extends StatelessWidget {
           builder: (BuildContext context, BoxConstraints constraints) {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
-                onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: transaction),
+                onTap: () => onTap != null
+                    ? onTap!()
+                    : selectEntity(entity: transaction),
                 onLongPress: () => onLongPress != null
-                    ? onLongPress()
+                    ? onLongPress!()
                     : selectEntity(entity: transaction, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -91,7 +92,7 @@ class TransactionListItem extends StatelessWidget {
                                     materialTapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
                                     onChanged: (value) =>
-                                        onCheckboxChanged(value),
+                                        onCheckboxChanged!(value),
                                     activeColor:
                                         Theme.of(context).colorScheme.secondary,
                                   ),
@@ -124,9 +125,9 @@ class TransactionListItem extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .titleSmall
+                                      .titleSmall!
                                       .copyWith(
-                                        color: textColor
+                                        color: textColor!
                                             .withOpacity(kLighterOpacity),
                                       ),
                                 ),
@@ -147,8 +148,8 @@ class TransactionListItem extends StatelessWidget {
                         width: 100,
                         child: Text(
                           transaction.isWithdrawal
-                              ? localization.withdrawal
-                              : localization.deposit,
+                              ? localization!.withdrawal
+                              : localization!.deposit,
                         ),
                       ),
                       SizedBox(width: 30),
@@ -156,7 +157,7 @@ class TransactionListItem extends StatelessWidget {
                         constraints: BoxConstraints(minWidth: 100),
                         child: Text(
                           formatNumber(transaction.amount, context,
-                              currencyId: transaction.currencyId),
+                              currencyId: transaction.currencyId)!,
                           style: textStyle,
                           textAlign: TextAlign.end,
                         ),
@@ -168,10 +169,11 @@ class TransactionListItem extends StatelessWidget {
                 ),
               )
             : ListTile(
-                onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: transaction),
+                onTap: () => onTap != null
+                    ? onTap!()
+                    : selectEntity(entity: transaction),
                 onLongPress: () => onLongPress != null
-                    ? onLongPress()
+                    ? onLongPress!()
                     : selectEntity(entity: transaction, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
@@ -180,7 +182,7 @@ class TransactionListItem extends StatelessWidget {
                           value: isChecked,
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => onCheckboxChanged(value),
+                          onChanged: (value) => onCheckboxChanged!(value),
                           activeColor: Theme.of(context).colorScheme.secondary,
                         ),
                       )
@@ -197,7 +199,7 @@ class TransactionListItem extends StatelessWidget {
                       ),
                       Text(
                           formatNumber(transaction.amount, context,
-                              currencyId: transaction.currencyId),
+                              currencyId: transaction.currencyId)!,
                           style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),
@@ -214,8 +216,8 @@ class TransactionListItem extends StatelessWidget {
                                       .name +
                                   ' • ' +
                                   (transaction.isDeposit
-                                      ? localization.deposit
-                                      : localization.withdrawal))
+                                      ? localization!.deposit
+                                      : localization!.withdrawal))
                               : Text(
                                   filterMatch,
                                   maxLines: 3,
@@ -223,7 +225,7 @@ class TransactionListItem extends StatelessWidget {
                                 ),
                         ),
                         Text(
-                            localization.lookup(
+                            localization!.lookup(
                                 kPurchaseOrderStatuses[transaction.statusId]),
                             style: TextStyle(
                                 color: TransactionStatusColors(

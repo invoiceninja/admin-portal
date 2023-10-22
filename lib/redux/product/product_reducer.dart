@@ -15,32 +15,33 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 EntityUIState productUIReducer(ProductUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(productListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
+    ..editing.replace(editingReducer(state.editing, action)!)
     ..tabIndex = tabIndexReducer(state.tabIndex, action)
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
 
-final forceSelectedReducer = combineReducers<bool>([
-  TypedReducer<bool, ViewProduct>((completer, action) => true),
-  TypedReducer<bool, ViewProductList>((completer, action) => false),
-  TypedReducer<bool, FilterProductsByState>((completer, action) => false),
-  TypedReducer<bool, FilterProducts>((completer, action) => false),
-  TypedReducer<bool, FilterProductsByCustom1>((completer, action) => false),
-  TypedReducer<bool, FilterProductsByCustom2>((completer, action) => false),
-  TypedReducer<bool, FilterProductsByCustom3>((completer, action) => false),
-  TypedReducer<bool, FilterProductsByCustom4>((completer, action) => false),
+final forceSelectedReducer = combineReducers<bool?>([
+  TypedReducer<bool?, ViewProduct>((completer, action) => true),
+  TypedReducer<bool?, ViewProductList>((completer, action) => false),
+  TypedReducer<bool?, FilterProductsByState>((completer, action) => false),
+  TypedReducer<bool?, FilterProducts>((completer, action) => false),
+  TypedReducer<bool?, FilterProductsByCustom1>((completer, action) => false),
+  TypedReducer<bool?, FilterProductsByCustom2>((completer, action) => false),
+  TypedReducer<bool?, FilterProductsByCustom3>((completer, action) => false),
+  TypedReducer<bool?, FilterProductsByCustom4>((completer, action) => false),
 ]);
 
-final tabIndexReducer = combineReducers<int>([
-  TypedReducer<int, UpdateProductTab>((completer, action) {
+final int? Function(int, dynamic) tabIndexReducer = combineReducers<int?>([
+  TypedReducer<int?, UpdateProductTab>((completer, action) {
     return action.tabIndex;
   }),
-  TypedReducer<int, PreviewEntity>((completer, action) {
+  TypedReducer<int?, PreviewEntity>((completer, action) {
     return 0;
   }),
 ]);
 
+/*
 Reducer<String> dropdownFilterReducer = combineReducers([
   TypedReducer<String, FilterProductDropdown>(filterProductDropdownReducer),
 ]);
@@ -49,52 +50,53 @@ String filterProductDropdownReducer(
     String dropdownFilter, FilterProductDropdown action) {
   return action.filter;
 }
+*/
 
-final editingReducer = combineReducers<ProductEntity>([
-  TypedReducer<ProductEntity, SaveProductSuccess>(_updateEditing),
-  TypedReducer<ProductEntity, AddProductSuccess>(_updateEditing),
-  TypedReducer<ProductEntity, EditProduct>(_updateEditing),
-  TypedReducer<ProductEntity, UpdateProduct>((product, action) {
+final editingReducer = combineReducers<ProductEntity?>([
+  TypedReducer<ProductEntity?, SaveProductSuccess>(_updateEditing),
+  TypedReducer<ProductEntity?, AddProductSuccess>(_updateEditing),
+  TypedReducer<ProductEntity?, EditProduct>(_updateEditing),
+  TypedReducer<ProductEntity?, UpdateProduct>((product, action) {
     return action.product.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<ProductEntity, RestoreProductsSuccess>((products, action) {
+  TypedReducer<ProductEntity?, RestoreProductsSuccess>((products, action) {
     return action.products[0];
   }),
-  TypedReducer<ProductEntity, ArchiveProductsSuccess>((products, action) {
+  TypedReducer<ProductEntity?, ArchiveProductsSuccess>((products, action) {
     return action.products[0];
   }),
-  TypedReducer<ProductEntity, DeleteProductsSuccess>((products, action) {
+  TypedReducer<ProductEntity?, DeleteProductsSuccess>((products, action) {
     return action.products[0];
   }),
-  TypedReducer<ProductEntity, DiscardChanges>(_clearEditing),
+  TypedReducer<ProductEntity?, DiscardChanges>(_clearEditing),
 ]);
 
-ProductEntity _clearEditing(ProductEntity product, dynamic action) {
+ProductEntity _clearEditing(ProductEntity? product, dynamic action) {
   return ProductEntity();
 }
 
-ProductEntity _updateEditing(ProductEntity product, dynamic action) {
+ProductEntity? _updateEditing(ProductEntity? product, dynamic action) {
   return action.product;
 }
 
-Reducer<String> selectedIdReducer = combineReducers([
-  TypedReducer<String, ArchiveProductsSuccess>((completer, action) => ''),
-  TypedReducer<String, DeleteProductsSuccess>((completer, action) => ''),
-  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+Reducer<String?> selectedIdReducer = combineReducers([
+  TypedReducer<String?, ArchiveProductsSuccess>((completer, action) => ''),
+  TypedReducer<String?, DeleteProductsSuccess>((completer, action) => ''),
+  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.product ? action.entityId : selectedId),
-  TypedReducer<String, ViewProduct>((selectedId, action) => action.productId),
-  TypedReducer<String, AddProductSuccess>(
+  TypedReducer<String?, ViewProduct>((selectedId, action) => action.productId),
+  TypedReducer<String?, AddProductSuccess>(
       (selectedId, action) => action.product.id),
-  TypedReducer<String, SelectCompany>(
+  TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, SortProducts>((selectedId, action) => ''),
-  TypedReducer<String, FilterProducts>((selectedId, action) => ''),
-  TypedReducer<String, FilterProductsByState>((selectedId, action) => ''),
-  TypedReducer<String, FilterProductsByCustom1>((selectedId, action) => ''),
-  TypedReducer<String, FilterProductsByCustom2>((selectedId, action) => ''),
-  TypedReducer<String, FilterProductsByCustom3>((selectedId, action) => ''),
-  TypedReducer<String, FilterProductsByCustom4>((selectedId, action) => ''),
+  TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String?, SortProducts>((selectedId, action) => ''),
+  TypedReducer<String?, FilterProducts>((selectedId, action) => ''),
+  TypedReducer<String?, FilterProductsByState>((selectedId, action) => ''),
+  TypedReducer<String?, FilterProductsByCustom1>((selectedId, action) => ''),
+  TypedReducer<String?, FilterProductsByCustom2>((selectedId, action) => ''),
+  TypedReducer<String?, FilterProductsByCustom3>((selectedId, action) => ''),
+  TypedReducer<String?, FilterProductsByCustom4>((selectedId, action) => ''),
 ]);
 
 final productListReducer = combineReducers<ListUIState>([
@@ -186,7 +188,7 @@ ListUIState _filterProducts(
 
 ListUIState _sortProducts(ListUIState productListState, SortProducts action) {
   return productListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortAscending = b.sortField != action.field || !b.sortAscending!
     ..sortField = action.field);
 }
 
@@ -197,13 +199,13 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState productListState, AddToProductMultiselect action) {
-  return productListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+  return productListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState productListState, RemoveFromProductMultiselect action) {
   return productListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(

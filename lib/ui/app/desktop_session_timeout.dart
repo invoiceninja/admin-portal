@@ -18,14 +18,14 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 class DesktopSessionTimeout extends StatefulWidget {
   const DesktopSessionTimeout({this.child});
 
-  final Widget child;
+  final Widget? child;
 
   @override
   _DesktopSessionTimeoutState createState() => _DesktopSessionTimeoutState();
 }
 
 class _DesktopSessionTimeoutState extends State<DesktopSessionTimeout> {
-  Timer _timer;
+  Timer? _timer;
   bool _isWarned = false;
 
   @override
@@ -83,14 +83,14 @@ class _DesktopSessionTimeoutState extends State<DesktopSessionTimeout> {
                 children: [
                   Expanded(
                       child: Text(
-                    localization.sessionAboutToExpire,
+                    localization!.sessionAboutToExpire,
                     style: TextStyle(color: Colors.white),
                   )),
                   TextButton(
                       onPressed: () {
                         final store = StoreProvider.of<AppState>(context);
                         final completer = Completer<Null>();
-                        completer.future.then((value) {
+                        completer.future.then<Null>((_) {
                           setState(() {
                             _isWarned = false;
                           });
@@ -104,12 +104,12 @@ class _DesktopSessionTimeoutState extends State<DesktopSessionTimeout> {
                 ],
               ),
             ),
-            Expanded(child: widget.child),
+            Expanded(child: widget.child!),
           ],
         ),
       );
     }
 
-    return widget.child;
+    return widget.child!;
   }
 }

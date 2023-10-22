@@ -17,8 +17,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientEditSettings extends StatefulWidget {
   const ClientEditSettings({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final ClientEditVM viewModel;
@@ -30,7 +30,7 @@ class ClientEditSettings extends StatefulWidget {
 class ClientEditSettingsState extends State<ClientEditSettings> {
   final _taskRateController = TextEditingController();
 
-  List<TextEditingController> _controllers;
+  late List<TextEditingController> _controllers;
   final _debouncer = Debouncer();
 
   @override
@@ -45,7 +45,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
     final client = widget.viewModel.client;
     _taskRateController.text = formatNumber(
         client.settings.defaultTaskRate, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -77,7 +77,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final company = state.company;
@@ -99,7 +99,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
           entityList: memoizedCurrencyList(viewModel.staticState.currencyMap),
           labelText: localization.currency,
           entityId: client.currencyId,
-          onSelected: (SelectableEntity currency) => viewModel.onChanged(client
+          onSelected: (SelectableEntity? currency) => viewModel.onChanged(client
               .rebuild((b) => b..settings.currencyId = currency?.id ?? '')),
         ),
         EntityDropdown(
@@ -107,7 +107,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
           entityList: memoizedLanguageList(viewModel.staticState.languageMap),
           labelText: localization.language,
           entityId: client.languageId,
-          onSelected: (SelectableEntity language) => viewModel.onChanged(client
+          onSelected: (SelectableEntity? language) => viewModel.onChanged(client
               .rebuild((b) => b..settings.languageId = language?.id ?? '')),
         ),
         if (company.isModuleEnabled(EntityType.invoice))
@@ -117,7 +117,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
             items: memoizedDropdownPaymentTermList(
                     state.paymentTermState.map, state.paymentTermState.list)
                 .map((paymentTermId) {
-              final paymentTerm = state.paymentTermState.map[paymentTermId];
+              final paymentTerm = state.paymentTermState.map[paymentTermId]!;
               return DropdownMenuItem<String>(
                 child: Text(paymentTerm.numDays == 0
                     ? localization.dueOnReceipt
@@ -139,7 +139,7 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
             items: memoizedDropdownPaymentTermList(
                     state.paymentTermState.map, state.paymentTermState.list)
                 .map((paymentTermId) {
-              final paymentTerm = state.paymentTermState.map[paymentTermId];
+              final paymentTerm = state.paymentTermState.map[paymentTermId]!;
               return DropdownMenuItem<String>(
                 child: Text(paymentTerm.numDays == 0
                     ? localization.dueOnReceipt

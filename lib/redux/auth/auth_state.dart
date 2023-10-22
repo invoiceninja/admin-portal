@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 part 'auth_state.g.dart';
 
 abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
-  factory AuthState({String url, String referralCode}) {
+  factory AuthState({String? url, String? referralCode}) {
     return _$AuthState._(
       email: '',
       url: url ?? '',

@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
@@ -78,7 +79,7 @@ enum PurchaseOrderReportFields {
 }
 
 var memoizedPurchaseOrderReport = memo7((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, InvoiceEntity> purchaseOrderMap,
   BuiltMap<String, ClientEntity> clientMap,
@@ -86,7 +87,7 @@ var memoizedPurchaseOrderReport = memo7((
   BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) =>
-    purchaseOrderReport(userCompany, reportsUIState, purchaseOrderMap,
+    purchaseOrderReport(userCompany!, reportsUIState, purchaseOrderMap,
         clientMap, vendorMap, userMap, staticState));
 
 ReportResult purchaseOrderReport(
@@ -102,10 +103,10 @@ ReportResult purchaseOrderReport(
   final List<BaseEntity> entities = [];
   BuiltList<PurchaseOrderReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
+  final reportSettings = userCompany.settings.reportSettings;
   final purchaseOrderReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportPurchaseOrder)
-          ? reportSettings[kReportPurchaseOrder]
+      reportSettings.containsKey(kReportPurchaseOrder)
+          ? reportSettings[kReportPurchaseOrder]!
           : ReportSettingsEntity();
 
   final defaultColumns = [
@@ -119,14 +120,14 @@ ReportResult purchaseOrderReport(
   if (purchaseOrderReportSettings.columns.isNotEmpty) {
     columns = BuiltList(purchaseOrderReportSettings.columns
         .map((e) => EnumUtils.fromString(PurchaseOrderReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
   }
 
   for (var purchaseOrderId in purchaseOrderMap.keys) {
-    final purchaseOrder = purchaseOrderMap[purchaseOrderId];
+    final purchaseOrder = purchaseOrderMap[purchaseOrderId]!;
     final vendor = vendorMap[purchaseOrder.vendorId] ?? VendorEntity();
 
     if (purchaseOrder.invitations.isEmpty) {
@@ -137,9 +138,9 @@ ReportResult purchaseOrderReport(
         vendor.getContact(purchaseOrder.invitations.first.vendorContactId);
     //final vendor = vendorMap[purchaseOrder.vendorId];
 
-    if ((purchaseOrder.isDeleted &&
+    if ((purchaseOrder.isDeleted! &&
             !userCompany.company.reportIncludeDeleted) ||
-        vendor.isDeleted) {
+        vendor.isDeleted!) {
       continue;
     }
 
@@ -319,13 +320,13 @@ ReportResult purchaseOrderReport(
           value = vendor.phone;
           break;
         case PurchaseOrderReportFields.contact_email:
-          value = contact?.email ?? '';
+          value = contact.email;
           break;
         case PurchaseOrderReportFields.contact_name:
-          value = contact?.fullName ?? '';
+          value = contact.fullName;
           break;
         case PurchaseOrderReportFields.contact_phone:
-          value = contact?.phone ?? '';
+          value = contact.phone;
           break;
         case PurchaseOrderReportFields.vendor_website:
           value = vendor.website;
@@ -363,7 +364,7 @@ ReportResult purchaseOrderReport(
         userCompany: userCompany,
         reportsUIState: reportsUIState,
         column: EnumUtils.parse(column),
-      )) {
+      )!) {
         skip = true;
       }
 
@@ -394,7 +395,7 @@ ReportResult purchaseOrderReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) => sortReportTableRows(
-      rowA, rowB, purchaseOrderReportSettings, selectedColumns));
+      rowA, rowB, purchaseOrderReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns: PurchaseOrderReportFields.values

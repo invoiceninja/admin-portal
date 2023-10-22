@@ -13,8 +13,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseCategoryEdit extends StatefulWidget {
   const ExpenseCategoryEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final ExpenseCategoryEditVM viewModel;
@@ -71,7 +71,7 @@ class _ExpenseCategoryEditState extends State<ExpenseCategoryEdit> {
   }
 
   void _onSavePressed() {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -89,8 +89,8 @@ class _ExpenseCategoryEditState extends State<ExpenseCategoryEdit> {
     return EditScaffold(
       entity: expenseCategory,
       title: expenseCategory.isNew
-          ? localization.newExpenseCategory
-          : localization.editExpenseCategory,
+          ? localization!.newExpenseCategory
+          : localization!.editExpenseCategory,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (_) => _onSavePressed(),
       body: Form(

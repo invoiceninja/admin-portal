@@ -53,7 +53,7 @@ class TransactionRuleFields {
 abstract class TransactionRuleEntity extends Object
     with BaseEntity
     implements Built<TransactionRuleEntity, TransactionRuleEntityBuilder> {
-  factory TransactionRuleEntity({String id, AppState state}) {
+  factory TransactionRuleEntity({String? id, AppState? state}) {
     return _$TransactionRuleEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
@@ -102,17 +102,17 @@ abstract class TransactionRuleEntity extends Object
   EntityType get entityType => EntityType.transactionRule;
 
   @override
-  List<EntityAction> getActions(
-      {UserCompanyEntity userCompany,
-      ClientEntity client,
+  List<EntityAction?> getActions(
+      {UserCompanyEntity? userCompany,
+      ClientEntity? client,
       bool includeEdit = false,
       bool multiselect = false}) {
-    final actions = <EntityAction>[];
+    final actions = <EntityAction?>[];
 
-    if (!isDeleted &&
+    if (!isDeleted! &&
         !multiselect &&
         includeEdit &&
-        userCompany.canEditEntity(this)) {
+        userCompany!.canEditEntity(this)) {
       actions.add(EntityAction.edit);
     }
 
@@ -123,7 +123,7 @@ abstract class TransactionRuleEntity extends Object
     return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
-  int compareTo(TransactionRuleEntity transactionRule, String sortField,
+  int compareTo(TransactionRuleEntity? transactionRule, String sortField,
       bool sortAscending) {
     int response = 0;
     final transactionRuleA = sortAscending ? this : transactionRule;
@@ -132,9 +132,9 @@ abstract class TransactionRuleEntity extends Object
     switch (sortField) {
       // STARTER: sort switch - do not remove comment
       case TransactionRuleFields.name:
-        response = transactionRuleA.name
+        response = transactionRuleA!.name
             .toLowerCase()
-            .compareTo(transactionRuleB.name.toLowerCase());
+            .compareTo(transactionRuleB!.name.toLowerCase());
         break;
 
       default:
@@ -145,14 +145,14 @@ abstract class TransactionRuleEntity extends Object
 
     if (response == 0) {
       // STARTER: sort default - do not remove comment
-      return transactionRuleA.name.compareTo(transactionRuleB.name);
+      return transactionRuleA!.name.compareTo(transactionRuleB!.name);
     } else {
       return response;
     }
   }
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     return matchesStrings(
       haystacks: [
         name,
@@ -162,7 +162,7 @@ abstract class TransactionRuleEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     return matchesStringsValue(
       haystacks: [
         //
@@ -175,10 +175,10 @@ abstract class TransactionRuleEntity extends Object
   String get listDisplayName => name;
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
   @override
-  FormatNumberType get listDisplayAmountType => null;
+  FormatNumberType? get listDisplayAmountType => null;
 
   static Serializer<TransactionRuleEntity> get serializer =>
       _$transactionRuleEntitySerializer;
@@ -189,7 +189,7 @@ abstract class TransactionRuleCriteriaEntity
         Built<TransactionRuleCriteriaEntity,
             TransactionRuleCriteriaEntityBuilder> {
   factory TransactionRuleCriteriaEntity(
-      {String searchKey, String operator, String value}) {
+      {String? searchKey, String? operator, String? value}) {
     return _$TransactionRuleCriteriaEntity._(
       searchKey: searchKey ?? SEARCH_KEY_DESCRIPTION,
       operator: operator ?? STRING_OPERATOR_CONTAINS,

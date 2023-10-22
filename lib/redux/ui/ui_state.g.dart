@@ -15,9 +15,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
   final String wireName = 'UIState';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, UIState object,
+  Iterable<Object?> serialize(Serializers serializers, UIState object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'selectedCompanyIndex',
       serializers.serialize(object.selectedCompanyIndex,
           specifiedType: const FullType(int)),
@@ -138,7 +138,7 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       serializers.serialize(object.reportsUIState,
           specifiedType: const FullType(ReportsUIState)),
     ];
-    Object value;
+    Object? value;
     value = object.loadingEntityType;
     if (value != null) {
       result
@@ -157,198 +157,206 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
   }
 
   @override
-  UIState deserialize(Serializers serializers, Iterable<Object> serialized,
+  UIState deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new UIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'selectedCompanyIndex':
           result.selectedCompanyIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'currentRoute':
           result.currentRoute = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'previousRoute':
           result.previousRoute = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'loadingEntityType':
           result.loadingEntityType = serializers.deserialize(value,
-              specifiedType: const FullType(EntityType)) as EntityType;
+              specifiedType: const FullType(EntityType)) as EntityType?;
           break;
         case 'previewStack':
           result.previewStack.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(EntityType)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(EntityType)]))!
+              as BuiltList<Object?>);
           break;
         case 'filterStack':
           result.filterStack.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(BaseEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(BaseEntity)]))!
+              as BuiltList<Object?>);
           break;
         case 'filter':
           result.filter = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'filterClearedAt':
           result.filterClearedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'lastActivityAt':
           result.lastActivityAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'dashboardUIState':
           result.dashboardUIState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(DashboardUIState))
+                  specifiedType: const FullType(DashboardUIState))!
               as DashboardUIState);
           break;
         case 'productUIState':
           result.productUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ProductUIState)) as ProductUIState);
+                  specifiedType: const FullType(ProductUIState))!
+              as ProductUIState);
           break;
         case 'clientUIState':
           result.clientUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ClientUIState)) as ClientUIState);
+              specifiedType: const FullType(ClientUIState))! as ClientUIState);
           break;
         case 'invoiceUIState':
           result.invoiceUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(InvoiceUIState)) as InvoiceUIState);
+                  specifiedType: const FullType(InvoiceUIState))!
+              as InvoiceUIState);
           break;
         case 'scheduleUIState':
           result.scheduleUIState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(ScheduleUIState))
+                  specifiedType: const FullType(ScheduleUIState))!
               as ScheduleUIState);
           break;
         case 'transactionRuleUIState':
           result.transactionRuleUIState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(TransactionRuleUIState))
+                  specifiedType: const FullType(TransactionRuleUIState))!
               as TransactionRuleUIState);
           break;
         case 'transactionUIState':
           result.transactionUIState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(TransactionUIState))
+                  specifiedType: const FullType(TransactionUIState))!
               as TransactionUIState);
           break;
         case 'bankAccountUIState':
           result.bankAccountUIState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(BankAccountUIState))
+                  specifiedType: const FullType(BankAccountUIState))!
               as BankAccountUIState);
           break;
         case 'purchaseOrderUIState':
           result.purchaseOrderUIState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(PurchaseOrderUIState))
+                  specifiedType: const FullType(PurchaseOrderUIState))!
               as PurchaseOrderUIState);
           break;
         case 'recurringExpenseUIState':
           result.recurringExpenseUIState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(RecurringExpenseUIState))
+                  specifiedType: const FullType(RecurringExpenseUIState))!
               as RecurringExpenseUIState);
           break;
         case 'subscriptionUIState':
           result.subscriptionUIState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(SubscriptionUIState))
+                  specifiedType: const FullType(SubscriptionUIState))!
               as SubscriptionUIState);
           break;
         case 'taskStatusUIState':
           result.taskStatusUIState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(TaskStatusUIState))
+                  specifiedType: const FullType(TaskStatusUIState))!
               as TaskStatusUIState);
           break;
         case 'expenseCategoryUIState':
           result.expenseCategoryUIState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(ExpenseCategoryUIState))
+                  specifiedType: const FullType(ExpenseCategoryUIState))!
               as ExpenseCategoryUIState);
           break;
         case 'recurringInvoiceUIState':
           result.recurringInvoiceUIState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(RecurringInvoiceUIState))
+                  specifiedType: const FullType(RecurringInvoiceUIState))!
               as RecurringInvoiceUIState);
           break;
         case 'webhookUIState':
           result.webhookUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(WebhookUIState)) as WebhookUIState);
+                  specifiedType: const FullType(WebhookUIState))!
+              as WebhookUIState);
           break;
         case 'tokenUIState':
           result.tokenUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TokenUIState)) as TokenUIState);
+              specifiedType: const FullType(TokenUIState))! as TokenUIState);
           break;
         case 'paymentTermUIState':
           result.paymentTermUIState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(PaymentTermUIState))
+                  specifiedType: const FullType(PaymentTermUIState))!
               as PaymentTermUIState);
           break;
         case 'designUIState':
           result.designUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(DesignUIState)) as DesignUIState);
+              specifiedType: const FullType(DesignUIState))! as DesignUIState);
           break;
         case 'creditUIState':
           result.creditUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(CreditUIState)) as CreditUIState);
+              specifiedType: const FullType(CreditUIState))! as CreditUIState);
           break;
         case 'userUIState':
           result.userUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(UserUIState)) as UserUIState);
+              specifiedType: const FullType(UserUIState))! as UserUIState);
           break;
         case 'taxRateUIState':
           result.taxRateUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TaxRateUIState)) as TaxRateUIState);
+                  specifiedType: const FullType(TaxRateUIState))!
+              as TaxRateUIState);
           break;
         case 'companyGatewayUIState':
           result.companyGatewayUIState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(CompanyGatewayUIState))
+                  specifiedType: const FullType(CompanyGatewayUIState))!
               as CompanyGatewayUIState);
           break;
         case 'groupUIState':
           result.groupUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(GroupUIState)) as GroupUIState);
+              specifiedType: const FullType(GroupUIState))! as GroupUIState);
           break;
         case 'documentUIState':
           result.documentUIState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(DocumentUIState))
+                  specifiedType: const FullType(DocumentUIState))!
               as DocumentUIState);
           break;
         case 'expenseUIState':
           result.expenseUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ExpenseUIState)) as ExpenseUIState);
+                  specifiedType: const FullType(ExpenseUIState))!
+              as ExpenseUIState);
           break;
         case 'vendorUIState':
           result.vendorUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(VendorUIState)) as VendorUIState);
+              specifiedType: const FullType(VendorUIState))! as VendorUIState);
           break;
         case 'taskUIState':
           result.taskUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TaskUIState)) as TaskUIState);
+              specifiedType: const FullType(TaskUIState))! as TaskUIState);
           break;
         case 'projectUIState':
           result.projectUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ProjectUIState)) as ProjectUIState);
+                  specifiedType: const FullType(ProjectUIState))!
+              as ProjectUIState);
           break;
         case 'paymentUIState':
           result.paymentUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(PaymentUIState)) as PaymentUIState);
+                  specifiedType: const FullType(PaymentUIState))!
+              as PaymentUIState);
           break;
         case 'quoteUIState':
           result.quoteUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(QuoteUIState)) as QuoteUIState);
+              specifiedType: const FullType(QuoteUIState))! as QuoteUIState);
           break;
         case 'settingsUIState':
           result.settingsUIState.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(SettingsUIState))
+                  specifiedType: const FullType(SettingsUIState))!
               as SettingsUIState);
           break;
         case 'reportsUIState':
           result.reportsUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ReportsUIState)) as ReportsUIState);
+                  specifiedType: const FullType(ReportsUIState))!
+              as ReportsUIState);
           break;
       }
     }
@@ -365,13 +373,13 @@ class _$UIState extends UIState {
   @override
   final String previousRoute;
   @override
-  final EntityType loadingEntityType;
+  final EntityType? loadingEntityType;
   @override
   final BuiltList<EntityType> previewStack;
   @override
   final BuiltList<BaseEntity> filterStack;
   @override
-  final String filter;
+  final String? filter;
   @override
   final int filterClearedAt;
   @override
@@ -441,51 +449,51 @@ class _$UIState extends UIState {
   @override
   final ReportsUIState reportsUIState;
 
-  factory _$UIState([void Function(UIStateBuilder) updates]) =>
+  factory _$UIState([void Function(UIStateBuilder)? updates]) =>
       (new UIStateBuilder()..update(updates))._build();
 
   _$UIState._(
-      {this.selectedCompanyIndex,
-      this.currentRoute,
-      this.previousRoute,
+      {required this.selectedCompanyIndex,
+      required this.currentRoute,
+      required this.previousRoute,
       this.loadingEntityType,
-      this.previewStack,
-      this.filterStack,
+      required this.previewStack,
+      required this.filterStack,
       this.filter,
-      this.filterClearedAt,
-      this.lastActivityAt,
-      this.dashboardUIState,
-      this.productUIState,
-      this.clientUIState,
-      this.invoiceUIState,
-      this.scheduleUIState,
-      this.transactionRuleUIState,
-      this.transactionUIState,
-      this.bankAccountUIState,
-      this.purchaseOrderUIState,
-      this.recurringExpenseUIState,
-      this.subscriptionUIState,
-      this.taskStatusUIState,
-      this.expenseCategoryUIState,
-      this.recurringInvoiceUIState,
-      this.webhookUIState,
-      this.tokenUIState,
-      this.paymentTermUIState,
-      this.designUIState,
-      this.creditUIState,
-      this.userUIState,
-      this.taxRateUIState,
-      this.companyGatewayUIState,
-      this.groupUIState,
-      this.documentUIState,
-      this.expenseUIState,
-      this.vendorUIState,
-      this.taskUIState,
-      this.projectUIState,
-      this.paymentUIState,
-      this.quoteUIState,
-      this.settingsUIState,
-      this.reportsUIState})
+      required this.filterClearedAt,
+      required this.lastActivityAt,
+      required this.dashboardUIState,
+      required this.productUIState,
+      required this.clientUIState,
+      required this.invoiceUIState,
+      required this.scheduleUIState,
+      required this.transactionRuleUIState,
+      required this.transactionUIState,
+      required this.bankAccountUIState,
+      required this.purchaseOrderUIState,
+      required this.recurringExpenseUIState,
+      required this.subscriptionUIState,
+      required this.taskStatusUIState,
+      required this.expenseCategoryUIState,
+      required this.recurringInvoiceUIState,
+      required this.webhookUIState,
+      required this.tokenUIState,
+      required this.paymentTermUIState,
+      required this.designUIState,
+      required this.creditUIState,
+      required this.userUIState,
+      required this.taxRateUIState,
+      required this.companyGatewayUIState,
+      required this.groupUIState,
+      required this.documentUIState,
+      required this.expenseUIState,
+      required this.vendorUIState,
+      required this.taskUIState,
+      required this.projectUIState,
+      required this.paymentUIState,
+      required this.quoteUIState,
+      required this.settingsUIState,
+      required this.reportsUIState})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         selectedCompanyIndex, r'UIState', 'selectedCompanyIndex');
@@ -621,10 +629,10 @@ class _$UIState extends UIState {
         reportsUIState == other.reportsUIState;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, selectedCompanyIndex.hashCode);
     _$hash = $jc(_$hash, currentRoute.hashCode);
@@ -720,248 +728,248 @@ class _$UIState extends UIState {
 }
 
 class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
-  _$UIState _$v;
+  _$UIState? _$v;
 
-  int _selectedCompanyIndex;
-  int get selectedCompanyIndex => _$this._selectedCompanyIndex;
-  set selectedCompanyIndex(int selectedCompanyIndex) =>
+  int? _selectedCompanyIndex;
+  int? get selectedCompanyIndex => _$this._selectedCompanyIndex;
+  set selectedCompanyIndex(int? selectedCompanyIndex) =>
       _$this._selectedCompanyIndex = selectedCompanyIndex;
 
-  String _currentRoute;
-  String get currentRoute => _$this._currentRoute;
-  set currentRoute(String currentRoute) => _$this._currentRoute = currentRoute;
+  String? _currentRoute;
+  String? get currentRoute => _$this._currentRoute;
+  set currentRoute(String? currentRoute) => _$this._currentRoute = currentRoute;
 
-  String _previousRoute;
-  String get previousRoute => _$this._previousRoute;
-  set previousRoute(String previousRoute) =>
+  String? _previousRoute;
+  String? get previousRoute => _$this._previousRoute;
+  set previousRoute(String? previousRoute) =>
       _$this._previousRoute = previousRoute;
 
-  EntityType _loadingEntityType;
-  EntityType get loadingEntityType => _$this._loadingEntityType;
-  set loadingEntityType(EntityType loadingEntityType) =>
+  EntityType? _loadingEntityType;
+  EntityType? get loadingEntityType => _$this._loadingEntityType;
+  set loadingEntityType(EntityType? loadingEntityType) =>
       _$this._loadingEntityType = loadingEntityType;
 
-  ListBuilder<EntityType> _previewStack;
+  ListBuilder<EntityType>? _previewStack;
   ListBuilder<EntityType> get previewStack =>
       _$this._previewStack ??= new ListBuilder<EntityType>();
-  set previewStack(ListBuilder<EntityType> previewStack) =>
+  set previewStack(ListBuilder<EntityType>? previewStack) =>
       _$this._previewStack = previewStack;
 
-  ListBuilder<BaseEntity> _filterStack;
+  ListBuilder<BaseEntity>? _filterStack;
   ListBuilder<BaseEntity> get filterStack =>
       _$this._filterStack ??= new ListBuilder<BaseEntity>();
-  set filterStack(ListBuilder<BaseEntity> filterStack) =>
+  set filterStack(ListBuilder<BaseEntity>? filterStack) =>
       _$this._filterStack = filterStack;
 
-  String _filter;
-  String get filter => _$this._filter;
-  set filter(String filter) => _$this._filter = filter;
+  String? _filter;
+  String? get filter => _$this._filter;
+  set filter(String? filter) => _$this._filter = filter;
 
-  int _filterClearedAt;
-  int get filterClearedAt => _$this._filterClearedAt;
-  set filterClearedAt(int filterClearedAt) =>
+  int? _filterClearedAt;
+  int? get filterClearedAt => _$this._filterClearedAt;
+  set filterClearedAt(int? filterClearedAt) =>
       _$this._filterClearedAt = filterClearedAt;
 
-  int _lastActivityAt;
-  int get lastActivityAt => _$this._lastActivityAt;
-  set lastActivityAt(int lastActivityAt) =>
+  int? _lastActivityAt;
+  int? get lastActivityAt => _$this._lastActivityAt;
+  set lastActivityAt(int? lastActivityAt) =>
       _$this._lastActivityAt = lastActivityAt;
 
-  DashboardUIStateBuilder _dashboardUIState;
+  DashboardUIStateBuilder? _dashboardUIState;
   DashboardUIStateBuilder get dashboardUIState =>
       _$this._dashboardUIState ??= new DashboardUIStateBuilder();
-  set dashboardUIState(DashboardUIStateBuilder dashboardUIState) =>
+  set dashboardUIState(DashboardUIStateBuilder? dashboardUIState) =>
       _$this._dashboardUIState = dashboardUIState;
 
-  ProductUIStateBuilder _productUIState;
+  ProductUIStateBuilder? _productUIState;
   ProductUIStateBuilder get productUIState =>
       _$this._productUIState ??= new ProductUIStateBuilder();
-  set productUIState(ProductUIStateBuilder productUIState) =>
+  set productUIState(ProductUIStateBuilder? productUIState) =>
       _$this._productUIState = productUIState;
 
-  ClientUIStateBuilder _clientUIState;
+  ClientUIStateBuilder? _clientUIState;
   ClientUIStateBuilder get clientUIState =>
       _$this._clientUIState ??= new ClientUIStateBuilder();
-  set clientUIState(ClientUIStateBuilder clientUIState) =>
+  set clientUIState(ClientUIStateBuilder? clientUIState) =>
       _$this._clientUIState = clientUIState;
 
-  InvoiceUIStateBuilder _invoiceUIState;
+  InvoiceUIStateBuilder? _invoiceUIState;
   InvoiceUIStateBuilder get invoiceUIState =>
       _$this._invoiceUIState ??= new InvoiceUIStateBuilder();
-  set invoiceUIState(InvoiceUIStateBuilder invoiceUIState) =>
+  set invoiceUIState(InvoiceUIStateBuilder? invoiceUIState) =>
       _$this._invoiceUIState = invoiceUIState;
 
-  ScheduleUIStateBuilder _scheduleUIState;
+  ScheduleUIStateBuilder? _scheduleUIState;
   ScheduleUIStateBuilder get scheduleUIState =>
       _$this._scheduleUIState ??= new ScheduleUIStateBuilder();
-  set scheduleUIState(ScheduleUIStateBuilder scheduleUIState) =>
+  set scheduleUIState(ScheduleUIStateBuilder? scheduleUIState) =>
       _$this._scheduleUIState = scheduleUIState;
 
-  TransactionRuleUIStateBuilder _transactionRuleUIState;
+  TransactionRuleUIStateBuilder? _transactionRuleUIState;
   TransactionRuleUIStateBuilder get transactionRuleUIState =>
       _$this._transactionRuleUIState ??= new TransactionRuleUIStateBuilder();
   set transactionRuleUIState(
-          TransactionRuleUIStateBuilder transactionRuleUIState) =>
+          TransactionRuleUIStateBuilder? transactionRuleUIState) =>
       _$this._transactionRuleUIState = transactionRuleUIState;
 
-  TransactionUIStateBuilder _transactionUIState;
+  TransactionUIStateBuilder? _transactionUIState;
   TransactionUIStateBuilder get transactionUIState =>
       _$this._transactionUIState ??= new TransactionUIStateBuilder();
-  set transactionUIState(TransactionUIStateBuilder transactionUIState) =>
+  set transactionUIState(TransactionUIStateBuilder? transactionUIState) =>
       _$this._transactionUIState = transactionUIState;
 
-  BankAccountUIStateBuilder _bankAccountUIState;
+  BankAccountUIStateBuilder? _bankAccountUIState;
   BankAccountUIStateBuilder get bankAccountUIState =>
       _$this._bankAccountUIState ??= new BankAccountUIStateBuilder();
-  set bankAccountUIState(BankAccountUIStateBuilder bankAccountUIState) =>
+  set bankAccountUIState(BankAccountUIStateBuilder? bankAccountUIState) =>
       _$this._bankAccountUIState = bankAccountUIState;
 
-  PurchaseOrderUIStateBuilder _purchaseOrderUIState;
+  PurchaseOrderUIStateBuilder? _purchaseOrderUIState;
   PurchaseOrderUIStateBuilder get purchaseOrderUIState =>
       _$this._purchaseOrderUIState ??= new PurchaseOrderUIStateBuilder();
-  set purchaseOrderUIState(PurchaseOrderUIStateBuilder purchaseOrderUIState) =>
+  set purchaseOrderUIState(PurchaseOrderUIStateBuilder? purchaseOrderUIState) =>
       _$this._purchaseOrderUIState = purchaseOrderUIState;
 
-  RecurringExpenseUIStateBuilder _recurringExpenseUIState;
+  RecurringExpenseUIStateBuilder? _recurringExpenseUIState;
   RecurringExpenseUIStateBuilder get recurringExpenseUIState =>
       _$this._recurringExpenseUIState ??= new RecurringExpenseUIStateBuilder();
   set recurringExpenseUIState(
-          RecurringExpenseUIStateBuilder recurringExpenseUIState) =>
+          RecurringExpenseUIStateBuilder? recurringExpenseUIState) =>
       _$this._recurringExpenseUIState = recurringExpenseUIState;
 
-  SubscriptionUIStateBuilder _subscriptionUIState;
+  SubscriptionUIStateBuilder? _subscriptionUIState;
   SubscriptionUIStateBuilder get subscriptionUIState =>
       _$this._subscriptionUIState ??= new SubscriptionUIStateBuilder();
-  set subscriptionUIState(SubscriptionUIStateBuilder subscriptionUIState) =>
+  set subscriptionUIState(SubscriptionUIStateBuilder? subscriptionUIState) =>
       _$this._subscriptionUIState = subscriptionUIState;
 
-  TaskStatusUIStateBuilder _taskStatusUIState;
+  TaskStatusUIStateBuilder? _taskStatusUIState;
   TaskStatusUIStateBuilder get taskStatusUIState =>
       _$this._taskStatusUIState ??= new TaskStatusUIStateBuilder();
-  set taskStatusUIState(TaskStatusUIStateBuilder taskStatusUIState) =>
+  set taskStatusUIState(TaskStatusUIStateBuilder? taskStatusUIState) =>
       _$this._taskStatusUIState = taskStatusUIState;
 
-  ExpenseCategoryUIStateBuilder _expenseCategoryUIState;
+  ExpenseCategoryUIStateBuilder? _expenseCategoryUIState;
   ExpenseCategoryUIStateBuilder get expenseCategoryUIState =>
       _$this._expenseCategoryUIState ??= new ExpenseCategoryUIStateBuilder();
   set expenseCategoryUIState(
-          ExpenseCategoryUIStateBuilder expenseCategoryUIState) =>
+          ExpenseCategoryUIStateBuilder? expenseCategoryUIState) =>
       _$this._expenseCategoryUIState = expenseCategoryUIState;
 
-  RecurringInvoiceUIStateBuilder _recurringInvoiceUIState;
+  RecurringInvoiceUIStateBuilder? _recurringInvoiceUIState;
   RecurringInvoiceUIStateBuilder get recurringInvoiceUIState =>
       _$this._recurringInvoiceUIState ??= new RecurringInvoiceUIStateBuilder();
   set recurringInvoiceUIState(
-          RecurringInvoiceUIStateBuilder recurringInvoiceUIState) =>
+          RecurringInvoiceUIStateBuilder? recurringInvoiceUIState) =>
       _$this._recurringInvoiceUIState = recurringInvoiceUIState;
 
-  WebhookUIStateBuilder _webhookUIState;
+  WebhookUIStateBuilder? _webhookUIState;
   WebhookUIStateBuilder get webhookUIState =>
       _$this._webhookUIState ??= new WebhookUIStateBuilder();
-  set webhookUIState(WebhookUIStateBuilder webhookUIState) =>
+  set webhookUIState(WebhookUIStateBuilder? webhookUIState) =>
       _$this._webhookUIState = webhookUIState;
 
-  TokenUIStateBuilder _tokenUIState;
+  TokenUIStateBuilder? _tokenUIState;
   TokenUIStateBuilder get tokenUIState =>
       _$this._tokenUIState ??= new TokenUIStateBuilder();
-  set tokenUIState(TokenUIStateBuilder tokenUIState) =>
+  set tokenUIState(TokenUIStateBuilder? tokenUIState) =>
       _$this._tokenUIState = tokenUIState;
 
-  PaymentTermUIStateBuilder _paymentTermUIState;
+  PaymentTermUIStateBuilder? _paymentTermUIState;
   PaymentTermUIStateBuilder get paymentTermUIState =>
       _$this._paymentTermUIState ??= new PaymentTermUIStateBuilder();
-  set paymentTermUIState(PaymentTermUIStateBuilder paymentTermUIState) =>
+  set paymentTermUIState(PaymentTermUIStateBuilder? paymentTermUIState) =>
       _$this._paymentTermUIState = paymentTermUIState;
 
-  DesignUIStateBuilder _designUIState;
+  DesignUIStateBuilder? _designUIState;
   DesignUIStateBuilder get designUIState =>
       _$this._designUIState ??= new DesignUIStateBuilder();
-  set designUIState(DesignUIStateBuilder designUIState) =>
+  set designUIState(DesignUIStateBuilder? designUIState) =>
       _$this._designUIState = designUIState;
 
-  CreditUIStateBuilder _creditUIState;
+  CreditUIStateBuilder? _creditUIState;
   CreditUIStateBuilder get creditUIState =>
       _$this._creditUIState ??= new CreditUIStateBuilder();
-  set creditUIState(CreditUIStateBuilder creditUIState) =>
+  set creditUIState(CreditUIStateBuilder? creditUIState) =>
       _$this._creditUIState = creditUIState;
 
-  UserUIStateBuilder _userUIState;
+  UserUIStateBuilder? _userUIState;
   UserUIStateBuilder get userUIState =>
       _$this._userUIState ??= new UserUIStateBuilder();
-  set userUIState(UserUIStateBuilder userUIState) =>
+  set userUIState(UserUIStateBuilder? userUIState) =>
       _$this._userUIState = userUIState;
 
-  TaxRateUIStateBuilder _taxRateUIState;
+  TaxRateUIStateBuilder? _taxRateUIState;
   TaxRateUIStateBuilder get taxRateUIState =>
       _$this._taxRateUIState ??= new TaxRateUIStateBuilder();
-  set taxRateUIState(TaxRateUIStateBuilder taxRateUIState) =>
+  set taxRateUIState(TaxRateUIStateBuilder? taxRateUIState) =>
       _$this._taxRateUIState = taxRateUIState;
 
-  CompanyGatewayUIStateBuilder _companyGatewayUIState;
+  CompanyGatewayUIStateBuilder? _companyGatewayUIState;
   CompanyGatewayUIStateBuilder get companyGatewayUIState =>
       _$this._companyGatewayUIState ??= new CompanyGatewayUIStateBuilder();
   set companyGatewayUIState(
-          CompanyGatewayUIStateBuilder companyGatewayUIState) =>
+          CompanyGatewayUIStateBuilder? companyGatewayUIState) =>
       _$this._companyGatewayUIState = companyGatewayUIState;
 
-  GroupUIStateBuilder _groupUIState;
+  GroupUIStateBuilder? _groupUIState;
   GroupUIStateBuilder get groupUIState =>
       _$this._groupUIState ??= new GroupUIStateBuilder();
-  set groupUIState(GroupUIStateBuilder groupUIState) =>
+  set groupUIState(GroupUIStateBuilder? groupUIState) =>
       _$this._groupUIState = groupUIState;
 
-  DocumentUIStateBuilder _documentUIState;
+  DocumentUIStateBuilder? _documentUIState;
   DocumentUIStateBuilder get documentUIState =>
       _$this._documentUIState ??= new DocumentUIStateBuilder();
-  set documentUIState(DocumentUIStateBuilder documentUIState) =>
+  set documentUIState(DocumentUIStateBuilder? documentUIState) =>
       _$this._documentUIState = documentUIState;
 
-  ExpenseUIStateBuilder _expenseUIState;
+  ExpenseUIStateBuilder? _expenseUIState;
   ExpenseUIStateBuilder get expenseUIState =>
       _$this._expenseUIState ??= new ExpenseUIStateBuilder();
-  set expenseUIState(ExpenseUIStateBuilder expenseUIState) =>
+  set expenseUIState(ExpenseUIStateBuilder? expenseUIState) =>
       _$this._expenseUIState = expenseUIState;
 
-  VendorUIStateBuilder _vendorUIState;
+  VendorUIStateBuilder? _vendorUIState;
   VendorUIStateBuilder get vendorUIState =>
       _$this._vendorUIState ??= new VendorUIStateBuilder();
-  set vendorUIState(VendorUIStateBuilder vendorUIState) =>
+  set vendorUIState(VendorUIStateBuilder? vendorUIState) =>
       _$this._vendorUIState = vendorUIState;
 
-  TaskUIStateBuilder _taskUIState;
+  TaskUIStateBuilder? _taskUIState;
   TaskUIStateBuilder get taskUIState =>
       _$this._taskUIState ??= new TaskUIStateBuilder();
-  set taskUIState(TaskUIStateBuilder taskUIState) =>
+  set taskUIState(TaskUIStateBuilder? taskUIState) =>
       _$this._taskUIState = taskUIState;
 
-  ProjectUIStateBuilder _projectUIState;
+  ProjectUIStateBuilder? _projectUIState;
   ProjectUIStateBuilder get projectUIState =>
       _$this._projectUIState ??= new ProjectUIStateBuilder();
-  set projectUIState(ProjectUIStateBuilder projectUIState) =>
+  set projectUIState(ProjectUIStateBuilder? projectUIState) =>
       _$this._projectUIState = projectUIState;
 
-  PaymentUIStateBuilder _paymentUIState;
+  PaymentUIStateBuilder? _paymentUIState;
   PaymentUIStateBuilder get paymentUIState =>
       _$this._paymentUIState ??= new PaymentUIStateBuilder();
-  set paymentUIState(PaymentUIStateBuilder paymentUIState) =>
+  set paymentUIState(PaymentUIStateBuilder? paymentUIState) =>
       _$this._paymentUIState = paymentUIState;
 
-  QuoteUIStateBuilder _quoteUIState;
+  QuoteUIStateBuilder? _quoteUIState;
   QuoteUIStateBuilder get quoteUIState =>
       _$this._quoteUIState ??= new QuoteUIStateBuilder();
-  set quoteUIState(QuoteUIStateBuilder quoteUIState) =>
+  set quoteUIState(QuoteUIStateBuilder? quoteUIState) =>
       _$this._quoteUIState = quoteUIState;
 
-  SettingsUIStateBuilder _settingsUIState;
+  SettingsUIStateBuilder? _settingsUIState;
   SettingsUIStateBuilder get settingsUIState =>
       _$this._settingsUIState ??= new SettingsUIStateBuilder();
-  set settingsUIState(SettingsUIStateBuilder settingsUIState) =>
+  set settingsUIState(SettingsUIStateBuilder? settingsUIState) =>
       _$this._settingsUIState = settingsUIState;
 
-  ReportsUIStateBuilder _reportsUIState;
+  ReportsUIStateBuilder? _reportsUIState;
   ReportsUIStateBuilder get reportsUIState =>
       _$this._reportsUIState ??= new ReportsUIStateBuilder();
-  set reportsUIState(ReportsUIStateBuilder reportsUIState) =>
+  set reportsUIState(ReportsUIStateBuilder? reportsUIState) =>
       _$this._reportsUIState = reportsUIState;
 
   UIStateBuilder() {
@@ -1024,7 +1032,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   }
 
   @override
-  void update(void Function(UIStateBuilder) updates) {
+  void update(void Function(UIStateBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -1083,7 +1091,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
               settingsUIState: settingsUIState.build(),
               reportsUIState: reportsUIState.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'previewStack';
         previewStack.build();

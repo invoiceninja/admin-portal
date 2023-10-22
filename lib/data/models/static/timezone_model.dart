@@ -69,7 +69,7 @@ abstract class TimezoneEntity extends Object
   String get location;
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     if (filter == null || filter.isEmpty) {
       return true;
     }
@@ -86,7 +86,7 @@ abstract class TimezoneEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     if (filter == null || filter.isEmpty) {
       return null;
     }
@@ -106,7 +106,7 @@ abstract class TimezoneEntity extends Object
   }
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
   static Serializer<TimezoneEntity> get serializer =>
       _$timezoneEntitySerializer;

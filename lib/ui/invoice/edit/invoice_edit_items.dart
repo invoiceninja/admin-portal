@@ -20,9 +20,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceEditItems extends StatefulWidget {
   const InvoiceEditItems({
-    Key key,
-    @required this.viewModel,
-    @required this.entityViewModel,
+    Key? key,
+    required this.viewModel,
+    required this.entityViewModel,
   }) : super(key: key);
 
   final EntityEditItemsVM viewModel;
@@ -33,20 +33,20 @@ class InvoiceEditItems extends StatefulWidget {
 }
 
 class _InvoiceEditItemsState extends State<InvoiceEditItems> {
-  int selectedItemIndex;
+  int? selectedItemIndex;
 
-  void _showInvoiceItemEditor(int lineItemIndex, BuildContext context) {
+  void _showInvoiceItemEditor(int? lineItemIndex, BuildContext context) {
     showDialog<ItemEditDetails>(
         context: context,
         builder: (BuildContext context) {
           final viewModel = widget.viewModel;
-          final invoice = viewModel.invoice;
+          final invoice = viewModel.invoice!;
 
           return ItemEditDetails(
             viewModel: viewModel,
             entityViewModel: widget.entityViewModel,
             key: ValueKey('__${lineItemIndex}__'),
-            invoiceItem: invoice.lineItems[lineItemIndex],
+            invoiceItem: invoice.lineItems[lineItemIndex!],
             index: lineItemIndex,
           );
         });
@@ -56,7 +56,7 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final invoice = viewModel.invoice;
+    final invoice = viewModel.invoice!;
     final itemIndex = viewModel.invoiceItemIndex;
 
     final invoiceItem =
@@ -65,14 +65,14 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
             : null;
 
     if (invoiceItem != null && itemIndex != selectedItemIndex) {
-      viewModel.clearSelectedInvoiceItem();
+      viewModel.clearSelectedInvoiceItem!();
       WidgetsBinding.instance.addPostFrameCallback((duration) async {
         _showInvoiceItemEditor(itemIndex, context);
       });
     }
 
     if (invoice.lineItems.isEmpty) {
-      return HelpText(localization.clickPlusToAddItem);
+      return HelpText(localization!.clickPlusToAddItem);
     }
 
     return ScrollableListView(
@@ -90,11 +90,11 @@ class _InvoiceEditItemsState extends State<InvoiceEditItems> {
 
 class ItemEditDetails extends StatefulWidget {
   const ItemEditDetails({
-    Key key,
-    @required this.index,
-    @required this.invoiceItem,
-    @required this.viewModel,
-    @required this.entityViewModel,
+    Key? key,
+    required this.index,
+    required this.invoiceItem,
+    required this.viewModel,
+    required this.entityViewModel,
   }) : super(key: key);
 
   final int index;
@@ -117,10 +117,10 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   final _custom3Controller = TextEditingController();
   final _custom4Controller = TextEditingController();
 
-  TaxRateEntity _taxRate1;
-  TaxRateEntity _taxRate2;
-  TaxRateEntity _taxRate3;
-  String _taxCategoryId;
+  TaxRateEntity? _taxRate1;
+  TaxRateEntity? _taxRate2;
+  TaxRateEntity? _taxRate3;
+  String? _taxCategoryId;
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
@@ -135,11 +135,11 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
     _productKeyController.text = invoiceItem.productKey;
     _notesController.text = invoiceItem.notes;
     _costController.text = formatNumber(invoiceItem.cost, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
     _qtyController.text = formatNumber(invoiceItem.quantity, context,
-        formatNumberType: FormatNumberType.inputAmount);
+        formatNumberType: FormatNumberType.inputAmount)!;
     _discountController.text = formatNumber(invoiceItem.discount, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
     _custom1Controller.text = invoiceItem.customValue1;
     _custom2Controller.text = invoiceItem.customValue2;
     _custom3Controller.text = invoiceItem.customValue3;
@@ -188,7 +188,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   }
 
   void _onChanged() {
-    final company = widget.viewModel.company;
+    final company = widget.viewModel.company!;
 
     var invoiceItem = widget.invoiceItem.rebuild((b) => b
       ..productKey = _productKeyController.text.trim()
@@ -219,15 +219,15 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
     }
 
     if (invoiceItem != widget.invoiceItem) {
-      widget.viewModel.onChangedInvoiceItem(invoiceItem, widget.index);
+      widget.viewModel.onChangedInvoiceItem!(invoiceItem, widget.index);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
-    final company = viewModel.company;
+    final company = viewModel.company!;
 
     return AlertDialog(
       actions: [
@@ -236,14 +236,14 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
           onPressed: () => confirmCallback(
               context: context,
               callback: (_) {
-                widget.viewModel.onRemoveInvoiceItemPressed(widget.index);
+                widget.viewModel.onRemoveInvoiceItemPressed!(widget.index);
                 Navigator.of(context).pop();
               }),
         ),
         TextButton(
           child: Text(localization.done.toUpperCase()),
           onPressed: () {
-            viewModel.clearSelectedInvoiceItem();
+            viewModel.clearSelectedInvoiceItem!();
             Navigator.of(context).pop();
           },
         )
@@ -340,7 +340,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                       .toList()),
             if (!company.calculateTaxes ||
                 _taxCategoryId == kTaxCategoryOverrideTax) ...[
-              if (company.enableFirstItemTaxRate || _taxRate1.name.isNotEmpty)
+              if (company.enableFirstItemTaxRate || _taxRate1!.name.isNotEmpty)
                 TaxRateDropdown(
                   onSelected: (taxRate) {
                     setState(() {
@@ -349,13 +349,13 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                     });
                   },
                   labelText: localization.tax +
-                      (company.settings.enableInclusiveTaxes
+                      (company.settings.enableInclusiveTaxes!
                           ? ' - ${localization.inclusive}'
                           : ''),
-                  initialTaxName: _taxRate1.name,
-                  initialTaxRate: _taxRate1.rate,
+                  initialTaxName: _taxRate1!.name,
+                  initialTaxRate: _taxRate1!.rate,
                 ),
-              if (company.enableSecondItemTaxRate || _taxRate2.name.isNotEmpty)
+              if (company.enableSecondItemTaxRate || _taxRate2!.name.isNotEmpty)
                 TaxRateDropdown(
                   onSelected: (taxRate) {
                     setState(() {
@@ -364,13 +364,13 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                     });
                   },
                   labelText: localization.tax +
-                      (company.settings.enableInclusiveTaxes
+                      (company.settings.enableInclusiveTaxes!
                           ? ' - ${localization.inclusive}'
                           : ''),
-                  initialTaxName: _taxRate2.name,
-                  initialTaxRate: _taxRate2.rate,
+                  initialTaxName: _taxRate2!.name,
+                  initialTaxRate: _taxRate2!.rate,
                 ),
-              if (company.enableThirdItemTaxRate || _taxRate3.name.isNotEmpty)
+              if (company.enableThirdItemTaxRate || _taxRate3!.name.isNotEmpty)
                 TaxRateDropdown(
                   onSelected: (taxRate) {
                     setState(() {
@@ -379,11 +379,11 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                     });
                   },
                   labelText: localization.tax +
-                      (company.settings.enableInclusiveTaxes
+                      (company.settings.enableInclusiveTaxes!
                           ? ' - ${localization.inclusive}'
                           : ''),
-                  initialTaxName: _taxRate3.name,
-                  initialTaxRate: _taxRate3.rate,
+                  initialTaxName: _taxRate3!.name,
+                  initialTaxRate: _taxRate3!.rate,
                 ),
             ],
           ],

@@ -18,27 +18,27 @@ DashboardUIState dashboardUIReducer(DashboardUIState state, dynamic action) {
     ..showSidebar = showSidebarReducer(state.showSidebar, action));
 }
 
-Reducer<BuiltMap<EntityType, BuiltList<String>>> selectedEntitiesReducer =
+Reducer<BuiltMap<EntityType?, BuiltList<String>>> selectedEntitiesReducer =
     combineReducers([
-  TypedReducer<BuiltMap<EntityType, BuiltList<String>>,
+  TypedReducer<BuiltMap<EntityType?, BuiltList<String>>,
       UpdateDashboardSelection>((state, action) {
     return state.rebuild((b) =>
         b..[action.entityType] = BuiltList(action.entityIds ?? <String>[]));
   }),
-  TypedReducer<BuiltMap<EntityType, BuiltList<String>>, SelectCompany>(
+  TypedReducer<BuiltMap<EntityType?, BuiltList<String>>, SelectCompany>(
       (state, action) {
     return state.rebuild((b) => b..clear());
   }),
 ]);
 
-Reducer<EntityType> selectedEntityTypeReducer = combineReducers([
-  TypedReducer<EntityType, UpdateDashboardEntityType>((state, action) {
+Reducer<EntityType?> selectedEntityTypeReducer = combineReducers([
+  TypedReducer<EntityType?, UpdateDashboardEntityType>((state, action) {
     return action.entityType;
   }),
 ]);
 
-Reducer<bool> showSidebarReducer = combineReducers([
-  TypedReducer<bool, UpdateDashboardSidebar>((state, action) {
+Reducer<bool?> showSidebarReducer = combineReducers([
+  TypedReducer<bool?, UpdateDashboardSidebar>((state, action) {
     return action.showSidebar;
   }),
 ]);
@@ -60,7 +60,7 @@ DashboardUISettings dashboardSettingsReducer(
     } else if (action.includeTaxes != null) {
       return state.rebuild((b) => b..includeTaxes = action.includeTaxes);
     } else if (action.offset != null) {
-      return state.rebuild((b) => b..offset += action.offset);
+      return state.rebuild((b) => b..offset = state.offset + action.offset!);
     } else if (action.currencyId != null) {
       return state.rebuild((b) => b..currencyId = action.currencyId);
     } else if (action.groupBy != null) {

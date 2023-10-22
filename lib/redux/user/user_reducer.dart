@@ -15,43 +15,44 @@ import 'package:invoiceninja_flutter/redux/user/user_state.dart';
 EntityUIState userUIReducer(UserUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(userListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
+    ..editing.replace(editingReducer(state.editing, action)!)
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
 
-final forceSelectedReducer = combineReducers<bool>([
-  TypedReducer<bool, ViewUser>((completer, action) => true),
-  TypedReducer<bool, ViewUserList>((completer, action) => false),
-  TypedReducer<bool, FilterUsersByState>((completer, action) => false),
-  TypedReducer<bool, FilterUsers>((completer, action) => false),
-  TypedReducer<bool, FilterUsersByCustom1>((completer, action) => false),
-  TypedReducer<bool, FilterUsersByCustom2>((completer, action) => false),
-  TypedReducer<bool, FilterUsersByCustom3>((completer, action) => false),
-  TypedReducer<bool, FilterUsersByCustom4>((completer, action) => false),
+final forceSelectedReducer = combineReducers<bool?>([
+  TypedReducer<bool?, ViewUser>((completer, action) => true),
+  TypedReducer<bool?, ViewUserList>((completer, action) => false),
+  TypedReducer<bool?, FilterUsersByState>((completer, action) => false),
+  TypedReducer<bool?, FilterUsers>((completer, action) => false),
+  TypedReducer<bool?, FilterUsersByCustom1>((completer, action) => false),
+  TypedReducer<bool?, FilterUsersByCustom2>((completer, action) => false),
+  TypedReducer<bool?, FilterUsersByCustom3>((completer, action) => false),
+  TypedReducer<bool?, FilterUsersByCustom4>((completer, action) => false),
 ]);
 
-Reducer<String> selectedIdReducer = combineReducers([
-  TypedReducer<String, ArchiveUserSuccess>((completer, action) => ''),
-  TypedReducer<String, DeleteUserSuccess>((completer, action) => ''),
-  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+Reducer<String?> selectedIdReducer = combineReducers([
+  TypedReducer<String?, ArchiveUserSuccess>((completer, action) => ''),
+  TypedReducer<String?, DeleteUserSuccess>((completer, action) => ''),
+  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.user ? action.entityId : selectedId),
-  TypedReducer<String, ViewUser>((String selectedId, action) => action.userId),
-  TypedReducer<String, AddUserSuccess>(
-      (String selectedId, action) => action.user.id),
-  TypedReducer<String, SelectCompany>(
+  TypedReducer<String?, ViewUser>(
+      (String? selectedId, action) => action.userId),
+  TypedReducer<String?, AddUserSuccess>(
+      (String? selectedId, action) => action.user.id),
+  TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, SortUsers>((selectedId, action) => ''),
-  TypedReducer<String, FilterUsers>((selectedId, action) => ''),
-  TypedReducer<String, FilterUsersByState>((selectedId, action) => ''),
-  TypedReducer<String, FilterUsersByCustom1>((selectedId, action) => ''),
-  TypedReducer<String, FilterUsersByCustom2>((selectedId, action) => ''),
-  TypedReducer<String, FilterUsersByCustom3>((selectedId, action) => ''),
-  TypedReducer<String, FilterUsersByCustom4>((selectedId, action) => ''),
-  TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
+  TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String?, SortUsers>((selectedId, action) => ''),
+  TypedReducer<String?, FilterUsers>((selectedId, action) => ''),
+  TypedReducer<String?, FilterUsersByState>((selectedId, action) => ''),
+  TypedReducer<String?, FilterUsersByCustom1>((selectedId, action) => ''),
+  TypedReducer<String?, FilterUsersByCustom2>((selectedId, action) => ''),
+  TypedReducer<String?, FilterUsersByCustom3>((selectedId, action) => ''),
+  TypedReducer<String?, FilterUsersByCustom4>((selectedId, action) => ''),
+  TypedReducer<String?, ClearEntitySelection>((selectedId, action) =>
       action.entityType == EntityType.user ? '' : selectedId),
-  TypedReducer<String, FilterByEntity>(
+  TypedReducer<String?, FilterByEntity>(
       (selectedId, action) => action.clearSelection
           ? ''
           : action.entityType == EntityType.user
@@ -59,30 +60,30 @@ Reducer<String> selectedIdReducer = combineReducers([
               : selectedId),
 ]);
 
-final editingReducer = combineReducers<UserEntity>([
-  TypedReducer<UserEntity, SaveUserSuccess>(_updateEditing),
-  TypedReducer<UserEntity, AddUserSuccess>(_updateEditing),
-  TypedReducer<UserEntity, RestoreUserSuccess>((users, action) {
+final editingReducer = combineReducers<UserEntity?>([
+  TypedReducer<UserEntity?, SaveUserSuccess>(_updateEditing),
+  TypedReducer<UserEntity?, AddUserSuccess>(_updateEditing),
+  TypedReducer<UserEntity?, RestoreUserSuccess>((users, action) {
     return action.users[0];
   }),
-  TypedReducer<UserEntity, ArchiveUserSuccess>((users, action) {
+  TypedReducer<UserEntity?, ArchiveUserSuccess>((users, action) {
     return action.users[0];
   }),
-  TypedReducer<UserEntity, DeleteUserSuccess>((users, action) {
+  TypedReducer<UserEntity?, DeleteUserSuccess>((users, action) {
     return action.users[0];
   }),
-  TypedReducer<UserEntity, EditUser>(_updateEditing),
-  TypedReducer<UserEntity, UpdateUser>((user, action) {
+  TypedReducer<UserEntity?, EditUser>(_updateEditing),
+  TypedReducer<UserEntity?, UpdateUser>((user, action) {
     return action.user.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<UserEntity, DiscardChanges>(_clearEditing),
+  TypedReducer<UserEntity?, DiscardChanges>(_clearEditing),
 ]);
 
-UserEntity _clearEditing(UserEntity user, dynamic action) {
+UserEntity _clearEditing(UserEntity? user, dynamic action) {
   return UserEntity();
 }
 
-UserEntity _updateEditing(UserEntity user, dynamic action) {
+UserEntity? _updateEditing(UserEntity? user, dynamic action) {
   return action.user;
 }
 
@@ -168,7 +169,7 @@ ListUIState _filterUsers(ListUIState userListState, FilterUsers action) {
 
 ListUIState _sortUsers(ListUIState userListState, SortUsers action) {
   return userListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortAscending = b.sortField != action.field || !b.sortAscending!
     ..sortField = action.field);
 }
 
@@ -179,12 +180,12 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState userListState, AddToUserMultiselect action) {
-  return userListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+  return userListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState userListState, RemoveFromUserMultiselect action) {
-  return userListState.rebuild((b) => b..selectedIds.remove(action.entity.id));
+  return userListState.rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(

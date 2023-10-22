@@ -12,15 +12,15 @@ part 'settings_state.g.dart';
 abstract class SettingsUIState extends Object
     implements Built<SettingsUIState, SettingsUIStateBuilder> {
   factory SettingsUIState(
-      {CompanyEntity company,
-      ClientEntity client,
-      GroupEntity group,
-      UserEntity user,
-      CompanyEntity origCompany,
-      ClientEntity origClient,
-      GroupEntity origGroup,
-      UserEntity origUser,
-      String section}) {
+      {CompanyEntity? company,
+      ClientEntity? client,
+      GroupEntity? group,
+      UserEntity? user,
+      CompanyEntity? origCompany,
+      ClientEntity? origClient,
+      GroupEntity? origGroup,
+      UserEntity? origUser,
+      String? section}) {
     return _$SettingsUIState._(
       company: company ?? CompanyEntity(),
       client: client ?? ClientEntity(),
@@ -80,8 +80,7 @@ abstract class SettingsUIState extends Object
 
   EmailTemplate get selectedTemplate;
 
-  @nullable
-  String get filter;
+  String? get filter;
 
   int get filterClearedAt;
 
@@ -92,9 +91,9 @@ abstract class SettingsUIState extends Object
   bool get isFiltered => entityType != EntityType.company;
 
   SettingsEntity get settings {
-    if (entityType == EntityType.client && client != null) {
+    if (entityType == EntityType.client) {
       return client.settings;
-    } else if (entityType == EntityType.group && group != null) {
+    } else if (entityType == EntityType.group) {
       return group.settings;
     } else {
       return company.settings;

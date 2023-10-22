@@ -11,8 +11,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class BoolDropdownButton extends StatelessWidget {
   const BoolDropdownButton({
-    @required this.value,
-    @required this.onChanged,
+    required this.value,
+    required this.onChanged,
     this.label,
     this.showBlank,
     this.enabledLabel,
@@ -22,37 +22,37 @@ class BoolDropdownButton extends StatelessWidget {
     this.minWidth,
   });
 
-  final String label;
-  final String helpLabel;
-  final bool value;
-  final Function(bool) onChanged;
-  final IconData iconData;
-  final bool showBlank;
-  final String enabledLabel;
-  final String disabledLabel;
-  final double minWidth;
+  final String? label;
+  final String? helpLabel;
+  final bool? value;
+  final Function(bool?) onChanged;
+  final IconData? iconData;
+  final bool? showBlank;
+  final String? enabledLabel;
+  final String? disabledLabel;
+  final double? minWidth;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final trueLabel = enabledLabel ?? localization.enabled;
-    final falseLabel = disabledLabel ?? localization.disabled;
+    final trueLabel = enabledLabel ?? localization!.enabled;
+    final falseLabel = disabledLabel ?? localization!.disabled;
 
     final state = StoreProvider.of<AppState>(context).state;
     final _showBlank = showBlank ?? state.settingsUIState.isFiltered;
 
     if (!_showBlank &&
-        (enabledLabel == null || enabledLabel == localization.yes)) {
+        (enabledLabel == null || enabledLabel == localization!.yes)) {
       return Padding(
         padding: const EdgeInsets.only(top: 12),
         child: SwitchListTile(
-          title: Text(label),
+          title: Text(label!),
           value: value ?? false,
           secondary:
               iconData != null && isDesktop(context) ? Icon(iconData) : null,
           onChanged: (value) => onChanged(value),
           activeColor: Theme.of(context).colorScheme.secondary,
-          subtitle: helpLabel != null ? Text(helpLabel) : null,
+          subtitle: helpLabel != null ? Text(helpLabel!) : null,
         ),
       );
     }
@@ -77,7 +77,7 @@ class BoolDropdownButton extends StatelessWidget {
                   child: Text(trueLabel),
                   value: true,
                 ),
-              ].toList(),
+              ],
             ),
           )
         : Padding(

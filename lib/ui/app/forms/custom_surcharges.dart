@@ -11,10 +11,10 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 
 class CustomSurcharges extends StatelessWidget {
   const CustomSurcharges({
-    @required this.surcharge1Controller,
-    @required this.surcharge2Controller,
-    @required this.surcharge3Controller,
-    @required this.surcharge4Controller,
+    required this.surcharge1Controller,
+    required this.surcharge2Controller,
+    required this.surcharge3Controller,
+    required this.surcharge4Controller,
     this.onSavePressed,
     this.isAfterTaxes = false,
   });
@@ -23,7 +23,7 @@ class CustomSurcharges extends StatelessWidget {
   final TextEditingController surcharge2Controller;
   final TextEditingController surcharge3Controller;
   final TextEditingController surcharge4Controller;
-  final Function(BuildContext) onSavePressed;
+  final Function(BuildContext)? onSavePressed;
   final bool isAfterTaxes;
 
   @override

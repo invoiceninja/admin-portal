@@ -20,8 +20,8 @@ import 'webhook_screen_vm.dart';
 
 class WebhookScreen extends StatelessWidget {
   const WebhookScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsWebhooks';
@@ -102,7 +102,7 @@ class WebhookScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newWebhook,
+              tooltip: localization!.newWebhook,
             )
           : null,
     );

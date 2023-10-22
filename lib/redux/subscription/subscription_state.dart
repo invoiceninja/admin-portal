@@ -35,7 +35,7 @@ abstract class SubscriptionState
 
   SubscriptionEntity get(String subscriptionId) {
     if (map.containsKey(subscriptionId)) {
-      return map[subscriptionId];
+      return map[subscriptionId]!;
     } else {
       return SubscriptionEntity(id: subscriptionId);
     }
@@ -60,7 +60,7 @@ abstract class SubscriptionState
 abstract class SubscriptionUIState extends Object
     with EntityUIState
     implements Built<SubscriptionUIState, SubscriptionUIStateBuilder> {
-  factory SubscriptionUIState(PrefStateSortField sortField) {
+  factory SubscriptionUIState(PrefStateSortField? sortField) {
     return _$SubscriptionUIState._(
       listUIState: ListUIState(sortField?.field ?? SubscriptionFields.createdAt,
           sortAscending: sortField?.ascending),
@@ -76,14 +76,13 @@ abstract class SubscriptionUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  SubscriptionEntity get editing;
+  SubscriptionEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<SubscriptionUIState> get serializer =>
       _$subscriptionUIStateSerializer;

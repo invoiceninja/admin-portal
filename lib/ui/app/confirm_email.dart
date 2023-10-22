@@ -11,8 +11,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ConfirmEmail extends StatelessWidget {
   const ConfirmEmail({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final ConfirmEmailVM viewModel;
@@ -20,7 +20,7 @@ class ConfirmEmail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final state = viewModel.state;
+    final state = viewModel.state!;
 
     return Material(
       color: Theme.of(context).cardColor,
@@ -38,7 +38,7 @@ class ConfirmEmail extends StatelessWidget {
                   ),
                   SizedBox(height: 60),
                   Text(
-                    localization.confirmYourEmailAddress,
+                    localization!.confirmYourEmailAddress,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   Padding(
@@ -51,7 +51,8 @@ class ConfirmEmail extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(bottom: kTableColumnGap),
                         child: TextButton(
-                          onPressed: viewModel.onResendPressed,
+                          onPressed:
+                              viewModel.onResendPressed as void Function()?,
                           child: Text(localization.resendEmail.toUpperCase()),
                         ),
                       ),
@@ -64,7 +65,7 @@ class ConfirmEmail extends StatelessWidget {
                               callback: (password, idToken) {
                                 fieldCallback(
                                   callback: (value) {
-                                    viewModel.onChangeEmail(
+                                    viewModel.onChangeEmail!(
                                         context, value, password, idToken);
                                   },
                                   field: localization.email,
@@ -91,14 +92,16 @@ class ConfirmEmail extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(bottom: kTableColumnGap),
                         child: TextButton(
-                          onPressed: viewModel.onRefreshPressed,
+                          onPressed:
+                              viewModel.onRefreshPressed as void Function()?,
                           child: Text(localization.refreshData.toUpperCase()),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: kTableColumnGap),
                         child: TextButton(
-                          onPressed: viewModel.onLogoutPressed,
+                          onPressed:
+                              viewModel.onLogoutPressed as void Function()?,
                           child: Text(localization.logout.toUpperCase()),
                         ),
                       ),

@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:memoize/memoize.dart';
@@ -34,14 +35,14 @@ enum ProductReportFields {
 }
 
 var memoizedProductReport = memo6((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, ProductEntity> productMap,
   BuiltMap<String, VendorEntity> vendorMap,
   BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) =>
-    productReport(userCompany, reportsUIState, productMap, vendorMap, userMap,
+    productReport(userCompany!, reportsUIState, productMap, vendorMap, userMap,
         staticState));
 
 ReportResult productReport(
@@ -56,11 +57,10 @@ ReportResult productReport(
   final List<BaseEntity> entities = [];
   BuiltList<ProductReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
-  final productReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportProduct)
-          ? reportSettings[kReportProduct]
-          : ReportSettingsEntity();
+  final reportSettings = userCompany.settings.reportSettings;
+  final productReportSettings = reportSettings.containsKey(kReportProduct)
+      ? reportSettings[kReportProduct]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     ProductReportFields.name,
@@ -73,16 +73,16 @@ ReportResult productReport(
   if (productReportSettings.columns.isNotEmpty) {
     columns = BuiltList(productReportSettings.columns
         .map((e) => EnumUtils.fromString(ProductReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
   }
 
   for (var productId in productMap.keys) {
-    final product = productMap[productId];
+    final product = productMap[productId]!;
 
-    if (product.isDeleted && !userCompany.company.reportIncludeDeleted) {
+    if (product.isDeleted! && !userCompany.company.reportIncludeDeleted) {
       continue;
     }
 
@@ -168,7 +168,7 @@ ReportResult productReport(
         userCompany: userCompany,
         reportsUIState: reportsUIState,
         column: EnumUtils.parse(column),
-      )) {
+      )!) {
         skip = true;
       }
 
@@ -203,7 +203,7 @@ ReportResult productReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, productReportSettings, selectedColumns));
+      sortReportTableRows(rowA, rowB, productReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns:

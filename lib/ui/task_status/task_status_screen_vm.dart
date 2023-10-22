@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dar
 import 'task_status_screen.dart';
 
 class TaskStatusScreenBuilder extends StatelessWidget {
-  const TaskStatusScreenBuilder({Key key}) : super(key: key);
+  const TaskStatusScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,18 +32,18 @@ class TaskStatusScreenBuilder extends StatelessWidget {
 
 class TaskStatusScreenVM {
   TaskStatusScreenVM({
-    @required this.isInMultiselect,
-    @required this.taskStatusList,
-    @required this.userCompany,
-    @required this.onEntityAction,
-    @required this.taskStatusMap,
+    required this.isInMultiselect,
+    required this.taskStatusList,
+    required this.userCompany,
+    required this.onEntityAction,
+    required this.taskStatusMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> taskStatusList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
-  final BuiltMap<String, TaskStatusEntity> taskStatusMap;
+  final BuiltMap<String?, TaskStatusEntity?> taskStatusMap;
 
   static TaskStatusScreenVM fromStore(Store<AppState> store) {
     final state = store.state;

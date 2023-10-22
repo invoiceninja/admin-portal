@@ -28,7 +28,7 @@ abstract class TransactionState
 
   TransactionEntity get(String transactionId) {
     if (map.containsKey(transactionId)) {
-      return map[transactionId];
+      return map[transactionId]!;
     } else {
       return TransactionEntity(id: transactionId);
     }
@@ -53,7 +53,7 @@ abstract class TransactionState
 abstract class TransactionUIState extends Object
     with EntityUIState
     implements Built<TransactionUIState, TransactionUIStateBuilder> {
-  factory TransactionUIState(PrefStateSortField sortField) {
+  factory TransactionUIState(PrefStateSortField? sortField) {
     return _$TransactionUIState._(
       listUIState: ListUIState(
         sortField?.field ?? TransactionFields.date,
@@ -70,14 +70,13 @@ abstract class TransactionUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  TransactionEntity get editing;
+  TransactionEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<TransactionUIState> get serializer =>
       _$transactionUIStateSerializer;

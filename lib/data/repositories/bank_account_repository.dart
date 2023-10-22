@@ -15,22 +15,22 @@ class BankAccountRepository {
   final WebClient webClient;
 
   Future<BankAccountEntity> loadItem(
-      Credentials credentials, String entityId) async {
+      Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/bank_integrations/$entityId', credentials.token);
 
     final BankAccountItemResponse bankAccountResponse = serializers
-        .deserializeWith(BankAccountItemResponse.serializer, response);
+        .deserializeWith(BankAccountItemResponse.serializer, response)!;
 
     return bankAccountResponse.data;
   }
 
   Future<BuiltList<BankAccountEntity>> loadList(Credentials credentials) async {
-    final String url = credentials.url + '/bank_integrations?';
+    final String url = credentials.url! + '/bank_integrations?';
     final dynamic response = await webClient.get(url, credentials.token);
 
     final BankAccountListResponse bankAccountResponse = serializers
-        .deserializeWith(BankAccountListResponse.serializer, response);
+        .deserializeWith(BankAccountListResponse.serializer, response)!;
 
     return bankAccountResponse.data;
   }
@@ -41,13 +41,13 @@ class BankAccountRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url +
+    final url = credentials.url! +
         '/bank_integrations/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final BankAccountListResponse bankAccountResponse = serializers
-        .deserializeWith(BankAccountListResponse.serializer, response);
+        .deserializeWith(BankAccountListResponse.serializer, response)!;
 
     return bankAccountResponse.data.toList();
   }
@@ -60,7 +60,7 @@ class BankAccountRepository {
 
     if (bankAccount.isNew) {
       response = await webClient.post(
-          credentials.url + '/bank_integrations', credentials.token,
+          credentials.url! + '/bank_integrations', credentials.token,
           data: json.encode(data));
     } else {
       final url = '${credentials.url}/bank_integrations/${bankAccount.id}';
@@ -69,7 +69,7 @@ class BankAccountRepository {
     }
 
     final BankAccountItemResponse bankAccountResponse = serializers
-        .deserializeWith(BankAccountItemResponse.serializer, response);
+        .deserializeWith(BankAccountItemResponse.serializer, response)!;
 
     return bankAccountResponse.data;
   }

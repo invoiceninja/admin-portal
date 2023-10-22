@@ -15,9 +15,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ExpenseCategoryView extends StatefulWidget {
   const ExpenseCategoryView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final ExpenseCategoryViewVM viewModel;
@@ -33,7 +33,7 @@ class _ExpenseCategoryViewState extends State<ExpenseCategoryView> {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final expenseCategory = viewModel.expenseCategory;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final amount = memoizedCalculateExpenseCategoryAmount(
         expenseCategory.id, viewModel.state.expenseState.map);
 

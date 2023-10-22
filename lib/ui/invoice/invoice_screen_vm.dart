@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'invoice_screen.dart';
 
 class InvoiceScreenBuilder extends StatelessWidget {
-  const InvoiceScreenBuilder({Key key}) : super(key: key);
+  const InvoiceScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +31,14 @@ class InvoiceScreenBuilder extends StatelessWidget {
 
 class InvoiceScreenVM {
   InvoiceScreenVM({
-    @required this.isInMultiselect,
-    @required this.invoiceList,
-    @required this.userCompany,
-    @required this.invoiceMap,
+    required this.isInMultiselect,
+    required this.invoiceList,
+    required this.userCompany,
+    required this.invoiceMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> invoiceList;
   final BuiltMap<String, InvoiceEntity> invoiceMap;
 

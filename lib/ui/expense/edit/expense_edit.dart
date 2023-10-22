@@ -22,8 +22,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ExpenseEdit extends StatefulWidget {
   const ExpenseEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final AbstractExpenseEditVM viewModel;
@@ -34,7 +34,7 @@ class ExpenseEdit extends StatefulWidget {
 
 class _ExpenseEditState extends State<ExpenseEdit>
     with SingleTickerProviderStateMixin {
-  TabController _controller;
+  TabController? _controller;
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_expenseEdit');
 
@@ -46,15 +46,15 @@ class _ExpenseEditState extends State<ExpenseEdit>
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
-  void _onSavePressed(BuildContext context, [EntityAction action]) {
+  void _onSavePressed(BuildContext context, [EntityAction? action]) {
     // Gives the exchange rate conversion a change to calculate
     // after the field loses focus
     WidgetsBinding.instance.addPostFrameCallback((duration) {
-      final bool isValid = _formKey.currentState.validate();
+      final bool isValid = _formKey.currentState!.validate();
 
       /*
         setState(() {
@@ -66,24 +66,24 @@ class _ExpenseEditState extends State<ExpenseEdit>
         return;
       }
 
-      widget.viewModel.onSavePressed(context, action);
+      widget.viewModel.onSavePressed!(context, action);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
-    final expense = viewModel.expense;
-    final state = viewModel.state;
+    final expense = viewModel.expense!;
+    final state = viewModel.state!;
     final store = StoreProvider.of<AppState>(context);
-    final client = state.clientState.get(expense.clientId);
+    final client = state.clientState.get(expense.clientId ?? '');
     final prefState = state.prefState;
     final isFullscreen = prefState.isEditorFullScreen(EntityType.expense);
     final footer = localization.expenseTotal +
         ': ' +
         formatNumber(expense.grossAmount, context,
-            currencyId: expense.currencyId);
+            currencyId: expense.currencyId)!;
 
     return EditScaffold(
       isFullscreen: isFullscreen,
@@ -95,7 +95,7 @@ class _ExpenseEditState extends State<ExpenseEdit>
           : (expense.isNew
               ? localization.newExpense
               : localization.editExpense),
-      onCancelPressed: (context) => viewModel.onCancelPressed(context),
+      onCancelPressed: (context) => viewModel.onCancelPressed!(context),
       onSavePressed: (context) => _onSavePressed(context),
       actions: expense.getActions(
         userCompany: state.userCompany,
@@ -178,7 +178,7 @@ class _ExpenseEditState extends State<ExpenseEdit>
                               ? footer
                               : '${expense.number} • $footer',
                           style: TextStyle(
-                            color: viewModel.state.prefState.enableDarkMode
+                            color: viewModel.state!.prefState.enableDarkMode
                                 ? Colors.white
                                 : Colors.black,
                             fontSize: 20.0,

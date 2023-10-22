@@ -21,8 +21,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentSettings extends StatefulWidget {
   const PaymentSettings({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final PaymentSettingsVM viewModel;
@@ -34,7 +34,7 @@ class PaymentSettings extends StatefulWidget {
 class _PaymentSettingsState extends State<PaymentSettings> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_paymentSettings');
-  FocusScopeNode _focusNode;
+  FocusScopeNode? _focusNode;
   final _minimumUnderPaymentAmountController = TextEditingController();
   final _minimumPaymentAmountController = TextEditingController();
   List<TextEditingController> _controllers = [];
@@ -57,11 +57,11 @@ class _PaymentSettingsState extends State<PaymentSettings> {
 
     _minimumUnderPaymentAmountController.text = formatNumber(
         widget.viewModel.settings.clientPortalUnderPaymentMinimum, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
 
     _minimumPaymentAmountController.text = formatNumber(
         widget.viewModel.settings.clientInitiatedPaymentsMinimum, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -71,7 +71,7 @@ class _PaymentSettingsState extends State<PaymentSettings> {
 
   @override
   void dispose() {
-    _focusNode.dispose();
+    _focusNode!.dispose();
     super.dispose();
   }
 
@@ -89,7 +89,7 @@ class _PaymentSettingsState extends State<PaymentSettings> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final settings = viewModel.settings;

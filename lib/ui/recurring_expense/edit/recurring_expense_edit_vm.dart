@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class RecurringExpenseEditScreen extends StatelessWidget {
-  const RecurringExpenseEditScreen({Key key}) : super(key: key);
+  const RecurringExpenseEditScreen({Key? key}) : super(key: key);
   static const String route = '/recurring_expense/edit';
 
   @override
@@ -36,7 +36,7 @@ class RecurringExpenseEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return ExpenseEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.expense.updatedAt),
+          key: ValueKey(viewModel.expense!.updatedAt),
         );
       },
     );
@@ -45,19 +45,19 @@ class RecurringExpenseEditScreen extends StatelessWidget {
 
 class RecurringExpenseEditVM extends AbstractExpenseEditVM {
   RecurringExpenseEditVM({
-    AppState state,
-    ExpenseEntity expense,
-    Function(ExpenseEntity) onChanged,
-    Function(BuildContext) onSavePressed,
-    Function(BuildContext) onCancelPressed,
-    bool isLoading,
-    bool isSaving,
-    ExpenseEntity origExpense,
-    Function(BuildContext context, Completer<SelectableEntity> completer)
+    AppState? state,
+    ExpenseEntity? expense,
+    Function(ExpenseEntity)? onChanged,
+    Function(BuildContext, [EntityAction?])? onSavePressed,
+    Function(BuildContext)? onCancelPressed,
+    bool? isLoading,
+    bool? isSaving,
+    ExpenseEntity? origExpense,
+    Function(BuildContext context, Completer<SelectableEntity> completer)?
         onAddClientPressed,
-    Function(BuildContext context, Completer<SelectableEntity> completer)
+    Function(BuildContext context, Completer<SelectableEntity> completer)?
         onAddVendorPressed,
-    Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
+    Function(BuildContext, List<MultipartFile>, bool)? onUploadDocuments,
   }) : super(
           state: state,
           expense: expense,
@@ -72,7 +72,7 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
 
   factory RecurringExpenseEditVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final recurringExpense = state.recurringExpenseUIState.editing;
+    final recurringExpense = state.recurringExpenseUIState.editing!;
 
     return RecurringExpenseEditVM(
       state: state,
@@ -85,12 +85,11 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
       },
       onAddClientPressed: (context, completer) {
         createEntity(
-            context: context,
             entity: ClientEntity(),
             force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()
-              ..future.then((_) {
+              ..future.then<Null>((_) {
                 store.dispatch(
                     UpdateCurrentRoute(RecurringExpenseEditScreen.route));
               }));
@@ -100,12 +99,11 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
       },
       onAddVendorPressed: (context, completer) {
         createEntity(
-            context: context,
             entity: VendorEntity(),
             force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()
-              ..future.then((_) {
+              ..future.then<Null>((_) {
                 store.dispatch(
                     UpdateCurrentRoute(RecurringExpenseEditScreen.route));
               }));
@@ -115,18 +113,17 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
       },
       onCancelPressed: (BuildContext context) {
         createEntity(
-            context: context,
             entity: ExpenseEntity(entityType: EntityType.recurringExpense),
             force: true);
         if (state.recurringExpenseUIState.cancelCompleter != null) {
-          state.recurringExpenseUIState.cancelCompleter.complete();
+          state.recurringExpenseUIState.cancelCompleter!.complete();
         } else {
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
       },
-      onSavePressed: (BuildContext context, [EntityAction action]) {
+      onSavePressed: (BuildContext context, [EntityAction? action]) {
         Debouncer.runOnComplete(() {
-          final recurringExpense = store.state.recurringExpenseUIState.editing;
+          final recurringExpense = store.state.recurringExpenseUIState.editing!;
           final localization = AppLocalization.of(context);
           if (recurringExpense.isOld &&
               recurringExpense.isChanged != true &&
@@ -143,8 +140,8 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
             ));
             return completer.future.then((savedRecurringExpense) {
               showToast(recurringExpense.isNew
-                  ? localization.createdRecurringExpense
-                  : localization.updatedRecurringExpense);
+                  ? localization!.createdRecurringExpense
+                  : localization!.updatedRecurringExpense);
               if (state.prefState.isMobile) {
                 store.dispatch(
                     UpdateCurrentRoute(RecurringExpenseViewScreen.route));
@@ -185,14 +182,14 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
       },
       onUploadDocuments: (BuildContext context,
           List<MultipartFile> multipartFiles, bool isPrivate) {
-        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        final completer = Completer<List<DocumentEntity>>();
         store.dispatch(SaveRecurringExpenseDocumentRequest(
             isPrivate: isPrivate,
             multipartFile: multipartFiles,
             expense: recurringExpense,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context).uploadedDocument);
+          showToast(AppLocalization.of(context)!.uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,

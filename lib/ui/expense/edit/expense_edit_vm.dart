@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/ui/expense/view/expense_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class ExpenseEditScreen extends StatelessWidget {
-  const ExpenseEditScreen({Key key}) : super(key: key);
+  const ExpenseEditScreen({Key? key}) : super(key: key);
   static const String route = '/expense/edit';
 
   @override
@@ -36,7 +36,7 @@ class ExpenseEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return ExpenseEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.expense.updatedAt),
+          key: ValueKey(viewModel.expense!.updatedAt),
         );
       },
     );
@@ -45,45 +45,45 @@ class ExpenseEditScreen extends StatelessWidget {
 
 abstract class AbstractExpenseEditVM {
   AbstractExpenseEditVM({
-    @required this.state,
-    @required this.expense,
-    @required this.onChanged,
-    @required this.origExpense,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
-    @required this.onAddClientPressed,
-    @required this.onAddVendorPressed,
-    @required this.onUploadDocument,
+    required this.state,
+    required this.expense,
+    required this.onChanged,
+    required this.origExpense,
+    required this.onSavePressed,
+    required this.onCancelPressed,
+    required this.onAddClientPressed,
+    required this.onAddVendorPressed,
+    required this.onUploadDocument,
   });
 
-  final ExpenseEntity expense;
-  final Function(ExpenseEntity) onChanged;
-  final Function(BuildContext, [EntityAction]) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
-  final ExpenseEntity origExpense;
-  final AppState state;
-  final Function(BuildContext context, Completer<SelectableEntity> completer)
+  final ExpenseEntity? expense;
+  final Function(ExpenseEntity)? onChanged;
+  final Function(BuildContext, [EntityAction?])? onSavePressed;
+  final Function(BuildContext)? onCancelPressed;
+  final ExpenseEntity? origExpense;
+  final AppState? state;
+  final Function(BuildContext context, Completer<SelectableEntity> completer)?
       onAddClientPressed;
-  final Function(BuildContext context, Completer<SelectableEntity> completer)
+  final Function(BuildContext context, Completer<SelectableEntity> completer)?
       onAddVendorPressed;
-  final Function(BuildContext, List<MultipartFile>, bool) onUploadDocument;
+  final Function(BuildContext, List<MultipartFile>, bool)? onUploadDocument;
 }
 
 class ExpenseEditVM extends AbstractExpenseEditVM {
   ExpenseEditVM({
-    AppState state,
-    ExpenseEntity expense,
-    Function(ExpenseEntity) onChanged,
-    Function(BuildContext, [EntityAction]) onSavePressed,
-    Function(BuildContext) onCancelPressed,
-    bool isLoading,
-    bool isSaving,
-    ExpenseEntity origExpense,
-    Function(BuildContext context, Completer<SelectableEntity> completer)
+    AppState? state,
+    ExpenseEntity? expense,
+    Function(ExpenseEntity)? onChanged,
+    Function(BuildContext, [EntityAction?])? onSavePressed,
+    Function(BuildContext)? onCancelPressed,
+    bool? isLoading,
+    bool? isSaving,
+    ExpenseEntity? origExpense,
+    Function(BuildContext context, Completer<SelectableEntity> completer)?
         onAddClientPressed,
-    Function(BuildContext context, Completer<SelectableEntity> completer)
+    Function(BuildContext context, Completer<SelectableEntity> completer)?
         onAddVendorPressed,
-    Function(BuildContext, List<MultipartFile>, bool) onUploadDocument,
+    Function(BuildContext, List<MultipartFile>, bool?)? onUploadDocument,
   }) : super(
           state: state,
           expense: expense,
@@ -97,7 +97,7 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
         );
 
   factory ExpenseEditVM.fromStore(Store<AppState> store) {
-    final expense = store.state.expenseUIState.editing;
+    final expense = store.state.expenseUIState.editing!;
     final state = store.state;
 
     return ExpenseEditVM(
@@ -110,17 +110,16 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
         store.dispatch(UpdateExpense(expense));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: ExpenseEntity(), force: true);
+        createEntity(entity: ExpenseEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onAddClientPressed: (context, completer) {
         createEntity(
-            context: context,
             entity: ClientEntity(),
             force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()
-              ..future.then((_) {
+              ..future.then<Null>((_) {
                 store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
               }));
         completer.future.then((SelectableEntity client) {
@@ -129,21 +128,20 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
       },
       onAddVendorPressed: (context, completer) {
         createEntity(
-            context: context,
             entity: VendorEntity(),
             force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()
-              ..future.then((_) {
+              ..future.then<Null>((_) {
                 store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
               }));
         completer.future.then((SelectableEntity expense) {
           store.dispatch(UpdateCurrentRoute(ExpenseEditScreen.route));
         });
       },
-      onSavePressed: (BuildContext context, [EntityAction action]) {
+      onSavePressed: (BuildContext context, [EntityAction? action]) {
         Debouncer.runOnComplete(() {
-          final expense = store.state.expenseUIState.editing;
+          final expense = store.state.expenseUIState.editing!;
           final localization = navigatorKey.localization;
           final navigator = navigatorKey.currentState;
 
@@ -159,15 +157,15 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
                 SaveExpenseRequest(completer: completer, expense: expense));
             return completer.future.then((savedExpense) {
               showToast(expense.isNew
-                  ? localization.createdExpense
-                  : localization.updatedExpense);
+                  ? localization!.createdExpense
+                  : localization!.updatedExpense);
 
               if (state.prefState.isMobile) {
                 store.dispatch(UpdateCurrentRoute(ExpenseViewScreen.route));
                 if (expense.isNew) {
-                  navigator.pushReplacementNamed(ExpenseViewScreen.route);
+                  navigator!.pushReplacementNamed(ExpenseViewScreen.route);
                 } else {
-                  navigator.pop(savedExpense);
+                  navigator!.pop(savedExpense);
                 }
               } else {
                 if (!state.prefState.isPreviewVisible) {
@@ -190,7 +188,7 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext,
+                  context: navigatorKey.currentContext!,
                   builder: (BuildContext context) {
                     return ErrorDialog(error);
                   });
@@ -199,15 +197,15 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
         });
       },
       onUploadDocument: (BuildContext context,
-          List<MultipartFile> multipartFile, bool isPrivate) {
-        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+          List<MultipartFile> multipartFile, bool? isPrivate) {
+        final completer = Completer<List<DocumentEntity>>();
         store.dispatch(SaveExpenseDocumentRequest(
             isPrivate: isPrivate,
             multipartFiles: multipartFile,
             expense: expense,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context).uploadedDocument);
+          showToast(AppLocalization.of(context)!.uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,

@@ -11,52 +11,52 @@ import 'package:invoiceninja_flutter/redux/schedule/schedule_state.dart';
 EntityUIState scheduleUIReducer(ScheduleUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(scheduleListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
+    ..editing.replace(editingReducer(state.editing, action)!)
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..forceSelected = forceSelectedReducer(state.forceSelected, action)
     ..tabIndex = tabIndexReducer(state.tabIndex, action));
 }
 
-final forceSelectedReducer = combineReducers<bool>([
-  TypedReducer<bool, ViewSchedule>((completer, action) => true),
-  TypedReducer<bool, ViewScheduleList>((completer, action) => false),
-  TypedReducer<bool, FilterSchedulesByState>((completer, action) => false),
-  TypedReducer<bool, FilterSchedules>((completer, action) => false),
-  TypedReducer<bool, FilterSchedulesByCustom1>((completer, action) => false),
-  TypedReducer<bool, FilterSchedulesByCustom2>((completer, action) => false),
-  TypedReducer<bool, FilterSchedulesByCustom3>((completer, action) => false),
-  TypedReducer<bool, FilterSchedulesByCustom4>((completer, action) => false),
+final forceSelectedReducer = combineReducers<bool?>([
+  TypedReducer<bool?, ViewSchedule>((completer, action) => true),
+  TypedReducer<bool?, ViewScheduleList>((completer, action) => false),
+  TypedReducer<bool?, FilterSchedulesByState>((completer, action) => false),
+  TypedReducer<bool?, FilterSchedules>((completer, action) => false),
+  TypedReducer<bool?, FilterSchedulesByCustom1>((completer, action) => false),
+  TypedReducer<bool?, FilterSchedulesByCustom2>((completer, action) => false),
+  TypedReducer<bool?, FilterSchedulesByCustom3>((completer, action) => false),
+  TypedReducer<bool?, FilterSchedulesByCustom4>((completer, action) => false),
 ]);
 
-final tabIndexReducer = combineReducers<int>([
-  TypedReducer<int, UpdateScheduleTab>((completer, action) {
+final int? Function(int, dynamic) tabIndexReducer = combineReducers<int?>([
+  TypedReducer<int?, UpdateScheduleTab>((completer, action) {
     return action.tabIndex;
   }),
-  TypedReducer<int, PreviewEntity>((completer, action) {
+  TypedReducer<int?, PreviewEntity>((completer, action) {
     return 0;
   }),
 ]);
 
-Reducer<String> selectedIdReducer = combineReducers([
-  TypedReducer<String, ArchiveSchedulesSuccess>((completer, action) => ''),
-  TypedReducer<String, DeleteSchedulesSuccess>((completer, action) => ''),
-  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+Reducer<String?> selectedIdReducer = combineReducers([
+  TypedReducer<String?, ArchiveSchedulesSuccess>((completer, action) => ''),
+  TypedReducer<String?, DeleteSchedulesSuccess>((completer, action) => ''),
+  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.schedule ? action.entityId : selectedId),
-  TypedReducer<String, ViewSchedule>(
-      (String selectedId, dynamic action) => action.scheduleId),
-  TypedReducer<String, AddScheduleSuccess>(
-      (String selectedId, dynamic action) => action.schedule.id),
-  TypedReducer<String, SelectCompany>(
+  TypedReducer<String?, ViewSchedule>(
+      (String? selectedId, dynamic action) => action.scheduleId),
+  TypedReducer<String?, AddScheduleSuccess>(
+      (String? selectedId, dynamic action) => action.schedule.id),
+  TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, SortSchedules>((selectedId, action) => ''),
-  TypedReducer<String, FilterSchedules>((selectedId, action) => ''),
-  TypedReducer<String, FilterSchedulesByState>((selectedId, action) => ''),
-  TypedReducer<String, FilterSchedulesByCustom1>((selectedId, action) => ''),
-  TypedReducer<String, FilterSchedulesByCustom2>((selectedId, action) => ''),
-  TypedReducer<String, FilterSchedulesByCustom3>((selectedId, action) => ''),
-  TypedReducer<String, FilterSchedulesByCustom4>((selectedId, action) => ''),
-  TypedReducer<String, FilterByEntity>(
+  TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String?, SortSchedules>((selectedId, action) => ''),
+  TypedReducer<String?, FilterSchedules>((selectedId, action) => ''),
+  TypedReducer<String?, FilterSchedulesByState>((selectedId, action) => ''),
+  TypedReducer<String?, FilterSchedulesByCustom1>((selectedId, action) => ''),
+  TypedReducer<String?, FilterSchedulesByCustom2>((selectedId, action) => ''),
+  TypedReducer<String?, FilterSchedulesByCustom3>((selectedId, action) => ''),
+  TypedReducer<String?, FilterSchedulesByCustom4>((selectedId, action) => ''),
+  TypedReducer<String?, FilterByEntity>(
       (selectedId, action) => action.clearSelection
           ? ''
           : action.entityType == EntityType.schedule
@@ -64,30 +64,30 @@ Reducer<String> selectedIdReducer = combineReducers([
               : selectedId),
 ]);
 
-final editingReducer = combineReducers<ScheduleEntity>([
-  TypedReducer<ScheduleEntity, SaveScheduleSuccess>(_updateEditing),
-  TypedReducer<ScheduleEntity, AddScheduleSuccess>(_updateEditing),
-  TypedReducer<ScheduleEntity, RestoreSchedulesSuccess>((schedules, action) {
+final editingReducer = combineReducers<ScheduleEntity?>([
+  TypedReducer<ScheduleEntity?, SaveScheduleSuccess>(_updateEditing),
+  TypedReducer<ScheduleEntity?, AddScheduleSuccess>(_updateEditing),
+  TypedReducer<ScheduleEntity?, RestoreSchedulesSuccess>((schedules, action) {
     return action.schedules[0];
   }),
-  TypedReducer<ScheduleEntity, ArchiveSchedulesSuccess>((schedules, action) {
+  TypedReducer<ScheduleEntity?, ArchiveSchedulesSuccess>((schedules, action) {
     return action.schedules[0];
   }),
-  TypedReducer<ScheduleEntity, DeleteSchedulesSuccess>((schedules, action) {
+  TypedReducer<ScheduleEntity?, DeleteSchedulesSuccess>((schedules, action) {
     return action.schedules[0];
   }),
-  TypedReducer<ScheduleEntity, EditSchedule>(_updateEditing),
-  TypedReducer<ScheduleEntity, UpdateSchedule>((schedule, action) {
+  TypedReducer<ScheduleEntity?, EditSchedule>(_updateEditing),
+  TypedReducer<ScheduleEntity?, UpdateSchedule>((schedule, action) {
     return action.schedule.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<ScheduleEntity, DiscardChanges>(_clearEditing),
+  TypedReducer<ScheduleEntity?, DiscardChanges>(_clearEditing),
 ]);
 
-ScheduleEntity _clearEditing(ScheduleEntity schedule, dynamic action) {
+ScheduleEntity _clearEditing(ScheduleEntity? schedule, dynamic action) {
   return ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_STATEMENT);
 }
 
-ScheduleEntity _updateEditing(ScheduleEntity schedule, dynamic action) {
+ScheduleEntity? _updateEditing(ScheduleEntity? schedule, dynamic action) {
   return action.schedule;
 }
 
@@ -163,7 +163,7 @@ ListUIState _filterSchedules(
 ListUIState _sortSchedules(
     ListUIState scheduleListState, SortSchedules action) {
   return scheduleListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortAscending = b.sortField != action.field || !b.sortAscending!
     ..sortField = action.field);
 }
 
@@ -174,13 +174,13 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState productListState, AddToScheduleMultiselect action) {
-  return productListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+  return productListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState productListState, RemoveFromScheduleMultiselect action) {
   return productListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(

@@ -20,24 +20,24 @@ class AppListTile extends StatelessWidget {
     this.trailing,
   });
 
-  final IconData icon;
-  final String title;
-  final String subtitle;
+  final IconData? icon;
+  final String? title;
+  final String? subtitle;
   final bool dense;
-  final Function onLongPress;
-  final String copyValue;
-  final Widget buttonRow;
-  final Widget trailing;
+  final Function? onLongPress;
+  final String? copyValue;
+  final Widget? buttonRow;
+  final Widget? trailing;
 
   void _onTap(BuildContext context) {
     if ((copyValue ?? title ?? '').isEmpty) {
       return;
     }
 
-    Clipboard.setData(ClipboardData(text: copyValue ?? title));
-    showToast(AppLocalization.of(context)
+    Clipboard.setData(ClipboardData(text: copyValue ?? title ?? ''));
+    showToast(AppLocalization.of(context)!
         .copiedToClipboard
-        .replaceFirst(':value', copyValue ?? title));
+        .replaceFirst(':value', copyValue ?? title!));
   }
 
   @override
@@ -47,14 +47,14 @@ class AppListTile extends StatelessWidget {
       child: ListTile(
         contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 16),
         leading: Icon(icon),
-        title: Text(title),
+        title: Text(title!),
         trailing: trailing,
         subtitle: buttonRow != null || subtitle != null
             ? Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (subtitle != null) Text(subtitle),
+                  if (subtitle != null) Text(subtitle!),
                   if (buttonRow != null)
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
@@ -65,7 +65,7 @@ class AppListTile extends StatelessWidget {
             : null,
         dense: dense,
         onTap: () => _onTap(context),
-        onLongPress: onLongPress,
+        onLongPress: onLongPress as void Function()?,
       ),
     );
   }

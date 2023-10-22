@@ -21,8 +21,8 @@ import 'recurring_expense_screen_vm.dart';
 
 class RecurringExpenseScreen extends StatelessWidget {
   const RecurringExpenseScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/recurring_expense';
@@ -41,27 +41,27 @@ class RecurringExpenseScreen extends StatelessWidget {
       ExpenseStatusEntity().rebuild(
         (b) => b
           ..id = kRecurringExpenseStatusDraft
-          ..name = localization.draft,
+          ..name = localization!.draft,
       ),
       ExpenseStatusEntity().rebuild(
         (b) => b
           ..id = kRecurringExpenseStatusPending
-          ..name = localization.pending,
+          ..name = localization!.pending,
       ),
       ExpenseStatusEntity().rebuild(
         (b) => b
           ..id = kRecurringExpenseStatusActive
-          ..name = localization.active,
+          ..name = localization!.active,
       ),
       ExpenseStatusEntity().rebuild(
         (b) => b
           ..id = kRecurringExpenseStatusPaused
-          ..name = localization.paused,
+          ..name = localization!.paused,
       ),
       ExpenseStatusEntity().rebuild(
         (b) => b
           ..id = kRecurringExpenseStatusCompleted
-          ..name = localization.completed,
+          ..name = localization!.completed,
       ),
     ];
 
@@ -151,7 +151,7 @@ class RecurringExpenseScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newRecurringExpense,
+              tooltip: localization!.newRecurringExpense,
             )
           : null,
     );

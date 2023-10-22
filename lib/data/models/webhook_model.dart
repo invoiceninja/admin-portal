@@ -53,7 +53,7 @@ class WebhookFields {
 abstract class WebhookEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<WebhookEntity, WebhookEntityBuilder> {
-  factory WebhookEntity({String id, AppState state}) {
+  factory WebhookEntity({String? id, AppState? state}) {
     return _$WebhookEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
@@ -230,18 +230,18 @@ abstract class WebhookEntity extends Object
     return targetUrl;
   }
 
-  String get eventType => EVENT_MAP[eventId];
+  String? get eventType => EVENT_MAP[eventId];
 
-  int compareTo(WebhookEntity webhook, String sortField, bool sortAscending) {
+  int compareTo(WebhookEntity? webhook, String sortField, bool sortAscending) {
     int response = 0;
-    final WebhookEntity webhookA = sortAscending ? this : webhook;
-    final WebhookEntity webhookB = sortAscending ? webhook : this;
+    final WebhookEntity? webhookA = sortAscending ? this : webhook;
+    final WebhookEntity? webhookB = sortAscending ? webhook : this;
 
     switch (sortField) {
       case WebhookFields.targetUrl:
-        response = webhookA.targetUrl
+        response = webhookA!.targetUrl
             .toLowerCase()
-            .compareTo(webhookB.targetUrl.toLowerCase());
+            .compareTo(webhookB!.targetUrl.toLowerCase());
         break;
       default:
         print('## ERROR: sort by webhook.$sortField is not implemented');
@@ -252,7 +252,7 @@ abstract class WebhookEntity extends Object
   }
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     return matchesStrings(
       haystacks: [
         targetUrl,
@@ -262,7 +262,7 @@ abstract class WebhookEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     return matchesStringsValue(
       haystacks: [
         targetUrl,
@@ -272,16 +272,16 @@ abstract class WebhookEntity extends Object
   }
 
   @override
-  List<EntityAction> getActions(
-      {UserCompanyEntity userCompany,
-      ClientEntity client,
+  List<EntityAction?> getActions(
+      {UserCompanyEntity? userCompany,
+      ClientEntity? client,
       bool includeEdit = false,
       bool includePreview = false,
       bool multiselect = false}) {
-    final actions = <EntityAction>[];
+    final actions = <EntityAction?>[];
 
-    if (!isDeleted && !multiselect) {
-      if (includeEdit && userCompany.canEditEntity(this)) {
+    if (!isDeleted! && !multiselect) {
+      if (includeEdit && userCompany!.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
     }
@@ -294,10 +294,10 @@ abstract class WebhookEntity extends Object
   }
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
   @override
-  FormatNumberType get listDisplayAmountType => null;
+  FormatNumberType? get listDisplayAmountType => null;
 
   // ignore: unused_element
   static void _initializeBuilder(WebhookEntityBuilder builder) => builder

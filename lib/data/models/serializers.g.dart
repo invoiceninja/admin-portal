@@ -64,6 +64,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(DocumentListResponse.serializer)
       ..add(DocumentState.serializer)
       ..add(DocumentUIState.serializer)
+      ..add(EmailHistoryEntity.serializer)
+      ..add(EmailHistoryEventEntity.serializer)
       ..add(EmailTemplate.serializer)
       ..add(EntityState.serializer)
       ..add(EntityType.serializer)
@@ -347,6 +349,10 @@ Serializers _$serializers = (new Serializers().toBuilder()
               BuiltList, const [const FullType(ExpenseScheduleEntity)]),
           () => new ListBuilder<ExpenseScheduleEntity>())
       ..addBuilderFactory(
+          const FullType(
+              BuiltList, const [const FullType(EmailHistoryEventEntity)]),
+          () => new ListBuilder<EmailHistoryEventEntity>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(EntityState)]),
           () => new ListBuilder<EntityState>())
       ..addBuilderFactory(
@@ -627,12 +633,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(WebhookEntity)]),
           () => new ListBuilder<WebhookEntity>())
       ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType(EntityType),
-            const FullType(BuiltList, const [const FullType(String)])
-          ]),
-          () => new MapBuilder<EntityType, BuiltList<String>>())
-      ..addBuilderFactory(
           const FullType(BuiltMap,
               const [const FullType(EntityType), const FullType(bool)]),
           () => new MapBuilder<EntityType, bool>())
@@ -789,15 +789,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltMap, const [
             const FullType(String),
-            const FullType(FeesAndLimitsSettings)
-          ]),
-          () => new MapBuilder<String, FeesAndLimitsSettings>())
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [const FullType(SystemLogEntity)]),
-          () => new ListBuilder<SystemLogEntity>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType(String),
             const FullType(GatewayOptionsEntity)
           ]),
           () => new MapBuilder<String, GatewayOptionsEntity>())
@@ -909,16 +900,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
               BuiltMap, const [const FullType(String), const FullType(String)]),
           () => new MapBuilder<String, String>())
       ..addBuilderFactory(
-          const FullType(
-              BuiltMap, const [const FullType(String), const FullType(String)]),
-          () => new MapBuilder<String, String>())
-      ..addBuilderFactory(
-          const FullType(BuiltMap, const [
-            const FullType(String),
-            const FullType(BuiltList, const [const FullType(String)])
-          ]),
-          () => new MapBuilder<String, BuiltList<String>>())
-      ..addBuilderFactory(
           const FullType(BuiltMap, const [
             const FullType(String),
             const FullType(SubscriptionEntity)
@@ -1009,7 +990,32 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(
               BuiltMap, const [const FullType(int), const FullType(String)]),
-          () => new MapBuilder<int, String>()))
+          () => new MapBuilder<int, String>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap, const [
+            const FullType.nullable(EntityType),
+            const FullType(BuiltList, const [const FullType(String)])
+          ]),
+          () => new MapBuilder<EntityType?, BuiltList<String>>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap, const [
+            const FullType.nullable(String),
+            const FullType(FeesAndLimitsSettings)
+          ]),
+          () => new MapBuilder<String?, FeesAndLimitsSettings>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(SystemLogEntity)]),
+          () => new ListBuilder<SystemLogEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType.nullable(String), const FullType(String)]),
+          () => new MapBuilder<String?, String>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(BuiltList, const [const FullType(String)])
+          ]),
+          () => new MapBuilder<String, BuiltList<String>>()))
     .build();
 
 // ignore_for_file: deprecated_member_use_from_same_package,type=lint

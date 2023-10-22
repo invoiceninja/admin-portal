@@ -185,7 +185,7 @@ void main({bool isTesting = false}) async {
         options.beforeSend = (SentryEvent event, {dynamic hint}) {
           final state = store.state;
           final account = state.account;
-          final reportErrors = account?.reportErrors ?? false;
+          final reportErrors = account.reportErrors;
 
           if (!reportErrors) {
             return null;
@@ -193,10 +193,12 @@ void main({bool isTesting = false}) async {
 
           event = event.copyWith(
             environment: '${store.state.environment}'.split('.').last,
+            /*
             extra: <String, dynamic>{
-              'server_version': account?.currentVersion ?? 'Unknown',
+              'server_version': account.currentVersion,
               'route': state.uiState.currentRoute,
             },
+            */
           );
 
           return event;
@@ -219,7 +221,7 @@ void main({bool isTesting = false}) async {
 
 Future<AppState> _initialState(bool isTesting) async {
   final prefs = await SharedPreferences.getInstance();
-  final prefString = prefs?.getString(kSharedPrefs);
+  final prefString = prefs.getString(kSharedPrefs);
 
   final url = WebUtils.apiUrl ?? prefs.getString(kSharedPrefUrl) ?? '';
   if (!kReleaseMode) {
@@ -228,7 +230,7 @@ Future<AppState> _initialState(bool isTesting) async {
     //url = kAppDemoUrl;
   }
 
-  var prefState = PrefState();
+  PrefState? prefState = PrefState();
   if (prefString != null) {
     try {
       prefState = serializers.deserializeWith(
@@ -237,14 +239,15 @@ Future<AppState> _initialState(bool isTesting) async {
       print('## Error: Failed to load prefs: $e');
     }
   }
-  prefState = prefState.rebuild((b) => b
-    ..enableDarkModeSystem =
-        WidgetsBinding.instance.window.platformBrightness == Brightness.dark);
 
-  String browserRoute;
+  prefState = prefState!.rebuild((b) => b
+    ..enableDarkModeSystem =
+        PlatformDispatcher.instance.platformBrightness == Brightness.dark);
+
+  String? browserRoute;
   if (kIsWeb && prefState.isDesktop) {
     browserRoute = WebUtils.browserRoute;
-    if (browserRoute.isNotEmpty && browserRoute.length > 4) {
+    if (browserRoute!.isNotEmpty && browserRoute.length > 4) {
       if (browserRoute == '/kanban') {
         browserRoute = '/task';
         prefState = prefState.rebuild((b) => b
@@ -258,7 +261,7 @@ Future<AppState> _initialState(bool isTesting) async {
 
   bool reportErrors = false;
   bool whiteLabeled = false;
-  String referralCode = '';
+  String? referralCode = '';
 
   if (kIsWeb) {
     reportErrors = WebUtils.getHtmlValue('report-errors') == '1';

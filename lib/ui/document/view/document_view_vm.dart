@@ -19,7 +19,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DocumentViewScreen extends StatelessWidget {
   const DocumentViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
   final bool isFilter;
@@ -44,14 +44,14 @@ class DocumentViewScreen extends StatelessWidget {
 
 class DocumentViewVM {
   DocumentViewVM({
-    @required this.state,
-    @required this.document,
-    @required this.company,
-    @required this.onEntityAction,
-    @required this.onRefreshed,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.isDirty,
+    required this.state,
+    required this.document,
+    required this.company,
+    required this.onEntityAction,
+    required this.onRefreshed,
+    required this.isSaving,
+    required this.isLoading,
+    required this.isDirty,
   });
 
   factory DocumentViewVM.fromStore(Store<AppState> store) {
@@ -61,8 +61,8 @@ class DocumentViewVM {
             DocumentEntity(id: state.documentUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(
           LoadDocument(completer: completer, documentId: document.id));
       return completer.future;
@@ -83,7 +83,7 @@ class DocumentViewVM {
 
   final AppState state;
   final DocumentEntity document;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;

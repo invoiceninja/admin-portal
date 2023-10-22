@@ -3,10 +3,13 @@ import 'dart:async';
 import 'dart:math';
 
 // Flutter imports:
-import 'package:flutter/material.dart' hide DataRow, DataCell, DataColumn;
+import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
+import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/ui/app/tables/app_paginated_data_table.dart';
 import 'package:overflow_view/overflow_view.dart';
 
 // Project imports:
@@ -24,8 +27,6 @@ import 'package:invoiceninja_flutter/ui/app/lists/list_filter.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
-import 'package:invoiceninja_flutter/ui/app/tables/app_data_table.dart';
-import 'package:invoiceninja_flutter/ui/app/tables/app_paginated_data_table.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/entity_datatable.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -33,25 +34,25 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class EntityList extends StatefulWidget {
   EntityList({
-    @required this.state,
-    @required this.entityType,
-    @required this.entityList,
-    @required this.onRefreshed,
-    @required this.onSortColumn,
-    @required this.itemBuilder,
-    @required this.onClearMultiselect,
+    required this.state,
+    required this.entityType,
+    required this.entityList,
+    required this.onRefreshed,
+    required this.onSortColumn,
+    required this.itemBuilder,
+    required this.onClearMultiselect,
     this.presenter,
     this.tableColumns,
   }) : super(
             key: ValueKey(
-                '__${entityType}_${tableColumns}_${state.uiState.filterEntityId}_${state.getUIState(entityType).listUIState.tableHashCode}__'));
+                '__${entityType}_${tableColumns}_${state.uiState.filterEntityId}_${state.getUIState(entityType)!.listUIState.tableHashCode}__'));
 
   final AppState state;
   final EntityType entityType;
-  final List<String> tableColumns;
-  final List<String> entityList;
+  final List<String>? tableColumns;
+  final List<String?> entityList;
   final Function(BuildContext) onRefreshed;
-  final EntityPresenter presenter;
+  final EntityPresenter? presenter;
   final Function(String) onSortColumn;
   final Function(BuildContext, int) itemBuilder;
   final Function onClearMultiselect;
@@ -61,7 +62,7 @@ class EntityList extends StatefulWidget {
 }
 
 class _EntityListState extends State<EntityList> {
-  EntityDataTableSource dataTableSource;
+  late EntityDataTableSource dataTableSource;
 
   int _firstRowIndex = 0;
 
@@ -73,7 +74,7 @@ class _EntityListState extends State<EntityList> {
     final state = widget.state;
     final entityList = widget.entityList;
     final entityMap = state.getEntityMap(entityType);
-    final entityState = state.getUIState(entityType);
+    final entityState = state.getUIState(entityType)!;
 
     dataTableSource = EntityDataTableSource(
       context: context,
@@ -81,7 +82,7 @@ class _EntityListState extends State<EntityList> {
       editingId: entityState.editingId,
       tableColumns: widget.tableColumns,
       entityList: entityList.toList(),
-      entityMap: entityMap,
+      entityMap: entityMap as BuiltMap<String?, BaseEntity?>?,
       entityPresenter: widget.presenter,
       onTap: (BaseEntity entity) => selectEntity(entity: entity),
     );
@@ -91,17 +92,17 @@ class _EntityListState extends State<EntityList> {
     final rowsPerPage = state.prefState.rowsPerPage;
 
     if (widget.entityList.isNotEmpty) {
-      if ((entityUIState.selectedId ?? '').isNotEmpty) {
+      if ((entityUIState!.selectedId ?? '').isNotEmpty) {
         final selectedIndex =
             widget.entityList.indexOf(entityUIState.selectedId);
 
         if (selectedIndex >= 0) {
           _firstRowIndex = (selectedIndex / rowsPerPage).floor() * rowsPerPage;
         }
-      } else {
+      } else if (state.historyList.isNotEmpty) {
         final history = state.historyList.first;
         if (history.page != null) {
-          _firstRowIndex = history.page * rowsPerPage;
+          _firstRowIndex = history.page! * rowsPerPage;
         }
       }
     }
@@ -112,10 +113,11 @@ class _EntityListState extends State<EntityList> {
     super.didUpdateWidget(oldWidget);
 
     final state = widget.state;
-    final uiState = state.getUIState(widget.entityType);
+    final uiState = state.getUIState(widget.entityType)!;
     dataTableSource.editingId = uiState.editingId;
     dataTableSource.entityList = widget.entityList;
-    dataTableSource.entityMap = state.getEntityMap(widget.entityType);
+    dataTableSource.entityMap = state.getEntityMap(widget.entityType)
+        as BuiltMap<String?, BaseEntity?>?;
 
     // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
     dataTableSource.notifyListeners();
@@ -128,7 +130,7 @@ class _EntityListState extends State<EntityList> {
     final state = widget.state;
     final uiState = state.uiState;
     final entityType = widget.entityType;
-    final listUIState = state.getUIState(entityType).listUIState;
+    final listUIState = state.getUIState(entityType)!.listUIState;
     final isInMultiselect = listUIState.isInMultiselect();
     final entityList = widget.entityList;
     final entityMap = state.getEntityMap(entityType);
@@ -145,7 +147,7 @@ class _EntityListState extends State<EntityList> {
       // null is a special case which means we need to reselect
       // the current selection to add it to the history
       final entityId = shouldSelectEntity == null
-          ? state.getUIState(entityType).selectedId
+          ? state.getUIState(entityType)!.selectedId
           : (entityList.isEmpty ? null : entityList.first);
 
       WidgetsBinding.instance.addPostFrameCallback((duration) {
@@ -173,7 +175,7 @@ class _EntityListState extends State<EntityList> {
             Expanded(
               child: entityList.isEmpty
                   ? HelpText(
-                      AppLocalization.of(context).clickPlusToCreateRecord)
+                      AppLocalization.of(context)!.clickPlusToCreateRecord)
                   : ScrollableListViewBuilder(
                       primary: true,
                       padding: const EdgeInsets.symmetric(vertical: 20),
@@ -245,7 +247,6 @@ class _EntityListState extends State<EntityList> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: AppPaginatedDataTable(
-                    hasActionsColumn: true,
                     onSelectAll: (value) {
                       final startIndex =
                           min(_firstRowIndex, entityList.length - 1);
@@ -253,8 +254,8 @@ class _EntityListState extends State<EntityList> {
                           min(_firstRowIndex + rowsPerPage, entityList.length);
                       final entities = entityList
                           .sublist(startIndex, endIndex)
-                          .map<BaseEntity>(
-                              (String entityId) => entityMap[entityId])
+                          .map<BaseEntity>((String? entityId) =>
+                              entityMap![entityId] as BaseEntity)
                           .where((invoice) =>
                               value != listUIState.isSelected(invoice.id))
                           .toList();
@@ -263,9 +264,9 @@ class _EntityListState extends State<EntityList> {
                     },
                     columns: [
                       if (!isInMultiselect) DataColumn(label: SizedBox()),
-                      ...widget.tableColumns.map((field) {
-                        String label =
-                            AppLocalization.of(context).lookup(field);
+                      ...widget.tableColumns!.map((field) {
+                        String? label =
+                            AppLocalization.of(context)!.lookup(field);
                         if (field.startsWith('custom')) {
                           final key = field.replaceFirst(
                               'custom', entityType.snakeCase);
@@ -284,12 +285,14 @@ class _EntityListState extends State<EntityList> {
                       }),
                     ],
                     source: dataTableSource,
-                    sortColumnIndex:
-                        widget.tableColumns.contains(listUIState.sortField)
-                            ? widget.tableColumns.indexOf(listUIState.sortField)
-                            : 0,
+                    sortColumnIndex: widget.tableColumns!
+                            .contains(listUIState.sortField)
+                        ? widget.tableColumns!.indexOf(listUIState.sortField) +
+                            1
+                        : 0,
                     sortAscending: listUIState.sortAscending,
                     rowsPerPage: state.prefState.rowsPerPage,
+                    showFirstLastButtons: true,
                     onPageChanged: (row) {
                       _firstRowIndex = row;
                       store.dispatch(UpdateLastHistory(
@@ -316,8 +319,8 @@ class _EntityListState extends State<EntityList> {
 
     final entities = listUIState.selectedIds == null
         ? <BaseEntity>[]
-        : listUIState.selectedIds
-            .map<BaseEntity>((entityId) => entityMap[entityId])
+        : listUIState.selectedIds!
+            .map<BaseEntity>((entityId) => entityMap![entityId] as BaseEntity)
             .toList();
     final firstEntity = entities.isEmpty ? null : entities.first;
     final actions = (firstEntity?.getActions(
@@ -326,11 +329,11 @@ class _EntityListState extends State<EntityList> {
               userCompany: state.userCompany,
               client: (firstEntity is BelongsToClient)
                   ? state.clientState
-                      .get((firstEntity as BelongsToClient).clientId)
+                      .get((firstEntity as BelongsToClient).clientId!)
                   : null,
             ) ??
             [])
-        .where((action) => action != null);
+        .whereNotNull();
 
     return RefreshIndicator(
         onRefresh: () => widget.onRefreshed(context),
@@ -357,8 +360,8 @@ class _EntityListState extends State<EntityList> {
                               min(entityList.length, kMaxEntitiesPerBulkAction);
                           final entities = entityList
                               .sublist(0, endIndex)
-                              .map<BaseEntity>(
-                                  (entityId) => entityMap[entityId])
+                              .map<BaseEntity>((entityId) =>
+                                  entityMap![entityId] as BaseEntity)
                               .toList();
                           handleEntitiesActions(
                               entities, EntityAction.toggleMultiselect);
@@ -372,7 +375,7 @@ class _EntityListState extends State<EntityList> {
                         padding: const EdgeInsets.symmetric(horizontal: 4),
                         child: Text(isList
                             ? '($countSelected)'
-                            : localization.countSelected
+                            : localization!.countSelected
                                 .replaceFirst(':count', '$countSelected')),
                       ),
                       Expanded(
@@ -385,7 +388,7 @@ class _EntityListState extends State<EntityList> {
                                     (action) => OutlinedButton(
                                       child: IconText(
                                         icon: getEntityActionIcon(action),
-                                        text: localization.lookup('$action'),
+                                        text: localization!.lookup('$action'),
                                       ),
                                       onPressed: () {
                                         handleEntitiesActions(entities, action);
@@ -402,7 +405,7 @@ class _EntityListState extends State<EntityList> {
                                     child: Row(
                                       children: [
                                         Text(
-                                          localization.more,
+                                          localization!.more,
                                           style: TextStyle(
                                               color:
                                                   state.prefState.enableDarkMode
@@ -436,10 +439,8 @@ class _EntityListState extends State<EntityList> {
                                                     .colorScheme
                                                     .secondary),
                                             SizedBox(width: 16.0),
-                                            Text(AppLocalization.of(context)
-                                                    .lookup(
-                                                        action.toString()) ??
-                                                ''),
+                                            Text(AppLocalization.of(context)!
+                                                .lookup(action.toString())),
                                           ],
                                         ),
                                       );
@@ -452,7 +453,7 @@ class _EntityListState extends State<EntityList> {
                     ] else ...[
                       SizedBox(width: 16),
                       Expanded(
-                        child: Text(localization.countSelected
+                        child: Text(localization!.countSelected
                             .replaceFirst(':count', '$countSelected')),
                       ),
                       SaveCancelButtons(
@@ -465,7 +466,7 @@ class _EntityListState extends State<EntityList> {
                             entities: entities,
                             multiselect: true,
                             completer: Completer<Null>()
-                              ..future.then<dynamic>(
+                              ..future.then<Null>(
                                   (_) => widget.onClearMultiselect()),
                           );
                         },

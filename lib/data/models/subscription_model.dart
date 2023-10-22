@@ -60,7 +60,7 @@ abstract class SubscriptionEntity extends Object
     implements Built<SubscriptionEntity, SubscriptionEntityBuilder> {
   // STARTER: properties - do not remove comment
 
-  factory SubscriptionEntity({String id, AppState state}) {
+  factory SubscriptionEntity({String? id, AppState? state}) {
     return _$SubscriptionEntity._(
       id: id ?? BaseEntity.nextId,
       name: '',
@@ -104,7 +104,7 @@ abstract class SubscriptionEntity extends Object
   int get hashCode;
 
   @override
-  EntityType get entityType => EntityType.subscription;
+  EntityType get entityType => EntityType.paymentLink;
 
   String get name;
 
@@ -179,16 +179,16 @@ abstract class SubscriptionEntity extends Object
   String get displayName => id;
 
   @override
-  List<EntityAction> getActions(
-      {UserCompanyEntity userCompany,
-      ClientEntity client,
+  List<EntityAction?> getActions(
+      {UserCompanyEntity? userCompany,
+      ClientEntity? client,
       bool includeEdit = false,
       bool includePreview = false,
       bool multiselect = false}) {
-    final actions = <EntityAction>[];
+    final actions = <EntityAction?>[];
 
-    if (!isDeleted) {
-      if (!multiselect && includeEdit && userCompany.canEditEntity(this)) {
+    if (!isDeleted!) {
+      if (!multiselect && includeEdit && userCompany!.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
     }
@@ -201,22 +201,22 @@ abstract class SubscriptionEntity extends Object
   }
 
   int compareTo(
-      SubscriptionEntity subscription, String sortField, bool sortAscending) {
+      SubscriptionEntity? subscription, String sortField, bool sortAscending) {
     int response = 0;
     final subscriptionA = sortAscending ? this : subscription;
     final subscriptionB = sortAscending ? subscription : this;
 
     switch (sortField) {
       case SubscriptionFields.name:
-        response = subscriptionA.displayName
+        response = subscriptionA!.displayName
             .toLowerCase()
-            .compareTo(subscriptionB.displayName.toLowerCase());
+            .compareTo(subscriptionB!.displayName.toLowerCase());
         break;
       case SubscriptionFields.createdAt:
-        response = subscriptionA.createdAt.compareTo(subscriptionB.createdAt);
+        response = subscriptionA!.createdAt.compareTo(subscriptionB!.createdAt);
         break;
       case SubscriptionFields.updatedAt:
-        response = subscriptionA.updatedAt.compareTo(subscriptionB.updatedAt);
+        response = subscriptionA!.updatedAt.compareTo(subscriptionB!.updatedAt);
         break;
       default:
         print('## ERROR: sort by subscription.$sortField is not implemented');
@@ -225,14 +225,14 @@ abstract class SubscriptionEntity extends Object
 
     if (response == 0) {
       // STARTER: sort default - do not remove comment
-      return subscriptionA.createdAt.compareTo(subscriptionB.createdAt);
+      return subscriptionA!.createdAt.compareTo(subscriptionB!.createdAt);
     } else {
       return response;
     }
   }
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     return matchesStrings(
       haystacks: [
         name,
@@ -242,7 +242,7 @@ abstract class SubscriptionEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     return matchesStringsValue(
       haystacks: [
         name,
@@ -255,10 +255,10 @@ abstract class SubscriptionEntity extends Object
   String get listDisplayName => name;
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
   @override
-  FormatNumberType get listDisplayAmountType => null;
+  FormatNumberType? get listDisplayAmountType => null;
 
   // ignore: unused_element
   static void _initializeBuilder(SubscriptionEntityBuilder builder) => builder

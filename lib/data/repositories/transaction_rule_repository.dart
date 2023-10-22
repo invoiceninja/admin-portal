@@ -15,24 +15,24 @@ class TransactionRuleRepository {
   final WebClient webClient;
 
   Future<TransactionRuleEntity> loadItem(
-      Credentials credentials, String entityId) async {
+      Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/bank_transaction_rules/$entityId',
         credentials.token);
 
     final TransactionRuleItemResponse transactionRuleResponse = serializers
-        .deserializeWith(TransactionRuleItemResponse.serializer, response);
+        .deserializeWith(TransactionRuleItemResponse.serializer, response)!;
 
     return transactionRuleResponse.data;
   }
 
   Future<BuiltList<TransactionRuleEntity>> loadList(
       Credentials credentials) async {
-    final String url = credentials.url + '/bnak_transaction_rules?';
+    final String url = credentials.url! + '/bnak_transaction_rules?';
     final dynamic response = await webClient.get(url, credentials.token);
 
     final TransactionRuleListResponse transactionRuleResponse = serializers
-        .deserializeWith(TransactionRuleListResponse.serializer, response);
+        .deserializeWith(TransactionRuleListResponse.serializer, response)!;
 
     return transactionRuleResponse.data;
   }
@@ -43,13 +43,13 @@ class TransactionRuleRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url +
+    final url = credentials.url! +
         '/bank_transaction_rules/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final TransactionRuleListResponse transactionRuleResponse = serializers
-        .deserializeWith(TransactionRuleListResponse.serializer, response);
+        .deserializeWith(TransactionRuleListResponse.serializer, response)!;
 
     return transactionRuleResponse.data.toList();
   }
@@ -62,7 +62,7 @@ class TransactionRuleRepository {
 
     if (transactionRule.isNew) {
       response = await webClient.post(
-          credentials.url + '/bank_transaction_rules', credentials.token,
+          credentials.url! + '/bank_transaction_rules', credentials.token,
           data: json.encode(data));
     } else {
       final url =
@@ -72,7 +72,7 @@ class TransactionRuleRepository {
     }
 
     final TransactionRuleItemResponse transactionRuleResponse = serializers
-        .deserializeWith(TransactionRuleItemResponse.serializer, response);
+        .deserializeWith(TransactionRuleItemResponse.serializer, response)!;
 
     return transactionRuleResponse.data;
   }

@@ -12,7 +12,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_pdf.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_pdf_vm.dart';
 
 class CreditEditPDFScreen extends StatelessWidget {
-  const CreditEditPDFScreen({Key key}) : super(key: key);
+  const CreditEditPDFScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +31,9 @@ class CreditEditPDFScreen extends StatelessWidget {
 
 class CreditEditPDFVM extends EntityEditPDFVM {
   CreditEditPDFVM({
-    @required CompanyEntity company,
-    @required InvoiceEntity invoice,
-    @required AppState state,
+    required CompanyEntity? company,
+    required InvoiceEntity? invoice,
+    required AppState state,
   }) : super(
           company: company,
           invoice: invoice,

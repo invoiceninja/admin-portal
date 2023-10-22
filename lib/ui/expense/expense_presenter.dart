@@ -13,7 +13,7 @@ import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class ExpensePresenter extends EntityPresenter {
-  static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
+  static List<String> getDefaultTableFields(UserCompanyEntity? userCompany) {
     return [
       ExpenseFields.status,
       ExpenseFields.number,
@@ -26,7 +26,7 @@ class ExpensePresenter extends EntityPresenter {
     ];
   }
 
-  static List<String> getAllTableFields(UserCompanyEntity userCompany) {
+  static List<String> getAllTableFields(UserCompanyEntity? userCompany) {
     return [
       ...getDefaultTableFields(userCompany),
       ...EntityPresenter.getBaseFields(),
@@ -57,7 +57,7 @@ class ExpensePresenter extends EntityPresenter {
   }
 
   @override
-  Widget getField({String field, BuildContext context}) {
+  Widget getField({String? field, required BuildContext context}) {
     final state = StoreProvider.of<AppState>(context).state;
     final expense = entity as ExpenseEntity;
 
@@ -65,25 +65,25 @@ class ExpensePresenter extends EntityPresenter {
       case ExpenseFields.status:
         return EntityStatusChip(entity: expense, showState: true);
       case ExpenseFields.vendor:
-        final vendor = state.vendorState.get(expense.vendorId);
+        final vendor = state.vendorState.get(expense.vendorId!);
         return LinkTextRelatedEntity(entity: vendor, relation: expense);
       case ExpenseFields.client:
-        final client = state.clientState.get(expense.clientId);
+        final client = state.clientState.get(expense.clientId!);
         return LinkTextRelatedEntity(entity: client, relation: expense);
       case ExpenseFields.expenseDate:
         return Text(formatDate(expense.date, context));
       case ExpenseFields.netAmount:
         return Text(formatNumber(expense.netAmount, context,
-            currencyId: expense.currencyId));
+            currencyId: expense.currencyId)!);
       case ExpenseFields.amount:
         return Text(formatNumber(expense.grossAmount, context,
-            currencyId: expense.currencyId));
+            currencyId: expense.currencyId)!);
       case ExpenseFields.convertedAmount:
         return Text(formatNumber(expense.convertedAmount, context,
-            currencyId: expense.invoiceCurrencyId));
+            currencyId: expense.invoiceCurrencyId)!);
       case ExpenseFields.taxAmount:
         return Text(formatNumber(expense.taxAmount, context,
-            currencyId: expense.currencyId));
+            currencyId: expense.currencyId)!);
       case ExpenseFields.publicNotes:
         return TableTooltip(message: expense.publicNotes);
       case ExpenseFields.number:
@@ -114,7 +114,7 @@ class ExpensePresenter extends EntityPresenter {
         return Text(formatDate(expense.paymentDate, context));
       case ExpenseFields.exchangeRate:
         return Text(formatNumber(expense.exchangeRate, context,
-            formatNumberType: FormatNumberType.double));
+            formatNumberType: FormatNumberType.double)!);
       case ExpenseFields.invoiceCurrency:
         return Text(state.staticState.currencyMap[expense.invoiceCurrencyId]
                 ?.listDisplayName ??
@@ -127,24 +127,24 @@ class ExpensePresenter extends EntityPresenter {
         return Text(expense.taxName3);
       case ExpenseFields.taxRate1:
         return Text(formatNumber(expense.taxRate1, context,
-            formatNumberType: FormatNumberType.percent));
+            formatNumberType: FormatNumberType.percent)!);
       case ExpenseFields.taxRate2:
         return Text(formatNumber(expense.taxRate2, context,
-            formatNumberType: FormatNumberType.percent));
+            formatNumberType: FormatNumberType.percent)!);
       case ExpenseFields.taxRate3:
         return Text(formatNumber(expense.taxRate3, context,
-            formatNumberType: FormatNumberType.percent));
+            formatNumberType: FormatNumberType.percent)!);
       case ExpenseFields.invoiceId:
         return Text(
             state.invoiceState.map[expense.invoiceId]?.listDisplayName ?? '');
       case ExpenseFields.customValue1:
-        return Text(presentCustomField(context, expense.customValue1));
+        return Text(presentCustomField(context, expense.customValue1)!);
       case ExpenseFields.customValue2:
-        return Text(presentCustomField(context, expense.customValue2));
+        return Text(presentCustomField(context, expense.customValue2)!);
       case ExpenseFields.customValue3:
-        return Text(presentCustomField(context, expense.customValue3));
+        return Text(presentCustomField(context, expense.customValue3)!);
       case ExpenseFields.customValue4:
-        return Text(presentCustomField(context, expense.customValue4));
+        return Text(presentCustomField(context, expense.customValue4)!);
       case ExpenseFields.documents:
         return Text('${expense.documents.length}');
       case ExpenseFields.recurringExpense:

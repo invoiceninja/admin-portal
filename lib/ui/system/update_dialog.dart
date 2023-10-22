@@ -36,7 +36,7 @@ enum UpdateState {
 
 class _UpdateDialogState extends State<UpdateDialog> {
   UpdateState updateState = UpdateState.initial;
-  String updateResponse;
+  String? updateResponse;
 
   @override
   Widget build(BuildContext context) {
@@ -47,20 +47,20 @@ class _UpdateDialogState extends State<UpdateDialog> {
     const dockerCommand =
         'docker-compose down\ndocker-compose pull\ndocker-compose up';
 
-    var message = '';
+    String? message = '';
     if (updateState == UpdateState.done) {
       message = updateResponse;
-      if (message.isEmpty) {
-        message = localization.appUpdated;
+      if (message!.isEmpty) {
+        message = localization!.appUpdated;
       } else if (message.contains('failed')) {
-        message += '\n\n${localization.updateFailHelp}\n\ngit checkout .';
+        message += '\n\n${localization!.updateFailHelp}\n\ngit checkout .';
       }
     }
 
     return AlertDialog(
       title: Text(account.isUpdateAvailable
-          ? localization.updateAvailable
-          : localization.forceUpdate),
+          ? localization!.updateAvailable
+          : localization!.forceUpdate),
       content: updateState == UpdateState.done
           ? SelectableText(message)
           : updateState == UpdateState.loading
@@ -168,7 +168,7 @@ class _UpdateDialogState extends State<UpdateDialog> {
               updateResponse = jsonDecode(response.body)['message'];
             });
 
-            if (updateResponse.contains('failed')) {
+            if (updateResponse!.contains('failed')) {
               // do nothing
             } else {
               if (kIsWeb) {

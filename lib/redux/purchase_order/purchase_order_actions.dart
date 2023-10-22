@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
@@ -26,54 +27,54 @@ class ViewPurchaseOrderList implements PersistUI {
   });
 
   final bool force;
-  final int page;
+  final int? page;
 }
 
 class ViewPurchaseOrder implements PersistUI, PersistPrefs {
   ViewPurchaseOrder({
-    @required this.purchaseOrderId,
+    required this.purchaseOrderId,
     this.force = false,
   });
 
-  final String purchaseOrderId;
+  final String? purchaseOrderId;
   final bool force;
 }
 
 class EditPurchaseOrder implements PersistUI, PersistPrefs {
   EditPurchaseOrder(
-      {@required this.purchaseOrder,
+      {required this.purchaseOrder,
       this.completer,
       this.purchaseOrderItemIndex,
       this.cancelCompleter,
       this.force = false});
 
   final InvoiceEntity purchaseOrder;
-  final Completer completer;
-  final int purchaseOrderItemIndex;
-  final Completer cancelCompleter;
+  final Completer? completer;
+  final int? purchaseOrderItemIndex;
+  final Completer? cancelCompleter;
   final bool force;
 }
 
 class ShowEmailPurchaseOrder {
   ShowEmailPurchaseOrder({this.purchaseOrder, this.context, this.completer});
 
-  final InvoiceEntity purchaseOrder;
-  final BuildContext context;
-  final Completer completer;
+  final InvoiceEntity? purchaseOrder;
+  final BuildContext? context;
+  final Completer? completer;
 }
 
 class ShowPdfPurchaseOrder {
   ShowPdfPurchaseOrder({this.purchaseOrder, this.context, this.activityId});
 
-  final InvoiceEntity purchaseOrder;
-  final BuildContext context;
-  final String activityId;
+  final InvoiceEntity? purchaseOrder;
+  final BuildContext? context;
+  final String? activityId;
 }
 
 class EditPurchaseOrderItem implements PersistUI {
   EditPurchaseOrderItem([this.itemIndex]);
 
-  final int itemIndex;
+  final int? itemIndex;
 }
 
 class UpdatePurchaseOrder implements PersistUI {
@@ -85,27 +86,27 @@ class UpdatePurchaseOrder implements PersistUI {
 class UpdatePurchaseOrderVendor implements PersistUI {
   UpdatePurchaseOrderVendor({this.vendor});
 
-  final VendorEntity vendor;
+  final VendorEntity? vendor;
 }
 
 class LoadPurchaseOrder {
   LoadPurchaseOrder({this.completer, this.purchaseOrderId});
 
-  final Completer completer;
-  final String purchaseOrderId;
+  final Completer? completer;
+  final String? purchaseOrderId;
 }
 
 class LoadPurchaseOrderActivity {
   LoadPurchaseOrderActivity({this.completer, this.purchaseOrderId});
 
-  final Completer completer;
-  final String purchaseOrderId;
+  final Completer? completer;
+  final String? purchaseOrderId;
 }
 
 class LoadPurchaseOrders {
   LoadPurchaseOrders({this.completer, this.page = 1});
 
-  final Completer completer;
+  final Completer? completer;
   final int page;
 }
 
@@ -159,13 +160,13 @@ class LoadPurchaseOrdersSuccess implements StopLoading {
 
 class SavePurchaseOrderDocumentRequest implements StartSaving {
   SavePurchaseOrderDocumentRequest({
-    @required this.isPrivate,
-    @required this.completer,
-    @required this.multipartFiles,
-    @required this.purchaseOrder,
+    required this.isPrivate,
+    required this.completer,
+    required this.multipartFiles,
+    required this.purchaseOrder,
   });
 
-  final bool isPrivate;
+  final bool? isPrivate;
   final Completer completer;
   final List<MultipartFile> multipartFiles;
   final InvoiceEntity purchaseOrder;
@@ -186,14 +187,14 @@ class SavePurchaseOrderDocumentFailure implements StopSaving {
 
 class SavePurchaseOrderRequest implements StartSaving {
   SavePurchaseOrderRequest({
-    @required this.completer,
-    @required this.purchaseOrder,
-    @required this.action,
+    required this.completer,
+    required this.purchaseOrder,
+    required this.action,
   });
 
   final Completer completer;
   final InvoiceEntity purchaseOrder;
-  final EntityAction action;
+  final EntityAction? action;
 }
 
 class SavePurchaseOrderSuccess implements StopSaving, PersistData, PersistUI {
@@ -218,9 +219,9 @@ class BulkEmailPurchaseOrdersRequest implements StartSaving {
   BulkEmailPurchaseOrdersRequest(
       {this.completer, this.purchaseOrderIds, this.template});
 
-  final Completer completer;
-  final List<String> purchaseOrderIds;
-  final EmailTemplate template;
+  final Completer? completer;
+  final List<String>? purchaseOrderIds;
+  final EmailTemplate? template;
 }
 
 class BulkEmailPurchaseOrdersSuccess implements StopSaving, PersistData {
@@ -251,7 +252,7 @@ class ArchivePurchaseOrdersSuccess implements StopSaving, PersistData {
 class ArchivePurchaseOrdersFailure implements StopSaving {
   ArchivePurchaseOrdersFailure(this.purchaseOrders);
 
-  final List<InvoiceEntity> purchaseOrders;
+  final List<InvoiceEntity?> purchaseOrders;
 }
 
 class DeletePurchaseOrdersRequest implements StartSaving {
@@ -270,7 +271,7 @@ class DeletePurchaseOrdersSuccess implements StopSaving, PersistData {
 class DeletePurchaseOrdersFailure implements StopSaving {
   DeletePurchaseOrdersFailure(this.purchaseOrders);
 
-  final List<InvoiceEntity> purchaseOrders;
+  final List<InvoiceEntity?> purchaseOrders;
 }
 
 class DownloadPurchaseOrdersRequest implements StartSaving {
@@ -342,17 +343,17 @@ class RestorePurchaseOrdersSuccess implements StopSaving, PersistData {
 class RestorePurchaseOrdersFailure implements StopSaving {
   RestorePurchaseOrdersFailure(this.purchaseOrders);
 
-  final List<InvoiceEntity> purchaseOrders;
+  final List<InvoiceEntity?> purchaseOrders;
 }
 
 class EmailPurchaseOrderRequest implements StartSaving {
   EmailPurchaseOrderRequest({
-    @required this.completer,
-    @required this.purchaseOrderId,
-    @required this.template,
-    @required this.subject,
-    @required this.body,
-    @required this.ccEmail,
+    required this.completer,
+    required this.purchaseOrderId,
+    required this.template,
+    required this.subject,
+    required this.body,
+    required this.ccEmail,
   });
 
   final Completer completer;
@@ -443,7 +444,7 @@ class ApprovePurchaseOrders implements StartSaving {
 class ApprovePurchaseOrderSuccess implements StopSaving {
   ApprovePurchaseOrderSuccess({this.purchaseOrders});
 
-  final List<InvoiceEntity> purchaseOrders;
+  final List<InvoiceEntity>? purchaseOrders;
 }
 
 class ApprovePurchaseOrderFailure implements StopSaving {
@@ -455,20 +456,20 @@ class ApprovePurchaseOrderFailure implements StopSaving {
 class AddPurchaseOrderContact implements PersistUI {
   AddPurchaseOrderContact({this.contact, this.invitation});
 
-  final VendorContactEntity contact;
-  final InvitationEntity invitation;
+  final VendorContactEntity? contact;
+  final InvitationEntity? invitation;
 }
 
 class RemovePurchaseOrderContact implements PersistUI {
   RemovePurchaseOrderContact({this.invitation});
 
-  final InvitationEntity invitation;
+  final InvitationEntity? invitation;
 }
 
 class AddPurchaseOrderItem implements PersistUI {
   AddPurchaseOrderItem({this.purchaseOrderItem});
 
-  final InvoiceItemEntity purchaseOrderItem;
+  final InvoiceItemEntity? purchaseOrderItem;
 }
 
 class MovePurchaseOrderItem implements PersistUI {
@@ -477,8 +478,8 @@ class MovePurchaseOrderItem implements PersistUI {
     this.newIndex,
   });
 
-  final int oldIndex;
-  final int newIndex;
+  final int? oldIndex;
+  final int? newIndex;
 }
 
 class AddPurchaseOrderItems implements PersistUI {
@@ -488,7 +489,10 @@ class AddPurchaseOrderItems implements PersistUI {
 }
 
 class UpdatePurchaseOrderItem implements PersistUI {
-  UpdatePurchaseOrderItem({this.index, this.purchaseOrderItem});
+  UpdatePurchaseOrderItem({
+    required this.index,
+    required this.purchaseOrderItem,
+  });
 
   final int index;
   final InvoiceItemEntity purchaseOrderItem;
@@ -503,7 +507,7 @@ class DeletePurchaseOrderItem implements PersistUI {
 class FilterPurchaseOrders implements PersistUI {
   FilterPurchaseOrders(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortPurchaseOrders implements PersistUI, PersistPrefs {
@@ -527,7 +531,7 @@ class FilterPurchaseOrdersByStatus implements PersistUI {
 class FilterPurchaseOrderDropdown {
   FilterPurchaseOrderDropdown(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class FilterPurchaseOrdersByCustom1 implements PersistUI {
@@ -559,15 +563,15 @@ class StartPurchaseOrderMultiselect {
 }
 
 class AddToPurchaseOrderMultiselect {
-  AddToPurchaseOrderMultiselect({@required this.entity});
+  AddToPurchaseOrderMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromPurchaseOrderMultiselect {
-  RemoveFromPurchaseOrderMultiselect({@required this.entity});
+  RemoveFromPurchaseOrderMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearPurchaseOrderMultiselect {
@@ -577,16 +581,16 @@ class ClearPurchaseOrderMultiselect {
 class UpdatePurchaseOrderTab implements PersistUI {
   UpdatePurchaseOrderTab({this.tabIndex});
 
-  final int tabIndex;
+  final int? tabIndex;
 }
 
-void handlePurchaseOrderAction(BuildContext context,
-    List<BaseEntity> purchaseOrders, EntityAction action) async {
+void handlePurchaseOrderAction(BuildContext? context,
+    List<BaseEntity> purchaseOrders, EntityAction? action) async {
   if (purchaseOrders.isEmpty) {
     return;
   }
 
-  final store = StoreProvider.of<AppState>(context);
+  final store = StoreProvider.of<AppState>(context!);
   final state = store.state;
   final localization = AppLocalization.of(context);
   final purchaseOrder = purchaseOrders.first as InvoiceEntity;
@@ -603,56 +607,52 @@ void handlePurchaseOrderAction(BuildContext context,
       break;
     case EntityAction.restore:
       store.dispatch(RestorePurchaseOrdersRequest(
-          snackBarCompleter<Null>(context, localization.restoredPurchaseOrder),
+          snackBarCompleter<Null>(localization!.restoredPurchaseOrder),
           purchaseOrderIds));
       break;
     case EntityAction.archive:
       store.dispatch(ArchivePurchaseOrdersRequest(
-          snackBarCompleter<Null>(context, localization.archivedPurchaseOrder),
+          snackBarCompleter<Null>(localization!.archivedPurchaseOrder),
           purchaseOrderIds));
       break;
     case EntityAction.delete:
       store.dispatch(DeletePurchaseOrdersRequest(
-          snackBarCompleter<Null>(context, localization.deletedPurchaseOrder),
+          snackBarCompleter<Null>(localization!.deletedPurchaseOrder),
           purchaseOrderIds));
       break;
     case EntityAction.printPdf:
       final invitation = purchaseOrder.invitations.first;
       final url = invitation.downloadLink;
       store.dispatch(StartSaving());
-      final http.Response response =
+      final http.Response? response =
           await WebClient().get(url, '', rawResponse: true);
       store.dispatch(StopSaving());
-      await Printing.layoutPdf(onLayout: (_) => response.bodyBytes);
+      await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;
     case EntityAction.bulkPrint:
       store.dispatch(StartSaving());
-      final url = state.credentials.url + '/purchase_orders/bulk';
+      final url = state.credentials.url! + '/purchase_orders/bulk';
       final data = json.encode({
         'ids': purchaseOrderIds,
         'action': EntityAction.bulkPrint.toApiParam()
       });
-      final http.Response response = await WebClient()
+      final http.Response? response = await WebClient()
           .post(url, state.credentials.token, data: data, rawResponse: true);
       store.dispatch(StopSaving());
-      await Printing.layoutPdf(onLayout: (_) => response.bodyBytes);
+      await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;
     case EntityAction.addToInventory:
       store.dispatch(AddPurchaseOrdersToInventoryRequest(
-          snackBarCompleter<Null>(
-              context,
-              purchaseOrders.length == 1
-                  ? localization.addedPurchaseOrderToInventory
-                  : localization.addedPurchaseOrdersToInventory),
+          snackBarCompleter<Null>(purchaseOrders.length == 1
+              ? localization!.addedPurchaseOrderToInventory
+              : localization!.addedPurchaseOrdersToInventory),
           purchaseOrderIds));
       break;
     case EntityAction.convertToExpense:
       store.dispatch(ConvertPurchaseOrdersToExpensesRequest(
-          snackBarCompleter<Null>(
-              context,
-              purchaseOrders.length == 1
-                  ? localization.convertedToExpense
-                  : localization.convertedToExpenses),
+          snackBarCompleter<Null>(purchaseOrders.length == 1
+              ? localization!.convertedToExpense
+              : localization!.convertedToExpenses),
           purchaseOrderIds));
       break;
     case EntityAction.viewExpense:
@@ -661,29 +661,23 @@ void handlePurchaseOrderAction(BuildContext context,
       break;
     case EntityAction.markSent:
       store.dispatch(MarkPurchaseOrdersSentRequest(
-          snackBarCompleter<Null>(
-              context,
-              purchaseOrders.length == 1
-                  ? localization.markedPurchaseOrderAsSent
-                  : localization.markedPurchaseOrdersAsSent),
+          snackBarCompleter<Null>(purchaseOrders.length == 1
+              ? localization!.markedPurchaseOrderAsSent
+              : localization!.markedPurchaseOrdersAsSent),
           purchaseOrderIds));
       break;
     case EntityAction.cancelInvoice:
       store.dispatch(CancelPurchaseOrdersRequest(
-          snackBarCompleter<Null>(
-              context,
-              purchaseOrders.length == 1
-                  ? localization.cancelledPurchaseOrder
-                  : localization.cancelledPurchaseOrders),
+          snackBarCompleter<Null>(purchaseOrders.length == 1
+              ? localization!.cancelledPurchaseOrder
+              : localization!.cancelledPurchaseOrders),
           purchaseOrderIds));
       break;
     case EntityAction.accept:
       store.dispatch(AcceptPurchaseOrdersRequest(
-          snackBarCompleter<Null>(
-              context,
-              purchaseOrders.length == 1
-                  ? localization.acceptedPurchaseOrder
-                  : localization.acceptedPurchaseOrders),
+          snackBarCompleter<Null>(purchaseOrders.length == 1
+              ? localization!.acceptedPurchaseOrder
+              : localization!.acceptedPurchaseOrders),
           purchaseOrderIds));
       break;
     case EntityAction.toggleMultiselect:
@@ -721,8 +715,7 @@ void handlePurchaseOrderAction(BuildContext context,
       });
       if (!emailValid) {
         showMessageDialog(
-            context: context,
-            message: localization.vendorEmailNotSet,
+            message: localization!.vendorEmailNotSet,
             secondaryActions: [
               TextButton(
                   onPressed: () {
@@ -735,16 +728,18 @@ void handlePurchaseOrderAction(BuildContext context,
         return;
       }
       if (action == EntityAction.sendEmail) {
-        store.dispatch(ShowEmailPurchaseOrder(
-            completer: snackBarCompleter<Null>(
-                context, localization.emailedPurchaseOrder),
+        store.dispatch(
+          ShowEmailPurchaseOrder(
+            completer:
+                snackBarCompleter<Null>(localization!.emailedPurchaseOrder),
             purchaseOrder: purchaseOrder,
-            context: context));
+            context: navigatorKey.currentContext!,
+          ),
+        );
       } else if (action == EntityAction.schedule) {
         if (!state.isProPlan) {
           showMessageDialog(
-              context: context,
-              message: localization.upgradeToPaidPlanToSchedule,
+              message: localization!.upgradeToPaidPlanToSchedule,
               secondaryActions: [
                 TextButton(
                     onPressed: () {
@@ -758,22 +753,19 @@ void handlePurchaseOrderAction(BuildContext context,
         }
 
         createEntity(
-            context: context,
             entity: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_RECORD)
                 .rebuild((b) => b
                   ..parameters.entityType = EntityType.purchaseOrder.apiValue
                   ..parameters.entityId = purchaseOrder.id));
       } else {
         confirmCallback(
-            context: context,
-            message: localization.bulkEmailPurchaseOrders,
+            context: navigatorKey.currentContext!,
+            message: localization!.bulkEmailPurchaseOrders,
             callback: (_) {
               store.dispatch(BulkEmailPurchaseOrdersRequest(
-                completer: snackBarCompleter<Null>(
-                    context,
-                    purchaseOrderIds.length == 1
-                        ? localization.emailedPurchaseOrder
-                        : localization.emailedPurchaseOrders),
+                completer: snackBarCompleter<Null>(purchaseOrderIds.length == 1
+                    ? localization.emailedPurchaseOrder
+                    : localization.emailedPurchaseOrders),
                 purchaseOrderIds: purchaseOrderIds,
               ));
             });
@@ -785,7 +777,6 @@ void handlePurchaseOrderAction(BuildContext context,
           clientId: purchaseOrder.clientId,
           entityType: EntityType.purchaseOrder);
       createEntity(
-          context: context,
           entity: purchaseOrder.clone
               .rebuild((b) => b
                 ..entityType = EntityType.quote
@@ -793,7 +784,7 @@ void handlePurchaseOrderAction(BuildContext context,
               .recreateInvitations(state));
       break;
     case EntityAction.cloneToOther:
-      cloneToDialog(context: context, invoice: purchaseOrder);
+      cloneToDialog(invoice: purchaseOrder);
       break;
     case EntityAction.cloneToInvoice:
       final designId = getDesignIdForClientByEntity(
@@ -801,7 +792,6 @@ void handlePurchaseOrderAction(BuildContext context,
           clientId: purchaseOrder.clientId,
           entityType: EntityType.invoice);
       createEntity(
-          context: context,
           entity: purchaseOrder.clone
               .rebuild((b) => b
                 ..entityType = EntityType.invoice
@@ -810,7 +800,7 @@ void handlePurchaseOrderAction(BuildContext context,
       break;
     case EntityAction.clone:
     case EntityAction.cloneToPurchaseOrder:
-      createEntity(context: context, entity: purchaseOrder.clone);
+      createEntity(entity: purchaseOrder.clone);
       break;
     case EntityAction.cloneToCredit:
       final designId = getDesignIdForClientByEntity(
@@ -818,7 +808,6 @@ void handlePurchaseOrderAction(BuildContext context,
           clientId: purchaseOrder.clientId,
           entityType: EntityType.credit);
       createEntity(
-          context: context,
           entity: purchaseOrder.clone
               .rebuild((b) => b
                 ..entityType = EntityType.credit
@@ -831,7 +820,6 @@ void handlePurchaseOrderAction(BuildContext context,
           clientId: purchaseOrder.clientId,
           entityType: EntityType.invoice);
       createEntity(
-          context: context,
           entity: purchaseOrder.clone
               .rebuild((b) => b
                 ..entityType = EntityType.recurringInvoice
@@ -843,7 +831,7 @@ void handlePurchaseOrderAction(BuildContext context,
       break;
     case EntityAction.bulkDownload:
       store.dispatch(DownloadPurchaseOrdersRequest(
-          snackBarCompleter<Null>(context, localization.exportedData),
+          snackBarCompleter<Null>(localization!.exportedData),
           purchaseOrderIds));
       break;
     case EntityAction.more:

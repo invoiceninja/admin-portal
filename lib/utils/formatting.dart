@@ -19,12 +19,12 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
-double round(double value, int precision) {
+double round(double? value, int precision) {
   if (value == null || value.isNaN) {
     return 0;
   }
 
-  final int fac = pow(10, precision);
+  final int fac = pow(10, precision) as int;
   double result = value * fac;
 
   // Workaround for floating point issues:
@@ -37,7 +37,7 @@ double round(double value, int precision) {
   return result.round() / fac;
 }
 
-int parseInt(String value, {bool zeroIsNull = false}) {
+int? parseInt(String value, {bool zeroIsNull = false}) {
   value = value.replaceAll(RegExp(r'[^0-9\.\-]'), '');
 
   final intValue = int.tryParse(value) ?? 0;
@@ -45,16 +45,16 @@ int parseInt(String value, {bool zeroIsNull = false}) {
   return (intValue == 0 && zeroIsNull) ? null : intValue;
 }
 
-double parseDouble(String value, {bool zeroIsNull = false}) {
+double? parseDouble(String? value, {bool zeroIsNull = false}) {
   // check for comma as decimal separator
-  final state = StoreProvider.of<AppState>(navigatorKey.currentContext).state;
+  final state = StoreProvider.of<AppState>(navigatorKey.currentContext!).state;
 
-  if (state.company.useCommaAsDecimalPlace && value.contains(',')) {
+  if (state.company.useCommaAsDecimalPlace && value!.contains(',')) {
     value = value.replaceAll('.', '');
     value = value.replaceAll(',', '.');
   }
 
-  value = value.replaceAll(RegExp(r'[^0-9\.\-]'), '');
+  value = value!.replaceAll(RegExp(r'[^0-9\.\-]'), '');
 
   final doubleValue = double.tryParse(value) ?? 0.0;
 
@@ -77,23 +77,25 @@ String formatSize(int size) {
       : '${round(size / 1000, 0).toInt()} KB';
 }
 
-String formatNumber(
-  double value,
-  BuildContext context, {
-  String clientId,
-  String vendorId,
-  String currencyId,
-  FormatNumberType formatNumberType = FormatNumberType.money,
-  bool showCurrencyCode,
+String? formatNumber(
+  double? value,
+  BuildContext? context, {
+  String? clientId,
+  String? vendorId,
+  String? currencyId,
+  FormatNumberType? formatNumberType = FormatNumberType.money,
+  bool? showCurrencyCode,
   bool zeroIsNull = false,
   bool roundToPrecision = true,
 }) {
-  if ((zeroIsNull ||
-          formatNumberType == FormatNumberType.inputMoney ||
-          formatNumberType == FormatNumberType.inputAmount) &&
-      value == 0) {
+  if (zeroIsNull && value == 0) {
     return null;
-  } else if (value == null) {
+  } else if (value == null ||
+      (value == 0 &&
+          ([
+            FormatNumberType.inputMoney,
+            FormatNumberType.inputAmount,
+          ].contains(formatNumberType)))) {
     return '';
   }
 
@@ -101,17 +103,17 @@ String formatNumber(
     return formatDuration(Duration(seconds: value.toInt()));
   }
 
-  final state = StoreProvider.of<AppState>(context).state;
+  final state = StoreProvider.of<AppState>(context!).state;
   final CompanyEntity company = state.company;
-  final ClientEntity client = state.clientState.map[clientId];
-  final VendorEntity vendor = state.vendorState.map[vendorId];
-  final GroupEntity group = state.groupState.map[client?.groupId];
+  final ClientEntity? client = state.clientState.map[clientId];
+  final VendorEntity? vendor = state.vendorState.map[vendorId];
+  final GroupEntity? group = state.groupState.map[client?.groupId];
 
-  String countryId;
+  String? countryId;
 
-  if ((client?.countryId ?? '').isNotEmpty && client.hasNameSet) {
+  if ((client?.countryId ?? '').isNotEmpty && client!.hasNameSet) {
     countryId = client.countryId;
-  } else if ((vendor?.countryId ?? '').isNotEmpty && vendor.hasNameSet) {
+  } else if ((vendor?.countryId ?? '').isNotEmpty && vendor!.hasNameSet) {
     countryId = vendor.countryId;
   } else {
     countryId = company.settings.countryId;
@@ -131,15 +133,17 @@ String formatNumber(
     currencyId = company.currencyId;
   }
 
-  final CurrencyEntity currency = state.staticState.currencyMap[currencyId];
-  final CurrencyEntity companyCurrency =
+  final CurrencyEntity? currency = state.staticState.currencyMap[currencyId];
+  final CurrencyEntity? companyCurrency =
       state.staticState.currencyMap[company.currencyId];
 
   final CountryEntity country =
       state.staticState.countryMap[countryId] ?? CountryEntity();
+  /*
   final CountryEntity companyCountry =
       state.staticState.countryMap[company.settings.countryId] ??
           CountryEntity();
+  */
 
   if (currency == null) {
     return '';
@@ -151,16 +155,15 @@ String formatNumber(
 
   String thousandSeparator = currency.thousandSeparator;
   String decimalSeparator = currency.decimalSeparator;
-  bool swapCurrencySymbol = companyCurrency.swapCurrencySymbol;
+  bool swapCurrencySymbol = companyCurrency!.swapCurrencySymbol;
 
   if (currency.id == kCurrencyEuro) {
-    swapCurrencySymbol = companyCountry.swapCurrencySymbol;
-    if (country.thousandSeparator != null &&
-        country.thousandSeparator.isNotEmpty) {
+    //swapCurrencySymbol = companyCountry.swapCurrencySymbol;
+    swapCurrencySymbol = country.swapCurrencySymbol;
+    if (country.thousandSeparator.isNotEmpty) {
       thousandSeparator = country.thousandSeparator;
     }
-    if (country.decimalSeparator != null &&
-        country.decimalSeparator.isNotEmpty) {
+    if (country.decimalSeparator.isNotEmpty) {
       decimalSeparator = country.decimalSeparator;
     }
   }
@@ -196,8 +199,8 @@ String formatNumber(
     SCIENTIFIC_PATTERN: '',
   );
 
-  NumberFormat formatter;
-  String formatted;
+  late NumberFormat formatter;
+  String? formatted;
 
   if (formatNumberType == FormatNumberType.int) {
     return NumberFormat('#,##0', 'custom').format(value);
@@ -224,7 +227,7 @@ String formatNumber(
       formatter = NumberFormat('#,##0.0####', 'custom');
     } else if (currency.precision == 2) {
       formatter = NumberFormat('#,##0.00###', 'custom');
-    } else if (currency.precision == 3) {
+    } else {
       formatter = NumberFormat('#,##0.000##', 'custom');
     }
 
@@ -312,28 +315,28 @@ String formatAddress(AppState appState,
   return str;
 }
 
-String convertDateTimeToSqlDate([DateTime date]) {
+String convertDateTimeToSqlDate([DateTime? date]) {
   date = date ?? DateTime.now();
   return date.toIso8601String().split('T').first;
 }
 
-DateTime convertSqlDateToDateTime([String date]) {
+DateTime convertSqlDateToDateTime([String? date]) {
   date = date ?? convertDateTimeToSqlDate();
   final parts = date.split('-');
   return DateTime.utc(
-    parseInt(parts[0]),
-    parseInt(parts[1]),
-    parseInt(parts[2]),
+    parseInt(parts[0])!,
+    parseInt(parts[1])!,
+    parseInt(parts[2])!,
   );
 }
 
-DateTime convertTimestampToDate(int timestamp) =>
+DateTime convertTimestampToDate(int? timestamp) =>
     DateTime.fromMillisecondsSinceEpoch((timestamp ?? 0) * 1000, isUtc: true);
 
-String convertTimestampToDateString(int timestamp) =>
+String convertTimestampToDateString(int? timestamp) =>
     convertTimestampToDate(timestamp).toIso8601String();
 
-String formatDuration(Duration duration, {bool showSeconds = true}) {
+String formatDuration(Duration? duration, {bool showSeconds = true}) {
   final time = duration.toString().split('.')[0];
 
   if (showSeconds) {
@@ -344,25 +347,26 @@ String formatDuration(Duration duration, {bool showSeconds = true}) {
   }
 }
 
-DateTime convertTimeOfDayToDateTime(TimeOfDay timeOfDay, [DateTime dateTime]) {
+DateTime convertTimeOfDayToDateTime(TimeOfDay? timeOfDay,
+    [DateTime? dateTime]) {
   dateTime ??= DateTime.now();
   return DateTime(dateTime.year, dateTime.month, dateTime.day,
           timeOfDay?.hour ?? 0, timeOfDay?.minute ?? 0)
       .toUtc();
 }
 
-TimeOfDay convertDateTimeToTimeOfDay(DateTime dateTime) =>
+TimeOfDay convertDateTimeToTimeOfDay(DateTime? dateTime) =>
     TimeOfDay(hour: dateTime?.hour ?? 0, minute: dateTime?.minute ?? 0);
 
 String formatDateRange(String startDate, String endDate, BuildContext context) {
   final today = DateTime.now();
 
-  final startDateTime = DateTime.tryParse(startDate).toLocal();
+  final startDateTime = DateTime.tryParse(startDate)!.toLocal();
   final startFormatter =
       DateFormat(today.year == startDateTime.year ? 'MMM d' : 'MMM d, yyy');
   final startDateTimeString = startFormatter.format(startDateTime);
 
-  final endDateTime = DateTime.tryParse(endDate).toLocal();
+  final endDateTime = DateTime.tryParse(endDate)!.toLocal();
   final endFormatter =
       DateFormat(today.year == endDateTime.year ? 'MMM d' : 'MMM d, yyy');
   final endDateTimeString = endFormatter.format(endDateTime);
@@ -371,7 +375,7 @@ String formatDateRange(String startDate, String endDate, BuildContext context) {
 }
 
 String parseDate(String value, BuildContext context) {
-  if (value == null || value.isEmpty) {
+  if (value.isEmpty) {
     return '';
   }
 
@@ -383,14 +387,14 @@ String parseDate(String value, BuildContext context) {
       ? company.settings.dateFormatId
       : kDefaultDateFormat;
 
-  final format = dateFormats[dateFormatId].format;
+  final format = dateFormats[dateFormatId]!.format;
   final formatter = DateFormat(format, localeSelector(state));
 
   return convertDateTimeToSqlDate(formatter.parse(value));
 }
 
-DateTime parseTime(String value, BuildContext context) {
-  if (value == null || value.isEmpty) {
+DateTime? parseTime(String value, BuildContext context) {
+  if (value.isEmpty) {
     return null;
   }
 
@@ -402,10 +406,10 @@ DateTime parseTime(String value, BuildContext context) {
   String format;
 
   format = showSeconds
-      ? enableMilitaryTime
+      ? enableMilitaryTime!
           ? 'H:mm:ss'
           : 'h:mm:ss a'
-      : enableMilitaryTime
+      : enableMilitaryTime!
           ? 'H:mm'
           : 'h:mm a';
 
@@ -413,38 +417,38 @@ DateTime parseTime(String value, BuildContext context) {
   return formatter.parse('2000-01-01 ' + value);
 }
 
-String formatDate(String value, BuildContext context,
+String formatDate(String? value, BuildContext? context,
     {bool showDate = true, bool showTime = false, bool showSeconds = true}) {
   if (value == null || value.isEmpty) {
     return '';
   }
 
-  final state = StoreProvider.of<AppState>(context).state;
-  final CompanyEntity company = state.company;
+  final state = StoreProvider.of<AppState>(context!).state;
+  final CompanyEntity? company = state.company;
   var formattedValue = '';
 
   if (showTime) {
     String format;
     if (!showDate) {
       format = showSeconds
-          ? company.settings.enableMilitaryTime
+          ? company!.settings.enableMilitaryTime!
               ? 'H:mm:ss'
               : 'h:mm:ss a'
-          : company.settings.enableMilitaryTime
+          : company!.settings.enableMilitaryTime!
               ? 'H:mm'
               : 'h:mm a';
     } else {
       final dateFormats = state.staticState.dateFormatMap;
-      final dateFormatId = (company.settings.dateFormatId ?? '').isNotEmpty
+      final dateFormatId = (company!.settings.dateFormatId ?? '').isNotEmpty
           ? company.settings.dateFormatId
           : kDefaultDateFormat;
-      format = dateFormats[dateFormatId].format;
+      format = dateFormats[dateFormatId]!.format;
       format += ' ' +
           (showSeconds
-              ? company.settings.enableMilitaryTime
+              ? company.settings.enableMilitaryTime!
                   ? 'H:mm:ss'
                   : 'h:mm:ss a'
-              : company.settings.enableMilitaryTime
+              : company.settings.enableMilitaryTime!
                   ? 'H:mm'
                   : 'h:mm a');
     }
@@ -454,7 +458,7 @@ String formatDate(String value, BuildContext context,
   } else {
     final dateFormats = state.staticState.dateFormatMap;
     final formatter = DateFormat(
-        dateFormats[company.settings.dateFormatId].format,
+        dateFormats[company!.settings.dateFormatId]!.format,
         localeSelector(state));
     final parsed = DateTime.tryParse(value);
     formattedValue = parsed == null ? '' : formatter.format(parsed);
@@ -464,7 +468,7 @@ String formatDate(String value, BuildContext context,
   return formattedValue.replaceFirst('..', '.');
 }
 
-String formatApiUrl(String url) {
+String formatApiUrl(String? url) {
   url = cleanApiUrl(url);
 
   if (url.isEmpty) {
@@ -474,23 +478,22 @@ String formatApiUrl(String url) {
   return url + '/api/v1';
 }
 
-String cleanApiUrl(String url) => (url ?? '')
+String cleanApiUrl(String? url) => (url ?? '')
     .trim()
     .replaceFirst(RegExp(r'/api/v1'), '')
     .replaceFirst(RegExp(r'/$'), '');
 
-String formatCustomValue({String value, String field, BuildContext context}) {
+String? formatCustomValue(
+    {String? value, String? field, required BuildContext context}) {
   final localization = AppLocalization.of(context);
   final state = StoreProvider.of<AppState>(context).state;
   final CompanyEntity company = state.company;
 
   switch (company.getCustomFieldType(field)) {
     case kFieldTypeSwitch:
-      return value == 'yes' ? localization.yes : localization.no;
-      break;
+      return value == 'yes' ? localization!.yes : localization!.no;
     case kFieldTypeDate:
       return formatDate(value, context);
-      break;
     default:
       return value;
   }

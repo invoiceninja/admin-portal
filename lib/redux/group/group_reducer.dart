@@ -15,36 +15,36 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 EntityUIState groupUIReducer(GroupUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(groupListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
+    ..editing.replace(editingReducer(state.editing, action)!)
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
 
-final forceSelectedReducer = combineReducers<bool>([
-  TypedReducer<bool, ViewGroup>((completer, action) => true),
-  TypedReducer<bool, ViewGroupList>((completer, action) => false),
-  TypedReducer<bool, FilterGroupsByState>((completer, action) => false),
-  TypedReducer<bool, FilterGroups>((completer, action) => false),
+final forceSelectedReducer = combineReducers<bool?>([
+  TypedReducer<bool?, ViewGroup>((completer, action) => true),
+  TypedReducer<bool?, ViewGroupList>((completer, action) => false),
+  TypedReducer<bool?, FilterGroupsByState>((completer, action) => false),
+  TypedReducer<bool?, FilterGroups>((completer, action) => false),
 ]);
 
-Reducer<String> selectedIdReducer = combineReducers([
-  TypedReducer<String, ArchiveGroupSuccess>((completer, action) => ''),
-  TypedReducer<String, DeleteGroupSuccess>((completer, action) => ''),
-  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+Reducer<String?> selectedIdReducer = combineReducers([
+  TypedReducer<String?, ArchiveGroupSuccess>((completer, action) => ''),
+  TypedReducer<String?, DeleteGroupSuccess>((completer, action) => ''),
+  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.group ? action.entityId : selectedId),
-  TypedReducer<String, ViewGroup>(
-      (String selectedId, action) => action.groupId),
-  TypedReducer<String, AddGroupSuccess>(
-      (String selectedId, action) => action.group.id),
-  TypedReducer<String, SelectCompany>(
+  TypedReducer<String?, ViewGroup>(
+      (String? selectedId, action) => action.groupId),
+  TypedReducer<String?, AddGroupSuccess>(
+      (String? selectedId, action) => action.group.id),
+  TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, SortGroups>((selectedId, action) => ''),
-  TypedReducer<String, FilterGroups>((selectedId, action) => ''),
-  TypedReducer<String, FilterGroupsByState>((selectedId, action) => ''),
-  TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
+  TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String?, SortGroups>((selectedId, action) => ''),
+  TypedReducer<String?, FilterGroups>((selectedId, action) => ''),
+  TypedReducer<String?, FilterGroupsByState>((selectedId, action) => ''),
+  TypedReducer<String?, ClearEntitySelection>((selectedId, action) =>
       action.entityType == EntityType.group ? '' : selectedId),
-  TypedReducer<String, FilterByEntity>(
+  TypedReducer<String?, FilterByEntity>(
       (selectedId, action) => action.clearSelection
           ? ''
           : action.entityType == EntityType.group
@@ -52,30 +52,30 @@ Reducer<String> selectedIdReducer = combineReducers([
               : selectedId),
 ]);
 
-final editingReducer = combineReducers<GroupEntity>([
-  TypedReducer<GroupEntity, SaveGroupSuccess>(_updateEditing),
-  TypedReducer<GroupEntity, AddGroupSuccess>(_updateEditing),
-  TypedReducer<GroupEntity, RestoreGroupSuccess>((groups, action) {
+final editingReducer = combineReducers<GroupEntity?>([
+  TypedReducer<GroupEntity?, SaveGroupSuccess>(_updateEditing),
+  TypedReducer<GroupEntity?, AddGroupSuccess>(_updateEditing),
+  TypedReducer<GroupEntity?, RestoreGroupSuccess>((groups, action) {
     return action.groups[0];
   }),
-  TypedReducer<GroupEntity, ArchiveGroupSuccess>((groups, action) {
+  TypedReducer<GroupEntity?, ArchiveGroupSuccess>((groups, action) {
     return action.groups[0];
   }),
-  TypedReducer<GroupEntity, DeleteGroupSuccess>((groups, action) {
+  TypedReducer<GroupEntity?, DeleteGroupSuccess>((groups, action) {
     return action.groups[0];
   }),
-  TypedReducer<GroupEntity, EditGroup>(_updateEditing),
-  TypedReducer<GroupEntity, UpdateGroup>((group, action) {
+  TypedReducer<GroupEntity?, EditGroup>(_updateEditing),
+  TypedReducer<GroupEntity?, UpdateGroup>((group, action) {
     return action.group.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<GroupEntity, DiscardChanges>(_clearEditing),
+  TypedReducer<GroupEntity?, DiscardChanges>(_clearEditing),
 ]);
 
-GroupEntity _clearEditing(GroupEntity group, dynamic action) {
+GroupEntity _clearEditing(GroupEntity? group, dynamic action) {
   return GroupEntity();
 }
 
-GroupEntity _updateEditing(GroupEntity group, dynamic action) {
+GroupEntity? _updateEditing(GroupEntity? group, dynamic action) {
   return action.group;
 }
 
@@ -121,7 +121,7 @@ ListUIState _filterGroups(ListUIState groupListState, FilterGroups action) {
 
 ListUIState _sortGroups(ListUIState groupListState, SortGroups action) {
   return groupListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortAscending = b.sortField != action.field || !b.sortAscending!
     ..sortField = action.field);
 }
 
@@ -132,12 +132,13 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState groupListState, AddToGroupMultiselect action) {
-  return groupListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+  return groupListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState groupListState, RemoveFromGroupMultiselect action) {
-  return groupListState.rebuild((b) => b..selectedIds.remove(action.entity.id));
+  return groupListState
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(

@@ -19,12 +19,12 @@ List<String> dropdownVendorsSelector(
     BuiltMap<String, UserEntity> userMap,
     StaticState staticState) {
   final list = vendorList.where((vendorId) {
-    final vendor = vendorMap[vendorId];
+    final vendor = vendorMap[vendorId]!;
     return vendor.isActive;
   }).toList();
 
   list.sort((vendorAId, vendorBId) {
-    final vendorA = vendorMap[vendorAId];
+    final vendorA = vendorMap[vendorAId]!;
     final vendorB = vendorMap[vendorBId];
     return vendorA.compareTo(
         vendorB, VendorFields.name, true, userMap, staticState);
@@ -50,7 +50,7 @@ List<String> filteredVendorsSelector(
     BuiltMap<String, UserEntity> userMap,
     StaticState staticState) {
   final list = vendorList.where((vendorId) {
-    final vendor = vendorMap[vendorId];
+    final vendor = vendorMap[vendorId]!;
 
     if (vendor.id == selectionState.selectedId) {
       return true;
@@ -78,7 +78,7 @@ List<String> filteredVendorsSelector(
   }).toList();
 
   list.sort((vendorAId, vendorBId) {
-    final vendorA = vendorMap[vendorAId];
+    final vendorA = vendorMap[vendorAId]!;
     final vendorB = vendorMap[vendorBId];
     return vendorA.compareTo(vendorB, vendorListState.sortField,
         vendorListState.sortAscending, userMap, staticState);
@@ -122,7 +122,7 @@ double calculateVendorBalance(String vendorId, String currencyId,
     final expense = expenseMap[expenseId] ?? ExpenseEntity();
     if (expense.vendorId == vendorId &&
         expense.isActive &&
-        (currencyId == null || expense.currencyId == currencyId)) {
+        (expense.currencyId == currencyId)) {
       total += expense.grossAmount;
     }
   });

@@ -15,12 +15,12 @@ var memoizedDropdownTokenList = memo3((BuiltMap<String, TokenEntity> tokenMap,
 List<String> dropdownTokensSelector(BuiltMap<String, TokenEntity> tokenMap,
     BuiltList<String> tokenList, String clientId) {
   final list = tokenList.where((tokenId) {
-    final token = tokenMap[tokenId];
+    final token = tokenMap[tokenId]!;
     return token.isActive;
   }).toList();
 
   list.sort((tokenAId, tokenBId) {
-    final tokenA = tokenMap[tokenAId];
+    final tokenA = tokenMap[tokenAId]!;
     final tokenB = tokenMap[tokenBId];
     return tokenA.compareTo(tokenB, TokenFields.name, true);
   });
@@ -30,7 +30,7 @@ List<String> dropdownTokensSelector(BuiltMap<String, TokenEntity> tokenMap,
 
 var memoizedFilteredTokenList = memo4((
   SelectionState selectionState,
-  BuiltMap<String, TokenEntity> tokenMap,
+  BuiltMap<String?, TokenEntity?> tokenMap,
   BuiltList<String> tokenList,
   ListUIState tokenListState,
 ) =>
@@ -43,14 +43,14 @@ var memoizedFilteredTokenList = memo4((
 
 List<String> filteredTokensSelector(
   SelectionState selectionState,
-  BuiltMap<String, TokenEntity> tokenMap,
+  BuiltMap<String?, TokenEntity?> tokenMap,
   BuiltList<String> tokenList,
   ListUIState tokenListState,
 ) {
   //final filterEntityId = selectionState.filterEntityId;
 
   final list = tokenList.where((tokenId) {
-    final token = tokenMap[tokenId];
+    final token = tokenMap[tokenId]!;
 
     if (token.id == selectionState.selectedId) {
       return true;
@@ -68,7 +68,7 @@ List<String> filteredTokensSelector(
   }).toList();
 
   list.sort((tokenAId, tokenBId) {
-    final tokenA = tokenMap[tokenAId];
+    final tokenA = tokenMap[tokenAId]!;
     final tokenB = tokenMap[tokenBId];
     return tokenA.compareTo(
         tokenB, tokenListState.sortField, tokenListState.sortAscending);

@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceViewSchedule extends StatefulWidget {
-  const InvoiceViewSchedule({Key key, @required this.viewModel})
+  const InvoiceViewSchedule({Key? key, required this.viewModel})
       : super(key: key);
 
   final AbstractInvoiceViewVM viewModel;
@@ -21,16 +21,16 @@ class InvoiceViewSchedule extends StatefulWidget {
 class _InvoiceViewScheduleState extends State<InvoiceViewSchedule> {
   @override
   void didChangeDependencies() {
-    if (widget.viewModel.invoice.isStale) {
-      widget.viewModel.onRefreshed(context);
+    if (widget.viewModel.invoice!.isStale) {
+      widget.viewModel.onRefreshed!(context);
     }
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    final invoice = widget.viewModel.invoice;
-    final localization = AppLocalization.of(context);
+    final invoice = widget.viewModel.invoice!;
+    final localization = AppLocalization.of(context)!;
 
     return ScrollableListView(
       padding: const EdgeInsets.all(16),
@@ -51,11 +51,11 @@ class _InvoiceViewScheduleState extends State<InvoiceViewSchedule> {
             ),
           ],
         ),
-        if (invoice.isStale && invoice.recurringDates.isEmpty)
+        if (invoice.isStale && invoice.recurringDates!.isEmpty)
           LoadingIndicator(
             height: 300,
           ),
-        ...invoice.recurringDates
+        ...invoice.recurringDates!
             .map((schedule) => Padding(
                   padding: const EdgeInsets.only(top: 16),
                   child: Row(

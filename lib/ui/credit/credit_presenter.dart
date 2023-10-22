@@ -17,7 +17,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CreditPresenter extends EntityPresenter {
-  static List<String> getDefaultTableFields(UserCompanyEntity userCompany) {
+  static List<String> getDefaultTableFields(UserCompanyEntity? userCompany) {
     return [
       CreditFields.status,
       CreditFields.number,
@@ -28,7 +28,7 @@ class CreditPresenter extends EntityPresenter {
     ];
   }
 
-  static List<String> getAllTableFields(UserCompanyEntity userCompany) {
+  static List<String> getAllTableFields(UserCompanyEntity? userCompany) {
     return [
       ...getDefaultTableFields(userCompany),
       ...EntityPresenter.getBaseFields(),
@@ -60,7 +60,7 @@ class CreditPresenter extends EntityPresenter {
   }
 
   @override
-  Widget getField({String field, BuildContext context}) {
+  Widget getField({String? field, required BuildContext context}) {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
     final credit = entity as InvoiceEntity;
@@ -70,9 +70,8 @@ class CreditPresenter extends EntityPresenter {
       case CreditFields.status:
         return EntityStatusChip(entity: credit, showState: true);
       case CreditFields.number:
-        return Text((credit.number ?? '').isEmpty
-            ? localization.pending
-            : credit.number);
+        return Text(
+            credit.number.isEmpty ? localization!.pending : credit.number);
       case CreditFields.client:
         return LinkTextRelatedEntity(entity: client, relation: credit);
       case CreditFields.date:
@@ -85,22 +84,22 @@ class CreditPresenter extends EntityPresenter {
         return Align(
           alignment: Alignment.centerRight,
           child: Text(
-              formatNumber(credit.amount, context, clientId: credit.clientId)),
+              formatNumber(credit.amount, context, clientId: credit.clientId)!),
         );
       case CreditFields.remaining:
       case CreditFields.balance:
         return Align(
             alignment: Alignment.centerRight,
             child: Text(formatNumber(credit.balanceOrAmount, context,
-                clientId: credit.clientId)));
+                clientId: credit.clientId)!));
       case CreditFields.customValue1:
-        return Text(presentCustomField(context, credit.customValue1));
+        return Text(presentCustomField(context, credit.customValue1)!);
       case CreditFields.customValue2:
-        return Text(presentCustomField(context, credit.customValue2));
+        return Text(presentCustomField(context, credit.customValue2)!);
       case CreditFields.customValue3:
-        return Text(presentCustomField(context, credit.customValue3));
+        return Text(presentCustomField(context, credit.customValue3)!);
       case CreditFields.customValue4:
-        return Text(presentCustomField(context, credit.customValue4));
+        return Text(presentCustomField(context, credit.customValue4)!);
       case CreditFields.publicNotes:
         return TableTooltip(message: credit.publicNotes);
       case CreditFields.privateNotes:
@@ -109,21 +108,21 @@ class CreditPresenter extends EntityPresenter {
         return Text(credit.isAmountDiscount
             ? formatNumber(credit.discount, context,
                 formatNumberType: FormatNumberType.money,
-                clientId: credit.clientId)
+                clientId: credit.clientId)!
             : formatNumber(credit.discount, context,
-                formatNumberType: FormatNumberType.percent));
+                formatNumberType: FormatNumberType.percent)!);
       case CreditFields.poNumber:
         return Text(credit.poNumber);
       case CreditFields.documents:
         return Text('${credit.documents.length}');
       case CreditFields.taxAmount:
-        return Text(
-            formatNumber(credit.taxAmount, context, clientId: credit.clientId));
+        return Text(formatNumber(credit.taxAmount, context,
+            clientId: credit.clientId)!);
       case CreditFields.exchangeRate:
         return Text(formatNumber(credit.exchangeRate, context,
-            formatNumberType: FormatNumberType.double));
+            formatNumberType: FormatNumberType.double)!);
       case CreditFields.isViewed:
-        return Text(credit.isViewed ? localization.yes : localization.no);
+        return Text(credit.isViewed ? localization!.yes : localization!.no);
       case CreditFields.project:
         final project = state.projectState.get(credit.projectId);
         return LinkTextRelatedEntity(entity: project, relation: credit);
@@ -146,7 +145,7 @@ class CreditPresenter extends EntityPresenter {
           return SizedBox();
         }
         if (field == CreditFields.contactName) {
-          return Text(contact.fullName ?? '');
+          return Text(contact.fullName);
         }
         return CopyToClipboard(
           value: contact.email,
@@ -154,7 +153,7 @@ class CreditPresenter extends EntityPresenter {
           onLongPress: () => launchUrl(Uri.parse('mailto:${contact.email}')),
         );
       case CreditFields.partial:
-        return Text(formatNumber(credit.partial, context));
+        return Text(formatNumber(credit.partial, context)!);
       case CreditFields.partialDueDate:
         return Text(formatDate(credit.partialDueDate, context));
     }

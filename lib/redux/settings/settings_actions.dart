@@ -2,7 +2,6 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:http/http.dart';
@@ -29,14 +28,14 @@ class ViewSettings implements PersistUI {
     this.tabIndex,
   });
 
-  final CompanyEntity company;
-  final GroupEntity group;
-  final ClientEntity client;
-  final UserEntity user;
+  final CompanyEntity? company;
+  final GroupEntity? group;
+  final ClientEntity? client;
+  final UserEntity? user;
   final bool force;
-  final String section;
+  final String? section;
   final bool clearFilter;
-  final int tabIndex;
+  final int? tabIndex;
 }
 
 class ClearSettingsFilter implements PersistUI {}
@@ -44,13 +43,13 @@ class ClearSettingsFilter implements PersistUI {}
 class ResetSettings {}
 
 class UpdateSettings implements PersistUI {
-  UpdateSettings({@required this.settings});
+  UpdateSettings({required this.settings});
 
   final SettingsEntity settings;
 }
 
 class UpdateSettingsTab implements PersistUI {
-  UpdateSettingsTab({@required this.tabIndex});
+  UpdateSettingsTab({required this.tabIndex});
 
   final int tabIndex;
 }
@@ -60,13 +59,13 @@ class UpdatedSetting implements PersistUI {}
 class UpdatedSettingUI implements PersistUI {}
 
 class UpdateSettingsTemplate implements PersistUI {
-  UpdateSettingsTemplate({@required this.selectedTemplate});
+  UpdateSettingsTemplate({required this.selectedTemplate});
 
   final EmailTemplate selectedTemplate;
 }
 
 class UpdateUserSettings implements PersistUI {
-  UpdateUserSettings({@required this.user});
+  UpdateUserSettings({required this.user});
 
   final UserEntity user;
 }
@@ -74,9 +73,9 @@ class UpdateUserSettings implements PersistUI {
 class UploadLogoRequest implements StartSaving {
   UploadLogoRequest({this.completer, this.multipartFile, this.type});
 
-  final Completer completer;
-  final MultipartFile multipartFile;
-  final EntityType type;
+  final Completer? completer;
+  final MultipartFile? multipartFile;
+  final EntityType? type;
 }
 
 class UploadLogoFailure implements StopSaving {
@@ -87,8 +86,8 @@ class UploadLogoFailure implements StopSaving {
 
 class SaveUserSettingsRequest implements StartSaving {
   SaveUserSettingsRequest({
-    @required this.completer,
-    @required this.user,
+    required this.completer,
+    required this.user,
   });
 
   final Completer completer;
@@ -109,16 +108,16 @@ class SaveUserSettingsFailure implements StopSaving {
 
 class SaveAuthUserRequest implements StartSaving {
   SaveAuthUserRequest({
-    @required this.user,
+    required this.user,
     this.completer,
     this.password,
     this.idToken,
   });
 
-  final Completer completer;
+  final Completer? completer;
   final UserEntity user;
-  final String password;
-  final String idToken;
+  final String? password;
+  final String? idToken;
 }
 
 class SaveAuthUserSuccess
@@ -136,16 +135,16 @@ class SaveAuthUserFailure implements StopSaving {
 
 class ConnecOAuthUserRequest implements StartSaving {
   ConnecOAuthUserRequest({
-    @required this.provider,
-    @required this.idToken,
-    @required this.accessToken,
+    required this.provider,
+    required this.idToken,
+    required this.accessToken,
     this.completer,
     this.password,
   });
 
-  final Completer completer;
+  final Completer? completer;
   final String provider;
-  final String password;
+  final String? password;
   final String idToken;
   final String accessToken;
 }
@@ -165,16 +164,16 @@ class ConnecOAuthUserFailure implements StopSaving {
 
 class DisconnecOAuthUserRequest implements StartSaving {
   DisconnecOAuthUserRequest({
-    @required this.user,
-    @required this.idToken,
-    @required this.completer,
-    @required this.password,
+    required this.user,
+    required this.idToken,
+    required this.completer,
+    required this.password,
   });
 
-  final UserEntity user;
+  final UserEntity? user;
   final Completer completer;
-  final String password;
-  final String idToken;
+  final String? password;
+  final String? idToken;
 }
 
 class DisconnectOAuthUserSuccess
@@ -192,15 +191,15 @@ class DisconnecOAuthUserFailure implements StopSaving {
 
 class DisconnectOAuthMailerRequest implements StartSaving {
   DisconnectOAuthMailerRequest({
-    @required this.completer,
-    @required this.idToken,
-    @required this.password,
-    @required this.user,
+    required this.completer,
+    required this.idToken,
+    required this.password,
+    required this.user,
   });
   final Completer completer;
-  final String password;
-  final String idToken;
-  final UserEntity user;
+  final String? password;
+  final String? idToken;
+  final UserEntity? user;
 }
 
 class DisconnectOAuthMailerSuccess
@@ -218,14 +217,14 @@ class DisconnectOAuthMailerFailure implements StopSaving {
 
 class DisableTwoFactorRequest implements StartSaving {
   DisableTwoFactorRequest({
-    @required this.completer,
-    @required this.idToken,
-    @required this.password,
+    required this.completer,
+    required this.idToken,
+    required this.password,
   });
 
   final Completer completer;
-  final String password;
-  final String idToken;
+  final String? password;
+  final String? idToken;
 }
 
 class DisableTwoFactorSuccess
@@ -239,15 +238,15 @@ class DisableTwoFactorFailure implements StopSaving {
 
 class ConnecGmailUserRequest implements StartSaving {
   ConnecGmailUserRequest({
-    @required this.serverAuthCode,
-    @required this.idToken,
+    required this.serverAuthCode,
+    required this.idToken,
     this.completer,
     this.password,
   });
 
-  final Completer completer;
+  final Completer? completer;
   final String idToken;
-  final String password;
+  final String? password;
   final String serverAuthCode;
 }
 
@@ -267,7 +266,7 @@ class ConnecGmailUserFailure implements StopSaving {
 class FilterSettings implements PersistUI {
   FilterSettings(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class ToggleShowNewSettings {}

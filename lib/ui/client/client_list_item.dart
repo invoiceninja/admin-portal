@@ -17,21 +17,21 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ClientListItem extends StatelessWidget {
   const ClientListItem({
-    @required this.user,
-    @required this.client,
-    @required this.filter,
+    required this.user,
+    required this.client,
+    required this.filter,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
 
-  final UserEntity user;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
+  final UserEntity? user;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onLongPress;
   final ClientEntity client;
-  final String filter;
-  final Function(bool) onCheckboxChanged;
+  final String? filter;
+  final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
 
   @override
@@ -40,7 +40,7 @@ class ClientListItem extends StatelessWidget {
     final state = store.state;
     final uiState = state.uiState;
     final clientUIState = uiState.clientUIState;
-    final filterMatch = filter != null && filter.isNotEmpty
+    final filterMatch = filter != null && filter!.isNotEmpty
         ? client.matchesFilterValue(filter)
         : null;
     final listUIState = clientUIState.listUIState;
@@ -52,7 +52,7 @@ class ClientListItem extends StatelessWidget {
       isSelected: isDesktop(context) &&
           client.id ==
               (uiState.isEditing
-                  ? clientUIState.editing.id
+                  ? clientUIState.editing!.id
                   : clientUIState.selectedId),
       userCompany: store.state.userCompany,
       entity: client,
@@ -61,9 +61,9 @@ class ClientListItem extends StatelessWidget {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: client),
+                    onTap != null ? onTap!() : selectEntity(entity: client),
                 onLongPress: () => onLongPress != null
-                    ? onLongPress()
+                    ? onLongPress!()
                     : selectEntity(entity: client, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -86,7 +86,7 @@ class ClientListItem extends StatelessWidget {
                                     materialTapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
                                     onChanged: (value) =>
-                                        onCheckboxChanged(value),
+                                        onCheckboxChanged!(value),
                                     activeColor:
                                         Theme.of(context).colorScheme.secondary,
                                   ),
@@ -139,7 +139,7 @@ class ClientListItem extends StatelessWidget {
                       SizedBox(width: 10),
                       Text(
                         formatNumber(client.balance, context,
-                            clientId: client.id),
+                            clientId: client.id)!,
                         style: textStyle,
                         textAlign: TextAlign.end,
                       ),
@@ -149,9 +149,9 @@ class ClientListItem extends StatelessWidget {
               )
             : ListTile(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: client),
+                    onTap != null ? onTap!() : selectEntity(entity: client),
                 onLongPress: () => onLongPress != null
-                    ? onLongPress()
+                    ? onLongPress!()
                     : selectEntity(entity: client, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
@@ -160,7 +160,7 @@ class ClientListItem extends StatelessWidget {
                           value: isChecked,
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => onCheckboxChanged(value),
+                          onChanged: (value) => onCheckboxChanged!(value),
                           activeColor: Theme.of(context).colorScheme.secondary,
                         ),
                       )
@@ -178,7 +178,7 @@ class ClientListItem extends StatelessWidget {
                       ),
                       Text(
                           formatNumber(client.balance, context,
-                              clientId: client.id),
+                              clientId: client.id)!,
                           style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),

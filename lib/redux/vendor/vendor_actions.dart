@@ -27,31 +27,31 @@ class ViewVendorList implements PersistUI {
   });
 
   final bool force;
-  final int page;
+  final int? page;
 }
 
 class ViewVendor implements PersistUI, PersistPrefs {
   ViewVendor({
-    @required this.vendorId,
+    required this.vendorId,
     this.force = false,
   });
 
-  final String vendorId;
+  final String? vendorId;
   final bool force;
 }
 
 class EditVendor implements PersistUI, PersistPrefs {
   EditVendor(
-      {@required this.vendor,
+      {required this.vendor,
       this.contact,
       this.completer,
       this.cancelCompleter,
       this.force = false});
 
   final VendorEntity vendor;
-  final VendorContactEntity contact;
-  final Completer completer;
-  final Completer cancelCompleter;
+  final VendorContactEntity? contact;
+  final Completer? completer;
+  final Completer? cancelCompleter;
   final bool force;
 }
 
@@ -64,21 +64,21 @@ class UpdateVendor implements PersistUI {
 class LoadVendor {
   LoadVendor({this.completer, this.vendorId});
 
-  final Completer completer;
-  final String vendorId;
+  final Completer? completer;
+  final String? vendorId;
 }
 
 class LoadVendorActivity {
   LoadVendorActivity({this.completer, this.vendorId});
 
-  final Completer completer;
-  final String vendorId;
+  final Completer? completer;
+  final String? vendorId;
 }
 
 class LoadVendors {
   LoadVendors({this.completer, this.page = 1});
 
-  final Completer completer;
+  final Completer? completer;
   final int page;
 }
 
@@ -133,8 +133,8 @@ class LoadVendorsSuccess implements StopLoading {
 class SaveVendorRequest implements StartSaving {
   SaveVendorRequest({this.completer, this.vendor});
 
-  final Completer completer;
-  final VendorEntity vendor;
+  final Completer? completer;
+  final VendorEntity? vendor;
 }
 
 class SaveVendorSuccess implements StopSaving, PersistData, PersistUI {
@@ -171,7 +171,7 @@ class ArchiveVendorSuccess implements StopSaving, PersistData {
 class ArchiveVendorFailure implements StopSaving {
   ArchiveVendorFailure(this.vendors);
 
-  final List<VendorEntity> vendors;
+  final List<VendorEntity?> vendors;
 }
 
 class DeleteVendorRequest implements StartSaving {
@@ -190,7 +190,7 @@ class DeleteVendorSuccess implements StopSaving, PersistData {
 class DeleteVendorFailure implements StopSaving {
   DeleteVendorFailure(this.vendors);
 
-  final List<VendorEntity> vendors;
+  final List<VendorEntity?> vendors;
 }
 
 class RestoreVendorRequest implements StartSaving {
@@ -209,23 +209,26 @@ class RestoreVendorSuccess implements StopSaving, PersistData {
 class RestoreVendorFailure implements StopSaving {
   RestoreVendorFailure(this.vendors);
 
-  final List<VendorEntity> vendors;
+  final List<VendorEntity?> vendors;
 }
 
 class EditVendorContact implements PersistUI {
   EditVendorContact([this.contact]);
 
-  final VendorContactEntity contact;
+  final VendorContactEntity? contact;
 }
 
 class AddVendorContact implements PersistUI {
   AddVendorContact([this.contact]);
 
-  final VendorContactEntity contact;
+  final VendorContactEntity? contact;
 }
 
 class UpdateVendorContact implements PersistUI {
-  UpdateVendorContact({this.index, this.contact});
+  UpdateVendorContact({
+    required this.index,
+    required this.contact,
+  });
 
   final int index;
   final VendorContactEntity contact;
@@ -240,7 +243,7 @@ class DeleteVendorContact implements PersistUI {
 class FilterVendors implements PersistUI {
   FilterVendors(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortVendors implements PersistUI, PersistPrefs {
@@ -280,12 +283,12 @@ class FilterVendorsByCustom4 implements PersistUI {
 }
 
 void handleVendorAction(
-    BuildContext context, List<BaseEntity> vendors, EntityAction action) {
+    BuildContext? context, List<BaseEntity> vendors, EntityAction? action) {
   if (vendors.isEmpty) {
     return;
   }
 
-  final store = StoreProvider.of<AppState>(context);
+  final store = StoreProvider.of<AppState>(context!);
   final state = store.state;
   final localization = AppLocalization.of(context);
   final vendor = vendors.first as VendorEntity;
@@ -297,15 +300,12 @@ void handleVendorAction(
       break;
     case EntityAction.vendorPortal:
       final contact = vendor.contacts.firstWhere((contact) {
-        return (contact.link ?? '').isNotEmpty;
+        return (contact.link).isNotEmpty;
       }, orElse: null);
-      if (contact != null) {
-        launchUrl(Uri.parse(contact.silentLink));
-      }
+      launchUrl(Uri.parse(contact.silentLink));
       break;
     case EntityAction.newPurchaseOrder:
       createEntity(
-        context: context,
         entity: InvoiceEntity(
           state: state,
           vendor: vendor,
@@ -315,13 +315,11 @@ void handleVendorAction(
       break;
     case EntityAction.newExpense:
       createEntity(
-        context: context,
         entity: ExpenseEntity(state: state, vendor: vendor),
       );
       break;
     case EntityAction.newRecurringExpense:
       createEntity(
-        context: context,
         entity: ExpenseEntity(
             state: state,
             vendor: vendor,
@@ -330,30 +328,30 @@ void handleVendorAction(
       break;
     case EntityAction.restore:
       final message = vendorIds.length > 1
-          ? localization.restoredVendors
+          ? localization!.restoredVendors
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', vendorIds.length.toString())
-          : localization.restoredVendor;
-      store.dispatch(RestoreVendorRequest(
-          snackBarCompleter<Null>(context, message), vendorIds));
+          : localization!.restoredVendor;
+      store.dispatch(
+          RestoreVendorRequest(snackBarCompleter<Null>(message), vendorIds));
       break;
     case EntityAction.archive:
       final message = vendorIds.length > 1
-          ? localization.archivedVendors
+          ? localization!.archivedVendors
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', vendorIds.length.toString())
-          : localization.archivedVendor;
-      store.dispatch(ArchiveVendorRequest(
-          snackBarCompleter<Null>(context, message), vendorIds));
+          : localization!.archivedVendor;
+      store.dispatch(
+          ArchiveVendorRequest(snackBarCompleter<Null>(message), vendorIds));
       break;
     case EntityAction.delete:
       final message = vendorIds.length > 1
-          ? localization.deletedVendors
+          ? localization!.deletedVendors
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', vendorIds.length.toString())
-          : localization.deletedVendor;
-      store.dispatch(DeleteVendorRequest(
-          snackBarCompleter<Null>(context, message), vendorIds));
+          : localization!.deletedVendor;
+      store.dispatch(
+          DeleteVendorRequest(snackBarCompleter<Null>(message), vendorIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.vendorListState.isInMultiselect()) {
@@ -385,15 +383,13 @@ void handleVendorAction(
         }
       }
       if (documentIds.isEmpty) {
-        showMessageDialog(
-            context: context, message: localization.noDocumentsToDownload);
+        showMessageDialog(message: localization!.noDocumentsToDownload);
       } else {
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
             completer: snackBarCompleter<Null>(
-              context,
-              localization.exportedData,
+              localization!.exportedData,
             ),
           ),
         );
@@ -408,25 +404,25 @@ void handleVendorAction(
 class StartVendorMultiselect {}
 
 class AddToVendorMultiselect {
-  AddToVendorMultiselect({@required this.entity});
+  AddToVendorMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromVendorMultiselect {
-  RemoveFromVendorMultiselect({@required this.entity});
+  RemoveFromVendorMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearVendorMultiselect {}
 
 class SaveVendorDocumentRequest implements StartSaving {
   SaveVendorDocumentRequest({
-    @required this.isPrivate,
-    @required this.completer,
-    @required this.multipartFiles,
-    @required this.vendor,
+    required this.isPrivate,
+    required this.completer,
+    required this.multipartFiles,
+    required this.vendor,
   });
 
   final bool isPrivate;
@@ -450,5 +446,5 @@ class SaveVendorDocumentFailure implements StopSaving {
 class UpdateVendorTab implements PersistUI {
   UpdateVendorTab({this.tabIndex});
 
-  final int tabIndex;
+  final int? tabIndex;
 }

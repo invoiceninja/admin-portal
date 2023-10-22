@@ -11,23 +11,23 @@ import 'package:invoiceninja_flutter/ui/invoice/view/invoice_view_vm.dart';
 
 class InvoiceViewDocuments extends StatelessWidget {
   const InvoiceViewDocuments(
-      {Key key, @required this.invoice, @required this.viewModel})
+      {Key? key, required this.invoice, required this.viewModel})
       : super(key: key);
 
   final AbstractInvoiceViewVM viewModel;
-  final InvoiceEntity invoice;
+  final InvoiceEntity? invoice;
 
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
 
     return DocumentGrid(
-      documents: invoice.documents.toList(),
+      documents: invoice!.documents.toList(),
       onUploadDocument: (path, isPrivate) =>
-          viewModel.onUploadDocuments(context, path, isPrivate),
-      onViewExpense: (document) => viewModel.onViewExpense(context, document),
+          viewModel.onUploadDocuments!(context, path, isPrivate),
+      onViewExpense: (document) => viewModel.onViewExpense!(context, document),
       onRenamedDocument: () =>
-          store.dispatch(LoadInvoice(invoiceId: invoice.id)),
+          store.dispatch(LoadInvoice(invoiceId: invoice!.id)),
     );
   }
 }

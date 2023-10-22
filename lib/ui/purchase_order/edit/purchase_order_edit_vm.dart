@@ -25,7 +25,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class PurchaseOrderEditScreen extends StatelessWidget {
-  const PurchaseOrderEditScreen({Key key}) : super(key: key);
+  const PurchaseOrderEditScreen({Key? key}) : super(key: key);
 
   static const String route = '/purchase_order/edit';
 
@@ -38,7 +38,7 @@ class PurchaseOrderEditScreen extends StatelessWidget {
       builder: (context, viewModel) {
         return PurchaseOrderEdit(
           viewModel: viewModel,
-          key: ValueKey(viewModel.invoice.updatedAt),
+          key: ValueKey(viewModel.invoice!.updatedAt),
         );
       },
     );
@@ -47,16 +47,16 @@ class PurchaseOrderEditScreen extends StatelessWidget {
 
 class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
   PurchaseOrderEditVM({
-    AppState state,
-    CompanyEntity company,
-    InvoiceEntity purchaseOrder,
-    int invoiceItemIndex,
-    InvoiceEntity origInvoice,
-    Function(BuildContext, [EntityAction]) onSavePressed,
-    Function(List<InvoiceItemEntity>, String, String) onItemsAdded,
-    bool isSaving,
-    Function(BuildContext) onCancelPressed,
-    Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
+    AppState? state,
+    CompanyEntity? company,
+    InvoiceEntity? purchaseOrder,
+    int? invoiceItemIndex,
+    InvoiceEntity? origInvoice,
+    Function(BuildContext, [EntityAction?])? onSavePressed,
+    Function(List<InvoiceItemEntity>, String?, String?)? onItemsAdded,
+    bool? isSaving,
+    Function(BuildContext)? onCancelPressed,
+    Function(BuildContext, List<MultipartFile>, bool?)? onUploadDocuments,
   }) : super(
           state: state,
           company: company,
@@ -72,7 +72,7 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
 
   factory PurchaseOrderEditVM.fromStore(Store<AppState> store) {
     final AppState state = store.state;
-    final purchaseOrder = state.purchaseOrderUIState.editing;
+    final purchaseOrder = state.purchaseOrderUIState.editing!;
 
     return PurchaseOrderEditVM(
       state: state,
@@ -81,16 +81,16 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
       purchaseOrder: purchaseOrder,
       invoiceItemIndex: state.purchaseOrderUIState.editingItemIndex,
       origInvoice: store.state.purchaseOrderState.map[purchaseOrder.id],
-      onSavePressed: (BuildContext context, [EntityAction action]) {
+      onSavePressed: (BuildContext context, [EntityAction? action]) {
         Debouncer.runOnComplete(() {
-          final purchaseOrder = store.state.purchaseOrderUIState.editing;
+          final purchaseOrder = store.state.purchaseOrderUIState.editing!;
           final localization = navigatorKey.localization;
           final navigator = navigatorKey.currentState;
           if (purchaseOrder.vendorId.isEmpty) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
-                  return ErrorDialog(localization.pleaseSelectAVendor);
+                  return ErrorDialog(localization!.pleaseSelectAVendor);
                 });
             return null;
           }
@@ -109,16 +109,17 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
             ));
             return completer.future.then((savedPurchaseOrder) {
               showToast(purchaseOrder.isNew
-                  ? localization.createdPurchaseOrder
-                  : localization.updatedPurchaseOrder);
+                  ? localization!.createdPurchaseOrder
+                  : localization!.updatedPurchaseOrder);
 
               if (state.prefState.isMobile) {
                 store.dispatch(
                     UpdateCurrentRoute(PurchaseOrderViewScreen.route));
                 if (purchaseOrder.isNew) {
-                  navigator.pushReplacementNamed(PurchaseOrderViewScreen.route);
+                  navigator!
+                      .pushReplacementNamed(PurchaseOrderViewScreen.route);
                 } else {
-                  navigator.pop(savedPurchaseOrder);
+                  navigator!.pop(savedPurchaseOrder);
                 }
               } else {
                 if (!state.prefState.isPreviewVisible) {
@@ -141,7 +142,7 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext,
+                  context: navigatorKey.currentContext!,
                   builder: (BuildContext context) {
                     return ErrorDialog(error);
                   });
@@ -159,20 +160,20 @@ class PurchaseOrderEditVM extends AbstractInvoiceEditVM {
         if (['pdf', 'email'].contains(state.uiState.previousSubRoute)) {
           viewEntitiesByType(entityType: EntityType.purchaseOrder);
         } else {
-          createEntity(context: context, entity: InvoiceEntity(), force: true);
+          createEntity(entity: InvoiceEntity(), force: true);
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
       },
       onUploadDocuments: (BuildContext context,
-          List<MultipartFile> multipartFiles, bool isPrivate) {
-        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+          List<MultipartFile> multipartFiles, bool? isPrivate) {
+        final completer = Completer<List<DocumentEntity>>();
         store.dispatch(SavePurchaseOrderDocumentRequest(
             isPrivate: isPrivate,
             multipartFiles: multipartFiles,
             purchaseOrder: purchaseOrder,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context).uploadedDocument);
+          showToast(AppLocalization.of(context)!.uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,

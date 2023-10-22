@@ -33,12 +33,12 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class SettingsWizard extends StatefulWidget {
   const SettingsWizard({
-    @required this.user,
-    @required this.company,
+    required this.user,
+    required this.company,
   });
 
-  final UserEntity user;
-  final CompanyEntity company;
+  final UserEntity? user;
+  final CompanyEntity? company;
 
   @override
   _SettingsWizardState createState() => _SettingsWizardState();
@@ -76,9 +76,9 @@ class _SettingsWizardState extends State<SettingsWizard> {
       _subdomainController,
     ];
 
-    _firstNameController.text = widget.user.firstName;
-    _lastNameController.text = widget.user.lastName;
-    _subdomainController.text = widget.company.subdomain;
+    _firstNameController.text = widget.user!.firstName;
+    _lastNameController.text = widget.user!.lastName;
+    _subdomainController.text = widget.company!.subdomain;
   }
 
   @override
@@ -132,7 +132,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
   }
 
   void _onSavePressed() {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid || _isCheckingSubdomain) {
       return;
@@ -146,10 +146,10 @@ class _SettingsWizardState extends State<SettingsWizard> {
         callback: (password, idToken) {
           final localization = AppLocalization.of(context);
           final completer = Completer<Null>();
-          completer.future.then((value) {
+          completer.future.then<Null>((_) {
             final toastCompleter =
-                snackBarCompleter<Null>(context, localization.savedSettings);
-            toastCompleter.future.then((value) {
+                snackBarCompleter<Null>(localization!.savedSettings);
+            toastCompleter.future.then<Null>((_) {
               setState(() {
                 _isSaving = false;
                 _showLogo = true;
@@ -196,7 +196,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
@@ -232,8 +232,8 @@ class _SettingsWizardState extends State<SettingsWizard> {
       entityList: memoizedCurrencyList(state.staticState.currencyMap),
       labelText: localization.currency,
       entityId: _currencyId,
-      onSelected: (SelectableEntity currency) =>
-          setState(() => _currencyId = currency?.id),
+      onSelected: (SelectableEntity? currency) =>
+          setState(() => _currencyId = currency?.id ?? ''),
       validator: (dynamic value) =>
           value.isEmpty ? localization.pleaseEnterAValue : null,
     );
@@ -243,10 +243,10 @@ class _SettingsWizardState extends State<SettingsWizard> {
       entityList: memoizedLanguageList(state.staticState.languageMap),
       labelText: localization.language,
       entityId: _languageId,
-      onSelected: (SelectableEntity language) {
-        setState(() => _languageId = language?.id);
+      onSelected: (SelectableEntity? language) {
+        setState(() => _languageId = language?.id ?? '');
         store.dispatch(UpdateCompanyLanguage(languageId: language?.id));
-        AppBuilder.of(context).rebuild();
+        AppBuilder.of(context)!.rebuild();
       },
       validator: (dynamic value) =>
           value.isEmpty ? localization.pleaseEnterAValue : null,
@@ -276,7 +276,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
                       : kBrightnessDark,
             ),
           );
-          AppBuilder.of(context).rebuild();
+          AppBuilder.of(context)!.rebuild();
         },
       );
     });

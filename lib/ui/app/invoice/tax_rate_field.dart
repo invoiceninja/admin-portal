@@ -9,21 +9,21 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaxRateField extends StatelessWidget {
   const TaxRateField({
-    Key key,
-    @required this.onNameChanged,
-    @required this.onAmountChanged,
-    @required this.initialTaxName,
-    @required this.initialTaxAmount,
+    Key? key,
+    required this.onNameChanged,
+    required this.onAmountChanged,
+    required this.initialTaxName,
+    required this.initialTaxAmount,
   }) : super(key: key);
 
   final Function(String) onNameChanged;
-  final Function(double) onAmountChanged;
+  final Function(double?) onAmountChanged;
   final String initialTaxName;
   final double initialTaxAmount;
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     return Row(
       children: [

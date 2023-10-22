@@ -12,11 +12,11 @@ var memoizedPaymentsByInvoice = memo3((String invoiceId,
         BuiltList<String> paymentList) =>
     paymentsByInvoiceSelector(invoiceId, paymentMap, paymentList));
 
-List<PaymentEntity> paymentsByInvoiceSelector(String invoiceId,
+List<PaymentEntity?> paymentsByInvoiceSelector(String invoiceId,
     BuiltMap<String, PaymentEntity> paymentMap, BuiltList<String> paymentList) {
   return paymentList.map((paymentId) => paymentMap[paymentId]).where((payment) {
-    return payment.paymentables.map((p) => p.invoiceId).contains(invoiceId) &&
-        !payment.isDeleted;
+    return payment!.paymentables.map((p) => p.invoiceId).contains(invoiceId) &&
+        !payment.isDeleted!;
   }).toList();
 }
 
@@ -25,11 +25,11 @@ var memoizedPaymentsByCredit = memo3((String invoiceId,
         BuiltList<String> paymentList) =>
     paymentsByCreditSelector(invoiceId, paymentMap, paymentList));
 
-List<PaymentEntity> paymentsByCreditSelector(String creditId,
+List<PaymentEntity?> paymentsByCreditSelector(String creditId,
     BuiltMap<String, PaymentEntity> paymentMap, BuiltList<String> paymentList) {
   return paymentList.map((paymentId) => paymentMap[paymentId]).where((payment) {
-    return payment.paymentables.map((p) => p.creditId).contains(creditId) &&
-        !payment.isDeleted;
+    return payment!.paymentables.map((p) => p.creditId).contains(creditId) &&
+        !payment.isDeleted!;
   }).toList();
 }
 
@@ -52,11 +52,12 @@ List<String> dropdownPaymentsSelector(
   BuiltMap<String, UserEntity> userMap,
   BuiltMap<String, PaymentTypeEntity> paymentTypeMap,
 ) {
-  final list =
-      paymentList.where((paymentId) => paymentMap[paymentId].isActive).toList();
+  final list = paymentList
+      .where((paymentId) => paymentMap[paymentId]!.isActive)
+      .toList();
 
   list.sort((paymentAId, paymentBId) {
-    final paymentA = paymentMap[paymentAId];
+    final paymentA = paymentMap[paymentAId]!;
     final paymentB = paymentMap[paymentBId];
 
     return paymentA.compareTo(
@@ -79,7 +80,7 @@ var memoizedFilteredPaymentList = memo8((SelectionState selectionState,
         BuiltMap<String, InvoiceEntity> invoiceMap,
         BuiltMap<String, ClientEntity> clientMap,
         BuiltMap<String, UserEntity> userMap,
-        BuiltMap<String, PaymentTypeEntity> paymentTypeMap,
+        BuiltMap<String?, PaymentTypeEntity?> paymentTypeMap,
         ListUIState paymentListState) =>
     filteredPaymentsSelector(
       selectionState,
@@ -99,13 +100,13 @@ List<String> filteredPaymentsSelector(
     BuiltMap<String, InvoiceEntity> invoiceMap,
     BuiltMap<String, ClientEntity> clientMap,
     BuiltMap<String, UserEntity> userMap,
-    BuiltMap<String, PaymentTypeEntity> paymentTypeMap,
+    BuiltMap<String?, PaymentTypeEntity?> paymentTypeMap,
     ListUIState paymentListState) {
   final filterEntityId = selectionState.filterEntityId;
   final filterEntityType = selectionState.filterEntityType;
 
   final list = paymentList.where((paymentId) {
-    final payment = paymentMap[paymentId];
+    final payment = paymentMap[paymentId]!;
     if (!payment.matchesStates(paymentListState.stateFilters)) {
       return false;
     }
@@ -152,7 +153,7 @@ List<String> filteredPaymentsSelector(
   }).toList();
 
   list.sort((paymentAId, paymentBId) {
-    final paymentA = paymentMap[paymentAId];
+    final paymentA = paymentMap[paymentAId]!;
     final paymentB = paymentMap[paymentBId];
     return paymentA.compareTo(
       payment: paymentB,

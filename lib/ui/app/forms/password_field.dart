@@ -14,11 +14,11 @@ class PasswordFormField extends StatefulWidget {
     this.labelText,
   });
 
-  final TextEditingController controller;
-  final Function(BuildContext) onSavePressed;
+  final TextEditingController? controller;
+  final Function(BuildContext)? onSavePressed;
   final bool newPassword;
   final bool validate;
-  final String labelText;
+  final String? labelText;
 
   @override
   _PasswordFormFieldState createState() => _PasswordFormFieldState();
@@ -38,17 +38,17 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
     final localization = AppLocalization.of(context);
 
     return DecoratedFormField(
-      key: ValueKey(widget.labelText ?? localization.password),
+      key: ValueKey(widget.labelText ?? localization!.password),
       controller: widget.controller,
       onSavePressed: widget.onSavePressed,
       autocorrect: false,
       decoration: InputDecoration(
-        labelText: widget.labelText ?? localization.password,
+        labelText: widget.labelText ?? localization!.password,
         suffixIcon: IconButton(
           alignment: Alignment.bottomCenter,
           tooltip: _isPasswordObscured
-              ? localization.showPassword
-              : localization.hidePassword,
+              ? localization!.showPassword
+              : localization!.hidePassword,
           icon: Icon(
             _isPasswordObscured ? Icons.visibility : Icons.visibility_off,
             color: Colors.grey,

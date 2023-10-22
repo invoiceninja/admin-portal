@@ -54,7 +54,7 @@ class ScheduleFields {
 abstract class ScheduleEntity extends Object
     with BaseEntity
     implements Built<ScheduleEntity, ScheduleEntityBuilder> {
-  factory ScheduleEntity(String template, {String id, AppState state}) {
+  factory ScheduleEntity(String template, {String? id, AppState? state}) {
     return _$ScheduleEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
@@ -109,17 +109,17 @@ abstract class ScheduleEntity extends Object
   EntityType get entityType => EntityType.schedule;
 
   @override
-  List<EntityAction> getActions(
-      {UserCompanyEntity userCompany,
-      ClientEntity client,
+  List<EntityAction?> getActions(
+      {UserCompanyEntity? userCompany,
+      ClientEntity? client,
       bool includeEdit = false,
       bool multiselect = false}) {
-    final actions = <EntityAction>[];
+    final actions = <EntityAction?>[];
 
-    if (!isDeleted &&
+    if (!isDeleted! &&
         !multiselect &&
         includeEdit &&
-        userCompany.canEditEntity(this)) {
+        userCompany!.canEditEntity(this)) {
       actions.add(EntityAction.edit);
     }
 
@@ -130,18 +130,19 @@ abstract class ScheduleEntity extends Object
     return actions..addAll(super.getActions(userCompany: userCompany));
   }
 
-  int compareTo(ScheduleEntity schedule, String sortField, bool sortAscending) {
+  int compareTo(
+      ScheduleEntity? schedule, String sortField, bool sortAscending) {
     int response = 0;
     final scheduleA = sortAscending ? this : schedule;
     final scheduleB = sortAscending ? schedule : this;
 
     switch (sortField) {
       case ScheduleFields.nextRun:
-        response = scheduleA.nextRun.compareTo(scheduleB.nextRun);
+        response = scheduleA!.nextRun.compareTo(scheduleB!.nextRun);
         break;
 
       default:
-        response = scheduleA.template.compareTo(scheduleB.template);
+        response = scheduleA!.template.compareTo(scheduleB!.template);
         break;
     }
 
@@ -154,7 +155,7 @@ abstract class ScheduleEntity extends Object
   }
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     return matchesStrings(
       haystacks: [
         template,
@@ -164,7 +165,7 @@ abstract class ScheduleEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     return matchesStringsValue(
       haystacks: [
         template,
@@ -175,15 +176,15 @@ abstract class ScheduleEntity extends Object
 
   @override
   String get listDisplayName {
-    final localization = AppLocalization.of(navigatorKey.currentContext);
+    final localization = AppLocalization.of(navigatorKey.currentContext!)!;
     return localization.lookup(template);
   }
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
   @override
-  FormatNumberType get listDisplayAmountType => null;
+  FormatNumberType? get listDisplayAmountType => null;
 
   static Serializer<ScheduleEntity> get serializer =>
       _$scheduleEntitySerializer;
@@ -204,7 +205,7 @@ abstract class ScheduleParameters
       showPaymentsTable:
           action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT ? true : null,
       onlyClientsWithInvoices:
-        action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT ? false : null,
+          action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT ? false : null,
       showCreditsTable:
           action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT ? true : null,
       status: action == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT
@@ -223,39 +224,30 @@ abstract class ScheduleParameters
   @memoized
   int get hashCode;
 
-  @nullable
   @BuiltValueField(wireName: 'date_range')
-  String get dateRange;
+  String? get dateRange;
 
-  @nullable
   @BuiltValueField(wireName: 'show_payments_table')
-  bool get showPaymentsTable;
+  bool? get showPaymentsTable;
 
-  @nullable
   @BuiltValueField(wireName: 'show_credits_table')
-  bool get showCreditsTable;
+  bool? get showCreditsTable;
 
-  @nullable
   @BuiltValueField(wireName: 'show_aging_table')
-  bool get showAgingTable;
+  bool? get showAgingTable;
 
-  @nullable
   @BuiltValueField(wireName: 'only_clients_with_invoices')
-  bool get onlyClientsWithInvoices;
+  bool? get onlyClientsWithInvoices;
 
-  @nullable
-  String get status;
+  String? get status;
 
-  @nullable
-  BuiltList<String> get clients;
+  BuiltList<String>? get clients;
 
-  @nullable
   @BuiltValueField(wireName: 'entity')
-  String get entityType;
+  String? get entityType;
 
-  @nullable
   @BuiltValueField(wireName: 'entity_id')
-  String get entityId;
+  String? get entityId;
 
   static Serializer<ScheduleParameters> get serializer =>
       _$scheduleParametersSerializer;

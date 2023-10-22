@@ -22,10 +22,10 @@ class _$ExpenseCategoryStateSerializer
   final String wireName = 'ExpenseCategoryState';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, ExpenseCategoryState object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'map',
       serializers.serialize(object.map,
           specifiedType: const FullType(BuiltMap, const [
@@ -43,28 +43,28 @@ class _$ExpenseCategoryStateSerializer
 
   @override
   ExpenseCategoryState deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ExpenseCategoryStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(ExpenseCategoryEntity)
-              ])));
+              ]))!);
           break;
         case 'list':
           result.list.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList<Object>);
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -84,10 +84,10 @@ class _$ExpenseCategoryUIStateSerializer
   final String wireName = 'ExpenseCategoryUIState';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, ExpenseCategoryUIState object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'listUIState',
       serializers.serialize(object.listUIState,
           specifiedType: const FullType(ListUIState)),
@@ -95,7 +95,7 @@ class _$ExpenseCategoryUIStateSerializer
       serializers.serialize(object.tabIndex,
           specifiedType: const FullType(int)),
     ];
-    Object value;
+    Object? value;
     value = object.editing;
     if (value != null) {
       result
@@ -122,36 +122,36 @@ class _$ExpenseCategoryUIStateSerializer
 
   @override
   ExpenseCategoryUIState deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ExpenseCategoryUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'editing':
           result.editing.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(ExpenseCategoryEntity))
+                  specifiedType: const FullType(ExpenseCategoryEntity))!
               as ExpenseCategoryEntity);
           break;
         case 'listUIState':
           result.listUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ListUIState)) as ListUIState);
+              specifiedType: const FullType(ListUIState))! as ListUIState);
           break;
         case 'selectedId':
           result.selectedId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'forceSelected':
           result.forceSelected = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'tabIndex':
           result.tabIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
       }
     }
@@ -167,10 +167,11 @@ class _$ExpenseCategoryState extends ExpenseCategoryState {
   final BuiltList<String> list;
 
   factory _$ExpenseCategoryState(
-          [void Function(ExpenseCategoryStateBuilder) updates]) =>
+          [void Function(ExpenseCategoryStateBuilder)? updates]) =>
       (new ExpenseCategoryStateBuilder()..update(updates))._build();
 
-  _$ExpenseCategoryState._({this.map, this.list}) : super._() {
+  _$ExpenseCategoryState._({required this.map, required this.list})
+      : super._() {
     BuiltValueNullFieldError.checkNotNull(map, r'ExpenseCategoryState', 'map');
     BuiltValueNullFieldError.checkNotNull(
         list, r'ExpenseCategoryState', 'list');
@@ -193,10 +194,10 @@ class _$ExpenseCategoryState extends ExpenseCategoryState {
         list == other.list;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, map.hashCode);
     _$hash = $jc(_$hash, list.hashCode);
@@ -215,16 +216,16 @@ class _$ExpenseCategoryState extends ExpenseCategoryState {
 
 class ExpenseCategoryStateBuilder
     implements Builder<ExpenseCategoryState, ExpenseCategoryStateBuilder> {
-  _$ExpenseCategoryState _$v;
+  _$ExpenseCategoryState? _$v;
 
-  MapBuilder<String, ExpenseCategoryEntity> _map;
+  MapBuilder<String, ExpenseCategoryEntity>? _map;
   MapBuilder<String, ExpenseCategoryEntity> get map =>
       _$this._map ??= new MapBuilder<String, ExpenseCategoryEntity>();
-  set map(MapBuilder<String, ExpenseCategoryEntity> map) => _$this._map = map;
+  set map(MapBuilder<String, ExpenseCategoryEntity>? map) => _$this._map = map;
 
-  ListBuilder<String> _list;
+  ListBuilder<String>? _list;
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
-  set list(ListBuilder<String> list) => _$this._list = list;
+  set list(ListBuilder<String>? list) => _$this._list = list;
 
   ExpenseCategoryStateBuilder();
 
@@ -245,7 +246,7 @@ class ExpenseCategoryStateBuilder
   }
 
   @override
-  void update(void Function(ExpenseCategoryStateBuilder) updates) {
+  void update(void Function(ExpenseCategoryStateBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -258,7 +259,7 @@ class ExpenseCategoryStateBuilder
       _$result = _$v ??
           new _$ExpenseCategoryState._(map: map.build(), list: list.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'map';
         map.build();
@@ -277,30 +278,30 @@ class ExpenseCategoryStateBuilder
 
 class _$ExpenseCategoryUIState extends ExpenseCategoryUIState {
   @override
-  final ExpenseCategoryEntity editing;
+  final ExpenseCategoryEntity? editing;
   @override
   final ListUIState listUIState;
   @override
-  final String selectedId;
+  final String? selectedId;
   @override
-  final bool forceSelected;
+  final bool? forceSelected;
   @override
   final int tabIndex;
   @override
-  final Completer<SelectableEntity> saveCompleter;
+  final Completer<SelectableEntity>? saveCompleter;
   @override
-  final Completer<Null> cancelCompleter;
+  final Completer<Null>? cancelCompleter;
 
   factory _$ExpenseCategoryUIState(
-          [void Function(ExpenseCategoryUIStateBuilder) updates]) =>
+          [void Function(ExpenseCategoryUIStateBuilder)? updates]) =>
       (new ExpenseCategoryUIStateBuilder()..update(updates))._build();
 
   _$ExpenseCategoryUIState._(
       {this.editing,
-      this.listUIState,
+      required this.listUIState,
       this.selectedId,
       this.forceSelected,
-      this.tabIndex,
+      required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
       : super._() {
@@ -332,10 +333,10 @@ class _$ExpenseCategoryUIState extends ExpenseCategoryUIState {
         cancelCompleter == other.cancelCompleter;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, editing.hashCode);
     _$hash = $jc(_$hash, listUIState.hashCode);
@@ -364,41 +365,41 @@ class _$ExpenseCategoryUIState extends ExpenseCategoryUIState {
 
 class ExpenseCategoryUIStateBuilder
     implements Builder<ExpenseCategoryUIState, ExpenseCategoryUIStateBuilder> {
-  _$ExpenseCategoryUIState _$v;
+  _$ExpenseCategoryUIState? _$v;
 
-  ExpenseCategoryEntityBuilder _editing;
+  ExpenseCategoryEntityBuilder? _editing;
   ExpenseCategoryEntityBuilder get editing =>
       _$this._editing ??= new ExpenseCategoryEntityBuilder();
-  set editing(ExpenseCategoryEntityBuilder editing) =>
+  set editing(ExpenseCategoryEntityBuilder? editing) =>
       _$this._editing = editing;
 
-  ListUIStateBuilder _listUIState;
+  ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
       _$this._listUIState ??= new ListUIStateBuilder();
-  set listUIState(ListUIStateBuilder listUIState) =>
+  set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
-  String _selectedId;
-  String get selectedId => _$this._selectedId;
-  set selectedId(String selectedId) => _$this._selectedId = selectedId;
+  String? _selectedId;
+  String? get selectedId => _$this._selectedId;
+  set selectedId(String? selectedId) => _$this._selectedId = selectedId;
 
-  bool _forceSelected;
-  bool get forceSelected => _$this._forceSelected;
-  set forceSelected(bool forceSelected) =>
+  bool? _forceSelected;
+  bool? get forceSelected => _$this._forceSelected;
+  set forceSelected(bool? forceSelected) =>
       _$this._forceSelected = forceSelected;
 
-  int _tabIndex;
-  int get tabIndex => _$this._tabIndex;
-  set tabIndex(int tabIndex) => _$this._tabIndex = tabIndex;
+  int? _tabIndex;
+  int? get tabIndex => _$this._tabIndex;
+  set tabIndex(int? tabIndex) => _$this._tabIndex = tabIndex;
 
-  Completer<SelectableEntity> _saveCompleter;
-  Completer<SelectableEntity> get saveCompleter => _$this._saveCompleter;
-  set saveCompleter(Completer<SelectableEntity> saveCompleter) =>
+  Completer<SelectableEntity>? _saveCompleter;
+  Completer<SelectableEntity>? get saveCompleter => _$this._saveCompleter;
+  set saveCompleter(Completer<SelectableEntity>? saveCompleter) =>
       _$this._saveCompleter = saveCompleter;
 
-  Completer<Null> _cancelCompleter;
-  Completer<Null> get cancelCompleter => _$this._cancelCompleter;
-  set cancelCompleter(Completer<Null> cancelCompleter) =>
+  Completer<Null>? _cancelCompleter;
+  Completer<Null>? get cancelCompleter => _$this._cancelCompleter;
+  set cancelCompleter(Completer<Null>? cancelCompleter) =>
       _$this._cancelCompleter = cancelCompleter;
 
   ExpenseCategoryUIStateBuilder();
@@ -425,7 +426,7 @@ class ExpenseCategoryUIStateBuilder
   }
 
   @override
-  void update(void Function(ExpenseCategoryUIStateBuilder) updates) {
+  void update(void Function(ExpenseCategoryUIStateBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -446,7 +447,7 @@ class ExpenseCategoryUIStateBuilder
               saveCompleter: saveCompleter,
               cancelCompleter: cancelCompleter);
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'editing';
         _editing?.build();

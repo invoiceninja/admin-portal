@@ -31,7 +31,7 @@ class HealthCheckDialog extends StatefulWidget {
 }
 
 class _HealthCheckDialogState extends State<HealthCheckDialog> {
-  HealthCheckResponse _response;
+  HealthCheckResponse? _response;
 
   @override
   void didChangeDependencies() {
@@ -88,7 +88,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
     webClient.get(url, credentials.token).then((dynamic response) {
       store.dispatch(RefreshData(
           completer: Completer<Null>()
-            ..future.then((value) {
+            ..future.then<Null>((_) {
               runCheck();
             })));
     }).catchError((dynamic error) {
@@ -112,10 +112,10 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
     final state = store.state;
     final localization = AppLocalization.of(context);
     final webPhpVersion =
-        _parseVersion(_response?.phpVersion?.currentPHPVersion ?? '');
+        _parseVersion(_response?.phpVersion.currentPHPVersion ?? '');
     final cliPhpVersion =
-        _parseVersion(_response?.phpVersion?.currentPHPCLIVersion ?? '');
-    final phpMemoryLimit = _response?.phpVersion?.memoryLimit ?? '';
+        _parseVersion(_response?.phpVersion.currentPHPCLIVersion ?? '');
+    final phpMemoryLimit = _response?.phpVersion.memoryLimit ?? '';
     final phpMemoryLimitDouble = parseDouble(phpMemoryLimit);
 
     return AlertDialog(
@@ -128,7 +128,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: LinearProgressIndicator(),
                 ),
-                Text('${localization.loading}...'),
+                Text('${localization!.loading}...'),
               ],
             )
           : Column(
@@ -137,19 +137,20 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                 _HealthListTile(
                   title: 'System Health',
                   subtitle:
-                      'Email: ${_response.emailDriver}\nQueue: ${_response.queue}\nPDF: ${_response.pdfEngine.replaceFirst(' Generator', '')}',
-                  isValid: _response.systemHealth,
+                      'Email: ${_response!.emailDriver}\nQueue: ${_response!.queue}\nPDF: ${_response!.pdfEngine.replaceFirst(' Generator', '')}',
+                  isValid: _response!.systemHealth,
                 ),
                 _HealthListTile(
                   title: 'Database Check',
-                  isValid: _response.dbCheck,
+                  isValid: _response!.dbCheck,
                 ),
                 _HealthListTile(
                   title: 'PHP Info',
                   // TODO move this logic to the backend
-                  isValid: _response.phpVersion.isOkay &&
+                  isValid: _response!.phpVersion.isOkay &&
                       webPhpVersion.startsWith('v8') &&
-                      cliPhpVersion.startsWith('v8'),
+                      (cliPhpVersion.startsWith('v8') ||
+                          !cliPhpVersion.startsWith('v')),
                   subtitle: 'Web: $webPhpVersion\nCLI: $cliPhpVersion' +
                       (phpMemoryLimit.isNotEmpty
                           ? '\nMemory Limit: $phpMemoryLimit'
@@ -171,12 +172,12 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     isWarning: true,
                   ),
                   */
-                if (_response.filePermissions != 'Ok' &&
+                if (_response!.filePermissions != 'Ok' &&
                     !state.account.disableAutoUpdate)
                   _HealthListTile(
                     title: 'Invalid File Permissions',
                     isValid: false,
-                    subtitle: _response.filePermissions,
+                    subtitle: _response!.filePermissions,
                     url: '$kDocsUrl/self-host-installation/#file-permissions',
                   ),
                 /*
@@ -197,22 +198,22 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                 ],
                 */
                 if (!state.account.isDocker &&
-                    phpMemoryLimitDouble > 100 &&
-                    phpMemoryLimitDouble < 512)
+                    phpMemoryLimitDouble! > 100 &&
+                    phpMemoryLimitDouble < 1024)
                   _HealthListTile(
                     title: 'PHP memory limit is too low',
                     subtitle:
-                        'Increase the limit to at least 512M to support the in-app update',
+                        'Increase the limit to 1024M to support the in-app update',
                     level: _HealthCheckLevel.Warning,
                   ),
-                if (_response.queue == 'sync')
+                if (_response!.queue == 'sync')
                   _HealthListTile(
                     title: 'Queue not enabled',
                     subtitle: 'Enable the queue for improved performance',
                     level: _HealthCheckLevel.Info,
                     url: '$kDocsUrl/self-host-installation/#final-setup-steps',
                   ),
-                if (!_response.pdfEngine.toLowerCase().startsWith('snappdf'))
+                if (!_response!.pdfEngine.toLowerCase().startsWith('snappdf'))
                   _HealthListTile(
                     title: 'SnapPDF not enabled',
                     subtitle: 'Use SnapPDF to generate PDF files locally',
@@ -220,13 +221,13 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     url:
                         '$kDocsUrl/self-host-troubleshooting/#pdf-conversion-issues',
                   ),
-                if (_response.trailingSlash)
+                if (_response!.trailingSlash)
                   _HealthListTile(
                     title: 'APP_URL has trailing slash',
                     subtitle: 'Remove the slash in the .env file',
                     level: _HealthCheckLevel.Warning,
                   ),
-                if (_response.exchangeRateApiNotConfigured)
+                if (_response!.exchangeRateApiNotConfigured)
                   _HealthListTile(
                     title: 'Exchange Rate API Not Enabled',
                     subtitle: 'Add an Open Exchange key to the .env file',
@@ -240,7 +241,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
           ? []
           : [
               TextButton(
-                child: Text(localization.clearCache.toUpperCase()),
+                child: Text(localization!.clearCache.toUpperCase()),
                 onPressed: () => clearCache(),
               ),
               TextButton(
@@ -258,7 +259,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
 
 class _HealthListTile extends StatelessWidget {
   const _HealthListTile({
-    @required this.title,
+    required this.title,
     this.isValid = true,
     this.level,
     this.subtitle,
@@ -267,9 +268,9 @@ class _HealthListTile extends StatelessWidget {
 
   final String title;
   final bool isValid;
-  final _HealthCheckLevel level;
-  final String subtitle;
-  final String url;
+  final _HealthCheckLevel? level;
+  final String? subtitle;
+  final String? url;
 
   @override
   Widget build(BuildContext context) {
@@ -277,7 +278,7 @@ class _HealthListTile extends StatelessWidget {
       title: Text(title),
       subtitle: Text(
         subtitle != null
-            ? subtitle
+            ? subtitle!
             : (level != null
                 ? level.toString()
                 : (isValid ? 'Passed' : 'Failed')),
@@ -294,7 +295,7 @@ class _HealthListTile extends StatelessWidget {
                 ? Colors.blue
                 : (isValid ? Colors.green : Colors.red),
       ),
-      onTap: url != null ? () => launchUrl(Uri.parse(url)) : null,
+      onTap: url != null ? () => launchUrl(Uri.parse(url!)) : null,
     );
   }
 }

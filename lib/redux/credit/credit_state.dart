@@ -26,7 +26,7 @@ abstract class CreditState implements Built<CreditState, CreditStateBuilder> {
 
   InvoiceEntity get(String creditId) {
     if (map.containsKey(creditId)) {
-      return map[creditId];
+      return map[creditId]!;
     } else {
       return InvoiceEntity(id: creditId, entityType: EntityType.credit);
     }
@@ -58,7 +58,7 @@ abstract class CreditState implements Built<CreditState, CreditStateBuilder> {
 abstract class CreditUIState extends Object
     with EntityUIState
     implements Built<CreditUIState, CreditUIStateBuilder> {
-  factory CreditUIState(PrefStateSortField sortField) {
+  factory CreditUIState(PrefStateSortField? sortField) {
     return _$CreditUIState._(
       listUIState: ListUIState(sortField?.field ?? CreditFields.number,
           sortAscending: sortField?.ascending ?? false),
@@ -74,22 +74,19 @@ abstract class CreditUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  InvoiceEntity get editing;
+  InvoiceEntity? get editing;
 
-  @nullable
   @BuiltValueField(serialize: false)
-  int get editingItemIndex;
+  int? get editingItemIndex;
 
-  @nullable
   @BuiltValueField(serialize: false)
-  String get historyActivityId;
+  String? get historyActivityId;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<CreditUIState> get serializer => _$creditUIStateSerializer;
 }

@@ -19,8 +19,8 @@ import 'credit_screen_vm.dart';
 
 class CreditScreen extends StatelessWidget {
   const CreditScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/credit';
@@ -110,7 +110,7 @@ class CreditScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newCredit,
+              tooltip: localization!.newCredit,
             )
           : null,
     );

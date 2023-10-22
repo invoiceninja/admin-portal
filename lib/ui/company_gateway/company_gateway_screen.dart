@@ -26,8 +26,8 @@ import 'company_gateway_screen_vm.dart';
 
 class CompanyGatewayScreen extends StatelessWidget {
   const CompanyGatewayScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsCompanyGateways';
@@ -38,7 +38,7 @@ class CompanyGatewayScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final listUIState = state.uiState.companyGatewayUIState.listUIState;
     final settingsUIState = state.uiState.settingsUIState;
 
@@ -60,19 +60,20 @@ class CompanyGatewayScreen extends StatelessWidget {
           SaveCancelButtons(
             isHeader: true,
             saveLabel: localization.actions,
-            onSavePressed: listUIState.selectedIds.isEmpty
+            onSavePressed: listUIState.selectedIds!.isEmpty
                 ? null
                 : (context) async {
-                    final companyGateways = listUIState.selectedIds
+                    final companyGateways = listUIState.selectedIds!
                         .map<CompanyGatewayEntity>((companyGatewayId) =>
-                            viewModel.companyGatewayMap[companyGatewayId])
+                            viewModel.companyGatewayMap[companyGatewayId]!)
+                        .whereType<CompanyGatewayEntity>()
                         .toList();
 
                     await showEntityActionsDialog(
                       entities: companyGateways,
                       multiselect: true,
                       completer: Completer<Null>()
-                        ..future.then<dynamic>((_) =>
+                        ..future.then<Null>((_) =>
                             store.dispatch(ClearCompanyGatewayMultiselect())),
                     );
                   },

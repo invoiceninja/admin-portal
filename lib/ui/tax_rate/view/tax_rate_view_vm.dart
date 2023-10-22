@@ -22,7 +22,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaxRateViewScreen extends StatelessWidget {
   const TaxRateViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
 
@@ -47,15 +47,15 @@ class TaxRateViewScreen extends StatelessWidget {
 
 class TaxRateViewVM {
   TaxRateViewVM({
-    @required this.state,
-    @required this.taxRate,
-    @required this.company,
-    @required this.onEntityAction,
-    @required this.onBackPressed,
-    @required this.onRefreshed,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.isDirty,
+    required this.state,
+    required this.taxRate,
+    required this.company,
+    required this.onEntityAction,
+    required this.onBackPressed,
+    required this.onRefreshed,
+    required this.isSaving,
+    required this.isLoading,
+    required this.isDirty,
   });
 
   factory TaxRateViewVM.fromStore(Store<AppState> store) {
@@ -64,8 +64,8 @@ class TaxRateViewVM {
         TaxRateEntity(id: state.taxRateUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadTaxRate(completer: completer, taxRateId: taxRate.id));
       return completer.future;
     }
@@ -88,7 +88,7 @@ class TaxRateViewVM {
 
   final AppState state;
   final TaxRateEntity taxRate;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function onBackPressed;
   final Function(BuildContext) onRefreshed;

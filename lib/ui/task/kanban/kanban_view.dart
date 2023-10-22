@@ -19,8 +19,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class KanbanView extends StatefulWidget {
   const KanbanView({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final KanbanVM viewModel;
@@ -32,9 +32,9 @@ class KanbanView extends StatefulWidget {
 class KanbanViewState extends State<KanbanView> {
   final _boardViewController = new BoardViewController();
 
-  List<String> _statuses;
-  TaskEntity _newTask;
-  Map<String, List<String>> _tasks;
+  List<String>? _statuses;
+  TaskEntity? _newTask;
+  Map<String, List<String>>? _tasks;
   bool isDragging = false;
 
   @override
@@ -60,17 +60,17 @@ class KanbanViewState extends State<KanbanView> {
     _tasks = {};
 
     viewModel.taskList.forEach((taskId) {
-      final task = state.taskState.map[taskId];
+      final task = state.taskState.map[taskId]!;
       final status = state.taskStatusState.get(task.statusId);
       final statusId = status.isNew ? '' : status.id;
-      if (!_tasks.containsKey(statusId)) {
-        _tasks[statusId] = [];
+      if (!_tasks!.containsKey(statusId)) {
+        _tasks![statusId] = [];
       }
-      _tasks[statusId].add(task.id);
+      _tasks![statusId]!.add(task.id);
     });
 
-    _tasks.forEach((key, value) {
-      _tasks[key].sort((taskIdA, taskIdB) {
+    _tasks!.forEach((key, value) {
+      _tasks![key]!.sort((taskIdA, taskIdB) {
         final taskA = state.taskState.get(taskIdA);
         final taskB = state.taskState.get(taskIdB);
         if (taskA.statusOrder == taskB.statusOrder) {
@@ -118,9 +118,8 @@ class KanbanViewState extends State<KanbanView> {
   */
 
   void _onBoardChanged() {
-    final localization = AppLocalization.of(context);
-    final completer =
-        snackBarCompleter<Null>(context, localization.updatedTaskStatus);
+    final localization = AppLocalization.of(context)!;
+    final completer = snackBarCompleter<Null>(localization.updatedTaskStatus);
     completer.future.catchError((Object error) {
       _initBoard();
     });
@@ -135,8 +134,8 @@ class KanbanViewState extends State<KanbanView> {
         ? Theme.of(context).cardColor
         : Colors.grey.shade300;
 
-    final filteredStatusIds = _statuses.where((statusId) {
-      return statusId.isNotEmpty || _tasks.containsKey(statusId);
+    final filteredStatusIds = _statuses!.where((statusId) {
+      return statusId.isNotEmpty || _tasks!.containsKey(statusId);
     }).toList();
 
     final boardList = filteredStatusIds.map((statusId) {
@@ -154,12 +153,12 @@ class KanbanViewState extends State<KanbanView> {
           }
 
           setState(() {
-            final status = _statuses[startIndex];
-            _statuses.removeAt(startIndex);
+            final status = _statuses![startIndex!];
+            _statuses!.removeAt(startIndex);
             _statuses = [
-              ..._statuses.sublist(0, endIndex),
+              ..._statuses!.sublist(0, endIndex),
               status,
-              ..._statuses.sublist(endIndex),
+              ..._statuses!.sublist(endIndex!),
             ];
           });
 
@@ -172,7 +171,7 @@ class KanbanViewState extends State<KanbanView> {
               isSaving: state.isSaving,
               isCorrectOrder: hasCorectOrder,
               onSavePressed: (completer, name) {
-                final statusOrder = _statuses.indexOf(statusId);
+                final statusOrder = _statuses!.indexOf(statusId);
                 widget.viewModel.onSaveStatusPressed(
                     completer, statusId, name, statusOrder);
               },
@@ -187,10 +186,10 @@ class KanbanViewState extends State<KanbanView> {
                   isSaving: state.isSaving,
                   isDragging: isDragging,
                   onSavePressed: (completer, description) {
-                    final statusOrder = _tasks[status.id]?.length ?? 0;
+                    final statusOrder = _tasks![status.id]?.length ?? 0;
                     widget.viewModel.onSaveTaskPressed(
                       completer,
-                      _newTask.id,
+                      _newTask!.id,
                       status.id,
                       description,
                       statusOrder,
@@ -205,7 +204,7 @@ class KanbanViewState extends State<KanbanView> {
               : Padding(
                   padding: const EdgeInsets.only(left: 8, top: 2, bottom: 4),
                   child: TextButton(
-                    child: Text(AppLocalization.of(context).newTask),
+                    child: Text(AppLocalization.of(context)!.newTask),
                     onPressed: () {
                       setState(() {
                         _newTask = TaskEntity(state: widget.viewModel.state)
@@ -215,7 +214,7 @@ class KanbanViewState extends State<KanbanView> {
                   ),
                 ),
         ),
-        items: (_tasks[status.id] ?? [])
+        items: (_tasks![status.id] ?? [])
             .map((taskId) => widget.viewModel.state.taskState.get(taskId))
             .map(
           (task) {
@@ -235,10 +234,11 @@ class KanbanViewState extends State<KanbanView> {
                               : state.taskUIState.selectedId) ==
                           task.id,
                       isCorrectOrder: (task.statusOrder ==
-                              _tasks[status.id].indexOf(task.id)) &&
+                              _tasks![status.id]!.indexOf(task.id)) &&
                           task.statusId == statusId,
                       onSavePressed: (completer, description) {
-                        final statusOrder = _tasks[status.id].indexOf(task.id);
+                        final statusOrder =
+                            _tasks![status.id]!.indexOf(task.id);
                         widget.viewModel.onSaveTaskPressed(
                           completer,
                           task.id,
@@ -265,10 +265,10 @@ class KanbanViewState extends State<KanbanView> {
               },
               */
               onDropItem: (
-                int listIndex,
-                int itemIndex,
-                int oldListIndex,
-                int oldItemIndex,
+                int? listIndex,
+                int? itemIndex,
+                int? oldListIndex,
+                int? oldItemIndex,
                 BoardItemState state,
               ) {
                 setState(() => isDragging = false);
@@ -277,24 +277,24 @@ class KanbanViewState extends State<KanbanView> {
                   return;
                 }
 
-                final oldStatusId = _statuses[oldListIndex];
-                final newStatusId = _statuses[listIndex];
-                final taskId = _tasks[status.id][oldItemIndex];
+                final oldStatusId = _statuses![oldListIndex!];
+                final newStatusId = _statuses![listIndex!];
+                final taskId = _tasks![status.id]![oldItemIndex!];
 
                 setState(() {
-                  if (_tasks.containsKey(oldStatusId) &&
-                      _tasks[oldStatusId].contains(taskId)) {
-                    _tasks[oldStatusId].remove(taskId);
+                  if (_tasks!.containsKey(oldStatusId) &&
+                      _tasks![oldStatusId]!.contains(taskId)) {
+                    _tasks![oldStatusId]!.remove(taskId);
                   }
 
-                  if (!_tasks.containsKey(newStatusId)) {
-                    _tasks[newStatusId] = [];
+                  if (!_tasks!.containsKey(newStatusId)) {
+                    _tasks![newStatusId] = [];
                   }
 
-                  _tasks[newStatusId] = [
-                    ..._tasks[newStatusId].sublist(0, itemIndex),
+                  _tasks![newStatusId] = [
+                    ..._tasks![newStatusId]!.sublist(0, itemIndex),
                     taskId,
-                    ..._tasks[newStatusId].sublist(itemIndex),
+                    ..._tasks![newStatusId]!.sublist(itemIndex!),
                   ];
                 });
 

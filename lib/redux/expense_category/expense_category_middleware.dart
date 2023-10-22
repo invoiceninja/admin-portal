@@ -48,14 +48,14 @@ List<Middleware<AppState>> createStoreExpenseCategoriesMiddleware([
 
 Middleware<AppState> _editExpenseCategory() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditExpenseCategory;
+    final action = dynamicAction as EditExpenseCategory?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ExpenseCategoryEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(ExpenseCategoryEditScreen.route);
+      navigatorKey.currentState!.pushNamed(ExpenseCategoryEditScreen.route);
     }
   };
 }
@@ -63,21 +63,21 @@ Middleware<AppState> _editExpenseCategory() {
 Middleware<AppState> _viewExpenseCategory() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ViewExpenseCategory;
+    final action = dynamicAction as ViewExpenseCategory?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ExpenseCategoryViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(ExpenseCategoryViewScreen.route);
+      navigatorKey.currentState!.pushNamed(ExpenseCategoryViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewExpenseCategoryList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewExpenseCategoryList;
+    final action = dynamicAction as ViewExpenseCategoryList?;
 
     next(action);
 
@@ -88,7 +88,7 @@ Middleware<AppState> _viewExpenseCategoryList() {
     store.dispatch(UpdateCurrentRoute(ExpenseCategoryScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           ExpenseCategoryScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -106,15 +106,11 @@ Middleware<AppState> _archiveExpenseCategory(
             EntityAction.archive)
         .then((List<ExpenseCategoryEntity> expenseCategories) {
       store.dispatch(ArchiveExpenseCategoriesSuccess(expenseCategories));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveExpenseCategoriesFailure(prevExpenseCategories));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -133,15 +129,11 @@ Middleware<AppState> _deleteExpenseCategory(
             EntityAction.delete)
         .then((List<ExpenseCategoryEntity> expenseCategories) {
       store.dispatch(DeleteExpenseCategoriesSuccess(expenseCategories));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteExpenseCategoriesFailure(prevExpenseCategories));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -160,15 +152,11 @@ Middleware<AppState> _restoreExpenseCategory(
             EntityAction.restore)
         .then((List<ExpenseCategoryEntity> expenseCategories) {
       store.dispatch(RestoreExpenseCategoriesSuccess(expenseCategories));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreExpenseCategoriesFailure(prevExpenseCategories));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -180,24 +168,24 @@ Middleware<AppState> _saveExpenseCategory(
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveExpenseCategoryRequest;
     repository
-        .saveData(store.state.credentials, action.expenseCategory)
+        .saveData(store.state.credentials, action.expenseCategory!)
         .then((ExpenseCategoryEntity expenseCategory) {
-      if (action.expenseCategory.isNew) {
+      if (action.expenseCategory!.isNew) {
         store.dispatch(AddExpenseCategorySuccess(expenseCategory));
       } else {
         store.dispatch(SaveExpenseCategorySuccess(expenseCategory));
       }
 
-      action.completer.complete(expenseCategory);
+      action.completer!.complete(expenseCategory);
 
       final expenseCategoryUIState = store.state.expenseCategoryUIState;
       if (expenseCategoryUIState.saveCompleter != null) {
-        expenseCategoryUIState.saveCompleter.complete(expenseCategory);
+        expenseCategoryUIState.saveCompleter!.complete(expenseCategory);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveExpenseCategoryFailure(error));
-      action.completer.completeError(error);
+      action.completer!.completeError(error);
     });
 
     next(action);
@@ -217,13 +205,13 @@ Middleware<AppState> _loadExpenseCategory(
       store.dispatch(LoadExpenseCategorySuccess(expenseCategory));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadExpenseCategoryFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -234,15 +222,15 @@ Middleware<AppState> _loadExpenseCategory(
 Middleware<AppState> _loadExpenseCategories(
     ExpenseCategoryRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as LoadExpenseCategories;
+    final action = dynamicAction as LoadExpenseCategories?;
     final AppState state = store.state;
 
     store.dispatch(LoadExpenseCategoriesRequest());
     repository.loadList(state.credentials).then((data) {
       store.dispatch(LoadExpenseCategoriesSuccess(data));
 
-      if (action.completer != null) {
-        action.completer.complete(null);
+      if (action!.completer != null) {
+        action.completer!.complete(null);
       }
       /*
       if (state.productState.isStale) {
@@ -252,8 +240,8 @@ Middleware<AppState> _loadExpenseCategories(
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadExpenseCategoriesFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
+      if (action!.completer != null) {
+        action.completer!.completeError(error);
       }
     });
 

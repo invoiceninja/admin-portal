@@ -26,8 +26,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ClientViewFullwidth extends StatefulWidget {
   const ClientViewFullwidth({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final ClientViewVM viewModel;
@@ -38,9 +38,9 @@ class ClientViewFullwidth extends StatefulWidget {
 
 class _ClientViewFullwidthState extends State<ClientViewFullwidth>
     with TickerProviderStateMixin {
-  ScrollController _scrollController1;
-  ScrollController _scrollController2;
-  ScrollController _scrollController3;
+  ScrollController? _scrollController1;
+  ScrollController? _scrollController2;
+  ScrollController? _scrollController3;
 
   @override
   void initState() {
@@ -53,9 +53,9 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
 
   @override
   void dispose() {
-    _scrollController1.dispose();
-    _scrollController2.dispose();
-    _scrollController3.dispose();
+    _scrollController1!.dispose();
+    _scrollController2!.dispose();
+    _scrollController3!.dispose();
     super.dispose();
   }
 
@@ -65,7 +65,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final company = state.company;
-    final client = state.clientState.get(state.uiState.filterEntityId);
+    final client = state.clientState.get(state.uiState.filterEntityId!);
     final documents = client.documents;
     final viewModel = widget.viewModel;
     final billingAddress = formatAddress(state, object: client);
@@ -86,7 +86,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
     client.gatewayTokens.forEach((gatewayToken) {
       final companyGateway =
           state.companyGatewayState.get(gatewayToken.companyGatewayId);
-      if (companyGateway.isOld && !companyGateway.isDeleted) {
+      if (companyGateway.isOld && !companyGateway.isDeleted!) {
         final customerReference = gatewayToken.customerReference;
         gatewayMap[customerReference] = companyGateway;
         final clientUrl = GatewayEntity.getClientUrl(
@@ -97,7 +97,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
           linkMap[customerReference] = clientUrl;
         }
         if (tokenMap.containsKey(customerReference)) {
-          tokenMap[customerReference].add(gatewayToken);
+          tokenMap[customerReference]!.add(gatewayToken);
         } else {
           tokenMap[customerReference] = [gatewayToken];
         }
@@ -124,7 +124,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                 controller: _scrollController1,
                 children: [
                   Text(
-                    localization.details,
+                    localization!.details,
                     style: Theme.of(context).textTheme.titleLarge,
                   ),
                   SizedBox(height: 8),
@@ -133,12 +133,12 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                     Text(localization.payments +
                         ': ' +
                         formatNumber(client.paymentBalance, context,
-                            clientId: client.id)),
+                            clientId: client.id)!),
                   if (client.creditBalance != 0)
                     Text(localization.credit +
                         ': ' +
                         formatNumber(client.creditBalance, context,
-                            clientId: client.id)),
+                            clientId: client.id)!),
                   if (client.idNumber.isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 1),

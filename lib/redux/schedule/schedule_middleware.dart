@@ -40,14 +40,14 @@ List<Middleware<AppState>> createStoreSchedulesMiddleware([
 
 Middleware<AppState> _editSchedule() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditSchedule;
+    final action = dynamicAction as EditSchedule?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ScheduleEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(ScheduleEditScreen.route);
+      navigatorKey.currentState!.pushNamed(ScheduleEditScreen.route);
     }
   };
 }
@@ -55,21 +55,21 @@ Middleware<AppState> _editSchedule() {
 Middleware<AppState> _viewSchedule() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ViewSchedule;
+    final action = dynamicAction as ViewSchedule?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(ScheduleViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(ScheduleViewScreen.route);
+      navigatorKey.currentState!.pushNamed(ScheduleViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewScheduleList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewScheduleList;
+    final action = dynamicAction as ViewScheduleList?;
 
     next(action);
 
@@ -80,7 +80,7 @@ Middleware<AppState> _viewScheduleList() {
     store.dispatch(UpdateCurrentRoute(ScheduleScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           ScheduleScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -97,15 +97,11 @@ Middleware<AppState> _archiveSchedule(ScheduleRepository repository) {
             store.state.credentials, action.scheduleIds, EntityAction.archive)
         .then((List<ScheduleEntity> schedules) {
       store.dispatch(ArchiveSchedulesSuccess(schedules));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveSchedulesFailure(prevSchedules));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -123,15 +119,11 @@ Middleware<AppState> _deleteSchedule(ScheduleRepository repository) {
             store.state.credentials, action.scheduleIds, EntityAction.delete)
         .then((List<ScheduleEntity> schedules) {
       store.dispatch(DeleteSchedulesSuccess(schedules));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteSchedulesFailure(prevSchedules));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -149,15 +141,11 @@ Middleware<AppState> _restoreSchedule(ScheduleRepository repository) {
             store.state.credentials, action.scheduleIds, EntityAction.restore)
         .then((List<ScheduleEntity> schedules) {
       store.dispatch(RestoreSchedulesSuccess(schedules));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreSchedulesFailure(prevSchedules));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -168,19 +156,19 @@ Middleware<AppState> _saveSchedule(ScheduleRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveScheduleRequest;
     repository
-        .saveData(store.state.credentials, action.schedule)
+        .saveData(store.state.credentials, action.schedule!)
         .then((ScheduleEntity schedule) {
-      if (action.schedule.isNew) {
+      if (action.schedule!.isNew) {
         store.dispatch(AddScheduleSuccess(schedule));
       } else {
         store.dispatch(SaveScheduleSuccess(schedule));
       }
 
-      action.completer.complete(schedule);
+      action.completer!.complete(schedule);
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveScheduleFailure(error));
-      action.completer.completeError(error);
+      action.completer!.completeError(error);
     });
 
     next(action);
@@ -197,13 +185,13 @@ Middleware<AppState> _loadSchedule(ScheduleRepository repository) {
       store.dispatch(LoadScheduleSuccess(schedule));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadScheduleFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -213,21 +201,21 @@ Middleware<AppState> _loadSchedule(ScheduleRepository repository) {
 
 Middleware<AppState> _loadSchedules(ScheduleRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as LoadSchedules;
+    final action = dynamicAction as LoadSchedules?;
     final AppState state = store.state;
 
     store.dispatch(LoadSchedulesRequest());
     repository.loadList(state.credentials).then((data) {
       store.dispatch(LoadSchedulesSuccess(data));
 
-      if (action.completer != null) {
-        action.completer.complete(null);
+      if (action!.completer != null) {
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadSchedulesFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
+      if (action!.completer != null) {
+        action.completer!.completeError(error);
       }
     });
 

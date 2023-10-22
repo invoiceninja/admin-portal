@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class QuoteViewScreen extends StatelessWidget {
   const QuoteViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
   final bool isFilter;
@@ -40,7 +40,7 @@ class QuoteViewScreen extends StatelessWidget {
         return InvoiceView(
           viewModel: viewModel,
           isFilter: isFilter,
-          tabIndex: viewModel.state.quoteUIState.tabIndex,
+          tabIndex: viewModel.state!.quoteUIState.tabIndex,
         );
       },
     );
@@ -49,20 +49,20 @@ class QuoteViewScreen extends StatelessWidget {
 
 class QuoteViewVM extends AbstractInvoiceViewVM {
   QuoteViewVM({
-    AppState state,
-    CompanyEntity company,
-    InvoiceEntity invoice,
-    ClientEntity client,
-    bool isSaving,
-    bool isDirty,
-    Function(BuildContext, EntityAction) onEntityAction,
-    Function(BuildContext, [int]) onEditPressed,
-    Function(BuildContext) onPaymentsPressed,
-    Function(BuildContext, PaymentEntity) onPaymentPressed,
-    Function(BuildContext) onRefreshed,
-    Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
-    Function(BuildContext, DocumentEntity) onViewExpense,
-    Function(BuildContext, InvoiceEntity, [String]) onViewPdf,
+    AppState? state,
+    CompanyEntity? company,
+    InvoiceEntity? invoice,
+    ClientEntity? client,
+    bool? isSaving,
+    bool? isDirty,
+    Function(BuildContext, EntityAction)? onEntityAction,
+    Function(BuildContext, [int])? onEditPressed,
+    Function(BuildContext)? onPaymentsPressed,
+    Function(BuildContext, PaymentEntity)? onPaymentPressed,
+    Function(BuildContext)? onRefreshed,
+    Function(BuildContext, List<MultipartFile>, bool)? onUploadDocuments,
+    Function(BuildContext, DocumentEntity)? onViewExpense,
+    Function(BuildContext, InvoiceEntity, [String?])? onViewPdf,
   }) : super(
           state: state,
           company: company,
@@ -87,8 +87,8 @@ class QuoteViewVM extends AbstractInvoiceViewVM {
         ClientEntity(id: quote.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadQuote(completer: completer, quoteId: quote.id));
       return completer.future;
     }
@@ -100,26 +100,26 @@ class QuoteViewVM extends AbstractInvoiceViewVM {
       isDirty: quote.isNew,
       invoice: quote,
       client: client,
-      onEditPressed: (BuildContext context, [int index]) {
+      onEditPressed: (BuildContext context, [int? index]) {
         editEntity(
             entity: quote,
             subIndex: index,
-            completer: snackBarCompleter<ClientEntity>(
-                context, AppLocalization.of(context).updatedQuote));
+            completer: snackBarCompleter<InvoiceEntity>(
+                AppLocalization.of(context)!.updatedQuote));
       },
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([quote], action, autoPop: true),
       onUploadDocuments: (BuildContext context,
           List<MultipartFile> multipartFiles, bool isPrivate) {
-        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        final completer = Completer<List<DocumentEntity>>();
         store.dispatch(SaveQuoteDocumentRequest(
             isPrivate: isPrivate,
             multipartFile: multipartFiles,
             quote: quote,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context).uploadedDocument);
+          showToast(AppLocalization.of(context)!.uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,

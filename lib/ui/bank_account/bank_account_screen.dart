@@ -25,8 +25,8 @@ import 'bank_account_screen_vm.dart';
 
 class BankAccountScreen extends StatelessWidget {
   const BankAccountScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsBankAccounts';
@@ -98,7 +98,7 @@ class BankAccountScreen extends StatelessWidget {
                   if (state.isEnterprisePlan) ...[
                     Expanded(
                       child: AppButton(
-                        label: localization.connect.toUpperCase(),
+                        label: localization!.connect.toUpperCase(),
                         onPressed: () => connectAccounts(context),
                         iconData: Icons.link,
                       ),
@@ -119,7 +119,7 @@ class BankAccountScreen extends StatelessWidget {
                             child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            HelpText(localization.upgradeToConnectBankAccount),
+                            HelpText(localization!.upgradeToConnectBankAccount),
                             SizedBox(height: 16),
                             Row(
                               children: [
@@ -149,8 +149,8 @@ class BankAccountScreen extends StatelessWidget {
                 Expanded(
                   child: AppButton(
                     label: (state.isHosted
-                            ? localization.rules
-                            : localization.manageRules)
+                            ? localization!.rules
+                            : localization!.manageRules)
                         .toUpperCase(),
                     onPressed: () {
                       store.dispatch(

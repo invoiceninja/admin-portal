@@ -16,7 +16,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ScheduleEditScreen extends StatelessWidget {
-  const ScheduleEditScreen({Key key}) : super(key: key);
+  const ScheduleEditScreen({Key? key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsSchedulesEdit';
 
   @override
@@ -37,20 +37,20 @@ class ScheduleEditScreen extends StatelessWidget {
 
 class ScheduleEditVM {
   ScheduleEditVM({
-    @required this.state,
-    @required this.schedule,
-    @required this.company,
-    @required this.onChanged,
-    @required this.isSaving,
-    @required this.origSchedule,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
-    @required this.isLoading,
+    required this.state,
+    required this.schedule,
+    required this.company,
+    required this.onChanged,
+    required this.isSaving,
+    required this.origSchedule,
+    required this.onSavePressed,
+    required this.onCancelPressed,
+    required this.isLoading,
   });
 
   factory ScheduleEditVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final schedule = state.scheduleUIState.editing;
+    final schedule = state.scheduleUIState.editing!;
 
     return ScheduleEditVM(
       state: state,
@@ -64,11 +64,10 @@ class ScheduleEditVM {
       },
       onCancelPressed: (BuildContext context) {
         createEntity(
-            context: context,
             entity: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_STATEMENT),
             force: true);
         if (state.scheduleUIState.cancelCompleter != null) {
-          state.scheduleUIState.cancelCompleter.complete();
+          state.scheduleUIState.cancelCompleter!.complete();
         } else {
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
@@ -82,9 +81,9 @@ class ScheduleEditVM {
           store.dispatch(
               SaveScheduleRequest(completer: completer, schedule: schedule));
           return completer.future.then((savedSchedule) {
-            showToast(schedule.isNew
-                ? localization.createdSchedule
-                : localization.updatedSchedule);
+            showToast(schedule!.isNew
+                ? localization!.createdSchedule
+                : localization!.updatedSchedule);
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(ScheduleViewScreen.route));
               if (schedule.isNew) {
@@ -109,12 +108,12 @@ class ScheduleEditVM {
   }
 
   final ScheduleEntity schedule;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(ScheduleEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final bool isLoading;
   final bool isSaving;
-  final ScheduleEntity origSchedule;
+  final ScheduleEntity? origSchedule;
   final AppState state;
 }

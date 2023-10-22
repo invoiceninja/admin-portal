@@ -22,7 +22,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ProjectViewScreen extends StatelessWidget {
   const ProjectViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
   final bool isFilter;
@@ -47,18 +47,18 @@ class ProjectViewScreen extends StatelessWidget {
 
 class ProjectViewVM {
   ProjectViewVM({
-    @required this.state,
-    @required this.project,
-    @required this.client,
-    @required this.company,
-    @required this.onEntityAction,
-    @required this.onEntityPressed,
-    @required this.onAddTaskPressed,
-    @required this.onRefreshed,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.isDirty,
-    @required this.onUploadDocuments,
+    required this.state,
+    required this.project,
+    required this.client,
+    required this.company,
+    required this.onEntityAction,
+    required this.onEntityPressed,
+    required this.onAddTaskPressed,
+    required this.onRefreshed,
+    required this.isSaving,
+    required this.isLoading,
+    required this.isDirty,
+    required this.onUploadDocuments,
   });
 
   factory ProjectViewVM.fromStore(Store<AppState> store) {
@@ -69,8 +69,8 @@ class ProjectViewVM {
         ClientEntity(id: project.clientId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadProject(completer: completer, projectId: project.id));
       return completer.future;
     }
@@ -85,8 +85,8 @@ class ProjectViewVM {
       client: client,
       onRefreshed: (context) => _handleRefresh(context),
       onEntityPressed: (BuildContext context, EntityType entityType,
-          {bool longPress = false}) {
-        if (longPress && project.isActive && client.isActive) {
+          {bool? longPress = false}) {
+        if (longPress == true && project.isActive && client.isActive) {
           handleProjectAction(
               context, [project], EntityAction.newEntityType(entityType));
         } else {
@@ -98,7 +98,6 @@ class ProjectViewVM {
       },
       onAddTaskPressed: (context) {
         createEntity(
-            context: context,
             entity: TaskEntity(state: state).rebuild((b) => b
               ..projectId = project.id
               ..clientId = project.clientId),
@@ -108,14 +107,14 @@ class ProjectViewVM {
           handleEntitiesActions([project], action, autoPop: true),
       onUploadDocuments: (BuildContext context,
           List<MultipartFile> multipartFiles, bool isPrivate) {
-        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        final completer = Completer<List<DocumentEntity>>();
         store.dispatch(SaveProjectDocumentRequest(
             isPrivate: isPrivate,
             multipartFile: multipartFiles,
             project: project,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context).uploadedDocument);
+          showToast(AppLocalization.of(context)!.uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: context,
@@ -130,10 +129,10 @@ class ProjectViewVM {
   final AppState state;
   final ProjectEntity project;
   final ClientEntity client;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onAddTaskPressed;
-  final Function(BuildContext, EntityType, {bool longPress}) onEntityPressed;
+  final Function(BuildContext, EntityType, {bool? longPress}) onEntityPressed;
   final Function(BuildContext) onRefreshed;
   final bool isSaving;
   final bool isLoading;

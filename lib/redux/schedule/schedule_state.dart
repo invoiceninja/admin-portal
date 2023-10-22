@@ -28,7 +28,7 @@ abstract class ScheduleState
 
   ScheduleEntity get(String scheduleId) {
     if (map.containsKey(scheduleId)) {
-      return map[scheduleId];
+      return map[scheduleId]!;
     } else {
       return ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_STATEMENT,
           id: scheduleId);
@@ -53,7 +53,7 @@ abstract class ScheduleState
 abstract class ScheduleUIState extends Object
     with EntityUIState
     implements Built<ScheduleUIState, ScheduleUIStateBuilder> {
-  factory ScheduleUIState(PrefStateSortField sortField) {
+  factory ScheduleUIState(PrefStateSortField? sortField) {
     return _$ScheduleUIState._(
       listUIState: ListUIState(sortField?.field ?? ScheduleFields.nextRun,
           sortAscending: sortField?.ascending),
@@ -68,14 +68,13 @@ abstract class ScheduleUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  ScheduleEntity get editing;
+  ScheduleEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<ScheduleUIState> get serializer =>
       _$scheduleUIStateSerializer;

@@ -62,7 +62,7 @@ abstract class SizeEntity extends Object
   String get name;
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     if (filter == null || filter.isEmpty) {
       return true;
     }
@@ -77,7 +77,7 @@ abstract class SizeEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     if (filter == null || filter.isEmpty) {
       return null;
     }
@@ -93,7 +93,7 @@ abstract class SizeEntity extends Object
   }
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
   static Serializer<SizeEntity> get serializer => _$sizeEntitySerializer;
 }

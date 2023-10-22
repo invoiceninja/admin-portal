@@ -10,7 +10,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -37,13 +36,13 @@ class ViewInvoiceList implements PersistUI {
   });
 
   final bool force;
-  final int page;
+  final int? page;
 }
 
 class ViewInvoice implements PersistUI, PersistPrefs {
   ViewInvoice({this.invoiceId, this.force = false});
 
-  final String invoiceId;
+  final String? invoiceId;
   final bool force;
 }
 
@@ -55,32 +54,32 @@ class EditInvoice implements PersistUI, PersistPrefs {
     this.force = false,
   });
 
-  final InvoiceEntity invoice;
-  final int invoiceItemIndex;
-  final Completer completer;
+  final InvoiceEntity? invoice;
+  final int? invoiceItemIndex;
+  final Completer? completer;
   final bool force;
 }
 
 class ShowEmailInvoice {
   ShowEmailInvoice({this.invoice, this.context, this.completer});
 
-  final InvoiceEntity invoice;
-  final BuildContext context;
-  final Completer completer;
+  final InvoiceEntity? invoice;
+  final BuildContext? context;
+  final Completer? completer;
 }
 
 class ShowPdfInvoice {
   ShowPdfInvoice({this.invoice, this.context, this.activityId});
 
-  final InvoiceEntity invoice;
-  final BuildContext context;
-  final String activityId;
+  final InvoiceEntity? invoice;
+  final BuildContext? context;
+  final String? activityId;
 }
 
 class EditInvoiceItem implements PersistUI {
   EditInvoiceItem([this.invoiceItemIndex]);
 
-  final int invoiceItemIndex;
+  final int? invoiceItemIndex;
 }
 
 class UpdateInvoice implements PersistUI {
@@ -92,20 +91,20 @@ class UpdateInvoice implements PersistUI {
 class UpdateInvoiceClient implements PersistUI {
   UpdateInvoiceClient({this.client});
 
-  final ClientEntity client;
+  final ClientEntity? client;
 }
 
 class LoadInvoice {
   LoadInvoice({this.completer, this.invoiceId});
 
-  final Completer completer;
-  final String invoiceId;
+  final Completer? completer;
+  final String? invoiceId;
 }
 
 class LoadInvoices {
   LoadInvoices({this.completer, this.page = 1});
 
-  final Completer completer;
+  final Completer? completer;
   final int page;
 }
 
@@ -160,20 +159,20 @@ class LoadInvoicesSuccess implements StopLoading {
 class AddInvoiceContact implements PersistUI {
   AddInvoiceContact({this.contact, this.invitation});
 
-  final ClientContactEntity contact;
-  final InvitationEntity invitation;
+  final ClientContactEntity? contact;
+  final InvitationEntity? invitation;
 }
 
 class RemoveInvoiceContact implements PersistUI {
   RemoveInvoiceContact({this.invitation});
 
-  final InvitationEntity invitation;
+  final InvitationEntity? invitation;
 }
 
 class AddInvoiceItem implements PersistUI {
   AddInvoiceItem({this.invoiceItem});
 
-  final InvoiceItemEntity invoiceItem;
+  final InvoiceItemEntity? invoiceItem;
 }
 
 class MoveInvoiceItem implements PersistUI {
@@ -182,8 +181,8 @@ class MoveInvoiceItem implements PersistUI {
     this.newIndex,
   });
 
-  final int oldIndex;
-  final int newIndex;
+  final int? oldIndex;
+  final int? newIndex;
 }
 
 class AddInvoiceItems implements PersistUI {
@@ -193,7 +192,10 @@ class AddInvoiceItems implements PersistUI {
 }
 
 class UpdateInvoiceItem implements PersistUI {
-  UpdateInvoiceItem({this.index, this.invoiceItem});
+  UpdateInvoiceItem({
+    required this.index,
+    required this.invoiceItem,
+  });
 
   final int index;
   final InvoiceItemEntity invoiceItem;
@@ -207,14 +209,14 @@ class DeleteInvoiceItem implements PersistUI {
 
 class SaveInvoiceRequest implements StartSaving {
   SaveInvoiceRequest({
-    @required this.completer,
-    @required this.invoice,
-    @required this.entityAction,
+    required this.completer,
+    required this.invoice,
+    required this.entityAction,
   });
 
   final Completer completer;
   final InvoiceEntity invoice;
-  final EntityAction entityAction;
+  final EntityAction? entityAction;
 }
 
 class SaveInvoiceSuccess implements StopSaving, PersistUI {
@@ -237,12 +239,12 @@ class SaveInvoiceFailure implements StopSaving {
 
 class EmailInvoiceRequest implements StartSaving {
   EmailInvoiceRequest({
-    @required this.completer,
-    @required this.invoiceId,
-    @required this.template,
-    @required this.subject,
-    @required this.body,
-    @required this.ccEmail,
+    required this.completer,
+    required this.invoiceId,
+    required this.template,
+    required this.subject,
+    required this.body,
+    required this.ccEmail,
   });
 
   final Completer completer;
@@ -254,7 +256,7 @@ class EmailInvoiceRequest implements StartSaving {
 }
 
 class EmailInvoiceSuccess implements StopSaving, PersistData {
-  EmailInvoiceSuccess({@required this.invoice});
+  EmailInvoiceSuccess({required this.invoice});
 
   final InvoiceEntity invoice;
 }
@@ -287,9 +289,9 @@ class MarkInvoicesSentFailure implements StopSaving {
 class BulkEmailInvoicesRequest implements StartSaving {
   BulkEmailInvoicesRequest({this.completer, this.invoiceIds, this.template});
 
-  final Completer completer;
-  final List<String> invoiceIds;
-  final EmailTemplate template;
+  final Completer? completer;
+  final List<String>? invoiceIds;
+  final EmailTemplate? template;
 }
 
 class BulkEmailInvoicesSuccess implements StopSaving, PersistData {
@@ -377,7 +379,7 @@ class ArchiveInvoicesSuccess implements StopSaving, PersistData {
 class ArchiveInvoicesFailure implements StopSaving {
   ArchiveInvoicesFailure(this.invoices);
 
-  final List<InvoiceEntity> invoices;
+  final List<InvoiceEntity?> invoices;
 }
 
 class DeleteInvoicesRequest implements StartSaving {
@@ -396,7 +398,7 @@ class DeleteInvoicesSuccess implements StopSaving, PersistData {
 class DeleteInvoicesFailure implements StopSaving {
   DeleteInvoicesFailure(this.invoices);
 
-  final List<InvoiceEntity> invoices;
+  final List<InvoiceEntity?> invoices;
 }
 
 class DownloadInvoicesRequest implements StartSaving {
@@ -430,13 +432,13 @@ class RestoreInvoicesSuccess implements StopSaving, PersistData {
 class RestoreInvoicesFailure implements StopSaving {
   RestoreInvoicesFailure(this.invoices);
 
-  final List<InvoiceEntity> invoices;
+  final List<InvoiceEntity?> invoices;
 }
 
 class FilterInvoices implements PersistUI {
   FilterInvoices(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortInvoices implements PersistUI, PersistPrefs {
@@ -460,7 +462,7 @@ class FilterInvoicesByStatus implements PersistUI {
 class FilterInvoiceDropdown {
   FilterInvoiceDropdown(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class FilterInvoicesByCustom1 implements PersistUI {
@@ -490,28 +492,28 @@ class FilterInvoicesByCustom4 implements PersistUI {
 class StartInvoiceMultiselect {}
 
 class AddToInvoiceMultiselect {
-  AddToInvoiceMultiselect({@required this.entity});
+  AddToInvoiceMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromInvoiceMultiselect {
-  RemoveFromInvoiceMultiselect({@required this.entity});
+  RemoveFromInvoiceMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearInvoiceMultiselect {}
 
 class SaveInvoiceDocumentRequest implements StartSaving {
   SaveInvoiceDocumentRequest({
-    @required this.isPrivate,
-    @required this.completer,
-    @required this.multipartFiles,
-    @required this.invoice,
+    required this.isPrivate,
+    required this.completer,
+    required this.multipartFiles,
+    required this.invoice,
   });
 
-  final bool isPrivate;
+  final bool? isPrivate;
   final Completer completer;
   final List<MultipartFile> multipartFiles;
   final InvoiceEntity invoice;
@@ -532,16 +534,16 @@ class SaveInvoiceDocumentFailure implements StopSaving {
 class UpdateInvoiceTab implements PersistUI {
   UpdateInvoiceTab({this.tabIndex});
 
-  final int tabIndex;
+  final int? tabIndex;
 }
 
-void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
-    EntityAction action) async {
+void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
+    EntityAction? action) async {
   if (invoices.isEmpty) {
     return;
   }
 
-  final store = StoreProvider.of<AppState>(context);
+  final store = StoreProvider.of<AppState>(context!);
   final state = store.state;
   final localization = AppLocalization.of(context);
   final invoice = invoices.first as InvoiceEntity;
@@ -567,11 +569,9 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       break;
     case EntityAction.markSent:
       store.dispatch(MarkInvoicesSentRequest(
-          snackBarCompleter<Null>(
-              context,
-              invoiceIds.length == 1
-                  ? localization.markedInvoiceAsSent
-                  : localization.markedInvoicesAsSent),
+          snackBarCompleter<Null>(invoiceIds.length == 1
+              ? localization!.markedInvoiceAsSent
+              : localization!.markedInvoicesAsSent),
           invoiceIds));
       break;
     case EntityAction.reverse:
@@ -580,7 +580,6 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
           clientId: invoice.clientId,
           entityType: EntityType.credit);
       createEntity(
-          context: context,
           entity: invoice.clone.rebuild((b) => b
             ..invoiceId = invoice.id
             ..entityType = EntityType.credit
@@ -589,37 +588,31 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
     case EntityAction.cancelInvoice:
       confirmCallback(
           context: context,
-          message: localization.cancelInvoice,
+          message: localization!.cancelInvoice,
           callback: (_) {
             store.dispatch(CancelInvoicesRequest(
-                snackBarCompleter<Null>(
-                    context,
-                    invoiceIds.length == 1
-                        ? localization.cancelledInvoice
-                        : localization.cancelledInvoices),
+                snackBarCompleter<Null>(invoiceIds.length == 1
+                    ? localization.cancelledInvoice
+                    : localization.cancelledInvoices),
                 invoiceIds));
           });
       break;
     case EntityAction.markPaid:
       store.dispatch(MarkInvoicesPaidRequest(
-          snackBarCompleter<Null>(
-              context,
-              invoiceIds.length == 1
-                  ? localization.markedInvoiceAsPaid
-                  : localization.markedInvoicesAsPaid),
+          snackBarCompleter<Null>(invoiceIds.length == 1
+              ? localization!.markedInvoiceAsPaid
+              : localization!.markedInvoicesAsPaid),
           invoiceIds));
       break;
     case EntityAction.autoBill:
       confirmCallback(
           context: context,
-          message: localization.autoBill,
+          message: localization!.autoBill,
           callback: (_) {
             store.dispatch(AutoBillInvoicesRequest(
-                snackBarCompleter<Null>(
-                    context,
-                    invoiceIds.length == 1
-                        ? localization.autoBilledInvoice
-                        : localization.autoBilledInvoices),
+                snackBarCompleter<Null>(invoiceIds.length == 1
+                    ? localization.autoBilledInvoice
+                    : localization.autoBilledInvoices),
                 invoiceIds));
           });
       break;
@@ -637,8 +630,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       });
       if (!emailValid) {
         showMessageDialog(
-            context: context,
-            message: localization.clientEmailNotSet,
+            message: localization!.clientEmailNotSet,
             secondaryActions: [
               TextButton(
                   onPressed: () {
@@ -651,15 +643,13 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       }
       if (action == EntityAction.sendEmail) {
         store.dispatch(ShowEmailInvoice(
-            completer:
-                snackBarCompleter<Null>(context, localization.emailedInvoice),
+            completer: snackBarCompleter<Null>(localization!.emailedInvoice),
             invoice: invoice,
             context: context));
       } else if (action == EntityAction.schedule) {
         if (!state.isProPlan) {
           showMessageDialog(
-              context: context,
-              message: localization.upgradeToPaidPlanToSchedule,
+              message: localization!.upgradeToPaidPlanToSchedule,
               secondaryActions: [
                 TextButton(
                     onPressed: () {
@@ -673,7 +663,6 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
         }
 
         createEntity(
-            context: context,
             entity: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_RECORD)
                 .rebuild((b) => b
                   ..parameters.entityType = EntityType.invoice.apiValue
@@ -684,7 +673,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
           builder: (context) {
             final settings = getClientSettings(state, client);
             final templates = {
-              EmailTemplate.invoice: localization.initialEmail,
+              EmailTemplate.invoice: localization!.initialEmail,
               EmailTemplate.reminder1: localization.firstReminder,
               EmailTemplate.reminder2: localization.secondReminder,
               EmailTemplate.reminder3: localization.thirdReminder,
@@ -705,7 +694,7 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
               ),
               children: templates.keys
                   .map((template) => SimpleDialogOption(
-                        child: Text(templates[template]),
+                        child: Text(templates[template]!),
                         onPressed: () {
                           Navigator.of(context).pop(template);
                         },
@@ -717,11 +706,9 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
 
         if (template != null) {
           store.dispatch(BulkEmailInvoicesRequest(
-            completer: snackBarCompleter<Null>(
-                navigatorKey.currentContext,
-                invoiceIds.length == 1
-                    ? localization.emailedInvoice
-                    : localization.emailedInvoices),
+            completer: snackBarCompleter<Null>(invoiceIds.length == 1
+                ? localization!.emailedInvoice
+                : localization!.emailedInvoices),
             invoiceIds: invoiceIds,
             template: template,
           ));
@@ -729,11 +716,11 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       }
       break;
     case EntityAction.cloneToOther:
-      cloneToDialog(context: context, invoice: invoice);
+      cloneToDialog(invoice: invoice);
       break;
     case EntityAction.clone:
     case EntityAction.cloneToInvoice:
-      createEntity(context: context, entity: invoice.clone);
+      createEntity(entity: invoice.clone);
       break;
     case EntityAction.cloneToQuote:
       final designId = getDesignIdForClientByEntity(
@@ -741,7 +728,6 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
           clientId: invoice.clientId,
           entityType: EntityType.quote);
       createEntity(
-          context: context,
           entity: invoice.clone.rebuild((b) => b
             ..entityType = EntityType.quote
             ..designId = designId));
@@ -752,7 +738,6 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
           clientId: invoice.clientId,
           entityType: EntityType.credit);
       createEntity(
-          context: context,
           entity: invoice.clone.rebuild((b) => b
             ..entityType = EntityType.credit
             ..designId = designId));
@@ -763,7 +748,6 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
           vendorId: invoice.vendorId,
           entityType: EntityType.purchaseOrder);
       createEntity(
-          context: context,
           entity: invoice.clone
               .rebuild((b) => b
                 ..entityType = EntityType.purchaseOrder
@@ -772,17 +756,16 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       break;
     case EntityAction.cloneToRecurring:
       createEntity(
-          context: context,
           entity: invoice.clone
               .rebuild((b) => b..entityType = EntityType.recurringInvoice));
       break;
     case EntityAction.newPayment:
       createEntity(
-        context: context,
         entity: PaymentEntity(state: state, client: client).rebuild((b) => b
           ..invoices.addAll(invoices
               .where((invoice) => !(invoice as InvoiceEntity).isPaid)
-              .map((invoice) => PaymentableEntity.fromInvoice(invoice))
+              .map((invoice) =>
+                  PaymentableEntity.fromInvoice(invoice as InvoiceEntity))
               .toList())),
         filterEntity: client,
       );
@@ -795,35 +778,34 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       break;
     case EntityAction.bulkDownload:
       store.dispatch(DownloadInvoicesRequest(
-          snackBarCompleter<Null>(context, localization.exportedData),
-          invoiceIds));
+          snackBarCompleter<Null>(localization!.exportedData), invoiceIds));
       break;
     case EntityAction.restore:
       final message = invoiceIds.length > 1
-          ? localization.restoredInvoices
+          ? localization!.restoredInvoices
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', invoiceIds.length.toString())
-          : localization.restoredInvoice;
-      store.dispatch(RestoreInvoicesRequest(
-          snackBarCompleter<Null>(context, message), invoiceIds));
+          : localization!.restoredInvoice;
+      store.dispatch(
+          RestoreInvoicesRequest(snackBarCompleter<Null>(message), invoiceIds));
       break;
     case EntityAction.archive:
       final message = invoiceIds.length > 1
-          ? localization.archivedInvoices
+          ? localization!.archivedInvoices
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', invoiceIds.length.toString())
-          : localization.archivedInvoice;
-      store.dispatch(ArchiveInvoicesRequest(
-          snackBarCompleter<Null>(context, message), invoiceIds));
+          : localization!.archivedInvoice;
+      store.dispatch(
+          ArchiveInvoicesRequest(snackBarCompleter<Null>(message), invoiceIds));
       break;
     case EntityAction.delete:
       final message = invoiceIds.length > 1
-          ? localization.deletedInvoices
+          ? localization!.deletedInvoices
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', invoiceIds.length.toString())
-          : localization.deletedInvoice;
-      store.dispatch(DeleteInvoicesRequest(
-          snackBarCompleter<Null>(context, message), invoiceIds));
+          : localization!.deletedInvoice;
+      store.dispatch(
+          DeleteInvoicesRequest(snackBarCompleter<Null>(message), invoiceIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.invoiceListState.isInMultiselect()) {
@@ -841,20 +823,20 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
       final invitation = invoice.invitations.first;
       final url = invitation.downloadLink;
       store.dispatch(StartSaving());
-      final http.Response response =
+      final http.Response? response =
           await WebClient().get(url, '', rawResponse: true);
       store.dispatch(StopSaving());
-      await Printing.layoutPdf(onLayout: (_) => response.bodyBytes);
+      await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;
     case EntityAction.bulkPrint:
       store.dispatch(StartSaving());
-      final url = state.credentials.url + '/invoices/bulk';
+      final url = state.credentials.url! + '/invoices/bulk';
       final data = json.encode(
           {'ids': invoiceIds, 'action': EntityAction.bulkPrint.toApiParam()});
-      final http.Response response = await WebClient()
+      final http.Response? response = await WebClient()
           .post(url, state.credentials.token, data: data, rawResponse: true);
       store.dispatch(StopSaving());
-      await Printing.layoutPdf(onLayout: (_) => response.bodyBytes);
+      await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;
     case EntityAction.more:
       showEntityActionsDialog(
@@ -869,15 +851,13 @@ void handleInvoiceAction(BuildContext context, List<BaseEntity> invoices,
         }
       }
       if (documentIds.isEmpty) {
-        showMessageDialog(
-            context: context, message: localization.noDocumentsToDownload);
+        showMessageDialog(message: localization!.noDocumentsToDownload);
       } else {
         store.dispatch(
           DownloadDocumentsRequest(
             documentIds: documentIds,
             completer: snackBarCompleter<Null>(
-              context,
-              localization.exportedData,
+              localization!.exportedData,
             ),
           ),
         );

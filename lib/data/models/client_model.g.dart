@@ -23,9 +23,10 @@ class _$ClientListResponseSerializer
   final String wireName = 'ClientListResponse';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, ClientListResponse object,
+  Iterable<Object?> serialize(
+      Serializers serializers, ClientListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType:
@@ -37,21 +38,21 @@ class _$ClientListResponseSerializer
 
   @override
   ClientListResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ClientListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(ClientEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(ClientEntity)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -68,9 +69,10 @@ class _$ClientItemResponseSerializer
   final String wireName = 'ClientItemResponse';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, ClientItemResponse object,
+  Iterable<Object?> serialize(
+      Serializers serializers, ClientItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(ClientEntity)),
@@ -81,19 +83,19 @@ class _$ClientItemResponseSerializer
 
   @override
   ClientItemResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ClientItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ClientEntity)) as ClientEntity);
+              specifiedType: const FullType(ClientEntity))! as ClientEntity);
           break;
       }
     }
@@ -109,9 +111,9 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
   final String wireName = 'ClientEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, ClientEntity object,
+  Iterable<Object?> serialize(Serializers serializers, ClientEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'group_settings_id',
       serializers.serialize(object.groupId,
           specifiedType: const FullType(String)),
@@ -263,7 +265,7 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.loadedAt;
     if (value != null) {
       result
@@ -302,243 +304,245 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
   }
 
   @override
-  ClientEntity deserialize(Serializers serializers, Iterable<Object> serialized,
+  ClientEntity deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ClientEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'group_settings_id':
           result.groupId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'loadedAt':
           result.loadedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'name':
           result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'display_name':
           result.displayName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'balance':
           result.balance = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'credit_balance':
           result.creditBalance = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'payment_balance':
           result.paymentBalance = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'paid_to_date':
           result.paidToDate = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'client_hash':
           result.clientHash = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'address1':
           result.address1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'address2':
           result.address2 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'city':
           result.city = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'state':
           result.state = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'postal_code':
           result.postalCode = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'country_id':
           result.countryId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'phone':
           result.phone = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'private_notes':
           result.privateNotes = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'public_notes':
           result.publicNotes = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'website':
           result.website = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'industry_id':
           result.industryId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'size_id':
           result.sizeId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'vat_number':
           result.vatNumber = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'id_number':
           result.idNumber = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'number':
           result.number = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'shipping_address1':
           result.shippingAddress1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'shipping_address2':
           result.shippingAddress2 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'shipping_city':
           result.shippingCity = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'shipping_state':
           result.shippingState = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'shipping_postal_code':
           result.shippingPostalCode = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'shipping_country_id':
           result.shippingCountryId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'settings':
           result.settings.replace(serializers.deserialize(value,
-              specifiedType: const FullType(SettingsEntity)) as SettingsEntity);
+                  specifiedType: const FullType(SettingsEntity))!
+              as SettingsEntity);
           break;
         case 'last_login':
           result.lastLogin = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value3':
           result.customValue3 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'routing_id':
           result.routingId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'is_tax_exempt':
           result.isTaxExempt = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'tax_info':
           result.taxData.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TaxDataEntity)) as TaxDataEntity);
+              specifiedType: const FullType(TaxDataEntity))! as TaxDataEntity);
           break;
         case 'classification':
           result.classification = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'contacts':
           result.contacts.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(ClientContactEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(ClientContactEntity)]))!
+              as BuiltList<Object?>);
           break;
         case 'activities':
           result.activities.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(ActivityEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(ActivityEntity)]))!
+              as BuiltList<Object?>);
           break;
         case 'ledger':
           result.ledger.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(LedgerEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(LedgerEntity)]))!
+              as BuiltList<Object?>);
           break;
         case 'gateway_tokens':
           result.gatewayTokens.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(GatewayTokenEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(GatewayTokenEntity)]))!
+              as BuiltList<Object?>);
           break;
         case 'documents':
           result.documents.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(DocumentEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(DocumentEntity)]))!
+              as BuiltList<Object?>);
           break;
         case 'system_logs':
           result.systemLogs.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(SystemLogEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(SystemLogEntity)]))!
+              as BuiltList<Object?>);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'archived_at':
           result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'user_id':
           result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -558,10 +562,10 @@ class _$ClientContactEntitySerializer
   final String wireName = 'ClientContactEntity';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, ClientContactEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'first_name',
       serializers.serialize(object.firstName,
           specifiedType: const FullType(String)),
@@ -615,7 +619,7 @@ class _$ClientContactEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.isChanged;
     if (value != null) {
       result
@@ -649,103 +653,103 @@ class _$ClientContactEntitySerializer
 
   @override
   ClientContactEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ClientContactEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'first_name':
           result.firstName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'last_name':
           result.lastName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'email':
           result.email = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'password':
           result.password = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'phone':
           result.phone = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'contact_key':
           result.contactKey = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'is_primary':
           result.isPrimary = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'send_email':
           result.sendEmail = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'custom_value1':
           result.customValue1 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value2':
           result.customValue2 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value3':
           result.customValue3 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value4':
           result.customValue4 = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'last_login':
           result.lastLogin = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'link':
           result.link = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'archived_at':
           result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'user_id':
           result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -759,10 +763,10 @@ class _$ClientListResponse extends ClientListResponse {
   final BuiltList<ClientEntity> data;
 
   factory _$ClientListResponse(
-          [void Function(ClientListResponseBuilder) updates]) =>
+          [void Function(ClientListResponseBuilder)? updates]) =>
       (new ClientListResponseBuilder()..update(updates))._build();
 
-  _$ClientListResponse._({this.data}) : super._() {
+  _$ClientListResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'ClientListResponse', 'data');
   }
 
@@ -781,10 +785,10 @@ class _$ClientListResponse extends ClientListResponse {
     return other is ClientListResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -801,12 +805,12 @@ class _$ClientListResponse extends ClientListResponse {
 
 class ClientListResponseBuilder
     implements Builder<ClientListResponse, ClientListResponseBuilder> {
-  _$ClientListResponse _$v;
+  _$ClientListResponse? _$v;
 
-  ListBuilder<ClientEntity> _data;
+  ListBuilder<ClientEntity>? _data;
   ListBuilder<ClientEntity> get data =>
       _$this._data ??= new ListBuilder<ClientEntity>();
-  set data(ListBuilder<ClientEntity> data) => _$this._data = data;
+  set data(ListBuilder<ClientEntity>? data) => _$this._data = data;
 
   ClientListResponseBuilder();
 
@@ -826,7 +830,7 @@ class ClientListResponseBuilder
   }
 
   @override
-  void update(void Function(ClientListResponseBuilder) updates) {
+  void update(void Function(ClientListResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -838,7 +842,7 @@ class ClientListResponseBuilder
     try {
       _$result = _$v ?? new _$ClientListResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -858,10 +862,10 @@ class _$ClientItemResponse extends ClientItemResponse {
   final ClientEntity data;
 
   factory _$ClientItemResponse(
-          [void Function(ClientItemResponseBuilder) updates]) =>
+          [void Function(ClientItemResponseBuilder)? updates]) =>
       (new ClientItemResponseBuilder()..update(updates))._build();
 
-  _$ClientItemResponse._({this.data}) : super._() {
+  _$ClientItemResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'ClientItemResponse', 'data');
   }
 
@@ -880,10 +884,10 @@ class _$ClientItemResponse extends ClientItemResponse {
     return other is ClientItemResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -900,11 +904,11 @@ class _$ClientItemResponse extends ClientItemResponse {
 
 class ClientItemResponseBuilder
     implements Builder<ClientItemResponse, ClientItemResponseBuilder> {
-  _$ClientItemResponse _$v;
+  _$ClientItemResponse? _$v;
 
-  ClientEntityBuilder _data;
+  ClientEntityBuilder? _data;
   ClientEntityBuilder get data => _$this._data ??= new ClientEntityBuilder();
-  set data(ClientEntityBuilder data) => _$this._data = data;
+  set data(ClientEntityBuilder? data) => _$this._data = data;
 
   ClientItemResponseBuilder();
 
@@ -924,7 +928,7 @@ class ClientItemResponseBuilder
   }
 
   @override
-  void update(void Function(ClientItemResponseBuilder) updates) {
+  void update(void Function(ClientItemResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -936,7 +940,7 @@ class ClientItemResponseBuilder
     try {
       _$result = _$v ?? new _$ClientItemResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -955,7 +959,7 @@ class _$ClientEntity extends ClientEntity {
   @override
   final String groupId;
   @override
-  final int loadedAt;
+  final int? loadedAt;
   @override
   final String name;
   @override
@@ -1045,7 +1049,7 @@ class _$ClientEntity extends ClientEntity {
   @override
   final BuiltList<SystemLogEntity> systemLogs;
   @override
-  final bool isChanged;
+  final bool? isChanged;
   @override
   final int createdAt;
   @override
@@ -1053,72 +1057,72 @@ class _$ClientEntity extends ClientEntity {
   @override
   final int archivedAt;
   @override
-  final bool isDeleted;
+  final bool? isDeleted;
   @override
-  final String createdUserId;
+  final String? createdUserId;
   @override
-  final String assignedUserId;
+  final String? assignedUserId;
   @override
   final String id;
 
-  factory _$ClientEntity([void Function(ClientEntityBuilder) updates]) =>
+  factory _$ClientEntity([void Function(ClientEntityBuilder)? updates]) =>
       (new ClientEntityBuilder()..update(updates))._build();
 
   _$ClientEntity._(
-      {this.groupId,
+      {required this.groupId,
       this.loadedAt,
-      this.name,
-      this.displayName,
-      this.balance,
-      this.creditBalance,
-      this.paymentBalance,
-      this.paidToDate,
-      this.clientHash,
-      this.address1,
-      this.address2,
-      this.city,
-      this.state,
-      this.postalCode,
-      this.countryId,
-      this.phone,
-      this.privateNotes,
-      this.publicNotes,
-      this.website,
-      this.industryId,
-      this.sizeId,
-      this.vatNumber,
-      this.idNumber,
-      this.number,
-      this.shippingAddress1,
-      this.shippingAddress2,
-      this.shippingCity,
-      this.shippingState,
-      this.shippingPostalCode,
-      this.shippingCountryId,
-      this.settings,
-      this.lastLogin,
-      this.customValue1,
-      this.customValue2,
-      this.customValue3,
-      this.customValue4,
-      this.routingId,
-      this.isTaxExempt,
-      this.taxData,
-      this.classification,
-      this.contacts,
-      this.activities,
-      this.ledger,
-      this.gatewayTokens,
-      this.documents,
-      this.systemLogs,
+      required this.name,
+      required this.displayName,
+      required this.balance,
+      required this.creditBalance,
+      required this.paymentBalance,
+      required this.paidToDate,
+      required this.clientHash,
+      required this.address1,
+      required this.address2,
+      required this.city,
+      required this.state,
+      required this.postalCode,
+      required this.countryId,
+      required this.phone,
+      required this.privateNotes,
+      required this.publicNotes,
+      required this.website,
+      required this.industryId,
+      required this.sizeId,
+      required this.vatNumber,
+      required this.idNumber,
+      required this.number,
+      required this.shippingAddress1,
+      required this.shippingAddress2,
+      required this.shippingCity,
+      required this.shippingState,
+      required this.shippingPostalCode,
+      required this.shippingCountryId,
+      required this.settings,
+      required this.lastLogin,
+      required this.customValue1,
+      required this.customValue2,
+      required this.customValue3,
+      required this.customValue4,
+      required this.routingId,
+      required this.isTaxExempt,
+      required this.taxData,
+      required this.classification,
+      required this.contacts,
+      required this.activities,
+      required this.ledger,
+      required this.gatewayTokens,
+      required this.documents,
+      required this.systemLogs,
       this.isChanged,
-      this.createdAt,
-      this.updatedAt,
-      this.archivedAt,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.archivedAt,
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.id})
+      required this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(groupId, r'ClientEntity', 'groupId');
     BuiltValueNullFieldError.checkNotNull(name, r'ClientEntity', 'name');
@@ -1274,10 +1278,10 @@ class _$ClientEntity extends ClientEntity {
         id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, groupId.hashCode);
     _$hash = $jc(_$hash, name.hashCode);
@@ -1399,246 +1403,246 @@ class _$ClientEntity extends ClientEntity {
 
 class ClientEntityBuilder
     implements Builder<ClientEntity, ClientEntityBuilder> {
-  _$ClientEntity _$v;
+  _$ClientEntity? _$v;
 
-  String _groupId;
-  String get groupId => _$this._groupId;
-  set groupId(String groupId) => _$this._groupId = groupId;
+  String? _groupId;
+  String? get groupId => _$this._groupId;
+  set groupId(String? groupId) => _$this._groupId = groupId;
 
-  int _loadedAt;
-  int get loadedAt => _$this._loadedAt;
-  set loadedAt(int loadedAt) => _$this._loadedAt = loadedAt;
+  int? _loadedAt;
+  int? get loadedAt => _$this._loadedAt;
+  set loadedAt(int? loadedAt) => _$this._loadedAt = loadedAt;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
 
-  String _displayName;
-  String get displayName => _$this._displayName;
-  set displayName(String displayName) => _$this._displayName = displayName;
+  String? _displayName;
+  String? get displayName => _$this._displayName;
+  set displayName(String? displayName) => _$this._displayName = displayName;
 
-  double _balance;
-  double get balance => _$this._balance;
-  set balance(double balance) => _$this._balance = balance;
+  double? _balance;
+  double? get balance => _$this._balance;
+  set balance(double? balance) => _$this._balance = balance;
 
-  double _creditBalance;
-  double get creditBalance => _$this._creditBalance;
-  set creditBalance(double creditBalance) =>
+  double? _creditBalance;
+  double? get creditBalance => _$this._creditBalance;
+  set creditBalance(double? creditBalance) =>
       _$this._creditBalance = creditBalance;
 
-  double _paymentBalance;
-  double get paymentBalance => _$this._paymentBalance;
-  set paymentBalance(double paymentBalance) =>
+  double? _paymentBalance;
+  double? get paymentBalance => _$this._paymentBalance;
+  set paymentBalance(double? paymentBalance) =>
       _$this._paymentBalance = paymentBalance;
 
-  double _paidToDate;
-  double get paidToDate => _$this._paidToDate;
-  set paidToDate(double paidToDate) => _$this._paidToDate = paidToDate;
+  double? _paidToDate;
+  double? get paidToDate => _$this._paidToDate;
+  set paidToDate(double? paidToDate) => _$this._paidToDate = paidToDate;
 
-  String _clientHash;
-  String get clientHash => _$this._clientHash;
-  set clientHash(String clientHash) => _$this._clientHash = clientHash;
+  String? _clientHash;
+  String? get clientHash => _$this._clientHash;
+  set clientHash(String? clientHash) => _$this._clientHash = clientHash;
 
-  String _address1;
-  String get address1 => _$this._address1;
-  set address1(String address1) => _$this._address1 = address1;
+  String? _address1;
+  String? get address1 => _$this._address1;
+  set address1(String? address1) => _$this._address1 = address1;
 
-  String _address2;
-  String get address2 => _$this._address2;
-  set address2(String address2) => _$this._address2 = address2;
+  String? _address2;
+  String? get address2 => _$this._address2;
+  set address2(String? address2) => _$this._address2 = address2;
 
-  String _city;
-  String get city => _$this._city;
-  set city(String city) => _$this._city = city;
+  String? _city;
+  String? get city => _$this._city;
+  set city(String? city) => _$this._city = city;
 
-  String _state;
-  String get state => _$this._state;
-  set state(String state) => _$this._state = state;
+  String? _state;
+  String? get state => _$this._state;
+  set state(String? state) => _$this._state = state;
 
-  String _postalCode;
-  String get postalCode => _$this._postalCode;
-  set postalCode(String postalCode) => _$this._postalCode = postalCode;
+  String? _postalCode;
+  String? get postalCode => _$this._postalCode;
+  set postalCode(String? postalCode) => _$this._postalCode = postalCode;
 
-  String _countryId;
-  String get countryId => _$this._countryId;
-  set countryId(String countryId) => _$this._countryId = countryId;
+  String? _countryId;
+  String? get countryId => _$this._countryId;
+  set countryId(String? countryId) => _$this._countryId = countryId;
 
-  String _phone;
-  String get phone => _$this._phone;
-  set phone(String phone) => _$this._phone = phone;
+  String? _phone;
+  String? get phone => _$this._phone;
+  set phone(String? phone) => _$this._phone = phone;
 
-  String _privateNotes;
-  String get privateNotes => _$this._privateNotes;
-  set privateNotes(String privateNotes) => _$this._privateNotes = privateNotes;
+  String? _privateNotes;
+  String? get privateNotes => _$this._privateNotes;
+  set privateNotes(String? privateNotes) => _$this._privateNotes = privateNotes;
 
-  String _publicNotes;
-  String get publicNotes => _$this._publicNotes;
-  set publicNotes(String publicNotes) => _$this._publicNotes = publicNotes;
+  String? _publicNotes;
+  String? get publicNotes => _$this._publicNotes;
+  set publicNotes(String? publicNotes) => _$this._publicNotes = publicNotes;
 
-  String _website;
-  String get website => _$this._website;
-  set website(String website) => _$this._website = website;
+  String? _website;
+  String? get website => _$this._website;
+  set website(String? website) => _$this._website = website;
 
-  String _industryId;
-  String get industryId => _$this._industryId;
-  set industryId(String industryId) => _$this._industryId = industryId;
+  String? _industryId;
+  String? get industryId => _$this._industryId;
+  set industryId(String? industryId) => _$this._industryId = industryId;
 
-  String _sizeId;
-  String get sizeId => _$this._sizeId;
-  set sizeId(String sizeId) => _$this._sizeId = sizeId;
+  String? _sizeId;
+  String? get sizeId => _$this._sizeId;
+  set sizeId(String? sizeId) => _$this._sizeId = sizeId;
 
-  String _vatNumber;
-  String get vatNumber => _$this._vatNumber;
-  set vatNumber(String vatNumber) => _$this._vatNumber = vatNumber;
+  String? _vatNumber;
+  String? get vatNumber => _$this._vatNumber;
+  set vatNumber(String? vatNumber) => _$this._vatNumber = vatNumber;
 
-  String _idNumber;
-  String get idNumber => _$this._idNumber;
-  set idNumber(String idNumber) => _$this._idNumber = idNumber;
+  String? _idNumber;
+  String? get idNumber => _$this._idNumber;
+  set idNumber(String? idNumber) => _$this._idNumber = idNumber;
 
-  String _number;
-  String get number => _$this._number;
-  set number(String number) => _$this._number = number;
+  String? _number;
+  String? get number => _$this._number;
+  set number(String? number) => _$this._number = number;
 
-  String _shippingAddress1;
-  String get shippingAddress1 => _$this._shippingAddress1;
-  set shippingAddress1(String shippingAddress1) =>
+  String? _shippingAddress1;
+  String? get shippingAddress1 => _$this._shippingAddress1;
+  set shippingAddress1(String? shippingAddress1) =>
       _$this._shippingAddress1 = shippingAddress1;
 
-  String _shippingAddress2;
-  String get shippingAddress2 => _$this._shippingAddress2;
-  set shippingAddress2(String shippingAddress2) =>
+  String? _shippingAddress2;
+  String? get shippingAddress2 => _$this._shippingAddress2;
+  set shippingAddress2(String? shippingAddress2) =>
       _$this._shippingAddress2 = shippingAddress2;
 
-  String _shippingCity;
-  String get shippingCity => _$this._shippingCity;
-  set shippingCity(String shippingCity) => _$this._shippingCity = shippingCity;
+  String? _shippingCity;
+  String? get shippingCity => _$this._shippingCity;
+  set shippingCity(String? shippingCity) => _$this._shippingCity = shippingCity;
 
-  String _shippingState;
-  String get shippingState => _$this._shippingState;
-  set shippingState(String shippingState) =>
+  String? _shippingState;
+  String? get shippingState => _$this._shippingState;
+  set shippingState(String? shippingState) =>
       _$this._shippingState = shippingState;
 
-  String _shippingPostalCode;
-  String get shippingPostalCode => _$this._shippingPostalCode;
-  set shippingPostalCode(String shippingPostalCode) =>
+  String? _shippingPostalCode;
+  String? get shippingPostalCode => _$this._shippingPostalCode;
+  set shippingPostalCode(String? shippingPostalCode) =>
       _$this._shippingPostalCode = shippingPostalCode;
 
-  String _shippingCountryId;
-  String get shippingCountryId => _$this._shippingCountryId;
-  set shippingCountryId(String shippingCountryId) =>
+  String? _shippingCountryId;
+  String? get shippingCountryId => _$this._shippingCountryId;
+  set shippingCountryId(String? shippingCountryId) =>
       _$this._shippingCountryId = shippingCountryId;
 
-  SettingsEntityBuilder _settings;
+  SettingsEntityBuilder? _settings;
   SettingsEntityBuilder get settings =>
       _$this._settings ??= new SettingsEntityBuilder();
-  set settings(SettingsEntityBuilder settings) => _$this._settings = settings;
+  set settings(SettingsEntityBuilder? settings) => _$this._settings = settings;
 
-  int _lastLogin;
-  int get lastLogin => _$this._lastLogin;
-  set lastLogin(int lastLogin) => _$this._lastLogin = lastLogin;
+  int? _lastLogin;
+  int? get lastLogin => _$this._lastLogin;
+  set lastLogin(int? lastLogin) => _$this._lastLogin = lastLogin;
 
-  String _customValue1;
-  String get customValue1 => _$this._customValue1;
-  set customValue1(String customValue1) => _$this._customValue1 = customValue1;
+  String? _customValue1;
+  String? get customValue1 => _$this._customValue1;
+  set customValue1(String? customValue1) => _$this._customValue1 = customValue1;
 
-  String _customValue2;
-  String get customValue2 => _$this._customValue2;
-  set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+  String? _customValue2;
+  String? get customValue2 => _$this._customValue2;
+  set customValue2(String? customValue2) => _$this._customValue2 = customValue2;
 
-  String _customValue3;
-  String get customValue3 => _$this._customValue3;
-  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+  String? _customValue3;
+  String? get customValue3 => _$this._customValue3;
+  set customValue3(String? customValue3) => _$this._customValue3 = customValue3;
 
-  String _customValue4;
-  String get customValue4 => _$this._customValue4;
-  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+  String? _customValue4;
+  String? get customValue4 => _$this._customValue4;
+  set customValue4(String? customValue4) => _$this._customValue4 = customValue4;
 
-  String _routingId;
-  String get routingId => _$this._routingId;
-  set routingId(String routingId) => _$this._routingId = routingId;
+  String? _routingId;
+  String? get routingId => _$this._routingId;
+  set routingId(String? routingId) => _$this._routingId = routingId;
 
-  bool _isTaxExempt;
-  bool get isTaxExempt => _$this._isTaxExempt;
-  set isTaxExempt(bool isTaxExempt) => _$this._isTaxExempt = isTaxExempt;
+  bool? _isTaxExempt;
+  bool? get isTaxExempt => _$this._isTaxExempt;
+  set isTaxExempt(bool? isTaxExempt) => _$this._isTaxExempt = isTaxExempt;
 
-  TaxDataEntityBuilder _taxData;
+  TaxDataEntityBuilder? _taxData;
   TaxDataEntityBuilder get taxData =>
       _$this._taxData ??= new TaxDataEntityBuilder();
-  set taxData(TaxDataEntityBuilder taxData) => _$this._taxData = taxData;
+  set taxData(TaxDataEntityBuilder? taxData) => _$this._taxData = taxData;
 
-  String _classification;
-  String get classification => _$this._classification;
-  set classification(String classification) =>
+  String? _classification;
+  String? get classification => _$this._classification;
+  set classification(String? classification) =>
       _$this._classification = classification;
 
-  ListBuilder<ClientContactEntity> _contacts;
+  ListBuilder<ClientContactEntity>? _contacts;
   ListBuilder<ClientContactEntity> get contacts =>
       _$this._contacts ??= new ListBuilder<ClientContactEntity>();
-  set contacts(ListBuilder<ClientContactEntity> contacts) =>
+  set contacts(ListBuilder<ClientContactEntity>? contacts) =>
       _$this._contacts = contacts;
 
-  ListBuilder<ActivityEntity> _activities;
+  ListBuilder<ActivityEntity>? _activities;
   ListBuilder<ActivityEntity> get activities =>
       _$this._activities ??= new ListBuilder<ActivityEntity>();
-  set activities(ListBuilder<ActivityEntity> activities) =>
+  set activities(ListBuilder<ActivityEntity>? activities) =>
       _$this._activities = activities;
 
-  ListBuilder<LedgerEntity> _ledger;
+  ListBuilder<LedgerEntity>? _ledger;
   ListBuilder<LedgerEntity> get ledger =>
       _$this._ledger ??= new ListBuilder<LedgerEntity>();
-  set ledger(ListBuilder<LedgerEntity> ledger) => _$this._ledger = ledger;
+  set ledger(ListBuilder<LedgerEntity>? ledger) => _$this._ledger = ledger;
 
-  ListBuilder<GatewayTokenEntity> _gatewayTokens;
+  ListBuilder<GatewayTokenEntity>? _gatewayTokens;
   ListBuilder<GatewayTokenEntity> get gatewayTokens =>
       _$this._gatewayTokens ??= new ListBuilder<GatewayTokenEntity>();
-  set gatewayTokens(ListBuilder<GatewayTokenEntity> gatewayTokens) =>
+  set gatewayTokens(ListBuilder<GatewayTokenEntity>? gatewayTokens) =>
       _$this._gatewayTokens = gatewayTokens;
 
-  ListBuilder<DocumentEntity> _documents;
+  ListBuilder<DocumentEntity>? _documents;
   ListBuilder<DocumentEntity> get documents =>
       _$this._documents ??= new ListBuilder<DocumentEntity>();
-  set documents(ListBuilder<DocumentEntity> documents) =>
+  set documents(ListBuilder<DocumentEntity>? documents) =>
       _$this._documents = documents;
 
-  ListBuilder<SystemLogEntity> _systemLogs;
+  ListBuilder<SystemLogEntity>? _systemLogs;
   ListBuilder<SystemLogEntity> get systemLogs =>
       _$this._systemLogs ??= new ListBuilder<SystemLogEntity>();
-  set systemLogs(ListBuilder<SystemLogEntity> systemLogs) =>
+  set systemLogs(ListBuilder<SystemLogEntity>? systemLogs) =>
       _$this._systemLogs = systemLogs;
 
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+  bool? _isChanged;
+  bool? get isChanged => _$this._isChanged;
+  set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
 
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+  int? _archivedAt;
+  int? get archivedAt => _$this._archivedAt;
+  set archivedAt(int? archivedAt) => _$this._archivedAt = archivedAt;
 
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+  bool? _isDeleted;
+  bool? get isDeleted => _$this._isDeleted;
+  set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
 
-  String _createdUserId;
-  String get createdUserId => _$this._createdUserId;
-  set createdUserId(String createdUserId) =>
+  String? _createdUserId;
+  String? get createdUserId => _$this._createdUserId;
+  set createdUserId(String? createdUserId) =>
       _$this._createdUserId = createdUserId;
 
-  String _assignedUserId;
-  String get assignedUserId => _$this._assignedUserId;
-  set assignedUserId(String assignedUserId) =>
+  String? _assignedUserId;
+  String? get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String? assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   ClientEntityBuilder() {
     ClientEntity._initializeBuilder(this);
@@ -1713,7 +1717,7 @@ class ClientEntityBuilder
   }
 
   @override
-  void update(void Function(ClientEntityBuilder) updates) {
+  void update(void Function(ClientEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -1788,7 +1792,7 @@ class ClientEntityBuilder
               assignedUserId: assignedUserId,
               id: BuiltValueNullFieldError.checkNotNull(id, r'ClientEntity', 'id'));
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'settings';
         settings.build();
@@ -1849,7 +1853,7 @@ class _$ClientContactEntity extends ClientContactEntity {
   @override
   final String link;
   @override
-  final bool isChanged;
+  final bool? isChanged;
   @override
   final int createdAt;
   @override
@@ -1857,41 +1861,41 @@ class _$ClientContactEntity extends ClientContactEntity {
   @override
   final int archivedAt;
   @override
-  final bool isDeleted;
+  final bool? isDeleted;
   @override
-  final String createdUserId;
+  final String? createdUserId;
   @override
-  final String assignedUserId;
+  final String? assignedUserId;
   @override
   final String id;
 
   factory _$ClientContactEntity(
-          [void Function(ClientContactEntityBuilder) updates]) =>
+          [void Function(ClientContactEntityBuilder)? updates]) =>
       (new ClientContactEntityBuilder()..update(updates))._build();
 
   _$ClientContactEntity._(
-      {this.firstName,
-      this.lastName,
-      this.email,
-      this.password,
-      this.phone,
-      this.contactKey,
-      this.isPrimary,
-      this.sendEmail,
-      this.customValue1,
-      this.customValue2,
-      this.customValue3,
-      this.customValue4,
-      this.lastLogin,
-      this.link,
+      {required this.firstName,
+      required this.lastName,
+      required this.email,
+      required this.password,
+      required this.phone,
+      required this.contactKey,
+      required this.isPrimary,
+      required this.sendEmail,
+      required this.customValue1,
+      required this.customValue2,
+      required this.customValue3,
+      required this.customValue4,
+      required this.lastLogin,
+      required this.link,
       this.isChanged,
-      this.createdAt,
-      this.updatedAt,
-      this.archivedAt,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.archivedAt,
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.id})
+      required this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         firstName, r'ClientContactEntity', 'firstName');
@@ -1966,10 +1970,10 @@ class _$ClientContactEntity extends ClientContactEntity {
         id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, firstName.hashCode);
     _$hash = $jc(_$hash, lastName.hashCode);
@@ -2028,97 +2032,97 @@ class _$ClientContactEntity extends ClientContactEntity {
 
 class ClientContactEntityBuilder
     implements Builder<ClientContactEntity, ClientContactEntityBuilder> {
-  _$ClientContactEntity _$v;
+  _$ClientContactEntity? _$v;
 
-  String _firstName;
-  String get firstName => _$this._firstName;
-  set firstName(String firstName) => _$this._firstName = firstName;
+  String? _firstName;
+  String? get firstName => _$this._firstName;
+  set firstName(String? firstName) => _$this._firstName = firstName;
 
-  String _lastName;
-  String get lastName => _$this._lastName;
-  set lastName(String lastName) => _$this._lastName = lastName;
+  String? _lastName;
+  String? get lastName => _$this._lastName;
+  set lastName(String? lastName) => _$this._lastName = lastName;
 
-  String _email;
-  String get email => _$this._email;
-  set email(String email) => _$this._email = email;
+  String? _email;
+  String? get email => _$this._email;
+  set email(String? email) => _$this._email = email;
 
-  String _password;
-  String get password => _$this._password;
-  set password(String password) => _$this._password = password;
+  String? _password;
+  String? get password => _$this._password;
+  set password(String? password) => _$this._password = password;
 
-  String _phone;
-  String get phone => _$this._phone;
-  set phone(String phone) => _$this._phone = phone;
+  String? _phone;
+  String? get phone => _$this._phone;
+  set phone(String? phone) => _$this._phone = phone;
 
-  String _contactKey;
-  String get contactKey => _$this._contactKey;
-  set contactKey(String contactKey) => _$this._contactKey = contactKey;
+  String? _contactKey;
+  String? get contactKey => _$this._contactKey;
+  set contactKey(String? contactKey) => _$this._contactKey = contactKey;
 
-  bool _isPrimary;
-  bool get isPrimary => _$this._isPrimary;
-  set isPrimary(bool isPrimary) => _$this._isPrimary = isPrimary;
+  bool? _isPrimary;
+  bool? get isPrimary => _$this._isPrimary;
+  set isPrimary(bool? isPrimary) => _$this._isPrimary = isPrimary;
 
-  bool _sendEmail;
-  bool get sendEmail => _$this._sendEmail;
-  set sendEmail(bool sendEmail) => _$this._sendEmail = sendEmail;
+  bool? _sendEmail;
+  bool? get sendEmail => _$this._sendEmail;
+  set sendEmail(bool? sendEmail) => _$this._sendEmail = sendEmail;
 
-  String _customValue1;
-  String get customValue1 => _$this._customValue1;
-  set customValue1(String customValue1) => _$this._customValue1 = customValue1;
+  String? _customValue1;
+  String? get customValue1 => _$this._customValue1;
+  set customValue1(String? customValue1) => _$this._customValue1 = customValue1;
 
-  String _customValue2;
-  String get customValue2 => _$this._customValue2;
-  set customValue2(String customValue2) => _$this._customValue2 = customValue2;
+  String? _customValue2;
+  String? get customValue2 => _$this._customValue2;
+  set customValue2(String? customValue2) => _$this._customValue2 = customValue2;
 
-  String _customValue3;
-  String get customValue3 => _$this._customValue3;
-  set customValue3(String customValue3) => _$this._customValue3 = customValue3;
+  String? _customValue3;
+  String? get customValue3 => _$this._customValue3;
+  set customValue3(String? customValue3) => _$this._customValue3 = customValue3;
 
-  String _customValue4;
-  String get customValue4 => _$this._customValue4;
-  set customValue4(String customValue4) => _$this._customValue4 = customValue4;
+  String? _customValue4;
+  String? get customValue4 => _$this._customValue4;
+  set customValue4(String? customValue4) => _$this._customValue4 = customValue4;
 
-  int _lastLogin;
-  int get lastLogin => _$this._lastLogin;
-  set lastLogin(int lastLogin) => _$this._lastLogin = lastLogin;
+  int? _lastLogin;
+  int? get lastLogin => _$this._lastLogin;
+  set lastLogin(int? lastLogin) => _$this._lastLogin = lastLogin;
 
-  String _link;
-  String get link => _$this._link;
-  set link(String link) => _$this._link = link;
+  String? _link;
+  String? get link => _$this._link;
+  set link(String? link) => _$this._link = link;
 
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+  bool? _isChanged;
+  bool? get isChanged => _$this._isChanged;
+  set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
 
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+  int? _archivedAt;
+  int? get archivedAt => _$this._archivedAt;
+  set archivedAt(int? archivedAt) => _$this._archivedAt = archivedAt;
 
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+  bool? _isDeleted;
+  bool? get isDeleted => _$this._isDeleted;
+  set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
 
-  String _createdUserId;
-  String get createdUserId => _$this._createdUserId;
-  set createdUserId(String createdUserId) =>
+  String? _createdUserId;
+  String? get createdUserId => _$this._createdUserId;
+  set createdUserId(String? createdUserId) =>
       _$this._createdUserId = createdUserId;
 
-  String _assignedUserId;
-  String get assignedUserId => _$this._assignedUserId;
-  set assignedUserId(String assignedUserId) =>
+  String? _assignedUserId;
+  String? get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String? assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   ClientContactEntityBuilder();
 
@@ -2159,7 +2163,7 @@ class ClientContactEntityBuilder
   }
 
   @override
-  void update(void Function(ClientContactEntityBuilder) updates) {
+  void update(void Function(ClientContactEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

@@ -13,23 +13,23 @@ import 'package:invoiceninja_flutter/utils/colors.dart';
 
 class AppBorder extends StatelessWidget {
   const AppBorder({
-    @required this.child,
+    required this.child,
     this.isTop,
     this.isBottom,
     this.isLeft,
     this.hideBorder = false,
   });
 
-  final Widget child;
-  final bool isTop;
-  final bool isBottom;
-  final bool isLeft;
+  final Widget? child;
+  final bool? isTop;
+  final bool? isBottom;
+  final bool? isLeft;
   final bool hideBorder;
 
   @override
   Widget build(BuildContext context) {
     if (hideBorder) {
-      return child;
+      return child!;
     }
 
     final Store<AppState> store = StoreProvider.of<AppState>(context);
@@ -48,26 +48,26 @@ class AppBorder extends StatelessWidget {
               isAllSides ? BorderRadius.circular(kBorderRadius) : null,
           border: isAllSides
               ? Border.all(
-                  width: borderWidth,
-                  color: color,
+                  width: borderWidth as double,
+                  color: color!,
                 )
               : Border(
                   top: isTop == true
                       ? BorderSide(
-                          width: borderWidth,
-                          color: color,
+                          width: borderWidth as double,
+                          color: color!,
                         )
                       : BorderSide.none,
                   bottom: isBottom == true
                       ? BorderSide(
-                          width: borderWidth,
-                          color: color,
+                          width: borderWidth as double,
+                          color: color!,
                         )
                       : BorderSide.none,
                   left: isLeft == true
                       ? BorderSide(
-                          width: borderWidth,
-                          color: color,
+                          width: borderWidth as double,
+                          color: color!,
                         )
                       : BorderSide.none,
                 ),

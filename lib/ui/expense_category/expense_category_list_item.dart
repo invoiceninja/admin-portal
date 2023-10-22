@@ -14,7 +14,7 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class ExpenseCategoryListItem extends StatelessWidget {
   const ExpenseCategoryListItem({
-    @required this.expenseCategory,
+    required this.expenseCategory,
     this.filter = '',
     this.onTap,
     this.onLongPress,
@@ -22,10 +22,10 @@ class ExpenseCategoryListItem extends StatelessWidget {
     this.showCheck = false,
   });
 
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onLongPress;
   final ExpenseCategoryEntity expenseCategory;
-  final String filter;
+  final String? filter;
   final bool isChecked;
   final bool showCheck;
 
@@ -36,7 +36,7 @@ class ExpenseCategoryListItem extends StatelessWidget {
     final uiState = state.uiState;
     final expenseCategoryUIState = uiState.expenseCategoryUIState;
 
-    final filterMatch = filter != null && filter.isNotEmpty
+    final filterMatch = filter != null && filter!.isNotEmpty
         ? expenseCategory.matchesFilterValue(filter)
         : null;
     final subtitle = filterMatch;
@@ -47,14 +47,14 @@ class ExpenseCategoryListItem extends StatelessWidget {
       isSelected: !showCheck &&
           expenseCategory.id ==
               (uiState.isEditing
-                  ? expenseCategoryUIState.editing.id
+                  ? expenseCategoryUIState.editing!.id
                   : expenseCategoryUIState.selectedId),
       showMultiselect: showCheck,
       child: ListTile(
         onTap: () =>
-            onTap != null ? onTap() : selectEntity(entity: expenseCategory),
+            onTap != null ? onTap!() : selectEntity(entity: expenseCategory),
         onLongPress: () => onLongPress != null
-            ? onLongPress()
+            ? onLongPress!()
             : selectEntity(entity: expenseCategory, longPress: true),
         leading: showCheck
             ? IgnorePointer(
@@ -76,7 +76,7 @@ class ExpenseCategoryListItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Text(formatNumber(expenseCategory.listDisplayAmount, context),
+              Text(formatNumber(expenseCategory.listDisplayAmount, context)!,
                   style: Theme.of(context).textTheme.titleMedium),
             ],
           ),

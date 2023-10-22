@@ -20,9 +20,9 @@ class _$TokenListResponseSerializer
   final String wireName = 'TokenListResponse';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, TokenListResponse object,
+  Iterable<Object?> serialize(Serializers serializers, TokenListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType:
@@ -34,21 +34,21 @@ class _$TokenListResponseSerializer
 
   @override
   TokenListResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TokenListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(TokenEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(TokenEntity)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -65,9 +65,9 @@ class _$TokenItemResponseSerializer
   final String wireName = 'TokenItemResponse';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, TokenItemResponse object,
+  Iterable<Object?> serialize(Serializers serializers, TokenItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(TokenEntity)),
@@ -78,19 +78,19 @@ class _$TokenItemResponseSerializer
 
   @override
   TokenItemResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TokenItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-              specifiedType: const FullType(TokenEntity)) as TokenEntity);
+              specifiedType: const FullType(TokenEntity))! as TokenEntity);
           break;
       }
     }
@@ -106,9 +106,9 @@ class _$TokenEntitySerializer implements StructuredSerializer<TokenEntity> {
   final String wireName = 'TokenEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, TokenEntity object,
+  Iterable<Object?> serialize(Serializers serializers, TokenEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'is_system',
       serializers.serialize(object.isSystem,
           specifiedType: const FullType(bool)),
@@ -129,7 +129,7 @@ class _$TokenEntitySerializer implements StructuredSerializer<TokenEntity> {
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.isChanged;
     if (value != null) {
       result
@@ -162,59 +162,59 @@ class _$TokenEntitySerializer implements StructuredSerializer<TokenEntity> {
   }
 
   @override
-  TokenEntity deserialize(Serializers serializers, Iterable<Object> serialized,
+  TokenEntity deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TokenEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'is_system':
           result.isSystem = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'token':
           result.token = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'name':
           result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'archived_at':
           result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'user_id':
           result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -228,10 +228,10 @@ class _$TokenListResponse extends TokenListResponse {
   final BuiltList<TokenEntity> data;
 
   factory _$TokenListResponse(
-          [void Function(TokenListResponseBuilder) updates]) =>
+          [void Function(TokenListResponseBuilder)? updates]) =>
       (new TokenListResponseBuilder()..update(updates))._build();
 
-  _$TokenListResponse._({this.data}) : super._() {
+  _$TokenListResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'TokenListResponse', 'data');
   }
 
@@ -249,10 +249,10 @@ class _$TokenListResponse extends TokenListResponse {
     return other is TokenListResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -269,12 +269,12 @@ class _$TokenListResponse extends TokenListResponse {
 
 class TokenListResponseBuilder
     implements Builder<TokenListResponse, TokenListResponseBuilder> {
-  _$TokenListResponse _$v;
+  _$TokenListResponse? _$v;
 
-  ListBuilder<TokenEntity> _data;
+  ListBuilder<TokenEntity>? _data;
   ListBuilder<TokenEntity> get data =>
       _$this._data ??= new ListBuilder<TokenEntity>();
-  set data(ListBuilder<TokenEntity> data) => _$this._data = data;
+  set data(ListBuilder<TokenEntity>? data) => _$this._data = data;
 
   TokenListResponseBuilder();
 
@@ -294,7 +294,7 @@ class TokenListResponseBuilder
   }
 
   @override
-  void update(void Function(TokenListResponseBuilder) updates) {
+  void update(void Function(TokenListResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -306,7 +306,7 @@ class TokenListResponseBuilder
     try {
       _$result = _$v ?? new _$TokenListResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -326,10 +326,10 @@ class _$TokenItemResponse extends TokenItemResponse {
   final TokenEntity data;
 
   factory _$TokenItemResponse(
-          [void Function(TokenItemResponseBuilder) updates]) =>
+          [void Function(TokenItemResponseBuilder)? updates]) =>
       (new TokenItemResponseBuilder()..update(updates))._build();
 
-  _$TokenItemResponse._({this.data}) : super._() {
+  _$TokenItemResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(data, r'TokenItemResponse', 'data');
   }
 
@@ -347,10 +347,10 @@ class _$TokenItemResponse extends TokenItemResponse {
     return other is TokenItemResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -367,11 +367,11 @@ class _$TokenItemResponse extends TokenItemResponse {
 
 class TokenItemResponseBuilder
     implements Builder<TokenItemResponse, TokenItemResponseBuilder> {
-  _$TokenItemResponse _$v;
+  _$TokenItemResponse? _$v;
 
-  TokenEntityBuilder _data;
+  TokenEntityBuilder? _data;
   TokenEntityBuilder get data => _$this._data ??= new TokenEntityBuilder();
-  set data(TokenEntityBuilder data) => _$this._data = data;
+  set data(TokenEntityBuilder? data) => _$this._data = data;
 
   TokenItemResponseBuilder();
 
@@ -391,7 +391,7 @@ class TokenItemResponseBuilder
   }
 
   @override
-  void update(void Function(TokenItemResponseBuilder) updates) {
+  void update(void Function(TokenItemResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -403,7 +403,7 @@ class TokenItemResponseBuilder
     try {
       _$result = _$v ?? new _$TokenItemResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -426,7 +426,7 @@ class _$TokenEntity extends TokenEntity {
   @override
   final String name;
   @override
-  final bool isChanged;
+  final bool? isChanged;
   @override
   final int createdAt;
   @override
@@ -434,29 +434,29 @@ class _$TokenEntity extends TokenEntity {
   @override
   final int archivedAt;
   @override
-  final bool isDeleted;
+  final bool? isDeleted;
   @override
-  final String createdUserId;
+  final String? createdUserId;
   @override
-  final String assignedUserId;
+  final String? assignedUserId;
   @override
   final String id;
 
-  factory _$TokenEntity([void Function(TokenEntityBuilder) updates]) =>
+  factory _$TokenEntity([void Function(TokenEntityBuilder)? updates]) =>
       (new TokenEntityBuilder()..update(updates))._build();
 
   _$TokenEntity._(
-      {this.isSystem,
-      this.token,
-      this.name,
+      {required this.isSystem,
+      required this.token,
+      required this.name,
       this.isChanged,
-      this.createdAt,
-      this.updatedAt,
-      this.archivedAt,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.archivedAt,
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.id})
+      required this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(isSystem, r'TokenEntity', 'isSystem');
     BuiltValueNullFieldError.checkNotNull(token, r'TokenEntity', 'token');
@@ -494,10 +494,10 @@ class _$TokenEntity extends TokenEntity {
         id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, isSystem.hashCode);
     _$hash = $jc(_$hash, token.hashCode);
@@ -533,53 +533,53 @@ class _$TokenEntity extends TokenEntity {
 }
 
 class TokenEntityBuilder implements Builder<TokenEntity, TokenEntityBuilder> {
-  _$TokenEntity _$v;
+  _$TokenEntity? _$v;
 
-  bool _isSystem;
-  bool get isSystem => _$this._isSystem;
-  set isSystem(bool isSystem) => _$this._isSystem = isSystem;
+  bool? _isSystem;
+  bool? get isSystem => _$this._isSystem;
+  set isSystem(bool? isSystem) => _$this._isSystem = isSystem;
 
-  String _token;
-  String get token => _$this._token;
-  set token(String token) => _$this._token = token;
+  String? _token;
+  String? get token => _$this._token;
+  set token(String? token) => _$this._token = token;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
 
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+  bool? _isChanged;
+  bool? get isChanged => _$this._isChanged;
+  set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
 
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+  int? _archivedAt;
+  int? get archivedAt => _$this._archivedAt;
+  set archivedAt(int? archivedAt) => _$this._archivedAt = archivedAt;
 
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+  bool? _isDeleted;
+  bool? get isDeleted => _$this._isDeleted;
+  set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
 
-  String _createdUserId;
-  String get createdUserId => _$this._createdUserId;
-  set createdUserId(String createdUserId) =>
+  String? _createdUserId;
+  String? get createdUserId => _$this._createdUserId;
+  set createdUserId(String? createdUserId) =>
       _$this._createdUserId = createdUserId;
 
-  String _assignedUserId;
-  String get assignedUserId => _$this._assignedUserId;
-  set assignedUserId(String assignedUserId) =>
+  String? _assignedUserId;
+  String? get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String? assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   TokenEntityBuilder();
 
@@ -609,7 +609,7 @@ class TokenEntityBuilder implements Builder<TokenEntity, TokenEntityBuilder> {
   }
 
   @override
-  void update(void Function(TokenEntityBuilder) updates) {
+  void update(void Function(TokenEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

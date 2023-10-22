@@ -43,7 +43,7 @@ Middleware<AppState> _createViewDashboard() {
 
           if (store.state.prefState.isMobile &&
               store.state.userCompany.canViewDashboard) {
-            navigatorKey.currentState.pushNamedAndRemoveUntil(
+            navigatorKey.currentState!.pushNamedAndRemoveUntil(
                 DashboardScreenBuilder.route, (Route<dynamic> route) => false);
           }
         });

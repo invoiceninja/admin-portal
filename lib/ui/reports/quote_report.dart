@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
@@ -77,7 +78,7 @@ enum QuoteReportFields {
 }
 
 var memoizedQuoteReport = memo7((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, InvoiceEntity> quoteMap,
   BuiltMap<String, ClientEntity> clientMap,
@@ -85,7 +86,7 @@ var memoizedQuoteReport = memo7((
   BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) =>
-    quoteReport(userCompany, reportsUIState, quoteMap, clientMap, vendorMap,
+    quoteReport(userCompany!, reportsUIState, quoteMap, clientMap, vendorMap,
         userMap, staticState));
 
 ReportResult quoteReport(
@@ -101,11 +102,10 @@ ReportResult quoteReport(
   final List<BaseEntity> entities = [];
   BuiltList<QuoteReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
-  final quoteReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportQuote)
-          ? reportSettings[kReportQuote]
-          : ReportSettingsEntity();
+  final reportSettings = userCompany.settings.reportSettings;
+  final quoteReportSettings = reportSettings.containsKey(kReportQuote)
+      ? reportSettings[kReportQuote]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     QuoteReportFields.number,
@@ -118,14 +118,14 @@ ReportResult quoteReport(
   if (quoteReportSettings.columns.isNotEmpty) {
     columns = BuiltList(quoteReportSettings.columns
         .map((e) => EnumUtils.fromString(QuoteReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
   }
 
   for (var quoteId in quoteMap.keys) {
-    final quote = quoteMap[quoteId];
+    final quote = quoteMap[quoteId]!;
     final client = clientMap[quote.clientId] ?? ClientEntity();
 
     if (quote.invitations.isEmpty) {
@@ -135,8 +135,8 @@ ReportResult quoteReport(
     final contact = client.getContact(quote.invitations.first.clientContactId);
     //final vendor = vendorMap[quote.vendorId];
 
-    if ((quote.isDeleted && !userCompany.company.reportIncludeDeleted) ||
-        client.isDeleted) {
+    if ((quote.isDeleted! && !userCompany.company.reportIncludeDeleted) ||
+        client.isDeleted!) {
       continue;
     }
 
@@ -319,13 +319,13 @@ ReportResult quoteReport(
           value = client.phone;
           break;
         case QuoteReportFields.contact_email:
-          value = contact?.email ?? '';
+          value = contact.email;
           break;
         case QuoteReportFields.contact_name:
-          value = contact?.fullName ?? '';
+          value = contact.fullName;
           break;
         case QuoteReportFields.contact_phone:
-          value = contact?.phone ?? '';
+          value = contact.phone;
           break;
         case QuoteReportFields.client_website:
           value = client.website;
@@ -358,14 +358,14 @@ ReportResult quoteReport(
         userCompany: userCompany,
         reportsUIState: reportsUIState,
         column: EnumUtils.parse(column),
-      )) {
+      )!) {
         skip = true;
       }
 
       if (value.runtimeType == bool) {
         row.add(quote.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        String currencyId = client.currencyId;
+        String? currencyId = client.currencyId;
         if ([
           QuoteReportFields.converted_amount,
         ].contains(column)) {
@@ -389,7 +389,7 @@ ReportResult quoteReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, quoteReportSettings, selectedColumns));
+      sortReportTableRows(rowA, rowB, quoteReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns:

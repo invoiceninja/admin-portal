@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class GroupListBuilder extends StatelessWidget {
-  const GroupListBuilder({Key key}) : super(key: key);
+  const GroupListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +43,12 @@ class GroupListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final groupId = viewModel.groupList[index];
-              final group = viewModel.groupMap[groupId];
+              final group = viewModel.groupMap[groupId]!;
               final listState = state.getListState(EntityType.group);
               final isInMultiselect = listState.isInMultiselect();
 
               return GroupListItem(
-                user: viewModel.userCompany.user,
+                user: viewModel.userCompany!.user,
                 filter: viewModel.filter,
                 group: group,
                 isChecked: isInMultiselect && listState.isSelected(group.id),
@@ -61,25 +61,25 @@ class GroupListBuilder extends StatelessWidget {
 
 class GroupListVM {
   GroupListVM({
-    @required this.state,
-    @required this.userCompany,
-    @required this.groupList,
-    @required this.groupMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.userCompany,
+    required this.groupList,
+    required this.groupMap,
+    required this.filter,
+    required this.isLoading,
+    required this.listState,
+    required this.onRefreshed,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
   });
 
   static GroupListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
       if (store.state.isLoading) {
-        return Future<Null>(null);
+        return Future<Null>.value();
       }
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -105,11 +105,11 @@ class GroupListVM {
   }
 
   final AppState state;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> groupList;
   final BuiltMap<String, GroupEntity> groupMap;
   final ListUIState listState;
-  final String filter;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(String) onSortColumn;

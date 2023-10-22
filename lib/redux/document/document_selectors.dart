@@ -17,7 +17,7 @@ List<String> dropdownDocumentsSelector(
     BuiltList<String> documentList,
     String clientId) {
   final list = documentList.where((documentId) {
-    final document = documentMap[documentId];
+    final document = documentMap[documentId]!;
     /*
     if (clientId != null && clientId > 0 && document.clientId != clientId) {
       return false;
@@ -27,7 +27,7 @@ List<String> dropdownDocumentsSelector(
   }).toList();
 
   list.sort((documentAId, documentBId) {
-    final documentA = documentMap[documentAId];
+    final documentA = documentMap[documentAId]!;
     final documentB = documentMap[documentBId];
     return documentA.compareTo(documentB, DocumentFields.name, true);
   });
@@ -62,15 +62,15 @@ List<String> filteredDocumentsSelector(
 
     if (filterEntityType != null) {
       if (filterEntityType == EntityType.document &&
-          document.id != filterEntityId) {
+          document!.id != filterEntityId) {
         return false;
-      } else if (document.parentType != filterEntityType ||
+      } else if (document!.parentType != filterEntityType ||
           document.parentId != filterEntityId) {
         return false;
       }
     }
 
-    if (!document.matchesStates(documentListState.stateFilters)) {
+    if (!document!.matchesStates(documentListState.stateFilters)) {
       return false;
     }
     if (!document.matchesStatuses(documentListState.statusFilters)) {
@@ -80,7 +80,7 @@ List<String> filteredDocumentsSelector(
   }).toList();
 
   list.sort((documentAId, documentBId) {
-    final documentA = documentMap[documentAId];
+    final documentA = documentMap[documentAId]!;
     final documentB = documentMap[documentBId];
     return documentA.compareTo(documentB, documentListState.sortField,
         documentListState.sortAscending);
@@ -98,11 +98,11 @@ List<String> invoiceDocumentsSelector(
     BuiltMap<String, DocumentEntity> documentMap,
     BuiltMap<String, ExpenseEntity> expenseMap,
     InvoiceEntity entity) {
-  final map = <String, List<String>>{};
+  final map = <String?, List<String>>{};
   expenseMap.forEach((int, expense) {
     if (expense.invoiceDocuments) {
       if (map.containsKey(expense.invoiceId)) {
-        map[expense.invoiceId].add(expense.id);
+        map[expense.invoiceId]!.add(expense.id);
       } else {
         map[expense.invoiceId] = [expense.id];
       }
@@ -110,7 +110,7 @@ List<String> invoiceDocumentsSelector(
   });
 
   final list = documentMap.keys.where((documentId) {
-    final document = documentMap[documentId];
+    final document = documentMap[documentId]!;
 
     if (!document.isActive) {
       return false;
@@ -129,7 +129,7 @@ List<String> invoiceDocumentsSelector(
   }).toList();
 
   list.sort((documentAId, documentBId) {
-    final documentA = documentMap[documentAId];
+    final documentA = documentMap[documentAId]!;
     final documentB = documentMap[documentBId];
     return documentA.compareTo(documentB, DocumentFields.id, true);
   });

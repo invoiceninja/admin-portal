@@ -26,9 +26,9 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class CompanyGatewayView extends StatefulWidget {
   const CompanyGatewayView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final CompanyGatewayViewVM viewModel;
@@ -40,7 +40,7 @@ class CompanyGatewayView extends StatefulWidget {
 
 class _CompanyGatewayViewState extends State<CompanyGatewayView>
     with SingleTickerProviderStateMixin {
-  TabController _controller;
+  TabController? _controller;
 
   @override
   void initState() {
@@ -50,13 +50,13 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView>
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final companyGateway = viewModel.companyGateway;
 
@@ -94,9 +94,9 @@ class _CompanyGatewayViewState extends State<CompanyGatewayView>
 
 class _CompanyGatewayOverview extends StatelessWidget {
   const _CompanyGatewayOverview({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final bool isFilter;
@@ -106,8 +106,8 @@ class _CompanyGatewayOverview extends StatelessWidget {
   Widget build(BuildContext context) {
     final state = viewModel.state;
     final companyGateway = viewModel.companyGateway;
-    final gateway = state.staticState.gatewayMap[companyGateway.gatewayId];
-    final localization = AppLocalization.of(context);
+    final gateway = state.staticState.gatewayMap[companyGateway.gatewayId]!;
+    final localization = AppLocalization.of(context)!;
     final processed = memoizedCalculateCompanyGatewayProcessed(
         companyGateway.id, viewModel.state.paymentState.map);
     final webhookUrl =
@@ -121,23 +121,25 @@ class _CompanyGatewayOverview extends StatelessWidget {
             companyGateway.getSettingsForGatewayTypeId(gatewayTypeId);
         if (settings.feeAmount != 0) {
           fields[localization.feeAmount] =
-              formatNumber(settings.feeAmount, context);
+              formatNumber(settings.feeAmount, context) ?? '';
         }
         if (settings.feePercent != 0) {
           fields[localization.feePercent] = formatNumber(
-              settings.feePercent, context,
-              formatNumberType: FormatNumberType.percent);
+                  settings.feePercent, context,
+                  formatNumberType: FormatNumberType.percent) ??
+              '';
         }
         if (settings.feeCap != 0) {
-          fields[localization.feeCap] = formatNumber(settings.feeCap, context);
+          fields[localization.feeCap] =
+              formatNumber(settings.feeCap, context) ?? '';
         }
         if (settings.minLimit != -1) {
           fields[localization.minLimit] =
-              formatNumber(settings.minLimit, context);
+              formatNumber(settings.minLimit, context) ?? '';
         }
         if (settings.maxLimit != -1) {
           fields[localization.maxLimit] =
-              formatNumber(settings.maxLimit, context);
+              formatNumber(settings.maxLimit, context) ?? '';
         }
         if (fields.isNotEmpty) {
           allFields[gatewayTypeId] = fields;
@@ -204,7 +206,7 @@ class _CompanyGatewayOverview extends StatelessWidget {
         ),
         ListDivider(),
       ],
-      if (gateway?.supportsTokenBilling == true) ...[
+      if (gateway.supportsTokenBilling == true) ...[
         EntitiesListTile(
           hideNew: true,
           entity: companyGateway,
@@ -242,8 +244,8 @@ class _CompanyGatewayOverview extends StatelessWidget {
 
 class _CompanyGatewaySystemLog extends StatefulWidget {
   const _CompanyGatewaySystemLog({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final CompanyGatewayViewVM viewModel;

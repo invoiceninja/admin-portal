@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorListBuilder extends StatelessWidget {
-  const VendorListBuilder({Key key}) : super(key: key);
+  const VendorListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class VendorListBuilder extends StatelessWidget {
           onSortColumn: viewModel.onSortColumn,
           itemBuilder: (BuildContext context, index) {
             final vendorId = viewModel.vendorList[index];
-            final vendor = viewModel.vendorMap[vendorId];
+            final vendor = viewModel.vendorMap[vendorId]!;
             final state = viewModel.state;
             final listUIState = state.getListState(EntityType.vendor);
 
@@ -61,25 +61,25 @@ class VendorListBuilder extends StatelessWidget {
 
 class VendorListVM {
   VendorListVM({
-    @required this.state,
-    @required this.vendorList,
-    @required this.vendorMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.tableColumns,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.vendorList,
+    required this.vendorMap,
+    required this.filter,
+    required this.isLoading,
+    required this.listState,
+    required this.onRefreshed,
+    required this.tableColumns,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
   });
 
   static VendorListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
       if (store.state.isLoading) {
-        return Future<Null>(null);
+        return Future<Null>.value();
       }
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -101,7 +101,7 @@ class VendorListVM {
       filter: state.vendorUIState.listUIState.filter,
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
-          state.userCompany.settings?.getTableColumns(EntityType.vendor) ??
+          state.userCompany.settings.getTableColumns(EntityType.vendor) ??
               VendorPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortVendors(field)),
       onClearMultielsect: () => store.dispatch(ClearVendorMultiselect()),
@@ -112,7 +112,7 @@ class VendorListVM {
   final List<String> vendorList;
   final BuiltMap<String, VendorEntity> vendorMap;
   final ListUIState listState;
-  final String filter;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final List<String> tableColumns;

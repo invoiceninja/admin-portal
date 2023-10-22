@@ -10,8 +10,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentTermView extends StatefulWidget {
   const PaymentTermView({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final PaymentTermViewVM viewModel;
@@ -25,7 +25,7 @@ class _PaymentTermViewState extends State<PaymentTermView> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final paymentTerm = viewModel.paymentTerm;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     return ViewScaffold(
       entity: paymentTerm,

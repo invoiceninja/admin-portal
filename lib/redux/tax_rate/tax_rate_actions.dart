@@ -24,19 +24,19 @@ class ViewTaxRateList implements PersistUI {
 
 class ViewTaxRate implements PersistUI {
   ViewTaxRate({
-    @required this.taxRateId,
+    required this.taxRateId,
     this.force = false,
   });
 
-  final String taxRateId;
+  final String? taxRateId;
   final bool force;
 }
 
 class EditTaxRate implements PersistUI {
-  EditTaxRate({@required this.taxRate, this.completer, this.force = false});
+  EditTaxRate({required this.taxRate, this.completer, this.force = false});
 
   final TaxRateEntity taxRate;
-  final Completer completer;
+  final Completer? completer;
   final bool force;
 }
 
@@ -49,21 +49,21 @@ class UpdateTaxRate implements PersistUI {
 class LoadTaxRate {
   LoadTaxRate({this.completer, this.taxRateId});
 
-  final Completer completer;
-  final String taxRateId;
+  final Completer? completer;
+  final String? taxRateId;
 }
 
 class LoadTaxRateActivity {
   LoadTaxRateActivity({this.completer, this.taxRateId});
 
-  final Completer completer;
-  final String taxRateId;
+  final Completer? completer;
+  final String? taxRateId;
 }
 
 class LoadTaxRates {
   LoadTaxRates({this.completer});
 
-  final Completer completer;
+  final Completer? completer;
 }
 
 class LoadTaxRateRequest implements StartLoading {}
@@ -117,8 +117,8 @@ class LoadTaxRatesSuccess implements StopLoading {
 class SaveTaxRateRequest implements StartSaving {
   SaveTaxRateRequest({this.completer, this.taxRate});
 
-  final Completer completer;
-  final TaxRateEntity taxRate;
+  final Completer? completer;
+  final TaxRateEntity? taxRate;
 }
 
 class SaveTaxRateSuccess implements StopSaving, PersistData, PersistUI {
@@ -155,7 +155,7 @@ class ArchiveTaxRatesSuccess implements StopSaving, PersistData {
 class ArchiveTaxRateFailure implements StopSaving {
   ArchiveTaxRateFailure(this.taxRates);
 
-  final List<TaxRateEntity> taxRates;
+  final List<TaxRateEntity?> taxRates;
 }
 
 class DeleteTaxRateRequest implements StartSaving {
@@ -174,7 +174,7 @@ class DeleteTaxRatesSuccess implements StopSaving, PersistData {
 class DeleteTaxRateFailure implements StopSaving {
   DeleteTaxRateFailure(this.taxRates);
 
-  final List<TaxRateEntity> taxRates;
+  final List<TaxRateEntity?> taxRates;
 }
 
 class RestoreTaxRateRequest implements StartSaving {
@@ -193,13 +193,13 @@ class RestoreTaxRatesSuccess implements StopSaving, PersistData {
 class RestoreTaxRateFailure implements StopSaving {
   RestoreTaxRateFailure(this.taxRates);
 
-  final List<TaxRateEntity> taxRates;
+  final List<TaxRateEntity?> taxRates;
 }
 
 class FilterTaxRates implements PersistUI {
   FilterTaxRates(this.filter);
 
-  final String filter;
+  final String? filter;
 }
 
 class SortTaxRates implements PersistUI, PersistPrefs {
@@ -215,12 +215,12 @@ class FilterTaxRatesByState implements PersistUI {
 }
 
 void handleTaxRateAction(
-    BuildContext context, List<BaseEntity> taxRates, EntityAction action) {
+    BuildContext? context, List<BaseEntity> taxRates, EntityAction? action) {
   if (taxRates.isEmpty) {
     return;
   }
 
-  final store = StoreProvider.of<AppState>(context);
+  final store = StoreProvider.of<AppState>(context!);
   final localization = AppLocalization.of(context);
   final taxRate = taxRates.first;
   final taxRateIds = taxRates.map((taxRate) => taxRate.id).toList();
@@ -231,30 +231,30 @@ void handleTaxRateAction(
       break;
     case EntityAction.restore:
       final message = taxRateIds.length > 1
-          ? localization.restoredTaxRates
+          ? localization!.restoredTaxRates
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', taxRateIds.length.toString())
-          : localization.restoredTaxRate;
-      store.dispatch(RestoreTaxRateRequest(
-          snackBarCompleter<Null>(context, message), taxRateIds));
+          : localization!.restoredTaxRate;
+      store.dispatch(
+          RestoreTaxRateRequest(snackBarCompleter<Null>(message), taxRateIds));
       break;
     case EntityAction.archive:
       final message = taxRateIds.length > 1
-          ? localization.archivedTaxRates
+          ? localization!.archivedTaxRates
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', taxRateIds.length.toString())
-          : localization.archivedTaxRate;
-      store.dispatch(ArchiveTaxRateRequest(
-          snackBarCompleter<Null>(context, message), taxRateIds));
+          : localization!.archivedTaxRate;
+      store.dispatch(
+          ArchiveTaxRateRequest(snackBarCompleter<Null>(message), taxRateIds));
       break;
     case EntityAction.delete:
       final message = taxRateIds.length > 1
-          ? localization.deletedTaxRates
+          ? localization!.deletedTaxRates
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', taxRateIds.length.toString())
-          : localization.deletedTaxRate;
-      store.dispatch(DeleteTaxRateRequest(
-          snackBarCompleter<Null>(context, message), taxRateIds));
+          : localization!.deletedTaxRate;
+      store.dispatch(
+          DeleteTaxRateRequest(snackBarCompleter<Null>(message), taxRateIds));
       break;
     case EntityAction.toggleMultiselect:
       if (!store.state.taxRateListState.isInMultiselect()) {
@@ -284,15 +284,15 @@ void handleTaxRateAction(
 class StartTaxRateMultiselect {}
 
 class AddToTaxRateMultiselect {
-  AddToTaxRateMultiselect({@required this.entity});
+  AddToTaxRateMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class RemoveFromTaxRateMultiselect {
-  RemoveFromTaxRateMultiselect({@required this.entity});
+  RemoveFromTaxRateMultiselect({required this.entity});
 
-  final BaseEntity entity;
+  final BaseEntity? entity;
 }
 
 class ClearTaxRateMultiselect {}

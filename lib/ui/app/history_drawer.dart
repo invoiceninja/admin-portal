@@ -29,15 +29,15 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class HistoryDrawer extends StatelessWidget {
   const HistoryDrawer({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final AppDrawerVM viewModel;
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
@@ -91,7 +91,7 @@ class HistoryDrawer extends StatelessWidget {
 }
 
 class HistoryListTile extends StatefulWidget {
-  const HistoryListTile({@required this.history});
+  const HistoryListTile({required this.history});
 
   final HistoryRecord history;
 
@@ -112,15 +112,15 @@ class _HistoryListTileState extends State<HistoryListTile> {
 
     Widget title = SizedBox();
     Widget subtitle = SizedBox();
-    String clientId;
-    BaseEntity entity;
+    String? clientId;
+    BaseEntity? entity;
 
     if ([
       EntityType.dashboard,
       EntityType.reports,
       EntityType.settings,
     ].contains(history.entityType)) {
-      title = Text(localization.lookup(history.entityType.toString()));
+      title = Text(localization!.lookup(history.entityType.toString()));
       if (history.entityType == EntityType.reports) {
         subtitle = Text(
           localization.lookup(state.uiState.reportsUIState.report),
@@ -133,9 +133,10 @@ class _HistoryListTileState extends State<HistoryListTile> {
         );
       }
     } else if (history.id == null) {
-      title = Text(localization.lookup(history.entityType.plural));
+      title = Text(localization!.lookup(history.entityType.plural));
     } else {
-      entity = state.getEntityMap(history.entityType)[history.id] as BaseEntity;
+      entity =
+          state.getEntityMap(history.entityType)![history.id] as BaseEntity?;
 
       if (entity == null) {
         return SizedBox();
@@ -148,11 +149,11 @@ class _HistoryListTileState extends State<HistoryListTile> {
       title = Text(entity.listDisplayName.isEmpty
           ? formatNumber(entity.listDisplayAmount, context,
               formatNumberType: entity.listDisplayAmountType,
-              clientId: clientId)
+              clientId: clientId)!
           : entity.listDisplayName);
 
       subtitle = Text(
-        localization.lookup('${history.entityType}'),
+        localization!.lookup('${history.entityType}'),
         style: Theme.of(context).textTheme.bodySmall,
       );
     }
@@ -257,10 +258,10 @@ class _HistoryListTileState extends State<HistoryListTile> {
             ? null
             : () {
                 showEntityActionsDialog(
-                  entities: [entity],
+                  entities: [entity!],
                   completer: state.prefState.isHistoryFloated
                       ? (Completer<Null>()
-                        ..future.then((value) {
+                        ..future.then<Null>((_) {
                           Navigator.pop(context);
                         }))
                       : null,

@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientEditScreen extends StatelessWidget {
-  const ClientEditScreen({Key key}) : super(key: key);
+  const ClientEditScreen({Key? key}) : super(key: key);
 
   static const String route = '/client/edit';
 
@@ -45,22 +45,22 @@ class ClientEditScreen extends StatelessWidget {
 
 class ClientEditVM {
   ClientEditVM({
-    @required this.state,
-    @required this.company,
-    @required this.isSaving,
-    @required this.client,
-    @required this.origClient,
-    @required this.onChanged,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
-    @required this.staticState,
-    @required this.copyBillingAddress,
-    @required this.copyShippingAddress,
+    required this.state,
+    required this.company,
+    required this.isSaving,
+    required this.client,
+    required this.origClient,
+    required this.onChanged,
+    required this.onSavePressed,
+    required this.onCancelPressed,
+    required this.staticState,
+    required this.copyBillingAddress,
+    required this.copyShippingAddress,
   });
 
   factory ClientEditVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final client = state.clientUIState.editing;
+    final client = state.clientUIState.editing!;
 
     return ClientEditVM(
         state: state,
@@ -88,22 +88,22 @@ class ClientEditVM {
               ..postalCode = client.shippingPostalCode
               ..countryId = client.shippingCountryId))),
         onCancelPressed: (BuildContext context) {
-          createEntity(context: context, entity: ClientEntity(), force: true);
+          createEntity(entity: ClientEntity(), force: true);
           if (state.clientUIState.cancelCompleter != null) {
-            state.clientUIState.cancelCompleter.complete();
+            state.clientUIState.cancelCompleter!.complete();
           } else {
             store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
           }
         },
         onSavePressed: (BuildContext context) {
           Debouncer.runOnComplete(() {
-            final client = store.state.clientUIState.editing;
+            final client = store.state.clientUIState.editing!;
             if (!client.hasNameSet) {
               showDialog<ErrorDialog>(
                   context: context,
                   builder: (BuildContext context) {
                     return ErrorDialog(
-                        AppLocalization.of(navigatorKey.currentContext)
+                        AppLocalization.of(navigatorKey.currentContext!)!
                             .pleaseEnterAClientOrContactName);
                   });
               return null;
@@ -115,14 +115,14 @@ class ClientEditVM {
                 SaveClientRequest(completer: completer, client: client));
             return completer.future.then((savedClient) {
               showToast(client.isNew
-                  ? localization.createdClient
-                  : localization.updatedClient);
+                  ? localization!.createdClient
+                  : localization!.updatedClient);
               if (state.prefState.isMobile) {
                 store.dispatch(UpdateCurrentRoute(ClientViewScreen.route));
                 if (client.isNew && state.clientUIState.saveCompleter == null) {
-                  navigator.pushReplacementNamed(ClientViewScreen.route);
+                  navigator!.pushReplacementNamed(ClientViewScreen.route);
                 } else {
-                  navigator.pop(savedClient);
+                  navigator!.pop(savedClient);
                 }
               } else if (state.clientUIState.saveCompleter == null) {
                 if (!state.prefState.isPreviewVisible) {
@@ -132,7 +132,7 @@ class ClientEditVM {
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext,
+                  context: navigatorKey.currentContext!,
                   builder: (BuildContext context) {
                     return ErrorDialog(error);
                   });
@@ -142,10 +142,10 @@ class ClientEditVM {
   }
 
   final AppState state;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final bool isSaving;
   final ClientEntity client;
-  final ClientEntity origClient;
+  final ClientEntity? origClient;
   final Function(ClientEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;

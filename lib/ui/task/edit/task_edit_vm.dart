@@ -22,7 +22,7 @@ import 'package:invoiceninja_flutter/ui/task/view/task_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class TaskEditScreen extends StatelessWidget {
-  const TaskEditScreen({Key key}) : super(key: key);
+  const TaskEditScreen({Key? key}) : super(key: key);
   static const String route = '/task/edit';
 
   @override
@@ -43,20 +43,20 @@ class TaskEditScreen extends StatelessWidget {
 
 class TaskEditVM {
   TaskEditVM({
-    @required this.state,
-    @required this.task,
-    @required this.onFabPressed,
-    @required this.taskTimeIndex,
-    @required this.company,
-    @required this.isSaving,
-    @required this.origTask,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
-    @required this.isLoading,
+    required this.state,
+    required this.task,
+    required this.onFabPressed,
+    required this.taskTimeIndex,
+    required this.company,
+    required this.isSaving,
+    required this.origTask,
+    required this.onSavePressed,
+    required this.onCancelPressed,
+    required this.isLoading,
   });
 
   factory TaskEditVM.fromStore(Store<AppState> store) {
-    final task = store.state.taskUIState.editing;
+    final task = store.state.taskUIState.editing!;
     final state = store.state;
 
     return TaskEditVM(
@@ -68,7 +68,7 @@ class TaskEditVM {
       state: state,
       company: state.company,
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: TaskEntity(), force: true);
+        createEntity(entity: TaskEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onFabPressed: () {
@@ -76,22 +76,22 @@ class TaskEditVM {
           final taskTimes = task.getTaskTimes();
           store.dispatch(UpdateTaskTime(
               index: taskTimes.length - 1,
-              taskTime: taskTimes.firstWhere((time) => time.isRunning).stop));
+              taskTime: taskTimes.firstWhere((time) => time!.isRunning)!.stop));
         } else {
           store.dispatch(AddTaskTime(TaskTime()));
         }
       },
-      onSavePressed: (BuildContext context, [EntityAction action]) {
+      onSavePressed: (BuildContext context, [EntityAction? action]) {
         Debouncer.runOnComplete(() {
-          final task = store.state.taskUIState.editing;
+          final task = store.state.taskUIState.editing!;
           final origTask = state.taskState.get(task.id);
           final localization = navigatorKey.localization;
           final navigator = navigatorKey.currentState;
           if (!task.areTimesValid) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
-                  return ErrorDialog(localization.taskErrors);
+                  return ErrorDialog(localization!.taskErrors);
                 });
             return null;
           }
@@ -110,8 +110,8 @@ class TaskEditVM {
             ));
             return completer.future.then((savedTask) {
               showToast(task.isNew
-                  ? localization.createdTask
-                  : localization.updatedTask);
+                  ? localization!.createdTask
+                  : localization!.updatedTask);
 
               if (origTask.statusId != savedTask.statusId) {
                 store.dispatch(UpdateKanban());
@@ -120,9 +120,9 @@ class TaskEditVM {
               if (state.prefState.isMobile) {
                 store.dispatch(UpdateCurrentRoute(TaskViewScreen.route));
                 if (task.isNew) {
-                  navigator.pushReplacementNamed(TaskViewScreen.route);
+                  navigator!.pushReplacementNamed(TaskViewScreen.route);
                 } else {
-                  navigator.pop(savedTask);
+                  navigator!.pop(savedTask);
                 }
               } else {
                 if (!state.prefState.isPreviewVisible) {
@@ -145,7 +145,7 @@ class TaskEditVM {
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(
-                  context: navigatorKey.currentContext,
+                  context: navigatorKey.currentContext!,
                   builder: (BuildContext context) {
                     return ErrorDialog(error);
                   });
@@ -157,13 +157,13 @@ class TaskEditVM {
   }
 
   final TaskEntity task;
-  final int taskTimeIndex;
-  final CompanyEntity company;
-  final Function(BuildContext, [EntityAction]) onSavePressed;
+  final int? taskTimeIndex;
+  final CompanyEntity? company;
+  final Function(BuildContext, [EntityAction?]) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final Function onFabPressed;
   final bool isLoading;
   final bool isSaving;
-  final TaskEntity origTask;
+  final TaskEntity? origTask;
   final AppState state;
 }

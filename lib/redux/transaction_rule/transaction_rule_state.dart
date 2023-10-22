@@ -28,7 +28,7 @@ abstract class TransactionRuleState
 
   TransactionRuleEntity get(String transactionRuleId) {
     if (map.containsKey(transactionRuleId)) {
-      return map[transactionRuleId];
+      return map[transactionRuleId]!;
     } else {
       return TransactionRuleEntity(id: transactionRuleId);
     }
@@ -54,7 +54,7 @@ abstract class TransactionRuleState
 abstract class TransactionRuleUIState extends Object
     with EntityUIState
     implements Built<TransactionRuleUIState, TransactionRuleUIStateBuilder> {
-  factory TransactionRuleUIState(PrefStateSortField sortField) {
+  factory TransactionRuleUIState(PrefStateSortField? sortField) {
     return _$TransactionRuleUIState._(
       listUIState: ListUIState(sortField?.field ?? TransactionRuleFields.name,
           sortAscending: sortField?.ascending),
@@ -69,14 +69,13 @@ abstract class TransactionRuleUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  TransactionRuleEntity get editing;
+  TransactionRuleEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<TransactionRuleUIState> get serializer =>
       _$transactionRuleUIStateSerializer;

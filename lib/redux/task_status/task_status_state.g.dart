@@ -19,9 +19,9 @@ class _$TaskStatusStateSerializer
   final String wireName = 'TaskStatusState';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, TaskStatusState object,
+  Iterable<Object?> serialize(Serializers serializers, TaskStatusState object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'map',
       serializers.serialize(object.map,
           specifiedType: const FullType(BuiltMap, const [
@@ -39,28 +39,28 @@ class _$TaskStatusStateSerializer
 
   @override
   TaskStatusState deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TaskStatusStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'map':
           result.map.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(TaskStatusEntity)
-              ])));
+              ]))!);
           break;
         case 'list':
           result.list.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList<Object>);
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -77,9 +77,9 @@ class _$TaskStatusUIStateSerializer
   final String wireName = 'TaskStatusUIState';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, TaskStatusUIState object,
+  Iterable<Object?> serialize(Serializers serializers, TaskStatusUIState object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'listUIState',
       serializers.serialize(object.listUIState,
           specifiedType: const FullType(ListUIState)),
@@ -87,7 +87,7 @@ class _$TaskStatusUIStateSerializer
       serializers.serialize(object.tabIndex,
           specifiedType: const FullType(int)),
     ];
-    Object value;
+    Object? value;
     value = object.editing;
     if (value != null) {
       result
@@ -114,36 +114,36 @@ class _$TaskStatusUIStateSerializer
 
   @override
   TaskStatusUIState deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TaskStatusUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'editing':
           result.editing.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(TaskStatusEntity))
+                  specifiedType: const FullType(TaskStatusEntity))!
               as TaskStatusEntity);
           break;
         case 'listUIState':
           result.listUIState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(ListUIState)) as ListUIState);
+              specifiedType: const FullType(ListUIState))! as ListUIState);
           break;
         case 'selectedId':
           result.selectedId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'forceSelected':
           result.forceSelected = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'tabIndex':
           result.tabIndex = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
       }
     }
@@ -158,10 +158,10 @@ class _$TaskStatusState extends TaskStatusState {
   @override
   final BuiltList<String> list;
 
-  factory _$TaskStatusState([void Function(TaskStatusStateBuilder) updates]) =>
+  factory _$TaskStatusState([void Function(TaskStatusStateBuilder)? updates]) =>
       (new TaskStatusStateBuilder()..update(updates))._build();
 
-  _$TaskStatusState._({this.map, this.list}) : super._() {
+  _$TaskStatusState._({required this.map, required this.list}) : super._() {
     BuiltValueNullFieldError.checkNotNull(map, r'TaskStatusState', 'map');
     BuiltValueNullFieldError.checkNotNull(list, r'TaskStatusState', 'list');
   }
@@ -180,10 +180,10 @@ class _$TaskStatusState extends TaskStatusState {
     return other is TaskStatusState && map == other.map && list == other.list;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, map.hashCode);
     _$hash = $jc(_$hash, list.hashCode);
@@ -202,16 +202,16 @@ class _$TaskStatusState extends TaskStatusState {
 
 class TaskStatusStateBuilder
     implements Builder<TaskStatusState, TaskStatusStateBuilder> {
-  _$TaskStatusState _$v;
+  _$TaskStatusState? _$v;
 
-  MapBuilder<String, TaskStatusEntity> _map;
+  MapBuilder<String, TaskStatusEntity>? _map;
   MapBuilder<String, TaskStatusEntity> get map =>
       _$this._map ??= new MapBuilder<String, TaskStatusEntity>();
-  set map(MapBuilder<String, TaskStatusEntity> map) => _$this._map = map;
+  set map(MapBuilder<String, TaskStatusEntity>? map) => _$this._map = map;
 
-  ListBuilder<String> _list;
+  ListBuilder<String>? _list;
   ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
-  set list(ListBuilder<String> list) => _$this._list = list;
+  set list(ListBuilder<String>? list) => _$this._list = list;
 
   TaskStatusStateBuilder();
 
@@ -232,7 +232,7 @@ class TaskStatusStateBuilder
   }
 
   @override
-  void update(void Function(TaskStatusStateBuilder) updates) {
+  void update(void Function(TaskStatusStateBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -245,7 +245,7 @@ class TaskStatusStateBuilder
       _$result =
           _$v ?? new _$TaskStatusState._(map: map.build(), list: list.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'map';
         map.build();
@@ -264,30 +264,30 @@ class TaskStatusStateBuilder
 
 class _$TaskStatusUIState extends TaskStatusUIState {
   @override
-  final TaskStatusEntity editing;
+  final TaskStatusEntity? editing;
   @override
   final ListUIState listUIState;
   @override
-  final String selectedId;
+  final String? selectedId;
   @override
-  final bool forceSelected;
+  final bool? forceSelected;
   @override
   final int tabIndex;
   @override
-  final Completer<SelectableEntity> saveCompleter;
+  final Completer<SelectableEntity>? saveCompleter;
   @override
-  final Completer<Null> cancelCompleter;
+  final Completer<Null>? cancelCompleter;
 
   factory _$TaskStatusUIState(
-          [void Function(TaskStatusUIStateBuilder) updates]) =>
+          [void Function(TaskStatusUIStateBuilder)? updates]) =>
       (new TaskStatusUIStateBuilder()..update(updates))._build();
 
   _$TaskStatusUIState._(
       {this.editing,
-      this.listUIState,
+      required this.listUIState,
       this.selectedId,
       this.forceSelected,
-      this.tabIndex,
+      required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
       : super._() {
@@ -318,10 +318,10 @@ class _$TaskStatusUIState extends TaskStatusUIState {
         cancelCompleter == other.cancelCompleter;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, editing.hashCode);
     _$hash = $jc(_$hash, listUIState.hashCode);
@@ -350,40 +350,40 @@ class _$TaskStatusUIState extends TaskStatusUIState {
 
 class TaskStatusUIStateBuilder
     implements Builder<TaskStatusUIState, TaskStatusUIStateBuilder> {
-  _$TaskStatusUIState _$v;
+  _$TaskStatusUIState? _$v;
 
-  TaskStatusEntityBuilder _editing;
+  TaskStatusEntityBuilder? _editing;
   TaskStatusEntityBuilder get editing =>
       _$this._editing ??= new TaskStatusEntityBuilder();
-  set editing(TaskStatusEntityBuilder editing) => _$this._editing = editing;
+  set editing(TaskStatusEntityBuilder? editing) => _$this._editing = editing;
 
-  ListUIStateBuilder _listUIState;
+  ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
       _$this._listUIState ??= new ListUIStateBuilder();
-  set listUIState(ListUIStateBuilder listUIState) =>
+  set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
-  String _selectedId;
-  String get selectedId => _$this._selectedId;
-  set selectedId(String selectedId) => _$this._selectedId = selectedId;
+  String? _selectedId;
+  String? get selectedId => _$this._selectedId;
+  set selectedId(String? selectedId) => _$this._selectedId = selectedId;
 
-  bool _forceSelected;
-  bool get forceSelected => _$this._forceSelected;
-  set forceSelected(bool forceSelected) =>
+  bool? _forceSelected;
+  bool? get forceSelected => _$this._forceSelected;
+  set forceSelected(bool? forceSelected) =>
       _$this._forceSelected = forceSelected;
 
-  int _tabIndex;
-  int get tabIndex => _$this._tabIndex;
-  set tabIndex(int tabIndex) => _$this._tabIndex = tabIndex;
+  int? _tabIndex;
+  int? get tabIndex => _$this._tabIndex;
+  set tabIndex(int? tabIndex) => _$this._tabIndex = tabIndex;
 
-  Completer<SelectableEntity> _saveCompleter;
-  Completer<SelectableEntity> get saveCompleter => _$this._saveCompleter;
-  set saveCompleter(Completer<SelectableEntity> saveCompleter) =>
+  Completer<SelectableEntity>? _saveCompleter;
+  Completer<SelectableEntity>? get saveCompleter => _$this._saveCompleter;
+  set saveCompleter(Completer<SelectableEntity>? saveCompleter) =>
       _$this._saveCompleter = saveCompleter;
 
-  Completer<Null> _cancelCompleter;
-  Completer<Null> get cancelCompleter => _$this._cancelCompleter;
-  set cancelCompleter(Completer<Null> cancelCompleter) =>
+  Completer<Null>? _cancelCompleter;
+  Completer<Null>? get cancelCompleter => _$this._cancelCompleter;
+  set cancelCompleter(Completer<Null>? cancelCompleter) =>
       _$this._cancelCompleter = cancelCompleter;
 
   TaskStatusUIStateBuilder();
@@ -410,7 +410,7 @@ class TaskStatusUIStateBuilder
   }
 
   @override
-  void update(void Function(TaskStatusUIStateBuilder) updates) {
+  void update(void Function(TaskStatusUIStateBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -431,7 +431,7 @@ class TaskStatusUIStateBuilder
               saveCompleter: saveCompleter,
               cancelCompleter: cancelCompleter);
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'editing';
         _editing?.build();

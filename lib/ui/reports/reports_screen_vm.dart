@@ -18,9 +18,9 @@ import 'package:invoiceninja_flutter/ui/reports/recurring_expense_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/recurring_invoice_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/transaction_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/vendor_report.dart';
+import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:memoize/memoize.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -58,7 +58,7 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class ReportsScreenBuilder extends StatelessWidget {
-  const ReportsScreenBuilder({Key key}) : super(key: key);
+  const ReportsScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -75,47 +75,47 @@ class ReportsScreenBuilder extends StatelessWidget {
 
 class ReportsScreenVM {
   ReportsScreenVM({
-    @required this.state,
-    @required this.onSettingsChanged,
-    @required this.onReportColumnsChanged,
-    @required this.onReportFiltersChanged,
-    @required this.onExportPressed,
-    @required this.onReportSorted,
-    @required this.groupTotals,
-    @required this.reportResult,
-    @required this.onReportTotalsSorted,
-    @required this.reportState,
+    required this.state,
+    required this.onSettingsChanged,
+    required this.onReportColumnsChanged,
+    required this.onReportFiltersChanged,
+    required this.onExportPressed,
+    required this.onReportSorted,
+    required this.groupTotals,
+    required this.reportResult,
+    required this.onReportTotalsSorted,
+    required this.reportState,
   });
 
   final AppState state;
-  final ReportResult reportResult;
+  final ReportResult? reportResult;
   final ReportsUIState reportState;
   final GroupTotals groupTotals;
   final Function(BuildContext, List<String>) onReportColumnsChanged;
   final Function(BuildContext) onExportPressed;
-  final Function(BuildContext, BuiltMap<String, String>) onReportFiltersChanged;
-  final Function(String, bool) onReportSorted;
+  final Function(BuildContext, BuiltMap<String?, String?>)
+      onReportFiltersChanged;
+  final Function(String?, bool) onReportSorted;
   final Function(int, bool) onReportTotalsSorted;
   final Function({
-    String report,
-    String customStartDate,
-    String customEndDate,
-    String group,
-    String selectedGroup,
-    String subgroup,
-    String chart,
+    String? report,
+    String? customStartDate,
+    String? customEndDate,
+    String? group,
+    String? selectedGroup,
+    String? subgroup,
+    String? chart,
   }) onSettingsChanged;
 
   static ReportsScreenVM fromStore(Store<AppState> store) {
     final state = store.state;
     final report = state.uiState.reportsUIState.report;
-    final allReportSettings = state.userCompany?.settings?.reportSettings;
-    final reportSettings =
-        allReportSettings != null && allReportSettings.containsKey(report)
-            ? allReportSettings[report]
-            : ReportSettingsEntity();
+    final allReportSettings = state.userCompany.settings.reportSettings;
+    final reportSettings = allReportSettings.containsKey(report)
+        ? allReportSettings[report]
+        : ReportSettingsEntity();
 
-    ReportResult reportResult;
+    ReportResult? reportResult;
 
     switch (state.uiState.reportsUIState.report) {
       case kReportInvoice:
@@ -304,7 +304,7 @@ class ReportsScreenVM {
           state.staticState,
         );
         break;
-      case kReportContact:
+      case kReportClientContact:
         reportResult = memoizedContactReport(
           state.userCompany,
           state.uiState.reportsUIState,
@@ -405,14 +405,14 @@ class ReportsScreenVM {
         onReportColumnsChanged: (context, columns) {
           final settings = state.userCompany.settings.rebuild((b) => b
             ..reportSettings[state.uiState.reportsUIState.report] =
-                reportSettings.rebuild(
+                reportSettings!.rebuild(
                     (b) => b..columns.replace(BuiltList<String>(columns))));
           final userCompany =
               state.userCompany.rebuild((b) => b..settings.replace(settings));
           final user =
               state.user.rebuild((b) => b..userCompany.replace(userCompany));
           final completer = snackBarCompleter<Null>(
-              context, AppLocalization.of(context).savedSettings);
+              AppLocalization.of(context)!.savedSettings);
           store.dispatch(
             SaveUserSettingsRequest(
               completer: completer,
@@ -421,13 +421,13 @@ class ReportsScreenVM {
           );
         },
         onSettingsChanged: ({
-          String report,
-          String group,
-          String selectedGroup,
-          String subgroup,
-          String chart,
-          String customStartDate,
-          String customEndDate,
+          String? report,
+          String? group,
+          String? selectedGroup,
+          String? subgroup,
+          String? chart,
+          String? customStartDate,
+          String? customEndDate,
         }) {
           Timer(Duration(milliseconds: 100), () {
             final reportState = state.uiState.reportsUIState;
@@ -448,17 +448,17 @@ class ReportsScreenVM {
           String csvData = '';
 
           if (reportState.group.isEmpty || reportState.isGroupByFiltered) {
-            reportResult.columns.forEach((column) {
-              final value = localization.lookup(column);
+            reportResult!.columns.forEach((column) {
+              final value = localization!.lookup(column);
               csvData += '"$value",';
             });
             csvData = csvData.substring(0, csvData.length - 1);
             reportResult.data.forEach((row) {
               csvData += '\n';
               for (var i = 0; i < row.length; i++) {
-                final column = reportResult.columns[i];
+                final column = reportResult!.columns[i];
                 final value = row[i]
-                    .renderText(context, column)
+                    .renderText(context, column)!
                     .trim()
                     .replaceAll('"', '""');
                 csvData += '"$value",';
@@ -466,14 +466,15 @@ class ReportsScreenVM {
               csvData = csvData.substring(0, csvData.length - 1);
             });
           } else {
-            final columns = reportResult.columns
+            final columns = reportResult!.columns
                 .where((column) =>
                     getReportColumnType(column, context) ==
                     ReportColumnType.number)
                 .toList();
-            columns.sort((String str1, String str2) => str1.compareTo(str2));
+            columns
+                .sort((String? str1, String? str2) => str1!.compareTo(str2!));
 
-            csvData += localization.lookup(reportState.group) +
+            csvData += localization!.lookup(reportState.group) +
                 ',' +
                 localization.count;
 
@@ -483,10 +484,10 @@ class ReportsScreenVM {
 
             csvData += '\n';
 
-            groupTotals.rows.forEach((group) {
-              final row = groupTotals.totals[group];
+            groupTotals.rows!.forEach((group) {
+              final row = groupTotals.totals![group]!;
               csvData +=
-                  '"${group.trim().replaceAll('"', '""')}",${row['count'].toInt()}';
+                  '"${group!.trim().replaceAll('"', '""')}",${row['count']!.toInt()}';
 
               columns.forEach((column) {
                 final value =
@@ -510,17 +511,19 @@ class ReportsScreenVM {
           if (kIsWeb) {
             WebUtils.downloadTextFile(filename, csvData);
           } else {
-            final directory = await (isDesktopOS()
-                ? getDownloadsDirectory()
-                : getApplicationDocumentsDirectory());
-            final filePath =
-                directory.path + file.Platform.pathSeparator + filename;
+            final directory = await getAppDownloadDirectory();
+
+            if (directory == null) {
+              return;
+            }
+
+            final filePath = directory + file.Platform.pathSeparator + filename;
             final csvFile = file.File(filePath);
             await csvFile.writeAsString(csvData);
 
             if (isDesktopOS()) {
-              showToast(localization.fileSavedInPath
-                  .replaceFirst(':path', directory.path));
+              showToast(localization!.fileSavedInPath
+                  .replaceFirst(':path', directory));
             } else {
               await Share.shareXFiles([XFile(filePath)]);
             }
@@ -532,19 +535,19 @@ class ReportsScreenVM {
 class GroupTotals {
   GroupTotals({this.totals, this.rows});
 
-  final Map<String, Map<String, double>> totals;
-  final List<String> rows;
+  final Map<String?, Map<String?, double?>>? totals;
+  final List<String?>? rows;
 }
 
 var memoizeedGroupTotals = memo5((
-  ReportResult reportResult,
+  ReportResult? reportResult,
   ReportsUIState reportUIState,
-  ReportSettingsEntity reportSettings,
+  ReportSettingsEntity? reportSettings,
   BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity company,
+  CompanyEntity? company,
 ) =>
     calculateReportTotals(
-      reportResult: reportResult,
+      reportResult: reportResult!,
       reportState: reportUIState,
       reportSettings: reportSettings,
       currencyMap: currencyMap,
@@ -552,13 +555,13 @@ var memoizeedGroupTotals = memo5((
     ));
 
 GroupTotals calculateReportTotals({
-  ReportResult reportResult,
-  ReportsUIState reportState,
-  ReportSettingsEntity reportSettings,
-  BuiltMap<String, CurrencyEntity> currencyMap,
-  CompanyEntity company,
+  required ReportResult reportResult,
+  required ReportsUIState reportState,
+  ReportSettingsEntity? reportSettings,
+  BuiltMap<String, CurrencyEntity>? currencyMap,
+  CompanyEntity? company,
 }) {
-  final Map<String, Map<String, double>> totals = {};
+  final Map<String?, Map<String?, double?>> totals = {};
   final data = reportResult.data;
   final columns = reportResult.columns;
 
@@ -567,7 +570,7 @@ GroupTotals calculateReportTotals({
   }
 
   bool shouldConverCurrencies = false;
-  final Map<String, Map<String, String>> groupCurrencies = {};
+  final Map<String?, Map<String?, String?>> groupCurrencies = {};
   for (var i = 0; i < data.length; i++) {
     final row = data[i];
     final columnIndex = columns.indexOf(reportState.group);
@@ -589,14 +592,14 @@ GroupTotals calculateReportTotals({
       final column = columns[j];
 
       if (cell is ReportNumberValue) {
-        final currencyId = groupCurrencies[group][column] ?? '';
+        final currencyId = groupCurrencies[group]![column] ?? '';
 
         if (currencyId.isNotEmpty && currencyId != cell.currencyId) {
           shouldConverCurrencies = true;
           break;
         }
 
-        groupCurrencies[group][column] = cell.currencyId;
+        groupCurrencies[group]![column] = cell.currencyId;
       }
     }
   }
@@ -611,7 +614,7 @@ GroupTotals calculateReportTotals({
     }
 
     final groupCell = row[columnIndex];
-    String group = groupCell.stringValue;
+    String? group = groupCell.stringValue;
 
     if (groupCell is ReportAgeValue) {
       final age = groupCell.doubleValue;
@@ -628,7 +631,7 @@ GroupTotals calculateReportTotals({
       } else {
         group = kAgeGroup120;
       }
-    } else if (group.isNotEmpty && isValidDate(group)) {
+    } else if (group!.isNotEmpty && isValidDate(group)) {
       group = convertDateTimeToSqlDate(DateTime.tryParse(group));
       if (reportState.subgroup == kReportGroupYear) {
         group = group.substring(0, 4) + '-01-01';
@@ -651,34 +654,34 @@ GroupTotals calculateReportTotals({
       final column = columns[j];
 
       if (column == reportState.group) {
-        totals[group]['count'] += 1;
+        totals[group]!['count'] = totals[group]!['count']! + 1;
       }
 
       if (cell is ReportNumberValue ||
           cell is ReportAgeValue ||
           cell is ReportDurationValue) {
-        if (!totals[group].containsKey(column)) {
-          totals[group][column] = 0;
+        if (!totals[group]!.containsKey(column)) {
+          totals[group]![column] = 0;
         }
 
         if (cell is ReportNumberValue && cell.currencyId != null) {
-          totals[group]['${column}_currency_id'] = parseDouble(
-              shouldConverCurrencies ? company.currencyId : cell.currencyId);
+          totals[group]!['${column}_currency_id'] = parseDouble(
+              shouldConverCurrencies ? company!.currencyId : cell.currencyId);
         }
 
         if (cell is ReportNumberValue &&
             cell.currencyId != null &&
-            cell.currencyId != company.currencyId &&
+            cell.currencyId != company!.currencyId &&
             shouldConverCurrencies) {
-          double cellValue = cell.value;
-          final toCurrency = currencyMap[company.currencyId];
+          double cellValue = cell.value!;
+          final toCurrency = currencyMap![company.currencyId]!;
           final rate = getExchangeRate(currencyMap,
               fromCurrencyId: cell.currencyId,
               toCurrencyId: company.currencyId);
           cellValue = round(cellValue * rate, toCurrency.precision);
-          totals[group][column] += cellValue;
+          totals[group]![column] = totals[group]![column]! + cellValue;
         } else {
-          totals[group][column] += cell.doubleValue;
+          totals[group]![column] = totals[group]![column]! + cell.doubleValue!;
         }
       }
     }
@@ -686,24 +689,24 @@ GroupTotals calculateReportTotals({
 
   final rows = totals.keys.toList();
   final sortedColumns = reportResult.sortedColumns(reportState);
-  final index = sortedColumns.contains(reportSettings.sortColumn)
+  final index = sortedColumns.contains(reportSettings!.sortColumn)
       ? sortedColumns.indexOf(reportSettings.sortColumn)
       : 0;
 
   rows.sort((rowA, rowB) {
     final valuesA = totals[rowA];
     final valuesB = totals[rowB];
-    if (index != null && index < columns.length) {
+    if (index < columns.length) {
       final sort = sortedColumns[index];
       if (index == 0) {
         return reportSettings.sortAscending
-            ? rowA.compareTo(rowB)
-            : rowB.compareTo(rowA);
+            ? rowA!.compareTo(rowB!)
+            : rowB!.compareTo(rowA!);
       } else {
-        if (valuesA.containsKey(sort) && valuesB.containsKey(sort)) {
+        if (valuesA!.containsKey(sort) && valuesB!.containsKey(sort)) {
           return reportSettings.sortAscending
-              ? valuesA[sort].compareTo(valuesB[sort])
-              : valuesB[sort].compareTo(valuesA[sort]);
+              ? valuesA[sort]!.compareTo(valuesB[sort]!)
+              : valuesB[sort]!.compareTo(valuesA[sort]!);
         }
       }
     }

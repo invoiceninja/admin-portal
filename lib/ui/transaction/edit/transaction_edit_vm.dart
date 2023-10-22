@@ -15,7 +15,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TransactionEditScreen extends StatelessWidget {
-  const TransactionEditScreen({Key key}) : super(key: key);
+  const TransactionEditScreen({Key? key}) : super(key: key);
   static const String route = '/transaction/edit';
 
   @override
@@ -36,21 +36,21 @@ class TransactionEditScreen extends StatelessWidget {
 
 class TransactionEditVM {
   TransactionEditVM({
-    @required this.state,
-    @required this.transaction,
-    @required this.company,
-    @required this.onChanged,
-    @required this.isSaving,
-    @required this.origTransaction,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
-    @required this.isLoading,
-    @required this.onAddBankAccountPressed,
+    required this.state,
+    required this.transaction,
+    required this.company,
+    required this.onChanged,
+    required this.isSaving,
+    required this.origTransaction,
+    required this.onSavePressed,
+    required this.onCancelPressed,
+    required this.isLoading,
+    required this.onAddBankAccountPressed,
   });
 
   factory TransactionEditVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final transaction = state.transactionUIState.editing;
+    final transaction = state.transactionUIState.editing!;
 
     return TransactionEditVM(
       state: state,
@@ -63,10 +63,9 @@ class TransactionEditVM {
         store.dispatch(UpdateTransaction(transaction));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(
-            context: context, entity: TransactionEntity(), force: true);
+        createEntity(entity: TransactionEntity(), force: true);
         if (state.transactionUIState.cancelCompleter != null) {
-          state.transactionUIState.cancelCompleter.complete();
+          state.transactionUIState.cancelCompleter!.complete();
         } else {
           store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
         }
@@ -80,9 +79,9 @@ class TransactionEditVM {
           store.dispatch(SaveTransactionRequest(
               completer: completer, transaction: transaction));
           return completer.future.then((savedTransaction) {
-            showToast(transaction.isNew
-                ? localization.createdTransaction
-                : localization.updatedTransaction);
+            showToast(transaction!.isNew
+                ? localization!.createdTransaction
+                : localization!.updatedTransaction);
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(TransactionViewScreen.route));
               if (transaction.isNew) {
@@ -105,12 +104,11 @@ class TransactionEditVM {
       },
       onAddBankAccountPressed: (context, completer) {
         createEntity(
-            context: context,
             entity: BankAccountEntity(state: state),
             force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()
-              ..future.then((_) {
+              ..future.then<Null>((_) {
                 store.dispatch(UpdateCurrentRoute(TransactionEditScreen.route));
               }));
         completer.future.then((SelectableEntity client) {
@@ -121,13 +119,13 @@ class TransactionEditVM {
   }
 
   final TransactionEntity transaction;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(TransactionEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final bool isLoading;
   final bool isSaving;
-  final TransactionEntity origTransaction;
+  final TransactionEntity? origTransaction;
   final AppState state;
   final Function(BuildContext context, Completer<SelectableEntity> completer)
       onAddBankAccountPressed;

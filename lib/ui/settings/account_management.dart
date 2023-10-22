@@ -39,8 +39,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class AccountManagement extends StatefulWidget {
   const AccountManagement({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final AccountManagementVM viewModel;
@@ -53,8 +53,8 @@ class _AccountManagementState extends State<AccountManagement>
     with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_accountManagement');
-  FocusScopeNode _focusNode;
-  TabController _controller;
+  FocusScopeNode? _focusNode;
+  TabController? _controller;
 
   final _debouncer = Debouncer();
   final _trackingIdController = TextEditingController();
@@ -71,12 +71,12 @@ class _AccountManagementState extends State<AccountManagement>
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
         vsync: this, length: 4, initialIndex: settingsUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller!.index));
   }
 
   @override
@@ -121,15 +121,15 @@ class _AccountManagementState extends State<AccountManagement>
       controller.removeListener(_onChanged);
       controller.dispose();
     });
-    _focusNode.dispose();
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
+    _focusNode!.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final company = viewModel.company;
@@ -210,7 +210,7 @@ class _AccountManagementState extends State<AccountManagement>
                   activeColor: Theme.of(context).colorScheme.secondary,
                   onChanged: (value) {
                     int enabledModules = company.enabledModules;
-                    if (value) {
+                    if (value!) {
                       enabledModules = enabledModules | module;
                     } else {
                       enabledModules = enabledModules ^ module;
@@ -289,8 +289,8 @@ class _AccountManagementState extends State<AccountManagement>
 
 class _AccountOverview extends StatelessWidget {
   const _AccountOverview({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final AccountManagementVM viewModel;
@@ -298,7 +298,7 @@ class _AccountOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final state = viewModel.state;
     final account = state.account;
     final company = viewModel.company;
@@ -312,26 +312,26 @@ class _AccountOverview extends StatelessWidget {
       if (state.clientState.list.isNotEmpty) {
         final count = state.clientState.list.length;
         stats += '\n- $count ' +
-            (count == 1 ? localization.client : localization.clients);
+            (count == 1 ? localization!.client : localization!.clients);
       }
 
       if (state.productState.list.isNotEmpty) {
         final count = state.productState.list.length;
         stats += '\n- $count ' +
-            (count == 1 ? localization.product : localization.products);
+            (count == 1 ? localization!.product : localization!.products);
       }
 
       if (state.invoiceState.list.isNotEmpty && !state.company.isLarge) {
         final count = state.invoiceState.list.length;
         stats += '\n- $count ' +
-            (count == 1 ? localization.invoice : localization.invoices);
+            (count == 1 ? localization!.invoice : localization!.invoices);
       }
 
       return stats;
     }
 
-    String secondValue;
-    String secondLabel;
+    String? secondValue;
+    String? secondLabel;
 
     if (state.isHosted && (account.plan.isEmpty || account.isTrial)) {
       final clientLimit = account.hostedClientCount;
@@ -599,7 +599,7 @@ class _AccountOverview extends StatelessWidget {
                                 context: context,
                                 callback: (password, idToken) {
                                   viewModel.onPurgeData(
-                                      context, password, idToken);
+                                      context, password ?? '', idToken ?? '');
                                 });
                           });
                     },
@@ -630,7 +630,7 @@ class _AccountOverview extends StatelessWidget {
                           message: message,
                           typeToConfirm: localization.delete.toLowerCase(),
                           askForReason: true,
-                          callback: (String reason) async {
+                          callback: (String? reason) async {
                             if (state.user.isConnectedToApple &&
                                 !state.user.hasPassword) {
                               final credentials =
@@ -648,10 +648,10 @@ class _AccountOverview extends StatelessWidget {
                               );
 
                               viewModel.onCompanyDelete(
-                                navigatorKey.currentContext,
+                                navigatorKey.currentContext!,
                                 '',
-                                credentials.identityToken,
-                                reason,
+                                credentials.identityToken ?? '',
+                                reason ?? '',
                               );
                             } else {
                               passwordCallback(
@@ -660,9 +660,9 @@ class _AccountOverview extends StatelessWidget {
                                   callback: (password, idToken) {
                                     viewModel.onCompanyDelete(
                                       context,
-                                      password,
-                                      idToken,
-                                      reason,
+                                      password ?? '',
+                                      idToken ?? '',
+                                      reason ?? '',
                                     );
                                   });
                             }

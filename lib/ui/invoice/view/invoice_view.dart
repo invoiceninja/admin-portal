@@ -25,10 +25,10 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceView extends StatefulWidget {
   const InvoiceView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
-    @required this.tabIndex,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
+    required this.tabIndex,
   }) : super(key: key);
 
   final AbstractInvoiceViewVM viewModel;
@@ -41,14 +41,14 @@ class InvoiceView extends StatefulWidget {
 
 class _InvoiceViewState extends State<InvoiceView>
     with SingleTickerProviderStateMixin {
-  TabController _controller;
+  TabController? _controller;
 
   @override
   void initState() {
     super.initState();
 
-    final invoice = widget.viewModel.invoice;
-    final state = widget.viewModel.state;
+    final invoice = widget.viewModel.invoice!;
+    final state = widget.viewModel.state!;
     final company = state.company;
 
     int tabIndex = 0;
@@ -70,7 +70,7 @@ class _InvoiceViewState extends State<InvoiceView>
       length: company.isModuleEnabled(EntityType.document) ? 5 : 4,
       initialIndex: widget.isFilter ? 0 : tabIndex,
     );
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
@@ -79,18 +79,18 @@ class _InvoiceViewState extends State<InvoiceView>
     }
 
     final store = StoreProvider.of<AppState>(context);
-    final invoice = widget.viewModel.invoice;
+    final invoice = widget.viewModel.invoice!;
 
     if (invoice.isRecurring) {
-      store.dispatch(UpdateRecurringInvoiceTab(tabIndex: _controller.index));
+      store.dispatch(UpdateRecurringInvoiceTab(tabIndex: _controller!.index));
     } else if (invoice.isQuote) {
-      store.dispatch(UpdateQuoteTab(tabIndex: _controller.index));
+      store.dispatch(UpdateQuoteTab(tabIndex: _controller!.index));
     } else if (invoice.isCredit) {
-      store.dispatch(UpdateCreditTab(tabIndex: _controller.index));
+      store.dispatch(UpdateCreditTab(tabIndex: _controller!.index));
     } else if (invoice.isPurchaseOrder) {
-      store.dispatch(UpdatePurchaseOrderTab(tabIndex: _controller.index));
+      store.dispatch(UpdatePurchaseOrderTab(tabIndex: _controller!.index));
     } else {
-      store.dispatch(UpdateInvoiceTab(tabIndex: _controller.index));
+      store.dispatch(UpdateInvoiceTab(tabIndex: _controller!.index));
     }
   }
 
@@ -99,23 +99,23 @@ class _InvoiceViewState extends State<InvoiceView>
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.tabIndex != widget.tabIndex) {
-      _controller.index = widget.tabIndex;
+      _controller!.index = widget.tabIndex;
     }
   }
 
   @override
   void dispose() {
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
-    final invoice = viewModel.invoice;
-    final localization = AppLocalization.of(context);
-    final state = viewModel.state;
+    final invoice = viewModel.invoice!;
+    final localization = AppLocalization.of(context)!;
+    final state = viewModel.state!;
     final company = state.company;
     /*
     final documents = memoizedInvoiceDocumentsSelector(
@@ -155,7 +155,7 @@ class _InvoiceViewState extends State<InvoiceView>
       body: Builder(
         builder: (BuildContext context) {
           return RefreshIndicator(
-            onRefresh: () => viewModel.onRefreshed(context),
+            onRefresh: () => viewModel.onRefreshed!(context),
             child: Column(
               children: <Widget>[
                 Expanded(
@@ -163,54 +163,54 @@ class _InvoiceViewState extends State<InvoiceView>
                     controller: _controller,
                     children: <Widget>[
                       RefreshIndicator(
-                        onRefresh: () => viewModel.onRefreshed(context),
+                        onRefresh: () => viewModel.onRefreshed!(context),
                         child: InvoiceOverview(
                           viewModel: viewModel,
                           isFilter: widget.isFilter,
                           key: ValueKey(
-                              '${viewModel.invoice.id}-${viewModel.invoice.loadedAt}'),
+                              '${viewModel.invoice!.id}-${viewModel.invoice!.loadedAt}'),
                         ),
                       ),
                       RefreshIndicator(
-                        onRefresh: () => viewModel.onRefreshed(context),
+                        onRefresh: () => viewModel.onRefreshed!(context),
                         child: InvoiceViewContacts(
                           viewModel: viewModel,
                           key: ValueKey(
-                              '${viewModel.invoice.id}-${viewModel.invoice.loadedAt}'),
+                              '${viewModel.invoice!.id}-${viewModel.invoice!.loadedAt}'),
                         ),
                       ),
                       if (company.isModuleEnabled(EntityType.document))
                         RefreshIndicator(
-                          onRefresh: () => viewModel.onRefreshed(context),
+                          onRefresh: () => viewModel.onRefreshed!(context),
                           child: InvoiceViewDocuments(
                               viewModel: viewModel,
                               invoice: viewModel.invoice,
                               key: ValueKey(
-                                  '${viewModel.invoice.id}-${viewModel.invoice.loadedAt}')),
+                                  '${viewModel.invoice!.id}-${viewModel.invoice!.loadedAt}')),
                         ),
                       if (invoice.isRecurring)
                         RefreshIndicator(
-                          onRefresh: () => viewModel.onRefreshed(context),
+                          onRefresh: () => viewModel.onRefreshed!(context),
                           child: InvoiceViewSchedule(
                             viewModel: viewModel,
                             key: ValueKey(
-                                '${viewModel.invoice.id}-${viewModel.invoice.loadedAt}'),
+                                '${viewModel.invoice!.id}-${viewModel.invoice!.loadedAt}'),
                           ),
                         ),
                       if (!invoice.isRecurring)
                         RefreshIndicator(
-                          onRefresh: () => viewModel.onRefreshed(context),
+                          onRefresh: () => viewModel.onRefreshed!(context),
                           child: InvoiceViewHistory(
                               viewModel: viewModel,
                               key: ValueKey(
-                                  '${viewModel.invoice.id}-${viewModel.invoice.loadedAt}')),
+                                  '${viewModel.invoice!.id}-${viewModel.invoice!.loadedAt}')),
                         ),
                       RefreshIndicator(
-                        onRefresh: () => viewModel.onRefreshed(context),
+                        onRefresh: () => viewModel.onRefreshed!(context),
                         child: InvoiceViewActivity(
                             viewModel: viewModel,
                             key: ValueKey(
-                                '${viewModel.invoice.id}-${viewModel.invoice.loadedAt}')),
+                                '${viewModel.invoice!.id}-${viewModel.invoice!.loadedAt}')),
                       ),
                     ],
                   ),

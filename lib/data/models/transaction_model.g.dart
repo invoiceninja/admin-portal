@@ -26,10 +26,10 @@ class _$TransactionListResponseSerializer
   final String wireName = 'TransactionListResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, TransactionListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(
@@ -41,21 +41,21 @@ class _$TransactionListResponseSerializer
 
   @override
   TransactionListResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TransactionListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(TransactionEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(TransactionEntity)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -75,10 +75,10 @@ class _$TransactionItemResponseSerializer
   final String wireName = 'TransactionItemResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, TransactionItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(TransactionEntity)),
@@ -89,19 +89,19 @@ class _$TransactionItemResponseSerializer
 
   @override
   TransactionItemResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TransactionItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(TransactionEntity))
+                  specifiedType: const FullType(TransactionEntity))!
               as TransactionEntity);
           break;
       }
@@ -119,9 +119,9 @@ class _$TransactionEntitySerializer
   final String wireName = 'TransactionEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, TransactionEntity object,
+  Iterable<Object?> serialize(Serializers serializers, TransactionEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'amount',
       serializers.serialize(object.amount,
           specifiedType: const FullType(double)),
@@ -178,7 +178,7 @@ class _$TransactionEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.isChanged;
     if (value != null) {
       result
@@ -212,107 +212,107 @@ class _$TransactionEntitySerializer
 
   @override
   TransactionEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TransactionEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'amount':
           result.amount = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'currency_id':
           result.currencyId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'category_type':
           result.category = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'base_type':
           result.baseType = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'date':
           result.date = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'bank_integration_id':
           result.bankAccountId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'description':
           result.description = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'status_id':
           result.statusId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'ninja_category_id':
           result.categoryId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'invoice_ids':
           result.invoiceIds = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'payment_id':
           result.paymentId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'expense_id':
           result.expenseId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'vendor_id':
           result.vendorId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'transaction_id':
           result.transactionId = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'bank_transaction_rule_id':
           result.transactionRuleId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'archived_at':
           result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'user_id':
           result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -332,10 +332,10 @@ class _$TransactionStatusEntitySerializer
   final String wireName = 'TransactionStatusEntity';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, TransactionStatusEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
       'name',
@@ -347,23 +347,23 @@ class _$TransactionStatusEntitySerializer
 
   @override
   TransactionStatusEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TransactionStatusEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'name':
           result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -377,10 +377,10 @@ class _$TransactionListResponse extends TransactionListResponse {
   final BuiltList<TransactionEntity> data;
 
   factory _$TransactionListResponse(
-          [void Function(TransactionListResponseBuilder) updates]) =>
+          [void Function(TransactionListResponseBuilder)? updates]) =>
       (new TransactionListResponseBuilder()..update(updates))._build();
 
-  _$TransactionListResponse._({this.data}) : super._() {
+  _$TransactionListResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
         data, r'TransactionListResponse', 'data');
   }
@@ -400,10 +400,10 @@ class _$TransactionListResponse extends TransactionListResponse {
     return other is TransactionListResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -421,12 +421,12 @@ class _$TransactionListResponse extends TransactionListResponse {
 class TransactionListResponseBuilder
     implements
         Builder<TransactionListResponse, TransactionListResponseBuilder> {
-  _$TransactionListResponse _$v;
+  _$TransactionListResponse? _$v;
 
-  ListBuilder<TransactionEntity> _data;
+  ListBuilder<TransactionEntity>? _data;
   ListBuilder<TransactionEntity> get data =>
       _$this._data ??= new ListBuilder<TransactionEntity>();
-  set data(ListBuilder<TransactionEntity> data) => _$this._data = data;
+  set data(ListBuilder<TransactionEntity>? data) => _$this._data = data;
 
   TransactionListResponseBuilder();
 
@@ -446,7 +446,7 @@ class TransactionListResponseBuilder
   }
 
   @override
-  void update(void Function(TransactionListResponseBuilder) updates) {
+  void update(void Function(TransactionListResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -458,7 +458,7 @@ class TransactionListResponseBuilder
     try {
       _$result = _$v ?? new _$TransactionListResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -478,10 +478,10 @@ class _$TransactionItemResponse extends TransactionItemResponse {
   final TransactionEntity data;
 
   factory _$TransactionItemResponse(
-          [void Function(TransactionItemResponseBuilder) updates]) =>
+          [void Function(TransactionItemResponseBuilder)? updates]) =>
       (new TransactionItemResponseBuilder()..update(updates))._build();
 
-  _$TransactionItemResponse._({this.data}) : super._() {
+  _$TransactionItemResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
         data, r'TransactionItemResponse', 'data');
   }
@@ -501,10 +501,10 @@ class _$TransactionItemResponse extends TransactionItemResponse {
     return other is TransactionItemResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -522,12 +522,12 @@ class _$TransactionItemResponse extends TransactionItemResponse {
 class TransactionItemResponseBuilder
     implements
         Builder<TransactionItemResponse, TransactionItemResponseBuilder> {
-  _$TransactionItemResponse _$v;
+  _$TransactionItemResponse? _$v;
 
-  TransactionEntityBuilder _data;
+  TransactionEntityBuilder? _data;
   TransactionEntityBuilder get data =>
       _$this._data ??= new TransactionEntityBuilder();
-  set data(TransactionEntityBuilder data) => _$this._data = data;
+  set data(TransactionEntityBuilder? data) => _$this._data = data;
 
   TransactionItemResponseBuilder();
 
@@ -547,7 +547,7 @@ class TransactionItemResponseBuilder
   }
 
   @override
-  void update(void Function(TransactionItemResponseBuilder) updates) {
+  void update(void Function(TransactionItemResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -559,7 +559,7 @@ class TransactionItemResponseBuilder
     try {
       _$result = _$v ?? new _$TransactionItemResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -606,13 +606,13 @@ class _$TransactionEntity extends TransactionEntity {
   @override
   final String transactionRuleId;
   @override
-  final String pendingVendorId;
+  final String? pendingVendorId;
   @override
-  final String pendingCategoryId;
+  final String? pendingCategoryId;
   @override
-  final String pendingExpenseId;
+  final String? pendingExpenseId;
   @override
-  final bool isChanged;
+  final bool? isChanged;
   @override
   final int createdAt;
   @override
@@ -620,45 +620,45 @@ class _$TransactionEntity extends TransactionEntity {
   @override
   final int archivedAt;
   @override
-  final bool isDeleted;
+  final bool? isDeleted;
   @override
-  final String createdUserId;
+  final String? createdUserId;
   @override
-  final String assignedUserId;
+  final String? assignedUserId;
   @override
   final String id;
 
   factory _$TransactionEntity(
-          [void Function(TransactionEntityBuilder) updates]) =>
+          [void Function(TransactionEntityBuilder)? updates]) =>
       (new TransactionEntityBuilder()..update(updates))._build();
 
   _$TransactionEntity._(
-      {this.amount,
-      this.currencyId,
-      this.category,
-      this.baseType,
-      this.date,
-      this.bankAccountId,
-      this.description,
-      this.statusId,
-      this.categoryId,
-      this.invoiceIds,
-      this.paymentId,
-      this.expenseId,
-      this.vendorId,
-      this.transactionId,
-      this.transactionRuleId,
+      {required this.amount,
+      required this.currencyId,
+      required this.category,
+      required this.baseType,
+      required this.date,
+      required this.bankAccountId,
+      required this.description,
+      required this.statusId,
+      required this.categoryId,
+      required this.invoiceIds,
+      required this.paymentId,
+      required this.expenseId,
+      required this.vendorId,
+      required this.transactionId,
+      required this.transactionRuleId,
       this.pendingVendorId,
       this.pendingCategoryId,
       this.pendingExpenseId,
       this.isChanged,
-      this.createdAt,
-      this.updatedAt,
-      this.archivedAt,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.archivedAt,
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.id})
+      required this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         amount, r'TransactionEntity', 'amount');
@@ -738,10 +738,10 @@ class _$TransactionEntity extends TransactionEntity {
         id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, amount.hashCode);
     _$hash = $jc(_$hash, currencyId.hashCode);
@@ -808,118 +808,119 @@ class _$TransactionEntity extends TransactionEntity {
 
 class TransactionEntityBuilder
     implements Builder<TransactionEntity, TransactionEntityBuilder> {
-  _$TransactionEntity _$v;
+  _$TransactionEntity? _$v;
 
-  double _amount;
-  double get amount => _$this._amount;
-  set amount(double amount) => _$this._amount = amount;
+  double? _amount;
+  double? get amount => _$this._amount;
+  set amount(double? amount) => _$this._amount = amount;
 
-  String _currencyId;
-  String get currencyId => _$this._currencyId;
-  set currencyId(String currencyId) => _$this._currencyId = currencyId;
+  String? _currencyId;
+  String? get currencyId => _$this._currencyId;
+  set currencyId(String? currencyId) => _$this._currencyId = currencyId;
 
-  String _category;
-  String get category => _$this._category;
-  set category(String category) => _$this._category = category;
+  String? _category;
+  String? get category => _$this._category;
+  set category(String? category) => _$this._category = category;
 
-  String _baseType;
-  String get baseType => _$this._baseType;
-  set baseType(String baseType) => _$this._baseType = baseType;
+  String? _baseType;
+  String? get baseType => _$this._baseType;
+  set baseType(String? baseType) => _$this._baseType = baseType;
 
-  String _date;
-  String get date => _$this._date;
-  set date(String date) => _$this._date = date;
+  String? _date;
+  String? get date => _$this._date;
+  set date(String? date) => _$this._date = date;
 
-  String _bankAccountId;
-  String get bankAccountId => _$this._bankAccountId;
-  set bankAccountId(String bankAccountId) =>
+  String? _bankAccountId;
+  String? get bankAccountId => _$this._bankAccountId;
+  set bankAccountId(String? bankAccountId) =>
       _$this._bankAccountId = bankAccountId;
 
-  String _description;
-  String get description => _$this._description;
-  set description(String description) => _$this._description = description;
+  String? _description;
+  String? get description => _$this._description;
+  set description(String? description) => _$this._description = description;
 
-  String _statusId;
-  String get statusId => _$this._statusId;
-  set statusId(String statusId) => _$this._statusId = statusId;
+  String? _statusId;
+  String? get statusId => _$this._statusId;
+  set statusId(String? statusId) => _$this._statusId = statusId;
 
-  String _categoryId;
-  String get categoryId => _$this._categoryId;
-  set categoryId(String categoryId) => _$this._categoryId = categoryId;
+  String? _categoryId;
+  String? get categoryId => _$this._categoryId;
+  set categoryId(String? categoryId) => _$this._categoryId = categoryId;
 
-  String _invoiceIds;
-  String get invoiceIds => _$this._invoiceIds;
-  set invoiceIds(String invoiceIds) => _$this._invoiceIds = invoiceIds;
+  String? _invoiceIds;
+  String? get invoiceIds => _$this._invoiceIds;
+  set invoiceIds(String? invoiceIds) => _$this._invoiceIds = invoiceIds;
 
-  String _paymentId;
-  String get paymentId => _$this._paymentId;
-  set paymentId(String paymentId) => _$this._paymentId = paymentId;
+  String? _paymentId;
+  String? get paymentId => _$this._paymentId;
+  set paymentId(String? paymentId) => _$this._paymentId = paymentId;
 
-  String _expenseId;
-  String get expenseId => _$this._expenseId;
-  set expenseId(String expenseId) => _$this._expenseId = expenseId;
+  String? _expenseId;
+  String? get expenseId => _$this._expenseId;
+  set expenseId(String? expenseId) => _$this._expenseId = expenseId;
 
-  String _vendorId;
-  String get vendorId => _$this._vendorId;
-  set vendorId(String vendorId) => _$this._vendorId = vendorId;
+  String? _vendorId;
+  String? get vendorId => _$this._vendorId;
+  set vendorId(String? vendorId) => _$this._vendorId = vendorId;
 
-  int _transactionId;
-  int get transactionId => _$this._transactionId;
-  set transactionId(int transactionId) => _$this._transactionId = transactionId;
+  int? _transactionId;
+  int? get transactionId => _$this._transactionId;
+  set transactionId(int? transactionId) =>
+      _$this._transactionId = transactionId;
 
-  String _transactionRuleId;
-  String get transactionRuleId => _$this._transactionRuleId;
-  set transactionRuleId(String transactionRuleId) =>
+  String? _transactionRuleId;
+  String? get transactionRuleId => _$this._transactionRuleId;
+  set transactionRuleId(String? transactionRuleId) =>
       _$this._transactionRuleId = transactionRuleId;
 
-  String _pendingVendorId;
-  String get pendingVendorId => _$this._pendingVendorId;
-  set pendingVendorId(String pendingVendorId) =>
+  String? _pendingVendorId;
+  String? get pendingVendorId => _$this._pendingVendorId;
+  set pendingVendorId(String? pendingVendorId) =>
       _$this._pendingVendorId = pendingVendorId;
 
-  String _pendingCategoryId;
-  String get pendingCategoryId => _$this._pendingCategoryId;
-  set pendingCategoryId(String pendingCategoryId) =>
+  String? _pendingCategoryId;
+  String? get pendingCategoryId => _$this._pendingCategoryId;
+  set pendingCategoryId(String? pendingCategoryId) =>
       _$this._pendingCategoryId = pendingCategoryId;
 
-  String _pendingExpenseId;
-  String get pendingExpenseId => _$this._pendingExpenseId;
-  set pendingExpenseId(String pendingExpenseId) =>
+  String? _pendingExpenseId;
+  String? get pendingExpenseId => _$this._pendingExpenseId;
+  set pendingExpenseId(String? pendingExpenseId) =>
       _$this._pendingExpenseId = pendingExpenseId;
 
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+  bool? _isChanged;
+  bool? get isChanged => _$this._isChanged;
+  set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
 
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+  int? _archivedAt;
+  int? get archivedAt => _$this._archivedAt;
+  set archivedAt(int? archivedAt) => _$this._archivedAt = archivedAt;
 
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+  bool? _isDeleted;
+  bool? get isDeleted => _$this._isDeleted;
+  set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
 
-  String _createdUserId;
-  String get createdUserId => _$this._createdUserId;
-  set createdUserId(String createdUserId) =>
+  String? _createdUserId;
+  String? get createdUserId => _$this._createdUserId;
+  set createdUserId(String? createdUserId) =>
       _$this._createdUserId = createdUserId;
 
-  String _assignedUserId;
-  String get assignedUserId => _$this._assignedUserId;
-  set assignedUserId(String assignedUserId) =>
+  String? _assignedUserId;
+  String? get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String? assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   TransactionEntityBuilder() {
     TransactionEntity._initializeBuilder(this);
@@ -966,7 +967,7 @@ class TransactionEntityBuilder
   }
 
   @override
-  void update(void Function(TransactionEntityBuilder) updates) {
+  void update(void Function(TransactionEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -1023,10 +1024,11 @@ class _$TransactionStatusEntity extends TransactionStatusEntity {
   final String name;
 
   factory _$TransactionStatusEntity(
-          [void Function(TransactionStatusEntityBuilder) updates]) =>
+          [void Function(TransactionStatusEntityBuilder)? updates]) =>
       (new TransactionStatusEntityBuilder()..update(updates))._build();
 
-  _$TransactionStatusEntity._({this.id, this.name}) : super._() {
+  _$TransactionStatusEntity._({required this.id, required this.name})
+      : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'TransactionStatusEntity', 'id');
     BuiltValueNullFieldError.checkNotNull(
         name, r'TransactionStatusEntity', 'name');
@@ -1049,10 +1051,10 @@ class _$TransactionStatusEntity extends TransactionStatusEntity {
         name == other.name;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, name.hashCode);
@@ -1072,15 +1074,15 @@ class _$TransactionStatusEntity extends TransactionStatusEntity {
 class TransactionStatusEntityBuilder
     implements
         Builder<TransactionStatusEntity, TransactionStatusEntityBuilder> {
-  _$TransactionStatusEntity _$v;
+  _$TransactionStatusEntity? _$v;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
 
   TransactionStatusEntityBuilder();
 
@@ -1101,7 +1103,7 @@ class TransactionStatusEntityBuilder
   }
 
   @override
-  void update(void Function(TransactionStatusEntityBuilder) updates) {
+  void update(void Function(TransactionStatusEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

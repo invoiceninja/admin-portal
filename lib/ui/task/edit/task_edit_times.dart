@@ -17,8 +17,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskEditTimes extends StatefulWidget {
   const TaskEditTimes({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final TaskEditTimesVM viewModel;
@@ -28,21 +28,21 @@ class TaskEditTimes extends StatefulWidget {
 }
 
 class _TaskEditTimesState extends State<TaskEditTimes> {
-  TaskTime selectedTaskTime;
+  TaskTime? selectedTaskTime;
 
-  void _showTaskTimeEditor(TaskTime taskTime, BuildContext context) {
+  void _showTaskTimeEditor(TaskTime? taskTime, BuildContext context) {
     showDialog<ResponsivePadding>(
         barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
           final viewModel = widget.viewModel;
-          final task = viewModel.task;
+          final task = viewModel.task!;
           final taskTimes = task.getTaskTimes();
           return TimeEditDetails(
             viewModel: viewModel,
             taskTime: taskTime,
             index: taskTimes.indexOf(
-                taskTimes.firstWhere((time) => time.equalTo(taskTime))),
+                taskTimes.firstWhere((time) => time!.equalTo(taskTime!))),
           );
         });
   }
@@ -51,12 +51,12 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
-    final task = viewModel.task;
+    final task = viewModel.task!;
     final taskTimes = task.getTaskTimes();
     final invalidTimes = task.getInvalidTimeIndices;
     final taskTime = viewModel.taskTimeIndex != null &&
-            taskTimes.length > viewModel.taskTimeIndex
-        ? taskTimes[viewModel.taskTimeIndex]
+            taskTimes.length > viewModel.taskTimeIndex!
+        ? taskTimes[viewModel.taskTimeIndex!]
         : null;
 
     if (taskTime != null && taskTime != selectedTaskTime) {
@@ -67,7 +67,7 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
     }
 
     if (task.getTaskTimes().isEmpty) {
-      return HelpText(localization.clickPlusToAddTime);
+      return HelpText(localization!.clickPlusToAddTime);
     }
 
     final sortedTaskTimes = task.getTaskTimes().toList().reversed.toList();
@@ -91,14 +91,14 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
 
 class TimeEditDetails extends StatefulWidget {
   const TimeEditDetails({
-    Key key,
-    @required this.index,
-    @required this.taskTime,
-    @required this.viewModel,
+    Key? key,
+    required this.index,
+    required this.taskTime,
+    required this.viewModel,
   }) : super(key: key);
 
   final int index;
-  final TaskTime taskTime;
+  final TaskTime? taskTime;
   final TaskEditTimesVM viewModel;
 
   @override
@@ -106,7 +106,7 @@ class TimeEditDetails extends StatefulWidget {
 }
 
 class TimeEditDetailsState extends State<TimeEditDetails> {
-  TaskTime _taskTime = TaskTime();
+  TaskTime? _taskTime = TaskTime();
   int _startDateUpdatedAt = 0;
   int _startTimeUpdatedAt = 0;
   int _endDateUpdatedAt = 0;
@@ -122,13 +122,13 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
-    final company = viewModel.company;
+    final company = viewModel.company!;
     final showEndDate = company.showTaskEndDate;
 
     // Handle the end time being before the start time
-    final times = _taskTime.asList;
+    final times = _taskTime!.asList;
     final duration = Duration(seconds: times[1] - times[0]);
 
     return AlertDialog(
@@ -140,13 +140,13 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               key: ValueKey('__date_${_startTimeUpdatedAt}__'),
               labelText:
                   showEndDate ? localization.startDate : localization.date,
-              selectedDate: _taskTime.startDate == null
+              selectedDate: _taskTime!.startDate == null
                   ? null
-                  : convertDateTimeToSqlDate(_taskTime.startDate.toLocal()),
+                  : convertDateTimeToSqlDate(_taskTime!.startDate!.toLocal()),
               onSelected: (date, _) {
                 setState(() {
-                  _taskTime = _taskTime.copyWithStartDate(date,
-                      syncDates: !showEndDate);
+                  _taskTime = _taskTime!
+                      .copyWithStartDate(date, syncDates: !showEndDate);
                   viewModel.onUpdatedTaskTime(_taskTime, widget.index);
                   _startDateUpdatedAt = DateTime.now().millisecondsSinceEpoch;
                 });
@@ -155,10 +155,14 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
             TimePicker(
               key: ValueKey('__start_time_${_durationUpdateAt}__'),
               labelText: localization.startTime,
-              selectedDateTime: _taskTime.startDate,
+              selectedDateTime: _taskTime!.startDate,
               onSelected: (timeOfDay) {
+                if (timeOfDay == null) {
+                  return;
+                }
+
                 setState(() {
-                  _taskTime = _taskTime.copyWithStartTime(timeOfDay);
+                  _taskTime = _taskTime!.copyWithStartTime(timeOfDay);
                   viewModel.onUpdatedTaskTime(_taskTime, widget.index);
                   _startTimeUpdatedAt = DateTime.now().millisecondsSinceEpoch;
                 });
@@ -169,12 +173,12 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
                 labelText: localization.endDate,
                 key: ValueKey(
                     '__${_startDateUpdatedAt}_${_durationUpdateAt}_${_endTimeUpdatedAt}__'),
-                selectedDate: _taskTime.endDate == null
+                selectedDate: _taskTime!.endDate == null
                     ? null
-                    : convertDateTimeToSqlDate(_taskTime.endDate.toLocal()),
+                    : convertDateTimeToSqlDate(_taskTime!.endDate!.toLocal()),
                 onSelected: (date, _) {
                   setState(() {
-                    _taskTime = _taskTime.copyWithEndDate(date);
+                    _taskTime = _taskTime!.copyWithEndDate(date);
                     viewModel.onUpdatedTaskTime(_taskTime, widget.index);
                     _endDateUpdatedAt = DateTime.now().millisecondsSinceEpoch;
                   });
@@ -184,11 +188,15 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               key: ValueKey(
                   '__end_time_${_endDateUpdatedAt}_${_durationUpdateAt}__'),
               labelText: localization.endTime,
-              selectedDateTime: _taskTime.endDate,
+              selectedDateTime: _taskTime!.endDate,
               isEndTime: true,
               onSelected: (timeOfDay) {
                 setState(() {
-                  _taskTime = _taskTime.copyWithEndTime(timeOfDay);
+                  if (timeOfDay == null) {
+                    return;
+                  }
+
+                  _taskTime = _taskTime!.copyWithEndTime(timeOfDay);
                   viewModel.onUpdatedTaskTime(_taskTime, widget.index);
                   _endTimeUpdatedAt = DateTime.now().millisecondsSinceEpoch;
                 });
@@ -200,34 +208,34 @@ class TimeEditDetailsState extends State<TimeEditDetails> {
               labelText: localization.duration,
               onSelected: (Duration duration) {
                 setState(() {
-                  _taskTime = _taskTime.copyWithDuration(duration);
+                  _taskTime = _taskTime!.copyWithDuration(duration);
                   viewModel.onUpdatedTaskTime(_taskTime, widget.index);
                   _durationUpdateAt = DateTime.now().millisecondsSinceEpoch;
                 });
               },
               selectedDuration:
-                  (_taskTime.startDate == null || _taskTime.endDate == null)
+                  (_taskTime!.startDate == null || _taskTime!.endDate == null)
                       ? null
                       : duration,
             ),
-            if (company.settings.showTaskItemDescription)
+            if (company.settings.showTaskItemDescription!)
               GrowableFormField(
                 label: localization.description,
-                initialValue: _taskTime.description,
+                initialValue: _taskTime!.description,
                 onChanged: (value) {
-                  _taskTime = _taskTime.rebuild((b) => b..description = value);
+                  _taskTime = _taskTime!.rebuild((b) => b..description = value);
                   viewModel.onUpdatedTaskTime(_taskTime, widget.index);
                 },
               ),
-            if (company.settings.allowBillableTaskItems)
+            if (company.settings.allowBillableTaskItems!)
               Padding(
                 padding: const EdgeInsets.only(top: 10),
                 child: SwitchListTile(
                     title: Text(localization.billable),
-                    value: _taskTime.isBillable,
+                    value: _taskTime!.isBillable,
                     onChanged: (value) {
                       _taskTime =
-                          _taskTime.rebuild((b) => b..isBillable = value);
+                          _taskTime!.rebuild((b) => b..isBillable = value);
                       viewModel.onUpdatedTaskTime(_taskTime, widget.index);
                       setState(() {});
                     }),

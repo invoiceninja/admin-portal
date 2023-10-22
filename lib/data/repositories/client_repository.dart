@@ -25,7 +25,7 @@ class ClientRepository {
   final WebClient webClient;
 
   Future<ClientEntity> loadItem(
-      Credentials credentials, String entityId) async {
+      Credentials credentials, String? entityId) async {
     final String url =
         '${credentials.url}/clients/$entityId?include=gateway_tokens,activities,ledger,system_logs,documents';
 
@@ -41,7 +41,7 @@ class ClientRepository {
   Future<BuiltList<ClientEntity>> loadList(
       Credentials credentials, int page) async {
     final String url =
-        credentials.url + '/clients?per_page=$kMaxRecordsPerPage&page=$page';
+        credentials.url! + '/clients?per_page=$kMaxRecordsPerPage&page=$page';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
@@ -60,24 +60,24 @@ class ClientRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url +
+    final url = credentials.url! +
         '/clients/bulk?per_page=$kMaxEntitiesPerBulkAction&include=gateway_tokens,activities,ledger,system_logs,documents';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final ClientListResponse clientResponse =
-        serializers.deserializeWith(ClientListResponse.serializer, response);
+        serializers.deserializeWith(ClientListResponse.serializer, response)!;
 
     return clientResponse.data.toList();
   }
 
   Future<bool> purge({
-    @required Credentials credentials,
-    @required String clientId,
-    @required String password,
-    @required String idToken,
+    required Credentials credentials,
+    required String clientId,
+    required String? password,
+    required String? idToken,
   }) async {
-    final url = credentials.url + '/clients/$clientId/purge';
+    final url = credentials.url! + '/clients/$clientId/purge';
 
     await webClient.post(url, credentials.token,
         password: password, idToken: idToken);
@@ -86,19 +86,20 @@ class ClientRepository {
   }
 
   Future<ClientEntity> merge({
-    @required Credentials credentials,
-    @required String clientId,
-    @required String mergeIntoClientId,
-    @required String password,
-    @required String idToken,
+    required Credentials credentials,
+    required String? clientId,
+    required String? mergeIntoClientId,
+    required String? password,
+    required String? idToken,
   }) async {
-    final url = credentials.url + '/clients/$mergeIntoClientId/$clientId/merge';
+    final url =
+        credentials.url! + '/clients/$mergeIntoClientId/$clientId/merge';
 
     final dynamic response = await webClient.post(url, credentials.token,
         password: password, idToken: idToken);
 
     final ClientItemResponse clientResponse =
-        serializers.deserializeWith(ClientItemResponse.serializer, response);
+        serializers.deserializeWith(ClientItemResponse.serializer, response)!;
 
     return clientResponse.data;
   }
@@ -111,19 +112,19 @@ class ClientRepository {
 
     if (client.isNew) {
       response = await webClient.post(
-          credentials.url +
+          credentials.url! +
               '/clients?include=gateway_tokens,activities,ledger,system_logs,documents',
           credentials.token,
           data: json.encode(data));
     } else {
-      final url = credentials.url +
+      final url = credentials.url! +
           '/clients/${client.id}?include=gateway_tokens,activities,ledger,system_logs,documents';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }
 
     final ClientItemResponse clientResponse =
-        serializers.deserializeWith(ClientItemResponse.serializer, response);
+        serializers.deserializeWith(ClientItemResponse.serializer, response)!;
 
     return clientResponse.data;
   }
@@ -145,7 +146,7 @@ class ClientRepository {
         multipartFiles: multipartFile);
 
     final ClientItemResponse clientResponse =
-        serializers.deserializeWith(ClientItemResponse.serializer, response);
+        serializers.deserializeWith(ClientItemResponse.serializer, response)!;
 
     return clientResponse.data;
   }

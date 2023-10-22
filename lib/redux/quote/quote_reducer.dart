@@ -17,7 +17,7 @@ import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 EntityUIState quoteUIReducer(QuoteUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(quoteListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
+    ..editing.replace(editingReducer(state.editing, action)!)
     ..editingItemIndex = editingItemReducer(state.editingItemIndex, action)
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..forceSelected = forceSelectedReducer(state.forceSelected, action)
@@ -26,36 +26,37 @@ EntityUIState quoteUIReducer(QuoteUIState state, dynamic action) {
         historyActivityIdReducer(state.historyActivityId, action));
 }
 
-final forceSelectedReducer = combineReducers<bool>([
-  TypedReducer<bool, ViewQuote>((completer, action) => true),
-  TypedReducer<bool, ViewQuoteList>((completer, action) => false),
-  TypedReducer<bool, FilterQuotesByState>((completer, action) => false),
-  TypedReducer<bool, FilterQuotesByStatus>((completer, action) => false),
-  TypedReducer<bool, FilterQuotes>((completer, action) => false),
-  TypedReducer<bool, FilterQuotesByCustom1>((completer, action) => false),
-  TypedReducer<bool, FilterQuotesByCustom2>((completer, action) => false),
-  TypedReducer<bool, FilterQuotesByCustom3>((completer, action) => false),
-  TypedReducer<bool, FilterQuotesByCustom4>((completer, action) => false),
+final forceSelectedReducer = combineReducers<bool?>([
+  TypedReducer<bool?, ViewQuote>((completer, action) => true),
+  TypedReducer<bool?, ViewQuoteList>((completer, action) => false),
+  TypedReducer<bool?, FilterQuotesByState>((completer, action) => false),
+  TypedReducer<bool?, FilterQuotesByStatus>((completer, action) => false),
+  TypedReducer<bool?, FilterQuotes>((completer, action) => false),
+  TypedReducer<bool?, FilterQuotesByCustom1>((completer, action) => false),
+  TypedReducer<bool?, FilterQuotesByCustom2>((completer, action) => false),
+  TypedReducer<bool?, FilterQuotesByCustom3>((completer, action) => false),
+  TypedReducer<bool?, FilterQuotesByCustom4>((completer, action) => false),
 ]);
 
-final tabIndexReducer = combineReducers<int>([
-  TypedReducer<int, UpdateQuoteTab>((completer, action) {
+final int? Function(int, dynamic) tabIndexReducer = combineReducers<int?>([
+  TypedReducer<int?, UpdateQuoteTab>((completer, action) {
     return action.tabIndex;
   }),
-  TypedReducer<int, PreviewEntity>((completer, action) {
+  TypedReducer<int?, PreviewEntity>((completer, action) {
     return 0;
   }),
 ]);
 
-final historyActivityIdReducer = combineReducers<String>([
-  TypedReducer<String, ShowPdfQuote>((index, action) => action.activityId),
+final historyActivityIdReducer = combineReducers<String?>([
+  TypedReducer<String?, ShowPdfQuote>((index, action) => action.activityId),
 ]);
 
-final editingItemReducer = combineReducers<int>([
-  TypedReducer<int, EditQuote>((index, action) => action.quoteItemIndex),
-  TypedReducer<int, EditQuoteItem>((index, action) => action.quoteItemIndex),
+final editingItemReducer = combineReducers<int?>([
+  TypedReducer<int?, EditQuote>((index, action) => action.quoteItemIndex),
+  TypedReducer<int?, EditQuoteItem>((index, action) => action.quoteItemIndex),
 ]);
 
+/*
 Reducer<String> dropdownFilterReducer = combineReducers([
   TypedReducer<String, FilterQuoteDropdown>(filterquoteDropdownReducer),
 ]);
@@ -64,31 +65,33 @@ String filterquoteDropdownReducer(
     String dropdownFilter, FilterQuoteDropdown action) {
   return action.filter;
 }
+*/
 
-Reducer<String> selectedIdReducer = combineReducers([
-  TypedReducer<String, ArchiveQuotesSuccess>((completer, action) => ''),
-  TypedReducer<String, DeleteQuotesSuccess>((completer, action) => ''),
-  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+Reducer<String?> selectedIdReducer = combineReducers([
+  TypedReducer<String?, ArchiveQuotesSuccess>((completer, action) => ''),
+  TypedReducer<String?, DeleteQuotesSuccess>((completer, action) => ''),
+  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.quote ? action.entityId : selectedId),
-  TypedReducer<String, ViewQuote>((selectedId, action) => action.quoteId),
-  TypedReducer<String, AddQuoteSuccess>(
+  TypedReducer<String?, ViewQuote>((selectedId, action) => action.quoteId),
+  TypedReducer<String?, AddQuoteSuccess>(
       (selectedId, action) => action.quote.id),
-  TypedReducer<String, ShowEmailQuote>((selectedId, action) => action.quote.id),
-  TypedReducer<String, ShowPdfQuote>((selectedId, action) => action.quote.id),
-  TypedReducer<String, SelectCompany>(
+  TypedReducer<String?, ShowEmailQuote>(
+      (selectedId, action) => action.quote!.id),
+  TypedReducer<String?, ShowPdfQuote>((selectedId, action) => action.quote!.id),
+  TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, SortQuotes>((selectedId, action) => ''),
-  TypedReducer<String, FilterQuotes>((selectedId, action) => ''),
-  TypedReducer<String, FilterQuotesByState>((selectedId, action) => ''),
-  TypedReducer<String, FilterQuotesByStatus>((selectedId, action) => ''),
-  TypedReducer<String, FilterQuotesByCustom1>((selectedId, action) => ''),
-  TypedReducer<String, FilterQuotesByCustom2>((selectedId, action) => ''),
-  TypedReducer<String, FilterQuotesByCustom3>((selectedId, action) => ''),
-  TypedReducer<String, FilterQuotesByCustom4>((selectedId, action) => ''),
-  TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
+  TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String?, SortQuotes>((selectedId, action) => ''),
+  TypedReducer<String?, FilterQuotes>((selectedId, action) => ''),
+  TypedReducer<String?, FilterQuotesByState>((selectedId, action) => ''),
+  TypedReducer<String?, FilterQuotesByStatus>((selectedId, action) => ''),
+  TypedReducer<String?, FilterQuotesByCustom1>((selectedId, action) => ''),
+  TypedReducer<String?, FilterQuotesByCustom2>((selectedId, action) => ''),
+  TypedReducer<String?, FilterQuotesByCustom3>((selectedId, action) => ''),
+  TypedReducer<String?, FilterQuotesByCustom4>((selectedId, action) => ''),
+  TypedReducer<String?, ClearEntitySelection>((selectedId, action) =>
       action.entityType == EntityType.quote ? '' : selectedId),
-  TypedReducer<String, FilterByEntity>(
+  TypedReducer<String?, FilterByEntity>(
       (selectedId, action) => action.clearSelection
           ? ''
           : action.entityType == EntityType.quote
@@ -96,85 +99,85 @@ Reducer<String> selectedIdReducer = combineReducers([
               : selectedId),
 ]);
 
-final editingReducer = combineReducers<InvoiceEntity>([
-  TypedReducer<InvoiceEntity, LoadQuoteSuccess>(_updateEditing),
-  TypedReducer<InvoiceEntity, SaveQuoteSuccess>(_updateEditing),
-  TypedReducer<InvoiceEntity, AddQuoteSuccess>(_updateEditing),
-  TypedReducer<InvoiceEntity, EditQuote>(_updateEditing),
-  TypedReducer<InvoiceEntity, UpdateQuote>((quote, action) {
+final editingReducer = combineReducers<InvoiceEntity?>([
+  TypedReducer<InvoiceEntity?, LoadQuoteSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity?, SaveQuoteSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity?, AddQuoteSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity?, EditQuote>(_updateEditing),
+  TypedReducer<InvoiceEntity?, UpdateQuote>((quote, action) {
     return action.quote.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<InvoiceEntity, AddQuoteItem>((invoice, action) {
-    return invoice.rebuild((b) => b..isChanged = true);
+  TypedReducer<InvoiceEntity?, AddQuoteItem>((invoice, action) {
+    return invoice!.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<InvoiceEntity, MoveQuoteItem>((invoice, action) {
-    return invoice.moveLineItem(action.oldIndex, action.newIndex);
+  TypedReducer<InvoiceEntity?, MoveQuoteItem>((invoice, action) {
+    return invoice!.moveLineItem(action.oldIndex!, action.newIndex);
   }),
-  TypedReducer<InvoiceEntity, DeleteQuoteItem>((invoice, action) {
-    return invoice.rebuild((b) => b..isChanged = true);
+  TypedReducer<InvoiceEntity?, DeleteQuoteItem>((invoice, action) {
+    return invoice!.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<InvoiceEntity, UpdateQuoteItem>((invoice, action) {
-    return invoice.rebuild((b) => b..isChanged = true);
+  TypedReducer<InvoiceEntity?, UpdateQuoteItem>((invoice, action) {
+    return invoice!.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<InvoiceEntity, UpdateQuoteClient>((quote, action) {
+  TypedReducer<InvoiceEntity?, UpdateQuoteClient>((quote, action) {
     final client = action.client;
-    return quote.rebuild((b) => b
+    return quote!.rebuild((b) => b
       ..isChanged = true
       ..clientId = client?.id ?? ''
       ..invitations.replace((client?.emailContacts ?? <ClientContactEntity>[])
           .map((contact) => InvitationEntity(clientContactId: contact.id))
           .toList()));
   }),
-  TypedReducer<InvoiceEntity, RestoreQuotesSuccess>((quotes, action) {
+  TypedReducer<InvoiceEntity?, RestoreQuotesSuccess>((quotes, action) {
     return action.quotes[0];
   }),
-  TypedReducer<InvoiceEntity, ArchiveQuotesSuccess>((quotes, action) {
+  TypedReducer<InvoiceEntity?, ArchiveQuotesSuccess>((quotes, action) {
     return action.quotes[0];
   }),
-  TypedReducer<InvoiceEntity, DeleteQuotesSuccess>((quotes, action) {
+  TypedReducer<InvoiceEntity?, DeleteQuotesSuccess>((quotes, action) {
     return action.quotes[0];
   }),
-  TypedReducer<InvoiceEntity, AddQuoteItem>(_addQuoteItem),
-  TypedReducer<InvoiceEntity, AddQuoteItems>(_addQuoteItems),
-  TypedReducer<InvoiceEntity, DeleteQuoteItem>(_removeQuoteItem),
-  TypedReducer<InvoiceEntity, UpdateQuoteItem>(_updateQuoteItem),
-  TypedReducer<InvoiceEntity, DiscardChanges>(_clearEditing),
-  TypedReducer<InvoiceEntity, AddQuoteContact>((invoice, action) {
-    return invoice.rebuild((b) => b
+  TypedReducer<InvoiceEntity?, AddQuoteItem>(_addQuoteItem),
+  TypedReducer<InvoiceEntity?, AddQuoteItems>(_addQuoteItems),
+  TypedReducer<InvoiceEntity?, DeleteQuoteItem>(_removeQuoteItem),
+  TypedReducer<InvoiceEntity?, UpdateQuoteItem>(_updateQuoteItem),
+  TypedReducer<InvoiceEntity?, DiscardChanges>(_clearEditing),
+  TypedReducer<InvoiceEntity?, AddQuoteContact>((invoice, action) {
+    return invoice!.rebuild((b) => b
       ..invitations.add(action.invitation ??
-          InvitationEntity(clientContactId: action.contact.id)));
+          InvitationEntity(clientContactId: action.contact!.id)));
   }),
-  TypedReducer<InvoiceEntity, RemoveQuoteContact>((invoice, action) {
-    return invoice.rebuild((b) => b..invitations.remove(action.invitation));
+  TypedReducer<InvoiceEntity?, RemoveQuoteContact>((invoice, action) {
+    return invoice!.rebuild((b) => b..invitations.remove(action.invitation));
   }),
 ]);
 
-InvoiceEntity _clearEditing(InvoiceEntity quote, dynamic action) {
+InvoiceEntity _clearEditing(InvoiceEntity? quote, dynamic action) {
   return InvoiceEntity();
 }
 
-InvoiceEntity _updateEditing(InvoiceEntity quote, dynamic action) {
+InvoiceEntity? _updateEditing(InvoiceEntity? quote, dynamic action) {
   return action.quote;
 }
 
-InvoiceEntity _addQuoteItem(InvoiceEntity quote, AddQuoteItem action) {
-  return quote.rebuild(
+InvoiceEntity _addQuoteItem(InvoiceEntity? quote, AddQuoteItem action) {
+  return quote!.rebuild(
       (b) => b..lineItems.add(action.quoteItem ?? InvoiceItemEntity()));
 }
 
-InvoiceEntity _addQuoteItems(InvoiceEntity quote, AddQuoteItems action) {
-  return quote.rebuild((b) => b..lineItems.addAll(action.quoteItems));
+InvoiceEntity _addQuoteItems(InvoiceEntity? quote, AddQuoteItems action) {
+  return quote!.rebuild((b) => b..lineItems.addAll(action.quoteItems));
 }
 
-InvoiceEntity _removeQuoteItem(InvoiceEntity quote, DeleteQuoteItem action) {
-  if (quote.lineItems.length <= action.index) {
+InvoiceEntity? _removeQuoteItem(InvoiceEntity? quote, DeleteQuoteItem action) {
+  if (quote!.lineItems.length <= action.index) {
     return quote;
   }
   return quote.rebuild((b) => b..lineItems.removeAt(action.index));
 }
 
-InvoiceEntity _updateQuoteItem(InvoiceEntity quote, UpdateQuoteItem action) {
-  if (quote.lineItems.length <= action.index) {
+InvoiceEntity? _updateQuoteItem(InvoiceEntity? quote, UpdateQuoteItem action) {
+  if (quote!.lineItems.length <= action.index) {
     return quote;
   }
   return quote.rebuild((b) => b..lineItems[action.index] = action.quoteItem);
@@ -277,7 +280,7 @@ ListUIState _filterQuotes(ListUIState quoteListState, FilterQuotes action) {
 
 ListUIState _sortQuotes(ListUIState quoteListState, SortQuotes action) {
   return quoteListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortAscending = b.sortField != action.field || !b.sortAscending!
     ..sortField = action.field);
 }
 
@@ -288,12 +291,13 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState quoteListState, AddToQuoteMultiselect action) {
-  return quoteListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+  return quoteListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState quoteListState, RemoveFromQuoteMultiselect action) {
-  return quoteListState.rebuild((b) => b..selectedIds.remove(action.entity.id));
+  return quoteListState
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(
@@ -375,7 +379,7 @@ QuoteState _emailQuoteSuccess(QuoteState quoteState, EmailQuoteSuccess action) {
 QuoteState _convertQuotesToInvoicesSuccess(
     QuoteState quoteState, ConvertQuotesToInvoicesSuccess action) {
   final quoteMap = Map<String, InvoiceEntity>.fromIterable(
-    action.quotes,
+    action.quotes!,
     key: (dynamic item) => item.id,
     value: (dynamic item) => item,
   );
@@ -385,7 +389,7 @@ QuoteState _convertQuotesToInvoicesSuccess(
 QuoteState _convertQuotesToProjectsSuccess(
     QuoteState quoteState, ConvertQuotesToProjectsSuccess action) {
   final quoteMap = Map<String, InvoiceEntity>.fromIterable(
-    action.quotes,
+    action.quotes!,
     key: (dynamic item) => item.id,
     value: (dynamic item) => item,
   );
@@ -400,9 +404,9 @@ QuoteState _addQuote(QuoteState quoteState, AddQuoteSuccess action) {
 }
 
 QuoteState _updateQuote(QuoteState invoiceState, dynamic action) {
-  final InvoiceEntity quote = action.quote;
+  final InvoiceEntity? quote = action.quote;
   return invoiceState.rebuild((b) => b
-    ..map[quote.id] = quote
+    ..map[quote!.id] = quote
         .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch));
 }
 

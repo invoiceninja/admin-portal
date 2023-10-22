@@ -13,8 +13,8 @@ void main() {
 
 void runTestSuite({bool batchMode = false}) {
   group('Invoice Tests', () {
-    TestLocalization localization;
-    FlutterDriver driver;
+    late TestLocalization localization;
+    FlutterDriver? driver;
 
     final clientName = makeUnique(faker.company.name());
     final poNumber =
@@ -34,51 +34,51 @@ void runTestSuite({bool batchMode = false}) {
       driver = await FlutterDriver.connect();
 
       print('Login to app');
-      await login(driver, retype: batchMode);
+      await login(driver!, retype: batchMode);
 
       print('View invoices');
-      await viewSection(driver: driver, name: localization.invoices);
+      await viewSection(driver: driver!, name: localization.invoices);
     });
 
     tearDownAll(() async {
-      await logout(driver, localization);
+      await logout(driver!, localization);
 
       if (driver != null) {
-        driver.close();
+        driver!.close();
       }
     });
 
     // Create an empty invoice
     test('Try to add an empty invoice', () async {
       print('Tap new invoice');
-      await driver.tap(find.byTooltip(localization.newInvoice));
+      await driver!.tap(find.byTooltip(localization.newInvoice));
 
       print('Tap save');
-      await driver.tap(find.text(localization.save));
+      await driver!.tap(find.text(localization.save));
 
       print('Check for error');
-      await driver.waitFor(find.text(localization.pleaseSelectAClient));
+      await driver!.waitFor(find.text(localization.pleaseSelectAClient));
 
-      if (await isMobile(driver)) {
+      if (await isMobile(driver!)) {
         print('Click back');
-        await driver.tap(find.pageBack());
-        await driver.waitFor(find.byTooltip(localization.newInvoice));
+        await driver!.tap(find.pageBack());
+        await driver!.waitFor(find.byTooltip(localization.newInvoice));
       } else {
         print('Click cancel');
-        await driver.tap(find.text(localization.cancel));
+        await driver!.tap(find.text(localization.cancel));
       }
     });
 
     // Create a new invoice
     test('Add a new invoice', () async {
       print('Tap new invoice');
-      await driver.tap(find.byTooltip(localization.newInvoice));
+      await driver!.tap(find.byTooltip(localization.newInvoice));
 
       print('Create new client: $clientName');
-      if (await isMobile(driver)) {
-        await driver.tap(find.byValueKey(Keys.clientPickerEmptyKey));
+      if (await isMobile(driver!)) {
+        await driver!.tap(find.byValueKey(Keys.clientPickerEmptyKey));
       }
-      await driver.tap(find.byTooltip(localization.createNew));
+      await driver!.tap(find.byTooltip(localization.createNew));
 
       print('Fill the client form');
       await fillTextFields(driver, <String, String>{
@@ -87,15 +87,15 @@ void runTestSuite({bool batchMode = false}) {
       });
       // Await for Debouncer
       await Future<dynamic>.delayed(Duration(milliseconds: 500));
-      await driver.tap(find.text(localization.save));
+      await driver!.tap(find.text(localization.save));
 
       // Await for Screen change
-      await driver.waitFor(find.text(localization.newInvoice));
+      await driver!.waitFor(find.text(localization.newInvoice));
 
       print('Fill the invoice form');
-      if (await isMobile(driver)) {
-        await driver.tap(find.byTooltip(localization.addItem));
-        await driver.tap(find.byTooltip(localization.createNew));
+      if (await isMobile(driver!)) {
+        await driver!.tap(find.byTooltip(localization.addItem));
+        await driver!.tap(find.byTooltip(localization.createNew));
 
         await fillTextFields(driver, <String, String>{
           localization.product: productKey,
@@ -106,8 +106,8 @@ void runTestSuite({bool batchMode = false}) {
 
         // Await for Debouncer
         await Future<dynamic>.delayed(Duration(milliseconds: 500));
-        await driver.tap(find.text(localization.done.toUpperCase()));
-        await driver.tap(find.text(localization.details));
+        await driver!.tap(find.text(localization.done.toUpperCase()));
+        await driver!.tap(find.text(localization.details));
       } else {
         await fillTextFields(driver, <String, String>{
           getLineItemKey('name', 0): productKey,
@@ -117,31 +117,31 @@ void runTestSuite({bool batchMode = false}) {
         });
       }
 
-      await fillAndSaveForm(driver, <String, String>{
+      await fillAndSaveForm(driver!, <String, String>{
         localization.poNumber: poNumber,
       });
 
-      if (await isMobile(driver)) {
+      if (await isMobile(driver!)) {
         print('Click back');
-        await driver.tap(find.pageBack());
-        await driver.waitFor(find.byTooltip(localization.newInvoice));
+        await driver!.tap(find.pageBack());
+        await driver!.waitFor(find.byTooltip(localization.newInvoice));
       }
     });
 
     // Edit the newly created invoice
     test('Edit an existing invoice', () async {
-      if (await isMobile(driver)) {
+      if (await isMobile(driver!)) {
         print('Select invoice: $clientName');
-        await driver.scrollUntilVisible(
+        await driver!.scrollUntilVisible(
             find.byType('ListView'), find.text(clientName),
             dyScroll: -300);
-        await driver.tap(find.text(clientName));
+        await driver!.tap(find.text(clientName));
       }
 
       print('Tap edit');
-      await driver.tap(find.text(localization.edit));
+      await driver!.tap(find.text(localization.edit));
 
-      await fillAndSaveForm(driver, <String, String>{
+      await fillAndSaveForm(driver!, <String, String>{
         localization.poNumber: updatedPoNumber,
       });
     });
@@ -149,7 +149,7 @@ void runTestSuite({bool batchMode = false}) {
     // Archive the edited invoice
     test('Archive/delete invoice test', () async {
       await testArchiveAndDelete(
-          driver: driver,
+          driver: driver!,
           rowText: clientName,
           archivedMessage: localization.archivedInvoice,
           deletedMessage: localization.deletedInvoice,
@@ -158,15 +158,15 @@ void runTestSuite({bool batchMode = false}) {
 
     // Mark the invoice as paid
     test('Mark invoice as paid', () async {
-      await selectAction(driver, localization.enterPayment);
-      await driver.tap(find.text(localization.save));
+      await selectAction(driver!, localization.enterPayment);
+      await driver!.tap(find.text(localization.save));
       // "Completed" status
-      await driver
+      await driver!
           .waitFor(find.text(localization.paymentStatus4.toUpperCase()));
 
-      if (await isMobile(driver)) {
-        await driver.tap(find.pageBack());
-        await driver.tap(find.pageBack());
+      if (await isMobile(driver!)) {
+        await driver!.tap(find.pageBack());
+        await driver!.tap(find.pageBack());
       }
     });
   });

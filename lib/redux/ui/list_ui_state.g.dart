@@ -15,9 +15,9 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
   final String wireName = 'ListUIState';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, ListUIState object,
+  Iterable<Object?> serialize(Serializers serializers, ListUIState object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'filterClearedAt',
       serializers.serialize(object.filterClearedAt,
           specifiedType: const FullType(int)),
@@ -52,7 +52,7 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
     ];
-    Object value;
+    Object? value;
     value = object.filter;
     if (value != null) {
       result
@@ -72,73 +72,73 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
   }
 
   @override
-  ListUIState deserialize(Serializers serializers, Iterable<Object> serialized,
+  ListUIState deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new ListUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'filter':
           result.filter = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'filterClearedAt':
           result.filterClearedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'sortField':
           result.sortField = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'sortAscending':
           result.sortAscending = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'stateFilters':
           result.stateFilters.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(EntityState)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(EntityState)]))!
+              as BuiltList<Object?>);
           break;
         case 'statusFilters':
           result.statusFilters.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(EntityStatus)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(EntityStatus)]))!
+              as BuiltList<Object?>);
           break;
         case 'custom1Filters':
           result.custom1Filters.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList<Object>);
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
           break;
         case 'custom2Filters':
           result.custom2Filters.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList<Object>);
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
           break;
         case 'custom3Filters':
           result.custom3Filters.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList<Object>);
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
           break;
         case 'custom4Filters':
           result.custom4Filters.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList<Object>);
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
           break;
         case 'selectedIds':
           result.selectedIds.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
-              as BuiltList<Object>);
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(String)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -149,7 +149,7 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
 
 class _$ListUIState extends ListUIState {
   @override
-  final String filter;
+  final String? filter;
   @override
   final int filterClearedAt;
   @override
@@ -169,22 +169,22 @@ class _$ListUIState extends ListUIState {
   @override
   final BuiltList<String> custom4Filters;
   @override
-  final BuiltList<String> selectedIds;
+  final BuiltList<String>? selectedIds;
 
-  factory _$ListUIState([void Function(ListUIStateBuilder) updates]) =>
+  factory _$ListUIState([void Function(ListUIStateBuilder)? updates]) =>
       (new ListUIStateBuilder()..update(updates))._build();
 
   _$ListUIState._(
       {this.filter,
-      this.filterClearedAt,
-      this.sortField,
-      this.sortAscending,
-      this.stateFilters,
-      this.statusFilters,
-      this.custom1Filters,
-      this.custom2Filters,
-      this.custom3Filters,
-      this.custom4Filters,
+      required this.filterClearedAt,
+      required this.sortField,
+      required this.sortAscending,
+      required this.stateFilters,
+      required this.statusFilters,
+      required this.custom1Filters,
+      required this.custom2Filters,
+      required this.custom3Filters,
+      required this.custom4Filters,
       this.selectedIds})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -231,10 +231,10 @@ class _$ListUIState extends ListUIState {
         selectedIds == other.selectedIds;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, filter.hashCode);
     _$hash = $jc(_$hash, filterClearedAt.hashCode);
@@ -270,66 +270,66 @@ class _$ListUIState extends ListUIState {
 }
 
 class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
-  _$ListUIState _$v;
+  _$ListUIState? _$v;
 
-  String _filter;
-  String get filter => _$this._filter;
-  set filter(String filter) => _$this._filter = filter;
+  String? _filter;
+  String? get filter => _$this._filter;
+  set filter(String? filter) => _$this._filter = filter;
 
-  int _filterClearedAt;
-  int get filterClearedAt => _$this._filterClearedAt;
-  set filterClearedAt(int filterClearedAt) =>
+  int? _filterClearedAt;
+  int? get filterClearedAt => _$this._filterClearedAt;
+  set filterClearedAt(int? filterClearedAt) =>
       _$this._filterClearedAt = filterClearedAt;
 
-  String _sortField;
-  String get sortField => _$this._sortField;
-  set sortField(String sortField) => _$this._sortField = sortField;
+  String? _sortField;
+  String? get sortField => _$this._sortField;
+  set sortField(String? sortField) => _$this._sortField = sortField;
 
-  bool _sortAscending;
-  bool get sortAscending => _$this._sortAscending;
-  set sortAscending(bool sortAscending) =>
+  bool? _sortAscending;
+  bool? get sortAscending => _$this._sortAscending;
+  set sortAscending(bool? sortAscending) =>
       _$this._sortAscending = sortAscending;
 
-  ListBuilder<EntityState> _stateFilters;
+  ListBuilder<EntityState>? _stateFilters;
   ListBuilder<EntityState> get stateFilters =>
       _$this._stateFilters ??= new ListBuilder<EntityState>();
-  set stateFilters(ListBuilder<EntityState> stateFilters) =>
+  set stateFilters(ListBuilder<EntityState>? stateFilters) =>
       _$this._stateFilters = stateFilters;
 
-  ListBuilder<EntityStatus> _statusFilters;
+  ListBuilder<EntityStatus>? _statusFilters;
   ListBuilder<EntityStatus> get statusFilters =>
       _$this._statusFilters ??= new ListBuilder<EntityStatus>();
-  set statusFilters(ListBuilder<EntityStatus> statusFilters) =>
+  set statusFilters(ListBuilder<EntityStatus>? statusFilters) =>
       _$this._statusFilters = statusFilters;
 
-  ListBuilder<String> _custom1Filters;
+  ListBuilder<String>? _custom1Filters;
   ListBuilder<String> get custom1Filters =>
       _$this._custom1Filters ??= new ListBuilder<String>();
-  set custom1Filters(ListBuilder<String> custom1Filters) =>
+  set custom1Filters(ListBuilder<String>? custom1Filters) =>
       _$this._custom1Filters = custom1Filters;
 
-  ListBuilder<String> _custom2Filters;
+  ListBuilder<String>? _custom2Filters;
   ListBuilder<String> get custom2Filters =>
       _$this._custom2Filters ??= new ListBuilder<String>();
-  set custom2Filters(ListBuilder<String> custom2Filters) =>
+  set custom2Filters(ListBuilder<String>? custom2Filters) =>
       _$this._custom2Filters = custom2Filters;
 
-  ListBuilder<String> _custom3Filters;
+  ListBuilder<String>? _custom3Filters;
   ListBuilder<String> get custom3Filters =>
       _$this._custom3Filters ??= new ListBuilder<String>();
-  set custom3Filters(ListBuilder<String> custom3Filters) =>
+  set custom3Filters(ListBuilder<String>? custom3Filters) =>
       _$this._custom3Filters = custom3Filters;
 
-  ListBuilder<String> _custom4Filters;
+  ListBuilder<String>? _custom4Filters;
   ListBuilder<String> get custom4Filters =>
       _$this._custom4Filters ??= new ListBuilder<String>();
-  set custom4Filters(ListBuilder<String> custom4Filters) =>
+  set custom4Filters(ListBuilder<String>? custom4Filters) =>
       _$this._custom4Filters = custom4Filters;
 
-  ListBuilder<String> _selectedIds;
+  ListBuilder<String>? _selectedIds;
   ListBuilder<String> get selectedIds =>
       _$this._selectedIds ??= new ListBuilder<String>();
-  set selectedIds(ListBuilder<String> selectedIds) =>
+  set selectedIds(ListBuilder<String>? selectedIds) =>
       _$this._selectedIds = selectedIds;
 
   ListUIStateBuilder();
@@ -360,7 +360,7 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
   }
 
   @override
-  void update(void Function(ListUIStateBuilder) updates) {
+  void update(void Function(ListUIStateBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -387,7 +387,7 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
               custom4Filters: custom4Filters.build(),
               selectedIds: _selectedIds?.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'stateFilters';
         stateFilters.build();

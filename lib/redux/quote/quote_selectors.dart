@@ -7,12 +7,12 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
-ClientEntity quoteClientSelector(
+ClientEntity? quoteClientSelector(
     InvoiceEntity quote, BuiltMap<String, ClientEntity> clientMap) {
   return clientMap[quote.clientId];
 }
 
-ClientContactEntity quoteContactSelector(
+ClientContactEntity? quoteContactSelector(
     InvoiceEntity quote, ClientEntity client) {
   var contactIds = quote.invitations
       .map((invitation) => invitation.clientContactId)
@@ -57,13 +57,11 @@ List<String> dropdownQuoteSelector(
     if (excludedIds.contains(invoiceId)) {
       return false;
     }
-    if (clientId != null &&
-        clientId.isNotEmpty &&
-        invoice.clientId != clientId) {
+    if (clientId.isNotEmpty && invoice!.clientId != clientId) {
       return false;
     }
-    if (!clientMap.containsKey(invoice.clientId) ||
-        !clientMap[invoice.clientId].isActive) {
+    if (!clientMap.containsKey(invoice!.clientId) ||
+        !clientMap[invoice.clientId]!.isActive) {
       return false;
     }
     return invoice.isActive &&
@@ -72,7 +70,7 @@ List<String> dropdownQuoteSelector(
   }).toList();
 
   list.sort((invoiceAId, invoiceBId) {
-    final invoiceA = quoteMap[invoiceAId];
+    final invoiceA = quoteMap[invoiceAId]!;
     final invoiceB = quoteMap[invoiceBId];
     return invoiceA.compareTo(
       invoice: invoiceB,
@@ -109,7 +107,7 @@ List<String> filteredQuotesSelector(
   final filterEntityType = selectionState.filterEntityType;
 
   final list = quoteList.where((quoteId) {
-    final quote = quoteMap[quoteId];
+    final quote = quoteMap[quoteId]!;
     final client =
         clientMap[quote.clientId] ?? ClientEntity(id: quote.clientId);
 
@@ -169,7 +167,7 @@ List<String> filteredQuotesSelector(
   }).toList();
 
   list.sort((quoteAId, quoteBId) {
-    return quoteMap[quoteAId].compareTo(
+    return quoteMap[quoteAId]!.compareTo(
         invoice: quoteMap[quoteBId],
         sortField: quoteListState.sortField,
         sortAscending: quoteListState.sortAscending,

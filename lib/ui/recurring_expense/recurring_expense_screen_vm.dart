@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/redux/recurring_expense/recurring_expense_s
 import 'recurring_expense_screen.dart';
 
 class RecurringExpenseScreenBuilder extends StatelessWidget {
-  const RecurringExpenseScreenBuilder({Key key}) : super(key: key);
+  const RecurringExpenseScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,16 +32,16 @@ class RecurringExpenseScreenBuilder extends StatelessWidget {
 
 class RecurringExpenseScreenVM {
   RecurringExpenseScreenVM({
-    @required this.isInMultiselect,
-    @required this.recurringExpenseList,
-    @required this.userCompany,
-    @required this.onEntityAction,
-    @required this.recurringExpenseMap,
+    required this.isInMultiselect,
+    required this.recurringExpenseList,
+    required this.userCompany,
+    required this.onEntityAction,
+    required this.recurringExpenseMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
-  final List<String> recurringExpenseList;
+  final UserCompanyEntity? userCompany;
+  final List<String?> recurringExpenseList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final BuiltMap<String, ExpenseEntity> recurringExpenseMap;
 

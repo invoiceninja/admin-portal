@@ -22,7 +22,7 @@ import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
 
 class PurchaseOrderEditDetailsScreen extends StatelessWidget {
-  const PurchaseOrderEditDetailsScreen({Key key, @required this.viewModel})
+  const PurchaseOrderEditDetailsScreen({Key? key, required this.viewModel})
       : super(key: key);
 
   final AbstractInvoiceEditVM viewModel;
@@ -34,11 +34,11 @@ class PurchaseOrderEditDetailsScreen extends StatelessWidget {
         return PurchaseOrderEditDetailsVM.fromStore(store);
       },
       builder: (context, viewModel) {
-        if (viewModel.state.prefState.isEditorFullScreen(EntityType.invoice)) {
+        if (viewModel.state!.prefState.isEditorFullScreen(EntityType.invoice)) {
           return InvoiceEditDesktop(
             viewModel: viewModel,
             entityViewModel: this.viewModel,
-            key: ValueKey('__purchaseOrder_${viewModel.invoice.id}__'),
+            key: ValueKey('__purchaseOrder_${viewModel.invoice!.id}__'),
           );
         } else {
           return InvoiceEditDetails(
@@ -53,17 +53,17 @@ class PurchaseOrderEditDetailsScreen extends StatelessWidget {
 
 class PurchaseOrderEditDetailsVM extends EntityEditDetailsVM {
   PurchaseOrderEditDetailsVM({
-    AppState state,
-    CompanyEntity company,
-    InvoiceEntity invoice,
-    Function(InvoiceEntity) onChanged,
-    Function(BuildContext, InvoiceEntity, ClientEntity) onClientChanged,
-    Function(BuildContext, InvoiceEntity, VendorEntity) onVendorChanged,
-    BuiltMap<String, ClientEntity> clientMap,
-    BuiltList<String> clientList,
-    Function(BuildContext context, Completer<SelectableEntity> completer)
+    AppState? state,
+    CompanyEntity? company,
+    InvoiceEntity? invoice,
+    Function(InvoiceEntity)? onChanged,
+    Function(BuildContext, InvoiceEntity, ClientEntity?)? onClientChanged,
+    Function(BuildContext, InvoiceEntity, VendorEntity?)? onVendorChanged,
+    BuiltMap<String, ClientEntity>? clientMap,
+    BuiltList<String>? clientList,
+    Function(BuildContext context, Completer<SelectableEntity> completer)?
         onAddClientPressed,
-    Function(BuildContext context, Completer<SelectableEntity> completer)
+    Function(BuildContext context, Completer<SelectableEntity> completer)?
         onAddVendorPressed,
   }) : super(
           state: state,
@@ -92,18 +92,16 @@ class PurchaseOrderEditDetailsVM extends EntityEditDetailsVM {
       clientMap: state.clientState.map,
       clientList: state.clientState.list,
       onVendorChanged: (context, purchaseOrder, vendor) {
-        store.dispatch(
-            UpdatePurchaseOrder(purchaseOrder.applyVendor(state, vendor)));
+        store.dispatch(UpdatePurchaseOrder(purchaseOrder));
         store.dispatch(UpdatePurchaseOrderVendor(vendor: vendor));
       },
       onAddVendorPressed: (context, completer) {
         createEntity(
-            context: context,
             entity: VendorEntity(state: state),
             force: true,
             completer: completer,
             cancelCompleter: Completer<Null>()
-              ..future.then((_) {
+              ..future.then<Null>((_) {
                 store.dispatch(
                     UpdateCurrentRoute(PurchaseOrderEditScreen.route));
               }));

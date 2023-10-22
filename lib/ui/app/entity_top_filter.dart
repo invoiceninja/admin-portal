@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -20,7 +21,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EntityTopFilter extends StatelessWidget {
   const EntityTopFilter({
-    @required this.show,
+    required this.show,
   });
 
   final bool show;
@@ -41,8 +42,8 @@ class EntityTopFilter extends StatelessWidget {
     final filterEntity =
         entityMap != null ? entityMap[uiState.filterEntityId] : null;
     final relatedTypes = filterEntityType?.relatedTypes
-            ?.where((element) => state.company.isModuleEnabled(element))
-            ?.toList() ??
+            .where((element) => state.company.isModuleEnabled(element))
+            .toList() ??
         [];
 
     final backgroundColor = !prefState.enableDarkMode && state.hasAccentColor
@@ -114,8 +115,9 @@ class EntityTopFilter extends StatelessWidget {
                                   constraints: BoxConstraints(maxWidth: 220),
                                   child: Text(
                                     EntityPresenter()
-                                        .initialize(filterEntity, context)
-                                        .title(),
+                                        .initialize(
+                                            filterEntity as BaseEntity, context)
+                                        .title()!,
                                     style: TextStyle(
                                         fontSize: 17,
                                         color: state.headerTextColor),
@@ -138,7 +140,7 @@ class EntityTopFilter extends StatelessWidget {
                                   DecoratedBox(
                                     child: TextButton(
                                       child: Text(
-                                        localization.lookup(
+                                        localization!.lookup(
                                             '${relatedTypes[i].plural}'),
                                         style: TextStyle(
                                           color: state.headerTextColor,
@@ -152,12 +154,13 @@ class EntityTopFilter extends StatelessWidget {
                                       onPressed: () {
                                         viewEntitiesByType(
                                           entityType: relatedTypes[i],
-                                          filterEntity: filterEntity,
+                                          filterEntity:
+                                              filterEntity as BaseEntity?,
                                         );
                                       },
                                       onLongPress: () {
                                         handleEntityAction(
-                                            filterEntity,
+                                            filterEntity as BaseEntity,
                                             EntityAction.newEntityType(
                                                 relatedTypes[i]));
                                       },
@@ -169,7 +172,7 @@ class EntityTopFilter extends StatelessWidget {
                                                 color: prefState
                                                             .enableDarkMode ||
                                                         !state.hasAccentColor
-                                                    ? state.accentColor
+                                                    ? state.accentColor!
                                                     : Colors.white,
                                                 width: 2,
                                               ),
@@ -186,7 +189,7 @@ class EntityTopFilter extends StatelessWidget {
                                     child: Row(
                                       children: [
                                         Text(
-                                          localization.more,
+                                          localization!.more,
                                           style: TextStyle(
                                               color: state.headerTextColor),
                                         ),
@@ -200,17 +203,18 @@ class EntityTopFilter extends StatelessWidget {
                                   onSelected: (EntityType value) {
                                     if (value == filterEntityType) {
                                       viewEntity(
-                                        entity: filterEntity,
+                                        entity: filterEntity as BaseEntity,
                                       );
                                     } else {
                                       viewEntitiesByType(
                                         entityType: value,
-                                        filterEntity: filterEntity,
+                                        filterEntity:
+                                            filterEntity as BaseEntity?,
                                       );
                                     }
                                   },
                                   itemBuilder: (BuildContext context) =>
-                                      filterEntityType.relatedTypes
+                                      filterEntityType!.relatedTypes
                                           .sublist(
                                               relatedTypes.length - remaining)
                                           .where((element) => state.company
@@ -237,7 +241,7 @@ class EntityTopFilter extends StatelessWidget {
                         SizedBox(width: 4),
                         if (!prefState
                             .isViewerFullScreen(filterEntityType)) ...[
-                          if (filterEntityType.hasFullWidthViewer)
+                          if (filterEntityType!.hasFullWidthViewer)
                             AppBorder(
                               isLeft: true,
                               child: InkWell(
@@ -282,7 +286,7 @@ class EntityTopFilterHeader extends StatelessWidget {
     final entityMap =
         filterEntityType != null ? state.getEntityMap(filterEntityType) : null;
     final filterEntity =
-        entityMap != null ? entityMap[uiState.filterEntityId] : null;
+        entityMap != null ? entityMap[uiState.filterEntityId]! : null;
 
     final backgroundColor = !prefState.enableDarkMode && state.hasAccentColor
         ? state.accentColor
@@ -293,10 +297,10 @@ class EntityTopFilterHeader extends StatelessWidget {
           includeEdit: true,
           userCompany: state.userCompany,
         )
-        .where((action) => action != null);
+        .whereNotNull();
     final textStyle = Theme.of(context)
         .textTheme
-        .bodyMedium
+        .bodyMedium!
         .copyWith(color: state.headerTextColor);
 
     return Material(
@@ -316,7 +320,7 @@ class EntityTopFilterHeader extends StatelessWidget {
                 color: state.headerTextColor,
               ),
               onPressed: () {
-                final entityType = uiState.filterEntityType;
+                final entityType = uiState.filterEntityType!;
                 if (entityType.hasFullWidthViewer &&
                     state.prefState.isViewerFullScreen(entityType)) {
                   viewEntitiesByType(
@@ -355,7 +359,7 @@ class EntityTopFilterHeader extends StatelessWidget {
                       child: Text(
                         EntityPresenter()
                             .initialize(filterEntity, context)
-                            .title(),
+                            .title()!,
                         style: TextStyle(
                             fontSize: 17, color: state.headerTextColor),
                         overflow: TextOverflow.ellipsis,
@@ -374,13 +378,13 @@ class EntityTopFilterHeader extends StatelessWidget {
                     spacing: 8,
                     children: entityActions.map(
                       (action) {
-                        final label = localization.lookup('$action');
+                        final label = localization!.lookup('$action');
 
                         return OutlinedButton(
                           style: action == EntityAction.edit
                               ? ButtonStyle(
                                   backgroundColor: MaterialStateProperty.all(
-                                      state.prefState.colorThemeModel
+                                      state.prefState.colorThemeModel!
                                           .colorSuccess))
                               : null,
                           child: IconText(
@@ -403,7 +407,7 @@ class EntityTopFilterHeader extends StatelessWidget {
                           child: Row(
                             children: [
                               Text(
-                                localization.more,
+                                localization!.more,
                                 style: textStyle,
                               ),
                               SizedBox(width: 4),
@@ -429,9 +433,8 @@ class EntityTopFilterHeader extends StatelessWidget {
                                           .colorScheme
                                           .secondary),
                                   SizedBox(width: 16.0),
-                                  Text(AppLocalization.of(context)
-                                          .lookup(action.toString()) ??
-                                      ''),
+                                  Text(AppLocalization.of(context)!
+                                      .lookup(action.toString())),
                                 ],
                               ),
                             );

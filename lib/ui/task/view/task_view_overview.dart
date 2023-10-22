@@ -20,9 +20,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskOverview extends StatefulWidget {
   const TaskOverview({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final TaskViewVM viewModel;
@@ -33,7 +33,7 @@ class TaskOverview extends StatefulWidget {
 }
 
 class _TaskOverviewState extends State<TaskOverview> {
-  Timer _timer;
+  Timer? _timer;
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _TaskOverviewState extends State<TaskOverview> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    _timer!.cancel();
     _timer = null;
     super.dispose();
   }
@@ -58,19 +58,19 @@ class _TaskOverviewState extends State<TaskOverview> {
 
     final project = viewModel.project;
     final client = viewModel.client;
-    final company = viewModel.company;
+    final company = viewModel.company!;
     final invoice = viewModel.state.invoiceState.map[task.invoiceId];
     final user = viewModel.state.userState.map[task.assignedUserId];
-    final group = state.groupState.get(client?.groupId);
+    final group = state.groupState.get(client?.groupId ?? '');
     final status = state.taskStatusState.get(task.statusId);
 
-    final Map<String, String> fields = {
+    final Map<String, String?> fields = {
       TaskFields.rate: formatNumber(task.rate, context,
           zeroIsNull: true, clientId: client?.id),
     };
 
-    if ((task.statusId ?? '').isNotEmpty) {
-      fields[localization.status] =
+    if (task.statusId.isNotEmpty) {
+      fields[localization!.status] =
           company.taskStatusMap[task.statusId]?.name ?? '';
     }
 
@@ -120,7 +120,7 @@ class _TaskOverviewState extends State<TaskOverview> {
               : task.isRunning
                   ? Colors.blue
                   : null,
-          label: localization.duration,
+          label: localization!.duration,
           value: formatDuration(task.calculateDuration()),
           secondLabel: localization.amount,
           secondValue: formatNumber(
@@ -131,7 +131,7 @@ class _TaskOverviewState extends State<TaskOverview> {
                 client: client,
                 task: task,
                 group: group,
-              ),
+              )!,
             ),
             context,
             clientId: client?.id,
@@ -158,14 +158,12 @@ class _TaskOverviewState extends State<TaskOverview> {
         ]);
       }
 
-      if (status != null) {
-        widgets.addAll([
-          EntityListTile(
-            entity: status,
-            isFilter: widget.isFilter,
-          ),
-        ]);
-      }
+      widgets.addAll([
+        EntityListTile(
+          entity: status,
+          isFilter: widget.isFilter,
+        ),
+      ]);
 
       if (user != null) {
         widgets.addAll([

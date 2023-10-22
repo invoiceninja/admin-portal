@@ -11,7 +11,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/settings/settings_screen.dart';
 
 class SettingsScreenBuilder extends StatelessWidget {
-  const SettingsScreenBuilder({Key key}) : super(key: key);
+  const SettingsScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class SettingsScreenBuilder extends StatelessWidget {
 }
 
 class SettingsScreenVM {
-  SettingsScreenVM({@required this.state});
+  SettingsScreenVM({required this.state});
 
   final AppState state;
 

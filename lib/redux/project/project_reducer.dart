@@ -16,67 +16,69 @@ import 'package:invoiceninja_flutter/redux/ui/entity_ui_state.dart';
 import 'package:invoiceninja_flutter/redux/ui/list_ui_state.dart';
 
 EntityUIState projectUIReducer(ProjectUIState state, dynamic action) {
-  return state.rebuild((b) => b
-    ..listUIState.replace(projectListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
-    ..selectedId = selectedIdReducer(state.selectedId, action)
-    ..forceSelected = forceSelectedReducer(state.forceSelected, action)
-    ..tabIndex = tabIndexReducer(state.tabIndex, action)
-    ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
-    ..cancelCompleter = cancelCompleterReducer(state.cancelCompleter, action));
+  return state.rebuild(
+    (b) => b
+      ..listUIState.replace(projectListReducer(state.listUIState, action))
+      ..editing.replace(editingReducer(state.editing, action)!)
+      ..selectedId = selectedIdReducer(state.selectedId, action)
+      ..forceSelected = forceSelectedReducer(state.forceSelected, action)
+      ..tabIndex = tabIndexReducer(state.tabIndex, action)
+      ..saveCompleter = saveCompleterReducer(state.saveCompleter, action)
+      ..cancelCompleter = cancelCompleterReducer(state.cancelCompleter, action),
+  );
 }
 
-final forceSelectedReducer = combineReducers<bool>([
-  TypedReducer<bool, ViewProject>((completer, action) => true),
-  TypedReducer<bool, ViewProjectList>((completer, action) => false),
-  TypedReducer<bool, FilterProjectsByState>((completer, action) => false),
-  TypedReducer<bool, FilterProjects>((completer, action) => false),
-  TypedReducer<bool, FilterProjectsByCustom1>((completer, action) => false),
-  TypedReducer<bool, FilterProjectsByCustom2>((completer, action) => false),
-  TypedReducer<bool, FilterProjectsByCustom3>((completer, action) => false),
-  TypedReducer<bool, FilterProjectsByCustom4>((completer, action) => false),
+final forceSelectedReducer = combineReducers<bool?>([
+  TypedReducer<bool?, ViewProject>((completer, action) => true),
+  TypedReducer<bool?, ViewProjectList>((completer, action) => false),
+  TypedReducer<bool?, FilterProjectsByState>((completer, action) => false),
+  TypedReducer<bool?, FilterProjects>((completer, action) => false),
+  TypedReducer<bool?, FilterProjectsByCustom1>((completer, action) => false),
+  TypedReducer<bool?, FilterProjectsByCustom2>((completer, action) => false),
+  TypedReducer<bool?, FilterProjectsByCustom3>((completer, action) => false),
+  TypedReducer<bool?, FilterProjectsByCustom4>((completer, action) => false),
 ]);
 
-final tabIndexReducer = combineReducers<int>([
-  TypedReducer<int, UpdateProjectTab>((completer, action) {
+final int? Function(int, dynamic) tabIndexReducer = combineReducers<int?>([
+  TypedReducer<int?, UpdateProjectTab>((completer, action) {
     return action.tabIndex;
   }),
-  TypedReducer<int, PreviewEntity>((completer, action) {
+  TypedReducer<int?, PreviewEntity>((completer, action) {
     return 0;
   }),
 ]);
 
-final saveCompleterReducer = combineReducers<Completer<SelectableEntity>>([
-  TypedReducer<Completer<SelectableEntity>, EditProject>((completer, action) {
-    return action.completer;
+final saveCompleterReducer = combineReducers<Completer<SelectableEntity>?>([
+  TypedReducer<Completer<SelectableEntity>?, EditProject>((completer, action) {
+    return action.completer as Completer<SelectableEntity>?;
   }),
 ]);
 
-final cancelCompleterReducer = combineReducers<Completer<SelectableEntity>>([
-  TypedReducer<Completer<SelectableEntity>, EditProject>((completer, action) {
-    return action.cancelCompleter;
+final cancelCompleterReducer = combineReducers<Completer<Null>?>([
+  TypedReducer<Completer<Null>?, EditProject>((completer, action) {
+    return action.cancelCompleter as Completer<Null>?;
   }),
 ]);
 
-Reducer<String> selectedIdReducer = combineReducers([
-  TypedReducer<String, ArchiveProjectSuccess>((completer, action) => ''),
-  TypedReducer<String, DeleteProjectSuccess>((completer, action) => ''),
-  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+Reducer<String?> selectedIdReducer = combineReducers([
+  TypedReducer<String?, ArchiveProjectSuccess>((completer, action) => ''),
+  TypedReducer<String?, DeleteProjectSuccess>((completer, action) => ''),
+  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.project ? action.entityId : selectedId),
-  TypedReducer<String, ViewProject>((selectedId, action) => action.projectId),
-  TypedReducer<String, AddProjectSuccess>(
+  TypedReducer<String?, ViewProject>((selectedId, action) => action.projectId),
+  TypedReducer<String?, AddProjectSuccess>(
       (selectedId, action) => action.project.id),
-  TypedReducer<String, SelectCompany>(
+  TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, SortProjects>((selectedId, action) => ''),
-  TypedReducer<String, FilterProjects>((selectedId, action) => ''),
-  TypedReducer<String, FilterProjectsByState>((selectedId, action) => ''),
-  TypedReducer<String, FilterProjectsByCustom1>((selectedId, action) => ''),
-  TypedReducer<String, FilterProjectsByCustom2>((selectedId, action) => ''),
-  TypedReducer<String, FilterProjectsByCustom3>((selectedId, action) => ''),
-  TypedReducer<String, FilterProjectsByCustom4>((selectedId, action) => ''),
-  TypedReducer<String, FilterByEntity>(
+  TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String?, SortProjects>((selectedId, action) => ''),
+  TypedReducer<String?, FilterProjects>((selectedId, action) => ''),
+  TypedReducer<String?, FilterProjectsByState>((selectedId, action) => ''),
+  TypedReducer<String?, FilterProjectsByCustom1>((selectedId, action) => ''),
+  TypedReducer<String?, FilterProjectsByCustom2>((selectedId, action) => ''),
+  TypedReducer<String?, FilterProjectsByCustom3>((selectedId, action) => ''),
+  TypedReducer<String?, FilterProjectsByCustom4>((selectedId, action) => ''),
+  TypedReducer<String?, FilterByEntity>(
       (selectedId, action) => action.clearSelection
           ? ''
           : action.entityType == EntityType.project
@@ -84,30 +86,30 @@ Reducer<String> selectedIdReducer = combineReducers([
               : selectedId),
 ]);
 
-final editingReducer = combineReducers<ProjectEntity>([
-  TypedReducer<ProjectEntity, SaveProjectSuccess>(_updateEditing),
-  TypedReducer<ProjectEntity, AddProjectSuccess>(_updateEditing),
-  TypedReducer<ProjectEntity, RestoreProjectSuccess>((projects, action) {
+final editingReducer = combineReducers<ProjectEntity?>([
+  TypedReducer<ProjectEntity?, SaveProjectSuccess>(_updateEditing),
+  TypedReducer<ProjectEntity?, AddProjectSuccess>(_updateEditing),
+  TypedReducer<ProjectEntity?, RestoreProjectSuccess>((projects, action) {
     return action.projects[0];
   }),
-  TypedReducer<ProjectEntity, ArchiveProjectSuccess>((projects, action) {
+  TypedReducer<ProjectEntity?, ArchiveProjectSuccess>((projects, action) {
     return action.projects[0];
   }),
-  TypedReducer<ProjectEntity, DeleteProjectSuccess>((projects, action) {
+  TypedReducer<ProjectEntity?, DeleteProjectSuccess>((projects, action) {
     return action.projects[0];
   }),
-  TypedReducer<ProjectEntity, EditProject>(_updateEditing),
-  TypedReducer<ProjectEntity, UpdateProject>((project, action) {
+  TypedReducer<ProjectEntity?, EditProject>(_updateEditing),
+  TypedReducer<ProjectEntity?, UpdateProject>((project, action) {
     return action.project.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<ProjectEntity, DiscardChanges>(_clearEditing),
+  TypedReducer<ProjectEntity?, DiscardChanges>(_clearEditing),
 ]);
 
-ProjectEntity _clearEditing(ProjectEntity project, dynamic dynamicAction) {
+ProjectEntity _clearEditing(ProjectEntity? project, dynamic dynamicAction) {
   return ProjectEntity();
 }
 
-ProjectEntity _updateEditing(ProjectEntity project, dynamic action) {
+ProjectEntity? _updateEditing(ProjectEntity? project, dynamic action) {
   return action.project;
 }
 
@@ -200,7 +202,7 @@ ListUIState _filterProjects(
 
 ListUIState _sortProjects(ListUIState projectListState, SortProjects action) {
   return projectListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortAscending = b.sortField != action.field || !b.sortAscending!
     ..sortField = action.field);
 }
 
@@ -211,13 +213,13 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState projectListState, AddToProjectMultiselect action) {
-  return projectListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+  return projectListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState projectListState, RemoveFromProjectMultiselect action) {
   return projectListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(

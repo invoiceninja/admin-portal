@@ -15,13 +15,13 @@ import 'package:flutter/material.dart';
 
 class WebSocketRefresh extends StatefulWidget {
   const WebSocketRefresh({
-    Key key,
+    Key? key,
     this.child,
     this.companyId,
   }) : super(key: key);
 
-  final Widget child;
-  final String companyId;
+  final Widget? child;
+  final String? companyId;
 
   @override
   _WebSocketRefreshState createState() => _WebSocketRefreshState();
@@ -91,5 +91,5 @@ class _WebSocketRefreshState extends State<WebSocketRefresh> {
   }
 
   @override
-  Widget build(BuildContext context) => widget.child;
+  Widget build(BuildContext context) => widget.child!;
 }

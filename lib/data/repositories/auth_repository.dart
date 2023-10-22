@@ -25,11 +25,11 @@ class AuthRepository {
   final WebClient webClient;
 
   Future<LoginResponse> signUp({
-    String url,
-    String secret,
-    @required String email,
-    @required String password,
-    @required String referralCode,
+    String? url,
+    String? secret,
+    required String email,
+    required String password,
+    required String referralCode,
   }) async {
     final credentials = {
       'email': email,
@@ -51,13 +51,13 @@ class AuthRepository {
   }
 
   Future<LoginResponse> oauthSignUp({
-    @required String url,
-    @required String idToken,
-    @required String accessToken,
-    @required String referralCode,
-    @required String provider,
-    String firstName = '',
-    String lastName = '',
+    required String url,
+    required String? idToken,
+    required String? accessToken,
+    required String referralCode,
+    required String provider,
+    String? firstName = '',
+    String? lastName = '',
   }) async {
     final credentials = {
       'terms_of_service': true,
@@ -78,12 +78,12 @@ class AuthRepository {
   }
 
   Future<LoginResponse> login(
-      {String email,
-      String password,
-      String url,
-      String secret,
-      String platform,
-      String oneTimePassword}) async {
+      {String? email,
+      String? password,
+      String? url,
+      String? secret,
+      String? platform,
+      String? oneTimePassword}) async {
     final credentials = {
       'email': email,
       'password': password,
@@ -95,7 +95,7 @@ class AuthRepository {
     return sendRequest(url: url, data: credentials, secret: secret);
   }
 
-  Future<dynamic> logout({@required Credentials credentials}) async {
+  Future<dynamic> logout({required Credentials credentials}) async {
     return webClient.post(
       '${credentials.url}/logout',
       credentials.token,
@@ -103,14 +103,14 @@ class AuthRepository {
   }
 
   Future<LoginResponse> oauthLogin({
-    @required String idToken,
-    @required String accessToken,
-    @required String url,
-    @required String secret,
-    @required String platform,
-    @required String provider,
-    @required String email,
-    @required String authCode,
+    required String? idToken,
+    required String? accessToken,
+    required String url,
+    required String secret,
+    required String platform,
+    required String provider,
+    required String? email,
+    required String? authCode,
   }) async {
     final credentials = {
       'id_token': idToken,
@@ -125,11 +125,11 @@ class AuthRepository {
   }
 
   Future<LoginResponse> refresh({
-    @required String url,
-    @required String token,
-    @required int updatedAt,
-    @required bool currentCompany,
-    @required bool includeStatic,
+    required String url,
+    required String token,
+    required int updatedAt,
+    required bool currentCompany,
+    required bool includeStatic,
   }) async {
     url = formatApiUrl(url) + '/refresh?';
 
@@ -150,7 +150,7 @@ class AuthRepository {
   }
 
   Future<LoginResponse> recoverPassword(
-      {String email, String url, String secret, String platform}) async {
+      {String? email, String? url, String? secret, String? platform}) async {
     final credentials = {
       'email': email,
     };
@@ -160,15 +160,15 @@ class AuthRepository {
   }
 
   Future<void> setDefaultCompany({
-    @required Credentials credentials,
-    @required String companyId,
+    required Credentials credentials,
+    required String companyId,
   }) async {
     final url = '${credentials.url}/companies/$companyId/default';
     return webClient.post(url, credentials.token);
   }
 
   Future<dynamic> addCompany({
-    @required Credentials credentials,
+    required Credentials credentials,
   }) async {
     final url = '${credentials.url}/companies';
     final data = {
@@ -179,10 +179,10 @@ class AuthRepository {
   }
 
   Future<dynamic> deleteCompany({
-    @required Credentials credentials,
-    @required String companyId,
-    @required String password,
-    @required String reason,
+    required Credentials credentials,
+    required String companyId,
+    required String password,
+    required String reason,
   }) async {
     final url = '${credentials.url}/companies/$companyId';
     return webClient.delete(
@@ -196,10 +196,10 @@ class AuthRepository {
   }
 
   Future<dynamic> purgeData({
-    @required Credentials credentials,
-    @required String companyId,
-    @required String password,
-    @required String idToken,
+    required Credentials credentials,
+    required String companyId,
+    required String password,
+    required String idToken,
   }) async {
     return webClient.post(
       '${credentials.url}/companies/purge_save_settings/$companyId',
@@ -210,7 +210,7 @@ class AuthRepository {
   }
 
   Future<dynamic> resendConfirmation(
-      {@required Credentials credentials, @required String userId}) async {
+      {required Credentials credentials, required String userId}) async {
     return webClient.post(
       '${credentials.url}/user/$userId/reconfirm',
       credentials.token,
@@ -218,10 +218,10 @@ class AuthRepository {
   }
 
   Future<LoginResponse> sendRequest({
-    String url,
+    required String url,
     dynamic data,
-    String token,
-    String secret,
+    String? token,
+    String? secret,
     bool includeStatic = true,
   }) async {
     if (url.contains('?')) {

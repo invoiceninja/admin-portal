@@ -22,17 +22,17 @@ class DocumentRepository {
   final WebClient webClient;
 
   Future<DocumentEntity> loadItem(
-      Credentials credentials, String entityId) async {
+      Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/documents/$entityId', credentials.token);
 
     final DocumentItemResponse documentResponse =
-        serializers.deserializeWith(DocumentItemResponse.serializer, response);
+        serializers.deserializeWith(DocumentItemResponse.serializer, response)!;
 
     return documentResponse.data;
   }
 
-  Future<Uint8List> loadData(
+  Future<Uint8List?> loadData(
       Credentials credentials, DocumentEntity document) async {
     final url = '${cleanApiUrl(credentials.url)}/documents/${document.hash}';
     final dynamic response =
@@ -42,12 +42,12 @@ class DocumentRepository {
   }
 
   Future<BuiltList<DocumentEntity>> loadList(Credentials credentials) async {
-    final url = credentials.url + '/documents?';
+    final url = credentials.url! + '/documents?';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
     final DocumentListResponse documentResponse =
-        serializers.deserializeWith(DocumentListResponse.serializer, response);
+        serializers.deserializeWith(DocumentListResponse.serializer, response)!;
 
     return documentResponse.data;
   }
@@ -57,13 +57,13 @@ class DocumentRepository {
     final data = serializers.serializeWith(DocumentEntity.serializer, document);
     dynamic response;
 
-    final url = credentials.url + '/documents/${document.id}';
+    final url = credentials.url! + '/documents/${document.id}';
 
     response =
         await webClient.put(url, credentials.token, data: json.encode(data));
 
     final DocumentItemResponse documentResponse =
-        serializers.deserializeWith(DocumentItemResponse.serializer, response);
+        serializers.deserializeWith(DocumentItemResponse.serializer, response)!;
 
     return documentResponse.data;
   }
@@ -74,19 +74,19 @@ class DocumentRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url =
-        credentials.url + '/documents/bulk?per_page=$kMaxEntitiesPerBulkAction';
+    final url = credentials.url! +
+        '/documents/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final DocumentListResponse documentResponse =
-        serializers.deserializeWith(DocumentListResponse.serializer, response);
+        serializers.deserializeWith(DocumentListResponse.serializer, response)!;
 
     return documentResponse.data.toList();
   }
 
   Future<bool> delete(Credentials credentials, String documentId,
-      String password, String idToken) async {
+      String? password, String? idToken) async {
     await webClient.delete(
       '${credentials.url}/documents/$documentId',
       credentials.token,

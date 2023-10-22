@@ -17,7 +17,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CustomField extends StatefulWidget {
   const CustomField({
-    @required this.field,
+    required this.field,
     this.onSavePressed,
     this.controller,
     this.onChanged,
@@ -25,11 +25,11 @@ class CustomField extends StatefulWidget {
     this.hideFieldLabel = false,
   });
 
-  final TextEditingController controller;
-  final Function(String) onChanged;
-  final Function(BuildContext) onSavePressed;
+  final TextEditingController? controller;
+  final Function(String)? onChanged;
+  final Function(BuildContext)? onSavePressed;
   final String field;
-  final String value;
+  final String? value;
   final bool hideFieldLabel;
 
   @override
@@ -37,22 +37,22 @@ class CustomField extends StatefulWidget {
 }
 
 class _CustomFieldState extends State<CustomField> {
-  TextEditingController _controller;
-  String _value;
+  TextEditingController? _controller;
+  String? _value;
 
   @override
   void initState() {
     super.initState();
 
     _controller = widget.controller ?? TextEditingController();
-    _controller.text = widget.value ?? '';
+    _controller!.text = widget.value ?? '';
     _value = widget.value;
   }
 
   @override
   void dispose() {
     if (widget.controller == null) {
-      _controller.dispose();
+      _controller!.dispose();
     }
     super.dispose();
   }
@@ -64,7 +64,7 @@ class _CustomFieldState extends State<CustomField> {
     final localization = AppLocalization.of(context);
     final fieldLabel = company.getCustomFieldLabel(widget.field);
 
-    if ((fieldLabel ?? '').isEmpty) {
+    if (fieldLabel.isEmpty) {
       return SizedBox();
     }
 
@@ -93,25 +93,27 @@ class _CustomFieldState extends State<CustomField> {
       case kFieldTypeSwitch:
         return BoolDropdownButton(
           onChanged: (value) {
-            _controller.text = value ? kSwitchValueYes : kSwitchValueNo;
+            _controller!.text =
+                value == true ? kSwitchValueYes : kSwitchValueNo;
             Debouncer.complete();
             if (widget.onChanged != null) {
-              widget.onChanged(value ? kSwitchValueYes : kSwitchValueNo);
+              widget
+                  .onChanged!(value == true ? kSwitchValueYes : kSwitchValueNo);
             }
           },
           value: widget.value == null ? null : widget.value == kSwitchValueYes,
           label: widget.hideFieldLabel ? '' : fieldLabel,
-          enabledLabel: localization.yes,
+          enabledLabel: localization!.yes,
           disabledLabel: localization.no,
         );
       case kFieldTypeDate:
         return DatePicker(
           labelText: widget.hideFieldLabel ? null : fieldLabel,
           onSelected: (date, _) {
-            _controller.text = date;
+            _controller!.text = date;
             Debouncer.complete();
             if (widget.onChanged != null) {
-              widget.onChanged(date);
+              widget.onChanged!(date);
             }
           },
           selectedDate: widget.value,
@@ -127,11 +129,11 @@ class _CustomFieldState extends State<CustomField> {
               .toList(),
           onChanged: (dynamic value) {
             setState(() {
-              _controller.text = _value = value;
+              _controller!.text = _value = value;
             });
             Debouncer.complete();
             if (widget.onChanged != null) {
-              widget.onChanged(value);
+              widget.onChanged!(value);
             }
           },
           labelText: widget.hideFieldLabel ? null : fieldLabel,

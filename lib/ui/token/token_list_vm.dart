@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TokenListBuilder extends StatelessWidget {
-  const TokenListBuilder({Key key}) : super(key: key);
+  const TokenListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class TokenListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final tokenId = viewModel.tokenList[index];
-              final token = viewModel.tokenMap[tokenId];
+              final token = viewModel.tokenMap[tokenId]!;
               final listState = state.getListState(EntityType.token);
               final isInMultiselect = listState.isInMultiselect();
 
@@ -61,27 +61,27 @@ class TokenListBuilder extends StatelessWidget {
 
 class TokenListVM {
   TokenListVM({
-    @required this.state,
-    @required this.userCompany,
-    @required this.tokenList,
-    @required this.tokenMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.onEntityAction,
-    @required this.tableColumns,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.userCompany,
+    required this.tokenList,
+    required this.tokenMap,
+    required this.filter,
+    required this.isLoading,
+    required this.listState,
+    required this.onRefreshed,
+    required this.onEntityAction,
+    required this.tableColumns,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
   });
 
   static TokenListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
       if (store.state.isLoading) {
-        return Future<Null>(null);
+        return Future<Null>.value();
       }
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -105,7 +105,7 @@ class TokenListVM {
           handleTokenAction(context, tokens, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
-          state.userCompany.settings?.getTableColumns(EntityType.token) ??
+          state.userCompany.settings.getTableColumns(EntityType.token) ??
               TokenPresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortTokens(field)),
       onClearMultielsect: () => store.dispatch(ClearTokenMultiselect()),
@@ -113,11 +113,11 @@ class TokenListVM {
   }
 
   final AppState state;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> tokenList;
-  final BuiltMap<String, TokenEntity> tokenMap;
+  final BuiltMap<String?, TokenEntity?> tokenMap;
   final ListUIState listState;
-  final String filter;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;

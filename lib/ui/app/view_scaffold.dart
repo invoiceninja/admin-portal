@@ -20,8 +20,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ViewScaffold extends StatelessWidget {
   const ViewScaffold({
-    @required this.body,
-    @required this.entity,
+    required this.body,
+    required this.entity,
     this.appBarBottom,
     this.isFilter = false,
     this.onBackPressed,
@@ -32,9 +32,9 @@ class ViewScaffold extends StatelessWidget {
   final bool isFilter;
   final BaseEntity entity;
   final Widget body;
-  final Function onBackPressed;
-  final Widget appBarBottom;
-  final String title;
+  final Function? onBackPressed;
+  final Widget? appBarBottom;
+  final String? title;
   final bool isEditable;
 
   @override
@@ -43,9 +43,9 @@ class ViewScaffold extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final userCompany = state.userCompany;
-    final isSettings = entity.entityType.isSetting;
+    final isSettings = entity.entityType!.isSetting;
 
-    String appBarTitle;
+    String? appBarTitle;
     if (title != null) {
       appBarTitle = title;
     } else if (entity.isNew) {
@@ -55,7 +55,7 @@ class ViewScaffold extends StatelessWidget {
       appBarTitle = presenter.title(isNarrow: isMobile(context));
     }
 
-    Widget leading;
+    Widget? leading;
     if (isDesktop(context)) {
       if (isFilter == true &&
           entity.entityType == state.uiState.filterEntityType) {
@@ -74,11 +74,11 @@ class ViewScaffold extends StatelessWidget {
         }
       } else if (state.uiState.previewStack.isNotEmpty) {
         leading = IconButton(
-            tooltip: localization.back,
+            tooltip: localization!.back,
             icon: Icon(Icons.arrow_back),
             onPressed: () => store.dispatch(PopPreviewStack()));
       } else if (isDesktop(context) &&
-          !entity.entityType.isSetting &&
+          !entity.entityType!.isSetting &&
           state.prefState.isModuleTable) {
         leading = IconButton(
           icon: Icon(Icons.close),
@@ -102,9 +102,9 @@ class ViewScaffold extends StatelessWidget {
             automaticallyImplyLeading: isMobile(context),
             title: CopyToClipboard(
               value: appBarTitle,
-              child: Text(appBarTitle),
+              child: Text(appBarTitle!),
             ),
-            bottom: appBarBottom,
+            bottom: appBarBottom as PreferredSizeWidget?,
             actions: entity.isNew
                 ? []
                 : [
@@ -112,12 +112,12 @@ class ViewScaffold extends StatelessWidget {
                       TextButton(
                           onPressed: () {
                             onBackPressed != null
-                                ? onBackPressed()
+                                ? onBackPressed!()
                                 : store.dispatch(UpdateCurrentRoute(
                                     state.uiState.previousRoute));
                           },
                           child: Text(
-                            localization.back,
+                            localization!.back,
                             style: TextStyle(color: state.headerTextColor),
                           )),
                     if (isEditable && userCompany.canEditEntity(entity))
@@ -127,7 +127,7 @@ class ViewScaffold extends StatelessWidget {
                                 state.uiState.filterEntityType.toString();
 
                         return AppTextButton(
-                          label: localization.edit,
+                          label: localization!.edit,
                           isInHeader: true,
                           onPressed: isDisabled
                               ? null
@@ -153,7 +153,7 @@ class ViewScaffold extends StatelessWidget {
           ),
           body: SafeArea(
             child: entity.isNew
-                ? BlankScreen(localization.noRecordSelected)
+                ? BlankScreen(localization!.noRecordSelected)
                 : body,
           ),
         ),

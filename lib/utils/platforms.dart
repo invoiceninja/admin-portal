@@ -27,7 +27,7 @@ bool supportsInlineBrowser() {
   }
 
   if (kIsWeb) {
-    final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
+    final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
     final state = store.state;
 
     if (state.isHosted && !state.account.accountSmsVerified) {
@@ -48,7 +48,7 @@ bool supportsAppleOAuth() => kIsWeb || isApple();
 bool supportsMicrosoftOAuth() => kIsWeb;
 
 bool supportsLatestFeatures(String version) {
-  final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
+  final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
   final state = store.state;
 
   if (!kReleaseMode || state.isStaging) {
@@ -59,7 +59,7 @@ bool supportsLatestFeatures(String version) {
     return true;
   }
 
-  if (version == null) {
+  if (version.isEmpty) {
     return false;
   }
 
@@ -67,7 +67,7 @@ bool supportsLatestFeatures(String version) {
 }
 
 bool supportsInAppPurchase() {
-  final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
+  final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
   if (store.state.isSelfHosted) {
     return false;
   }
@@ -139,7 +139,7 @@ String getPdfRequirements(BuildContext context) {
   final localization = AppLocalization.of(context);
   if (isMobile(context)) {
     final version = isAndroid() ? 'Android 5.0+' : 'iOS 11.0+';
-    return localization.pdfMinRequirements.replaceFirst(':version', version);
+    return localization!.pdfMinRequirements.replaceFirst(':version', version);
   } else {
     return '';
   }
@@ -227,7 +227,7 @@ String getNativeAppUrl(String platform) {
   return '';
 }
 
-IconData getNativeAppIcon(String platform) {
+IconData? getNativeAppIcon(String platform) {
   switch (platform) {
     case kPlatformAndroid:
       return Icons.android;
@@ -276,8 +276,7 @@ AppLayout calculateLayout(BuildContext context) {
 }
 
 AppLayout getLayout(BuildContext context) =>
-    StoreProvider.of<AppState>(context).state.prefState.appLayout ??
-    AppLayout.mobile;
+    StoreProvider.of<AppState>(context).state.prefState.appLayout;
 
 bool isMobile(BuildContext context) => getLayout(context) == AppLayout.mobile;
 

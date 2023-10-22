@@ -17,7 +17,7 @@ EntityUIState recurringInvoiceUIReducer(
   return state.rebuild((b) => b
     ..listUIState
         .replace(recurringInvoiceListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
+    ..editing.replace(editingReducer(state.editing, action)!)
     ..editingItemIndex = editingItemIndexReducer(state.editingItemIndex, action)
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..forceSelected = forceSelectedReducer(state.forceSelected, action)
@@ -26,44 +26,45 @@ EntityUIState recurringInvoiceUIReducer(
         historyActivityIdReducer(state.historyActivityId, action));
 }
 
-final forceSelectedReducer = combineReducers<bool>([
-  TypedReducer<bool, ViewRecurringInvoice>((completer, action) => true),
-  TypedReducer<bool, ViewRecurringInvoiceList>((completer, action) => false),
-  TypedReducer<bool, FilterRecurringInvoicesByState>(
+final forceSelectedReducer = combineReducers<bool?>([
+  TypedReducer<bool?, ViewRecurringInvoice>((completer, action) => true),
+  TypedReducer<bool?, ViewRecurringInvoiceList>((completer, action) => false),
+  TypedReducer<bool?, FilterRecurringInvoicesByState>(
       (completer, action) => false),
-  TypedReducer<bool, FilterRecurringInvoicesByStatus>(
+  TypedReducer<bool?, FilterRecurringInvoicesByStatus>(
       (completer, action) => false),
-  TypedReducer<bool, FilterRecurringInvoices>((completer, action) => false),
-  TypedReducer<bool, FilterRecurringInvoicesByCustom1>(
+  TypedReducer<bool?, FilterRecurringInvoices>((completer, action) => false),
+  TypedReducer<bool?, FilterRecurringInvoicesByCustom1>(
       (completer, action) => false),
-  TypedReducer<bool, FilterRecurringInvoicesByCustom2>(
+  TypedReducer<bool?, FilterRecurringInvoicesByCustom2>(
       (completer, action) => false),
-  TypedReducer<bool, FilterRecurringInvoicesByCustom3>(
+  TypedReducer<bool?, FilterRecurringInvoicesByCustom3>(
       (completer, action) => false),
-  TypedReducer<bool, FilterRecurringInvoicesByCustom4>(
+  TypedReducer<bool?, FilterRecurringInvoicesByCustom4>(
       (completer, action) => false),
 ]);
 
-final tabIndexReducer = combineReducers<int>([
-  TypedReducer<int, UpdateRecurringInvoiceTab>((completer, action) {
+final int? Function(int, dynamic) tabIndexReducer = combineReducers<int?>([
+  TypedReducer<int?, UpdateRecurringInvoiceTab>((completer, action) {
     return action.tabIndex;
   }),
-  TypedReducer<int, PreviewEntity>((completer, action) {
+  TypedReducer<int?, PreviewEntity>((completer, action) {
     return 0;
   }),
 ]);
 
-final historyActivityIdReducer = combineReducers<String>([
-  TypedReducer<String, ShowPdfRecurringInvoice>(
+final historyActivityIdReducer = combineReducers<String?>([
+  TypedReducer<String?, ShowPdfRecurringInvoice>(
       (index, action) => action.activityId),
 ]);
 
-final editingItemIndexReducer = combineReducers<int>([
-  TypedReducer<int, EditRecurringInvoice>((index, action) => action.itemIndex),
-  TypedReducer<int, EditRecurringInvoiceItem>(
+final editingItemIndexReducer = combineReducers<int?>([
+  TypedReducer<int?, EditRecurringInvoice>((index, action) => action.itemIndex),
+  TypedReducer<int?, EditRecurringInvoiceItem>(
       (index, action) => action.itemIndex),
 ]);
 
+/*
 Reducer<String> dropdownFilterReducer = combineReducers([
   TypedReducer<String, FilterRecurringInvoiceDropdown>(
       filterRecurringInvoiceDropdownReducer),
@@ -73,44 +74,45 @@ String filterRecurringInvoiceDropdownReducer(
     String dropdownFilter, FilterRecurringInvoiceDropdown action) {
   return action.filter;
 }
+*/
 
-Reducer<String> selectedIdReducer = combineReducers([
-  TypedReducer<String, ArchiveRecurringInvoicesSuccess>(
+Reducer<String?> selectedIdReducer = combineReducers([
+  TypedReducer<String?, ArchiveRecurringInvoicesSuccess>(
       (completer, action) => ''),
-  TypedReducer<String, DeleteRecurringInvoicesSuccess>(
+  TypedReducer<String?, DeleteRecurringInvoicesSuccess>(
       (completer, action) => ''),
-  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.recurringInvoice
           ? action.entityId
           : selectedId),
-  TypedReducer<String, ViewRecurringInvoice>(
+  TypedReducer<String?, ViewRecurringInvoice>(
       (selectedId, action) => action.recurringInvoiceId),
-  TypedReducer<String, AddRecurringInvoiceSuccess>(
+  TypedReducer<String?, AddRecurringInvoiceSuccess>(
       (selectedId, action) => action.recurringInvoice.id),
-  TypedReducer<String, ShowEmailRecurringInvoice>(
-      (selectedId, action) => action.invoice.id),
-  TypedReducer<String, ShowPdfRecurringInvoice>(
-      (selectedId, action) => action.invoice.id),
-  TypedReducer<String, SelectCompany>(
+  TypedReducer<String?, ShowEmailRecurringInvoice>(
+      (selectedId, action) => action.invoice!.id),
+  TypedReducer<String?, ShowPdfRecurringInvoice>(
+      (selectedId, action) => action.invoice!.id),
+  TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, SortRecurringInvoices>((selectedId, action) => ''),
-  TypedReducer<String, FilterRecurringInvoices>((selectedId, action) => ''),
-  TypedReducer<String, FilterRecurringInvoicesByState>(
+  TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String?, SortRecurringInvoices>((selectedId, action) => ''),
+  TypedReducer<String?, FilterRecurringInvoices>((selectedId, action) => ''),
+  TypedReducer<String?, FilterRecurringInvoicesByState>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterRecurringInvoicesByStatus>(
+  TypedReducer<String?, FilterRecurringInvoicesByStatus>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterRecurringInvoicesByCustom1>(
+  TypedReducer<String?, FilterRecurringInvoicesByCustom1>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterRecurringInvoicesByCustom2>(
+  TypedReducer<String?, FilterRecurringInvoicesByCustom2>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterRecurringInvoicesByCustom3>(
+  TypedReducer<String?, FilterRecurringInvoicesByCustom3>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterRecurringInvoicesByCustom4>(
+  TypedReducer<String?, FilterRecurringInvoicesByCustom4>(
       (selectedId, action) => ''),
-  TypedReducer<String, ClearEntitySelection>((selectedId, action) =>
+  TypedReducer<String?, ClearEntitySelection>((selectedId, action) =>
       action.entityType == EntityType.recurringInvoice ? '' : selectedId),
-  TypedReducer<String, FilterByEntity>(
+  TypedReducer<String?, FilterByEntity>(
       (selectedId, action) => action.clearSelection
           ? ''
           : action.entityType == EntityType.recurringInvoice
@@ -118,104 +120,104 @@ Reducer<String> selectedIdReducer = combineReducers([
               : selectedId),
 ]);
 
-final editingReducer = combineReducers<InvoiceEntity>([
-  TypedReducer<InvoiceEntity, LoadRecurringInvoiceSuccess>(_updateEditing),
-  TypedReducer<InvoiceEntity, SaveRecurringInvoiceSuccess>(_updateEditing),
-  TypedReducer<InvoiceEntity, AddRecurringInvoiceSuccess>(_updateEditing),
-  TypedReducer<InvoiceEntity, EditRecurringInvoice>(_updateEditing),
-  TypedReducer<InvoiceEntity, UpdateRecurringInvoice>(
+final editingReducer = combineReducers<InvoiceEntity?>([
+  TypedReducer<InvoiceEntity?, LoadRecurringInvoiceSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity?, SaveRecurringInvoiceSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity?, AddRecurringInvoiceSuccess>(_updateEditing),
+  TypedReducer<InvoiceEntity?, EditRecurringInvoice>(_updateEditing),
+  TypedReducer<InvoiceEntity?, UpdateRecurringInvoice>(
       (recurringInvoice, action) {
     return action.recurringInvoice.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<InvoiceEntity, AddRecurringInvoiceItem>(
+  TypedReducer<InvoiceEntity?, AddRecurringInvoiceItem>(
       (recurringInvoice, action) {
-    return recurringInvoice.rebuild((b) => b..isChanged = true);
+    return recurringInvoice!.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<InvoiceEntity, MoveRecurringInvoiceItem>((invoice, action) {
-    return invoice.moveLineItem(action.oldIndex, action.newIndex);
+  TypedReducer<InvoiceEntity?, MoveRecurringInvoiceItem>((invoice, action) {
+    return invoice!.moveLineItem(action.oldIndex!, action.newIndex);
   }),
-  TypedReducer<InvoiceEntity, DeleteRecurringInvoiceItem>(
+  TypedReducer<InvoiceEntity?, DeleteRecurringInvoiceItem>(
       (recurringInvoice, action) {
-    return recurringInvoice.rebuild((b) => b..isChanged = true);
+    return recurringInvoice!.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<InvoiceEntity, UpdateRecurringInvoiceItem>(
+  TypedReducer<InvoiceEntity?, UpdateRecurringInvoiceItem>(
       (recurringInvoice, action) {
-    return recurringInvoice.rebuild((b) => b..isChanged = true);
+    return recurringInvoice!.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<InvoiceEntity, UpdateRecurringInvoiceClient>(
+  TypedReducer<InvoiceEntity?, UpdateRecurringInvoiceClient>(
       (recurringInvoice, action) {
     final client = action.client;
-    return recurringInvoice.rebuild((b) => b
+    return recurringInvoice!.rebuild((b) => b
       ..isChanged = true
       ..clientId = client?.id ?? ''
       ..invitations.replace((client?.emailContacts ?? <ClientContactEntity>[])
           .map((contact) => InvitationEntity(clientContactId: contact.id))
           .toList()));
   }),
-  TypedReducer<InvoiceEntity, RestoreRecurringInvoicesSuccess>(
+  TypedReducer<InvoiceEntity?, RestoreRecurringInvoicesSuccess>(
       (recurringInvoices, action) {
     return action.recurringInvoices[0];
   }),
-  TypedReducer<InvoiceEntity, ArchiveRecurringInvoicesSuccess>(
+  TypedReducer<InvoiceEntity?, ArchiveRecurringInvoicesSuccess>(
       (recurringInvoices, action) {
     return action.recurringInvoices[0];
   }),
-  TypedReducer<InvoiceEntity, DeleteRecurringInvoicesSuccess>(
+  TypedReducer<InvoiceEntity?, DeleteRecurringInvoicesSuccess>(
       (recurringInvoices, action) {
     return action.recurringInvoices[0];
   }),
-  TypedReducer<InvoiceEntity, AddRecurringInvoiceItem>(
+  TypedReducer<InvoiceEntity?, AddRecurringInvoiceItem>(
       _addRecurringInvoiceItem),
-  TypedReducer<InvoiceEntity, AddRecurringInvoiceItems>(
+  TypedReducer<InvoiceEntity?, AddRecurringInvoiceItems>(
       _addRecurringInvoiceItems),
-  TypedReducer<InvoiceEntity, DeleteRecurringInvoiceItem>(
+  TypedReducer<InvoiceEntity?, DeleteRecurringInvoiceItem>(
       _removeRecurringInvoiceItem),
-  TypedReducer<InvoiceEntity, UpdateRecurringInvoiceItem>(
+  TypedReducer<InvoiceEntity?, UpdateRecurringInvoiceItem>(
       _updateRecurringInvoiceItem),
-  TypedReducer<InvoiceEntity, DiscardChanges>(_clearEditing),
-  TypedReducer<InvoiceEntity, AddRecurringInvoiceContact>(
+  TypedReducer<InvoiceEntity?, DiscardChanges>(_clearEditing),
+  TypedReducer<InvoiceEntity?, AddRecurringInvoiceContact>(
       (recurringInvoice, action) {
-    return recurringInvoice.rebuild((b) => b
+    return recurringInvoice!.rebuild((b) => b
       ..invitations.add(action.invitation ??
-          InvitationEntity(clientContactId: action.contact.id)));
+          InvitationEntity(clientContactId: action.contact!.id)));
   }),
-  TypedReducer<InvoiceEntity, RemoveRecurringInvoiceContact>(
+  TypedReducer<InvoiceEntity?, RemoveRecurringInvoiceContact>(
       (recurringInvoice, action) {
-    return recurringInvoice
+    return recurringInvoice!
         .rebuild((b) => b..invitations.remove(action.invitation));
   }),
 ]);
 
-InvoiceEntity _clearEditing(InvoiceEntity recurringInvoice, dynamic action) {
+InvoiceEntity _clearEditing(InvoiceEntity? recurringInvoice, dynamic action) {
   return InvoiceEntity();
 }
 
-InvoiceEntity _updateEditing(InvoiceEntity recurringInvoice, dynamic action) {
+InvoiceEntity? _updateEditing(InvoiceEntity? recurringInvoice, dynamic action) {
   return action.recurringInvoice;
 }
 
 InvoiceEntity _addRecurringInvoiceItem(
-    InvoiceEntity recurringInvoice, AddRecurringInvoiceItem action) {
+    InvoiceEntity? recurringInvoice, AddRecurringInvoiceItem action) {
   final item = action.invoiceItem ?? InvoiceItemEntity();
-  return recurringInvoice.rebuild((b) => b..lineItems.add(item));
+  return recurringInvoice!.rebuild((b) => b..lineItems.add(item));
 }
 
 InvoiceEntity _addRecurringInvoiceItems(
-    InvoiceEntity recurringInvoice, AddRecurringInvoiceItems action) {
-  return recurringInvoice.rebuild((b) => b..lineItems.addAll(action.items));
+    InvoiceEntity? recurringInvoice, AddRecurringInvoiceItems action) {
+  return recurringInvoice!.rebuild((b) => b..lineItems.addAll(action.items));
 }
 
-InvoiceEntity _removeRecurringInvoiceItem(
-    InvoiceEntity recurringInvoice, DeleteRecurringInvoiceItem action) {
-  if (recurringInvoice.lineItems.length <= action.index) {
+InvoiceEntity? _removeRecurringInvoiceItem(
+    InvoiceEntity? recurringInvoice, DeleteRecurringInvoiceItem action) {
+  if (recurringInvoice!.lineItems.length <= action.index) {
     return recurringInvoice;
   }
   return recurringInvoice.rebuild((b) => b..lineItems.removeAt(action.index));
 }
 
-InvoiceEntity _updateRecurringInvoiceItem(
-    InvoiceEntity recurringInvoice, UpdateRecurringInvoiceItem action) {
-  if (recurringInvoice.lineItems.length <= action.index) {
+InvoiceEntity? _updateRecurringInvoiceItem(
+    InvoiceEntity? recurringInvoice, UpdateRecurringInvoiceItem action) {
+  if (recurringInvoice!.lineItems.length <= action.index) {
     return recurringInvoice;
   }
   return recurringInvoice
@@ -335,7 +337,7 @@ ListUIState _filterRecurringInvoices(
 ListUIState _sortRecurringInvoices(
     ListUIState recurringInvoiceListState, SortRecurringInvoices action) {
   return recurringInvoiceListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortAscending = b.sortField != action.field || !b.sortAscending!
     ..sortField = action.field);
 }
 
@@ -348,13 +350,13 @@ ListUIState _startListMultiselect(ListUIState recurringInvoiceListState,
 ListUIState _addToListMultiselect(ListUIState recurringInvoiceListState,
     AddToRecurringInvoiceMultiselect action) {
   return recurringInvoiceListState
-      .rebuild((b) => b..selectedIds.add(action.entity.id));
+      .rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(ListUIState recurringInvoiceListState,
     RemoveFromRecurringInvoiceMultiselect action) {
   return recurringInvoiceListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(ListUIState recurringInvoiceListState,
@@ -479,9 +481,9 @@ RecurringInvoiceState _addRecurringInvoice(
 
 RecurringInvoiceState _updateRecurringInvoice(
     RecurringInvoiceState recurringInvoiceState, dynamic action) {
-  final InvoiceEntity recurringInvoice = action.recurringInvoice;
+  final InvoiceEntity? recurringInvoice = action.recurringInvoice;
   return recurringInvoiceState.rebuild((b) => b
-    ..map[action.recurringInvoice.id] = recurringInvoice
+    ..map[action.recurringInvoice.id] = recurringInvoice!
         .rebuild((b) => b..loadedAt = DateTime.now().millisecondsSinceEpoch));
 }
 

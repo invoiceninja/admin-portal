@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class RecurringExpenseViewScreen extends StatelessWidget {
   const RecurringExpenseViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
   static const String route = '/recurring_expense/view';
@@ -40,7 +40,7 @@ class RecurringExpenseViewScreen extends StatelessWidget {
         return ExpenseView(
           viewModel: vm,
           isFilter: isFilter,
-          tabIndex: vm.state.recurringExpenseUIState.tabIndex,
+          tabIndex: vm.state!.recurringExpenseUIState.tabIndex,
         );
       },
     );
@@ -49,15 +49,15 @@ class RecurringExpenseViewScreen extends StatelessWidget {
 
 class RecurringExpenseViewVM extends AbstractExpenseViewVM {
   RecurringExpenseViewVM({
-    AppState state,
-    ExpenseEntity expense,
-    CompanyEntity company,
-    Function(BuildContext, EntityAction) onEntityAction,
-    Function(BuildContext) onRefreshed,
-    Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments,
-    bool isSaving,
-    bool isLoading,
-    bool isDirty,
+    required ExpenseEntity expense,
+    AppState? state,
+    CompanyEntity? company,
+    Function(BuildContext, EntityAction)? onEntityAction,
+    Function(BuildContext)? onRefreshed,
+    Function(BuildContext, List<MultipartFile>, bool)? onUploadDocuments,
+    bool? isSaving,
+    bool? isLoading,
+    bool? isDirty,
   }) : super(
           state: state,
           expense: expense,
@@ -77,8 +77,8 @@ class RecurringExpenseViewVM extends AbstractExpenseViewVM {
         ExpenseEntity(id: state.recurringExpenseUIState.selectedId);
 
     Future<Null> _handleRefresh(BuildContext context) {
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadRecurringExpense(
           completer: completer, recurringExpenseId: recurringExpense.id));
       return completer.future;
@@ -96,17 +96,17 @@ class RecurringExpenseViewVM extends AbstractExpenseViewVM {
           handleEntitiesActions([recurringExpense], action, autoPop: true),
       onUploadDocuments: (BuildContext context,
           List<MultipartFile> multipartFiles, bool isPrivate) {
-        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        final completer = Completer<List<DocumentEntity>>();
         store.dispatch(SaveRecurringExpenseDocumentRequest(
             isPrivate: isPrivate,
             multipartFile: multipartFiles,
             expense: recurringExpense,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context).uploadedDocument);
+          showToast(AppLocalization.of(context)!.uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
-              context: navigatorKey.currentContext,
+              context: navigatorKey.currentContext!,
               builder: (BuildContext context) {
                 return ErrorDialog(error);
               });

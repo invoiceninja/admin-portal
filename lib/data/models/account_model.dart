@@ -11,7 +11,7 @@ part 'account_model.g.dart';
 
 abstract class AccountEntity
     implements Built<AccountEntity, AccountEntityBuilder> {
-  factory AccountEntity(bool reportErrors, {String id, AppState state}) {
+  factory AccountEntity(bool reportErrors, {String? id, AppState? state}) {
     return _$AccountEntity._(
       id: '',
       key: '',
@@ -138,6 +138,7 @@ abstract class AccountEntity
   // ignore: unused_element
   static void _initializeBuilder(AccountEntityBuilder builder) => builder
     ..key = ''
+    ..currentVersion = ''
     ..debugEnabled = false
     ..isDocker = false
     ..isSchedulerRunning = true

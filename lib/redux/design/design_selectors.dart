@@ -16,7 +16,7 @@ var memoizedDropdownDesignList = memo3(
 List<String> dropdownDesignsSelector(BuiltMap<String, DesignEntity> designMap,
     BuiltList<String> designList, String clientId) {
   final list = designList.where((designId) {
-    final design = designMap[designId];
+    final design = designMap[designId]!;
     /*
     if (clientId != null && clientId > 0 && design.clientId != clientId) {
       return false;
@@ -26,7 +26,7 @@ List<String> dropdownDesignsSelector(BuiltMap<String, DesignEntity> designMap,
   }).toList();
 
   list.sort((designAId, designBId) {
-    final designA = designMap[designAId];
+    final designA = designMap[designAId]!;
     final designB = designMap[designBId];
     return designA.compareTo(designB, DesignFields.name, true);
   });
@@ -42,7 +42,7 @@ var memoizedFilteredDesignList = memo3(
 List<String> filteredDesignsSelector(BuiltMap<String, DesignEntity> designMap,
     BuiltList<String> designList, ListUIState designListState) {
   final list = designList.where((designId) {
-    final design = designMap[designId];
+    final design = designMap[designId]!;
 
     if (!design.isCustom) {
       return false;
@@ -55,7 +55,7 @@ List<String> filteredDesignsSelector(BuiltMap<String, DesignEntity> designMap,
   }).toList();
 
   list.sort((designAId, designBId) {
-    final designA = designMap[designAId];
+    final designA = designMap[designAId]!;
     final designB = designMap[designBId];
     return designA.compareTo(
         designB, designListState.sortField, designListState.sortAscending);
@@ -64,8 +64,10 @@ List<String> filteredDesignsSelector(BuiltMap<String, DesignEntity> designMap,
   return list;
 }
 
-String getDesignIdForClientByEntity(
-    {AppState state, String clientId, EntityType entityType}) {
+String? getDesignIdForClientByEntity(
+    {required AppState state,
+    required String clientId,
+    EntityType? entityType}) {
   final client = state.clientState.get(clientId);
   final settings = getClientSettings(state, client);
   switch (entityType) {
@@ -81,8 +83,10 @@ String getDesignIdForClientByEntity(
   }
 }
 
-String getDesignIdForVendorByEntity(
-    {AppState state, String vendorId, EntityType entityType}) {
+String? getDesignIdForVendorByEntity(
+    {required AppState state,
+    required String vendorId,
+    EntityType? entityType}) {
   final vendor = state.vendorState.get(vendorId);
 
   final settings = getVendorSettings(state, vendor);

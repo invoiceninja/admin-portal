@@ -21,8 +21,8 @@ import 'recurring_invoice_screen_vm.dart';
 
 class RecurringInvoiceScreen extends StatelessWidget {
   const RecurringInvoiceScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/recurring_invoice';
@@ -41,27 +41,27 @@ class RecurringInvoiceScreen extends StatelessWidget {
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kRecurringInvoiceStatusDraft
-          ..name = localization.draft,
+          ..name = localization!.draft,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kRecurringInvoiceStatusPending
-          ..name = localization.pending,
+          ..name = localization!.pending,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kRecurringInvoiceStatusActive
-          ..name = localization.active,
+          ..name = localization!.active,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kRecurringInvoiceStatusPaused
-          ..name = localization.paused,
+          ..name = localization!.paused,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kRecurringInvoiceStatusCompleted
-          ..name = localization.completed,
+          ..name = localization!.completed,
       ),
     ];
 
@@ -151,7 +151,7 @@ class RecurringInvoiceScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newRecurringInvoice,
+              tooltip: localization!.newRecurringInvoice,
             )
           : null,
     );

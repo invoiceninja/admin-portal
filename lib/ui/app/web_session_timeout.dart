@@ -19,14 +19,14 @@ import 'package:invoiceninja_flutter/utils/web_stub.dart'
 class WebSessionTimeout extends StatefulWidget {
   const WebSessionTimeout({this.child});
 
-  final Widget child;
+  final Widget? child;
 
   @override
   _WebSessionTimeoutState createState() => _WebSessionTimeoutState();
 }
 
 class _WebSessionTimeoutState extends State<WebSessionTimeout> {
-  Timer _timer;
+  Timer? _timer;
 
   @override
   void initState() {
@@ -66,6 +66,6 @@ class _WebSessionTimeoutState extends State<WebSessionTimeout> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.child;
+    return widget.child!;
   }
 }

@@ -17,21 +17,21 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ProjectListItem extends StatelessWidget {
   const ProjectListItem({
-    @required this.user,
-    @required this.project,
-    @required this.filter,
+    required this.user,
+    required this.project,
+    required this.filter,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
     this.isChecked = false,
   });
 
-  final UserEntity user;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
+  final UserEntity? user;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onLongPress;
   final ProjectEntity project;
-  final String filter;
-  final Function(bool) onCheckboxChanged;
+  final String? filter;
+  final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
 
   @override
@@ -41,7 +41,7 @@ class ProjectListItem extends StatelessWidget {
     final uiState = state.uiState;
     final projectUIState = uiState.projectUIState;
     final client = state.clientState.get(project.clientId);
-    final filterMatch = filter != null && filter.isNotEmpty
+    final filterMatch = filter != null && filter!.isNotEmpty
         ? (project.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))
         : null;
@@ -50,13 +50,13 @@ class ProjectListItem extends StatelessWidget {
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
     final textStyle = TextStyle(fontSize: 16);
     final subtitle = client.displayName;
-    final textColor = Theme.of(context).textTheme.bodyLarge.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
     return DismissibleEntity(
       isSelected: isDesktop(context) &&
           project.id ==
               (uiState.isEditing
-                  ? projectUIState.editing.id
+                  ? projectUIState.editing!.id
                   : projectUIState.selectedId),
       userCompany: store.state.userCompany,
       entity: project,
@@ -65,9 +65,9 @@ class ProjectListItem extends StatelessWidget {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: project),
+                    onTap != null ? onTap!() : selectEntity(entity: project),
                 onLongPress: () => onLongPress != null
-                    ? onLongPress()
+                    ? onLongPress!()
                     : selectEntity(entity: project, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -90,7 +90,7 @@ class ProjectListItem extends StatelessWidget {
                                     materialTapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
                                     onChanged: (value) =>
-                                        onCheckboxChanged(value),
+                                        onCheckboxChanged!(value),
                                     activeColor:
                                         Theme.of(context).colorScheme.secondary,
                                   ),
@@ -114,7 +114,7 @@ class ProjectListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              project.number ?? '',
+                              project.number,
                               style: textStyle,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -133,14 +133,14 @@ class ProjectListItem extends StatelessWidget {
                                         ? '  📎'
                                         : ''),
                                 style: textStyle),
-                            Text(subtitle ?? filterMatch,
+                            Text(subtitle,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .titleSmall
+                                    .titleSmall!
                                     .copyWith(
-                                      color: textColor
+                                      color: textColor!
                                           .withOpacity(kLighterOpacity),
                                     )),
                           ],
@@ -161,9 +161,9 @@ class ProjectListItem extends StatelessWidget {
               )
             : ListTile(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: project),
+                    onTap != null ? onTap!() : selectEntity(entity: project),
                 onLongPress: () => onLongPress != null
-                    ? onLongPress()
+                    ? onLongPress!()
                     : selectEntity(entity: project, longPress: true),
                 leading: showCheckbox
                     ? IgnorePointer(
@@ -172,7 +172,7 @@ class ProjectListItem extends StatelessWidget {
                           value: isChecked,
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => onCheckboxChanged(value),
+                          onChanged: (value) => onCheckboxChanged!(value),
                           activeColor: Theme.of(context).colorScheme.secondary,
                         ),
                       )

@@ -24,7 +24,7 @@ List<String> dropdownExpenseCategoriesSelector(
     BuiltMap<String, UserEntity> userMap,
     String clientId) {
   final list = expenseCategoryList.where((expenseCategoryId) {
-    final expenseCategory = expenseCategoryMap[expenseCategoryId];
+    final expenseCategory = expenseCategoryMap[expenseCategoryId]!;
     /*
     if (clientId != null && clientId > 0 && expenseCategory.clientId != clientId) {
       return false;
@@ -34,7 +34,7 @@ List<String> dropdownExpenseCategoriesSelector(
   }).toList();
 
   list.sort((expenseCategoryAId, expenseCategoryBId) {
-    final expenseCategoryA = expenseCategoryMap[expenseCategoryAId];
+    final expenseCategoryA = expenseCategoryMap[expenseCategoryAId]!;
     final expenseCategoryB = expenseCategoryMap[expenseCategoryBId];
     return expenseCategoryA.compareTo(
         expenseCategory: expenseCategoryB,
@@ -58,7 +58,7 @@ List<String> filteredExpenseCategoriesSelector(
     BuiltList<String> expenseCategoryList,
     ListUIState expenseCategoryListState) {
   final list = expenseCategoryList.where((expenseCategoryId) {
-    final expenseCategory = expenseCategoryMap[expenseCategoryId];
+    final expenseCategory = expenseCategoryMap[expenseCategoryId]!;
 
     if (expenseCategory.id == selectionState.selectedId) {
       return true;
@@ -71,7 +71,7 @@ List<String> filteredExpenseCategoriesSelector(
   }).toList();
 
   list.sort((expenseCategoryAId, expenseCategoryBId) {
-    return expenseCategoryMap[expenseCategoryAId].compareTo(
+    return expenseCategoryMap[expenseCategoryAId]!.compareTo(
       expenseCategory: expenseCategoryMap[expenseCategoryBId],
       sortField: expenseCategoryListState.sortField,
       sortAscending: expenseCategoryListState.sortAscending,
@@ -87,8 +87,8 @@ var memoizedCalculateExpenseCategoryAmount = memo2(
             categoryId: categoryId, expenseMap: expenseMap));
 
 double calculateExpenseCategoryAmount({
-  String categoryId,
-  BuiltMap<String, ExpenseEntity> expenseMap,
+  String? categoryId,
+  required BuiltMap<String, ExpenseEntity> expenseMap,
 }) {
   double total = 0;
 

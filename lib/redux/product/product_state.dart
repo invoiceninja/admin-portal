@@ -35,7 +35,7 @@ abstract class ProductState
 
   ProductEntity get(String productId) {
     if (map.containsKey(productId)) {
-      return map[productId];
+      return map[productId]!;
     } else {
       return ProductEntity(id: productId);
     }
@@ -59,7 +59,7 @@ abstract class ProductState
 abstract class ProductUIState extends Object
     with EntityUIState
     implements Built<ProductUIState, ProductUIStateBuilder> {
-  factory ProductUIState(PrefStateSortField sortField) {
+  factory ProductUIState(PrefStateSortField? sortField) {
     return _$ProductUIState._(
       listUIState: ListUIState(sortField?.field ?? ProductFields.productKey,
           sortAscending: sortField?.ascending),
@@ -75,14 +75,13 @@ abstract class ProductUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  ProductEntity get editing;
+  ProductEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<ProductUIState> get serializer =>
       _$productUIStateSerializer;

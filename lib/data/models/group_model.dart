@@ -53,7 +53,7 @@ class GroupFields {
 abstract class GroupEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<GroupEntity, GroupEntityBuilder> {
-  factory GroupEntity({String id, AppState state}) {
+  factory GroupEntity({String? id, AppState? state}) {
     return _$GroupEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
@@ -92,24 +92,24 @@ abstract class GroupEntity extends Object
   }
 
   bool get hasCurrency =>
-      settings.currencyId != null && settings.currencyId.isNotEmpty;
+      settings.currencyId != null && settings.currencyId!.isNotEmpty;
 
-  String get currencyId => settings.currencyId;
+  String? get currencyId => settings.currencyId;
 
   bool get hasLanguage =>
-      settings.languageId != null && settings.languageId.isNotEmpty;
+      settings.languageId != null && settings.languageId!.isNotEmpty;
 
-  String get languageId => settings.languageId;
+  String? get languageId => settings.languageId;
 
-  int compareTo(GroupEntity group, String sortField, bool sortAscending) {
+  int compareTo(GroupEntity? group, String sortField, bool sortAscending) {
     int response = 0;
-    final GroupEntity groupA = sortAscending ? this : group;
-    final GroupEntity groupB = sortAscending ? group : this;
+    final GroupEntity? groupA = sortAscending ? this : group;
+    final GroupEntity? groupB = sortAscending ? group : this;
 
     switch (sortField) {
       case GroupFields.name:
         response =
-            groupA.name.toLowerCase().compareTo(groupB.name.toLowerCase());
+            groupA!.name.toLowerCase().compareTo(groupB!.name.toLowerCase());
         break;
       default:
         print('## ERROR: sort by group.$sortField is not implemented');
@@ -120,7 +120,7 @@ abstract class GroupEntity extends Object
   }
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     return matchesStrings(
       haystacks: [
         name,
@@ -130,7 +130,7 @@ abstract class GroupEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     return matchesStringsValue(
       haystacks: [],
       needle: filter,
@@ -138,20 +138,20 @@ abstract class GroupEntity extends Object
   }
 
   @override
-  List<EntityAction> getActions(
-      {UserCompanyEntity userCompany,
-      ClientEntity client,
+  List<EntityAction?> getActions(
+      {UserCompanyEntity? userCompany,
+      ClientEntity? client,
       bool includeEdit = false,
       bool includePreview = false,
       bool multiselect = false}) {
-    final actions = <EntityAction>[];
+    final actions = <EntityAction?>[];
 
-    if (!isDeleted && !multiselect) {
-      if (includeEdit && userCompany.canEditEntity(this)) {
+    if (!isDeleted! && !multiselect) {
+      if (includeEdit && userCompany!.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
 
-      if (userCompany.canEditEntity(this)) {
+      if (userCompany!.canEditEntity(this)) {
         actions.add(EntityAction.settings);
       }
 
@@ -168,10 +168,10 @@ abstract class GroupEntity extends Object
   }
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
   @override
-  FormatNumberType get listDisplayAmountType => null;
+  FormatNumberType? get listDisplayAmountType => null;
 
   // ignore: unused_element
   static void _initializeBuilder(GroupEntityBuilder builder) =>

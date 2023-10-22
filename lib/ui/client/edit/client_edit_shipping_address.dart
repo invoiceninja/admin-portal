@@ -15,8 +15,8 @@ import '../../app/form_card.dart';
 
 class ClientEditShippingAddress extends StatefulWidget {
   const ClientEditShippingAddress({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final ClientEditVM viewModel;
@@ -89,7 +89,7 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final client = viewModel.client;
     final isFullscreen =
@@ -143,7 +143,7 @@ class ClientEditShippingAddressState extends State<ClientEditShippingAddress> {
           entityList: memoizedCountryList(viewModel.staticState.countryMap),
           labelText: localization.country,
           entityId: client.shippingCountryId,
-          onSelected: (SelectableEntity country) => viewModel.onChanged(
+          onSelected: (SelectableEntity? country) => viewModel.onChanged(
               client.rebuild((b) => b..shippingCountryId = country?.id ?? '')),
         ),
         if (client.hasBillingAddress && client.areAddressesDifferent)

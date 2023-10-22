@@ -45,14 +45,14 @@ List<Middleware<AppState>> createStoreWebhooksMiddleware([
 
 Middleware<AppState> _editWebhook() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditWebhook;
+    final action = dynamicAction as EditWebhook?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(WebhookEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(WebhookEditScreen.route);
+      navigatorKey.currentState!.pushNamed(WebhookEditScreen.route);
     }
   };
 }
@@ -60,21 +60,21 @@ Middleware<AppState> _editWebhook() {
 Middleware<AppState> _viewWebhook() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ViewWebhook;
+    final action = dynamicAction as ViewWebhook?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(WebhookViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(WebhookViewScreen.route);
+      navigatorKey.currentState!.pushNamed(WebhookViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewWebhookList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewWebhookList;
+    final action = dynamicAction as ViewWebhookList?;
 
     next(action);
 
@@ -85,7 +85,7 @@ Middleware<AppState> _viewWebhookList() {
     store.dispatch(UpdateCurrentRoute(WebhookScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           WebhookScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -102,15 +102,11 @@ Middleware<AppState> _archiveWebhook(WebhookRepository repository) {
             store.state.credentials, action.webhookIds, EntityAction.archive)
         .then((List<WebhookEntity> webhooks) {
       store.dispatch(ArchiveWebhooksSuccess(webhooks));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveWebhooksFailure(prevWebhooks));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -128,15 +124,11 @@ Middleware<AppState> _deleteWebhook(WebhookRepository repository) {
             store.state.credentials, action.webhookIds, EntityAction.delete)
         .then((List<WebhookEntity> webhooks) {
       store.dispatch(DeleteWebhooksSuccess(webhooks));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteWebhooksFailure(prevWebhooks));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -154,15 +146,11 @@ Middleware<AppState> _restoreWebhook(WebhookRepository repository) {
             store.state.credentials, action.webhookIds, EntityAction.restore)
         .then((List<WebhookEntity> webhooks) {
       store.dispatch(RestoreWebhooksSuccess(webhooks));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreWebhooksFailure(prevWebhooks));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -173,19 +161,19 @@ Middleware<AppState> _saveWebhook(WebhookRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as SaveWebhookRequest;
     repository
-        .saveData(store.state.credentials, action.webhook)
+        .saveData(store.state.credentials, action.webhook!)
         .then((WebhookEntity webhook) {
-      if (action.webhook.isNew) {
+      if (action.webhook!.isNew) {
         store.dispatch(AddWebhookSuccess(webhook));
       } else {
         store.dispatch(SaveWebhookSuccess(webhook));
       }
 
-      action.completer.complete(webhook);
+      action.completer!.complete(webhook);
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveWebhookFailure(error));
-      action.completer.completeError(error);
+      action.completer!.completeError(error);
     });
 
     next(action);
@@ -202,13 +190,13 @@ Middleware<AppState> _loadWebhook(WebhookRepository repository) {
       store.dispatch(LoadWebhookSuccess(webhook));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadWebhookFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -218,15 +206,15 @@ Middleware<AppState> _loadWebhook(WebhookRepository repository) {
 
 Middleware<AppState> _loadWebhooks(WebhookRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as LoadWebhooks;
+    final action = dynamicAction as LoadWebhooks?;
     final AppState state = store.state;
 
     store.dispatch(LoadWebhooksRequest());
     repository.loadList(state.credentials).then((data) {
       store.dispatch(LoadWebhooksSuccess(data));
 
-      if (action.completer != null) {
-        action.completer.complete(null);
+      if (action!.completer != null) {
+        action.completer!.complete(null);
       }
       /*
       if (state.productState.isStale) {
@@ -236,8 +224,8 @@ Middleware<AppState> _loadWebhooks(WebhookRepository repository) {
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadWebhooksFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
+      if (action!.completer != null) {
+        action.completer!.completeError(error);
       }
     });
 

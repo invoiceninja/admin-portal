@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
@@ -8,7 +7,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 
-abstract class CalculateInvoiceTotal {
+abstract mixin class CalculateInvoiceTotal {
   bool get isAmountDiscount;
 
   String get taxName1;
@@ -57,7 +56,7 @@ abstract class CalculateInvoiceTotal {
   }
 
   Map<String, double> calculateTaxes(
-      {@required bool useInclusiveTaxes, @required int precision}) {
+      {required bool useInclusiveTaxes, required int precision}) {
     double total = calculateSubtotal(precision: precision);
     double taxAmount;
     final map = <String, double>{};
@@ -209,7 +208,7 @@ abstract class CalculateInvoiceTotal {
     return round(lineTotal, precision);
   }
 
-  double calculateTotal({@required int precision}) {
+  double calculateTotal({required int precision}) {
     double total = calculateSubtotal(precision: precision);
     double itemTax = 0.0;
 
@@ -302,7 +301,7 @@ abstract class CalculateInvoiceTotal {
     return total;
   }
 
-  double calculateSubtotal({@required int precision}) {
+  double calculateSubtotal({required int precision}) {
     var total = 0.0;
 
     lineItems.forEach((item) {

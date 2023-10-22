@@ -33,7 +33,7 @@ abstract class InvoiceState
 
   InvoiceEntity get(String invoiceId) {
     if (map.containsKey(invoiceId)) {
-      return map[invoiceId];
+      return map[invoiceId]!;
     } else {
       return InvoiceEntity(id: invoiceId);
     }
@@ -59,7 +59,7 @@ abstract class InvoiceState
 abstract class InvoiceUIState extends Object
     with EntityUIState
     implements Built<InvoiceUIState, InvoiceUIStateBuilder> {
-  factory InvoiceUIState(PrefStateSortField sortField) {
+  factory InvoiceUIState(PrefStateSortField? sortField) {
     return _$InvoiceUIState._(
       listUIState: ListUIState(sortField?.field ?? InvoiceFields.number,
           sortAscending: sortField?.ascending ?? false),
@@ -75,22 +75,19 @@ abstract class InvoiceUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  InvoiceEntity get editing;
+  InvoiceEntity? get editing;
 
-  @nullable
   @BuiltValueField(serialize: false)
-  int get editingItemIndex;
+  int? get editingItemIndex;
 
-  @nullable
   @BuiltValueField(serialize: false)
-  String get historyActivityId;
+  String? get historyActivityId;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<InvoiceUIState> get serializer =>
       _$invoiceUIStateSerializer;

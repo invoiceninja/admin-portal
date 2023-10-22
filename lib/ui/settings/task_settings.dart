@@ -18,8 +18,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskSettings extends StatefulWidget {
   const TaskSettings({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final TaskSettingsVM viewModel;
@@ -31,9 +31,9 @@ class TaskSettings extends StatefulWidget {
 class _TaskSettingsState extends State<TaskSettings> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_taskSettings');
-  FocusScopeNode _focusNode;
+  FocusScopeNode? _focusNode;
   final _taskRateController = TextEditingController();
-  List<TextEditingController> _controllers;
+  late List<TextEditingController> _controllers;
 
   @override
   void initState() {
@@ -52,7 +52,7 @@ class _TaskSettingsState extends State<TaskSettings> {
 
     _taskRateController.text = formatNumber(
         widget.viewModel.settings.defaultTaskRate, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -66,7 +66,7 @@ class _TaskSettingsState extends State<TaskSettings> {
       controller.removeListener(_onChanged);
       controller.dispose();
     });
-    _focusNode.dispose();
+    _focusNode!.dispose();
     super.dispose();
   }
 
@@ -84,7 +84,7 @@ class _TaskSettingsState extends State<TaskSettings> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final company = viewModel.company;
     final settings = viewModel.settings;
@@ -126,7 +126,7 @@ class _TaskSettingsState extends State<TaskSettings> {
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.showTaskItemDescription),
-                value: settings.showTaskItemDescription,
+                value: settings.showTaskItemDescription!,
                 subtitle: Text(localization.showTaskItemDescriptionHelp),
                 onChanged: (value) => viewModel.onSettingsChanged(settings
                     .rebuild((b) => b..showTaskItemDescription = value)),
@@ -134,7 +134,7 @@ class _TaskSettingsState extends State<TaskSettings> {
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.showTaskBillable),
-                value: settings.allowBillableTaskItems,
+                value: settings.allowBillableTaskItems!,
                 subtitle: Text(localization.allowBillableTaskItemsHelp),
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..allowBillableTaskItems = value)),
@@ -232,7 +232,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                 SwitchListTile(
                   activeColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.lockInvoicedTasks),
-                  value: company.invoiceTaskLock ?? false,
+                  value: company.invoiceTaskLock,
                   subtitle: Text(localization.lockInvoicedTasksHelp),
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..invoiceTaskLock = value)),
@@ -240,7 +240,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                 SwitchListTile(
                   activeColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.addDocumentsToInvoice),
-                  value: company.invoiceTaskDocuments ?? false,
+                  value: company.invoiceTaskDocuments,
                   subtitle: Text(localization.addDocumentsToInvoiceHelp),
                   onChanged: (value) => viewModel.onCompanyChanged(
                       company.rebuild((b) => b..invoiceTaskDocuments = value)),

@@ -17,7 +17,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/schedule/schedule_actions.dart';
 
 class ScheduleListBuilder extends StatelessWidget {
-  const ScheduleListBuilder({Key key}) : super(key: key);
+  const ScheduleListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class ScheduleListBuilder extends StatelessWidget {
             itemBuilder: (BuildContext context, index) {
               final state = viewModel.state;
               final scheduleId = viewModel.scheduleList[index];
-              final schedule = viewModel.scheduleMap[scheduleId];
+              final schedule = viewModel.scheduleMap[scheduleId]!;
               final listState = state.getListState(EntityType.schedule);
               final isInMultiselect = listState.isInMultiselect();
 
@@ -54,27 +54,27 @@ class ScheduleListBuilder extends StatelessWidget {
 
 class ScheduleListVM {
   ScheduleListVM({
-    @required this.state,
-    @required this.userCompany,
-    @required this.scheduleList,
-    @required this.scheduleMap,
-    @required this.filter,
-    @required this.isLoading,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.onEntityAction,
-    @required this.tableColumns,
-    @required this.onSortColumn,
-    @required this.onClearMultielsect,
+    required this.state,
+    required this.userCompany,
+    required this.scheduleList,
+    required this.scheduleMap,
+    required this.filter,
+    required this.isLoading,
+    required this.listState,
+    required this.onRefreshed,
+    required this.onEntityAction,
+    required this.tableColumns,
+    required this.onSortColumn,
+    required this.onClearMultielsect,
   });
 
   static ScheduleListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
       if (store.state.isLoading) {
-        return Future<Null>(null);
+        return Future<Null>.value();
       }
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -98,7 +98,7 @@ class ScheduleListVM {
           handleScheduleAction(context, schedules, action),
       onRefreshed: (context) => _handleRefresh(context),
       tableColumns:
-          state.userCompany.settings?.getTableColumns(EntityType.schedule) ??
+          state.userCompany.settings.getTableColumns(EntityType.schedule) ??
               SchedulePresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortSchedules(field)),
       onClearMultielsect: () => store.dispatch(ClearScheduleMultiselect()),
@@ -106,11 +106,11 @@ class ScheduleListVM {
   }
 
   final AppState state;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> scheduleList;
   final BuiltMap<String, ScheduleEntity> scheduleMap;
   final ListUIState listState;
-  final String filter;
+  final String? filter;
   final bool isLoading;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;

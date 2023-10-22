@@ -101,13 +101,13 @@ abstract class ExpenseEntity extends Object
     with BaseEntity, SelectableEntity, BelongsToClient
     implements Built<ExpenseEntity, ExpenseEntityBuilder> {
   factory ExpenseEntity({
-    String id,
-    AppState state,
-    VendorEntity vendor,
-    ClientEntity client,
-    UserEntity user,
-    ProjectEntity project,
-    EntityType entityType,
+    String? id,
+    AppState? state,
+    VendorEntity? vendor,
+    ClientEntity? client,
+    UserEntity? user,
+    ProjectEntity? project,
+    EntityType? entityType,
   }) {
     final company = state?.company;
     return _$ExpenseEntity._(
@@ -128,14 +128,14 @@ abstract class ExpenseEntity extends Object
       paymentDate: (company?.markExpensesPaid ?? false)
           ? convertDateTimeToSqlDate()
           : '',
-      paymentTypeId: company?.settings?.defaultExpensePaymentTypeId ?? '',
+      paymentTypeId: company?.settings.defaultExpensePaymentTypeId ?? '',
       exchangeRate: 1,
       currencyId: (vendor != null && vendor.hasCurrency)
           ? vendor.currencyId
-          : (state?.company?.currencyId ?? kDefaultCurrencyId),
+          : (state?.company.currencyId ?? kDefaultCurrencyId),
       invoiceCurrencyId: (client != null && client.hasCurrency)
-          ? client.settings.currencyId // TODO handle group currency
-          : (state?.company?.currencyId ?? kDefaultCurrencyId),
+          ? client.settings.currencyId! // TODO handle group currency
+          : (state?.company.currencyId ?? kDefaultCurrencyId),
       documents: BuiltList<DocumentEntity>(),
       taxName1: '',
       taxName2: '',
@@ -219,9 +219,9 @@ abstract class ExpenseEntity extends Object
 
   double get amount;
 
-  @nullable // TODO remove this
+  // TODO remove this
   @BuiltValueField(wireName: 'date')
-  String get date;
+  String? get date;
 
   @BuiltValueField(wireName: 'payment_date')
   String get paymentDate;
@@ -253,26 +253,21 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'tax_rate3')
   double get taxRate3;
 
-  @nullable
   @override
   @BuiltValueField(wireName: 'client_id')
-  String get clientId;
+  String? get clientId;
 
-  @nullable
   @BuiltValueField(wireName: 'invoice_id')
-  String get invoiceId;
+  String? get invoiceId;
 
-  @nullable
   @BuiltValueField(wireName: 'vendor_id')
-  String get vendorId;
+  String? get vendorId;
 
-  @nullable
   @BuiltValueField(wireName: 'project_id')
-  String get projectId;
+  String? get projectId;
 
-  @nullable
   @BuiltValueField(wireName: 'status_id')
-  String get statusId;
+  String? get statusId;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
@@ -298,15 +293,14 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'uses_inclusive_taxes')
   bool get usesInclusiveTaxes;
 
-  @nullable
   @BuiltValueField(wireName: 'calculate_tax_by_amount')
-  bool get calculateTaxByAmount;
+  bool? get calculateTaxByAmount;
 
   BuiltList<DocumentEntity> get documents;
 
   String get number;
 
-  @nullable // TODO remove this
+  // TODO remove this
   @BuiltValueField(wireName: 'recurring_expense_id')
   String get recurringExpenseId;
 
@@ -322,23 +316,22 @@ abstract class ExpenseEntity extends Object
   @BuiltValueField(wireName: 'remaining_cycles')
   int get remainingCycles;
 
-  @nullable
   @BuiltValueField(wireName: 'recurring_dates')
-  BuiltList<ExpenseScheduleEntity> get recurringDates;
+  BuiltList<ExpenseScheduleEntity>? get recurringDates;
 
   @override
-  List<EntityAction> getActions(
-      {UserCompanyEntity userCompany,
-      ClientEntity client,
+  List<EntityAction?> getActions(
+      {UserCompanyEntity? userCompany,
+      ClientEntity? client,
       bool includeEdit = false,
       bool includePreview = false,
       bool multiselect = false}) {
-    final actions = <EntityAction>[];
+    final actions = <EntityAction?>[];
 
-    if (!isDeleted) {
+    if (!isDeleted!) {
       if (includeEdit &&
           !multiselect &&
-          userCompany.canEditEntity(this) &&
+          userCompany!.canEditEntity(this) &&
           !multiselect) {
         actions.add(EntityAction.edit);
       }
@@ -354,7 +347,7 @@ abstract class ExpenseEntity extends Object
       if (!isInvoiced &&
           !isRecurring &&
           shouldBeInvoiced &&
-          userCompany.canCreate(EntityType.invoice)) {
+          userCompany!.canCreate(EntityType.invoice)) {
         actions.add(EntityAction.invoiceExpense);
         if ((clientId ?? '').isNotEmpty) {
           actions.add(EntityAction.addToInvoice);
@@ -363,7 +356,7 @@ abstract class ExpenseEntity extends Object
     }
 
     if (!multiselect && isOld) {
-      if (userCompany.canCreate(EntityType.expense) && !isRecurring) {
+      if (userCompany!.canCreate(EntityType.expense) && !isRecurring) {
         actions.add(EntityAction.cloneToExpense);
       }
 
@@ -376,7 +369,7 @@ abstract class ExpenseEntity extends Object
       }
     }
 
-    if (!isDeleted && multiselect) {
+    if (!isDeleted! && multiselect) {
       actions.add(EntityAction.documents);
     }
 
@@ -390,7 +383,7 @@ abstract class ExpenseEntity extends Object
   }
 
   int compareTo(
-      ExpenseEntity expense,
+      ExpenseEntity? expense,
       String sortField,
       bool sortAscending,
       BuiltMap<String, ClientEntity> clientMap,
@@ -400,102 +393,101 @@ abstract class ExpenseEntity extends Object
       BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
       StaticState staticState) {
     int response = 0;
-    final ExpenseEntity expenseA = sortAscending ? this : expense;
-    final ExpenseEntity expenseB = sortAscending ? expense : this;
+    final ExpenseEntity? expenseA = sortAscending ? this : expense;
+    final ExpenseEntity? expenseB = sortAscending ? expense : this;
 
     switch (sortField) {
       case ExpenseFields.netAmount:
-        response = expenseA.netAmount.compareTo(expenseB.netAmount);
+        response = expenseA!.netAmount.compareTo(expenseB!.netAmount);
         break;
       case ExpenseFields.amount:
-        response = expenseA.amount.compareTo(expenseB.amount);
+        response = expenseA!.amount.compareTo(expenseB!.amount);
         break;
       case EntityFields.assignedTo:
-        final userA = userMap[expenseA.assignedUserId] ?? UserEntity();
-        final userB = userMap[expenseB.assignedUserId] ?? UserEntity();
+        final userA = userMap[expenseA!.assignedUserId] ?? UserEntity();
+        final userB = userMap[expenseB!.assignedUserId] ?? UserEntity();
         response = userA.listDisplayName
             .toLowerCase()
             .compareTo(userB.listDisplayName.toLowerCase());
         break;
       case EntityFields.createdBy:
-        final userA = userMap[expenseA.createdUserId] ?? UserEntity();
-        final userB = userMap[expenseB.createdUserId] ?? UserEntity();
+        final userA = userMap[expenseA!.createdUserId] ?? UserEntity();
+        final userB = userMap[expenseB!.createdUserId] ?? UserEntity();
         response = userA.listDisplayName
             .toLowerCase()
             .compareTo(userB.listDisplayName.toLowerCase());
         break;
       case ExpenseFields.clientId:
       case ExpenseFields.client:
-        final clientA = clientMap[expenseA.clientId] ?? ClientEntity();
-        final clientB = clientMap[expenseB.clientId] ?? ClientEntity();
+        final clientA = clientMap[expenseA!.clientId] ?? ClientEntity();
+        final clientB = clientMap[expenseB!.clientId] ?? ClientEntity();
         response = removeDiacritics(clientA.listDisplayName)
             .toLowerCase()
             .compareTo(removeDiacritics(clientB.listDisplayName).toLowerCase());
         break;
       case ExpenseFields.vendorId:
       case ExpenseFields.vendor:
-        final vendorA = vendorMap[expenseA.vendorId] ?? VendorEntity();
-        final vendorB = vendorMap[expenseB.vendorId] ?? VendorEntity();
+        final vendorA = vendorMap[expenseA!.vendorId] ?? VendorEntity();
+        final vendorB = vendorMap[expenseB!.vendorId] ?? VendorEntity();
         response = removeDiacritics(vendorA.listDisplayName)
             .toLowerCase()
             .compareTo(removeDiacritics(vendorB.listDisplayName).toLowerCase());
         break;
       case EntityFields.state:
-        final stateA =
-            EntityState.valueOf(expenseA.entityState) ?? EntityState.active;
-        final stateB =
-            EntityState.valueOf(expenseB.entityState) ?? EntityState.active;
+        final stateA = EntityState.valueOf(expenseA!.entityState);
+        final stateB = EntityState.valueOf(expenseB!.entityState);
         response =
             stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
         break;
       case ExpenseFields.publicNotes:
-        response = expenseA.publicNotes
+        response = expenseA!.publicNotes
             .toLowerCase()
-            .compareTo(expenseB.publicNotes.toLowerCase());
+            .compareTo(expenseB!.publicNotes.toLowerCase());
         break;
       case ExpenseFields.expenseDate:
-        response =
-            expenseA.date.toLowerCase().compareTo(expenseB.date.toLowerCase());
+        response = expenseA!.date!
+            .toLowerCase()
+            .compareTo(expenseB!.date!.toLowerCase());
         break;
       case ExpenseFields.paymentDate:
-        response = expenseA.paymentDate
+        response = expenseA!.paymentDate
             .toLowerCase()
-            .compareTo(expenseB.paymentDate.toLowerCase());
+            .compareTo(expenseB!.paymentDate.toLowerCase());
         break;
       case EntityFields.createdAt:
-        response = expenseA.createdAt.compareTo(expenseB.createdAt);
+        response = expenseA!.createdAt.compareTo(expenseB!.createdAt);
         break;
       case ExpenseFields.updatedAt:
-        response = expenseA.updatedAt.compareTo(expenseB.updatedAt);
+        response = expenseA!.updatedAt.compareTo(expenseB!.updatedAt);
         break;
       case ExpenseFields.archivedAt:
-        response = expenseA.archivedAt.compareTo(expenseB.archivedAt);
+        response = expenseA!.archivedAt.compareTo(expenseB!.archivedAt);
         break;
       case ExpenseFields.documents:
         response =
-            expenseA.documents.length.compareTo(expenseB.documents.length);
+            expenseA!.documents.length.compareTo(expenseB!.documents.length);
         break;
       case ExpenseFields.number:
         response = compareNatural(
-            expenseA.number.toLowerCase(), expenseB.number.toLowerCase());
+            expenseA!.number.toLowerCase(), expenseB!.number.toLowerCase());
         break;
       case ExpenseFields.privateNotes:
-        response = expenseA.privateNotes.compareTo(expenseB.privateNotes);
+        response = expenseA!.privateNotes.compareTo(expenseB!.privateNotes);
         break;
       case ExpenseFields.transactionId:
-        response = expenseA.transactionId.compareTo(expenseB.transactionId);
+        response = expenseA!.transactionId.compareTo(expenseB!.transactionId);
         break;
       case ExpenseFields.transactionReference:
-        response = expenseA.transactionReference
-            .compareTo(expenseB.transactionReference);
+        response = expenseA!.transactionReference
+            .compareTo(expenseB!.transactionReference);
         break;
       case ExpenseFields.bankId:
-        response = expenseA.bankId.compareTo(expenseB.bankId);
+        response = expenseA!.bankId.compareTo(expenseB!.bankId);
         break;
       case ExpenseFields.currencyId:
         final currencyMap = staticState.currencyMap;
-        final currencyA = currencyMap[expenseA.currencyId] ?? CurrencyEntity();
-        final currencyB = currencyMap[expenseB.currencyId] ?? CurrencyEntity();
+        final currencyA = currencyMap[expenseA!.currencyId] ?? CurrencyEntity();
+        final currencyB = currencyMap[expenseB!.currencyId] ?? CurrencyEntity();
         response = currencyA.name
             .toLowerCase()
             .compareTo(currencyB.name.toLowerCase());
@@ -503,67 +495,67 @@ abstract class ExpenseEntity extends Object
       case ExpenseFields.categoryId:
       case ExpenseFields.category:
         final categoryA =
-            expenseCategoryMap[expenseA.categoryId] ?? ExpenseCategoryEntity();
+            expenseCategoryMap[expenseA!.categoryId] ?? ExpenseCategoryEntity();
         final categoryB =
-            expenseCategoryMap[expenseB.categoryId] ?? ExpenseCategoryEntity();
+            expenseCategoryMap[expenseB!.categoryId] ?? ExpenseCategoryEntity();
         response = categoryA.name
             .toLowerCase()
             .compareTo(categoryB.name.toLowerCase());
         break;
       case ExpenseFields.exchangeRate:
-        response = expenseA.exchangeRate.compareTo(expenseB.exchangeRate);
+        response = expenseA!.exchangeRate.compareTo(expenseB!.exchangeRate);
         break;
       case ExpenseFields.invoiceCurrencyId:
         final currencyMap = staticState.currencyMap;
         final currencyA =
-            currencyMap[expenseA.invoiceCurrencyId] ?? CurrencyEntity();
+            currencyMap[expenseA!.invoiceCurrencyId] ?? CurrencyEntity();
         final currencyB =
-            currencyMap[expenseB.invoiceCurrencyId] ?? CurrencyEntity();
+            currencyMap[expenseB!.invoiceCurrencyId] ?? CurrencyEntity();
         response = currencyA.name
             .toLowerCase()
             .compareTo(currencyB.name.toLowerCase());
         break;
       case ExpenseFields.taxName1:
-        response = expenseA.taxName1.compareTo(expenseB.taxName1);
+        response = expenseA!.taxName1.compareTo(expenseB!.taxName1);
         break;
       case ExpenseFields.taxName2:
-        response = expenseA.taxName2.compareTo(expenseB.taxName2);
+        response = expenseA!.taxName2.compareTo(expenseB!.taxName2);
         break;
       case ExpenseFields.taxRate1:
-        response = expenseA.taxRate1.compareTo(expenseB.taxRate1);
+        response = expenseA!.taxRate1.compareTo(expenseB!.taxRate1);
         break;
       case ExpenseFields.taxRate2:
-        response = expenseA.taxRate2.compareTo(expenseB.taxRate2);
+        response = expenseA!.taxRate2.compareTo(expenseB!.taxRate2);
         break;
       case ExpenseFields.invoiceId:
-        final invoiceA = invoiceMap[expenseA.invoiceId] ?? InvoiceEntity();
-        final invoiceB = invoiceMap[expenseB.invoiceId] ?? InvoiceEntity();
+        final invoiceA = invoiceMap[expenseA!.invoiceId] ?? InvoiceEntity();
+        final invoiceB = invoiceMap[expenseB!.invoiceId] ?? InvoiceEntity();
         response = invoiceA.listDisplayName.compareTo(invoiceB.listDisplayName);
         break;
       case ExpenseFields.customValue1:
-        response = expenseA.customValue1.compareTo(expenseB.customValue1);
+        response = expenseA!.customValue1.compareTo(expenseB!.customValue1);
         break;
       case ExpenseFields.customValue2:
-        response = expenseA.customValue2.compareTo(expenseB.customValue2);
+        response = expenseA!.customValue2.compareTo(expenseB!.customValue2);
         break;
       case ExpenseFields.customValue3:
-        response = expenseA.customValue3.compareTo(expenseB.customValue3);
+        response = expenseA!.customValue3.compareTo(expenseB!.customValue3);
         break;
       case ExpenseFields.customValue4:
-        response = expenseA.customValue4.compareTo(expenseB.customValue4);
+        response = expenseA!.customValue4.compareTo(expenseB!.customValue4);
         break;
       case RecurringExpenseFields.frequency:
-        response = expenseA.frequencyId.compareTo(expenseB.frequencyId);
+        response = expenseA!.frequencyId.compareTo(expenseB!.frequencyId);
         break;
       case RecurringExpenseFields.nextSendDate:
-        response = expenseA.nextSendDate.compareTo(expenseB.nextSendDate);
+        response = expenseA!.nextSendDate.compareTo(expenseB!.nextSendDate);
         break;
       case RecurringExpenseFields.lastSentDate:
-        response = expenseA.lastSentDate.compareTo(expenseB.lastSentDate);
+        response = expenseA!.lastSentDate.compareTo(expenseB!.lastSentDate);
         break;
       case ExpenseFields.status:
-        response =
-            expenseA.calculatedStatusId.compareTo(expenseB.calculatedStatusId);
+        response = expenseA!.calculatedStatusId!
+            .compareTo(expenseB!.calculatedStatusId!);
         break;
       default:
         print('## ERROR: sort by expense.$sortField is not implemented');
@@ -571,14 +563,14 @@ abstract class ExpenseEntity extends Object
     }
 
     if (response == 0) {
-      response = expense.number.toLowerCase().compareTo(number.toLowerCase());
+      response = expense!.number.toLowerCase().compareTo(number.toLowerCase());
     }
 
     return response;
   }
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     return matchesStrings(
       haystacks: [
         number,
@@ -600,7 +592,7 @@ abstract class ExpenseEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     return matchesStringsValue(
       haystacks: [
         number,
@@ -659,30 +651,29 @@ abstract class ExpenseEntity extends Object
   }
 
   @override
-  String get listDisplayName => number ?? '';
+  String get listDisplayName => number;
 
-  @nullable
   @BuiltValueField(compare: false)
-  int get loadedAt;
+  int? get loadedAt;
 
   bool get isPaid =>
       paymentDate.isNotEmpty ||
       paymentTypeId.isNotEmpty ||
       transactionReference.isNotEmpty;
 
-  bool isBetween(String startDate, String endDate) {
+  bool isBetween(String? startDate, String? endDate) {
     return (startDate ?? '').compareTo(date ?? '') <= 0 &&
         (endDate ?? '').compareTo(date ?? '') >= 0;
   }
 
-  bool get isLoaded => loadedAt != null && loadedAt > 0;
+  bool get isLoaded => loadedAt != null && loadedAt! > 0;
 
   bool get isStale {
     if (!isLoaded) {
       return true;
     }
 
-    return DateTime.now().millisecondsSinceEpoch - loadedAt >
+    return DateTime.now().millisecondsSinceEpoch - loadedAt! >
         kMillisecondsToRefreshActivities;
   }
 
@@ -705,7 +696,7 @@ abstract class ExpenseEntity extends Object
           .contains(calculatedStatusId);
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
@@ -807,7 +798,7 @@ abstract class ExpenseEntity extends Object
 
   double get grossAmount => usesInclusiveTaxes ? amount : amount + taxAmount;
 
-  String get calculatedStatusId {
+  String? get calculatedStatusId {
     if (isRecurring) {
       if (remainingCycles == 0) {
         return kRecurringInvoiceStatusCompleted;
@@ -838,12 +829,11 @@ abstract class ExpenseEntity extends Object
   double get convertedAmountWithTax =>
       round(grossAmount * convertedExchangeRate, 2);
 
-  bool get isInvoiced => invoiceId != null && invoiceId.isNotEmpty;
+  bool get isInvoiced => invoiceId != null && invoiceId!.isNotEmpty;
 
   bool get isPending {
     if (isRecurring) {
-      return statusId == kRecurringExpenseStatusActive &&
-          (lastSentDate ?? '').isEmpty;
+      return statusId == kRecurringExpenseStatusActive && lastSentDate.isEmpty;
     } else {
       return !isInvoiced && shouldBeInvoiced;
     }
@@ -859,6 +849,7 @@ abstract class ExpenseEntity extends Object
     ..frequencyId = ''
     ..lastSentDate = ''
     ..nextSendDate = ''
+    ..recurringExpenseId = ''
     ..remainingCycles = -1;
 
   static Serializer<ExpenseEntity> get serializer => _$expenseEntitySerializer;

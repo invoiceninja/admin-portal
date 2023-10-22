@@ -17,7 +17,7 @@ import 'package:invoiceninja_flutter/redux/task_status/task_status_actions.dart'
 import 'package:invoiceninja_flutter/ui/task/kanban/kanban_view.dart';
 
 class KanbanViewBuilder extends StatefulWidget {
-  const KanbanViewBuilder({Key key}) : super(key: key);
+  const KanbanViewBuilder({Key? key}) : super(key: key);
 
   @override
   _KanbanViewBuilderState createState() => _KanbanViewBuilderState();
@@ -43,12 +43,12 @@ class _KanbanViewBuilderState extends State<KanbanViewBuilder> {
 
 class KanbanVM {
   KanbanVM({
-    @required this.state,
-    @required this.taskList,
-    @required this.filteredTaskList,
-    @required this.onSaveTaskPressed,
-    @required this.onSaveStatusPressed,
-    @required this.onBoardChanged,
+    required this.state,
+    required this.taskList,
+    required this.filteredTaskList,
+    required this.onSaveTaskPressed,
+    required this.onSaveStatusPressed,
+    required this.onBoardChanged,
   });
 
   static KanbanVM fromStore(Store<AppState> store) {
@@ -106,7 +106,7 @@ class KanbanVM {
           if (uiState.filterEntityType == EntityType.client) {
             task = task.rebuild((b) => b..clientId = uiState.filterEntityId);
           } else if (uiState.filterEntityType == EntityType.project) {
-            final project = state.projectState.get(uiState.filterEntityId);
+            final project = state.projectState.get(uiState.filterEntityId!);
             task = task.rebuild((b) => b
               ..projectId = uiState.filterEntityId
               ..clientId = project.clientId);
@@ -128,7 +128,7 @@ class KanbanVM {
   final AppState state;
   final List<String> taskList;
   final List<String> filteredTaskList;
-  final Function(Completer<Null>, List<String>, Map<String, List<String>>)
+  final Function(Completer<Null>, List<String>?, Map<String, List<String>>?)
       onBoardChanged;
   final Function(Completer<TaskEntity>, String, String, String, int)
       onSaveTaskPressed;

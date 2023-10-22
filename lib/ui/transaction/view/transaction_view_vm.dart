@@ -12,7 +12,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 
 class TransactionViewScreen extends StatelessWidget {
   const TransactionViewScreen({
-    Key key,
+    Key? key,
     this.isFilter = false,
   }) : super(key: key);
   static const String route = '/transaction/view';
@@ -38,17 +38,17 @@ class TransactionViewScreen extends StatelessWidget {
 
 class TransactionViewVM {
   TransactionViewVM({
-    @required this.state,
-    @required this.transactions,
-    @required this.company,
-    @required this.onEntityAction,
-    @required this.onRefreshed,
-    @required this.isSaving,
-    @required this.isLoading,
-    @required this.onConvertToPayment,
-    @required this.onConvertToExpense,
-    @required this.onLinkToPayment,
-    @required this.onLinkToExpense,
+    required this.state,
+    required this.transactions,
+    required this.company,
+    required this.onEntityAction,
+    required this.onRefreshed,
+    required this.isSaving,
+    required this.isLoading,
+    required this.onConvertToPayment,
+    required this.onConvertToExpense,
+    required this.onLinkToPayment,
+    required this.onLinkToExpense,
   });
 
   factory TransactionViewVM.fromStore(Store<AppState> store) {
@@ -56,22 +56,24 @@ class TransactionViewVM {
     final List<TransactionEntity> transactions = [];
     List<String> transactionIds = [];
     if (state.transactionListState.isInMultiselect()) {
-      transactionIds = state.transactionListState.selectedIds.toList();
+      transactionIds = state.transactionListState.selectedIds!.toList();
+    } else if (state.transactionUIState.selectedId != null) {
+      transactionIds = [state.transactionUIState.selectedId!];
     } else {
-      transactionIds = [state.transactionUIState.selectedId];
+      transactionIds = [];
     }
 
-    transactionIds.forEach((transactionId) {
+    transactionIds.forEach((String transactionId) {
       transactions.add(state.transactionState.map[transactionId] ??
           TransactionEntity(id: transactionId));
     });
 
-    Future<Null> _handleRefresh(BuildContext context) {
+    Future<Null>? _handleRefresh(BuildContext context) {
       if (transactions.isEmpty) {
         return null;
       }
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(LoadTransaction(
           completer: completer, transactionId: transactions.first.id));
       return completer.future;
@@ -90,7 +92,7 @@ class TransactionViewVM {
         store.dispatch(
           LinkTransactionToPaymentRequest(
               snackBarCompleter<Null>(
-                  context, AppLocalization.of(context).convertedTransaction),
+                  AppLocalization.of(context)!.convertedTransaction),
               transactionIds.first,
               paymentId),
         );
@@ -99,7 +101,7 @@ class TransactionViewVM {
         store.dispatch(
           LinkTransactionToExpenseRequest(
               snackBarCompleter<Null>(
-                  context, AppLocalization.of(context).convertedTransaction),
+                  AppLocalization.of(context)!.convertedTransaction),
               transactionIds.first,
               expenseId),
         );
@@ -108,7 +110,7 @@ class TransactionViewVM {
         store.dispatch(
           ConvertTransactionToPaymentRequest(
               snackBarCompleter<Null>(
-                  context, AppLocalization.of(context).convertedTransaction),
+                  AppLocalization.of(context)!.convertedTransaction),
               transactionIds.first,
               invoiceIds),
         );
@@ -117,8 +119,8 @@ class TransactionViewVM {
         store.dispatch(
           ConvertTransactionsToExpensesRequest(
             snackBarCompleter<Null>(
-                context, AppLocalization.of(context).convertedTransaction)
-              ..future.then((value) {
+                AppLocalization.of(context)!.convertedTransaction)
+              ..future.then<Null>((_) {
                 if (state.transactionListState.isInMultiselect()) {
                   store.dispatch(ClearTransactionMultiselect());
                   if (store.state.prefState.isPreviewVisible) {
@@ -137,7 +139,7 @@ class TransactionViewVM {
 
   final AppState state;
   final List<TransactionEntity> transactions;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
   final Function(BuildContext, List<String>) onConvertToPayment;

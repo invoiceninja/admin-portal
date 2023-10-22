@@ -20,8 +20,8 @@ import 'token_screen_vm.dart';
 
 class TokenScreen extends StatelessWidget {
   const TokenScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsTokens';
@@ -102,7 +102,7 @@ class TokenScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newToken,
+              tooltip: localization!.newToken,
             )
           : null,
     );

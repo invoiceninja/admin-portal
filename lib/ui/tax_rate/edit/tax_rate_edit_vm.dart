@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/ui/tax_rate/view/tax_rate_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 
 class TaxRateEditScreen extends StatelessWidget {
-  const TaxRateEditScreen({Key key}) : super(key: key);
+  const TaxRateEditScreen({Key? key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsTaxRatesEdit';
 
   @override
@@ -44,19 +44,19 @@ class TaxRateEditScreen extends StatelessWidget {
 
 class TaxRateEditVM {
   TaxRateEditVM({
-    @required this.state,
-    @required this.taxRate,
-    @required this.company,
-    @required this.onChanged,
-    @required this.isSaving,
-    @required this.origTaxRate,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
-    @required this.isLoading,
+    required this.state,
+    required this.taxRate,
+    required this.company,
+    required this.onChanged,
+    required this.isSaving,
+    required this.origTaxRate,
+    required this.onSavePressed,
+    required this.onCancelPressed,
+    required this.isLoading,
   });
 
   factory TaxRateEditVM.fromStore(Store<AppState> store) {
-    final taxRate = store.state.taxRateUIState.editing;
+    final taxRate = store.state.taxRateUIState.editing!;
     final state = store.state;
 
     return TaxRateEditVM(
@@ -70,7 +70,7 @@ class TaxRateEditVM {
         store.dispatch(UpdateTaxRate(taxRate));
       },
       onCancelPressed: (context) {
-        createEntity(context: context, entity: TaxRateEntity(), force: true);
+        createEntity(entity: TaxRateEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
@@ -83,23 +83,23 @@ class TaxRateEditVM {
           store.dispatch(
               SaveTaxRateRequest(completer: completer, taxRate: taxRate));
           return completer.future.then((savedTaxRate) {
-            showToast(taxRate.isNew
-                ? localization.createdTaxRate
-                : localization.updatedTaxRate);
+            showToast(taxRate!.isNew
+                ? localization!.createdTaxRate
+                : localization!.updatedTaxRate);
 
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(TaxRateViewScreen.route));
               if (taxRate.isNew) {
-                navigator.pushReplacementNamed(TaxRateViewScreen.route);
+                navigator!.pushReplacementNamed(TaxRateViewScreen.route);
               } else {
-                navigator.pop(savedTaxRate);
+                navigator!.pop(savedTaxRate);
               }
             } else {
               viewEntity(entity: savedTaxRate, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
                   return ErrorDialog(error);
                 });
@@ -110,12 +110,12 @@ class TaxRateEditVM {
   }
 
   final TaxRateEntity taxRate;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(TaxRateEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final bool isLoading;
   final bool isSaving;
-  final TaxRateEntity origTaxRate;
+  final TaxRateEntity? origTaxRate;
   final AppState state;
 }

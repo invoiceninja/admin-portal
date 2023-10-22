@@ -69,7 +69,7 @@ List<Middleware<AppState>> createStoreInvoicesMiddleware([
 
 Middleware<AppState> _viewInvoiceList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewInvoiceList;
+    final action = dynamicAction as ViewInvoiceList?;
 
     next(action);
 
@@ -80,7 +80,7 @@ Middleware<AppState> _viewInvoiceList() {
     store.dispatch(UpdateCurrentRoute(InvoiceScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           InvoiceScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -89,28 +89,28 @@ Middleware<AppState> _viewInvoiceList() {
 Middleware<AppState> _viewInvoice() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ViewInvoice;
+    final action = dynamicAction as ViewInvoice?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(InvoiceViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      await navigatorKey.currentState.pushNamed(InvoiceViewScreen.route);
+      await navigatorKey.currentState!.pushNamed(InvoiceViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _editInvoice() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditInvoice;
+    final action = dynamicAction as EditInvoice?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(InvoiceEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(InvoiceEditScreen.route);
+      navigatorKey.currentState!.pushNamed(InvoiceEditScreen.route);
     }
   };
 }
@@ -118,7 +118,7 @@ Middleware<AppState> _editInvoice() {
 Middleware<AppState> _showEmailInvoice() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ShowEmailInvoice;
+    final action = dynamicAction as ShowEmailInvoice?;
 
     next(action);
 
@@ -126,10 +126,12 @@ Middleware<AppState> _showEmailInvoice() {
 
     if (store.state.prefState.isMobile) {
       final emailWasSent =
-          await navigatorKey.currentState.pushNamed(InvoiceEmailScreen.route);
+          await navigatorKey.currentState!.pushNamed(InvoiceEmailScreen.route);
 
-      if (action.completer != null && emailWasSent != null && emailWasSent) {
-        action.completer.complete(null);
+      if (action!.completer != null &&
+          emailWasSent != null &&
+          emailWasSent as bool) {
+        action.completer!.complete(null);
       }
     }
   };
@@ -138,14 +140,14 @@ Middleware<AppState> _showEmailInvoice() {
 Middleware<AppState> _showPdfInvoice() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ShowPdfInvoice;
+    final action = dynamicAction as ShowPdfInvoice?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(InvoicePdfScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(InvoicePdfScreen.route);
+      navigatorKey.currentState!.pushNamed(InvoicePdfScreen.route);
     }
   };
 }
@@ -159,15 +161,11 @@ Middleware<AppState> _cancelInvoices(InvoiceRepository repository) {
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(CancelInvoicesSuccess(invoices));
       store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(CancelInvoicesFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -185,15 +183,11 @@ Middleware<AppState> _archiveInvoice(InvoiceRepository repository) {
             store.state.credentials, action.invoiceIds, EntityAction.archive)
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(ArchiveInvoicesSuccess(invoices));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveInvoicesFailure(prevInvoices));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -212,15 +206,11 @@ Middleware<AppState> _deleteInvoice(InvoiceRepository repository) {
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(DeleteInvoicesSuccess(invoices));
       store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteInvoicesFailure(prevInvoices));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -239,15 +229,11 @@ Middleware<AppState> _restoreInvoice(InvoiceRepository repository) {
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(RestoreInvoicesSuccess(invoices));
       store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreInvoicesFailure(prevInvoices));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -263,15 +249,11 @@ Middleware<AppState> _markInvoiceSent(InvoiceRepository repository) {
         .then((invoices) {
       store.dispatch(MarkInvoicesSentSuccess(invoices));
       store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(MarkInvoicesSentFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -287,15 +269,11 @@ Middleware<AppState> _autoBillInvoices(InvoiceRepository repository) {
         .then((invoices) {
       store.dispatch(AutoBillInvoicesSuccess(invoices));
       store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(AutoBillInvoicesFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -311,15 +289,11 @@ Middleware<AppState> _markInvoicePaid(InvoiceRepository repository) {
         .then((invoices) {
       store.dispatch(MarkInvoicesPaidSuccess(invoices));
       store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(MarkInvoicesPaidFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -334,15 +308,11 @@ Middleware<AppState> _downloadInvoices(InvoiceRepository repository) {
             EntityAction.bulkDownload)
         .then((invoices) {
       store.dispatch(DownloadInvoicesSuccess());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DownloadInvoicesFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -352,7 +322,7 @@ Middleware<AppState> _downloadInvoices(InvoiceRepository repository) {
 Middleware<AppState> _emailInvoice(InvoiceRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as EmailInvoiceRequest;
-    final origInvoice = store.state.invoiceState.map[action.invoiceId];
+    final origInvoice = store.state.invoiceState.map[action.invoiceId]!;
     repository
         .emailInvoice(
       store.state.credentials,
@@ -365,15 +335,11 @@ Middleware<AppState> _emailInvoice(InvoiceRepository repository) {
         .then((InvoiceEntity invoice) {
       store.dispatch(EmailInvoiceSuccess(invoice: invoice));
       store.dispatch(RefreshData());
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(EmailInvoiceFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -387,20 +353,20 @@ Middleware<AppState> _bulkEmailInvoices(InvoiceRepository repository) {
     repository
         .bulkAction(
       store.state.credentials,
-      action.invoiceIds,
+      action.invoiceIds!,
       EntityAction.sendEmail,
       template: action.template,
     )
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(BulkEmailInvoicesSuccess(invoices));
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(BulkEmailInvoicesFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -452,13 +418,13 @@ Middleware<AppState> _loadInvoice(InvoiceRepository repository) {
       store.dispatch(LoadInvoiceSuccess(invoice));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadInvoiceFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -500,7 +466,7 @@ Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
         ));
       } else {
         if (action.completer != null) {
-          action.completer.complete(null);
+          action.completer!.complete(null);
         }
         store.dispatch(LoadRecurringInvoices());
       }
@@ -508,7 +474,7 @@ Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
       print(error);
       store.dispatch(LoadInvoicesFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -518,14 +484,14 @@ Middleware<AppState> _loadInvoices(InvoiceRepository repository) {
 
 Middleware<AppState> _saveDocument(InvoiceRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as SaveInvoiceDocumentRequest;
+    final action = dynamicAction as SaveInvoiceDocumentRequest?;
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocuments(
         store.state.credentials,
-        action.invoice,
+        action!.invoice,
         action.multipartFiles,
-        action.isPrivate,
+        action.isPrivate!,
       )
           .then((invoice) {
         store.dispatch(SaveInvoiceSuccess(invoice));
@@ -537,8 +503,7 @@ Middleware<AppState> _saveDocument(InvoiceRepository repository) {
             ..parentType = EntityType.invoice));
         });
         store.dispatch(LoadDocumentsSuccess(documents));
-
-        action.completer.complete(null);
+        action.completer.complete(documents);
       }).catchError((Object error) {
         print(error);
         store.dispatch(SaveInvoiceDocumentFailure(error));
@@ -547,7 +512,7 @@ Middleware<AppState> _saveDocument(InvoiceRepository repository) {
     } else {
       const error = 'Uploading documents requires an enterprise plan';
       store.dispatch(SaveInvoiceDocumentFailure(error));
-      action.completer.completeError(error);
+      action!.completer.completeError(error);
     }
 
     next(action);

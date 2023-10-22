@@ -12,8 +12,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorEditSettings extends StatefulWidget {
   const VendorEditSettings({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final VendorEditVM viewModel;
@@ -25,7 +25,7 @@ class VendorEditSettings extends StatefulWidget {
 class VendorEditSettingsState extends State<VendorEditSettings> {
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final vendor = viewModel.vendor;
@@ -46,7 +46,7 @@ class VendorEditSettingsState extends State<VendorEditSettings> {
           entityList: memoizedCurrencyList(state.staticState.currencyMap),
           labelText: localization.currency,
           entityId: vendor.currencyId,
-          onSelected: (SelectableEntity currency) => viewModel.onChanged(
+          onSelected: (SelectableEntity? currency) => viewModel.onChanged(
               vendor.rebuild((b) => b..currencyId = currency?.id ?? '')),
         ),
         EntityDropdown(
@@ -54,7 +54,7 @@ class VendorEditSettingsState extends State<VendorEditSettings> {
           entityList: memoizedLanguageList(state.staticState.languageMap),
           labelText: localization.language,
           entityId: vendor.languageId,
-          onSelected: (SelectableEntity language) => viewModel.onChanged(
+          onSelected: (SelectableEntity? language) => viewModel.onChanged(
               vendor.rebuild((b) => b..languageId = language?.id ?? '')),
         ),
       ],

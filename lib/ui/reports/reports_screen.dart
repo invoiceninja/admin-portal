@@ -1,6 +1,8 @@
 // Flutter imports:
-import 'package:flutter/material.dart' hide DataRow, DataCell, DataColumn;
+
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:flutter/material.dart' as mt;
+import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
@@ -31,8 +33,6 @@ import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
-import 'package:invoiceninja_flutter/ui/app/tables/app_data_table.dart';
-import 'package:invoiceninja_flutter/ui/app/tables/app_data_table_source.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/app_paginated_data_table.dart';
 import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/ui/reports/report_charts.dart';
@@ -48,8 +48,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ReportsScreen extends StatelessWidget {
   const ReportsScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/reports';
@@ -58,11 +58,11 @@ class ReportsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = viewModel.state;
     final reportsState = viewModel.reportState;
-    final reportResult = viewModel.reportResult;
+    final reportResult = viewModel.reportResult!;
 
     Widget leading = SizedBox();
     final hideReports = state.isHosted && !state.isProPlan && !state.isTrial;
@@ -91,7 +91,7 @@ class ReportsScreen extends StatelessWidget {
 
     final reports = [
       kReportClient,
-      kReportContact,
+      kReportClientContact,
       if (state.company.isModuleEnabled(EntityType.invoice)) ...[
         kReportInvoice,
         kReportInvoiceItem,
@@ -208,7 +208,7 @@ class ReportsScreen extends StatelessWidget {
         ].contains(getReportColumnType(column, context)));
     final dateField = filterColumns.isNotEmpty ? filterColumns.first : null;
     final dateRange = (reportState.filters[dateField] ?? '').isNotEmpty
-        ? DateRange.valueOf(reportState.filters[dateField])
+        ? DateRange.valueOf(reportState.filters[dateField]!)
         : null;
 
     final dateChildren = [
@@ -228,8 +228,10 @@ class ReportsScreen extends StatelessWidget {
                               filterColumns.first: ''
                           }
                         : {
-                            value: (reportState.filters[value] ?? '').isNotEmpty
-                                ? reportState.filters[value]
+                            value: reportState.filters.containsKey(value) &&
+                                    (reportState.filters[value] ?? '')
+                                        .isNotEmpty
+                                ? reportState.filters[value]!
                                 : DateRange.thisQuarter.toString(),
                             if (filterColumns.isNotEmpty &&
                                 filterColumns.first != value)
@@ -357,7 +359,7 @@ class ReportsScreen extends StatelessWidget {
                         onPressed: () {
                           multiselectDialog(
                             // Using the navigatorKey to prevent using the appBarTheme
-                            context: navigatorKey.currentContext,
+                            context: navigatorKey.currentContext!,
                             onSelected: (selected) {
                               viewModel.onReportColumnsChanged(
                                   context, selected);
@@ -389,14 +391,14 @@ class ReportsScreen extends StatelessWidget {
                         onSelected: (context, action) {
                           final entities = action.applyMaxLimit
                               ? cappedEntities
-                              : reportResult.entities;
+                              : reportResult.entities!;
                           confirmCallback(
                               context: context,
                               message: localization.lookup(action.toString()) +
                                   ' • ' +
                                   (entities.length == 1
-                                      ? '1 ${localization.lookup(firstEntity.entityType.toString())}'
-                                      : '${entities.length} ${localization.lookup(firstEntity.entityType.plural)}'),
+                                      ? '1 ${localization.lookup(firstEntity!.entityType.toString())}'
+                                      : '${entities.length} ${localization.lookup(firstEntity!.entityType!.plural)}'),
                               callback: (_) {
                                 handleEntitiesActions(entities, action);
                               });
@@ -541,7 +543,7 @@ class ReportsScreen extends StatelessWidget {
 }
 
 class ReportDataTable extends StatefulWidget {
-  const ReportDataTable({Key key, @required this.viewModel}) : super(key: key);
+  const ReportDataTable({Key? key, required this.viewModel}) : super(key: key);
 
   final ReportsScreenVM viewModel;
 
@@ -553,7 +555,7 @@ class _ReportDataTableState extends State<ReportDataTable> {
   final Map<String, Map<String, TextEditingController>>
       _textEditingControllers = {};
   final Map<String, Map<String, FocusNode>> _textEditingFocusNodes = {};
-  ReportDataTableSource dataTableSource;
+  late ReportDataTableSource dataTableSource;
 
   @override
   void initState() {
@@ -580,12 +582,6 @@ class _ReportDataTableState extends State<ReportDataTable> {
     final viewModel = widget.viewModel;
     dataTableSource.viewModel = viewModel;
 
-    /*
-    dataTableSource.editingId = viewModel.state.productUIState.editing.id;
-    dataTableSource.entityList = viewModel.productList;
-    dataTableSource.entityMap = viewModel.productMap;
-    */
-
     // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
     dataTableSource.notifyListeners();
   }
@@ -594,25 +590,25 @@ class _ReportDataTableState extends State<ReportDataTable> {
   void didChangeDependencies() {
     final viewModel = widget.viewModel;
     final reportState = viewModel.reportState;
-    final reportResult = viewModel.reportResult;
+    final reportResult = viewModel.reportResult!;
 
     for (var column in reportResult.columns) {
       if (_textEditingControllers[reportState.report] == null) {
         _textEditingControllers[reportState.report] = {};
         _textEditingFocusNodes[reportState.report] = {};
       }
-      if (!_textEditingControllers[reportState.report].containsKey(column)) {
+      if (!_textEditingControllers[reportState.report]!.containsKey(column)) {
         final textEditingController = TextEditingController();
         // TODO figure out how to remove this listener in dispose
         textEditingController.addListener(() {
           _onChanged(column, textEditingController.text);
         });
         if (reportState.filters.containsKey(column)) {
-          textEditingController.text = reportState.filters[column];
+          textEditingController.text = reportState.filters[column]!;
         }
-        _textEditingControllers[reportState.report][column] =
+        _textEditingControllers[reportState.report]![column] =
             textEditingController;
-        _textEditingFocusNodes[reportState.report][column] = FocusNode();
+        _textEditingFocusNodes[reportState.report]![column] = FocusNode();
       }
     }
 
@@ -629,9 +625,9 @@ class _ReportDataTableState extends State<ReportDataTable> {
   @override
   void dispose() {
     _textEditingControllers.keys.forEach((i) {
-      _textEditingControllers[i].keys.forEach((j) {
-        _textEditingControllers[i][j].dispose();
-        _textEditingFocusNodes[i][j].dispose();
+      _textEditingControllers[i]!.keys.forEach((j) {
+        _textEditingControllers[i]![j]!.dispose();
+        _textEditingFocusNodes[i]![j]!.dispose();
       });
     });
     super.dispose();
@@ -641,13 +637,13 @@ class _ReportDataTableState extends State<ReportDataTable> {
   Widget build(BuildContext context) {
     final state = widget.viewModel.state;
     final viewModel = widget.viewModel;
-    final reportResult = viewModel.reportResult;
+    final reportResult = viewModel.reportResult!;
     final reportState = viewModel.reportState;
     final settings = state.userCompany.settings;
-    final reportSettings = settings != null &&
-            settings.reportSettings.containsKey(reportState.report)
-        ? settings.reportSettings[reportState.report]
-        : ReportSettingsEntity();
+    final reportSettings =
+        settings.reportSettings.containsKey(reportState.report)
+            ? settings.reportSettings[reportState.report]!
+            : ReportSettingsEntity();
     final sortedColumns = reportResult.sortedColumns(reportState);
 
     return Column(
@@ -683,18 +679,17 @@ class _ReportDataTableState extends State<ReportDataTable> {
         SingleChildScrollView(
           padding: const EdgeInsets.all(12),
           child: AppPaginatedDataTable(
-            //showFirstLastButtons: true,
-            subtractOneFromCount: true,
-            header: SizedBox(),
             sortColumnIndex: sortedColumns.contains(reportSettings.sortColumn)
                 ? sortedColumns.indexOf(reportSettings.sortColumn)
                 : null,
-            sortAscending: reportSettings.sortAscending ?? true,
+            sortAscending: reportSettings.sortAscending,
             columns: reportResult.tableColumns(
                 context,
                 (index, ascending) => widget.viewModel
                     .onReportSorted(sortedColumns[index], ascending)),
             source: dataTableSource,
+            showFirstLastButtons: true,
+            subtractOne: true,
           ),
         )
       ],
@@ -703,8 +698,11 @@ class _ReportDataTableState extends State<ReportDataTable> {
 }
 
 class TotalsDataTable extends StatelessWidget {
-  const TotalsDataTable(
-      {this.reportSettings, this.reportResult, this.viewModel});
+  const TotalsDataTable({
+    required this.reportSettings,
+    required this.reportResult,
+    required this.viewModel,
+  });
 
   final ReportsScreenVM viewModel;
   final ReportSettingsEntity reportSettings;
@@ -713,11 +711,11 @@ class TotalsDataTable extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return mt.DataTable(
-      sortColumnIndex: reportSettings.sortTotalsIndex != null &&
-              reportResult.columns.length > reportSettings.sortTotalsIndex
-          ? reportSettings.sortTotalsIndex
-          : null,
-      sortAscending: reportSettings.sortTotalsAscending ?? true,
+      sortColumnIndex:
+          reportResult.columns.length > reportSettings.sortTotalsIndex
+              ? reportSettings.sortTotalsIndex
+              : null,
+      sortAscending: reportSettings.sortTotalsAscending,
       columns: reportResult.totalColumns(
           context,
           (index, ascending) =>
@@ -737,19 +735,19 @@ enum ReportColumnType {
   duration,
 }
 
-bool canTotalColumn(String column) {
+bool canTotalColumn(String? column) {
   if (['notification_threshold', 'age'].contains(column)) {
     return false;
   }
 
-  if (column.contains('_rate')) {
+  if (column!.contains('_rate')) {
     return false;
   }
 
   return true;
 }
 
-ReportColumnType getReportColumnType(String column, BuildContext context) {
+ReportColumnType getReportColumnType(String? column, BuildContext context) {
   column = toSnakeCase(column);
 
   ReportColumnType convertCustomFieldType(String type) {
@@ -788,13 +786,13 @@ ReportColumnType getReportColumnType(String column, BuildContext context) {
   }
 }
 
-class ReportDataTableSource extends AppDataTableSource {
+class ReportDataTableSource extends DataTableSource {
   ReportDataTableSource({
-    @required this.context,
-    @required this.textEditingControllers,
-    @required this.textEditingFocusNodes,
-    @required this.onFilterChanged,
-    @required this.viewModel,
+    required this.context,
+    required this.textEditingControllers,
+    required this.textEditingFocusNodes,
+    required this.onFilterChanged,
+    required this.viewModel,
   });
 
   ReportsScreenVM viewModel;
@@ -814,11 +812,11 @@ class ReportDataTableSource extends AppDataTableSource {
     final reportState = viewModel.reportState;
 
     if (reportState.group.isEmpty || reportState.isGroupByFiltered) {
-      return viewModel.reportResult.data.length + 1;
+      return viewModel.reportResult!.data.length + 1;
     } else {
       return viewModel.groupTotals.totals == null
           ? 1
-          : viewModel.groupTotals.totals.length + 1;
+          : viewModel.groupTotals.totals!.length + 1;
     }
   }
 
@@ -826,23 +824,23 @@ class ReportDataTableSource extends AppDataTableSource {
   DataRow getRow(int index) {
     final reportResult = viewModel.reportResult;
     if (index == 0) {
-      return reportResult.tableFilters(
+      return reportResult!.tableFilters(
           context,
           textEditingControllers[viewModel.reportState.report],
           textEditingFocusNodes[viewModel.reportState.report],
           (column, value) => onFilterChanged(column, value));
     } else {
-      return reportResult.tableRow(context, viewModel, index);
+      return reportResult!.tableRow(context, viewModel, index);
     }
   }
 }
 
 class ReportResult {
   ReportResult({
-    @required this.columns,
-    @required this.allColumns,
-    @required this.defaultColumns,
-    @required this.data,
+    required this.columns,
+    required this.allColumns,
+    required this.defaultColumns,
+    required this.data,
     this.entities,
     this.showTotals = true,
   });
@@ -851,18 +849,18 @@ class ReportResult {
   final List<String> allColumns;
   final List<String> defaultColumns;
   final List<List<ReportElement>> data;
-  final List<BaseEntity> entities;
+  final List<BaseEntity>? entities;
   final bool showTotals;
 
-  static bool matchField({
-    @required String column,
-    @required dynamic value,
-    @required UserCompanyEntity userCompany,
-    @required ReportsUIState reportsUIState,
-    AppLocalization localization,
+  static bool? matchField({
+    required String column,
+    required dynamic value,
+    required UserCompanyEntity userCompany,
+    required ReportsUIState reportsUIState,
+    AppLocalization? localization,
   }) {
     if (reportsUIState.filters.containsKey(column)) {
-      final filter = reportsUIState.filters[column];
+      final filter = reportsUIState.filters[column]!;
 
       if (filter.isNotEmpty) {
         if (column == 'age') {
@@ -872,7 +870,7 @@ class ReportResult {
           } else if (filter == kAgeGroup120) {
             return value > min;
           } else {
-            final max = min + 30;
+            final max = min! + 30;
             if (value < min || value >= max) {
               return false;
             }
@@ -920,15 +918,18 @@ class ReportResult {
     return true;
   }
 
-  static bool matchString({String filter, String value}) {
+  static bool matchString({
+    required String filter,
+    String? value,
+  }) {
     filter = filter.trim();
 
-    if (filter == null || filter.isEmpty) {
+    if (filter.isEmpty) {
       return true;
     }
 
     value = (value ?? '').toLowerCase();
-    filter = (filter ?? '').toLowerCase();
+    filter = filter.toLowerCase();
 
     if (filter == 'null' && value.isEmpty) {
       return true;
@@ -938,7 +939,7 @@ class ReportResult {
       return true;
     }
 
-    final localization = AppLocalization.of(navigatorKey.currentContext);
+    final localization = AppLocalization.of(navigatorKey.currentContext!)!;
     if (localization.lookup(value).toLowerCase().contains(filter)) {
       return true;
     }
@@ -946,13 +947,13 @@ class ReportResult {
     return false;
   }
 
-  static bool matchAmount({String filter, num amount}) {
+  static bool matchAmount({required String filter, required num amount}) {
     final String range = filter.replaceAll(',', '-') + '-';
     final List<String> parts = range.split('-');
-    final min = parseDouble(parts[0]);
+    final min = parseDouble(parts[0])!;
     final max = parts.length > 1 ? parseDouble(parts[1]) : 0;
 
-    if (amount < min || (max > 0 && amount > max)) {
+    if (amount < min || (max! > 0 && amount > max)) {
       return false;
     }
 
@@ -960,10 +961,10 @@ class ReportResult {
   }
 
   static bool matchDateTime({
-    String filter,
-    String value,
-    UserCompanyEntity userCompany,
-    ReportsUIState reportsUIState,
+    required String filter,
+    required String value,
+    required UserCompanyEntity userCompany,
+    required ReportsUIState reportsUIState,
   }) {
     DateRange dateRange = DateRange.last30Days;
     try {
@@ -992,21 +993,22 @@ class ReportResult {
 
     if (dateRange == DateRange.custom) {
       if (customStartDate.isNotEmpty && customEndDate.isNotEmpty) {
-        if (!(startDate.compareTo(value) <= 0 &&
-            endDate.compareTo(value) >= 0)) {
+        if (!(startDate!.compareTo(value) <= 0 &&
+            endDate!.compareTo(value) >= 0)) {
           return false;
         }
       } else if (customStartDate.isNotEmpty) {
-        if (!(startDate.compareTo(value) <= 0)) {
+        if (!(startDate!.compareTo(value) <= 0)) {
           return false;
         }
       } else if (customEndDate.isNotEmpty) {
-        if (!(endDate.compareTo(value) >= 0)) {
+        if (!(endDate!.compareTo(value) >= 0)) {
           return false;
         }
       }
     } else {
-      if (!(startDate.compareTo(value) <= 0 && endDate.compareTo(value) >= 0)) {
+      if (!(startDate!.compareTo(value) <= 0 &&
+          endDate!.compareTo(value) >= 0)) {
         return false;
       }
     }
@@ -1034,16 +1036,16 @@ class ReportResult {
     final reportState = store.state.uiState.reportsUIState;
 
     return [
-      for (String column in sortedColumns(reportState))
+      for (String? column in sortedColumns(reportState))
         DataColumn(
           label: Container(
             constraints: BoxConstraints(minWidth: kTableColumnWidthMin),
             child: Row(
               children: [
                 Text(
-                  (company.getCustomFieldLabel(column).isNotEmpty
+                  (company.getCustomFieldLabel(column!).isNotEmpty
                           ? company.getCustomFieldLabel(column)
-                          : localization.lookup(column)) +
+                          : localization!.lookup(column)) +
                       '   ',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -1069,8 +1071,8 @@ class ReportResult {
 
   DataRow tableFilters(
       BuildContext context,
-      Map<String, TextEditingController> textEditingControllers,
-      Map<String, FocusNode> textEditingFocusNodes,
+      Map<String, TextEditingController>? textEditingControllers,
+      Map<String, FocusNode>? textEditingFocusNodes,
       Function(String, String) onFilterChanged) {
     final localization = AppLocalization.of(context);
     final theme = Theme.of(context);
@@ -1087,45 +1089,45 @@ class ReportResult {
             labelText: null,
             showBlank: true,
             blankValue: null,
-            value: textEditingControllers[column].text == 'true'
+            value: textEditingControllers[column]!.text == 'true'
                 ? true
-                : textEditingControllers[column].text == 'false'
+                : textEditingControllers[column]!.text == 'false'
                     ? false
                     : null,
             onChanged: (dynamic value) {
               if (value == null) {
-                textEditingControllers[column].text = '';
+                textEditingControllers[column]!.text = '';
                 onFilterChanged(column, '');
               } else {
-                textEditingControllers[column].text = value.toString();
+                textEditingControllers[column]!.text = value.toString();
                 onFilterChanged(column, value.toString());
               }
             },
             items: [
               DropdownMenuItem(
-                child: Text(AppLocalization.of(context).yes),
+                child: Text(AppLocalization.of(context)!.yes),
                 value: true,
               ),
               DropdownMenuItem(
-                child: Text(AppLocalization.of(context).no),
+                child: Text(AppLocalization.of(context)!.no),
                 value: false,
               ),
             ],
           ))
         else if (getReportColumnType(column, context) == ReportColumnType.age)
           DataCell(AppDropdownButton<String>(
-            value: (textEditingControllers[column].text ?? '').isNotEmpty &&
-                    textEditingControllers[column].text != 'null'
-                ? textEditingControllers[column].text
+            value: textEditingControllers[column]!.text.isNotEmpty &&
+                    textEditingControllers[column]!.text != 'null'
+                ? textEditingControllers[column]!.text
                 : null,
             showBlank: true,
             onChanged: (dynamic value) {
-              textEditingControllers[column].text = value;
+              textEditingControllers[column]!.text = value;
               onFilterChanged(column, value);
             },
             items: kAgeGroups.keys
                 .map((ageGroup) => DropdownMenuItem(
-                      child: Text(localization.lookup(ageGroup)),
+                      child: Text(localization!.lookup(ageGroup)),
                       value: ageGroup,
                     ))
                 .toList(),
@@ -1139,20 +1141,18 @@ class ReportResult {
             keyboardType:
                 TextInputType.numberWithOptions(decimal: true, signed: true),
             decoration: InputDecoration(
-                suffixIcon: textEditingControllers == null
+                suffixIcon: (textEditingControllers[column]?.text ?? '').isEmpty
                     ? null
-                    : (textEditingControllers[column]?.text ?? '').isEmpty
-                        ? null
-                        : IconButton(
-                            icon: Icon(
-                              Icons.clear,
-                              color: Colors.grey,
-                            ),
-                            onPressed: () {
-                              textEditingControllers[column].text = '';
-                              onFilterChanged(column, '');
-                            },
-                          )),
+                    : IconButton(
+                        icon: Icon(
+                          Icons.clear,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          textEditingControllers[column]!.text = '';
+                          onFilterChanged(column, '');
+                        },
+                      )),
           ))
         else if ([
           ReportColumnType.date,
@@ -1163,21 +1163,21 @@ class ReportResult {
             showBlank: true,
             blankValue: null,
             value: (reportState.filters[column] ?? '').isNotEmpty
-                ? DateRange.valueOf(reportState.filters[column])
+                ? DateRange.valueOf(reportState.filters[column]!)
                 : null,
             onChanged: (dynamic value) {
               if (value == null) {
-                textEditingControllers[column].text = '';
+                textEditingControllers[column]!.text = '';
                 onFilterChanged(column, '');
               } else {
-                textEditingControllers[column].text = value.toString();
+                textEditingControllers[column]!.text = value.toString();
                 onFilterChanged(column, value.toString());
               }
             },
             items: DateRange.values
                 .where((value) => value != DateRange.allTime)
                 .map((dateRange) => DropdownMenuItem<DateRange>(
-                      child: Text(localization.lookup(dateRange.toString())),
+                      child: Text(localization!.lookup(dateRange.toString())),
                       value: dateRange,
                     ))
                 .toList(),
@@ -1185,54 +1185,51 @@ class ReportResult {
         // TODO remove DEMO_MODE check
         else if (Config.DEMO_MODE)
           DataCell(TextFormField(
-            controller: textEditingControllers != null
-                ? textEditingControllers[column]
-                : null,
+            controller: textEditingControllers[column],
             decoration: InputDecoration(
-                suffixIcon: textEditingControllers == null
+                suffixIcon: (textEditingControllers[column]?.text ?? '').isEmpty
                     ? null
-                    : (textEditingControllers[column]?.text ?? '').isEmpty
-                        ? null
-                        : IconButton(
-                            icon: Icon(
-                              Icons.clear,
-                              color: Colors.grey,
-                            ),
-                            onPressed: () {
-                              textEditingControllers[column].text = '';
-                              onFilterChanged(column, '');
-                            },
-                          )),
+                    : IconButton(
+                        icon: Icon(
+                          Icons.clear,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          textEditingControllers[column]!.text = '';
+                          onFilterChanged(column, '');
+                        },
+                      )),
           ))
         else
           DataCell(
             RawAutocomplete<String>(
               textEditingController: textEditingControllers[column],
-              focusNode: textEditingFocusNodes[column],
+              focusNode: textEditingFocusNodes![column],
               optionsBuilder: (TextEditingValue textEditingValue) {
                 final filter = textEditingValue.text.toLowerCase();
                 final index = columns.indexOf(column);
                 final options = data
                     .where((row) =>
                         row[index]
-                            .renderText(context, column)
+                            .renderText(context, column)!
                             .toLowerCase()
                             .contains(filter) &&
                         row[index]
-                            .renderText(context, column)
+                            .renderText(context, column)!
                             .trim()
                             .isNotEmpty)
                     .map((row) => row[index].renderText(context, column))
+                    .whereType<String>()
                     .toSet()
                     .toList();
 
                 return options;
               },
               onSelected: (value) {
-                final textEditingController = textEditingControllers[column];
+                final textEditingController = textEditingControllers[column]!;
                 textEditingController.text = value;
                 onFilterChanged(column, value);
-                textEditingFocusNodes[column].requestFocus();
+                textEditingFocusNodes[column]!.requestFocus();
                 WidgetsBinding.instance.addPostFrameCallback((duration) {
                   textEditingController.selection = TextSelection.fromPosition(
                       TextPosition(offset: textEditingController.text.length));
@@ -1253,9 +1250,9 @@ class ReportResult {
                             color: Colors.grey,
                           ),
                           onPressed: () {
-                            textEditingControllers[column].text = '';
+                            textEditingControllers[column]!.text = '';
                             onFilterChanged(column, '');
-                            textEditingFocusNodes[column].unfocus();
+                            textEditingFocusNodes[column]!.unfocus();
                           },
                         )),
                   controller: textEditingController,
@@ -1344,29 +1341,29 @@ class ReportResult {
       return DataRow(cells: cells);
     } else {
       final groupTotals = viewModel.groupTotals;
-      final group = groupTotals.rows[index - 1];
-      final values = viewModel.groupTotals.totals[group];
+      final group = groupTotals.rows![index - 1];
+      final values = viewModel.groupTotals.totals![group];
       final cells = <DataCell>[];
       final localization = AppLocalization.of(context);
 
       for (var column in sortedColumns(reportState)) {
-        String value = '';
+        String? value = '';
         final columnType = getReportColumnType(column, context);
         if (column == groupBy) {
-          if (group.isEmpty) {
-            value = localization.blank;
+          if (group!.isEmpty) {
+            value = localization!.blank;
           } else if (columnType == ReportColumnType.dateTime ||
               columnType == ReportColumnType.date) {
             value = formatDate(group, context);
           } else if (columnType == ReportColumnType.age ||
               EntityPresenter.isFieldLocalized(column)) {
-            value = localization.lookup(group);
+            value = localization!.lookup(group);
           } else {
-            value = group == 'null' ? localization.blank : group;
+            value = group == 'null' ? localization!.blank : group;
           }
-          value = value + ' (' + values['count'].floor().toString() + ')';
+          value = value + ' (' + values!['count']!.floor().toString() + ')';
         } else if (columnType == ReportColumnType.number) {
-          final currencyId = values['${column}_currency_id'];
+          final currencyId = values!['${column}_currency_id'];
           value = formatNumber(values[column], context,
               formatNumberType: column.toLowerCase().contains('quantity')
                   ? FormatNumberType.double
@@ -1374,11 +1371,11 @@ class ReportResult {
               currencyId:
                   currencyId == null ? null : currencyId.round().toString());
         } else if (columnType == ReportColumnType.duration) {
-          value = formatDuration(Duration(seconds: values[column].toInt()));
+          value = formatDuration(Duration(seconds: values![column]!.toInt()));
         }
 
-        cells.add(DataCell(Text(value), onTap: () {
-          if (group.isEmpty) {
+        cells.add(DataCell(Text(value!), onTap: () {
+          if (group!.isEmpty) {
             return;
           }
           if (column == groupBy) {
@@ -1395,16 +1392,16 @@ class ReportResult {
                 customEndDate = convertDateTimeToSqlDate(date);
               } else if (reportState.subgroup == kReportGroupMonth) {
                 customEndDate =
-                    convertDateTimeToSqlDate(addDays(addMonths(date, 1), -1));
+                    convertDateTimeToSqlDate(addDays(addMonths(date!, 1), -1));
               } else if (reportState.subgroup == kReportGroupWeek) {
-                customEndDate = convertDateTimeToSqlDate(addDays(date, 6));
+                customEndDate = convertDateTimeToSqlDate(addDays(date!, 6));
               } else {
                 customEndDate =
-                    convertDateTimeToSqlDate(addDays(addYears(date, 1), -1));
+                    convertDateTimeToSqlDate(addDays(addYears(date!, 1), -1));
               }
             } else if (getReportColumnType(column, context) ==
                 ReportColumnType.bool) {
-              filter = filter == localization.yes
+              filter = filter == localization!.yes
                   ? 'true'
                   : filter == localization.no
                       ? 'false'
@@ -1432,11 +1429,11 @@ class ReportResult {
       BuildContext context, Function(int, bool) onSortCallback) {
     final store = StoreProvider.of<AppState>(context);
     final company = store.state.company;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final sortedColumns = columns
         .where((column) => canTotalColumn(column))
         .toList()
-      ..sort((String str1, String str2) => str1.compareTo(str2));
+      ..sort((String? str1, String? str2) => str1!.compareTo(str2!));
 
     //for (String column in sortedColumns)
     //  print('## $column => ${getReportColumnType(column, context)}');
@@ -1450,7 +1447,7 @@ class ReportResult {
         label: Text(localization.count),
         onSort: onSortCallback,
       ),
-      for (String column in sortedColumns)
+      for (String? column in sortedColumns)
         if ([
           ReportColumnType.number,
           ReportColumnType.age,
@@ -1458,7 +1455,7 @@ class ReportResult {
         ].contains(getReportColumnType(column, context)))
           mt.DataColumn(
             label: Text(
-              company.getCustomFieldLabel(column).isEmpty
+              company.getCustomFieldLabel(column!).isEmpty
                   ? localization.lookup(column)
                   : company.getCustomFieldLabel(column),
               overflow: TextOverflow.ellipsis,
@@ -1479,14 +1476,14 @@ class ReportResult {
     final state = store.state;
     final reportState = state.uiState.reportsUIState;
     final settings = state.userCompany.settings;
-    final reportSettings = settings != null &&
-            settings.reportSettings.containsKey(reportState.report)
-        ? settings.reportSettings[reportState.report]
-        : ReportSettingsEntity();
+    final reportSettings =
+        settings.reportSettings.containsKey(reportState.report)
+            ? settings.reportSettings[reportState.report]!
+            : ReportSettingsEntity();
 
-    final Map<String, Map<String, double>> totals = {};
+    final Map<String, Map<String?, double>> totals = {};
 
-    final allColumns = <String>[];
+    final allColumns = <String?>[];
 
     for (var i = 0; i < data.length; i++) {
       final row = data[i];
@@ -1532,83 +1529,82 @@ class ReportResult {
             totals[currencyId] = {'count': 0};
           }
           if (!countedRow) {
-            totals[currencyId]['count']++;
+            totals[currencyId]!['count'] = totals[currencyId]!['count']! + 1;
             countedRow = true;
           }
-          if (!totals[currencyId].containsKey(column)) {
-            totals[currencyId][column] = 0;
+          if (!totals[currencyId]!.containsKey(column)) {
+            totals[currencyId]![column] = 0;
           }
-          totals[currencyId][column] += cell.doubleValue;
+          totals[currencyId]![column] =
+              totals[currencyId]![column]! + cell.doubleValue!;
         }
       }
     }
 
     for (var currencyId in totals.keys) {
       for (var column in allColumns) {
-        if (!totals[currencyId].containsKey(column)) {
-          totals[currencyId][column] = 0;
+        if (!totals[currencyId]!.containsKey(column)) {
+          totals[currencyId]![column] = 0;
         }
       }
     }
 
-    final keys = totals.keys.where((element) => element != null).toList();
-    if (reportSettings.sortTotalsIndex != null) {
-      keys.sort((rowA, rowB) {
-        dynamic valueA;
-        dynamic valueB;
+    final keys = totals.keys.whereNotNull().toList();
+    keys.sort((rowA, rowB) {
+      dynamic valueA;
+      dynamic valueB;
 
-        if (reportSettings.sortTotalsIndex == 0) {
-          final currencyMap = state.staticState.currencyMap;
-          valueA = currencyMap[rowA]?.listDisplayName;
-          valueB = currencyMap[rowB]?.listDisplayName;
-        } else if (reportSettings.sortTotalsIndex == 1) {
-          valueA = totals[rowA]['count'];
-          valueB = totals[rowB]['count'];
-        } else {
-          final List<String> fields = totals[rowA].keys.toList()
-            ..remove('count')
-            ..sort((String str1, String str2) => str1.compareTo(str2));
-          final sortColumn = fields[reportSettings.sortTotalsIndex - 2];
-          valueA = totals[rowA][sortColumn];
-          valueB = totals[rowB][sortColumn];
-        }
+      if (reportSettings.sortTotalsIndex == 0) {
+        final currencyMap = state.staticState.currencyMap;
+        valueA = currencyMap[rowA]?.listDisplayName;
+        valueB = currencyMap[rowB]?.listDisplayName;
+      } else if (reportSettings.sortTotalsIndex == 1) {
+        valueA = totals[rowA]!['count'];
+        valueB = totals[rowB]!['count'];
+      } else {
+        final List<String?> fields = totals[rowA]!.keys.toList()
+          ..remove('count')
+          ..sort((String? str1, String? str2) => str1!.compareTo(str2!));
+        final sortColumn = fields[reportSettings.sortTotalsIndex - 2];
+        valueA = totals[rowA]![sortColumn];
+        valueB = totals[rowB]![sortColumn];
+      }
 
-        if (valueA == null || valueB == null) {
-          return 0;
-        }
+      if (valueA == null || valueB == null) {
+        return 0;
+      }
 
-        return reportSettings.sortTotalsAscending
-            ? valueA.compareTo(valueB)
-            : valueB.compareTo(valueA);
-      });
-    }
+      return reportSettings.sortTotalsAscending
+          ? valueA.compareTo(valueB)
+          : valueB.compareTo(valueA);
+    });
 
-    List<String> allFields = [];
+    List<String?> allFields = [];
     keys.forEach((currencyId) {
-      final values = totals[currencyId];
+      final values = totals[currencyId]!;
       allFields.addAll(values.keys);
     });
     allFields = allFields.toSet().toList()
-      ..sort((String str1, String str2) => str1.compareTo(str2));
+      ..sort((String? str1, String? str2) => str1!.compareTo(str2!));
 
     keys.forEach((currencyId) {
-      final values = totals[currencyId];
+      final values = totals[currencyId]!;
       final cells = <mt.DataCell>[
         mt.DataCell(Text(
             store.state.staticState.currencyMap[currencyId]?.listDisplayName ??
                 '')),
-        mt.DataCell(Text(values['count'].toInt().toString())),
+        mt.DataCell(Text(values['count']!.toInt().toString())),
       ];
 
       allFields.forEach((field) {
         final amount = values[field];
         if (field != 'count') {
-          String value;
+          String? value;
           if (field == 'age') {
-            value = formatNumber(amount / values['count'], context,
+            value = formatNumber(amount! / values['count']!, context,
                 formatNumberType: FormatNumberType.double);
           } else if (field == 'duration') {
-            value = formatDuration(Duration(seconds: amount.toInt()));
+            value = formatDuration(Duration(seconds: amount!.toInt()));
           } else {
             value = formatNumber(amount, context,
                 currencyId: currencyId,
@@ -1616,7 +1612,7 @@ class ReportResult {
                     ? FormatNumberType.double
                     : FormatNumberType.money);
           }
-          cells.add(mt.DataCell(Text(value)));
+          cells.add(mt.DataCell(Text(value!)));
         }
       });
 
@@ -1631,52 +1627,52 @@ class ReportResult {
 abstract class ReportElement {
   ReportElement({this.entityType, this.entityId});
 
-  final EntityType entityType;
-  final String entityId;
+  final EntityType? entityType;
+  final String? entityId;
 
-  double get doubleValue => 0;
+  double? get doubleValue => 0;
 
-  String get stringValue => '';
+  String? get stringValue => '';
 
-  Widget renderWidget(BuildContext context, String column) {
+  Widget renderWidget(BuildContext context, String? column) {
     throw 'Error: need to override renderWidget()';
   }
 
-  String renderText(BuildContext context, String column) {
+  String? renderText(BuildContext context, String? column) {
     throw 'Error: need to override sortString()';
   }
 }
 
 class ReportStringValue extends ReportElement {
   ReportStringValue({
-    @required this.value,
-    @required EntityType entityType,
-    @required String entityId,
+    required this.value,
+    required EntityType? entityType,
+    required String entityId,
   }) : super(entityType: entityType, entityId: entityId);
 
-  final String value;
+  final String? value;
 
   @override
-  String get stringValue => value;
+  String? get stringValue => value;
 
   @override
-  Widget renderWidget(BuildContext context, String column) {
+  Widget renderWidget(BuildContext context, String? column) {
     return Text(
-      renderText(context, column),
+      renderText(context, column)!,
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
     );
   }
 
   @override
-  String renderText(BuildContext context, String column) {
+  String? renderText(BuildContext context, String? column) {
     if (getReportColumnType(column, context) == ReportColumnType.dateTime ||
         getReportColumnType(column, context) == ReportColumnType.date) {
       return formatDate(value, context,
           showTime: getReportColumnType(column, context) ==
               ReportColumnType.dateTime);
     } else if (EntityPresenter.isFieldLocalized(column)) {
-      return AppLocalization.of(context).lookup(value);
+      return AppLocalization.of(context)!.lookup(value);
     } else {
       return value ?? '';
     }
@@ -1685,140 +1681,140 @@ class ReportStringValue extends ReportElement {
 
 class ReportEntityTypeValue extends ReportElement {
   ReportEntityTypeValue({
-    @required this.value,
-    @required EntityType entityType,
-    @required String entityId,
+    required this.value,
+    required EntityType? entityType,
+    required String? entityId,
   }) : super(entityType: entityType, entityId: entityId);
 
-  final EntityType value;
+  final EntityType? value;
 
   @override
   String get stringValue => '$value';
 
   @override
-  Widget renderWidget(BuildContext context, String column) {
-    return Text(renderText(context, column));
+  Widget renderWidget(BuildContext context, String? column) {
+    return Text(renderText(context, column)!);
   }
 
   @override
-  String renderText(BuildContext context, String column) {
-    return AppLocalization.of(context).lookup('$value');
+  String? renderText(BuildContext context, String? column) {
+    return AppLocalization.of(context)!.lookup('$value');
   }
 }
 
 class ReportAgeValue extends ReportElement {
   ReportAgeValue({
-    @required this.value,
-    @required EntityType entityType,
-    @required String entityId,
-    @required this.currencyId,
+    required this.value,
+    required EntityType? entityType,
+    required String entityId,
+    required this.currencyId,
   }) : super(entityType: entityType, entityId: entityId);
 
-  final int value;
-  final String currencyId;
+  final int? value;
+  final String? currencyId;
 
   @override
   String get stringValue => '$value';
 
   @override
-  double get doubleValue => value == -1 ? 0 : value.toDouble();
+  double get doubleValue => value == -1 ? 0 : value!.toDouble();
 
   @override
-  Widget renderWidget(BuildContext context, String column) {
+  Widget renderWidget(BuildContext context, String? column) {
     return Text(renderText(context, column));
   }
 
   @override
-  String renderText(BuildContext context, String column) {
-    return value == -1 ? AppLocalization.of(context).paid : '$value';
+  String renderText(BuildContext context, String? column) {
+    return value == -1 ? AppLocalization.of(context)!.paid : '$value';
   }
 }
 
 class ReportDurationValue extends ReportElement {
   ReportDurationValue({
-    @required this.value,
-    @required EntityType entityType,
-    @required String entityId,
-    @required this.currencyId,
+    required this.value,
+    required EntityType? entityType,
+    required String entityId,
+    required this.currencyId,
   }) : super(entityType: entityType, entityId: entityId);
 
-  final int value;
-  final String currencyId;
+  final int? value;
+  final String? currencyId;
 
   @override
   String get stringValue => '$value';
 
   @override
-  double get doubleValue => value.toDouble();
+  double get doubleValue => value!.toDouble();
 
   @override
-  Widget renderWidget(BuildContext context, String column) {
+  Widget renderWidget(BuildContext context, String? column) {
     return Text(renderText(context, column));
   }
 
   @override
-  String renderText(BuildContext context, String column) {
-    return formatDuration(Duration(seconds: value));
+  String renderText(BuildContext context, String? column) {
+    return formatDuration(Duration(seconds: value!));
   }
 }
 
 class ReportIntValue extends ReportElement {
   ReportIntValue({
     this.value,
-    EntityType entityType,
-    String entityId,
+    EntityType? entityType,
+    String? entityId,
   }) : super(entityType: entityType, entityId: entityId);
 
-  final int value;
+  final int? value;
 
   @override
   String get stringValue => '$value';
 
   @override
-  double get doubleValue => value.toDouble();
+  double get doubleValue => value!.toDouble();
 
   @override
-  Widget renderWidget(BuildContext context, String column) {
-    return Text(renderText(context, column));
+  Widget renderWidget(BuildContext context, String? column) {
+    return Text(renderText(context, column)!);
   }
 
   @override
-  String renderText(BuildContext context, String column) {
-    return formatNumber(value.toDouble(), context,
+  String? renderText(BuildContext context, String? column) {
+    return formatNumber(value!.toDouble(), context,
         formatNumberType: FormatNumberType.int);
   }
 }
 
 class ReportNumberValue extends ReportElement {
   ReportNumberValue({
-    @required this.value,
-    @required EntityType entityType,
-    @required String entityId,
-    @required this.currencyId,
-    @required this.exchangeRate,
+    required this.value,
+    required EntityType? entityType,
+    required String entityId,
+    required this.currencyId,
+    required this.exchangeRate,
     this.formatNumberType = FormatNumberType.money,
   }) : super(entityType: entityType, entityId: entityId);
 
-  final double value;
-  final FormatNumberType formatNumberType;
-  final String currencyId;
-  final double exchangeRate;
+  final double? value;
+  final FormatNumberType? formatNumberType;
+  final String? currencyId;
+  final double? exchangeRate;
 
   @override
-  double get doubleValue => value;
+  double? get doubleValue => value;
 
   @override
   String get stringValue => '$value';
 
   @override
-  Widget renderWidget(BuildContext context, String column) {
-    return Text(renderText(context, column));
+  Widget renderWidget(BuildContext context, String? column) {
+    return Text(renderText(context, column)!);
   }
 
   @override
-  String renderText(BuildContext context, String column) {
+  String? renderText(BuildContext context, String? column) {
     if (currencyId == null ||
-        column.endsWith('_rate') ||
+        column!.endsWith('_rate') ||
         column.endsWith('_rate1') ||
         column.endsWith('_rate2') ||
         column.endsWith('_rate3')) {
@@ -1834,38 +1830,38 @@ class ReportNumberValue extends ReportElement {
 
 class ReportBoolValue extends ReportElement {
   ReportBoolValue({
-    @required this.value,
-    @required EntityType entityType,
-    @required String entityId,
+    required this.value,
+    required EntityType? entityType,
+    required String entityId,
   }) : super(entityType: entityType, entityId: entityId);
 
-  final bool value;
+  final bool? value;
 
   @override
   String get stringValue => '$value';
 
   @override
-  Widget renderWidget(BuildContext context, String column) {
+  Widget renderWidget(BuildContext context, String? column) {
     final localization = AppLocalization.of(context);
     return SizedBox(
       width: 80,
       child: Text(
-        value == true ? localization.yes : localization.no,
+        value == true ? localization!.yes : localization!.no,
         textAlign: TextAlign.center,
       ),
     );
   }
 
   @override
-  String renderText(BuildContext context, String column) {
+  String renderText(BuildContext context, String? column) {
     final localization = AppLocalization.of(context);
-    return value == true ? localization.yes : localization.no;
+    return value == true ? localization!.yes : localization!.no;
   }
 }
 
-int sortReportTableRows(dynamic rowA, dynamic rowB,
-    ReportSettingsEntity reportSettings, List<String> columns) {
-  if (reportSettings.sortColumn == null || reportSettings.sortColumn.isEmpty) {
+int? sortReportTableRows(dynamic rowA, dynamic rowB,
+    ReportSettingsEntity reportSettings, List<String?> columns) {
+  if (reportSettings.sortColumn.isEmpty) {
     return 0;
   }
 
@@ -1879,6 +1875,14 @@ int sortReportTableRows(dynamic rowA, dynamic rowB,
 
   final dynamic valueA = rowA[index].value;
   final dynamic valueB = rowB[index].value;
+
+  if (valueA is bool) {
+    if (reportSettings.sortAscending) {
+      return valueA ? 1 : -1;
+    } else {
+      return valueA ? -1 : 1;
+    }
+  }
 
   if (reportSettings.sortAscending) {
     return valueA.compareTo(valueB);

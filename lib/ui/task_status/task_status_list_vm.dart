@@ -23,7 +23,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskStatusListBuilder extends StatelessWidget {
-  const TaskStatusListBuilder({Key key}) : super(key: key);
+  const TaskStatusListBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,22 +38,22 @@ class TaskStatusListBuilder extends StatelessWidget {
 
 class TaskStatusListVM {
   TaskStatusListVM({
-    @required this.state,
-    @required this.taskStatusList,
-    @required this.taskStatusMap,
-    @required this.filter,
-    @required this.listState,
-    @required this.onRefreshed,
-    @required this.onSortChanged,
+    required this.state,
+    required this.taskStatusList,
+    required this.taskStatusMap,
+    required this.filter,
+    required this.listState,
+    required this.onRefreshed,
+    required this.onSortChanged,
   });
 
   static TaskStatusListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
       if (store.state.isLoading) {
-        return Future<Null>(null);
+        return Future<Null>.value();
       }
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -78,8 +78,7 @@ class TaskStatusListVM {
 
         store.dispatch(SaveTaskStatusRequest(
             completer: snackBarCompleter<TaskStatusEntity>(
-                navigatorKey.currentContext,
-                AppLocalization.of(navigatorKey.currentContext)
+                AppLocalization.of(navigatorKey.currentContext!)!
                     .updatedTaskStatus),
             taskStatus:
                 taskStatus.rebuild((b) => b..statusOrder = newIndex + 1)));
@@ -89,9 +88,9 @@ class TaskStatusListVM {
 
   final AppState state;
   final List<String> taskStatusList;
-  final BuiltMap<String, TaskStatusEntity> taskStatusMap;
+  final BuiltMap<String?, TaskStatusEntity?> taskStatusMap;
   final ListUIState listState;
-  final String filter;
+  final String? filter;
   final Function(BuildContext) onRefreshed;
   final Function(int, int) onSortChanged;
 }

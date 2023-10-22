@@ -26,7 +26,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class PaymentRefundScreen extends StatelessWidget {
-  const PaymentRefundScreen({Key key}) : super(key: key);
+  const PaymentRefundScreen({Key? key}) : super(key: key);
 
   static const String route = '/payment/refund';
 
@@ -48,23 +48,23 @@ class PaymentRefundScreen extends StatelessWidget {
 
 class PaymentRefundVM {
   PaymentRefundVM({
-    @required this.state,
-    @required this.payment,
-    @required this.origPayment,
-    @required this.onChanged,
-    @required this.onRefundPressed,
-    @required this.prefState,
-    @required this.invoiceMap,
-    @required this.invoiceList,
-    @required this.staticState,
-    @required this.onCancelPressed,
-    @required this.isSaving,
-    @required this.isDirty,
+    required this.state,
+    required this.payment,
+    required this.origPayment,
+    required this.onChanged,
+    required this.onRefundPressed,
+    required this.prefState,
+    required this.invoiceMap,
+    required this.invoiceList,
+    required this.staticState,
+    required this.onCancelPressed,
+    required this.isSaving,
+    required this.isDirty,
   });
 
   factory PaymentRefundVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final payment = state.paymentUIState.editing;
+    final payment = state.paymentUIState.editing!;
 
     return PaymentRefundVM(
       state: state,
@@ -80,7 +80,7 @@ class PaymentRefundVM {
         store.dispatch(UpdatePayment(payment));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(context: context, entity: PaymentEntity(), force: true);
+        createEntity(entity: PaymentEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onRefundPressed:
@@ -88,7 +88,7 @@ class PaymentRefundVM {
         store.dispatch(
             RefundPaymentRequest(completer: completer, payment: payment));
         return completer.future.then((savedPayment) {
-          showToast(AppLocalization.of(context).refundedPayment);
+          showToast(AppLocalization.of(context)!.refundedPayment);
           if (isMobile(context)) {
             store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));
             if (payment.isNew) {
@@ -113,7 +113,7 @@ class PaymentRefundVM {
 
   final AppState state;
   final PaymentEntity payment;
-  final PaymentEntity origPayment;
+  final PaymentEntity? origPayment;
   final Function(PaymentEntity) onChanged;
   final Function(BuildContext, Completer<PaymentEntity>) onRefundPressed;
   final Function(BuildContext) onCancelPressed;

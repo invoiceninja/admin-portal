@@ -11,12 +11,12 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 class FieldGrid extends StatelessWidget {
   const FieldGrid(this.fields);
 
-  final Map<String, String> fields;
+  final Map<String?, String?> fields;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final textColor = Theme.of(context).textTheme.bodyLarge.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color;
     final List<Widget> fieldWidgets = [];
 
     fields.forEach((field, value) {
@@ -34,7 +34,7 @@ class FieldGrid extends StatelessWidget {
           );
         }
 
-        if (value != null && value.isNotEmpty) {
+        if (value.isNotEmpty) {
           fieldWidgets.add(Material(
             color: Colors.transparent,
             child: CopyToClipboard(
@@ -44,10 +44,10 @@ class FieldGrid extends StatelessWidget {
                 children: <Widget>[
                   Flexible(
                     child: Text(
-                      localization.lookup(field),
+                      localization!.lookup(field),
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        color: textColor.withOpacity(.65),
+                        color: textColor!.withOpacity(.65),
                       ),
                     ),
                   ),

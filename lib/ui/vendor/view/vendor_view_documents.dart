@@ -9,7 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/document_grid.dart';
 import 'package:invoiceninja_flutter/ui/vendor/view/vendor_view_vm.dart';
 
 class VendorViewDocuments extends StatelessWidget {
-  const VendorViewDocuments({Key key, @required this.viewModel})
+  const VendorViewDocuments({Key? key, required this.viewModel})
       : super(key: key);
 
   final VendorViewVM viewModel;

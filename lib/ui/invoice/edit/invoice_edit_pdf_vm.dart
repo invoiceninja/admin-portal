@@ -11,7 +11,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_pdf.dart';
 
 class InvoiceEditPDFScreen extends StatelessWidget {
-  const InvoiceEditPDFScreen({Key key}) : super(key: key);
+  const InvoiceEditPDFScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,21 +30,21 @@ class InvoiceEditPDFScreen extends StatelessWidget {
 
 class EntityEditPDFVM {
   EntityEditPDFVM({
-    @required this.state,
-    @required this.company,
-    @required this.invoice,
+    required this.state,
+    required this.company,
+    required this.invoice,
   });
 
   final AppState state;
-  final CompanyEntity company;
-  final InvoiceEntity invoice;
+  final CompanyEntity? company;
+  final InvoiceEntity? invoice;
 }
 
 class InvoiceEditPDFVM extends EntityEditPDFVM {
   InvoiceEditPDFVM({
-    @required CompanyEntity company,
-    @required InvoiceEntity invoice,
-    @required AppState state,
+    required CompanyEntity? company,
+    required InvoiceEntity? invoice,
+    required AppState state,
   }) : super(
           company: company,
           invoice: invoice,

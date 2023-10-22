@@ -25,7 +25,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentTermEditScreen extends StatelessWidget {
-  const PaymentTermEditScreen({Key key}) : super(key: key);
+  const PaymentTermEditScreen({Key? key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsPaymentTermEdit';
 
   @override
@@ -46,20 +46,20 @@ class PaymentTermEditScreen extends StatelessWidget {
 
 class PaymentTermEditVM {
   PaymentTermEditVM({
-    @required this.state,
-    @required this.paymentTerm,
-    @required this.company,
-    @required this.onChanged,
-    @required this.isSaving,
-    @required this.origPaymentTerm,
-    @required this.onSavePressed,
-    @required this.onCancelPressed,
-    @required this.isLoading,
+    required this.state,
+    required this.paymentTerm,
+    required this.company,
+    required this.onChanged,
+    required this.isSaving,
+    required this.origPaymentTerm,
+    required this.onSavePressed,
+    required this.onCancelPressed,
+    required this.isLoading,
   });
 
   factory PaymentTermEditVM.fromStore(Store<AppState> store) {
     final state = store.state;
-    final paymentTerm = state.paymentTermUIState.editing;
+    final paymentTerm = state.paymentTermUIState.editing!;
 
     return PaymentTermEditVM(
       state: state,
@@ -72,8 +72,7 @@ class PaymentTermEditVM {
         store.dispatch(UpdatePaymentTerm(paymentTerm));
       },
       onCancelPressed: (BuildContext context) {
-        createEntity(
-            context: context, entity: PaymentTermEntity(), force: true);
+        createEntity(entity: PaymentTermEntity(), force: true);
         store.dispatch(UpdateCurrentRoute(state.uiState.previousRoute));
       },
       onSavePressed: (BuildContext context) {
@@ -85,9 +84,9 @@ class PaymentTermEditVM {
           store.dispatch(SavePaymentTermRequest(
               completer: completer, paymentTerm: paymentTerm));
           return completer.future.then((savedPaymentTerm) {
-            showToast(paymentTerm.isNew
-                ? localization.createdPaymentTerm
-                : localization.updatedPaymentTerm);
+            showToast(paymentTerm!.isNew
+                ? localization!.createdPaymentTerm
+                : localization!.updatedPaymentTerm);
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(PaymentTermScreen.route));
               if (paymentTerm.isNew) {
@@ -101,7 +100,7 @@ class PaymentTermEditVM {
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
-                context: navigatorKey.currentContext,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
                   return ErrorDialog(error);
                 });
@@ -112,12 +111,12 @@ class PaymentTermEditVM {
   }
 
   final PaymentTermEntity paymentTerm;
-  final CompanyEntity company;
+  final CompanyEntity? company;
   final Function(PaymentTermEntity) onChanged;
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext) onCancelPressed;
   final bool isLoading;
   final bool isSaving;
-  final PaymentTermEntity origPaymentTerm;
+  final PaymentTermEntity? origPaymentTerm;
   final AppState state;
 }

@@ -20,10 +20,10 @@ List<String> dropdownClientsSelector(
     BuiltMap<String, UserEntity> userMap,
     StaticState staticState) {
   final list =
-      clientList.where((clientId) => clientMap[clientId].isActive).toList();
+      clientList.where((clientId) => clientMap[clientId]!.isActive).toList();
 
   list.sort((clientAId, clientBId) {
-    final clientA = clientMap[clientAId];
+    final clientA = clientMap[clientAId]!;
     final clientB = clientMap[clientBId];
     return clientA.compareTo(
         clientB, ClientFields.name, true, userMap, staticState);
@@ -44,7 +44,7 @@ EntityStats clientStatsForUser(
     if (client.assignedUserId == userId) {
       if (client.isActive) {
         countActive++;
-      } else if (client.isDeleted) {
+      } else if (client.isDeleted!) {
         countArchived++;
       }
     }
@@ -75,7 +75,7 @@ List<String> filteredClientsSelector(
   final filterEntityType = selectionState.filterEntityType;
 
   final list = clientList.where((clientId) {
-    final client = clientMap[clientId];
+    final client = clientMap[clientId]!;
     final group = groupMap[client.groupId] ?? GroupEntity(id: client.groupId);
 
     if (client.id == selectionState.selectedId) {
@@ -121,7 +121,7 @@ List<String> filteredClientsSelector(
   }).toList();
 
   list.sort((clientAId, clientBId) {
-    final clientA = clientMap[clientAId];
+    final clientA = clientMap[clientAId]!;
     final clientB = clientMap[clientBId];
     return clientA.compareTo(clientB, clientListState.sortField,
         clientListState.sortAscending, userMap, staticState);
@@ -130,7 +130,7 @@ List<String> filteredClientsSelector(
   return list;
 }
 
-SettingsEntity getClientSettings(AppState state, ClientEntity client) {
+SettingsEntity getClientSettings(AppState? state, ClientEntity? client) {
   if (state == null) {
     return SettingsEntity();
   }
@@ -146,11 +146,7 @@ SettingsEntity getClientSettings(AppState state, ClientEntity client) {
   );
 }
 
-SettingsEntity getVendorSettings(AppState state, VendorEntity vendor) {
-  if (state == null) {
-    return SettingsEntity();
-  }
-
+SettingsEntity getVendorSettings(AppState state, VendorEntity? vendor) {
   vendor ??= VendorEntity();
   final company = state.company;
   //final group = state.groupState.get(vendor.groupId);
@@ -162,6 +158,6 @@ SettingsEntity getVendorSettings(AppState state, VendorEntity vendor) {
   );
 }
 
-bool hasClientChanges(
+bool? hasClientChanges(
         ClientEntity client, BuiltMap<String, ClientEntity> clientMap) =>
     client.isNew ? client.isChanged : client != clientMap[client.id];

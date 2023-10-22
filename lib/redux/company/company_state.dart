@@ -58,7 +58,6 @@ abstract class UserCompanyState
       quoteState: QuoteState(),
       // STARTER: constructor - do not remove comment
       scheduleState: ScheduleState(),
-
       transactionRuleState: TransactionRuleState(),
       transactionState: TransactionState(),
       bankAccountState: BankAccountState(),
@@ -88,7 +87,6 @@ abstract class UserCompanyState
 
   int get lastUpdated;
 
-  @nullable
   UserCompanyEntity get userCompany;
 
   DocumentState get documentState;
@@ -165,7 +163,7 @@ abstract class UserCompanyState
         kMillisecondsToRefreshData;
   }
 
-  bool get isLoaded => lastUpdated != null && lastUpdated > 0;
+  bool get isLoaded => lastUpdated > 0;
 
   static Serializer<UserCompanyState> get serializer =>
       _$userCompanyStateSerializer;

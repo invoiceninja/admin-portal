@@ -24,7 +24,7 @@ class SettingsRepository {
     final data = serializers.serializeWith(CompanyEntity.serializer, company);
     dynamic response;
 
-    final url = credentials.url + '/companies/${company.id}';
+    final url = credentials.url! + '/companies/${company.id}';
     response = await webClient.put(
       url,
       credentials.token,
@@ -32,16 +32,16 @@ class SettingsRepository {
     );
 
     final CompanyItemResponse companyResponse =
-        serializers.deserializeWith(CompanyItemResponse.serializer, response);
+        serializers.deserializeWith(CompanyItemResponse.serializer, response)!;
 
     return companyResponse.data;
   }
 
   Future<CompanyEntity> saveEInvoiceCertificate(Credentials credentials,
-      CompanyEntity company, MultipartFile eInvoiceCertificate) async {
+      CompanyEntity company, MultipartFile? eInvoiceCertificate) async {
     dynamic response;
 
-    final url = credentials.url + '/companies/${company.id}';
+    final url = credentials.url! + '/companies/${company.id}';
     final fields = <String, String>{
       '_method': 'put',
     };
@@ -54,7 +54,7 @@ class SettingsRepository {
     );
 
     final CompanyItemResponse companyResponse =
-        serializers.deserializeWith(CompanyItemResponse.serializer, response);
+        serializers.deserializeWith(CompanyItemResponse.serializer, response)!;
 
     return companyResponse.data;
   }
@@ -62,13 +62,13 @@ class SettingsRepository {
   Future<UserEntity> saveAuthUser(
     Credentials credentials,
     UserEntity user,
-    String password,
-    String idToken,
+    String? password,
+    String? idToken,
   ) async {
     final data = serializers.serializeWith(UserEntity.serializer, user);
     dynamic response;
 
-    final url = credentials.url + '/users/${user.id}?include=company_user';
+    final url = credentials.url! + '/users/${user.id}?include=company_user';
     response = await webClient.put(
       url,
       credentials.token,
@@ -78,7 +78,7 @@ class SettingsRepository {
     );
 
     final UserItemResponse userResponse =
-        serializers.deserializeWith(UserItemResponse.serializer, response);
+        serializers.deserializeWith(UserItemResponse.serializer, response)!;
 
     return userResponse.data;
   }
@@ -86,13 +86,13 @@ class SettingsRepository {
   Future<UserEntity> connectOAuthUser(
     Credentials credentials,
     String provider,
-    String password,
+    String? password,
     String idToken,
     String accessToken,
   ) async {
     dynamic response;
 
-    final url = credentials.url + '/connected_account?include=company_user';
+    final url = credentials.url! + '/connected_account?include=company_user';
     response = await webClient.post(
       url,
       credentials.token,
@@ -107,7 +107,7 @@ class SettingsRepository {
     );
 
     final UserItemResponse userResponse =
-        serializers.deserializeWith(UserItemResponse.serializer, response);
+        serializers.deserializeWith(UserItemResponse.serializer, response)!;
 
     return userResponse.data;
   }
@@ -115,12 +115,12 @@ class SettingsRepository {
   Future<UserEntity> disconnectOAuthUser(
     Credentials credentials,
     UserEntity user,
-    String password,
-    String idToken,
+    String? password,
+    String? idToken,
   ) async {
     dynamic response;
 
-    final url = credentials.url +
+    final url = credentials.url! +
         '/users/${user.id}/disconnect_oauth?include=company_user';
     response = await webClient.post(
       url,
@@ -130,20 +130,20 @@ class SettingsRepository {
     );
 
     final UserItemResponse userResponse =
-        serializers.deserializeWith(UserItemResponse.serializer, response);
+        serializers.deserializeWith(UserItemResponse.serializer, response)!;
 
     return userResponse.data;
   }
 
   Future<UserEntity> disconnectOAuthMailer(
     Credentials credentials,
-    String password,
-    String idToken,
+    String? password,
+    String? idToken,
     String userId,
   ) async {
     dynamic response;
 
-    final url = credentials.url +
+    final url = credentials.url! +
         '/users/$userId/disconnect_mailer?include=company_user';
     response = await webClient.post(
       url,
@@ -152,21 +152,21 @@ class SettingsRepository {
     );
 
     final UserItemResponse userResponse =
-        serializers.deserializeWith(UserItemResponse.serializer, response);
+        serializers.deserializeWith(UserItemResponse.serializer, response)!;
 
     return userResponse.data;
   }
 
   Future<UserEntity> connectGmailUser(
     Credentials credentials,
-    String password,
+    String? password,
     String idToken,
     String serverAuthCode,
   ) async {
     dynamic response;
 
     final url =
-        credentials.url + '/connected_account/gmail?include=company_user';
+        credentials.url! + '/connected_account/gmail?include=company_user';
     response = await webClient.post(
       url,
       credentials.token,
@@ -181,7 +181,7 @@ class SettingsRepository {
     );
 
     final UserItemResponse userResponse =
-        serializers.deserializeWith(UserItemResponse.serializer, response);
+        serializers.deserializeWith(UserItemResponse.serializer, response)!;
 
     return userResponse.data;
   }
@@ -191,7 +191,7 @@ class SettingsRepository {
     final data = serializers.serializeWith(UserEntity.serializer, user);
     dynamic response;
 
-    final url = credentials.url + '/company_users/${user.id}';
+    final url = credentials.url! + '/company_users/${user.id}';
     response = await webClient.put(
       url,
       credentials.token,
@@ -199,13 +199,13 @@ class SettingsRepository {
     );
 
     final UserCompanyItemResponse userResponse = serializers.deserializeWith(
-        UserCompanyItemResponse.serializer, response);
+        UserCompanyItemResponse.serializer, response)!;
 
     return userResponse.data;
   }
 
   Future<BaseEntity> uploadLogo(Credentials credentials, String entityId,
-      MultipartFile multipartFile, EntityType type) async {
+      MultipartFile? multipartFile, EntityType? type) async {
     final route = type == EntityType.company
         ? 'companies'
         : type == EntityType.group
@@ -218,15 +218,15 @@ class SettingsRepository {
 
     if (type == EntityType.client) {
       return serializers
-          .deserializeWith(ClientItemResponse.serializer, response)
+          .deserializeWith(ClientItemResponse.serializer, response)!
           .data;
     } else if (type == EntityType.group) {
       return serializers
-          .deserializeWith(GroupItemResponse.serializer, response)
+          .deserializeWith(GroupItemResponse.serializer, response)!
           .data;
     } else {
       return serializers
-          .deserializeWith(CompanyItemResponse.serializer, response)
+          .deserializeWith(CompanyItemResponse.serializer, response)!
           .data;
     }
   }
@@ -246,15 +246,15 @@ class SettingsRepository {
         data: fields, multipartFiles: multipartFiles);
 
     final CompanyItemResponse companyResponse =
-        serializers.deserializeWith(CompanyItemResponse.serializer, response);
+        serializers.deserializeWith(CompanyItemResponse.serializer, response)!;
 
     return companyResponse.data;
   }
 
   Future<bool> disableTwoFactor(
     Credentials credentials,
-    String password,
-    String idToken,
+    String? password,
+    String? idToken,
   ) async {
     await webClient.post(
       '${credentials.url}/settings/disable_two_factor',

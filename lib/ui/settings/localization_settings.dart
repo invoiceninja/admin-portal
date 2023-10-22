@@ -29,8 +29,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class LocalizationSettings extends StatefulWidget {
   const LocalizationSettings({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final LocalizationSettingsVM viewModel;
@@ -47,8 +47,8 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
   bool autoValidate = false;
 
   final _firstNameController = TextEditingController();
-  TabController _controller;
-  FocusScopeNode _focusNode;
+  TabController? _controller;
+  FocusScopeNode? _focusNode;
 
   List<TextEditingController> _controllers = [];
 
@@ -62,19 +62,19 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
         length: 2,
         initialIndex:
             settingsUIState.isFiltered ? 0 : settingsUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller!.index));
   }
 
   @override
   void dispose() {
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
-    _focusNode.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
+    _focusNode!.dispose();
     _controllers.forEach((dynamic controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -104,7 +104,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final settings = viewModel.settings;
@@ -147,7 +147,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                         memoizedCurrencyList(state.staticState.currencyMap),
                     labelText: localization.currency,
                     entityId: settings.currencyId,
-                    onSelected: (SelectableEntity currency) =>
+                    onSelected: (SelectableEntity? currency) =>
                         viewModel.onSettingsChanged(settings
                             .rebuild((b) => b..currencyId = currency?.id)),
                   ),
@@ -159,11 +159,11 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                     enabledLabel: '${localization.code}: ' +
                         formatNumber(1000, context,
                             showCurrencyCode: true,
-                            currencyId: settings.currencyId),
+                            currencyId: settings.currencyId)!,
                     disabledLabel: '${localization.symbol}: ' +
                         formatNumber(1000, context,
                             showCurrencyCode: false,
-                            currencyId: settings.currencyId),
+                            currencyId: settings.currencyId)!,
                   ),
                   if (!state.isDemo)
                     LearnMoreUrl(
@@ -175,7 +175,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                             memoizedLanguageList(state.staticState.languageMap),
                         labelText: localization.language,
                         entityId: settings.languageId,
-                        onSelected: (SelectableEntity language) =>
+                        onSelected: (SelectableEntity? language) =>
                             viewModel.onSettingsChanged(settings
                                 .rebuild((b) => b..languageId = language?.id)),
                       ),
@@ -186,7 +186,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                         memoizedTimezoneList(state.staticState.timezoneMap),
                     labelText: localization.timezone,
                     entityId: settings.timezoneId,
-                    onSelected: (SelectableEntity timezone) =>
+                    onSelected: (SelectableEntity? timezone) =>
                         viewModel.onSettingsChanged(settings
                             .rebuild((b) => b..timezoneId = timezone?.id)),
                   ),
@@ -196,7 +196,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                         memoizedDateFormatList(state.staticState.dateFormatMap),
                     labelText: localization.dateFormat,
                     entityId: settings.dateFormatId,
-                    onSelected: (SelectableEntity dateFormat) =>
+                    onSelected: (SelectableEntity? dateFormat) =>
                         viewModel.onSettingsChanged(settings
                             .rebuild((b) => b..dateFormatId = dateFormat?.id)),
                   ),
@@ -320,14 +320,14 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                             ),
                             TextButton(
                               onPressed: () async {
-                                final countryId = await showDialog<String>(
+                                final countryId = (await showDialog<String>(
                                     context: context,
                                     builder: (BuildContext context) {
                                       return _AddCompanyDialog();
-                                    });
+                                    }))!;
                                 if (countryId.isNotEmpty) {
                                   final key = 'country_' +
-                                      state.staticState.countryMap[countryId]
+                                      state.staticState.countryMap[countryId]!
                                           .name;
                                   viewModel.onSettingsChanged(settings.rebuild(
                                       (b) => b..translations[key] = ''));
@@ -346,7 +346,7 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                       children: [
                         Expanded(
                             child: Text(
-                          key.startsWith('country_')
+                          key!.startsWith('country_')
                               ? key.split('_')[1]
                               : localization.lookup(key),
                           maxLines: 1,
@@ -382,18 +382,18 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
 }
 
 class _AddCompanyDialog extends StatefulWidget {
-  const _AddCompanyDialog({Key key}) : super(key: key);
+  const _AddCompanyDialog({Key? key}) : super(key: key);
 
   @override
   State<_AddCompanyDialog> createState() => _AddCompanyDialogState();
 }
 
 class _AddCompanyDialogState extends State<_AddCompanyDialog> {
-  String _countryId;
+  String? _countryId;
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
@@ -418,8 +418,8 @@ class _AddCompanyDialogState extends State<_AddCompanyDialog> {
         entityType: EntityType.country,
         entityList: memoizedCountryList(state.staticState.countryMap),
         labelText: localization.country,
-        onSelected: (SelectableEntity country) {
-          _countryId = country.id;
+        onSelected: (SelectableEntity? country) {
+          _countryId = country?.id ?? '';
         },
       ),
     );

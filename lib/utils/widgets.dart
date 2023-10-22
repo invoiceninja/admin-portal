@@ -19,7 +19,7 @@ class WidgetUtils {
     }
 
     WidgetsBinding.instance.addPostFrameCallback((duration) async {
-      final context = navigatorKey.currentContext;
+      final context = navigatorKey.currentContext!;
       final localization = AppLocalization.of(context);
       final store = StoreProvider.of<AppState>(context);
       final state = store.state;

@@ -42,8 +42,8 @@ import 'package:printing/printing.dart';
 
 class InvoiceDesign extends StatefulWidget {
   const InvoiceDesign({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final InvoiceDesignVM viewModel;
@@ -57,8 +57,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_invoiceDesign');
 
-  TabController _controller;
-  FocusScopeNode _focusNode;
+  TabController? _controller;
+  FocusScopeNode? _focusNode;
 
   final _logoSizeController = TextEditingController();
 
@@ -70,10 +70,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
   bool _wasCreditDesignChanged = false;
   bool _wasPurchaseOrderDesignChanged = false;
 
-  bool _updateAllInvoiceDesigns = false;
-  bool _updateAllQuoteDesigns = false;
-  bool _updateAllCreditDesigns = false;
-  bool _updateAllPurchaseOrderDesigns = false;
+  bool? _updateAllInvoiceDesigns = false;
+  bool? _updateAllQuoteDesigns = false;
+  bool? _updateAllCreditDesigns = false;
+  bool? _updateAllPurchaseOrderDesigns = false;
 
   @override
   void initState() {
@@ -108,7 +108,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
 
     _controller = TabController(
         vsync: this, length: tabs, initialIndex: settingsUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   @override
@@ -123,7 +123,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
     final settings = widget.viewModel.settings;
     _logoSizeController.text = (settings.companyLogoSize ?? '').isEmpty
         ? ''
-        : parseInt(settings.companyLogoSize).toString();
+        : parseInt(settings.companyLogoSize!).toString();
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -133,7 +133,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
 
   void _onTabChanged() {
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller!.index));
   }
 
   void _onChanged() {
@@ -144,7 +144,9 @@ class _InvoiceDesignState extends State<InvoiceDesign>
       ..companyLogoSize = logoSize.isEmpty
           ? ''
           : logoSize +
-              (viewModel.settings.companyLogoSize.contains('px') ? 'px' : '%'));
+              (viewModel.settings.companyLogoSize!.contains('px')
+                  ? 'px'
+                  : '%'));
     if (settings != viewModel.settings) {
       _debouncer.run(() {
         viewModel.onSettingsChanged(settings);
@@ -158,16 +160,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
       controller.removeListener(_onChanged);
       controller.dispose();
     });
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
-    _focusNode.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
+    _focusNode!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final settings = viewModel.settings;
@@ -202,10 +204,10 @@ class _InvoiceDesignState extends State<InvoiceDesign>
       title: localization.invoiceDesign,
       onSavePressed: (context) {
         viewModel.onSavePressed(context, [
-          if (_updateAllInvoiceDesigns) EntityType.invoice,
-          if (_updateAllQuoteDesigns) EntityType.quote,
-          if (_updateAllCreditDesigns) EntityType.credit,
-          if (_updateAllPurchaseOrderDesigns) EntityType.purchaseOrder,
+          if (_updateAllInvoiceDesigns!) EntityType.invoice,
+          if (_updateAllQuoteDesigns!) EntityType.quote,
+          if (_updateAllCreditDesigns!) EntityType.credit,
+          if (_updateAllPurchaseOrderDesigns!) EntityType.purchaseOrder,
         ]);
       },
       appBarBottom: state.settingsUIState.isFiltered
@@ -246,7 +248,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                               onPressed: () =>
                                   state.designState.customDesigns.isEmpty
                                       ? createEntity(
-                                          context: context,
                                           entity: DesignEntity(state: state),
                                         )
                                       : store.dispatch(ViewSettings(
@@ -561,6 +562,16 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 .rebuild((b) => b..showShippingAddress = value),
                           ),
                         ),
+                        if (company.isModuleEnabled(EntityType.document))
+                          BoolDropdownButton(
+                            label: localization.invoiceEmbedDocuments,
+                            //helpLabel: localization.invoiceEmbedDocumentsHelp,
+                            value: settings.embedDocuments ?? false,
+                            iconData: MdiIcons.image,
+                            onChanged: (value) => viewModel.onSettingsChanged(
+                                settings
+                                    .rebuild((b) => b..embedDocuments = value)),
+                          ),
                       ],
                     ),
                     FormCard(
@@ -571,8 +582,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           value: !(settings.hideEmptyColumnsOnPdf ?? false),
                           iconData: MdiIcons.table,
                           onChanged: (value) => viewModel.onSettingsChanged(
-                            settings.rebuild(
-                                (b) => b..hideEmptyColumnsOnPdf = !value),
+                            settings.rebuild((b) =>
+                                b..hideEmptyColumnsOnPdf = value == false),
                           ),
                           enabledLabel: localization.show,
                           disabledLabel: localization.hide,
@@ -659,14 +670,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           iconData: MdiIcons.fileInvoiceDollar,
                           onChanged: (value) => viewModel.onSettingsChanged(
                               settings.rebuild((b) => b..hidePaidToDate = value)),
-                        ),
-                        BoolDropdownButton(
-                          label: localization.invoiceEmbedDocuments,
-                          helpLabel: localization.invoiceEmbedDocumentsHelp,
-                          value: settings.embedDocuments,
-                          iconData: MdiIcons.image,
-                          onChanged: (value) => viewModel.onSettingsChanged(
-                              settings.rebuild((b) => b..embedDocuments = value)),
                         ),
                       ],
                     ),               
@@ -1224,14 +1227,14 @@ class _InvoiceDesignState extends State<InvoiceDesign>
               child: _PdfPreview(
                 state: state,
                 settings: viewModel.settings,
-                entityType: tabs[_controller.index] ==
+                entityType: tabs[_controller!.index] ==
                             localization.vendorDetails ||
-                        tabs[_controller.index] ==
+                        tabs[_controller!.index] ==
                             localization.purchaseOrderDetails
                     ? EntityType.purchaseOrder
-                    : tabs[_controller.index] == localization.quoteDetails
+                    : tabs[_controller!.index] == localization.quoteDetails
                         ? EntityType.quote
-                        : tabs[_controller.index] == localization.creditDetails
+                        : tabs[_controller!.index] == localization.creditDetails
                             ? EntityType.credit
                             : EntityType.invoice,
               ),
@@ -1244,22 +1247,22 @@ class _InvoiceDesignState extends State<InvoiceDesign>
 
 class _PdfPreview extends StatefulWidget {
   const _PdfPreview({
-    Key key,
+    Key? key,
     this.state,
     this.settings,
     this.entityType = EntityType.invoice,
   }) : super(key: key);
 
-  final SettingsEntity settings;
+  final SettingsEntity? settings;
   final EntityType entityType;
-  final AppState state;
+  final AppState? state;
 
   @override
   State<_PdfPreview> createState() => _PdfPreviewState();
 }
 
 class _PdfPreviewState extends State<_PdfPreview> {
-  http.Response response;
+  http.Response? response;
   bool isLoading = false;
 
   @override
@@ -1279,16 +1282,16 @@ class _PdfPreviewState extends State<_PdfPreview> {
   }
 
   void _loadPdf() async {
-    final state = widget.state;
+    final state = widget.state!;
     final settingsUIState = state.settingsUIState;
-    final url = state.credentials.url + '/live_design';
+    final url = state.credentials.url! + '/live_design';
 
     final request = PdfPreviewRequest(
       entityType: widget.entityType.apiValue,
       settingsType: settingsUIState.entityType.apiValue,
-      settings: widget.settings,
-      groupId: settingsUIState.group.id ?? '',
-      clientId: settingsUIState.client.id ?? '',
+      settings: widget.settings!,
+      groupId: settingsUIState.group.id,
+      clientId: settingsUIState.client.id,
     );
 
     setState(() => isLoading = true);
@@ -1321,7 +1324,7 @@ class _PdfPreviewState extends State<_PdfPreview> {
     return Stack(
       children: [
         PdfPreview(
-          build: (format) => response.bodyBytes,
+          build: (format) => response!.bodyBytes,
           canChangeOrientation: false,
           canChangePageFormat: false,
           canDebug: false,

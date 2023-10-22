@@ -34,7 +34,7 @@ abstract class RecurringExpenseState
 
   ExpenseEntity get(String recurringExpenseId) {
     if (map.containsKey(recurringExpenseId)) {
-      return map[recurringExpenseId];
+      return map[recurringExpenseId]!;
     } else {
       return ExpenseEntity(id: recurringExpenseId);
     }
@@ -60,7 +60,7 @@ abstract class RecurringExpenseState
 abstract class RecurringExpenseUIState extends Object
     with EntityUIState
     implements Built<RecurringExpenseUIState, RecurringExpenseUIStateBuilder> {
-  factory RecurringExpenseUIState(PrefStateSortField sortField) {
+  factory RecurringExpenseUIState(PrefStateSortField? sortField) {
     return _$RecurringExpenseUIState._(
       listUIState: ListUIState(
           sortField?.field ?? RecurringExpenseFields.number,
@@ -76,14 +76,13 @@ abstract class RecurringExpenseUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  ExpenseEntity get editing;
+  ExpenseEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<RecurringExpenseUIState> get serializer =>
       _$recurringExpenseUIStateSerializer;

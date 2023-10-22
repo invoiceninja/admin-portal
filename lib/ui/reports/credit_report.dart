@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:memoize/memoize.dart';
 
@@ -79,14 +80,14 @@ enum CreditReportFields {
 }
 
 var memoizedCreditReport = memo6((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, InvoiceEntity> creditMap,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, UserEntity> userMap,
   StaticState staticState,
 ) =>
-    creditReport(userCompany, reportsUIState, creditMap, clientMap, userMap,
+    creditReport(userCompany!, reportsUIState, creditMap, clientMap, userMap,
         staticState));
 
 ReportResult creditReport(
@@ -101,11 +102,10 @@ ReportResult creditReport(
   final List<BaseEntity> entities = [];
   BuiltList<CreditReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
-  final creditReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportCredit)
-          ? reportSettings[kReportCredit]
-          : ReportSettingsEntity();
+  final reportSettings = userCompany.settings.reportSettings;
+  final creditReportSettings = reportSettings.containsKey(kReportCredit)
+      ? reportSettings[kReportCredit]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     CreditReportFields.number,
@@ -119,14 +119,14 @@ ReportResult creditReport(
   if (creditReportSettings.columns.isNotEmpty) {
     columns = BuiltList(creditReportSettings.columns
         .map((e) => EnumUtils.fromString(CreditReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
   }
 
   for (var creditId in creditMap.keys) {
-    final credit = creditMap[creditId];
+    final credit = creditMap[creditId]!;
     final client = clientMap[credit.clientId] ?? ClientEntity();
 
     if (credit.invitations.isEmpty) {
@@ -135,8 +135,8 @@ ReportResult creditReport(
 
     final contact = client.getContact(credit.invitations.first.clientContactId);
 
-    if ((credit.isDeleted && !userCompany.company.reportIncludeDeleted) ||
-        client.isDeleted) {
+    if ((credit.isDeleted! && !userCompany.company.reportIncludeDeleted) ||
+        client.isDeleted!) {
       continue;
     }
 
@@ -167,7 +167,7 @@ ReportResult creditReport(
           value = round(credit.balance * 1 / credit.exchangeRate, 2);
           break;
         case CreditReportFields.client:
-          value = client?.listDisplayName ?? '';
+          value = client.listDisplayName;
           break;
         case CreditReportFields.client_balance:
           value = client.balance;
@@ -325,13 +325,13 @@ ReportResult creditReport(
           value = client.phone;
           break;
         case CreditReportFields.contact_email:
-          value = contact?.email ?? '';
+          value = contact.email;
           break;
         case CreditReportFields.contact_name:
-          value = contact?.fullName ?? '';
+          value = contact.fullName;
           break;
         case CreditReportFields.contact_phone:
-          value = contact?.phone ?? '';
+          value = contact.phone;
           break;
         case CreditReportFields.client_website:
           value = client.website;
@@ -364,14 +364,14 @@ ReportResult creditReport(
         userCompany: userCompany,
         reportsUIState: reportsUIState,
         column: EnumUtils.parse(column),
-      )) {
+      )!) {
         skip = true;
       }
 
       if (value.runtimeType == bool) {
         row.add(credit.getReportBool(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        String currencyId = client.currencyId;
+        String? currencyId = client.currencyId;
         if ([
           CreditReportFields.converted_amount,
           CreditReportFields.converted_balance
@@ -396,7 +396,7 @@ ReportResult creditReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, creditReportSettings, selectedColumns));
+      sortReportTableRows(rowA, rowB, creditReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns:

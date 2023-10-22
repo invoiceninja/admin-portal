@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
@@ -52,10 +53,11 @@ enum ExpenseReportFields {
   created_at,
   updated_at,
   converted_amount,
+  status,
 }
 
 var memoizedExpenseReport = memo10((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, ExpenseEntity> expenseMap,
   BuiltMap<String, ExpenseCategoryEntity> expenseCategoryMap,
@@ -67,7 +69,7 @@ var memoizedExpenseReport = memo10((
   StaticState staticState,
 ) =>
     expenseReport(
-      userCompany,
+      userCompany!,
       reportsUIState,
       expenseMap,
       expenseCategoryMap,
@@ -95,11 +97,10 @@ ReportResult expenseReport(
   final List<BaseEntity> entities = [];
   BuiltList<ExpenseReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
-  final expenseReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportExpense)
-          ? reportSettings[kReportExpense]
-          : ReportSettingsEntity();
+  final reportSettings = userCompany.settings.reportSettings;
+  final expenseReportSettings = reportSettings.containsKey(kReportExpense)
+      ? reportSettings[kReportExpense]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     ExpenseReportFields.amount,
@@ -114,20 +115,20 @@ ReportResult expenseReport(
   if (expenseReportSettings.columns.isNotEmpty) {
     columns = BuiltList(expenseReportSettings.columns
         .map((e) => EnumUtils.fromString(ExpenseReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
   }
 
   for (var expenseId in expenseMap.keys) {
-    final expense = expenseMap[expenseId];
+    final expense = expenseMap[expenseId]!;
     final client = clientMap[expense.clientId] ?? ClientEntity();
     final invoice = invoiceMap[expense.invoiceId] ?? InvoiceEntity();
     final vendor = vendorMap[expense.vendorId] ?? VendorEntity();
     final project = projectMap[expense.projectId] ?? ProjectEntity();
 
-    if (expense.isDeleted && !userCompany.company.reportIncludeDeleted) {
+    if (expense.isDeleted! && !userCompany.company.reportIncludeDeleted) {
       continue;
     }
 
@@ -180,37 +181,37 @@ ReportResult expenseReport(
           value = expense.taxRate3;
           break;
         case ExpenseReportFields.client:
-          value = client?.displayName;
+          value = client.displayName;
           break;
         case ExpenseReportFields.client_balance:
-          value = client?.balance;
+          value = client.balance;
           break;
         case ExpenseReportFields.client_address1:
-          value = client?.address1;
+          value = client.address1;
           break;
         case ExpenseReportFields.client_address2:
-          value = client?.address2;
+          value = client.address2;
           break;
         case ExpenseReportFields.client_shipping_address1:
-          value = client?.shippingAddress1;
+          value = client.shippingAddress1;
           break;
         case ExpenseReportFields.client_shipping_address2:
-          value = client?.shippingAddress2;
+          value = client.shippingAddress2;
           break;
         case ExpenseReportFields.invoice:
-          value = invoice?.listDisplayName;
+          value = invoice.listDisplayName;
           break;
         case ExpenseReportFields.invoice_amount:
-          value = invoice?.amount;
+          value = invoice.amount;
           break;
         case ExpenseReportFields.invoice_date:
           value = invoice.isNew ? '' : invoice.date;
           break;
         case ExpenseReportFields.vendor:
-          value = vendor?.listDisplayName;
+          value = vendor.listDisplayName;
           break;
         case ExpenseReportFields.project:
-          value = project?.name;
+          value = project.name;
           break;
         case ExpenseReportFields.expense1:
           value = presentCustomField(
@@ -273,6 +274,8 @@ ReportResult expenseReport(
         case ExpenseReportFields.converted_amount:
           value = round(expense.convertedAmount, 2);
           break;
+        case ExpenseReportFields.status:
+          value = kExpenseStatuses[expense.calculatedStatusId];
       }
 
       if (!ReportResult.matchField(
@@ -280,7 +283,7 @@ ReportResult expenseReport(
         userCompany: userCompany,
         reportsUIState: reportsUIState,
         column: EnumUtils.parse(column),
-      )) {
+      )!) {
         skip = true;
       }
 
@@ -305,7 +308,7 @@ ReportResult expenseReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, expenseReportSettings, selectedColumns));
+      sortReportTableRows(rowA, rowB, expenseReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns:

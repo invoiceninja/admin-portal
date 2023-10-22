@@ -21,7 +21,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ExpenseListItem extends StatelessWidget {
   const ExpenseListItem({
-    @required this.expense,
+    required this.expense,
     this.filter,
     this.onTap,
     this.onCheckboxChanged,
@@ -31,10 +31,10 @@ class ExpenseListItem extends StatelessWidget {
     this.showSelected = true,
   });
 
-  final Function(bool) onCheckboxChanged;
-  final GestureTapCallback onTap;
+  final Function(bool?)? onCheckboxChanged;
+  final GestureTapCallback? onTap;
   final ExpenseEntity expense;
-  final String filter;
+  final String? filter;
   final bool showCheckbox;
   final bool isDismissible;
   final bool isChecked;
@@ -48,30 +48,30 @@ class ExpenseListItem extends StatelessWidget {
     final uiState = state.uiState;
     final expenseUIState = uiState.expenseUIState;
     final listUIState = expenseUIState.listUIState;
-    final client = state.clientState.get(expense.clientId);
-    final vendor = state.vendorState.get(expense.vendorId);
+    final client = state.clientState.get(expense.clientId!);
+    final vendor = state.vendorState.get(expense.vendorId!);
     final category = state.expenseCategoryState.get(expense.categoryId);
-    final filterMatch = filter != null && filter.isNotEmpty
+    final filterMatch = filter != null && filter!.isNotEmpty
         ? (expense.matchesFilterValue(filter) ??
             client.matchesFilterValue(filter))
         : null;
     final textStyle = TextStyle(fontSize: 16);
-    final textColor = Theme.of(context).textTheme.bodyLarge.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color;
 
     String subtitle = '';
     if (filterMatch != null) {
       subtitle = filterMatch;
-    } else if (client != null || vendor != null || category != null) {
+    } else {
       final parts = <String>[
         formatDate(expense.date, context),
       ];
-      if (category != null && category.isOld) {
+      if (category.isOld) {
         parts.add(category.name);
       }
-      if (vendor != null && vendor.isOld) {
+      if (vendor.isOld) {
         parts.add(vendor.name);
       }
-      if (client != null && client.isOld) {
+      if (client.isOld) {
         parts.add(client.displayName);
       }
       subtitle = parts.join(' • ');
@@ -84,7 +84,7 @@ class ExpenseListItem extends StatelessWidget {
           showSelected &&
           expense.id ==
               (uiState.isEditing
-                  ? expenseUIState.editing.id
+                  ? expenseUIState.editing!.id
                   : expenseUIState.selectedId),
       userCompany: store.state.userCompany,
       entity: expense,
@@ -93,7 +93,7 @@ class ExpenseListItem extends StatelessWidget {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: expense),
+                    onTap != null ? onTap!() : selectEntity(entity: expense),
                 onLongPress: () => onTap != null
                     ? null
                     : selectEntity(entity: expense, longPress: true),
@@ -118,7 +118,7 @@ class ExpenseListItem extends StatelessWidget {
                                     materialTapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
                                     onChanged: (value) =>
-                                        onCheckboxChanged(value),
+                                        onCheckboxChanged!(value),
                                     activeColor:
                                         Theme.of(context).colorScheme.secondary,
                                   ),
@@ -155,19 +155,19 @@ class ExpenseListItem extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              (expense.publicNotes ?? '') +
+                              expense.publicNotes +
                                   (expense.documents.isNotEmpty ? '  📎' : ''),
                               style: textStyle,
                               maxLines: 1,
                             ),
-                            Text(subtitle ?? filterMatch,
+                            Text(subtitle,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .titleSmall
+                                    .titleSmall!
                                     .copyWith(
-                                      color: textColor
+                                      color: textColor!
                                           .withOpacity(kLighterOpacity),
                                     )),
                           ],
@@ -176,7 +176,7 @@ class ExpenseListItem extends StatelessWidget {
                       SizedBox(width: 8),
                       Text(
                         formatNumber(expense.grossAmount, context,
-                            currencyId: expense.currencyId),
+                            currencyId: expense.currencyId)!,
                         style: textStyle,
                         textAlign: TextAlign.end,
                       ),
@@ -188,7 +188,7 @@ class ExpenseListItem extends StatelessWidget {
               )
             : ListTile(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: expense),
+                    onTap != null ? onTap!() : selectEntity(entity: expense),
                 onLongPress: () => onTap != null
                     ? null
                     : selectEntity(entity: expense, longPress: true),
@@ -199,7 +199,7 @@ class ExpenseListItem extends StatelessWidget {
                           value: isChecked,
                           materialTapTargetSize:
                               MaterialTapTargetSize.shrinkWrap,
-                          onChanged: (value) => onCheckboxChanged(value),
+                          onChanged: (value) => onCheckboxChanged!(value),
                           activeColor: Theme.of(context).colorScheme.secondary,
                         ),
                       )
@@ -220,7 +220,7 @@ class ExpenseListItem extends StatelessWidget {
                       ),
                       Text(
                           formatNumber(expense.amount, context,
-                              currencyId: expense.currencyId),
+                              currencyId: expense.currencyId)!,
                           style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),
@@ -236,17 +236,17 @@ class ExpenseListItem extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
                                   .textTheme
-                                  .titleSmall
+                                  .titleSmall!
                                   .copyWith(
                                     color:
-                                        textColor.withOpacity(kLighterOpacity),
+                                        textColor!.withOpacity(kLighterOpacity),
                                   )),
                           EntityStateLabel(expense),
                         ],
                       ),
                     ),
                     Text(
-                        localization.lookup(
+                        localization!.lookup(
                             kExpenseStatuses[expense.calculatedStatusId]),
                         style: TextStyle(
                             color: category.color.isNotEmpty &&

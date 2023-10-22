@@ -15,9 +15,9 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
   final String wireName = 'AppState';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, AppState object,
+  Iterable<Object?> serialize(Serializers serializers, AppState object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'isLoading',
       serializers.serialize(object.isLoading,
           specifiedType: const FullType(bool)),
@@ -58,61 +58,61 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
   }
 
   @override
-  AppState deserialize(Serializers serializers, Iterable<Object> serialized,
+  AppState deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new AppStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'isLoading':
           result.isLoading = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'isSaving':
           result.isSaving = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'isTesting':
           result.isTesting = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'isWhiteLabeled':
           result.isWhiteLabeled = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'dismissedNativeWarning':
           result.dismissedNativeWarning = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'lastError':
           result.lastError = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'authState':
           result.authState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(AuthState)) as AuthState);
+              specifiedType: const FullType(AuthState))! as AuthState);
           break;
         case 'staticState':
           result.staticState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(StaticState)) as StaticState);
+              specifiedType: const FullType(StaticState))! as StaticState);
           break;
         case 'prefState':
           result.prefState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(PrefState)) as PrefState);
+              specifiedType: const FullType(PrefState))! as PrefState);
           break;
         case 'uiState':
           result.uiState.replace(serializers.deserialize(value,
-              specifiedType: const FullType(UIState)) as UIState);
+              specifiedType: const FullType(UIState))! as UIState);
           break;
         case 'userCompanyStates':
           result.userCompanyStates.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(UserCompanyState)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(UserCompanyState)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -145,21 +145,21 @@ class _$AppState extends AppState {
   @override
   final BuiltList<UserCompanyState> userCompanyStates;
 
-  factory _$AppState([void Function(AppStateBuilder) updates]) =>
+  factory _$AppState([void Function(AppStateBuilder)? updates]) =>
       (new AppStateBuilder()..update(updates))._build();
 
   _$AppState._(
-      {this.isLoading,
-      this.isSaving,
-      this.isTesting,
-      this.isWhiteLabeled,
-      this.dismissedNativeWarning,
-      this.lastError,
-      this.authState,
-      this.staticState,
-      this.prefState,
-      this.uiState,
-      this.userCompanyStates})
+      {required this.isLoading,
+      required this.isSaving,
+      required this.isTesting,
+      required this.isWhiteLabeled,
+      required this.dismissedNativeWarning,
+      required this.lastError,
+      required this.authState,
+      required this.staticState,
+      required this.prefState,
+      required this.uiState,
+      required this.userCompanyStates})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(isLoading, r'AppState', 'isLoading');
     BuiltValueNullFieldError.checkNotNull(isSaving, r'AppState', 'isSaving');
@@ -202,10 +202,10 @@ class _$AppState extends AppState {
         userCompanyStates == other.userCompanyStates;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, isLoading.hashCode);
     _$hash = $jc(_$hash, isSaving.hashCode);
@@ -224,58 +224,58 @@ class _$AppState extends AppState {
 }
 
 class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
-  _$AppState _$v;
+  _$AppState? _$v;
 
-  bool _isLoading;
-  bool get isLoading => _$this._isLoading;
-  set isLoading(bool isLoading) => _$this._isLoading = isLoading;
+  bool? _isLoading;
+  bool? get isLoading => _$this._isLoading;
+  set isLoading(bool? isLoading) => _$this._isLoading = isLoading;
 
-  bool _isSaving;
-  bool get isSaving => _$this._isSaving;
-  set isSaving(bool isSaving) => _$this._isSaving = isSaving;
+  bool? _isSaving;
+  bool? get isSaving => _$this._isSaving;
+  set isSaving(bool? isSaving) => _$this._isSaving = isSaving;
 
-  bool _isTesting;
-  bool get isTesting => _$this._isTesting;
-  set isTesting(bool isTesting) => _$this._isTesting = isTesting;
+  bool? _isTesting;
+  bool? get isTesting => _$this._isTesting;
+  set isTesting(bool? isTesting) => _$this._isTesting = isTesting;
 
-  bool _isWhiteLabeled;
-  bool get isWhiteLabeled => _$this._isWhiteLabeled;
-  set isWhiteLabeled(bool isWhiteLabeled) =>
+  bool? _isWhiteLabeled;
+  bool? get isWhiteLabeled => _$this._isWhiteLabeled;
+  set isWhiteLabeled(bool? isWhiteLabeled) =>
       _$this._isWhiteLabeled = isWhiteLabeled;
 
-  bool _dismissedNativeWarning;
-  bool get dismissedNativeWarning => _$this._dismissedNativeWarning;
-  set dismissedNativeWarning(bool dismissedNativeWarning) =>
+  bool? _dismissedNativeWarning;
+  bool? get dismissedNativeWarning => _$this._dismissedNativeWarning;
+  set dismissedNativeWarning(bool? dismissedNativeWarning) =>
       _$this._dismissedNativeWarning = dismissedNativeWarning;
 
-  String _lastError;
-  String get lastError => _$this._lastError;
-  set lastError(String lastError) => _$this._lastError = lastError;
+  String? _lastError;
+  String? get lastError => _$this._lastError;
+  set lastError(String? lastError) => _$this._lastError = lastError;
 
-  AuthStateBuilder _authState;
+  AuthStateBuilder? _authState;
   AuthStateBuilder get authState =>
       _$this._authState ??= new AuthStateBuilder();
-  set authState(AuthStateBuilder authState) => _$this._authState = authState;
+  set authState(AuthStateBuilder? authState) => _$this._authState = authState;
 
-  StaticStateBuilder _staticState;
+  StaticStateBuilder? _staticState;
   StaticStateBuilder get staticState =>
       _$this._staticState ??= new StaticStateBuilder();
-  set staticState(StaticStateBuilder staticState) =>
+  set staticState(StaticStateBuilder? staticState) =>
       _$this._staticState = staticState;
 
-  PrefStateBuilder _prefState;
+  PrefStateBuilder? _prefState;
   PrefStateBuilder get prefState =>
       _$this._prefState ??= new PrefStateBuilder();
-  set prefState(PrefStateBuilder prefState) => _$this._prefState = prefState;
+  set prefState(PrefStateBuilder? prefState) => _$this._prefState = prefState;
 
-  UIStateBuilder _uiState;
+  UIStateBuilder? _uiState;
   UIStateBuilder get uiState => _$this._uiState ??= new UIStateBuilder();
-  set uiState(UIStateBuilder uiState) => _$this._uiState = uiState;
+  set uiState(UIStateBuilder? uiState) => _$this._uiState = uiState;
 
-  ListBuilder<UserCompanyState> _userCompanyStates;
+  ListBuilder<UserCompanyState>? _userCompanyStates;
   ListBuilder<UserCompanyState> get userCompanyStates =>
       _$this._userCompanyStates ??= new ListBuilder<UserCompanyState>();
-  set userCompanyStates(ListBuilder<UserCompanyState> userCompanyStates) =>
+  set userCompanyStates(ListBuilder<UserCompanyState>? userCompanyStates) =>
       _$this._userCompanyStates = userCompanyStates;
 
   AppStateBuilder();
@@ -306,7 +306,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   }
 
   @override
-  void update(void Function(AppStateBuilder) updates) {
+  void update(void Function(AppStateBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -338,7 +338,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
               uiState: uiState.build(),
               userCompanyStates: userCompanyStates.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'authState';
         authState.build();

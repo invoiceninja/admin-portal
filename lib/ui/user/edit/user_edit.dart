@@ -22,8 +22,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class UserEdit extends StatefulWidget {
   const UserEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final UserEditVM viewModel;
@@ -38,7 +38,7 @@ class _UserEditState extends State<UserEdit>
       GlobalKey<FormState>(debugLabel: '_userEdit');
   final _debouncer = Debouncer();
   final FocusScopeNode _focusNode = FocusScopeNode();
-  TabController _controller;
+  TabController? _controller;
 
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
@@ -94,7 +94,7 @@ class _UserEditState extends State<UserEdit>
   @override
   void dispose() {
     _focusNode.dispose();
-    _controller.dispose();
+    _controller!.dispose();
     _controllers.forEach((controller) {
       controller.removeListener(_onChanged);
       controller.dispose();
@@ -123,9 +123,9 @@ class _UserEditState extends State<UserEdit>
 
   void _togglePermission(String permission) {
     final user = widget.viewModel.user;
-    final userCompany = user.userCompany;
+    final userCompany = user.userCompany!;
 
-    final permissions = (userCompany.permissions ?? '').split(',');
+    final permissions = userCompany.permissions.split(',');
     if (permissions.contains(permission)) {
       permissions.remove(permission);
     } else {
@@ -139,7 +139,7 @@ class _UserEditState extends State<UserEdit>
   }
 
   void _onSavePressed(BuildContext context) {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -152,9 +152,9 @@ class _UserEditState extends State<UserEdit>
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final user = viewModel.user;
-    final userCompany = user.userCompany;
+    final userCompany = user.userCompany!;
 
     return EditScaffold(
       entity: user,
@@ -273,7 +273,7 @@ class _UserEditState extends State<UserEdit>
                   SwitchListTile(
                     title: Text(localization.administrator),
                     subtitle: Text(localization.administratorHelp),
-                    value: userCompany.isAdmin ?? false,
+                    value: userCompany.isAdmin,
                     onChanged: (value) => viewModel.onUserChanged(
                         user.rebuild((b) => b..userCompany.isAdmin = value)),
                     activeColor: Theme.of(context).colorScheme.secondary,
@@ -499,23 +499,21 @@ class _UserEditState extends State<UserEdit>
 
 class _PermissionCheckbox extends StatelessWidget {
   const _PermissionCheckbox({
-    @required this.userCompany,
-    @required this.permission,
-    @required this.onChanged,
+    required this.userCompany,
+    required this.permission,
+    required this.onChanged,
     this.checkAll = false,
   });
 
   final UserCompanyEntity userCompany;
   final String permission;
-  final Function(bool) onChanged;
+  final Function(bool?) onChanged;
   final bool checkAll;
 
   @override
   Widget build(BuildContext context) {
     return Checkbox(
-      value: checkAll
-          ? true
-          : (userCompany.permissions ?? '').contains(permission),
+      value: checkAll ? true : userCompany.permissions.contains(permission),
       onChanged: checkAll ? null : onChanged,
       activeColor: Theme.of(context).colorScheme.secondary,
     );

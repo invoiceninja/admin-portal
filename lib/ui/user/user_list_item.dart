@@ -15,8 +15,8 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 
 class UserListItem extends StatelessWidget {
   const UserListItem({
-    @required this.user,
-    @required this.filter,
+    required this.user,
+    required this.filter,
     this.onTap,
     this.onLongPress,
     this.onCheckboxChanged,
@@ -24,10 +24,10 @@ class UserListItem extends StatelessWidget {
   });
 
   final UserEntity user;
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
-  final String filter;
-  final Function(bool) onCheckboxChanged;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onLongPress;
+  final String? filter;
+  final Function(bool?)? onCheckboxChanged;
   final bool isChecked;
 
   @override
@@ -40,7 +40,7 @@ class UserListItem extends StatelessWidget {
     final isInMultiselect = listUIState.isInMultiselect();
     final showCheckbox = onCheckboxChanged != null || isInMultiselect;
 
-    final filterMatch = filter != null && filter.isNotEmpty
+    final filterMatch = filter != null && filter!.isNotEmpty
         ? user.matchesFilterValue(filter)
         : user.email;
     final subtitle = filterMatch;
@@ -50,9 +50,9 @@ class UserListItem extends StatelessWidget {
       entity: user,
       isSelected: false,
       child: ListTile(
-        onTap: () => onTap != null ? onTap() : selectEntity(entity: user),
+        onTap: () => onTap != null ? onTap!() : selectEntity(entity: user),
         onLongPress: () => onLongPress != null
-            ? onLongPress()
+            ? onLongPress!()
             : selectEntity(entity: user, longPress: true),
         leading: showCheckbox
             ? IgnorePointer(
@@ -60,7 +60,7 @@ class UserListItem extends StatelessWidget {
                 child: Checkbox(
                   value: isChecked,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  onChanged: (value) => onCheckboxChanged(value),
+                  onChanged: (value) => onCheckboxChanged!(value),
                   activeColor: Theme.of(context).colorScheme.secondary,
                 ),
               )
@@ -75,7 +75,7 @@ class UserListItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Text(formatNumber(user.listDisplayAmount, context),
+              Text(formatNumber(user.listDisplayAmount, context)!,
                   style: Theme.of(context).textTheme.titleMedium),
             ],
           ),

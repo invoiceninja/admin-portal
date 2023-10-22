@@ -12,14 +12,14 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DesignPicker extends StatelessWidget {
   const DesignPicker({
-    @required this.onSelected,
+    required this.onSelected,
     this.label,
     this.initialValue,
   });
 
   final Function(DesignEntity) onSelected;
-  final String label;
-  final String initialValue;
+  final String? label;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -30,24 +30,24 @@ class DesignPicker extends StatelessWidget {
 
     return AppDropdownButton<String>(
       value: initialValue,
-      onChanged: (dynamic value) => onSelected(designState.map[value]),
+      onChanged: (dynamic value) => onSelected(designState.map[value]!),
       items: designState.list
           .where((designId) {
             final design = designState.map[designId];
             if (state.isHosted &&
                 !state.isPaidAccount &&
                 !state.account.isTrial &&
-                !design.isFree) {
+                !design!.isFree) {
               return false;
             }
-            return design.isActive || designId == initialValue;
+            return design!.isActive || designId == initialValue;
           })
           .map((value) => DropdownMenuItem(
                 value: value,
-                child: Text(designState.map[value].displayName),
+                child: Text(designState.map[value]!.displayName),
               ))
           .toList(),
-      labelText: label ?? localization.design,
+      labelText: label ?? localization!.design,
     );
   }
 }

@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -20,17 +21,17 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceItemSelector extends StatefulWidget {
   const InvoiceItemSelector({
-    @required this.invoice,
-    @required this.clientId,
-    @required this.showTasksAndExpenses,
+    required this.invoice,
+    required this.clientId,
+    required this.showTasksAndExpenses,
     this.onItemsSelected,
     this.excluded,
   });
 
   final InvoiceEntity invoice;
-  final Function(List<InvoiceItemEntity>, [String, String]) onItemsSelected;
+  final Function(List<InvoiceItemEntity>, [String?, String?])? onItemsSelected;
   final String clientId;
-  final List<BaseEntity> excluded;
+  final List<BaseEntity>? excluded;
   final bool showTasksAndExpenses;
 
   @override
@@ -39,9 +40,9 @@ class InvoiceItemSelector extends StatefulWidget {
 
 class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     with SingleTickerProviderStateMixin {
-  String _filter;
-  String _filterClientId;
-  TabController _tabController;
+  String? _filter;
+  String? _filterClientId;
+  TabController? _tabController;
   final List<BaseEntity> _selected = [];
 
   final _textController = TextEditingController();
@@ -56,12 +57,12 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
   @override
   void dispose() {
     _textController.dispose();
-    _tabController.dispose();
+    _tabController!.dispose();
     super.dispose();
   }
 
   void _addBlankItem(CompanyEntity company) {
-    widget.onItemsSelected([
+    widget.onItemsSelected!([
       InvoiceItemEntity(
           quantity:
               company.defaultQuantity || !company.enableProductQuantity ? 1 : 0)
@@ -73,14 +74,14 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     final List<InvoiceItemEntity> items = [];
     final state = StoreProvider.of<AppState>(context).state;
     final company = state.company;
-    String projectId;
+    String? projectId;
 
     _selected.forEach((entity) {
       if (entity.entityType == EntityType.product) {
         items.add(
           convertProductToInvoiceItem(
             company: company,
-            product: entity as ProductEntity,
+            product: entity as ProductEntity?,
             invoice: widget.invoice,
             currencyMap: state.staticState.currencyMap,
             client: state.clientState.get(widget.clientId),
@@ -101,7 +102,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
 
     _updateClientId();
 
-    widget.onItemsSelected(items, _filterClientId, projectId);
+    widget.onItemsSelected!(items, _filterClientId, projectId);
     Navigator.pop(context);
   }
 
@@ -120,22 +121,20 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
   }
 
   void _updateClientId() {
-    final selected = _selected.firstWhere(
-        (entity) =>
-            entity is BelongsToClient &&
-            (((entity as BelongsToClient).clientId ?? '').isNotEmpty),
-        orElse: () => null);
+    final selected = _selected.firstWhereOrNull((entity) =>
+        entity is BelongsToClient &&
+        (((entity as BelongsToClient).clientId ?? '').isNotEmpty));
 
     if (selected != null) {
       _filterClientId = (selected as BelongsToClient).clientId;
-    } else if ((widget.clientId ?? '').isEmpty) {
+    } else if ((widget.clientId).isEmpty) {
       _filterClientId = null;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final state = StoreProvider.of<AppState>(context).state;
     final company = state.company;
     final showTabBar = widget.showTasksAndExpenses &&
@@ -144,7 +143,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
 
     final products =
         memoizedProductList(state.productState.map).where((entityId) {
-      final entity = state.productState.map[entityId];
+      final entity = state.productState.map[entityId]!;
       return entity.isActive && entity.matchesFilter(_filter);
     }).toList();
 
@@ -155,9 +154,9 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       state.clientState.map,
       state.projectState.map,
     ).where((entityId) {
-      final task = state.taskState.get(entityId);
+      final task = state.taskState.get(entityId!);
       final client = state.clientState.get(task.clientId);
-      if (widget.excluded != null && widget.excluded.contains(task)) {
+      if (widget.excluded != null && widget.excluded!.contains(task)) {
         return false;
       }
       return task.matchesFilter(_filter) || client.matchesNameOrEmail(_filter);
@@ -167,9 +166,9 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       state.expenseState.map,
       _filterClientId,
     ).where((entityId) {
-      final expense = state.expenseState.get(entityId);
-      final client = state.clientState.get(expense.clientId);
-      if (widget.excluded != null && widget.excluded.contains(expense)) {
+      final expense = state.expenseState.get(entityId!);
+      final client = state.clientState.get(expense.clientId!);
+      if (widget.excluded != null && widget.excluded!.contains(expense)) {
         return false;
       }
       return expense.matchesFilter(_filter) ||
@@ -180,8 +179,8 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       return ScrollableListViewBuilder(
         itemCount: products.length,
         itemBuilder: (BuildContext context, int index) {
-          final String entityId = products[index];
-          final product = state.productState.map[entityId];
+          final String? entityId = products[index];
+          final product = state.productState.map[entityId]!;
           return ProductListItem(
             isDismissible: false,
             showCost: widget.invoice.isPurchaseOrder &&
@@ -208,8 +207,8 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       return ScrollableListViewBuilder(
         itemCount: tasks.length,
         itemBuilder: (BuildContext context, int index) {
-          final String entityId = tasks[index];
-          final task = state.taskState.map[entityId];
+          final String? entityId = tasks[index];
+          final task = state.taskState.map[entityId]!;
           return TaskListItem(
             isDismissible: false,
             onCheckboxChanged: (checked) => _toggleEntity(task),
@@ -233,7 +232,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
       return ScrollableListViewBuilder(
         itemCount: expenses.length,
         itemBuilder: (BuildContext context, int index) {
-          final String entityId = expenses[index];
+          final String? entityId = expenses[index];
           final expense = state.expenseState.map[entityId] ?? ExpenseEntity();
           return ExpenseListItem(
             isDismissible: false,

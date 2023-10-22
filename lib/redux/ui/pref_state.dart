@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
@@ -182,7 +181,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       ? enableDarkModeSystem
       : darkModeType == kBrightnessDark;
 
-  ColorTheme get colorThemeModel {
+  ColorTheme? get colorThemeModel {
     final theme = enableDarkMode ? darkColorTheme : colorTheme;
 
     if (colorThemesMap.containsKey(theme)) {
@@ -201,7 +200,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   bool get isDesktop => appLayout == AppLayout.desktop;
 
-  bool isEditorFullScreen(EntityType entityType) {
+  bool isEditorFullScreen(EntityType? entityType) {
     if (!isDesktop) {
       return false;
     }
@@ -211,10 +210,10 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       return false;
     }
 
-    return !(useSidebarEditor[entityType.baseType] ?? false);
+    return !(useSidebarEditor[entityType!.baseType] ?? false);
   }
 
-  bool isViewerFullScreen(EntityType entityType) {
+  bool isViewerFullScreen(EntityType? entityType) {
     if (!isDesktop || entityType == null) {
       return false;
     }
@@ -316,7 +315,7 @@ abstract class PrefStateSortField
 abstract class CompanyPrefState
     implements Built<CompanyPrefState, CompanyPrefStateBuilder> {
   factory CompanyPrefState({
-    String accentColor,
+    String? accentColor,
   }) {
     return _$CompanyPrefState._(
       historyList: BuiltList<HistoryRecord>(),
@@ -391,9 +390,9 @@ class AppSidebarMode extends EnumClass {
 abstract class HistoryRecord
     implements Built<HistoryRecord, HistoryRecordBuilder> {
   factory HistoryRecord({
-    @required EntityType entityType,
-    String id,
-    int page,
+    required EntityType entityType,
+    String? id,
+    int? page,
   }) {
     return _$HistoryRecord._(
       id: id,
@@ -409,13 +408,11 @@ abstract class HistoryRecord
   @memoized
   int get hashCode;
 
-  @nullable
-  String get id;
+  String? get id;
 
   EntityType get entityType;
 
-  @nullable
-  int get page;
+  int? get page;
 
   int get timestamp;
 
@@ -424,7 +421,7 @@ abstract class HistoryRecord
   bool matchesRecord(HistoryRecord record) =>
       isEqualTo(entityId: record.id, entityType: record.entityType);
 
-  bool isEqualTo({EntityType entityType, String entityId}) =>
+  bool isEqualTo({EntityType? entityType, String? entityId}) =>
       entityType == this.entityType && (entityId ?? '') == (id ?? '');
 
   static Serializer<HistoryRecord> get serializer => _$historyRecordSerializer;

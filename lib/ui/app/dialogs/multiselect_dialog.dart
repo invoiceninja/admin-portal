@@ -12,18 +12,18 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 void multiselectDialog({
-  BuildContext context,
-  List<String> options,
-  List<String> selected,
-  List<String> defaultSelected,
-  Function(List<String>) onSelected,
-  EntityType entityType,
+  required BuildContext context,
+  required Function(List<String>) onSelected,
+  required List<String> options,
+  required List<String> selected,
+  required List<String> defaultSelected,
+  EntityType? entityType,
 }) {
   showDialog<AlertDialog>(
     context: context,
     barrierDismissible: false,
     builder: (BuildContext context) {
-      final localization = AppLocalization.of(context);
+      final localization = AppLocalization.of(context)!;
       return MultiSelectList(
         options: options,
         selected: selected,
@@ -39,11 +39,11 @@ void multiselectDialog({
 
 class MultiSelectList extends StatefulWidget {
   const MultiSelectList({
-    @required this.options,
-    @required this.selected,
-    @required this.defaultSelected,
-    @required this.addTitle,
-    @required this.onSelected,
+    required this.options,
+    required this.selected,
+    required this.defaultSelected,
+    required this.addTitle,
+    required this.onSelected,
     this.liveChanges = false,
     this.prefix,
     this.isDialog = false,
@@ -56,36 +56,35 @@ class MultiSelectList extends StatefulWidget {
   final String addTitle;
   final Function(List<String>) onSelected;
   final bool liveChanges;
-  final String prefix;
+  final String? prefix;
   final bool isDialog;
-  final EntityType entityType;
+  final EntityType? entityType;
 
   @override
   MultiSelectListState createState() => MultiSelectListState();
 }
 
 class MultiSelectListState extends State<MultiSelectList> {
-  List<String> selected;
+  late List<String> selected;
 
   // TODO remove this https://github.com/flutter/flutter/issues/71946
-  ScrollController _controller;
+  ScrollController? _controller;
 
   @override
   void initState() {
     super.initState();
-    selected = (widget.selected ?? []).isNotEmpty
-        ? widget.selected
-        : widget.defaultSelected;
+    selected =
+        (widget.selected).isNotEmpty ? widget.selected : widget.defaultSelected;
     _controller = ScrollController();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
-  String lookupOption(String value) {
+  String? lookupOption(String value) {
     value = value.replaceFirst('\$', '');
 
     final localization = AppLocalization.of(context);
@@ -93,13 +92,13 @@ class MultiSelectListState extends State<MultiSelectList> {
 
     // Workaround to sync up the variable with the PDF label
     if (value == InvoiceTotalFields.outstanding) {
-      return localization.balanceDue;
+      return localization!.balanceDue;
     }
 
     if (parts.length == 1 || parts[0] == widget.prefix) {
-      return localization.lookup(parts.last);
+      return localization!.lookup(parts.last);
     } else {
-      return localization.lookup(parts[0]) +
+      return localization!.lookup(parts[0]) +
           ' ' +
           localization.lookup(parts[1]);
     }
@@ -110,20 +109,21 @@ class MultiSelectListState extends State<MultiSelectList> {
     final localization = AppLocalization.of(context);
     final state = StoreProvider.of<AppState>(context).state;
 
-    final Map<String, String> options = {};
+    final Map<String?, String?> options = {};
     widget.options
         .where((option) => !selected.contains(option))
         .forEach((option) {
       final columnTitle = state.company.getCustomFieldLabel(
           widget.entityType != null
-              ? option.replaceFirst('custom', widget.entityType.snakeCase)
+              ? option.replaceFirst('custom', widget.entityType!.snakeCase)
               : option);
       options[option] =
           columnTitle.isEmpty ? lookupOption(option) : columnTitle;
     });
     final keys = options.keys.toList();
-    keys.sort((a, b) =>
-        lookupOption(a).toLowerCase().compareTo(lookupOption(b).toLowerCase()));
+    keys.sort((a, b) => lookupOption(a!)!
+        .toLowerCase()
+        .compareTo(lookupOption(b!)!.toLowerCase()));
 
     final column = Container(
       width: isMobile(context) ? double.maxFinite : 400,
@@ -135,7 +135,7 @@ class MultiSelectListState extends State<MultiSelectList> {
             labelText: widget.addTitle,
             items: keys.map((option) {
               return DropdownMenuItem(
-                child: Text(options[option]),
+                child: Text(options[option]!),
                 value: option,
               );
             }).toList(),
@@ -171,7 +171,7 @@ class MultiSelectListState extends State<MultiSelectList> {
                   final columnTitle = state.company.getCustomFieldLabel(
                       widget.entityType != null
                           ? option.replaceFirst(
-                              'custom', widget.entityType.snakeCase)
+                              'custom', widget.entityType!.snakeCase)
                           : option);
                   return Padding(
                     key: ValueKey('__${entry.key}_${entry.value}__'),
@@ -192,7 +192,7 @@ class MultiSelectListState extends State<MultiSelectList> {
                         Expanded(
                           child: Text(
                             columnTitle.isEmpty
-                                ? lookupOption(option)
+                                ? lookupOption(option)!
                                 : columnTitle,
                             textAlign: TextAlign.left,
                             style: Theme.of(context).textTheme.titleMedium,
@@ -232,7 +232,7 @@ class MultiSelectListState extends State<MultiSelectList> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   TextButton(
-                      child: Text(localization.reset.toUpperCase()),
+                      child: Text(localization!.reset.toUpperCase()),
                       onPressed: () {
                         setState(
                             () => selected = widget.defaultSelected.toList());
@@ -249,7 +249,7 @@ class MultiSelectListState extends State<MultiSelectList> {
 
     return widget.isDialog
         ? AlertDialog(
-            semanticLabel: localization.editColumns,
+            semanticLabel: localization!.editColumns,
             title: Text(localization.editColumns),
             content: column,
             actions: [

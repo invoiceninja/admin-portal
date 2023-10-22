@@ -13,7 +13,7 @@ import 'package:invoiceninja_flutter/ui/client/edit/client_edit_contacts.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 
 class ClientEditContactsScreen extends StatelessWidget {
-  const ClientEditContactsScreen({Key key, @required this.viewModel})
+  const ClientEditContactsScreen({Key? key, required this.viewModel})
       : super(key: key);
 
   final ClientEditVM viewModel;
@@ -36,13 +36,13 @@ class ClientEditContactsScreen extends StatelessWidget {
 
 class ClientEditContactsVM {
   ClientEditContactsVM({
-    @required this.company,
-    @required this.client,
-    @required this.contact,
-    @required this.onAddContactPressed,
-    @required this.onRemoveContactPressed,
-    @required this.onDoneContactPressed,
-    @required this.onChangedContact,
+    required this.company,
+    required this.client,
+    required this.contact,
+    required this.onAddContactPressed,
+    required this.onRemoveContactPressed,
+    required this.onDoneContactPressed,
+    required this.onChangedContact,
   });
 
   factory ClientEditContactsVM.fromStore(Store<AppState> store) {
@@ -67,9 +67,9 @@ class ClientEditContactsVM {
         });
   }
 
-  final CompanyEntity company;
-  final ClientEntity client;
-  final ClientContactEntity contact;
+  final CompanyEntity? company;
+  final ClientEntity? client;
+  final ClientContactEntity? contact;
   final Function() onAddContactPressed;
   final Function(int) onRemoveContactPressed;
   final Function(BuildContext) onDoneContactPressed;

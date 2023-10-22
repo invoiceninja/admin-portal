@@ -14,9 +14,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class EntityHeader extends StatelessWidget {
   const EntityHeader({
-    @required this.entity,
-    @required this.label,
-    @required this.value,
+    required this.entity,
+    required this.label,
+    required this.value,
     this.secondLabel,
     this.secondValue,
     this.statusLabel,
@@ -24,17 +24,17 @@ class EntityHeader extends StatelessWidget {
   });
 
   final BaseEntity entity;
-  final Color statusColor;
-  final String statusLabel;
-  final String label;
-  final String value;
-  final String secondLabel;
-  final String secondValue;
+  final Color? statusColor;
+  final String? statusLabel;
+  final String? label;
+  final String? value;
+  final String? secondLabel;
+  final String? secondValue;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context);
-    final textColor = Theme.of(context).textTheme.bodyLarge.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color;
     final store = StoreProvider.of<AppState>(context);
     final prefState = store.state.prefState;
 
@@ -45,17 +45,17 @@ class EntityHeader extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text(label,
+            Text(label!,
                 style: TextStyle(
                   fontSize: 16.0,
-                  color: textColor.withOpacity(.65),
+                  color: textColor!.withOpacity(.65),
                 )),
             SizedBox(
               height: 8,
             ),
             FittedBox(
               child: Text(
-                (value ?? '').isEmpty ? ' ' : value,
+                (value ?? '').isEmpty ? ' ' : value!,
                 style: TextStyle(
                   fontSize: 30,
                 ),
@@ -73,17 +73,17 @@ class EntityHeader extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text(secondLabel,
+            Text(secondLabel!,
                 style: TextStyle(
                   fontSize: 16.0,
-                  color: textColor.withOpacity(.65),
+                  color: textColor!.withOpacity(.65),
                 )),
             SizedBox(
               height: 8,
             ),
             FittedBox(
               child: Text(
-                (secondValue ?? '').isEmpty ? ' ' : secondValue,
+                (secondValue ?? '').isEmpty ? ' ' : secondValue!,
                 style: TextStyle(
                   fontSize: 30,
                 ),
@@ -129,7 +129,7 @@ class EntityHeader extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: entity.isArchived
                             ? Colors.orange
-                            : prefState.colorThemeModel.colorDanger,
+                            : prefState.colorThemeModel!.colorDanger,
                         borderRadius:
                             BorderRadius.all(Radius.circular(kBorderRadius)),
                       ),
@@ -143,8 +143,8 @@ class EntityHeader extends StatelessWidget {
                               vertical: 5, horizontal: 8),
                           child: Text(
                             entity.isArchived
-                                ? localization.archived
-                                : localization.deleted,
+                                ? localization!.archived
+                                : localization!.deleted,
                             style: TextStyle(fontSize: 14, color: Colors.white),
                             textAlign: TextAlign.center,
                             overflow: TextOverflow.ellipsis,

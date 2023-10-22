@@ -11,56 +11,64 @@ import 'package:invoiceninja_flutter/redux/transaction/transaction_state.dart';
 EntityUIState transactionUIReducer(TransactionUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(transactionListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
+    ..editing.replace(editingReducer(state.editing, action)!)
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..forceSelected = forceSelectedReducer(state.forceSelected, action)
     ..tabIndex = tabIndexReducer(state.tabIndex, action));
 }
 
-final forceSelectedReducer = combineReducers<bool>([
-  TypedReducer<bool, ViewTransaction>((completer, action) => true),
-  TypedReducer<bool, ViewTransactionList>((completer, action) => false),
-  TypedReducer<bool, FilterTransactionsByState>((completer, action) => false),
-  TypedReducer<bool, FilterTransactionsByStatus>((completer, action) => false),
-  TypedReducer<bool, FilterTransactions>((completer, action) => false),
-  TypedReducer<bool, FilterTransactionsByCustom1>((completer, action) => false),
-  TypedReducer<bool, FilterTransactionsByCustom2>((completer, action) => false),
-  TypedReducer<bool, FilterTransactionsByCustom3>((completer, action) => false),
-  TypedReducer<bool, FilterTransactionsByCustom4>((completer, action) => false),
+final forceSelectedReducer = combineReducers<bool?>([
+  TypedReducer<bool?, ViewTransaction>((completer, action) => true),
+  TypedReducer<bool?, ViewTransactionList>((completer, action) => false),
+  TypedReducer<bool?, FilterTransactionsByState>((completer, action) => false),
+  TypedReducer<bool?, FilterTransactionsByStatus>((completer, action) => false),
+  TypedReducer<bool?, FilterTransactions>((completer, action) => false),
+  TypedReducer<bool?, FilterTransactionsByCustom1>(
+      (completer, action) => false),
+  TypedReducer<bool?, FilterTransactionsByCustom2>(
+      (completer, action) => false),
+  TypedReducer<bool?, FilterTransactionsByCustom3>(
+      (completer, action) => false),
+  TypedReducer<bool?, FilterTransactionsByCustom4>(
+      (completer, action) => false),
 ]);
 
-final tabIndexReducer = combineReducers<int>([
-  TypedReducer<int, UpdateTransactionTab>((completer, action) {
+final int? Function(int, dynamic) tabIndexReducer = combineReducers<int?>([
+  TypedReducer<int?, UpdateTransactionTab>((completer, action) {
     return action.tabIndex;
   }),
-  TypedReducer<int, PreviewEntity>((completer, action) {
+  TypedReducer<int?, PreviewEntity>((completer, action) {
     return 0;
   }),
 ]);
 
-Reducer<String> selectedIdReducer = combineReducers([
-  TypedReducer<String, ArchiveTransactionsSuccess>((completer, action) => ''),
-  TypedReducer<String, DeleteTransactionsSuccess>((completer, action) => ''),
-  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+Reducer<String?> selectedIdReducer = combineReducers([
+  TypedReducer<String?, ArchiveTransactionsSuccess>((completer, action) => ''),
+  TypedReducer<String?, DeleteTransactionsSuccess>((completer, action) => ''),
+  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.transaction
           ? action.entityId
           : selectedId),
-  TypedReducer<String, ViewTransaction>(
-      (String selectedId, dynamic action) => action.transactionId),
-  TypedReducer<String, AddTransactionSuccess>(
-      (String selectedId, dynamic action) => action.transaction.id),
-  TypedReducer<String, SelectCompany>(
+  TypedReducer<String?, ViewTransaction>(
+      (String? selectedId, dynamic action) => action.transactionId),
+  TypedReducer<String?, AddTransactionSuccess>(
+      (String? selectedId, dynamic action) => action.transaction.id),
+  TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, SortTransactions>((selectedId, action) => ''),
-  TypedReducer<String, FilterTransactions>((selectedId, action) => ''),
-  TypedReducer<String, FilterTransactionsByState>((selectedId, action) => ''),
-  TypedReducer<String, FilterTransactionsByStatus>((selectedId, action) => ''),
-  TypedReducer<String, FilterTransactionsByCustom1>((selectedId, action) => ''),
-  TypedReducer<String, FilterTransactionsByCustom2>((selectedId, action) => ''),
-  TypedReducer<String, FilterTransactionsByCustom3>((selectedId, action) => ''),
-  TypedReducer<String, FilterTransactionsByCustom4>((selectedId, action) => ''),
-  TypedReducer<String, FilterByEntity>(
+  TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String?, SortTransactions>((selectedId, action) => ''),
+  TypedReducer<String?, FilterTransactions>((selectedId, action) => ''),
+  TypedReducer<String?, FilterTransactionsByState>((selectedId, action) => ''),
+  TypedReducer<String?, FilterTransactionsByStatus>((selectedId, action) => ''),
+  TypedReducer<String?, FilterTransactionsByCustom1>(
+      (selectedId, action) => ''),
+  TypedReducer<String?, FilterTransactionsByCustom2>(
+      (selectedId, action) => ''),
+  TypedReducer<String?, FilterTransactionsByCustom3>(
+      (selectedId, action) => ''),
+  TypedReducer<String?, FilterTransactionsByCustom4>(
+      (selectedId, action) => ''),
+  TypedReducer<String?, FilterByEntity>(
       (selectedId, action) => action.clearSelection
           ? ''
           : action.entityType == EntityType.transaction
@@ -68,34 +76,35 @@ Reducer<String> selectedIdReducer = combineReducers([
               : selectedId),
 ]);
 
-final editingReducer = combineReducers<TransactionEntity>([
-  TypedReducer<TransactionEntity, SaveTransactionSuccess>(_updateEditing),
-  TypedReducer<TransactionEntity, AddTransactionSuccess>(_updateEditing),
-  TypedReducer<TransactionEntity, RestoreTransactionsSuccess>(
+final editingReducer = combineReducers<TransactionEntity?>([
+  TypedReducer<TransactionEntity?, SaveTransactionSuccess>(_updateEditing),
+  TypedReducer<TransactionEntity?, AddTransactionSuccess>(_updateEditing),
+  TypedReducer<TransactionEntity?, RestoreTransactionsSuccess>(
       (transactions, action) {
     return action.transactions[0];
   }),
-  TypedReducer<TransactionEntity, ArchiveTransactionsSuccess>(
+  TypedReducer<TransactionEntity?, ArchiveTransactionsSuccess>(
       (transactions, action) {
     return action.transactions[0];
   }),
-  TypedReducer<TransactionEntity, DeleteTransactionsSuccess>(
+  TypedReducer<TransactionEntity?, DeleteTransactionsSuccess>(
       (transactions, action) {
     return action.transactions[0];
   }),
-  TypedReducer<TransactionEntity, EditTransaction>(_updateEditing),
-  TypedReducer<TransactionEntity, UpdateTransaction>((transaction, action) {
+  TypedReducer<TransactionEntity?, EditTransaction>(_updateEditing),
+  TypedReducer<TransactionEntity?, UpdateTransaction>((transaction, action) {
     return action.transaction.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<TransactionEntity, DiscardChanges>(_clearEditing),
+  TypedReducer<TransactionEntity?, DiscardChanges>(_clearEditing),
 ]);
 
-TransactionEntity _clearEditing(TransactionEntity transaction, dynamic action) {
+TransactionEntity _clearEditing(
+    TransactionEntity? transaction, dynamic action) {
   return TransactionEntity();
 }
 
-TransactionEntity _updateEditing(
-    TransactionEntity transaction, dynamic action) {
+TransactionEntity? _updateEditing(
+    TransactionEntity? transaction, dynamic action) {
   return action.transaction;
 }
 
@@ -186,7 +195,7 @@ ListUIState _filterTransactions(
 ListUIState _sortTransactions(
     ListUIState transactionListState, SortTransactions action) {
   return transactionListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortAscending = b.sortField != action.field || !b.sortAscending!
     ..sortField = action.field);
 }
 
@@ -197,13 +206,13 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState productListState, AddToTransactionMultiselect action) {
-  return productListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+  return productListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState productListState, RemoveFromTransactionMultiselect action) {
   return productListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(

@@ -55,7 +55,7 @@ class ExpenseCategoryFields {
 abstract class ExpenseCategoryEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<ExpenseCategoryEntity, ExpenseCategoryEntityBuilder> {
-  factory ExpenseCategoryEntity({String id, AppState state}) {
+  factory ExpenseCategoryEntity({String? id, AppState? state}) {
     return _$ExpenseCategoryEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
@@ -82,16 +82,16 @@ abstract class ExpenseCategoryEntity extends Object
   int get hashCode;
 
   @override
-  List<EntityAction> getActions(
-      {UserCompanyEntity userCompany,
-      ClientEntity client,
+  List<EntityAction?> getActions(
+      {UserCompanyEntity? userCompany,
+      ClientEntity? client,
       bool includeEdit = false,
       bool includePreview = false,
       bool multiselect = false}) {
-    final actions = <EntityAction>[];
+    final actions = <EntityAction?>[];
 
-    if (!isDeleted && !multiselect) {
-      if (includeEdit && userCompany.canEditEntity(this)) {
+    if (!isDeleted! && !multiselect) {
+      if (includeEdit && userCompany!.canEditEntity(this)) {
         actions.add(EntityAction.edit);
       }
 
@@ -104,7 +104,7 @@ abstract class ExpenseCategoryEntity extends Object
   }
 
   @override
-  bool matchesFilter(String filter) {
+  bool matchesFilter(String? filter) {
     if (filter == null || filter.isEmpty) {
       return true;
     }
@@ -118,7 +118,7 @@ abstract class ExpenseCategoryEntity extends Object
   }
 
   @override
-  String matchesFilterValue(String filter) {
+  String? matchesFilterValue(String? filter) {
     if (filter == null || filter.isEmpty) {
       return null;
     }
@@ -132,7 +132,7 @@ abstract class ExpenseCategoryEntity extends Object
   }
 
   @override
-  double get listDisplayAmount => null;
+  double? get listDisplayAmount => null;
 
   @override
   FormatNumberType get listDisplayAmountType => FormatNumberType.money;
@@ -142,20 +142,20 @@ abstract class ExpenseCategoryEntity extends Object
   String get color;
 
   int compareTo(
-      {ExpenseCategoryEntity expenseCategory,
-      String sortField,
-      bool sortAscending}) {
+      {ExpenseCategoryEntity? expenseCategory,
+      String? sortField,
+      required bool sortAscending}) {
     int response = 0;
-    final ExpenseCategoryEntity categoryA =
+    final ExpenseCategoryEntity? categoryA =
         sortAscending ? this : expenseCategory;
-    final ExpenseCategoryEntity categoryB =
+    final ExpenseCategoryEntity? categoryB =
         sortAscending ? expenseCategory : this;
 
     switch (sortField) {
       case ExpenseCategoryFields.name:
-        response = categoryA.name
+        response = categoryA!.name
             .toLowerCase()
-            .compareTo(categoryB.name.toLowerCase());
+            .compareTo(categoryB!.name.toLowerCase());
         break;
       default:
         print(

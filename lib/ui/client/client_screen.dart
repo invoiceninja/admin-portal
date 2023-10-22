@@ -19,8 +19,8 @@ import 'client_screen_vm.dart';
 
 class ClientScreen extends StatelessWidget {
   const ClientScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/client';
@@ -67,7 +67,7 @@ class ClientScreen extends StatelessWidget {
         },
         sortFields: [
           ClientFields.name,
-          ClientFields.idNumber,
+          ClientFields.number,
           ClientFields.balance,
           ClientFields.updatedAt,
         ],
@@ -111,7 +111,7 @@ class ClientScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newClient,
+              tooltip: localization!.newClient,
             )
           : null,
     );

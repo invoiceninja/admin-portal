@@ -15,9 +15,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaskStatusView extends StatefulWidget {
   const TaskStatusView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final TaskStatusViewVM viewModel;
@@ -33,7 +33,7 @@ class _TaskStatusViewState extends State<TaskStatusView> {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final taskStatus = viewModel.taskStatus;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final amount = memoizedCalculateTaskStatusAmount(
         taskStatus.id, viewModel.state.taskState.map);
 

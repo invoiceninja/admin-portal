@@ -77,14 +77,14 @@ List<Middleware<AppState>> createStoreRecurringInvoicesMiddleware([
 
 Middleware<AppState> _editRecurringInvoice() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as EditRecurringInvoice;
+    final action = dynamicAction as EditRecurringInvoice?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(RecurringInvoiceEditScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(RecurringInvoiceEditScreen.route);
+      navigatorKey.currentState!.pushNamed(RecurringInvoiceEditScreen.route);
     }
   };
 }
@@ -92,21 +92,21 @@ Middleware<AppState> _editRecurringInvoice() {
 Middleware<AppState> _viewRecurringInvoice() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ViewRecurringInvoice;
+    final action = dynamicAction as ViewRecurringInvoice?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(RecurringInvoiceViewScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(RecurringInvoiceViewScreen.route);
+      navigatorKey.currentState!.pushNamed(RecurringInvoiceViewScreen.route);
     }
   };
 }
 
 Middleware<AppState> _viewRecurringInvoiceList() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as ViewRecurringInvoiceList;
+    final action = dynamicAction as ViewRecurringInvoiceList?;
 
     next(action);
 
@@ -117,7 +117,7 @@ Middleware<AppState> _viewRecurringInvoiceList() {
     store.dispatch(UpdateCurrentRoute(RecurringInvoiceScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamedAndRemoveUntil(
+      navigatorKey.currentState!.pushNamedAndRemoveUntil(
           RecurringInvoiceScreen.route, (Route<dynamic> route) => false);
     }
   };
@@ -126,14 +126,14 @@ Middleware<AppState> _viewRecurringInvoiceList() {
 Middleware<AppState> _showPdfRecurringInvoice() {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ShowPdfRecurringInvoice;
+    final action = dynamicAction as ShowPdfRecurringInvoice?;
 
     next(action);
 
     store.dispatch(UpdateCurrentRoute(RecurringInvoicePdfScreen.route));
 
     if (store.state.prefState.isMobile) {
-      navigatorKey.currentState.pushNamed(RecurringInvoicePdfScreen.route);
+      navigatorKey.currentState!.pushNamed(RecurringInvoicePdfScreen.route);
     }
   };
 }
@@ -144,17 +144,17 @@ Middleware<AppState> _startRecurringInvoice(
     final action = dynamicAction as StartRecurringInvoicesRequest;
     repository
         .bulkAction(
-            store.state.credentials, action.invoiceIds, EntityAction.start)
+            store.state.credentials, action.invoiceIds!, EntityAction.start)
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(StartRecurringInvoicesSuccess(invoices));
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(StartRecurringInvoicesFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -168,17 +168,17 @@ Middleware<AppState> _stopRecurringInvoice(
     final action = dynamicAction as StopRecurringInvoicesRequest;
     repository
         .bulkAction(
-            store.state.credentials, action.invoiceIds, EntityAction.stop)
+            store.state.credentials, action.invoiceIds!, EntityAction.stop)
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(StopRecurringInvoicesSuccess(invoices));
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(StopRecurringInvoicesFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -191,18 +191,19 @@ Middleware<AppState> _updatePricesRecurringInvoice(
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
     final action = dynamicAction as UpdatePricesRecurringInvoicesRequest;
     repository
-        .bulkAction(store.state.credentials, action.recurringInvoiceIds,
+        .bulkAction(store.state.credentials, action.recurringInvoiceIds!,
             EntityAction.updatePrices)
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(UpdatePricesRecurringInvoicesSuccess(invoices));
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(UpdatePricesRecurringInvoicesFailure(error));
+      store.dispatch(
+          UpdatePricesRecurringInvoicesFailure(error as List<InvoiceEntity>));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -221,13 +222,14 @@ Middleware<AppState> _increasePricesRecurringInvoice(
         }).then((List<InvoiceEntity> invoices) {
       store.dispatch(IncreasePricesRecurringInvoicesSuccess(invoices));
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
-      store.dispatch(IncreasePricesRecurringInvoicesFailure(error));
+      store.dispatch(
+          IncreasePricesRecurringInvoicesFailure(error as List<InvoiceEntity>));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -244,15 +246,12 @@ Middleware<AppState> _sendNowRecurringInvoice(
             EntityAction.sendNow)
         .then((List<InvoiceEntity> invoices) {
       store.dispatch(SendNowRecurringInvoicesSuccess(invoices));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
-      store.dispatch(SendNowRecurringInvoicesFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      store.dispatch(
+          SendNowRecurringInvoicesFailure(error as List<InvoiceEntity>));
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -271,15 +270,11 @@ Middleware<AppState> _archiveRecurringInvoice(
             EntityAction.archive)
         .then((List<InvoiceEntity> recurringInvoices) {
       store.dispatch(ArchiveRecurringInvoicesSuccess(recurringInvoices));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(ArchiveRecurringInvoicesFailure(prevRecurringInvoices));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -298,15 +293,11 @@ Middleware<AppState> _deleteRecurringInvoice(
             EntityAction.delete)
         .then((List<InvoiceEntity> recurringInvoices) {
       store.dispatch(DeleteRecurringInvoicesSuccess(recurringInvoices));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(DeleteRecurringInvoicesFailure(prevRecurringInvoices));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -325,15 +316,11 @@ Middleware<AppState> _restoreRecurringInvoice(
             EntityAction.restore)
         .then((List<InvoiceEntity> recurringInvoices) {
       store.dispatch(RestoreRecurringInvoicesSuccess(recurringInvoices));
-      if (action.completer != null) {
-        action.completer.complete(null);
-      }
+      action.completer.complete(null);
     }).catchError((Object error) {
       print(error);
       store.dispatch(RestoreRecurringInvoicesFailure(prevRecurringInvoices));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -346,25 +333,25 @@ Middleware<AppState> _saveRecurringInvoice(
     final action = dynamicAction as SaveRecurringInvoiceRequest;
 
     // remove any empty line items
-    final updatedInvoice = action.recurringInvoice.rebuild((b) => b
+    final updatedInvoice = action.recurringInvoice!.rebuild((b) => b
       ..lineItems.replace(
-          action.recurringInvoice.lineItems.where((item) => !item.isEmpty)));
+          action.recurringInvoice!.lineItems.where((item) => !item.isEmpty)));
 
     repository
         .saveData(store.state.credentials, updatedInvoice,
             action: action.action)
         .then((InvoiceEntity recurringInvoice) {
-      if (action.recurringInvoice.isNew) {
+      if (action.recurringInvoice!.isNew) {
         store.dispatch(AddRecurringInvoiceSuccess(recurringInvoice));
       } else {
         store.dispatch(SaveRecurringInvoiceSuccess(recurringInvoice));
       }
 
-      action.completer.complete(recurringInvoice);
+      action.completer!.complete(recurringInvoice);
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveRecurringInvoiceFailure(error));
-      action.completer.completeError(error);
+      action.completer!.completeError(error);
     });
 
     next(action);
@@ -384,13 +371,13 @@ Middleware<AppState> _loadRecurringInvoice(
       store.dispatch(LoadRecurringInvoiceSuccess(recurringInvoice));
 
       if (action.completer != null) {
-        action.completer.complete(null);
+        action.completer!.complete(null);
       }
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadRecurringInvoiceFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -431,7 +418,7 @@ Middleware<AppState> _loadRecurringInvoices(
         ));
       } else {
         if (action.completer != null) {
-          action.completer.complete(null);
+          action.completer!.complete(null);
         }
         store.dispatch(LoadPayments());
       }
@@ -439,7 +426,7 @@ Middleware<AppState> _loadRecurringInvoices(
       print(error);
       store.dispatch(LoadRecurringInvoicesFailure(error));
       if (action.completer != null) {
-        action.completer.completeError(error);
+        action.completer!.completeError(error);
       }
     });
 
@@ -449,12 +436,12 @@ Middleware<AppState> _loadRecurringInvoices(
 
 Middleware<AppState> _saveDocument(RecurringInvoiceRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as SaveRecurringInvoiceDocumentRequest;
+    final action = dynamicAction as SaveRecurringInvoiceDocumentRequest?;
     if (store.state.isEnterprisePlan) {
       repository
           .uploadDocument(
         store.state.credentials,
-        action.invoice,
+        action!.invoice,
         action.multipartFiles,
         action.isPrivate,
       )
@@ -468,8 +455,7 @@ Middleware<AppState> _saveDocument(RecurringInvoiceRepository repository) {
             ..parentType = EntityType.recurringInvoice));
         });
         store.dispatch(LoadDocumentsSuccess(documents));
-
-        action.completer.complete(null);
+        action.completer.complete(documents);
       }).catchError((Object error) {
         print(error);
         store.dispatch(SaveRecurringInvoiceDocumentFailure(error));
@@ -478,7 +464,7 @@ Middleware<AppState> _saveDocument(RecurringInvoiceRepository repository) {
     } else {
       const error = 'Uploading documents requires an enterprise plan';
       store.dispatch(SaveRecurringInvoiceDocumentFailure(error));
-      action.completer.completeError(error);
+      action!.completer.completeError(error);
     }
 
     next(action);

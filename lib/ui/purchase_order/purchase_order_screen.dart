@@ -17,8 +17,8 @@ import 'purchase_order_screen_vm.dart';
 
 class PurchaseOrderScreen extends StatelessWidget {
   const PurchaseOrderScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/purchase_order';
@@ -37,22 +37,22 @@ class PurchaseOrderScreen extends StatelessWidget {
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kPurchaseOrderStatusDraft
-          ..name = localization.draft,
+          ..name = localization!.draft,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kPurchaseOrderStatusSent
-          ..name = localization.sent,
+          ..name = localization!.sent,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kPurchaseOrderStatusAccepted
-          ..name = localization.accepted,
+          ..name = localization!.accepted,
       ),
       InvoiceStatusEntity().rebuild(
         (b) => b
           ..id = kPurchaseOrderStatusCancelled
-          ..name = localization.cancelled,
+          ..name = localization!.cancelled,
       ),
     ];
 
@@ -143,7 +143,7 @@ class PurchaseOrderScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newPurchaseOrder,
+              tooltip: localization!.newPurchaseOrder,
             )
           : null,
     );

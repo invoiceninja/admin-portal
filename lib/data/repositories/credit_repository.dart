@@ -25,7 +25,7 @@ class CreditRepository {
   final WebClient webClient;
 
   Future<InvoiceEntity> loadItem(
-      Credentials credentials, String entityId) async {
+      Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/credits/$entityId?include=activities.history',
         credentials.token);
@@ -39,7 +39,7 @@ class CreditRepository {
 
   Future<BuiltList<InvoiceEntity>> loadList(
       Credentials credentials, int createdAt, bool filterDeleted) async {
-    String url = credentials.url + '/credits?created_at=$createdAt';
+    String url = credentials.url! + '/credits?created_at=$createdAt';
 
     if (filterDeleted) {
       url += '&filter_deleted_clients=true';
@@ -56,13 +56,13 @@ class CreditRepository {
 
   Future<List<InvoiceEntity>> bulkAction(
       Credentials credentials, List<String> ids, EntityAction action,
-      {EmailTemplate template}) async {
+      {EmailTemplate? template}) async {
     if (ids.length > kMaxEntitiesPerBulkAction && action.applyMaxLimit) {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
     final url =
-        credentials.url + '/credits/bulk?per_page=$kMaxEntitiesPerBulkAction';
+        credentials.url! + '/credits/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({
           'ids': ids,
@@ -71,7 +71,7 @@ class CreditRepository {
         }));
 
     final InvoiceListResponse invoiceResponse =
-        serializers.deserializeWith(InvoiceListResponse.serializer, response);
+        serializers.deserializeWith(InvoiceListResponse.serializer, response)!;
 
     return invoiceResponse.data.toList();
   }
@@ -79,7 +79,7 @@ class CreditRepository {
   Future<InvoiceEntity> saveData(
     Credentials credentials,
     InvoiceEntity credit,
-    EntityAction action,
+    EntityAction? action,
   ) async {
     credit = credit.rebuild((b) => b..documents.clear());
     final data = serializers.serializeWith(InvoiceEntity.serializer, credit);
@@ -87,7 +87,7 @@ class CreditRepository {
     dynamic response;
 
     if (credit.isNew) {
-      url = credentials.url + '/credits?include=activities.history';
+      url = credentials.url! + '/credits?include=activities.history';
     } else {
       url =
           '${credentials.url}/credits/${credit.id}?include=activities.history';
@@ -108,7 +108,7 @@ class CreditRepository {
     }
 
     final InvoiceItemResponse creditResponse =
-        serializers.deserializeWith(InvoiceItemResponse.serializer, response);
+        serializers.deserializeWith(InvoiceItemResponse.serializer, response)!;
 
     return creditResponse.data;
   }
@@ -131,11 +131,11 @@ class CreditRepository {
     };
 
     final dynamic response = await webClient.post(
-        credentials.url + '/emails', credentials.token,
+        credentials.url! + '/emails', credentials.token,
         data: json.encode(data));
 
     final InvoiceItemResponse invoiceResponse =
-        serializers.deserializeWith(InvoiceItemResponse.serializer, response);
+        serializers.deserializeWith(InvoiceItemResponse.serializer, response)!;
 
     return invoiceResponse.data;
   }
@@ -155,7 +155,7 @@ class CreditRepository {
         data: fields, multipartFiles: multipartFiles);
 
     final InvoiceItemResponse invoiceResponse =
-        serializers.deserializeWith(InvoiceItemResponse.serializer, response);
+        serializers.deserializeWith(InvoiceItemResponse.serializer, response)!;
 
     return invoiceResponse.data;
   }

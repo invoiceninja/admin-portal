@@ -1,12 +1,13 @@
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart' hide LiveText;
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -22,19 +23,18 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/color_picker.dart';
-import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/settings/device_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
-import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
+import 'package:invoiceninja_flutter/ui/app/live_text.dart';
 
 class DeviceSettings extends StatefulWidget {
   const DeviceSettings({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final DeviceSettingsVM viewModel;
@@ -48,8 +48,8 @@ class _DeviceSettingsState extends State<DeviceSettings>
   final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_deviceSettings');
 
-  TabController _controller;
-  FocusScopeNode _focusNode;
+  TabController? _controller;
+  FocusScopeNode? _focusNode;
 
   @override
   void initState() {
@@ -58,25 +58,25 @@ class _DeviceSettingsState extends State<DeviceSettings>
     _focusNode = FocusScopeNode();
     _controller = TabController(
         vsync: this, length: 2, initialIndex: settingsUIState.tabIndex);
-    _controller.addListener(_onTabChanged);
+    _controller!.addListener(_onTabChanged);
   }
 
   void _onTabChanged() {
     final store = StoreProvider.of<AppState>(context);
-    store.dispatch(UpdateSettingsTab(tabIndex: _controller.index));
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller!.index));
   }
 
   @override
   void dispose() {
-    _controller.removeListener(_onTabChanged);
-    _controller.dispose();
-    _focusNode.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
+    _focusNode!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final prefState = state.prefState;
@@ -120,7 +120,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                     value: prefState.appLayout == AppLayout.mobile,
                     onChanged: (value) {
                       viewModel.onLayoutChanged(context,
-                          value ? AppLayout.mobile : AppLayout.desktop);
+                          value == true ? AppLayout.mobile : AppLayout.desktop);
                     },
                     enabledLabel: localization.mobile,
                     disabledLabel: localization.desktop,
@@ -132,7 +132,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       onChanged: (value) {
                         viewModel.onMenuModeChanged(
                           context,
-                          value
+                          value == true
                               ? AppSidebarMode.float
                               : AppSidebarMode.collapse,
                         );
@@ -147,7 +147,9 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       onChanged: (value) {
                         viewModel.onHistoryModeChanged(
                           context,
-                          value ? AppSidebarMode.float : AppSidebarMode.visible,
+                          value == true
+                              ? AppSidebarMode.float
+                              : AppSidebarMode.visible,
                         );
                       },
                       enabledLabel: localization.float,
@@ -159,7 +161,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       label: localization.clickSelected,
                       value: prefState.tapSelectedToEdit,
                       onChanged: (value) {
-                        viewModel.onTapSelectedChanged(context, value);
+                        viewModel.onTapSelectedChanged(context, value == true);
                       },
                       enabledLabel: localization.editRecord,
                       disabledLabel: localization.hidePreview,
@@ -168,7 +170,8 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       label: localization.afterSaving,
                       value: prefState.editAfterSaving,
                       onChanged: (value) {
-                        viewModel.onEditAfterSavingChanged(context, value);
+                        viewModel.onEditAfterSavingChanged(
+                            context, value == true);
                       },
                       enabledLabel: localization.editRecord,
                       disabledLabel: localization.viewRecord,
@@ -179,7 +182,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       value: !prefState.longPressSelectionIsDefault,
                       onChanged: (value) {
                         viewModel.onLongPressSelectionIsDefault(
-                            context, !value);
+                            context, value == false);
                       },
                       enabledLabel: localization.showActions,
                       disabledLabel: localization.startMultiselect,
@@ -213,7 +216,8 @@ class _DeviceSettingsState extends State<DeviceSettings>
                       label: localization.previewLocation,
                       value: prefState.showPdfPreviewSideBySide,
                       onChanged: (value) {
-                        viewModel.onShowPdfSideBySideChanged(context, value);
+                        viewModel.onShowPdfSideBySideChanged(
+                            context, value == true);
                       },
                       disabledLabel: localization.bottom,
                       enabledLabel: localization.side,
@@ -229,7 +233,7 @@ class _DeviceSettingsState extends State<DeviceSettings>
                         value: prefState.textScaleFactor,
                         onChanged: (dynamic value) {
                           viewModel.onTextScaleFactorChanged(context, value);
-                          AppBuilder.of(context).rebuild();
+                          AppBuilder.of(context)!.rebuild();
                         },
                         items: [
                           DropdownMenuItem(
@@ -397,31 +401,31 @@ class _DeviceSettingsState extends State<DeviceSettings>
                                   ),
                                   Expanded(
                                     child: Container(
-                                      color: colorThemesMap[key].colorInfo,
+                                      color: colorThemesMap[key]!.colorInfo,
                                       height: 50,
                                     ),
                                   ),
                                   Expanded(
                                     child: Container(
-                                      color: colorThemesMap[key].colorPrimary,
+                                      color: colorThemesMap[key]!.colorPrimary,
                                       height: 50,
                                     ),
                                   ),
                                   Expanded(
                                     child: Container(
-                                      color: colorThemesMap[key].colorSuccess,
+                                      color: colorThemesMap[key]!.colorSuccess,
                                       height: 50,
                                     ),
                                   ),
                                   Expanded(
                                     child: Container(
-                                      color: colorThemesMap[key].colorWarning,
+                                      color: colorThemesMap[key]!.colorWarning,
                                       height: 50,
                                     ),
                                   ),
                                   Expanded(
                                     child: Container(
-                                      color: colorThemesMap[key].colorDanger,
+                                      color: colorThemesMap[key]!.colorDanger,
                                       height: 50,
                                     ),
                                   ),

@@ -16,7 +16,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class VendorListItem extends StatelessWidget {
   const VendorListItem({
-    @required this.vendor,
+    required this.vendor,
     this.filter = '',
     this.onTap,
     this.onLongPress,
@@ -25,11 +25,11 @@ class VendorListItem extends StatelessWidget {
     this.isChecked = false,
   });
 
-  final GestureTapCallback onTap;
-  final GestureTapCallback onLongPress;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onLongPress;
   final VendorEntity vendor;
-  final String filter;
-  final Function(bool) onCheckboxChanged;
+  final String? filter;
+  final Function(bool)? onCheckboxChanged;
   final bool isChecked;
   final bool showCheck;
 
@@ -39,19 +39,19 @@ class VendorListItem extends StatelessWidget {
     final state = store.state;
     final uiState = state.uiState;
     final vendorUIState = uiState.vendorUIState;
-    final filterMatch = filter != null && filter.isNotEmpty
+    final filterMatch = filter != null && filter!.isNotEmpty
         ? vendor.matchesFilterValue(filter)
         : null;
     final textStyle = TextStyle(fontSize: 16);
-    final textColor = Theme.of(context).textTheme.bodyLarge.color;
-    final documents = vendor.documents ?? <DocumentEntity>[];
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color;
+    final documents = vendor.documents;
 
     return DismissibleEntity(
       isSelected: isDesktop(context) &&
           !showCheck &&
           vendor.id ==
               (uiState.isEditing
-                  ? vendorUIState.editing.id
+                  ? vendorUIState.editing!.id
                   : vendorUIState.selectedId),
       showMultiselect: showCheck,
       userCompany: store.state.userCompany,
@@ -61,9 +61,9 @@ class VendorListItem extends StatelessWidget {
         return constraints.maxWidth > kTableListWidthCutoff
             ? InkWell(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: vendor),
+                    onTap != null ? onTap!() : selectEntity(entity: vendor),
                 onLongPress: () => onLongPress != null
-                    ? onLongPress()
+                    ? onLongPress!()
                     : selectEntity(entity: vendor, longPress: true),
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -130,9 +130,9 @@ class VendorListItem extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .titleSmall
+                                      .titleSmall!
                                       .copyWith(
-                                        color: textColor
+                                        color: textColor!
                                             .withOpacity(kLighterOpacity),
                                       )),
                           ],
@@ -153,9 +153,9 @@ class VendorListItem extends StatelessWidget {
               )
             : ListTile(
                 onTap: () =>
-                    onTap != null ? onTap() : selectEntity(entity: vendor),
+                    onTap != null ? onTap!() : selectEntity(entity: vendor),
                 onLongPress: () => onLongPress != null
-                    ? onLongPress()
+                    ? onLongPress!()
                     : selectEntity(entity: vendor, longPress: true),
                 leading: showCheck
                     ? IgnorePointer(
@@ -196,9 +196,10 @@ class VendorListItem extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             style: Theme.of(context)
                                 .textTheme
-                                .titleSmall
+                                .titleSmall!
                                 .copyWith(
-                                  color: textColor.withOpacity(kLighterOpacity),
+                                  color:
+                                      textColor!.withOpacity(kLighterOpacity),
                                 ))
                         : Text(vendor.number),
                     EntityStateLabel(vendor),

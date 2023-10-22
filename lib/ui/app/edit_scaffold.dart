@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -27,10 +28,10 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class EditScaffold extends StatelessWidget {
   const EditScaffold({
-    Key key,
-    @required this.title,
-    @required this.onSavePressed,
-    @required this.body,
+    Key? key,
+    required this.title,
+    required this.onSavePressed,
+    required this.body,
     this.entity,
     this.onCancelPressed,
     this.bottomNavigationBar,
@@ -42,17 +43,17 @@ class EditScaffold extends StatelessWidget {
     this.actions,
   }) : super(key: key);
 
-  final BaseEntity entity;
-  final String title;
-  final Function(BuildContext) onSavePressed;
-  final Function(BuildContext) onCancelPressed;
-  final Function(BuildContext, EntityAction) onActionPressed;
-  final List<EntityAction> actions;
-  final Widget appBarBottom;
-  final Widget floatingActionButton;
+  final BaseEntity? entity;
+  final String? title;
+  final Function(BuildContext)? onSavePressed;
+  final Function(BuildContext)? onCancelPressed;
+  final Function(BuildContext, EntityAction)? onActionPressed;
+  final List<EntityAction?>? actions;
+  final Widget? appBarBottom;
+  final Widget? floatingActionButton;
   final Widget body;
-  final Widget bottomNavigationBar;
-  final String saveLabel;
+  final Widget? bottomNavigationBar;
+  final String? saveLabel;
   final bool isFullscreen;
 
   @override
@@ -61,16 +62,16 @@ class EditScaffold extends StatelessWidget {
     final state = store.state;
     final account = state.account;
     final localization = AppLocalization.of(context);
-    Function bannerClick;
+    Function? bannerClick;
 
     bool showUpgradeBanner = false;
     bool isEnabled = !state.isSaving && (entity?.isEditable ?? true);
     bool isCancelEnabled = false;
-    String upgradeMessage = state.userCompany.isOwner
+    String? upgradeMessage = state.userCompany.isOwner
         ? (state.account.isEligibleForTrial && !supportsInAppPurchase()
-            ? localization.startFreeTrialMessage
-            : localization.upgradeToPaidPlan)
-        : localization.ownerUpgradeToPaidPlan;
+            ? localization!.startFreeTrialMessage
+            : localization!.upgradeToPaidPlan)
+        : localization!.ownerUpgradeToPaidPlan;
     if (account.isTrial) {
       if (account.trialDaysLeft <= 1) {
         upgradeMessage = localization.freeTrialEndsToday;
@@ -112,12 +113,12 @@ class EditScaffold extends StatelessWidget {
           ((isEnabled && onSavePressed != null) || isCancelEnabled))
         EntityAction.back,
       EntityAction.save,
-      ...(actions ?? []).where((action) => action != null),
+      ...(actions ?? []).whereNotNull(),
     ];
 
     final textStyle = Theme.of(context)
         .textTheme
-        .bodyMedium
+        .bodyMedium!
         .copyWith(color: state.headerTextColor);
 
     final showOverflow = isDesktop(context) && state.isFullScreen;
@@ -129,7 +130,7 @@ class EditScaffold extends StatelessWidget {
       child: CallbackShortcuts(
         bindings: <ShortcutActivator, VoidCallback>{
           const SingleActivator(LogicalKeyboardKey.keyS, control: true): () =>
-              onSavePressed(context),
+              onSavePressed!(context),
         },
         child: FocusTraversalGroup(
           child: Scaffold(
@@ -180,16 +181,17 @@ class EditScaffold extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   if (showOverflow)
-                    Text(title)
+                    Text(title!)
                   else
-                    Flexible(child: Text(title)),
+                    Flexible(child: Text(title!)),
                   SizedBox(width: 16),
                   if (isDesktop(context) &&
                       isFullscreen &&
                       entity != null &&
-                      entity.isOld) ...[
+                      entity!.isOld) ...[
                     EntityStatusChip(
-                        entity: state.getEntity(entity.entityType, entity.id)),
+                        entity:
+                            state.getEntity(entity!.entityType, entity!.id)),
                     SizedBox(width: 8),
                   ],
                   if (showOverflow)
@@ -204,7 +206,7 @@ class EditScaffold extends StatelessWidget {
                               spacing: 8,
                               children: entityActions.map(
                                 (action) {
-                                  String label;
+                                  String? label;
                                   if (action == EntityAction.save &&
                                       saveLabel != null) {
                                     label = saveLabel;
@@ -219,7 +221,7 @@ class EditScaffold extends StatelessWidget {
                                             backgroundColor:
                                                 MaterialStateProperty.all(state
                                                     .prefState
-                                                    .colorThemeModel
+                                                    .colorThemeModel!
                                                     .colorSuccess))
                                         : null,
                                     child: ConstrainedBox(
@@ -237,7 +239,7 @@ class EditScaffold extends StatelessWidget {
                                                           color: Colors.white)
                                                       : textStyle,
                                             )
-                                          : Text(label,
+                                          : Text(label!,
                                               style: state.isSaving
                                                   ? null
                                                   : textStyle),
@@ -247,7 +249,7 @@ class EditScaffold extends StatelessWidget {
                                         : () {
                                             if (action == EntityAction.back) {
                                               if (onCancelPressed != null) {
-                                                onCancelPressed(context);
+                                                onCancelPressed!(context);
                                               } else {
                                                 store.dispatch(ResetSettings());
                                               }
@@ -259,9 +261,9 @@ class EditScaffold extends StatelessWidget {
                                                   disposition: UnfocusDisposition
                                                       .previouslyFocusedChild);
 
-                                              onSavePressed(context);
+                                              onSavePressed!(context);
                                             } else {
-                                              onActionPressed(context, action);
+                                              onActionPressed!(context, action);
                                             }
                                           },
                                   );
@@ -287,7 +289,7 @@ class EditScaffold extends StatelessWidget {
                                         : Icon(Icons.more_vert),
                                   ),
                                   onSelected: (EntityAction action) {
-                                    onActionPressed(context, action);
+                                    onActionPressed!(context, action);
                                   },
                                   itemBuilder: (BuildContext context) {
                                     return entityActions
@@ -304,10 +306,8 @@ class EditScaffold extends StatelessWidget {
                                                     .colorScheme
                                                     .secondary),
                                             SizedBox(width: 16.0),
-                                            Text(AppLocalization.of(context)
-                                                    .lookup(
-                                                        action.toString()) ??
-                                                ''),
+                                            Text(AppLocalization.of(context)!
+                                                .lookup(action.toString())),
                                           ],
                                         ),
                                       );
@@ -342,7 +342,7 @@ class EditScaffold extends StatelessWidget {
                                   ? null
                                   : () {
                                       if (onCancelPressed != null) {
-                                        onCancelPressed(context);
+                                        onCancelPressed!(context);
                                       } else {
                                         store.dispatch(ResetSettings());
                                       }
@@ -352,7 +352,7 @@ class EditScaffold extends StatelessWidget {
                                 child: IconText(
                                   icon: getEntityActionIcon(EntityAction.back),
                                   text: (entity != null &&
-                                          entity.entityType.isSetting)
+                                          entity!.entityType!.isSetting)
                                       ? localization.back
                                       : localization.cancel,
                                   style: state.isSaving ? null : textStyle,
@@ -366,7 +366,7 @@ class EditScaffold extends StatelessWidget {
                                       backgroundColor:
                                           MaterialStateProperty.all(state
                                               .prefState
-                                              .colorThemeModel
+                                              .colorThemeModel!
                                               .colorSuccess))
                                   : null,
                               onPressed: !isEnabled ||
@@ -380,7 +380,7 @@ class EditScaffold extends StatelessWidget {
                                           disposition: UnfocusDisposition
                                               .previouslyFocusedChild);
 
-                                      onSavePressed(context);
+                                      onSavePressed!(context);
                                     },
                               child: ConstrainedBox(
                                 constraints: BoxConstraints(minWidth: 60),
@@ -412,20 +412,20 @@ class EditScaffold extends StatelessWidget {
                                       disposition: UnfocusDisposition
                                           .previouslyFocusedChild);
 
-                                  onSavePressed(context);
+                                  onSavePressed!(context);
                                 },
                           onCancelPressed: isMobile(context)
                               ? null
                               : (context) {
                                   if (onCancelPressed != null) {
-                                    onCancelPressed(context);
+                                    onCancelPressed!(context);
                                   } else {
                                     store.dispatch(ResetSettings());
                                   }
                                 },
                         ),
                       if (actions != null &&
-                          actions.isNotEmpty &&
+                          actions!.isNotEmpty &&
                           onActionPressed != null)
                         PopupMenuButton<EntityAction>(
                           icon: Icon(
@@ -435,33 +435,37 @@ class EditScaffold extends StatelessWidget {
                           ),
                           itemBuilder: (BuildContext context) =>
                               <PopupMenuEntry<EntityAction>>[
-                            ...actions
-                                .map((action) => action == null
-                                    ? PopupMenuDivider()
-                                    : PopupMenuItem<EntityAction>(
-                                        child: Row(
-                                          children: <Widget>[
-                                            Icon(
-                                              getEntityActionIcon(action),
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .secondary,
+                            ...actions!
+                                    .map((action) => action == null
+                                        ? PopupMenuDivider()
+                                        : PopupMenuItem<EntityAction>(
+                                            child: Row(
+                                              children: <Widget>[
+                                                Icon(
+                                                  getEntityActionIcon(action),
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .secondary,
+                                                ),
+                                                SizedBox(width: 16.0),
+                                                Text(AppLocalization.of(
+                                                        context)!
+                                                    .lookup(action.toString())),
+                                              ],
                                             ),
-                                            SizedBox(width: 16.0),
-                                            Text(AppLocalization.of(context)
-                                                .lookup(action.toString())),
-                                          ],
-                                        ),
-                                        value: action,
-                                      ))
-                                .toList()
+                                            value: action,
+                                          ))
+                                    .toList()
+                                as Iterable<PopupMenuEntry<EntityAction>>
                           ],
                           onSelected: (action) =>
-                              onActionPressed(context, action),
+                              onActionPressed!(context, action),
                           enabled: isEnabled,
                         )
                     ],
-              bottom: isFullscreen && isDesktop(context) ? null : appBarBottom,
+              bottom: isFullscreen && isDesktop(context)
+                  ? null
+                  : appBarBottom as PreferredSizeWidget?,
             ),
             bottomNavigationBar: bottomNavigationBar,
             floatingActionButtonLocation:

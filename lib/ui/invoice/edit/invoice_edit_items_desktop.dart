@@ -1,4 +1,5 @@
 // Flutter imports:
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -31,9 +32,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceEditItemsDesktop extends StatefulWidget {
   const InvoiceEditItemsDesktop({
-    @required this.viewModel,
-    @required this.entityViewModel,
-    @required this.isTasks,
+    required this.viewModel,
+    required this.entityViewModel,
+    required this.isTasks,
   });
 
   final EntityEditItemsVM viewModel;
@@ -61,9 +62,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
   static const COLUMN_DISCOUNT = 'discount';
 
   final _debouncer = Debouncer();
-  TextEditingController _textEditingController;
+  TextEditingController? _textEditingController;
   bool _isReordering = false;
-  int _updatedAt;
+  int? _updatedAt;
   int _autocompleteFocusIndex = -1;
   final _columns = <String>[];
 
@@ -76,8 +77,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
 
   void _updateColumns() {
     final viewModel = widget.viewModel;
-    final lineItems = viewModel.invoice.lineItems;
-    final state = viewModel.state;
+    final lineItems = viewModel.invoice!.lineItems;
+    final state = viewModel.state!;
     final company = state.company;
 
     final includedLineItems = lineItems.where((lineItem) {
@@ -256,17 +257,17 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     bool debounce = true,
   }) {
     final viewModel = widget.viewModel;
-    final lineItems = viewModel.invoice.lineItems;
+    final lineItems = viewModel.invoice!.lineItems;
 
     if (index == lineItems.length) {
-      viewModel.onChangedInvoiceItem(lineItem, index);
+      viewModel.onChangedInvoiceItem!(lineItem, index);
     } else if (lineItem != lineItems[index]) {
       if (debounce) {
         _debouncer.run(() {
-          viewModel.onChangedInvoiceItem(lineItem, index);
+          viewModel.onChangedInvoiceItem!(lineItem, index);
         });
       } else {
-        viewModel.onChangedInvoiceItem(lineItem, index);
+        viewModel.onChangedInvoiceItem!(lineItem, index);
       }
     }
   }
@@ -282,10 +283,10 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     final localization = AppLocalization.of(context);
     final theme = Theme.of(context);
     final viewModel = widget.viewModel;
-    final state = viewModel.state;
+    final state = viewModel.state!;
     final company = state.company;
 
-    final invoice = viewModel.invoice;
+    final invoice = viewModel.invoice!;
     final client = state.clientState.get(invoice.clientId);
     final precision =
         state.staticState.currencyMap[client.currencyId]?.precision ?? 2;
@@ -322,22 +323,22 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
 
     for (var i = 0; i < _columns.length; i++) {
       final column = _columns[i];
-      String label = '';
+      String? label = '';
       bool isNumeric = false;
       if (column == COLUMN_ITEM) {
         if (widget.isTasks) {
-          label = (translations['service'] ?? '').isNotEmpty
-              ? translations['service']
-              : localization.service;
+          label = (translations!['service'] ?? '').isNotEmpty
+              ? translations['service']!
+              : localization!.service;
         } else {
-          label = (translations['item'] ?? '').isNotEmpty
-              ? translations['item']
-              : localization.item;
+          label = (translations!['item'] ?? '').isNotEmpty
+              ? translations['item']!
+              : localization!.item;
         }
       } else if (column == COLUMN_DESCRIPTION) {
-        label = (translations['description'] ?? '').isNotEmpty
-            ? translations['description']
-            : localization.description;
+        label = (translations!['description'] ?? '').isNotEmpty
+            ? translations['description']!
+            : localization!.description;
       } else if (column == COLUMN_CUSTOM1) {
         label = company.getCustomFieldLabel(customField1);
       } else if (column == COLUMN_CUSTOM2) {
@@ -347,38 +348,38 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       } else if (column == COLUMN_CUSTOM4) {
         label = company.getCustomFieldLabel(customField4);
       } else if ([COLUMN_TAX1, COLUMN_TAX2, COLUMN_TAX3].contains(column)) {
-        label = localization.tax +
-            (company.settings.enableInclusiveTaxes
+        label = localization!.tax +
+            (company.settings.enableInclusiveTaxes!
                 ? ' - ${localization.inclusive}'
                 : '');
       } else if (column == COLUMN_TAX_CATEGORY) {
-        label = localization.taxCategory;
+        label = localization!.taxCategory;
       } else if (column == COLUMN_QUANTITY) {
         if (widget.isTasks) {
-          label = (translations['hours'] ?? '').isNotEmpty
-              ? translations['hours']
-              : localization.hours;
+          label = (translations!['hours'] ?? '').isNotEmpty
+              ? translations['hours']!
+              : localization!.hours;
         } else {
-          label = (translations['quantity'] ?? '').isNotEmpty
-              ? translations['quantity']
-              : localization.quantity;
+          label = (translations!['quantity'] ?? '').isNotEmpty
+              ? translations['quantity']!
+              : localization!.quantity;
         }
         isNumeric = true;
       } else if (column == COLUMN_UNIT_COST) {
         if (widget.isTasks) {
-          label = (translations['rate'] ?? '').isNotEmpty
-              ? translations['rate']
-              : localization.rate;
+          label = (translations!['rate'] ?? '').isNotEmpty
+              ? translations['rate']!
+              : localization!.rate;
         } else {
-          label = (translations['unit_cost'] ?? '').isNotEmpty
-              ? translations['unit_cost']
-              : localization.unitCost;
+          label = (translations!['unit_cost'] ?? '').isNotEmpty
+              ? translations['unit_cost']!
+              : localization!.unitCost;
         }
         isNumeric = true;
       } else if (column == COLUMN_DISCOUNT) {
-        label = (translations['discount'] ?? '').isNotEmpty
-            ? translations['discount']
-            : localization.discount;
+        label = (translations!['discount'] ?? '').isNotEmpty
+            ? translations['discount']!
+            : localization!.discount;
         isNumeric = true;
       }
       tableHeaderColumns.add(TableHeader(
@@ -406,7 +407,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     .toList(),
                 Expanded(
                   child: TableHeader(
-                    localization.lineTotal,
+                    localization!.lineTotal,
                     isNumeric: true,
                   ),
                 ),
@@ -447,27 +448,27 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       ..._columns
                           .map((column) {
                             if (column == COLUMN_ITEM) {
-                              return Text(item.productKey ?? '');
+                              return Text(item.productKey);
                             } else if (column == COLUMN_DESCRIPTION) {
                               return Text(
-                                item.notes ?? '',
+                                item.notes,
                                 maxLines: 2, // TODO change to 1
                                 overflow: TextOverflow.ellipsis,
                               );
                             } else if (column == COLUMN_CUSTOM1) {
-                              return Text(item.customValue1 ?? '');
+                              return Text(item.customValue1);
                             } else if (column == COLUMN_CUSTOM2) {
-                              return Text(item.customValue2 ?? '');
+                              return Text(item.customValue2);
                             } else if (column == COLUMN_CUSTOM3) {
-                              return Text(item.customValue3 ?? '');
+                              return Text(item.customValue3);
                             } else if (column == COLUMN_CUSTOM4) {
-                              return Text(item.customValue4 ?? '');
+                              return Text(item.customValue4);
                             } else if (column == COLUMN_TAX1) {
-                              return Text(item.taxName1 ?? '');
+                              return Text(item.taxName1);
                             } else if (column == COLUMN_TAX2) {
-                              return Text(item.taxName2 ?? '');
+                              return Text(item.taxName2);
                             } else if (column == COLUMN_TAX3) {
-                              return Text(item.taxName3 ?? '');
+                              return Text(item.taxName3);
                             } else if (column == COLUMN_TAX_CATEGORY) {
                               return Text(localization
                                   .lookup(kTaxCategories[item.taxCategoryId]));
@@ -569,7 +570,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                 newIndex--;
               }
 
-              viewModel.onMovedInvoiceItem(oldIndex, newIndex);
+              viewModel.onMovedInvoiceItem!(oldIndex, newIndex);
             },
           )
         ],
@@ -585,7 +586,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
 
     tableHeaderColumns.addAll([
       TableHeader(
-        localization.lineTotal,
+        localization!.lineTotal,
         isNumeric: true,
       ),
       IconButton(
@@ -652,6 +653,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 final options = productIds
                                     .map((productId) =>
                                         productState.map[productId])
+                                    .whereType<ProductEntity>()
                                     .where((product) {
                                   final filter =
                                       textEditingValue.text.toLowerCase();
@@ -693,7 +695,6 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                     ? product.cost
                                     : product.price;
                                 if (company.convertProductExchangeRate &&
-                                    invoice.clientId != null &&
                                     client.currencyId != company.currencyId) {
                                   double exchangeRate = invoice.exchangeRate;
                                   if (!company.convertRateToClient &&
@@ -717,7 +718,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                       ..quantity =
                                           item.isTask || item.quantity != 0
                                               ? item.quantity
-                                              : viewModel.state.company
+                                              : viewModel.state!.company
                                                       .defaultQuantity
                                                   ? 1
                                                   : product.quantity
@@ -818,8 +819,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                                         .cardColor,
                                                 child:
                                                     EntityAutocompleteListTile(
-                                                  onTap: (entity) =>
-                                                      onSelected(entity),
+                                                  onTap: (entity) => onSelected(
+                                                      entity as ProductEntity),
                                                   overrideSuggestedAmount:
                                                       (entity) {
                                                     final product =
@@ -1162,6 +1163,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                             ),
                           ),
                         );
+                      } else {
+                        return SizedBox();
                       }
                     }).toList(),
                     Padding(
@@ -1219,16 +1222,16 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               entityId: lineItems[index].taskId,
                               entityType: EntityType.task);
                         } else if (action == localization.moveTop) {
-                          viewModel.onMovedInvoiceItem(index, 0);
+                          viewModel.onMovedInvoiceItem!(index, 0);
                         } else if (action == localization.moveUp) {
-                          viewModel.onMovedInvoiceItem(index, index - 1);
+                          viewModel.onMovedInvoiceItem!(index, index - 1);
                         } else if (action == localization.moveDown) {
-                          viewModel.onMovedInvoiceItem(index, index + 1);
+                          viewModel.onMovedInvoiceItem!(index, index + 1);
                         } else if (action == localization.moveBottom) {
-                          viewModel.onMovedInvoiceItem(
+                          viewModel.onMovedInvoiceItem!(
                               index, lineItems.length - 2);
                         } else if (action == localization.remove) {
-                          viewModel.onRemoveInvoiceItemPressed(index);
+                          viewModel.onRemoveInvoiceItemPressed!(index);
                         }
                         _updateTable();
                       },
@@ -1247,7 +1250,7 @@ class TableHeader extends StatelessWidget {
     this.isFirst = false,
   });
 
-  final String label;
+  final String? label;
   final bool isNumeric;
   final bool isFirst;
 
@@ -1271,7 +1274,7 @@ class TableHeader extends StatelessWidget {
         left: tableHeaderColor.isNotEmpty && isFirst ? 4 : 0,
       ),
       child: Text(
-        label,
+        label!,
         textAlign: isNumeric ? TextAlign.right : TextAlign.left,
         style: TextStyle(
             color: tableFontColor.isNotEmpty

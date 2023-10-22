@@ -24,7 +24,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class QuoteListBuilder extends StatelessWidget {
-  const QuoteListBuilder({Key key}) : super(key: key);
+  const QuoteListBuilder({Key? key}) : super(key: key);
 
   static const String route = '/quotes/edit';
 
@@ -44,7 +44,7 @@ class QuoteListBuilder extends StatelessWidget {
             onSortColumn: viewModel.onSortColumn,
             itemBuilder: (BuildContext context, index) {
               final invoiceId = viewModel.invoiceList[index];
-              final invoice = viewModel.invoiceMap[invoiceId];
+              final invoice = viewModel.invoiceMap[invoiceId]!;
 
               return QuoteListItem(
                 filter: viewModel.filter,
@@ -58,20 +58,19 @@ class QuoteListBuilder extends StatelessWidget {
 
 class QuoteListVM extends EntityListVM {
   QuoteListVM({
-    @required AppState state,
-    @required List<String> invoiceList,
-    @required BuiltMap<String, InvoiceEntity> invoiceMap,
-    @required BuiltMap<String, ClientEntity> clientMap,
-    @required String filter,
-    @required bool isLoading,
-    @required Function(BuildContext) onRefreshed,
-    @required
-        Function(BuildContext, List<InvoiceEntity>, EntityAction)
-            onEntityAction,
-    @required List<String> tableColumns,
-    @required EntityType entityType,
-    @required Function(String) onSortColumn,
-    @required Function onClearMultiselect,
+    required AppState state,
+    required List<String> invoiceList,
+    required BuiltMap<String, InvoiceEntity> invoiceMap,
+    required BuiltMap<String, ClientEntity> clientMap,
+    required String? filter,
+    required bool isLoading,
+    required Function(BuildContext) onRefreshed,
+    required Function(BuildContext, List<InvoiceEntity>, EntityAction)
+        onEntityAction,
+    required List<String> tableColumns,
+    required EntityType entityType,
+    required Function(String) onSortColumn,
+    required Function onClearMultiselect,
   }) : super(
           state: state,
           invoiceList: invoiceList,
@@ -89,10 +88,10 @@ class QuoteListVM extends EntityListVM {
   static QuoteListVM fromStore(Store<AppState> store) {
     Future<Null> _handleRefresh(BuildContext context) {
       if (store.state.isLoading) {
-        return Future<Null>(null);
+        return Future<Null>.value();
       }
-      final completer = snackBarCompleter<Null>(
-          context, AppLocalization.of(context).refreshComplete);
+      final completer =
+          snackBarCompleter<Null>(AppLocalization.of(context)!.refreshComplete);
       store.dispatch(RefreshData(completer: completer));
       return completer.future;
     }
@@ -118,7 +117,7 @@ class QuoteListVM extends EntityListVM {
               EntityAction action) =>
           handleQuoteAction(context, quotes, action),
       tableColumns:
-          state.userCompany.settings?.getTableColumns(EntityType.quote) ??
+          state.userCompany.settings.getTableColumns(EntityType.quote) ??
               QuotePresenter.getDefaultTableFields(state.userCompany),
       onSortColumn: (field) => store.dispatch(SortQuotes(field)),
       onClearMultiselect: () => store.dispatch(ClearQuoteMultiselect()),

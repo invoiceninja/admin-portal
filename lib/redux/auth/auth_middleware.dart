@@ -67,11 +67,11 @@ void _saveAuthLocal(String url) async {
 
 Middleware<AppState> _createUserLogout() {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as UserLogout;
+    final action = dynamicAction as UserLogout?;
 
     next(action);
 
-    navigatorKey.currentState.pushNamedAndRemoveUntil(
+    navigatorKey.currentState!.pushNamedAndRemoveUntil(
         LoginScreen.route, (Route<dynamic> route) => false);
 
     store.dispatch(UpdateCurrentRoute(LoginScreen.route));
@@ -82,7 +82,7 @@ Middleware<AppState> _createUserLogout() {
 
 Middleware<AppState> _createUserLogoutAll(AuthRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as UserLogoutAll;
+    final action = dynamicAction as UserLogoutAll?;
 
     repository
         .logout(credentials: store.state.credentials)
@@ -90,8 +90,8 @@ Middleware<AppState> _createUserLogoutAll(AuthRepository repository) {
       store.dispatch(UserLogoutAllSuccess());
       store.dispatch(UserLogout());
     }).catchError((Object error) {
-      if (action.completer != null) {
-        action.completer.completeError(error);
+      if (action!.completer != null) {
+        action.completer!.completeError(error);
       }
       store.dispatch(UserLogoutAllFailure(error));
     });
@@ -120,9 +120,7 @@ Middleware<AppState> _createLoginRequest(AuthRepository repository) {
     }).catchError((Object error) {
       print('## Login error: $error');
       final message = _parseError('$error');
-      if (action.completer != null) {
-        action.completer.completeError(message);
-      }
+      action.completer.completeError(message);
       store.dispatch(UserLoginFailure(message));
       if ('$error'.startsWith('Error ::')) {
         throw error;
@@ -152,9 +150,7 @@ Middleware<AppState> _createSignUpRequest(AuthRepository repository) {
     }).catchError((Object error) {
       print('## Signup error: $error');
       final message = _parseError('$error');
-      if (action.completer != null) {
-        action.completer.completeError(message);
-      }
+      action.completer.completeError(message);
       store.dispatch(UserLoginFailure(message));
       if ('$error'.startsWith('Error ::')) {
         throw error;
@@ -189,9 +185,7 @@ Middleware<AppState> _createOAuthLoginRequest(AuthRepository repository) {
     }).catchError((Object error) {
       print('## Oauth login error: $error');
       final message = _parseError('$error');
-      if (action.completer != null) {
-        action.completer.completeError(message);
-      }
+      action.completer.completeError(message);
       store.dispatch(UserLoginFailure(message));
       if ('$error'.startsWith('Error ::')) {
         throw error;
@@ -226,9 +220,7 @@ Middleware<AppState> _createOAuthSignUpRequest(AuthRepository repository) {
     }).catchError((Object error) {
       print('## OAuth signup error: $error');
       final message = _parseError('$error');
-      if (action.completer != null) {
-        action.completer.completeError(message);
-      }
+      action.completer.completeError(message);
       store.dispatch(UserLoginFailure(message));
       if ('$error'.startsWith('Error ::')) {
         throw error;
@@ -270,7 +262,7 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
 
     String token;
     bool hasToken = false;
-    if ((state?.userCompany?.token?.token ?? '').isNotEmpty) {
+    if (state.userCompany.token.token.isNotEmpty) {
       token = state.userCompany.token.token;
       hasToken = true;
     } else {
@@ -322,14 +314,14 @@ Middleware<AppState> _createRefreshRequest(AuthRepository repository) {
         ));
       }
 
-      AppBuilder.of(navigatorKey.currentContext).rebuild();
+      AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
     }).catchError((Object error) {
       if ('$error'.startsWith('403') || '$error'.startsWith('429')) {
         store.dispatch(UserLogout());
       } else {
         final message = _parseError('$error');
         if (action.completer != null) {
-          action.completer.completeError(message);
+          action.completer!.completeError(message);
         }
 
         store.dispatch(RefreshDataFailure(message));
@@ -359,9 +351,7 @@ Middleware<AppState> _createRecoverRequest(AuthRepository repository) {
       action.completer.complete(null);
     }).catchError((Object error) {
       store.dispatch(RecoverPasswordFailure(error.toString()));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action.completer.completeError(error);
     });
 
     next(action);
@@ -371,7 +361,7 @@ Middleware<AppState> _createRecoverRequest(AuthRepository repository) {
 Middleware<AppState> _createCompany(AuthRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as AddCompany;
+    final action = dynamicAction as AddCompany?;
     final state = store.state;
 
     repository.addCompany(credentials: state.credentials).then((dynamic value) {
@@ -383,7 +373,7 @@ Middleware<AppState> _createCompany(AuthRepository repository) {
             store.dispatch(SelectCompany(companyIndex: state.companies.length));
             store.dispatch(ViewDashboard(force: true));
 
-            action.completer.complete();
+            action!.completer!.complete();
           }),
       ));
     });
@@ -395,7 +385,7 @@ Middleware<AppState> _createCompany(AuthRepository repository) {
 Middleware<AppState> _setDefaultCompany(AuthRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as SetDefaultCompanyRequest;
+    final action = dynamicAction as SetDefaultCompanyRequest?;
     final state = store.state;
     final companyId = state.company.id;
 
@@ -404,12 +394,10 @@ Middleware<AppState> _setDefaultCompany(AuthRepository repository) {
         .then((_) {
       store.dispatch(SetDefaultCompanySuccess());
       store.dispatch(RefreshData(allCompanies: true));
-      action.completer.complete();
+      action!.completer.complete();
     }).catchError((Object error) {
       store.dispatch(SetDefaultCompanyFailure(error));
-      if (action.completer != null) {
-        action.completer.completeError(error);
-      }
+      action!.completer.completeError(error);
     });
 
     next(action);
@@ -459,7 +447,7 @@ Middleware<AppState> _purgeData(AuthRepository repository) {
       store.dispatch(RefreshData(
           clearData: true,
           completer: Completer<Null>()
-            ..future.then((value) {
+            ..future.then<Null>((_) {
               action.completer.complete(null);
             })));
     }).catchError((Object error) {
@@ -474,7 +462,7 @@ Middleware<AppState> _purgeData(AuthRepository repository) {
 Middleware<AppState> _resendConfirmation(AuthRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction,
       NextDispatcher next) async {
-    final action = dynamicAction as ResendConfirmation;
+    final action = dynamicAction as ResendConfirmation?;
     final state = store.state;
 
     repository

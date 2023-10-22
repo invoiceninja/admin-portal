@@ -14,8 +14,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceEditNotes extends StatefulWidget {
   const InvoiceEditNotes({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final EntityEditNotesVM viewModel;
@@ -45,7 +45,7 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    final invoice = widget.viewModel.invoice;
+    final invoice = widget.viewModel.invoice!;
     _publicNotesController.text = invoice.publicNotes;
     _privateNotesController.text = invoice.privateNotes;
     _termsController.text = invoice.terms;
@@ -68,24 +68,24 @@ class InvoiceEditNotesState extends State<InvoiceEditNotes> {
   }
 
   void _onChanged() {
-    final invoice = widget.viewModel.invoice.rebuild((b) => b
+    final invoice = widget.viewModel.invoice!.rebuild((b) => b
       ..publicNotes = _publicNotesController.text.trim()
       ..privateNotes = _privateNotesController.text.trim()
       ..terms = _termsController.text.trim()
       ..footer = _footerController.text.trim());
     if (invoice != widget.viewModel.invoice) {
       _debouncer.run(() {
-        widget.viewModel.onChanged(invoice);
+        widget.viewModel.onChanged!(invoice);
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
-    final state = viewModel.state;
-    final invoice = viewModel.invoice;
+    final state = viewModel.state!;
+    final invoice = viewModel.invoice!;
     final client = state.clientState.get(invoice.clientId);
     final settings = getClientSettings(state, client);
 

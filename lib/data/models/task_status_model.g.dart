@@ -24,10 +24,10 @@ class _$TaskStatusListResponseSerializer
   final String wireName = 'TaskStatusListResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, TaskStatusListResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(
@@ -39,21 +39,21 @@ class _$TaskStatusListResponseSerializer
 
   @override
   TaskStatusListResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TaskStatusListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
-                      BuiltList, const [const FullType(TaskStatusEntity)]))
-              as BuiltList<Object>);
+                      BuiltList, const [const FullType(TaskStatusEntity)]))!
+              as BuiltList<Object?>);
           break;
       }
     }
@@ -73,10 +73,10 @@ class _$TaskStatusItemResponseSerializer
   final String wireName = 'TaskStatusItemResponse';
 
   @override
-  Iterable<Object> serialize(
+  Iterable<Object?> serialize(
       Serializers serializers, TaskStatusItemResponse object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'data',
       serializers.serialize(object.data,
           specifiedType: const FullType(TaskStatusEntity)),
@@ -87,19 +87,19 @@ class _$TaskStatusItemResponseSerializer
 
   @override
   TaskStatusItemResponse deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TaskStatusItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'data':
           result.data.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(TaskStatusEntity))
+                  specifiedType: const FullType(TaskStatusEntity))!
               as TaskStatusEntity);
           break;
       }
@@ -117,9 +117,9 @@ class _$TaskStatusEntitySerializer
   final String wireName = 'TaskStatusEntity';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, TaskStatusEntity object,
+  Iterable<Object?> serialize(Serializers serializers, TaskStatusEntity object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
+    final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
       'color',
@@ -137,7 +137,7 @@ class _$TaskStatusEntitySerializer
       'id',
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
-    Object value;
+    Object? value;
     value = object.statusOrder;
     if (value != null) {
       result
@@ -177,59 +177,59 @@ class _$TaskStatusEntitySerializer
 
   @override
   TaskStatusEntity deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new TaskStatusEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
-      final Object value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'name':
           result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'color':
           result.color = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'status_order':
           result.statusOrder = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'updated_at':
           result.updatedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'archived_at':
           result.archivedAt = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'is_deleted':
           result.isDeleted = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool;
+              specifiedType: const FullType(bool)) as bool?;
           break;
         case 'user_id':
           result.createdUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'assigned_user_id':
           result.assignedUserId = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -243,10 +243,10 @@ class _$TaskStatusListResponse extends TaskStatusListResponse {
   final BuiltList<TaskStatusEntity> data;
 
   factory _$TaskStatusListResponse(
-          [void Function(TaskStatusListResponseBuilder) updates]) =>
+          [void Function(TaskStatusListResponseBuilder)? updates]) =>
       (new TaskStatusListResponseBuilder()..update(updates))._build();
 
-  _$TaskStatusListResponse._({this.data}) : super._() {
+  _$TaskStatusListResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
         data, r'TaskStatusListResponse', 'data');
   }
@@ -266,10 +266,10 @@ class _$TaskStatusListResponse extends TaskStatusListResponse {
     return other is TaskStatusListResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -286,12 +286,12 @@ class _$TaskStatusListResponse extends TaskStatusListResponse {
 
 class TaskStatusListResponseBuilder
     implements Builder<TaskStatusListResponse, TaskStatusListResponseBuilder> {
-  _$TaskStatusListResponse _$v;
+  _$TaskStatusListResponse? _$v;
 
-  ListBuilder<TaskStatusEntity> _data;
+  ListBuilder<TaskStatusEntity>? _data;
   ListBuilder<TaskStatusEntity> get data =>
       _$this._data ??= new ListBuilder<TaskStatusEntity>();
-  set data(ListBuilder<TaskStatusEntity> data) => _$this._data = data;
+  set data(ListBuilder<TaskStatusEntity>? data) => _$this._data = data;
 
   TaskStatusListResponseBuilder();
 
@@ -311,7 +311,7 @@ class TaskStatusListResponseBuilder
   }
 
   @override
-  void update(void Function(TaskStatusListResponseBuilder) updates) {
+  void update(void Function(TaskStatusListResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -323,7 +323,7 @@ class TaskStatusListResponseBuilder
     try {
       _$result = _$v ?? new _$TaskStatusListResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -343,10 +343,10 @@ class _$TaskStatusItemResponse extends TaskStatusItemResponse {
   final TaskStatusEntity data;
 
   factory _$TaskStatusItemResponse(
-          [void Function(TaskStatusItemResponseBuilder) updates]) =>
+          [void Function(TaskStatusItemResponseBuilder)? updates]) =>
       (new TaskStatusItemResponseBuilder()..update(updates))._build();
 
-  _$TaskStatusItemResponse._({this.data}) : super._() {
+  _$TaskStatusItemResponse._({required this.data}) : super._() {
     BuiltValueNullFieldError.checkNotNull(
         data, r'TaskStatusItemResponse', 'data');
   }
@@ -366,10 +366,10 @@ class _$TaskStatusItemResponse extends TaskStatusItemResponse {
     return other is TaskStatusItemResponse && data == other.data;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, data.hashCode);
     _$hash = $jf(_$hash);
@@ -386,12 +386,12 @@ class _$TaskStatusItemResponse extends TaskStatusItemResponse {
 
 class TaskStatusItemResponseBuilder
     implements Builder<TaskStatusItemResponse, TaskStatusItemResponseBuilder> {
-  _$TaskStatusItemResponse _$v;
+  _$TaskStatusItemResponse? _$v;
 
-  TaskStatusEntityBuilder _data;
+  TaskStatusEntityBuilder? _data;
   TaskStatusEntityBuilder get data =>
       _$this._data ??= new TaskStatusEntityBuilder();
-  set data(TaskStatusEntityBuilder data) => _$this._data = data;
+  set data(TaskStatusEntityBuilder? data) => _$this._data = data;
 
   TaskStatusItemResponseBuilder();
 
@@ -411,7 +411,7 @@ class TaskStatusItemResponseBuilder
   }
 
   @override
-  void update(void Function(TaskStatusItemResponseBuilder) updates) {
+  void update(void Function(TaskStatusItemResponseBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -423,7 +423,7 @@ class TaskStatusItemResponseBuilder
     try {
       _$result = _$v ?? new _$TaskStatusItemResponse._(data: data.build());
     } catch (_) {
-      String _$failedField;
+      late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
@@ -444,9 +444,9 @@ class _$TaskStatusEntity extends TaskStatusEntity {
   @override
   final String color;
   @override
-  final int statusOrder;
+  final int? statusOrder;
   @override
-  final bool isChanged;
+  final bool? isChanged;
   @override
   final int createdAt;
   @override
@@ -454,30 +454,30 @@ class _$TaskStatusEntity extends TaskStatusEntity {
   @override
   final int archivedAt;
   @override
-  final bool isDeleted;
+  final bool? isDeleted;
   @override
-  final String createdUserId;
+  final String? createdUserId;
   @override
-  final String assignedUserId;
+  final String? assignedUserId;
   @override
   final String id;
 
   factory _$TaskStatusEntity(
-          [void Function(TaskStatusEntityBuilder) updates]) =>
+          [void Function(TaskStatusEntityBuilder)? updates]) =>
       (new TaskStatusEntityBuilder()..update(updates))._build();
 
   _$TaskStatusEntity._(
-      {this.name,
-      this.color,
+      {required this.name,
+      required this.color,
       this.statusOrder,
       this.isChanged,
-      this.createdAt,
-      this.updatedAt,
-      this.archivedAt,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.archivedAt,
       this.isDeleted,
       this.createdUserId,
       this.assignedUserId,
-      this.id})
+      required this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'TaskStatusEntity', 'name');
     BuiltValueNullFieldError.checkNotNull(color, r'TaskStatusEntity', 'color');
@@ -515,10 +515,10 @@ class _$TaskStatusEntity extends TaskStatusEntity {
         id == other.id;
   }
 
-  int __hashCode;
+  int? __hashCode;
   @override
   int get hashCode {
-    if (__hashCode != null) return __hashCode;
+    if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, color.hashCode);
@@ -555,53 +555,53 @@ class _$TaskStatusEntity extends TaskStatusEntity {
 
 class TaskStatusEntityBuilder
     implements Builder<TaskStatusEntity, TaskStatusEntityBuilder> {
-  _$TaskStatusEntity _$v;
+  _$TaskStatusEntity? _$v;
 
-  String _name;
-  String get name => _$this._name;
-  set name(String name) => _$this._name = name;
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
 
-  String _color;
-  String get color => _$this._color;
-  set color(String color) => _$this._color = color;
+  String? _color;
+  String? get color => _$this._color;
+  set color(String? color) => _$this._color = color;
 
-  int _statusOrder;
-  int get statusOrder => _$this._statusOrder;
-  set statusOrder(int statusOrder) => _$this._statusOrder = statusOrder;
+  int? _statusOrder;
+  int? get statusOrder => _$this._statusOrder;
+  set statusOrder(int? statusOrder) => _$this._statusOrder = statusOrder;
 
-  bool _isChanged;
-  bool get isChanged => _$this._isChanged;
-  set isChanged(bool isChanged) => _$this._isChanged = isChanged;
+  bool? _isChanged;
+  bool? get isChanged => _$this._isChanged;
+  set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
 
-  int _createdAt;
-  int get createdAt => _$this._createdAt;
-  set createdAt(int createdAt) => _$this._createdAt = createdAt;
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  int _updatedAt;
-  int get updatedAt => _$this._updatedAt;
-  set updatedAt(int updatedAt) => _$this._updatedAt = updatedAt;
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
 
-  int _archivedAt;
-  int get archivedAt => _$this._archivedAt;
-  set archivedAt(int archivedAt) => _$this._archivedAt = archivedAt;
+  int? _archivedAt;
+  int? get archivedAt => _$this._archivedAt;
+  set archivedAt(int? archivedAt) => _$this._archivedAt = archivedAt;
 
-  bool _isDeleted;
-  bool get isDeleted => _$this._isDeleted;
-  set isDeleted(bool isDeleted) => _$this._isDeleted = isDeleted;
+  bool? _isDeleted;
+  bool? get isDeleted => _$this._isDeleted;
+  set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
 
-  String _createdUserId;
-  String get createdUserId => _$this._createdUserId;
-  set createdUserId(String createdUserId) =>
+  String? _createdUserId;
+  String? get createdUserId => _$this._createdUserId;
+  set createdUserId(String? createdUserId) =>
       _$this._createdUserId = createdUserId;
 
-  String _assignedUserId;
-  String get assignedUserId => _$this._assignedUserId;
-  set assignedUserId(String assignedUserId) =>
+  String? _assignedUserId;
+  String? get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String? assignedUserId) =>
       _$this._assignedUserId = assignedUserId;
 
-  String _id;
-  String get id => _$this._id;
-  set id(String id) => _$this._id = id;
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
 
   TaskStatusEntityBuilder() {
     TaskStatusEntity._initializeBuilder(this);
@@ -633,7 +633,7 @@ class TaskStatusEntityBuilder
   }
 
   @override
-  void update(void Function(TaskStatusEntityBuilder) updates) {
+  void update(void Function(TaskStatusEntityBuilder)? updates) {
     if (updates != null) updates(this);
   }
 

@@ -23,8 +23,8 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 class TransactionRuleEdit extends StatefulWidget {
   const TransactionRuleEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final TransactionRuleEditVM viewModel;
@@ -79,7 +79,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
   }
 
   void _onSubmitted() {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -96,13 +96,13 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
     final transactionRule = viewModel.transactionRule;
     final state = viewModel.state;
 
-    final textColor = Theme.of(context).textTheme.bodyLarge.color;
+    final textColor = Theme.of(context).textTheme.bodyLarge!.color!;
     final textStyle = TextStyle(color: textColor.withOpacity(.65));
 
     return EditScaffold(
       title: transactionRule.isNew
-          ? localization.newTransactionRule
-          : localization.editTransactionRule,
+          ? localization!.newTransactionRule
+          : localization!.editTransactionRule,
       onCancelPressed: (context) => viewModel.onCancelPressed(context),
       onSavePressed: (context) => _onSubmitted(),
       body: Form(
@@ -200,12 +200,14 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                                             context: context,
                                             builder: (context) =>
                                                 _RuleCriteria(criteria: rule));
-                                        final index =
-                                            transactionRule.rules.indexOf(rule);
-                                        viewModel.onChanged(
-                                            transactionRule.rebuild((b) => b
-                                              ..rules.replaceRange(index,
-                                                  index + 1, [updatedRule])));
+                                        if (updatedRule != null) {
+                                          final index = transactionRule.rules
+                                              .indexOf(rule);
+                                          viewModel.onChanged(
+                                              transactionRule.rebuild((b) => b
+                                                ..rules.replaceRange(index,
+                                                    index + 1, [updatedRule])));
+                                        }
                                       },
                                       icon: Icon(MdiIcons.circleEditOutline),
                                     ),
@@ -233,8 +235,10 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                                 context: context,
                                 builder: (context) => _RuleCriteria());
 
-                        viewModel.onChanged(
-                            transactionRule.rebuild((b) => b..rules.add(rule)));
+                        if (rule != null) {
+                          viewModel.onChanged(transactionRule
+                              .rebuild((b) => b..rules.add(rule)));
+                        }
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8),
@@ -303,18 +307,18 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
 
 class _RuleCriteria extends StatefulWidget {
   const _RuleCriteria({
-    Key key,
+    Key? key,
     this.criteria,
   }) : super(key: key);
 
-  final TransactionRuleCriteriaEntity criteria;
+  final TransactionRuleCriteriaEntity? criteria;
 
   @override
   State<_RuleCriteria> createState() => __RuleCriteriaState();
 }
 
 class __RuleCriteriaState extends State<_RuleCriteria> {
-  TransactionRuleCriteriaEntity _criteria;
+  TransactionRuleCriteriaEntity? _criteria;
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_ruleCriteria');
 
@@ -326,16 +330,16 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
   }
 
   void onDonePressed() {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
     }
 
-    if (_criteria.searchKey.isEmpty ||
-        _criteria.operator.isEmpty ||
-        (_criteria.value.isEmpty &&
-            _criteria.operator !=
+    if (_criteria!.searchKey.isEmpty ||
+        _criteria!.operator.isEmpty ||
+        (_criteria!.value.isEmpty &&
+            _criteria!.operator !=
                 TransactionRuleCriteriaEntity.STRING_OPERATOR_IS_EMPTY)) {
       return;
     }
@@ -345,7 +349,7 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     return AlertDialog(
       content: Form(
@@ -355,10 +359,10 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
           children: [
             AppDropdownButton<String>(
               labelText: localization.field,
-              value: _criteria.searchKey,
+              value: _criteria!.searchKey,
               onChanged: (dynamic value) {
                 setState(() {
-                  _criteria = _criteria.rebuild((b) => b
+                  _criteria = _criteria!.rebuild((b) => b
                     ..searchKey = value
                     ..operator = value ==
                             TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION
@@ -379,13 +383,13 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
             ),
             AppDropdownButton<String>(
               labelText: localization.operator,
-              value: _criteria.operator,
+              value: _criteria!.operator,
               onChanged: (dynamic value) {
                 setState(() {
-                  _criteria = _criteria.rebuild((b) => b..operator = value);
+                  _criteria = _criteria!.rebuild((b) => b..operator = value);
                 });
               },
-              items: _criteria.searchKey ==
+              items: _criteria!.searchKey ==
                       TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION
                   ? [
                       DropdownMenuItem<String>(
@@ -441,16 +445,16 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                       ),
                     ],
             ),
-            if (_criteria.operator !=
+            if (_criteria!.operator !=
                 TransactionRuleCriteriaEntity.STRING_OPERATOR_IS_EMPTY)
               DecoratedFormField(
                 autofocus: true,
                 label: localization.value,
-                initialValue: _criteria.value,
+                initialValue: _criteria!.value,
                 keyboardType: TextInputType.text,
                 onChanged: (value) {
                   setState(() {
-                    _criteria = _criteria.rebuild((b) => b..value = value);
+                    _criteria = _criteria!.rebuild((b) => b..value = value);
                   });
                 },
                 onSavePressed: (context) => onDonePressed(),

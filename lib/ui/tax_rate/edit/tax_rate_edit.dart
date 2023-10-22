@@ -13,8 +13,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class TaxRateEdit extends StatefulWidget {
   const TaxRateEdit({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final TaxRateEditVM viewModel;
@@ -27,7 +27,7 @@ class _TaxRateEditState extends State<TaxRateEdit> {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_taxRateEdit');
 
-  FocusScopeNode _focusNode;
+  FocusScopeNode? _focusNode;
 
   final _nameController = TextEditingController();
   final _rateController = TextEditingController();
@@ -47,7 +47,7 @@ class _TaxRateEditState extends State<TaxRateEdit> {
     final taxRate = widget.viewModel.taxRate;
     _nameController.text = taxRate.name;
     _rateController.text = formatNumber(taxRate.rate, context,
-        formatNumberType: FormatNumberType.inputMoney);
+        formatNumberType: FormatNumberType.inputMoney)!;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -76,7 +76,7 @@ class _TaxRateEditState extends State<TaxRateEdit> {
   }
 
   void _onSavePressed(BuildContext context) {
-    final bool isValid = _formKey.currentState.validate();
+    final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
@@ -88,7 +88,7 @@ class _TaxRateEditState extends State<TaxRateEdit> {
   @override
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     return EditScaffold(
       entity: viewModel.taxRate,

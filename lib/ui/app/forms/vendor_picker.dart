@@ -19,22 +19,22 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class VendorPicker extends StatelessWidget {
   const VendorPicker({
-    @required this.vendorId,
-    @required this.vendorState,
-    @required this.onSelected,
-    @required this.onAddPressed,
+    required this.vendorId,
+    required this.vendorState,
+    required this.onSelected,
+    required this.onAddPressed,
     this.autofocus,
   });
 
   final String vendorId;
   final VendorState vendorState;
-  final Function(SelectableEntity) onSelected;
+  final Function(SelectableEntity?) onSelected;
   final Function(Completer<SelectableEntity> completer) onAddPressed;
-  final bool autofocus;
+  final bool? autofocus;
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
@@ -46,8 +46,8 @@ class VendorPicker extends StatelessWidget {
       entityList: memoizedDropdownVendorList(vendorState.map, vendorState.list,
           state.userState.map, state.staticState),
       entityMap: vendorState.map,
-      validator: (String val) => val.trim().isEmpty
-          ? AppLocalization.of(context).pleaseSelectAVendor
+      validator: (String? val) => (val ?? '').trim().isEmpty
+          ? AppLocalization.of(context)!.pleaseSelectAVendor
           : null,
       onSelected: onSelected,
       onAddPressed: onAddPressed,

@@ -9,13 +9,13 @@ import 'package:url_launcher/url_launcher.dart';
 
 class LinkTextRelatedEntity extends StatefulWidget {
   const LinkTextRelatedEntity({
-    Key key,
-    @required this.entity,
-    @required this.relation,
+    Key? key,
+    required this.entity,
+    required this.relation,
   }) : super(key: key);
 
-  final BaseEntity entity;
-  final BaseEntity relation;
+  final BaseEntity? entity;
+  final BaseEntity? relation;
 
   @override
   State<LinkTextRelatedEntity> createState() => _LinkTextRelatedEntityState();
@@ -39,26 +39,26 @@ class _LinkTextRelatedEntityState extends State<LinkTextRelatedEntity> {
       },
       child: GestureDetector(
         child: Text(
-          widget.entity.listDisplayName,
+          widget.entity!.listDisplayName,
           style: TextStyle(
             decoration:
                 _isHovered ? TextDecoration.underline : TextDecoration.none,
           ),
         ),
         onTap: () {
-          final entity = widget.entity;
+          final entity = widget.entity!;
           if (entity.entityType == EntityType.company ||
               entity.entityType == null) {
             viewEntitiesByType(entityType: EntityType.settings);
-          } else if (entity.entityType.hasFullWidthViewer) {
+          } else if (entity.entityType!.hasFullWidthViewer) {
             viewEntity(entity: entity);
           } else {
-            viewEntity(entity: widget.relation);
+            viewEntity(entity: widget.relation!);
             viewEntity(entity: entity, addToStack: true);
           }
         },
         onLongPress: () {
-          editEntity(entity: widget.entity);
+          editEntity(entity: widget.entity!);
         },
       ),
     );
@@ -66,12 +66,12 @@ class _LinkTextRelatedEntityState extends State<LinkTextRelatedEntity> {
 }
 
 class LinkTextSpan extends TextSpan {
-  LinkTextSpan({TextStyle style, String url, String text})
+  LinkTextSpan({TextStyle? style, String? url, String? text})
       : super(
             style: style,
             text: text ?? url,
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                launchUrl(Uri.parse(url));
+                launchUrl(Uri.parse(url!));
               });
 }

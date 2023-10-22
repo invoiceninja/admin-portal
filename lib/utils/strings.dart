@@ -8,13 +8,13 @@ String getOnlyDigits(String value) => value.replaceAll(RegExp('[^\\d]'), '');
 
 bool isAllDigits(String value) => getOnlyDigits(value) == value;
 
-String toSnakeCase(String value) {
+String toSnakeCase(String? value) {
   if ((value ?? '').isEmpty) {
     return '';
   }
 
-  return value.replaceAllMapped(
-      RegExp(r'[A-Z]'), (Match match) => '_' + match[0].toLowerCase());
+  return value!.replaceAllMapped(
+      RegExp(r'[A-Z]'), (Match match) => '_' + match[0]!.toLowerCase());
 }
 
 String toCamelCase(String subject) {
@@ -34,16 +34,16 @@ String toCamelCase(String subject) {
 }
 
 String toSpaceCase(String value) {
-  if ((value ?? '').isEmpty) {
+  if (value.isEmpty) {
     return '';
   }
 
   return value.replaceAllMapped(
-      RegExp(r'[A-Z]'), (Match match) => ' ' + match[0].toLowerCase());
+      RegExp(r'[A-Z]'), (Match match) => ' ' + match[0]!.toLowerCase());
 }
 
 String toTitleCase(String text) {
-  if ((text ?? '').isEmpty) {
+  if (text.isEmpty) {
     return '';
   }
 
@@ -51,7 +51,8 @@ String toTitleCase(String text) {
     return text.toUpperCase();
   }
 
-  text = toSpaceCase(text.toLowerCase());
+  text = toSpaceCase(text);
+
   final words = text.split(' ');
   final capitalized = words.map((word) {
     if (word == 'url') {
@@ -63,7 +64,7 @@ String toTitleCase(String text) {
     }
 
     final first = word.substring(0, 1).toUpperCase();
-    final rest = word.substring(1);
+    final rest = word.substring(1).toLowerCase();
     return '$first$rest';
   });
 
@@ -116,15 +117,15 @@ void printWrapped(String text) {
 }
 
 bool matchesStrings({
-  List<String> haystacks,
-  String needle,
+  List<String?>? haystacks,
+  String? needle,
 }) {
   if (needle == null || needle.isEmpty) {
     return true;
   }
 
   bool isMatch = false;
-  haystacks.forEach((haystack) {
+  haystacks!.forEach((haystack) {
     if (matchesString(
       haystack: haystack,
       needle: needle,
@@ -135,12 +136,12 @@ bool matchesStrings({
   return isMatch;
 }
 
-bool matchesString({String haystack, String needle}) {
+bool matchesString({String? haystack, String? needle}) {
   if (needle == null || needle.isEmpty) {
     return true;
   }
 
-  final store = StoreProvider.of<AppState>(navigatorKey.currentContext);
+  final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
   final state = store.state;
 
   if (state.prefState.enableFlexibleSearch) {
@@ -149,31 +150,31 @@ bool matchesString({String haystack, String needle}) {
       final character = RegExp.escape(String.fromCharCode(rune));
       regExp += character + '.*?';
     });
-    return RegExp(regExp).hasMatch(haystack.toLowerCase());
+    return RegExp(regExp).hasMatch(haystack!.toLowerCase());
   } else if (needle.contains(' ')) {
     final parts = needle.toLowerCase().split(' ');
     bool isMatch = true;
     parts.forEach((needle) {
-      if (!haystack.toLowerCase().contains(needle)) {
+      if (!haystack!.toLowerCase().contains(needle)) {
         isMatch = false;
       }
     });
     return isMatch;
   } else {
-    return haystack.toLowerCase().contains(needle.toLowerCase());
+    return haystack!.toLowerCase().contains(needle.toLowerCase());
   }
 }
 
-String matchesStringsValue({
-  List<String> haystacks,
-  String needle,
+String? matchesStringsValue({
+  List<String?>? haystacks,
+  String? needle,
 }) {
   if (needle == null || needle.isEmpty) {
     return null;
   }
 
-  String match;
-  haystacks.forEach((haystack) {
+  String? match;
+  haystacks!.forEach((haystack) {
     final value = matchesStringValue(
       haystack: haystack,
       needle: needle,
@@ -185,12 +186,12 @@ String matchesStringsValue({
   return match;
 }
 
-String matchesStringValue({String haystack, String needle}) {
+String? matchesStringValue({String? haystack, String? needle}) {
   if (needle == null || needle.isEmpty) {
     return null;
   }
 
-  if (haystack.toLowerCase().contains(needle.toLowerCase())) {
+  if (haystack!.toLowerCase().contains(needle.toLowerCase())) {
     return haystack;
   } else {
     return null;

@@ -20,8 +20,8 @@ import 'group_screen_vm.dart';
 
 class GroupSettingsScreen extends StatelessWidget {
   const GroupSettingsScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   static const String route = '/$kSettings/$kSettingsGroupSettings';
@@ -87,7 +87,7 @@ class GroupSettingsScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization.newGroup,
+              tooltip: localization!.newGroup,
             )
           : null,
     );

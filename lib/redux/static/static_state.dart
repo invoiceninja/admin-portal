@@ -31,17 +31,16 @@ abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
   @memoized
   int get hashCode;
 
-  @nullable
-  int get updatedAt;
+  int? get updatedAt;
 
-  bool get isLoaded => updatedAt != null && updatedAt > 0;
+  bool get isLoaded => updatedAt != null && updatedAt! > 0;
 
   bool get isStale {
     if (!isLoaded) {
       return true;
     }
 
-    return DateTime.now().millisecondsSinceEpoch - updatedAt >
+    return DateTime.now().millisecondsSinceEpoch - updatedAt! >
         kMillisecondsToRefreshStaticData;
   }
 

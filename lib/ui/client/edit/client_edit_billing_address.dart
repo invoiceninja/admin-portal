@@ -15,8 +15,8 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientEditBillingAddress extends StatefulWidget {
   const ClientEditBillingAddress({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final ClientEditVM viewModel;
@@ -89,7 +89,7 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final client = viewModel.client;
     final isFullscreen =
@@ -147,7 +147,7 @@ class ClientEditBillingAddressState extends State<ClientEditBillingAddress> {
           entityList: memoizedCountryList(viewModel.staticState.countryMap),
           labelText: localization.country,
           entityId: client.countryId,
-          onSelected: (SelectableEntity country) => viewModel.onChanged(
+          onSelected: (SelectableEntity? country) => viewModel.onChanged(
               client.rebuild((b) => b..countryId = country?.id ?? '')),
         ),
         if (client.hasShippingAddress && client.areAddressesDifferent)

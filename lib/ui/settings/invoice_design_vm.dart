@@ -27,7 +27,7 @@ import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class InvoiceDesignScreen extends StatelessWidget {
-  const InvoiceDesignScreen({Key key}) : super(key: key);
+  const InvoiceDesignScreen({Key? key}) : super(key: key);
   static const String route = '/$kSettings/$kSettingsInvoiceDesign';
 
   @override
@@ -46,11 +46,11 @@ class InvoiceDesignScreen extends StatelessWidget {
 
 class InvoiceDesignVM {
   InvoiceDesignVM({
-    @required this.state,
-    @required this.company,
-    @required this.onSavePressed,
-    @required this.settings,
-    @required this.onSettingsChanged,
+    required this.state,
+    required this.company,
+    required this.onSavePressed,
+    required this.settings,
+    required this.onSettingsChanged,
   });
 
   static InvoiceDesignVM fromStore(Store<AppState> store) {
@@ -81,8 +81,8 @@ class InvoiceDesignVM {
             switch (settingsUIState.entityType) {
               case EntityType.company:
                 final completer = snackBarCompleter<Null>(
-                    context, AppLocalization.of(context).savedSettings)
-                  ..future.then((value) {
+                    AppLocalization.of(context)!.savedSettings)
+                  ..future.then<Null>((_) {
                     final webClient = WebClient();
                     final credentials = state.credentials;
                     final url = '${credentials.url}/designs/set/default';
@@ -99,7 +99,7 @@ class InvoiceDesignVM {
                       )
                           .then((dynamic response) {
                         showToast(
-                            AppLocalization.of(navigatorKey.currentContext)
+                            AppLocalization.of(navigatorKey.currentContext!)!
                                 .savedSettings);
                       }).catchError((dynamic error) {
                         showErrorDialog(message: '$error');
@@ -111,13 +111,13 @@ class InvoiceDesignVM {
                 break;
               case EntityType.group:
                 final completer = snackBarCompleter<GroupEntity>(
-                    context, AppLocalization.of(context).savedSettings);
+                    AppLocalization.of(context)!.savedSettings);
                 store.dispatch(SaveGroupRequest(
                     completer: completer, group: settingsUIState.group));
                 break;
               case EntityType.client:
                 final completer = snackBarCompleter<ClientEntity>(
-                    context, AppLocalization.of(context).savedSettings);
+                    AppLocalization.of(context)!.savedSettings);
                 store.dispatch(SaveClientRequest(
                     completer: completer, client: settingsUIState.client));
                 break;

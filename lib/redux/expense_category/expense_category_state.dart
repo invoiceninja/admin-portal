@@ -33,7 +33,7 @@ abstract class ExpenseCategoryState
 
   ExpenseCategoryEntity get(String categoryId) {
     if (map.containsKey(categoryId)) {
-      return map[categoryId];
+      return map[categoryId]!;
     } else {
       return ExpenseCategoryEntity(id: categoryId);
     }
@@ -61,7 +61,7 @@ abstract class ExpenseCategoryState
 abstract class ExpenseCategoryUIState extends Object
     with EntityUIState
     implements Built<ExpenseCategoryUIState, ExpenseCategoryUIStateBuilder> {
-  factory ExpenseCategoryUIState(PrefStateSortField sortField) {
+  factory ExpenseCategoryUIState(PrefStateSortField? sortField) {
     return _$ExpenseCategoryUIState._(
       listUIState: ListUIState(sortField?.field ?? ExpenseCategoryFields.name,
           sortAscending: sortField?.ascending),
@@ -77,14 +77,13 @@ abstract class ExpenseCategoryUIState extends Object
   @memoized
   int get hashCode;
 
-  @nullable
-  ExpenseCategoryEntity get editing;
+  ExpenseCategoryEntity? get editing;
 
   @override
-  bool get isCreatingNew => editing.isNew;
+  bool get isCreatingNew => editing!.isNew;
 
   @override
-  String get editingId => editing.id;
+  String get editingId => editing!.id;
 
   static Serializer<ExpenseCategoryUIState> get serializer =>
       _$expenseCategoryUIStateSerializer;

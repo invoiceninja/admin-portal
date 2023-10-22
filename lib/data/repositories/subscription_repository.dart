@@ -20,23 +20,23 @@ class SubscriptionRepository {
   final WebClient webClient;
 
   Future<SubscriptionEntity> loadItem(
-      Credentials credentials, String entityId) async {
+      Credentials credentials, String? entityId) async {
     final dynamic response = await webClient.get(
         '${credentials.url}/subscriptions/$entityId', credentials.token);
 
     final SubscriptionItemResponse subscriptionResponse = serializers
-        .deserializeWith(SubscriptionItemResponse.serializer, response);
+        .deserializeWith(SubscriptionItemResponse.serializer, response)!;
 
     return subscriptionResponse.data;
   }
 
   Future<BuiltList<SubscriptionEntity>> loadList(
       Credentials credentials) async {
-    final String url = credentials.url + '/subscriptions?';
+    final String url = credentials.url! + '/subscriptions?';
     final dynamic response = await webClient.get(url, credentials.token);
 
     final SubscriptionListResponse subscriptionResponse = serializers
-        .deserializeWith(SubscriptionListResponse.serializer, response);
+        .deserializeWith(SubscriptionListResponse.serializer, response)!;
 
     return subscriptionResponse.data;
   }
@@ -47,13 +47,13 @@ class SubscriptionRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url +
+    final url = credentials.url! +
         '/subscriptions/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
     final SubscriptionListResponse subscriptionResponse = serializers
-        .deserializeWith(SubscriptionListResponse.serializer, response);
+        .deserializeWith(SubscriptionListResponse.serializer, response)!;
 
     return subscriptionResponse.data.toList();
   }
@@ -66,7 +66,7 @@ class SubscriptionRepository {
 
     if (subscription.isNew) {
       response = await webClient.post(
-          credentials.url + '/subscriptions', credentials.token,
+          credentials.url! + '/subscriptions', credentials.token,
           data: json.encode(data));
     } else {
       final url = '${credentials.url}/subscriptions/${subscription.id}';
@@ -75,7 +75,7 @@ class SubscriptionRepository {
     }
 
     final SubscriptionItemResponse subscriptionResponse = serializers
-        .deserializeWith(SubscriptionItemResponse.serializer, response);
+        .deserializeWith(SubscriptionItemResponse.serializer, response)!;
 
     return subscriptionResponse.data;
   }

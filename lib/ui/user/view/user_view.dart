@@ -28,9 +28,9 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class UserView extends StatelessWidget {
   const UserView({
-    Key key,
-    @required this.viewModel,
-    @required this.isFilter,
+    Key? key,
+    required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final UserViewVM viewModel;
@@ -38,7 +38,7 @@ class UserView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final user = viewModel.user;
     final state = StoreProvider.of<AppState>(context).state;
     final userCompany = state.userCompany;

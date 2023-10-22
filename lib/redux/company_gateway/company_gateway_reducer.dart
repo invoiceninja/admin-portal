@@ -16,54 +16,55 @@ EntityUIState companyGatewayUIReducer(
     CompanyGatewayUIState state, dynamic action) {
   return state.rebuild((b) => b
     ..listUIState.replace(companyGatewayListReducer(state.listUIState, action))
-    ..editing.replace(editingReducer(state.editing, action))
+    ..editing.replace(editingReducer(state.editing, action)!)
     ..selectedId = selectedIdReducer(state.selectedId, action)
     ..forceSelected = forceSelectedReducer(state.forceSelected, action));
 }
 
-final forceSelectedReducer = combineReducers<bool>([
-  TypedReducer<bool, ViewCompanyGateway>((completer, action) => true),
-  TypedReducer<bool, ViewCompanyGatewayList>((completer, action) => false),
-  TypedReducer<bool, FilterCompanyGatewaysByState>(
+final forceSelectedReducer = combineReducers<bool?>([
+  TypedReducer<bool?, ViewCompanyGateway>((completer, action) => true),
+  TypedReducer<bool?, ViewCompanyGatewayList>((completer, action) => false),
+  TypedReducer<bool?, FilterCompanyGatewaysByState>(
       (completer, action) => false),
-  TypedReducer<bool, FilterCompanyGateways>((completer, action) => false),
-  TypedReducer<bool, FilterCompanyGatewaysByCustom1>(
+  TypedReducer<bool?, FilterCompanyGateways>((completer, action) => false),
+  TypedReducer<bool?, FilterCompanyGatewaysByCustom1>(
       (completer, action) => false),
-  TypedReducer<bool, FilterCompanyGatewaysByCustom2>(
+  TypedReducer<bool?, FilterCompanyGatewaysByCustom2>(
       (completer, action) => false),
-  TypedReducer<bool, FilterCompanyGatewaysByCustom3>(
+  TypedReducer<bool?, FilterCompanyGatewaysByCustom3>(
       (completer, action) => false),
-  TypedReducer<bool, FilterCompanyGatewaysByCustom4>(
+  TypedReducer<bool?, FilterCompanyGatewaysByCustom4>(
       (completer, action) => false),
 ]);
 
-Reducer<String> selectedIdReducer = combineReducers([
-  TypedReducer<String, ArchiveCompanyGatewaySuccess>((completer, action) => ''),
-  TypedReducer<String, DeleteCompanyGatewaySuccess>((completer, action) => ''),
-  TypedReducer<String, PreviewEntity>((selectedId, action) =>
+Reducer<String?> selectedIdReducer = combineReducers([
+  TypedReducer<String?, ArchiveCompanyGatewaySuccess>(
+      (completer, action) => ''),
+  TypedReducer<String?, DeleteCompanyGatewaySuccess>((completer, action) => ''),
+  TypedReducer<String?, PreviewEntity>((selectedId, action) =>
       action.entityType == EntityType.companyGateway
           ? action.entityId
           : selectedId),
-  TypedReducer<String, ViewCompanyGateway>(
-      (String selectedId, action) => action.companyGatewayId),
-  TypedReducer<String, AddCompanyGatewaySuccess>(
-      (String selectedId, action) => action.companyGateway.id),
-  TypedReducer<String, SelectCompany>(
+  TypedReducer<String?, ViewCompanyGateway>(
+      (String? selectedId, action) => action.companyGatewayId),
+  TypedReducer<String?, AddCompanyGatewaySuccess>(
+      (String? selectedId, action) => action.companyGateway.id),
+  TypedReducer<String?, SelectCompany>(
       (selectedId, action) => action.clearSelection ? '' : selectedId),
-  TypedReducer<String, ClearEntityFilter>((selectedId, action) => ''),
-  TypedReducer<String, SortCompanyGateways>((selectedId, action) => ''),
-  TypedReducer<String, FilterCompanyGateways>((selectedId, action) => ''),
-  TypedReducer<String, FilterCompanyGatewaysByState>(
+  TypedReducer<String?, ClearEntityFilter>((selectedId, action) => ''),
+  TypedReducer<String?, SortCompanyGateways>((selectedId, action) => ''),
+  TypedReducer<String?, FilterCompanyGateways>((selectedId, action) => ''),
+  TypedReducer<String?, FilterCompanyGatewaysByState>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterCompanyGatewaysByCustom1>(
+  TypedReducer<String?, FilterCompanyGatewaysByCustom1>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterCompanyGatewaysByCustom2>(
+  TypedReducer<String?, FilterCompanyGatewaysByCustom2>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterCompanyGatewaysByCustom3>(
+  TypedReducer<String?, FilterCompanyGatewaysByCustom3>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterCompanyGatewaysByCustom4>(
+  TypedReducer<String?, FilterCompanyGatewaysByCustom4>(
       (selectedId, action) => ''),
-  TypedReducer<String, FilterByEntity>(
+  TypedReducer<String?, FilterByEntity>(
       (selectedId, action) => action.clearSelection
           ? ''
           : action.entityType == EntityType.companyGateway
@@ -71,36 +72,37 @@ Reducer<String> selectedIdReducer = combineReducers([
               : selectedId),
 ]);
 
-final editingReducer = combineReducers<CompanyGatewayEntity>([
-  TypedReducer<CompanyGatewayEntity, SaveCompanyGatewaySuccess>(_updateEditing),
-  TypedReducer<CompanyGatewayEntity, AddCompanyGatewaySuccess>(_updateEditing),
-  TypedReducer<CompanyGatewayEntity, RestoreCompanyGatewaySuccess>(
+final editingReducer = combineReducers<CompanyGatewayEntity?>([
+  TypedReducer<CompanyGatewayEntity?, SaveCompanyGatewaySuccess>(
+      _updateEditing),
+  TypedReducer<CompanyGatewayEntity?, AddCompanyGatewaySuccess>(_updateEditing),
+  TypedReducer<CompanyGatewayEntity?, RestoreCompanyGatewaySuccess>(
       (companyGateways, action) {
     return action.companyGateways[0];
   }),
-  TypedReducer<CompanyGatewayEntity, ArchiveCompanyGatewaySuccess>(
+  TypedReducer<CompanyGatewayEntity?, ArchiveCompanyGatewaySuccess>(
       (companyGateways, action) {
     return action.companyGateways[0];
   }),
-  TypedReducer<CompanyGatewayEntity, DeleteCompanyGatewaySuccess>(
+  TypedReducer<CompanyGatewayEntity?, DeleteCompanyGatewaySuccess>(
       (companyGateways, action) {
     return action.companyGateways[0];
   }),
-  TypedReducer<CompanyGatewayEntity, EditCompanyGateway>(_updateEditing),
-  TypedReducer<CompanyGatewayEntity, UpdateCompanyGateway>(
+  TypedReducer<CompanyGatewayEntity?, EditCompanyGateway>(_updateEditing),
+  TypedReducer<CompanyGatewayEntity?, UpdateCompanyGateway>(
       (companyGateway, action) {
     return action.companyGateway.rebuild((b) => b..isChanged = true);
   }),
-  TypedReducer<CompanyGatewayEntity, DiscardChanges>(_clearEditing),
+  TypedReducer<CompanyGatewayEntity?, DiscardChanges>(_clearEditing),
 ]);
 
 CompanyGatewayEntity _clearEditing(
-    CompanyGatewayEntity companyGateway, dynamic action) {
+    CompanyGatewayEntity? companyGateway, dynamic action) {
   return CompanyGatewayEntity();
 }
 
-CompanyGatewayEntity _updateEditing(
-    CompanyGatewayEntity companyGateway, dynamic action) {
+CompanyGatewayEntity? _updateEditing(
+    CompanyGatewayEntity? companyGateway, dynamic action) {
   return action.companyGateway;
 }
 
@@ -172,7 +174,7 @@ ListUIState _filterCompanyGateways(
 ListUIState _sortCompanyGateways(
     ListUIState companyGatewayListState, SortCompanyGateways action) {
   return companyGatewayListState.rebuild((b) => b
-    ..sortAscending = b.sortField != action.field || !b.sortAscending
+    ..sortAscending = b.sortField != action.field || !b.sortAscending!
     ..sortField = action.field);
 }
 
@@ -183,13 +185,13 @@ ListUIState _startListMultiselect(
 
 ListUIState _addToListMultiselect(
     ListUIState productListState, AddToCompanyGatewayMultiselect action) {
-  return productListState.rebuild((b) => b..selectedIds.add(action.entity.id));
+  return productListState.rebuild((b) => b..selectedIds.add(action.entity!.id));
 }
 
 ListUIState _removeFromListMultiselect(
     ListUIState productListState, RemoveFromCompanyGatewayMultiselect action) {
   return productListState
-      .rebuild((b) => b..selectedIds.remove(action.entity.id));
+      .rebuild((b) => b..selectedIds.remove(action.entity!.id));
 }
 
 ListUIState _clearListMultiselect(

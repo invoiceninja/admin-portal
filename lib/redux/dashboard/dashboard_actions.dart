@@ -12,7 +12,7 @@ class ViewDashboard implements PersistUI {
   });
 
   final bool force;
-  final String filter;
+  final String? filter;
 }
 
 class UpdateDashboardSettings implements PersistUI {
@@ -24,11 +24,11 @@ class UpdateDashboardSettings implements PersistUI {
     this.groupBy,
   });
 
-  DashboardSettings settings;
-  int offset;
-  String currencyId;
-  bool includeTaxes;
-  String groupBy;
+  DashboardSettings? settings;
+  int? offset;
+  String? currencyId;
+  bool? includeTaxes;
+  String? groupBy;
 }
 
 class UpdateDashboardFields implements PersistUI {
@@ -36,7 +36,7 @@ class UpdateDashboardFields implements PersistUI {
     this.dashboardFields,
   });
 
-  BuiltList<DashboardField> dashboardFields;
+  BuiltList<DashboardField>? dashboardFields;
 }
 
 class UpdateDashboardFieldSettingss implements PersistUI {
@@ -45,8 +45,8 @@ class UpdateDashboardFieldSettingss implements PersistUI {
     this.numberFieldsPerRowDesktop,
   });
 
-  final int numberFieldsPerRowMobile;
-  final int numberFieldsPerRowDesktop;
+  final int? numberFieldsPerRowMobile;
+  final int? numberFieldsPerRowDesktop;
 }
 
 class UpdateDashboardSelection implements PersistUI {
@@ -55,18 +55,18 @@ class UpdateDashboardSelection implements PersistUI {
     this.entityIds,
   });
 
-  EntityType entityType;
-  List<String> entityIds;
+  EntityType? entityType;
+  List<String>? entityIds;
 }
 
 class UpdateDashboardEntityType implements PersistUI {
   UpdateDashboardEntityType({this.entityType});
 
-  EntityType entityType;
+  EntityType? entityType;
 }
 
 class UpdateDashboardSidebar implements PersistUI {
   UpdateDashboardSidebar({this.showSidebar});
 
-  bool showSidebar;
+  bool? showSidebar;
 }

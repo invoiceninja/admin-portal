@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
@@ -80,14 +81,14 @@ enum ClientReportFields {
 }
 
 var memoizedClientReport = memo6((
-  UserCompanyEntity userCompany,
+  UserCompanyEntity? userCompany,
   ReportsUIState reportsUIState,
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, UserEntity> userMap,
   BuiltMap<String, GroupEntity> groupMap,
   StaticState staticState,
 ) =>
-    clientReport(userCompany, reportsUIState, clientMap, userMap, groupMap,
+    clientReport(userCompany!, reportsUIState, clientMap, userMap, groupMap,
         staticState));
 
 ReportResult clientReport(
@@ -102,11 +103,10 @@ ReportResult clientReport(
   final List<BaseEntity> entities = [];
   BuiltList<ClientReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
-  final clientReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportClient)
-          ? reportSettings[kReportClient]
-          : ReportSettingsEntity();
+  final reportSettings = userCompany.settings.reportSettings;
+  final clientReportSettings = reportSettings.containsKey(kReportClient)
+      ? reportSettings[kReportClient]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     ClientReportFields.name,
@@ -123,16 +123,16 @@ ReportResult clientReport(
   if (clientReportSettings.columns.isNotEmpty) {
     columns = BuiltList(clientReportSettings.columns
         .map((e) => EnumUtils.fromString(ClientReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
   }
 
   for (var clientId in clientMap.keys) {
-    final client = clientMap[clientId];
+    final client = clientMap[clientId]!;
     final contact = client.primaryContact;
-    if (client.isDeleted && !userCompany.company.reportIncludeDeleted) {
+    if (client.isDeleted! && !userCompany.company.reportIncludeDeleted) {
       continue;
     }
 
@@ -363,7 +363,7 @@ ReportResult clientReport(
           value = client.isTaxExempt;
           break;
         case ClientReportFields.classification:
-          value = AppLocalization.of(navigatorKey.currentContext)
+          value = AppLocalization.of(navigatorKey.currentContext!)!
               .lookup(client.classification);
           break;
       }
@@ -373,7 +373,7 @@ ReportResult clientReport(
         userCompany: userCompany,
         reportsUIState: reportsUIState,
         column: EnumUtils.parse(column),
-      )) {
+      )!) {
         skip = true;
       }
 
@@ -382,7 +382,7 @@ ReportResult clientReport(
       } else if (column == ClientReportFields.documents) {
         row.add(client.getReportInt(value: value));
       } else if (value.runtimeType == double || value.runtimeType == int) {
-        String currencyId = client.currencyId;
+        String? currencyId = client.currencyId;
         if ([
           ClientReportFields.converted_balance,
           ClientReportFields.converted_credit_balance,
@@ -409,7 +409,7 @@ ReportResult clientReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, clientReportSettings, selectedColumns));
+      sortReportTableRows(rowA, rowB, clientReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns:

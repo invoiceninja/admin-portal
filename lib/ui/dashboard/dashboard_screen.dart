@@ -39,8 +39,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({
-    Key key,
-    @required this.viewModel,
+    Key? key,
+    required this.viewModel,
   }) : super(key: key);
 
   final DashboardVM viewModel;
@@ -51,9 +51,9 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen>
     with TickerProviderStateMixin {
-  TabController _mainTabController;
-  TabController _sideTabController;
-  ScrollController _scrollController;
+  late TabController _mainTabController;
+  late TabController _sideTabController;
+  late ScrollController _scrollController;
   final List<EntityType> _tabs = [];
 
   @override
@@ -176,13 +176,13 @@ class _DashboardScreenState extends State<DashboardScreen>
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final company = state.company;
-    Widget leading;
+    Widget? leading;
 
     if (isMobile(context) || state.prefState.isMenuFloated) {
       leading = Builder(
         builder: (context) => InkWell(
           child: IconButton(
-            tooltip: localization.menuSidebar,
+            tooltip: localization!.menuSidebar,
             icon: Icon(Icons.menu),
             onPressed: () {
               Scaffold.of(context).openDrawer();
@@ -215,7 +215,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     isScrollable: true,
                     tabs: [
                       Tab(
-                        text: localization.overview,
+                        text: localization!.overview,
                       ),
                       Tab(
                         text: localization.activity,
@@ -252,7 +252,7 @@ class _DashboardScreenState extends State<DashboardScreen>
               padding: const EdgeInsets.only(right: 10),
               child: IconButton(
                   tooltip: state.prefState.enableTooltips
-                      ? localization.upgrade
+                      ? localization!.upgrade
                       : null,
                   onPressed: () => launchUrl(Uri.parse(kWhiteLabelUrl)),
                   icon: Icon(Icons.rocket_launch)),
@@ -265,7 +265,7 @@ class _DashboardScreenState extends State<DashboardScreen>
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: IconButton(
-                tooltip: localization.enableReactApp,
+                tooltip: localization!.enableReactApp,
                 onPressed: () async {
                   final credentials = state.credentials;
                   final account = state.account
@@ -286,7 +286,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                     WebUtils.reloadBrowser();
                   }).catchError((Object error) {
                     store.dispatch(StopSaving());
-                    showErrorDialog(message: error);
+                    showErrorDialog(message: error as String?);
                   });
                 },
                 icon: Icon(MdiIcons.react),
@@ -297,7 +297,7 @@ class _DashboardScreenState extends State<DashboardScreen>
               builder: (context) => IconButton(
                 padding: const EdgeInsets.only(left: 4, right: 24),
                 tooltip: state.prefState.enableTooltips
-                    ? localization.history
+                    ? localization!.history
                     : null,
                 icon: Icon(Icons.history),
                 onPressed: () {
@@ -317,7 +317,7 @@ class _DashboardScreenState extends State<DashboardScreen>
                 isScrollable: isMobile(context),
                 tabs: [
                   Tab(
-                    text: localization.overview,
+                    text: localization!.overview,
                   ),
                   Tab(
                     text: localization.activity,
@@ -390,16 +390,16 @@ class _DashboardScreenState extends State<DashboardScreen>
 
 class _CustomTabBarView extends StatelessWidget {
   const _CustomTabBarView({
-    @required this.viewModel,
-    @required this.mainTabController,
-    @required this.sideTabController,
-    @required this.scrollController,
+    required this.viewModel,
+    required this.mainTabController,
+    required this.sideTabController,
+    required this.scrollController,
   });
 
   final DashboardVM viewModel;
-  final TabController mainTabController;
-  final TabController sideTabController;
-  final ScrollController scrollController;
+  final TabController? mainTabController;
+  final TabController? sideTabController;
+  final ScrollController? scrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -419,7 +419,7 @@ class _CustomTabBarView extends StatelessWidget {
               trailing: Icon(Icons.navigate_next),
               subtitle: Text(subtitle != null
                   ? subtitle
-                  : localization.lookup('${entity.entityType}')),
+                  : localization!.lookup('${entity.entityType}')),
               onTap: () => viewEntity(entity: entity),
             );
           });

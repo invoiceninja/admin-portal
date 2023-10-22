@@ -15,7 +15,7 @@ import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
 import 'credit_screen.dart';
 
 class CreditScreenBuilder extends StatelessWidget {
-  const CreditScreenBuilder({Key key}) : super(key: key);
+  const CreditScreenBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +32,15 @@ class CreditScreenBuilder extends StatelessWidget {
 
 class CreditScreenVM {
   CreditScreenVM({
-    @required this.isInMultiselect,
-    @required this.creditList,
-    @required this.userCompany,
-    @required this.onEntityAction,
-    @required this.creditMap,
+    required this.isInMultiselect,
+    required this.creditList,
+    required this.userCompany,
+    required this.onEntityAction,
+    required this.creditMap,
   });
 
   final bool isInMultiselect;
-  final UserCompanyEntity userCompany;
+  final UserCompanyEntity? userCompany;
   final List<String> creditList;
   final Function(BuildContext, List<BaseEntity>, EntityAction) onEntityAction;
   final BuiltMap<String, InvoiceEntity> creditMap;

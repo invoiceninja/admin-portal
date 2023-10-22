@@ -17,11 +17,11 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'dialogs.dart';
 
 void loadDesign({
-  @required BuildContext context,
-  @required DesignEntity design,
-  @required bool isDraftMode,
-  @required bool isPurchaseOrder,
-  @required Function(Response) onComplete,
+  required BuildContext context,
+  required DesignEntity design,
+  required bool isDraftMode,
+  required bool isPurchaseOrder,
+  required Function(Response?) onComplete,
 }) {
   if (Config.DEMO_MODE) {
     onComplete(null);
@@ -50,8 +50,7 @@ void loadDesign({
       .then((dynamic response) {
     if ((response as Response).statusCode >= 400) {
       showErrorDialog(
-          message:
-              '${(response as Response).statusCode}: ${(response as Response).reasonPhrase}');
+          message: '${response.statusCode}: ${response.reasonPhrase}');
       onComplete(null);
     } else {
       onComplete(response);

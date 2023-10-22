@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
@@ -48,7 +49,7 @@ enum PaymentReportFields {
 
 var memoizedPaymentReport = memo8(
   (
-    UserCompanyEntity userCompany,
+    UserCompanyEntity? userCompany,
     ReportsUIState reportsUIState,
     BuiltMap<String, PaymentEntity> paymentMap,
     BuiltMap<String, ClientEntity> clientMap,
@@ -58,7 +59,7 @@ var memoizedPaymentReport = memo8(
     StaticState staticState,
   ) =>
       paymentReport(
-    userCompany,
+    userCompany!,
     reportsUIState,
     paymentMap,
     clientMap,
@@ -83,11 +84,10 @@ ReportResult paymentReport(
   final List<BaseEntity> entities = [];
   BuiltList<PaymentReportFields> columns;
 
-  final reportSettings = userCompany.settings?.reportSettings;
-  final paymentReportSettings =
-      reportSettings != null && reportSettings.containsKey(kReportPayment)
-          ? reportSettings[kReportPayment]
-          : ReportSettingsEntity();
+  final reportSettings = userCompany.settings.reportSettings;
+  final paymentReportSettings = reportSettings.containsKey(kReportPayment)
+      ? reportSettings[kReportPayment]!
+      : ReportSettingsEntity();
 
   final defaultColumns = [
     PaymentReportFields.number,
@@ -100,7 +100,7 @@ ReportResult paymentReport(
   if (paymentReportSettings.columns.isNotEmpty) {
     columns = BuiltList(paymentReportSettings.columns
         .map((e) => EnumUtils.fromString(PaymentReportFields.values, e))
-        .where((element) => element != null)
+        .whereNotNull()
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
@@ -113,16 +113,16 @@ ReportResult paymentReport(
     for (var paymentId in paymentMap.keys) {
       final payment = paymentMap[paymentId] ?? PaymentEntity();
       paymentInvoiceMap[payment.id] = [];
-      if (payment.isDeleted && !userCompany.company.reportIncludeDeleted) {
+      if (payment.isDeleted! && !userCompany.company.reportIncludeDeleted) {
         continue;
       }
       for (var invoicePaymentable in payment.invoicePaymentables) {
         final invoice =
             invoiceMap[invoicePaymentable.invoiceId] ?? InvoiceEntity();
-        if (invoice.isDeleted && !userCompany.company.reportIncludeDeleted) {
+        if (invoice.isDeleted! && !userCompany.company.reportIncludeDeleted) {
           continue;
         }
-        paymentInvoiceMap[payment.id].add(invoice.number);
+        paymentInvoiceMap[payment.id]!.add(invoice.number);
       }
     }
   }
@@ -131,16 +131,16 @@ ReportResult paymentReport(
     for (var paymentId in paymentMap.keys) {
       final payment = paymentMap[paymentId] ?? PaymentEntity();
       paymentCreditMap[payment.id] = [];
-      if (payment.isDeleted && !userCompany.company.reportIncludeDeleted) {
+      if (payment.isDeleted! && !userCompany.company.reportIncludeDeleted) {
         continue;
       }
       for (var creditPaymentable in payment.creditPaymentables) {
         final credit =
             creditMap[creditPaymentable.invoiceId] ?? InvoiceEntity();
-        if (credit.isDeleted && !userCompany.company.reportIncludeDeleted) {
+        if (credit.isDeleted! && !userCompany.company.reportIncludeDeleted) {
           continue;
         }
-        paymentCreditMap[payment.id].add(credit.number);
+        paymentCreditMap[payment.id]!.add(credit.number);
       }
     }
   }
@@ -149,8 +149,8 @@ ReportResult paymentReport(
     final payment = paymentMap[paymentId] ?? PaymentEntity();
     final client = clientMap[payment.clientId] ?? ClientEntity();
 
-    if ((payment.isDeleted && !userCompany.company.reportIncludeDeleted) ||
-        client.isDeleted) {
+    if ((payment.isDeleted! && !userCompany.company.reportIncludeDeleted) ||
+        client.isDeleted!) {
       continue;
     }
 
@@ -277,7 +277,7 @@ ReportResult paymentReport(
         userCompany: userCompany,
         reportsUIState: reportsUIState,
         column: EnumUtils.parse(column),
-      )) {
+      )!) {
         skip = true;
       }
 
@@ -302,7 +302,7 @@ ReportResult paymentReport(
 
   final selectedColumns = columns.map((item) => EnumUtils.parse(item)).toList();
   data.sort((rowA, rowB) =>
-      sortReportTableRows(rowA, rowB, paymentReportSettings, selectedColumns));
+      sortReportTableRows(rowA, rowB, paymentReportSettings, selectedColumns)!);
 
   return ReportResult(
     allColumns:

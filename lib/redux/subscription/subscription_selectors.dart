@@ -24,7 +24,7 @@ List<String> dropdownSubscriptionsSelector(
     BuiltMap<String, UserEntity> userMap,
     String clientId) {
   final list = subscriptionList.where((subscriptionId) {
-    final subscription = subscriptionMap[subscriptionId];
+    final subscription = subscriptionMap[subscriptionId]!;
     /*
     if (clientId != null && clientId > 0 && subscription.clientId != clientId) {
       return false;
@@ -34,7 +34,7 @@ List<String> dropdownSubscriptionsSelector(
   }).toList();
 
   list.sort((subscriptionAId, subscriptionBId) {
-    final subscriptionA = subscriptionMap[subscriptionAId];
+    final subscriptionA = subscriptionMap[subscriptionAId]!;
     final subscriptionB = subscriptionMap[subscriptionBId];
     return subscriptionA.compareTo(
         subscriptionB, SubscriptionFields.createdAt, true);
@@ -44,7 +44,7 @@ List<String> dropdownSubscriptionsSelector(
 }
 
 var memoizedFilteredSubscriptionList = memo4((SelectionState selectionState,
-        BuiltMap<String, SubscriptionEntity> subscriptionMap,
+        BuiltMap<String?, SubscriptionEntity?> subscriptionMap,
         BuiltList<String> subscriptionList,
         ListUIState subscriptionListState) =>
     filteredSubscriptionsSelector(
@@ -56,14 +56,14 @@ var memoizedFilteredSubscriptionList = memo4((SelectionState selectionState,
 
 List<String> filteredSubscriptionsSelector(
     SelectionState selectionState,
-    BuiltMap<String, SubscriptionEntity> subscriptionMap,
+    BuiltMap<String?, SubscriptionEntity?> subscriptionMap,
     BuiltList<String> subscriptionList,
     ListUIState subscriptionListState) {
   final filterEntityId = selectionState.filterEntityId;
   //final filterEntityType = selectionState.filterEntityType;
 
   final list = subscriptionList.where((subscriptionId) {
-    final subscription = subscriptionMap[subscriptionId];
+    final subscription = subscriptionMap[subscriptionId]!;
     if (subscription.id == selectionState.selectedId) {
       return true;
     }
@@ -79,7 +79,7 @@ List<String> filteredSubscriptionsSelector(
   }).toList();
 
   list.sort((subscriptionAId, subscriptionBId) {
-    final subscriptionA = subscriptionMap[subscriptionAId];
+    final subscriptionA = subscriptionMap[subscriptionAId]!;
     final subscriptionB = subscriptionMap[subscriptionBId];
     return subscriptionA.compareTo(subscriptionB,
         subscriptionListState.sortField, subscriptionListState.sortAscending);
