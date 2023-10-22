@@ -353,7 +353,7 @@ Middleware<AppState> _loadCredits(CreditRepository repository) {
       store.dispatch(LoadDocumentsSuccess(documents));
 
       if (action!.completer != null) {
-        action.completer!.complete(null);
+        action.completer!.complete(documents.firstOrNull);
       }
       store.dispatch(LoadProjects());
     }).catchError((Object error) {
@@ -432,8 +432,7 @@ Middleware<AppState> _saveDocument(CreditRepository repository) {
             ..parentType = EntityType.credit));
         });
         store.dispatch(LoadDocumentsSuccess(documents));
-
-        action.completer.complete(null);
+        action.completer.complete(documents);
       }).catchError((Object error) {
         print(error);
         store.dispatch(SaveCreditDocumentFailure(error));

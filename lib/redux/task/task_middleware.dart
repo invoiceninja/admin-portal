@@ -327,8 +327,7 @@ Middleware<AppState> _saveDocument(TaskRepository repository) {
             ..parentType = EntityType.task));
         });
         store.dispatch(LoadDocumentsSuccess(documents));
-
-        action.completer.complete(null);
+        action.completer.complete(documents);
       }).catchError((Object error) {
         print(error);
         store.dispatch(SaveTaskDocumentFailure(error));

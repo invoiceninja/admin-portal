@@ -262,8 +262,7 @@ Middleware<AppState> _saveDocument(GroupRepository repository) {
             ..parentType = EntityType.group));
         });
         store.dispatch(LoadDocumentsSuccess(documents));
-
-        action.completer.complete(null);
+        action.completer.complete(documents);
       }).catchError((Object error) {
         print(error);
         store.dispatch(SaveGroupDocumentFailure(error));

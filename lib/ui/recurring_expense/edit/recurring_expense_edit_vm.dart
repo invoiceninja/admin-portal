@@ -182,7 +182,7 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
       },
       onUploadDocuments: (BuildContext context,
           List<MultipartFile> multipartFiles, bool isPrivate) {
-        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        final completer = Completer<List<DocumentEntity>>();
         store.dispatch(SaveRecurringExpenseDocumentRequest(
             isPrivate: isPrivate,
             multipartFile: multipartFiles,

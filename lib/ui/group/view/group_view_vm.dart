@@ -98,7 +98,7 @@ class GroupViewVM {
       },
       onUploadDocuments: (BuildContext context,
           List<MultipartFile> multipartFile, bool isPrivate) {
-        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        final completer = Completer<List<DocumentEntity>>();
         store.dispatch(SaveGroupDocumentRequest(
             isPrivate: isPrivate,
             multipartFiles: multipartFile,

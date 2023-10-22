@@ -113,7 +113,7 @@ class RecurringInvoiceViewVM extends AbstractInvoiceViewVM {
           handleEntitiesActions([invoice], action, autoPop: true),
       onUploadDocuments: (BuildContext context,
           List<MultipartFile> multipartFiles, bool isPrivate) {
-        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        final completer = Completer<List<DocumentEntity>>();
         store.dispatch(SaveRecurringInvoiceDocumentRequest(
             isPrivate: isPrivate,
             multipartFiles: multipartFiles,

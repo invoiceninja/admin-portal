@@ -86,7 +86,7 @@ class ProductViewVM {
           handleEntitiesActions([product], action, autoPop: true),
       onUploadDocuments: (BuildContext context,
           List<MultipartFile> multipartFile, bool isPrivate) {
-        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        final completer = Completer<List<DocumentEntity>>();
         store.dispatch(SaveProductDocumentRequest(
           isPrivate: isPrivate,
           multipartFiles: multipartFile,

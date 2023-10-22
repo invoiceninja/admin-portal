@@ -559,8 +559,7 @@ Middleware<AppState> _saveDocument(PurchaseOrderRepository repository) {
             ..parentType = EntityType.purchaseOrder));
         });
         store.dispatch(LoadDocumentsSuccess(documents));
-
-        action.completer.complete(null);
+        action.completer.complete(documents);
       }).catchError((Object error) {
         print(error);
         store.dispatch(SavePurchaseOrderDocumentFailure(error));

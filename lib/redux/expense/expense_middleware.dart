@@ -278,8 +278,7 @@ Middleware<AppState> _saveDocument(ExpenseRepository repository) {
             ..parentType = EntityType.expense));
         });
         store.dispatch(LoadDocumentsSuccess(documents));
-
-        action.completer.complete(null);
+        action.completer.complete(documents);
       }).catchError((Object error) {
         print(error);
         store.dispatch(SaveExpenseDocumentFailure(error));

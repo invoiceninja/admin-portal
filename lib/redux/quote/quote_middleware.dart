@@ -489,8 +489,7 @@ Middleware<AppState> _saveDocument(QuoteRepository repository) {
             ..parentType = EntityType.quote));
         });
         store.dispatch(LoadDocumentsSuccess(documents));
-
-        action.completer.complete(null);
+        action.completer.complete(documents);
       }).catchError((Object error) {
         print(error);
         store.dispatch(SaveQuoteDocumentFailure(error));

@@ -455,8 +455,7 @@ Middleware<AppState> _saveDocument(RecurringInvoiceRepository repository) {
             ..parentType = EntityType.recurringInvoice));
         });
         store.dispatch(LoadDocumentsSuccess(documents));
-
-        action.completer.complete(null);
+        action.completer.complete(documents);
       }).catchError((Object error) {
         print(error);
         store.dispatch(SaveRecurringInvoiceDocumentFailure(error));

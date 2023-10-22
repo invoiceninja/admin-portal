@@ -107,7 +107,7 @@ class ProjectViewVM {
           handleEntitiesActions([project], action, autoPop: true),
       onUploadDocuments: (BuildContext context,
           List<MultipartFile> multipartFiles, bool isPrivate) {
-        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        final completer = Completer<List<DocumentEntity>>();
         store.dispatch(SaveProjectDocumentRequest(
             isPrivate: isPrivate,
             multipartFile: multipartFiles,

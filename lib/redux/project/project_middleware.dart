@@ -280,8 +280,7 @@ Middleware<AppState> _saveDocument(ProjectRepository repository) {
             ..parentType = EntityType.project));
         });
         store.dispatch(LoadDocumentsSuccess(documents));
-
-        action.completer.complete(null);
+        action.completer.complete(documents);
       }).catchError((Object error) {
         print(error);
         store.dispatch(SaveProjectDocumentFailure(error));

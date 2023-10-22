@@ -313,8 +313,7 @@ Middleware<AppState> _saveDocument(ProductRepository repository) {
             ..parentType = EntityType.product));
         });
         store.dispatch(LoadDocumentsSuccess(documents));
-
-        action.completer.complete(null);
+        action.completer.complete(documents);
       }).catchError((Object error) {
         print(error);
         store.dispatch(SaveProductDocumentFailure(error));

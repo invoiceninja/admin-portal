@@ -146,7 +146,7 @@ class InvoiceViewVM extends AbstractInvoiceViewVM {
           handleEntitiesActions([invoice], action, autoPop: true),
       onUploadDocuments: (BuildContext context,
           List<MultipartFile> multipartFile, bool isPrivate) {
-        final Completer<DocumentEntity> completer = Completer<DocumentEntity>();
+        final completer = Completer<List<DocumentEntity>>();
         store.dispatch(SaveInvoiceDocumentRequest(
             isPrivate: isPrivate,
             multipartFiles: multipartFile,

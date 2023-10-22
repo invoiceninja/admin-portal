@@ -337,9 +337,9 @@ Middleware<AppState> _saveDocument(ClientRepository repository) {
             ..parentId = client.id
             ..parentType = EntityType.client));
         });
-        store.dispatch(LoadDocumentsSuccess(documents));
 
-        action.completer.complete(null);
+        store.dispatch(LoadDocumentsSuccess(documents));
+        action.completer.complete(documents);
       }).catchError((Object error) {
         print(error);
         store.dispatch(SaveClientDocumentFailure(error));

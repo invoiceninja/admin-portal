@@ -382,8 +382,7 @@ Middleware<AppState> _saveDocument(SettingsRepository repository) {
             ..parentType = EntityType.company));
         });
         store.dispatch(LoadDocumentsSuccess(documents));
-
-        action.completer.complete(null);
+        action.completer.complete(documents);
       }).catchError((Object error) {
         print(error);
         store.dispatch(SaveCompanyDocumentFailure(error));
