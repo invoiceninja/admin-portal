@@ -107,6 +107,9 @@ abstract class DocumentEntity extends Object
     'pdf',
     'xml',
     'zip',
+    'ods',
+    'odt',
+    'odp',
   ];
 
   @override
