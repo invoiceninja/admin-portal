@@ -18,9 +18,9 @@ import 'package:invoiceninja_flutter/ui/reports/recurring_expense_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/recurring_invoice_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/transaction_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/vendor_report.dart';
+import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:memoize/memoize.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -511,22 +511,19 @@ class ReportsScreenVM {
           if (kIsWeb) {
             WebUtils.downloadTextFile(filename, csvData);
           } else {
-            final directory = await (isDesktopOS()
-                ? getDownloadsDirectory()
-                : getApplicationDocumentsDirectory());
+            final directory = await getAppDownloadDirectory();
 
             if (directory == null) {
               return;
             }
 
-            final filePath =
-                directory.path + file.Platform.pathSeparator + filename;
+            final filePath = directory + file.Platform.pathSeparator + filename;
             final csvFile = file.File(filePath);
             await csvFile.writeAsString(csvData);
 
             if (isDesktopOS()) {
               showToast(localization!.fileSavedInPath
-                  .replaceFirst(':path', directory.path));
+                  .replaceFirst(':path', directory));
             } else {
               await Share.shareXFiles([XFile(filePath)]);
             }

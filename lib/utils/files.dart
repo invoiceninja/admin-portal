@@ -7,6 +7,10 @@ import 'package:flutter/foundation.dart';
 // Package imports:
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 // Project imports:
@@ -76,4 +80,25 @@ Future<List<MultipartFile>?> _pickFiles({
   }
 
   return null;
+}
+
+Future<String?> getAppDownloadDirectory() async {
+  final directory = await (isDesktopOS()
+      ? getDownloadsDirectory()
+      : getApplicationDocumentsDirectory());
+
+  if (directory == null) {
+    return null;
+  }
+
+  if (!Directory(directory.path).existsSync()) {
+    showErrorDialog(
+        message: AppLocalization.of(navigatorKey.currentContext!)!
+            .directoryDoesNotExist
+            .replaceFirst(':value', directory.path));
+
+    return null;
+  }
+
+  return directory.path;
 }

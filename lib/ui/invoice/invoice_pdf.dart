@@ -14,7 +14,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:printing/printing.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -269,16 +269,15 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                                   WebUtils.downloadBinaryFile(
                                       fileName, _response!.bodyBytes);
                                 } else {
-                                  final directory = await (isDesktopOS()
-                                      ? getDownloadsDirectory()
-                                      : getApplicationDocumentsDirectory());
+                                  final directory =
+                                      await getAppDownloadDirectory();
 
                                   if (directory == null) {
                                     return;
                                   }
 
                                   String filePath =
-                                      '${directory.path}${file.Platform.pathSeparator}$fileName';
+                                      '$directory${file.Platform.pathSeparator}$fileName';
 
                                   if (file.File(filePath).existsSync()) {
                                     final timestamp =
@@ -293,7 +292,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
 
                                   if (isDesktopOS()) {
                                     showToast(localization.fileSavedInPath
-                                        .replaceFirst(':path', directory.path));
+                                        .replaceFirst(':path', directory));
                                   } else {
                                     await Share.shareXFiles([XFile(filePath)]);
                                   }

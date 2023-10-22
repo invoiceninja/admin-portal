@@ -21,8 +21,8 @@ import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/multiselect.dart';
+import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:printing/printing.dart';
 
 // Project imports:
@@ -352,16 +352,14 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                             WebUtils.downloadBinaryFile(
                                 fileName, _response!.bodyBytes);
                           } else {
-                            final directory = await (isDesktopOS()
-                                ? getDownloadsDirectory()
-                                : getApplicationDocumentsDirectory());
+                            final directory = await getAppDownloadDirectory();
 
                             if (directory == null) {
                               return;
                             }
 
                             String filePath =
-                                '${directory.path}${file.Platform.pathSeparator}$fileName';
+                                '$directory${file.Platform.pathSeparator}$fileName';
 
                             if (file.File(filePath).existsSync()) {
                               final timestamp =
@@ -375,7 +373,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
 
                             if (isDesktopOS()) {
                               showToast(localization.fileSavedInPath
-                                  .replaceFirst(':path', directory.path));
+                                  .replaceFirst(':path', directory));
                             } else {
                               await Share.shareXFiles([XFile(filePath)]);
                             }

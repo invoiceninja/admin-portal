@@ -34,9 +34,9 @@ import 'package:invoiceninja_flutter/redux/vendor/vendor_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
 import 'package:printing/printing.dart';
 
@@ -321,7 +321,7 @@ void handleDocumentAction(
   }
 
   final store = StoreProvider.of<AppState>(context!);
-  final localization = AppLocalization.of(context);
+  final localization = AppLocalization.of(context)!;
   final documentIds = documents.map((document) => document.id).toList();
   final document = store.state.documentState.map[documentIds.first]!;
 
@@ -331,19 +331,19 @@ void handleDocumentAction(
       break;
     case EntityAction.restore:
       final message = documentIds.length > 1
-          ? localization!.restoredDocuments
+          ? localization.restoredDocuments
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', documentIds.length.toString())
-          : localization!.restoredDocument;
+          : localization.restoredDocument;
       store.dispatch(RestoreDocumentRequest(
           snackBarCompleter<Null>(message), documentIds));
       break;
     case EntityAction.archive:
       final message = documentIds.length > 1
-          ? localization!.archivedDocuments
+          ? localization.archivedDocuments
               .replaceFirst(':value', ':count')
               .replaceFirst(':count', documentIds.length.toString())
-          : localization!.archivedDocument;
+          : localization.archivedDocument;
       store.dispatch(ArchiveDocumentRequest(
           snackBarCompleter<Null>(message), documentIds));
       break;
@@ -386,7 +386,7 @@ void handleDocumentAction(
         DownloadDocumentsRequest(
           documentIds: documentIds,
           completer: snackBarCompleter<Null>(
-            localization!.exportedData,
+            localization.exportedData,
           ),
         ),
       );
@@ -402,7 +402,7 @@ void handleDocumentAction(
                 actions: [
                   TextButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: Text(localization!.close.toUpperCase())),
+                      child: Text(localization.close.toUpperCase())),
                 ],
                 content: document.isImage
                     ? PinchZoom(
@@ -440,27 +440,26 @@ void handleDocumentAction(
             WebUtils.downloadBinaryFile(document!.name, document.data!);
           }
         } else {
-          final directory = await (isDesktopOS()
-              ? getDownloadsDirectory() as FutureOr<file.Directory>
-              : getApplicationDocumentsDirectory());
+          final directory = await getAppDownloadDirectory();
+          if (directory != null) {
+            String filePath =
+                '$directory/${file.Platform.pathSeparator}${document!.name}';
 
-          String filePath =
-              '${directory.path}${file.Platform.pathSeparator}${document!.name}';
+            if (file.File(filePath).existsSync()) {
+              final extension = document.name.split('.').last;
+              final timestamp = DateTime.now().millisecondsSinceEpoch;
+              filePath = filePath.replaceFirst(
+                  '.$extension', '_$timestamp.$extension');
+            }
 
-          if (file.File(filePath).existsSync()) {
-            final extension = document.name.split('.').last;
-            final timestamp = DateTime.now().millisecondsSinceEpoch;
-            filePath =
-                filePath.replaceFirst('.$extension', '_$timestamp.$extension');
-          }
+            await File(filePath).writeAsBytes(document.data!);
 
-          await File(filePath).writeAsBytes(document.data!);
-
-          if (isDesktopOS()) {
-            showToast(localization!.fileSavedInPath
-                .replaceFirst(':path', directory.path));
-          } else {
-            await Share.shareXFiles([XFile(filePath)]);
+            if (isDesktopOS()) {
+              showToast(localization.fileSavedInPath
+                  .replaceFirst(':path', directory));
+            } else {
+              await Share.shareXFiles([XFile(filePath)]);
+            }
           }
         }
       }
