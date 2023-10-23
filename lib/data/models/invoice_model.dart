@@ -1830,6 +1830,30 @@ abstract class InvitationEntity extends Object
 
   String get borderlessLink => '$silentLink&borderless=true';
 
+  String get latestEmailStatus {
+    if (viewedDate.isNotEmpty) {
+      return 'viewed';
+    } else if (openedDate.isNotEmpty) {
+      return 'opened';
+    } else if (sentDate.isNotEmpty) {
+      return emailStatus;
+    } else {
+      return '';
+    }
+  }
+
+  String get latestEmailStatusDate {
+    if (viewedDate.isNotEmpty) {
+      return viewedDate;
+    } else if (openedDate.isNotEmpty) {
+      return openedDate;
+    } else if (sentDate.isNotEmpty) {
+      return sentDate;
+    } else {
+      return '';
+    }
+  }
+
   @override
   bool matchesFilter(String? filter) {
     if (filter == null || filter.isEmpty) {

@@ -175,9 +175,10 @@ class _ClientContactListTile extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 2),
                       child: Text(
-                        localization.lookup(invitation!.emailStatus) +
+                        localization.lookup(invitation!.latestEmailStatus) +
                             ' • ' +
-                            formatDate(invitation!.sentDate, context),
+                            formatDate(
+                                invitation!.latestEmailStatusDate, context),
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
@@ -268,9 +269,10 @@ class _VendorContactListTile extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 2),
                       child: Text(
-                        localization.lookup(invitation!.emailStatus) +
+                        localization.lookup(invitation!.latestEmailStatus) +
                             ' • ' +
-                            formatDate(invitation!.sentDate, context),
+                            formatDate(
+                                invitation!.latestEmailStatusDate, context),
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
