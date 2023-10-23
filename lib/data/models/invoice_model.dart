@@ -1772,6 +1772,8 @@ abstract class InvitationEntity extends Object
       clientContactId: clientContactId ?? '',
       vendorContactId: vendorContactId ?? '',
       createdAt: 0,
+      emailStatus: '',
+      emailError: '',
       key: '',
       link: '',
       sentDate: '',
@@ -1813,7 +1815,10 @@ abstract class InvitationEntity extends Object
   String get openedDate;
 
   @BuiltValueField(wireName: 'email_status', compare: false)
-  String? get emailStatus;
+  String get emailStatus;
+
+  @BuiltValueField(wireName: 'email_error', compare: false)
+  String get emailError;
 
   String get downloadLink =>
       '$link/download?t=${DateTime.now().millisecondsSinceEpoch}';
@@ -1857,7 +1862,9 @@ abstract class InvitationEntity extends Object
   // ignore: unused_element
   static void _initializeBuilder(InvitationEntityBuilder builder) => builder
     ..clientContactId = ''
-    ..vendorContactId = '';
+    ..vendorContactId = ''
+    ..emailError = ''
+    ..emailStatus = '';
 
   static Serializer<InvitationEntity> get serializer =>
       _$invitationEntitySerializer;
