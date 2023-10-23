@@ -190,7 +190,8 @@ class _ClientContactListTile extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
-                ]
+                  SizedBox(height: 8),
+                ],
               ],
             ),
           ),
@@ -284,6 +285,7 @@ class _VendorContactListTile extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
+                  SizedBox(height: 8),
                 ],
               ],
             ),
