@@ -127,7 +127,7 @@ class _InvitationListTile extends StatelessWidget {
                     formatDate(invitation.viewedDate, context, showTime: true),
               ),
             ),
-          if (invitation.emailStatus.isNotEmpty)
+          if (invitation.emailError.isNotEmpty)
             CopyToClipboard(
               value: invitation.emailError,
               child: Padding(

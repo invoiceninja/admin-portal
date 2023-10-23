@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 import '../../../redux/app/app_state.dart';
@@ -121,11 +122,11 @@ class _ClientContactListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final invitationButton = (invitation?.link ?? '').isNotEmpty
         ? IconButton(
-            tooltip: localization!.copyLink,
+            tooltip: localization.copyLink,
             icon: Icon(Icons.copy),
             onPressed: () {
               Clipboard.setData(ClipboardData(text: invitation!.link));
@@ -162,11 +163,33 @@ class _ClientContactListTile extends StatelessWidget {
                       : AppLocalization.of(context)!.blankContact,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                if (clientContact.email.isNotEmpty)
-                  Text(
-                    clientContact.email,
-                    style: Theme.of(context).textTheme.bodySmall,
+                if (clientContact.email.isNotEmpty) ...[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(
+                      clientContact.email,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
                   ),
+                  if ((invitation?.emailStatus ?? '').isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: Text(
+                        localization.lookup(invitation!.emailStatus) +
+                            ' • ' +
+                            formatDate(invitation!.sentDate, context),
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ),
+                  if ((invitation?.emailError ?? '').isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text(
+                        invitation!.emailError,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ),
+                ]
               ],
             ),
           ),
@@ -192,11 +215,11 @@ class _VendorContactListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final invitationButton = (invitation?.link ?? '').isNotEmpty
         ? IconButton(
-            tooltip: localization!.copyLink,
+            tooltip: localization.copyLink,
             icon: Icon(Icons.copy),
             onPressed: () {
               Clipboard.setData(ClipboardData(text: invitation!.link));
@@ -233,11 +256,33 @@ class _VendorContactListTile extends StatelessWidget {
                       : AppLocalization.of(context)!.blankContact,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                if (vendorContact.email.isNotEmpty)
-                  Text(
-                    vendorContact.email,
-                    style: Theme.of(context).textTheme.bodySmall,
+                if (vendorContact.email.isNotEmpty) ...[
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Text(
+                      vendorContact.email,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
                   ),
+                  if ((invitation?.emailStatus ?? '').isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 2),
+                      child: Text(
+                        localization.lookup(invitation!.emailStatus) +
+                            ' • ' +
+                            formatDate(invitation!.sentDate, context),
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ),
+                  if ((invitation?.emailError ?? '').isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text(
+                        invitation!.emailError,
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ),
+                ],
               ],
             ),
           ),
