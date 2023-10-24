@@ -558,6 +558,10 @@ class DashboardPanels extends StatelessWidget {
                         currentQuoteData[1],
                     DashboardUISettings.FIELD_UNAPPROVED_QUOTES:
                         currentQuoteData[2],
+                    DashboardUISettings.FIELD_INVOICED_QUOTES:
+                        currentQuoteData[3],
+                    DashboardUISettings.FIELD_INVOICE_PAID_QUOTES:
+                        currentQuoteData[4],
                     DashboardUISettings.FIELD_LOGGED_TASKS: currentTaskData[0],
                     DashboardUISettings.FIELD_INVOICED_TASKS:
                         currentTaskData[1],
@@ -587,6 +591,10 @@ class DashboardPanels extends StatelessWidget {
                         previousQuoteData[1],
                     DashboardUISettings.FIELD_UNAPPROVED_QUOTES:
                         previousQuoteData[2],
+                    DashboardUISettings.FIELD_INVOICED_QUOTES:
+                        previousQuoteData[3],
+                    DashboardUISettings.FIELD_INVOICE_PAID_QUOTES:
+                        previousQuoteData[4],
                     DashboardUISettings.FIELD_LOGGED_TASKS: currentTaskData[0],
                     DashboardUISettings.FIELD_INVOICED_TASKS:
                         previousTaskData[1],

@@ -68,6 +68,8 @@ abstract class DashboardUISettings
   static const String FIELD_ACTIVE_QUOTES = 'total_active_quotes';
   static const String FIELD_APPROVED_QUOTES = 'total_approved_quotes';
   static const String FIELD_UNAPPROVED_QUOTES = 'total_unapproved_quotes';
+  static const String FIELD_INVOICED_QUOTES = 'total_invoiced_quotes';
+  static const String FIELD_INVOICE_PAID_QUOTES = 'total_invoice_paid_quotes';
   static const String FIELD_LOGGED_TASKS = 'total_logged_tasks';
   static const String FIELD_INVOICED_TASKS = 'total_invoiced_tasks';
   static const String FIELD_PAID_TASKS = 'total_paid_tasks';
