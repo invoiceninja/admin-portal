@@ -207,12 +207,13 @@ List<ChartDataGroup> _chartInvoices({
   return data;
 }
 
-var memoizedChartQuotes = memo5((
+var memoizedChartQuotes = memo6((
   BuiltMap<String, CurrencyEntity> currencyMap,
   CompanyEntity? company,
   DashboardUISettings settings,
   BuiltMap<String, InvoiceEntity> quoteMap,
   BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
 ) =>
     chartQuotes(
       currencyMap: currencyMap,
@@ -220,14 +221,16 @@ var memoizedChartQuotes = memo5((
       settings: settings,
       quoteMap: quoteMap,
       clientMap: clientMap,
+      invoiceMap: invoiceMap,
     ));
 
-var memoizedPreviousChartQuotes = memo5((
+var memoizedPreviousChartQuotes = memo6((
   BuiltMap<String, CurrencyEntity> currencyMap,
   CompanyEntity? company,
   DashboardUISettings settings,
   BuiltMap<String, InvoiceEntity> quoteMap,
   BuiltMap<String, ClientEntity> clientMap,
+  BuiltMap<String, InvoiceEntity> invoiceMap,
 ) =>
     chartQuotes(
       currencyMap: currencyMap,
@@ -235,6 +238,7 @@ var memoizedPreviousChartQuotes = memo5((
       settings: settings,
       quoteMap: quoteMap,
       clientMap: clientMap,
+      invoiceMap: invoiceMap,
     ));
 
 List<ChartDataGroup> chartQuotes({
@@ -242,27 +246,36 @@ List<ChartDataGroup> chartQuotes({
   required CompanyEntity company,
   required DashboardUISettings settings,
   required BuiltMap<String, InvoiceEntity> quoteMap,
+  required BuiltMap<String, InvoiceEntity> invoiceMap,
   BuiltMap<String, ClientEntity>? clientMap,
 }) {
   const STATUS_ACTIVE = 'active';
   const STATUS_APPROVED = 'approved';
   const STATUS_UNAPPROVED = 'unapproved';
+  const STATUS_INVOICED = 'invoiced';
+  const STATUS_PAID = 'invoice_paid';
 
   final Map<String, int> counts = {
     STATUS_ACTIVE: 0,
     STATUS_APPROVED: 0,
     STATUS_UNAPPROVED: 0,
+    STATUS_INVOICED: 0,
+    STATUS_PAID: 0,
   };
 
   final Map<String, Map<String, double>> totals = {
     STATUS_ACTIVE: {},
     STATUS_APPROVED: {},
     STATUS_UNAPPROVED: {},
+    STATUS_INVOICED: {},
+    STATUS_PAID: {},
   };
 
   final ChartDataGroup activeData = ChartDataGroup(STATUS_ACTIVE);
   final ChartDataGroup approvedData = ChartDataGroup(STATUS_APPROVED);
   final ChartDataGroup unapprovedData = ChartDataGroup(STATUS_UNAPPROVED);
+  final ChartDataGroup invoicedData = ChartDataGroup(STATUS_INVOICED);
+  final ChartDataGroup paidData = ChartDataGroup(STATUS_PAID);
 
   quoteMap.forEach((int, quote) {
     final client =
@@ -310,10 +323,14 @@ List<ChartDataGroup> chartQuotes({
           totals[STATUS_ACTIVE]![date] = 0.0;
           totals[STATUS_APPROVED]![date] = 0.0;
           totals[STATUS_UNAPPROVED]![date] = 0.0;
+          totals[STATUS_INVOICED]![date] = 0.0;
+          totals[STATUS_PAID]![date] = 0.0;
 
           activeData.entityMap[date] = [];
           approvedData.entityMap[date] = [];
           unapprovedData.entityMap[date] = [];
+          invoicedData.entityMap[date] = [];
+          paidData.entityMap[date] = [];
         }
 
         totals[STATUS_ACTIVE]![date] = totals[STATUS_ACTIVE]![date]! + amount;
@@ -333,6 +350,22 @@ List<ChartDataGroup> chartQuotes({
           unapprovedData.entityMap[date]!.add(quote.id);
           unapprovedData.periodTotal += amount;
         }
+
+        if (quote.isInvoiced) {
+          final invoice = invoiceMap[quote.invoiceId];
+          if (invoice != null && invoice.isPaid) {
+            totals[STATUS_PAID]![date] = totals[STATUS_PAID]![date]! + amount;
+            counts[STATUS_PAID] = counts[STATUS_PAID]! + 1;
+            paidData.entityMap[date]!.add(quote.id);
+            paidData.periodTotal += amount;
+          } else {
+            totals[STATUS_INVOICED]![date] =
+                totals[STATUS_INVOICED]![date]! + amount;
+            counts[STATUS_INVOICED] = counts[STATUS_INVOICED]! + 1;
+            invoicedData.entityMap[date]!.add(quote.id);
+            invoicedData.periodTotal += amount;
+          }
+        }
       }
     }
   });
@@ -349,10 +382,15 @@ List<ChartDataGroup> chartQuotes({
           .add(ChartMoneyData(date, totals[STATUS_APPROVED]![key]));
       unapprovedData.rawSeries
           .add(ChartMoneyData(date, totals[STATUS_UNAPPROVED]![key]));
+      invoicedData.rawSeries
+          .add(ChartMoneyData(date, totals[STATUS_INVOICED]![key]));
+      paidData.rawSeries.add(ChartMoneyData(date, totals[STATUS_PAID]![key]));
     } else {
       activeData.rawSeries.add(ChartMoneyData(date, 0.0));
       approvedData.rawSeries.add(ChartMoneyData(date, 0.0));
       unapprovedData.rawSeries.add(ChartMoneyData(date, 0.0));
+      invoicedData.rawSeries.add(ChartMoneyData(date, 0.0));
+      paidData.rawSeries.add(ChartMoneyData(date, 0.0));
     }
 
     if (settings.groupBy == kReportGroupDay) {
@@ -373,11 +411,19 @@ List<ChartDataGroup> chartQuotes({
   unapprovedData.average = (counts[STATUS_UNAPPROVED] ?? 0) > 0
       ? round(unapprovedData.periodTotal / counts[STATUS_UNAPPROVED]!, 2)
       : 0;
+  invoicedData.average = (counts[STATUS_INVOICED] ?? 0) > 0
+      ? round(invoicedData.periodTotal / counts[STATUS_INVOICED]!, 2)
+      : 0;
+  paidData.average = (counts[STATUS_PAID] ?? 0) > 0
+      ? round(paidData.periodTotal / counts[STATUS_PAID]!, 2)
+      : 0;
 
   final List<ChartDataGroup> data = [
     activeData,
     approvedData,
     unapprovedData,
+    invoicedData,
+    paidData,
   ];
 
   return data;
@@ -610,7 +656,7 @@ List<ChartDataGroup> chartTasks(
 ) {
   const STATUS_LOGGED = 'logged';
   const STATUS_INVOICED = 'invoiced';
-  const STATUS_PAID = 'paid';
+  const STATUS_PAID = 'invoice_paid';
 
   final Map<String, int> counts = {
     STATUS_LOGGED: 0,

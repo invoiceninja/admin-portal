@@ -372,6 +372,7 @@ class DashboardPanels extends StatelessWidget {
       settings,
       state.quoteState.map,
       state.clientState.map,
+      state.invoiceState.map,
     );
 
     final previousQuoteData = memoizedPreviousChartQuotes(
@@ -380,6 +381,7 @@ class DashboardPanels extends StatelessWidget {
       settings.rebuild((b) => b..offset = settings.offset + 1),
       state.quoteState.map,
       state.clientState.map,
+      state.invoiceState.map,
     );
 
     final currentTaskData = memoizedChartTasks(

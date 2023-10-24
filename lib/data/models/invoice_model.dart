@@ -1239,6 +1239,8 @@ abstract class InvoiceEntity extends Object
 
   bool get isRecurringInvoice => entityType == EntityType.recurringInvoice;
 
+  bool get isInvoiced => (invoiceId ?? '').isNotEmpty;
+
   bool get isRecurring => [EntityType.recurringInvoice].contains(entityType);
 
   bool get isLinkedToRecurring => (recurringId ?? '').isNotEmpty;
