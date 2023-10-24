@@ -154,6 +154,16 @@ class _ProjectOverviewState extends State<ProjectOverview> {
                     project.id, state.invoiceState.map)
                 .present(localization.active, localization.archived),
           ),
+        if (company.isModuleEnabled(EntityType.quote))
+          EntitiesListTile(
+            entity: project,
+            isFilter: widget.isFilter,
+            entityType: EntityType.quote,
+            title: localization.quotes,
+            subtitle:
+                memoizedQuoteStatsForProject(project.id, state.quoteState.map)
+                    .present(localization.active, localization.archived),
+          ),
       ];
 
       widgets.addAll([
