@@ -1239,6 +1239,8 @@ abstract class InvoiceEntity extends Object
 
   bool get isRecurringInvoice => entityType == EntityType.recurringInvoice;
 
+  bool get isInvoiced => (invoiceId ?? '').isNotEmpty;
+
   bool get isRecurring => [EntityType.recurringInvoice].contains(entityType);
 
   bool get isLinkedToRecurring => (recurringId ?? '').isNotEmpty;
@@ -1772,6 +1774,8 @@ abstract class InvitationEntity extends Object
       clientContactId: clientContactId ?? '',
       vendorContactId: vendorContactId ?? '',
       createdAt: 0,
+      emailStatus: '',
+      emailError: '',
       key: '',
       link: '',
       sentDate: '',
@@ -1813,7 +1817,10 @@ abstract class InvitationEntity extends Object
   String get openedDate;
 
   @BuiltValueField(wireName: 'email_status', compare: false)
-  String? get emailStatus;
+  String get emailStatus;
+
+  @BuiltValueField(wireName: 'email_error', compare: false)
+  String get emailError;
 
   String get downloadLink =>
       '$link/download?t=${DateTime.now().millisecondsSinceEpoch}';
@@ -1824,6 +1831,30 @@ abstract class InvitationEntity extends Object
       '$link/download_e_invoice?t=${DateTime.now().millisecondsSinceEpoch}';
 
   String get borderlessLink => '$silentLink&borderless=true';
+
+  String get latestEmailStatus {
+    if (viewedDate.isNotEmpty) {
+      return 'viewed';
+    } else if (openedDate.isNotEmpty) {
+      return 'opened';
+    } else if (sentDate.isNotEmpty) {
+      return emailStatus;
+    } else {
+      return '';
+    }
+  }
+
+  String get latestEmailStatusDate {
+    if (viewedDate.isNotEmpty) {
+      return viewedDate;
+    } else if (openedDate.isNotEmpty) {
+      return openedDate;
+    } else if (sentDate.isNotEmpty) {
+      return sentDate;
+    } else {
+      return '';
+    }
+  }
 
   @override
   bool matchesFilter(String? filter) {
@@ -1857,7 +1888,9 @@ abstract class InvitationEntity extends Object
   // ignore: unused_element
   static void _initializeBuilder(InvitationEntityBuilder builder) => builder
     ..clientContactId = ''
-    ..vendorContactId = '';
+    ..vendorContactId = ''
+    ..emailError = ''
+    ..emailStatus = '';
 
   static Serializer<InvitationEntity> get serializer =>
       _$invitationEntitySerializer;

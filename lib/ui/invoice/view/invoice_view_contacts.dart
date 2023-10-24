@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 
 // Package imports:
 import 'package:invoiceninja_flutter/ui/app/portal_links.dart';
@@ -42,7 +43,7 @@ class _InvitationListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final state = viewModel.state!;
     final client = state.clientState.get(viewModel.invoice!.clientId);
     final vendor = state.vendorState.get(viewModel.invoice!.vendorId);
@@ -78,19 +79,19 @@ class _InvitationListTile extends StatelessWidget {
       case InvitationEntity.EMAIL_STATUS_DELIVERED:
         icon = Tooltip(
           child: Icon(Icons.check_circle),
-          message: localization!.delivered,
+          message: localization.delivered,
         );
         break;
       case InvitationEntity.EMAIL_STATUS_BOUNCED:
         icon = Tooltip(
           child: Icon(Icons.error),
-          message: localization!.bounced,
+          message: localization.bounced,
         );
         break;
       case InvitationEntity.EMAIL_STATUS_SPAM:
         icon = Tooltip(
           child: Icon(Icons.error),
-          message: localization!.spam,
+          message: localization.spam,
         );
         break;
     }
@@ -106,7 +107,7 @@ class _InvitationListTile extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 4),
               child: Text(
-                '${localization!.sent}: ' +
+                '${localization.lookup(invitation.emailStatus)}: ' +
                     formatDate(invitation.sentDate, context, showTime: true),
               ),
             ),
@@ -114,7 +115,7 @@ class _InvitationListTile extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 4),
               child: Text(
-                '${localization!.opened}: ' +
+                '${localization.opened}: ' +
                     formatDate(invitation.openedDate, context, showTime: true),
               ),
             ),
@@ -122,11 +123,22 @@ class _InvitationListTile extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 4),
               child: Text(
-                '${localization!.viewed}: ' +
+                '${localization.viewed}: ' +
                     formatDate(invitation.viewedDate, context, showTime: true),
               ),
             ),
-          SizedBox(height: 8),
+          if (invitation.emailError.isNotEmpty)
+            CopyToClipboard(
+              value: invitation.emailError,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Text(
+                  invitation.emailError,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+            ),
+          SizedBox(height: 16),
           PortalLinks(
             viewLink: invitation.silentLink,
             copyLink: invitation.link,

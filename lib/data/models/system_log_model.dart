@@ -18,7 +18,7 @@ abstract class SystemLogEntity
       log: '',
       typeId: 0,
       userId: '',
-      history: EmailHistoryEntity(),
+      //history: EmailHistoryEntity(),
     );
   }
 
@@ -60,7 +60,7 @@ abstract class SystemLogEntity
   @BuiltValueField(wireName: 'created_at')
   int get createdAt;
 
-  EmailHistoryEntity get history;
+  //EmailHistoryEntity get history;
 
   String get category {
     switch (categoryId) {
@@ -186,9 +186,12 @@ abstract class SystemLogEntity
     return 'Unknown $typeId';
   }
 
+  /*
   // ignore: unused_element
   static void _initializeBuilder(SystemLogEntityBuilder builder) =>
-      builder..history.replace(EmailHistoryEntity());
+      builder..history.replace(EmailHistoryEntity()
+      );
+  */
 
   static Serializer<SystemLogEntity> get serializer =>
       _$systemLogEntitySerializer;

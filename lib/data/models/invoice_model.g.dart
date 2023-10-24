@@ -988,6 +988,12 @@ class _$InvitationEntitySerializer
       'opened_date',
       serializers.serialize(object.openedDate,
           specifiedType: const FullType(String)),
+      'email_status',
+      serializers.serialize(object.emailStatus,
+          specifiedType: const FullType(String)),
+      'email_error',
+      serializers.serialize(object.emailError,
+          specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -1001,13 +1007,6 @@ class _$InvitationEntitySerializer
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
     Object? value;
-    value = object.emailStatus;
-    if (value != null) {
-      result
-        ..add('email_status')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     value = object.isChanged;
     if (value != null) {
       result
@@ -1088,7 +1087,11 @@ class _$InvitationEntitySerializer
           break;
         case 'email_status':
           result.emailStatus = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'email_error':
+          result.emailError = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -3002,7 +3005,9 @@ class _$InvitationEntity extends InvitationEntity {
   @override
   final String openedDate;
   @override
-  final String? emailStatus;
+  final String emailStatus;
+  @override
+  final String emailError;
   @override
   final bool? isChanged;
   @override
@@ -3034,7 +3039,8 @@ class _$InvitationEntity extends InvitationEntity {
       required this.sentDate,
       required this.viewedDate,
       required this.openedDate,
-      this.emailStatus,
+      required this.emailStatus,
+      required this.emailError,
       this.isChanged,
       required this.createdAt,
       required this.updatedAt,
@@ -3057,6 +3063,10 @@ class _$InvitationEntity extends InvitationEntity {
         viewedDate, r'InvitationEntity', 'viewedDate');
     BuiltValueNullFieldError.checkNotNull(
         openedDate, r'InvitationEntity', 'openedDate');
+    BuiltValueNullFieldError.checkNotNull(
+        emailStatus, r'InvitationEntity', 'emailStatus');
+    BuiltValueNullFieldError.checkNotNull(
+        emailError, r'InvitationEntity', 'emailError');
     BuiltValueNullFieldError.checkNotNull(
         createdAt, r'InvitationEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
@@ -3126,6 +3136,7 @@ class _$InvitationEntity extends InvitationEntity {
           ..add('viewedDate', viewedDate)
           ..add('openedDate', openedDate)
           ..add('emailStatus', emailStatus)
+          ..add('emailError', emailError)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -3176,6 +3187,10 @@ class InvitationEntityBuilder
   String? _emailStatus;
   String? get emailStatus => _$this._emailStatus;
   set emailStatus(String? emailStatus) => _$this._emailStatus = emailStatus;
+
+  String? _emailError;
+  String? get emailError => _$this._emailError;
+  set emailError(String? emailError) => _$this._emailError = emailError;
 
   bool? _isChanged;
   bool? get isChanged => _$this._isChanged;
@@ -3230,6 +3245,7 @@ class InvitationEntityBuilder
       _viewedDate = $v.viewedDate;
       _openedDate = $v.openedDate;
       _emailStatus = $v.emailStatus;
+      _emailError = $v.emailError;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -3275,12 +3291,13 @@ class InvitationEntityBuilder
                 viewedDate, r'InvitationEntity', 'viewedDate'),
             openedDate: BuiltValueNullFieldError.checkNotNull(
                 openedDate, r'InvitationEntity', 'openedDate'),
-            emailStatus: emailStatus,
+            emailStatus: BuiltValueNullFieldError.checkNotNull(
+                emailStatus, r'InvitationEntity', 'emailStatus'),
+            emailError:
+                BuiltValueNullFieldError.checkNotNull(emailError, r'InvitationEntity', 'emailError'),
             isChanged: isChanged,
-            createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, r'InvitationEntity', 'createdAt'),
-            updatedAt:
-                BuiltValueNullFieldError.checkNotNull(updatedAt, r'InvitationEntity', 'updatedAt'),
+            createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'InvitationEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'InvitationEntity', 'updatedAt'),
             archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'InvitationEntity', 'archivedAt'),
             isDeleted: isDeleted,
             createdUserId: createdUserId,

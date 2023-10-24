@@ -343,6 +343,29 @@ EntityStats invoiceStatsForProject(
   return EntityStats(countActive: countActive, countArchived: countArchived);
 }
 
+var memoizedQuoteStatsForProject = memo2((
+  String projectId,
+  BuiltMap<String, InvoiceEntity> quoteMap,
+) =>
+    quoteStatsForProject(projectId, quoteMap));
+
+EntityStats quoteStatsForProject(
+    String projectId, BuiltMap<String, InvoiceEntity> quoteMap) {
+  int countActive = 0;
+  int countArchived = 0;
+  quoteMap.forEach((quoteId, quote) {
+    if (quote.projectId == projectId) {
+      if (quote.isActive) {
+        countActive++;
+      } else if (quote.isArchived) {
+        countArchived++;
+      }
+    }
+  });
+
+  return EntityStats(countActive: countActive, countArchived: countArchived);
+}
+
 var memoizedInvoiceStatsForUser = memo2(
     (String userId, BuiltMap<String, InvoiceEntity> invoiceMap) =>
         invoiceStatsForUser(userId, invoiceMap));

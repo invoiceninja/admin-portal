@@ -280,6 +280,12 @@ void handleProjectAction(
           entity: InvoiceEntity(state: state, client: client)
               .rebuild((b) => b..projectId = project.id));
       break;
+    case EntityAction.newQuote:
+      createEntity(
+          entity: InvoiceEntity(
+                  state: state, client: client, entityType: EntityType.quote)
+              .rebuild((b) => b..projectId = project.id));
+      break;
     case EntityAction.invoiceProject:
       String lastClientId = '';
       bool hasMultipleClients = false;

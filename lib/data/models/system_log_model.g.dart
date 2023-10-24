@@ -47,9 +47,6 @@ class _$SystemLogEntitySerializer
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
-      'history',
-      serializers.serialize(object.history,
-          specifiedType: const FullType(EmailHistoryEntity)),
     ];
 
     return result;
@@ -102,11 +99,6 @@ class _$SystemLogEntitySerializer
         case 'created_at':
           result.createdAt = serializers.deserialize(value,
               specifiedType: const FullType(int))! as int;
-          break;
-        case 'history':
-          result.history.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(EmailHistoryEntity))!
-              as EmailHistoryEntity);
           break;
       }
     }
@@ -288,8 +280,6 @@ class _$SystemLogEntity extends SystemLogEntity {
   final String log;
   @override
   final int createdAt;
-  @override
-  final EmailHistoryEntity history;
 
   factory _$SystemLogEntity([void Function(SystemLogEntityBuilder)? updates]) =>
       (new SystemLogEntityBuilder()..update(updates))._build();
@@ -303,8 +293,7 @@ class _$SystemLogEntity extends SystemLogEntity {
       required this.categoryId,
       required this.typeId,
       required this.log,
-      required this.createdAt,
-      required this.history})
+      required this.createdAt})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'SystemLogEntity', 'id');
     BuiltValueNullFieldError.checkNotNull(
@@ -320,8 +309,6 @@ class _$SystemLogEntity extends SystemLogEntity {
     BuiltValueNullFieldError.checkNotNull(log, r'SystemLogEntity', 'log');
     BuiltValueNullFieldError.checkNotNull(
         createdAt, r'SystemLogEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        history, r'SystemLogEntity', 'history');
   }
 
   @override
@@ -344,8 +331,7 @@ class _$SystemLogEntity extends SystemLogEntity {
         categoryId == other.categoryId &&
         typeId == other.typeId &&
         log == other.log &&
-        createdAt == other.createdAt &&
-        history == other.history;
+        createdAt == other.createdAt;
   }
 
   int? __hashCode;
@@ -362,7 +348,6 @@ class _$SystemLogEntity extends SystemLogEntity {
     _$hash = $jc(_$hash, typeId.hashCode);
     _$hash = $jc(_$hash, log.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
-    _$hash = $jc(_$hash, history.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -378,8 +363,7 @@ class _$SystemLogEntity extends SystemLogEntity {
           ..add('categoryId', categoryId)
           ..add('typeId', typeId)
           ..add('log', log)
-          ..add('createdAt', createdAt)
-          ..add('history', history))
+          ..add('createdAt', createdAt))
         .toString();
   }
 }
@@ -424,14 +408,7 @@ class SystemLogEntityBuilder
   int? get createdAt => _$this._createdAt;
   set createdAt(int? createdAt) => _$this._createdAt = createdAt;
 
-  EmailHistoryEntityBuilder? _history;
-  EmailHistoryEntityBuilder get history =>
-      _$this._history ??= new EmailHistoryEntityBuilder();
-  set history(EmailHistoryEntityBuilder? history) => _$this._history = history;
-
-  SystemLogEntityBuilder() {
-    SystemLogEntity._initializeBuilder(this);
-  }
+  SystemLogEntityBuilder();
 
   SystemLogEntityBuilder get _$this {
     final $v = _$v;
@@ -445,7 +422,6 @@ class SystemLogEntityBuilder
       _typeId = $v.typeId;
       _log = $v.log;
       _createdAt = $v.createdAt;
-      _history = $v.history.toBuilder();
       _$v = null;
     }
     return this;
@@ -466,40 +442,26 @@ class SystemLogEntityBuilder
   SystemLogEntity build() => _build();
 
   _$SystemLogEntity _build() {
-    _$SystemLogEntity _$result;
-    try {
-      _$result = _$v ??
-          new _$SystemLogEntity._(
-              id: BuiltValueNullFieldError.checkNotNull(
-                  id, r'SystemLogEntity', 'id'),
-              companyId: BuiltValueNullFieldError.checkNotNull(
-                  companyId, r'SystemLogEntity', 'companyId'),
-              userId: BuiltValueNullFieldError.checkNotNull(
-                  userId, r'SystemLogEntity', 'userId'),
-              clientId: BuiltValueNullFieldError.checkNotNull(
-                  clientId, r'SystemLogEntity', 'clientId'),
-              eventId: BuiltValueNullFieldError.checkNotNull(
-                  eventId, r'SystemLogEntity', 'eventId'),
-              categoryId: BuiltValueNullFieldError.checkNotNull(
-                  categoryId, r'SystemLogEntity', 'categoryId'),
-              typeId: BuiltValueNullFieldError.checkNotNull(
-                  typeId, r'SystemLogEntity', 'typeId'),
-              log: BuiltValueNullFieldError.checkNotNull(
-                  log, r'SystemLogEntity', 'log'),
-              createdAt: BuiltValueNullFieldError.checkNotNull(
-                  createdAt, r'SystemLogEntity', 'createdAt'),
-              history: history.build());
-    } catch (_) {
-      late String _$failedField;
-      try {
-        _$failedField = 'history';
-        history.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'SystemLogEntity', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ??
+        new _$SystemLogEntity._(
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, r'SystemLogEntity', 'id'),
+            companyId: BuiltValueNullFieldError.checkNotNull(
+                companyId, r'SystemLogEntity', 'companyId'),
+            userId: BuiltValueNullFieldError.checkNotNull(
+                userId, r'SystemLogEntity', 'userId'),
+            clientId: BuiltValueNullFieldError.checkNotNull(
+                clientId, r'SystemLogEntity', 'clientId'),
+            eventId: BuiltValueNullFieldError.checkNotNull(
+                eventId, r'SystemLogEntity', 'eventId'),
+            categoryId: BuiltValueNullFieldError.checkNotNull(
+                categoryId, r'SystemLogEntity', 'categoryId'),
+            typeId: BuiltValueNullFieldError.checkNotNull(
+                typeId, r'SystemLogEntity', 'typeId'),
+            log: BuiltValueNullFieldError.checkNotNull(
+                log, r'SystemLogEntity', 'log'),
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, r'SystemLogEntity', 'createdAt'));
     replace(_$result);
     return _$result;
   }

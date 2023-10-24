@@ -64,8 +64,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(DocumentListResponse.serializer)
       ..add(DocumentState.serializer)
       ..add(DocumentUIState.serializer)
-      ..add(EmailHistoryEntity.serializer)
-      ..add(EmailHistoryEventEntity.serializer)
       ..add(EmailTemplate.serializer)
       ..add(EntityState.serializer)
       ..add(EntityType.serializer)
@@ -348,10 +346,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(
               BuiltList, const [const FullType(ExpenseScheduleEntity)]),
           () => new ListBuilder<ExpenseScheduleEntity>())
-      ..addBuilderFactory(
-          const FullType(
-              BuiltList, const [const FullType(EmailHistoryEventEntity)]),
-          () => new ListBuilder<EmailHistoryEventEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(EntityState)]),
           () => new ListBuilder<EntityState>())
