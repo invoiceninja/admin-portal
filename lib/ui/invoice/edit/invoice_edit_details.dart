@@ -173,7 +173,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                         vendorState: state.vendorState,
                         onSelected: (vendor) {
                           viewModel.onVendorChanged!(
-                              context, invoice, vendor as VendorEntity);
+                              context, invoice, vendor as VendorEntity?);
                         },
                         onAddPressed: (completer) =>
                             viewModel.onAddVendorPressed!(context, completer),
