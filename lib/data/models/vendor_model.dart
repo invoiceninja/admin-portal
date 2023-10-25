@@ -474,7 +474,7 @@ abstract class VendorEntity extends Object
   @override
   String get listDisplayName {
     // TODO simplify once not needed any more
-    return displayName.isNotEmpty ? displayName : name;
+    return displayName.isNotEmpty ? displayName : calculateDisplayName;
   }
 
   @override
