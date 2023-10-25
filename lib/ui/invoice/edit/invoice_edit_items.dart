@@ -252,7 +252,9 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
         child: Column(
           children: <Widget>[
             DecoratedFormField(
-              label: localization.product,
+              label: widget.invoiceItem.isTask
+                  ? localization.service
+                  : localization.product,
               controller: _productKeyController,
               onSavePressed: widget.entityViewModel.onSavePressed,
               keyboardType: TextInputType.text,
@@ -296,7 +298,9 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
               value: _custom4Controller.text,
             ),
             DecoratedFormField(
-              label: localization.unitCost,
+              label: widget.invoiceItem.isTask
+                  ? localization.rate
+                  : localization.unitCost,
               controller: _costController,
               keyboardType:
                   TextInputType.numberWithOptions(decimal: true, signed: true),
@@ -304,7 +308,9 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
             ),
             company.enableProductQuantity
                 ? DecoratedFormField(
-                    label: localization.quantity,
+                    label: widget.invoiceItem.isTask
+                        ? localization.hours
+                        : localization.quantity,
                     controller: _qtyController,
                     keyboardType: TextInputType.numberWithOptions(
                         decimal: true, signed: true),

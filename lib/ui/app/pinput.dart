@@ -9,7 +9,7 @@ class AppPinput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     return Pinput(
       onCompleted: onCompleted,
@@ -18,7 +18,7 @@ class AppPinput extends StatelessWidget {
       showCursor: true,
       androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
       validator: (value) =>
-          value!.isEmpty ? localization!.pleaseEnterACode : null,
+          value!.isEmpty ? localization.pleaseEnterACode : null,
     );
   }
 }

@@ -116,6 +116,9 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
     final result = <Object?>[
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'display_name',
+      serializers.serialize(object.displayName,
+          specifiedType: const FullType(String)),
       'address1',
       serializers.serialize(object.address1,
           specifiedType: const FullType(String)),
@@ -258,6 +261,10 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
           break;
         case 'name':
           result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'display_name':
+          result.displayName = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
         case 'address1':
@@ -790,6 +797,8 @@ class _$VendorEntity extends VendorEntity {
   @override
   final String name;
   @override
+  final String displayName;
+  @override
   final String address1;
   @override
   final String address2;
@@ -860,6 +869,7 @@ class _$VendorEntity extends VendorEntity {
   _$VendorEntity._(
       {this.loadedAt,
       required this.name,
+      required this.displayName,
       required this.address1,
       required this.address2,
       required this.city,
@@ -894,6 +904,8 @@ class _$VendorEntity extends VendorEntity {
       required this.id})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'VendorEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(
+        displayName, r'VendorEntity', 'displayName');
     BuiltValueNullFieldError.checkNotNull(
         address1, r'VendorEntity', 'address1');
     BuiltValueNullFieldError.checkNotNull(
@@ -958,6 +970,7 @@ class _$VendorEntity extends VendorEntity {
     if (identical(other, this)) return true;
     return other is VendorEntity &&
         name == other.name &&
+        displayName == other.displayName &&
         address1 == other.address1 &&
         address2 == other.address2 &&
         city == other.city &&
@@ -998,6 +1011,7 @@ class _$VendorEntity extends VendorEntity {
     if (__hashCode != null) return __hashCode!;
     var _$hash = 0;
     _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, displayName.hashCode);
     _$hash = $jc(_$hash, address1.hashCode);
     _$hash = $jc(_$hash, address2.hashCode);
     _$hash = $jc(_$hash, city.hashCode);
@@ -1039,6 +1053,7 @@ class _$VendorEntity extends VendorEntity {
     return (newBuiltValueToStringHelper(r'VendorEntity')
           ..add('loadedAt', loadedAt)
           ..add('name', name)
+          ..add('displayName', displayName)
           ..add('address1', address1)
           ..add('address2', address2)
           ..add('city', city)
@@ -1086,6 +1101,10 @@ class VendorEntityBuilder
   String? _name;
   String? get name => _$this._name;
   set name(String? name) => _$this._name = name;
+
+  String? _displayName;
+  String? get displayName => _$this._displayName;
+  set displayName(String? displayName) => _$this._displayName = displayName;
 
   String? _address1;
   String? get address1 => _$this._address1;
@@ -1233,6 +1252,7 @@ class VendorEntityBuilder
     if ($v != null) {
       _loadedAt = $v.loadedAt;
       _name = $v.name;
+      _displayName = $v.displayName;
       _address1 = $v.address1;
       _address2 = $v.address2;
       _city = $v.city;
@@ -1292,6 +1312,8 @@ class VendorEntityBuilder
               loadedAt: loadedAt,
               name: BuiltValueNullFieldError.checkNotNull(
                   name, r'VendorEntity', 'name'),
+              displayName: BuiltValueNullFieldError.checkNotNull(
+                  displayName, r'VendorEntity', 'displayName'),
               address1: BuiltValueNullFieldError.checkNotNull(
                   address1, r'VendorEntity', 'address1'),
               address2: BuiltValueNullFieldError.checkNotNull(
@@ -1304,12 +1326,10 @@ class VendorEntityBuilder
                   postalCode, r'VendorEntity', 'postalCode'),
               countryId: BuiltValueNullFieldError.checkNotNull(
                   countryId, r'VendorEntity', 'countryId'),
-              languageId: BuiltValueNullFieldError.checkNotNull(
-                  languageId, r'VendorEntity', 'languageId'),
-              phone: BuiltValueNullFieldError.checkNotNull(
-                  phone, r'VendorEntity', 'phone'),
-              privateNotes:
-                  BuiltValueNullFieldError.checkNotNull(privateNotes, r'VendorEntity', 'privateNotes'),
+              languageId:
+                  BuiltValueNullFieldError.checkNotNull(languageId, r'VendorEntity', 'languageId'),
+              phone: BuiltValueNullFieldError.checkNotNull(phone, r'VendorEntity', 'phone'),
+              privateNotes: BuiltValueNullFieldError.checkNotNull(privateNotes, r'VendorEntity', 'privateNotes'),
               publicNotes: BuiltValueNullFieldError.checkNotNull(publicNotes, r'VendorEntity', 'publicNotes'),
               website: BuiltValueNullFieldError.checkNotNull(website, r'VendorEntity', 'website'),
               number: BuiltValueNullFieldError.checkNotNull(number, r'VendorEntity', 'number'),

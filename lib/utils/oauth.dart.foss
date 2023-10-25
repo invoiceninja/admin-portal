@@ -1,17 +1,17 @@
 class GoogleOAuth {
-  
   static bool get isEnabled => false;
 
-  static Future<bool> signIn(Function(String, String) callback, {bool isSilent = false}) async {
-    //
+  static Future<bool> signIn(Function(String, String) callback,
+      {bool isSilent = false}) async {
+    return false;
   }
 
   static Future<bool> signUp(Function(String, String) callback) async {
-    //
+    return false;
   }
 
   static Future<bool> requestGmailScope() async {
-    //
+    return false;
   }
 
   /*
@@ -20,11 +20,11 @@ class GoogleOAuth {
   }
   */
 
-  static void signOut() async {
+  static Future<Null> signOut() async {
     //
   }
 
-  static void disconnect() async {
+  static Future<Null> disconnect() async {
     //
   }
 }

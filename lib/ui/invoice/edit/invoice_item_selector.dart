@@ -42,7 +42,7 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
     with SingleTickerProviderStateMixin {
   String? _filter;
   String? _filterClientId;
-  TabController? _tabController;
+  late TabController _tabController;
   final List<BaseEntity> _selected = [];
 
   final _textController = TextEditingController();
@@ -57,15 +57,17 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
   @override
   void dispose() {
     _textController.dispose();
-    _tabController!.dispose();
+    _tabController.dispose();
     super.dispose();
   }
 
   void _addBlankItem(CompanyEntity company) {
     widget.onItemsSelected!([
       InvoiceItemEntity(
-          quantity:
-              company.defaultQuantity || !company.enableProductQuantity ? 1 : 0)
+        quantity:
+            company.defaultQuantity || !company.enableProductQuantity ? 1 : 0,
+        typeId: _tabController.index == 1 ? InvoiceItemEntity.TYPE_TASK : null,
+      )
     ]);
     Navigator.pop(context);
   }

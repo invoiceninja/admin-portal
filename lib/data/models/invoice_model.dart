@@ -1552,7 +1552,8 @@ class TaskItemFields {
 
 abstract class InvoiceItemEntity
     implements Built<InvoiceItemEntity, InvoiceItemEntityBuilder> {
-  factory InvoiceItemEntity({String? productKey, double? quantity}) {
+  factory InvoiceItemEntity(
+      {String? productKey, double? quantity, String? typeId}) {
     return _$InvoiceItemEntity._(
       productKey: productKey ?? '',
       notes: '',
@@ -1565,7 +1566,7 @@ abstract class InvoiceItemEntity
       taxRate2: 0,
       taxName3: '',
       taxRate3: 0,
-      typeId: TYPE_STANDARD,
+      typeId: typeId ?? TYPE_STANDARD,
       customValue1: '',
       customValue2: '',
       customValue3: '',

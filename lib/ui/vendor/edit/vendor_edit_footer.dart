@@ -61,8 +61,8 @@ class VendorEditFooter extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 16, top: 8),
                   child: Text(
                     vendor.number.isEmpty
-                        ? vendor.name
-                        : '${vendor.number} • ${vendor.name}',
+                        ? vendor.calculateDisplayName
+                        : '${vendor.number} • ${vendor.calculateDisplayName}',
                     style: TextStyle(
                       color: state.prefState.enableDarkMode
                           ? Colors.white

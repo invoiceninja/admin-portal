@@ -292,8 +292,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                 vendorId: invoice.vendorId,
                                 vendorState: state.vendorState,
                                 onSelected: (vendor) {
-                                  viewModel.onVendorChanged!(
-                                      context, invoice, vendor as VendorEntity);
+                                  viewModel.onVendorChanged!(context, invoice,
+                                      vendor as VendorEntity?);
                                 },
                                 onAddPressed: (completer) => viewModel
                                     .onAddVendorPressed!(context, completer),

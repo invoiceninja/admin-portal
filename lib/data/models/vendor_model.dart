@@ -94,6 +94,7 @@ abstract class VendorEntity extends Object
       number: '',
       isChanged: false,
       name: '',
+      displayName: '',
       address1: '',
       address2: '',
       city: '',
@@ -163,6 +164,9 @@ abstract class VendorEntity extends Object
   }
 
   String get name;
+
+  @BuiltValueField(wireName: 'display_name')
+  String get displayName;
 
   String get address1;
 
@@ -469,7 +473,8 @@ abstract class VendorEntity extends Object
 
   @override
   String get listDisplayName {
-    return name;
+    // TODO simplify once not needed any more
+    return displayName.isNotEmpty ? displayName : calculateDisplayName;
   }
 
   @override
@@ -520,6 +525,7 @@ abstract class VendorEntity extends Object
     ..activities.replace(BuiltList<ActivityEntity>())
     ..lastLogin = 0
     ..languageId = ''
+    ..displayName = ''
     ..classification = '';
 
   static Serializer<VendorEntity> get serializer => _$vendorEntitySerializer;
