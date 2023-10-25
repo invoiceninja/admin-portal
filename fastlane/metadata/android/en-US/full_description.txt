@@ -46,4 +46,3 @@ Self-hosting? Invoice Ninja is 100% source-available!
 Terms of Service: https://www.invoiceninja.com/terms/
 Privacy Policy: https://www.invoiceninja.com/privacy-policy/
 GDPR Compliance: https://www.invoiceninja.com/gdpr/
-Privacy Shield Policy: https://www.invoiceninja.com/privacy-shield/
