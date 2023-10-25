@@ -287,8 +287,17 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
     final url = (state.isStaging ? kAppStagingUrl : kAppProductionUrl) +
         '/api/admin/subscription';
 
+    var purchaseID = purchaseDetails.purchaseID;
+    if (purchaseDetails is AppStorePurchaseDetails) {
+      final originalTransaction =
+          purchaseDetails.skPaymentTransaction.originalTransaction;
+      if (originalTransaction != null) {
+        purchaseID = originalTransaction.transactionIdentifier;
+      }
+    }
+
     final data = {
-      'inapp_transaction_id': purchaseDetails.purchaseID,
+      'inapp_transaction_id': purchaseID,
       'key': state.account.key,
       'plan': purchaseDetails.productID.replaceAll('-', '_'),
       'plan_paid': (int.parse(purchaseDetails.transactionDate!) / 1000).floor(),
