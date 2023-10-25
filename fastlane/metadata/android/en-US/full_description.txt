@@ -1,3 +1,51 @@
-<i>Invoice Ninja</i> is an invoicing application that makes sending invoices and receiving payments simple and easy. Our latest version is a clean slate rewrite of our popular invoicing application which builds on the existing feature set and adds a wide range of features and enhancements that you have asked for.
+Invoice Ninja is a leading platform for freelancers & SMB’s to invoice clients, accept payments, track expenses & time billable-tasks.
 
-We're similar to WordPress, you can either run the app on our server (hosted) or on your own server (selfhosted) – the server-part is built with PHP/Laravel; many people use Docker or Cloudron to install a packaged version, but you also can install it manually.
+200,000+ businesses trust Invoice Ninja. And it's 100% free!
+
+Create invoices, track payments, vendors, expenses, and time billable-tasks & projects.
+* Invoicing, Quotes, Credits, Payments
+* Product Library, Client Management
+* Project & Task Management, Time-Tracking
+* Full Persistence, 2FA, Google Login
+
+Pro & Enterprise Highlights
+* Unlimited Clients, Invoices, Quotes
+* Email invoices & quotes via your Gmail account.
+* Attach & embed 3rd party files to client invoices & emails
+
+Intuitive business dashboard
+* View revenue, invoices sent, recent activity data.
+* Track upcoming invoices, invoices past due, more.
+
+Invoice Clients in seconds
+* Create clients and send an invoices in seconds.
+* Create subscriptions, recurring invoices, payment profiles.
+* Send Invoices & quotes directly via your Gmail account.
+* Product library system to quickly populate invoices & quotes.
+
+Clients pay faster
+* Accept credit cards, ACH payments, PayPal, & more.
+* Clients pay directly from their invoice with the click of a button.
+
+Notifications keep you up-to-date
+* Receive app and email notifications when client view or paid.
+* View instant data updates when payments are made.
+* Automate payment reminders & past due notifications.
+
+Time-tracking, Tasks, Kanban Boards
+* The feel of desktop software but with the power of a web-based app.
+* Create projects, time billable-tasks, monitor progress in kanban boards.
+
+Integration Platforms
+* Streamline workflow with Zapier, Integromat & more.
+* Self-host integrations with Digital Ocean, Cloudron, Softaculous & more.
+
+Download the Invoice Ninja app today and start invoicing clients & get paid!
+
+Self-hosting? Invoice Ninja is 100% source-available!
+* GitHub: https://github.com/invoiceninja/admin-portal
+
+Terms of Service: https://www.invoiceninja.com/terms/
+Privacy Policy: https://www.invoiceninja.com/privacy-policy/
+GDPR Compliance: https://www.invoiceninja.com/gdpr/
+Privacy Shield Policy: https://www.invoiceninja.com/privacy-shield/
