@@ -1,1 +1,1 @@
-Create invoices, accept payments, track expenses & time-tasks
+Leading platform for freelancers & SMB’s to invoice clients, accept payments, track expenses & time billable-tasks.
