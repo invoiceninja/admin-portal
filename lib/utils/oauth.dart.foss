@@ -20,11 +20,11 @@ class GoogleOAuth {
   }
   */
 
-  static void signOut() async {
+  static Future<GoogleSignInAccount?> signOut() async {
     //
   }
 
-  static void disconnect() async {
+  static Future<GoogleSignInAccount?> disconnect() async {
     //
   }
 }
