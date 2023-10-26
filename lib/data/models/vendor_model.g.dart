@@ -441,6 +441,9 @@ class _$VendorContactEntitySerializer
       'phone',
       serializers.serialize(object.phone,
           specifiedType: const FullType(String)),
+      'password',
+      serializers.serialize(object.password,
+          specifiedType: const FullType(String)),
       'custom_value1',
       serializers.serialize(object.customValue1,
           specifiedType: const FullType(String)),
@@ -533,6 +536,10 @@ class _$VendorContactEntitySerializer
           break;
         case 'phone':
           result.phone = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'password':
+          result.password = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
         case 'custom_value1':
@@ -1387,6 +1394,8 @@ class _$VendorContactEntity extends VendorContactEntity {
   @override
   final String phone;
   @override
+  final String password;
+  @override
   final String customValue1;
   @override
   final String customValue2;
@@ -1424,6 +1433,7 @@ class _$VendorContactEntity extends VendorContactEntity {
       required this.isPrimary,
       required this.sendEmail,
       required this.phone,
+      required this.password,
       required this.customValue1,
       required this.customValue2,
       required this.customValue3,
@@ -1450,6 +1460,8 @@ class _$VendorContactEntity extends VendorContactEntity {
         sendEmail, r'VendorContactEntity', 'sendEmail');
     BuiltValueNullFieldError.checkNotNull(
         phone, r'VendorContactEntity', 'phone');
+    BuiltValueNullFieldError.checkNotNull(
+        password, r'VendorContactEntity', 'password');
     BuiltValueNullFieldError.checkNotNull(
         customValue1, r'VendorContactEntity', 'customValue1');
     BuiltValueNullFieldError.checkNotNull(
@@ -1487,6 +1499,7 @@ class _$VendorContactEntity extends VendorContactEntity {
         isPrimary == other.isPrimary &&
         sendEmail == other.sendEmail &&
         phone == other.phone &&
+        password == other.password &&
         customValue1 == other.customValue1 &&
         customValue2 == other.customValue2 &&
         customValue3 == other.customValue3 &&
@@ -1513,6 +1526,7 @@ class _$VendorContactEntity extends VendorContactEntity {
     _$hash = $jc(_$hash, isPrimary.hashCode);
     _$hash = $jc(_$hash, sendEmail.hashCode);
     _$hash = $jc(_$hash, phone.hashCode);
+    _$hash = $jc(_$hash, password.hashCode);
     _$hash = $jc(_$hash, customValue1.hashCode);
     _$hash = $jc(_$hash, customValue2.hashCode);
     _$hash = $jc(_$hash, customValue3.hashCode);
@@ -1539,6 +1553,7 @@ class _$VendorContactEntity extends VendorContactEntity {
           ..add('isPrimary', isPrimary)
           ..add('sendEmail', sendEmail)
           ..add('phone', phone)
+          ..add('password', password)
           ..add('customValue1', customValue1)
           ..add('customValue2', customValue2)
           ..add('customValue3', customValue3)
@@ -1583,6 +1598,10 @@ class VendorContactEntityBuilder
   String? _phone;
   String? get phone => _$this._phone;
   set phone(String? phone) => _$this._phone = phone;
+
+  String? _password;
+  String? get password => _$this._password;
+  set password(String? password) => _$this._password = password;
 
   String? _customValue1;
   String? get customValue1 => _$this._customValue1;
@@ -1651,6 +1670,7 @@ class VendorContactEntityBuilder
       _isPrimary = $v.isPrimary;
       _sendEmail = $v.sendEmail;
       _phone = $v.phone;
+      _password = $v.password;
       _customValue1 = $v.customValue1;
       _customValue2 = $v.customValue2;
       _customValue3 = $v.customValue3;
@@ -1698,12 +1718,13 @@ class VendorContactEntityBuilder
                 sendEmail, r'VendorContactEntity', 'sendEmail'),
             phone: BuiltValueNullFieldError.checkNotNull(
                 phone, r'VendorContactEntity', 'phone'),
+            password: BuiltValueNullFieldError.checkNotNull(
+                password, r'VendorContactEntity', 'password'),
             customValue1: BuiltValueNullFieldError.checkNotNull(
                 customValue1, r'VendorContactEntity', 'customValue1'),
-            customValue2: BuiltValueNullFieldError.checkNotNull(
-                customValue2, r'VendorContactEntity', 'customValue2'),
-            customValue3:
-                BuiltValueNullFieldError.checkNotNull(customValue3, r'VendorContactEntity', 'customValue3'),
+            customValue2:
+                BuiltValueNullFieldError.checkNotNull(customValue2, r'VendorContactEntity', 'customValue2'),
+            customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'VendorContactEntity', 'customValue3'),
             customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'VendorContactEntity', 'customValue4'),
             link: BuiltValueNullFieldError.checkNotNull(link, r'VendorContactEntity', 'link'),
             isChanged: isChanged,
