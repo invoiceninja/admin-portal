@@ -114,6 +114,24 @@ class _VariablesHelpState extends State<VariablesHelp>
                     InvoiceFields.footer,
                     'payments',
                   ],
+                  /*
+                  if (company.hasCustomField(CustomFieldType.invoice1))
+                    'invoice.custom1',
+                  if (company.hasCustomField(CustomFieldType.invoice2))
+                    'invoice.custom2',
+                  if (company.hasCustomField(CustomFieldType.invoice3))
+                    'invoice.custom3',
+                  if (company.hasCustomField(CustomFieldType.invoice4))
+                    'invoice.custom4',
+                  if (company.hasCustomField(CustomFieldType.surcharge1))
+                    'invoice.custom_surcharge1',
+                  if (company.hasCustomField(CustomFieldType.surcharge2))
+                    'invoice.custom_surcharge2',
+                  if (company.hasCustomField(CustomFieldType.surcharge3))
+                    'invoice.custom_surcharge3',
+                  if (company.hasCustomField(CustomFieldType.surcharge4))
+                    'invoice.custom_surcharge4',
+                  */
                   if (company.hasCustomField(CustomFieldType.invoice1))
                     InvoiceFields.customValue1,
                   if (company.hasCustomField(CustomFieldType.invoice2))
