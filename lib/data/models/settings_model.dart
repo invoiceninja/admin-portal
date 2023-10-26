@@ -884,6 +884,8 @@ abstract class SettingsEntity
         return emailSubjectReminder3;
       case EmailTemplate.reminder_endless:
         return emailSubjectReminderEndless;
+      case EmailTemplate.statement:
+        return emailSubjectStatement;
       case EmailTemplate.custom1:
         return emailSubjectCustom1;
       case EmailTemplate.custom2:
@@ -917,6 +919,8 @@ abstract class SettingsEntity
         return emailBodyReminder3;
       case EmailTemplate.reminder_endless:
         return emailBodyReminderEndless;
+      case EmailTemplate.statement:
+        return emailBodyStatement;
       case EmailTemplate.custom1:
         return emailBodyCustom1;
       case EmailTemplate.custom2:
