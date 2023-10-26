@@ -29,6 +29,8 @@ class CompanyFields {
   static const String email = 'email';
   static const String address1 = 'address1';
   static const String address2 = 'address2';
+  static const String city = 'city';
+  static const String postalCode = 'postal_code';
   static const String country = 'country';
   static const String vatNumber = 'vat_number';
   static const String idNumber = 'id_number';
