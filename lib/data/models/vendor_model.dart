@@ -616,6 +616,14 @@ abstract class VendorContactEntity extends Object
     }
   }
 
+  String get emailOrFullName {
+    if (email.isNotEmpty) {
+      return email;
+    } else {
+      return fullName;
+    }
+  }
+
   String get fullNameWithEmail {
     String name = fullName;
 

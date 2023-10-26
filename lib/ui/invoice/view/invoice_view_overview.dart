@@ -248,17 +248,19 @@ class InvoiceOverview extends StatelessWidget {
         EntityListTile(
           isFilter: isFilter,
           entity: vendor,
-          subtitle: vendor.primaryContact.email,
+          subtitle: vendor
+              .getContact(invoice.invitations.first.vendorContactId)
+              .emailOrFullName,
         ),
       );
     } else if (client != null) {
-      widgets.add(
-        EntityListTile(
-          isFilter: isFilter,
-          entity: client,
-          subtitle: client.primaryContact.email,
-        ),
-      );
+      widgets.add(EntityListTile(
+        isFilter: isFilter,
+        entity: client,
+        subtitle: client
+            .getContact(invoice.invitations.first.clientContactId)
+            .emailOrFullName,
+      ));
     }
 
     if (invoice.projectId.isNotEmpty) {
