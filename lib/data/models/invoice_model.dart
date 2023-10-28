@@ -146,9 +146,9 @@ abstract class InvoiceEntity extends Object
     final settings = getClientSettings(state, client);
 
     double exchangeRate = 1;
-    if ((client?.currencyId ?? '').isNotEmpty) {
+    if (state != null && (client?.currencyId ?? '').isNotEmpty) {
       exchangeRate = getExchangeRate(
-        state!.staticState.currencyMap,
+        state.staticState.currencyMap,
         fromCurrencyId: state.company.currencyId,
         toCurrencyId: client!.currencyId,
       );

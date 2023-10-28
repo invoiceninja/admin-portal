@@ -229,6 +229,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'textScaleFactor',
       serializers.serialize(object.textScaleFactor,
           specifiedType: const FullType(double)),
+      'donwloadsFolder',
+      serializers.serialize(object.donwloadsFolder,
+          specifiedType: const FullType(String)),
       'sortFields',
       serializers.serialize(object.sortFields,
           specifiedType: const FullType(BuiltMap, const [
@@ -410,6 +413,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
         case 'textScaleFactor':
           result.textScaleFactor = serializers.deserialize(value,
               specifiedType: const FullType(double))! as double;
+          break;
+        case 'donwloadsFolder':
+          result.donwloadsFolder = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
           break;
         case 'sortFields':
           result.sortFields.replace(serializers.deserialize(value,
@@ -741,6 +748,8 @@ class _$PrefState extends PrefState {
   @override
   final double textScaleFactor;
   @override
+  final String donwloadsFolder;
+  @override
   final BuiltMap<EntityType, PrefStateSortField> sortFields;
   @override
   final BuiltMap<String, CompanyPrefState> companyPrefs;
@@ -786,6 +795,7 @@ class _$PrefState extends PrefState {
       required this.editAfterSaving,
       required this.enableNativeBrowser,
       required this.textScaleFactor,
+      required this.donwloadsFolder,
       required this.sortFields,
       required this.companyPrefs})
       : super._() {
@@ -862,6 +872,8 @@ class _$PrefState extends PrefState {
     BuiltValueNullFieldError.checkNotNull(
         textScaleFactor, r'PrefState', 'textScaleFactor');
     BuiltValueNullFieldError.checkNotNull(
+        donwloadsFolder, r'PrefState', 'donwloadsFolder');
+    BuiltValueNullFieldError.checkNotNull(
         sortFields, r'PrefState', 'sortFields');
     BuiltValueNullFieldError.checkNotNull(
         companyPrefs, r'PrefState', 'companyPrefs');
@@ -915,6 +927,7 @@ class _$PrefState extends PrefState {
         editAfterSaving == other.editAfterSaving &&
         enableNativeBrowser == other.enableNativeBrowser &&
         textScaleFactor == other.textScaleFactor &&
+        donwloadsFolder == other.donwloadsFolder &&
         sortFields == other.sortFields &&
         companyPrefs == other.companyPrefs;
   }
@@ -961,6 +974,7 @@ class _$PrefState extends PrefState {
     _$hash = $jc(_$hash, editAfterSaving.hashCode);
     _$hash = $jc(_$hash, enableNativeBrowser.hashCode);
     _$hash = $jc(_$hash, textScaleFactor.hashCode);
+    _$hash = $jc(_$hash, donwloadsFolder.hashCode);
     _$hash = $jc(_$hash, sortFields.hashCode);
     _$hash = $jc(_$hash, companyPrefs.hashCode);
     _$hash = $jf(_$hash);
@@ -1007,6 +1021,7 @@ class _$PrefState extends PrefState {
           ..add('editAfterSaving', editAfterSaving)
           ..add('enableNativeBrowser', enableNativeBrowser)
           ..add('textScaleFactor', textScaleFactor)
+          ..add('donwloadsFolder', donwloadsFolder)
           ..add('sortFields', sortFields)
           ..add('companyPrefs', companyPrefs))
         .toString();
@@ -1199,6 +1214,11 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   set textScaleFactor(double? textScaleFactor) =>
       _$this._textScaleFactor = textScaleFactor;
 
+  String? _donwloadsFolder;
+  String? get donwloadsFolder => _$this._donwloadsFolder;
+  set donwloadsFolder(String? donwloadsFolder) =>
+      _$this._donwloadsFolder = donwloadsFolder;
+
   MapBuilder<EntityType, PrefStateSortField>? _sortFields;
   MapBuilder<EntityType, PrefStateSortField> get sortFields =>
       _$this._sortFields ??= new MapBuilder<EntityType, PrefStateSortField>();
@@ -1255,6 +1275,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _editAfterSaving = $v.editAfterSaving;
       _enableNativeBrowser = $v.enableNativeBrowser;
       _textScaleFactor = $v.textScaleFactor;
+      _donwloadsFolder = $v.donwloadsFolder;
       _sortFields = $v.sortFields.toBuilder();
       _companyPrefs = $v.companyPrefs.toBuilder();
       _$v = null;
@@ -1326,6 +1347,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               editAfterSaving: BuiltValueNullFieldError.checkNotNull(editAfterSaving, r'PrefState', 'editAfterSaving'),
               enableNativeBrowser: BuiltValueNullFieldError.checkNotNull(enableNativeBrowser, r'PrefState', 'enableNativeBrowser'),
               textScaleFactor: BuiltValueNullFieldError.checkNotNull(textScaleFactor, r'PrefState', 'textScaleFactor'),
+              donwloadsFolder: BuiltValueNullFieldError.checkNotNull(donwloadsFolder, r'PrefState', 'donwloadsFolder'),
               sortFields: sortFields.build(),
               companyPrefs: companyPrefs.build());
     } catch (_) {

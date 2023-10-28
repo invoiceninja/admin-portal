@@ -145,6 +145,12 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
     if (viewModel.state.company.markdownEmailEnabled &&
         _bodyController.text.trim().startsWith('<')) {
       _bodyController.text = html2md.convert(_bodyController.text);
+
+      // TODO remove this, it's currently needed to fix $start\_date
+      if (emailTemplate.name == EmailTemplate.statement.name) {
+        _bodyController.text =
+            _bodyController.text.replaceAll('\\_date', '_date');
+      }
     }
 
     _bodyController.addListener(_onTextChanged);
@@ -360,6 +366,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                   items: EmailTemplate.values.where((value) {
                     if ([
                           EmailTemplate.invoice,
+                          EmailTemplate.statement,
                           EmailTemplate.payment,
                           EmailTemplate.payment_partial,
                         ].contains(value) &&
@@ -373,10 +380,6 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                       return false;
                     } else if (value == EmailTemplate.purchase_order &&
                         !company.isModuleEnabled(EntityType.purchaseOrder)) {
-                      return false;
-                    }
-                    // TODO remove this once statements are enabled
-                    if (value == EmailTemplate.statement) {
                       return false;
                     }
                     return true;

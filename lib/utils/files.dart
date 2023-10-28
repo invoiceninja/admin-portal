@@ -6,8 +6,10 @@ import 'package:flutter/foundation.dart';
 
 // Package imports:
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:path_provider/path_provider.dart';
@@ -83,22 +85,33 @@ Future<List<MultipartFile>?> _pickFiles({
 }
 
 Future<String?> getAppDownloadDirectory() async {
-  final directory = await (isDesktopOS()
-      ? getDownloadsDirectory()
-      : getApplicationDocumentsDirectory());
+  var path = '';
 
-  if (directory == null) {
-    return null;
+  final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
+  final state = store.state;
+
+  if (state.prefState.donwloadsFolder.isNotEmpty) {
+    path = state.prefState.donwloadsFolder;
+  } else {
+    final directory = await (isDesktopOS()
+        ? getDownloadsDirectory()
+        : getApplicationDocumentsDirectory());
+
+    if (directory == null) {
+      return null;
+    }
+
+    path = directory.path;
   }
 
-  if (!Directory(directory.path).existsSync()) {
+  if (!Directory(path).existsSync()) {
     showErrorDialog(
         message: AppLocalization.of(navigatorKey.currentContext!)!
             .directoryDoesNotExist
-            .replaceFirst(':value', directory.path));
+            .replaceFirst(':value', path));
 
     return null;
   }
 
-  return directory.path;
+  return path;
 }

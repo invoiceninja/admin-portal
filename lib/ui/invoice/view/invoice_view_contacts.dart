@@ -107,7 +107,7 @@ class _InvitationListTile extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(bottom: 4),
               child: Text(
-                '${localization.lookup(invitation.emailStatus)}: ' +
+                '${localization.sent}: ' +
                     formatDate(invitation.sentDate, context, showTime: true),
               ),
             ),

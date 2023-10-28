@@ -184,6 +184,8 @@ class _VariablesHelpState extends State<VariablesHelp>
                   CompanyFields.country,
                   CompanyFields.address1,
                   CompanyFields.address2,
+                  CompanyFields.city,
+                  CompanyFields.postalCode,
                   CompanyFields.idNumber,
                   CompanyFields.email,
                   CompanyFields.phone,

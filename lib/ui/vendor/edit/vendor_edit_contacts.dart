@@ -186,6 +186,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
   final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   final _phoneController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
@@ -216,6 +217,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
       _firstNameController,
       _lastNameController,
       _emailController,
+      _passwordController,
       _phoneController,
       _custom1Controller,
       _custom2Controller,
@@ -230,6 +232,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
     _firstNameController.text = contact.firstName;
     _lastNameController.text = contact.lastName;
     _emailController.text = contact.email;
+    _passwordController.text = contact.password;
     _phoneController.text = contact.phone;
     _custom1Controller.text = contact.customValue1;
     _custom2Controller.text = contact.customValue2;
@@ -258,6 +261,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
       ..lastName = _lastNameController.text.trim()
       ..email = _emailController.text.trim()
       ..phone = _phoneController.text.trim()
+      ..password = _passwordController.text.trim()
       ..customValue1 = _custom1Controller.text.trim()
       ..customValue2 = _custom2Controller.text.trim()
       ..customValue3 = _custom3Controller.text.trim()
@@ -274,6 +278,7 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
     final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = widget.vendorViewModel.state;
+    final company = viewModel.company!;
     final isFullscreen = state.prefState.isEditorFullScreen(EntityType.vendor);
 
     final column = Column(
@@ -299,6 +304,19 @@ class VendorContactEditDetailsState extends State<VendorContactEditDetails> {
               ? localization.emailIsInvalid
               : null,
         ),
+        company.settings.enablePortalPassword ?? false
+            ? DecoratedFormField(
+                autocorrect: false,
+                controller: _passwordController,
+                label: localization.password,
+                obscureText: true,
+                keyboardType: TextInputType.visiblePassword,
+                validator: (value) => value.isNotEmpty && value.length < 8
+                    ? localization.passwordIsTooShort
+                    : null,
+                onSavePressed: (_) => _onDoneContactPressed(),
+              )
+            : SizedBox(),
         DecoratedFormField(
           controller: _phoneController,
           onSavePressed: (_) => _onDoneContactPressed(),

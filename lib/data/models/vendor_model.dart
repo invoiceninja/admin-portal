@@ -555,6 +555,7 @@ abstract class VendorContactEntity extends Object
       customValue3: '',
       customValue4: '',
       link: '',
+      password: '',
     );
   }
 
@@ -585,6 +586,8 @@ abstract class VendorContactEntity extends Object
 
   String get phone;
 
+  String get password;
+
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
 
@@ -610,6 +613,14 @@ abstract class VendorContactEntity extends Object
       return fullName;
     } else {
       return email;
+    }
+  }
+
+  String get emailOrFullName {
+    if (email.isNotEmpty) {
+      return email;
+    } else {
+      return fullName;
     }
   }
 
@@ -665,6 +676,7 @@ abstract class VendorContactEntity extends Object
   static void _initializeBuilder(VendorContactEntityBuilder builder) => builder
     ..sendEmail = true
     ..link = ''
+    ..password = ''
     ..customValue1 = ''
     ..customValue2 = ''
     ..customValue3 = ''

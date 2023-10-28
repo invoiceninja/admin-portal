@@ -49,6 +49,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       persistData: false,
       persistUI: true,
       enableNativeBrowser: false,
+      donwloadsFolder: '',
       statementIncludes: BuiltList(<String>[kStatementIncludePayments]),
       companyPrefs: BuiltMap<String, CompanyPrefState>(),
       sortFields: BuiltMap<EntityType, PrefStateSortField>(),
@@ -175,6 +176,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   double get textScaleFactor;
 
+  String get donwloadsFolder;
+
   BuiltMap<EntityType, PrefStateSortField> get sortFields;
 
   bool get enableDarkMode => darkModeType == kBrightnessSytem
@@ -284,7 +287,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..darkModeType = kBrightnessSytem
     ..colorTheme = kColorThemeLight
     ..darkColorTheme = kColorThemeDark
-    ..enableDarkModeSystem = false;
+    ..enableDarkModeSystem = false
+    ..donwloadsFolder = '';
 
   static Serializer<PrefState> get serializer => _$prefStateSerializer;
 }
