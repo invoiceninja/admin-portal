@@ -1,4 +1,7 @@
 // Flutter imports:
+import 'dart:io';
+
+import 'package:filesystem_picker/filesystem_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' hide LiveText;
@@ -7,6 +10,8 @@ import 'package:flutter/services.dart' hide LiveText;
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -50,6 +55,11 @@ class _DeviceSettingsState extends State<DeviceSettings>
 
   TabController? _controller;
   FocusScopeNode? _focusNode;
+  String _defaultDownloadsFolder = '';
+
+  final _downloadsFolderController = TextEditingController();
+
+  List<TextEditingController> _controllers = [];
 
   @override
   void initState() {
@@ -59,6 +69,37 @@ class _DeviceSettingsState extends State<DeviceSettings>
     _controller = TabController(
         vsync: this, length: 2, initialIndex: settingsUIState.tabIndex);
     _controller!.addListener(_onTabChanged);
+  }
+
+  @override
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+
+    _controllers = [
+      _downloadsFolderController,
+    ];
+
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+
+    final prefState = widget.viewModel.state.prefState;
+    _downloadsFolderController.text = prefState.donwloadsFolder;
+
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
+
+    _defaultDownloadsFolder = prefState.donwloadsFolder.isEmpty
+        ? await getAppDownloadDirectory() ?? ''
+        : prefState.donwloadsFolder;
+  }
+
+  void _onChanged() async {
+    widget.viewModel
+        .onDownloadsFolderChanged(context, _downloadsFolderController.text);
+
+    _defaultDownloadsFolder = _downloadsFolderController.text.isEmpty
+        ? await getAppDownloadDirectory() ?? ''
+        : _downloadsFolderController.text;
   }
 
   void _onTabChanged() {
@@ -226,6 +267,41 @@ class _DeviceSettingsState extends State<DeviceSettings>
                 ),
               FormCard(
                 children: <Widget>[
+                  if (!kIsWeb)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: DecoratedFormField(
+                            label: localization.downloadsFolder,
+                            keyboardType: TextInputType.text,
+                            hint: _defaultDownloadsFolder,
+                            controller: _downloadsFolderController,
+                          ),
+                        ),
+                        SizedBox(width: 20),
+                        OutlinedButton(
+                          onPressed: () async {
+                            final folder = await FilesystemPicker.open(
+                              context: context,
+                              fsType: FilesystemType.folder,
+                              rootDirectory: Directory(Platform.pathSeparator),
+                              directory: Directory(_defaultDownloadsFolder),
+                              title: localization.downloadsFolder,
+                              pickText: localization.saveFilesToThisFolder,
+                            );
+
+                            if ((folder ?? '').isNotEmpty) {
+                              _downloadsFolderController.text = folder!;
+                            }
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Text(localization.select),
+                          ),
+                        ),
+                      ],
+                    ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
                     child: AppDropdownButton<double>(

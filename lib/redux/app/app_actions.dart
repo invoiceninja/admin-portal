@@ -188,6 +188,7 @@ class UpdateUserPreferences implements PersistPrefs {
     this.enableTooltips,
     this.flexibleSearch,
     this.enableNativeBrowser,
+    this.downloadsFolder,
     this.statementIncludes,
   });
 
@@ -219,6 +220,7 @@ class UpdateUserPreferences implements PersistPrefs {
   final bool? enableTooltips;
   final bool? flexibleSearch;
   final bool? enableNativeBrowser;
+  final String? downloadsFolder;
   final BuiltList<String>? statementIncludes;
 }
 
