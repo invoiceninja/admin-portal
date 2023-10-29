@@ -2,6 +2,8 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/redux/product/product_selectors.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:memoize/memoize.dart';
 
@@ -32,6 +34,7 @@ enum ProductReportFields {
   notification_threshold,
   created_at,
   updated_at,
+  record_state,
 }
 
 var memoizedProductReport = memo6((
@@ -160,6 +163,10 @@ ReportResult productReport(
           break;
         case ProductReportFields.created_at:
           value = convertTimestampToDateString(product.createdAt);
+          break;
+        case ProductReportFields.record_state:
+          value = AppLocalization.of(navigatorKey.currentContext!)!
+              .lookup(product.entityState);
           break;
       }
 

@@ -2,6 +2,8 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 
@@ -76,6 +78,7 @@ enum PurchaseOrderReportFields {
   contact_email,
   contact_phone,
   contact_name,
+  record_state,
 }
 
 var memoizedPurchaseOrderReport = memo7((
@@ -356,6 +359,10 @@ ReportResult purchaseOrderReport(
           */
         case PurchaseOrderReportFields.vendor_number:
           value = vendor.number;
+          break;
+        case PurchaseOrderReportFields.record_state:
+          value = AppLocalization.of(navigatorKey.currentContext!)!
+              .lookup(purchaseOrder.entityState);
           break;
       }
 

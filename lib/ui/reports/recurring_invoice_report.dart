@@ -86,6 +86,7 @@ enum RecurringInvoiceReportFields {
   due_on,
   next_send_date,
   last_sent_date,
+  record_state,
 }
 
 var memoizedRecurringInvoiceReport = memo8((
@@ -400,6 +401,10 @@ ReportResult recurringInvoiceReport(
             value = localization!.dayCount
                 .replaceFirst(':count', '${invoice.dueDateDays}');
           }
+          break;
+        case RecurringInvoiceReportFields.record_state:
+          value = AppLocalization.of(navigatorKey.currentContext!)!
+              .lookup(invoice.entityState);
           break;
       }
 

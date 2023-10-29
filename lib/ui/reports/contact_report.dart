@@ -1,7 +1,9 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:collection/collection.dart' show IterableNullableExtension;
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -67,6 +69,7 @@ enum ContactReportFields {
   is_active,
   created_at,
   updated_at,
+  record_state,
 }
 
 var memoizedContactReport = memo5((
@@ -338,6 +341,10 @@ ReportResult contactReport(
             break;
           case ContactReportFields.created_at:
             value = convertTimestampToDateString(client.createdAt);
+            break;
+          case ContactReportFields.record_state:
+            value = AppLocalization.of(navigatorKey.currentContext!)!
+                .lookup(client.entityState);
             break;
         }
 

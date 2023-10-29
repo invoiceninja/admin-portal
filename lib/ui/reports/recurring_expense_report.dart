@@ -45,6 +45,7 @@ enum RecurringExpenseReportFields {
   frequency,
   start_date,
   remaining_cycles,
+  record_state,
 }
 
 var memoizedRecurringExpenseReport = memo9((
@@ -226,6 +227,10 @@ ReportResult recurringExpenseReport(
           value = invoice.remainingCycles == -1
               ? localization!.endless
               : '${invoice.remainingCycles}';
+          break;
+        case RecurringExpenseReportFields.record_state:
+          value = AppLocalization.of(navigatorKey.currentContext!)!
+              .lookup(expense.entityState);
           break;
       }
 
