@@ -78,6 +78,7 @@ enum ClientReportFields {
   routing_id,
   tax_exempt,
   classification,
+  record_state,
 }
 
 var memoizedClientReport = memo6((
@@ -366,6 +367,9 @@ ReportResult clientReport(
           value = AppLocalization.of(navigatorKey.currentContext!)!
               .lookup(client.classification);
           break;
+        case ClientReportFields.record_state:
+          value = AppLocalization.of(navigatorKey.currentContext!)!
+              .lookup(client.entityState);
       }
 
       if (!ReportResult.matchField(
