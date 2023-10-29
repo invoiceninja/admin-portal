@@ -68,7 +68,7 @@ class WebClient {
     String url,
     String? token, {
     dynamic data,
-    List<MultipartFile?>? multipartFiles,
+    List<MultipartFile>? multipartFiles,
     String? secret,
     String? password,
     String? idToken,
@@ -309,12 +309,12 @@ String _parseError(int code, String response) {
 }
 
 Future<http.Response> _uploadFiles(
-    String url, String? token, List<MultipartFile?> multipartFiles,
+    String url, String? token, List<MultipartFile> multipartFiles,
     {String method = 'POST', dynamic data}) async {
   final request = http.MultipartRequest(method, Uri.parse(url))
     ..fields.addAll(data ?? {})
     ..headers.addAll(_getHeaders(url, token))
-    ..files.addAll(multipartFiles as Iterable<MultipartFile>);
+    ..files.addAll(multipartFiles);
 
   return await http.Response.fromStream(await request.send())
       .timeout(const Duration(minutes: 10));
