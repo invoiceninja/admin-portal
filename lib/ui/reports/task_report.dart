@@ -1,6 +1,8 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:collection/collection.dart' show IterableNullableExtension;
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:memoize/memoize.dart';
 
@@ -43,6 +45,7 @@ enum TaskReportFields {
   assigned_to,
   created_by,
   amount,
+  record_state,
 }
 
 var memoizedTaskReport = memo10((
@@ -247,6 +250,9 @@ ReportResult taskReport(
             )!,
           );
           break;
+        case TaskReportFields.record_state:
+          value = AppLocalization.of(navigatorKey.currentContext!)!
+              .lookup(task.entityState);
       }
 
       if (!ReportResult.matchField(

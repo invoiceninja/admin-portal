@@ -88,6 +88,7 @@ dependencies:
   # quick_actions: ^0.2.1
   # idb_shim: ^1.11.1+1
   collection: ^1.15.0-nullsafety.4
+  filesystem_picker: ^4.0.0
 
 dependency_overrides:
   intl: any

@@ -35,6 +35,7 @@ enum ProfitAndLossReportFields {
   category,
   currency,
   transaction_reference,
+  record_state,
 }
 
 var memoizedProfitAndLossReport = memo9((
@@ -174,6 +175,10 @@ ReportResult profitAndLossReport(
         case ProfitAndLossReportFields.transaction_reference:
           value = payment.transactionReference;
           break;
+        case ProfitAndLossReportFields.record_state:
+          value = AppLocalization.of(navigatorKey.currentContext!)!
+              .lookup(payment.entityState);
+          break;
       }
 
       if (!ReportResult.matchField(
@@ -276,6 +281,10 @@ ReportResult profitAndLossReport(
           break;
         case ProfitAndLossReportFields.transaction_reference:
           value = expense.transactionReference;
+          break;
+        case ProfitAndLossReportFields.record_state:
+          value = AppLocalization.of(navigatorKey.currentContext!)!
+              .lookup(expense.entityState);
           break;
       }
 

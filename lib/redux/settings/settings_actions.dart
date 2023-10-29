@@ -71,10 +71,10 @@ class UpdateUserSettings implements PersistUI {
 }
 
 class UploadLogoRequest implements StartSaving {
-  UploadLogoRequest({this.completer, this.multipartFile, this.type});
+  UploadLogoRequest({this.completer, required this.multipartFile, this.type});
 
   final Completer? completer;
-  final MultipartFile? multipartFile;
+  final MultipartFile multipartFile;
   final EntityType? type;
 }
 

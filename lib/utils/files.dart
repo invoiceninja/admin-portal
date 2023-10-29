@@ -107,7 +107,7 @@ Future<String?> getAppDownloadDirectory() async {
   if (!Directory(path).existsSync()) {
     showErrorDialog(
         message: AppLocalization.of(navigatorKey.currentContext!)!
-            .directoryDoesNotExist
+            .downloadsFolderDoesNotExist
             .replaceFirst(':value', path));
 
     return null;

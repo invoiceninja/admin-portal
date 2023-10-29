@@ -2,6 +2,8 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/utils/strings.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -31,6 +33,7 @@ enum TransactionReportFields {
   defaultCategory,
   created_at,
   updated_at,
+  record_state,
 }
 
 var memoizedTransactionReport = memo10((
@@ -172,6 +175,9 @@ ReportResult transactionReport(
         case TransactionReportFields.created_at:
           value = convertTimestampToDateString(transaction.createdAt);
           break;
+        case TransactionReportFields.record_state:
+          value = AppLocalization.of(navigatorKey.currentContext!)!
+              .lookup(transaction.entityState);
       }
 
       if (!ReportResult.matchField(

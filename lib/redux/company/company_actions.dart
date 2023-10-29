@@ -58,14 +58,14 @@ class SaveCompanyFailure implements StopSaving {
 
 class SaveEInvoiceCertificateRequest implements StartSaving {
   SaveEInvoiceCertificateRequest({
-    this.completer,
-    this.company,
-    this.eInvoiceCertificate,
+    required this.completer,
+    required this.company,
+    required this.eInvoiceCertificate,
   });
 
-  final Completer? completer;
-  final CompanyEntity? company;
-  final MultipartFile? eInvoiceCertificate;
+  final Completer completer;
+  final CompanyEntity company;
+  final MultipartFile eInvoiceCertificate;
 }
 
 class SaveEInvoiceCertificateSuccess

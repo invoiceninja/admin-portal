@@ -38,7 +38,7 @@ class SettingsRepository {
   }
 
   Future<CompanyEntity> saveEInvoiceCertificate(Credentials credentials,
-      CompanyEntity company, MultipartFile? eInvoiceCertificate) async {
+      CompanyEntity company, MultipartFile eInvoiceCertificate) async {
     dynamic response;
 
     final url = credentials.url! + '/companies/${company.id}';
@@ -205,7 +205,7 @@ class SettingsRepository {
   }
 
   Future<BaseEntity> uploadLogo(Credentials credentials, String entityId,
-      MultipartFile? multipartFile, EntityType? type) async {
+      MultipartFile multipartFile, EntityType? type) async {
     final route = type == EntityType.company
         ? 'companies'
         : type == EntityType.group

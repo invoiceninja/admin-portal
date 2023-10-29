@@ -126,16 +126,16 @@ Middleware<AppState> _saveEInvoiceCertificate(
     settingsRepository
         .saveEInvoiceCertificate(
       store.state.credentials,
-      action.company!,
+      action.company,
       action.eInvoiceCertificate,
     )
         .then((company) {
       store.dispatch(SaveEInvoiceCertificateSuccess(company));
-      action.completer!.complete();
+      action.completer.complete();
     }).catchError((Object error) {
       print(error);
       store.dispatch(SaveEInvoiceCertificateFailure(error));
-      action.completer!.completeError(error);
+      action.completer.completeError(error);
     });
 
     next(action);
