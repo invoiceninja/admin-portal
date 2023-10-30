@@ -347,9 +347,8 @@ Future<Response?> _loadPDF(
         .get('${credential.url}$url', credential.token, rawResponse: true);
   } else {
     final invitation = invoice.invitations.first;
-    final url = invitation.downloadLink
-        .substring(0, invitation.downloadLink.length - 30);
-    response = await WebClient().get(url, '', rawResponse: false);
+    final url = invitation.downloadLink;
+    response = await WebClient().get(url, '', rawResponse: true);
   }
 
   if (response!.statusCode >= 400) {
