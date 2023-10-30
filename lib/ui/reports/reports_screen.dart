@@ -1397,6 +1397,9 @@ class ReportResult {
               customStartDate = group;
               if (reportState.subgroup == kReportGroupDay) {
                 customEndDate = convertDateTimeToSqlDate(date);
+              } else if (reportState.subgroup == kReportGroupQuarter) {
+                customEndDate =
+                    convertDateTimeToSqlDate(addDays(addMonths(date!, 3), -1));
               } else if (reportState.subgroup == kReportGroupMonth) {
                 customEndDate =
                     convertDateTimeToSqlDate(addDays(addMonths(date!, 1), -1));
