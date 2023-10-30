@@ -638,6 +638,7 @@ const String kReportPayment = 'payment';
 const String kReportProduct = 'product';
 const String kReportProfitAndLoss = 'profit_and_loss';
 const String kReportTask = 'task';
+const String kReportTaskItem = 'task_item';
 const String kReportInvoiceTax = 'invoice_tax';
 const String kReportPaymentTax = 'payment_tax';
 const String kReportQuote = 'quote';

@@ -688,7 +688,7 @@ List<ChartDataGroup> chartTasks(
       // skip it
     } else {
       task.getTaskTimes().forEach((taskTime) {
-        taskTime!.getParts().forEach((date, duration) {
+        taskTime.getParts().forEach((date, duration) {
           if (settings.groupBy == kReportGroupYear) {
             date = date.substring(0, 4) + '-01-01';
           } else if (settings.groupBy == kReportGroupMonth) {

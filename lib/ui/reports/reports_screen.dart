@@ -119,7 +119,10 @@ class ReportsScreen extends StatelessWidget {
       ],
       kReportProduct,
       kReportProfitAndLoss,
-      kReportTask,
+      if (state.company.isModuleEnabled(EntityType.task)) ...[
+        kReportTask,
+        kReportTaskItem,
+      ],
       if (state.company.isModuleEnabled(EntityType.vendor)) ...[
         kReportVendor,
         if (state.company.isModuleEnabled(EntityType.purchaseOrder))

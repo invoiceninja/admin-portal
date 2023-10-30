@@ -96,9 +96,9 @@ class TaskPresenter extends EntityPresenter {
         final notes = <String>[];
         task
             .getTaskTimes()
-            .where((time) => time!.startDate != null && time.endDate != null)
+            .where((time) => time.startDate != null && time.endDate != null)
             .forEach((time) {
-          final start = formatDate(time!.startDate!.toIso8601String(), context,
+          final start = formatDate(time.startDate!.toIso8601String(), context,
               showTime: true, showDate: true);
           final end = formatDate(time.endDate!.toIso8601String(), context,
               showTime: true, showDate: false);

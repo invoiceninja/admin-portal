@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/reports/purchase_order_item_report.dart'
 import 'package:invoiceninja_flutter/ui/reports/purchase_order_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/recurring_expense_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/recurring_invoice_report.dart';
+import 'package:invoiceninja_flutter/ui/reports/task_item_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/transaction_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/vendor_report.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
@@ -202,6 +203,20 @@ class ReportsScreenVM {
         break;
       case kReportTask:
         reportResult = memoizedTaskReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.taskState.map,
+          state.invoiceState.map,
+          state.groupState.map,
+          state.clientState.map,
+          state.taskStatusState.map,
+          state.userState.map,
+          state.projectState.map,
+          state.staticState,
+        );
+        break;
+      case kReportTaskItem:
+        reportResult = memoizedTaskItemReport(
           state.userCompany,
           state.uiState.reportsUIState,
           state.taskState.map,

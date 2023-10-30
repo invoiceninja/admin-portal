@@ -58,9 +58,9 @@ InvoiceItemEntity convertTaskToInvoiceItem({
     task
         .getTaskTimes()
         .where((time) =>
-            time!.startDate != null && time.endDate != null && time.isBillable)
+            time.startDate != null && time.endDate != null && time.isBillable)
         .forEach((time) {
-      final hours = round(time!.duration.inSeconds / 3600, 3);
+      final hours = round(time.duration.inSeconds / 3600, 3);
       final hoursStr = hours == 1
           ? ' • 1 ${localization.hour}'
           : ' • $hours ${localization.hours}';

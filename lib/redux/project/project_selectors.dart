@@ -43,8 +43,8 @@ List<InvoiceItemEntity> convertProjectToInvoiceItem({
     final taskTimesA = taskA!.getTaskTimes();
     final taskTimesB = taskB!.getTaskTimes();
 
-    final taskADate = taskTimesA.isEmpty ? null : taskTimesA.first!.startDate;
-    final taskBDate = taskTimesB.isEmpty ? null : taskTimesB.first!.startDate;
+    final taskADate = taskTimesA.isEmpty ? null : taskTimesA.first.startDate;
+    final taskBDate = taskTimesB.isEmpty ? null : taskTimesB.first.startDate;
 
     if (taskADate == null) {
       return 1;
