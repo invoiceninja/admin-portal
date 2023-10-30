@@ -293,7 +293,7 @@ String _parseError(int code, String response, String? reason) {
   try {
     final dynamic jsonResponse = json.decode(response);
 
-    message = jsonResponse['message'] ?? jsonResponse;
+    message += jsonResponse['message'] ?? jsonResponse;
 
     if (jsonResponse['errors'] != null &&
         (jsonResponse['errors'] as Map).isNotEmpty) {
