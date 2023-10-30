@@ -737,6 +737,7 @@ const String kTaxRegionAustralia = 'AU';
 const String kReportGroupDay = 'day';
 const String kReportGroupWeek = 'week';
 const String kReportGroupMonth = 'month';
+const String kReportGroupQuarter = 'quarter';
 const String kReportGroupYear = 'year';
 
 const int kModuleRecurringInvoices = 1;

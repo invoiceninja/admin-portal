@@ -191,6 +191,10 @@ class ReportsScreen extends StatelessWidget {
               value: kReportGroupMonth,
             ),
             DropdownMenuItem(
+              child: Text(localization.quarter),
+              value: kReportGroupQuarter,
+            ),
+            DropdownMenuItem(
               child: Text(localization.year),
               value: kReportGroupYear,
             ),

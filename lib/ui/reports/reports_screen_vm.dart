@@ -652,6 +652,19 @@ GroupTotals calculateReportTotals({
         group = group.substring(0, 4) + '-01-01';
       } else if (reportState.subgroup == kReportGroupMonth) {
         group = group.substring(0, 7) + '-01';
+      } else if (reportState.subgroup == kReportGroupQuarter) {
+        final parts = group.split('-');
+        final month = parseInt(parts[1]) ?? 0;
+        group = parts[0] + '-';
+        if (month <= 3) {
+          group += '01-01';
+        } else if (month <= 6) {
+          group += '04-01';
+        } else if (month <= 9) {
+          group += '07-01';
+        } else {
+          group += '10-01';
+        }
       } else if (reportState.subgroup == kReportGroupWeek) {
         final date = DateTime.parse(group);
         final dateWeek =
