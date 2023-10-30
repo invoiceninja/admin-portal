@@ -29,7 +29,6 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
-import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -362,7 +361,6 @@ Future<Response?> _loadPDF(
       errorMessage += response.body;
     }
 
-    showErrorDialog(message: errorMessage);
     throw errorMessage;
   }
 
