@@ -46,6 +46,7 @@ enum TaskReportFields {
   created_by,
   amount,
   record_state,
+  is_invoiced,
 }
 
 var memoizedTaskReport = memo10((
@@ -253,6 +254,10 @@ ReportResult taskReport(
         case TaskReportFields.record_state:
           value = AppLocalization.of(navigatorKey.currentContext!)!
               .lookup(task.entityState);
+          break;
+        case TaskReportFields.is_invoiced:
+          value = task.isInvoiced;
+          break;
       }
 
       if (!ReportResult.matchField(
