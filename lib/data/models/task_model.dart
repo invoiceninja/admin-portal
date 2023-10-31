@@ -287,6 +287,9 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
     );
   }
 
+  double calculateAmount(double taskRate) =>
+      taskRate * round(duration.inSeconds / 3600, 3);
+
   static Serializer<TaskTime> get serializer => _$taskTimeSerializer;
 }
 
@@ -350,7 +353,7 @@ abstract class TaskEntity extends Object
 
   TaskEntity stop() {
     final times = getTaskTimes();
-    final taskTime = times.last!.stop;
+    final taskTime = times.last.stop;
 
     return updateTaskTime(taskTime, times.length - 1);
   }
@@ -373,7 +376,7 @@ abstract class TaskEntity extends Object
     bool isValid = true;
 
     times.forEach((time) {
-      final startDate = time!.startDate;
+      final startDate = time.startDate;
       final endDate = time.endDate;
 
       if (time.isRunning) {
@@ -404,7 +407,7 @@ abstract class TaskEntity extends Object
     int counter = 0;
 
     times.forEach((time) {
-      final startDate = time!.startDate;
+      final startDate = time.startDate;
       final endDate = time.endDate;
 
       if (time.isRunning) {
@@ -434,7 +437,7 @@ abstract class TaskEntity extends Object
       return false;
     }
 
-    return taskTimes.any((taskTime) => taskTime!.isRunning);
+    return taskTimes.any((taskTime) => taskTime.isRunning);
   }
 
   bool isBetween(String? startDate, String? endDate) {
@@ -445,16 +448,16 @@ abstract class TaskEntity extends Object
     }
 
     final taskStartDate =
-        convertDateTimeToSqlDate(taskTimes.first!.startDate!.toLocal());
+        convertDateTimeToSqlDate(taskTimes.first.startDate!.toLocal());
     if (startDate!.compareTo(taskStartDate) <= 0 &&
         endDate!.compareTo(taskStartDate) >= 0) {
       return true;
     }
 
-    final completedTimes = taskTimes.where((element) => !element!.isRunning);
+    final completedTimes = taskTimes.where((element) => !element.isRunning);
 
     if (completedTimes.isNotEmpty) {
-      final lastTaskTime = completedTimes.last!;
+      final lastTaskTime = completedTimes.last;
       final taskEndDate =
           convertDateTimeToSqlDate(lastTaskTime.endDate!.toLocal());
 
@@ -504,8 +507,8 @@ abstract class TaskEntity extends Object
     return last[1].round();
   }
 
-  List<TaskTime?> getTaskTimes({bool sort = true}) {
-    final List<TaskTime?> details = [];
+  List<TaskTime> getTaskTimes({bool sort = true}) {
+    final List<TaskTime> details = [];
 
     if (timeLog.isEmpty) {
       return details;
@@ -541,8 +544,8 @@ abstract class TaskEntity extends Object
     });
 
     if (sort) {
-      details.sort(
-          (timeA, timeB) => timeA!.startDate!.compareTo(timeB!.startDate!));
+      details
+          .sort((timeA, timeB) => timeA.startDate!.compareTo(timeB.startDate!));
     }
 
     return details;
@@ -588,8 +591,8 @@ abstract class TaskEntity extends Object
     int seconds = 0;
 
     getTaskTimes().forEach((taskTime) {
-      if (!onlyBillable || taskTime!.isBillable) {
-        seconds += taskTime!.duration.inSeconds;
+      if (!onlyBillable || taskTime.isBillable) {
+        seconds += taskTime.duration.inSeconds;
       }
     });
 

@@ -108,7 +108,8 @@ class TaskViewVM {
       onEditPressed: (BuildContext context, [TaskTime? taskTime]) {
         editEntity(
             entity: task,
-            subIndex: task.getTaskTimes().indexOf(taskTime),
+            subIndex:
+                taskTime != null ? task.getTaskTimes().indexOf(taskTime) : 0,
             completer: snackBarCompleter<TaskEntity>(
                 AppLocalization.of(context)!.updatedTask));
       },

@@ -252,7 +252,8 @@ void _checkResponse(String url, http.Response response) {
   final minClientVersion = response.headers['x-minimum-client-version'];
 
   if (response.statusCode >= 500) {
-    throw _parseError(response.statusCode, response.body);
+    throw _parseError(
+        response.statusCode, response.body, response.reasonPhrase);
   } else if (serverVersion == null) {
     throw 'Error: please check that Invoice Ninja v5 is installed on the server\n\nURL: $url\n\nResponse: ${response.body.length > 200 ? response.body.substring(0, 200) : response.body}\n\nHeaders: ${response.headers}}';
   } else if (Version.parse(kClientVersion) < Version.parse(minClientVersion!)) {
@@ -260,7 +261,8 @@ void _checkResponse(String url, http.Response response) {
   } else if (Version.parse(serverVersion) < Version.parse(kMinServerVersion)) {
     throw 'Error: server not supported, please update to the latest version [Current v$serverVersion < Minimum v$kMinServerVersion]';
   } else if (response.statusCode >= 400) {
-    throw _parseError(response.statusCode, response.body);
+    throw _parseError(
+        response.statusCode, response.body, response.reasonPhrase);
   }
 }
 
@@ -277,8 +279,12 @@ void _preCheck() {
   */
 }
 
-String _parseError(int code, String response) {
-  dynamic message = response;
+String _parseError(int code, String response, String? reason) {
+  String message = '';
+
+  if ((reason ?? '').isNotEmpty) {
+    message += reason! + ' • ';
+  }
 
   if (response.contains('DOCTYPE html')) {
     return '$code: An error occurred';
@@ -287,7 +293,7 @@ String _parseError(int code, String response) {
   try {
     final dynamic jsonResponse = json.decode(response);
 
-    message = jsonResponse['message'] ?? jsonResponse;
+    message += jsonResponse['message'] ?? jsonResponse;
 
     if (jsonResponse['errors'] != null &&
         (jsonResponse['errors'] as Map).isNotEmpty) {

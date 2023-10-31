@@ -420,10 +420,10 @@ void handleTaskAction(
         final taskBTimes = taskBEntity.getTaskTimes();
         final taskADate = taskATimes.isEmpty
             ? convertTimestampToDate(taskA.createdAt)
-            : taskATimes.first!.startDate!;
+            : taskATimes.first.startDate!;
         final taskBDate = taskBTimes.isEmpty
             ? convertTimestampToDate(taskB.createdAt)
-            : taskBTimes.first!.startDate!;
+            : taskBTimes.first.startDate!;
         return taskADate.compareTo(taskBDate);
       });
 
