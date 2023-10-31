@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+
+Name=Invoice Ninja
+Comment=An example app that counts
+Categories=Utility;Amusement;
+
+Icon=com.example.FlutterApp
+Exec=flutter_flatpak_example
+Terminal=false
+StartupWMClass=flutter_flatpak_example
