@@ -10,6 +10,7 @@
   <developer_name>Hillel Coren</developer_name>
   <url type="homepage">https://invoiceninja.com</url>
   <project_license>AAL</project_license>
+  <metadata_license>CC0-1.0</metadata_license>
   <supports>
     <control>pointing</control>
     <control>keyboard</control>
@@ -46,6 +47,6 @@
   </screenshots>
   <content_rating type="oars-1.1"/>
   <releases>
-    <release version="5.0.135" date="2023-11-01"/>
+    <release version="5.0.136" date="2023-11-01"/>
   </releases>
 </component>
