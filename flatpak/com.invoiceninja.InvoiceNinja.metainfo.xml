@@ -9,8 +9,8 @@
   <summary>Create invoices, accept payments, track expenses &amp; time tasks</summary>
   <developer_name>Hillel Coren</developer_name>
   <url type="homepage">https://invoiceninja.com</url>
-  <metadata_license>BSD</metadata_license>
-  <project_license>BSD</project_license>
+  <metadata_license>BSD-3-Clause</metadata_license>
+  <project_license>BSD-3-Clause</project_license>
   <supports>
     <control>pointing</control>
     <control>keyboard</control>
