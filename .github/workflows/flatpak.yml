@@ -59,6 +59,16 @@ jobs:
           tar -czaf $archiveName ./*
           mv $archiveName "$baseDir"/
 
+      - uses: MCJack123/ghaction-generate-release-hashes@v3
+        with:
+          hash-type: sha256
+          file-name: hashes.txt
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Asset Hashes
+          path: hashes.txt
+
       - name: Upload app archive to workflow
         uses: actions/upload-artifact@v3
         with:
@@ -80,6 +90,7 @@ jobs:
           automatic_release_tag: "v5.0.128"
           files: |
             ${{ github.workspace }}/artifacts/Invoice-Ninja-Archive
+            ${{ github.workspace }}/artifacts/hashes.txt
 
 #  build-flatpak:
 #    name: Build flatpak
