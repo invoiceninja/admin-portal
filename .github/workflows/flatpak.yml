@@ -63,10 +63,10 @@ jobs:
       - name: Upload app archive to workflow
         uses: actions/upload-artifact@v3
         with:
-          #name: Invoice-Ninja-Archive
-          #path: Invoice-Ninja-Linux-Portable.tar.gz
-          name: linux-artifacts
-          path: output/*
+          name: Invoice-Ninja-Archive
+          path: Invoice-Ninja-Linux-Portable.tar.gz
+          #name: linux-artifacts
+          #path: output/*
 
       - name: Download artifacts
         uses: actions/download-artifact@v3
@@ -82,7 +82,7 @@ jobs:
           title: "Latest Release"
           automatic_release_tag: "v5.0.128"
           files: |
-            ${{ github.workspace }}/artifacts/linux-artifacts/*            
+            ${{ github.workspace }}/artifacts/*
 
 #  build-flatpak:
 #    name: Build flatpak
