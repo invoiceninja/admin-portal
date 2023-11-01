@@ -9,7 +9,7 @@
   <summary>Create invoices, accept payments, track expenses &amp; time tasks</summary>
   <developer_name>Hillel Coren</developer_name>
   <url type="homepage">https://invoiceninja.com</url>
-  <project_license>BSD-3-Clause</project_license>
+  <project_license>AAL</project_license>
   <supports>
     <control>pointing</control>
     <control>keyboard</control>
@@ -46,6 +46,6 @@
   </screenshots>
   <content_rating type="oars-1.1"/>
   <releases>
-    <release version="5.0.134" date="2023-11-01"/>
+    <release version="5.0.135" date="2023-11-01"/>
   </releases>
 </component>
