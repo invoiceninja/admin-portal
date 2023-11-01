@@ -6,9 +6,9 @@ on:
   #  branches:
   #    - master
 
-concurrency:
-  group: ci-release-${{ github.ref }}-1
-  cancel-in-progress: true
+#concurrency:
+#  group: ci-release-${{ github.ref }}-1
+#  cancel-in-progress: true
 
 env:
   project-id: com.invoiceninja.app
@@ -17,8 +17,8 @@ jobs:
   build-flutter-app:
     name: Build Flutter app
     env:
-      api_secret: ${{secrets.api_secret}}
-      commit_secret: ${{secrets.commit_secret}}
+      api_secret: ${{ secrets.api_secret }}
+      commit_secret: ${{ secrets.commit_secret }}
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout code
@@ -43,13 +43,12 @@ jobs:
       - name: Prepare App
         run: |
           cp lib/.env.dart.example lib/.env.dart
-          sed -i 's/secret/${{secrets.api_secret}}/g' lib/.env.dart
+          sed -i 's/secret/${{ secrets.api_secret }}/g' lib/.env.dart
           echo "const FLUTTER_VERSION = const <String, String>" > lib/flutter_version.dart
           flutter --version --machine >> lib/flutter_version.dart
           echo ";" >> lib/flutter_version.dart
 
       - name: Build Flutter linux version
-        #working-directory: ${{ github.workspace }}/counter_app
         run: |
           archiveName=Invoice-Ninja-Linux-Portable.tar.gz
           baseDir=$(pwd)
@@ -63,26 +62,24 @@ jobs:
       - name: Upload app archive to workflow
         uses: actions/upload-artifact@v3
         with:
-          #name: Invoice-Ninja-Archive
-          #path: Invoice-Ninja-Linux-Portable.tar.gz
-          name: linux-artifacts
-          path: output/*
+          name: Invoice-Ninja-Archive
+          path: Invoice-Ninja-Linux-Portable.tar.gz
 
       - name: Download artifacts
         uses: actions/download-artifact@v3
         with:
           path: artifacts
 
-      - name: Create Draft Release & Upload artifacts
+      - name: Create Release
         uses: marvinpinto/action-automatic-releases@v1.2.1
         with:
-          repo_token: "${{secrets.commit_secret}}"
-          draft: true
+          repo_token: "${{ secrets.commit_secret }}"
+          draft: false
           prerelease: false
           title: "Latest Release"
           automatic_release_tag: "v5.0.128"
           files: |
-            ${{ github.workspace }}/artifacts/linux-artifacts/*            
+            ${{ github.workspace }}/artifacts/Invoice-Ninja-Archive
 
 #  build-flatpak:
 #    name: Build flatpak
