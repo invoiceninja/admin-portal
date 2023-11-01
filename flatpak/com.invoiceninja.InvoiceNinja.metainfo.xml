@@ -42,11 +42,11 @@
   <launchable type="desktop-id">com.invoiceninja.InvoiceNinja.desktop</launchable>
   <screenshots>
     <screenshot type="default">
-      <image>https://github.com/invoiceninja/admin-portal/blob/master/samples/screenshots/5.png</image>
+      <image>https://raw.githubusercontent.com/invoiceninja/admin-portal/master/samples/screenshots/5.png</image>
     </screenshot>
   </screenshots>
   <content_rating type="oars-1.1"/>
   <releases>
-    <release version="5.0.130" date="2023-11-01"/>
+    <release version="5.0.131" date="2023-11-01"/>
   </releases>
 </component>
