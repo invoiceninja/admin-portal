@@ -11,7 +11,7 @@ on:
 #  cancel-in-progress: true
 
 env:
-  project-id: com.invoiceninja.app
+  project-id: com.invoiceninja.InvoiceNinja
 
 jobs:
   build-flutter-app:
@@ -57,10 +57,10 @@ jobs:
 
           cd build/linux/x64/release/bundle || exit
           tar -czaf $archiveName ./*
-          shasum -a 256 $archiveName > Hash.txt
+          shasum -a 256 $archiveName > Hashes.txt
 
           mv $archiveName "$baseDir"/
-          mv Hash.txt "$baseDir"/
+          mv Hashes.txt "$baseDir"/
 
       - name: Upload app archive to workflow
         uses: actions/upload-artifact@v3
@@ -72,7 +72,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Invoice-Ninja-Hash
-          path: Hash.txt
+          path: Hashes.txt
 
       - name: Download artifacts
         uses: actions/download-artifact@v3
@@ -86,7 +86,7 @@ jobs:
           draft: false
           prerelease: false
           title: "Latest Release"
-          automatic_release_tag: "v5.0.128"
+          automatic_release_tag: "v5.0.129"
           files: |
             ${{ github.workspace }}/artifacts/Invoice-Ninja-Archive
             ${{ github.workspace }}/artifacts/Invoice-Ninja-Hash
