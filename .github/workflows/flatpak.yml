@@ -72,7 +72,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Invoice-Ninja-Hash
-          path: sha256.txt
+          path: Hash.txt
 
       - name: Download artifacts
         uses: actions/download-artifact@v3
