@@ -5,9 +5,9 @@ on:
     branches:
       - master
 
-concurrency:
-  group: ci-release-${{ github.ref }}-1
-  cancel-in-progress: true
+#concurrency:
+#  group: ci-release-${{ github.ref }}-1
+#  cancel-in-progress: true
 
 jobs:
   build-main:
