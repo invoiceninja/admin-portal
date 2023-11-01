@@ -10,6 +10,7 @@
   <developer_name>Hillel Coren</developer_name>
   <url type="homepage">https://invoiceninja.com</url>
   <project_license>AAL</project_license>
+  <metadata_license>CC0-1.0</metadata_license>
   <supports>
     <control>pointing</control>
     <control>keyboard</control>
