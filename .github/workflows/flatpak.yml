@@ -82,7 +82,7 @@ jobs:
           title: "Latest Release"
           automatic_release_tag: "v5.0.128"
           files: |
-            ${{ github.workspace }}/artifacts/*
+            ${{ github.workspace }}/artifacts/Invoice-Ninja-Archive
 
 #  build-flatpak:
 #    name: Build flatpak
