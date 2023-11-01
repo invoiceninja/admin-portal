@@ -57,13 +57,22 @@ jobs:
 
           cd build/linux/x64/release/bundle || exit
           tar -czaf $archiveName ./*
+          shasum -a 256 $archiveName > sha256.txt
+
           mv $archiveName "$baseDir"/
+          mv sha256.txt "$baseDir"/
 
       - name: Upload app archive to workflow
         uses: actions/upload-artifact@v3
         with:
           name: Invoice-Ninja-Archive
           path: Invoice-Ninja-Linux-Portable.tar.gz
+
+      - name: Upload app archive hash to workflow
+        uses: actions/upload-artifact@v3
+        with:
+          name: Invoice-Ninja-Hash
+          path: sha256.txt
 
       - name: Download artifacts
         uses: actions/download-artifact@v3
@@ -80,6 +89,7 @@ jobs:
           automatic_release_tag: "v5.0.128"
           files: |
             ${{ github.workspace }}/artifacts/Invoice-Ninja-Archive
+            ${{ github.workspace }}/artifacts/Invoice-Ninja-Hash
 
 #  build-flatpak:
 #    name: Build flatpak
