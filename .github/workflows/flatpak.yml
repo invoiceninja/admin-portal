@@ -11,7 +11,7 @@ on:
 #  cancel-in-progress: true
 
 env:
-  project-id: com.invoiceninja.app
+  project-id: com.invoiceninja.InvoiceNinja
 
 jobs:
   build-flutter-app:

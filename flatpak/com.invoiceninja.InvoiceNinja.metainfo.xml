@@ -4,7 +4,7 @@
     https://www.freedesktop.org/software/appstream/metainfocreator/#/
 -->
 <component type="desktop-application">
-  <id>com.invoiceninja.app</id>
+  <id>com.invoiceninja.InvoiceNinja</id>
   <name>Invoice Ninja</name>
   <summary>Create invoices, accept payments, track expenses &amp; time tasks</summary>
   <developer_name>Hillel Coren</developer_name>
@@ -39,7 +39,7 @@
       All of these features combine to help you receive the money you deserve and reduce the amount of time you spend on repetitive invoicing tasks. Spend less time on paperwork and more time at your craft.
     </p>
   </description>
-  <launchable type="desktop-id">com.invoiceninja.app.desktop</launchable>
+  <launchable type="desktop-id">com.invoiceninja.InvoiceNinja.desktop</launchable>
   <screenshots>
     <screenshot type="default">
       <image>https://github.com/invoiceninja/admin-portal/blob/master/samples/screenshots/5.png</image>
