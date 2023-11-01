@@ -6,6 +6,10 @@ on:
   #  branches:
   #    - master
 
+concurrency:
+  group: ci-release-${{ github.ref }}-1
+  cancel-in-progress: true
+
 env:
   project-id: com.invoiceninja.app
 
@@ -14,6 +18,7 @@ jobs:
     name: Build Flutter app
     env:
       api_secret: ${{secrets.api_secret}}
+      commit_secret: ${{secrets.commit_secret}}
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout code
@@ -58,8 +63,26 @@ jobs:
       - name: Upload app archive to workflow
         uses: actions/upload-artifact@v3
         with:
-          name: Invoice-Ninja-Archive
-          path: Invoice-Ninja-Linux-Portable.tar.gz
+          #name: Invoice-Ninja-Archive
+          #path: Invoice-Ninja-Linux-Portable.tar.gz
+          name: linux-artifacts
+          path: output/*
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: artifacts
+
+      - name: Create Draft Release & Upload artifacts
+        uses: marvinpinto/action-automatic-releases@v1.2.1
+        with:
+          repo_token: "${{secrets.commit_secret}}"
+          draft: true
+          prerelease: false
+          title: "Latest Release"
+          automatic_release_tag: "v5.0.128"
+          files: |
+            ${{ github.workspace }}/artifacts/linux-artifacts/*            
 
 #  build-flatpak:
 #    name: Build flatpak

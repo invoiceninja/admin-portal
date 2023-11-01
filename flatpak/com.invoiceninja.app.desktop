@@ -3,10 +3,10 @@ Version=1.0
 Type=Application
 
 Name=Invoice Ninja
-Comment=An example app that counts
-Categories=Utility;Amusement;
+Comment=Create invoices, accept payments, track expenses & time tasks
+Categories=Productivity;
 
-Icon=com.example.FlutterApp
-Exec=flutter_flatpak_example
+Icon=com.invoiceninja.app
+Exec=invoiceninja_client
 Terminal=false
-StartupWMClass=flutter_flatpak_example
+StartupWMClass=invoiceninja_client

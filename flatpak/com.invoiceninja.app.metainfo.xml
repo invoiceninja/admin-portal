@@ -4,40 +4,29 @@
     https://www.freedesktop.org/software/appstream/metainfocreator/#/
 -->
 <component type="desktop-application">
-  <id>com.example.FlutterApp</id>
-  <name>Flutter App</name>
-  <summary>An example app that counts</summary>
-  <developer_name>Kristen McWilliam</developer_name>
-  <url type="homepage">https://github.com/Merrit/flutter_flatpak_example</url>
-  <metadata_license>MIT</metadata_license>
-  <project_license>MIT</project_license>
+  <id>com.invoiceninja.app</id>
+  <name>Invoice Ninja</name>
+  <summary>Create invoices, accept payments, track expenses &amp; time tasks</summary>
+  <developer_name>Hillel Coren</developer_name>
+  <url type="homepage">https://invoiceninja.com</url>
+  <metadata_license>AAL</metadata_license>
+  <project_license>AAL</project_license>
   <supports>
     <control>pointing</control>
     <control>keyboard</control>
     <control>touch</control>
   </supports>
   <description>
-    <p>Fast and beautiful counting app. For all your counting needs!</p>
-    <p>Features</p>
-    <ul>
-      <li>Counts!</li>
-      <li>Cooks!</li>
-      <li>Cleans!</li>
-      <li>Comets!</li>
-      <li>Dinosaurs!</li>
-      <li>.. Burritos?</li>
-      <li>Burritos!!</li>
-      <li></li>
-    </ul>
+    <p>Create invoices, accept payments, track expenses &amp; time tasks</p>
   </description>
-  <launchable type="desktop-id">com.example.FlutterApp.desktop</launchable>
+  <launchable type="desktop-id">com.invoiceninja.app.desktop</launchable>
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/Merrit/flutter_flatpak_example/main/screenshots/screenshot.png</image>
+      <image>https://github.com/invoiceninja/flutter-mobile/blob/master/samples/screenshots/1.png</image>
     </screenshot>
   </screenshots>
-  <content_rating type="oars-1.1" />
+  <content_rating type="oars-1.1"/>
   <releases>
-    <release version="1.0.0" date="2022-02-25" />
+    <release version="5.0.127" date="2023-10-31"/>
   </releases>
 </component>
