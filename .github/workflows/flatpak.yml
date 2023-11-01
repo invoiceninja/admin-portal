@@ -57,10 +57,10 @@ jobs:
 
           cd build/linux/x64/release/bundle || exit
           tar -czaf $archiveName ./*
-          shasum -a 256 $archiveName > sha256.txt
+          shasum -a 256 $archiveName > Hash.txt
 
           mv $archiveName "$baseDir"/
-          mv sha256.txt "$baseDir"/
+          mv Hash.txt "$baseDir"/
 
       - name: Upload app archive to workflow
         uses: actions/upload-artifact@v3
