@@ -7,7 +7,7 @@
   <id>com.invoiceninja.InvoiceNinja</id>
   <name>Invoice Ninja</name>
   <summary>Create invoices, accept payments, track expenses &amp; time tasks</summary>
-  <developer_name>Hillel Coren</developer_name>
+  <developer_name>Invoice Ninja</developer_name>
   <url type="homepage">https://invoiceninja.com</url>
   <project_license>AAL</project_license>
   <metadata_license>CC0-1.0</metadata_license>
@@ -47,6 +47,7 @@
   </screenshots>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="5.0.137" date="2023-11-02"/>
     <release version="5.0.136" date="2023-11-01"/>
   </releases>
 </component>
