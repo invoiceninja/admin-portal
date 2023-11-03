@@ -51,11 +51,11 @@ class WebClient {
     );
     client.close();
 
+    _checkResponse(url, response);
+
     if (rawResponse) {
       return response;
     }
-
-    _checkResponse(url, response);
 
     final dynamic jsonResponse = json.decode(response.body);
 
@@ -113,11 +113,11 @@ class WebClient {
       client.close();
     }
 
+    _checkResponse(url, response);
+
     if (rawResponse) {
       return response;
     }
-
-    _checkResponse(url, response);
 
     return json.decode(response.body);
   }

@@ -351,18 +351,5 @@ Future<Response?> _loadPDF(
     response = await WebClient().get(url, '', rawResponse: true);
   }
 
-  if (response!.statusCode >= 400) {
-    String errorMessage =
-        '${response.statusCode}: ${response.reasonPhrase}\n\n';
-
-    try {
-      errorMessage += jsonDecode(response.body)['message'];
-    } catch (error) {
-      errorMessage += response.body;
-    }
-
-    throw errorMessage;
-  }
-
   return response;
 }
