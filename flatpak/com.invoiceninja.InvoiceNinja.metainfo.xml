@@ -9,6 +9,9 @@
   <summary>Create invoices, accept payments, track expenses &amp; time tasks</summary>
   <developer_name>Invoice Ninja</developer_name>
   <url type="homepage">https://invoiceninja.com</url>
+  <url type="help">https://forum.invoiceninja.com</url>
+  <url type="vcs-browser">https://github.com/invoiceninja/admin-portal</url>
+  <url type="bugtracker">https://github.com/invoiceninja/admin-portal/issues</url>
   <project_license>AAL</project_license>
   <metadata_license>CC0-1.0</metadata_license>
   <supports>
@@ -18,7 +21,7 @@
   </supports>
   <description>
     <p>Create. Send. Get Paid.</p>
-    <p>Invoice Ninja is a leading source-code available platform for SMB’s to invoice, accept payments, track expenses &amp; time billable-tasks. Designed for freelancers and small to medium size businesses, Invoice Ninja is a suite of apps to help you get paid.</p>
+    <p>Invoice Ninja is a leading platform for SMB’s to invoice, accept payments, track expenses &amp; time billable-tasks. Designed for freelancers and small to medium size businesses, Invoice Ninja is a suite of apps to help you get paid.</p>
     <p>
       • Incredibly easy to use<br/>
       Invoice Ninja was built to serve freelancers and business owners with a complete suite of invoicing &amp; payment tools to advance your business.
