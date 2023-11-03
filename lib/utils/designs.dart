@@ -48,13 +48,7 @@ void loadDesign({
   webClient
       .post(url, credentials.token, data: json.encode(data), rawResponse: true)
       .then((dynamic response) {
-    if ((response as Response).statusCode >= 400) {
-      showErrorDialog(
-          message: '${response.statusCode}: ${response.reasonPhrase}');
-      onComplete(null);
-    } else {
-      onComplete(response);
-    }
+    onComplete(response);
   }).catchError((dynamic error) {
     showErrorDialog(message: '$error');
     onComplete(null);
