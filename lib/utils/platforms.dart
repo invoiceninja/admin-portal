@@ -47,6 +47,8 @@ bool supportsAppleOAuth() => kIsWeb || isApple();
 // TODO remove this function
 bool supportsMicrosoftOAuth() => kIsWeb;
 
+bool supportsDesignTemplates() => !kReleaseMode;
+
 bool supportsLatestFeatures(String version) {
   final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
   final state = store.state;

@@ -550,7 +550,13 @@ class SettingsSearch extends StatelessWidget {
           'show_paid_stamp#2023-01-29',
           'show_shipping_address#2023-01-29',
           'share_invoice_quote_columns#2023-03-20',
-          'invoice_embed_documents#2023-10-27'
+          'invoice_embed_documents#2023-10-27',
+          if (supportsDesignTemplates()) ...[
+            'delivery_note_design',
+            'statement_design',
+            'payment_receipt_design',
+            'payment_refund_design',
+          ],
         ],
       ],
       kSettingsCustomDesigns: [

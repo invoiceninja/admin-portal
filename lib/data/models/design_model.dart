@@ -112,6 +112,8 @@ abstract class DesignEntity extends Object
             kDesignIncludes: '',
           }),
       isCustom: true,
+      isTemplate: false,
+      entities: '',
     );
   }
 
@@ -133,6 +135,11 @@ abstract class DesignEntity extends Object
 
   @BuiltValueField(wireName: 'is_free')
   bool get isFree;
+
+  @BuiltValueField(wireName: 'is_template')
+  bool get isTemplate;
+
+  String get entities;
 
   DesignEntity get clone => rebuild((b) => b
     ..id = BaseEntity.nextId
@@ -225,8 +232,10 @@ abstract class DesignEntity extends Object
   FormatNumberType? get listDisplayAmountType => null;
 
   // ignore: unused_element
-  static void _initializeBuilder(DesignEntityBuilder builder) =>
-      builder..isFree = true;
+  static void _initializeBuilder(DesignEntityBuilder builder) => builder
+    ..isFree = true
+    ..isTemplate = false
+    ..entities = '';
 
   static Serializer<DesignEntity> get serializer => _$designEntitySerializer;
 }
