@@ -462,7 +462,7 @@ class _DesignSettingsState extends State<DesignSettings> {
             DesignPicker(
                 label: localization.design,
                 onSelected: (value) {
-                  widget.onLoadDesign(value);
+                  widget.onLoadDesign(value!);
                   _selectedDesign = value;
                 },
                 initialValue: _selectedDesign?.id),

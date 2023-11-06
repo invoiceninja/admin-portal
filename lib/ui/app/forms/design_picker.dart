@@ -15,11 +15,13 @@ class DesignPicker extends StatelessWidget {
     required this.onSelected,
     this.label,
     this.initialValue,
+    this.showBlank = false,
   });
 
-  final Function(DesignEntity) onSelected;
+  final Function(DesignEntity?) onSelected;
   final String? label;
   final String? initialValue;
+  final bool showBlank;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +31,7 @@ class DesignPicker extends StatelessWidget {
     final designState = state.designState;
 
     return AppDropdownButton<String>(
+      showBlank: showBlank,
       value: initialValue,
       onChanged: (dynamic value) => onSelected(designState.map[value]!),
       items: designState.list

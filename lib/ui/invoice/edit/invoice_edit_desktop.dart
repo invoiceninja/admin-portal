@@ -795,7 +795,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                         initialValue: invoice.designId,
                                         onSelected: (value) {
                                           viewModel.onChanged!(invoice.rebuild(
-                                              (b) => b..designId = value.id));
+                                              (b) => b..designId = value!.id));
                                         },
                                       ),
                                       UserPicker(

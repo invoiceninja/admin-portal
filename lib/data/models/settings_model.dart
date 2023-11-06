@@ -369,6 +369,18 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'credit_design_id')
   String? get defaultCreditDesignId;
 
+  @BuiltValueField(wireName: 'delivery_note_design_id')
+  String? get defaultDeliveryNoteDesignId;
+
+  @BuiltValueField(wireName: 'statement_design_id')
+  String? get defaultStatementDesignId;
+
+  @BuiltValueField(wireName: 'payment_receipt_design_id')
+  String? get defaultPaymentReceiptDesignId;
+
+  @BuiltValueField(wireName: 'payment_refund_design_id')
+  String? get defaultPaymentRefundDesignId;
+
   @BuiltValueField(wireName: 'invoice_footer')
   String? get defaultInvoiceFooter;
 

@@ -292,7 +292,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 });
                                 viewModel.onSettingsChanged(settings.rebuild(
                                     (b) =>
-                                        b..defaultInvoiceDesignId = value.id));
+                                        b..defaultInvoiceDesignId = value!.id));
                               },
                             ),
                             if (!isFiltered &&
@@ -320,7 +320,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                   _wasQuoteDesignChanged = true;
                                 });
                                 viewModel.onSettingsChanged(settings.rebuild(
-                                    (b) => b..defaultQuoteDesignId = value.id));
+                                    (b) =>
+                                        b..defaultQuoteDesignId = value!.id));
                               },
                             ),
                             if (!isFiltered &&
@@ -349,7 +350,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 });
                                 viewModel.onSettingsChanged(settings.rebuild(
                                     (b) =>
-                                        b..defaultCreditDesignId = value.id));
+                                        b..defaultCreditDesignId = value!.id));
                               },
                             ),
                             if (!isFiltered &&
@@ -381,7 +382,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 viewModel.onSettingsChanged(settings.rebuild(
                                     (b) => b
                                       ..defaultPurchaseOrderDesignId =
-                                          value.id));
+                                          value!.id));
                               },
                             ),
                             if (!isFiltered &&
@@ -415,6 +416,21 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           ),
                           SizedBox(height: 16),
                         ],
+                        DesignPicker(
+                          showBlank: true,
+                          label: localization.deliveryNoteDesign,
+                          initialValue: settings.defaultDeliveryNoteDesignId,
+                          onSelected: (value) {
+                            viewModel.onSettingsChanged(settings.rebuild((b) =>
+                                b
+                                  ..defaultDeliveryNoteDesignId =
+                                      value?.id ?? ''));
+                          },
+                        ),
+                      ],
+                    ),
+                    FormCard(
+                      children: [
                         AppDropdownButton(
                           labelText: localization.pageLayout,
                           value: settings.pageLayout,
