@@ -449,6 +449,7 @@ class _DesignSettingsState extends State<DesignSettings> {
     final localization = AppLocalization.of(context)!;
 
     return ScrollableListView(
+      primary: true,
       children: <Widget>[
         FormCard(
           children: <Widget>[
@@ -466,9 +467,16 @@ class _DesignSettingsState extends State<DesignSettings> {
                   _selectedDesign = value;
                 },
                 initialValue: _selectedDesign?.id),
+            SizedBox(height: 16),
+            SwitchListTile(
+              activeColor: Theme.of(context).colorScheme.secondary,
+              title: Text(localization.template),
+              //subtitle: Text(localization.draftModeHelp),
+              value: widget.draftMode,
+              onChanged: widget.isLoading ? null : widget.onDraftModeChanged,
+            ),
             // TODO remove this once browser supported on all platforms
-            if (!kReleaseMode || kIsWeb || isMobileOS()) ...[
-              SizedBox(height: 16),
+            if (!kReleaseMode || kIsWeb || isMobileOS())
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.draftMode),
@@ -476,7 +484,6 @@ class _DesignSettingsState extends State<DesignSettings> {
                 value: widget.draftMode,
                 onChanged: widget.isLoading ? null : widget.onDraftModeChanged,
               ),
-            ]
           ],
         ),
         Padding(
