@@ -33,7 +33,7 @@ class DesignPicker extends StatelessWidget {
     return AppDropdownButton<String>(
       showBlank: showBlank,
       value: initialValue,
-      onChanged: (dynamic value) => onSelected(designState.map[value]!),
+      onChanged: (dynamic value) => onSelected(designState.map[value]),
       items: designState.list
           .where((designId) {
             final design = designState.map[designId];
