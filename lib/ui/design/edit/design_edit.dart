@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:printing/printing.dart';
@@ -447,6 +448,8 @@ class _DesignSettingsState extends State<DesignSettings> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context)!;
+    final design = widget.viewModel.design;
+    final entityTypes = design.entities.split(',');
 
     return ScrollableListView(
       primary: true,
@@ -468,13 +471,6 @@ class _DesignSettingsState extends State<DesignSettings> {
                 },
                 initialValue: _selectedDesign?.id),
             SizedBox(height: 16),
-            SwitchListTile(
-              activeColor: Theme.of(context).colorScheme.secondary,
-              title: Text(localization.template),
-              //subtitle: Text(localization.draftModeHelp),
-              value: widget.draftMode,
-              onChanged: widget.isLoading ? null : widget.onDraftModeChanged,
-            ),
             // TODO remove this once browser supported on all platforms
             if (!kReleaseMode || kIsWeb || isMobileOS())
               SwitchListTile(
@@ -484,6 +480,41 @@ class _DesignSettingsState extends State<DesignSettings> {
                 value: widget.draftMode,
                 onChanged: widget.isLoading ? null : widget.onDraftModeChanged,
               ),
+            if (supportsDesignTemplates())
+              SwitchListTile(
+                activeColor: Theme.of(context).colorScheme.secondary,
+                title: Text(localization.template),
+                subtitle: Text(localization.templateHelp),
+                value: design.isTemplate,
+                onChanged: (value) {
+                  widget.viewModel.onChanged(
+                    design.rebuild((b) => b..isTemplate = value),
+                  );
+                },
+              ),
+            if (design.isTemplate) ...[
+              SizedBox(height: 10),
+              ...[
+                EntityType.client,
+                EntityType.invoice,
+              ]
+                  .map((entityType) => CheckboxListTile(
+                        value: entityTypes.contains(entityType.apiValue),
+                        onChanged: (value) {
+                          final entities = entityTypes;
+                          if (value == true) {
+                            entities.add(entityType.apiValue);
+                          } else {
+                            entities.remove(entityType.apiValue);
+                          }
+                          widget.viewModel.onChanged(design.rebuild(
+                              (b) => b..entities = entities.join(',')));
+                        },
+                        title: Text(localization.lookup(entityType.plural)),
+                        controlAffinity: ListTileControlAffinity.leading,
+                      ))
+                  .toList(),
+            ],
           ],
         ),
         Padding(

@@ -449,6 +449,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                         value?.id));
                             },
                           ),
+                          /*
                           DesignPicker(
                             showBlank: true,
                             label: localization.paymentRefundDesign,
@@ -460,6 +461,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                         value?.id));
                             },
                           ),
+                          */
                         ],
                       ],
                     ),
