@@ -144,41 +144,37 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
     */
 
     final activitySelector = _activityId == null || kIsWeb
-        ? <Widget>[]
-        : [
-            Theme(
-              data: state.prefState.enableDarkMode || state.hasAccentColor
-                  ? ThemeData.dark()
-                  : ThemeData.light(),
-              child: Flexible(
-                child: IgnorePointer(
-                  ignoring: _isLoading,
-                  child: AppDropdownButton<String>(
-                      value: _activityId,
-                      onChanged: (dynamic activityId) {
-                        setState(() {
-                          _activityId = activityId;
-                          loadPdf();
-                        });
-                      },
-                      items: invoice.balanceHistory
-                          .map((history) => DropdownMenuItem(
-                                child: Text(formatNumber(
-                                        history.amount, context,
-                                        clientId: invoice.clientId)! +
-                                    ' • ' +
-                                    formatDate(
-                                        convertTimestampToDateString(
-                                            history.createdAt),
-                                        context,
-                                        showTime: true)),
-                                value: history.activityId,
-                              ))
-                          .toList()),
-                ),
+        ? SizedBox()
+        : Padding(
+            padding: const EdgeInsets.only(left: 17),
+            child: SizedBox(
+              width: 350,
+              child: IgnorePointer(
+                ignoring: _isLoading,
+                child: AppDropdownButton<String>(
+                    value: _activityId,
+                    onChanged: (dynamic activityId) {
+                      setState(() {
+                        _activityId = activityId;
+                        loadPdf();
+                      });
+                    },
+                    items: invoice.balanceHistory
+                        .map((history) => DropdownMenuItem(
+                              child: Text(formatNumber(history.amount, context,
+                                      clientId: invoice.clientId)! +
+                                  ' • ' +
+                                  formatDate(
+                                      convertTimestampToDateString(
+                                          history.createdAt),
+                                      context,
+                                      showTime: true)),
+                              value: history.activityId,
+                            ))
+                        .toList()),
               ),
             ),
-          ];
+          );
 
     final deliveryNote = Container(
       width: 200,
@@ -213,17 +209,8 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
           ? AppBar(
               centerTitle: false,
               automaticallyImplyLeading: isMobile(context),
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(EntityPresenter()
-                        .initialize(invoice, context)
-                        .title()!),
-                  ),
-                  if (isDesktop(context)) ...activitySelector,
-                ],
-              ),
+              title:
+                  Text(EntityPresenter().initialize(invoice, context).title()!),
               actions: <Widget>[
                 if (showEmail)
                   TextButton(
@@ -302,6 +289,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
           child: Row(
             children: [
               if (invoice.isInvoice && _activityId == null) deliveryNote,
+              activitySelector,
             ],
           ),
         ),
