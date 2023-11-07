@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 
 // Package imports:
@@ -45,6 +46,12 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
 
     final activityList = invoice.activities
         .where((activity) => (activity.history?.id ?? '').isNotEmpty)
+        .where((activity) => ![
+              kActivityViewInvoice,
+              kActivityViewQuote,
+              kActivityViewCredit,
+              kActivityViewPurchaseOrder,
+            ].contains(activity.activityTypeId))
         .toList();
     activityList.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
 
@@ -97,7 +104,7 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
         );
       },
       separatorBuilder: (context, index) => ListDivider(),
-      itemCount: invoice.history.length,
+      itemCount: activityList.length,
     );
   }
 }

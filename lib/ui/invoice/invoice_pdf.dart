@@ -161,7 +161,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                           loadPdf();
                         });
                       },
-                      items: invoice.history
+                      items: invoice.balanceHistory
                           .map((history) => DropdownMenuItem(
                                 child: Text(formatNumber(
                                         history.amount, context,

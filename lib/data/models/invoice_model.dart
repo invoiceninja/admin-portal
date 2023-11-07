@@ -635,6 +635,21 @@ abstract class InvoiceEntity extends Object
       .whereType<InvoiceHistoryEntity>()
       .toList();
 
+  List<InvoiceHistoryEntity> get balanceHistory => activities
+      .where((activity) =>
+          activity.history != null &&
+          activity.history!.id.isNotEmpty &&
+          activity.history!.createdAt > 0 &&
+          ![
+            kActivityViewInvoice,
+            kActivityViewQuote,
+            kActivityViewCredit,
+            kActivityViewPurchaseOrder,
+          ].contains(activity.activityTypeId))
+      .map((activity) => activity.history)
+      .whereType<InvoiceHistoryEntity>()
+      .toList();
+
   bool get isLoaded => loadedAt != null && loadedAt! > 0;
 
   bool get isStale {
