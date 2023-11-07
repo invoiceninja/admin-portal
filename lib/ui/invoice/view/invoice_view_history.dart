@@ -44,7 +44,7 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
     }
 
     final activityList = invoice.activities
-        .where((activity) => activity.history != null)
+        .where((activity) => (activity.history?.id ?? '').isNotEmpty)
         .toList();
     activityList.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
 
