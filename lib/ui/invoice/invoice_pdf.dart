@@ -180,29 +180,21 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
             ),
           ];
 
-    final deliveryNote = Theme(
-      data: ThemeData(
-        unselectedWidgetColor: state.headerTextColor,
-      ),
-      child: Container(
-        width: 200,
-        child: CheckboxListTile(
-          title: Text(
-            localization.deliveryNote,
-            style: TextStyle(
-              color: state.headerTextColor,
-            ),
-          ),
-          value: _isDeliveryNote,
-          onChanged: (value) {
-            setState(() {
-              _isDeliveryNote = !_isDeliveryNote;
-              loadPdf();
-            });
-          },
-          controlAffinity: ListTileControlAffinity.leading,
-          activeColor: state.accentColor,
+    final deliveryNote = Container(
+      width: 200,
+      child: CheckboxListTile(
+        title: Text(
+          localization.deliveryNote,
         ),
+        value: _isDeliveryNote,
+        onChanged: (value) {
+          setState(() {
+            _isDeliveryNote = !_isDeliveryNote;
+            loadPdf();
+          });
+        },
+        controlAffinity: ListTileControlAffinity.leading,
+        activeColor: state.accentColor,
       ),
     );
 
@@ -216,116 +208,123 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
     }
 
     return Scaffold(
-        backgroundColor: Colors.grey.shade300,
-        appBar: widget.showAppBar
-            ? AppBar(
-                centerTitle: false,
-                automaticallyImplyLeading: isMobile(context),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(EntityPresenter()
-                          .initialize(invoice, context)
-                          .title()!),
-                    ),
-                    if (isDesktop(context)) ...activitySelector,
-                    //if (isDesktop(context)) ...pageSelector,
-                    if (isDesktop(context) &&
-                        invoice.isInvoice &&
-                        _activityId == null)
-                      deliveryNote,
-                  ],
-                ),
-                actions: <Widget>[
-                  if (showEmail)
-                    TextButton(
-                      child: Text(localization.email,
-                          style: TextStyle(color: state.headerTextColor)),
-                      onPressed: () {
-                        handleEntityAction(invoice, EntityAction.sendEmail);
-                      },
-                    ),
-                  if (!invoice.isRecurring)
-                    AppTextButton(
-                      isInHeader: true,
-                      label: localization.download,
-                      onPressed: _response == null
-                          ? null
-                          : () async {
-                              if (_response == null) {
-                                launchUrl(
-                                    Uri.parse(invoice.invitationDownloadLink));
+      backgroundColor: Colors.grey.shade300,
+      appBar: widget.showAppBar
+          ? AppBar(
+              centerTitle: false,
+              automaticallyImplyLeading: isMobile(context),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(EntityPresenter()
+                        .initialize(invoice, context)
+                        .title()!),
+                  ),
+                  if (isDesktop(context)) ...activitySelector,
+                ],
+              ),
+              actions: <Widget>[
+                if (showEmail)
+                  TextButton(
+                    child: Text(localization.email,
+                        style: TextStyle(color: state.headerTextColor)),
+                    onPressed: () {
+                      handleEntityAction(invoice, EntityAction.sendEmail);
+                    },
+                  ),
+                if (!invoice.isRecurring)
+                  AppTextButton(
+                    isInHeader: true,
+                    label: localization.download,
+                    onPressed: _response == null
+                        ? null
+                        : () async {
+                            if (_response == null) {
+                              launchUrl(
+                                  Uri.parse(invoice.invitationDownloadLink));
+                            } else {
+                              final fileName =
+                                  localization.lookup('${invoice.entityType}') +
+                                      '_' +
+                                      (invoice.number.isEmpty
+                                          ? localization.pending
+                                          : invoice.number) +
+                                      '.pdf';
+                              if (kIsWeb) {
+                                WebUtils.downloadBinaryFile(
+                                    fileName, _response!.bodyBytes);
                               } else {
-                                final fileName = localization
-                                        .lookup('${invoice.entityType}') +
-                                    '_' +
-                                    (invoice.number.isEmpty
-                                        ? localization.pending
-                                        : invoice.number) +
-                                    '.pdf';
-                                if (kIsWeb) {
-                                  WebUtils.downloadBinaryFile(
-                                      fileName, _response!.bodyBytes);
+                                final directory =
+                                    await getAppDownloadDirectory();
+
+                                if (directory == null) {
+                                  return;
+                                }
+
+                                String filePath =
+                                    '$directory${file.Platform.pathSeparator}$fileName';
+
+                                if (file.File(filePath).existsSync()) {
+                                  final timestamp =
+                                      DateTime.now().millisecondsSinceEpoch;
+                                  filePath = filePath.replaceFirst(
+                                      '.pdf', '_$timestamp.pdf');
+                                }
+
+                                final pdfData = file.File(filePath);
+                                await pdfData
+                                    .writeAsBytes(_response!.bodyBytes);
+
+                                if (isDesktopOS()) {
+                                  showToast(localization.fileSavedInPath
+                                      .replaceFirst(':path', directory));
                                 } else {
-                                  final directory =
-                                      await getAppDownloadDirectory();
-
-                                  if (directory == null) {
-                                    return;
-                                  }
-
-                                  String filePath =
-                                      '$directory${file.Platform.pathSeparator}$fileName';
-
-                                  if (file.File(filePath).existsSync()) {
-                                    final timestamp =
-                                        DateTime.now().millisecondsSinceEpoch;
-                                    filePath = filePath.replaceFirst(
-                                        '.pdf', '_$timestamp.pdf');
-                                  }
-
-                                  final pdfData = file.File(filePath);
-                                  await pdfData
-                                      .writeAsBytes(_response!.bodyBytes);
-
-                                  if (isDesktopOS()) {
-                                    showToast(localization.fileSavedInPath
-                                        .replaceFirst(':path', directory));
-                                  } else {
-                                    await Share.shareXFiles([XFile(filePath)]);
-                                  }
+                                  await Share.shareXFiles([XFile(filePath)]);
                                 }
                               }
-                            },
+                            }
+                          },
+                  ),
+                if (isDesktop(context))
+                  TextButton(
+                    child: Text(localization.close,
+                        style: TextStyle(color: state.headerTextColor)),
+                    onPressed: () {
+                      viewEntity(entity: invoice);
+                    },
+                  ),
+              ],
+            )
+          : null,
+      body: Column(children: [
+        Material(
+          child: Row(
+            children: [
+              if (invoice.isInvoice && _activityId == null) deliveryNote,
+            ],
+          ),
+        ),
+        Expanded(
+          child: _isLoading || _response == null
+              ? LoadingIndicator()
+              : (kIsWeb && state.prefState.enableNativeBrowser)
+                  ? HtmlElementView(viewType: _pdfString!)
+                  : PdfPreview(
+                      build: (format) => _response!.bodyBytes,
+                      canChangeOrientation: false,
+                      canChangePageFormat: false,
+                      canDebug: false,
+                      maxPageWidth: 800,
+                      pdfFileName:
+                          localization.lookup(invoice.entityType!.snakeCase) +
+                              '_' +
+                              invoice.number +
+                              '.pdf',
                     ),
-                  if (isDesktop(context))
-                    TextButton(
-                      child: Text(localization.close,
-                          style: TextStyle(color: state.headerTextColor)),
-                      onPressed: () {
-                        viewEntity(entity: invoice);
-                      },
-                    ),
-                ],
-              )
-            : null,
-        body: _isLoading || _response == null
-            ? LoadingIndicator()
-            : (kIsWeb && state.prefState.enableNativeBrowser)
-                ? HtmlElementView(viewType: _pdfString!)
-                : PdfPreview(
-                    build: (format) => _response!.bodyBytes,
-                    canChangeOrientation: false,
-                    canChangePageFormat: false,
-                    canDebug: false,
-                    maxPageWidth: 800,
-                    pdfFileName:
-                        localization.lookup(invoice.entityType!.snakeCase) +
-                            '_' +
-                            invoice.number +
-                            '.pdf',
-                  ));
+        ),
+      ]),
+    );
   }
 }
 
