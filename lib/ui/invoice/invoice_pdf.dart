@@ -12,6 +12,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:printing/printing.dart';
 
@@ -49,6 +50,7 @@ class InvoicePdfView extends StatefulWidget {
 class _InvoicePdfViewState extends State<InvoicePdfView> {
   bool _isLoading = true;
   bool _isDeliveryNote = false;
+  String? _designId;
   String? _activityId;
   String? _pdfString;
   http.Response? _response;
@@ -139,38 +141,64 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
           ];
     */
 
-    final activitySelector = _activityId == null || kIsWeb
-        ? SizedBox()
-        : Padding(
-            padding: const EdgeInsets.only(left: 17),
-            child: SizedBox(
-              width: 350,
-              child: IgnorePointer(
-                ignoring: _isLoading,
-                child: AppDropdownButton<String>(
-                    value: _activityId,
-                    onChanged: (dynamic activityId) {
-                      setState(() {
-                        _activityId = activityId;
-                        loadPdf();
-                      });
-                    },
-                    items: invoice.balanceHistory
-                        .map((history) => DropdownMenuItem(
-                              child: Text(formatNumber(history.amount, context,
-                                      clientId: invoice.clientId)! +
-                                  ' • ' +
-                                  formatDate(
-                                      convertTimestampToDateString(
-                                          history.createdAt),
-                                      context,
-                                      showTime: true)),
-                              value: history.activityId,
-                            ))
-                        .toList()),
-              ),
-            ),
-          );
+    final activitySelector =
+        _activityId == null || (kIsWeb && state.prefState.enableNativeBrowser)
+            ? SizedBox()
+            : Padding(
+                padding: const EdgeInsets.only(left: 17),
+                child: SizedBox(
+                  width: 350,
+                  child: IgnorePointer(
+                    ignoring: _isLoading,
+                    child: AppDropdownButton<String>(
+                        value: _activityId,
+                        onChanged: (dynamic activityId) {
+                          setState(() {
+                            _activityId = activityId;
+                            loadPdf();
+                          });
+                        },
+                        items: invoice.balanceHistory
+                            .map((history) => DropdownMenuItem(
+                                  child: Text(formatNumber(
+                                          history.amount, context,
+                                          clientId: invoice.clientId)! +
+                                      ' • ' +
+                                      formatDate(
+                                          convertTimestampToDateString(
+                                              history.createdAt),
+                                          context,
+                                          showTime: true)),
+                                  value: history.activityId,
+                                ))
+                            .toList()),
+                  ),
+                ),
+              );
+
+    final designSelector =
+        _activityId != null || (kIsWeb && state.prefState.enableNativeBrowser)
+            ? SizedBox()
+            : Padding(
+                padding: const EdgeInsets.only(left: 17),
+                child: SizedBox(
+                  width: 350,
+                  child: IgnorePointer(
+                    ignoring: _isLoading,
+                    child: DesignPicker(
+                      initialValue: _designId,
+                      onSelected: (design) {
+                        setState(() {
+                          _designId = design?.id;
+                          loadPdf();
+                        });
+                      },
+                      label: localization.design,
+                      showBlank: true,
+                    ),
+                  ),
+                ),
+              );
 
     final deliveryNote = Container(
       width: 200,
@@ -248,8 +276,9 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
         Material(
           child: Row(
             children: [
-              if (invoice.isInvoice && _activityId == null) deliveryNote,
+              designSelector,
               activitySelector,
+              if (invoice.isInvoice && _activityId == null) deliveryNote,
             ],
           ),
         ),
