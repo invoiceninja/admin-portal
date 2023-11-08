@@ -38,6 +38,7 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice!;
+    final localization = AppLocalization.of(context)!;
 
     // TODO remove this null check, it shouldn't be needed
     if (invoice.isStale) {
@@ -56,7 +57,7 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
     activityList.sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
 
     if (activityList.isEmpty) {
-      return HelpText(AppLocalization.of(context)!.noHistory);
+      return HelpText(localization.noHistory);
     }
 
     return ScrollableListViewBuilder(
@@ -71,7 +72,7 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
         final contact = client.getContact(activity.contactId);
         final user = state.userState.get(activity.userId);
 
-        String? personName;
+        String personName = '';
         if (contact.isOld) {
           personName = contact.fullNameOrEmail;
         } else if (user.isOld) {
@@ -81,6 +82,10 @@ class _InvoiceViewHistoryState extends State<InvoiceViewHistory> {
           }
         } else {
           personName = client.name;
+        }
+
+        if (personName.isEmpty) {
+          personName = localization.system;
         }
 
         return ListTile(
