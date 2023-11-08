@@ -324,8 +324,10 @@ Future<Response?> _loadPDF(
 ) async {
   http.Response? response;
 
+  final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
+
   if ((activityId ?? '').isNotEmpty || isDeliveryNote) {
-    final store = StoreProvider.of<AppState>(context);
     final credential = store.state.credentials;
     final url = isDeliveryNote
         ? '/invoices/${invoice.id}/delivery_note'
@@ -335,7 +337,7 @@ Future<Response?> _loadPDF(
   } else {
     final invitation = invoice.invitations.first;
     final url = invitation.downloadLink;
-    response = await WebClient().get(url, '', rawResponse: true);
+    response = await WebClient().get(url, state.token, rawResponse: true);
   }
 
   return response;

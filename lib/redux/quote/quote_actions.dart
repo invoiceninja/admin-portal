@@ -731,7 +731,7 @@ Future handleQuoteAction(
       final url = invitation.downloadLink;
       store.dispatch(StartSaving());
       final http.Response? response =
-          await WebClient().get(url, '', rawResponse: true);
+          await WebClient().get(url, state.token, rawResponse: true);
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;
