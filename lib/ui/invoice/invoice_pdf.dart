@@ -182,7 +182,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
             : Padding(
                 padding: const EdgeInsets.only(left: 17),
                 child: SizedBox(
-                  width: 350,
+                  width: 200,
                   child: IgnorePointer(
                     ignoring: _isLoading,
                     child: DesignPicker(
@@ -276,7 +276,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
         Material(
           child: Row(
             children: [
-              designSelector,
+              if (supportsDesignTemplates()) designSelector,
               activitySelector,
               if (invoice.isInvoice && _activityId == null) deliveryNote,
             ],
