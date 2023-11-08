@@ -3,7 +3,6 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:built_collection/built_collection.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -35,9 +34,6 @@ import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
 import 'package:printing/printing.dart';
-
-import 'package:invoiceninja_flutter/utils/web_stub.dart'
-    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class ViewDocumentList implements PersistUI {
   ViewDocumentList({
@@ -430,13 +426,7 @@ void handleDocumentAction(
       void downloadDocument() async {
         final DocumentEntity? document =
             store.state.documentState.map[documentIds.first];
-        if (kIsWeb) {
-          if (document?.data != null) {
-            WebUtils.downloadBinaryFile(document!.name, document.data!);
-          }
-        } else {
-          saveDownloadedFile(document!.data!, document.name);
-        }
+        saveDownloadedFile(document!.data!, document.name);
       }
       if (document.data == null) {
         store.dispatch(LoadDocumentData(

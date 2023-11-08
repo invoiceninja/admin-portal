@@ -4,7 +4,6 @@ import 'dart:convert';
 
 // Flutter imports:
 import 'package:built_collection/built_collection.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -37,9 +36,6 @@ import 'package:invoiceninja_flutter/utils/dates.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-
-import 'package:invoiceninja_flutter/utils/web_stub.dart'
-    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class ClientPdfView extends StatefulWidget {
   const ClientPdfView({
@@ -333,12 +329,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                               '_' +
                               (client!.number) +
                               '.pdf';
-                          if (kIsWeb) {
-                            WebUtils.downloadBinaryFile(
-                                fileName, _response!.bodyBytes);
-                          } else {
-                            saveDownloadedFile(_response!.bodyBytes, fileName);
-                          }
+                          saveDownloadedFile(_response!.bodyBytes, fileName);
                         },
                 ),
                 AppTextButton(

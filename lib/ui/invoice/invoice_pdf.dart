@@ -14,7 +14,6 @@ import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:printing/printing.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -224,25 +223,14 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                     onPressed: _response == null
                         ? null
                         : () async {
-                            if (_response == null) {
-                              launchUrl(
-                                  Uri.parse(invoice.invitationDownloadLink));
-                            } else {
-                              final fileName =
-                                  localization.lookup('${invoice.entityType}') +
-                                      '_' +
-                                      (invoice.number.isEmpty
-                                          ? localization.pending
-                                          : invoice.number) +
-                                      '.pdf';
-                              if (kIsWeb) {
-                                WebUtils.downloadBinaryFile(
-                                    fileName, _response!.bodyBytes);
-                              } else {
-                                saveDownloadedFile(
-                                    _response!.bodyBytes, fileName);
-                              }
-                            }
+                            final fileName =
+                                localization.lookup('${invoice.entityType}') +
+                                    '_' +
+                                    (invoice.number.isEmpty
+                                        ? localization.pending
+                                        : invoice.number) +
+                                    '.pdf';
+                            saveDownloadedFile(_response!.bodyBytes, fileName);
                           },
                   ),
                 if (isDesktop(context))

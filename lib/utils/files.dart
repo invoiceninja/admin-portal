@@ -88,24 +88,29 @@ Future<List<MultipartFile>?> _pickFiles({
 }
 
 void saveDownloadedFile(Uint8List data, String fileName) async {
-  final directory = await getAppDownloadDirectory();
-  if (directory != null) {
-    String filePath = '$directory/${file.Platform.pathSeparator}$fileName';
+  if (kIsWeb) {
+    WebUtils.downloadBinaryFile(fileName, data);
+  } else {
+    final directory = await getAppDownloadDirectory();
+    if (directory != null) {
+      String filePath = '$directory/${file.Platform.pathSeparator}$fileName';
 
-    if (file.File(filePath).existsSync()) {
-      final extension = fileName.split('.').last;
-      final timestamp = DateTime.now().millisecondsSinceEpoch;
-      filePath = filePath.replaceFirst('.$extension', '_$timestamp.$extension');
-    }
+      if (file.File(filePath).existsSync()) {
+        final extension = fileName.split('.').last;
+        final timestamp = DateTime.now().millisecondsSinceEpoch;
+        filePath =
+            filePath.replaceFirst('.$extension', '_$timestamp.$extension');
+      }
 
-    await File(filePath).writeAsBytes(data);
+      await File(filePath).writeAsBytes(data);
 
-    if (isDesktopOS()) {
-      showToast(AppLocalization.of(navigatorKey.currentContext!)!
-          .fileSavedInPath
-          .replaceFirst(':path', directory));
-    } else {
-      await Share.shareXFiles([XFile(filePath)]);
+      if (isDesktopOS()) {
+        showToast(AppLocalization.of(navigatorKey.currentContext!)!
+            .fileSavedInPath
+            .replaceFirst(':path', directory));
+      } else {
+        await Share.shareXFiles([XFile(filePath)]);
+      }
     }
   }
 }
