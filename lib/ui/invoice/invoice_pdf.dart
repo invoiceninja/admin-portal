@@ -1,7 +1,6 @@
 // Dart imports:
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io' as file;
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
@@ -9,14 +8,12 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:printing/printing.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -242,33 +239,8 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                                 WebUtils.downloadBinaryFile(
                                     fileName, _response!.bodyBytes);
                               } else {
-                                final directory =
-                                    await getAppDownloadDirectory();
-
-                                if (directory == null) {
-                                  return;
-                                }
-
-                                String filePath =
-                                    '$directory${file.Platform.pathSeparator}$fileName';
-
-                                if (file.File(filePath).existsSync()) {
-                                  final timestamp =
-                                      DateTime.now().millisecondsSinceEpoch;
-                                  filePath = filePath.replaceFirst(
-                                      '.pdf', '_$timestamp.pdf');
-                                }
-
-                                final pdfData = file.File(filePath);
-                                await pdfData
-                                    .writeAsBytes(_response!.bodyBytes);
-
-                                if (isDesktopOS()) {
-                                  showToast(localization.fileSavedInPath
-                                      .replaceFirst(':path', directory));
-                                } else {
-                                  await Share.shareXFiles([XFile(filePath)]);
-                                }
+                                saveDownloadedFile(
+                                    _response!.bodyBytes, fileName);
                               }
                             }
                           },

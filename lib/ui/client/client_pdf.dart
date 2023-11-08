@@ -1,7 +1,6 @@
 // Dart imports:
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io' as file;
 
 // Flutter imports:
 import 'package:built_collection/built_collection.dart';
@@ -41,7 +40,6 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
-import 'package:share_plus/share_plus.dart';
 
 class ClientPdfView extends StatefulWidget {
   const ClientPdfView({
@@ -339,31 +337,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                             WebUtils.downloadBinaryFile(
                                 fileName, _response!.bodyBytes);
                           } else {
-                            final directory = await getAppDownloadDirectory();
-
-                            if (directory == null) {
-                              return;
-                            }
-
-                            String filePath =
-                                '$directory${file.Platform.pathSeparator}$fileName';
-
-                            if (file.File(filePath).existsSync()) {
-                              final timestamp =
-                                  DateTime.now().millisecondsSinceEpoch;
-                              filePath = filePath.replaceFirst(
-                                  '.pdf', '_$timestamp.pdf');
-                            }
-
-                            final pdfData = file.File(filePath);
-                            await pdfData.writeAsBytes(_response!.bodyBytes);
-
-                            if (isDesktopOS()) {
-                              showToast(localization.fileSavedInPath
-                                  .replaceFirst(':path', directory));
-                            } else {
-                              await Share.shareXFiles([XFile(filePath)]);
-                            }
+                            saveDownloadedFile(_response!.bodyBytes, fileName);
                           }
                         },
                 ),

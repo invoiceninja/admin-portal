@@ -1,7 +1,5 @@
 // Dart imports:
 import 'dart:async';
-import 'dart:io' as file;
-import 'dart:io';
 
 // Flutter imports:
 import 'package:built_collection/built_collection.dart';
@@ -10,7 +8,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -36,13 +33,11 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
 import 'package:printing/printing.dart';
 
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
-import 'package:share_plus/share_plus.dart';
 
 class ViewDocumentList implements PersistUI {
   ViewDocumentList({
@@ -440,27 +435,7 @@ void handleDocumentAction(
             WebUtils.downloadBinaryFile(document!.name, document.data!);
           }
         } else {
-          final directory = await getAppDownloadDirectory();
-          if (directory != null) {
-            String filePath =
-                '$directory/${file.Platform.pathSeparator}${document!.name}';
-
-            if (file.File(filePath).existsSync()) {
-              final extension = document.name.split('.').last;
-              final timestamp = DateTime.now().millisecondsSinceEpoch;
-              filePath = filePath.replaceFirst(
-                  '.$extension', '_$timestamp.$extension');
-            }
-
-            await File(filePath).writeAsBytes(document.data!);
-
-            if (isDesktopOS()) {
-              showToast(localization.fileSavedInPath
-                  .replaceFirst(':path', directory));
-            } else {
-              await Share.shareXFiles([XFile(filePath)]);
-            }
-          }
+          saveDownloadedFile(document!.data!, document.name);
         }
       }
       if (document.data == null) {
