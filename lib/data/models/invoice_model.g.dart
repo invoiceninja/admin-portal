@@ -374,13 +374,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.filename;
-    if (value != null) {
-      result
-        ..add('filename')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(String)));
-    }
     value = object.recurringDates;
     if (value != null) {
       result
@@ -676,10 +669,6 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         case 'auto_bill_enabled':
           result.autoBillEnabled = serializers.deserialize(value,
               specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'filename':
-          result.filename = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String?;
           break;
         case 'recurring_dates':
           result.recurringDates.replace(serializers.deserialize(value,
@@ -1570,8 +1559,6 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final bool autoBillEnabled;
   @override
-  final String? filename;
-  @override
   final BuiltList<InvoiceScheduleEntity>? recurringDates;
   @override
   final BuiltList<InvoiceItemEntity> lineItems;
@@ -1670,7 +1657,6 @@ class _$InvoiceEntity extends InvoiceEntity {
       this.invoiceId,
       this.recurringId,
       required this.autoBillEnabled,
-      this.filename,
       this.recurringDates,
       required this.lineItems,
       required this.invitations,
@@ -1867,7 +1853,6 @@ class _$InvoiceEntity extends InvoiceEntity {
         invoiceId == other.invoiceId &&
         recurringId == other.recurringId &&
         autoBillEnabled == other.autoBillEnabled &&
-        filename == other.filename &&
         recurringDates == other.recurringDates &&
         lineItems == other.lineItems &&
         invitations == other.invitations &&
@@ -1949,7 +1934,6 @@ class _$InvoiceEntity extends InvoiceEntity {
     _$hash = $jc(_$hash, invoiceId.hashCode);
     _$hash = $jc(_$hash, recurringId.hashCode);
     _$hash = $jc(_$hash, autoBillEnabled.hashCode);
-    _$hash = $jc(_$hash, filename.hashCode);
     _$hash = $jc(_$hash, recurringDates.hashCode);
     _$hash = $jc(_$hash, lineItems.hashCode);
     _$hash = $jc(_$hash, invitations.hashCode);
@@ -2031,7 +2015,6 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('invoiceId', invoiceId)
           ..add('recurringId', recurringId)
           ..add('autoBillEnabled', autoBillEnabled)
-          ..add('filename', filename)
           ..add('recurringDates', recurringDates)
           ..add('lineItems', lineItems)
           ..add('invitations', invitations)
@@ -2306,10 +2289,6 @@ class InvoiceEntityBuilder
   set autoBillEnabled(bool? autoBillEnabled) =>
       _$this._autoBillEnabled = autoBillEnabled;
 
-  String? _filename;
-  String? get filename => _$this._filename;
-  set filename(String? filename) => _$this._filename = filename;
-
   ListBuilder<InvoiceScheduleEntity>? _recurringDates;
   ListBuilder<InvoiceScheduleEntity> get recurringDates =>
       _$this._recurringDates ??= new ListBuilder<InvoiceScheduleEntity>();
@@ -2462,7 +2441,6 @@ class InvoiceEntityBuilder
       _invoiceId = $v.invoiceId;
       _recurringId = $v.recurringId;
       _autoBillEnabled = $v.autoBillEnabled;
-      _filename = $v.filename;
       _recurringDates = $v.recurringDates?.toBuilder();
       _lineItems = $v.lineItems.toBuilder();
       _invitations = $v.invitations.toBuilder();
@@ -2571,7 +2549,6 @@ class InvoiceEntityBuilder
               invoiceId: invoiceId,
               recurringId: recurringId,
               autoBillEnabled: BuiltValueNullFieldError.checkNotNull(autoBillEnabled, r'InvoiceEntity', 'autoBillEnabled'),
-              filename: filename,
               recurringDates: _recurringDates?.build(),
               lineItems: lineItems.build(),
               invitations: invitations.build(),

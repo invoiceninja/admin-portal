@@ -214,7 +214,6 @@ abstract class InvoiceEntity extends Object
       customSurcharge2: 0,
       customSurcharge3: 0,
       customSurcharge4: 0,
-      filename: '',
       subscriptionId: '',
       recurringDates: BuiltList<InvoiceScheduleEntity>(),
       lineItems: BuiltList<InvoiceItemEntity>(),
@@ -553,8 +552,6 @@ abstract class InvoiceEntity extends Object
 
   @BuiltValueField(wireName: 'auto_bill_enabled')
   bool get autoBillEnabled;
-
-  String? get filename;
 
   @BuiltValueField(wireName: 'recurring_dates')
   BuiltList<InvoiceScheduleEntity>? get recurringDates;
