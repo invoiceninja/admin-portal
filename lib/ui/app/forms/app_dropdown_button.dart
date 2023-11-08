@@ -34,25 +34,26 @@ class AppDropdownButton<T> extends StatelessWidget {
     }
     final bool isEmpty = checkedValue == null || checkedValue == '';
 
-    Widget dropDownButton = DropdownButtonHideUnderline(
-      child: DropdownButton<T>(
-        value: checkedValue,
-        isExpanded: true,
-        isDense: labelText != null,
-        onChanged: enabled ? onChanged : null,
-        selectedItemBuilder: selectedItemBuilder,
-        items: [
-          if (showBlank || isEmpty)
-            DropdownMenuItem<T>(
-              value: blankValue,
-              child: blankLabel == null ? SizedBox() : Text(blankLabel!),
-            ),
-          ...items
-        ],
-      ),
+    Widget dropDownButton = DropdownButtonFormField<T>(
+      decoration: labelText != null
+          ? InputDecoration(label: Text(labelText!))
+          : InputDecoration.collapsed(hintText: ''),
+      value: checkedValue == blankValue ? null : checkedValue,
+      isExpanded: true,
+      isDense: labelText != null,
+      onChanged: enabled ? onChanged : null,
+      selectedItemBuilder: selectedItemBuilder,
+      items: [
+        if (showBlank || isEmpty)
+          DropdownMenuItem<T>(
+            value: blankValue,
+            child: blankLabel == null ? SizedBox() : Text(blankLabel!),
+          ),
+        ...items
+      ],
     );
 
-    if (labelText != null) {
+    if (false && labelText != null) {
       dropDownButton = InputDecorator(
           decoration: InputDecoration(
             labelText: labelText!.isEmpty ? null : labelText,
