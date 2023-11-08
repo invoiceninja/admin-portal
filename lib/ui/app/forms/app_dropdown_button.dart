@@ -34,7 +34,7 @@ class AppDropdownButton<T> extends StatelessWidget {
     }
     final bool isEmpty = checkedValue == null || checkedValue == '';
 
-    Widget dropDownButton = DropdownButtonFormField<T>(
+    return DropdownButtonFormField<T>(
       decoration: labelText != null
           ? InputDecoration(label: Text(labelText!))
           : InputDecoration.collapsed(hintText: ''),
@@ -52,16 +52,5 @@ class AppDropdownButton<T> extends StatelessWidget {
         ...items
       ],
     );
-
-    if (false && labelText != null) {
-      dropDownButton = InputDecorator(
-          decoration: InputDecoration(
-            labelText: labelText!.isEmpty ? null : labelText,
-          ),
-          isEmpty: isEmpty && blankLabel == null,
-          child: dropDownButton);
-    }
-
-    return dropDownButton;
   }
 }
