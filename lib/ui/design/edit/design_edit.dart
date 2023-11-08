@@ -689,7 +689,7 @@ class _PdfDesignPreviewState extends State<PdfDesignPreview> {
               allowPrinting: false,
               allowSharing: false,
               canDebug: false,
-              maxPageWidth: 800,
+              maxPageWidth: 600,
             )
           else
             SizedBox(),

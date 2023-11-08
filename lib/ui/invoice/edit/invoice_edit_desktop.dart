@@ -1352,7 +1352,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
                             allowSharing: false,
                             canDebug: false,
                             pages: [_currentPage - 1],
-                            maxPageWidth: 800,
+                            maxPageWidth: 600,
                           ),
               ),
             ],
