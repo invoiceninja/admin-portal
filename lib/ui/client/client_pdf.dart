@@ -266,6 +266,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
         kStatementIncludeAging,
       ],
       whenEmpty: '',
+      height: 50,
     ));
 
     /*
@@ -416,7 +417,9 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                   ? Row(
                       children: [
                         datePicker,
+                        SizedBox(width: 16),
                         statusPicker,
+                        SizedBox(width: 16),
                         sectionPicker,
                       ],
                     )
