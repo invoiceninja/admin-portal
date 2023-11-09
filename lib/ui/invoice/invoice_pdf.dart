@@ -275,7 +275,6 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
             )
           : null,
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Material(
             child: Row(

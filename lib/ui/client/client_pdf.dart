@@ -4,6 +4,7 @@ import 'dart:convert';
 
 // Flutter imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -19,6 +20,7 @@ import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/multiselect.dart';
+import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:printing/printing.dart';
@@ -36,6 +38,9 @@ import 'package:invoiceninja_flutter/utils/dates.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class ClientPdfView extends StatefulWidget {
   const ClientPdfView({
@@ -62,6 +67,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       convertDateTimeToSqlDate(DateTime.now().subtract(Duration(days: 365)));
   String? _endDate = convertDateTimeToSqlDate();
   String _status = kStatementStatusAll;
+  String? _pdfString;
 
   @override
   void initState() {
@@ -85,6 +91,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
     }
 
     final localization = AppLocalization.of(context);
+    final state = widget.viewModel.state;
 
     setState(() {
       _isLoading = true;
@@ -98,6 +105,12 @@ class _ClientPdfViewState extends State<ClientPdfView> {
           }
         } else {
           _response = response;
+
+          if (kIsWeb && state.prefState.enableNativeBrowser) {
+            _pdfString = 'data:application/pdf;base64,' +
+                base64Encode(response!.bodyBytes);
+            WebUtils.registerWebView(_pdfString);
+          }
         }
 
         _isLoading = false;
@@ -172,8 +185,88 @@ class _ClientPdfViewState extends State<ClientPdfView> {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final localization = AppLocalization.of(context);
-    final client = widget.viewModel.client;
+    final localization = AppLocalization.of(context)!;
+    final client = widget.viewModel.client!;
+
+    final datePicker = Flexible(
+      child: Theme(
+        data: state.prefState.enableDarkMode || state.hasAccentColor
+            ? ThemeData.dark()
+            : ThemeData.light(),
+        child: AppDropdownButton<DateRange>(
+          labelText: localization.dateRange,
+          blankValue: null,
+          //showBlank: true,
+          value: _dateRange,
+          onChanged: (dynamic value) {
+            setState(() {
+              _dateRange = value;
+            });
+
+            if (value != DateRange.custom) {
+              loadPDF();
+            }
+          },
+          items: DateRange.values
+              .where((value) => value != DateRange.allTime)
+              .map((dateRange) => DropdownMenuItem<DateRange>(
+                    child: Text(localization.lookup(dateRange.toString())),
+                    value: dateRange,
+                  ))
+              .toList(),
+        ),
+      ),
+    );
+
+    final statusPicker = Flexible(
+      child: Theme(
+        data: state.prefState.enableDarkMode || state.hasAccentColor
+            ? ThemeData.dark()
+            : ThemeData.light(),
+        child: AppDropdownButton<String>(
+            labelText: localization.status,
+            blankValue: null,
+            value: _status,
+            onChanged: (dynamic value) {
+              setState(() {
+                _status = value;
+              });
+              loadPDF();
+            },
+            items: [
+              kStatementStatusAll,
+              kStatementStatusPaid,
+              kStatementStatusUnpaid,
+            ]
+                .map((value) => DropdownMenuItem<String>(
+                      child: Text(localization.lookup(value)),
+                      value: value,
+                    ))
+                .toList()),
+      ),
+    );
+
+    final sectionPicker = Flexible(
+        child: DropDownMultiSelect(
+      onChanged: (List<dynamic> selected) {
+        //_selectedOptions = selected;
+        store.dispatch(UpdateUserPreferences(
+            statementIncludes: BuiltList<String>(selected)));
+        loadPDF();
+      },
+      selectedValues: state.prefState.statementIncludes.toList(),
+      menuItembuilder: (dynamic option) => Text(
+        localization.lookup(option),
+        style: TextStyle(fontSize: 14),
+      ),
+      isDense: true,
+      options: <String>[
+        kStatementIncludePayments,
+        kStatementIncludeCredits,
+        kStatementIncludeAging,
+      ],
+      whenEmpty: '',
+    ));
 
     /*
     final pageSelector = _pageCount == 1
@@ -218,104 +311,11 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  /*
                   Expanded(
                     child: Text(
-                      EntityPresenter().initialize(client, context).title(),
+                      EntityPresenter().initialize(client, context).title()!,
                     ),
                   ),
-                  */
-                  Flexible(
-                    child: Theme(
-                      data:
-                          state.prefState.enableDarkMode || state.hasAccentColor
-                              ? ThemeData.dark()
-                              : ThemeData.light(),
-                      child: AppDropdownButton<DateRange>(
-                        labelText: localization!.dateRange,
-                        blankValue: null,
-                        //showBlank: true,
-                        value: _dateRange,
-                        onChanged: (dynamic value) {
-                          setState(() {
-                            _dateRange = value;
-                          });
-
-                          if (value != DateRange.custom) {
-                            loadPDF();
-                          }
-                        },
-                        items: DateRange.values
-                            .where((value) => value != DateRange.allTime)
-                            .map((dateRange) => DropdownMenuItem<DateRange>(
-                                  child: Text(localization
-                                      .lookup(dateRange.toString())),
-                                  value: dateRange,
-                                ))
-                            .toList(),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 16),
-                  Flexible(
-                    child: Theme(
-                      data:
-                          state.prefState.enableDarkMode || state.hasAccentColor
-                              ? ThemeData.dark()
-                              : ThemeData.light(),
-                      child: AppDropdownButton<String>(
-                          labelText: localization.status,
-                          blankValue: null,
-                          value: _status,
-                          onChanged: (dynamic value) {
-                            setState(() {
-                              _status = value;
-                            });
-                            loadPDF();
-                          },
-                          items: [
-                            kStatementStatusAll,
-                            kStatementStatusPaid,
-                            kStatementStatusUnpaid,
-                          ]
-                              .map((value) => DropdownMenuItem<String>(
-                                    child: Text(localization.lookup(value)),
-                                    value: value,
-                                  ))
-                              .toList()),
-                    ),
-                  ),
-                  if (isDesktop(context)) ...[
-                    Theme(
-                      data: ThemeData(
-                          appBarTheme: AppBarTheme(
-                        titleTextStyle: TextStyle(fontSize: 60),
-                      )),
-                      child: Flexible(
-                          child: DropDownMultiSelect(
-                        onChanged: (List<dynamic> selected) {
-                          //_selectedOptions = selected;
-                          store.dispatch(UpdateUserPreferences(
-                              statementIncludes: BuiltList<String>(selected)));
-                          loadPDF();
-                        },
-                        selectedValues:
-                            state.prefState.statementIncludes.toList(),
-                        menuItembuilder: (dynamic option) => Text(
-                          localization.lookup(option),
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        isDense: true,
-                        options: <String>[
-                          kStatementIncludePayments,
-                          kStatementIncludeCredits,
-                          kStatementIncludeAging,
-                        ],
-                        whenEmpty: '',
-                      )),
-                    )
-                    //...pageSelector,
-                  ]
                 ],
               ),
               actions: <Widget>[
@@ -327,7 +327,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                       : () async {
                           final fileName = localization.statement +
                               '_' +
-                              (client!.number) +
+                              (client.number) +
                               '.pdf';
                           saveDownloadedFile(_response!.bodyBytes, fileName);
                         },
@@ -338,7 +338,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                   onPressed: _response == null
                       ? null
                       : () async {
-                          if (!client!.hasEmailAddress) {
+                          if (!client.hasEmailAddress) {
                             showMessageDialog(
                                 message: localization.clientEmailNotSet,
                                 secondaryActions: [
@@ -384,7 +384,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                           entity: ScheduleEntity(
                                   ScheduleEntity.TEMPLATE_EMAIL_STATEMENT)
                               .rebuild((b) => b
-                                ..parameters.clients.add(client!.id)
+                                ..parameters.clients.add(client.id)
                                 ..parameters.showAgingTable =
                                     includes.contains(localization.aging)
                                 ..parameters.showPaymentsTable =
@@ -401,7 +401,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                     child: Text(localization.close,
                         style: TextStyle(color: state.headerTextColor)),
                     onPressed: () {
-                      viewEntity(entity: client!);
+                      viewEntity(entity: client);
                     },
                   ),
               ],
@@ -409,6 +409,20 @@ class _ClientPdfViewState extends State<ClientPdfView> {
           : null,
       body: Column(
         children: [
+          Material(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: isDesktop(context)
+                  ? Row(
+                      children: [
+                        datePicker,
+                        statusPicker,
+                        sectionPicker,
+                      ],
+                    )
+                  : Placeholder(),
+            ),
+          ),
           if (_dateRange == DateRange.custom)
             Container(
               width: double.infinity,
@@ -421,7 +435,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     child: DatePicker(
-                      labelText: localization!.startDate,
+                      labelText: localization.startDate,
                       onSelected: (value, _) {
                         setState(() {
                           _startDate = value;
@@ -457,15 +471,19 @@ class _ClientPdfViewState extends State<ClientPdfView> {
           Expanded(
             child: _isLoading || _response == null
                 ? LoadingIndicator()
-                : PdfPreview(
-                    build: (format) => _response!.bodyBytes,
-                    canChangeOrientation: false,
-                    canChangePageFormat: false,
-                    canDebug: false,
-                    maxPageWidth: 600,
-                    pdfFileName:
-                        localization!.statement + '_' + client!.number + '.pdf',
-                  ),
+                : (kIsWeb && state.prefState.enableNativeBrowser)
+                    ? HtmlElementView(viewType: _pdfString!)
+                    : PdfPreview(
+                        build: (format) => _response!.bodyBytes,
+                        canChangeOrientation: false,
+                        canChangePageFormat: false,
+                        canDebug: false,
+                        maxPageWidth: 600,
+                        pdfFileName: localization.statement +
+                            '_' +
+                            client.number +
+                            '.pdf',
+                      ),
           ),
         ],
       ),
