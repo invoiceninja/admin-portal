@@ -110,7 +110,8 @@ class _ClientPdfViewState extends State<ClientPdfView> {
     });
   }
 
-  Future<Response?> _loadPDF({bool sendEmail = false}) async {
+  Future<Response?> _loadPDF(
+      {bool sendEmail = false, String designId = ''}) async {
     final client = widget.viewModel.client!;
     http.Response? response;
 
@@ -121,6 +122,9 @@ class _ClientPdfViewState extends State<ClientPdfView> {
     String url = '${state.credentials.url}/client_statement';
     if (sendEmail) {
       url += '?send_email=true';
+    }
+    if (designId.isNotEmpty) {
+      url += '&design_id=$designId';
     }
 
     String? startDate = '';

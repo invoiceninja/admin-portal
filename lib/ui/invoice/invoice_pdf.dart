@@ -307,14 +307,20 @@ Future<Response?> _loadPDF(
 
   if ((activityId ?? '').isNotEmpty || isDeliveryNote) {
     final credential = store.state.credentials;
-    final url = isDeliveryNote
+    var url = isDeliveryNote
         ? '/invoices/${invoice.id}/delivery_note'
         : '/activities/download_entity/$activityId';
+    if ((designId ?? '').isNotEmpty) {
+      url += '&design_id=$designId';
+    }
     response = await WebClient()
         .get('${credential.url}$url', credential.token, rawResponse: true);
   } else {
     final invitation = invoice.invitations.first;
-    final url = invitation.downloadLink;
+    var url = invitation.downloadLink;
+    if ((designId ?? '').isNotEmpty) {
+      url += '&design_id=$designId';
+    }
     response = await WebClient().get(url, state.token, rawResponse: true);
   }
 
