@@ -420,15 +420,15 @@ class _ClientPdfViewState extends State<ClientPdfView> {
               child: isDesktop(context)
                   ? Row(
                       children: [
+                        datePicker,
+                        SizedBox(width: 16),
+                        statusPicker,
+                        SizedBox(width: 16),
                         if (hasDesignTemplatesForEntityType(
                             state.designState.map, EntityType.client)) ...[
                           designPicker,
                           SizedBox(width: 16),
                         ],
-                        datePicker,
-                        SizedBox(width: 16),
-                        statusPicker,
-                        SizedBox(width: 16),
                         sectionPicker,
                       ],
                     )
