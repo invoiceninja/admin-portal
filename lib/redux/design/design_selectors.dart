@@ -98,3 +98,16 @@ String? getDesignIdForVendorByEntity(
       return settings.defaultInvoiceDesignId;
   }
 }
+
+bool hasDesignTemplatesForEntityType(
+    BuiltMap<String, DesignEntity> designMap, EntityType entityType) {
+  var hasMatch = false;
+
+  designMap.forEach((designId, design) {
+    if (design.supportsEntityType(entityType)) {
+      hasMatch = true;
+    }
+  });
+
+  return hasMatch;
+}

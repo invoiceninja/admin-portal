@@ -11,6 +11,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
@@ -88,6 +89,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
       invoice,
       _isDeliveryNote,
       _activityId,
+      _designId,
     ).then((response) async {
       setState(() {
         _response = response;
@@ -176,29 +178,32 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                 ),
               );
 
-    final designSelector =
-        _activityId != null || (kIsWeb && state.prefState.enableNativeBrowser)
-            ? SizedBox()
-            : Padding(
-                padding: const EdgeInsets.only(left: 17),
-                child: SizedBox(
-                  width: 200,
-                  child: IgnorePointer(
-                    ignoring: _isLoading,
-                    child: DesignPicker(
-                      initialValue: _designId,
-                      onSelected: (design) {
-                        setState(() {
-                          _designId = design?.id;
-                          loadPdf();
-                        });
-                      },
-                      label: localization.design,
-                      showBlank: true,
-                    ),
-                  ),
+    final designSelector = _activityId != null ||
+            (kIsWeb && state.prefState.enableNativeBrowser) ||
+            !hasDesignTemplatesForEntityType(
+                state.designState.map, invoice.entityType!)
+        ? SizedBox()
+        : Padding(
+            padding: const EdgeInsets.only(left: 17),
+            child: SizedBox(
+              width: 200,
+              child: IgnorePointer(
+                ignoring: _isLoading,
+                child: DesignPicker(
+                  initialValue: _designId,
+                  onSelected: (design) {
+                    setState(() {
+                      _designId = design?.id;
+                      loadPdf();
+                    });
+                  },
+                  label: localization.design,
+                  showBlank: true,
+                  entityType: invoice.entityType,
                 ),
-              );
+              ),
+            ),
+          );
 
     final deliveryNote = Container(
       width: 200,
@@ -310,6 +315,7 @@ Future<Response?> _loadPDF(
   InvoiceEntity invoice,
   bool isDeliveryNote,
   String? activityId,
+  String? designId,
 ) async {
   http.Response? response;
 
