@@ -189,61 +189,51 @@ class _ClientPdfViewState extends State<ClientPdfView> {
     final client = widget.viewModel.client!;
 
     final datePicker = Flexible(
-      child: Theme(
-        data: state.prefState.enableDarkMode || state.hasAccentColor
-            ? ThemeData.dark()
-            : ThemeData.light(),
-        child: AppDropdownButton<DateRange>(
-          labelText: localization.dateRange,
-          blankValue: null,
-          //showBlank: true,
-          value: _dateRange,
-          onChanged: (dynamic value) {
-            setState(() {
-              _dateRange = value;
-            });
+      child: AppDropdownButton<DateRange>(
+        labelText: localization.dateRange,
+        blankValue: null,
+        //showBlank: true,
+        value: _dateRange,
+        onChanged: (dynamic value) {
+          setState(() {
+            _dateRange = value;
+          });
 
-            if (value != DateRange.custom) {
-              loadPDF();
-            }
-          },
-          items: DateRange.values
-              .where((value) => value != DateRange.allTime)
-              .map((dateRange) => DropdownMenuItem<DateRange>(
-                    child: Text(localization.lookup(dateRange.toString())),
-                    value: dateRange,
-                  ))
-              .toList(),
-        ),
+          if (value != DateRange.custom) {
+            loadPDF();
+          }
+        },
+        items: DateRange.values
+            .where((value) => value != DateRange.allTime)
+            .map((dateRange) => DropdownMenuItem<DateRange>(
+                  child: Text(localization.lookup(dateRange.toString())),
+                  value: dateRange,
+                ))
+            .toList(),
       ),
     );
 
     final statusPicker = Flexible(
-      child: Theme(
-        data: state.prefState.enableDarkMode || state.hasAccentColor
-            ? ThemeData.dark()
-            : ThemeData.light(),
-        child: AppDropdownButton<String>(
-            labelText: localization.status,
-            blankValue: null,
-            value: _status,
-            onChanged: (dynamic value) {
-              setState(() {
-                _status = value;
-              });
-              loadPDF();
-            },
-            items: [
-              kStatementStatusAll,
-              kStatementStatusPaid,
-              kStatementStatusUnpaid,
-            ]
-                .map((value) => DropdownMenuItem<String>(
-                      child: Text(localization.lookup(value)),
-                      value: value,
-                    ))
-                .toList()),
-      ),
+      child: AppDropdownButton<String>(
+          labelText: localization.status,
+          blankValue: null,
+          value: _status,
+          onChanged: (dynamic value) {
+            setState(() {
+              _status = value;
+            });
+            loadPDF();
+          },
+          items: [
+            kStatementStatusAll,
+            kStatementStatusPaid,
+            kStatementStatusUnpaid,
+          ]
+              .map((value) => DropdownMenuItem<String>(
+                    child: Text(localization.lookup(value)),
+                    value: value,
+                  ))
+              .toList()),
     );
 
     final sectionPicker = Flexible(
