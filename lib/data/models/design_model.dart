@@ -231,6 +231,9 @@ abstract class DesignEntity extends Object
   @override
   FormatNumberType? get listDisplayAmountType => null;
 
+  bool supportsEntityType(EntityType entityType) =>
+      isTemplate && entities.split(',').contains(entityType.apiValue);
+
   // ignore: unused_element
   static void _initializeBuilder(DesignEntityBuilder builder) => builder
     ..isFree = true

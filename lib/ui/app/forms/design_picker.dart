@@ -6,6 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/design_model.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -16,12 +17,14 @@ class DesignPicker extends StatelessWidget {
     this.label,
     this.initialValue,
     this.showBlank = false,
+    this.entityType,
   });
 
   final Function(DesignEntity?) onSelected;
   final String? label;
   final String? initialValue;
   final bool showBlank;
+  final EntityType? entityType;
 
   @override
   Widget build(BuildContext context) {
@@ -36,14 +39,17 @@ class DesignPicker extends StatelessWidget {
       onChanged: (dynamic value) => onSelected(designState.map[value]),
       items: designState.list
           .where((designId) {
-            final design = designState.map[designId];
+            final design = designState.map[designId]!;
             if (state.isHosted &&
                 !state.isPaidAccount &&
                 !state.account.isTrial &&
-                !design!.isFree) {
+                !design.isFree) {
               return false;
             }
-            return design!.isActive || designId == initialValue;
+            if (entityType != null && !design.supportsEntityType(entityType!)) {
+              return false;
+            }
+            return design.isActive || designId == initialValue;
           })
           .map((value) => DropdownMenuItem(
                 value: value,
