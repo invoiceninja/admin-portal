@@ -426,25 +426,6 @@ class DesignSettings extends StatefulWidget {
 }
 
 class _DesignSettingsState extends State<DesignSettings> {
-  DesignEntity? _selectedDesign;
-
-  @override
-  void initState() {
-    super.initState();
-
-    final viewModel = widget.viewModel;
-    final design = viewModel.design;
-
-    if (design.isOld) {
-      _selectedDesign = design;
-    } else {
-      final state = viewModel.state;
-      final designMap = state.designState.map;
-      _selectedDesign =
-          designMap[state.company.settings.defaultInvoiceDesignId];
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context)!;
@@ -469,8 +450,7 @@ class _DesignSettingsState extends State<DesignSettings> {
               label: localization.loadDesign,
               onSelected: (value) {
                 if (value != null) {
-                  widget.onLoadDesign(value!);
-                  _selectedDesign = value;
+                  widget.onLoadDesign(value);
                 }
               },
             ),
