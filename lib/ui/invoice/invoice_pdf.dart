@@ -263,12 +263,15 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
       body: Column(
         children: [
           Material(
-            child: Row(
-              children: [
-                if (supportsDesignTemplates()) designPicker,
-                activityPicker,
-                if (invoice.isInvoice && _activityId == null) deliveryNote,
-              ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Row(
+                children: [
+                  if (supportsDesignTemplates()) designPicker,
+                  activityPicker,
+                  if (invoice.isInvoice && _activityId == null) deliveryNote,
+                ],
+              ),
             ),
           ),
           Expanded(
@@ -302,16 +305,16 @@ Future<Response?> _loadPDF(
 ) async {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
-  final credential = store.state.credentials;
+  final credentials = store.state.credentials;
   final invitation = invoice.invitations.first;
 
   var url = '';
 
   if ((activityId ?? '').isNotEmpty) {
-    url = '${credential.url}/activities/download_entity/$activityId';
+    url = '${credentials.url}/activities/download_entity/$activityId';
   } else {
     if (isDeliveryNote) {
-      url = '${credential.url}/invoices/${invoice.id}/delivery_note';
+      url = '${credentials.url}/invoices/${invoice.id}/delivery_note';
     } else {
       url = invitation.downloadLink;
     }

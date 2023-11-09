@@ -407,33 +407,17 @@ class _ClientPdfViewState extends State<ClientPdfView> {
         children: [
           Material(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: isDesktop(context)
-                  ? Row(
-                      children: [
-                        datePicker,
-                        SizedBox(width: 16),
-                        statusPicker,
-                        SizedBox(width: 16),
-                        if (hasDesignTemplatesForEntityType(
-                            state.designState.map, EntityType.client)) ...[
-                          designPicker,
-                          SizedBox(width: 16),
-                        ],
-                        sectionPicker,
-                      ],
-                    )
-                  : Column(
-                      children: [
-                        Row(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  isDesktop(context)
+                      ? Row(
                           children: [
                             datePicker,
                             SizedBox(width: 16),
                             statusPicker,
-                          ],
-                        ),
-                        Row(
-                          children: [
+                            SizedBox(width: 16),
                             if (hasDesignTemplatesForEntityType(
                                 state.designState.map, EntityType.client)) ...[
                               designPicker,
@@ -441,54 +425,73 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                             ],
                             sectionPicker,
                           ],
+                        )
+                      : Column(
+                          children: [
+                            Row(
+                              children: [
+                                datePicker,
+                                SizedBox(width: 16),
+                                statusPicker,
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                if (hasDesignTemplatesForEntityType(
+                                    state.designState.map,
+                                    EntityType.client)) ...[
+                                  designPicker,
+                                  SizedBox(width: 16),
+                                ],
+                                sectionPicker,
+                              ],
+                            ),
+                          ],
                         ),
+                  if (_dateRange == DateRange.custom) ...[
+                    SizedBox(height: 8),
+                    Wrap(
+                      alignment: WrapAlignment.start,
+                      children: [
+                        Container(
+                          width: 180,
+                          child: DatePicker(
+                            labelText: localization.startDate,
+                            onSelected: (value, _) {
+                              setState(() {
+                                _startDate = value;
+                              });
+                            },
+                            selectedDate: _startDate,
+                          ),
+                        ),
+                        SizedBox(width: 16),
+                        Container(
+                          width: 180,
+                          child: DatePicker(
+                            labelText: localization.endDate,
+                            onSelected: (value, _) {
+                              setState(() {
+                                _endDate = value;
+                              });
+                            },
+                            selectedDate: _endDate,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: AppButton(
+                            label: localization.loadPdf,
+                            onPressed: () => loadPDF(),
+                          ),
+                        )
                       ],
                     ),
-            ),
-          ),
-          if (_dateRange == DateRange.custom)
-            Material(
-              child: Wrap(
-                alignment: WrapAlignment.center,
-                children: [
-                  Container(
-                    width: 180,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: DatePicker(
-                      labelText: localization.startDate,
-                      onSelected: (value, _) {
-                        setState(() {
-                          _startDate = value;
-                        });
-                      },
-                      selectedDate: _startDate,
-                    ),
-                  ),
-                  Container(
-                    width: 180,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: DatePicker(
-                      labelText: localization.endDate,
-                      onSelected: (value, _) {
-                        setState(() {
-                          _endDate = value;
-                        });
-                      },
-                      selectedDate: _endDate,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: AppButton(
-                      label: localization.loadPdf,
-                      onPressed: () => loadPDF(),
-                    ),
-                  )
+                  ],
                 ],
               ),
             ),
+          ),
           Expanded(
             child: _isLoading || _response == null
                 ? LoadingIndicator()
