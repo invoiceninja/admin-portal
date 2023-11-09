@@ -4,7 +4,6 @@ import 'dart:convert';
 
 // Flutter imports:
 import 'package:built_collection/built_collection.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -15,6 +14,7 @@ import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
@@ -39,11 +39,6 @@ import 'package:invoiceninja_flutter/utils/dates.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-
-import 'package:invoiceninja_flutter/utils/web_stub.dart'
-    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
-
-import '../../redux/design/design_selectors.dart';
 
 class ClientPdfView extends StatefulWidget {
   const ClientPdfView({
@@ -70,7 +65,6 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       convertDateTimeToSqlDate(DateTime.now().subtract(Duration(days: 365)));
   String? _endDate = convertDateTimeToSqlDate();
   String _status = kStatementStatusAll;
-  String? _pdfString;
   String? _designId;
 
   @override
@@ -86,7 +80,6 @@ class _ClientPdfViewState extends State<ClientPdfView> {
     }
 
     final localization = AppLocalization.of(context);
-    final state = widget.viewModel.state;
 
     setState(() {
       _isLoading = true;
@@ -100,12 +93,6 @@ class _ClientPdfViewState extends State<ClientPdfView> {
           }
         } else {
           _response = response;
-
-          if (kIsWeb && state.prefState.enableNativeBrowser) {
-            _pdfString = 'data:application/pdf;base64,' +
-                base64Encode(response!.bodyBytes);
-            WebUtils.registerWebView(_pdfString);
-          }
         }
 
         _isLoading = false;
@@ -501,19 +488,15 @@ class _ClientPdfViewState extends State<ClientPdfView> {
           Expanded(
             child: _isLoading || _response == null
                 ? LoadingIndicator()
-                : (kIsWeb && state.prefState.enableNativeBrowser)
-                    ? HtmlElementView(viewType: _pdfString!)
-                    : PdfPreview(
-                        build: (format) => _response!.bodyBytes,
-                        canChangeOrientation: false,
-                        canChangePageFormat: false,
-                        canDebug: false,
-                        maxPageWidth: 600,
-                        pdfFileName: localization.statement +
-                            '_' +
-                            client.number +
-                            '.pdf',
-                      ),
+                : PdfPreview(
+                    build: (format) => _response!.bodyBytes,
+                    canChangeOrientation: false,
+                    canChangePageFormat: false,
+                    canDebug: false,
+                    maxPageWidth: 600,
+                    pdfFileName:
+                        localization.statement + '_' + client.number + '.pdf',
+                  ),
           ),
         ],
       ),

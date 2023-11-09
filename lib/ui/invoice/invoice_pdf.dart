@@ -1,6 +1,5 @@
 // Dart imports:
 import 'dart:async';
-import 'dart:convert';
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
@@ -31,9 +30,6 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-import 'package:invoiceninja_flutter/utils/web_stub.dart'
-    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
-
 class InvoicePdfView extends StatefulWidget {
   const InvoicePdfView({
     Key? key,
@@ -53,7 +49,6 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
   bool _isDeliveryNote = false;
   String? _designId;
   String? _activityId;
-  String? _pdfString;
   http.Response? _response;
   //int _pageCount = 1;
   //int _currentPage = 1;
@@ -75,7 +70,6 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
   void loadPdf() {
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice!;
-    final state = viewModel.state;
 
     if (invoice.invitations.isEmpty) {
       return;
@@ -95,12 +89,6 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
       setState(() {
         _response = response;
         _isLoading = false;
-
-        if (kIsWeb && state!.prefState.enableNativeBrowser) {
-          _pdfString = 'data:application/pdf;base64,' +
-              base64Encode(response!.bodyBytes);
-          WebUtils.registerWebView(_pdfString);
-        }
       });
     }).catchError((Object error) {
       setState(() {
@@ -144,42 +132,39 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
           ];
     */
 
-    final activityPicker =
-        _activityId == null || (kIsWeb && state.prefState.enableNativeBrowser)
-            ? SizedBox()
-            : Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 17),
-                  child: IgnorePointer(
-                    ignoring: _isLoading,
-                    child: AppDropdownButton<String>(
-                        value: _activityId,
-                        onChanged: (dynamic activityId) {
-                          setState(() {
-                            _activityId = activityId;
-                            loadPdf();
-                          });
-                        },
-                        items: invoice.balanceHistory
-                            .map((history) => DropdownMenuItem(
-                                  child: Text(formatNumber(
-                                          history.amount, context,
-                                          clientId: invoice.clientId)! +
-                                      ' • ' +
-                                      formatDate(
-                                          convertTimestampToDateString(
-                                              history.createdAt),
-                                          context,
-                                          showTime: true)),
-                                  value: history.activityId,
-                                ))
-                            .toList()),
-                  ),
-                ),
-              );
+    final activityPicker = _activityId == null
+        ? SizedBox()
+        : Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 17),
+              child: IgnorePointer(
+                ignoring: _isLoading,
+                child: AppDropdownButton<String>(
+                    value: _activityId,
+                    onChanged: (dynamic activityId) {
+                      setState(() {
+                        _activityId = activityId;
+                        loadPdf();
+                      });
+                    },
+                    items: invoice.balanceHistory
+                        .map((history) => DropdownMenuItem(
+                              child: Text(formatNumber(history.amount, context,
+                                      clientId: invoice.clientId)! +
+                                  ' • ' +
+                                  formatDate(
+                                      convertTimestampToDateString(
+                                          history.createdAt),
+                                      context,
+                                      showTime: true)),
+                              value: history.activityId,
+                            ))
+                        .toList()),
+              ),
+            ),
+          );
 
     final designPicker = _activityId != null ||
-            (kIsWeb && state.prefState.enableNativeBrowser) ||
             !hasDesignTemplatesForEntityType(
                 state.designState.map, invoice.entityType!)
         ? SizedBox()
@@ -289,20 +274,18 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
           Expanded(
             child: _isLoading || _response == null
                 ? LoadingIndicator()
-                : (kIsWeb && state.prefState.enableNativeBrowser)
-                    ? HtmlElementView(viewType: _pdfString!)
-                    : PdfPreview(
-                        build: (format) => _response!.bodyBytes,
-                        canChangeOrientation: false,
-                        canChangePageFormat: false,
-                        canDebug: false,
-                        maxPageWidth: 600,
-                        pdfFileName:
-                            localization.lookup(invoice.entityType!.snakeCase) +
-                                '_' +
-                                invoice.number +
-                                '.pdf',
-                      ),
+                : PdfPreview(
+                    build: (format) => _response!.bodyBytes,
+                    canChangeOrientation: false,
+                    canChangePageFormat: false,
+                    canDebug: false,
+                    maxPageWidth: 600,
+                    pdfFileName:
+                        localization.lookup(invoice.entityType!.snakeCase) +
+                            '_' +
+                            invoice.number +
+                            '.pdf',
+                  ),
           ),
         ],
       ),
