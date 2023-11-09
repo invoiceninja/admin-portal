@@ -146,10 +146,9 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
     final activitySelector =
         _activityId == null || (kIsWeb && state.prefState.enableNativeBrowser)
             ? SizedBox()
-            : Padding(
-                padding: const EdgeInsets.only(left: 17),
-                child: SizedBox(
-                  width: 350,
+            : Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 17),
                   child: IgnorePointer(
                     ignoring: _isLoading,
                     child: AppDropdownButton<String>(
@@ -183,10 +182,9 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
             !hasDesignTemplatesForEntityType(
                 state.designState.map, invoice.entityType!)
         ? SizedBox()
-        : Padding(
-            padding: const EdgeInsets.only(left: 17),
-            child: SizedBox(
-              width: 200,
+        : Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 17),
               child: IgnorePointer(
                 ignoring: _isLoading,
                 child: DesignPicker(
@@ -205,8 +203,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
             ),
           );
 
-    final deliveryNote = Container(
-      width: 200,
+    final deliveryNote = Flexible(
       child: CheckboxListTile(
         title: Text(
           localization.deliveryNote,
@@ -277,35 +274,38 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
               ],
             )
           : null,
-      body: Column(children: [
-        Material(
-          child: Row(
-            children: [
-              if (supportsDesignTemplates()) designSelector,
-              activitySelector,
-              if (invoice.isInvoice && _activityId == null) deliveryNote,
-            ],
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Material(
+            child: Row(
+              children: [
+                if (supportsDesignTemplates()) designSelector,
+                activitySelector,
+                if (invoice.isInvoice && _activityId == null) deliveryNote,
+              ],
+            ),
           ),
-        ),
-        Expanded(
-          child: _isLoading || _response == null
-              ? LoadingIndicator()
-              : (kIsWeb && state.prefState.enableNativeBrowser)
-                  ? HtmlElementView(viewType: _pdfString!)
-                  : PdfPreview(
-                      build: (format) => _response!.bodyBytes,
-                      canChangeOrientation: false,
-                      canChangePageFormat: false,
-                      canDebug: false,
-                      maxPageWidth: 600,
-                      pdfFileName:
-                          localization.lookup(invoice.entityType!.snakeCase) +
-                              '_' +
-                              invoice.number +
-                              '.pdf',
-                    ),
-        ),
-      ]),
+          Expanded(
+            child: _isLoading || _response == null
+                ? LoadingIndicator()
+                : (kIsWeb && state.prefState.enableNativeBrowser)
+                    ? HtmlElementView(viewType: _pdfString!)
+                    : PdfPreview(
+                        build: (format) => _response!.bodyBytes,
+                        canChangeOrientation: false,
+                        canChangePageFormat: false,
+                        canDebug: false,
+                        maxPageWidth: 600,
+                        pdfFileName:
+                            localization.lookup(invoice.entityType!.snakeCase) +
+                                '_' +
+                                invoice.number +
+                                '.pdf',
+                      ),
+          ),
+        ],
+      ),
     );
   }
 }
