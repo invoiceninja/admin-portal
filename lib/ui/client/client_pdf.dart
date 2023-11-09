@@ -432,7 +432,27 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                         sectionPicker,
                       ],
                     )
-                  : Placeholder(),
+                  : Column(
+                      children: [
+                        Row(
+                          children: [
+                            datePicker,
+                            SizedBox(width: 16),
+                            statusPicker,
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            if (hasDesignTemplatesForEntityType(
+                                state.designState.map, EntityType.client)) ...[
+                              designPicker,
+                              SizedBox(width: 16),
+                            ],
+                            sectionPicker,
+                          ],
+                        ),
+                      ],
+                    ),
             ),
           ),
           if (_dateRange == DateRange.custom)
