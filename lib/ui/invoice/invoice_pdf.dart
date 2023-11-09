@@ -300,29 +300,26 @@ Future<Response?> _loadPDF(
   String? activityId,
   String? designId,
 ) async {
-  http.Response? response;
-
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
+  final credential = store.state.credentials;
+  final invitation = invoice.invitations.first;
 
-  if ((activityId ?? '').isNotEmpty || isDeliveryNote) {
-    final credential = store.state.credentials;
-    var url = isDeliveryNote
-        ? '/invoices/${invoice.id}/delivery_note'
-        : '/activities/download_entity/$activityId';
-    if ((designId ?? '').isNotEmpty) {
-      url += '&design_id=$designId';
-    }
-    response = await WebClient()
-        .get('${credential.url}$url', credential.token, rawResponse: true);
+  var url = '';
+
+  if ((activityId ?? '').isNotEmpty) {
+    url = '${credential.url}/activities/download_entity/$activityId';
   } else {
-    final invitation = invoice.invitations.first;
-    var url = invitation.downloadLink;
+    if (isDeliveryNote) {
+      url = '${credential.url}/invoices/${invoice.id}/delivery_note';
+    } else {
+      url = invitation.downloadLink;
+    }
+
     if ((designId ?? '').isNotEmpty) {
       url += '&design_id=$designId';
     }
-    response = await WebClient().get(url, state.token, rawResponse: true);
   }
 
-  return response;
+  return await WebClient().get(url, state.token, rawResponse: true);
 }
