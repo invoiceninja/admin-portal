@@ -68,6 +68,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
     loadPdf();
   }
 
@@ -143,7 +144,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
           ];
     */
 
-    final activitySelector =
+    final activityPicker =
         _activityId == null || (kIsWeb && state.prefState.enableNativeBrowser)
             ? SizedBox()
             : Expanded(
@@ -177,7 +178,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                 ),
               );
 
-    final designSelector = _activityId != null ||
+    final designPicker = _activityId != null ||
             (kIsWeb && state.prefState.enableNativeBrowser) ||
             !hasDesignTemplatesForEntityType(
                 state.designState.map, invoice.entityType!)
@@ -279,8 +280,8 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
           Material(
             child: Row(
               children: [
-                if (supportsDesignTemplates()) designSelector,
-                activitySelector,
+                if (supportsDesignTemplates()) designPicker,
+                activityPicker,
                 if (invoice.isInvoice && _activityId == null) deliveryNote,
               ],
             ),

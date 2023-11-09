@@ -19,6 +19,7 @@ import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/multiselect.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
@@ -41,6 +42,8 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+
+import '../../redux/design/design_selectors.dart';
 
 class ClientPdfView extends StatefulWidget {
   const ClientPdfView({
@@ -68,15 +71,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
   String? _endDate = convertDateTimeToSqlDate();
   String _status = kStatementStatusAll;
   String? _pdfString;
-
-  @override
-  void initState() {
-    super.initState();
-
-    //final state = widget.viewModel.state;
-    //final settings = state.dashboardUIState.settings;
-    //_dateRange = settings.dateRange;
-  }
+  String? _designId;
 
   @override
   void didChangeDependencies() {
@@ -188,7 +183,25 @@ class _ClientPdfViewState extends State<ClientPdfView> {
     final localization = AppLocalization.of(context)!;
     final client = widget.viewModel.client!;
 
-    final datePicker = Flexible(
+    final designPicker = Expanded(
+      child: IgnorePointer(
+        ignoring: _isLoading,
+        child: DesignPicker(
+          initialValue: _designId,
+          onSelected: (design) {
+            setState(() {
+              _designId = design?.id;
+              loadPDF();
+            });
+          },
+          label: localization.design,
+          showBlank: true,
+          entityType: EntityType.client,
+        ),
+      ),
+    );
+
+    final datePicker = Expanded(
       child: AppDropdownButton<DateRange>(
         labelText: localization.dateRange,
         blankValue: null,
@@ -213,7 +226,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       ),
     );
 
-    final statusPicker = Flexible(
+    final statusPicker = Expanded(
       child: AppDropdownButton<String>(
           labelText: localization.status,
           blankValue: null,
@@ -236,7 +249,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
               .toList()),
     );
 
-    final sectionPicker = Flexible(
+    final sectionPicker = Expanded(
         child: DropDownMultiSelect(
       onChanged: (List<dynamic> selected) {
         //_selectedOptions = selected;
@@ -399,6 +412,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
             )
           : null,
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Material(
             child: Padding(
@@ -406,6 +420,11 @@ class _ClientPdfViewState extends State<ClientPdfView> {
               child: isDesktop(context)
                   ? Row(
                       children: [
+                        if (hasDesignTemplatesForEntityType(
+                            state.designState.map, EntityType.client)) ...[
+                          designPicker,
+                          SizedBox(width: 16),
+                        ],
                         datePicker,
                         SizedBox(width: 16),
                         statusPicker,
@@ -417,9 +436,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
             ),
           ),
           if (_dateRange == DateRange.custom)
-            Container(
-              width: double.infinity,
-              color: Theme.of(context).colorScheme.background,
+            Material(
               child: Wrap(
                 alignment: WrapAlignment.center,
                 children: [
