@@ -448,6 +448,7 @@ class _DesignSettingsState extends State<DesignSettings> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context)!;
+    final state = widget.viewModel.state;
     final design = widget.viewModel.design;
     final entityTypes = design.entities.split(',');
 
@@ -464,13 +465,16 @@ class _DesignSettingsState extends State<DesignSettings> {
                   value.isEmpty ? localization.pleaseEnterAName : null,
             ),
             DesignPicker(
-                label: localization.design,
-                onSelected: (value) {
+              showBlank: true,
+              label: localization.loadDesign,
+              onSelected: (value) {
+                if (value != null) {
                   widget.onLoadDesign(value!);
                   _selectedDesign = value;
-                },
-                initialValue: _selectedDesign?.id),
-            SizedBox(height: 16),
+                }
+              },
+            ),
+            SizedBox(height: 20),
             // TODO remove this once browser supported on all platforms
             if (!kReleaseMode || kIsWeb || isMobileOS())
               SwitchListTile(
@@ -497,7 +501,15 @@ class _DesignSettingsState extends State<DesignSettings> {
               ...[
                 EntityType.client,
                 EntityType.invoice,
+                EntityType.payment,
+                EntityType.quote,
+                EntityType.credit,
+                EntityType.project,
+                EntityType.task,
+                EntityType.purchaseOrder,
               ]
+                  .where(
+                      (entityType) => state.company.isModuleEnabled(entityType))
                   .map((entityType) => CheckboxListTile(
                         value: entityTypes.contains(entityType.apiValue),
                         onChanged: (value) {
@@ -507,8 +519,10 @@ class _DesignSettingsState extends State<DesignSettings> {
                           } else {
                             entities.remove(entityType.apiValue);
                           }
-                          widget.viewModel.onChanged(design.rebuild(
-                              (b) => b..entities = entities.join(',')));
+                          widget.viewModel.onChanged(design.rebuild((b) => b
+                            ..entities = entities
+                                .where((entity) => entity.isNotEmpty)
+                                .join(',')));
                         },
                         title: Text(localization.lookup(entityType.plural)),
                         controlAffinity: ListTileControlAffinity.leading,
