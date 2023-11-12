@@ -43,13 +43,13 @@ class _FormColorPickerState extends State<FormColorPicker> {
   final _debouncer = Debouncer();
   late List<TextEditingController> _controllers;
 
-  final _defaultColors = [
+  final _defaultColors = <Color>[
     Colors.red,
     Colors.pink,
     Colors.purple,
     Colors.deepPurple,
     Colors.indigo,
-    convertHexStringToColor(kDefaultAccentColor),
+    convertHexStringToColor(kDefaultAccentColor) ?? Colors.black,
     Colors.blue,
     Colors.lightBlue,
     Colors.cyan,
@@ -133,7 +133,7 @@ class _FormColorPickerState extends State<FormColorPicker> {
           content: SingleChildScrollView(
             child: BlockPicker(
               availableColors: [
-                ..._defaultColors as Iterable<Color>,
+                ..._defaultColors,
                 colors!.colorInfo!,
                 colors.colorPrimary!,
                 colors.colorSuccess!,
