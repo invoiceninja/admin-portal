@@ -1,11 +1,9 @@
 // Dart imports:
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io' as file;
 
 // Flutter imports:
 import 'package:built_collection/built_collection.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -16,11 +14,14 @@ import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/multiselect.dart';
+import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:printing/printing.dart';
@@ -38,10 +39,6 @@ import 'package:invoiceninja_flutter/utils/dates.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-
-import 'package:invoiceninja_flutter/utils/web_stub.dart'
-    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
-import 'package:share_plus/share_plus.dart';
 
 class ClientPdfView extends StatefulWidget {
   const ClientPdfView({
@@ -68,15 +65,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       convertDateTimeToSqlDate(DateTime.now().subtract(Duration(days: 365)));
   String? _endDate = convertDateTimeToSqlDate();
   String _status = kStatementStatusAll;
-
-  @override
-  void initState() {
-    super.initState();
-
-    //final state = widget.viewModel.state;
-    //final settings = state.dashboardUIState.settings;
-    //_dateRange = settings.dateRange;
-  }
+  String? _designId;
 
   @override
   void didChangeDependencies() {
@@ -121,7 +110,8 @@ class _ClientPdfViewState extends State<ClientPdfView> {
     });
   }
 
-  Future<Response?> _loadPDF({bool sendEmail = false}) async {
+  Future<Response?> _loadPDF(
+      {bool sendEmail = false, String designId = ''}) async {
     final client = widget.viewModel.client!;
     http.Response? response;
 
@@ -132,6 +122,9 @@ class _ClientPdfViewState extends State<ClientPdfView> {
     String url = '${state.credentials.url}/client_statement';
     if (sendEmail) {
       url += '?send_email=true';
+    }
+    if (designId.isNotEmpty) {
+      url += '&design_id=$designId';
     }
 
     String? startDate = '';
@@ -178,8 +171,97 @@ class _ClientPdfViewState extends State<ClientPdfView> {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final localization = AppLocalization.of(context);
-    final client = widget.viewModel.client;
+    final localization = AppLocalization.of(context)!;
+    final client = widget.viewModel.client!;
+
+    final designPicker = Expanded(
+      child: IgnorePointer(
+        ignoring: _isLoading,
+        child: DesignPicker(
+          initialValue: _designId,
+          onSelected: (design) {
+            setState(() {
+              _designId = design?.id;
+              loadPDF();
+            });
+          },
+          label: localization.design,
+          showBlank: true,
+          entityType: EntityType.client,
+        ),
+      ),
+    );
+
+    final datePicker = Expanded(
+      child: AppDropdownButton<DateRange>(
+        labelText: localization.dateRange,
+        blankValue: null,
+        //showBlank: true,
+        value: _dateRange,
+        onChanged: (dynamic value) {
+          setState(() {
+            _dateRange = value;
+          });
+
+          if (value != DateRange.custom) {
+            loadPDF();
+          }
+        },
+        items: DateRange.values
+            .where((value) => value != DateRange.allTime)
+            .map((dateRange) => DropdownMenuItem<DateRange>(
+                  child: Text(localization.lookup(dateRange.toString())),
+                  value: dateRange,
+                ))
+            .toList(),
+      ),
+    );
+
+    final statusPicker = Expanded(
+      child: AppDropdownButton<String>(
+          labelText: localization.status,
+          blankValue: null,
+          value: _status,
+          onChanged: (dynamic value) {
+            setState(() {
+              _status = value;
+            });
+            loadPDF();
+          },
+          items: [
+            kStatementStatusAll,
+            kStatementStatusPaid,
+            kStatementStatusUnpaid,
+          ]
+              .map((value) => DropdownMenuItem<String>(
+                    child: Text(localization.lookup(value)),
+                    value: value,
+                  ))
+              .toList()),
+    );
+
+    final sectionPicker = Expanded(
+        child: DropDownMultiSelect(
+      onChanged: (List<dynamic> selected) {
+        //_selectedOptions = selected;
+        store.dispatch(UpdateUserPreferences(
+            statementIncludes: BuiltList<String>(selected)));
+        loadPDF();
+      },
+      selectedValues: state.prefState.statementIncludes.toList(),
+      menuItembuilder: (dynamic option) => Text(
+        localization.lookup(option),
+        style: TextStyle(fontSize: 14),
+      ),
+      isDense: true,
+      options: <String>[
+        kStatementIncludePayments,
+        kStatementIncludeCredits,
+        kStatementIncludeAging,
+      ],
+      whenEmpty: '',
+      height: 50,
+    ));
 
     /*
     final pageSelector = _pageCount == 1
@@ -224,104 +306,11 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  /*
                   Expanded(
                     child: Text(
-                      EntityPresenter().initialize(client, context).title(),
+                      EntityPresenter().initialize(client, context).title()!,
                     ),
                   ),
-                  */
-                  Flexible(
-                    child: Theme(
-                      data:
-                          state.prefState.enableDarkMode || state.hasAccentColor
-                              ? ThemeData.dark()
-                              : ThemeData.light(),
-                      child: AppDropdownButton<DateRange>(
-                        labelText: localization!.dateRange,
-                        blankValue: null,
-                        //showBlank: true,
-                        value: _dateRange,
-                        onChanged: (dynamic value) {
-                          setState(() {
-                            _dateRange = value;
-                          });
-
-                          if (value != DateRange.custom) {
-                            loadPDF();
-                          }
-                        },
-                        items: DateRange.values
-                            .where((value) => value != DateRange.allTime)
-                            .map((dateRange) => DropdownMenuItem<DateRange>(
-                                  child: Text(localization
-                                      .lookup(dateRange.toString())),
-                                  value: dateRange,
-                                ))
-                            .toList(),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 16),
-                  Flexible(
-                    child: Theme(
-                      data:
-                          state.prefState.enableDarkMode || state.hasAccentColor
-                              ? ThemeData.dark()
-                              : ThemeData.light(),
-                      child: AppDropdownButton<String>(
-                          labelText: localization.status,
-                          blankValue: null,
-                          value: _status,
-                          onChanged: (dynamic value) {
-                            setState(() {
-                              _status = value;
-                            });
-                            loadPDF();
-                          },
-                          items: [
-                            kStatementStatusAll,
-                            kStatementStatusPaid,
-                            kStatementStatusUnpaid,
-                          ]
-                              .map((value) => DropdownMenuItem<String>(
-                                    child: Text(localization.lookup(value)),
-                                    value: value,
-                                  ))
-                              .toList()),
-                    ),
-                  ),
-                  if (isDesktop(context)) ...[
-                    Theme(
-                      data: ThemeData(
-                          appBarTheme: AppBarTheme(
-                        titleTextStyle: TextStyle(fontSize: 60),
-                      )),
-                      child: Flexible(
-                          child: DropDownMultiSelect(
-                        onChanged: (List<dynamic> selected) {
-                          //_selectedOptions = selected;
-                          store.dispatch(UpdateUserPreferences(
-                              statementIncludes: BuiltList<String>(selected)));
-                          loadPDF();
-                        },
-                        selectedValues:
-                            state.prefState.statementIncludes.toList(),
-                        menuItembuilder: (dynamic option) => Text(
-                          localization.lookup(option),
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        isDense: true,
-                        options: <String>[
-                          kStatementIncludePayments,
-                          kStatementIncludeCredits,
-                          kStatementIncludeAging,
-                        ],
-                        whenEmpty: '',
-                      )),
-                    )
-                    //...pageSelector,
-                  ]
                 ],
               ),
               actions: <Widget>[
@@ -333,38 +322,9 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                       : () async {
                           final fileName = localization.statement +
                               '_' +
-                              (client!.number) +
+                              (client.number) +
                               '.pdf';
-                          if (kIsWeb) {
-                            WebUtils.downloadBinaryFile(
-                                fileName, _response!.bodyBytes);
-                          } else {
-                            final directory = await getAppDownloadDirectory();
-
-                            if (directory == null) {
-                              return;
-                            }
-
-                            String filePath =
-                                '$directory${file.Platform.pathSeparator}$fileName';
-
-                            if (file.File(filePath).existsSync()) {
-                              final timestamp =
-                                  DateTime.now().millisecondsSinceEpoch;
-                              filePath = filePath.replaceFirst(
-                                  '.pdf', '_$timestamp.pdf');
-                            }
-
-                            final pdfData = file.File(filePath);
-                            await pdfData.writeAsBytes(_response!.bodyBytes);
-
-                            if (isDesktopOS()) {
-                              showToast(localization.fileSavedInPath
-                                  .replaceFirst(':path', directory));
-                            } else {
-                              await Share.shareXFiles([XFile(filePath)]);
-                            }
-                          }
+                          saveDownloadedFile(_response!.bodyBytes, fileName);
                         },
                 ),
                 AppTextButton(
@@ -373,7 +333,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                   onPressed: _response == null
                       ? null
                       : () async {
-                          if (!client!.hasEmailAddress) {
+                          if (!client.hasEmailAddress) {
                             showMessageDialog(
                                 message: localization.clientEmailNotSet,
                                 secondaryActions: [
@@ -419,7 +379,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                           entity: ScheduleEntity(
                                   ScheduleEntity.TEMPLATE_EMAIL_STATEMENT)
                               .rebuild((b) => b
-                                ..parameters.clients.add(client!.id)
+                                ..parameters.clients.add(client.id)
                                 ..parameters.showAgingTable =
                                     includes.contains(localization.aging)
                                 ..parameters.showPaymentsTable =
@@ -436,59 +396,102 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                     child: Text(localization.close,
                         style: TextStyle(color: state.headerTextColor)),
                     onPressed: () {
-                      viewEntity(entity: client!);
+                      viewEntity(entity: client);
                     },
                   ),
               ],
             )
           : null,
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          if (_dateRange == DateRange.custom)
-            Container(
-              width: double.infinity,
-              color: Theme.of(context).colorScheme.background,
-              child: Wrap(
-                alignment: WrapAlignment.center,
+          Material(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    width: 180,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: DatePicker(
-                      labelText: localization!.startDate,
-                      onSelected: (value, _) {
-                        setState(() {
-                          _startDate = value;
-                        });
-                      },
-                      selectedDate: _startDate,
+                  isDesktop(context)
+                      ? Row(
+                          children: [
+                            datePicker,
+                            SizedBox(width: 16),
+                            statusPicker,
+                            SizedBox(width: 16),
+                            if (hasDesignTemplatesForEntityType(
+                                state.designState.map, EntityType.client)) ...[
+                              designPicker,
+                              SizedBox(width: 16),
+                            ],
+                            sectionPicker,
+                          ],
+                        )
+                      : Column(
+                          children: [
+                            Row(
+                              children: [
+                                datePicker,
+                                SizedBox(width: 16),
+                                statusPicker,
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                if (hasDesignTemplatesForEntityType(
+                                    state.designState.map,
+                                    EntityType.client)) ...[
+                                  designPicker,
+                                  SizedBox(width: 16),
+                                ],
+                                sectionPicker,
+                              ],
+                            ),
+                          ],
+                        ),
+                  if (_dateRange == DateRange.custom) ...[
+                    SizedBox(height: 8),
+                    Wrap(
+                      alignment: WrapAlignment.start,
+                      children: [
+                        Container(
+                          width: 180,
+                          child: DatePicker(
+                            labelText: localization.startDate,
+                            onSelected: (value, _) {
+                              setState(() {
+                                _startDate = value;
+                              });
+                            },
+                            selectedDate: _startDate,
+                          ),
+                        ),
+                        SizedBox(width: 16),
+                        Container(
+                          width: 180,
+                          child: DatePicker(
+                            labelText: localization.endDate,
+                            onSelected: (value, _) {
+                              setState(() {
+                                _endDate = value;
+                              });
+                            },
+                            selectedDate: _endDate,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: AppButton(
+                            label: localization.loadPdf,
+                            onPressed: () => loadPDF(),
+                          ),
+                        )
+                      ],
                     ),
-                  ),
-                  Container(
-                    width: 180,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: DatePicker(
-                      labelText: localization.endDate,
-                      onSelected: (value, _) {
-                        setState(() {
-                          _endDate = value;
-                        });
-                      },
-                      selectedDate: _endDate,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: AppButton(
-                      label: localization.loadPdf,
-                      onPressed: () => loadPDF(),
-                    ),
-                  )
+                  ],
                 ],
               ),
             ),
+          ),
           Expanded(
             child: _isLoading || _response == null
                 ? LoadingIndicator()
@@ -497,9 +500,9 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                     canChangeOrientation: false,
                     canChangePageFormat: false,
                     canDebug: false,
-                    maxPageWidth: 800,
+                    maxPageWidth: 600,
                     pdfFileName:
-                        localization!.statement + '_' + client!.number + '.pdf',
+                        localization.statement + '_' + client.number + '.pdf',
                   ),
           ),
         ],

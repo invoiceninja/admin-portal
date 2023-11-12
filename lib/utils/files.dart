@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:io';
+import 'dart:io' as file;
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/foundation.dart';
 // Package imports:
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -21,6 +23,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 // ignore: unused_import
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+import 'package:share_plus/share_plus.dart';
 
 Future<List<MultipartFile>?> pickFiles({
   String? fileIndex,
@@ -82,6 +85,34 @@ Future<List<MultipartFile>?> _pickFiles({
   }
 
   return null;
+}
+
+void saveDownloadedFile(Uint8List data, String fileName) async {
+  if (kIsWeb) {
+    WebUtils.downloadBinaryFile(fileName, data);
+  } else {
+    final directory = await getAppDownloadDirectory();
+    if (directory != null) {
+      String filePath = '$directory/${file.Platform.pathSeparator}$fileName';
+
+      if (file.File(filePath).existsSync()) {
+        final extension = fileName.split('.').last;
+        final timestamp = DateTime.now().millisecondsSinceEpoch;
+        filePath =
+            filePath.replaceFirst('.$extension', '_$timestamp.$extension');
+      }
+
+      await File(filePath).writeAsBytes(data);
+
+      if (isDesktopOS()) {
+        showToast(AppLocalization.of(navigatorKey.currentContext!)!
+            .fileSavedInPath
+            .replaceFirst(':path', directory));
+      } else {
+        await Share.shareXFiles([XFile(filePath)]);
+      }
+    }
+  }
 }
 
 Future<String?> getAppDownloadDirectory() async {

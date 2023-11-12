@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:printing/printing.dart';
@@ -625,7 +626,7 @@ void handlePurchaseOrderAction(BuildContext? context,
       final url = invitation.downloadLink;
       store.dispatch(StartSaving());
       final http.Response? response =
-          await WebClient().get(url, '', rawResponse: true);
+          await WebClient().get(url, state.token, rawResponse: true);
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;
@@ -827,7 +828,17 @@ void handlePurchaseOrderAction(BuildContext? context,
               .recreateInvitations(state));
       break;
     case EntityAction.download:
-      launchUrl(Uri.parse(purchaseOrder.invitationDownloadLink));
+      await WebClient()
+          .get(purchaseOrder.invitationEInvoiceDownloadLink, state.token,
+              rawResponse: true)
+          .then((response) {
+        store.dispatch(StopLoading());
+        saveDownloadedFile(response.bodyBytes,
+            localization!.purchaseOrder + '_' + purchaseOrder.number + '.pdf');
+      }).catchError((_) {
+        store.dispatch(StopLoading());
+      });
+
       break;
     case EntityAction.bulkDownload:
       store.dispatch(DownloadPurchaseOrdersRequest(

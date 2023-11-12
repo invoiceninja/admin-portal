@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -97,4 +98,21 @@ String? getDesignIdForVendorByEntity(
       print('## ERROR: undefined entity type $entityType in design_selectors');
       return settings.defaultInvoiceDesignId;
   }
+}
+
+bool hasDesignTemplatesForEntityType(
+    BuiltMap<String, DesignEntity> designMap, EntityType entityType) {
+  if (!kReleaseMode) {
+    return true;
+  }
+
+  var hasMatch = false;
+
+  designMap.forEach((designId, design) {
+    if (design.supportsEntityType(entityType)) {
+      hasMatch = true;
+    }
+  });
+
+  return hasMatch;
 }

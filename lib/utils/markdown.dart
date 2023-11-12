@@ -1,5 +1,5 @@
-/*
 // DELETE THIS FILE ONCE SUPER EDITOR IS UPDATED
+// Note: using the standard function crashes with h1 tags
 
 import 'dart:convert';
 
@@ -468,7 +468,7 @@ class AttributedTextMarkdownSerializer extends AttributionVisitor {
       final linkMarker =
           _encodeLinkMarker(startingAttributions, AttributionVisitEvent.start);
 
-      _buffer
+      _buffer!
         ..write(linkMarker)
         ..write(markdownStyles);
     }
@@ -488,7 +488,7 @@ class AttributedTextMarkdownSerializer extends AttributionVisitor {
 
       // +1 on end index because this visitor has inclusive indices
       // whereas substring() expects an exclusive ending index.
-      _buffer
+      _buffer!
         ..write(markdownStyles)
         ..write(linkMarker);
     }
@@ -588,4 +588,3 @@ class _EmptyParagraphSyntax extends md.BlockSyntax {
     return md.Element('p', []);
   }
 }
-*/

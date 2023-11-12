@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/constants.dart';
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/static/document_status_model.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
@@ -119,22 +118,6 @@ class DocumentScreen extends StatelessWidget {
           }
         },
       ),
-      floatingActionButton: state.prefState.isMenuFloated &&
-              userCompany.canCreate(EntityType.document)
-          ? FloatingActionButton(
-              heroTag: 'document_fab',
-              backgroundColor: Theme.of(context).primaryColorDark,
-              onPressed: () {
-                createEntityByType(
-                    context: context, entityType: EntityType.document);
-              },
-              child: Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-              tooltip: localization!.newDocument,
-            )
-          : null,
     );
   }
 }

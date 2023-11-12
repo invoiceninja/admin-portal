@@ -559,6 +559,34 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.defaultDeliveryNoteDesignId;
+    if (value != null) {
+      result
+        ..add('delivery_note_design_id')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.defaultStatementDesignId;
+    if (value != null) {
+      result
+        ..add('statement_design_id')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.defaultPaymentReceiptDesignId;
+    if (value != null) {
+      result
+        ..add('payment_receipt_design_id')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.defaultPaymentRefundDesignId;
+    if (value != null) {
+      result
+        ..add('payment_refund_design_id')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.defaultInvoiceFooter;
     if (value != null) {
       result
@@ -1873,6 +1901,22 @@ class _$SettingsEntitySerializer
           result.defaultCreditDesignId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'delivery_note_design_id':
+          result.defaultDeliveryNoteDesignId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'statement_design_id':
+          result.defaultStatementDesignId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'payment_receipt_design_id':
+          result.defaultPaymentReceiptDesignId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'payment_refund_design_id':
+          result.defaultPaymentRefundDesignId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'invoice_footer':
           result.defaultInvoiceFooter = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
@@ -2677,6 +2721,14 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String? defaultCreditDesignId;
   @override
+  final String? defaultDeliveryNoteDesignId;
+  @override
+  final String? defaultStatementDesignId;
+  @override
+  final String? defaultPaymentReceiptDesignId;
+  @override
+  final String? defaultPaymentRefundDesignId;
+  @override
   final String? defaultInvoiceFooter;
   @override
   final String? defaultTaxName1;
@@ -3041,6 +3093,10 @@ class _$SettingsEntity extends SettingsEntity {
       this.defaultInvoiceDesignId,
       this.defaultQuoteDesignId,
       this.defaultCreditDesignId,
+      this.defaultDeliveryNoteDesignId,
+      this.defaultStatementDesignId,
+      this.defaultPaymentReceiptDesignId,
+      this.defaultPaymentRefundDesignId,
       this.defaultInvoiceFooter,
       this.defaultTaxName1,
       this.defaultTaxRate1,
@@ -3274,6 +3330,10 @@ class _$SettingsEntity extends SettingsEntity {
         defaultInvoiceDesignId == other.defaultInvoiceDesignId &&
         defaultQuoteDesignId == other.defaultQuoteDesignId &&
         defaultCreditDesignId == other.defaultCreditDesignId &&
+        defaultDeliveryNoteDesignId == other.defaultDeliveryNoteDesignId &&
+        defaultStatementDesignId == other.defaultStatementDesignId &&
+        defaultPaymentReceiptDesignId == other.defaultPaymentReceiptDesignId &&
+        defaultPaymentRefundDesignId == other.defaultPaymentRefundDesignId &&
         defaultInvoiceFooter == other.defaultInvoiceFooter &&
         defaultTaxName1 == other.defaultTaxName1 &&
         defaultTaxRate1 == other.defaultTaxRate1 &&
@@ -3505,6 +3565,10 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, defaultInvoiceDesignId.hashCode);
     _$hash = $jc(_$hash, defaultQuoteDesignId.hashCode);
     _$hash = $jc(_$hash, defaultCreditDesignId.hashCode);
+    _$hash = $jc(_$hash, defaultDeliveryNoteDesignId.hashCode);
+    _$hash = $jc(_$hash, defaultStatementDesignId.hashCode);
+    _$hash = $jc(_$hash, defaultPaymentReceiptDesignId.hashCode);
+    _$hash = $jc(_$hash, defaultPaymentRefundDesignId.hashCode);
     _$hash = $jc(_$hash, defaultInvoiceFooter.hashCode);
     _$hash = $jc(_$hash, defaultTaxName1.hashCode);
     _$hash = $jc(_$hash, defaultTaxRate1.hashCode);
@@ -3731,6 +3795,10 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('defaultInvoiceDesignId', defaultInvoiceDesignId)
           ..add('defaultQuoteDesignId', defaultQuoteDesignId)
           ..add('defaultCreditDesignId', defaultCreditDesignId)
+          ..add('defaultDeliveryNoteDesignId', defaultDeliveryNoteDesignId)
+          ..add('defaultStatementDesignId', defaultStatementDesignId)
+          ..add('defaultPaymentReceiptDesignId', defaultPaymentReceiptDesignId)
+          ..add('defaultPaymentRefundDesignId', defaultPaymentRefundDesignId)
           ..add('defaultInvoiceFooter', defaultInvoiceFooter)
           ..add('defaultTaxName1', defaultTaxName1)
           ..add('defaultTaxRate1', defaultTaxRate1)
@@ -4267,6 +4335,29 @@ class SettingsEntityBuilder
   String? get defaultCreditDesignId => _$this._defaultCreditDesignId;
   set defaultCreditDesignId(String? defaultCreditDesignId) =>
       _$this._defaultCreditDesignId = defaultCreditDesignId;
+
+  String? _defaultDeliveryNoteDesignId;
+  String? get defaultDeliveryNoteDesignId =>
+      _$this._defaultDeliveryNoteDesignId;
+  set defaultDeliveryNoteDesignId(String? defaultDeliveryNoteDesignId) =>
+      _$this._defaultDeliveryNoteDesignId = defaultDeliveryNoteDesignId;
+
+  String? _defaultStatementDesignId;
+  String? get defaultStatementDesignId => _$this._defaultStatementDesignId;
+  set defaultStatementDesignId(String? defaultStatementDesignId) =>
+      _$this._defaultStatementDesignId = defaultStatementDesignId;
+
+  String? _defaultPaymentReceiptDesignId;
+  String? get defaultPaymentReceiptDesignId =>
+      _$this._defaultPaymentReceiptDesignId;
+  set defaultPaymentReceiptDesignId(String? defaultPaymentReceiptDesignId) =>
+      _$this._defaultPaymentReceiptDesignId = defaultPaymentReceiptDesignId;
+
+  String? _defaultPaymentRefundDesignId;
+  String? get defaultPaymentRefundDesignId =>
+      _$this._defaultPaymentRefundDesignId;
+  set defaultPaymentRefundDesignId(String? defaultPaymentRefundDesignId) =>
+      _$this._defaultPaymentRefundDesignId = defaultPaymentRefundDesignId;
 
   String? _defaultInvoiceFooter;
   String? get defaultInvoiceFooter => _$this._defaultInvoiceFooter;
@@ -5047,6 +5138,10 @@ class SettingsEntityBuilder
       _defaultInvoiceDesignId = $v.defaultInvoiceDesignId;
       _defaultQuoteDesignId = $v.defaultQuoteDesignId;
       _defaultCreditDesignId = $v.defaultCreditDesignId;
+      _defaultDeliveryNoteDesignId = $v.defaultDeliveryNoteDesignId;
+      _defaultStatementDesignId = $v.defaultStatementDesignId;
+      _defaultPaymentReceiptDesignId = $v.defaultPaymentReceiptDesignId;
+      _defaultPaymentRefundDesignId = $v.defaultPaymentRefundDesignId;
       _defaultInvoiceFooter = $v.defaultInvoiceFooter;
       _defaultTaxName1 = $v.defaultTaxName1;
       _defaultTaxRate1 = $v.defaultTaxRate1;
@@ -5290,6 +5385,10 @@ class SettingsEntityBuilder
               defaultInvoiceDesignId: defaultInvoiceDesignId,
               defaultQuoteDesignId: defaultQuoteDesignId,
               defaultCreditDesignId: defaultCreditDesignId,
+              defaultDeliveryNoteDesignId: defaultDeliveryNoteDesignId,
+              defaultStatementDesignId: defaultStatementDesignId,
+              defaultPaymentReceiptDesignId: defaultPaymentReceiptDesignId,
+              defaultPaymentRefundDesignId: defaultPaymentRefundDesignId,
               defaultInvoiceFooter: defaultInvoiceFooter,
               defaultTaxName1: defaultTaxName1,
               defaultTaxRate1: defaultTaxRate1,

@@ -11,7 +11,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/dismissible_entity.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_state_label.dart';
-import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class DesignListItem extends StatelessWidget {
   const DesignListItem({
@@ -75,8 +75,9 @@ class DesignListItem extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              Text(formatNumber(design.listDisplayAmount, context)!,
-                  style: Theme.of(context).textTheme.titleMedium),
+              if (design.isTemplate)
+                Text(AppLocalization.of(context)!.template,
+                    style: Theme.of(context).textTheme.bodySmall),
             ],
           ),
         ),

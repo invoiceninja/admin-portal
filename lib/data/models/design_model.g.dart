@@ -185,6 +185,12 @@ class _$DesignEntitySerializer implements StructuredSerializer<DesignEntity> {
           specifiedType: const FullType(bool)),
       'is_free',
       serializers.serialize(object.isFree, specifiedType: const FullType(bool)),
+      'is_template',
+      serializers.serialize(object.isTemplate,
+          specifiedType: const FullType(bool)),
+      'entities',
+      serializers.serialize(object.entities,
+          specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -257,6 +263,14 @@ class _$DesignEntitySerializer implements StructuredSerializer<DesignEntity> {
         case 'is_free':
           result.isFree = serializers.deserialize(value,
               specifiedType: const FullType(bool))! as bool;
+          break;
+        case 'is_template':
+          result.isTemplate = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
+          break;
+        case 'entities':
+          result.entities = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -637,6 +651,10 @@ class _$DesignEntity extends DesignEntity {
   @override
   final bool isFree;
   @override
+  final bool isTemplate;
+  @override
+  final String entities;
+  @override
   final bool? isChanged;
   @override
   final int createdAt;
@@ -661,6 +679,8 @@ class _$DesignEntity extends DesignEntity {
       required this.design,
       required this.isCustom,
       required this.isFree,
+      required this.isTemplate,
+      required this.entities,
       this.isChanged,
       required this.createdAt,
       required this.updatedAt,
@@ -675,6 +695,10 @@ class _$DesignEntity extends DesignEntity {
     BuiltValueNullFieldError.checkNotNull(
         isCustom, r'DesignEntity', 'isCustom');
     BuiltValueNullFieldError.checkNotNull(isFree, r'DesignEntity', 'isFree');
+    BuiltValueNullFieldError.checkNotNull(
+        isTemplate, r'DesignEntity', 'isTemplate');
+    BuiltValueNullFieldError.checkNotNull(
+        entities, r'DesignEntity', 'entities');
     BuiltValueNullFieldError.checkNotNull(
         createdAt, r'DesignEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
@@ -699,6 +723,8 @@ class _$DesignEntity extends DesignEntity {
         design == other.design &&
         isCustom == other.isCustom &&
         isFree == other.isFree &&
+        isTemplate == other.isTemplate &&
+        entities == other.entities &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -718,6 +744,8 @@ class _$DesignEntity extends DesignEntity {
     _$hash = $jc(_$hash, design.hashCode);
     _$hash = $jc(_$hash, isCustom.hashCode);
     _$hash = $jc(_$hash, isFree.hashCode);
+    _$hash = $jc(_$hash, isTemplate.hashCode);
+    _$hash = $jc(_$hash, entities.hashCode);
     _$hash = $jc(_$hash, isChanged.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
@@ -737,6 +765,8 @@ class _$DesignEntity extends DesignEntity {
           ..add('design', design)
           ..add('isCustom', isCustom)
           ..add('isFree', isFree)
+          ..add('isTemplate', isTemplate)
+          ..add('entities', entities)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -769,6 +799,14 @@ class DesignEntityBuilder
   bool? _isFree;
   bool? get isFree => _$this._isFree;
   set isFree(bool? isFree) => _$this._isFree = isFree;
+
+  bool? _isTemplate;
+  bool? get isTemplate => _$this._isTemplate;
+  set isTemplate(bool? isTemplate) => _$this._isTemplate = isTemplate;
+
+  String? _entities;
+  String? get entities => _$this._entities;
+  set entities(String? entities) => _$this._entities = entities;
 
   bool? _isChanged;
   bool? get isChanged => _$this._isChanged;
@@ -815,6 +853,8 @@ class DesignEntityBuilder
       _design = $v.design.toBuilder();
       _isCustom = $v.isCustom;
       _isFree = $v.isFree;
+      _isTemplate = $v.isTemplate;
+      _entities = $v.entities;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -854,6 +894,10 @@ class DesignEntityBuilder
                   isCustom, r'DesignEntity', 'isCustom'),
               isFree: BuiltValueNullFieldError.checkNotNull(
                   isFree, r'DesignEntity', 'isFree'),
+              isTemplate: BuiltValueNullFieldError.checkNotNull(
+                  isTemplate, r'DesignEntity', 'isTemplate'),
+              entities: BuiltValueNullFieldError.checkNotNull(
+                  entities, r'DesignEntity', 'entities'),
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(
                   createdAt, r'DesignEntity', 'createdAt'),
