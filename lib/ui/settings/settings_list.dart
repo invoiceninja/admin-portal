@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -505,7 +506,7 @@ class SettingsSearch extends StatelessWidget {
           'show_pdf_preview',
           'pdf_preview_location#2022-10-24',
           'refresh_data',
-          'downloads_folder#2023-10-29'
+          if (!kIsWeb) 'downloads_folder#2023-10-29'
         ],
         [
           'dark_mode',
