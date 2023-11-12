@@ -276,7 +276,9 @@ class _VendorContactListTile extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
-                  if ((invitation?.emailError ?? '').isNotEmpty)
+                  if ((invitation?.emailError ?? '').isNotEmpty &&
+                      invitation?.emailStatus !=
+                          InvitationEntity.EMAIL_STATUS_DELIVERED)
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Text(
