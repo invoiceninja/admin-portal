@@ -609,10 +609,8 @@ class SettingsSearch extends StatelessWidget {
         [
           'header',
           'footer',
-          if (isSelfHosted(context)) ...[
-            'custom_css',
-            'custom_javascript',
-          ],
+          'custom_css',
+          if (isSelfHosted(context)) 'custom_javascript',
         ],
       ],
       kSettingsEmailSettings: [

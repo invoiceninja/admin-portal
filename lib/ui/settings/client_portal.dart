@@ -731,20 +731,19 @@ class _ClientPortalState extends State<ClientPortal>
                     maxLines: 6,
                     keyboardType: TextInputType.multiline,
                   ),
-                  if (isSelfHosted(context)) ...[
-                    DecoratedFormField(
-                      label: localization.customCss,
-                      controller: _customCssController,
-                      maxLines: 6,
-                      keyboardType: TextInputType.multiline,
-                    ),
+                  DecoratedFormField(
+                    label: localization.customCss,
+                    controller: _customCssController,
+                    maxLines: 6,
+                    keyboardType: TextInputType.multiline,
+                  ),
+                  if (isSelfHosted(context))
                     DecoratedFormField(
                       label: localization.customJavascript,
                       controller: _customJavaScriptController,
                       maxLines: 6,
                       keyboardType: TextInputType.multiline,
                     ),
-                  ],
                 ],
               )
             ],
