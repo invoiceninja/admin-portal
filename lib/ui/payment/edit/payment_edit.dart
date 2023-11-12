@@ -81,7 +81,7 @@ class _PaymentEditState extends State<PaymentEdit> {
     _showConvertCurrency =
         payment.exchangeRate != 1 && payment.exchangeRate != 0;
     final state = widget.viewModel.state;
-    if (state.company.convertExpenseCurrency) {
+    if (state.company.convertPaymentCurrency) {
       _showConvertCurrency = true;
     }
 
