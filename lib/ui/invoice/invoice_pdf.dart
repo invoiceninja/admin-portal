@@ -262,18 +262,19 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
           : null,
       body: Column(
         children: [
-          Material(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Row(
-                children: [
-                  if (supportsDesignTemplates()) designPicker,
-                  activityPicker,
-                  if (invoice.isInvoice && _activityId == null) deliveryNote,
-                ],
+          if (widget.showAppBar)
+            Material(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  children: [
+                    if (supportsDesignTemplates()) designPicker,
+                    activityPicker,
+                    if (invoice.isInvoice && _activityId == null) deliveryNote,
+                  ],
+                ),
               ),
             ),
-          ),
           Expanded(
             child: _isLoading || _response == null
                 ? LoadingIndicator()

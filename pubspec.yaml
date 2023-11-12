@@ -21,7 +21,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   #google_sign_in: ^6.0.1
-  google_sign_in: ^6.1.5
+  google_sign_in: 5.4.4 #https://pub.dev/packages/google_sign_in_web
   in_app_review: ^2.0.4
   in_app_purchase: ^3.1.1
   pinput: ^3.0.1
