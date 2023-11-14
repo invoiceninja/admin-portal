@@ -292,8 +292,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                 vendorId: invoice.vendorId,
                                 vendorState: state.vendorState,
                                 onSelected: (vendor) {
-                                  viewModel.onVendorChanged!(
-                                      context, invoice, vendor as VendorEntity);
+                                  viewModel.onVendorChanged!(context, invoice,
+                                      vendor as VendorEntity?);
                                 },
                                 onAddPressed: (completer) => viewModel
                                     .onAddVendorPressed!(context, completer),
@@ -795,7 +795,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                         initialValue: invoice.designId,
                                         onSelected: (value) {
                                           viewModel.onChanged!(invoice.rebuild(
-                                              (b) => b..designId = value.id));
+                                              (b) => b..designId = value!.id));
                                         },
                                       ),
                                       UserPicker(
@@ -1352,7 +1352,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
                             allowSharing: false,
                             canDebug: false,
                             pages: [_currentPage - 1],
-                            maxPageWidth: 800,
+                            maxPageWidth: 600,
                           ),
               ),
             ],

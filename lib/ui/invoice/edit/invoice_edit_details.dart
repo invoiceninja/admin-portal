@@ -173,7 +173,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                         vendorState: state.vendorState,
                         onSelected: (vendor) {
                           viewModel.onVendorChanged!(
-                              context, invoice, vendor as VendorEntity);
+                              context, invoice, vendor as VendorEntity?);
                         },
                         onAddPressed: (completer) =>
                             viewModel.onAddVendorPressed!(context, completer),
@@ -459,7 +459,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
             DesignPicker(
               initialValue: invoice.designId,
               onSelected: (value) => viewModel
-                  .onChanged!(invoice.rebuild((b) => b..designId = value.id)),
+                  .onChanged!(invoice.rebuild((b) => b..designId = value!.id)),
             ),
             if (company.isModuleEnabled(EntityType.project))
               ProjectPicker(

@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -505,6 +506,7 @@ class SettingsSearch extends StatelessWidget {
           'show_pdf_preview',
           'pdf_preview_location#2022-10-24',
           'refresh_data',
+          if (!kIsWeb) 'downloads_folder#2023-10-29'
         ],
         [
           'dark_mode',
@@ -549,7 +551,13 @@ class SettingsSearch extends StatelessWidget {
           'show_paid_stamp#2023-01-29',
           'show_shipping_address#2023-01-29',
           'share_invoice_quote_columns#2023-03-20',
-          'invoice_embed_documents#2023-10-27'
+          'invoice_embed_documents#2023-10-27',
+          if (supportsDesignTemplates()) ...[
+            'delivery_note_design#2023-11-06',
+            'statement_design#2023-11-06',
+            'payment_receipt_design#2023-11-06',
+            //'payment_refund_design#2023-11-06',
+          ],
         ],
       ],
       kSettingsCustomDesigns: [
@@ -601,10 +609,8 @@ class SettingsSearch extends StatelessWidget {
         [
           'header',
           'footer',
-          if (isSelfHosted(context)) ...[
-            'custom_css',
-            'custom_javascript',
-          ],
+          'custom_css',
+          if (isSelfHosted(context)) 'custom_javascript',
         ],
       ],
       kSettingsEmailSettings: [

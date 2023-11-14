@@ -115,7 +115,7 @@ class InvoiceEditPDFState extends State<InvoiceEditPDF> {
               allowPrinting: false,
               allowSharing: false,
               canDebug: false,
-              maxPageWidth: 800,
+              maxPageWidth: 600,
             ),
     );
   }

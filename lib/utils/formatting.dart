@@ -333,8 +333,9 @@ DateTime convertSqlDateToDateTime([String? date]) {
 DateTime convertTimestampToDate(int? timestamp) =>
     DateTime.fromMillisecondsSinceEpoch((timestamp ?? 0) * 1000, isUtc: true);
 
-String convertTimestampToDateString(int? timestamp) =>
-    convertTimestampToDate(timestamp).toIso8601String();
+String convertTimestampToDateString(int? timestamp) => (timestamp ?? 0) == 0
+    ? ''
+    : convertTimestampToDate(timestamp).toIso8601String();
 
 String formatDuration(Duration? duration, {bool showSeconds = true}) {
   final time = duration.toString().split('.')[0];

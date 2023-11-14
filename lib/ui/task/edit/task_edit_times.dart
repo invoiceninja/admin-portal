@@ -42,7 +42,7 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
             viewModel: viewModel,
             taskTime: taskTime,
             index: taskTimes.indexOf(
-                taskTimes.firstWhere((time) => time!.equalTo(taskTime!))),
+                taskTimes.firstWhere((time) => time.equalTo(taskTime!))),
           );
         });
   }

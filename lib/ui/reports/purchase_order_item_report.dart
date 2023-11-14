@@ -2,6 +2,8 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:memoize/memoize.dart';
 
@@ -38,6 +40,7 @@ enum PurchaseOrderItemReportFields {
   taxAmount,
   netTotal,
   currency,
+  record_state,
 }
 
 var memoizedPurchaseOrderItemReport = memo7((
@@ -202,6 +205,10 @@ ReportResult lineItemReport(
             break;
           case PurchaseOrderItemReportFields.clientIdNumber:
             value = client.idNumber;
+            break;
+          case PurchaseOrderItemReportFields.record_state:
+            value = AppLocalization.of(navigatorKey.currentContext!)!
+                .lookup(invoice.entityState);
             break;
         }
 

@@ -6,13 +6,12 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
-
-import '../../../redux/app/app_state.dart';
 
 class InvoiceEditContacts extends StatelessWidget {
   const InvoiceEditContacts({
@@ -182,7 +181,9 @@ class _ClientContactListTile extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
-                  if ((invitation?.emailError ?? '').isNotEmpty)
+                  if ((invitation?.emailError ?? '').isNotEmpty &&
+                      invitation?.emailStatus !=
+                          InvitationEntity.EMAIL_STATUS_DELIVERED)
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Text(
@@ -277,7 +278,9 @@ class _VendorContactListTile extends StatelessWidget {
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
-                  if ((invitation?.emailError ?? '').isNotEmpty)
+                  if ((invitation?.emailError ?? '').isNotEmpty &&
+                      invitation?.emailStatus !=
+                          InvitationEntity.EMAIL_STATUS_DELIVERED)
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Text(

@@ -51,11 +51,11 @@ class WebClient {
     );
     client.close();
 
+    _checkResponse(url, response);
+
     if (rawResponse) {
       return response;
     }
-
-    _checkResponse(url, response);
 
     final dynamic jsonResponse = json.decode(response.body);
 
@@ -68,7 +68,7 @@ class WebClient {
     String url,
     String? token, {
     dynamic data,
-    List<MultipartFile?>? multipartFiles,
+    List<MultipartFile>? multipartFiles,
     String? secret,
     String? password,
     String? idToken,
@@ -113,11 +113,11 @@ class WebClient {
       client.close();
     }
 
+    _checkResponse(url, response);
+
     if (rawResponse) {
       return response;
     }
-
-    _checkResponse(url, response);
 
     return json.decode(response.body);
   }
@@ -252,7 +252,8 @@ void _checkResponse(String url, http.Response response) {
   final minClientVersion = response.headers['x-minimum-client-version'];
 
   if (response.statusCode >= 500) {
-    throw _parseError(response.statusCode, response.body);
+    throw _parseError(
+        response.statusCode, response.body, response.reasonPhrase);
   } else if (serverVersion == null) {
     throw 'Error: please check that Invoice Ninja v5 is installed on the server\n\nURL: $url\n\nResponse: ${response.body.length > 200 ? response.body.substring(0, 200) : response.body}\n\nHeaders: ${response.headers}}';
   } else if (Version.parse(kClientVersion) < Version.parse(minClientVersion!)) {
@@ -260,7 +261,8 @@ void _checkResponse(String url, http.Response response) {
   } else if (Version.parse(serverVersion) < Version.parse(kMinServerVersion)) {
     throw 'Error: server not supported, please update to the latest version [Current v$serverVersion < Minimum v$kMinServerVersion]';
   } else if (response.statusCode >= 400) {
-    throw _parseError(response.statusCode, response.body);
+    throw _parseError(
+        response.statusCode, response.body, response.reasonPhrase);
   }
 }
 
@@ -277,8 +279,12 @@ void _preCheck() {
   */
 }
 
-String _parseError(int code, String response) {
-  dynamic message = response;
+String _parseError(int code, String response, String? reason) {
+  String message = '';
+
+  if ((reason ?? '').isNotEmpty) {
+    message += reason! + ' • ';
+  }
 
   if (response.contains('DOCTYPE html')) {
     return '$code: An error occurred';
@@ -287,7 +293,7 @@ String _parseError(int code, String response) {
   try {
     final dynamic jsonResponse = json.decode(response);
 
-    message = jsonResponse['message'] ?? jsonResponse;
+    message += jsonResponse['message'] ?? jsonResponse;
 
     if (jsonResponse['errors'] != null &&
         (jsonResponse['errors'] as Map).isNotEmpty) {
@@ -309,12 +315,12 @@ String _parseError(int code, String response) {
 }
 
 Future<http.Response> _uploadFiles(
-    String url, String? token, List<MultipartFile?> multipartFiles,
+    String url, String? token, List<MultipartFile> multipartFiles,
     {String method = 'POST', dynamic data}) async {
   final request = http.MultipartRequest(method, Uri.parse(url))
     ..fields.addAll(data ?? {})
     ..headers.addAll(_getHeaders(url, token))
-    ..files.addAll(multipartFiles as Iterable<MultipartFile>);
+    ..files.addAll(multipartFiles);
 
   return await http.Response.fromStream(await request.send())
       .timeout(const Duration(minutes: 10));

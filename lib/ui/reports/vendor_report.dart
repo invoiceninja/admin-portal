@@ -56,6 +56,7 @@ enum VendorReportFields {
   documents,
   last_login,
   classification,
+  record_state,
   /*
   contact_last_login,
   shipping_address1,
@@ -322,6 +323,10 @@ ReportResult vendorReport(
         case VendorReportFields.classification:
           value = AppLocalization.of(navigatorKey.currentContext!)!
               .lookup(vendor.classification);
+          break;
+        case VendorReportFields.record_state:
+          value = AppLocalization.of(navigatorKey.currentContext!)!
+              .lookup(vendor.entityState);
           break;
       }
 

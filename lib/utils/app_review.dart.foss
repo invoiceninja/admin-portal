@@ -7,6 +7,6 @@ class AppReview {
 
   static void requestReview() => null;
 
-  static void openStoreListing() =>
-      launch(getRateAppURL(navigatorKey.currentContext));
+  static void openStoreListing() => launchUrl(
+      Uri.dataFromString(getRateAppURL(navigatorKey.currentContext!)));
 }

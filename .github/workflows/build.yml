@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - master
+
+#concurrency:
+#  group: ci-release-${{ github.ref }}-1
+#  cancel-in-progress: true
+
 jobs:
   build-main:
     name: Build Web - MAIN
@@ -19,19 +24,25 @@ jobs:
       sentry_url: ${{secrets.sentry_url}}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: subosito/flutter-action@v1
+      - name: Checkout code
+        uses: actions/checkout@v1
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.13.6'
           #channel: 'stable'
+
       - name: Install Sentry
         run: |
           curl -sL https://sentry.io/get-cli/ | bash
-      - name: Setup Flutter
+
+      - name: Check Flutter
         run: |
           flutter doctor -v
           flutter pub get
           flutter config --enable-web
+
       - name: Prepare App
         run: |
           cp lib/.env.dart.example lib/.env.dart
@@ -39,6 +50,7 @@ jobs:
           echo "const FLUTTER_VERSION = const <String, String>" > lib/flutter_version.dart
           flutter --version --machine >> lib/flutter_version.dart
           echo ";" >> lib/flutter_version.dart
+
       - name: Build Hosted App
         run: |
           #export SENTRY_RELEASE=$(sentry-cli releases propose-version)
@@ -60,7 +72,7 @@ jobs:
           rm ./public/index.html
           git add .
           git commit -m 'Admin Portal - Hosted'
-          #git push
+          git push
           cd ..
 
           #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --project ${{secrets.sentry_project}} --org ${{secrets.sentry_org}} files $SENTRY_RELEASE upload-sourcemaps . --ext dart --rewrite
@@ -70,6 +82,7 @@ jobs:
 
           #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} finalize $SENTRY_RELEASE
           #sentry-cli --auth-token ${{secrets.sentry_auth_token}} --url ${{secrets.sentry_url}} releases --org ${{secrets.sentry_org}} deploys $SENTRY_RELEASE new -e production
+
       - name: Build Profile App
         run: |
           flutter build web --profile
@@ -83,6 +96,7 @@ jobs:
           git commit -m 'Admin Portal - Profile'
           git push
           cd ..      
+
       - name: Build Selfhosted App
         run: |
           cp lib/utils/oauth.dart.foss lib/utils/oauth.dart

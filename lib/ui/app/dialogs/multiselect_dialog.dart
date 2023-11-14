@@ -132,6 +132,7 @@ class MultiSelectListState extends State<MultiSelectList> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           AppDropdownButton<String>(
+            key: ValueKey('__${selected.join(',')}__'),
             labelText: widget.addTitle,
             items: keys.map((option) {
               return DropdownMenuItem(

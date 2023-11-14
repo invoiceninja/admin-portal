@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:printing/printing.dart';
@@ -425,30 +426,15 @@ class DesignSettings extends StatefulWidget {
 }
 
 class _DesignSettingsState extends State<DesignSettings> {
-  DesignEntity? _selectedDesign;
-
-  @override
-  void initState() {
-    super.initState();
-
-    final viewModel = widget.viewModel;
-    final design = viewModel.design;
-
-    if (design.isOld) {
-      _selectedDesign = design;
-    } else {
-      final state = viewModel.state;
-      final designMap = state.designState.map;
-      _selectedDesign =
-          designMap[state.company.settings.defaultInvoiceDesignId];
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context)!;
+    final state = widget.viewModel.state;
+    final design = widget.viewModel.design;
+    final entityTypes = design.entities.split(',');
 
     return ScrollableListView(
+      primary: true,
       children: <Widget>[
         FormCard(
           children: <Widget>[
@@ -460,15 +446,17 @@ class _DesignSettingsState extends State<DesignSettings> {
                   value.isEmpty ? localization.pleaseEnterAName : null,
             ),
             DesignPicker(
-                label: localization.design,
-                onSelected: (value) {
+              showBlank: true,
+              label: localization.loadDesign,
+              onSelected: (value) {
+                if (value != null) {
                   widget.onLoadDesign(value);
-                  _selectedDesign = value;
-                },
-                initialValue: _selectedDesign?.id),
+                }
+              },
+            ),
+            SizedBox(height: 20),
             // TODO remove this once browser supported on all platforms
-            if (!kReleaseMode || kIsWeb || isMobileOS()) ...[
-              SizedBox(height: 16),
+            if (!kReleaseMode || kIsWeb || isMobileOS())
               SwitchListTile(
                 activeColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.draftMode),
@@ -476,7 +464,51 @@ class _DesignSettingsState extends State<DesignSettings> {
                 value: widget.draftMode,
                 onChanged: widget.isLoading ? null : widget.onDraftModeChanged,
               ),
-            ]
+            if (supportsDesignTemplates())
+              SwitchListTile(
+                activeColor: Theme.of(context).colorScheme.secondary,
+                title: Text(localization.template),
+                subtitle: Text(localization.templateHelp),
+                value: design.isTemplate,
+                onChanged: (value) {
+                  widget.viewModel.onChanged(
+                    design.rebuild((b) => b..isTemplate = value),
+                  );
+                },
+              ),
+            if (design.isTemplate) ...[
+              SizedBox(height: 10),
+              ...[
+                EntityType.client,
+                EntityType.invoice,
+                EntityType.payment,
+                EntityType.quote,
+                EntityType.credit,
+                EntityType.project,
+                EntityType.task,
+                EntityType.purchaseOrder,
+              ]
+                  .where(
+                      (entityType) => state.company.isModuleEnabled(entityType))
+                  .map((entityType) => CheckboxListTile(
+                        value: entityTypes.contains(entityType.apiValue),
+                        onChanged: (value) {
+                          final entities = entityTypes;
+                          if (value == true) {
+                            entities.add(entityType.apiValue);
+                          } else {
+                            entities.remove(entityType.apiValue);
+                          }
+                          widget.viewModel.onChanged(design.rebuild((b) => b
+                            ..entities = entities
+                                .where((entity) => entity.isNotEmpty)
+                                .join(',')));
+                        },
+                        title: Text(localization.lookup(entityType.plural)),
+                        controlAffinity: ListTileControlAffinity.leading,
+                      ))
+                  .toList(),
+            ],
           ],
         ),
         Padding(
@@ -651,7 +683,7 @@ class _PdfDesignPreviewState extends State<PdfDesignPreview> {
               allowPrinting: false,
               allowSharing: false,
               canDebug: false,
-              maxPageWidth: 800,
+              maxPageWidth: 600,
             )
           else
             SizedBox(),

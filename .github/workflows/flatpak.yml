@@ -1,0 +1,115 @@
+name: Build Flatpak
+
+on:
+  workflow_dispatch:
+  #push:
+  #  branches:
+  #    - master
+
+#concurrency:
+#  group: ci-release-${{ github.ref }}-1
+#  cancel-in-progress: true
+
+env:
+  project-id: com.invoiceninja.InvoiceNinja
+
+jobs:
+  build-flutter-app:
+    name: Build Flutter
+    env:
+      api_secret: ${{ secrets.api_secret }}
+      commit_secret: ${{ secrets.commit_secret }}
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Flutter dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libx11-dev pkg-config cmake ninja-build libblkid-dev
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.13.6'
+          #channel: 'stable'
+
+      - name: Init Flutter
+        run: |
+          flutter doctor -v
+          flutter pub get
+
+      - name: Prepare App
+        run: |
+          cp lib/.env.dart.example lib/.env.dart
+          sed -i 's/secret/${{ secrets.api_secret }}/g' lib/.env.dart
+          echo "const FLUTTER_VERSION = const <String, String>" > lib/flutter_version.dart
+          flutter --version --machine >> lib/flutter_version.dart
+          echo ";" >> lib/flutter_version.dart
+
+      - name: Build Flutter linux version
+        run: |
+          archiveName=Invoice-Ninja-Linux-Portable.tar.gz
+          baseDir=$(pwd)
+
+          flutter build linux
+
+          cd build/linux/x64/release/bundle || exit
+          tar -czaf $archiveName ./*
+          shasum -a 256 $archiveName > Hashes.txt
+
+          mv $archiveName "$baseDir"/
+          mv Hashes.txt "$baseDir"/
+
+      - name: Upload app archive to workflow
+        uses: actions/upload-artifact@v3
+        with:
+          name: Invoice-Ninja-Archive
+          path: Invoice-Ninja-Linux-Portable.tar.gz
+
+      - name: Upload app archive hash to workflow
+        uses: actions/upload-artifact@v3
+        with:
+          name: Invoice-Ninja-Hash
+          path: Hashes.txt
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: artifacts
+
+      - name: Create Release
+        uses: marvinpinto/action-automatic-releases@v1.2.1
+        with:
+          repo_token: "${{ secrets.commit_secret }}"
+          draft: false
+          prerelease: false
+          title: "Latest Release"
+          automatic_release_tag: "v5.0.140"
+          files: |
+            ${{ github.workspace }}/artifacts/Invoice-Ninja-Archive
+            ${{ github.workspace }}/artifacts/Invoice-Ninja-Hash
+
+#  build-flatpak:
+#    name: Build flatpak
+#    needs: build-flutter-app
+#    runs-on: ubuntu-latest
+#    container:
+#      image: bilelmoussaoui/flatpak-github-actions:freedesktop-22.08
+#      options: --privileged
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v3
+#
+#      - name: Build .flatpak
+#        uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v5
+#        with:
+#          bundle: FlutterApp.flatpak
+#          manifest-path: flathub_repo/com.example.FlutterApp.yml
+#
+#      - name: Upload .flatpak artifact to workflow
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: Flatpak artifact
+#          path: FlutterApp.flatpak

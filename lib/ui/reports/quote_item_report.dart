@@ -1,6 +1,8 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:collection/collection.dart' show IterableNullableExtension;
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 
@@ -41,6 +43,7 @@ enum QuoteItemReportFields {
   taxAmount,
   netTotal,
   currency,
+  record_state,
 }
 
 var memoizedQuoteItemReport = memo6((
@@ -199,6 +202,10 @@ ReportResult lineItemReport(
             break;
           case QuoteItemReportFields.clientIdNumber:
             value = client.idNumber;
+            break;
+          case QuoteItemReportFields.record_state:
+            value = AppLocalization.of(navigatorKey.currentContext!)!
+                .lookup(invoice.entityState);
             break;
         }
 

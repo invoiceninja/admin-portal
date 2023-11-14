@@ -369,6 +369,18 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'credit_design_id')
   String? get defaultCreditDesignId;
 
+  @BuiltValueField(wireName: 'delivery_note_design_id')
+  String? get defaultDeliveryNoteDesignId;
+
+  @BuiltValueField(wireName: 'statement_design_id')
+  String? get defaultStatementDesignId;
+
+  @BuiltValueField(wireName: 'payment_receipt_design_id')
+  String? get defaultPaymentReceiptDesignId;
+
+  @BuiltValueField(wireName: 'payment_refund_design_id')
+  String? get defaultPaymentRefundDesignId;
+
   @BuiltValueField(wireName: 'invoice_footer')
   String? get defaultInvoiceFooter;
 
@@ -884,6 +896,8 @@ abstract class SettingsEntity
         return emailSubjectReminder3;
       case EmailTemplate.reminder_endless:
         return emailSubjectReminderEndless;
+      case EmailTemplate.statement:
+        return emailSubjectStatement;
       case EmailTemplate.custom1:
         return emailSubjectCustom1;
       case EmailTemplate.custom2:
@@ -917,6 +931,8 @@ abstract class SettingsEntity
         return emailBodyReminder3;
       case EmailTemplate.reminder_endless:
         return emailBodyReminderEndless;
+      case EmailTemplate.statement:
+        return emailBodyStatement;
       case EmailTemplate.custom1:
         return emailBodyCustom1;
       case EmailTemplate.custom2:

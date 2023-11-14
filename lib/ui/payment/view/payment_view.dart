@@ -54,6 +54,12 @@ class _PaymentViewState extends State<PaymentView> {
       transactionReference: payment.transactionReference,
     );
 
+    var invoice = InvoiceEntity(client: client);
+    if (payment.invoicePaymentables.isNotEmpty) {
+      final invoiceId = payment.invoicePaymentables.first.invoiceId;
+      invoice = state.invoiceState.get(invoiceId!);
+    }
+
     final fields = <String, String?>{};
     /*
     fields[PaymentFields.paymentStatusId] =
@@ -107,7 +113,10 @@ class _PaymentViewState extends State<PaymentView> {
                       EntityListTile(
                         isFilter: widget.isFilter,
                         entity: client,
-                        subtitle: client.primaryContact.email,
+                        subtitle: client
+                            .getContact(
+                                invoice.invitations.first.clientContactId)
+                            .emailOrFullName,
                       ),
                       for (final paymentable in payment.invoicePaymentables)
                         EntityListTile(

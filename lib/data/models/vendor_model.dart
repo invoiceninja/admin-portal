@@ -94,6 +94,7 @@ abstract class VendorEntity extends Object
       number: '',
       isChanged: false,
       name: '',
+      displayName: '',
       address1: '',
       address2: '',
       city: '',
@@ -163,6 +164,9 @@ abstract class VendorEntity extends Object
   }
 
   String get name;
+
+  @BuiltValueField(wireName: 'display_name')
+  String get displayName;
 
   String get address1;
 
@@ -469,7 +473,8 @@ abstract class VendorEntity extends Object
 
   @override
   String get listDisplayName {
-    return name;
+    // TODO simplify once not needed any more
+    return displayName.isNotEmpty ? displayName : calculateDisplayName;
   }
 
   @override
@@ -520,6 +525,7 @@ abstract class VendorEntity extends Object
     ..activities.replace(BuiltList<ActivityEntity>())
     ..lastLogin = 0
     ..languageId = ''
+    ..displayName = ''
     ..classification = '';
 
   static Serializer<VendorEntity> get serializer => _$vendorEntitySerializer;
@@ -549,6 +555,7 @@ abstract class VendorContactEntity extends Object
       customValue3: '',
       customValue4: '',
       link: '',
+      password: '',
     );
   }
 
@@ -579,6 +586,8 @@ abstract class VendorContactEntity extends Object
 
   String get phone;
 
+  String get password;
+
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
 
@@ -604,6 +613,14 @@ abstract class VendorContactEntity extends Object
       return fullName;
     } else {
       return email;
+    }
+  }
+
+  String get emailOrFullName {
+    if (email.isNotEmpty) {
+      return email;
+    } else {
+      return fullName;
     }
   }
 
@@ -659,6 +676,7 @@ abstract class VendorContactEntity extends Object
   static void _initializeBuilder(VendorContactEntityBuilder builder) => builder
     ..sendEmail = true
     ..link = ''
+    ..password = ''
     ..customValue1 = ''
     ..customValue2 = ''
     ..customValue3 = ''

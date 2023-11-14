@@ -146,9 +146,9 @@ abstract class InvoiceEntity extends Object
     final settings = getClientSettings(state, client);
 
     double exchangeRate = 1;
-    if ((client?.currencyId ?? '').isNotEmpty) {
+    if (state != null && (client?.currencyId ?? '').isNotEmpty) {
       exchangeRate = getExchangeRate(
-        state!.staticState.currencyMap,
+        state.staticState.currencyMap,
         fromCurrencyId: state.company.currencyId,
         toCurrencyId: client!.currencyId,
       );
@@ -214,7 +214,6 @@ abstract class InvoiceEntity extends Object
       customSurcharge2: 0,
       customSurcharge3: 0,
       customSurcharge4: 0,
-      filename: '',
       subscriptionId: '',
       recurringDates: BuiltList<InvoiceScheduleEntity>(),
       lineItems: BuiltList<InvoiceItemEntity>(),
@@ -554,8 +553,6 @@ abstract class InvoiceEntity extends Object
   @BuiltValueField(wireName: 'auto_bill_enabled')
   bool get autoBillEnabled;
 
-  String? get filename;
-
   @BuiltValueField(wireName: 'recurring_dates')
   BuiltList<InvoiceScheduleEntity>? get recurringDates;
 
@@ -631,6 +628,21 @@ abstract class InvoiceEntity extends Object
           activity.history != null &&
           activity.history!.id.isNotEmpty &&
           activity.history!.createdAt > 0)
+      .map((activity) => activity.history)
+      .whereType<InvoiceHistoryEntity>()
+      .toList();
+
+  List<InvoiceHistoryEntity> get balanceHistory => activities
+      .where((activity) =>
+          activity.history != null &&
+          activity.history!.id.isNotEmpty &&
+          activity.history!.createdAt > 0 &&
+          ![
+            kActivityViewInvoice,
+            kActivityViewQuote,
+            kActivityViewCredit,
+            kActivityViewPurchaseOrder,
+          ].contains(activity.activityTypeId))
       .map((activity) => activity.history)
       .whereType<InvoiceHistoryEntity>()
       .toList();
@@ -1552,7 +1564,8 @@ class TaskItemFields {
 
 abstract class InvoiceItemEntity
     implements Built<InvoiceItemEntity, InvoiceItemEntityBuilder> {
-  factory InvoiceItemEntity({String? productKey, double? quantity}) {
+  factory InvoiceItemEntity(
+      {String? productKey, double? quantity, String? typeId}) {
     return _$InvoiceItemEntity._(
       productKey: productKey ?? '',
       notes: '',
@@ -1565,7 +1578,7 @@ abstract class InvoiceItemEntity
       taxRate2: 0,
       taxName3: '',
       taxRate3: 0,
-      typeId: TYPE_STANDARD,
+      typeId: typeId ?? TYPE_STANDARD,
       customValue1: '',
       customValue2: '',
       customValue3: '',
@@ -1781,6 +1794,7 @@ abstract class InvitationEntity extends Object
       sentDate: '',
       viewedDate: '',
       openedDate: '',
+      messageId: '',
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
@@ -1821,6 +1835,9 @@ abstract class InvitationEntity extends Object
 
   @BuiltValueField(wireName: 'email_error', compare: false)
   String get emailError;
+
+  @BuiltValueField(wireName: 'message_id', compare: false)
+  String get messageId;
 
   String get downloadLink =>
       '$link/download?t=${DateTime.now().millisecondsSinceEpoch}';
@@ -1890,7 +1907,8 @@ abstract class InvitationEntity extends Object
     ..clientContactId = ''
     ..vendorContactId = ''
     ..emailError = ''
-    ..emailStatus = '';
+    ..emailStatus = ''
+    ..messageId = '';
 
   static Serializer<InvitationEntity> get serializer =>
       _$invitationEntitySerializer;

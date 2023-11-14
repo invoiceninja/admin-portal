@@ -1,13 +1,18 @@
 // Dart imports:
 import 'dart:io';
+import 'dart:io' as file;
 
 // Flutter imports:
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 
 // Package imports:
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:path_provider/path_provider.dart';
@@ -19,6 +24,7 @@ import 'package:invoiceninja_flutter/utils/platforms.dart';
 // ignore: unused_import
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+import 'package:share_plus/share_plus.dart';
 
 Future<List<MultipartFile>?> pickFiles({
   String? fileIndex,
@@ -34,11 +40,18 @@ Future<List<MultipartFile>?> pickFiles({
       allowMultiple: allowMultiple,
     );
   } else {
-    final permission = await (fileType == FileType.image && Platform.isIOS
-        ? Permission.photos.request()
-        : Permission.storage.request());
+    final androidInfo = await DeviceInfoPlugin().androidInfo;
+    PermissionStatus status;
 
-    if (permission == PermissionStatus.granted) {
+    if (Platform.isIOS && fileType == FileType.image) {
+      status = await Permission.photos.request();
+    } else if (Platform.isAndroid && androidInfo.version.sdkInt >= 33) {
+      status = await Permission.photos.request();
+    } else {
+      status = await Permission.storage.request();
+    }
+
+    if (status == PermissionStatus.granted) {
       return _pickFiles(
         fileIndex: fileIndex,
         fileType: fileType,
@@ -82,23 +95,62 @@ Future<List<MultipartFile>?> _pickFiles({
   return null;
 }
 
-Future<String?> getAppDownloadDirectory() async {
-  final directory = await (isDesktopOS()
-      ? getDownloadsDirectory()
-      : getApplicationDocumentsDirectory());
+void saveDownloadedFile(Uint8List data, String fileName) async {
+  if (kIsWeb) {
+    WebUtils.downloadBinaryFile(fileName, data);
+  } else {
+    final directory = await getAppDownloadDirectory();
+    if (directory != null) {
+      String filePath = '$directory/${file.Platform.pathSeparator}$fileName';
 
-  if (directory == null) {
-    return null;
+      if (file.File(filePath).existsSync()) {
+        final extension = fileName.split('.').last;
+        final timestamp = DateTime.now().millisecondsSinceEpoch;
+        filePath =
+            filePath.replaceFirst('.$extension', '_$timestamp.$extension');
+      }
+
+      await File(filePath).writeAsBytes(data);
+
+      if (isDesktopOS()) {
+        showToast(AppLocalization.of(navigatorKey.currentContext!)!
+            .fileSavedInPath
+            .replaceFirst(':path', directory));
+      } else {
+        await Share.shareXFiles([XFile(filePath)]);
+      }
+    }
+  }
+}
+
+Future<String?> getAppDownloadDirectory() async {
+  var path = '';
+
+  final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
+  final state = store.state;
+
+  if (state.prefState.donwloadsFolder.isNotEmpty) {
+    path = state.prefState.donwloadsFolder;
+  } else {
+    final directory = await (isDesktopOS()
+        ? getDownloadsDirectory()
+        : getApplicationDocumentsDirectory());
+
+    if (directory == null) {
+      return null;
+    }
+
+    path = directory.path;
   }
 
-  if (!Directory(directory.path).existsSync()) {
+  if (!Directory(path).existsSync()) {
     showErrorDialog(
         message: AppLocalization.of(navigatorKey.currentContext!)!
-            .directoryDoesNotExist
-            .replaceFirst(':value', directory.path));
+            .downloadsFolderDoesNotExist
+            .replaceFirst(':value', path));
 
     return null;
   }
 
-  return directory.path;
+  return path;
 }

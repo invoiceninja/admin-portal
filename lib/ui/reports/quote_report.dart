@@ -2,6 +2,8 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:memoize/memoize.dart';
 
@@ -75,6 +77,7 @@ enum QuoteReportFields {
   contact_email,
   contact_phone,
   contact_name,
+  record_state,
 }
 
 var memoizedQuoteReport = memo7((
@@ -350,6 +353,10 @@ ReportResult quoteReport(
           break;
         case QuoteReportFields.client_id_number:
           value = client.idNumber;
+          break;
+        case QuoteReportFields.record_state:
+          value = AppLocalization.of(navigatorKey.currentContext!)!
+              .lookup(quote.entityState);
           break;
       }
 

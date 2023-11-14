@@ -292,7 +292,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 });
                                 viewModel.onSettingsChanged(settings.rebuild(
                                     (b) =>
-                                        b..defaultInvoiceDesignId = value.id));
+                                        b..defaultInvoiceDesignId = value!.id));
                               },
                             ),
                             if (!isFiltered &&
@@ -320,7 +320,8 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                   _wasQuoteDesignChanged = true;
                                 });
                                 viewModel.onSettingsChanged(settings.rebuild(
-                                    (b) => b..defaultQuoteDesignId = value.id));
+                                    (b) =>
+                                        b..defaultQuoteDesignId = value!.id));
                               },
                             ),
                             if (!isFiltered &&
@@ -349,7 +350,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 });
                                 viewModel.onSettingsChanged(settings.rebuild(
                                     (b) =>
-                                        b..defaultCreditDesignId = value.id));
+                                        b..defaultCreditDesignId = value!.id));
                               },
                             ),
                             if (!isFiltered &&
@@ -381,7 +382,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 viewModel.onSettingsChanged(settings.rebuild(
                                     (b) => b
                                       ..defaultPurchaseOrderDesignId =
-                                          value.id));
+                                          value!.id));
                               },
                             ),
                             if (!isFiltered &&
@@ -415,6 +416,57 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           ),
                           SizedBox(height: 16),
                         ],
+                        if (supportsDesignTemplates()) ...[
+                          DesignPicker(
+                            showBlank: true,
+                            label: localization.deliveryNoteDesign,
+                            initialValue: settings.defaultDeliveryNoteDesignId,
+                            onSelected: (value) {
+                              viewModel.onSettingsChanged(settings.rebuild(
+                                  (b) => b
+                                    ..defaultDeliveryNoteDesignId = value?.id));
+                            },
+                          ),
+                          DesignPicker(
+                            showBlank: true,
+                            label: localization.statementDesign,
+                            initialValue: settings.defaultStatementDesignId,
+                            onSelected: (value) {
+                              viewModel.onSettingsChanged(settings.rebuild(
+                                  (b) =>
+                                      b..defaultStatementDesignId = value?.id));
+                            },
+                          ),
+                          DesignPicker(
+                            showBlank: true,
+                            label: localization.paymentReceiptDesign,
+                            initialValue:
+                                settings.defaultPaymentReceiptDesignId,
+                            onSelected: (value) {
+                              viewModel.onSettingsChanged(settings.rebuild(
+                                  (b) => b
+                                    ..defaultPaymentReceiptDesignId =
+                                        value?.id));
+                            },
+                          ),
+                          /*
+                          DesignPicker(
+                            showBlank: true,
+                            label: localization.paymentRefundDesign,
+                            initialValue: settings.defaultPaymentRefundDesignId,
+                            onSelected: (value) {
+                              viewModel.onSettingsChanged(settings.rebuild(
+                                  (b) => b
+                                    ..defaultPaymentRefundDesignId =
+                                        value?.id));
+                            },
+                          ),
+                          */
+                        ],
+                      ],
+                    ),
+                    FormCard(
+                      children: [
                         AppDropdownButton(
                           labelText: localization.pageLayout,
                           value: settings.pageLayout,
@@ -1328,7 +1380,7 @@ class _PdfPreviewState extends State<_PdfPreview> {
           canChangeOrientation: false,
           canChangePageFormat: false,
           canDebug: false,
-          maxPageWidth: 800,
+          maxPageWidth: 600,
           allowPrinting: false,
           allowSharing: false,
         ),

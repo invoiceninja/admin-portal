@@ -4,7 +4,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.127';
+const String kClientVersion = '5.0.140';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -638,6 +638,7 @@ const String kReportPayment = 'payment';
 const String kReportProduct = 'product';
 const String kReportProfitAndLoss = 'profit_and_loss';
 const String kReportTask = 'task';
+const String kReportTaskItem = 'task_item';
 const String kReportInvoiceTax = 'invoice_tax';
 const String kReportPaymentTax = 'payment_tax';
 const String kReportQuote = 'quote';
@@ -736,6 +737,7 @@ const String kTaxRegionAustralia = 'AU';
 const String kReportGroupDay = 'day';
 const String kReportGroupWeek = 'week';
 const String kReportGroupMonth = 'month';
+const String kReportGroupQuarter = 'quarter';
 const String kReportGroupYear = 'year';
 
 const int kModuleRecurringInvoices = 1;

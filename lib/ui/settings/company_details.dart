@@ -664,7 +664,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       initialValue: settings.defaultInvoiceDesignId,
                       onSelected: (value) => viewModel.onSettingsChanged(
                           settings.rebuild(
-                              (b) => b..defaultInvoiceDesignId = value.id)),
+                              (b) => b..defaultInvoiceDesignId = value!.id)),
                     ),
                   if (company.isModuleEnabled(EntityType.quote))
                     DesignPicker(
@@ -672,7 +672,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       initialValue: settings.defaultQuoteDesignId,
                       onSelected: (value) => viewModel.onSettingsChanged(
                           settings.rebuild(
-                              (b) => b..defaultQuoteDesignId = value.id)),
+                              (b) => b..defaultQuoteDesignId = value!.id)),
                     ),
                   if (company.isModuleEnabled(EntityType.credit))
                     DesignPicker(
@@ -680,7 +680,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       initialValue: settings.defaultCreditDesignId,
                       onSelected: (value) => viewModel.onSettingsChanged(
                           settings.rebuild(
-                              (b) => b..defaultCreditDesignId = value.id)),
+                              (b) => b..defaultCreditDesignId = value!.id)),
                     ),
                   if (company.isModuleEnabled(EntityType.purchaseOrder))
                     DesignPicker(
@@ -688,7 +688,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       initialValue: settings.defaultPurchaseOrderDesignId,
                       onSelected: (value) => viewModel.onSettingsChanged(
                           settings.rebuild((b) =>
-                              b..defaultPurchaseOrderDesignId = value.id)),
+                              b..defaultPurchaseOrderDesignId = value!.id)),
                     ),
                 ]),
               if (!state.settingsUIState.isFiltered)

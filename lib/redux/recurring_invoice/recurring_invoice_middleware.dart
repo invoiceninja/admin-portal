@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 
 // Package imports:
@@ -19,8 +20,6 @@ import 'package:invoiceninja_flutter/ui/recurring_invoice/edit/recurring_invoice
 import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/recurring_invoice_screen.dart';
 import 'package:invoiceninja_flutter/ui/recurring_invoice/view/recurring_invoice_view_vm.dart';
-
-import '../document/document_actions.dart';
 
 List<Middleware<AppState>> createStoreRecurringInvoicesMiddleware([
   RecurringInvoiceRepository repository = const RecurringInvoiceRepository(),

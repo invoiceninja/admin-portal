@@ -173,6 +173,8 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   UserCompanyEntity get userCompany => userCompanyState.userCompany;
 
+  String get token => userCompany.token.token;
+
   Credentials get credentials =>
       Credentials(token: userCompanyState.token.token, url: authState.url);
 

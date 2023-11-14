@@ -129,7 +129,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
     final showEndDate = company.showTaskEndDate;
     final taskTimes = task.getTaskTimes(sort: false);
 
-    if (!taskTimes.any((taskTime) => taskTime!.isEmpty)) {
+    if (!taskTimes.any((taskTime) => taskTime.isEmpty)) {
       taskTimes.add(TaskTime().rebuild((b) => b..startDate = null));
     }
 
@@ -333,15 +333,13 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                                       ? localization.startDate
                                       : null,
                                   selectedDate:
-                                      taskTimes[index]!.startDate == null
+                                      taskTimes[index].startDate == null
                                           ? null
                                           : convertDateTimeToSqlDate(
-                                              taskTimes[index]!
-                                                  .startDate!
+                                              taskTimes[index].startDate!
                                                   .toLocal()),
                                   onSelected: (date, _) {
-                                    final taskTime = taskTimes[index]!
-                                        .copyWithStartDate(date,
+                                    final taskTime = taskTimes[index].copyWithStartDate(date,
                                             syncDates: !showEndDate);
                                     viewModel.onUpdatedTaskTime(
                                         taskTime, index);
@@ -363,14 +361,13 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                                   labelText: settings.showTaskItemDescription!
                                       ? localization.startTime
                                       : null,
-                                  selectedDateTime: taskTimes[index]!.startDate,
+                                  selectedDateTime: taskTimes[index].startDate,
                                   onSelected: (timeOfDay) {
                                     if (timeOfDay == null) {
                                       return;
                                     }
 
-                                    final taskTime = taskTimes[index]!
-                                        .copyWithStartTime(timeOfDay);
+                                    final taskTime = taskTimes[index].copyWithStartTime(timeOfDay);
                                     viewModel.onUpdatedTaskTime(
                                         taskTime, index);
                                     setState(() {
@@ -393,15 +390,13 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                                         ? localization.endDate
                                         : null,
                                     selectedDate:
-                                        taskTimes[index]!.endDate == null
+                                        taskTimes[index].endDate == null
                                             ? null
                                             : convertDateTimeToSqlDate(
-                                                taskTimes[index]!
-                                                    .endDate!
+                                                taskTimes[index].endDate!
                                                     .toLocal()),
                                     onSelected: (date, _) {
-                                      final taskTime = taskTimes[index]!
-                                          .copyWithEndDate(date);
+                                      final taskTime = taskTimes[index].copyWithEndDate(date);
                                       viewModel.onUpdatedTaskTime(
                                           taskTime, index);
                                       setState(() {
@@ -422,15 +417,14 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                                   labelText: settings.showTaskItemDescription!
                                       ? localization.endTime
                                       : null,
-                                  selectedDateTime: taskTimes[index]!.endDate,
+                                  selectedDateTime: taskTimes[index].endDate,
                                   isEndTime: true,
                                   onSelected: (timeOfDay) {
                                     if (timeOfDay == null) {
                                       return;
                                     }
 
-                                    final taskTime = taskTimes[index]!
-                                        .copyWithEndTime(timeOfDay);
+                                    final taskTime = taskTimes[index].copyWithEndTime(timeOfDay);
                                     viewModel.onUpdatedTaskTime(
                                         taskTime, index);
                                     setState(() {
@@ -452,8 +446,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                                       ? localization.duration
                                       : null,
                                   onSelected: (Duration duration) {
-                                    final taskTime = taskTimes[index]!
-                                        .copyWithDuration(duration);
+                                    final taskTime = taskTimes[index].copyWithDuration(duration);
                                     viewModel.onUpdatedTaskTime(
                                         taskTime, index);
                                     setState(() {
@@ -462,10 +455,10 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                                     });
                                   },
                                   selectedDuration:
-                                      (taskTimes[index]!.startDate == null ||
-                                              taskTimes[index]!.endDate == null)
+                                      (taskTimes[index].startDate == null ||
+                                              taskTimes[index].endDate == null)
                                           ? null
-                                          : taskTimes[index]!.duration,
+                                          : taskTimes[index].duration,
                                 ),
                               ),
                             ),
@@ -477,7 +470,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                                 const EdgeInsets.only(bottom: 16, right: 16),
                             child: GrowableFormField(
                               label: localization.description,
-                              initialValue: taskTime!.description,
+                              initialValue: taskTime.description,
                               onChanged: (value) {
                                 viewModel.onUpdatedTaskTime(
                                     taskTime
@@ -493,7 +486,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                     Padding(
                       padding: const EdgeInsets.only(right: 8, left: 4),
                       child: IconButton(
-                          tooltip: taskTime!.isBillable
+                          tooltip: taskTime.isBillable
                               ? localization.billable
                               : localization.notBillable,
                           onPressed: taskTime.isEmpty
@@ -514,7 +507,7 @@ class _TaskEditDesktopState extends State<TaskEditDesktop> {
                     tooltip: overlapping.contains(index)
                         ? localization.invalidTime
                         : localization.remove,
-                    onPressed: taskTimes[index]!.isEmpty
+                    onPressed: taskTimes[index].isEmpty
                         ? null
                         : () {
                             confirmCallback(

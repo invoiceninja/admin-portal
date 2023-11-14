@@ -131,6 +131,7 @@ class EntityType extends EnumClass {
           EntityType.task,
           EntityType.expense,
           EntityType.invoice,
+          EntityType.quote,
         ];
       case EntityType.group:
         return [
@@ -285,6 +286,7 @@ class EmailTemplate extends EnumClass {
   static const EmailTemplate payment = _$payment_email;
   static const EmailTemplate payment_partial = _$payment_partial_email;
   static const EmailTemplate credit = _$credit_email;
+  static const EmailTemplate purchase_order = _$purchase_order;
   static const EmailTemplate statement = _$statement_email;
   static const EmailTemplate reminder1 = _$reminder1_email;
   static const EmailTemplate reminder2 = _$reminder2_email;
@@ -293,7 +295,6 @@ class EmailTemplate extends EnumClass {
   static const EmailTemplate custom1 = _$custom1_email;
   static const EmailTemplate custom2 = _$custom2_email;
   static const EmailTemplate custom3 = _$custom3_email;
-  static const EmailTemplate purchase_order = _$purchase_order;
 
   static BuiltSet<EmailTemplate> get values => _$templateValues;
 

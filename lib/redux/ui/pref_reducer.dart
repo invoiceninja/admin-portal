@@ -93,6 +93,7 @@ PrefState prefReducer(
         longPressReducer(state.longPressSelectionIsDefault, action)
     ..tapSelectedToEdit =
         tapSelectedToEditReducer(state.tapSelectedToEdit, action)
+    ..donwloadsFolder = downloadsFolderReducer(state.donwloadsFolder, action)
     ..requireAuthentication =
         requireAuthenticationReducer(state.requireAuthentication, action)
     ..colorTheme = colorThemeReducer(state.colorTheme, action)
@@ -409,6 +410,12 @@ Reducer<bool> longPressReducer = combineReducers([
 Reducer<bool> tapSelectedToEditReducer = combineReducers([
   TypedReducer<bool, UpdateUserPreferences>((tapSelectedToEdit, action) {
     return action.tapSelectedToEdit ?? tapSelectedToEdit;
+  }),
+]);
+
+Reducer<String> downloadsFolderReducer = combineReducers([
+  TypedReducer<String, UpdateUserPreferences>((downloadsFolder, action) {
+    return action.downloadsFolder ?? downloadsFolder;
   }),
 ]);
 

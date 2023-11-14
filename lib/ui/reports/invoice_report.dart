@@ -2,6 +2,8 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -93,6 +95,7 @@ enum InvoiceReportFields {
   age_group_60,
   age_group_90,
   age_group_120,
+  record_state,
 }
 
 var memoizedInvoiceReport = memo9((
@@ -467,6 +470,10 @@ ReportResult invoiceReport(
           break;
         case InvoiceReportFields.age_group_120:
           value = invoice.isPaid || invoice.age < 120 ? 0.0 : invoice.balance;
+          break;
+        case InvoiceReportFields.record_state:
+          value = AppLocalization.of(navigatorKey.currentContext!)!
+              .lookup(invoice.entityState);
           break;
       }
 

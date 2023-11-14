@@ -61,6 +61,7 @@ class DeviceSettingsVM {
     required this.onEnableTouchEventsChanged,
     required this.onEnableTooltipsChanged,
     required this.onEnableFlexibleSearchChanged,
+    required this.onDownloadsFolderChanged,
   });
 
   static DeviceSettingsVM fromStore(Store<AppState> store) {
@@ -97,6 +98,9 @@ class DeviceSettingsVM {
       },
       onTapSelectedChanged: (context, value) async {
         store.dispatch(UpdateUserPreferences(tapSelectedToEdit: value));
+      },
+      onDownloadsFolderChanged: (context, value) async {
+        store.dispatch(UpdateUserPreferences(downloadsFolder: value));
       },
       onEnableTouchEventsChanged: (context, value) async {
         store.dispatch(UpdateUserPreferences(enableTouchEvents: value));
@@ -221,5 +225,6 @@ class DeviceSettingsVM {
   final Function(BuildContext, bool) onEnableTooltipsChanged;
   final Function(BuildContext, bool) onEnableFlexibleSearchChanged;
   final Function(BuildContext, double) onTextScaleFactorChanged;
+  final Function(BuildContext, String) onDownloadsFolderChanged;
   final Future<bool> authenticationSupported;
 }

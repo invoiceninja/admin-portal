@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+
+Name=Invoice Ninja
+Comment=Create invoices, accept payments, track expenses & time tasks
+Categories=Productivity;
+
+Icon=com.invoiceninja.InvoiceNinja
+Exec=invoiceninja_client
+Terminal=false
+StartupWMClass=invoiceninja_client

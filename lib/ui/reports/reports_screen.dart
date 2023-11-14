@@ -119,7 +119,10 @@ class ReportsScreen extends StatelessWidget {
       ],
       kReportProduct,
       kReportProfitAndLoss,
-      kReportTask,
+      if (state.company.isModuleEnabled(EntityType.task)) ...[
+        kReportTask,
+        kReportTaskItem,
+      ],
       if (state.company.isModuleEnabled(EntityType.vendor)) ...[
         kReportVendor,
         if (state.company.isModuleEnabled(EntityType.purchaseOrder))
@@ -186,6 +189,10 @@ class ReportsScreen extends StatelessWidget {
             DropdownMenuItem(
               child: Text(localization.month),
               value: kReportGroupMonth,
+            ),
+            DropdownMenuItem(
+              child: Text(localization.quarter),
+              value: kReportGroupQuarter,
             ),
             DropdownMenuItem(
               child: Text(localization.year),
@@ -1390,6 +1397,9 @@ class ReportResult {
               customStartDate = group;
               if (reportState.subgroup == kReportGroupDay) {
                 customEndDate = convertDateTimeToSqlDate(date);
+              } else if (reportState.subgroup == kReportGroupQuarter) {
+                customEndDate =
+                    convertDateTimeToSqlDate(addDays(addMonths(date!, 3), -1));
               } else if (reportState.subgroup == kReportGroupMonth) {
                 customEndDate =
                     convertDateTimeToSqlDate(addDays(addMonths(date!, 1), -1));

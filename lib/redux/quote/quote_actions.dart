@@ -12,6 +12,7 @@ import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
+import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
@@ -681,7 +682,16 @@ Future handleQuoteAction(
             ..designId = designId));
       break;
     case EntityAction.download:
-      launchUrl(Uri.parse(quote.invitationDownloadLink));
+      store.dispatch(StartLoading());
+      await WebClient()
+          .get(quote.invitationDownloadLink, state.token, rawResponse: true)
+          .then((response) {
+        store.dispatch(StopLoading());
+        saveDownloadedFile(response.bodyBytes,
+            localization!.quote + '_' + quote.number + '.pdf');
+      }).catchError((_) {
+        store.dispatch(StopLoading());
+      });
       break;
     case EntityAction.bulkDownload:
       store.dispatch(DownloadQuotesRequest(
@@ -731,7 +741,7 @@ Future handleQuoteAction(
       final url = invitation.downloadLink;
       store.dispatch(StartSaving());
       final http.Response? response =
-          await WebClient().get(url, '', rawResponse: true);
+          await WebClient().get(url, state.token, rawResponse: true);
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
       break;

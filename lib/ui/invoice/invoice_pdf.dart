@@ -1,7 +1,5 @@
 // Dart imports:
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io' as file;
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
@@ -9,15 +7,14 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:printing/printing.dart';
-import 'package:share_plus/share_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -29,13 +26,9 @@ import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
-import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-
-import 'package:invoiceninja_flutter/utils/web_stub.dart'
-    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
 
 class InvoicePdfView extends StatefulWidget {
   const InvoicePdfView({
@@ -54,8 +47,8 @@ class InvoicePdfView extends StatefulWidget {
 class _InvoicePdfViewState extends State<InvoicePdfView> {
   bool _isLoading = true;
   bool _isDeliveryNote = false;
+  String? _designId;
   String? _activityId;
-  String? _pdfString;
   http.Response? _response;
   //int _pageCount = 1;
   //int _currentPage = 1;
@@ -70,13 +63,13 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
     loadPdf();
   }
 
   void loadPdf() {
     final viewModel = widget.viewModel;
     final invoice = viewModel.invoice!;
-    final state = viewModel.state;
 
     if (invoice.invitations.isEmpty) {
       return;
@@ -91,16 +84,11 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
       invoice,
       _isDeliveryNote,
       _activityId,
+      _designId,
     ).then((response) async {
       setState(() {
         _response = response;
         _isLoading = false;
-
-        if (kIsWeb && state!.prefState.enableNativeBrowser) {
-          _pdfString = 'data:application/pdf;base64,' +
-              base64Encode(response!.bodyBytes);
-          WebUtils.registerWebView(_pdfString);
-        }
       });
     }).catchError((Object error) {
       setState(() {
@@ -144,66 +132,77 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
           ];
     */
 
-    final activitySelector = _activityId == null || kIsWeb
-        ? <Widget>[]
-        : [
-            Theme(
-              data: state.prefState.enableDarkMode || state.hasAccentColor
-                  ? ThemeData.dark()
-                  : ThemeData.light(),
-              child: Flexible(
-                child: IgnorePointer(
-                  ignoring: _isLoading,
-                  child: AppDropdownButton<String>(
-                      value: _activityId,
-                      onChanged: (dynamic activityId) {
-                        setState(() {
-                          _activityId = activityId;
-                          loadPdf();
-                        });
-                      },
-                      items: invoice.history
-                          .map((history) => DropdownMenuItem(
-                                child: Text(formatNumber(
-                                        history.amount, context,
-                                        clientId: invoice.clientId)! +
-                                    ' • ' +
-                                    formatDate(
-                                        convertTimestampToDateString(
-                                            history.createdAt),
-                                        context,
-                                        showTime: true)),
-                                value: history.activityId,
-                              ))
-                          .toList()),
+    final activityPicker = _activityId == null
+        ? SizedBox()
+        : Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 17),
+              child: IgnorePointer(
+                ignoring: _isLoading,
+                child: AppDropdownButton<String>(
+                    value: _activityId,
+                    onChanged: (dynamic activityId) {
+                      setState(() {
+                        _activityId = activityId;
+                        loadPdf();
+                      });
+                    },
+                    items: invoice.balanceHistory
+                        .map((history) => DropdownMenuItem(
+                              child: Text(formatNumber(history.amount, context,
+                                      clientId: invoice.clientId)! +
+                                  ' • ' +
+                                  formatDate(
+                                      convertTimestampToDateString(
+                                          history.createdAt),
+                                      context,
+                                      showTime: true)),
+                              value: history.activityId,
+                            ))
+                        .toList()),
+              ),
+            ),
+          );
+
+    final designPicker = _activityId != null ||
+            !hasDesignTemplatesForEntityType(
+                state.designState.map, invoice.entityType!)
+        ? SizedBox()
+        : Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 17),
+              child: IgnorePointer(
+                ignoring: _isLoading,
+                child: DesignPicker(
+                  initialValue: _designId,
+                  onSelected: (design) {
+                    setState(() {
+                      _designId = design?.id;
+                      loadPdf();
+                    });
+                  },
+                  label: localization.design,
+                  showBlank: true,
+                  entityType: invoice.entityType,
                 ),
               ),
             ),
-          ];
+          );
 
-    final deliveryNote = Theme(
-      data: ThemeData(
-        unselectedWidgetColor: state.headerTextColor,
-      ),
-      child: Container(
-        width: 200,
-        child: CheckboxListTile(
-          title: Text(
-            localization.deliveryNote,
-            style: TextStyle(
-              color: state.headerTextColor,
-            ),
-          ),
-          value: _isDeliveryNote,
-          onChanged: (value) {
-            setState(() {
-              _isDeliveryNote = !_isDeliveryNote;
-              loadPdf();
-            });
-          },
-          controlAffinity: ListTileControlAffinity.leading,
-          activeColor: state.accentColor,
+    final deliveryNote = Flexible(
+      child: CheckboxListTile(
+        title: Text(
+          localization.deliveryNote,
         ),
+        value: _isDeliveryNote,
+        onChanged: (value) {
+          setState(() {
+            _isDeliveryNote = !_isDeliveryNote;
+            loadPdf();
+          });
+        },
+        controlAffinity: ListTileControlAffinity.leading,
+        activeColor: state.accentColor,
       ),
     );
 
@@ -217,116 +216,84 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
     }
 
     return Scaffold(
-        backgroundColor: Colors.grey.shade300,
-        appBar: widget.showAppBar
-            ? AppBar(
-                centerTitle: false,
-                automaticallyImplyLeading: isMobile(context),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(EntityPresenter()
-                          .initialize(invoice, context)
-                          .title()!),
-                    ),
-                    if (isDesktop(context)) ...activitySelector,
-                    //if (isDesktop(context)) ...pageSelector,
-                    if (isDesktop(context) &&
-                        invoice.isInvoice &&
-                        _activityId == null)
-                      deliveryNote,
-                  ],
-                ),
-                actions: <Widget>[
-                  if (showEmail)
-                    TextButton(
-                      child: Text(localization.email,
-                          style: TextStyle(color: state.headerTextColor)),
-                      onPressed: () {
-                        handleEntityAction(invoice, EntityAction.sendEmail);
-                      },
-                    ),
-                  if (!invoice.isRecurring)
-                    AppTextButton(
-                      isInHeader: true,
-                      label: localization.download,
-                      onPressed: _response == null
-                          ? null
-                          : () async {
-                              if (_response == null) {
-                                launchUrl(
-                                    Uri.parse(invoice.invitationDownloadLink));
-                              } else {
-                                final fileName = localization
-                                        .lookup('${invoice.entityType}') +
+      backgroundColor: Colors.grey.shade300,
+      appBar: widget.showAppBar
+          ? AppBar(
+              centerTitle: false,
+              automaticallyImplyLeading: isMobile(context),
+              title:
+                  Text(EntityPresenter().initialize(invoice, context).title()!),
+              actions: <Widget>[
+                if (showEmail)
+                  TextButton(
+                    child: Text(localization.email,
+                        style: TextStyle(color: state.headerTextColor)),
+                    onPressed: () {
+                      handleEntityAction(invoice, EntityAction.sendEmail);
+                    },
+                  ),
+                if (!invoice.isRecurring)
+                  AppTextButton(
+                    isInHeader: true,
+                    label: localization.download,
+                    onPressed: _response == null
+                        ? null
+                        : () async {
+                            final fileName =
+                                localization.lookup('${invoice.entityType}') +
                                     '_' +
                                     (invoice.number.isEmpty
                                         ? localization.pending
                                         : invoice.number) +
                                     '.pdf';
-                                if (kIsWeb) {
-                                  WebUtils.downloadBinaryFile(
-                                      fileName, _response!.bodyBytes);
-                                } else {
-                                  final directory =
-                                      await getAppDownloadDirectory();
-
-                                  if (directory == null) {
-                                    return;
-                                  }
-
-                                  String filePath =
-                                      '$directory${file.Platform.pathSeparator}$fileName';
-
-                                  if (file.File(filePath).existsSync()) {
-                                    final timestamp =
-                                        DateTime.now().millisecondsSinceEpoch;
-                                    filePath = filePath.replaceFirst(
-                                        '.pdf', '_$timestamp.pdf');
-                                  }
-
-                                  final pdfData = file.File(filePath);
-                                  await pdfData
-                                      .writeAsBytes(_response!.bodyBytes);
-
-                                  if (isDesktopOS()) {
-                                    showToast(localization.fileSavedInPath
-                                        .replaceFirst(':path', directory));
-                                  } else {
-                                    await Share.shareXFiles([XFile(filePath)]);
-                                  }
-                                }
-                              }
-                            },
-                    ),
-                  if (isDesktop(context))
-                    TextButton(
-                      child: Text(localization.close,
-                          style: TextStyle(color: state.headerTextColor)),
-                      onPressed: () {
-                        viewEntity(entity: invoice);
-                      },
-                    ),
-                ],
-              )
-            : null,
-        body: _isLoading || _response == null
-            ? LoadingIndicator()
-            : (kIsWeb && state.prefState.enableNativeBrowser)
-                ? HtmlElementView(viewType: _pdfString!)
+                            saveDownloadedFile(_response!.bodyBytes, fileName);
+                          },
+                  ),
+                if (isDesktop(context))
+                  TextButton(
+                    child: Text(localization.close,
+                        style: TextStyle(color: state.headerTextColor)),
+                    onPressed: () {
+                      viewEntity(entity: invoice);
+                    },
+                  ),
+              ],
+            )
+          : null,
+      body: Column(
+        children: [
+          if (widget.showAppBar)
+            Material(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  children: [
+                    if (supportsDesignTemplates()) designPicker,
+                    activityPicker,
+                    if (invoice.isInvoice && _activityId == null) deliveryNote,
+                  ],
+                ),
+              ),
+            ),
+          Expanded(
+            child: _isLoading || _response == null
+                ? LoadingIndicator()
                 : PdfPreview(
                     build: (format) => _response!.bodyBytes,
                     canChangeOrientation: false,
                     canChangePageFormat: false,
                     canDebug: false,
-                    maxPageWidth: 800,
+                    maxPageWidth: 600,
                     pdfFileName:
                         localization.lookup(invoice.entityType!.snakeCase) +
                             '_' +
                             invoice.number +
                             '.pdf',
-                  ));
+                  ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -335,36 +302,28 @@ Future<Response?> _loadPDF(
   InvoiceEntity invoice,
   bool isDeliveryNote,
   String? activityId,
+  String? designId,
 ) async {
-  http.Response? response;
+  final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
+  final credentials = store.state.credentials;
+  final invitation = invoice.invitations.first;
 
-  if ((activityId ?? '').isNotEmpty || isDeliveryNote) {
-    final store = StoreProvider.of<AppState>(context);
-    final credential = store.state.credentials;
-    final url = isDeliveryNote
-        ? '/invoices/${invoice.id}/delivery_note'
-        : '/activities/download_entity/$activityId';
-    response = await WebClient()
-        .get('${credential.url}$url', credential.token, rawResponse: true);
+  var url = '';
+
+  if ((activityId ?? '').isNotEmpty) {
+    url = '${credentials.url}/activities/download_entity/$activityId';
   } else {
-    final invitation = invoice.invitations.first;
-    final url = invitation.downloadLink;
-    response = await WebClient().get(url, '', rawResponse: true);
-  }
-
-  if (response!.statusCode >= 400) {
-    String errorMessage =
-        '${response.statusCode}: ${response.reasonPhrase}\n\n';
-
-    try {
-      errorMessage += jsonDecode(response.body)['message'];
-    } catch (error) {
-      errorMessage += response.body;
+    if (isDeliveryNote) {
+      url = '${credentials.url}/invoices/${invoice.id}/delivery_note';
+    } else {
+      url = invitation.downloadLink;
     }
 
-    showErrorDialog(message: errorMessage);
-    throw errorMessage;
+    if ((designId ?? '').isNotEmpty) {
+      url += '&design_id=$designId';
+    }
   }
 
-  return response;
+  return await WebClient().get(url, state.token, rawResponse: true);
 }

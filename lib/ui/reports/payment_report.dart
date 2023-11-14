@@ -3,6 +3,8 @@ import 'package:built_collection/built_collection.dart';
 import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -45,6 +47,7 @@ enum PaymentReportFields {
   converted_amount,
   invoices,
   credits,
+  record_state,
 }
 
 var memoizedPaymentReport = memo8(
@@ -269,6 +272,10 @@ ReportResult paymentReport(
           break;
         case PaymentReportFields.credits:
           value = (paymentCreditMap[payment.id] ?? []).join(', ');
+          break;
+        case PaymentReportFields.record_state:
+          value = AppLocalization.of(navigatorKey.currentContext!)!
+              .lookup(payment.entityState);
           break;
       }
 

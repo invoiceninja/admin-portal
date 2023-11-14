@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/ui/reports/purchase_order_item_report.dart'
 import 'package:invoiceninja_flutter/ui/reports/purchase_order_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/recurring_expense_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/recurring_invoice_report.dart';
+import 'package:invoiceninja_flutter/ui/reports/task_item_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/transaction_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/vendor_report.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
@@ -202,6 +203,20 @@ class ReportsScreenVM {
         break;
       case kReportTask:
         reportResult = memoizedTaskReport(
+          state.userCompany,
+          state.uiState.reportsUIState,
+          state.taskState.map,
+          state.invoiceState.map,
+          state.groupState.map,
+          state.clientState.map,
+          state.taskStatusState.map,
+          state.userState.map,
+          state.projectState.map,
+          state.staticState,
+        );
+        break;
+      case kReportTaskItem:
+        reportResult = memoizedTaskItemReport(
           state.userCompany,
           state.uiState.reportsUIState,
           state.taskState.map,
@@ -637,6 +652,19 @@ GroupTotals calculateReportTotals({
         group = group.substring(0, 4) + '-01-01';
       } else if (reportState.subgroup == kReportGroupMonth) {
         group = group.substring(0, 7) + '-01';
+      } else if (reportState.subgroup == kReportGroupQuarter) {
+        final parts = group.split('-');
+        final month = parseInt(parts[1]) ?? 0;
+        group = parts[0] + '-';
+        if (month <= 3) {
+          group += '01-01';
+        } else if (month <= 6) {
+          group += '04-01';
+        } else if (month <= 9) {
+          group += '07-01';
+        } else {
+          group += '10-01';
+        }
       } else if (reportState.subgroup == kReportGroupWeek) {
         final date = DateTime.parse(group);
         final dateWeek =
