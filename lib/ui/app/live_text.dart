@@ -3,6 +3,7 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/widgets.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:window_manager/window_manager.dart';
 
 class LiveText extends StatefulWidget {
@@ -29,11 +30,13 @@ class _LiveTextState extends State<LiveText> {
   void initState() {
     super.initState();
     _timer = Timer.periodic(
-      widget.duration ?? Duration(milliseconds: 100),
+      widget.duration ?? Duration(milliseconds: 500),
       (Timer timer) async {
-        final isFocused = await windowManager.isFocused();
-        if (!isFocused) {
-          return;
+        if (isDesktopOS()) {
+          final isFocused = await windowManager.isFocused();
+          if (!isFocused) {
+            return;
+          }
         }
 
         if (mounted) {
