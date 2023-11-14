@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:io' as file;
 
 // Flutter imports:
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 
 // Package imports:
@@ -39,11 +40,18 @@ Future<List<MultipartFile>?> pickFiles({
       allowMultiple: allowMultiple,
     );
   } else {
-    final permission = await (fileType == FileType.image && Platform.isIOS
-        ? Permission.photos.request()
-        : Permission.storage.request());
+    final androidInfo = await DeviceInfoPlugin().androidInfo;
+    PermissionStatus status;
 
-    if (permission == PermissionStatus.granted) {
+    if (Platform.isIOS && fileType == FileType.image) {
+      status = await Permission.photos.request();
+    } else if (Platform.isAndroid && androidInfo.version.sdkInt >= 33) {
+      status = await Permission.photos.request();
+    } else {
+      status = await Permission.storage.request();
+    }
+
+    if (status == PermissionStatus.granted) {
       return _pickFiles(
         fileIndex: fileIndex,
         fileType: fileType,
