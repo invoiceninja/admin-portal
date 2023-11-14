@@ -631,8 +631,7 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
     case EntityAction.download:
       store.dispatch(StartLoading());
       await WebClient()
-          .get(credit.invitationEInvoiceDownloadLink, state.token,
-              rawResponse: true)
+          .get(credit.invitationDownloadLink, state.token, rawResponse: true)
           .then((response) {
         store.dispatch(StopLoading());
         saveDownloadedFile(response.bodyBytes,

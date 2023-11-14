@@ -829,7 +829,7 @@ void handlePurchaseOrderAction(BuildContext? context,
       break;
     case EntityAction.download:
       await WebClient()
-          .get(purchaseOrder.invitationEInvoiceDownloadLink, state.token,
+          .get(purchaseOrder.invitationDownloadLink, state.token,
               rawResponse: true)
           .then((response) {
         store.dispatch(StopLoading());
