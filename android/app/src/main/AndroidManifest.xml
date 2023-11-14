@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.CALL_PHONE"/>
 
@@ -15,6 +16,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
     <uses-feature android:name="android.hardware.camera.front" android:required="false"/>
     <uses-feature android:name="android.hardware.READ_EXTERNAL_STORAGE" android:required="false"/>
+    <uses-feature android:name="android.hardware.READ_MEDIA_IMAGES" android:required="false"/>
     <uses-feature android:name="android.hardware.CALL_PHONE" android:required="false"/>
 
     <application
