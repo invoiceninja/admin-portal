@@ -176,18 +176,18 @@ class _DocumentGridState extends State<DocumentGrid> {
                         final status = await Permission.camera.request();
                         if (status == PermissionStatus.granted) {
                           final multipartFiles = <MultipartFile>[];
-                          final images = await ImagePicker().pickMultiImage();
-                          for (var index = 0; index < images.length; index++) {
-                            final image = images[index];
+                          final image = await ImagePicker()
+                              .pickImage(source: ImageSource.camera);
+                          if (image != null) {
                             final croppedFile = (await ImageCropper()
                                 .cropImage(sourcePath: image.path))!;
                             final bytes = await croppedFile.readAsBytes();
                             final multipartFile = MultipartFile.fromBytes(
-                                'documents[$index]', bytes,
+                                'documents[0]', bytes,
                                 filename: image.path.split('/').last);
                             multipartFiles.add(multipartFile);
+                            widget.onUploadDocument(multipartFiles, _isPrivate);
                           }
-                          widget.onUploadDocument(multipartFiles, _isPrivate);
                         } else {
                           openAppSettings();
                         }
