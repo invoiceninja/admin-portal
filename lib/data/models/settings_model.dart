@@ -30,6 +30,21 @@ abstract class SettingsEntity
           clientSettings?.defaultPurchaseOrderDesignId ??
               groupSettings?.defaultPurchaseOrderDesignId ??
               companySettings?.defaultPurchaseOrderDesignId,
+      defaultStatementDesignId: clientSettings?.defaultStatementDesignId ??
+          groupSettings?.defaultStatementDesignId ??
+          companySettings?.defaultStatementDesignId,
+      defaultDeliveryNoteDesignId:
+          clientSettings?.defaultDeliveryNoteDesignId ??
+              groupSettings?.defaultDeliveryNoteDesignId ??
+              companySettings?.defaultDeliveryNoteDesignId,
+      defaultPaymentReceiptDesignId:
+          clientSettings?.defaultPaymentReceiptDesignId ??
+              groupSettings?.defaultPaymentReceiptDesignId ??
+              companySettings?.defaultPaymentReceiptDesignId,
+      defaultPaymentRefundDesignId:
+          clientSettings?.defaultPaymentRefundDesignId ??
+              groupSettings?.defaultPaymentRefundDesignId ??
+              companySettings?.defaultPaymentRefundDesignId,
       defaultInvoiceTerms: clientSettings?.defaultInvoiceTerms ??
           groupSettings?.defaultInvoiceTerms ??
           companySettings?.defaultInvoiceTerms,
