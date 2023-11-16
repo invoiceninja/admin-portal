@@ -8,10 +8,12 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_contacts_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class InvoiceEditContacts extends StatelessWidget {
   const InvoiceEditContacts({
@@ -61,6 +63,7 @@ class InvoiceEditContacts extends StatelessWidget {
           return _ContactListTile(
             fullName: contact.fullName,
             email: contact.email,
+            hash: '',
             invoice: invoice,
             invitation: invitation,
             onTap: () => invitation == null
@@ -97,6 +100,7 @@ class InvoiceEditContacts extends StatelessWidget {
           return _ContactListTile(
             fullName: contact.fullName,
             email: contact.email,
+            hash: client?.clientHash ?? '',
             invoice: invoice,
             invitation: invitation,
             onTap: () => invitation == null
@@ -114,12 +118,14 @@ class _ContactListTile extends StatelessWidget {
     required this.fullName,
     required this.email,
     required this.invoice,
+    required this.hash,
     this.invitation,
     this.onTap,
   });
 
   final String fullName;
   final String email;
+  final String hash;
   final InvoiceEntity invoice;
   final InvitationEntity? invitation;
   final Function? onTap;
@@ -128,6 +134,8 @@ class _ContactListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
+
+    /*
     final invitationButton = (invitation?.link ?? '').isNotEmpty
         ? IconButton(
             tooltip: localization.copyLink,
@@ -136,6 +144,55 @@ class _ContactListTile extends StatelessWidget {
               Clipboard.setData(ClipboardData(text: invitation!.link));
               showToast(localization.copiedToClipboard.replaceFirst(
                   ':value', invitation!.link.substring(0, 40) + '...'));
+            },
+          )
+        : SizedBox();
+    */
+
+    final invitationButton = (invitation?.link ?? '').isNotEmpty
+        ? PopupMenuButton<String>(
+            icon: Icon(Icons.more_vert),
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem<String>(
+                  child: IconText(
+                    text: localization.viewPortal,
+                    icon: Icons.open_in_new,
+                  ),
+                  value: localization.viewPortal,
+                ),
+                PopupMenuItem<String>(
+                  child: IconText(
+                    text: localization.copyLink,
+                    icon: Icons.copy,
+                  ),
+                  value: localization.copyLink,
+                ),
+                PopupMenuItem<String>(
+                  child: IconText(
+                    text: localization.reactivateEmail,
+                    icon: Icons.check_circle,
+                  ),
+                  value: localization.reactivateEmail,
+                ),
+              ];
+            },
+            onSelected: (String action) {
+              var viewLinkWithHash = invitation!.silentLink;
+              if (!viewLinkWithHash.contains('?')) {
+                viewLinkWithHash += '?';
+              }
+              viewLinkWithHash += '&client_hash=$hash';
+
+              if (action == localization.viewPortal) {
+                launchUrl(Uri.parse(viewLinkWithHash));
+              } else if (action == localization.copyLink) {
+                Clipboard.setData(ClipboardData(text: invitation!.link));
+                showToast(
+                    localization.copiedToClipboard.replaceFirst(':value ', ''));
+              } else if (action == localization.reactivateEmail) {
+                //
+              }
             },
           )
         : SizedBox();
