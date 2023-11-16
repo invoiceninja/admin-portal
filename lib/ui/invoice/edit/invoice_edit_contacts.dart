@@ -115,7 +115,7 @@ class InvoiceEditContacts extends StatelessWidget {
   }
 }
 
-class _ContactListTile extends StatelessWidget {
+class _ContactListTile extends StatefulWidget {
   const _ContactListTile({
     required this.fullName,
     required this.email,
@@ -131,6 +131,13 @@ class _ContactListTile extends StatelessWidget {
   final InvoiceEntity invoice;
   final InvitationEntity? invitation;
   final Function? onTap;
+
+  @override
+  State<_ContactListTile> createState() => _ContactListTileState();
+}
+
+class _ContactListTileState extends State<_ContactListTile> {
+  bool _showEmailError = true;
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +159,7 @@ class _ContactListTile extends StatelessWidget {
         : SizedBox();
     */
 
-    final invitationButton = (invitation?.link ?? '').isNotEmpty
+    final invitationButton = (widget.invitation?.link ?? '').isNotEmpty
         ? PopupMenuButton<String>(
             icon: Icon(Icons.more_vert),
             itemBuilder: (BuildContext context) {
@@ -174,16 +181,16 @@ class _ContactListTile extends StatelessWidget {
               ];
             },
             onSelected: (String action) {
-              var viewLinkWithHash = invitation!.silentLink;
+              var viewLinkWithHash = widget.invitation!.silentLink;
               if (!viewLinkWithHash.contains('?')) {
                 viewLinkWithHash += '?';
               }
-              viewLinkWithHash += '&client_hash=$hash';
+              viewLinkWithHash += '&client_hash=${widget.hash}';
 
               if (action == localization.viewPortal) {
                 launchUrl(Uri.parse(viewLinkWithHash));
               } else if (action == localization.copyLink) {
-                Clipboard.setData(ClipboardData(text: invitation!.link));
+                Clipboard.setData(ClipboardData(text: widget.invitation!.link));
                 showToast(
                     localization.copiedToClipboard.replaceFirst(':value ', ''));
               } else if (action == localization.reactivateEmail) {
@@ -202,8 +209,8 @@ class _ContactListTile extends StatelessWidget {
             children: [
               Checkbox(
                 activeColor: Theme.of(context).colorScheme.secondary,
-                value: invitation != null,
-                onChanged: (value) => onTap!(),
+                value: widget.invitation != null,
+                onChanged: (value) => widget.onTap!(),
               ),
               if (store.state.prefState.showPdfPreviewSideBySide)
                 invitationButton,
@@ -215,53 +222,60 @@ class _ContactListTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
-                  fullName.isNotEmpty
-                      ? fullName
+                  widget.fullName.isNotEmpty
+                      ? widget.fullName
                       : AppLocalization.of(context)!.blankContact,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                if (email.isNotEmpty) ...[
+                if (widget.email.isNotEmpty) ...[
                   Padding(
                     padding: const EdgeInsets.only(top: 4),
                     child: Text(
-                      email,
+                      widget.email,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
-                  if ((invitation?.emailStatus ?? '').isNotEmpty)
+                  if ((widget.invitation?.emailStatus ?? '').isNotEmpty)
                     Padding(
                       padding: const EdgeInsets.only(top: 2),
                       child: Text(
-                        localization.lookup(invitation!.latestEmailStatus) +
+                        localization
+                                .lookup(widget.invitation!.latestEmailStatus) +
                             ' • ' +
-                            formatDate(
-                                invitation!.latestEmailStatusDate, context),
+                            formatDate(widget.invitation!.latestEmailStatusDate,
+                                context),
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
-                  if ((invitation?.emailError ?? '').isNotEmpty &&
-                      invitation?.emailStatus !=
-                          InvitationEntity.EMAIL_STATUS_DELIVERED) ...[
-                    SizedBox(height: 16),
-                    OutlinedButton(
-                        onPressed: () {
-                          final credentials = state.credentials;
-                          store.dispatch(StartSaving());
-                          WebClient()
-                              .post(
-                                  '${credentials.url}/reactivate_email/${invitation!.messageId}',
-                                  credentials.token)
-                              .then((value) {
-                            store.dispatch(StopSaving());
-                            showToast(localization.emailReactivated);
-                          }).catchError((error) {
-                            store.dispatch(StopSaving());
-                          });
-                        },
-                        child: Text(localization.reactivateEmail)),
+                  if ((widget.invitation?.emailError ?? '').isNotEmpty &&
+                      widget.invitation?.emailStatus !=
+                          InvitationEntity.EMAIL_STATUS_DELIVERED &&
+                      _showEmailError) ...[
+                    if (state.isHosted) ...[
+                      SizedBox(height: 16),
+                      OutlinedButton(
+                          onPressed: () {
+                            final credentials = state.credentials;
+                            store.dispatch(StartSaving());
+                            WebClient()
+                                .post(
+                                    '${credentials.url}/reactivate_email/${widget.invitation!.messageId}',
+                                    credentials.token)
+                                .then((value) {
+                              store.dispatch(StopSaving());
+                              showToast(localization.emailReactivated);
+                              setState(() {
+                                _showEmailError = false;
+                              });
+                            }).catchError((error) {
+                              store.dispatch(StopSaving());
+                            });
+                          },
+                          child: Text(localization.reactivateEmail)),
+                    ],
                     SizedBox(height: 16),
                     Text(
-                      invitation!.emailError,
+                      widget.invitation!.emailError,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ],
