@@ -57,8 +57,10 @@ class InvoiceEditContacts extends StatelessWidget {
       return ScrollableListView(
         children: vendorContacts.map((contact) {
           final invitation = invoice.getInvitationForVendorContact(contact);
-          return _VendorContactListTile(
-            vendorContact: contact,
+
+          return _ContactListTile(
+            fullName: contact.fullName,
+            email: contact.email,
             invoice: invoice,
             invitation: invitation,
             onTap: () => invitation == null
@@ -92,8 +94,9 @@ class InvoiceEditContacts extends StatelessWidget {
         showScrollbar: true,
         children: clientContacts.map((contact) {
           final invitation = invoice.getInvitationForClientContact(contact);
-          return _ClientContactListTile(
-            clientContact: contact,
+          return _ContactListTile(
+            fullName: contact.fullName,
+            email: contact.email,
             invoice: invoice,
             invitation: invitation,
             onTap: () => invitation == null
@@ -106,16 +109,18 @@ class InvoiceEditContacts extends StatelessWidget {
   }
 }
 
-class _ClientContactListTile extends StatelessWidget {
-  const _ClientContactListTile({
-    required this.clientContact,
+class _ContactListTile extends StatelessWidget {
+  const _ContactListTile({
+    required this.fullName,
+    required this.email,
     required this.invoice,
     this.invitation,
     this.onTap,
   });
 
+  final String fullName;
+  final String email;
   final InvoiceEntity invoice;
-  final ClientContactEntity clientContact;
   final InvitationEntity? invitation;
   final Function? onTap;
 
@@ -157,113 +162,16 @@ class _ClientContactListTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  clientContact.fullName.isNotEmpty
-                      ? clientContact.fullName
+                  fullName.isNotEmpty
+                      ? fullName
                       : AppLocalization.of(context)!.blankContact,
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
-                if (clientContact.email.isNotEmpty) ...[
+                if (email.isNotEmpty) ...[
                   Padding(
                     padding: const EdgeInsets.only(top: 4),
                     child: Text(
-                      clientContact.email,
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ),
-                  if ((invitation?.emailStatus ?? '').isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 2),
-                      child: Text(
-                        localization.lookup(invitation!.latestEmailStatus) +
-                            ' • ' +
-                            formatDate(
-                                invitation!.latestEmailStatusDate, context),
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ),
-                  if ((invitation?.emailError ?? '').isNotEmpty &&
-                      invitation?.emailStatus !=
-                          InvitationEntity.EMAIL_STATUS_DELIVERED)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: Text(
-                        invitation!.emailError,
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ),
-                  SizedBox(height: 8),
-                ],
-              ],
-            ),
-          ),
-          if (!store.state.prefState.showPdfPreviewSideBySide) invitationButton,
-        ],
-      ),
-    );
-  }
-}
-
-class _VendorContactListTile extends StatelessWidget {
-  const _VendorContactListTile({
-    required this.vendorContact,
-    required this.invoice,
-    this.invitation,
-    this.onTap,
-  });
-
-  final InvoiceEntity invoice;
-  final VendorContactEntity vendorContact;
-  final InvitationEntity? invitation;
-  final Function? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final localization = AppLocalization.of(context)!;
-    final store = StoreProvider.of<AppState>(context);
-    final invitationButton = (invitation?.link ?? '').isNotEmpty
-        ? IconButton(
-            tooltip: localization.copyLink,
-            icon: Icon(Icons.copy),
-            onPressed: () {
-              Clipboard.setData(ClipboardData(text: invitation!.link));
-              showToast(localization.copiedToClipboard.replaceFirst(
-                  ':value', invitation!.link.substring(0, 40) + '...'));
-            },
-          )
-        : SizedBox();
-
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
-            children: [
-              Checkbox(
-                activeColor: Theme.of(context).colorScheme.secondary,
-                value: invitation != null,
-                onChanged: (value) => onTap!(),
-              ),
-              if (store.state.prefState.showPdfPreviewSideBySide)
-                invitationButton,
-            ],
-          ),
-          SizedBox(width: 8),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  vendorContact.fullName.isNotEmpty
-                      ? vendorContact.fullName
-                      : AppLocalization.of(context)!.blankContact,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                if (vendorContact.email.isNotEmpty) ...[
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4),
-                    child: Text(
-                      vendorContact.email,
+                      email,
                       style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
