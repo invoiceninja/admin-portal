@@ -6,6 +6,8 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
@@ -134,6 +136,7 @@ class _ContactListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
 
     /*
     final invitationButton = (invitation?.link ?? '').isNotEmpty
@@ -167,13 +170,6 @@ class _ContactListTile extends StatelessWidget {
                     icon: Icons.copy,
                   ),
                   value: localization.copyLink,
-                ),
-                PopupMenuItem<String>(
-                  child: IconText(
-                    text: localization.reactivateEmail,
-                    icon: Icons.check_circle,
-                  ),
-                  value: localization.reactivateEmail,
                 ),
               ];
             },
@@ -216,7 +212,7 @@ class _ContactListTile extends StatelessWidget {
           SizedBox(width: 8),
           Expanded(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text(
                   fullName.isNotEmpty
@@ -245,14 +241,30 @@ class _ContactListTile extends StatelessWidget {
                     ),
                   if ((invitation?.emailError ?? '').isNotEmpty &&
                       invitation?.emailStatus !=
-                          InvitationEntity.EMAIL_STATUS_DELIVERED)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8),
-                      child: Text(
-                        invitation!.emailError,
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
+                          InvitationEntity.EMAIL_STATUS_DELIVERED) ...[
+                    SizedBox(height: 16),
+                    OutlinedButton(
+                        onPressed: () {
+                          final credentials = state.credentials;
+                          store.dispatch(StartSaving());
+                          WebClient()
+                              .post(
+                                  '${credentials.url}/reactivate_email/${invitation!.messageId}',
+                                  credentials.token)
+                              .then((value) {
+                            store.dispatch(StopSaving());
+                            showToast(localization.emailReactivated);
+                          }).catchError((error) {
+                            store.dispatch(StopSaving());
+                          });
+                        },
+                        child: Text(localization.reactivateEmail)),
+                    SizedBox(height: 16),
+                    Text(
+                      invitation!.emailError,
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
+                  ],
                   SizedBox(height: 8),
                 ],
               ],
