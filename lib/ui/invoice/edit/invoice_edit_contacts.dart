@@ -251,7 +251,7 @@ class _ContactListTileState extends State<_ContactListTile> {
                       widget.invitation?.emailStatus !=
                           InvitationEntity.EMAIL_STATUS_DELIVERED &&
                       _showEmailError) ...[
-                    if (state.isHosted) ...[
+                    if (state.isUsingPostmark) ...[
                       SizedBox(height: 16),
                       OutlinedButton(
                           onPressed: () {
