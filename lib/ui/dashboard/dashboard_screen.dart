@@ -267,27 +267,32 @@ class _DashboardScreenState extends State<DashboardScreen>
               child: IconButton(
                 tooltip: localization!.enableReactApp,
                 onPressed: () async {
-                  final credentials = state.credentials;
-                  final account = state.account
-                      .rebuild((b) => b..setReactAsDefaultAP = true);
-                  final url = '${credentials.url}/accounts/${account.id}';
-                  final data = serializers.serializeWith(
-                      AccountEntity.serializer, account);
+                  confirmCallback(
+                      context: context,
+                      message: localization.enableReactApp,
+                      callback: (_) {
+                        final credentials = state.credentials;
+                        final account = state.account
+                            .rebuild((b) => b..setReactAsDefaultAP = true);
+                        final url = '${credentials.url}/accounts/${account.id}';
+                        final data = serializers.serializeWith(
+                            AccountEntity.serializer, account);
 
-                  store.dispatch(StartSaving());
-                  WebClient()
-                      .put(
-                    url,
-                    credentials.token,
-                    data: json.encode(data),
-                  )
-                      .then((dynamic _) {
-                    store.dispatch(StopSaving());
-                    WebUtils.reloadBrowser();
-                  }).catchError((Object error) {
-                    store.dispatch(StopSaving());
-                    showErrorDialog(message: error as String?);
-                  });
+                        store.dispatch(StartSaving());
+                        WebClient()
+                            .put(
+                          url,
+                          credentials.token,
+                          data: json.encode(data),
+                        )
+                            .then((dynamic _) {
+                          store.dispatch(StopSaving());
+                          WebUtils.reloadBrowser();
+                        }).catchError((Object error) {
+                          store.dispatch(StopSaving());
+                          showErrorDialog(message: error as String?);
+                        });
+                      });
                 },
                 icon: Icon(MdiIcons.react),
               ),

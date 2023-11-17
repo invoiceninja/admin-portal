@@ -117,7 +117,7 @@ class _EntityListTileState extends State<EntityListTile> {
               formatDate(entity.date, context);
     } else if (entity is ExpenseEntity) {
       defaultSubtitle =
-          formatNumber(entity.amount, context, clientId: entity.clientId)! +
+          formatNumber(entity.amount, context, currencyId: entity.currencyId)! +
               ' • ' +
               formatDate(entity.date, context);
     } else if (entity is TransactionEntity) {

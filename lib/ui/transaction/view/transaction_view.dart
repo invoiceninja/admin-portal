@@ -163,9 +163,9 @@ class _MatchDepositsState extends State<_MatchDeposits> {
   TextEditingController? _invoiceFilterController;
   TextEditingController? _paymentFilterController;
   FocusNode? _focusNode;
-  late List<InvoiceEntity?> _invoices;
-  late List<InvoiceEntity?> _selectedInvoices;
-  late List<PaymentEntity?> _payments;
+  late List<InvoiceEntity> _invoices;
+  late List<InvoiceEntity> _selectedInvoices;
+  late List<PaymentEntity> _payments;
   PaymentEntity? _selectedPayment;
 
   bool _matchExisting = false;
@@ -200,19 +200,12 @@ class _MatchDepositsState extends State<_MatchDeposits> {
   void updateInvoiceList() {
     final state = widget.viewModel.state;
     final invoiceState = state.invoiceState;
-    final transactions = widget.viewModel.transactions;
 
     _invoices = invoiceState.map.values.where((invoice) {
       if (_selectedInvoices.isNotEmpty) {
-        if (invoice.clientId != _selectedInvoices.first!.clientId) {
+        if (invoice.clientId != _selectedInvoices.first.clientId) {
           return false;
         }
-      }
-
-      if (transactions.isNotEmpty &&
-          state.clientState.get(invoice.clientId).currencyId !=
-              transactions.first.currencyId) {
-        return false;
       }
 
       if (invoice.isPaid || invoice.isDeleted!) {
@@ -258,14 +251,13 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       return true;
     }).toList();
     _invoices.sort((invoiceA, invoiceB) {
-      return invoiceB!.date.compareTo(invoiceA!.date);
+      return invoiceB.date.compareTo(invoiceA.date);
     });
   }
 
   void updatePaymentList() {
     final state = widget.viewModel.state;
     final paymentState = state.paymentState;
-    final transactions = widget.viewModel.transactions;
 
     _payments = paymentState.map.values.where((payment) {
       if (_selectedPayment != null) {
@@ -275,12 +267,6 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       }
 
       if (payment.transactionId.isNotEmpty || payment.isDeleted!) {
-        return false;
-      }
-
-      if (transactions.isNotEmpty &&
-          state.clientState.get(payment.clientId).currencyId !=
-              transactions.first.currencyId) {
         return false;
       }
 
@@ -323,7 +309,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       return true;
     }).toList();
     _payments.sort((paymentA, paymentB) {
-      return paymentB!.date.compareTo(paymentA!.date);
+      return paymentB.date.compareTo(paymentA.date);
     });
   }
 
@@ -355,16 +341,20 @@ class _MatchDepositsState extends State<_MatchDeposits> {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
 
-    String? currencyId;
-    if (_selectedInvoices.isNotEmpty) {
-      currencyId =
-          state.clientState.get(_selectedInvoices.first!.clientId).currencyId;
-    }
-
-    double totalSelected = 0;
+    final totalSelected = <String, double>{};
     _selectedInvoices.forEach((invoice) {
-      totalSelected += invoice!.balanceOrAmount;
+      final client = state.clientState.get(invoice.clientId);
+      final currencyId = client.currencyId ?? kCurrencyUSDollar;
+      if (!totalSelected.containsKey(currencyId)) {
+        totalSelected[currencyId] = 0;
+      }
+      totalSelected[currencyId] =
+          totalSelected[currencyId]! + invoice.balanceOrAmount;
     });
+    final totalSelectedString = totalSelected.keys.map((currencyId) {
+      return formatNumber(totalSelected[currencyId], context,
+          currencyId: currencyId);
+    }).join(' | ');
 
     return Column(
       mainAxisSize: MainAxisSize.max,
@@ -552,7 +542,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                 separatorBuilder: (context, index) => ListDivider(),
                 itemCount: _payments.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final payment = _payments[index]!;
+                  final payment = _payments[index];
                   return PaymentListItem(
                     payment: payment,
                     showCheckbox: true,
@@ -581,7 +571,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                 separatorBuilder: (context, index) => ListDivider(),
                 itemCount: _invoices.length,
                 itemBuilder: (BuildContext context, int index) {
-                  final invoice = _invoices[index]!;
+                  final invoice = _invoices[index];
                   return InvoiceListItem(
                     invoice: invoice,
                     showCheckbox: true,
@@ -604,7 +594,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Text(
-                '${_selectedInvoices.length} ${localization.selected} • ${formatNumber(totalSelected, context, currencyId: currencyId)}',
+                '${_selectedInvoices.length} ${localization.selected} • $totalSelectedString',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.grey),
               ),
@@ -642,7 +632,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
                               viewModel.onConvertToPayment(
                                 context,
                                 _selectedInvoices
-                                    .map((invoice) => invoice!.id)
+                                    .map((invoice) => invoice.id)
                                     .toList(),
                               );
                             },
@@ -689,7 +679,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
   late List<ExpenseEntity?> _expenses;
   VendorEntity? _selectedVendor;
   ExpenseCategoryEntity? _selectedCategory;
-  late List<ExpenseEntity?> _selectedExpenses;
+  late List<ExpenseEntity> _selectedExpenses;
 
   @override
   void initState() {
@@ -793,15 +783,9 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
   void updateExpenseList() {
     final state = widget.viewModel.state;
     final expenseState = state.expenseState;
-    final transactions = widget.viewModel.transactions;
 
     _expenses = expenseState.map.values.where((expense) {
       if (expense.transactionId.isNotEmpty || expense.isDeleted!) {
-        return false;
-      }
-
-      if (transactions.isNotEmpty &&
-          expense.currencyId != transactions.first.currencyId) {
         return false;
       }
 
@@ -889,16 +873,18 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
     final transaction =
         transactions.isNotEmpty ? transactions.first : TransactionEntity();
 
-    String? currencyId;
-    if (_selectedExpenses.isNotEmpty) {
-      currencyId =
-          state.clientState.get(_selectedExpenses.first!.clientId!).currencyId;
-    }
-
-    double totalSelected = 0;
+    final totalSelected = <String, double>{};
     _selectedExpenses.forEach((expense) {
-      totalSelected += expense!.grossAmount;
+      if (!totalSelected.containsKey(expense.currencyId)) {
+        totalSelected[expense.currencyId] = 0;
+      }
+      totalSelected[expense.currencyId] =
+          totalSelected[expense.currencyId]! + expense.grossAmount;
     });
+    final totalSelectedString = totalSelected.keys.map((currencyId) {
+      return formatNumber(totalSelected[currencyId], context,
+          currencyId: currencyId);
+    }).join(' | ');
 
     return Column(
       mainAxisSize: MainAxisSize.max,
@@ -1063,7 +1049,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                       store.dispatch(SaveTransactionSuccess(transaction.rebuild(
                           (b) => b
                             ..pendingExpenseId = _selectedExpenses
-                                .map((expense) => expense!.id)
+                                .map((expense) => expense.id)
                                 .join(','))));
                     }),
                   );
@@ -1258,7 +1244,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             child: Text(
-              '${_selectedExpenses.length} ${localization.selected} • ${formatNumber(totalSelected, context, currencyId: currencyId)}',
+              '${_selectedExpenses.length} ${localization.selected} • $totalSelectedString',
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.grey),
             ),
@@ -1283,7 +1269,7 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                               viewModel.onLinkToExpense(
                                 context,
                                 _selectedExpenses
-                                    .map((expense) => expense!.id)
+                                    .map((expense) => expense.id)
                                     .join(','),
                               );
                             },

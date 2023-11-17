@@ -455,6 +455,7 @@ class _LoginState extends State<LoginView> {
                                       val.isEmpty || val.trim().isEmpty
                                           ? localization.pleaseEnterYourEmail
                                           : null,
+                                  autofillHints: [AutofillHints.username],
                                 ),
                               if (_loginType == LOGIN_TYPE_EMAIL &&
                                   !_recoverPassword)
