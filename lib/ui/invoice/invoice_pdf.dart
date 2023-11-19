@@ -10,9 +10,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
-import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:printing/printing.dart';
 
@@ -164,6 +162,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
             ),
           );
 
+    /*
     final designPicker = _activityId != null ||
             !hasDesignTemplatesForEntityType(
                 state.designState.map, invoice.entityType!)
@@ -188,6 +187,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
               ),
             ),
           );
+    */
 
     final deliveryNote = Flexible(
       child: CheckboxListTile(
@@ -268,7 +268,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Row(
                   children: [
-                    if (supportsDesignTemplates()) designPicker,
+                    //if (supportsDesignTemplates()) designPicker,
                     activityPicker,
                     if (invoice.isInvoice && _activityId == null) deliveryNote,
                   ],
