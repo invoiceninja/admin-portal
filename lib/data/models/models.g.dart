@@ -100,6 +100,7 @@ const EntityAction _$increasePrices = const EntityAction._('increasePrices');
 const EntityAction _$setTaxCategory = const EntityAction._('setTaxCategory');
 const EntityAction _$eInvoice = const EntityAction._('eInvoice');
 const EntityAction _$unlink = const EntityAction._('unlink');
+const EntityAction _$runTemplate = const EntityAction._('runTemplate');
 
 EntityAction _$valueOf(String name) {
   switch (name) {
@@ -269,6 +270,8 @@ EntityAction _$valueOf(String name) {
       return _$eInvoice;
     case 'unlink':
       return _$unlink;
+    case 'runTemplate':
+      return _$runTemplate;
     default:
       throw new ArgumentError(name);
   }
@@ -359,6 +362,7 @@ final BuiltSet<EntityAction> _$values =
   _$setTaxCategory,
   _$eInvoice,
   _$unlink,
+  _$runTemplate,
 ]);
 
 Serializer<EntityAction> _$entityActionSerializer =
