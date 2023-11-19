@@ -624,6 +624,7 @@ class RunTemplateDialog extends StatefulWidget {
 
 class _RunTemplateDialogState extends State<RunTemplateDialog> {
   String _designId = '';
+  bool _sendEmail = false;
 
   @override
   Widget build(BuildContext context) {
@@ -649,14 +650,6 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            DesignPicker(
-              entityType: widget.entityType,
-              label: localization.template,
-              onSelected: (design) {
-                _designId = design?.id ?? '';
-              },
-            ),
-            SizedBox(height: 16),
             Text(
               localization.lookup(widget.entities.length == 1
                   ? widget.entityType.snakeCase
@@ -667,6 +660,26 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
             ...widget.entities
                 .map((entity) => Text(entity.listDisplayName))
                 .toList(),
+            SizedBox(height: 16),
+            DesignPicker(
+              entityType: widget.entityType,
+              label: localization.template,
+              onSelected: (design) {
+                _designId = design?.id ?? '';
+              },
+            ),
+            SizedBox(height: 16),
+            SwitchListTile(
+              value: _sendEmail,
+              title: Text(
+                localization.sendEmail,
+              ),
+              onChanged: (value) {
+                setState(() {
+                  _sendEmail = value;
+                });
+              },
+            ),
           ],
         ),
       ),
