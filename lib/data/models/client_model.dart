@@ -4,6 +4,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:collection/collection.dart';
 import 'package:diacritic/diacritic.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -12,7 +13,9 @@ import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/data/models/system_log_model.dart';
 import 'package:invoiceninja_flutter/data/models/tax_model.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
 import 'package:invoiceninja_flutter/redux/static/static_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
@@ -664,6 +667,14 @@ abstract class ClientEntity extends Object
 
     if (!isDeleted! && multiselect) {
       actions.add(EntityAction.documents);
+    }
+
+    if (!isDeleted!) {
+      final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
+      if (hasDesignTemplatesForEntityType(
+          store.state.designState.map, entityType)) {
+        actions.add(EntityAction.runTemplate);
+      }
     }
 
     if (!isDeleted! && !multiselect) {

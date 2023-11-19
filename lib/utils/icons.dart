@@ -129,6 +129,8 @@ IconData? getEntityActionIcon(EntityAction? entityAction) {
       return MdiIcons.xml;
     case EntityAction.unlink:
       return MdiIcons.pipeDisconnected;
+    case EntityAction.runTemplate:
+      return MdiIcons.arrowRightBoldCircleOutline;
     default:
       return null;
   }
