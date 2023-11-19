@@ -540,6 +540,15 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
         ),
       );
       break;
+    case EntityAction.runTemplate:
+      showDialog<void>(
+        context: context,
+        builder: (context) => RunTemplateDialog(
+          entityType: EntityType.client,
+          entities: clients,
+        ),
+      );
+      break;
     default:
       print('## Error: action $action not handled in client_actions');
   }

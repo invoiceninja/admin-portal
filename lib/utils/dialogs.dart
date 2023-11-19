@@ -7,6 +7,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
@@ -605,4 +606,70 @@ void addToInvoiceDialog({
           }).toList(),
         );
       });
+}
+
+class RunTemplateDialog extends StatefulWidget {
+  const RunTemplateDialog({
+    super.key,
+    required this.entityType,
+    required this.entities,
+  });
+
+  final EntityType entityType;
+  final List<BaseEntity> entities;
+
+  @override
+  State<RunTemplateDialog> createState() => _RunTemplateDialogState();
+}
+
+class _RunTemplateDialogState extends State<RunTemplateDialog> {
+  String _designId = '';
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context)!;
+
+    return AlertDialog(
+      title: Text(localization.runTemplate),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text(localization.close.toUpperCase()),
+        ),
+        TextButton(
+          onPressed: () {
+            //
+          },
+          child: Text(localization.start.toUpperCase()),
+        ),
+      ],
+      content: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            DesignPicker(
+              entityType: widget.entityType,
+              label: localization.template,
+              onSelected: (design) {
+                _designId = design?.id ?? '';
+              },
+            ),
+            SizedBox(height: 16),
+            Text(
+              localization.lookup(widget.entities.length == 1
+                  ? widget.entityType.snakeCase
+                  : widget.entityType.plural),
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            SizedBox(height: 8),
+            ...widget.entities
+                .map((entity) => Text(entity.listDisplayName))
+                .toList(),
+          ],
+        ),
+      ),
+    );
+  }
 }
