@@ -1,9 +1,11 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
@@ -23,6 +25,7 @@ import 'package:invoiceninja_flutter/ui/task/task_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TaskScreen extends StatelessWidget {
   const TaskScreen({
@@ -40,18 +43,18 @@ class TaskScreen extends StatelessWidget {
     final state = store.state;
     final company = store.state.company;
     final userCompany = store.state.userCompany;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     final statuses = [
       TaskStatusEntity().rebuild((b) => b
         ..id = kTaskStatusLogged
-        ..name = localization!.logged),
+        ..name = localization.logged),
       TaskStatusEntity().rebuild((b) => b
         ..id = kTaskStatusRunning
-        ..name = localization!.running),
+        ..name = localization.running),
       if (!state.prefState.showKanban)
         TaskStatusEntity().rebuild((b) => b
           ..id = kTaskStatusInvoiced
-          ..name = localization!.invoiced),
+          ..name = localization.invoiced),
       for (var statusId in memoizedSortedActiveTaskStatusIds(
           state.taskStatusState.list, state.taskStatusState.map))
         TaskStatusEntity().rebuild((b) => b
@@ -99,8 +102,57 @@ class TaskScreen extends StatelessWidget {
           },
         )
       ],
-      body:
-          state.prefState.showKanban ? KanbanViewBuilder() : TaskListBuilder(),
+      body: Column(children: [
+        // TODO once Firefox is supported
+        if (!state.prefState.hideTaskExtensionBanner &&
+            isDesktop(context) &&
+            (!kIsWeb || isChrome()))
+          ColoredBox(
+            color: Colors.orange,
+            child: Row(
+              children: [
+                SizedBox(width: 16),
+                Expanded(
+                  child: IconText(
+                    text: localization.taskExtensionBanner,
+                    icon: Icons.info_outline,
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    launchUrl(Uri.parse(kTaskExtensionYouTubeUrl));
+                  },
+                  child: Text(
+                    localization.watchVideo,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    launchUrl(Uri.parse(kTaskExtensionUrl));
+                  },
+                  child: Text(
+                    localization.viewExtension,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                IconButton(
+                  tooltip: localization.dismiss,
+                  onPressed: () {
+                    store.dispatch(DismissTaskExtensionBanner());
+                  },
+                  icon: Icon(Icons.clear),
+                ),
+                SizedBox(width: 12),
+              ],
+            ),
+          ),
+        Expanded(
+          child: state.prefState.showKanban
+              ? KanbanViewBuilder()
+              : TaskListBuilder(),
+        ),
+      ]),
       bottomNavigationBar: AppBottomBar(
         entityType: EntityType.task,
         iconButtons: [
@@ -166,7 +218,7 @@ class TaskScreen extends StatelessWidget {
                 Icons.add,
                 color: Colors.white,
               ),
-              tooltip: localization!.newTask,
+              tooltip: localization.newTask,
             )
           : null,
     );

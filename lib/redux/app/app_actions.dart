@@ -116,6 +116,8 @@ class DismissOneYearReviewAppPermanently implements PersistUI, PersistPrefs {}
 
 class DismissTwoYearReviewAppPermanently implements PersistUI, PersistPrefs {}
 
+class DismissTaskExtensionBanner implements PersistUI, PersistPrefs {}
+
 class ViewMainScreen {
   ViewMainScreen({this.addDelay = false});
 

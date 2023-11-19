@@ -53,6 +53,11 @@ const String kFacebookUrl = 'https://www.facebook.com/invoiceninja';
 const String kYouTubeUrl =
     'https://www.youtube.com/channel/UCXAHcBvhW05PDtWYIq7WDFA/videos';
 
+const String kTaskExtensionUrl =
+    'https://chromewebstore.google.com/detail/invoice-ninja-tasks/dlfcbfdpemfnjbjlladogijcchfmmaaf';
+const String kTaskExtensionYouTubeUrl =
+    'https://www.youtube.com/watch?v=UL0OklMJTEA&ab_channel=InvoiceNinja';
+
 const String kAppleOAuthClientId = 'com.invoiceninja.client';
 const String kAppleOAuthRedirectUrl = 'https://invoicing.co/auth/apple';
 

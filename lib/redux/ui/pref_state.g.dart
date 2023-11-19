@@ -220,6 +220,9 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'hideTwoYearReviewApp',
       serializers.serialize(object.hideTwoYearReviewApp,
           specifiedType: const FullType(bool)),
+      'hideTaskExtensionBanner',
+      serializers.serialize(object.hideTaskExtensionBanner,
+          specifiedType: const FullType(bool)),
       'editAfterSaving',
       serializers.serialize(object.editAfterSaving,
           specifiedType: const FullType(bool)),
@@ -400,6 +403,10 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           break;
         case 'hideTwoYearReviewApp':
           result.hideTwoYearReviewApp = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
+          break;
+        case 'hideTaskExtensionBanner':
+          result.hideTaskExtensionBanner = serializers.deserialize(value,
               specifiedType: const FullType(bool))! as bool;
           break;
         case 'editAfterSaving':
@@ -742,6 +749,8 @@ class _$PrefState extends PrefState {
   @override
   final bool hideTwoYearReviewApp;
   @override
+  final bool hideTaskExtensionBanner;
+  @override
   final bool editAfterSaving;
   @override
   final bool enableNativeBrowser;
@@ -792,6 +801,7 @@ class _$PrefState extends PrefState {
       required this.hideReviewApp,
       required this.hideOneYearReviewApp,
       required this.hideTwoYearReviewApp,
+      required this.hideTaskExtensionBanner,
       required this.editAfterSaving,
       required this.enableNativeBrowser,
       required this.textScaleFactor,
@@ -866,6 +876,8 @@ class _$PrefState extends PrefState {
     BuiltValueNullFieldError.checkNotNull(
         hideTwoYearReviewApp, r'PrefState', 'hideTwoYearReviewApp');
     BuiltValueNullFieldError.checkNotNull(
+        hideTaskExtensionBanner, r'PrefState', 'hideTaskExtensionBanner');
+    BuiltValueNullFieldError.checkNotNull(
         editAfterSaving, r'PrefState', 'editAfterSaving');
     BuiltValueNullFieldError.checkNotNull(
         enableNativeBrowser, r'PrefState', 'enableNativeBrowser');
@@ -924,6 +936,7 @@ class _$PrefState extends PrefState {
         hideReviewApp == other.hideReviewApp &&
         hideOneYearReviewApp == other.hideOneYearReviewApp &&
         hideTwoYearReviewApp == other.hideTwoYearReviewApp &&
+        hideTaskExtensionBanner == other.hideTaskExtensionBanner &&
         editAfterSaving == other.editAfterSaving &&
         enableNativeBrowser == other.enableNativeBrowser &&
         textScaleFactor == other.textScaleFactor &&
@@ -971,6 +984,7 @@ class _$PrefState extends PrefState {
     _$hash = $jc(_$hash, hideReviewApp.hashCode);
     _$hash = $jc(_$hash, hideOneYearReviewApp.hashCode);
     _$hash = $jc(_$hash, hideTwoYearReviewApp.hashCode);
+    _$hash = $jc(_$hash, hideTaskExtensionBanner.hashCode);
     _$hash = $jc(_$hash, editAfterSaving.hashCode);
     _$hash = $jc(_$hash, enableNativeBrowser.hashCode);
     _$hash = $jc(_$hash, textScaleFactor.hashCode);
@@ -1018,6 +1032,7 @@ class _$PrefState extends PrefState {
           ..add('hideReviewApp', hideReviewApp)
           ..add('hideOneYearReviewApp', hideOneYearReviewApp)
           ..add('hideTwoYearReviewApp', hideTwoYearReviewApp)
+          ..add('hideTaskExtensionBanner', hideTaskExtensionBanner)
           ..add('editAfterSaving', editAfterSaving)
           ..add('enableNativeBrowser', enableNativeBrowser)
           ..add('textScaleFactor', textScaleFactor)
@@ -1199,6 +1214,11 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   set hideTwoYearReviewApp(bool? hideTwoYearReviewApp) =>
       _$this._hideTwoYearReviewApp = hideTwoYearReviewApp;
 
+  bool? _hideTaskExtensionBanner;
+  bool? get hideTaskExtensionBanner => _$this._hideTaskExtensionBanner;
+  set hideTaskExtensionBanner(bool? hideTaskExtensionBanner) =>
+      _$this._hideTaskExtensionBanner = hideTaskExtensionBanner;
+
   bool? _editAfterSaving;
   bool? get editAfterSaving => _$this._editAfterSaving;
   set editAfterSaving(bool? editAfterSaving) =>
@@ -1272,6 +1292,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _hideReviewApp = $v.hideReviewApp;
       _hideOneYearReviewApp = $v.hideOneYearReviewApp;
       _hideTwoYearReviewApp = $v.hideTwoYearReviewApp;
+      _hideTaskExtensionBanner = $v.hideTaskExtensionBanner;
       _editAfterSaving = $v.editAfterSaving;
       _enableNativeBrowser = $v.enableNativeBrowser;
       _textScaleFactor = $v.textScaleFactor;
@@ -1344,6 +1365,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               hideReviewApp: BuiltValueNullFieldError.checkNotNull(hideReviewApp, r'PrefState', 'hideReviewApp'),
               hideOneYearReviewApp: BuiltValueNullFieldError.checkNotNull(hideOneYearReviewApp, r'PrefState', 'hideOneYearReviewApp'),
               hideTwoYearReviewApp: BuiltValueNullFieldError.checkNotNull(hideTwoYearReviewApp, r'PrefState', 'hideTwoYearReviewApp'),
+              hideTaskExtensionBanner: BuiltValueNullFieldError.checkNotNull(hideTaskExtensionBanner, r'PrefState', 'hideTaskExtensionBanner'),
               editAfterSaving: BuiltValueNullFieldError.checkNotNull(editAfterSaving, r'PrefState', 'editAfterSaving'),
               enableNativeBrowser: BuiltValueNullFieldError.checkNotNull(enableNativeBrowser, r'PrefState', 'enableNativeBrowser'),
               textScaleFactor: BuiltValueNullFieldError.checkNotNull(textScaleFactor, r'PrefState', 'textScaleFactor'),
