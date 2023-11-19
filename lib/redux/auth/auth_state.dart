@@ -47,7 +47,7 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
 
     if ([
       kAppProductionUrl,
-      kAppDemoUrl,
+      kFlutterDemoUrl,
       kAppStagingUrl,
       kAppStagingNetUrl,
     ].contains(cleanUrl)) {

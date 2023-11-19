@@ -259,40 +259,46 @@ class _DashboardScreenState extends State<DashboardScreen>
             ),
           if (!kReleaseMode ||
               (kIsWeb &&
-                  state.isSelfHosted &&
-                  state.userCompany.isAdmin &&
-                  !state.isDemo))
+                  (state.isHosted ||
+                      (state.isSelfHosted && state.userCompany.isAdmin))))
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: IconButton(
                 tooltip: localization!.enableReactApp,
                 onPressed: () async {
-                  confirmCallback(
-                      context: context,
-                      message: localization.enableReactApp,
-                      callback: (_) {
-                        final credentials = state.credentials;
-                        final account = state.account
-                            .rebuild((b) => b..setReactAsDefaultAP = true);
-                        final url = '${credentials.url}/accounts/${account.id}';
-                        final data = serializers.serializeWith(
-                            AccountEntity.serializer, account);
+                  if (state.isDemo) {
+                    launchUrl(Uri.parse(kReactDemoUrl));
+                  } else if (state.isHosted) {
+                    launchUrl(Uri.parse(kAppReactUrl));
+                  } else {
+                    confirmCallback(
+                        context: context,
+                        message: localization.enableReactApp,
+                        callback: (_) {
+                          final credentials = state.credentials;
+                          final account = state.account
+                              .rebuild((b) => b..setReactAsDefaultAP = true);
+                          final url =
+                              '${credentials.url}/accounts/${account.id}';
+                          final data = serializers.serializeWith(
+                              AccountEntity.serializer, account);
 
-                        store.dispatch(StartSaving());
-                        WebClient()
-                            .put(
-                          url,
-                          credentials.token,
-                          data: json.encode(data),
-                        )
-                            .then((dynamic _) {
-                          store.dispatch(StopSaving());
-                          WebUtils.reloadBrowser();
-                        }).catchError((Object error) {
-                          store.dispatch(StopSaving());
-                          showErrorDialog(message: error as String?);
+                          store.dispatch(StartSaving());
+                          WebClient()
+                              .put(
+                            url,
+                            credentials.token,
+                            data: json.encode(data),
+                          )
+                              .then((dynamic _) {
+                            store.dispatch(StopSaving());
+                            WebUtils.reloadBrowser();
+                          }).catchError((Object error) {
+                            store.dispatch(StopSaving());
+                            showErrorDialog(message: error as String?);
+                          });
                         });
-                      });
+                  }
                 },
                 icon: Icon(MdiIcons.react),
               ),

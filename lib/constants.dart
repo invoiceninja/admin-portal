@@ -10,10 +10,12 @@ const String kMinServerVersion = '5.0.4';
 const String kAppName = 'Invoice Ninja';
 const String kSiteUrl = 'https://invoiceninja.com';
 const String kAppProductionUrl = 'https://invoicing.co';
+const String kAppReactUrl = 'https://app.invoicing.co';
 const String kAppStagingUrl = 'https://staging.invoicing.co';
 const String kAppStagingNetUrl = 'https://invoiceninja.net';
 const String kAppLargeTestUrl = 'https://testv5.invoicing.co';
-const String kAppDemoUrl = 'https://demo.invoiceninja.com';
+const String kFlutterDemoUrl = 'https://demo.invoiceninja.com';
+const String kReactDemoUrl = 'https://react.invoicing.co/demo';
 const String kWhiteLabelUrl =
     'https://app.invoiceninja.com/buy_now/?account_key=AsFmBAeLXF0IKf7tmi0eiyZfmWW9hxMT&product_id=3';
 const String kPrivacyPolicyURL = 'https://www.invoiceninja.com/privacy-policy';

@@ -833,7 +833,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get isSelfHosted => !isHosted;
 
-  bool get isDemo => cleanApiUrl(authState.url) == kAppDemoUrl;
+  bool get isDemo => cleanApiUrl(authState.url) == kFlutterDemoUrl;
 
   bool get isStaging => cleanApiUrl(authState.url) == kAppStagingUrl;
 
