@@ -660,10 +660,9 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
             ...widget.entities
                 .map((entity) => Text(entity.listDisplayName))
                 .toList(),
-            SizedBox(height: 16),
+            SizedBox(height: 8),
             DesignPicker(
               entityType: widget.entityType,
-              label: localization.template,
               onSelected: (design) {
                 _designId = design?.id ?? '';
               },
