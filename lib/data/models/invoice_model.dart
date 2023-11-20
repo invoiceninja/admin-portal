@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/data/models/tax_model.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
+import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/money.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
@@ -1048,6 +1049,13 @@ abstract class InvoiceEntity extends Object
           if (isInvoice && state.company.settings.enableEInvoice == true) {
             actions.add(EntityAction.eInvoice);
           }
+        }
+      }
+
+      if (!isDeleted!) {
+        if (hasDesignTemplatesForEntityType(
+            store.state.designState.map, entityType!)) {
+          actions.add(EntityAction.runTemplate);
         }
       }
 
