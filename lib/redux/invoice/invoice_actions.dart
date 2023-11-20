@@ -850,7 +850,7 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
       break;
     case EntityAction.bulkPrint:
       store.dispatch(StartSaving());
-      final url = state.credentials.url! + '/invoices/bulk';
+      final url = state.credentials.url+ '/invoices/bulk';
       final data = json.encode(
           {'ids': invoiceIds, 'action': EntityAction.bulkPrint.toApiParam()});
       final http.Response? response = await WebClient()

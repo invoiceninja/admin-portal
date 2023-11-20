@@ -1336,7 +1336,7 @@ class _PdfPreviewState extends State<_PdfPreview> {
   void _loadPdf() async {
     final state = widget.state!;
     final settingsUIState = state.settingsUIState;
-    final url = state.credentials.url! + '/live_design';
+    final url = state.credentials.url+ '/live_design';
 
     final request = PdfPreviewRequest(
       entityType: widget.entityType.apiValue,

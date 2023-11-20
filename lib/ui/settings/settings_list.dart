@@ -54,7 +54,7 @@ class _SettingsListState extends State<SettingsList> {
     final settingsUIState = state.uiState.settingsUIState;
     final showAll = settingsUIState.entityType == EntityType.company;
 
-    if (state.credentials.token!.isEmpty) {
+    if (state.credentials.token.isEmpty) {
       return SizedBox();
     }
 

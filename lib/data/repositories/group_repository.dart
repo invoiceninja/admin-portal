@@ -33,7 +33,7 @@ class GroupRepository {
   }
 
   Future<BuiltList<GroupEntity>> loadList(Credentials credentials) async {
-    final url = credentials.url! + '/group_settings?';
+    final url = credentials.url+ '/group_settings?';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
@@ -49,7 +49,7 @@ class GroupRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url! +
+    final url = credentials.url+
         '/group_settings/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
@@ -67,10 +67,10 @@ class GroupRepository {
 
     if (group.isNew) {
       response = await webClient.post(
-          credentials.url! + '/group_settings', credentials.token,
+          credentials.url+ '/group_settings', credentials.token,
           data: json.encode(data));
     } else {
-      final url = credentials.url! + '/group_settings/${group.id}';
+      final url = credentials.url+ '/group_settings/${group.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

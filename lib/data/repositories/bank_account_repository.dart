@@ -26,7 +26,7 @@ class BankAccountRepository {
   }
 
   Future<BuiltList<BankAccountEntity>> loadList(Credentials credentials) async {
-    final String url = credentials.url! + '/bank_integrations?';
+    final String url = credentials.url+ '/bank_integrations?';
     final dynamic response = await webClient.get(url, credentials.token);
 
     final BankAccountListResponse bankAccountResponse = serializers
@@ -41,7 +41,7 @@ class BankAccountRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url! +
+    final url = credentials.url+
         '/bank_integrations/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
@@ -60,7 +60,7 @@ class BankAccountRepository {
 
     if (bankAccount.isNew) {
       response = await webClient.post(
-          credentials.url! + '/bank_integrations', credentials.token,
+          credentials.url+ '/bank_integrations', credentials.token,
           data: json.encode(data));
     } else {
       final url = '${credentials.url}/bank_integrations/${bankAccount.id}';

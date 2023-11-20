@@ -1,9 +1,12 @@
 // Flutter imports:
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
@@ -628,6 +631,8 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
     final localization = AppLocalization.of(context)!;
 
     return AlertDialog(
@@ -640,9 +645,29 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
           child: Text(localization.close.toUpperCase()),
         ),
         TextButton(
-          onPressed: () {
-            //
-          },
+          onPressed: _designId.isEmpty
+              ? null
+              : () {
+                  final credentials = state.credentials;
+                  final url =
+                      '${credentials.url}/${widget.entityType.pluralApiValue}/bulk';
+                  final data = {
+                    'ids': widget.entities.map((entity) => entity.id).toList(),
+                    'entity': widget.entityType.apiValue,
+                    'template_id': _designId,
+                    'send_email': _sendEmail,
+                    'action': EntityAction.runTemplate.toApiParam(),
+                  };
+
+                  print('## DATA: $data');
+                  WebClient()
+                      .post(url, credentials.token, data: jsonEncode(data))
+                      .then((response) {
+                    print('## RESPONSE: $response');
+                  }).catchError((error) {
+                    print('## ERROR: $error');
+                  });
+                },
           child: Text(localization.start.toUpperCase()),
         ),
       ],
@@ -662,9 +687,12 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
                 .toList(),
             SizedBox(height: 8),
             DesignPicker(
+              autofocus: true,
               entityType: widget.entityType,
               onSelected: (design) {
-                _designId = design?.id ?? '';
+                setState(() {
+                  _designId = design?.id ?? '';
+                });
               },
             ),
             SizedBox(height: 16),

@@ -26,7 +26,7 @@ class ScheduleRepository {
   }
 
   Future<BuiltList<ScheduleEntity>> loadList(Credentials credentials) async {
-    final String url = credentials.url! + '/task_schedulers?';
+    final String url = credentials.url+ '/task_schedulers?';
     final dynamic response = await webClient.get(url, credentials.token);
 
     final ScheduleListResponse scheduleResponse =
@@ -41,7 +41,7 @@ class ScheduleRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url! +
+    final url = credentials.url+
         '/task_schedulers/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
@@ -59,7 +59,7 @@ class ScheduleRepository {
 
     if (schedule.isNew) {
       response = await webClient.post(
-          credentials.url! + '/task_schedulers', credentials.token,
+          credentials.url+ '/task_schedulers', credentials.token,
           data: json.encode(data));
     } else {
       final url = '${credentials.url}/task_schedulers/${schedule.id}';

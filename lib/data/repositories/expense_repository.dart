@@ -38,7 +38,7 @@ class ExpenseRepository {
 
   Future<BuiltList<ExpenseEntity>> loadList(Credentials credentials, int page,
       int createdAt, bool filterDeleted) async {
-    final url = credentials.url! +
+    final url = credentials.url+
         '/expenses?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
 
     /* Server is incorrect if client isn't set
@@ -63,7 +63,7 @@ class ExpenseRepository {
     }
 
     final url =
-        credentials.url! + '/expenses/bulk?per_page=$kMaxEntitiesPerBulkAction';
+        credentials.url+ '/expenses/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
@@ -80,10 +80,10 @@ class ExpenseRepository {
 
     if (expense.isNew) {
       response = await webClient.post(
-          credentials.url! + '/expenses', credentials.token,
+          credentials.url+ '/expenses', credentials.token,
           data: json.encode(data));
     } else {
-      final url = credentials.url! + '/expenses/${expense.id}';
+      final url = credentials.url+ '/expenses/${expense.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

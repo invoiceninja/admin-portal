@@ -31,7 +31,7 @@ class TokenRepository {
   }
 
   Future<BuiltList<TokenEntity>> loadList(Credentials credentials) async {
-    final url = credentials.url! + '/tokens?';
+    final url = credentials.url+ '/tokens?';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
@@ -48,7 +48,7 @@ class TokenRepository {
     }
 
     final url =
-        credentials.url! + '/tokens/bulk?per_page=$kMaxEntitiesPerBulkAction';
+        credentials.url+ '/tokens/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
@@ -69,7 +69,7 @@ class TokenRepository {
 
     if (token.isNew) {
       response = await webClient.post(
-        credentials.url! + '/tokens',
+        credentials.url+ '/tokens',
         credentials.token,
         data: json.encode(data),
         password: password,

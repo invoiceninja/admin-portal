@@ -13,6 +13,7 @@ class AppDropdownButton<T> extends StatelessWidget {
     this.blankValue = '',
     this.blankLabel,
     this.enabled = true,
+    this.autofocus = false,
   }) : super(key: key);
 
   final String? labelText;
@@ -21,6 +22,7 @@ class AppDropdownButton<T> extends StatelessWidget {
   final List<DropdownMenuItem<T>> items;
   final bool showBlank;
   final bool enabled;
+  final bool autofocus;
   final dynamic blankValue;
   final String? blankLabel;
   final DropdownButtonBuilder? selectedItemBuilder;
@@ -40,6 +42,7 @@ class AppDropdownButton<T> extends StatelessWidget {
           : InputDecoration.collapsed(hintText: ''),
       value: checkedValue == blankValue ? null : checkedValue,
       isExpanded: true,
+      autofocus: autofocus,
       isDense: labelText != null,
       onChanged: enabled ? onChanged : null,
       selectedItemBuilder: selectedItemBuilder,

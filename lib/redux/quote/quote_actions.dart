@@ -747,7 +747,7 @@ Future handleQuoteAction(
       break;
     case EntityAction.bulkPrint:
       store.dispatch(StartSaving());
-      final url = state.credentials.url! + '/quotes/bulk';
+      final url = state.credentials.url+ '/quotes/bulk';
       final data = json.encode(
           {'ids': quoteIds, 'action': EntityAction.bulkPrint.toApiParam()});
       final http.Response? response = await WebClient()

@@ -88,7 +88,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
           // Fix for CORS error using 'object' subdomain
           return CachedImage(
             width: MenuDrawer.LOGO_WIDTH,
-            url: state.credentials.url! + '/companies/' + company.id + '/logo',
+            url: state.credentials.url+ '/companies/' + company.id + '/logo',
             apiToken: state.userCompanyStates
                 .firstWhere((userCompanyState) =>
                     userCompanyState.company.id == company.id)
@@ -347,7 +347,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 // Hide options while refreshing data
-                state.credentials.token!.isEmpty
+                state.credentials.token.isEmpty
                     ? Expanded(child: SizedBox())
                     : Container(
                         padding:
@@ -358,7 +358,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                         child: state.isMenuCollapsed
                             ? _collapsedCompanySelector
                             : _expandedCompanySelector),
-                state.credentials.token!.isEmpty
+                state.credentials.token.isEmpty
                     ? SizedBox()
                     : Theme(
                         data: state.prefState.enableDarkMode ||
@@ -1069,7 +1069,7 @@ class SidebarFooter extends StatelessWidget {
                         ),
                       ]),
                 )
-              else if (state.credentials.token!.isEmpty)
+              else if (state.credentials.token.isEmpty)
                 IconButton(
                   tooltip: prefState.enableTooltips ? localization!.error : '',
                   icon: Icon(
@@ -1680,7 +1680,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
 
     setState(() => _isSaving = true);
     WebClient()
-        .post(state.credentials.url! + '/support/messages/send',
+        .post(state.credentials.url+ '/support/messages/send',
             state.credentials.token,
             data: json.encode({
               'message': _message,

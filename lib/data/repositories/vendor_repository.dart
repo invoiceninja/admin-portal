@@ -40,7 +40,7 @@ class VendorRepository {
   Future<BuiltList<VendorEntity>> loadList(
       Credentials credentials, int page) async {
     final String url =
-        credentials.url! + '/vendors?per_page=$kMaxRecordsPerPage&page=$page';
+        credentials.url+ '/vendors?per_page=$kMaxRecordsPerPage&page=$page';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
@@ -57,7 +57,7 @@ class VendorRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url! +
+    final url = credentials.url+
         '/vendors/bulk?per_page=$kMaxEntitiesPerBulkAction&include=activities';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
@@ -75,10 +75,10 @@ class VendorRepository {
 
     if (vendor.isNew) {
       response = await webClient.post(
-          credentials.url! + '/vendors?include=activities', credentials.token,
+          credentials.url+ '/vendors?include=activities', credentials.token,
           data: json.encode(data));
     } else {
-      final url = credentials.url! + '/vendors/${vendor.id}?include=activities';
+      final url = credentials.url+ '/vendors/${vendor.id}?include=activities';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

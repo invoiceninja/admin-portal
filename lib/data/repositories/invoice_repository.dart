@@ -39,7 +39,7 @@ class InvoiceRepository {
 
   Future<BuiltList<InvoiceEntity>> loadList(Credentials credentials, int page,
       int createdAt, bool filterDeleted) async {
-    String url = credentials.url! +
+    String url = credentials.url+
         '/invoices?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
 
     if (filterDeleted) {
@@ -63,7 +63,7 @@ class InvoiceRepository {
     }
 
     final url =
-        credentials.url! + '/invoices/bulk?per_page=$kMaxEntitiesPerBulkAction';
+        credentials.url+ '/invoices/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({
           'ids': ids,
@@ -88,7 +88,7 @@ class InvoiceRepository {
     String url;
 
     if (invoice.isNew) {
-      url = credentials.url! + '/invoices?include=activities.history';
+      url = credentials.url+ '/invoices?include=activities.history';
     } else {
       url =
           '${credentials.url}/invoices/${invoice.id}?include=activities.history';
@@ -143,7 +143,7 @@ class InvoiceRepository {
     };
 
     final dynamic response = await webClient.post(
-        credentials.url! + '/emails', credentials.token,
+        credentials.url+ '/emails', credentials.token,
         data: json.encode(data));
 
     final InvoiceItemResponse invoiceResponse =

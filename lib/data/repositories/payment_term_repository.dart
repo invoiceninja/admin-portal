@@ -32,7 +32,7 @@ class PaymentTermRepository {
   }
 
   Future<BuiltList<PaymentTermEntity>> loadList(Credentials credentials) async {
-    final url = credentials.url! + '/payment_terms?';
+    final url = credentials.url+ '/payment_terms?';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
@@ -48,7 +48,7 @@ class PaymentTermRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url! +
+    final url = credentials.url+
         '/payment_terms/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
@@ -67,7 +67,7 @@ class PaymentTermRepository {
 
     if (paymentTerm.isNew) {
       response = await webClient.post(
-          credentials.url! + '/payment_terms', credentials.token,
+          credentials.url+ '/payment_terms', credentials.token,
           data: json.encode(data));
     } else {
       final url = '${credentials.url}/payment_terms/${paymentTerm.id}';

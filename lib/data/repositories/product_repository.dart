@@ -40,7 +40,7 @@ class ProductRepository {
   Future<BuiltList<ProductEntity>> loadList(
       Credentials credentials, int page) async {
     final url =
-        credentials.url! + '/products?per_page=$kMaxRecordsPerPage&page=$page';
+        credentials.url+ '/products?per_page=$kMaxRecordsPerPage&page=$page';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
@@ -62,7 +62,7 @@ class ProductRepository {
     }
 
     final url =
-        credentials.url! + '/products/bulk?per_page=$kMaxEntitiesPerBulkAction';
+        credentials.url+ '/products/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(
       url,
       credentials.token,
@@ -89,10 +89,10 @@ class ProductRepository {
 
     if (product.isNew) {
       response = await webClient.post(
-          credentials.url! + '/products', credentials.token,
+          credentials.url+ '/products', credentials.token,
           data: json.encode(data));
     } else {
-      var url = credentials.url! + '/products/${product.id}';
+      var url = credentials.url+ '/products/${product.id}';
       if (changedStock) {
         url += '?update_in_stock_quantity=true';
       }
