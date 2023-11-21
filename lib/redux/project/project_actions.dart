@@ -3,7 +3,6 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
@@ -389,6 +388,15 @@ void handleProjectAction(
           ),
         );
       }
+      break;
+    case EntityAction.runTemplate:
+      showDialog<void>(
+        context: context,
+        builder: (context) => RunTemplateDialog(
+          entityType: EntityType.project,
+          entities: projects,
+        ),
+      );
       break;
     default:
       print('## Error: action $action not handled in project_actions');

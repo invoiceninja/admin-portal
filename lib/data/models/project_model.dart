@@ -3,10 +3,13 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:diacritic/diacritic.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
@@ -199,6 +202,14 @@ abstract class ProjectEntity extends Object
 
     if (!isDeleted! && multiselect) {
       actions.add(EntityAction.documents);
+    }
+
+    if (!isDeleted!) {
+      final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
+      if (hasDesignTemplatesForEntityType(
+          store.state.designState.map, entityType)) {
+        actions.add(EntityAction.runTemplate);
+      }
     }
 
     if (actions.isNotEmpty && actions.last != null) {

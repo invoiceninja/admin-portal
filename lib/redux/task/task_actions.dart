@@ -543,6 +543,15 @@ void handleTaskAction(
         );
       }
       break;
+    case EntityAction.runTemplate:
+      showDialog<void>(
+        context: context,
+        builder: (context) => RunTemplateDialog(
+          entityType: EntityType.task,
+          entities: tasks,
+        ),
+      );
+      break;
     default:
       print('## ERROR: unhandled action $action in task_actions');
       break;
