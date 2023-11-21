@@ -631,6 +631,29 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
   bool _sendEmail = false;
   bool _isLoading = false;
 
+  Future<Uint8List> loadTemplate(String jobHash) async {
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final credentials = state.credentials;
+    final url = '${credentials.url}/templates/preview/$jobHash';
+
+    Uint8List? data;
+
+    while (data == null) {
+      await Future.delayed(Duration(seconds: 3));
+
+      try {
+        final response =
+            await WebClient().post(url, credentials.token, rawResponse: true);
+        data = response.bodyBytes;
+      } catch (error) {
+        print('## CATCH ERROR: $error');
+      }
+    }
+
+    return data;
+  }
+
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
@@ -667,13 +690,18 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
 
                   WebClient()
                       .post(url, credentials.token, data: jsonEncode(data))
-                      .then((response) {
+                      .then((response) async {
                     print('## RESPONSE: $response');
-                    setState(() => _isLoading = false);
 
                     if (_sendEmail) {
+                      setState(() => _isLoading = false);
                       Navigator.of(navigatorKey.currentContext!).pop();
                       showToast(localization.exportedData);
+                    } else {
+                      final jobHash = response['message'];
+                      final data = await loadTemplate(jobHash);
+                      print('## DATA LENGTH: ${data.length}');
+                      setState(() => _isLoading = false);
                     }
                   }).catchError((error) {
                     print('## ERROR: $error');
