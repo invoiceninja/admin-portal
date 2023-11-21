@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
@@ -628,6 +629,7 @@ class RunTemplateDialog extends StatefulWidget {
 class _RunTemplateDialogState extends State<RunTemplateDialog> {
   String _designId = '';
   bool _sendEmail = false;
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -660,12 +662,22 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
                   };
 
                   print('## DATA: $data');
+
+                  setState(() => _isLoading = true);
+
                   WebClient()
                       .post(url, credentials.token, data: jsonEncode(data))
                       .then((response) {
                     print('## RESPONSE: $response');
+                    setState(() => _isLoading = false);
+
+                    if (_sendEmail) {
+                      Navigator.of(navigatorKey.currentContext!).pop();
+                      showToast(localization.exportedData);
+                    }
                   }).catchError((error) {
                     print('## ERROR: $error');
+                    setState(() => _isLoading = false);
                   });
                 },
           child: Text(localization.start.toUpperCase()),
@@ -685,28 +697,34 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
             ...widget.entities
                 .map((entity) => Text(entity.listDisplayName))
                 .toList(),
-            SizedBox(height: 8),
-            DesignPicker(
-              autofocus: true,
-              entityType: widget.entityType,
-              onSelected: (design) {
-                setState(() {
-                  _designId = design?.id ?? '';
-                });
-              },
-            ),
-            SizedBox(height: 16),
-            SwitchListTile(
-              value: _sendEmail,
-              title: Text(
-                localization.sendEmail,
+            if (_isLoading) ...[
+              SizedBox(height: 30),
+              LinearProgressIndicator()
+            ] else ...[
+              SizedBox(height: 8),
+              DesignPicker(
+                autofocus: true,
+                entityType: widget.entityType,
+                initialValue: _designId,
+                onSelected: (design) {
+                  setState(() {
+                    _designId = design?.id ?? '';
+                  });
+                },
               ),
-              onChanged: (value) {
-                setState(() {
-                  _sendEmail = value;
-                });
-              },
-            ),
+              SizedBox(height: 16),
+              SwitchListTile(
+                value: _sendEmail,
+                title: Text(
+                  localization.sendEmail,
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    _sendEmail = value;
+                  });
+                },
+              ),
+            ],
           ],
         ),
       ),
