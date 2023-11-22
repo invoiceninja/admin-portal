@@ -668,13 +668,15 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text(localization.close.toUpperCase()),
+          child: Text((_isLoading ? localization.cancel : localization.close)
+              .toUpperCase()),
         ),
         if (_data != null) ...[
           TextButton(
             onPressed: () {
               setState(() {
                 _data = null;
+                _designId = '';
               });
             },
             child: Text(
@@ -685,12 +687,12 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
             child: Text(localization.download.toUpperCase()),
             onPressed: () {
               final design = state.designState.map[_designId]!;
-              saveDownloadedFile(_data!, design.name);
+              saveDownloadedFile(_data!, '${design.name}.pdf');
             },
           ),
-        ] else
+        ] else if (!_isLoading)
           TextButton(
-            onPressed: _designId.isEmpty || _isLoading
+            onPressed: _designId.isEmpty
                 ? null
                 : () {
                     final credentials = state.credentials;
@@ -750,7 +752,8 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
                   Text(
                     localization.lookup(widget.entities.length == 1
                         ? widget.entityType.snakeCase
-                        : widget.entityType.plural),
+                        : widget.entityType.plural +
+                            ' (${widget.entities.length})'),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   SizedBox(height: 8),
