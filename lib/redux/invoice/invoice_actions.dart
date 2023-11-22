@@ -862,6 +862,7 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
     case EntityAction.runTemplate:
       showDialog<void>(
         context: navigatorKey.currentContext!,
+        barrierDismissible: false,
         builder: (context) => RunTemplateDialog(
           entityType: EntityType.invoice,
           entities: invoices,

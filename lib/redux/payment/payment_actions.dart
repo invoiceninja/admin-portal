@@ -414,6 +414,7 @@ void handlePaymentAction(
     case EntityAction.runTemplate:
       showDialog<void>(
         context: context,
+        barrierDismissible: false,
         builder: (context) => RunTemplateDialog(
           entityType: EntityType.payment,
           entities: payments,

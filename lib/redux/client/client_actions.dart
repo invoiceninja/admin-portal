@@ -543,6 +543,7 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
     case EntityAction.runTemplate:
       showDialog<void>(
         context: context,
+        barrierDismissible: false,
         builder: (context) => RunTemplateDialog(
           entityType: EntityType.client,
           entities: clients,

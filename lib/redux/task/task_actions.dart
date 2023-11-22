@@ -546,6 +546,7 @@ void handleTaskAction(
     case EntityAction.runTemplate:
       showDialog<void>(
         context: context,
+        barrierDismissible: false,
         builder: (context) => RunTemplateDialog(
           entityType: EntityType.task,
           entities: tasks,

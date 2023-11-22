@@ -34,6 +34,7 @@ import 'package:invoiceninja_flutter/utils/oauth.dart';
 
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+import 'package:printing/printing.dart';
 
 void showRefreshDataDialog(
     {required BuildContext context, bool includeStatic = false}) async {
@@ -630,28 +631,27 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
   String _designId = '';
   bool _sendEmail = false;
   bool _isLoading = false;
+  Uint8List? _data;
 
-  Future<Uint8List> loadTemplate(String jobHash) async {
+  Future<bool> loadTemplate(String jobHash) async {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final credentials = state.credentials;
     final url = '${credentials.url}/templates/preview/$jobHash';
 
-    Uint8List? data;
-
-    while (data == null) {
+    while (_data == null) {
       await Future.delayed(Duration(seconds: 3));
 
       try {
         final response =
             await WebClient().post(url, credentials.token, rawResponse: true);
-        data = response.bodyBytes;
+        _data = response.bodyBytes;
       } catch (error) {
         print('## CATCH ERROR: $error');
       }
     }
 
-    return data;
+    return _data != null;
   }
 
   @override
@@ -699,8 +699,7 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
                       showToast(localization.exportedData);
                     } else {
                       final jobHash = response['message'];
-                      final data = await loadTemplate(jobHash);
-                      print('## DATA LENGTH: ${data.length}');
+                      await loadTemplate(jobHash);
                       setState(() => _isLoading = false);
                     }
                   }).catchError((error) {
@@ -711,51 +710,63 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
           child: Text(localization.start.toUpperCase()),
         ),
       ],
-      content: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              localization.lookup(widget.entities.length == 1
-                  ? widget.entityType.snakeCase
-                  : widget.entityType.plural),
-              style: Theme.of(context).textTheme.bodySmall,
+      content: _data != null
+          ? SizedBox(
+              width: 600,
+              child: PdfPreview(
+                build: (format) => _data!,
+                canChangeOrientation: false,
+                canChangePageFormat: false,
+                allowPrinting: false,
+                allowSharing: false,
+                canDebug: false,
+              ),
+            )
+          : SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    localization.lookup(widget.entities.length == 1
+                        ? widget.entityType.snakeCase
+                        : widget.entityType.plural),
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  SizedBox(height: 8),
+                  ...widget.entities
+                      .map((entity) => Text(entity.listDisplayName))
+                      .toList(),
+                  if (_isLoading) ...[
+                    SizedBox(height: 32),
+                    LinearProgressIndicator()
+                  ] else ...[
+                    SizedBox(height: 16),
+                    DesignPicker(
+                      autofocus: true,
+                      entityType: widget.entityType,
+                      initialValue: _designId,
+                      onSelected: (design) {
+                        setState(() {
+                          _designId = design?.id ?? '';
+                        });
+                      },
+                    ),
+                    SizedBox(height: 16),
+                    SwitchListTile(
+                      value: _sendEmail,
+                      title: Text(
+                        localization.sendEmail,
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _sendEmail = value;
+                        });
+                      },
+                    ),
+                  ],
+                ],
+              ),
             ),
-            SizedBox(height: 8),
-            ...widget.entities
-                .map((entity) => Text(entity.listDisplayName))
-                .toList(),
-            if (_isLoading) ...[
-              SizedBox(height: 30),
-              LinearProgressIndicator()
-            ] else ...[
-              SizedBox(height: 8),
-              DesignPicker(
-                autofocus: true,
-                entityType: widget.entityType,
-                initialValue: _designId,
-                onSelected: (design) {
-                  setState(() {
-                    _designId = design?.id ?? '';
-                  });
-                },
-              ),
-              SizedBox(height: 16),
-              SwitchListTile(
-                value: _sendEmail,
-                title: Text(
-                  localization.sendEmail,
-                ),
-                onChanged: (value) {
-                  setState(() {
-                    _sendEmail = value;
-                  });
-                },
-              ),
-            ],
-          ],
-        ),
-      ),
     );
   }
 }
