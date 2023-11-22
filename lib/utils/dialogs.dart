@@ -672,6 +672,7 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
               .toUpperCase()),
         ),
         if (_data != null) ...[
+          /*
           TextButton(
             onPressed: () {
               setState(() {
@@ -683,6 +684,7 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
               localization.reset.toUpperCase(),
             ),
           ),
+          */
           TextButton(
             child: Text(localization.download.toUpperCase()),
             onPressed: () {
