@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
+import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
@@ -639,7 +640,7 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
     final credentials = state.credentials;
     final url = '${credentials.url}/templates/preview/$jobHash';
 
-    while (_data == null) {
+    while (_data == null && mounted) {
       await Future.delayed(Duration(seconds: 3));
 
       try {
@@ -669,46 +670,66 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
           },
           child: Text(localization.close.toUpperCase()),
         ),
-        TextButton(
-          onPressed: _designId.isEmpty
-              ? null
-              : () {
-                  final credentials = state.credentials;
-                  final url =
-                      '${credentials.url}/${widget.entityType.pluralApiValue}/bulk';
-                  final data = {
-                    'ids': widget.entities.map((entity) => entity.id).toList(),
-                    'entity': widget.entityType.apiValue,
-                    'template_id': _designId,
-                    'send_email': _sendEmail,
-                    'action': EntityAction.runTemplate.toApiParam(),
-                  };
+        if (_data != null) ...[
+          TextButton(
+            onPressed: () {
+              setState(() {
+                _data = null;
+              });
+            },
+            child: Text(
+              localization.reset.toUpperCase(),
+            ),
+          ),
+          TextButton(
+            child: Text(localization.download.toUpperCase()),
+            onPressed: () {
+              final design = state.designState.map[_designId]!;
+              saveDownloadedFile(_data!, design.name);
+            },
+          ),
+        ] else
+          TextButton(
+            onPressed: _designId.isEmpty || _isLoading
+                ? null
+                : () {
+                    final credentials = state.credentials;
+                    final url =
+                        '${credentials.url}/${widget.entityType.pluralApiValue}/bulk';
+                    final data = {
+                      'ids':
+                          widget.entities.map((entity) => entity.id).toList(),
+                      'entity': widget.entityType.apiValue,
+                      'template_id': _designId,
+                      'send_email': _sendEmail,
+                      'action': EntityAction.runTemplate.toApiParam(),
+                    };
 
-                  print('## DATA: $data');
+                    print('## DATA: $data');
 
-                  setState(() => _isLoading = true);
+                    setState(() => _isLoading = true);
 
-                  WebClient()
-                      .post(url, credentials.token, data: jsonEncode(data))
-                      .then((response) async {
-                    print('## RESPONSE: $response');
+                    WebClient()
+                        .post(url, credentials.token, data: jsonEncode(data))
+                        .then((response) async {
+                      print('## RESPONSE: $response');
 
-                    if (_sendEmail) {
+                      if (_sendEmail) {
+                        setState(() => _isLoading = false);
+                        Navigator.of(navigatorKey.currentContext!).pop();
+                        showToast(localization.exportedData);
+                      } else {
+                        final jobHash = response['message'];
+                        await loadTemplate(jobHash);
+                        setState(() => _isLoading = false);
+                      }
+                    }).catchError((error) {
+                      print('## ERROR: $error');
                       setState(() => _isLoading = false);
-                      Navigator.of(navigatorKey.currentContext!).pop();
-                      showToast(localization.exportedData);
-                    } else {
-                      final jobHash = response['message'];
-                      await loadTemplate(jobHash);
-                      setState(() => _isLoading = false);
-                    }
-                  }).catchError((error) {
-                    print('## ERROR: $error');
-                    setState(() => _isLoading = false);
-                  });
-                },
-          child: Text(localization.start.toUpperCase()),
-        ),
+                    });
+                  },
+            child: Text(localization.start.toUpperCase()),
+          ),
       ],
       content: _data != null
           ? SizedBox(
