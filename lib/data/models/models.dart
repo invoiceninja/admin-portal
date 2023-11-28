@@ -135,6 +135,7 @@ class EntityAction extends EnumClass {
   static const EntityAction setTaxCategory = _$setTaxCategory;
   static const EntityAction eInvoice = _$eInvoice;
   static const EntityAction unlink = _$unlink;
+  static const EntityAction runTemplate = _$runTemplate;
 
   @override
   String toString() {
@@ -178,6 +179,10 @@ class EntityAction extends EnumClass {
 
   String toApiParam() {
     final value = toString();
+
+    if (this == EntityAction.runTemplate) {
+      return 'template';
+    }
 
     if (this == EntityAction.sendEmail || this == EntityAction.bulkSendEmail) {
       return 'email';

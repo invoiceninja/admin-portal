@@ -43,6 +43,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       hideReviewApp: false,
       hideOneYearReviewApp: false,
       hideTwoYearReviewApp: false,
+      hideTaskExtensionBanner: false,
       showKanban: false,
       showPdfPreview: true,
       showPdfPreviewSideBySide: false,
@@ -170,6 +171,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   bool get hideTwoYearReviewApp;
 
+  bool get hideTaskExtensionBanner;
+
   bool get editAfterSaving;
 
   bool get enableNativeBrowser;
@@ -288,7 +291,8 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..colorTheme = kColorThemeLight
     ..darkColorTheme = kColorThemeDark
     ..enableDarkModeSystem = false
-    ..donwloadsFolder = '';
+    ..donwloadsFolder = ''
+    ..hideTaskExtensionBanner = false;
 
   static Serializer<PrefState> get serializer => _$prefStateSerializer;
 }

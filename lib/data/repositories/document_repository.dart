@@ -42,7 +42,7 @@ class DocumentRepository {
   }
 
   Future<BuiltList<DocumentEntity>> loadList(Credentials credentials) async {
-    final url = credentials.url! + '/documents?';
+    final url = credentials.url+ '/documents?';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
@@ -57,7 +57,7 @@ class DocumentRepository {
     final data = serializers.serializeWith(DocumentEntity.serializer, document);
     dynamic response;
 
-    final url = credentials.url! + '/documents/${document.id}';
+    final url = credentials.url+ '/documents/${document.id}';
 
     response =
         await webClient.put(url, credentials.token, data: json.encode(data));
@@ -74,7 +74,7 @@ class DocumentRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url! +
+    final url = credentials.url+
         '/documents/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));

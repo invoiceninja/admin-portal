@@ -33,7 +33,7 @@ class RecurringExpenseRepository {
   }
 
   Future<BuiltList<ExpenseEntity>> loadList(Credentials credentials) async {
-    final String url = credentials.url! + '/recurring_expenses?';
+    final String url = credentials.url+ '/recurring_expenses?';
     final dynamic response = await webClient.get(url, credentials.token);
 
     final ExpenseListResponse recurringExpenseResponse =
@@ -48,7 +48,7 @@ class RecurringExpenseRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url! +
+    final url = credentials.url+
         '/recurring_expenses/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
@@ -68,7 +68,7 @@ class RecurringExpenseRepository {
     String url;
 
     if (recurringExpense.isNew) {
-      url = credentials.url! + '/recurring_expenses?show_dates=true';
+      url = credentials.url+ '/recurring_expenses?show_dates=true';
     } else {
       url =
           '${credentials.url}/recurring_expenses/${recurringExpense.id}?show_dates=true';

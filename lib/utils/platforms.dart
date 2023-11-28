@@ -191,6 +191,13 @@ String getPlatformName() {
   return 'Unknown';
 }
 
+bool isChrome() {
+  String userAgent = WebUtils.getHtmlValue('user-agent') ?? '';
+  userAgent = userAgent.toLowerCase();
+
+  return userAgent.contains('chrome');
+}
+
 String getNativePlatform() {
   String userAgent = WebUtils.getHtmlValue('user-agent') ?? '';
   userAgent = userAgent.toLowerCase();

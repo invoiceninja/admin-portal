@@ -54,7 +54,7 @@ class _SettingsListState extends State<SettingsList> {
     final settingsUIState = state.uiState.settingsUIState;
     final showAll = settingsUIState.entityType == EntityType.company;
 
-    if (state.credentials.token!.isEmpty) {
+    if (state.credentials.token.isEmpty) {
       return SizedBox();
     }
 
@@ -556,7 +556,7 @@ class SettingsSearch extends StatelessWidget {
             'delivery_note_design#2023-11-06',
             'statement_design#2023-11-06',
             'payment_receipt_design#2023-11-06',
-            //'payment_refund_design#2023-11-06',
+            'payment_refund_design#2023-11-06',
           ],
         ],
       ],

@@ -244,6 +244,20 @@ class EntityType extends EnumClass {
     return snakeCase;
   }
 
+  String get pluralApiValue {
+    if (this == EntityType.transaction) {
+      return 'bank_transactions';
+    }
+
+    if (this == EntityType.expenseCategory) {
+      return 'expense_categories';
+    } else if (this == EntityType.taskStatus) {
+      return 'task_statuses';
+    }
+
+    return snakeCase + 's';
+  }
+
   String get readableValue {
     if (this == EntityType.paymentLink) {
       return 'payment_link';

@@ -1,12 +1,18 @@
 // Flutter imports:
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
+import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
@@ -29,6 +35,7 @@ import 'package:invoiceninja_flutter/utils/oauth.dart';
 
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+import 'package:printing/printing.dart';
 
 void showRefreshDataDialog(
     {required BuildContext context, bool includeStatic = false}) async {
@@ -605,4 +612,187 @@ void addToInvoiceDialog({
           }).toList(),
         );
       });
+}
+
+class RunTemplateDialog extends StatefulWidget {
+  const RunTemplateDialog({
+    super.key,
+    required this.entityType,
+    required this.entities,
+  });
+
+  final EntityType entityType;
+  final List<BaseEntity> entities;
+
+  @override
+  State<RunTemplateDialog> createState() => _RunTemplateDialogState();
+}
+
+class _RunTemplateDialogState extends State<RunTemplateDialog> {
+  String _designId = '';
+  bool _sendEmail = false;
+  bool _isLoading = false;
+  Uint8List? _data;
+
+  Future<bool> loadTemplate(String jobHash) async {
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final credentials = state.credentials;
+    final url = '${credentials.url}/templates/preview/$jobHash';
+
+    while (_data == null && mounted) {
+      await Future.delayed(Duration(seconds: 3));
+
+      try {
+        final response =
+            await WebClient().post(url, credentials.token, rawResponse: true);
+        _data = response.bodyBytes;
+      } catch (error) {
+        print('## CATCH ERROR: $error');
+      }
+    }
+
+    return _data != null;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final localization = AppLocalization.of(context)!;
+
+    return AlertDialog(
+      title: Text(localization.runTemplate),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text((_isLoading ? localization.cancel : localization.close)
+              .toUpperCase()),
+        ),
+        if (_data != null) ...[
+          /*
+          TextButton(
+            onPressed: () {
+              setState(() {
+                _data = null;
+                _designId = '';
+              });
+            },
+            child: Text(
+              localization.reset.toUpperCase(),
+            ),
+          ),
+          */
+          TextButton(
+            child: Text(localization.download.toUpperCase()),
+            onPressed: () {
+              final design = state.designState.map[_designId]!;
+              saveDownloadedFile(_data!, '${design.name}.pdf');
+            },
+          ),
+        ] else if (!_isLoading)
+          TextButton(
+            onPressed: _designId.isEmpty
+                ? null
+                : () {
+                    final credentials = state.credentials;
+                    final url =
+                        '${credentials.url}/${widget.entityType.pluralApiValue}/bulk';
+                    final data = {
+                      'ids':
+                          widget.entities.map((entity) => entity.id).toList(),
+                      'entity': widget.entityType.apiValue,
+                      'template_id': _designId,
+                      'send_email': _sendEmail,
+                      'action': EntityAction.runTemplate.toApiParam(),
+                    };
+
+                    print('## DATA: $data');
+
+                    setState(() => _isLoading = true);
+
+                    WebClient()
+                        .post(url, credentials.token, data: jsonEncode(data))
+                        .then((response) async {
+                      print('## RESPONSE: $response');
+
+                      if (_sendEmail) {
+                        setState(() => _isLoading = false);
+                        Navigator.of(navigatorKey.currentContext!).pop();
+                        showToast(localization.exportedData);
+                      } else {
+                        final jobHash = response['message'];
+                        await loadTemplate(jobHash);
+                        setState(() => _isLoading = false);
+                      }
+                    }).catchError((error) {
+                      print('## ERROR: $error');
+                      setState(() => _isLoading = false);
+                    });
+                  },
+            child: Text(localization.start.toUpperCase()),
+          ),
+      ],
+      content: _data != null
+          ? SizedBox(
+              width: 600,
+              child: PdfPreview(
+                build: (format) => _data!,
+                canChangeOrientation: false,
+                canChangePageFormat: false,
+                allowPrinting: false,
+                allowSharing: false,
+                canDebug: false,
+              ),
+            )
+          : SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    localization.lookup(widget.entities.length == 1
+                        ? widget.entityType.snakeCase
+                        : widget.entityType.plural +
+                            ' (${widget.entities.length})'),
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  SizedBox(height: 8),
+                  ...widget.entities
+                      .map((entity) => Text(entity.listDisplayName))
+                      .toList(),
+                  if (_isLoading) ...[
+                    SizedBox(height: 32),
+                    LinearProgressIndicator()
+                  ] else ...[
+                    SizedBox(height: 16),
+                    DesignPicker(
+                      autofocus: true,
+                      entityType: widget.entityType,
+                      initialValue: _designId,
+                      onSelected: (design) {
+                        setState(() {
+                          _designId = design?.id ?? '';
+                        });
+                      },
+                    ),
+                    SizedBox(height: 16),
+                    SwitchListTile(
+                      value: _sendEmail,
+                      title: Text(
+                        localization.sendEmail,
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _sendEmail = value;
+                        });
+                      },
+                    ),
+                  ],
+                ],
+              ),
+            ),
+    );
+  }
 }

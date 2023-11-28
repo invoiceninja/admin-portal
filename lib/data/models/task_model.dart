@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
@@ -690,6 +691,14 @@ abstract class TaskEntity extends Object
 
     if (!isDeleted! && multiselect) {
       actions.add(EntityAction.documents);
+    }
+
+    if (!isDeleted!) {
+      final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
+      if (hasDesignTemplatesForEntityType(
+          store.state.designState.map, entityType)) {
+        actions.add(EntityAction.runTemplate);
+      }
     }
 
     if (actions.isNotEmpty && actions.last != null) {

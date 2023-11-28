@@ -5,10 +5,13 @@ import 'package:built_value/serializer.dart';
 
 // Project imports:
 import 'package:collection/collection.dart' show IterableExtension;
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
+import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
@@ -438,6 +441,14 @@ abstract class PaymentEntity extends Object
         if (client != null && client.hasEmailAddress) {
           actions.add(EntityAction.sendEmail);
         }
+      }
+    }
+
+    if (!isDeleted!) {
+      final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
+      if (hasDesignTemplatesForEntityType(
+          store.state.designState.map, entityType)) {
+        actions.add(EntityAction.runTemplate);
       }
     }
 

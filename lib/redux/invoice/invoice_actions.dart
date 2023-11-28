@@ -10,6 +10,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
@@ -850,13 +851,23 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
       break;
     case EntityAction.bulkPrint:
       store.dispatch(StartSaving());
-      final url = state.credentials.url! + '/invoices/bulk';
+      final url = state.credentials.url + '/invoices/bulk';
       final data = json.encode(
           {'ids': invoiceIds, 'action': EntityAction.bulkPrint.toApiParam()});
       final http.Response? response = await WebClient()
           .post(url, state.credentials.token, data: data, rawResponse: true);
       store.dispatch(StopSaving());
       await Printing.layoutPdf(onLayout: (_) => response!.bodyBytes);
+      break;
+    case EntityAction.runTemplate:
+      showDialog<void>(
+        context: navigatorKey.currentContext!,
+        barrierDismissible: false,
+        builder: (context) => RunTemplateDialog(
+          entityType: EntityType.invoice,
+          entities: invoices,
+        ),
+      );
       break;
     case EntityAction.more:
       showEntityActionsDialog(

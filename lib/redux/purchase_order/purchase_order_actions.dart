@@ -632,7 +632,7 @@ void handlePurchaseOrderAction(BuildContext? context,
       break;
     case EntityAction.bulkPrint:
       store.dispatch(StartSaving());
-      final url = state.credentials.url! + '/purchase_orders/bulk';
+      final url = state.credentials.url+ '/purchase_orders/bulk';
       final data = json.encode({
         'ids': purchaseOrderIds,
         'action': EntityAction.bulkPrint.toApiParam()

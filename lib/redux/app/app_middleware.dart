@@ -271,7 +271,7 @@ Middleware<AppState> _createLoadState(
       String? token;
 
       if (Config.DEMO_MODE ||
-          cleanApiUrl(store.state.authState.url) == kAppDemoUrl) {
+          cleanApiUrl(store.state.authState.url) == kFlutterDemoUrl) {
         token = 'TOKEN';
       } else {
         final SharedPreferences prefs = await SharedPreferences.getInstance();

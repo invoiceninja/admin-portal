@@ -27,7 +27,7 @@ class TransactionRepository {
 
   Future<BuiltList<TransactionEntity>> loadList(
       Credentials credentials, int page, int createdAt) async {
-    final String url = credentials.url! +
+    final String url = credentials.url+
         '/bank_transactions?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
     final dynamic response = await webClient.get(url, credentials.token);
 
@@ -43,7 +43,7 @@ class TransactionRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url! +
+    final url = credentials.url+
         '/bank_transactions/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
@@ -56,7 +56,7 @@ class TransactionRepository {
 
   Future<TransactionEntity> convertToPayment(Credentials credentials,
       String? transactionId, List<String> invoiceIds) async {
-    final url = credentials.url! + '/bank_transactions/match';
+    final url = credentials.url+ '/bank_transactions/match';
     final dynamic response = await webClient.post(
       url,
       credentials.token,
@@ -84,7 +84,7 @@ class TransactionRepository {
     String vendorId,
     String categoryId,
   ) async {
-    final url = credentials.url! + '/bank_transactions/match';
+    final url = credentials.url+ '/bank_transactions/match';
     final dynamic response = await webClient.post(
       url,
       credentials.token,
@@ -109,7 +109,7 @@ class TransactionRepository {
 
   Future<TransactionEntity> linkToPayment(
       Credentials credentials, String? transactionId, String paymentId) async {
-    final url = credentials.url! + '/bank_transactions/match';
+    final url = credentials.url+ '/bank_transactions/match';
     final dynamic response = await webClient.post(
       url,
       credentials.token,
@@ -133,7 +133,7 @@ class TransactionRepository {
 
   Future<TransactionEntity> linkToExpense(
       Credentials credentials, String? transactionId, String expenseId) async {
-    final url = credentials.url! + '/bank_transactions/match';
+    final url = credentials.url+ '/bank_transactions/match';
     final dynamic response = await webClient.post(
       url,
       credentials.token,
@@ -163,7 +163,7 @@ class TransactionRepository {
 
     if (transaction.isNew) {
       response = await webClient.post(
-          credentials.url! + '/bank_transactions', credentials.token,
+          credentials.url+ '/bank_transactions', credentials.token,
           data: json.encode(data));
     } else {
       final url = '${credentials.url}/bank_transactions/${transaction.id}';

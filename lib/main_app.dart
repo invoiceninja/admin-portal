@@ -353,7 +353,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
 
           return StyledToast(
             locale: locale,
-            duration: Duration(seconds: 3),
+            duration: Duration(seconds: 4),
             backgroundColor:
                 state.prefState.enableDarkMode ? Colors.white : Colors.black,
             textStyle: TextStyle(

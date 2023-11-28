@@ -833,7 +833,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get isSelfHosted => !isHosted;
 
-  bool get isDemo => cleanApiUrl(authState.url) == kAppDemoUrl;
+  bool get isDemo => cleanApiUrl(authState.url) == kFlutterDemoUrl;
 
   bool get isStaging => cleanApiUrl(authState.url) == kAppStagingUrl;
 
@@ -1028,10 +1028,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 }
 
 class Credentials {
-  const Credentials({this.url, this.token});
+  const Credentials({required this.url, required this.token});
 
-  final String? url;
-  final String? token;
+  final String url;
+  final String token;
 }
 
 class SelectionState {

@@ -18,12 +18,14 @@ class DesignPicker extends StatelessWidget {
     this.initialValue,
     this.showBlank = false,
     this.entityType,
+    this.autofocus = false,
   });
 
   final Function(DesignEntity?) onSelected;
   final String? label;
   final String? initialValue;
   final bool showBlank;
+  final bool autofocus;
   final EntityType? entityType;
 
   @override
@@ -34,6 +36,7 @@ class DesignPicker extends StatelessWidget {
     final designState = state.designState;
 
     return AppDropdownButton<String>(
+      autofocus: autofocus,
       showBlank: showBlank,
       value: initialValue,
       onChanged: (dynamic value) => onSelected(designState.map[value]),

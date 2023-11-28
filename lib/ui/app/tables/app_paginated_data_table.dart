@@ -434,8 +434,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
         math.min(_rowCount, _firstRowIndex + widget.rowsPerPage);
     if (widget.onRowsPerPageChanged != null) {
       final List<Widget> availableRowsPerPage = widget.availableRowsPerPage
-          .where(
-              (int value) => value <= _rowCount || value == widget.rowsPerPage)
+          //.where((int value) => value <= _rowCount || value == widget.rowsPerPage)
           .map<DropdownMenuItem<int>>((int value) {
         return DropdownMenuItem<int>(
           value: value,

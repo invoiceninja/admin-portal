@@ -449,7 +449,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                         value?.id));
                             },
                           ),
-                          /*
                           DesignPicker(
                             showBlank: true,
                             label: localization.paymentRefundDesign,
@@ -461,7 +460,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                         value?.id));
                             },
                           ),
-                          */
                         ],
                       ],
                     ),
@@ -1336,7 +1334,7 @@ class _PdfPreviewState extends State<_PdfPreview> {
   void _loadPdf() async {
     final state = widget.state!;
     final settingsUIState = state.settingsUIState;
-    final url = state.credentials.url! + '/live_design';
+    final url = state.credentials.url + '/live_design';
 
     final request = PdfPreviewRequest(
       entityType: widget.entityType.apiValue,
@@ -1380,7 +1378,7 @@ class _PdfPreviewState extends State<_PdfPreview> {
           canChangeOrientation: false,
           canChangePageFormat: false,
           canDebug: false,
-          maxPageWidth: 600,
+          maxPageWidth: 800,
           allowPrinting: false,
           allowSharing: false,
         ),

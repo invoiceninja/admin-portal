@@ -82,3 +82,4 @@ google-services.json
 GoogleService-Info.plist
 android/app/build.gradle
 android/app/release/
+.fvm

@@ -31,7 +31,7 @@ class DesignRepository {
   }
 
   Future<BuiltList<DesignEntity>> loadList(Credentials credentials) async {
-    final url = credentials.url! + '/designs?';
+    final url = credentials.url+ '/designs?';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
@@ -48,7 +48,7 @@ class DesignRepository {
     }
 
     final url =
-        credentials.url! + '/designs/bulk?per_page=$kMaxEntitiesPerBulkAction';
+        credentials.url+ '/designs/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
@@ -65,10 +65,10 @@ class DesignRepository {
 
     if (design.isNew) {
       response = await webClient.post(
-          credentials.url! + '/designs', credentials.token,
+          credentials.url+ '/designs', credentials.token,
           data: json.encode(data));
     } else {
-      final url = credentials.url! + '/designs/${design.id}';
+      final url = credentials.url+ '/designs/${design.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

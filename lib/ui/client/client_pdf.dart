@@ -14,12 +14,10 @@ import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
-import 'package:invoiceninja_flutter/redux/design/design_selectors.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/multiselect.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
@@ -65,7 +63,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
       convertDateTimeToSqlDate(DateTime.now().subtract(Duration(days: 365)));
   String? _endDate = convertDateTimeToSqlDate();
   String _status = kStatementStatusAll;
-  String? _designId;
+  //String? _designId;
 
   @override
   void didChangeDependencies() {
@@ -174,6 +172,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
     final localization = AppLocalization.of(context)!;
     final client = widget.viewModel.client!;
 
+    /*
     final designPicker = Expanded(
       child: IgnorePointer(
         ignoring: _isLoading,
@@ -191,6 +190,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
         ),
       ),
     );
+    */
 
     final datePicker = Expanded(
       child: AppDropdownButton<DateRange>(
@@ -418,11 +418,13 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                             SizedBox(width: 16),
                             statusPicker,
                             SizedBox(width: 16),
+                            /*
                             if (hasDesignTemplatesForEntityType(
                                 state.designState.map, EntityType.client)) ...[
                               designPicker,
                               SizedBox(width: 16),
                             ],
+                            */
                             sectionPicker,
                           ],
                         )
@@ -437,12 +439,14 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                             ),
                             Row(
                               children: [
+                                /*
                                 if (hasDesignTemplatesForEntityType(
                                     state.designState.map,
                                     EntityType.client)) ...[
                                   designPicker,
                                   SizedBox(width: 16),
                                 ],
+                                */
                                 sectionPicker,
                               ],
                             ),
@@ -500,7 +504,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                     canChangeOrientation: false,
                     canChangePageFormat: false,
                     canDebug: false,
-                    maxPageWidth: 600,
+                    maxPageWidth: 800,
                     pdfFileName:
                         localization.statement + '_' + client.number + '.pdf',
                   ),

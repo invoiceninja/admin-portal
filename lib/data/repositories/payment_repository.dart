@@ -38,7 +38,7 @@ class PaymentRepository {
 
   Future<BuiltList<PaymentEntity>> loadList(Credentials credentials, int page,
       int createdAt, bool filterDeleted) async {
-    String url = credentials.url! +
+    String url = credentials.url+
         '/payments?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
 
     if (filterDeleted) {
@@ -61,7 +61,7 @@ class PaymentRepository {
     }
 
     final url =
-        credentials.url! + '/payments/bulk?per_page=$kMaxEntitiesPerBulkAction';
+        credentials.url+ '/payments/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
@@ -100,7 +100,7 @@ class PaymentRepository {
     final data = serializers.serializeWith(PaymentEntity.serializer, payment);
     dynamic response;
 
-    var url = credentials.url! + '/payments/refund?';
+    var url = credentials.url+ '/payments/refund?';
     if (payment.sendEmail == true) {
       url += '&email_receipt=true';
     }

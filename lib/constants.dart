@@ -4,16 +4,18 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.141';
+const String kClientVersion = '5.0.142';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
 const String kSiteUrl = 'https://invoiceninja.com';
 const String kAppProductionUrl = 'https://invoicing.co';
+const String kAppReactUrl = 'https://app.invoicing.co';
 const String kAppStagingUrl = 'https://staging.invoicing.co';
 const String kAppStagingNetUrl = 'https://invoiceninja.net';
 const String kAppLargeTestUrl = 'https://testv5.invoicing.co';
-const String kAppDemoUrl = 'https://demo.invoiceninja.com';
+const String kFlutterDemoUrl = 'https://demo.invoiceninja.com';
+const String kReactDemoUrl = 'https://react.invoicing.co/demo';
 const String kWhiteLabelUrl =
     'https://app.invoiceninja.com/buy_now/?account_key=AsFmBAeLXF0IKf7tmi0eiyZfmWW9hxMT&product_id=3';
 const String kPrivacyPolicyURL = 'https://www.invoiceninja.com/privacy-policy';
@@ -50,6 +52,11 @@ const String kTwitterUrl = 'https://twitter.com/invoiceninja';
 const String kFacebookUrl = 'https://www.facebook.com/invoiceninja';
 const String kYouTubeUrl =
     'https://www.youtube.com/channel/UCXAHcBvhW05PDtWYIq7WDFA/videos';
+
+const String kTaskExtensionUrl =
+    'https://chromewebstore.google.com/detail/invoice-ninja-tasks/dlfcbfdpemfnjbjlladogijcchfmmaaf';
+const String kTaskExtensionYouTubeUrl =
+    'https://www.youtube.com/watch?v=UL0OklMJTEA&ab_channel=InvoiceNinja';
 
 const String kAppleOAuthClientId = 'com.invoiceninja.client';
 const String kAppleOAuthRedirectUrl = 'https://invoicing.co/auth/apple';
@@ -234,6 +241,8 @@ const kTaxClassifications = [
 ];
 
 const String kEInvoiceTypeEN16931 = 'EN16931';
+const String kEInvoiceTypeXInvoice_3_0 = 'XInvoice_3_0';
+const String kEInvoiceTypeXInvoice_2_3 = 'XInvoice_2_3';
 const String kEInvoiceTypeXInvoice_2_2 = 'XInvoice_2_2';
 const String kEInvoiceTypeXInvoice_2_1 = 'XInvoice_2_1';
 const String kEInvoiceTypeXInvoice_2_0 = 'XInvoice_2_0';
@@ -247,6 +256,8 @@ const String kEInvoiceTypeFacturae_3_2_2 = 'Facturae_3.2.2';
 
 const kEInvoiceTypes = [
   kEInvoiceTypeEN16931,
+  kEInvoiceTypeXInvoice_3_0,
+  kEInvoiceTypeXInvoice_2_3,
   kEInvoiceTypeXInvoice_2_2,
   kEInvoiceTypeXInvoice_2_1,
   kEInvoiceTypeXInvoice_2_0,

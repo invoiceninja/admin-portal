@@ -694,7 +694,7 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
       break;
     case EntityAction.bulkPrint:
       store.dispatch(StartSaving());
-      final url = state.credentials.url! + '/credits/bulk';
+      final url = state.credentials.url+ '/credits/bulk';
       final data = json.encode(
           {'ids': creditIds, 'action': EntityAction.bulkPrint.toApiParam()});
       final http.Response? response = await WebClient()

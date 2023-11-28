@@ -68,6 +68,8 @@ PrefState prefReducer(
         historySidebarReducer(state.historySidebarMode, action)
     ..hideDesktopWarning =
         hideDesktopWarningReducer(state.hideDesktopWarning, action)
+    ..hideTaskExtensionBanner =
+        hideTaskExtensionBannerReducer(state.hideTaskExtensionBanner, action)
     ..hideGatewayWarning =
         hideGatewayWarningReducer(state.hideGatewayWarning, action)
     ..hideReviewApp = hideReviewAppReducer(state.hideReviewApp, action)
@@ -256,6 +258,12 @@ Reducer<String> filterReducer = combineReducers([
 
 Reducer<bool> hideDesktopWarningReducer = combineReducers([
   TypedReducer<bool, DismissNativeWarningPermanently>((filter, action) {
+    return true;
+  }),
+]);
+
+Reducer<bool> hideTaskExtensionBannerReducer = combineReducers([
+  TypedReducer<bool, DismissTaskExtensionBanner>((filter, action) {
     return true;
   }),
 ]);

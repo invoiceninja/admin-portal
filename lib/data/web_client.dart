@@ -241,7 +241,7 @@ void _checkResponse(String url, http.Response response) {
    */
 
   if (!kReleaseMode) {
-    print('Response: ${formatSize(response.body.length)}');
+    print('Response: ${formatSize(response.bodyBytes.length)}');
     if (Config.DEBUG_REQUESTS) {
       printWrapped('${response.statusCode} ${response.body}');
       print('Headers: ${response.headers}');

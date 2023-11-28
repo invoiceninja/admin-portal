@@ -3,7 +3,6 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
@@ -15,6 +14,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ViewPaymentList implements PersistUI {
@@ -411,5 +411,17 @@ void handlePaymentAction(
         entities: [payment],
       );
       break;
+    case EntityAction.runTemplate:
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => RunTemplateDialog(
+          entityType: EntityType.payment,
+          entities: payments,
+        ),
+      );
+      break;
+    default:
+      print('## Error: action $action not handled in client_actions');
   }
 }
