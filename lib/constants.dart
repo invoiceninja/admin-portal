@@ -241,6 +241,8 @@ const kTaxClassifications = [
 ];
 
 const String kEInvoiceTypeEN16931 = 'EN16931';
+const String kEInvoiceTypeXInvoice_3_0 = 'XInvoice_3_0';
+const String kEInvoiceTypeXInvoice_2_3 = 'XInvoice_2_3';
 const String kEInvoiceTypeXInvoice_2_2 = 'XInvoice_2_2';
 const String kEInvoiceTypeXInvoice_2_1 = 'XInvoice_2_1';
 const String kEInvoiceTypeXInvoice_2_0 = 'XInvoice_2_0';
@@ -254,6 +256,8 @@ const String kEInvoiceTypeFacturae_3_2_2 = 'Facturae_3.2.2';
 
 const kEInvoiceTypes = [
   kEInvoiceTypeEN16931,
+  kEInvoiceTypeXInvoice_3_0,
+  kEInvoiceTypeXInvoice_2_3,
   kEInvoiceTypeXInvoice_2_2,
   kEInvoiceTypeXInvoice_2_1,
   kEInvoiceTypeXInvoice_2_0,
