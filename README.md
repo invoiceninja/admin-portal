@@ -5,7 +5,8 @@ Client application for [Invoice Ninja](https://github.com/invoiceninja/invoiceni
 #### Desktop Apps
 - [Windows](https://apps.microsoft.com/store/detail/invoice-ninja/9N3F2BBCFDR6)
 - [macOS](https://apps.apple.com/app/id1503970375?platform=mac)
-- [Linux](https://snapcraft.io/invoiceninja)
+- [Linux - Snap](https://snapcraft.io/invoiceninja)
+- [Linux - Flatpak](https://flathub.org/apps/com.invoiceninja.InvoiceNinja)
 
 #### Mobile Apps
 - [iOS](https://apps.apple.com/app/id1503970375?platform=iphone)
@@ -125,21 +126,10 @@ For additional information on [Redux architecture](https://blog.logrocket.com/fl
 ## Tests
 - Run `flutter drive --target=test_driver/all_it.dart` to run the tests
     
-## Code Signing
-- Run `cp android/app/build.gradle.prod android/app/build.gradle` to support running the code signed
-- Run `cp android/key.properties.example android/key.properties` to create the keys file
-- Run `keytool -genkey -v -keystore key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias invoiceninja` to generate a key to be able to sign the android application.
-- Update `android/key.properties` according to the parameters you entered in previous command when you generated the key 
-- Open a new Firebase project from your console. Firebase is used for authentication.
-    - Inside the project go to Authentication and enable at least one method.
-    - After go to add a new Android application. For the package name add `com.invoiceninja.flutter`
-    - Press "Register App" button.
-    - Download "google-services.json" and put it in `android/app` directory.
-
 ## Credits
 
 [https://github.com/invoiceninja/invoiceninja#credits](https://github.com/invoiceninja/invoiceninja/tree/v5-develop#credits)
 
 ## Contributions
 
-We gladly accept contributions! If you'd like to get involved with development please join our [Slack group](http://slack.invoiceninja.com/).
+We gladly accept contributions! If you'd like to get involved with development please join our [Slack group](http://slack.invoiceninja.com/) or [Discord Server](https://discord.gg/ZwEdtfCwXA).
