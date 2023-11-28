@@ -504,7 +504,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                     canChangeOrientation: false,
                     canChangePageFormat: false,
                     canDebug: false,
-                    maxPageWidth: 600,
+                    maxPageWidth: 800,
                     pdfFileName:
                         localization.statement + '_' + client.number + '.pdf',
                   ),

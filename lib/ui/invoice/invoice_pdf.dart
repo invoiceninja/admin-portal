@@ -283,7 +283,7 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                     canChangeOrientation: false,
                     canChangePageFormat: false,
                     canDebug: false,
-                    maxPageWidth: 600,
+                    maxPageWidth: 800,
                     pdfFileName:
                         localization.lookup(invoice.entityType!.snakeCase) +
                             '_' +

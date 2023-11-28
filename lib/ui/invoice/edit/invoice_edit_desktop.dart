@@ -1297,7 +1297,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
     final state = store.state;
 
     return Container(
-      height: state.prefState.showPdfPreviewSideBySide ? 800 : 1200,
+      height: state.prefState.showPdfPreviewSideBySide ? 800 : 1150,
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
@@ -1352,7 +1352,7 @@ class __PdfPreviewState extends State<_PdfPreview> {
                             allowSharing: false,
                             canDebug: false,
                             pages: [_currentPage - 1],
-                            maxPageWidth: 600,
+                            maxPageWidth: 800,
                           ),
               ),
             ],
