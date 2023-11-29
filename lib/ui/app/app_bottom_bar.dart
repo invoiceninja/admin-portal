@@ -143,8 +143,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
       if (closeBottomSheet() == kFilterStatePanel) {
         return;
       }
-      _filterStateController =
-          Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
+      _filterStateController = Scaffold.of(context).showBottomSheet((context) {
         return StoreConnector<AppState, BuiltList<EntityState>>(
           converter: (Store<AppState> store) =>
               store.state.getListState(widget.entityType).stateFilters,
@@ -185,8 +184,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
         return;
       }
 
-      _filterStatusController =
-          Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
+      _filterStatusController = Scaffold.of(context).showBottomSheet((context) {
         return StoreConnector<AppState, BuiltList<EntityStatus>>(
           converter: (Store<AppState> store) =>
               store.state.getListState(widget.entityType).statusFilters,
@@ -226,8 +224,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
         return;
       }
 
-      _sortController =
-          Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
+      _sortController = Scaffold.of(context).showBottomSheet((context) {
         return StoreConnector<AppState, ListUIState>(
           //distinct: true,
           converter: (Store<AppState> store) =>
@@ -284,7 +281,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
       }
 
       _filterCustom1Controller =
-          Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
+          Scaffold.of(context).showBottomSheet((context) {
         return CustomFieldSelector(
           customNumber: 1,
           entityType: widget.entityType,
@@ -304,7 +301,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
         return;
       }
       _filterCustom2Controller =
-          Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
+          Scaffold.of(context).showBottomSheet((context) {
         return CustomFieldSelector(
           customNumber: 2,
           entityType: widget.entityType,
@@ -325,7 +322,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
       }
 
       _filterCustom3Controller =
-          Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
+          Scaffold.of(context).showBottomSheet((context) {
         return CustomFieldSelector(
           customNumber: 3,
           entityType: widget.entityType,
@@ -346,7 +343,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
       }
 
       _filterCustom4Controller =
-          Scaffold.of(context).showBottomSheet<StoreConnector>((context) {
+          Scaffold.of(context).showBottomSheet((context) {
         return CustomFieldSelector(
           customNumber: 4,
           entityType: widget.entityType,
