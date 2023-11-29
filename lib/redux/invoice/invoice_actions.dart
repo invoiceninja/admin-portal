@@ -172,9 +172,13 @@ class RemoveInvoiceContact implements PersistUI {
 }
 
 class AddInvoiceItem implements PersistUI {
-  AddInvoiceItem({this.invoiceItem});
+  AddInvoiceItem({
+    this.invoiceItem,
+    this.index,
+  });
 
   final InvoiceItemEntity? invoiceItem;
+  final int? index;
 }
 
 class MoveInvoiceItem implements PersistUI {
