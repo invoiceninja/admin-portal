@@ -1192,6 +1192,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         final sectionIndex =
                             includedLineItems.indexOf(lineItems[index]);
                         final options = {
+                          localization.insertBelow: MdiIcons.plus,
                           if (widget.isTasks &&
                               (lineItems[index].taskId ?? '').isNotEmpty)
                             localization.viewTask: MdiIcons.chevronDoubleRight,
@@ -1232,6 +1233,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               index, lineItems.length - 2);
                         } else if (action == localization.remove) {
                           viewModel.onRemoveInvoiceItemPressed!(index);
+                        } else if (action == localization.insertBelow) {
+                          viewModel.addLineItem!(index + 1);
                         }
                         _updateTable();
                       },

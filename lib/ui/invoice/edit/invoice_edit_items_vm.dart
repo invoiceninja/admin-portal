@@ -79,7 +79,7 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
     CompanyEntity? company,
     InvoiceEntity? invoice,
     int? invoiceItemIndex,
-    Function? addLineItem,
+    Function([int])? addLineItem,
     Function(int)? deleteLineItem,
     Function(int)? onRemoveInvoiceItemPressed,
     Function? clearSelectedInvoiceItem,
@@ -107,8 +107,13 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
       company: store.state.company,
       invoice: store.state.invoiceUIState.editing,
       invoiceItemIndex: store.state.invoiceUIState.editingItemIndex,
-      addLineItem: () {
-        store.dispatch(AddInvoiceItem(invoiceItem: InvoiceItemEntity()));
+      addLineItem: ([int? index]) {
+        store.dispatch(AddInvoiceItem(
+            index: index,
+            invoiceItem: InvoiceItemEntity().rebuild((b) => b
+              ..typeId = isTasks
+                  ? InvoiceItemEntity.TYPE_TASK
+                  : InvoiceItemEntity.TYPE_STANDARD)));
       },
       deleteLineItem: null,
       onRemoveInvoiceItemPressed: (index) {

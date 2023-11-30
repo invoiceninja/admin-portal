@@ -295,6 +295,18 @@ class _PaymentSettingsState extends State<PaymentSettings> {
                 helpLabel: localization.markPaidPaymentEmailHelp,
                 iconData: Icons.email,
               ),
+              if (!state.settingsUIState.isFiltered) SizedBox(height: 10),
+              BoolDropdownButton(
+                value: state.settingsUIState.isFiltered
+                    ? settings.paymentEmailAllContacts
+                    : settings.paymentEmailAllContacts ?? false,
+                onChanged: (value) => viewModel.onSettingsChanged(settings
+                    .rebuild((b) => b..paymentEmailAllContacts = value)),
+                label: localization.sendEmailsTo,
+                iconData: Icons.email,
+                enabledLabel: localization.primaryContact,
+                disabledLabel: localization.allContacts,
+              ),
             ],
           )
         ],

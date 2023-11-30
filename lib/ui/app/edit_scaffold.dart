@@ -433,30 +433,28 @@ class EditScaffold extends StatelessWidget {
                             //size: iconSize,
                             //color: color,
                           ),
-                          itemBuilder: (BuildContext context) =>
-                              <PopupMenuEntry<EntityAction>>[
+                          itemBuilder: (BuildContext context) => [
                             ...actions!
-                                    .map((action) => action == null
-                                        ? PopupMenuDivider()
-                                        : PopupMenuItem<EntityAction>(
-                                            child: Row(
-                                              children: <Widget>[
-                                                Icon(
-                                                  getEntityActionIcon(action),
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .secondary,
-                                                ),
-                                                SizedBox(width: 16.0),
-                                                Text(AppLocalization.of(
-                                                        context)!
-                                                    .lookup(action.toString())),
-                                              ],
+                                .map((action) => action == null
+                                    ? PopupMenuDivider()
+                                    : PopupMenuItem<EntityAction>(
+                                        child: Row(
+                                          children: <Widget>[
+                                            Icon(
+                                              getEntityActionIcon(action),
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary,
                                             ),
-                                            value: action,
-                                          ))
-                                    .toList()
-                                as Iterable<PopupMenuEntry<EntityAction>>
+                                            SizedBox(width: 16.0),
+                                            Text(AppLocalization.of(context)!
+                                                .lookup(action.toString())),
+                                          ],
+                                        ),
+                                        value: action,
+                                      ))
+                                .whereType<PopupMenuEntry<EntityAction>>()
+                                .toList()
                           ],
                           onSelected: (action) =>
                               onActionPressed!(context, action),

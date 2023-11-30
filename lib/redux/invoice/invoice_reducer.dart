@@ -165,7 +165,11 @@ InvoiceEntity _updateEditing(InvoiceEntity? invoice, dynamic action) {
 
 InvoiceEntity _addInvoiceItem(InvoiceEntity? invoice, AddInvoiceItem action) {
   final item = action.invoiceItem ?? InvoiceItemEntity();
-  return invoice!.rebuild((b) => b..lineItems.add(item));
+  if (action.index == null) {
+    return invoice!.rebuild((b) => b..lineItems.add(item));
+  } else {
+    return invoice!.rebuild((b) => b..lineItems.insert(action.index!, item));
+  }
 }
 
 InvoiceEntity _addInvoiceItems(InvoiceEntity? invoice, AddInvoiceItems action) {

@@ -811,6 +811,9 @@ abstract class SettingsEntity
 
   String? get classification;
 
+  @BuiltValueField(wireName: 'payment_email_all_contacts')
+  bool? get paymentEmailAllContacts;
+
   bool get hasAddress => address1 != null && address1!.isNotEmpty;
 
   bool get hasLogo => companyLogo != null && companyLogo!.isNotEmpty;

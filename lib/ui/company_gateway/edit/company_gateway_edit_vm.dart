@@ -153,6 +153,10 @@ class CompanyGatewayEditVM {
                 launchUrl(Uri.parse(
                     '${cleanApiUrl(credentials.url)}/wepay/signup/${response['hash']}'));
                 break;
+              case kGatewayPayPalPlatform:
+                launchUrl(Uri.parse(
+                    '${cleanApiUrl(credentials.url)}/paypal/signup/${response['hash']}'));
+                break;
             }
           }).catchError((dynamic error) {
             store.dispatch(StopSaving());

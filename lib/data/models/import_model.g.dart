@@ -62,6 +62,17 @@ const ExportType _$payments = const ExportType._('payments');
 const ExportType _$products = const ExportType._('products');
 const ExportType _$tasks = const ExportType._('tasks');
 const ExportType _$profitloss = const ExportType._('profitloss');
+const ExportType _$aged_receivable_detailed_report =
+    const ExportType._('aged_receivable_detailed_report');
+const ExportType _$aged_receivable_summary_report =
+    const ExportType._('aged_receivable_summary_report');
+const ExportType _$client_balance_report =
+    const ExportType._('client_balance_report');
+const ExportType _$client_sales_report =
+    const ExportType._('client_sales_report');
+const ExportType _$tax_summary_report =
+    const ExportType._('tax_summary_report');
+const ExportType _$user_sales_report = const ExportType._('user_sales_report');
 
 ExportType _$exportValueOf(String name) {
   switch (name) {
@@ -95,6 +106,18 @@ ExportType _$exportValueOf(String name) {
       return _$tasks;
     case 'profitloss':
       return _$profitloss;
+    case 'aged_receivable_detailed_report':
+      return _$aged_receivable_detailed_report;
+    case 'aged_receivable_summary_report':
+      return _$aged_receivable_summary_report;
+    case 'client_balance_report':
+      return _$client_balance_report;
+    case 'client_sales_report':
+      return _$client_sales_report;
+    case 'tax_summary_report':
+      return _$tax_summary_report;
+    case 'user_sales_report':
+      return _$user_sales_report;
     default:
       throw new ArgumentError(name);
   }
@@ -117,6 +140,12 @@ final BuiltSet<ExportType> _$exportValues =
   _$products,
   _$tasks,
   _$profitloss,
+  _$aged_receivable_detailed_report,
+  _$aged_receivable_summary_report,
+  _$client_balance_report,
+  _$client_sales_report,
+  _$tax_summary_report,
+  _$user_sales_report,
 ]);
 
 Serializer<PreImportResponse> _$preImportResponseSerializer =

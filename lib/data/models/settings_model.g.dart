@@ -1571,6 +1571,13 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.paymentEmailAllContacts;
+    if (value != null) {
+      result
+        ..add('payment_email_all_contacts')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     return result;
   }
 
@@ -2485,6 +2492,10 @@ class _$SettingsEntitySerializer
           result.classification = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'payment_email_all_contacts':
+          result.paymentEmailAllContacts = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
       }
     }
 
@@ -3010,6 +3021,8 @@ class _$SettingsEntity extends SettingsEntity {
   final String? defaultExpensePaymentTypeId;
   @override
   final String? classification;
+  @override
+  final bool? paymentEmailAllContacts;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder)? updates]) =>
       (new SettingsEntityBuilder()..update(updates))._build();
@@ -3237,7 +3250,8 @@ class _$SettingsEntity extends SettingsEntity {
       this.enableEInvoice,
       this.eInvoiceType,
       this.defaultExpensePaymentTypeId,
-      this.classification})
+      this.classification,
+      this.paymentEmailAllContacts})
       : super._();
 
   @override
@@ -3479,7 +3493,8 @@ class _$SettingsEntity extends SettingsEntity {
         enableEInvoice == other.enableEInvoice &&
         eInvoiceType == other.eInvoiceType &&
         defaultExpensePaymentTypeId == other.defaultExpensePaymentTypeId &&
-        classification == other.classification;
+        classification == other.classification &&
+        paymentEmailAllContacts == other.paymentEmailAllContacts;
   }
 
   int? __hashCode;
@@ -3710,6 +3725,7 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, eInvoiceType.hashCode);
     _$hash = $jc(_$hash, defaultExpensePaymentTypeId.hashCode);
     _$hash = $jc(_$hash, classification.hashCode);
+    _$hash = $jc(_$hash, paymentEmailAllContacts.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -3944,7 +3960,8 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('enableEInvoice', enableEInvoice)
           ..add('eInvoiceType', eInvoiceType)
           ..add('defaultExpensePaymentTypeId', defaultExpensePaymentTypeId)
-          ..add('classification', classification))
+          ..add('classification', classification)
+          ..add('paymentEmailAllContacts', paymentEmailAllContacts))
         .toString();
   }
 }
@@ -5055,6 +5072,11 @@ class SettingsEntityBuilder
   set classification(String? classification) =>
       _$this._classification = classification;
 
+  bool? _paymentEmailAllContacts;
+  bool? get paymentEmailAllContacts => _$this._paymentEmailAllContacts;
+  set paymentEmailAllContacts(bool? paymentEmailAllContacts) =>
+      _$this._paymentEmailAllContacts = paymentEmailAllContacts;
+
   SettingsEntityBuilder();
 
   SettingsEntityBuilder get _$this {
@@ -5283,6 +5305,7 @@ class SettingsEntityBuilder
       _eInvoiceType = $v.eInvoiceType;
       _defaultExpensePaymentTypeId = $v.defaultExpensePaymentTypeId;
       _classification = $v.classification;
+      _paymentEmailAllContacts = $v.paymentEmailAllContacts;
       _$v = null;
     }
     return this;
@@ -5530,7 +5553,8 @@ class SettingsEntityBuilder
               enableEInvoice: enableEInvoice,
               eInvoiceType: eInvoiceType,
               defaultExpensePaymentTypeId: defaultExpensePaymentTypeId,
-              classification: classification);
+              classification: classification,
+              paymentEmailAllContacts: paymentEmailAllContacts);
     } catch (_) {
       late String _$failedField;
       try {
