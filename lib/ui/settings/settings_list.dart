@@ -422,6 +422,7 @@ class SettingsSearch extends StatelessWidget {
           'allow_under_payment',
           'auto_bill_standard_invoices#2023-01-17',
           'client_initiated_payments#2023-03-20',
+          'send_emails_to#2023-11-30',
         ]
       ],
       kSettingsTaxSettings: [

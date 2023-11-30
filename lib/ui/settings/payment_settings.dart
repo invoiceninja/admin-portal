@@ -302,7 +302,7 @@ class _PaymentSettingsState extends State<PaymentSettings> {
                     : settings.paymentEmailAllContacts ?? false,
                 onChanged: (value) => viewModel.onSettingsChanged(settings
                     .rebuild((b) => b..paymentEmailAllContacts = value)),
-                label: localization.sendEmailTo,
+                label: localization.sendEmailsTo,
                 iconData: Icons.email,
                 enabledLabel: localization.primaryContact,
                 disabledLabel: localization.allContacts,
