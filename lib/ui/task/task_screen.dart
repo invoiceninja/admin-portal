@@ -115,7 +115,8 @@ class TaskScreen extends StatelessWidget {
                 Expanded(
                   child: IconText(
                     text: localization.taskExtensionBanner,
-                    icon: Icons.info_outline,
+                    icon: MdiIcons.googleChrome,
+                    style: TextStyle(color: Colors.white),
                   ),
                 ),
                 TextButton(
@@ -142,6 +143,7 @@ class TaskScreen extends StatelessWidget {
                     store.dispatch(DismissTaskExtensionBanner());
                   },
                   icon: Icon(Icons.clear),
+                  color: Colors.white,
                 ),
                 SizedBox(width: 12),
               ],
