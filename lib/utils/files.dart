@@ -40,15 +40,21 @@ Future<List<MultipartFile>?> pickFiles({
       allowMultiple: allowMultiple,
     );
   } else {
-    final androidInfo = await DeviceInfoPlugin().androidInfo;
-    PermissionStatus status;
+    PermissionStatus? status;
 
-    if (Platform.isIOS && fileType == FileType.image) {
-      status = await Permission.photos.request();
-    } else if (Platform.isAndroid && androidInfo.version.sdkInt >= 33) {
-      status = await Permission.photos.request();
-    } else {
-      status = await Permission.storage.request();
+    if (Platform.isIOS) {
+      if (fileType == FileType.image) {
+        status = await Permission.photos.request();
+      } else {
+        status = await Permission.storage.request();
+      }
+    } else if (Platform.isAndroid) {
+      final androidInfo = await DeviceInfoPlugin().androidInfo;
+      if (androidInfo.version.sdkInt >= 33) {
+        status = await Permission.photos.request();
+      } else {
+        status = await Permission.storage.request();
+      }
     }
 
     if (status == PermissionStatus.granted) {
