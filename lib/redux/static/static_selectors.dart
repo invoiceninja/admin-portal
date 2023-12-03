@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -127,13 +128,36 @@ List<String?> sizeList(BuiltMap<String, SizeEntity> sizeMap) {
   return list;
 }
 
-var memoizedGatewayList = memo1(
-    (BuiltMap<String, GatewayEntity> gatewayMap) => gatewayList(gatewayMap));
+var memoizedGatewayList = memo2(
+    (BuiltMap<String, GatewayEntity> gatewayMap, bool isHosted) =>
+        gatewayList(gatewayMap, isHosted));
 
-List<String?> gatewayList(BuiltMap<String, GatewayEntity> gatewayMap) {
-  final list = gatewayMap.keys
-      .where((gatewayId) => gatewayMap[gatewayId]!.isVisible)
-      .toList();
+List<String?> gatewayList(
+    BuiltMap<String, GatewayEntity> gatewayMap, bool isHosted) {
+  final list = gatewayMap.keys.where((gatewayId) {
+    final gateway = gatewayMap[gatewayId]!;
+
+    if (!gateway.isVisible) {
+      return false;
+    }
+
+    if (isHosted) {
+      if ([
+        kGatewayPayPalExpress,
+        kGatewayPayPalREST,
+      ].contains(gateway.id)) {
+        return false;
+      }
+    } else {
+      if ([
+        kGatewayPayPalPlatform,
+      ].contains(gateway.id)) {
+        return false;
+      }
+    }
+
+    return true;
+  }).toList();
 
   list.sort((idA, idB) =>
       gatewayMap[idA]!.sortOrder.compareTo(gatewayMap[idB]!.sortOrder));

@@ -152,8 +152,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     EntityDropdown(
                       autofocus: true,
                       entityType: EntityType.gateway,
-                      entityList:
-                          memoizedGatewayList(state.staticState.gatewayMap),
+                      entityList: memoizedGatewayList(
+                          state.staticState.gatewayMap, state.isHosted),
                       labelText: localization.provider,
                       entityId: companyGateway.gatewayId,
                       onSelected: (SelectableEntity? gateway) {

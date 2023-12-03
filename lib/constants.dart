@@ -487,6 +487,7 @@ const String kGatewayStripe = 'd14dd26a37cecc30fdd65700bfb55b23';
 const String kGatewayStripeConnect = 'd14dd26a47cecc30fdd65700bfb67b34';
 const String kGatewayAuthorizeNet = '3b6621f970ab18887c4f6dca78d3f8bb';
 const String kGatewayCheckoutCom = '3758e7f7c6f4cecf0f4f348b9a00f456';
+const String kGatewayPayPalREST = '80af24a6a691230bbec33e930ab40665';
 const String kGatewayPayPalExpress = '38f2c48af60c7dd69e04248cbb24c36e';
 const String kGatewayPayPalPlatform = '80af24a6a691230bbec33e930ab40666';
 const String kGatewayWePay = '8fdeed552015b3c7b44ed6c8ebd9e992';
