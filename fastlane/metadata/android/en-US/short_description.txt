@@ -1,1 +1,1 @@
-Create invoices, accept payments, track expenses & time-tasks
+Invoice your clients, accept payments, track expenses & time billable-tasks
