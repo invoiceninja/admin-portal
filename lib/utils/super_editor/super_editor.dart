@@ -341,6 +341,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
     );
   }
 
+  /*
   Widget _buildCornerFabs() {
     return Padding(
       padding: const EdgeInsets.only(right: 16, bottom: 16),
@@ -404,6 +405,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
             ),
     );
   }
+  */
 
   Widget _buildEditor(BuildContext context) {
     final isLight = Theme.of(context).brightness == Brightness.light;

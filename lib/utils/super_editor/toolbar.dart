@@ -104,6 +104,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     super.dispose();
   }
 
+  /*
   /// Returns true if the currently selected text node is capable of being
   /// transformed into a different type text node, returns false if
   /// multiple nodes are selected, no node is selected, or the selected
@@ -260,6 +261,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
         return null;
     }
   }
+  */
 
   /// Toggles bold styling for the current selected text.
   void _toggleBold() {
@@ -434,6 +436,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     return SpanRange(startOffset, endOffset);
   }
 
+  /*
   /// Changes the alignment of the current selected text node
   /// to reflect [newAlignment].
   void _changeAlignment(TextAlign? newAlignment) {
@@ -490,6 +493,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
         return 'Unordered List Item';
     }
   }
+  */
 
   void _onPerformAction(TextInputAction action) {
     if (action == TextInputAction.done) {
@@ -733,6 +737,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     );
   }
 
+  /*
   Widget _buildVerticalDivider() {
     return Container(
       width: 1,
@@ -754,8 +759,10 @@ class _EditorToolbarState extends State<EditorToolbar> {
         return Icons.format_align_justify;
     }
   }
+  */
 }
 
+/*
 enum _TextType {
   header1,
   header2,
@@ -765,6 +772,7 @@ enum _TextType {
   orderedListItem,
   unorderedListItem,
 }
+*/
 
 /// Small toolbar that is intended to display over an image and
 /// offer controls to expand or contract the size of the image.
