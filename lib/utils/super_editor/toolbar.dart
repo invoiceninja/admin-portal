@@ -1,6 +1,7 @@
 import 'dart:math';
 
 //import 'package:example/logging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:follow_the_leader/follow_the_leader.dart';
@@ -543,6 +544,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              /*
               // Only allow the user to select a new type of text node if
               // the currently selected node can be converted.
               if (_isConvertibleNode()) ...[
@@ -573,6 +575,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
                 ),
                 _buildVerticalDivider(),
               ],
+              */
               Center(
                 child: IconButton(
                   onPressed: _toggleBold,
@@ -600,19 +603,21 @@ class _EditorToolbarState extends State<EditorToolbar> {
                   tooltip: 'Strikethrough',
                 ),
               ),
-              Center(
-                child: IconButton(
-                  onPressed:
-                      _areMultipleLinksSelected() ? null : _onLinkPressed,
-                  icon: const Icon(Icons.link),
-                  color: _isSingleLinkSelected()
-                      ? const Color(0xFF007AFF)
-                      : IconTheme.of(context).color,
-                  splashRadius: 16,
-                  //tooltip: AppLocalizations.of(context)!.labelLink,
-                  tooltip: 'Link',
+              if (kIsWeb)
+                Center(
+                  child: IconButton(
+                    onPressed:
+                        _areMultipleLinksSelected() ? null : _onLinkPressed,
+                    icon: const Icon(Icons.link),
+                    color: _isSingleLinkSelected()
+                        ? const Color(0xFF007AFF)
+                        : IconTheme.of(context).color,
+                    splashRadius: 16,
+                    //tooltip: AppLocalizations.of(context)!.labelLink,
+                    tooltip: 'Link',
+                  ),
                 ),
-              ),
+              /*
               // Only display alignment controls if the currently selected text
               // node respects alignment. List items, for example, do not.
               if (_isTextAlignable()) ...[
@@ -658,6 +663,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
                   tooltip: 'More Options',
                 ),
               ),
+              */
             ],
           ),
         ),
