@@ -25,6 +25,7 @@ workflows:
         echo "const FLUTTER_VERSION = const <String, String>" > $FCI_BUILD_DIR/lib/flutter_version.dart
         flutter --version --machine >> $FCI_BUILD_DIR/lib/flutter_version.dart
         echo ";" >> $FCI_BUILD_DIR/lib/flutter_version.dart
+      - cat $FCI_BUILD_DIR/lib/flutter_version.dart
       - cd . && flutter packages pub get
       - flutter config --enable-linux-desktop
       - flutter build linux --release
