@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
@@ -37,28 +36,13 @@ class CachedImage extends StatelessWidget {
       );
     }
 
-    // TODO remove this
-    if (kIsWeb) {
-      return Image.network(
-        url!,
-        width: width,
-        height: height,
-        key: ValueKey(
-            url! + (apiToken != null ? apiToken!.substring(0, 8) : '')),
-        fit: BoxFit.contain,
-        headers: apiToken != null ? {'X-API-TOKEN': apiToken!} : null,
-      );
-    }
-
-    return CachedNetworkImage(
+    return Image.network(
+      url!,
       width: width,
       height: height,
       key: ValueKey(url! + (apiToken != null ? apiToken!.substring(0, 8) : '')),
-      imageUrl: url!,
-      placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-      errorWidget: (context, url, Object? error) =>
-          Image.asset('assets/images/icon.png', width: 32, height: 30),
-      httpHeaders: apiToken != null ? {'X-API-TOKEN': apiToken!} : null,
+      fit: BoxFit.contain,
+      headers: apiToken != null ? {'X-API-TOKEN': apiToken!} : null,
     );
   }
 }

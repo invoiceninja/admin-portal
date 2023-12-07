@@ -39,8 +39,6 @@ dependencies:
   built_value: ^8.1.2
   built_collection: ^5.1.0
   memoize: ^3.0.0
-  #cached_network_image: 3.0.0 # imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
-  cached_network_image: ^3.3.0
   url_launcher: ^6.0.20
   share_plus: ^7.1.0
   intl: 0.17.0
