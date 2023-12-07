@@ -73,7 +73,7 @@ class PurchaseOrderPresenter extends EntityPresenter {
       case PurchaseOrderFields.status:
         return EntityStatusChip(entity: purchaseOrder, showState: true);
       case PurchaseOrderFields.number:
-        return Text((purchaseOrder.number).isEmpty
+        return Text(purchaseOrder.number.isEmpty
             ? localization!.pending
             : purchaseOrder.number);
       case PurchaseOrderFields.client:

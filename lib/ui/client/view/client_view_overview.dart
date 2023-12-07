@@ -165,7 +165,7 @@ class ClientOverview extends StatelessWidget {
           ),
         ),
         ListDivider(),
-        if ((client.privateNotes).isNotEmpty) ...[
+        if (client.privateNotes.isNotEmpty) ...[
           IconMessage(client.privateNotes, iconData: Icons.lock),
           ListDivider()
         ],

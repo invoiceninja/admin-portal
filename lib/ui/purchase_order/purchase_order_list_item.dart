@@ -217,7 +217,7 @@ class PurchaseOrderListItem extends StatelessWidget {
                       children: <Widget>[
                         Expanded(
                           child: filterMatch == null
-                              ? Text((((purchaseOrder.number).isEmpty
+                              ? Text(((purchaseOrder.number.isEmpty
                                           ? localization!.pending
                                           : purchaseOrder.number) +
                                       ' • ' +

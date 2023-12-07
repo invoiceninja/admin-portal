@@ -113,7 +113,7 @@ class QuoteListItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                (quote.number).isEmpty
+                                quote.number.isEmpty
                                     ? localization!.pending
                                     : quote.number,
                                 style: textStyle,

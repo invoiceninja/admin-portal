@@ -413,6 +413,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   */
                   theme: state.prefState.enableDarkMode
                       ? ThemeData(
+                          useMaterial3: false,
                           tooltipTheme: TooltipThemeData(
                             waitDuration: Duration(milliseconds: 500),
                           ),
@@ -438,6 +439,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                               BottomAppBarTheme(color: const Color(0xFF1B1C1E)),
                         )
                       : ThemeData(
+                          useMaterial3: false,
                           tooltipTheme: TooltipThemeData(
                             waitDuration: Duration(milliseconds: 500),
                           ),

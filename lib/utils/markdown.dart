@@ -1,3 +1,4 @@
+/*
 // DELETE THIS FILE ONCE SUPER EDITOR IS UPDATED
 // Note: using the standard function crashes with h1 tags
 
@@ -588,3 +589,4 @@ class _EmptyParagraphSyntax extends md.BlockSyntax {
     return md.Element('p', []);
   }
 }
+*/

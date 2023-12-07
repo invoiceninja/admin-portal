@@ -122,7 +122,7 @@ class RecurringInvoiceListItem extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                (invoice.number).isEmpty
+                                invoice.number.isEmpty
                                     ? localization.pending
                                     : invoice.number,
                                 style: textStyle,
