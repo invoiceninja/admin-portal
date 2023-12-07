@@ -27,7 +27,7 @@ workflows:
         echo ";" >> $FCI_BUILD_DIR/lib/flutter_version.dart
       - cd . && flutter packages pub get
       - flutter config --enable-linux-desktop
-      #- flutter build linux --release
+      - flutter build linux --release
       #- export SNAPCRAFT_STORE_CREDENTIALS=$(echo $SNAPCRAFT_LOGIN_CREDENTIALS)
       - snapcraft whoami
       - snapcraft snap --output invoiceninja.snap
