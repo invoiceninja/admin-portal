@@ -1,8 +1,9 @@
 //import 'package:example/logging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/utils/markdown.dart';
 import 'package:super_editor/super_editor.dart';
-import 'package:super_editor_markdown/super_editor_markdown.dart';
+//import 'package:super_editor_markdown/super_editor_markdown.dart';
 
 import 'package:invoiceninja_flutter/utils/super_editor/toolbar.dart';
 //import '_toolbar.dart';
@@ -313,6 +314,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
                         _buildMountedToolbar(),
                     ],
                   ),
+                  /*
                   Align(
                     alignment: Alignment.bottomRight,
                     child: ListenableBuilder(
@@ -329,6 +331,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
                       child: _buildCornerFabs(),
                     ),
                   ),
+                  */
                 ],
               ),
             ),

@@ -1,4 +1,3 @@
-/*
 // DELETE THIS FILE ONCE SUPER EDITOR IS UPDATED
 // Note: using the standard function crashes with h1 tags
 
@@ -232,7 +231,7 @@ class _MarkdownToDocument implements md.NodeVisitor {
 
     _content.add(
       ParagraphNode(
-        id: DocumentEditor.createNodeId(),
+        id: Editor.createNodeId(),
         text: _parseInlineText(element),
         metadata: <String, dynamic>{
           'blockType': headerAttribution,
@@ -244,7 +243,7 @@ class _MarkdownToDocument implements md.NodeVisitor {
   void _addParagraph(AttributedText attributedText) {
     _content.add(
       ParagraphNode(
-        id: DocumentEditor.createNodeId(),
+        id: Editor.createNodeId(),
         text: attributedText,
       ),
     );
@@ -253,7 +252,7 @@ class _MarkdownToDocument implements md.NodeVisitor {
   void _addBlockquote(md.Element element) {
     _content.add(
       ParagraphNode(
-        id: DocumentEditor.createNodeId(),
+        id: Editor.createNodeId(),
         text: _parseInlineText(element),
         metadata: <String, dynamic>{
           'blockType': blockquoteAttribution,
@@ -273,9 +272,9 @@ class _MarkdownToDocument implements md.NodeVisitor {
 
     _content.add(
       ParagraphNode(
-        id: DocumentEditor.createNodeId(),
+        id: Editor.createNodeId(),
         text: AttributedText(
-          text: element.textContent,
+          element.textContent,
         ),
         metadata: <String, dynamic>{
           'blockType': codeAttribution,
@@ -290,7 +289,7 @@ class _MarkdownToDocument implements md.NodeVisitor {
   }) {
     _content.add(
       ImageNode(
-        id: DocumentEditor.createNodeId(),
+        id: Editor.createNodeId(),
         imageUrl: imageUrl,
         altText: altText,
       ),
@@ -299,7 +298,7 @@ class _MarkdownToDocument implements md.NodeVisitor {
 
   void _addHorizontalRule() {
     _content.add(HorizontalRuleNode(
-      id: DocumentEditor.createNodeId(),
+      id: Editor.createNodeId(),
     ));
   }
 
@@ -310,7 +309,7 @@ class _MarkdownToDocument implements md.NodeVisitor {
   }) {
     _content.add(
       ListItemNode(
-        id: DocumentEditor.createNodeId(),
+        id: Editor.createNodeId(),
         itemType: listItemType,
         indent: indent,
         text: _parseInlineText(element),
@@ -382,8 +381,7 @@ class _InlineMarkdownToDocument implements md.NodeVisitor {
   @override
   void visitText(md.Text text) {
     final attributedText = _textStack.removeLast();
-    _textStack
-        .add(attributedText.copyAndAppend(AttributedText(text: text.text)));
+    _textStack.add(attributedText.copyAndAppend(AttributedText(text.text)));
   }
 
   @override
@@ -396,24 +394,24 @@ class _InlineMarkdownToDocument implements md.NodeVisitor {
       styledText.addAttribution(
         boldAttribution,
         SpanRange(
-          start: 0,
-          end: styledText.text.length - 1,
+          0,
+          styledText.text.length - 1,
         ),
       );
     } else if (element.tag == 'em') {
       styledText.addAttribution(
         italicsAttribution,
         SpanRange(
-          start: 0,
-          end: styledText.text.length - 1,
+          0,
+          styledText.text.length - 1,
         ),
       );
     } else if (element.tag == 'a') {
       styledText.addAttribution(
         LinkAttribution(url: Uri.parse(element.attributes['href']!)),
         SpanRange(
-          start: 0,
-          end: styledText.text.length - 1,
+          0,
+          styledText.text.length - 1,
         ),
       );
     }
@@ -589,4 +587,3 @@ class _EmptyParagraphSyntax extends md.BlockSyntax {
     return md.Element('p', []);
   }
 }
-*/
