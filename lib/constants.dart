@@ -903,7 +903,7 @@ const kMonthsOfTheYear = {
   '12': 'december',
 };
 
-const kFrequencyOnce = '0';
+//const kFrequencyOnce = '0';
 const kFrequencyMonthly = '5';
 
 const kStatementStatusAll = 'all';
