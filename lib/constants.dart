@@ -67,6 +67,8 @@ const String kDocsUrl = 'https://invoiceninja.github.io/en';
 const String kDocsCustomDomainUrl = '$kDocsUrl/hosted-custom-domain';
 const String kDocsCustomDesignUrl = '$kDocsUrl/custom-fields';
 const String kDocsCustomFieldsUrl = '$kDocsUrl/custom-fields/#custom-fields';
+const String kDocsEmailVariablesUrl =
+    '$kDocsUrl/email-customization/#payment-email-customization';
 const String kDocsStripeConnectUrl = '$kDocsUrl/hosted-stripe';
 
 const String kForumUrl = 'https://forum.invoiceninja.com';

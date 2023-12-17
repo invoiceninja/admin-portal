@@ -529,7 +529,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                       icon: MdiIcons.openInNew,
                     ),
                   ),
-                  onPressed: () => launchUrl(Uri.parse(kDocsCustomFieldsUrl)),
+                  onPressed: () => launchUrl(Uri.parse(kDocsEmailVariablesUrl)),
                 ),
               ),
               VariablesHelp(
