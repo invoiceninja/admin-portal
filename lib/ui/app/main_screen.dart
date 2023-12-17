@@ -258,8 +258,9 @@ class MainScreen extends StatelessWidget {
           print('## Error: main screen route $mainRoute not defined');
       }
 
-      return WillPopScope(
-        onWillPop: () async {
+      return PopScope(
+        canPop: false,
+        onPopInvoked: (_) async {
           final state = store.state;
           final historyList = state.historyList;
           final isEditing = state.uiState.isEditing;
@@ -268,7 +269,6 @@ class MainScreen extends StatelessWidget {
 
           if (state.uiState.isPreviewing) {
             store.dispatch(PopPreviewStack());
-            return false;
           }
 
           for (int i = index; i < historyList.length; i++) {
@@ -300,38 +300,35 @@ class MainScreen extends StatelessWidget {
 
           if (history == null) {
             store.dispatch(ViewDashboard());
-            return false;
+          } else {
+            switch (history.entityType) {
+              case EntityType.dashboard:
+                store.dispatch(ViewDashboard());
+                break;
+              case EntityType.reports:
+                store.dispatch(ViewReports());
+                break;
+              case EntityType.settings:
+                store.dispatch(ViewSettings(
+                  section: history.id,
+                  company: state.company,
+                  user: state.user,
+                  tabIndex: 0,
+                ));
+                break;
+              default:
+                if ((history.id ?? '').isEmpty) {
+                  viewEntitiesByType(
+                      entityType: history.entityType, page: history.page);
+                } else {
+                  viewEntityById(
+                    entityId: history.id,
+                    entityType: history.entityType,
+                    showError: false,
+                  );
+                }
+            }
           }
-
-          switch (history.entityType) {
-            case EntityType.dashboard:
-              store.dispatch(ViewDashboard());
-              break;
-            case EntityType.reports:
-              store.dispatch(ViewReports());
-              break;
-            case EntityType.settings:
-              store.dispatch(ViewSettings(
-                section: history.id,
-                company: state.company,
-                user: state.user,
-                tabIndex: 0,
-              ));
-              break;
-            default:
-              if ((history.id ?? '').isEmpty) {
-                viewEntitiesByType(
-                    entityType: history.entityType, page: history.page);
-              } else {
-                viewEntityById(
-                  entityId: history.id,
-                  entityType: history.entityType,
-                  showError: false,
-                );
-              }
-          }
-
-          return false;
         },
         child: DesktopSessionTimeout(
           child: SafeArea(

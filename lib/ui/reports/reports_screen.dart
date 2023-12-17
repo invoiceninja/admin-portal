@@ -326,10 +326,10 @@ class ReportsScreen extends StatelessWidget {
       ),
     ];
 
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (_) {
         store.dispatch(ViewDashboard());
-        return false;
       },
       child: Scaffold(
         drawer: isMobile(context) || state.prefState.isMenuFloated
