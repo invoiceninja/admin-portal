@@ -369,7 +369,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                     final MediaQueryData data = MediaQuery.of(context);
                     return MediaQuery(
                       data: data.copyWith(
-                        textScaleFactor: state.prefState.textScaleFactor,
+                        textScaler:
+                            TextScaler.linear(state.prefState.textScaleFactor),
                         alwaysUse24HourFormat:
                             state.company.settings.enableMilitaryTime ?? false,
                       ),
