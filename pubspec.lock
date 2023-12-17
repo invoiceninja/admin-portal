@@ -46,7 +46,7 @@ packages:
     description:
       path: attributed_text
       ref: stable
-      resolved-ref: c040c690f1dc0f7c482d8ece02622c200cb8e1b1
+      resolved-ref: "88af88145526519a1830336c83bb154ceba7235c"
       url: "https://github.com/superlistapp/super_editor"
     source: git
     version: "0.2.2"
@@ -1532,7 +1532,7 @@ packages:
     description:
       path: super_editor
       ref: stable
-      resolved-ref: c040c690f1dc0f7c482d8ece02622c200cb8e1b1
+      resolved-ref: "88af88145526519a1830336c83bb154ceba7235c"
       url: "https://github.com/superlistapp/super_editor"
     source: git
     version: "0.2.6"
@@ -1541,7 +1541,7 @@ packages:
     description:
       path: super_editor_markdown
       ref: stable
-      resolved-ref: c040c690f1dc0f7c482d8ece02622c200cb8e1b1
+      resolved-ref: "88af88145526519a1830336c83bb154ceba7235c"
       url: "https://github.com/superlistapp/super_editor"
     source: git
     version: "0.1.5"
@@ -1550,7 +1550,7 @@ packages:
     description:
       path: super_text_layout
       ref: stable
-      resolved-ref: c040c690f1dc0f7c482d8ece02622c200cb8e1b1
+      resolved-ref: "88af88145526519a1830336c83bb154ceba7235c"
       url: "https://github.com/superlistapp/super_editor"
     source: git
     version: "0.1.8"
