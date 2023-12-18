@@ -181,9 +181,6 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'persistData',
       serializers.serialize(object.persistData,
           specifiedType: const FullType(bool)),
-      'persistUI',
-      serializers.serialize(object.persistUI,
-          specifiedType: const FullType(bool)),
       'longPressSelectionIsDefault',
       serializers.serialize(object.longPressSelectionIsDefault,
           specifiedType: const FullType(bool)),
@@ -351,10 +348,6 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           break;
         case 'persistData':
           result.persistData = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'persistUI':
-          result.persistUI = serializers.deserialize(value,
               specifiedType: const FullType(bool))! as bool;
           break;
         case 'longPressSelectionIsDefault':
@@ -723,8 +716,6 @@ class _$PrefState extends PrefState {
   @override
   final bool persistData;
   @override
-  final bool persistUI;
-  @override
   final bool longPressSelectionIsDefault;
   @override
   final bool requireAuthentication;
@@ -788,7 +779,6 @@ class _$PrefState extends PrefState {
       required this.enableDarkModeSystem,
       required this.isFilterVisible,
       required this.persistData,
-      required this.persistUI,
       required this.longPressSelectionIsDefault,
       required this.requireAuthentication,
       required this.tapSelectedToEdit,
@@ -850,7 +840,6 @@ class _$PrefState extends PrefState {
         isFilterVisible, r'PrefState', 'isFilterVisible');
     BuiltValueNullFieldError.checkNotNull(
         persistData, r'PrefState', 'persistData');
-    BuiltValueNullFieldError.checkNotNull(persistUI, r'PrefState', 'persistUI');
     BuiltValueNullFieldError.checkNotNull(longPressSelectionIsDefault,
         r'PrefState', 'longPressSelectionIsDefault');
     BuiltValueNullFieldError.checkNotNull(
@@ -923,7 +912,6 @@ class _$PrefState extends PrefState {
         enableDarkModeSystem == other.enableDarkModeSystem &&
         isFilterVisible == other.isFilterVisible &&
         persistData == other.persistData &&
-        persistUI == other.persistUI &&
         longPressSelectionIsDefault == other.longPressSelectionIsDefault &&
         requireAuthentication == other.requireAuthentication &&
         tapSelectedToEdit == other.tapSelectedToEdit &&
@@ -971,7 +959,6 @@ class _$PrefState extends PrefState {
     _$hash = $jc(_$hash, enableDarkModeSystem.hashCode);
     _$hash = $jc(_$hash, isFilterVisible.hashCode);
     _$hash = $jc(_$hash, persistData.hashCode);
-    _$hash = $jc(_$hash, persistUI.hashCode);
     _$hash = $jc(_$hash, longPressSelectionIsDefault.hashCode);
     _$hash = $jc(_$hash, requireAuthentication.hashCode);
     _$hash = $jc(_$hash, tapSelectedToEdit.hashCode);
@@ -1019,7 +1006,6 @@ class _$PrefState extends PrefState {
           ..add('enableDarkModeSystem', enableDarkModeSystem)
           ..add('isFilterVisible', isFilterVisible)
           ..add('persistData', persistData)
-          ..add('persistUI', persistUI)
           ..add('longPressSelectionIsDefault', longPressSelectionIsDefault)
           ..add('requireAuthentication', requireAuthentication)
           ..add('tapSelectedToEdit', tapSelectedToEdit)
@@ -1152,10 +1138,6 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   bool? get persistData => _$this._persistData;
   set persistData(bool? persistData) => _$this._persistData = persistData;
 
-  bool? _persistUI;
-  bool? get persistUI => _$this._persistUI;
-  set persistUI(bool? persistUI) => _$this._persistUI = persistUI;
-
   bool? _longPressSelectionIsDefault;
   bool? get longPressSelectionIsDefault => _$this._longPressSelectionIsDefault;
   set longPressSelectionIsDefault(bool? longPressSelectionIsDefault) =>
@@ -1279,7 +1261,6 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _enableDarkModeSystem = $v.enableDarkModeSystem;
       _isFilterVisible = $v.isFilterVisible;
       _persistData = $v.persistData;
-      _persistUI = $v.persistUI;
       _longPressSelectionIsDefault = $v.longPressSelectionIsDefault;
       _requireAuthentication = $v.requireAuthentication;
       _tapSelectedToEdit = $v.tapSelectedToEdit;
@@ -1352,7 +1333,6 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               enableDarkModeSystem: BuiltValueNullFieldError.checkNotNull(enableDarkModeSystem, r'PrefState', 'enableDarkModeSystem'),
               isFilterVisible: BuiltValueNullFieldError.checkNotNull(isFilterVisible, r'PrefState', 'isFilterVisible'),
               persistData: BuiltValueNullFieldError.checkNotNull(persistData, r'PrefState', 'persistData'),
-              persistUI: BuiltValueNullFieldError.checkNotNull(persistUI, r'PrefState', 'persistUI'),
               longPressSelectionIsDefault: BuiltValueNullFieldError.checkNotNull(longPressSelectionIsDefault, r'PrefState', 'longPressSelectionIsDefault'),
               requireAuthentication: BuiltValueNullFieldError.checkNotNull(requireAuthentication, r'PrefState', 'requireAuthentication'),
               tapSelectedToEdit: BuiltValueNullFieldError.checkNotNull(tapSelectedToEdit, r'PrefState', 'tapSelectedToEdit'),

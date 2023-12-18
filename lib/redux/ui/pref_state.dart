@@ -48,7 +48,6 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       showPdfPreview: true,
       showPdfPreviewSideBySide: false,
       persistData: false,
-      persistUI: true,
       enableNativeBrowser: false,
       donwloadsFolder: '',
       statementIncludes: BuiltList(<String>[kStatementIncludePayments]),
@@ -144,8 +143,6 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
   bool get isFilterVisible;
 
   bool get persistData;
-
-  bool get persistUI;
 
   bool get longPressSelectionIsDefault;
 
