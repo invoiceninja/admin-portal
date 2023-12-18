@@ -437,6 +437,7 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                                 statusPicker,
                               ],
                             ),
+                            SizedBox(height: 12),
                             Row(
                               children: [
                                 /*
