@@ -14,6 +14,7 @@ class HelpText extends StatelessWidget {
           opacity: 0.8,
           child: Text(
             message!,
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 20,
               color: Colors.grey,
