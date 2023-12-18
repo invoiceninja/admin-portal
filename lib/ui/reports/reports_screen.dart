@@ -1387,8 +1387,8 @@ class ReportResult {
           }
           if (column == groupBy) {
             String filter = group;
-            String customStartDate = '';
-            String customEndDate = '';
+            String? customStartDate;
+            String? customEndDate;
             if (getReportColumnType(column, context) ==
                     ReportColumnType.dateTime ||
                 getReportColumnType(column, context) == ReportColumnType.date) {
