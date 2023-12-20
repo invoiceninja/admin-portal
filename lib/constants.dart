@@ -8,7 +8,7 @@ const String kClientVersion = '5.0.146';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
-const String kSiteUrl = 'https://invoiceninja.com/';
+const String kSiteUrl = 'https://invoiceninja.com';
 const String kAppProductionUrl = 'https://invoicing.co';
 const String kAppReactUrl = 'https://app.invoicing.co';
 const String kAppStagingUrl = 'https://staging.invoicing.co';
@@ -20,7 +20,7 @@ const String kWhiteLabelUrl =
     'https://app.invoiceninja.com/buy_now/?account_key=AsFmBAeLXF0IKf7tmi0eiyZfmWW9hxMT&product_id=3';
 const String kPrivacyPolicyURL = 'https://www.invoiceninja.com/privacy-policy';
 const String kTermsOfServiceURL = 'https://www.invoiceninja.com/terms';
-const String kBankingURL = 'https://invoiceninja.com/banking';
+const String kBankingURL = 'https://invoiceninja.com/banking/';
 const String kTransifexURL =
     'https://www.transifex.com/invoice-ninja/invoice-ninja';
 const String kWebhookSiteURL = 'https://requestcatcher.com';
