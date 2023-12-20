@@ -6,9 +6,6 @@ PODS:
   - file_selector_macos (0.0.1):
     - FlutterMacOS
   - FlutterMacOS (1.0.0)
-  - FMDB (2.7.5):
-    - FMDB/standard (= 2.7.5)
-  - FMDB/standard (2.7.5)
   - in_app_purchase_storekit (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -25,13 +22,13 @@ PODS:
     - FlutterMacOS
   - screen_retriever (0.0.1):
     - FlutterMacOS
-  - Sentry/HybridSDK (8.14.2):
-    - SentryPrivate (= 8.14.2)
+  - Sentry/HybridSDK (8.15.2):
+    - SentryPrivate (= 8.15.2)
   - sentry_flutter (0.0.1):
     - Flutter
     - FlutterMacOS
-    - Sentry/HybridSDK (= 8.14.2)
-  - SentryPrivate (8.14.2)
+    - Sentry/HybridSDK (= 8.15.2)
+  - SentryPrivate (8.15.2)
   - share_plus (0.0.1):
     - FlutterMacOS
   - shared_preferences_foundation (0.0.1):
@@ -41,9 +38,6 @@ PODS:
     - FlutterMacOS
   - smart_auth (0.0.1):
     - FlutterMacOS
-  - sqflite (0.0.2):
-    - FlutterMacOS
-    - FMDB (>= 2.7.5)
   - url_launcher_macos (0.0.1):
     - FlutterMacOS
   - widget_kit_plugin (0.0.1):
@@ -68,14 +62,12 @@ DEPENDENCIES:
   - shared_preferences_foundation (from `Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/darwin`)
   - sign_in_with_apple (from `Flutter/ephemeral/.symlinks/plugins/sign_in_with_apple/macos`)
   - smart_auth (from `Flutter/ephemeral/.symlinks/plugins/smart_auth/macos`)
-  - sqflite (from `Flutter/ephemeral/.symlinks/plugins/sqflite/macos`)
   - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
   - widget_kit_plugin (from `Flutter/ephemeral/.symlinks/plugins/widget_kit_plugin/macos`)
   - window_manager (from `Flutter/ephemeral/.symlinks/plugins/window_manager/macos`)
 
 SPEC REPOS:
   trunk:
-    - FMDB
     - Sentry
     - SentryPrivate
 
@@ -112,8 +104,6 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/sign_in_with_apple/macos
   smart_auth:
     :path: Flutter/ephemeral/.symlinks/plugins/smart_auth/macos
-  sqflite:
-    :path: Flutter/ephemeral/.symlinks/plugins/sqflite/macos
   url_launcher_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos
   widget_kit_plugin:
@@ -126,7 +116,6 @@ SPEC CHECKSUMS:
   device_info_plus: 5401765fde0b8d062a2f8eb65510fb17e77cf07f
   file_selector_macos: 468fb6b81fac7c0e88d71317f3eec34c3b008ff9
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
-  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   in_app_purchase_storekit: 4fb7ee9e824b1f09107fbfbbce8c4b276366dc43
   in_app_review: a850789fad746e89bce03d4aeee8078b45a53fd0
   package_info: 6eba2fd8d3371dda2d85c8db6fe97488f24b74b2
@@ -134,14 +123,13 @@ SPEC CHECKSUMS:
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   printing: 1dd6a1fce2209ec240698e2439a4adbb9b427637
   screen_retriever: 59634572a57080243dd1bf715e55b6c54f241a38
-  Sentry: e0ea366f95ebb68f26d6030d8c22d6b2e6d23dd0
-  sentry_flutter: 9a04c51c373d76ee22167bf1e65bc468c0a91fed
-  SentryPrivate: 949a21fa59872427edc73b524c3ec8456761d97f
+  Sentry: 6f5742b4c47c17c9adcf265f6f328cf4a0ed1923
+  sentry_flutter: 2c309a1d4b45e59d02cfa15795705687f1e2081b
+  SentryPrivate: b2f7996f37781080f04a946eb4e377ff63c64195
   share_plus: 76dd39142738f7a68dd57b05093b5e8193f220f7
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
   sign_in_with_apple: a9e97e744e8edc36aefc2723111f652102a7a727
   smart_auth: b38e3ab4bfe089eacb1e233aca1a2340f96c28e9
-  sqflite: a5789cceda41d54d23f31d6de539d65bb14100ea
   url_launcher_macos: d2691c7dd33ed713bf3544850a623080ec693d95
   widget_kit_plugin: 9658611f1ba5faaaa9e8221d94fce53733a6911c
   window_manager: 3a1844359a6295ab1e47659b1a777e36773cd6e8
