@@ -155,7 +155,7 @@ class CompanyGatewayEditVM {
                 break;
               case kGatewayPayPalPlatform:
                 launchUrl(Uri.parse(
-                    '${cleanApiUrl(credentials.url)}/paypal/signup/${response['hash']}'));
+                    '${cleanApiUrl(credentials.url)}/paypal?hash=${response['hash']}'));
                 break;
             }
           }).catchError((dynamic error) {

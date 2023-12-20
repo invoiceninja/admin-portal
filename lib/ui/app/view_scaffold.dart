@@ -89,73 +89,67 @@ class ViewScaffold extends StatelessWidget {
       }
     }
 
-    return WillPopScope(
-      onWillPop: () async {
-        return true;
-      },
-      child: FocusTraversalGroup(
-        child: Scaffold(
-          backgroundColor: Theme.of(context).cardColor,
-          appBar: AppBar(
-            centerTitle: false,
-            leading: leading,
-            automaticallyImplyLeading: isMobile(context),
-            title: CopyToClipboard(
-              value: appBarTitle,
-              child: Text(appBarTitle!),
-            ),
-            bottom: appBarBottom as PreferredSizeWidget?,
-            actions: entity.isNew
-                ? []
-                : [
-                    if (isSettings && isDesktop(context) && !isFilter)
-                      TextButton(
-                          onPressed: () {
-                            onBackPressed != null
-                                ? onBackPressed!()
-                                : store.dispatch(UpdateCurrentRoute(
-                                    state.uiState.previousRoute));
-                          },
-                          child: Text(
-                            localization!.back,
-                            style: TextStyle(color: state.headerTextColor),
-                          )),
-                    if (isEditable && userCompany.canEditEntity(entity))
-                      Builder(builder: (context) {
-                        final isDisabled = state.uiState.isEditing &&
-                            state.uiState.mainRoute ==
-                                state.uiState.filterEntityType.toString();
+    return FocusTraversalGroup(
+      child: Scaffold(
+        backgroundColor: Theme.of(context).cardColor,
+        appBar: AppBar(
+          centerTitle: false,
+          leading: leading,
+          automaticallyImplyLeading: isMobile(context),
+          title: CopyToClipboard(
+            value: appBarTitle,
+            child: Text(appBarTitle!),
+          ),
+          bottom: appBarBottom as PreferredSizeWidget?,
+          actions: entity.isNew
+              ? []
+              : [
+                  if (isSettings && isDesktop(context) && !isFilter)
+                    TextButton(
+                        onPressed: () {
+                          onBackPressed != null
+                              ? onBackPressed!()
+                              : store.dispatch(UpdateCurrentRoute(
+                                  state.uiState.previousRoute));
+                        },
+                        child: Text(
+                          localization!.back,
+                          style: TextStyle(color: state.headerTextColor),
+                        )),
+                  if (isEditable && userCompany.canEditEntity(entity))
+                    Builder(builder: (context) {
+                      final isDisabled = state.uiState.isEditing &&
+                          state.uiState.mainRoute ==
+                              state.uiState.filterEntityType.toString();
 
-                        return AppTextButton(
-                          label: localization!.edit,
-                          isInHeader: true,
-                          onPressed: isDisabled
-                              ? null
-                              : () {
-                                  editEntity(entity: entity);
-                                },
-                        );
-                      }),
-                    ViewActionMenuButton(
-                      isSaving: state.isSaving && !isFilter,
-                      entity: entity,
-                      onSelected: (context, action) =>
-                          handleEntityAction(entity, action, autoPop: true),
-                      entityActions: entity.getActions(
-                        userCompany: userCompany,
-                        client: entity is BelongsToClient
-                            ? state.clientState
-                                .map[(entity as BelongsToClient).clientId]
-                            : null,
-                      ),
+                      return AppTextButton(
+                        label: localization!.edit,
+                        isInHeader: true,
+                        onPressed: isDisabled
+                            ? null
+                            : () {
+                                editEntity(entity: entity);
+                              },
+                      );
+                    }),
+                  ViewActionMenuButton(
+                    isSaving: state.isSaving && !isFilter,
+                    entity: entity,
+                    onSelected: (context, action) =>
+                        handleEntityAction(entity, action, autoPop: true),
+                    entityActions: entity.getActions(
+                      userCompany: userCompany,
+                      client: entity is BelongsToClient
+                          ? state.clientState
+                              .map[(entity as BelongsToClient).clientId]
+                          : null,
                     ),
-                  ],
-          ),
-          body: SafeArea(
-            child: entity.isNew
-                ? BlankScreen(localization!.noRecordSelected)
-                : body,
-          ),
+                  ),
+                ],
+        ),
+        body: SafeArea(
+          child:
+              entity.isNew ? BlankScreen(localization!.noRecordSelected) : body,
         ),
       ),
     );

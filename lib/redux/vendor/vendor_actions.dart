@@ -300,7 +300,7 @@ void handleVendorAction(
       break;
     case EntityAction.vendorPortal:
       final contact = vendor.contacts.firstWhere((contact) {
-        return (contact.link).isNotEmpty;
+        return contact.link.isNotEmpty;
       }, orElse: null);
       launchUrl(Uri.parse(contact.silentLink));
       break;

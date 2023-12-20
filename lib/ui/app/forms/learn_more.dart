@@ -29,14 +29,20 @@ class LearnMoreUrl extends StatelessWidget {
     return Row(
       children: <Widget>[
         Expanded(
+          flex: 2,
           child: child,
         ),
         SizedBox(
           width: 10,
         ),
-        TextButton(
-          child: Text(label ?? localization!.learnMore),
-          onPressed: () => launchUrl(Uri.parse(url)),
+        Expanded(
+          child: TextButton(
+            child: Text(
+              label ?? localization!.learnMore,
+              maxLines: 4,
+            ),
+            onPressed: () => launchUrl(Uri.parse(url)),
+          ),
         ),
       ],
     );

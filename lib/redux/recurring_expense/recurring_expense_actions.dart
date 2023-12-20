@@ -388,10 +388,9 @@ void handleRecurringExpenseAction(BuildContext? context,
       break;
     case EntityAction.start:
       store.dispatch(StartRecurringExpensesRequest(
-        completer: snackBarCompleter<Null>(
-            (recurringExpense.lastSentDate).isEmpty
-                ? localization!.startedRecurringInvoice
-                : localization!.resumedRecurringInvoice),
+        completer: snackBarCompleter<Null>(recurringExpense.lastSentDate.isEmpty
+            ? localization!.startedRecurringInvoice
+            : localization!.resumedRecurringInvoice),
         expenseIds: recurringExpenseIds,
       ));
       break;

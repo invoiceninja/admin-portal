@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -452,26 +451,13 @@ class DocumentPreview extends StatelessWidget {
           fit: BoxFit.cover,
         );
       } else {
-        return CachedNetworkImage(
-            height: height,
-            width: double.infinity,
-            fit: BoxFit.cover,
+        return Image.network(
+            '${cleanApiUrl(state.credentials.url)}/documents/${document.hash}',
             key: ValueKey(document.preview),
-            imageUrl:
-                '${cleanApiUrl(state.credentials.url)}/documents/${document.hash}',
-            imageRenderMethodForWeb: ImageRenderMethodForWeb.HttpGet,
-            httpHeaders: {'X-API-TOKEN': state.credentials.token},
-            placeholder: (context, url) => Container(
-                  height: height,
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
-            errorWidget: (context, url, Object? error) => Text(
-                  '$error: $url',
-                  maxLines: 6,
-                  overflow: TextOverflow.ellipsis,
-                ));
+            width: double.infinity,
+            height: height,
+            fit: BoxFit.cover,
+            headers: {'X-API-TOKEN': state.credentials.token});
       }
     }
 

@@ -124,10 +124,10 @@ class ListScaffold extends StatelessWidget {
       ],
     );
 
-    return WillPopScope(
-        onWillPop: () async {
+    return PopScope(
+        canPop: false,
+        onPopInvoked: (_) {
           store.dispatch(ViewDashboard());
-          return false;
         },
         child: FocusTraversalGroup(
           child: Scaffold(

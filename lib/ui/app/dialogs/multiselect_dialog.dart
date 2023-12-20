@@ -74,7 +74,7 @@ class MultiSelectListState extends State<MultiSelectList> {
   void initState() {
     super.initState();
     selected =
-        (widget.selected).isNotEmpty ? widget.selected : widget.defaultSelected;
+        widget.selected.isNotEmpty ? widget.selected : widget.defaultSelected;
     _controller = ScrollController();
   }
 

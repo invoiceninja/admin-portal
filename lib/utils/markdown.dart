@@ -31,75 +31,6 @@ MutableDocument deserializeMarkdownToDocument(String markdown) {
   return MutableDocument(nodes: nodeVisitor.content);
 }
 
-String serializeDocumentToMarkdown(Document doc) {
-  final StringBuffer buffer = StringBuffer();
-
-  bool isFirstLine = true;
-  for (int i = 0; i < doc.nodes.length; ++i) {
-    final node = doc.nodes[i];
-
-    if (!isFirstLine) {
-      // Create a new line to encode the given node.
-      buffer.writeln('');
-    } else {
-      isFirstLine = false;
-    }
-
-    if (node is ImageNode) {
-      buffer.write('![${node.altText}](${node.imageUrl})');
-    } else if (node is HorizontalRuleNode) {
-      buffer.write('---');
-    } else if (node is ListItemNode) {
-      final indent = List.generate(node.indent + 1, (index) => '  ').join('');
-      final symbol = node.type == ListItemType.unordered ? '*' : '1.';
-
-      buffer.write('$indent$symbol ${node.text.toMarkdown()}');
-
-      final nodeBelow = i < doc.nodes.length - 1 ? doc.nodes[i + 1] : null;
-      if (nodeBelow != null && (nodeBelow is! ListItemNode)) {
-        // This list item is the last item in the list. Add an extra
-        // blank line after it.
-        buffer.writeln('');
-      }
-    } else if (node is ParagraphNode) {
-      final Attribution? blockType = node.getMetadataValue('blockType');
-
-      if (blockType == header1Attribution) {
-        buffer.write('# ${node.text.toMarkdown()}');
-      } else if (blockType == header2Attribution) {
-        buffer.write('## ${node.text.toMarkdown()}');
-      } else if (blockType == header3Attribution) {
-        buffer.write('### ${node.text.toMarkdown()}');
-      } else if (blockType == header4Attribution) {
-        buffer.write('#### ${node.text.toMarkdown()}');
-      } else if (blockType == header5Attribution) {
-        buffer.write('##### ${node.text.toMarkdown()}');
-      } else if (blockType == header6Attribution) {
-        buffer.write('###### ${node.text.toMarkdown()}');
-      } else if (blockType == blockquoteAttribution) {
-        // TODO: handle multiline
-        buffer.write('> ${node.text.toMarkdown()}');
-      } else if (blockType == codeAttribution) {
-        buffer //
-          ..writeln('```') //
-          ..writeln(node.text.toMarkdown()) //
-          ..write('```');
-      } else {
-        buffer.write(node.text.toMarkdown());
-      }
-
-      // Separates paragraphs with blank lines.
-      // If we are at the last node we don't add a trailing
-      // blank line.
-      if (i != doc.nodes.length - 1) {
-        buffer.writeln();
-      }
-    }
-  }
-
-  return buffer.toString();
-}
-
 /// Converts structured markdown to a list of [DocumentNode]s.
 ///
 /// To use [_MarkdownToDocument], obtain a series of markdown
@@ -231,7 +162,7 @@ class _MarkdownToDocument implements md.NodeVisitor {
 
     _content.add(
       ParagraphNode(
-        id: DocumentEditor.createNodeId(),
+        id: Editor.createNodeId(),
         text: _parseInlineText(element),
         metadata: <String, dynamic>{
           'blockType': headerAttribution,
@@ -243,7 +174,7 @@ class _MarkdownToDocument implements md.NodeVisitor {
   void _addParagraph(AttributedText attributedText) {
     _content.add(
       ParagraphNode(
-        id: DocumentEditor.createNodeId(),
+        id: Editor.createNodeId(),
         text: attributedText,
       ),
     );
@@ -252,7 +183,7 @@ class _MarkdownToDocument implements md.NodeVisitor {
   void _addBlockquote(md.Element element) {
     _content.add(
       ParagraphNode(
-        id: DocumentEditor.createNodeId(),
+        id: Editor.createNodeId(),
         text: _parseInlineText(element),
         metadata: <String, dynamic>{
           'blockType': blockquoteAttribution,
@@ -272,9 +203,9 @@ class _MarkdownToDocument implements md.NodeVisitor {
 
     _content.add(
       ParagraphNode(
-        id: DocumentEditor.createNodeId(),
+        id: Editor.createNodeId(),
         text: AttributedText(
-          text: element.textContent,
+          element.textContent,
         ),
         metadata: <String, dynamic>{
           'blockType': codeAttribution,
@@ -289,7 +220,7 @@ class _MarkdownToDocument implements md.NodeVisitor {
   }) {
     _content.add(
       ImageNode(
-        id: DocumentEditor.createNodeId(),
+        id: Editor.createNodeId(),
         imageUrl: imageUrl,
         altText: altText,
       ),
@@ -298,7 +229,7 @@ class _MarkdownToDocument implements md.NodeVisitor {
 
   void _addHorizontalRule() {
     _content.add(HorizontalRuleNode(
-      id: DocumentEditor.createNodeId(),
+      id: Editor.createNodeId(),
     ));
   }
 
@@ -309,7 +240,7 @@ class _MarkdownToDocument implements md.NodeVisitor {
   }) {
     _content.add(
       ListItemNode(
-        id: DocumentEditor.createNodeId(),
+        id: Editor.createNodeId(),
         itemType: listItemType,
         indent: indent,
         text: _parseInlineText(element),
@@ -381,8 +312,7 @@ class _InlineMarkdownToDocument implements md.NodeVisitor {
   @override
   void visitText(md.Text text) {
     final attributedText = _textStack.removeLast();
-    _textStack
-        .add(attributedText.copyAndAppend(AttributedText(text: text.text)));
+    _textStack.add(attributedText.copyAndAppend(AttributedText(text.text)));
   }
 
   @override
@@ -395,24 +325,24 @@ class _InlineMarkdownToDocument implements md.NodeVisitor {
       styledText.addAttribution(
         boldAttribution,
         SpanRange(
-          start: 0,
-          end: styledText.text.length - 1,
+          0,
+          styledText.text.length - 1,
         ),
       );
     } else if (element.tag == 'em') {
       styledText.addAttribution(
         italicsAttribution,
         SpanRange(
-          start: 0,
-          end: styledText.text.length - 1,
+          0,
+          styledText.text.length - 1,
         ),
       );
     } else if (element.tag == 'a') {
       styledText.addAttribution(
         LinkAttribution(url: Uri.parse(element.attributes['href']!)),
         SpanRange(
-          start: 0,
-          end: styledText.text.length - 1,
+          0,
+          styledText.text.length - 1,
         ),
       );
     }

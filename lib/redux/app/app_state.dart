@@ -162,7 +162,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
     }
 
     final companies =
-        list.where((CompanyEntity company) => (company.id).isNotEmpty).toList();
+        list.where((CompanyEntity company) => company.id.isNotEmpty).toList();
 
     return companies;
   }

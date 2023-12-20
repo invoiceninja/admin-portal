@@ -369,7 +369,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                     final MediaQueryData data = MediaQuery.of(context);
                     return MediaQuery(
                       data: data.copyWith(
-                        textScaleFactor: state.prefState.textScaleFactor,
+                        textScaler:
+                            TextScaler.linear(state.prefState.textScaleFactor),
                         alwaysUse24HourFormat:
                             state.company.settings.enableMilitaryTime ?? false,
                       ),
@@ -413,6 +414,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                   */
                   theme: state.prefState.enableDarkMode
                       ? ThemeData(
+                          useMaterial3: false,
                           tooltipTheme: TooltipThemeData(
                             waitDuration: Duration(milliseconds: 500),
                           ),
@@ -438,6 +440,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                               BottomAppBarTheme(color: const Color(0xFF1B1C1E)),
                         )
                       : ThemeData(
+                          useMaterial3: false,
                           tooltipTheme: TooltipThemeData(
                             waitDuration: Duration(milliseconds: 500),
                           ),

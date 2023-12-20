@@ -4,7 +4,7 @@ workflows:
     instance_type: linux
     max_build_duration: 120
     environment:
-      flutter: 3.13.6
+      flutter: 3.16.2
       xcode: latest
       cocoapods: default
       vars:
@@ -20,11 +20,13 @@ workflows:
           source: true
     scripts:
       - |
+        flutter doctor
         cp $FCI_BUILD_DIR/android/app/build.gradle.prod $FCI_BUILD_DIR/android/app/build.gradle
         cp $FCI_BUILD_DIR/lib/.env.dart.example $FCI_BUILD_DIR/lib/.env.dart
         echo "const FLUTTER_VERSION = const <String, String>" > $FCI_BUILD_DIR/lib/flutter_version.dart
         flutter --version --machine >> $FCI_BUILD_DIR/lib/flutter_version.dart
         echo ";" >> $FCI_BUILD_DIR/lib/flutter_version.dart
+      #- cat $FCI_BUILD_DIR/lib/flutter_version.dart
       - cd . && flutter packages pub get
       - flutter config --enable-linux-desktop
       #- flutter build linux --release

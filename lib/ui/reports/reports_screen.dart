@@ -326,10 +326,10 @@ class ReportsScreen extends StatelessWidget {
       ),
     ];
 
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (_) {
         store.dispatch(ViewDashboard());
-        return false;
       },
       child: Scaffold(
         drawer: isMobile(context) || state.prefState.isMenuFloated
@@ -434,25 +434,29 @@ class ReportsScreen extends StatelessWidget {
         ),
         body: hideReports
             ? Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    HelpText(localization.upgradeToViewReports),
-                    AppButton(
-                        label: localization.upgrade.toUpperCase(),
-                        onPressed: () {
-                          if (supportsInAppPurchase() &&
-                              state.account.canMakeIAP) {
-                            showDialog<void>(
-                              context: context,
-                              builder: (context) => UpgradeDialog(),
-                            );
-                          } else {
-                            launchUrl(
-                                Uri.parse(state.userCompany.ninjaPortalUrl));
-                          }
-                        })
-                  ],
+                child: mt.Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      HelpText(localization.upgradeToViewReports),
+                      SizedBox(height: 10),
+                      AppButton(
+                          label: localization.upgrade.toUpperCase(),
+                          onPressed: () {
+                            if (supportsInAppPurchase() &&
+                                state.account.canMakeIAP) {
+                              showDialog<void>(
+                                context: context,
+                                builder: (context) => UpgradeDialog(),
+                              );
+                            } else {
+                              launchUrl(
+                                  Uri.parse(state.userCompany.ninjaPortalUrl));
+                            }
+                          })
+                    ],
+                  ),
                 ),
               )
             : ScrollableListView(
@@ -1387,8 +1391,8 @@ class ReportResult {
           }
           if (column == groupBy) {
             String filter = group;
-            String customStartDate = '';
-            String customEndDate = '';
+            String? customStartDate;
+            String? customEndDate;
             if (getReportColumnType(column, context) ==
                     ReportColumnType.dateTime ||
                 getReportColumnType(column, context) == ReportColumnType.date) {

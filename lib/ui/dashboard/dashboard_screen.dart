@@ -373,29 +373,26 @@ class _DashboardScreenState extends State<DashboardScreen>
       ),
     );
 
-    return WillPopScope(
-      onWillPop: () async => true,
-      child: isDesktop(context)
-          ? Row(
-              children: [
+    return isDesktop(context)
+        ? Row(
+            children: [
+              Flexible(
+                child: mainScaffold,
+                flex: 3,
+              ),
+              if (state.dashboardUIState.showSidebar)
                 Flexible(
-                  child: mainScaffold,
-                  flex: 3,
-                ),
-                if (state.dashboardUIState.showSidebar)
-                  Flexible(
-                    child: AppBorder(
-                      isLeft: true,
-                      child: SidebarScaffold(
-                        tabController: _sideTabController,
-                      ),
+                  child: AppBorder(
+                    isLeft: true,
+                    child: SidebarScaffold(
+                      tabController: _sideTabController,
                     ),
-                    flex: 2,
                   ),
-              ],
-            )
-          : mainScaffold,
-    );
+                  flex: 2,
+                ),
+            ],
+          )
+        : mainScaffold;
   }
 }
 

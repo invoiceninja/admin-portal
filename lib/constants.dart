@@ -4,7 +4,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.145';
+const String kClientVersion = '5.0.146';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -67,6 +67,8 @@ const String kDocsUrl = 'https://invoiceninja.github.io/en';
 const String kDocsCustomDomainUrl = '$kDocsUrl/hosted-custom-domain';
 const String kDocsCustomDesignUrl = '$kDocsUrl/custom-fields';
 const String kDocsCustomFieldsUrl = '$kDocsUrl/custom-fields/#custom-fields';
+const String kDocsEmailVariablesUrl =
+    '$kDocsUrl/email-customization/#payment-email-customization';
 const String kDocsStripeConnectUrl = '$kDocsUrl/hosted-stripe';
 
 const String kForumUrl = 'https://forum.invoiceninja.com';
@@ -901,7 +903,7 @@ const kMonthsOfTheYear = {
   '12': 'december',
 };
 
-const kFrequencyOnce = '0';
+//const kFrequencyOnce = '0';
 const kFrequencyMonthly = '5';
 
 const kStatementStatusAll = 'all';

@@ -65,9 +65,10 @@ abstract class ScheduleEntity extends Object
       createdUserId: '',
       assignedUserId: '',
       archivedAt: 0,
-      frequencyId: template == ScheduleEntity.TEMPLATE_EMAIL_RECORD
-          ? kFrequencyOnce
-          : kFrequencyMonthly,
+      frequencyId: kFrequencyMonthly,
+      //frequencyId: template == ScheduleEntity.TEMPLATE_EMAIL_RECORD
+      //    ? kFrequencyOnce
+      //    : kFrequencyMonthly,
       isPaused: false,
       nextRun: '',
       template: template,
