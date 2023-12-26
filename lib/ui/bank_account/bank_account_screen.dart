@@ -11,7 +11,6 @@ import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dar
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/learn_more.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -37,9 +36,10 @@ class BankAccountScreen extends StatelessWidget {
 
   void connectAccounts(BuildContext context) {
     final localization = AppLocalization.of(context)!;
-    String integrationType = BankAccountEntity.INTEGRATION_TYPE_NORDIGEN;
 
-    if (isHosted(context)) {
+    if (isSelfHosted(context)) {
+      _connectAccounts(context, BankAccountEntity.INTEGRATION_TYPE_NORDIGEN);
+    } else {
       showDialog(
         context: context,
         builder: (context) {
@@ -55,9 +55,7 @@ class BankAccountScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text('Envestnet - Yodlee'),
-                  Text(
-                      localization.supportedRegions +
-                          ': USA, Australia, UK & India',
+                  Text(localization.yodleeRegions,
                       style: Theme.of(context).textTheme.bodySmall),
                   Row(
                     children: [
@@ -84,7 +82,7 @@ class BankAccountScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 30),
                   Text('GoCardless - Nordigen'),
-                  Text(localization.supportedRegions + ': Europe & UK',
+                  Text(localization.nordigenRegions,
                       style: Theme.of(context).textTheme.bodySmall),
                   Row(
                     children: [
@@ -115,8 +113,6 @@ class BankAccountScreen extends StatelessWidget {
           );
         },
       );
-    } else {
-      _connectAccounts(context, integrationType);
     }
   }
 
