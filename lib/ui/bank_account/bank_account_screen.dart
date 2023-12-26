@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dar
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/learn_more.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -19,6 +20,7 @@ import 'package:invoiceninja_flutter/ui/bank_account/bank_account_presenter.dart
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'bank_account_screen_vm.dart';
@@ -34,6 +36,91 @@ class BankAccountScreen extends StatelessWidget {
   final BankAccountScreenVM viewModel;
 
   void connectAccounts(BuildContext context) {
+    final localization = AppLocalization.of(context)!;
+    String integrationType = BankAccountEntity.INTEGRATION_TYPE_NORDIGEN;
+
+    if (isHosted(context)) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(localization.selectProvider),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(localization.close.toUpperCase()))
+            ],
+            content: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text('Envestnet - Yodlee'),
+                  Text(
+                      localization.supportedRegions +
+                          ': USA, Australia, UK & India',
+                      style: Theme.of(context).textTheme.bodySmall),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: AppButton(
+                          label: localization.learnMore.toUpperCase(),
+                          onPressed: () =>
+                              launchUrl(Uri.parse(kYodleeCoverageUrl)),
+                          iconData: Icons.info_outline,
+                        ),
+                      ),
+                      SizedBox(width: kTableColumnGap),
+                      Expanded(
+                        child: AppButton(
+                          label: localization.connect.toUpperCase(),
+                          onPressed: () => _connectAccounts(
+                            context,
+                            BankAccountEntity.INTEGRATION_TYPE_YODLEE,
+                          ),
+                          iconData: Icons.link,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 30),
+                  Text('GoCardless - Nordigen'),
+                  Text(localization.supportedRegions + ': Europe & UK',
+                      style: Theme.of(context).textTheme.bodySmall),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: AppButton(
+                          label: localization.learnMore.toUpperCase(),
+                          onPressed: () =>
+                              launchUrl(Uri.parse(kNordigenCoverageUrl)),
+                          iconData: Icons.info_outline,
+                        ),
+                      ),
+                      SizedBox(width: kTableColumnGap),
+                      Expanded(
+                        child: AppButton(
+                          label: localization.connect.toUpperCase(),
+                          onPressed: () => _connectAccounts(
+                            context,
+                            BankAccountEntity.INTEGRATION_TYPE_NORDIGEN,
+                          ),
+                          iconData: Icons.link,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    } else {
+      _connectAccounts(context, integrationType);
+    }
+  }
+
+  void _connectAccounts(BuildContext context, String integrationType) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final webClient = WebClient();
@@ -41,7 +128,6 @@ class BankAccountScreen extends StatelessWidget {
     final url = '${credentials.url}/one_time_token';
 
     store.dispatch(StartSaving());
-
     webClient
         .post(url, credentials.token,
             data: jsonEncode({

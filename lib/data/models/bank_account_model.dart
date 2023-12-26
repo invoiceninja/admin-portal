@@ -53,6 +53,9 @@ class BankAccountFields {
 abstract class BankAccountEntity extends Object
     with BaseEntity
     implements Built<BankAccountEntity, BankAccountEntityBuilder> {
+  static const String INTEGRATION_TYPE_YODLEE = 'yodlee';
+  static const String INTEGRATION_TYPE_NORDIGEN = 'nordigen';
+
   factory BankAccountEntity({String? id, AppState? state}) {
     return _$BankAccountEntity._(
       id: id ?? BaseEntity.nextId,

@@ -53,6 +53,11 @@ const String kFacebookUrl = 'https://www.facebook.com/invoiceninja';
 const String kYouTubeUrl =
     'https://www.youtube.com/channel/UCXAHcBvhW05PDtWYIq7WDFA/videos';
 
+const String kYodleeCoverageUrl =
+    'https://www.yodlee.com/open-banking/data-connections';
+const String kNordigenCoverageUrl =
+    'https://gocardless.com/bank-account-data/coverage';
+
 const String kTaskExtensionUrl =
     'https://chromewebstore.google.com/detail/invoice-ninja-tasks/dlfcbfdpemfnjbjlladogijcchfmmaaf';
 const String kTaskExtensionYouTubeUrl =
