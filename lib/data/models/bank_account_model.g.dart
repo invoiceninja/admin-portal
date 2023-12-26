@@ -139,6 +139,9 @@ class _$BankAccountEntitySerializer
       'disabled_upstream',
       serializers.serialize(object.disabledUpstream,
           specifiedType: const FullType(bool)),
+      'integration_type',
+      serializers.serialize(object.integrationType,
+          specifiedType: const FullType(bool)),
       'balance',
       serializers.serialize(object.balance,
           specifiedType: const FullType(double)),
@@ -227,6 +230,10 @@ class _$BankAccountEntitySerializer
           break;
         case 'disabled_upstream':
           result.disabledUpstream = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
+          break;
+        case 'integration_type':
+          result.integrationType = serializers.deserialize(value,
               specifiedType: const FullType(bool))! as bool;
           break;
         case 'balance':
@@ -494,6 +501,8 @@ class _$BankAccountEntity extends BankAccountEntity {
   @override
   final bool disabledUpstream;
   @override
+  final bool integrationType;
+  @override
   final double balance;
   @override
   final String currency;
@@ -526,6 +535,7 @@ class _$BankAccountEntity extends BankAccountEntity {
       required this.fromDate,
       required this.autoSync,
       required this.disabledUpstream,
+      required this.integrationType,
       required this.balance,
       required this.currency,
       this.isChanged,
@@ -549,6 +559,8 @@ class _$BankAccountEntity extends BankAccountEntity {
         autoSync, r'BankAccountEntity', 'autoSync');
     BuiltValueNullFieldError.checkNotNull(
         disabledUpstream, r'BankAccountEntity', 'disabledUpstream');
+    BuiltValueNullFieldError.checkNotNull(
+        integrationType, r'BankAccountEntity', 'integrationType');
     BuiltValueNullFieldError.checkNotNull(
         balance, r'BankAccountEntity', 'balance');
     BuiltValueNullFieldError.checkNotNull(
@@ -581,6 +593,7 @@ class _$BankAccountEntity extends BankAccountEntity {
         fromDate == other.fromDate &&
         autoSync == other.autoSync &&
         disabledUpstream == other.disabledUpstream &&
+        integrationType == other.integrationType &&
         balance == other.balance &&
         currency == other.currency &&
         isChanged == other.isChanged &&
@@ -605,6 +618,7 @@ class _$BankAccountEntity extends BankAccountEntity {
     _$hash = $jc(_$hash, fromDate.hashCode);
     _$hash = $jc(_$hash, autoSync.hashCode);
     _$hash = $jc(_$hash, disabledUpstream.hashCode);
+    _$hash = $jc(_$hash, integrationType.hashCode);
     _$hash = $jc(_$hash, balance.hashCode);
     _$hash = $jc(_$hash, currency.hashCode);
     _$hash = $jc(_$hash, isChanged.hashCode);
@@ -629,6 +643,7 @@ class _$BankAccountEntity extends BankAccountEntity {
           ..add('fromDate', fromDate)
           ..add('autoSync', autoSync)
           ..add('disabledUpstream', disabledUpstream)
+          ..add('integrationType', integrationType)
           ..add('balance', balance)
           ..add('currency', currency)
           ..add('isChanged', isChanged)
@@ -675,6 +690,11 @@ class BankAccountEntityBuilder
   bool? get disabledUpstream => _$this._disabledUpstream;
   set disabledUpstream(bool? disabledUpstream) =>
       _$this._disabledUpstream = disabledUpstream;
+
+  bool? _integrationType;
+  bool? get integrationType => _$this._integrationType;
+  set integrationType(bool? integrationType) =>
+      _$this._integrationType = integrationType;
 
   double? _balance;
   double? get balance => _$this._balance;
@@ -732,6 +752,7 @@ class BankAccountEntityBuilder
       _fromDate = $v.fromDate;
       _autoSync = $v.autoSync;
       _disabledUpstream = $v.disabledUpstream;
+      _integrationType = $v.integrationType;
       _balance = $v.balance;
       _currency = $v.currency;
       _isChanged = $v.isChanged;
@@ -778,10 +799,11 @@ class BankAccountEntityBuilder
                 autoSync, r'BankAccountEntity', 'autoSync'),
             disabledUpstream: BuiltValueNullFieldError.checkNotNull(
                 disabledUpstream, r'BankAccountEntity', 'disabledUpstream'),
+            integrationType: BuiltValueNullFieldError.checkNotNull(
+                integrationType, r'BankAccountEntity', 'integrationType'),
             balance: BuiltValueNullFieldError.checkNotNull(
                 balance, r'BankAccountEntity', 'balance'),
-            currency: BuiltValueNullFieldError.checkNotNull(
-                currency, r'BankAccountEntity', 'currency'),
+            currency: BuiltValueNullFieldError.checkNotNull(currency, r'BankAccountEntity', 'currency'),
             isChanged: isChanged,
             createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'BankAccountEntity', 'createdAt'),
             updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'BankAccountEntity', 'updatedAt'),

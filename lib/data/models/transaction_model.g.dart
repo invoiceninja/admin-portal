@@ -166,6 +166,12 @@ class _$TransactionEntitySerializer
       'bank_transaction_rule_id',
       serializers.serialize(object.transactionRuleId,
           specifiedType: const FullType(String)),
+      'participant_name',
+      serializers.serialize(object.participantName,
+          specifiedType: const FullType(String)),
+      'participant',
+      serializers.serialize(object.participant,
+          specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -179,6 +185,13 @@ class _$TransactionEntitySerializer
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
     Object? value;
+    value = object.pendingVendorId;
+    if (value != null) {
+      result
+        ..add('pendingVendorId')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.isChanged;
     if (value != null) {
       result
@@ -281,6 +294,18 @@ class _$TransactionEntitySerializer
         case 'bank_transaction_rule_id':
           result.transactionRuleId = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
+          break;
+        case 'participant_name':
+          result.participantName = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'participant':
+          result.participant = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'pendingVendorId':
+          result.pendingVendorId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -606,6 +631,10 @@ class _$TransactionEntity extends TransactionEntity {
   @override
   final String transactionRuleId;
   @override
+  final String participantName;
+  @override
+  final String participant;
+  @override
   final String? pendingVendorId;
   @override
   final String? pendingCategoryId;
@@ -648,6 +677,8 @@ class _$TransactionEntity extends TransactionEntity {
       required this.vendorId,
       required this.transactionId,
       required this.transactionRuleId,
+      required this.participantName,
+      required this.participant,
       this.pendingVendorId,
       this.pendingCategoryId,
       this.pendingExpenseId,
@@ -690,6 +721,10 @@ class _$TransactionEntity extends TransactionEntity {
     BuiltValueNullFieldError.checkNotNull(
         transactionRuleId, r'TransactionEntity', 'transactionRuleId');
     BuiltValueNullFieldError.checkNotNull(
+        participantName, r'TransactionEntity', 'participantName');
+    BuiltValueNullFieldError.checkNotNull(
+        participant, r'TransactionEntity', 'participant');
+    BuiltValueNullFieldError.checkNotNull(
         createdAt, r'TransactionEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
         updatedAt, r'TransactionEntity', 'updatedAt');
@@ -725,6 +760,8 @@ class _$TransactionEntity extends TransactionEntity {
         vendorId == other.vendorId &&
         transactionId == other.transactionId &&
         transactionRuleId == other.transactionRuleId &&
+        participantName == other.participantName &&
+        participant == other.participant &&
         pendingVendorId == other.pendingVendorId &&
         pendingCategoryId == other.pendingCategoryId &&
         pendingExpenseId == other.pendingExpenseId &&
@@ -758,6 +795,8 @@ class _$TransactionEntity extends TransactionEntity {
     _$hash = $jc(_$hash, vendorId.hashCode);
     _$hash = $jc(_$hash, transactionId.hashCode);
     _$hash = $jc(_$hash, transactionRuleId.hashCode);
+    _$hash = $jc(_$hash, participantName.hashCode);
+    _$hash = $jc(_$hash, participant.hashCode);
     _$hash = $jc(_$hash, pendingVendorId.hashCode);
     _$hash = $jc(_$hash, pendingCategoryId.hashCode);
     _$hash = $jc(_$hash, pendingExpenseId.hashCode);
@@ -791,6 +830,8 @@ class _$TransactionEntity extends TransactionEntity {
           ..add('vendorId', vendorId)
           ..add('transactionId', transactionId)
           ..add('transactionRuleId', transactionRuleId)
+          ..add('participantName', participantName)
+          ..add('participant', participant)
           ..add('pendingVendorId', pendingVendorId)
           ..add('pendingCategoryId', pendingCategoryId)
           ..add('pendingExpenseId', pendingExpenseId)
@@ -873,6 +914,15 @@ class TransactionEntityBuilder
   set transactionRuleId(String? transactionRuleId) =>
       _$this._transactionRuleId = transactionRuleId;
 
+  String? _participantName;
+  String? get participantName => _$this._participantName;
+  set participantName(String? participantName) =>
+      _$this._participantName = participantName;
+
+  String? _participant;
+  String? get participant => _$this._participant;
+  set participant(String? participant) => _$this._participant = participant;
+
   String? _pendingVendorId;
   String? get pendingVendorId => _$this._pendingVendorId;
   set pendingVendorId(String? pendingVendorId) =>
@@ -944,6 +994,8 @@ class TransactionEntityBuilder
       _vendorId = $v.vendorId;
       _transactionId = $v.transactionId;
       _transactionRuleId = $v.transactionRuleId;
+      _participantName = $v.participantName;
+      _participant = $v.participant;
       _pendingVendorId = $v.pendingVendorId;
       _pendingCategoryId = $v.pendingCategoryId;
       _pendingExpenseId = $v.pendingExpenseId;
@@ -1001,6 +1053,8 @@ class TransactionEntityBuilder
             vendorId: BuiltValueNullFieldError.checkNotNull(vendorId, r'TransactionEntity', 'vendorId'),
             transactionId: BuiltValueNullFieldError.checkNotNull(transactionId, r'TransactionEntity', 'transactionId'),
             transactionRuleId: BuiltValueNullFieldError.checkNotNull(transactionRuleId, r'TransactionEntity', 'transactionRuleId'),
+            participantName: BuiltValueNullFieldError.checkNotNull(participantName, r'TransactionEntity', 'participantName'),
+            participant: BuiltValueNullFieldError.checkNotNull(participant, r'TransactionEntity', 'participant'),
             pendingVendorId: pendingVendorId,
             pendingCategoryId: pendingCategoryId,
             pendingExpenseId: pendingExpenseId,
