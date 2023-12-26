@@ -141,7 +141,7 @@ class _$BankAccountEntitySerializer
           specifiedType: const FullType(bool)),
       'integration_type',
       serializers.serialize(object.integrationType,
-          specifiedType: const FullType(bool)),
+          specifiedType: const FullType(String)),
       'balance',
       serializers.serialize(object.balance,
           specifiedType: const FullType(double)),
@@ -234,7 +234,7 @@ class _$BankAccountEntitySerializer
           break;
         case 'integration_type':
           result.integrationType = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'balance':
           result.balance = serializers.deserialize(value,
@@ -501,7 +501,7 @@ class _$BankAccountEntity extends BankAccountEntity {
   @override
   final bool disabledUpstream;
   @override
-  final bool integrationType;
+  final String integrationType;
   @override
   final double balance;
   @override
@@ -691,9 +691,9 @@ class BankAccountEntityBuilder
   set disabledUpstream(bool? disabledUpstream) =>
       _$this._disabledUpstream = disabledUpstream;
 
-  bool? _integrationType;
-  bool? get integrationType => _$this._integrationType;
-  set integrationType(bool? integrationType) =>
+  String? _integrationType;
+  String? get integrationType => _$this._integrationType;
+  set integrationType(String? integrationType) =>
       _$this._integrationType = integrationType;
 
   double? _balance;

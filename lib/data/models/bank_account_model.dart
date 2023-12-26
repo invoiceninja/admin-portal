@@ -105,7 +105,7 @@ abstract class BankAccountEntity extends Object
   bool get disabledUpstream;
 
   @BuiltValueField(wireName: 'integration_type')
-  bool get integrationType;
+  String get integrationType;
 
   double get balance;
 
