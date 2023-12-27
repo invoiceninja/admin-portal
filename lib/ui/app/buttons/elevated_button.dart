@@ -6,6 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class AppButton extends StatelessWidget {
   const AppButton({
@@ -38,7 +39,7 @@ class AppButton extends StatelessWidget {
           color: Colors.white,
         ),
       ),
-      child: iconData != null
+      child: iconData != null && isDesktop(context)
           ? IconText(
               icon: iconData,
               text: label,

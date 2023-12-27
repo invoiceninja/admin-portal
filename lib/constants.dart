@@ -20,7 +20,7 @@ const String kWhiteLabelUrl =
     'https://app.invoiceninja.com/buy_now/?account_key=AsFmBAeLXF0IKf7tmi0eiyZfmWW9hxMT&product_id=3';
 const String kPrivacyPolicyURL = 'https://www.invoiceninja.com/privacy-policy';
 const String kTermsOfServiceURL = 'https://www.invoiceninja.com/terms';
-const String kBankingURL = 'https://invoiceninja.com/banking/';
+const String kBankingURL = 'https://invoiceninja.com/banking';
 const String kTransifexURL =
     'https://www.transifex.com/invoice-ninja/invoice-ninja';
 const String kWebhookSiteURL = 'https://requestcatcher.com';
@@ -52,6 +52,11 @@ const String kTwitterUrl = 'https://twitter.com/invoiceninja';
 const String kFacebookUrl = 'https://www.facebook.com/invoiceninja';
 const String kYouTubeUrl =
     'https://www.youtube.com/channel/UCXAHcBvhW05PDtWYIq7WDFA/videos';
+
+const String kYodleeCoverageUrl =
+    'https://www.yodlee.com/open-banking/data-connections';
+const String kNordigenCoverageUrl =
+    'https://gocardless.com/bank-account-data/coverage';
 
 const String kTaskExtensionUrl =
     'https://chromewebstore.google.com/detail/invoice-ninja-tasks/dlfcbfdpemfnjbjlladogijcchfmmaaf';

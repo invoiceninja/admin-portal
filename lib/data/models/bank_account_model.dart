@@ -73,10 +73,14 @@ abstract class BankAccountEntity extends Object
       disabledUpstream: false,
       fromDate: '',
       autoSync: false,
+      integrationType: '',
     );
   }
 
   BankAccountEntity._();
+
+  static const String INTEGRATION_TYPE_YODLEE = 'yodlee';
+  static const String INTEGRATION_TYPE_NORDIGEN = 'nordigen';
 
   @override
   @memoized
@@ -102,6 +106,9 @@ abstract class BankAccountEntity extends Object
 
   @BuiltValueField(wireName: 'disabled_upstream')
   bool get disabledUpstream;
+
+  @BuiltValueField(wireName: 'integration_type')
+  String get integrationType;
 
   double get balance;
 
@@ -203,7 +210,8 @@ abstract class BankAccountEntity extends Object
   static void _initializeBuilder(BankAccountEntityBuilder builder) => builder
     ..fromDate = ''
     ..disabledUpstream = false
-    ..autoSync = false;
+    ..autoSync = false
+    ..integrationType = '';
 
   static Serializer<BankAccountEntity> get serializer =>
       _$bankAccountEntitySerializer;

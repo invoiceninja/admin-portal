@@ -711,7 +711,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                       ..notes = item.isTask
                                           ? item.notes
                                           : product.notes
-                                      ..productCost = item.productCost
+                                      ..productCost = product.cost
                                       ..cost = item.isTask && item.cost != 0
                                           ? item.cost
                                           : cost

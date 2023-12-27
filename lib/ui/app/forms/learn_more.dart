@@ -12,11 +12,13 @@ class LearnMoreUrl extends StatelessWidget {
     required this.child,
     required this.url,
     this.label,
+    this.isVertical = false,
   });
 
   final Widget child;
   final String url;
   final String? label;
+  final bool isVertical;
 
   @override
   Widget build(BuildContext context) {
@@ -26,26 +28,43 @@ class LearnMoreUrl extends StatelessWidget {
       return child;
     }
 
-    return Row(
-      children: <Widget>[
-        Expanded(
-          flex: 2,
-          child: child,
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        Expanded(
-          child: TextButton(
+    if (isVertical) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          child,
+          SizedBox(height: 8),
+          OutlinedButton(
             child: Text(
               label ?? localization!.learnMore,
               maxLines: 4,
             ),
             onPressed: () => launchUrl(Uri.parse(url)),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    } else {
+      return Row(
+        children: <Widget>[
+          Expanded(
+            flex: 2,
+            child: child,
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Expanded(
+            child: TextButton(
+              child: Text(
+                label ?? localization!.learnMore,
+                maxLines: 4,
+              ),
+              onPressed: () => launchUrl(Uri.parse(url)),
+            ),
+          ),
+        ],
+      );
+    }
   }
 }
 

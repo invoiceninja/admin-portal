@@ -107,6 +107,8 @@ abstract class TransactionEntity extends Object
       categoryId: '',
       transactionRuleId: '',
       paymentId: '',
+      participant: '',
+      participantName: '',
     );
   }
 
@@ -161,7 +163,11 @@ abstract class TransactionEntity extends Object
   @BuiltValueField(wireName: 'bank_transaction_rule_id')
   String get transactionRuleId;
 
-  @BuiltValueField(serialize: false)
+  @BuiltValueField(wireName: 'participant_name')
+  String get participantName;
+
+  String get participant;
+
   String? get pendingVendorId;
 
   @BuiltValueField(serialize: false)
@@ -383,7 +389,9 @@ abstract class TransactionEntity extends Object
     ..bankAccountId = ''
     ..transactionRuleId = ''
     ..paymentId = ''
-    ..currencyId = '';
+    ..currencyId = ''
+    ..participantName = ''
+    ..participant = '';
 
   static Serializer<TransactionEntity> get serializer =>
       _$transactionEntitySerializer;

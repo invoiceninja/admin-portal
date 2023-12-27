@@ -19,6 +19,7 @@ import 'package:invoiceninja_flutter/ui/bank_account/bank_account_presenter.dart
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'bank_account_screen_vm.dart';
@@ -34,6 +35,88 @@ class BankAccountScreen extends StatelessWidget {
   final BankAccountScreenVM viewModel;
 
   void connectAccounts(BuildContext context) {
+    final localization = AppLocalization.of(context)!;
+
+    if (isSelfHosted(context)) {
+      _connectAccounts(context, BankAccountEntity.INTEGRATION_TYPE_NORDIGEN);
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(localization.selectProvider),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(localization.close.toUpperCase()))
+            ],
+            content: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text('Envestnet - Yodlee'),
+                  Text(localization.yodleeRegions,
+                      style: Theme.of(context).textTheme.bodySmall),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: AppButton(
+                          label: localization.learnMore.toUpperCase(),
+                          onPressed: () =>
+                              launchUrl(Uri.parse(kYodleeCoverageUrl)),
+                          iconData: Icons.info_outline,
+                        ),
+                      ),
+                      SizedBox(width: kTableColumnGap),
+                      Expanded(
+                        child: AppButton(
+                          label: localization.connect.toUpperCase(),
+                          onPressed: () => _connectAccounts(
+                            context,
+                            BankAccountEntity.INTEGRATION_TYPE_YODLEE,
+                          ),
+                          iconData: Icons.link,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 30),
+                  Text('GoCardless - Nordigen'),
+                  Text(localization.nordigenRegions,
+                      style: Theme.of(context).textTheme.bodySmall),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: AppButton(
+                          label: localization.learnMore.toUpperCase(),
+                          onPressed: () =>
+                              launchUrl(Uri.parse(kNordigenCoverageUrl)),
+                          iconData: Icons.info_outline,
+                        ),
+                      ),
+                      SizedBox(width: kTableColumnGap),
+                      Expanded(
+                        child: AppButton(
+                          label: localization.connect.toUpperCase(),
+                          onPressed: () => _connectAccounts(
+                            context,
+                            BankAccountEntity.INTEGRATION_TYPE_NORDIGEN,
+                          ),
+                          iconData: Icons.link,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    }
+  }
+
+  void _connectAccounts(BuildContext context, String integrationType) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final webClient = WebClient();
@@ -41,16 +124,25 @@ class BankAccountScreen extends StatelessWidget {
     final url = '${credentials.url}/one_time_token';
 
     store.dispatch(StartSaving());
-
     webClient
         .post(url, credentials.token,
             data: jsonEncode({
-              'context': {'return_url': ''}
+              'context':
+                  integrationType == BankAccountEntity.INTEGRATION_TYPE_YODLEE
+                      ? {'return_url': ''}
+                      : 'nordigen',
             }))
         .then((dynamic response) {
       store.dispatch(StopSaving());
-      launchUrl(Uri.parse(
-          '${cleanApiUrl(credentials.url)}/yodlee/onboard/${response['hash']}'));
+
+      String connectUrl = cleanApiUrl(credentials.url);
+      if (integrationType == BankAccountEntity.INTEGRATION_TYPE_YODLEE) {
+        connectUrl += '/yodlee/onboard/${response['hash']}';
+      } else {
+        connectUrl += '/nordigen/connect/${response['hash']}';
+      }
+
+      launchUrl(Uri.parse(connectUrl));
     }).catchError((dynamic error) {
       store.dispatch(StopSaving());
       showErrorDialog(message: '$error');
@@ -62,7 +154,7 @@ class BankAccountScreen extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
     final userCompany = state.userCompany;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
 
     return ListScaffold(
       entityType: EntityType.bankAccount,
@@ -94,63 +186,61 @@ class BankAccountScreen extends StatelessWidget {
                 const EdgeInsets.only(left: 16, top: 8, right: 16, bottom: 10),
             child: Row(
               children: [
-                if (state.isHosted) ...[
-                  if (state.isEnterprisePlan) ...[
-                    Expanded(
-                      child: AppButton(
-                        label: localization!.connect.toUpperCase(),
-                        onPressed: () => connectAccounts(context),
-                        iconData: Icons.link,
-                      ),
+                if (state.isEnterprisePlan) ...[
+                  Expanded(
+                    child: AppButton(
+                      label: localization.connect.toUpperCase(),
+                      onPressed: () => connectAccounts(context),
+                      iconData: Icons.link,
                     ),
-                    SizedBox(width: kGutterWidth),
-                    Expanded(
-                      child: AppButton(
-                        label: localization.refresh.toUpperCase(),
-                        onPressed: () => viewModel.onRefreshAccounts(context),
-                        iconData: Icons.refresh,
-                      ),
-                    ),
-                  ] else
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 20, bottom: 8),
-                        child: Center(
-                            child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            HelpText(localization!.upgradeToConnectBankAccount),
-                            SizedBox(height: 16),
-                            Row(
-                              children: [
-                                TextButton(
-                                  onPressed: () =>
-                                      launchUrl(Uri.parse(kBankingURL)),
-                                  child: Text(localization.learnMore),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    store.dispatch(ViewSettings(
-                                        clearFilter: true,
-                                        company: state.company,
-                                        user: state.user,
-                                        section: kSettingsAccountManagement));
-                                  },
-                                  child: Text(localization.upgrade),
-                                ),
-                              ],
-                            )
-                          ],
-                        )),
-                      ),
-                    ),
+                  ),
                   SizedBox(width: kGutterWidth),
-                ],
+                  Expanded(
+                    child: AppButton(
+                      label: localization.refresh.toUpperCase(),
+                      onPressed: () => viewModel.onRefreshAccounts(context),
+                      iconData: Icons.refresh,
+                    ),
+                  ),
+                ] else
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 20, bottom: 8),
+                      child: Center(
+                          child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          HelpText(localization.upgradeToConnectBankAccount),
+                          SizedBox(height: 16),
+                          Row(
+                            children: [
+                              TextButton(
+                                onPressed: () =>
+                                    launchUrl(Uri.parse(kBankingURL)),
+                                child: Text(localization.learnMore),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  store.dispatch(ViewSettings(
+                                      clearFilter: true,
+                                      company: state.company,
+                                      user: state.user,
+                                      section: kSettingsAccountManagement));
+                                },
+                                child: Text(localization.upgrade),
+                              ),
+                            ],
+                          )
+                        ],
+                      )),
+                    ),
+                  ),
+                SizedBox(width: kGutterWidth),
                 Expanded(
                   child: AppButton(
                     label: (state.isHosted
-                            ? localization!.rules
-                            : localization!.manageRules)
+                            ? localization.rules
+                            : localization.manageRules)
                         .toUpperCase(),
                     onPressed: () {
                       store.dispatch(
