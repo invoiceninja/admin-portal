@@ -268,6 +268,11 @@ class InvoiceOverview extends StatelessWidget {
       widgets.add(EntityListTile(entity: project, isFilter: isFilter));
     }
 
+    if ((invoice.invoiceId ?? '').isNotEmpty) {
+      final linkedInvoice = state.invoiceState.get(invoice.invoiceId!);
+      widgets.add(EntityListTile(entity: linkedInvoice, isFilter: isFilter));
+    }
+
     if (invoice.expenseId.isNotEmpty) {
       final expense = state.vendorState.get(invoice.expenseId);
       widgets.add(EntityListTile(entity: expense, isFilter: isFilter));
