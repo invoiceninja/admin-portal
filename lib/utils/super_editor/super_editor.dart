@@ -71,7 +71,6 @@ class _ExampleEditorState extends State<ExampleEditor> {
     markdown = markdown.replaceAll('</p>', '');
     markdown = markdown.replaceAll('</div>', '');
 
-    // _doc = createInitialDocument()..addListener(_onDocumentChange);
     _doc = deserializeMarkdownToDocument(markdown)
       ..addListener(_onDocumentChange);
     _composer = MutableDocumentComposer();
@@ -93,6 +92,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
 
   @override
   void dispose() {
+    _doc.removeListener(_onDocumentChange);
     _iosControlsController.dispose();
     _scrollController.dispose();
     _editorFocusNode.dispose();
@@ -103,6 +103,11 @@ class _ExampleEditorState extends State<ExampleEditor> {
   void _onDocumentChange(_) {
     _hideOrShowToolbar();
     _docChangeSignal.notifyListeners();
+
+    if (widget.onChanged != null) {
+      final value = serializeDocumentToMarkdown(_doc);
+      widget.onChanged!(value);
+    }
   }
 
   void _hideOrShowToolbar() {
