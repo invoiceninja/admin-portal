@@ -63,6 +63,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
   @override
   void initState() {
     super.initState();
+
     // Fix for <p> tags cutting off text
     var markdown = widget.value;
     markdown = markdown.replaceAll('<p/>', '\n');
@@ -88,6 +89,32 @@ class _ExampleEditorState extends State<ExampleEditor> {
     _scrollController = ScrollController()..addListener(_hideOrShowToolbar);
 
     _iosControlsController = SuperEditorIosControlsController();
+  }
+
+  @override
+  void didUpdateWidget(ExampleEditor oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.value != oldWidget.value) {
+      _setValue(widget.value);
+    }
+  }
+
+  void _setValue(String value) {
+    // Fix for <p> tags cutting off text
+    var markdown = widget.value;
+    markdown = markdown.replaceAll('<p/>', '\n');
+    markdown = markdown.replaceAll('<p>', '\n');
+    markdown = markdown.replaceAll('<div>', '\n');
+    markdown = markdown.replaceAll('</p>', '');
+    markdown = markdown.replaceAll('</div>', '');
+
+    _doc.removeListener(_onDocumentChange);
+    _doc = deserializeMarkdownToDocument(markdown)
+      ..addListener(_onDocumentChange);
+
+    _docEditor =
+        createDefaultDocumentEditor(document: _doc, composer: _composer);
   }
 
   @override
