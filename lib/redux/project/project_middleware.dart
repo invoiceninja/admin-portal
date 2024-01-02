@@ -227,7 +227,6 @@ Middleware<AppState> _loadProjects(ProjectRepository repository) {
     repository
         .loadList(
       state.credentials,
-      state.createdAtLimit,
       state.filterDeletedClients,
     )
         .then((data) {
