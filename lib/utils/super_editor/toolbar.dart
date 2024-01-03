@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 //import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:follow_the_leader/follow_the_leader.dart';
+import 'package:invoiceninja_flutter/utils/super_editor/super_editor_item_selector.dart';
 import 'package:overlord/follow_the_leader.dart';
 import 'package:super_editor/super_editor.dart';
 
@@ -103,7 +104,6 @@ class _EditorToolbarState extends State<EditorToolbar> {
     super.dispose();
   }
 
-  /*
   /// Returns true if the currently selected text node is capable of being
   /// transformed into a different type text node, returns false if
   /// multiple nodes are selected, no node is selected, or the selected
@@ -147,6 +147,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     }
   }
 
+  /*
   /// Returns the text alignment of the currently selected text node.
   ///
   /// Throws an exception if the currently selected node is not a text node.
@@ -184,6 +185,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     final selectedNode = widget.document.getNodeById(selection.extent.nodeId);
     return selectedNode is ParagraphNode;
   }
+  */
 
   /// Converts the currently selected text node into a new type of
   /// text node, represented by [newType].
@@ -260,7 +262,6 @@ class _EditorToolbarState extends State<EditorToolbar> {
         return null;
     }
   }
-  */
 
   /// Toggles bold styling for the current selected text.
   void _toggleBold() {
@@ -464,6 +465,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
         .getNodeById(widget.composer.selection!.extent.nodeId) as ParagraphNode;
     selectedNode.putMetadataValue('textAlign', newAlignmentValue);
   }
+  */
 
   /// Returns the localized name for the given [_TextType], e.g.,
   /// "Paragraph" or "Header 1".
@@ -492,7 +494,17 @@ class _EditorToolbarState extends State<EditorToolbar> {
         return 'Unordered List Item';
     }
   }
-  */
+
+  /// Called when the user selects a block type on the toolbar.
+  void _onBlockTypeSelected(SuperEditorDemoTextItem? selectedItem) {
+    if (selectedItem != null) {
+      setState(() {
+        _convertTextToNewType(_TextType.values //
+            .where((e) => e.name == selectedItem.id)
+            .first);
+      });
+    }
+  }
 
   void _onPerformAction(TextInputAction action) {
     if (action == TextInputAction.done) {
@@ -547,38 +559,16 @@ class _EditorToolbarState extends State<EditorToolbar> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              /*
               // Only allow the user to select a new type of text node if
               // the currently selected node can be converted.
               if (_isConvertibleNode()) ...[
                 Tooltip(
                   //message: AppLocalizations.of(context)!.labelTextBlockType,
                   message: 'Block Type',
-                  child: DropdownButton<_TextType>(
-                    value: _getCurrentTextType(),
-                    items: _TextType.values
-                        .map((textType) => DropdownMenuItem<_TextType>(
-                              value: textType,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 16.0),
-                                child: Text(_getTextTypeName(textType)),
-                              ),
-                            ))
-                        .toList(),
-                    icon: const Icon(Icons.arrow_drop_down),
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                    ),
-                    underline: const SizedBox(),
-                    elevation: 0,
-                    itemHeight: 48,
-                    onChanged: _convertTextToNewType,
-                  ),
+                  child: _buildBlockTypeSelector(),
                 ),
                 _buildVerticalDivider(),
               ],
-              */
               Center(
                 child: IconButton(
                   onPressed: _toggleBold,
@@ -673,6 +663,27 @@ class _EditorToolbarState extends State<EditorToolbar> {
     );
   }
 
+  Widget _buildBlockTypeSelector() {
+    final currentBlockType = _getCurrentTextType();
+    return SuperEditorDemoTextItemSelector(
+      parentFocusNode: widget.editorFocusNode,
+      boundaryKey: widget.editorViewportKey,
+      id: SuperEditorDemoTextItem(
+        id: currentBlockType.name,
+        label: _getTextTypeName(currentBlockType),
+      ),
+      items: _TextType.values
+          .map(
+            (blockType) => SuperEditorDemoTextItem(
+              id: blockType.name,
+              label: _getTextTypeName(blockType),
+            ),
+          )
+          .toList(),
+      onSelected: _onBlockTypeSelected,
+    );
+  }
+
   Widget _buildUrlField() {
     return Material(
       shape: const StadiumBorder(),
@@ -735,7 +746,6 @@ class _EditorToolbarState extends State<EditorToolbar> {
     );
   }
 
-  /*
   Widget _buildVerticalDivider() {
     return Container(
       width: 1,
@@ -743,6 +753,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     );
   }
 
+  /*
   IconData _buildTextAlignIcon(TextAlign align) {
     switch (align) {
       case TextAlign.left:
@@ -760,7 +771,6 @@ class _EditorToolbarState extends State<EditorToolbar> {
   */
 }
 
-/*
 enum _TextType {
   header1,
   header2,
@@ -770,7 +780,6 @@ enum _TextType {
   orderedListItem,
   unorderedListItem,
 }
-*/
 
 /// Small toolbar that is intended to display over an image and
 /// offer controls to expand or contract the size of the image.
