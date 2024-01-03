@@ -297,24 +297,18 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
     return Container(
       color: Colors.white,
       height: double.infinity,
-      child: Stack(
-        children: [
-          if (_isLoading) LinearProgressIndicator(),
-          if (supportsInlineBrowser())
-            EmailPreview(
+      child: (supportsInlineBrowser())
+          ? EmailPreview(
               isLoading: _isLoading,
               subject: _subjectPreview,
               body: _emailPreview,
             )
-          else
-            IgnorePointer(
+          : IgnorePointer(
               child: ExampleEditor(
                 value: '### $_subjectPreview\n\n\n' +
                     html2md.convert(_bodyPreview),
               ),
-            )
-        ],
-      ),
+            ),
     );
   }
 
@@ -372,36 +366,41 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
             ),
           ),
         ),
-        if (state.company.markdownEmailEnabled)
-          Expanded(
-            child: ColoredBox(
-              color: Colors.white,
-              child: IgnorePointer(
-                ignoring: !enableCustomEmail,
-                child: ExampleEditor(
-                  value: _rawBodyPreview,
-                  onChanged: (value) {
-                    if (value.trim() != _bodyController.text.trim()) {
-                      _bodyController.text = value;
-                      _onChanged();
-                    }
-                  },
+        Expanded(
+          child: Stack(
+            children: [
+              if (state.company.markdownEmailEnabled)
+                ColoredBox(
+                  color: Colors.white,
+                  child: IgnorePointer(
+                    ignoring: !enableCustomEmail,
+                    child: ExampleEditor(
+                      value: _rawBodyPreview,
+                      onChanged: (value) {
+                        if (value.trim() != _bodyController.text.trim()) {
+                          _bodyController.text = value;
+                          _onChanged();
+                        }
+                      },
+                    ),
+                  ),
+                )
+              else
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: DecoratedFormField(
+                    controller: _bodyController,
+                    label: localization.body,
+                    maxLines: enableCustomEmail ? 6 : 2,
+                    keyboardType: TextInputType.multiline,
+                    onChanged: (_) => _onChanged(),
+                    enabled: enableCustomEmail,
+                  ),
                 ),
-              ),
-            ),
-          )
-        else
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: DecoratedFormField(
-              controller: _bodyController,
-              label: localization.body,
-              maxLines: enableCustomEmail ? 6 : 2,
-              keyboardType: TextInputType.multiline,
-              onChanged: (_) => _onChanged(),
-              enabled: enableCustomEmail,
-            ),
-          )
+              if (_isLoading) LinearProgressIndicator(),
+            ],
+          ),
+        ),
       ],
     );
   }

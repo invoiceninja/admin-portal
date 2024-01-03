@@ -88,7 +88,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
           // Fix for CORS error using 'object' subdomain
           return CachedImage(
             width: MenuDrawer.LOGO_WIDTH,
-            url: state.credentials.url+ '/companies/' + company.id + '/logo',
+            url: state.credentials.url + '/companies/' + company.id + '/logo',
             apiToken: state.userCompanyStates
                 .firstWhere((userCompanyState) =>
                     userCompanyState.company.id == company.id)
@@ -967,9 +967,14 @@ class _DrawerTileState extends State<DrawerTile> {
               ? iconWidget
               : isLoading
                   ? Padding(
-                      padding: const EdgeInsets.only(left: 10),
+                      padding: const EdgeInsets.only(
+                        left: 10,
+                        right: 8,
+                      ),
                       child: SizedBox(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                          color: state.accentColor,
+                        ),
                         width: 22,
                         height: 22,
                       ),
@@ -1680,7 +1685,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
 
     setState(() => _isSaving = true);
     WebClient()
-        .post(state.credentials.url+ '/support/messages/send',
+        .post(state.credentials.url + '/support/messages/send',
             state.credentials.token,
             data: json.encode({
               'message': _message,
