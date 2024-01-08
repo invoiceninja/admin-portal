@@ -268,11 +268,6 @@ class InvoiceOverview extends StatelessWidget {
       widgets.add(EntityListTile(entity: project, isFilter: isFilter));
     }
 
-    if ((invoice.invoiceId ?? '').isNotEmpty) {
-      final linkedInvoice = state.invoiceState.get(invoice.invoiceId!);
-      widgets.add(EntityListTile(entity: linkedInvoice, isFilter: isFilter));
-    }
-
     if (invoice.expenseId.isNotEmpty) {
       final expense = state.vendorState.get(invoice.expenseId);
       widgets.add(EntityListTile(entity: expense, isFilter: isFilter));
@@ -303,16 +298,16 @@ class InvoiceOverview extends StatelessWidget {
       ));
     }
 
-    if (invoice.isQuote || invoice.isCredit) {
-      final relatedInvoice = state.invoiceState.map[invoice.invoiceId] ??
-          InvoiceEntity(id: invoice.invoiceId);
-      if ((invoice.invoiceId ?? '').isNotEmpty) {
-        widgets.add(EntityListTile(
-          isFilter: isFilter,
-          entity: relatedInvoice,
-        ));
-      }
-    } else {
+    final relatedInvoice = state.invoiceState.map[invoice.invoiceId] ??
+        InvoiceEntity(id: invoice.invoiceId);
+    if ((invoice.invoiceId ?? '').isNotEmpty) {
+      widgets.add(EntityListTile(
+        isFilter: isFilter,
+        entity: relatedInvoice,
+      ));
+    }
+
+    if (invoice.isInvoice) {
       final relatedQuote =
           memoizedInvoiceQuoteSelector(invoice, state.quoteState.map);
       if (relatedQuote != null) {
