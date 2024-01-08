@@ -37,7 +37,9 @@ class BankAccountScreen extends StatelessWidget {
   void connectAccounts(BuildContext context) {
     final localization = AppLocalization.of(context)!;
 
-    if (isSelfHosted(context)) {
+    if (!supportsLatestFeatures('5.8.0')) {
+      _connectAccounts(context, BankAccountEntity.INTEGRATION_TYPE_YODLEE);
+    } else if (isSelfHosted(context)) {
       _connectAccounts(context, BankAccountEntity.INTEGRATION_TYPE_NORDIGEN);
     } else {
       showDialog(

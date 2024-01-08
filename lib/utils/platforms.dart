@@ -57,9 +57,11 @@ bool supportsLatestFeatures(String version) {
     return true;
   }
 
+  /*
   if (state.isSelfHosted) {
     return true;
   }
+  */
 
   if (version.isEmpty) {
     return false;

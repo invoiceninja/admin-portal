@@ -821,6 +821,19 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                                     EntityAutocompleteListTile(
                                                   onTap: (entity) => onSelected(
                                                       entity as ProductEntity),
+                                                  overrideSuggestedLabel:
+                                                      (entity) {
+                                                    var label =
+                                                        entity.listDisplayName;
+                                                    if (state.company
+                                                        .trackInventory) {
+                                                      final product = entity
+                                                          as ProductEntity;
+                                                      label +=
+                                                          ' [${product.stockQuantity}]';
+                                                    }
+                                                    return label;
+                                                  },
                                                   overrideSuggestedAmount:
                                                       (entity) {
                                                     final product =
