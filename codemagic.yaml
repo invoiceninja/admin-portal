@@ -7,6 +7,7 @@ workflows:
       flutter: 3.16.2
       xcode: latest
       cocoapods: default
+      base: core22
       vars:
         SNAPCRAFT_BUILD_ENVIRONMENT: host
       groups:
