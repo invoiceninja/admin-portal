@@ -38,7 +38,3 @@ parts:
     source: .
     plugin: flutter
     flutter-target: lib/main.dart
-
-architectures:
-  - build-on: amd64
-  - build-on: arm64
