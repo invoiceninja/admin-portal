@@ -21,7 +21,7 @@ With Invoice Ninja, all your earnings, expenses, clients and vendors are stored 
 
 All of these features combine to help you receive the money you deserve and reduce the amount of time you spend on repetitive invoicing tasks. Spend less time on paperwork and more time at your craft."
 confinement: strict
-base: core22
+base: core18
 grade: stable
 
 apps:
