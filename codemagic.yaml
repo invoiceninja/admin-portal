@@ -32,6 +32,7 @@ workflows:
       #- flutter build linux --release
       #- export SNAPCRAFT_STORE_CREDENTIALS=$(echo $SNAPCRAFT_LOGIN_CREDENTIALS)
       - snapcraft whoami
+      - sudo snap refresh snapcraft --channel=7.x/stable
       - snapcraft snap --output invoiceninja.snap
       - snapcraft upload invoiceninja.snap --release stable
     artifacts:
