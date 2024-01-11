@@ -561,8 +561,7 @@ class _EntityNumberSettingsState extends State<EntityNumberSettings> {
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: Text(localization.viewDateFormats.toUpperCase()),
             ),
-            onPressed: () => launchUrl(Uri.parse(
-                'https://www.php.net/manual/en/datetime.format.php#refsect1-datetime.format-parameters')),
+            onPressed: () => launchUrl(Uri.parse(kPHPDateFormatsUrl)),
           ),
         ),
         HelpPanel(

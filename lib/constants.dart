@@ -76,9 +76,11 @@ const String kDocsEmailVariablesUrl =
     '$kDocsUrl/email-customization/#payment-email-customization';
 const String kDocsStripeConnectUrl = '$kDocsUrl/hosted-stripe';
 
+const String kPHPDateFormatsUrl =
+    'https://www.php.net/manual/en/datetime.format.php#refsect1-datetime.format-parameters';
 const String kForumUrl = 'https://forum.invoiceninja.com';
-const String kApiDocsURL = 'https://api-docs.invoicing.co';
-const String kZapierURL = 'https://zapier.com/apps/invoice-ninja';
+const String kApiDocsUrl = 'https://api-docs.invoicing.co';
+const String kZapierUrl = 'https://zapier.com/apps/invoice-ninja';
 const String kGatewayFeeHelpURL =
     'https://support.stripe.com/questions/passing-the-stripe-fee-on-to-customers';
 
