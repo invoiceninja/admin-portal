@@ -39,7 +39,7 @@ class QuoteRepository {
 
   Future<BuiltList<InvoiceEntity>> loadList(Credentials credentials, int page,
       int createdAt, bool filterDeleted) async {
-    String url = credentials.url+
+    String url = credentials.url +
         '/quotes?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
 
     if (filterDeleted) {
@@ -63,7 +63,7 @@ class QuoteRepository {
     }
 
     final url =
-        credentials.url+ '/quotes/bulk?per_page=$kMaxEntitiesPerBulkAction';
+        credentials.url + '/quotes/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({
           'ids': ids,
@@ -88,7 +88,7 @@ class QuoteRepository {
     dynamic response;
 
     if (quote.isNew) {
-      url = credentials.url+ '/quotes?include=activities.history';
+      url = credentials.url + '/quotes?include=activities.history';
     } else {
       url = '${credentials.url}/quotes/${quote.id}?include=activities.history';
     }
@@ -131,7 +131,7 @@ class QuoteRepository {
     String ccEmail,
   ) async {
     final data = {
-      'entity': '${quote.entityType}',
+      'entity': '${EntityType.quote.apiValue}',
       'entity_id': quote.id,
       'template': 'email_template_$template',
       'body': body,
@@ -140,7 +140,7 @@ class QuoteRepository {
     };
 
     final dynamic response = await webClient.post(
-        credentials.url+ '/emails', credentials.token,
+        credentials.url + '/emails', credentials.token,
         data: json.encode(data));
 
     final InvoiceItemResponse invoiceResponse =

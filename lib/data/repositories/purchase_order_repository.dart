@@ -33,7 +33,7 @@ class PurchaseOrderRepository {
     int createdAt,
     //bool filterDeleted,
   ) async {
-    final url = credentials.url+
+    final url = credentials.url +
         '/purchase_orders?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
 
     /*
@@ -57,7 +57,7 @@ class PurchaseOrderRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url+
+    final url = credentials.url +
         '/purchase_orders/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({
@@ -87,7 +87,7 @@ class PurchaseOrderRepository {
     dynamic response;
 
     if (purchaseOrder.isNew) {
-      url = credentials.url+ '/purchase_orders?include=activities.history';
+      url = credentials.url + '/purchase_orders?include=activities.history';
     } else {
       url =
           '${credentials.url}/purchase_orders/${purchaseOrder.id}?include=activities.history';
@@ -129,7 +129,7 @@ class PurchaseOrderRepository {
     String ccEmail,
   ) async {
     final data = {
-      'entity': '${purchaseOrder.entityType}',
+      'entity': '${EntityType.purchaseOrder.apiValue}',
       'entity_id': purchaseOrder.id,
       'template': 'email_template_$template',
       'body': body,
@@ -138,7 +138,7 @@ class PurchaseOrderRepository {
     };
 
     final dynamic response = await webClient.post(
-        credentials.url+ '/emails', credentials.token,
+        credentials.url + '/emails', credentials.token,
         data: json.encode(data));
 
     final InvoiceItemResponse invoiceResponse =
