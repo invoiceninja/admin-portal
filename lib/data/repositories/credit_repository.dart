@@ -39,7 +39,7 @@ class CreditRepository {
 
   Future<BuiltList<InvoiceEntity>> loadList(
       Credentials credentials, int createdAt, bool filterDeleted) async {
-    String url = credentials.url+ '/credits?created_at=$createdAt';
+    String url = credentials.url + '/credits?created_at=$createdAt';
 
     if (filterDeleted) {
       url += '&filter_deleted_clients=true';
@@ -62,7 +62,7 @@ class CreditRepository {
     }
 
     final url =
-        credentials.url+ '/credits/bulk?per_page=$kMaxEntitiesPerBulkAction';
+        credentials.url + '/credits/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({
           'ids': ids,
@@ -87,7 +87,7 @@ class CreditRepository {
     dynamic response;
 
     if (credit.isNew) {
-      url = credentials.url+ '/credits?include=activities.history';
+      url = credentials.url + '/credits?include=activities.history';
     } else {
       url =
           '${credentials.url}/credits/${credit.id}?include=activities.history';
@@ -122,7 +122,7 @@ class CreditRepository {
     String ccEmail,
   ) async {
     final data = {
-      'entity': '${credit.entityType}',
+      'entity': '${EntityType.credit.apiValue}',
       'entity_id': credit.id,
       'template': 'email_template_$template',
       'body': body,
@@ -131,7 +131,7 @@ class CreditRepository {
     };
 
     final dynamic response = await webClient.post(
-        credentials.url+ '/emails', credentials.token,
+        credentials.url + '/emails', credentials.token,
         data: json.encode(data));
 
     final InvoiceItemResponse invoiceResponse =
