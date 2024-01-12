@@ -34,6 +34,7 @@ enum TransactionReportFields {
   created_at,
   updated_at,
   record_state,
+  participant_name,
 }
 
 var memoizedTransactionReport = memo10((
@@ -178,6 +179,10 @@ ReportResult transactionReport(
         case TransactionReportFields.record_state:
           value = AppLocalization.of(navigatorKey.currentContext!)!
               .lookup(transaction.entityState);
+          break;
+        case TransactionReportFields.participant_name:
+          value = transaction.participantName;
+          break;
       }
 
       if (!ReportResult.matchField(

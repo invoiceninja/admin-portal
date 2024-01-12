@@ -35,6 +35,7 @@ class TransactionPresenter extends EntityPresenter {
       TransactionFields.category,
       TransactionFields.payment,
       TransactionFields.defaultCategory,
+      TransactionFields.participantName,
     ];
   }
 
@@ -76,6 +77,8 @@ class TransactionPresenter extends EntityPresenter {
         );
       case TransactionFields.description:
         return Text(transaction!.description);
+      case TransactionFields.participantName:
+        return Text(transaction!.participantName);
       case TransactionFields.accountType:
         final bankAccount =
             state.bankAccountState.get(transaction!.bankAccountId);
