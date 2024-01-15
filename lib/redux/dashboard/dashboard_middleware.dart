@@ -29,10 +29,11 @@ Middleware<AppState> _createViewDashboard() {
         store: store,
         force: action.force,
         callback: () {
-          if (!store.state.userCompany.canViewDashboard) {
+          final state = store.state;
+          if (state.isLoaded && !state.userCompany.canViewDashboard) {
             store.dispatch(ViewClientList());
           } else {
-            if (store.state.isStale) {
+            if (state.isStale) {
               store.dispatch(RefreshData());
             }
 
