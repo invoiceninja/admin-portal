@@ -99,6 +99,13 @@ List<String> filteredTransactionsSelector(
       return true;
     }
 
+    final bankAccount =
+        bankAccountMap[transaction.bankAccountId] ?? BankAccountEntity();
+    if (!bankAccount.isActive &&
+        !bankAccount.matchesEntityFilter(filterEntityType, filterEntityId)) {
+      return false;
+    }
+
     if (filterEntityType != null) {
       if (filterEntityType == EntityType.expenseCategory &&
           transaction.categoryId != filterEntityId) {
