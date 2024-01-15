@@ -4,7 +4,8 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
 // Project imports:
-import 'package:collection/collection.dart' show IterableExtension;
+import 'package:collection/collection.dart'
+    show IterableExtension, compareNatural;
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -267,9 +268,7 @@ abstract class PaymentEntity extends Object
         response = paymentA!.refunded.compareTo(paymentB!.refunded);
         break;
       case PaymentFields.number:
-        response = paymentA!.number
-            .toLowerCase()
-            .compareTo(paymentB!.number.toLowerCase());
+        response = compareNatural(paymentA!.number, paymentB!.number);
         break;
       case PaymentFields.transactionReference:
         response = paymentA!.transactionReference

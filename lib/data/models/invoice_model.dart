@@ -728,8 +728,7 @@ abstract class InvoiceEntity extends Object
                 invoiceBNumber.startsWith(recurringPrefix!)
             ? invoiceBNumber.replaceFirst(recurringPrefix, '')
             : invoiceBNumber;
-        response = compareNatural(
-            invoiceANumber.toLowerCase(), invoiceBNumber.toLowerCase());
+        response = compareNatural(invoiceANumber, invoiceBNumber);
         break;
       case InvoiceFields.amount:
         response = invoiceA.amount.compareTo(invoiceB.amount);

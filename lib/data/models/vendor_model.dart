@@ -327,8 +327,7 @@ abstract class VendorEntity extends Object
             vendorA!.documents.length.compareTo(vendorB!.documents.length);
         break;
       case VendorFields.number:
-        response = compareNatural(
-            vendorA!.number.toLowerCase(), vendorB!.number.toLowerCase());
+        response = compareNatural(vendorA!.number, vendorB!.number);
         break;
       case VendorFields.address1:
         response = vendorA!.address1.compareTo(vendorB!.address1);
