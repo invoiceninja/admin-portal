@@ -432,8 +432,7 @@ abstract class ClientEntity extends Object
         response = clientA!.idNumber.compareTo(clientB!.idNumber);
         break;
       case ClientFields.number:
-        response = compareNatural(
-            clientA!.number.toLowerCase(), clientB!.number.toLowerCase());
+        response = compareNatural(clientA!.number, clientB!.number);
         break;
       case ClientFields.website:
         response = clientA!.website

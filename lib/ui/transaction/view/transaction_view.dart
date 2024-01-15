@@ -1277,7 +1277,8 @@ class _MatchWithdrawalsState extends State<_MatchWithdrawals> {
                 )
               : AppButton(
                   label: localization.createExpense,
-                  onPressed: viewModel.state.isSaving
+                  onPressed: viewModel.state.isSaving ||
+                          (_selectedVendor == null && _selectedCategory == null)
                       ? null
                       : () {
                           final viewModel = widget.viewModel;

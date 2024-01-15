@@ -790,8 +790,7 @@ abstract class TaskEntity extends Object
         response = taskA.documents.length.compareTo(taskB.documents.length);
         break;
       case TaskFields.number:
-        response = compareNatural(
-            taskA.number.toLowerCase(), taskB.number.toLowerCase());
+        response = compareNatural(taskA.number, taskB.number);
         break;
       case TaskFields.createdBy:
         final userA = userMap[taskA.createdUserId] ?? UserEntity();

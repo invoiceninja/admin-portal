@@ -59,7 +59,7 @@ class _BankAccountViewState extends State<BankAccountView> {
           FieldGrid({
             localization.type: toTitleCase(bankAccount.type),
             localization.status: toTitleCase(bankAccount.status),
-            localization.provider: toTitleCase(bankAccount.provider),
+            localization.provider: bankAccount.provider,
             if (bankAccount.isConnected)
               localization.autoSync: bankAccount.autoSync
                   ? localization.enabled

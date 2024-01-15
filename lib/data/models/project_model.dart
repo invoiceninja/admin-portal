@@ -2,6 +2,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:collection/collection.dart';
 import 'package:diacritic/diacritic.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
@@ -307,7 +308,7 @@ abstract class ProjectEntity extends Object
             projectA.documents.length.compareTo(projectB.documents.length);
         break;
       case ProjectFields.number:
-        response = projectA.number.compareTo(projectB.number);
+        response = compareNatural(projectA.number, projectB.number);
         break;
       case ProjectFields.customValue1:
         response = projectA.customValue1.compareTo(projectB.customValue1);

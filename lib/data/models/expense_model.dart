@@ -468,8 +468,7 @@ abstract class ExpenseEntity extends Object
             expenseA!.documents.length.compareTo(expenseB!.documents.length);
         break;
       case ExpenseFields.number:
-        response = compareNatural(
-            expenseA!.number.toLowerCase(), expenseB!.number.toLowerCase());
+        response = compareNatural(expenseA!.number, expenseB!.number);
         break;
       case ExpenseFields.privateNotes:
         response = expenseA!.privateNotes.compareTo(expenseB!.privateNotes);
