@@ -192,6 +192,8 @@ abstract class TransactionEntity extends Object
 
   bool get isConverted => statusId == kTransactionStatusConverted;
 
+  String get formattedDescription => description.replaceAll('\n', ' ');
+
   @override
   List<EntityAction?> getActions(
       {UserCompanyEntity? userCompany,
