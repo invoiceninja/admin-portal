@@ -820,6 +820,7 @@ const List<String> kLanguages = [
   'hr',
   'it',
   'ja',
+  'lo_LA',
   'lt',
   'lv_LV',
   'mk_MK',
