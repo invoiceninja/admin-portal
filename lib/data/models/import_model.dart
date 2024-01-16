@@ -145,10 +145,11 @@ class ImportType extends EnumClass {
       case ImportType.csv:
         return {
           EntityType.client.apiValue: 'clients',
+          EntityType.product.apiValue: 'products',
           EntityType.invoice.apiValue: 'invoices',
           EntityType.recurringInvoice.apiValue: 'recurring_invoices',
           EntityType.payment.apiValue: 'payments',
-          EntityType.product.apiValue: 'products',
+          EntityType.task.apiValue: 'tasks',
           EntityType.vendor.apiValue: 'vendors',
           EntityType.expense.apiValue: 'expenses',
           EntityType.transaction.apiValue: 'transactions',

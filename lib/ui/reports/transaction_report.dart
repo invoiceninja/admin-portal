@@ -140,7 +140,7 @@ ReportResult transactionReport(
           value = transaction.date;
           break;
         case TransactionReportFields.description:
-          value = transaction.description;
+          value = transaction.formattedDescription;
           break;
         case TransactionReportFields.vendor:
           value = vendorMap[transaction.vendorId]?.name ?? '';
