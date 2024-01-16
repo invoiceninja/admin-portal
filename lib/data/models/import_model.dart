@@ -148,6 +148,7 @@ class ImportType extends EnumClass {
           EntityType.invoice.apiValue: 'invoices',
           EntityType.recurringInvoice.apiValue: 'recurring_invoices',
           EntityType.payment.apiValue: 'payments',
+          EntityType.task.apiValue: 'tasks',
           EntityType.product.apiValue: 'products',
           EntityType.vendor.apiValue: 'vendors',
           EntityType.expense.apiValue: 'expenses',
