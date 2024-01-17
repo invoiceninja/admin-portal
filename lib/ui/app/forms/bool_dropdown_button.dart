@@ -46,7 +46,7 @@ class BoolDropdownButton extends StatelessWidget {
       return Padding(
         padding: const EdgeInsets.only(top: 12),
         child: SwitchListTile(
-          title: Text(label!),
+          title: Text(label ?? ''),
           value: value ?? false,
           secondary:
               iconData != null && isDesktop(context) ? Icon(iconData) : null,

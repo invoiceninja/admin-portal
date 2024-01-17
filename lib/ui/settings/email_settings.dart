@@ -374,7 +374,8 @@ class _EmailSettingsState extends State<EmailSettings> {
                             ))
                         .toList())
               ] else if (settings.emailSendingMethod ==
-                  SettingsEntity.EMAIL_SENDING_METHOD_SMTP) ...[
+                      SettingsEntity.EMAIL_SENDING_METHOD_SMTP &&
+                  !settingsUIState.isFiltered) ...[
                 DecoratedFormField(
                   label: localization.host,
                   controller: _smtpHostController,
@@ -395,10 +396,10 @@ class _EmailSettingsState extends State<EmailSettings> {
                 ),
                 AppDropdownButton<String>(
                     labelText: localization.encryption,
-                    value: company.smtpEncryption,
+                    value: viewModel.company.smtpEncryption,
                     onChanged: (value) {
-                      viewModel.onCompanyChanged(
-                          company.rebuild((b) => b..smtpEncryption = value));
+                      viewModel.onCompanyChanged(viewModel.company
+                          .rebuild((b) => b..smtpEncryption = value));
                     },
                     items: [
                       DropdownMenuItem(
@@ -435,6 +436,15 @@ class _EmailSettingsState extends State<EmailSettings> {
                   keyboardType: TextInputType.url,
                   onSavePressed: _onSavePressed,
                 ),
+                SizedBox(height: 10),
+                BoolDropdownButton(
+                    label: localization.verifyPeer,
+                    value: viewModel.company.smtpVerifyPeer,
+                    onChanged: (value) {
+                      viewModel.onCompanyChanged(viewModel.company.rebuild(
+                        (b) => b..smtpVerifyPeer = value,
+                      ));
+                    }),
               ],
             ],
           ),
