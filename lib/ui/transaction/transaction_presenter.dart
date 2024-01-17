@@ -35,6 +35,7 @@ class TransactionPresenter extends EntityPresenter {
       TransactionFields.category,
       TransactionFields.payment,
       TransactionFields.defaultCategory,
+      TransactionFields.participant,
       TransactionFields.participantName,
     ];
   }
@@ -42,23 +43,23 @@ class TransactionPresenter extends EntityPresenter {
   @override
   Widget getField({String? field, required BuildContext context}) {
     final state = StoreProvider.of<AppState>(context).state;
-    final transaction = entity as TransactionEntity?;
+    final transaction = entity as TransactionEntity;
 
     switch (field) {
       case TransactionFields.status:
         return EntityStatusChip(entity: transaction, showState: true);
       case TransactionFields.date:
-        return Text(formatDate(transaction!.date, context));
+        return Text(formatDate(transaction.date, context));
       case TransactionFields.defaultCategory:
-        return Text(transaction!.category);
+        return Text(transaction.category);
       case TransactionFields.amount:
         return Align(
           alignment: Alignment.centerRight,
-          child: Text(formatNumber(transaction!.amount, context,
+          child: Text(formatNumber(transaction.amount, context,
               currencyId: transaction.currencyId)!),
         );
       case TransactionFields.deposit:
-        if (!transaction!.isDeposit) {
+        if (!transaction.isDeposit) {
           return SizedBox();
         }
         return Align(
@@ -67,7 +68,7 @@ class TransactionPresenter extends EntityPresenter {
               currencyId: transaction.currencyId)!),
         );
       case TransactionFields.withdrawal:
-        if (!transaction!.isWithdrawal) {
+        if (!transaction.isWithdrawal) {
           return SizedBox();
         }
         return Align(
@@ -76,27 +77,29 @@ class TransactionPresenter extends EntityPresenter {
               currencyId: transaction.currencyId)!),
         );
       case TransactionFields.description:
-        return Text(transaction!.description);
+        return Text(transaction.description);
       case TransactionFields.participantName:
-        return Text(transaction!.participantName);
+        return Text(transaction.participantName);
+      case TransactionFields.participant:
+        return Text(transaction.participant);
       case TransactionFields.accountType:
         final bankAccount =
-            state.bankAccountState.get(transaction!.bankAccountId);
+            state.bankAccountState.get(transaction.bankAccountId);
         return Text(toTitleCase(bankAccount.type));
       case TransactionFields.bankAccount:
         final bankAccount =
-            state.bankAccountState.get(transaction!.bankAccountId);
+            state.bankAccountState.get(transaction.bankAccountId);
         return LinkTextRelatedEntity(
             entity: bankAccount, relation: transaction);
       case TransactionFields.payment:
-        final payment = state.paymentState.get(transaction!.paymentId);
+        final payment = state.paymentState.get(transaction.paymentId);
         return LinkTextRelatedEntity(entity: payment, relation: transaction);
       case TransactionFields.invoices:
         return ConstrainedBox(
           constraints: BoxConstraints(maxWidth: kTableColumnWidthMax),
           child: Wrap(
             clipBehavior: Clip.antiAlias,
-            children: transaction!.invoiceIds
+            children: transaction.invoiceIds
                 .split(',')
                 .map((invoiceId) => state.invoiceState.map[invoiceId])
                 .whereNotNull()
@@ -113,7 +116,7 @@ class TransactionPresenter extends EntityPresenter {
           constraints: BoxConstraints(maxWidth: kTableColumnWidthMax),
           child: Wrap(
             clipBehavior: Clip.antiAlias,
-            children: transaction!.expenseId
+            children: transaction.expenseId
                 .split(',')
                 .map((expenseId) => state.expenseState.map[expenseId])
                 .whereNotNull()
@@ -126,11 +129,10 @@ class TransactionPresenter extends EntityPresenter {
           ),
         );
       case TransactionFields.vendor:
-        final vendor = state.vendorState.get(transaction!.vendorId);
+        final vendor = state.vendorState.get(transaction.vendorId);
         return LinkTextRelatedEntity(entity: vendor, relation: transaction);
       case TransactionFields.category:
-        final category =
-            state.expenseCategoryState.get(transaction!.categoryId);
+        final category = state.expenseCategoryState.get(transaction.categoryId);
         return LinkTextRelatedEntity(entity: category, relation: transaction);
     }
 

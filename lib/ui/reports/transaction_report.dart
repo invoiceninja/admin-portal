@@ -34,6 +34,7 @@ enum TransactionReportFields {
   created_at,
   updated_at,
   record_state,
+  participant,
   participant_name,
 }
 
@@ -182,6 +183,9 @@ ReportResult transactionReport(
           break;
         case TransactionReportFields.participant_name:
           value = transaction.participantName;
+          break;
+        case TransactionReportFields.participant:
+          value = transaction.participant;
           break;
       }
 
