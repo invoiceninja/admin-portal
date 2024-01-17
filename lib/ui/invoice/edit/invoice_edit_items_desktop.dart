@@ -660,14 +660,11 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                   final productKey =
                                       product.productKey.toLowerCase();
 
-                                  if (company.showProductDetails &&
-                                      product.notes
-                                          .toLowerCase()
-                                          .contains(filter)) {
-                                    return true;
+                                  if (company.showProductDetails) {
+                                    return product.matchesFilter(filter);
+                                  } else {
+                                    return productKey.contains(filter);
                                   }
-
-                                  return productKey.contains(filter);
                                 }).toList();
 
                                 if (options.length == 1 &&
