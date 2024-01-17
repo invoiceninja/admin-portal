@@ -134,7 +134,7 @@ abstract class CompanyEntity extends Object
       eInvoiceCertificatePassphrase: '',
       smtpHost: '',
       smtpPort: 587,
-      smtpEncryption: '',
+      smtpEncryption: SMTP_ENCRYPTION_TLS,
       smtpUsername: '',
       smtpPassword: '',
       smtpLocalDomain: '',
@@ -183,6 +183,9 @@ abstract class CompanyEntity extends Object
   static const USE_CREDITS_ALWAYS = 'always';
   static const USE_CREDITS_OPTION = 'option';
   static const USE_CREDITS_OFF = 'off';
+
+  static const SMTP_ENCRYPTION_TLS = 'TLS';
+  static const SMTP_ENCRYPTION_STARTTLS = 'STARTTLS';
 
   @override
   @memoized
@@ -867,7 +870,7 @@ abstract class CompanyEntity extends Object
     ..id = ''
     ..smtpHost = ''
     ..smtpPort = 587
-    ..smtpEncryption = ''
+    ..smtpEncryption = SMTP_ENCRYPTION_TLS
     ..smtpUsername = ''
     ..smtpPassword = ''
     ..smtpLocalDomain = ''

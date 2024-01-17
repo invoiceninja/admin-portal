@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
@@ -54,6 +55,7 @@ class _EmailSettingsState extends State<EmailSettings> {
   final _customSendingEmailController = TextEditingController();
   final _eInvoiceCertificatePassphraseController = TextEditingController();
   final _smtpHostController = TextEditingController();
+  final _smtpPortController = TextEditingController();
   final _smtpUsernameController = TextEditingController();
   final _smtpPasswordController = TextEditingController();
   final _smtpLocalDomainController = TextEditingController();
@@ -92,6 +94,7 @@ class _EmailSettingsState extends State<EmailSettings> {
       _customSendingEmailController,
       _eInvoiceCertificatePassphraseController,
       _smtpHostController,
+      _smtpPortController,
       _smtpUsernameController,
       _smtpPasswordController,
       _smtpLocalDomainController,
@@ -117,6 +120,7 @@ class _EmailSettingsState extends State<EmailSettings> {
     _eInvoiceCertificatePassphraseController.text =
         company.eInvoiceCertificatePassphrase;
     _smtpHostController.text = company.smtpHost;
+    _smtpPortController.text = company.smtpPort.toString();
     _smtpUsernameController.text = company.smtpUsername;
     _smtpPasswordController.text = company.smtpPassword;
     _smtpLocalDomainController.text = company.smtpLocalDomain;
@@ -171,6 +175,7 @@ class _EmailSettingsState extends State<EmailSettings> {
               ? null
               : eInvoiceCertificatePassphrase
       ..smtpHost = _smtpHostController.text.trim()
+      ..smtpPort = parseInt(_smtpPortController.text.trim())
       ..smtpUsername = _smtpUsernameController.text.trim()
       ..smtpPassword = _smtpPasswordController.text.trim()
       ..smtpLocalDomain = _smtpLocalDomainController.text.trim());
@@ -379,6 +384,32 @@ class _EmailSettingsState extends State<EmailSettings> {
                       ? localization.pleaseEnterAValue
                       : null,
                 ),
+                DecoratedFormField(
+                  label: localization.port,
+                  controller: _smtpPortController,
+                  keyboardType: TextInputType.number,
+                  onSavePressed: _onSavePressed,
+                  validator: (value) => value.trim().isEmpty
+                      ? localization.pleaseEnterAValue
+                      : null,
+                ),
+                AppDropdownButton<String>(
+                    labelText: localization.encryption,
+                    value: company.smtpEncryption,
+                    onChanged: (value) {
+                      viewModel.onCompanyChanged(
+                          company.rebuild((b) => b..smtpEncryption = value));
+                    },
+                    items: [
+                      DropdownMenuItem(
+                        child: Text(CompanyEntity.SMTP_ENCRYPTION_TLS),
+                        value: CompanyEntity.SMTP_ENCRYPTION_TLS,
+                      ),
+                      DropdownMenuItem(
+                        child: Text(CompanyEntity.SMTP_ENCRYPTION_STARTTLS),
+                        value: CompanyEntity.SMTP_ENCRYPTION_STARTTLS,
+                      ),
+                    ]),
                 DecoratedFormField(
                   label: localization.username,
                   controller: _smtpUsernameController,
