@@ -37,6 +37,7 @@ abstract class AccountEntity
       hasIapPlan: false,
       paymentId: '',
       taxApiEnabled: false,
+      nordigenEnabled: false,
     );
   }
 
@@ -115,6 +116,9 @@ abstract class AccountEntity
   @BuiltValueField(wireName: 'tax_api_enabled')
   bool get taxApiEnabled;
 
+  @BuiltValueField(wireName: 'nordigen_enabled')
+  bool get nordigenEnabled;
+
   bool get canMakeIAP => !hasIapPlan && paymentId.isEmpty;
 
   bool get isUpdateAvailable {
@@ -154,7 +158,8 @@ abstract class AccountEntity
     ..accountSmsVerified = true
     ..setReactAsDefaultAP = false
     ..paymentId = ''
-    ..taxApiEnabled = false;
+    ..taxApiEnabled = false
+    ..nordigenEnabled = false;
 
   static Serializer<AccountEntity> get serializer => _$accountEntitySerializer;
 }

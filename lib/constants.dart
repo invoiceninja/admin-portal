@@ -57,6 +57,7 @@ const String kYodleeCoverageUrl =
     'https://www.yodlee.com/open-banking/data-connections';
 const String kNordigenCoverageUrl =
     'https://gocardless.com/bank-account-data/coverage';
+const String kNordigenOverviewUrl = 'https://gocardless.com/bank-account-data';
 
 const String kTaskExtensionUrl =
     'https://chromewebstore.google.com/detail/invoice-ninja-tasks/dlfcbfdpemfnjbjlladogijcchfmmaaf';
