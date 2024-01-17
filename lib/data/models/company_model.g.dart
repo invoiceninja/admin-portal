@@ -176,6 +176,27 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'notify_vendor_when_paid',
       serializers.serialize(object.notifyVendorWhenPaid,
           specifiedType: const FullType(bool)),
+      'smtp_host',
+      serializers.serialize(object.smtpHost,
+          specifiedType: const FullType(String)),
+      'smtp_port',
+      serializers.serialize(object.smtpPort,
+          specifiedType: const FullType(int)),
+      'smtp_encryption',
+      serializers.serialize(object.smtpEncryption,
+          specifiedType: const FullType(String)),
+      'smtp_username',
+      serializers.serialize(object.smtpUsername,
+          specifiedType: const FullType(String)),
+      'smtp_password',
+      serializers.serialize(object.smtpPassword,
+          specifiedType: const FullType(String)),
+      'smtp_local_domain',
+      serializers.serialize(object.smtpLocalDomain,
+          specifiedType: const FullType(String)),
+      'smtp_verify_peer',
+      serializers.serialize(object.smtpVerifyPeer,
+          specifiedType: const FullType(bool)),
       'groups',
       serializers.serialize(object.groups,
           specifiedType:
@@ -644,6 +665,34 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
           break;
         case 'notify_vendor_when_paid':
           result.notifyVendorWhenPaid = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
+          break;
+        case 'smtp_host':
+          result.smtpHost = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'smtp_port':
+          result.smtpPort = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
+        case 'smtp_encryption':
+          result.smtpEncryption = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'smtp_username':
+          result.smtpUsername = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'smtp_password':
+          result.smtpPassword = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'smtp_local_domain':
+          result.smtpLocalDomain = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'smtp_verify_peer':
+          result.smtpVerifyPeer = serializers.deserialize(value,
               specifiedType: const FullType(bool))! as bool;
           break;
         case 'groups':
@@ -1734,6 +1783,20 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool notifyVendorWhenPaid;
   @override
+  final String smtpHost;
+  @override
+  final int smtpPort;
+  @override
+  final String smtpEncryption;
+  @override
+  final String smtpUsername;
+  @override
+  final String smtpPassword;
+  @override
+  final String smtpLocalDomain;
+  @override
+  final bool smtpVerifyPeer;
+  @override
   final BuiltList<GroupEntity> groups;
   @override
   final BuiltList<ActivityEntity> activities;
@@ -1925,6 +1988,13 @@ class _$CompanyEntity extends CompanyEntity {
       required this.convertPaymentCurrency,
       required this.convertExpenseCurrency,
       required this.notifyVendorWhenPaid,
+      required this.smtpHost,
+      required this.smtpPort,
+      required this.smtpEncryption,
+      required this.smtpUsername,
+      required this.smtpPassword,
+      required this.smtpLocalDomain,
+      required this.smtpVerifyPeer,
       required this.groups,
       required this.activities,
       required this.taxRates,
@@ -2088,6 +2158,20 @@ class _$CompanyEntity extends CompanyEntity {
         convertExpenseCurrency, r'CompanyEntity', 'convertExpenseCurrency');
     BuiltValueNullFieldError.checkNotNull(
         notifyVendorWhenPaid, r'CompanyEntity', 'notifyVendorWhenPaid');
+    BuiltValueNullFieldError.checkNotNull(
+        smtpHost, r'CompanyEntity', 'smtpHost');
+    BuiltValueNullFieldError.checkNotNull(
+        smtpPort, r'CompanyEntity', 'smtpPort');
+    BuiltValueNullFieldError.checkNotNull(
+        smtpEncryption, r'CompanyEntity', 'smtpEncryption');
+    BuiltValueNullFieldError.checkNotNull(
+        smtpUsername, r'CompanyEntity', 'smtpUsername');
+    BuiltValueNullFieldError.checkNotNull(
+        smtpPassword, r'CompanyEntity', 'smtpPassword');
+    BuiltValueNullFieldError.checkNotNull(
+        smtpLocalDomain, r'CompanyEntity', 'smtpLocalDomain');
+    BuiltValueNullFieldError.checkNotNull(
+        smtpVerifyPeer, r'CompanyEntity', 'smtpVerifyPeer');
     BuiltValueNullFieldError.checkNotNull(groups, r'CompanyEntity', 'groups');
     BuiltValueNullFieldError.checkNotNull(
         activities, r'CompanyEntity', 'activities');
@@ -2267,6 +2351,13 @@ class _$CompanyEntity extends CompanyEntity {
         convertPaymentCurrency == other.convertPaymentCurrency &&
         convertExpenseCurrency == other.convertExpenseCurrency &&
         notifyVendorWhenPaid == other.notifyVendorWhenPaid &&
+        smtpHost == other.smtpHost &&
+        smtpPort == other.smtpPort &&
+        smtpEncryption == other.smtpEncryption &&
+        smtpUsername == other.smtpUsername &&
+        smtpPassword == other.smtpPassword &&
+        smtpLocalDomain == other.smtpLocalDomain &&
+        smtpVerifyPeer == other.smtpVerifyPeer &&
         groups == other.groups &&
         activities == other.activities &&
         taxRates == other.taxRates &&
@@ -2392,6 +2483,13 @@ class _$CompanyEntity extends CompanyEntity {
     _$hash = $jc(_$hash, convertPaymentCurrency.hashCode);
     _$hash = $jc(_$hash, convertExpenseCurrency.hashCode);
     _$hash = $jc(_$hash, notifyVendorWhenPaid.hashCode);
+    _$hash = $jc(_$hash, smtpHost.hashCode);
+    _$hash = $jc(_$hash, smtpPort.hashCode);
+    _$hash = $jc(_$hash, smtpEncryption.hashCode);
+    _$hash = $jc(_$hash, smtpUsername.hashCode);
+    _$hash = $jc(_$hash, smtpPassword.hashCode);
+    _$hash = $jc(_$hash, smtpLocalDomain.hashCode);
+    _$hash = $jc(_$hash, smtpVerifyPeer.hashCode);
     _$hash = $jc(_$hash, groups.hashCode);
     _$hash = $jc(_$hash, activities.hashCode);
     _$hash = $jc(_$hash, taxRates.hashCode);
@@ -2516,6 +2614,13 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('convertPaymentCurrency', convertPaymentCurrency)
           ..add('convertExpenseCurrency', convertExpenseCurrency)
           ..add('notifyVendorWhenPaid', notifyVendorWhenPaid)
+          ..add('smtpHost', smtpHost)
+          ..add('smtpPort', smtpPort)
+          ..add('smtpEncryption', smtpEncryption)
+          ..add('smtpUsername', smtpUsername)
+          ..add('smtpPassword', smtpPassword)
+          ..add('smtpLocalDomain', smtpLocalDomain)
+          ..add('smtpVerifyPeer', smtpVerifyPeer)
           ..add('groups', groups)
           ..add('activities', activities)
           ..add('taxRates', taxRates)
@@ -2820,6 +2925,37 @@ class CompanyEntityBuilder
   bool? get notifyVendorWhenPaid => _$this._notifyVendorWhenPaid;
   set notifyVendorWhenPaid(bool? notifyVendorWhenPaid) =>
       _$this._notifyVendorWhenPaid = notifyVendorWhenPaid;
+
+  String? _smtpHost;
+  String? get smtpHost => _$this._smtpHost;
+  set smtpHost(String? smtpHost) => _$this._smtpHost = smtpHost;
+
+  int? _smtpPort;
+  int? get smtpPort => _$this._smtpPort;
+  set smtpPort(int? smtpPort) => _$this._smtpPort = smtpPort;
+
+  String? _smtpEncryption;
+  String? get smtpEncryption => _$this._smtpEncryption;
+  set smtpEncryption(String? smtpEncryption) =>
+      _$this._smtpEncryption = smtpEncryption;
+
+  String? _smtpUsername;
+  String? get smtpUsername => _$this._smtpUsername;
+  set smtpUsername(String? smtpUsername) => _$this._smtpUsername = smtpUsername;
+
+  String? _smtpPassword;
+  String? get smtpPassword => _$this._smtpPassword;
+  set smtpPassword(String? smtpPassword) => _$this._smtpPassword = smtpPassword;
+
+  String? _smtpLocalDomain;
+  String? get smtpLocalDomain => _$this._smtpLocalDomain;
+  set smtpLocalDomain(String? smtpLocalDomain) =>
+      _$this._smtpLocalDomain = smtpLocalDomain;
+
+  bool? _smtpVerifyPeer;
+  bool? get smtpVerifyPeer => _$this._smtpVerifyPeer;
+  set smtpVerifyPeer(bool? smtpVerifyPeer) =>
+      _$this._smtpVerifyPeer = smtpVerifyPeer;
 
   ListBuilder<GroupEntity>? _groups;
   ListBuilder<GroupEntity> get groups =>
@@ -3249,6 +3385,13 @@ class CompanyEntityBuilder
       _convertPaymentCurrency = $v.convertPaymentCurrency;
       _convertExpenseCurrency = $v.convertExpenseCurrency;
       _notifyVendorWhenPaid = $v.notifyVendorWhenPaid;
+      _smtpHost = $v.smtpHost;
+      _smtpPort = $v.smtpPort;
+      _smtpEncryption = $v.smtpEncryption;
+      _smtpUsername = $v.smtpUsername;
+      _smtpPassword = $v.smtpPassword;
+      _smtpLocalDomain = $v.smtpLocalDomain;
+      _smtpVerifyPeer = $v.smtpVerifyPeer;
       _groups = $v.groups.toBuilder();
       _activities = $v.activities.toBuilder();
       _taxRates = $v.taxRates.toBuilder();
@@ -3404,6 +3547,13 @@ class CompanyEntityBuilder
               convertPaymentCurrency: BuiltValueNullFieldError.checkNotNull(convertPaymentCurrency, r'CompanyEntity', 'convertPaymentCurrency'),
               convertExpenseCurrency: BuiltValueNullFieldError.checkNotNull(convertExpenseCurrency, r'CompanyEntity', 'convertExpenseCurrency'),
               notifyVendorWhenPaid: BuiltValueNullFieldError.checkNotNull(notifyVendorWhenPaid, r'CompanyEntity', 'notifyVendorWhenPaid'),
+              smtpHost: BuiltValueNullFieldError.checkNotNull(smtpHost, r'CompanyEntity', 'smtpHost'),
+              smtpPort: BuiltValueNullFieldError.checkNotNull(smtpPort, r'CompanyEntity', 'smtpPort'),
+              smtpEncryption: BuiltValueNullFieldError.checkNotNull(smtpEncryption, r'CompanyEntity', 'smtpEncryption'),
+              smtpUsername: BuiltValueNullFieldError.checkNotNull(smtpUsername, r'CompanyEntity', 'smtpUsername'),
+              smtpPassword: BuiltValueNullFieldError.checkNotNull(smtpPassword, r'CompanyEntity', 'smtpPassword'),
+              smtpLocalDomain: BuiltValueNullFieldError.checkNotNull(smtpLocalDomain, r'CompanyEntity', 'smtpLocalDomain'),
+              smtpVerifyPeer: BuiltValueNullFieldError.checkNotNull(smtpVerifyPeer, r'CompanyEntity', 'smtpVerifyPeer'),
               groups: groups.build(),
               activities: activities.build(),
               taxRates: taxRates.build(),
