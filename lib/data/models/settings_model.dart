@@ -127,6 +127,7 @@ abstract class SettingsEntity
   static const EMAIL_SENDING_METHOD_MICROSOFT = 'office365';
   static const EMAIL_SENDING_METHOD_POSTMARK = 'client_postmark';
   static const EMAIL_SENDING_METHOD_MAILGUN = 'client_mailgun';
+  static const EMAIL_SENDING_METHOD_SMTP = 'smtp';
 
   static const LOCK_INVOICES_OFF = 'off';
   static const LOCK_INVOICES_SENT = 'when_sent';

@@ -53,6 +53,10 @@ class _EmailSettingsState extends State<EmailSettings> {
   final _mailgunDomainController = TextEditingController();
   final _customSendingEmailController = TextEditingController();
   final _eInvoiceCertificatePassphraseController = TextEditingController();
+  final _smtpHostController = TextEditingController();
+  final _smtpUsernameController = TextEditingController();
+  final _smtpPasswordController = TextEditingController();
+  final _smtpLocalDomainController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -87,6 +91,10 @@ class _EmailSettingsState extends State<EmailSettings> {
       _mailgunDomainController,
       _customSendingEmailController,
       _eInvoiceCertificatePassphraseController,
+      _smtpHostController,
+      _smtpUsernameController,
+      _smtpPasswordController,
+      _smtpLocalDomainController,
     ];
 
     _controllers
@@ -108,6 +116,10 @@ class _EmailSettingsState extends State<EmailSettings> {
     _mailgunDomainController.text = settings.mailgunDomain ?? '';
     _eInvoiceCertificatePassphraseController.text =
         company.eInvoiceCertificatePassphrase;
+    _smtpHostController.text = company.smtpHost;
+    _smtpUsernameController.text = company.smtpUsername;
+    _smtpPasswordController.text = company.smtpPassword;
+    _smtpLocalDomainController.text = company.smtpLocalDomain;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -157,7 +169,11 @@ class _EmailSettingsState extends State<EmailSettings> {
       ..eInvoiceCertificatePassphrase =
           isFiltered && eInvoiceCertificatePassphrase.isEmpty
               ? null
-              : eInvoiceCertificatePassphrase);
+              : eInvoiceCertificatePassphrase
+      ..smtpHost = _smtpHostController.text.trim()
+      ..smtpUsername = _smtpUsernameController.text.trim()
+      ..smtpPassword = _smtpPasswordController.text.trim()
+      ..smtpLocalDomain = _smtpLocalDomainController.text.trim());
     if (company != viewModel.company) {
       viewModel.onCompanyChanged(company);
     }
@@ -222,6 +238,9 @@ class _EmailSettingsState extends State<EmailSettings> {
                         child: Text('Microsoft'),
                         value: SettingsEntity.EMAIL_SENDING_METHOD_MICROSOFT),
                   ],
+                  DropdownMenuItem(
+                      child: Text('SMTP'),
+                      value: SettingsEntity.EMAIL_SENDING_METHOD_SMTP),
                   DropdownMenuItem(
                       child: Text('Postmark'),
                       value: SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK),
@@ -349,6 +368,42 @@ class _EmailSettingsState extends State<EmailSettings> {
                               value: endpoint,
                             ))
                         .toList())
+              ] else if (settings.emailSendingMethod ==
+                  SettingsEntity.EMAIL_SENDING_METHOD_SMTP) ...[
+                DecoratedFormField(
+                  label: localization.host,
+                  controller: _smtpHostController,
+                  keyboardType: TextInputType.url,
+                  onSavePressed: _onSavePressed,
+                  validator: (value) => value.trim().isEmpty
+                      ? localization.pleaseEnterAValue
+                      : null,
+                ),
+                DecoratedFormField(
+                  label: localization.username,
+                  controller: _smtpUsernameController,
+                  keyboardType: TextInputType.text,
+                  onSavePressed: _onSavePressed,
+                  validator: (value) => value.trim().isEmpty
+                      ? localization.pleaseEnterAValue
+                      : null,
+                ),
+                DecoratedFormField(
+                  label: localization.password,
+                  obscureText: true,
+                  controller: _smtpPasswordController,
+                  keyboardType: TextInputType.text,
+                  onSavePressed: _onSavePressed,
+                  validator: (value) => value.trim().isEmpty
+                      ? localization.pleaseEnterAValue
+                      : null,
+                ),
+                DecoratedFormField(
+                  label: localization.localDomain,
+                  controller: _smtpLocalDomainController,
+                  keyboardType: TextInputType.url,
+                  onSavePressed: _onSavePressed,
+                ),
               ],
             ],
           ),
