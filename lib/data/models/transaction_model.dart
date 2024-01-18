@@ -67,6 +67,7 @@ class TransactionFields {
   static const String accountType = 'account_type';
   static const String defaultCategory = 'default_category';
   static const String participantName = 'participant_name';
+  static const String participant = 'participant';
 }
 
 abstract class TransactionEntity extends Object

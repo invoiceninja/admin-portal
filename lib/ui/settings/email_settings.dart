@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
@@ -53,6 +54,11 @@ class _EmailSettingsState extends State<EmailSettings> {
   final _mailgunDomainController = TextEditingController();
   final _customSendingEmailController = TextEditingController();
   final _eInvoiceCertificatePassphraseController = TextEditingController();
+  final _smtpHostController = TextEditingController();
+  final _smtpPortController = TextEditingController();
+  final _smtpUsernameController = TextEditingController();
+  final _smtpPasswordController = TextEditingController();
+  final _smtpLocalDomainController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -87,6 +93,11 @@ class _EmailSettingsState extends State<EmailSettings> {
       _mailgunDomainController,
       _customSendingEmailController,
       _eInvoiceCertificatePassphraseController,
+      _smtpHostController,
+      _smtpPortController,
+      _smtpUsernameController,
+      _smtpPasswordController,
+      _smtpLocalDomainController,
     ];
 
     _controllers
@@ -108,6 +119,11 @@ class _EmailSettingsState extends State<EmailSettings> {
     _mailgunDomainController.text = settings.mailgunDomain ?? '';
     _eInvoiceCertificatePassphraseController.text =
         company.eInvoiceCertificatePassphrase;
+    _smtpHostController.text = company.smtpHost;
+    _smtpPortController.text = company.smtpPort.toString();
+    _smtpUsernameController.text = company.smtpUsername;
+    _smtpPasswordController.text = company.smtpPassword;
+    _smtpLocalDomainController.text = company.smtpLocalDomain;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -157,7 +173,12 @@ class _EmailSettingsState extends State<EmailSettings> {
       ..eInvoiceCertificatePassphrase =
           isFiltered && eInvoiceCertificatePassphrase.isEmpty
               ? null
-              : eInvoiceCertificatePassphrase);
+              : eInvoiceCertificatePassphrase
+      ..smtpHost = _smtpHostController.text.trim()
+      ..smtpPort = parseInt(_smtpPortController.text.trim())
+      ..smtpUsername = _smtpUsernameController.text.trim()
+      ..smtpPassword = _smtpPasswordController.text.trim()
+      ..smtpLocalDomain = _smtpLocalDomainController.text.trim());
     if (company != viewModel.company) {
       viewModel.onCompanyChanged(company);
     }
@@ -222,6 +243,9 @@ class _EmailSettingsState extends State<EmailSettings> {
                         child: Text('Microsoft'),
                         value: SettingsEntity.EMAIL_SENDING_METHOD_MICROSOFT),
                   ],
+                  DropdownMenuItem(
+                      child: Text('SMTP'),
+                      value: SettingsEntity.EMAIL_SENDING_METHOD_SMTP),
                   DropdownMenuItem(
                       child: Text('Postmark'),
                       value: SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK),
@@ -349,6 +373,78 @@ class _EmailSettingsState extends State<EmailSettings> {
                               value: endpoint,
                             ))
                         .toList())
+              ] else if (settings.emailSendingMethod ==
+                      SettingsEntity.EMAIL_SENDING_METHOD_SMTP &&
+                  !settingsUIState.isFiltered) ...[
+                DecoratedFormField(
+                  label: localization.host,
+                  controller: _smtpHostController,
+                  keyboardType: TextInputType.url,
+                  onSavePressed: _onSavePressed,
+                  validator: (value) => value.trim().isEmpty
+                      ? localization.pleaseEnterAValue
+                      : null,
+                ),
+                DecoratedFormField(
+                  label: localization.port,
+                  controller: _smtpPortController,
+                  keyboardType: TextInputType.number,
+                  onSavePressed: _onSavePressed,
+                  validator: (value) => value.trim().isEmpty
+                      ? localization.pleaseEnterAValue
+                      : null,
+                ),
+                AppDropdownButton<String>(
+                    labelText: localization.encryption,
+                    value: viewModel.company.smtpEncryption,
+                    onChanged: (value) {
+                      viewModel.onCompanyChanged(viewModel.company
+                          .rebuild((b) => b..smtpEncryption = value));
+                    },
+                    items: [
+                      DropdownMenuItem(
+                        child: Text(CompanyEntity.SMTP_ENCRYPTION_TLS),
+                        value: CompanyEntity.SMTP_ENCRYPTION_TLS,
+                      ),
+                      DropdownMenuItem(
+                        child: Text(CompanyEntity.SMTP_ENCRYPTION_STARTTLS),
+                        value: CompanyEntity.SMTP_ENCRYPTION_STARTTLS,
+                      ),
+                    ]),
+                DecoratedFormField(
+                  label: localization.username,
+                  controller: _smtpUsernameController,
+                  keyboardType: TextInputType.text,
+                  onSavePressed: _onSavePressed,
+                  validator: (value) => value.trim().isEmpty
+                      ? localization.pleaseEnterAValue
+                      : null,
+                ),
+                DecoratedFormField(
+                  label: localization.password,
+                  obscureText: true,
+                  controller: _smtpPasswordController,
+                  keyboardType: TextInputType.text,
+                  onSavePressed: _onSavePressed,
+                  validator: (value) => value.trim().isEmpty
+                      ? localization.pleaseEnterAValue
+                      : null,
+                ),
+                DecoratedFormField(
+                  label: localization.localDomain,
+                  controller: _smtpLocalDomainController,
+                  keyboardType: TextInputType.url,
+                  onSavePressed: _onSavePressed,
+                ),
+                SizedBox(height: 10),
+                BoolDropdownButton(
+                    label: localization.verifyPeer,
+                    value: viewModel.company.smtpVerifyPeer,
+                    onChanged: (value) {
+                      viewModel.onCompanyChanged(viewModel.company.rebuild(
+                        (b) => b..smtpVerifyPeer = value,
+                      ));
+                    }),
               ],
             ],
           ),

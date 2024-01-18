@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:charts_flutter/flutter.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -90,11 +89,11 @@ class ReportCharts extends StatelessWidget {
         keys.sort((String? str1, String? str2) => str1!.compareTo(str2!));
         child = charts.TimeSeriesChart(
           [
-            charts.Series<dynamic, DateTime?>(
+            charts.Series<dynamic, DateTime>(
                 id: 'chart',
                 colorFn: (dynamic _, __) =>
                     charts.ColorUtil.fromDartColor(state.accentColor!),
-                domainFn: (dynamic item, _) => DateTime.tryParse(item['name']),
+                domainFn: (dynamic item, _) => DateTime.parse(item['name']),
                 measureFn: (dynamic item, _) => item['value'],
                 data: keys.map((key) {
                   return {
@@ -102,7 +101,7 @@ class ReportCharts extends StatelessWidget {
                     'value':
                         viewModel.groupTotals.totals![key]![reportState.chart]
                   };
-                }).toList()) as Series<dynamic, DateTime>
+                }).toList())
           ],
           animate: true,
           primaryMeasureAxis: numericAxis,

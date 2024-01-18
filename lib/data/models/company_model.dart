@@ -132,6 +132,13 @@ abstract class CompanyEntity extends Object
       hasEInvoiceCertificate: false,
       hasEInvoiceCertificatePassphrase: false,
       eInvoiceCertificatePassphrase: '',
+      smtpHost: '',
+      smtpPort: 587,
+      smtpEncryption: SMTP_ENCRYPTION_TLS,
+      smtpUsername: '',
+      smtpPassword: '',
+      smtpLocalDomain: '',
+      smtpVerifyPeer: true,
       taxData: TaxDataEntity(),
       taxConfig: TaxConfigEntity(),
       groups: BuiltList<GroupEntity>(),
@@ -176,6 +183,9 @@ abstract class CompanyEntity extends Object
   static const USE_CREDITS_ALWAYS = 'always';
   static const USE_CREDITS_OPTION = 'option';
   static const USE_CREDITS_OFF = 'off';
+
+  static const SMTP_ENCRYPTION_TLS = 'TLS';
+  static const SMTP_ENCRYPTION_STARTTLS = 'STARTTLS';
 
   @override
   @memoized
@@ -321,6 +331,27 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'notify_vendor_when_paid')
   bool get notifyVendorWhenPaid;
+
+  @BuiltValueField(wireName: 'smtp_host')
+  String get smtpHost;
+
+  @BuiltValueField(wireName: 'smtp_port')
+  int get smtpPort;
+
+  @BuiltValueField(wireName: 'smtp_encryption')
+  String get smtpEncryption;
+
+  @BuiltValueField(wireName: 'smtp_username')
+  String get smtpUsername;
+
+  @BuiltValueField(wireName: 'smtp_password')
+  String get smtpPassword;
+
+  @BuiltValueField(wireName: 'smtp_local_domain')
+  String get smtpLocalDomain;
+
+  @BuiltValueField(wireName: 'smtp_verify_peer')
+  bool get smtpVerifyPeer;
 
   BuiltList<GroupEntity> get groups;
 
@@ -837,6 +868,13 @@ abstract class CompanyEntity extends Object
     ..updatedAt = 0
     ..archivedAt = 0
     ..id = ''
+    ..smtpHost = ''
+    ..smtpPort = 587
+    ..smtpEncryption = SMTP_ENCRYPTION_TLS
+    ..smtpUsername = ''
+    ..smtpPassword = ''
+    ..smtpLocalDomain = ''
+    ..smtpVerifyPeer = true
     ..taxConfig.replace(TaxConfigEntity())
     ..taxData.replace(TaxDataEntity())
     ..systemLogs.replace(BuiltList<SystemLogEntity>())

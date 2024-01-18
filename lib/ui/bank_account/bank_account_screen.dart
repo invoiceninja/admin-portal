@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dar
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/app_bottom_bar.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/learn_more.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
 import 'package:invoiceninja_flutter/ui/app/list_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/list_filter.dart';
@@ -157,6 +158,8 @@ class BankAccountScreen extends StatelessWidget {
     final state = store.state;
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context)!;
+    final connectDisabled =
+        state.isSelfHosted && !state.account.nordigenEnabled;
 
     return ListScaffold(
       entityType: EntityType.bankAccount,
@@ -182,6 +185,7 @@ class BankAccountScreen extends StatelessWidget {
         }
       },
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding:
@@ -254,6 +258,14 @@ class BankAccountScreen extends StatelessWidget {
               ],
             ),
           ),
+          if (connectDisabled)
+            Padding(
+              padding: const EdgeInsets.only(left: 17, top: 10, right: 17),
+              child: LearnMoreUrl(
+                url: kNordigenOverviewUrl,
+                child: Text(localization.nordigenHelp),
+              ),
+            ),
           Expanded(child: BankAccountListBuilder()),
         ],
       ),

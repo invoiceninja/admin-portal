@@ -4,7 +4,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.149';
+const String kClientVersion = '5.0.150';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -57,6 +57,7 @@ const String kYodleeCoverageUrl =
     'https://www.yodlee.com/open-banking/data-connections';
 const String kNordigenCoverageUrl =
     'https://gocardless.com/bank-account-data/coverage';
+const String kNordigenOverviewUrl = 'https://gocardless.com/bank-account-data';
 
 const String kTaskExtensionUrl =
     'https://chromewebstore.google.com/detail/invoice-ninja-tasks/dlfcbfdpemfnjbjlladogijcchfmmaaf';
