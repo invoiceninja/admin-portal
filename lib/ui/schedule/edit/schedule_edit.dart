@@ -231,6 +231,48 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                   ],
                 ),
                 if (schedule.template ==
+                    ScheduleEntity.TEMPLATE_EMAIL_REPORT) ...[
+                  FormCard(
+                    isLast: true,
+                    children: [
+                      ClientPicker(
+                          key: ValueKey(
+                              '__report_client_picker_${_clientClearedAt}__'),
+                          isRequired: false,
+                          clientId: null,
+                          clientState: state.clientState,
+                          excludeIds: parameters.clients!.toList(),
+                          onSelected: (value) {
+                            if (value == null) {
+                              return;
+                            }
+                            if (!parameters.clients!.contains(value.id)) {
+                              viewModel.onChanged(schedule.rebuild(
+                                  (b) => b..parameters.clients.add(value.id)));
+                            }
+                            setState(() {
+                              _clientClearedAt =
+                                  DateTime.now().toIso8601String();
+                            });
+                          }),
+                      SizedBox(height: 20),
+                      if (parameters.clients!.isEmpty)
+                        HelpText(localization.allClients),
+                      for (var clientId in parameters.clients!)
+                        ListTile(
+                          title:
+                              Text(state.clientState.get(clientId).displayName),
+                          trailing: IconButton(
+                            icon: Icon(Icons.clear),
+                            onPressed: () {
+                              viewModel.onChanged(schedule.rebuild((b) =>
+                                  b..parameters.clients.remove(clientId)));
+                            },
+                          ),
+                        ),
+                    ],
+                  ),
+                ] else if (schedule.template ==
                     ScheduleEntity.TEMPLATE_EMAIL_STATEMENT) ...[
                   FormCard(children: [
                     AppDropdownButton<DateRange>(
@@ -300,8 +342,8 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                     isLast: true,
                     children: [
                       ClientPicker(
-                          key:
-                              ValueKey('__client_picker_${_clientClearedAt}__'),
+                          key: ValueKey(
+                              '__statement_client_picker_${_clientClearedAt}__'),
                           isRequired: false,
                           clientId: null,
                           clientState: state.clientState,
