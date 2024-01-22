@@ -75,6 +75,8 @@ class ScheduleListItem extends StatelessWidget {
       }
       subtitle +=
           ' • ' + localization.lookup(kFrequencies[schedule.frequencyId]);
+    } else if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_REPORT) {
+      title += ': ' + localization.lookup(schedule.parameters.reportName);
     }
 
     return DismissibleEntity(
