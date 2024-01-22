@@ -3,6 +3,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/serializer.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
+import 'package:invoiceninja_flutter/data/models/import_model.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -84,8 +85,8 @@ abstract class ScheduleEntity extends Object
 
   static const TEMPLATES = [
     TEMPLATE_EMAIL_STATEMENT,
-    TEMPLATE_EMAIL_RECORD,
     TEMPLATE_EMAIL_REPORT,
+    TEMPLATE_EMAIL_RECORD,
   ];
 
   @override
@@ -218,6 +219,9 @@ abstract class ScheduleParameters
           ? EntityType.invoice.toString()
           : null,
       entityId: action == ScheduleEntity.TEMPLATE_EMAIL_RECORD ? '' : null,
+      reportName: action == ScheduleEntity.TEMPLATE_EMAIL_REPORT
+          ? ExportType.invoices.name
+          : null,
     );
   }
 
@@ -251,6 +255,9 @@ abstract class ScheduleParameters
 
   @BuiltValueField(wireName: 'entity_id')
   String? get entityId;
+
+  @BuiltValueField(wireName: 'report_name')
+  String? get reportName;
 
   static Serializer<ScheduleParameters> get serializer =>
       _$scheduleParametersSerializer;

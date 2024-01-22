@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
+import 'package:invoiceninja_flutter/data/models/import_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
@@ -232,7 +233,26 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                 ),
                 if (schedule.template ==
                     ScheduleEntity.TEMPLATE_EMAIL_REPORT) ...[
-                  //
+                  FormCard(
+                    isLast: true,
+                    children: [
+                      AppDropdownButton<String>(
+                          value: schedule.parameters.reportName,
+                          labelText: localization.report,
+                          onChanged: (dynamic value) {
+                            setState(() {
+                              viewModel.onChanged(schedule.rebuild(
+                                  (b) => b..parameters.reportName = value));
+                            });
+                          },
+                          items: ExportType.values
+                              .map((importType) => DropdownMenuItem<String>(
+                                  value: importType.name,
+                                  child:
+                                      Text(localization.lookup('$importType'))))
+                              .toList()),
+                    ],
+                  ),
                 ] else if (schedule.template ==
                     ScheduleEntity.TEMPLATE_EMAIL_STATEMENT) ...[
                   FormCard(children: [
@@ -342,6 +362,7 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                 ] else if (schedule.template ==
                     ScheduleEntity.TEMPLATE_EMAIL_RECORD) ...[
                   FormCard(
+                    isLast: true,
                     children: [
                       AppDropdownButton<String>(
                           labelText: localization.type,
