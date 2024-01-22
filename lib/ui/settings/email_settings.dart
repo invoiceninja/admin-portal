@@ -235,6 +235,9 @@ class _EmailSettingsState extends State<EmailSettings> {
                   DropdownMenuItem(
                       child: Text(localization.defaultWord),
                       value: SettingsEntity.EMAIL_SENDING_METHOD_DEFAULT),
+                  DropdownMenuItem(
+                      child: Text('SMTP'),
+                      value: SettingsEntity.EMAIL_SENDING_METHOD_SMTP),
                   if (viewModel.state.isHosted) ...[
                     DropdownMenuItem(
                         child: Text('Gmail'),
@@ -243,9 +246,6 @@ class _EmailSettingsState extends State<EmailSettings> {
                         child: Text('Microsoft'),
                         value: SettingsEntity.EMAIL_SENDING_METHOD_MICROSOFT),
                   ],
-                  DropdownMenuItem(
-                      child: Text('SMTP'),
-                      value: SettingsEntity.EMAIL_SENDING_METHOD_SMTP),
                   DropdownMenuItem(
                       child: Text('Postmark'),
                       value: SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK),
