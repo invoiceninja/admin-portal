@@ -100,6 +100,7 @@ class _ScheduleViewState extends State<ScheduleView> {
                   : '${schedule.remainingCycles}',
               localization.report:
                   localization.lookup(schedule.parameters.reportName),
+              localization.dateRange: localization.lookup(parameters.dateRange),
             })
         ],
       ),

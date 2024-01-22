@@ -545,6 +545,15 @@ class ReportsScreen extends StatelessWidget {
                               },
                             ),
                           ),
+                          SizedBox(width: kGutterWidth),
+                          Expanded(
+                            child: AppButton(
+                              label: localization.schedule,
+                              onPressed: () {
+                                viewModel.onSchedulePressed(context);
+                              },
+                            ),
+                          ),
                         ],
                       ),
                     ),

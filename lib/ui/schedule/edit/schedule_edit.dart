@@ -251,6 +251,27 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                                   child:
                                       Text(localization.lookup('$importType'))))
                               .toList()),
+                      AppDropdownButton<DateRange>(
+                        labelText: localization.dateRange,
+                        blankValue: null,
+                        value: parameters.dateRange!.isNotEmpty
+                            ? DateRange.valueOf(
+                                toCamelCase(parameters.dateRange!))
+                            : null,
+                        onChanged: (dynamic value) {
+                          viewModel.onChanged(schedule.rebuild((b) => b
+                            ..parameters.dateRange =
+                                (value as DateRange).snakeCase));
+                        },
+                        items: DateRange.values
+                            .where((value) => value != DateRange.custom)
+                            .map((dateRange) => DropdownMenuItem<DateRange>(
+                                  child: Text(localization
+                                      .lookup(dateRange.toString())),
+                                  value: dateRange,
+                                ))
+                            .toList(),
+                      ),
                     ],
                   ),
                 ] else if (schedule.template ==
