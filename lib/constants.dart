@@ -410,6 +410,10 @@ const String kGatewayTypeInstantBankPay = '21';
 const String kGatewayTypeFPX = '22';
 const String kGatewayTypeKlarna = '23';
 const String kGatewayTypeBacs = '24';
+const String kGatewayTypeVenmo = '25';
+const String kGatewayTypeMercadoPago = '26';
+const String kGatewayTypeMyBank = '27';
+const String kGatewayTypePayLater = '28';
 
 const kGatewayTypes = {
   kGatewayTypeCreditCard: 'credit_card',
@@ -436,6 +440,10 @@ const kGatewayTypes = {
   kGatewayTypeFPX: 'fpx',
   kGatewayTypeKlarna: 'klarna',
   kGatewayTypeBacs: 'bacs',
+  kGatewayTypeVenmo: 'venmo',
+  kGatewayTypeMercadoPago: 'mercado_pago',
+  kGatewayTypeMyBank: 'my_bank',
+  kGatewayTypePayLater: 'pay_later',
 };
 
 const String kNotificationChannelEmail = 'email';
