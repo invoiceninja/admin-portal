@@ -202,14 +202,12 @@ class ExportType extends EnumClass {
   static const ExportType products = _$products;
   static const ExportType tasks = _$tasks;
   static const ExportType profitloss = _$profitloss;
-  static const ExportType aged_receivable_detailed_report =
-      _$aged_receivable_detailed_report;
-  static const ExportType aged_receivable_summary_report =
-      _$aged_receivable_summary_report;
-  static const ExportType client_balance_report = _$client_balance_report;
-  static const ExportType client_sales_report = _$client_sales_report;
-  static const ExportType tax_summary_report = _$tax_summary_report;
-  static const ExportType user_sales_report = _$user_sales_report;
+  static const ExportType ar_detailed = _$ar_detailed;
+  static const ExportType ar_summary = _$ar_summary;
+  static const ExportType client_balance = _$client_balance;
+  static const ExportType client_sales = _$client_sales;
+  static const ExportType tax_summary = _$tax_summary;
+  static const ExportType user_sales = _$user_sales;
 
   static BuiltSet<ExportType> get values => _$exportValues;
 

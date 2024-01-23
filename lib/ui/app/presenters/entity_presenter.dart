@@ -49,7 +49,7 @@ class EntityPresenter {
         isNarrow) {
       return name;
     } else {
-      return '$type $name';
+      return '$type: $name';
     }
   }
 

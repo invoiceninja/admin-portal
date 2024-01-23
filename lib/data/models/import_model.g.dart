@@ -62,17 +62,12 @@ const ExportType _$payments = const ExportType._('payments');
 const ExportType _$products = const ExportType._('products');
 const ExportType _$tasks = const ExportType._('tasks');
 const ExportType _$profitloss = const ExportType._('profitloss');
-const ExportType _$aged_receivable_detailed_report =
-    const ExportType._('aged_receivable_detailed_report');
-const ExportType _$aged_receivable_summary_report =
-    const ExportType._('aged_receivable_summary_report');
-const ExportType _$client_balance_report =
-    const ExportType._('client_balance_report');
-const ExportType _$client_sales_report =
-    const ExportType._('client_sales_report');
-const ExportType _$tax_summary_report =
-    const ExportType._('tax_summary_report');
-const ExportType _$user_sales_report = const ExportType._('user_sales_report');
+const ExportType _$ar_detailed = const ExportType._('ar_detailed');
+const ExportType _$ar_summary = const ExportType._('ar_summary');
+const ExportType _$client_balance = const ExportType._('client_balance');
+const ExportType _$client_sales = const ExportType._('client_sales');
+const ExportType _$tax_summary = const ExportType._('tax_summary');
+const ExportType _$user_sales = const ExportType._('user_sales');
 
 ExportType _$exportValueOf(String name) {
   switch (name) {
@@ -106,18 +101,18 @@ ExportType _$exportValueOf(String name) {
       return _$tasks;
     case 'profitloss':
       return _$profitloss;
-    case 'aged_receivable_detailed_report':
-      return _$aged_receivable_detailed_report;
-    case 'aged_receivable_summary_report':
-      return _$aged_receivable_summary_report;
-    case 'client_balance_report':
-      return _$client_balance_report;
-    case 'client_sales_report':
-      return _$client_sales_report;
-    case 'tax_summary_report':
-      return _$tax_summary_report;
-    case 'user_sales_report':
-      return _$user_sales_report;
+    case 'ar_detailed':
+      return _$ar_detailed;
+    case 'ar_summary':
+      return _$ar_summary;
+    case 'client_balance':
+      return _$client_balance;
+    case 'client_sales':
+      return _$client_sales;
+    case 'tax_summary':
+      return _$tax_summary;
+    case 'user_sales':
+      return _$user_sales;
     default:
       throw new ArgumentError(name);
   }
@@ -140,12 +135,12 @@ final BuiltSet<ExportType> _$exportValues =
   _$products,
   _$tasks,
   _$profitloss,
-  _$aged_receivable_detailed_report,
-  _$aged_receivable_summary_report,
-  _$client_balance_report,
-  _$client_sales_report,
-  _$tax_summary_report,
-  _$user_sales_report,
+  _$ar_detailed,
+  _$ar_summary,
+  _$client_balance,
+  _$client_sales,
+  _$tax_summary,
+  _$user_sales,
 ]);
 
 Serializer<PreImportResponse> _$preImportResponseSerializer =

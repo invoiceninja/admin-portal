@@ -385,6 +385,13 @@ class ReportsScreen extends StatelessWidget {
                         viewModel.onExportPressed(context);
                       },
                     ),
+                    AppTextButton(
+                      label: localization.schedule,
+                      isInHeader: true,
+                      onPressed: () {
+                        viewModel.onSchedulePressed(context);
+                      },
+                    ),
                   ],
                   Padding(
                     padding: const EdgeInsets.only(right: 8),
@@ -535,6 +542,15 @@ class ReportsScreen extends StatelessWidget {
                               label: localization.export,
                               onPressed: () {
                                 viewModel.onExportPressed(context);
+                              },
+                            ),
+                          ),
+                          SizedBox(width: kGutterWidth),
+                          Expanded(
+                            child: AppButton(
+                              label: localization.schedule,
+                              onPressed: () {
+                                viewModel.onSchedulePressed(context);
                               },
                             ),
                           ),

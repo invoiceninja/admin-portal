@@ -90,13 +90,18 @@ class _SystemLogViewerState extends State<SystemLogViewer> {
               },
               isExpanded: _isExpanded[systemLog.id] == true,
               body: _isExpanded[systemLog.id] == true
-                  ? Container(
-                      color: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: JsonViewer(logs ?? <String, dynamic>{}),
-                      ),
-                    )
+                  ? logs == null
+                      ? Padding(
+                          child: Text(systemLog.log),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 10))
+                      : Container(
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: JsonViewer(logs),
+                          ),
+                        )
                   : SizedBox(),
             );
           }).toList(),
