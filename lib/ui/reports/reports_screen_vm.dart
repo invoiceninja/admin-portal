@@ -11,6 +11,9 @@ import 'package:flutter/widgets.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/data/models/import_model.dart';
+import 'package:invoiceninja_flutter/data/models/schedule_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/ui/reports/credit_item_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/purchase_order_item_report.dart';
 import 'package:invoiceninja_flutter/ui/reports/purchase_order_report.dart';
@@ -81,6 +84,7 @@ class ReportsScreenVM {
     required this.onReportColumnsChanged,
     required this.onReportFiltersChanged,
     required this.onExportPressed,
+    required this.onSchedulePressed,
     required this.onReportSorted,
     required this.groupTotals,
     required this.reportResult,
@@ -94,6 +98,7 @@ class ReportsScreenVM {
   final GroupTotals groupTotals;
   final Function(BuildContext, List<String>) onReportColumnsChanged;
   final Function(BuildContext) onExportPressed;
+  final Function(BuildContext) onSchedulePressed;
   final Function(BuildContext, BuiltMap<String?, String?>)
       onReportFiltersChanged;
   final Function(String?, bool) onReportSorted;
@@ -456,6 +461,13 @@ class ReportsScreenVM {
               customEndDate: customEndDate,
             ));
           });
+        },
+        onSchedulePressed: (context) async {
+          createEntity(
+              entity: ScheduleEntity(ScheduleEntity.TEMPLATE_EMAIL_REPORT)
+                  .rebuild((b) => b
+                    ..parameters.reportName =
+                        kReportMap[report]?.name ?? ExportType.invoices.name));
         },
         onExportPressed: (context) async {
           final localization = AppLocalization.of(context);

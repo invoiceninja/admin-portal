@@ -337,6 +337,13 @@ class _$ScheduleParametersSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.reportName;
+    if (value != null) {
+      result
+        ..add('report_name')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -388,6 +395,10 @@ class _$ScheduleParametersSerializer
           break;
         case 'entity_id':
           result.entityId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'report_name':
+          result.reportName = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
       }
@@ -904,6 +915,8 @@ class _$ScheduleParameters extends ScheduleParameters {
   final String? entityType;
   @override
   final String? entityId;
+  @override
+  final String? reportName;
 
   factory _$ScheduleParameters(
           [void Function(ScheduleParametersBuilder)? updates]) =>
@@ -918,7 +931,8 @@ class _$ScheduleParameters extends ScheduleParameters {
       this.status,
       this.clients,
       this.entityType,
-      this.entityId})
+      this.entityId,
+      this.reportName})
       : super._();
 
   @override
@@ -942,7 +956,8 @@ class _$ScheduleParameters extends ScheduleParameters {
         status == other.status &&
         clients == other.clients &&
         entityType == other.entityType &&
-        entityId == other.entityId;
+        entityId == other.entityId &&
+        reportName == other.reportName;
   }
 
   int? __hashCode;
@@ -959,6 +974,7 @@ class _$ScheduleParameters extends ScheduleParameters {
     _$hash = $jc(_$hash, clients.hashCode);
     _$hash = $jc(_$hash, entityType.hashCode);
     _$hash = $jc(_$hash, entityId.hashCode);
+    _$hash = $jc(_$hash, reportName.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -974,7 +990,8 @@ class _$ScheduleParameters extends ScheduleParameters {
           ..add('status', status)
           ..add('clients', clients)
           ..add('entityType', entityType)
-          ..add('entityId', entityId))
+          ..add('entityId', entityId)
+          ..add('reportName', reportName))
         .toString();
   }
 }
@@ -1024,6 +1041,10 @@ class ScheduleParametersBuilder
   String? get entityId => _$this._entityId;
   set entityId(String? entityId) => _$this._entityId = entityId;
 
+  String? _reportName;
+  String? get reportName => _$this._reportName;
+  set reportName(String? reportName) => _$this._reportName = reportName;
+
   ScheduleParametersBuilder();
 
   ScheduleParametersBuilder get _$this {
@@ -1038,6 +1059,7 @@ class ScheduleParametersBuilder
       _clients = $v.clients?.toBuilder();
       _entityType = $v.entityType;
       _entityId = $v.entityId;
+      _reportName = $v.reportName;
       _$v = null;
     }
     return this;
@@ -1070,7 +1092,8 @@ class ScheduleParametersBuilder
               status: status,
               clients: _clients?.build(),
               entityType: entityType,
-              entityId: entityId);
+              entityId: entityId,
+              reportName: reportName);
     } catch (_) {
       late String _$failedField;
       try {

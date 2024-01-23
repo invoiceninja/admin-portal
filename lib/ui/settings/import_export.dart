@@ -12,6 +12,8 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/bank_account_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/schedule_model.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dart';
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -304,48 +306,71 @@ class _ImportExportState extends State<ImportExport> {
                       ]
                     ],
                   ],
-                  AppButton(
-                    iconData: MdiIcons.export,
-                    label: localization.export.toUpperCase(),
-                    onPressed: () {
-                      final webClient = WebClient();
-                      final state = StoreProvider.of<AppState>(context).state;
-                      final credentials = state.credentials;
-                      String? url = credentials.url;
+                  Row(
+                    children: [
+                      Expanded(
+                        child: AppButton(
+                          iconData: MdiIcons.export,
+                          label: localization.export.toUpperCase(),
+                          onPressed: () {
+                            final webClient = WebClient();
+                            final state =
+                                StoreProvider.of<AppState>(context).state;
+                            final credentials = state.credentials;
+                            String? url = credentials.url;
 
-                      if (_exportFormat == ImportType.json) {
-                        url = '$url/export';
-                      } else {
-                        url = '$url/reports/$_exportType';
-                      }
+                            if (_exportFormat == ImportType.json) {
+                              url = '$url/export';
+                            } else {
+                              url = '$url/reports/$_exportType';
+                            }
 
-                      setState(() => _isExporting = true);
+                            setState(() => _isExporting = true);
 
-                      final data = {
-                        'send_email': true,
-                        'report_keys': <String>[],
-                        'date_key': _exportDate,
-                        'date_range': _exportDateRange,
-                        'start_date': _exportStartDate,
-                        'end_date': _exportEndDate,
-                      };
+                            final data = {
+                              'send_email': true,
+                              'report_keys': <String>[],
+                              'date_key': _exportDate,
+                              'date_range': _exportDateRange,
+                              'start_date': _exportStartDate,
+                              'end_date': _exportEndDate,
+                            };
 
-                      if (_exportType == ExportType.profitloss) {
-                        data['is_income_billed'] = true;
-                        data['is_expense_billed'] = true;
-                        data['include_tax'] = true;
-                      }
+                            if (_exportType == ExportType.profitloss) {
+                              data['is_income_billed'] = true;
+                              data['is_expense_billed'] = true;
+                              data['include_tax'] = true;
+                            }
 
-                      webClient
-                          .post(url, credentials.token, data: json.encode(data))
-                          .then((dynamic result) {
-                        setState(() => _isExporting = false);
-                        showMessageDialog(message: localization.exportedData);
-                      }).catchError((dynamic error) {
-                        setState(() => _isExporting = false);
-                        showErrorDialog(message: '$error');
-                      });
-                    },
+                            webClient
+                                .post(url, credentials.token,
+                                    data: json.encode(data))
+                                .then((dynamic result) {
+                              setState(() => _isExporting = false);
+                              showMessageDialog(
+                                  message: localization.exportedData);
+                            }).catchError((dynamic error) {
+                              setState(() => _isExporting = false);
+                              showErrorDialog(message: '$error');
+                            });
+                          },
+                        ),
+                      ),
+                      SizedBox(width: kGutterWidth),
+                      Expanded(
+                          child: AppButton(
+                        label: localization.schedule,
+                        iconData: Icons.schedule,
+                        onPressed: () {
+                          createEntity(
+                              entity: ScheduleEntity(
+                                      ScheduleEntity.TEMPLATE_EMAIL_REPORT)
+                                  .rebuild((b) => b
+                                    ..parameters.reportName =
+                                        _exportType.name));
+                        },
+                      ))
+                    ],
                   )
                 ],
               ],

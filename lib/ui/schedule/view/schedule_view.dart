@@ -63,16 +63,13 @@ class _ScheduleViewState extends State<ScheduleView> {
               localization.lookup(schedule.parameters.entityType):
                   entity!.listDisplayName
             })
-          else
+          else if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT)
             FieldGrid({
               localization.frequency:
                   localization.lookup(kFrequencies[schedule.frequencyId]),
               localization.remainingCycles: schedule.remainingCycles == -1
                   ? localization.endless
                   : '${schedule.remainingCycles}',
-            }),
-          if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT)
-            FieldGrid({
               localization.clients: parameters.clients!.isEmpty
                   ? localization.allClients
                   : parameters.clients!.length == 1
@@ -93,6 +90,17 @@ class _ScheduleViewState extends State<ScheduleView> {
                       ? localization.yes
                       : localization.no,
               localization.status: localization.lookup(parameters.status),
+            })
+          else if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_REPORT)
+            FieldGrid({
+              localization.frequency:
+                  localization.lookup(kFrequencies[schedule.frequencyId]),
+              localization.remainingCycles: schedule.remainingCycles == -1
+                  ? localization.endless
+                  : '${schedule.remainingCycles}',
+              localization.report:
+                  localization.lookup(schedule.parameters.reportName),
+              localization.dateRange: localization.lookup(parameters.dateRange),
             })
         ],
       ),

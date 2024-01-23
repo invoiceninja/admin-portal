@@ -1,3 +1,5 @@
+import 'package:invoiceninja_flutter/data/models/import_model.dart';
+
 class Constants {
   //static String get hostedApiUrl => kReleaseMode ? kAppProductionUrl : kAppStagingUrl;
   static String get hostedApiUrl => kAppProductionUrl;
@@ -410,6 +412,10 @@ const String kGatewayTypeInstantBankPay = '21';
 const String kGatewayTypeFPX = '22';
 const String kGatewayTypeKlarna = '23';
 const String kGatewayTypeBacs = '24';
+const String kGatewayTypeVenmo = '25';
+const String kGatewayTypeMercadoPago = '26';
+const String kGatewayTypeMyBank = '27';
+const String kGatewayTypePayLater = '28';
 
 const kGatewayTypes = {
   kGatewayTypeCreditCard: 'credit_card',
@@ -436,6 +442,10 @@ const kGatewayTypes = {
   kGatewayTypeFPX: 'fpx',
   kGatewayTypeKlarna: 'klarna',
   kGatewayTypeBacs: 'bacs',
+  kGatewayTypeVenmo: 'venmo',
+  kGatewayTypeMercadoPago: 'mercado_pago',
+  kGatewayTypeMyBank: 'my_bank',
+  kGatewayTypePayLater: 'pay_later',
 };
 
 const String kNotificationChannelEmail = 'email';
@@ -673,6 +683,32 @@ const String kReportPurchaseOrder = 'purchase_order';
 const String kReportPurchaseOrderItem = 'purchase_order_item';
 const String kReportVendor = 'vendor';
 const String kReportTransaction = 'transaction';
+
+final kReportMap = {
+  kReportClient: ExportType.clients,
+  kReportClientContact: ExportType.client_contacts,
+  kReportCredit: ExportType.credits,
+  kReportCreditItem: null,
+  kReportDocument: ExportType.documents,
+  kReportExpense: ExportType.expenses,
+  kReportInvoice: ExportType.invoices,
+  kReportPayment: ExportType.payments,
+  kReportProduct: ExportType.products,
+  kReportProfitAndLoss: ExportType.profitloss,
+  kReportTask: ExportType.tasks,
+  kReportTaskItem: null,
+  kReportInvoiceTax: ExportType.tax_summary,
+  kReportPaymentTax: null,
+  kReportQuote: ExportType.quotes,
+  kReportInvoiceItem: ExportType.invoice_items,
+  kReportQuoteItem: ExportType.quote_items,
+  kReportRecurringExpense: null,
+  kReportRecurringInvoice: ExportType.recurring_invoices,
+  kReportPurchaseOrder: null,
+  kReportPurchaseOrderItem: null,
+  kReportVendor: null,
+  kReportTransaction: null,
+};
 
 const String kPdfFieldsClientDetails = 'client_details';
 const String kPdfFieldsCompanyDetails = 'company_details';

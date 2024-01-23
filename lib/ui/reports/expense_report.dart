@@ -57,6 +57,7 @@ enum ExpenseReportFields {
   converted_amount,
   status,
   record_state,
+  is_invoiced,
 }
 
 var memoizedExpenseReport = memo10((
@@ -283,6 +284,9 @@ ReportResult expenseReport(
         case ExpenseReportFields.record_state:
           value = AppLocalization.of(navigatorKey.currentContext!)!
               .lookup(expense.entityState);
+          break;
+        case ExpenseReportFields.is_invoiced:
+          value = expense.isInvoiced;
           break;
       }
 
