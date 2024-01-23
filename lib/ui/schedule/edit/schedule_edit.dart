@@ -19,6 +19,7 @@ import 'package:invoiceninja_flutter/ui/schedule/edit/schedule_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
 
 class ScheduleEdit extends StatefulWidget {
@@ -163,6 +164,9 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                           );
                         },
                         items: ScheduleEntity.TEMPLATES
+                            .where((entry) =>
+                                supportsLatestFeatures('5.8.0') ||
+                                entry != ScheduleEntity.TEMPLATE_EMAIL_REPORT)
                             .map((entry) => DropdownMenuItem(
                                   value: entry,
                                   child: Text(localization.lookup(entry)),

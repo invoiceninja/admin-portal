@@ -385,13 +385,14 @@ class ReportsScreen extends StatelessWidget {
                         viewModel.onExportPressed(context);
                       },
                     ),
-                    AppTextButton(
-                      label: localization.schedule,
-                      isInHeader: true,
-                      onPressed: () {
-                        viewModel.onSchedulePressed(context);
-                      },
-                    ),
+                    if (supportsLatestFeatures('5.8.0'))
+                      AppTextButton(
+                        label: localization.schedule,
+                        isInHeader: true,
+                        onPressed: () {
+                          viewModel.onSchedulePressed(context);
+                        },
+                      ),
                   ],
                   Padding(
                     padding: const EdgeInsets.only(right: 8),
@@ -545,15 +546,17 @@ class ReportsScreen extends StatelessWidget {
                               },
                             ),
                           ),
-                          SizedBox(width: kGutterWidth),
-                          Expanded(
-                            child: AppButton(
-                              label: localization.schedule,
-                              onPressed: () {
-                                viewModel.onSchedulePressed(context);
-                              },
+                          if (supportsLatestFeatures('5.8.0')) ...[
+                            SizedBox(width: kGutterWidth),
+                            Expanded(
+                              child: AppButton(
+                                label: localization.schedule,
+                                onPressed: () {
+                                  viewModel.onSchedulePressed(context);
+                                },
+                              ),
                             ),
-                          ),
+                          ],
                         ],
                       ),
                     ),
