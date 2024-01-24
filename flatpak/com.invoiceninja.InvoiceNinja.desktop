@@ -4,7 +4,7 @@ Type=Application
 
 Name=Invoice Ninja
 Comment=Create invoices, accept payments, track expenses & time tasks
-Categories=Productivity;
+Categories=Office;
 
 Icon=com.invoiceninja.InvoiceNinja
 Exec=invoiceninja_client
