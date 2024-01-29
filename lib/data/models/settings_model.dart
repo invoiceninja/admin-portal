@@ -815,6 +815,9 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'payment_email_all_contacts')
   bool? get paymentEmailAllContacts;
 
+  @BuiltValueField(wireName: 'show_pdfhtml_on_mobile')
+  bool? get showPdfhtmlOnMobile;
+
   bool get hasAddress => address1 != null && address1!.isNotEmpty;
 
   bool get hasLogo => companyLogo != null && companyLogo!.isNotEmpty;
