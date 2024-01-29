@@ -31,18 +31,27 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
   TaskTime? selectedTaskTime;
 
   void _showTaskTimeEditor(TaskTime? taskTime, BuildContext context) {
+    if (taskTime == null) {
+      return;
+    }
+
+    final viewModel = widget.viewModel;
+    final task = viewModel.task!;
+    final taskTimes = task.getTaskTimes();
+
+    if (taskTimes.where((time) => time.equalTo(taskTime)).isEmpty) {
+      return;
+    }
+
     showDialog<ResponsivePadding>(
         barrierDismissible: false,
         context: context,
         builder: (BuildContext context) {
-          final viewModel = widget.viewModel;
-          final task = viewModel.task!;
-          final taskTimes = task.getTaskTimes();
           return TimeEditDetails(
             viewModel: viewModel,
             taskTime: taskTime,
             index: taskTimes.indexOf(
-                taskTimes.firstWhere((time) => time.equalTo(taskTime!))),
+                taskTimes.firstWhere((time) => time.equalTo(taskTime))),
           );
         });
   }

@@ -235,9 +235,10 @@ class _EmailSettingsState extends State<EmailSettings> {
                   DropdownMenuItem(
                       child: Text(localization.defaultWord),
                       value: SettingsEntity.EMAIL_SENDING_METHOD_DEFAULT),
-                  DropdownMenuItem(
-                      child: Text('SMTP'),
-                      value: SettingsEntity.EMAIL_SENDING_METHOD_SMTP),
+                  if (!kReleaseMode)
+                    DropdownMenuItem(
+                        child: Text('SMTP'),
+                        value: SettingsEntity.EMAIL_SENDING_METHOD_SMTP),
                   if (viewModel.state.isHosted) ...[
                     DropdownMenuItem(
                         child: Text('Gmail'),

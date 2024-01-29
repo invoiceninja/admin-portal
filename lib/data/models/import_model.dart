@@ -202,6 +202,9 @@ class ExportType extends EnumClass {
   static const ExportType products = _$products;
   static const ExportType tasks = _$tasks;
   static const ExportType profitloss = _$profitloss;
+  static const ExportType vendor = _$vendor;
+  static const ExportType purchase_order = _$purchase_order;
+  static const ExportType purchase_order_item = _$purchase_order_item;
   static const ExportType ar_detailed = _$ar_detailed;
   static const ExportType ar_summary = _$ar_summary;
   static const ExportType client_balance = _$client_balance;
