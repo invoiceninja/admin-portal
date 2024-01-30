@@ -98,7 +98,8 @@ class PaymentEditVM {
             showDialog<ErrorDialog>(
                 context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
-                  return ErrorDialog(localization.pleaseSelectAnInvoice);
+                  return ErrorDialog(
+                      localization.pleaseSelectAnInvoiceOrCredit);
                 });
             return null;
           }
