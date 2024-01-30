@@ -501,6 +501,10 @@ abstract class PaymentEntity extends Object
 
   bool get isOnline => companyGatewayId.isNotEmpty;
 
+  double get convertedExchangeRate => exchangeRate == 0 ? 1 : exchangeRate;
+
+  double get convertedAmount => completedAmount * convertedExchangeRate;
+
   bool get isCompletedOrPartiallyRefunded => [
         kPaymentStatusCompleted,
         kPaymentStatusPartiallyRefunded
