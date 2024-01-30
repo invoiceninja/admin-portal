@@ -299,7 +299,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                                   viewLink: contact.silentLink,
                                   copyLink: contact.link,
                                   client: null,
-                                  style: PortalLinkStyle.icons,
+                                  style: PortalLinkStyle.buttons,
                                 ),
                                 SizedBox(height: 16),
                               ] else

@@ -36,6 +36,7 @@ enum ProfitAndLossReportFields {
   currency,
   transaction_reference,
   record_state,
+  converted_amount,
 }
 
 var memoizedProfitAndLossReport = memo9((
@@ -179,6 +180,9 @@ ReportResult profitAndLossReport(
           value = AppLocalization.of(navigatorKey.currentContext!)!
               .lookup(payment.entityState);
           break;
+        case ProfitAndLossReportFields.converted_amount:
+          value = payment.convertedAmount;
+          break;
       }
 
       if (!ReportResult.matchField(
@@ -194,6 +198,9 @@ ReportResult profitAndLossReport(
         row.add(payment.getReportEntityType());
       } else if (value.runtimeType == bool) {
         row.add(payment.getReportBool(value: value));
+      } else if (column == ProfitAndLossReportFields.converted_amount) {
+        row.add(payment.getReportDouble(
+            value: value, currencyId: userCompany.company.currencyId));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(payment.getReportDouble(
             value: value, currencyId: client.currencyId));
@@ -286,6 +293,9 @@ ReportResult profitAndLossReport(
           value = AppLocalization.of(navigatorKey.currentContext!)!
               .lookup(expense.entityState);
           break;
+        case ProfitAndLossReportFields.converted_amount:
+          value = expense.convertedAmount;
+          break;
       }
 
       if (!ReportResult.matchField(
@@ -301,6 +311,9 @@ ReportResult profitAndLossReport(
         row.add(expense.getReportEntityType());
       } else if (value.runtimeType == bool) {
         row.add(expense.getReportBool(value: value));
+      } else if (column == ProfitAndLossReportFields.converted_amount) {
+        row.add(expense.getReportDouble(
+            value: value, currencyId: userCompany.company.currencyId));
       } else if (value.runtimeType == double || value.runtimeType == int) {
         row.add(expense.getReportDouble(
             value: value, currencyId: expense.currencyId));
