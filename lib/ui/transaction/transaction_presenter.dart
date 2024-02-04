@@ -77,7 +77,7 @@ class TransactionPresenter extends EntityPresenter {
               currencyId: transaction.currencyId)!),
         );
       case TransactionFields.description:
-        return Text(transaction.description);
+        return Text(transaction.formattedDescription);
       case TransactionFields.participantName:
         return Text(transaction.participantName);
       case TransactionFields.participant:
