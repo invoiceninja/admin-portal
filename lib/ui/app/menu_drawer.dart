@@ -1425,7 +1425,12 @@ void _showAbout(BuildContext context) async {
                           .replaceFirst(':value', state.appVersion));
                     },
                     onLongPress: () async {
-                      if (kReleaseMode) {
+                      if (!kReleaseMode && supportsInAppPurchase()) {
+                        showDialog<void>(
+                          context: context,
+                          builder: (context) => UpgradeDialog(),
+                        );
+                      } else {
                         showMessageDialog(
                             message: FLUTTER_VERSION['channel']!.toUpperCase() +
                                 ' • ' +
@@ -1436,11 +1441,6 @@ void _showAbout(BuildContext context) async {
                                 onPressed: () => store.dispatch(UserLogout()),
                               ),
                             ]);
-                      } else {
-                        showDialog<void>(
-                          context: context,
-                          builder: (context) => UpgradeDialog(),
-                        );
                       }
                     },
                   ),
