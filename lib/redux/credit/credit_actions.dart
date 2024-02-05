@@ -634,8 +634,12 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
           .get(credit.invitationDownloadLink, state.token, rawResponse: true)
           .then((response) {
         store.dispatch(StopLoading());
-        saveDownloadedFile(response.bodyBytes,
-            localization!.credit + '_' + credit.number + '.pdf');
+        saveDownloadedFile(
+          response.bodyBytes,
+          credit.number + '.pdf',
+          prefix: EntityType.credit.name,
+          languageId: client.languageId,
+        );
       }).catchError((_) {
         store.dispatch(StopLoading());
       });
@@ -694,7 +698,7 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
       break;
     case EntityAction.bulkPrint:
       store.dispatch(StartSaving());
-      final url = state.credentials.url+ '/credits/bulk';
+      final url = state.credentials.url + '/credits/bulk';
       final data = json.encode(
           {'ids': creditIds, 'action': EntityAction.bulkPrint.toApiParam()});
       final http.Response? response = await WebClient()
