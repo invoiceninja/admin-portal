@@ -782,8 +782,12 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
           .get(invoice.invitationDownloadLink, state.token, rawResponse: true)
           .then((response) {
         store.dispatch(StopLoading());
-        saveDownloadedFile(response.bodyBytes,
-            localization!.invoice + '_' + invoice.number + '.pdf');
+        saveDownloadedFile(
+          response.bodyBytes,
+          invoice.number + '.pdf',
+          prefix: EntityType.invoice.apiValue,
+          languageId: client.languageId,
+        );
       }).catchError((_) {
         store.dispatch(StopLoading());
       });
@@ -795,8 +799,12 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
               rawResponse: true)
           .then((response) {
         store.dispatch(StopLoading());
-        saveDownloadedFile(response.bodyBytes,
-            localization!.invoice + '_' + invoice.number + '.xml');
+        saveDownloadedFile(
+          response.bodyBytes,
+          invoice.number + '.xml',
+          prefix: EntityType.invoice.apiValue,
+          languageId: client.languageId,
+        );
       }).catchError((_) {
         store.dispatch(StopLoading());
       });

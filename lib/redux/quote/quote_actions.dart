@@ -524,6 +524,7 @@ Future handleQuoteAction(
   final localization = AppLocalization.of(context);
   final quote = quotes.first as InvoiceEntity;
   final quoteIds = quotes.map((quote) => quote.id).toList();
+  final client = state.clientState.get(quote.clientId);
 
   switch (action) {
     case EntityAction.edit:
@@ -687,8 +688,12 @@ Future handleQuoteAction(
           .get(quote.invitationDownloadLink, state.token, rawResponse: true)
           .then((response) {
         store.dispatch(StopLoading());
-        saveDownloadedFile(response.bodyBytes,
-            localization!.quote + '_' + quote.number + '.pdf');
+        saveDownloadedFile(
+          response.bodyBytes,
+          quote.number + '.pdf',
+          prefix: EntityType.quote.apiValue,
+          languageId: client.languageId,
+        );
       }).catchError((_) {
         store.dispatch(StopLoading());
       });
@@ -747,7 +752,7 @@ Future handleQuoteAction(
       break;
     case EntityAction.bulkPrint:
       store.dispatch(StartSaving());
-      final url = state.credentials.url+ '/quotes/bulk';
+      final url = state.credentials.url + '/quotes/bulk';
       final data = json.encode(
           {'ids': quoteIds, 'action': EntityAction.bulkPrint.toApiParam()});
       final http.Response? response = await WebClient()
