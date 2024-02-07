@@ -637,7 +637,7 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
         saveDownloadedFile(
           response.bodyBytes,
           credit.number + '.pdf',
-          prefix: EntityType.credit.name,
+          prefix: EntityType.credit.apiValue,
           languageId: client.languageId,
         );
       }).catchError((_) {
