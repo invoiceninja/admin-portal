@@ -218,7 +218,7 @@ ReportResult recurringExpenseReport(
           value = expense.privateNotes;
           break;
         case RecurringExpenseReportFields.frequency:
-          value = localization!.lookup(kFrequencies[invoice.frequencyId]);
+          value = localization!.lookup(kFrequencies[expense.frequencyId]);
           break;
         case RecurringExpenseReportFields.start_date:
           value = invoice.nextSendDate;
