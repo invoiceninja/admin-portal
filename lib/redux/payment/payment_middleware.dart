@@ -301,6 +301,17 @@ Middleware<AppState> _loadPayments(PaymentRepository repository) {
     )
         .then((data) {
       store.dispatch(LoadPaymentsSuccess(data));
+
+      final documents = <DocumentEntity>[];
+      data.forEach((product) {
+        product.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = product.id
+            ..parentType = EntityType.payment));
+        });
+      });
+      store.dispatch(LoadDocumentsSuccess(documents));
+
       if (data.length == kMaxRecordsPerPage) {
         store.dispatch(LoadPayments(
           completer: action.completer,
