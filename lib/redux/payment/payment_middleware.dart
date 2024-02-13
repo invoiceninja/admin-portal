@@ -335,14 +335,14 @@ Middleware<AppState> _saveDocument(PaymentRepository repository) {
         action.multipartFiles,
         action.isPrivate,
       )
-          .then((product) {
-        store.dispatch(SavePaymentSuccess(product));
+          .then((payment) {
+        store.dispatch(SavePaymentSuccess(payment));
 
         final documents = <DocumentEntity>[];
-        product.documents.forEach((document) {
+        payment.documents.forEach((document) {
           documents.add(document.rebuild((b) => b
-            ..parentId = product.id
-            ..parentType = EntityType.product));
+            ..parentId = payment.id
+            ..parentType = EntityType.payment));
         });
         store.dispatch(LoadDocumentsSuccess(documents));
         action.completer.complete(documents);
