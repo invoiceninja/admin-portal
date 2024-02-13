@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -11,6 +10,10 @@ import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/ui/app/entities/entity_list_tile.dart';
+import 'package:invoiceninja_flutter/colors.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PaymentOverview extends StatefulWidget {
   const PaymentOverview({
@@ -31,7 +34,23 @@ class _PaymentOverviewState extends State<PaymentOverview> {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final payment = viewModel.payment;
-    final company = viewModel.company!;
+
+    final client = state.clientState.map[payment.clientId] ??
+        ClientEntity(id: payment.clientId);
+    final transaction = state.transactionState.get(payment.transactionId);
+
+    final companyGateway =
+        state.companyGatewayState.get(payment.companyGatewayId);
+    final companyGatewayLink = GatewayEntity.getPaymentUrl(
+      gatewayId: companyGateway.gatewayId,
+      transactionReference: payment.transactionReference,
+    );
+
+    var invoice = InvoiceEntity(client: client);
+    if (payment.invoicePaymentables.isNotEmpty) {
+      final invoiceId = payment.invoicePaymentables.first.invoiceId;
+      invoice = state.invoiceState.get(invoiceId!);
+    }
 
     final fields = <String, String?>{};
     /*

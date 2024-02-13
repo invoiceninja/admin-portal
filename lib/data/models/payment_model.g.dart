@@ -206,6 +206,10 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
       serializers.serialize(object.credits,
           specifiedType: const FullType(
               BuiltList, const [const FullType(PaymentableEntity)])),
+      'documents',
+      serializers.serialize(object.documents,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(DocumentEntity)])),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -422,6 +426,12 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
           result.credits.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(PaymentableEntity)]))!
+              as BuiltList<Object?>);
+          break;
+        case 'documents':
+          result.documents.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(DocumentEntity)]))!
               as BuiltList<Object?>);
           break;
         case 'isChanged':
@@ -816,6 +826,8 @@ class _$PaymentEntity extends PaymentEntity {
   @override
   final BuiltList<PaymentableEntity> credits;
   @override
+  final BuiltList<DocumentEntity> documents;
+  @override
   final bool? isChanged;
   @override
   final int createdAt;
@@ -868,6 +880,7 @@ class _$PaymentEntity extends PaymentEntity {
       required this.paymentables,
       required this.invoices,
       required this.credits,
+      required this.documents,
       this.isChanged,
       required this.createdAt,
       required this.updatedAt,
@@ -928,6 +941,8 @@ class _$PaymentEntity extends PaymentEntity {
         invoices, r'PaymentEntity', 'invoices');
     BuiltValueNullFieldError.checkNotNull(credits, r'PaymentEntity', 'credits');
     BuiltValueNullFieldError.checkNotNull(
+        documents, r'PaymentEntity', 'documents');
+    BuiltValueNullFieldError.checkNotNull(
         createdAt, r'PaymentEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
         updatedAt, r'PaymentEntity', 'updatedAt');
@@ -979,6 +994,7 @@ class _$PaymentEntity extends PaymentEntity {
         paymentables == other.paymentables &&
         invoices == other.invoices &&
         credits == other.credits &&
+        documents == other.documents &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1026,6 +1042,7 @@ class _$PaymentEntity extends PaymentEntity {
     _$hash = $jc(_$hash, paymentables.hashCode);
     _$hash = $jc(_$hash, invoices.hashCode);
     _$hash = $jc(_$hash, credits.hashCode);
+    _$hash = $jc(_$hash, documents.hashCode);
     _$hash = $jc(_$hash, isChanged.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
@@ -1073,6 +1090,7 @@ class _$PaymentEntity extends PaymentEntity {
           ..add('paymentables', paymentables)
           ..add('invoices', invoices)
           ..add('credits', credits)
+          ..add('documents', documents)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1231,6 +1249,12 @@ class PaymentEntityBuilder
   set credits(ListBuilder<PaymentableEntity>? credits) =>
       _$this._credits = credits;
 
+  ListBuilder<DocumentEntity>? _documents;
+  ListBuilder<DocumentEntity> get documents =>
+      _$this._documents ??= new ListBuilder<DocumentEntity>();
+  set documents(ListBuilder<DocumentEntity>? documents) =>
+      _$this._documents = documents;
+
   bool? _isChanged;
   bool? get isChanged => _$this._isChanged;
   set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
@@ -1304,6 +1328,7 @@ class PaymentEntityBuilder
       _paymentables = $v.paymentables.toBuilder();
       _invoices = $v.invoices.toBuilder();
       _credits = $v.credits.toBuilder();
+      _documents = $v.documents.toBuilder();
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -1377,6 +1402,7 @@ class PaymentEntityBuilder
               paymentables: paymentables.build(),
               invoices: invoices.build(),
               credits: credits.build(),
+              documents: documents.build(),
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'PaymentEntity', 'createdAt'),
               updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'PaymentEntity', 'updatedAt'),
@@ -1394,6 +1420,8 @@ class PaymentEntityBuilder
         invoices.build();
         _$failedField = 'credits';
         credits.build();
+        _$failedField = 'documents';
+        documents.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'PaymentEntity', _$failedField, e.toString());
