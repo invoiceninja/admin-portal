@@ -74,6 +74,7 @@ class PaymentRepository {
 
   Future<PaymentEntity> saveData(Credentials credentials, PaymentEntity payment,
       {bool? sendEmail = false}) async {
+    payment = payment.rebuild((b) => b..documents.clear());
     final data = serializers.serializeWith(PaymentEntity.serializer, payment);
     dynamic response;
 
