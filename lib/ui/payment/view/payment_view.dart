@@ -96,6 +96,7 @@ class _PaymentViewState extends State<PaymentView>
                             child: PaymentOverview(
                               viewModel: viewModel,
                               key: ValueKey(viewModel.payment.id),
+                              isFilter: widget.isFilter,
                             ),
                           ),
                           RefreshIndicator(
@@ -112,6 +113,7 @@ class _PaymentViewState extends State<PaymentView>
                         child: PaymentOverview(
                           viewModel: viewModel,
                           key: ValueKey(viewModel.payment.id),
+                          isFilter: widget.isFilter,
                         ),
                       ),
               ),

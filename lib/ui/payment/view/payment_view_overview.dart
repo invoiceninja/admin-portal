@@ -19,9 +19,11 @@ class PaymentOverview extends StatefulWidget {
   const PaymentOverview({
     Key? key,
     required this.viewModel,
+    required this.isFilter,
   }) : super(key: key);
 
   final PaymentViewVM viewModel;
+  final bool isFilter;
 
   @override
   _PaymentOverviewState createState() => _PaymentOverviewState();
@@ -81,7 +83,7 @@ class _PaymentOverviewState extends State<PaymentOverview> {
           statusColor: PaymentStatusColors(state.prefState.colorThemeModel)
               .colors[payment.statusId],
           statusLabel:
-              localization!.lookup('payment_status_${payment.statusId}'),
+              localization.lookup('payment_status_${payment.statusId}'),
           label: localization.amount,
           value: formatNumber(payment.amount - payment.refunded, context,
               clientId: client.id),

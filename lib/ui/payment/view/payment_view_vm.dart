@@ -37,6 +37,7 @@ class PaymentViewScreen extends StatelessWidget {
         return PaymentView(
           viewModel: vm,
           isFilter: isFilter,
+          tabIndex: vm.state.paymentUIState.tabIndex,
         );
       },
     );
