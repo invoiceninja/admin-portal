@@ -14,6 +14,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/bottom_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/view_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/payment/view/payment_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class PaymentView extends StatefulWidget {
   const PaymentView({
@@ -74,14 +75,32 @@ class _PaymentViewState extends State<PaymentView>
 
   @override
   Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
     final viewModel = widget.viewModel;
     final payment = viewModel.payment;
     final state = StoreProvider.of<AppState>(context).state;
     final company = state.company;
+    final documents = payment.documents;
 
     return ViewScaffold(
       isFilter: widget.isFilter,
       entity: payment,
+      appBarBottom: company.isModuleEnabled(EntityType.document)
+          ? TabBar(
+              controller: _controller,
+              isScrollable: false,
+              tabs: [
+                Tab(
+                  text: localization!.overview,
+                ),
+                Tab(
+                  text: documents.isEmpty
+                      ? localization.documents
+                      : '${localization.documents} (${documents.length})',
+                ),
+              ],
+            )
+          : null,
       body: Builder(
         builder: (BuildContext context) {
           return Column(
