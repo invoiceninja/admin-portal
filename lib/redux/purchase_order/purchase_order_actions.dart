@@ -597,6 +597,7 @@ void handlePurchaseOrderAction(BuildContext? context,
   final purchaseOrder = purchaseOrders.first as InvoiceEntity;
   final purchaseOrderIds =
       purchaseOrders.map((purchaseOrder) => purchaseOrder.id).toList();
+  final vendor = state.vendorState.get(purchaseOrder.vendorId);
 
   switch (action) {
     case EntityAction.edit:
@@ -632,7 +633,7 @@ void handlePurchaseOrderAction(BuildContext? context,
       break;
     case EntityAction.bulkPrint:
       store.dispatch(StartSaving());
-      final url = state.credentials.url+ '/purchase_orders/bulk';
+      final url = state.credentials.url + '/purchase_orders/bulk';
       final data = json.encode({
         'ids': purchaseOrderIds,
         'action': EntityAction.bulkPrint.toApiParam()
@@ -833,8 +834,12 @@ void handlePurchaseOrderAction(BuildContext? context,
               rawResponse: true)
           .then((response) {
         store.dispatch(StopLoading());
-        saveDownloadedFile(response.bodyBytes,
-            localization!.purchaseOrder + '_' + purchaseOrder.number + '.pdf');
+        saveDownloadedFile(
+          response.bodyBytes,
+          purchaseOrder.number + '.pdf',
+          prefix: EntityType.purchaseOrder.apiValue,
+          languageId: vendor.languageId,
+        );
       }).catchError((_) {
         store.dispatch(StopLoading());
       });

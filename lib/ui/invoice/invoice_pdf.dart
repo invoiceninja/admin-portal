@@ -239,14 +239,16 @@ class _InvoicePdfViewState extends State<InvoicePdfView> {
                     onPressed: _response == null
                         ? null
                         : () async {
-                            final fileName =
-                                localization.lookup('${invoice.entityType}') +
-                                    '_' +
-                                    (invoice.number.isEmpty
-                                        ? localization.pending
-                                        : invoice.number) +
-                                    '.pdf';
-                            saveDownloadedFile(_response!.bodyBytes, fileName);
+                            final fileName = (invoice.number.isEmpty
+                                    ? localization.pending
+                                    : invoice.number) +
+                                '.pdf';
+                            saveDownloadedFile(
+                              _response!.bodyBytes,
+                              fileName,
+                              prefix: invoice.entityType!.apiValue,
+                              languageId: client.languageId,
+                            );
                           },
                   ),
                 if (isDesktop(context))

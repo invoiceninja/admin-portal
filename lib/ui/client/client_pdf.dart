@@ -320,11 +320,13 @@ class _ClientPdfViewState extends State<ClientPdfView> {
                   onPressed: _response == null
                       ? null
                       : () async {
-                          final fileName = localization.statement +
-                              '_' +
-                              (client.number) +
-                              '.pdf';
-                          saveDownloadedFile(_response!.bodyBytes, fileName);
+                          final fileName = client.number + '.pdf';
+                          saveDownloadedFile(
+                            _response!.bodyBytes,
+                            fileName,
+                            prefix: 'statement',
+                            languageId: client.languageId,
+                          );
                         },
                 ),
                 AppTextButton(

@@ -1,8 +1,13 @@
 // Flutter imports:
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/ui/app/dialogs/error_dialog.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -32,6 +37,7 @@ class PaymentViewScreen extends StatelessWidget {
         return PaymentView(
           viewModel: vm,
           isFilter: isFilter,
+          tabIndex: vm.state.paymentUIState.tabIndex,
         );
       },
     );
@@ -48,6 +54,7 @@ class PaymentViewVM {
     required this.isSaving,
     required this.isLoading,
     required this.isDirty,
+    required this.onUploadDocuments,
   });
 
   factory PaymentViewVM.fromStore(Store<AppState> store) {
@@ -75,6 +82,25 @@ class PaymentViewVM {
       onRefreshed: (context) => _handleRefresh(context),
       onEntityAction: (BuildContext context, EntityAction action) =>
           handleEntitiesActions([payment], action, autoPop: true),
+      onUploadDocuments: (BuildContext context,
+          List<MultipartFile> multipartFile, bool isPrivate) {
+        final completer = Completer<List<DocumentEntity>>();
+        store.dispatch(SavePaymentDocumentRequest(
+          isPrivate: isPrivate,
+          multipartFiles: multipartFile,
+          payment: payment,
+          completer: completer,
+        ));
+        completer.future.then((client) {
+          showToast(AppLocalization.of(context)!.uploadedDocument);
+        }).catchError((Object error) {
+          showDialog<ErrorDialog>(
+              context: context,
+              builder: (BuildContext context) {
+                return ErrorDialog(error);
+              });
+        });
+      },
     );
   }
 
@@ -83,6 +109,7 @@ class PaymentViewVM {
   final CompanyEntity? company;
   final Function(BuildContext, EntityAction) onEntityAction;
   final Function(BuildContext) onRefreshed;
+  final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;

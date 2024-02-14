@@ -185,8 +185,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                  if ((client.languageId ?? '').isNotEmpty &&
-                      client.languageId != state.company.languageId)
+                  if (client.languageId != state.company.languageId)
                     Padding(
                       padding: const EdgeInsets.only(bottom: 1),
                       child: Text(

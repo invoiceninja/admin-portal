@@ -6,7 +6,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.154';
+const String kClientVersion = '5.0.155';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -43,7 +43,7 @@ const String kGoogleStoreUrl =
     'https://play.google.com/store/apps/details?id=$kPlayStoreAppId';
 const String kGoogleFDroidUrl =
     'https://f-droid.org/packages/com.invoiceninja.app';
-const String kMacOSUrl = 'https://apps.apple.com/app/id1503970375';
+const String kMacOSUrl = 'https://apps.apple.com/app/$kAppStoreAppId';
 const String kLinuxUrl = 'https://snapcraft.io/invoiceninja';
 const String kWindowsUrl =
     'https://apps.microsoft.com/store/detail/invoice-ninja/$kMicrosoftAppStoreId';

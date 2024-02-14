@@ -7,11 +7,13 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:http/http.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -315,6 +317,32 @@ class RemoveFromPaymentMultiselect {
 
 class ClearPaymentMultiselect {}
 
+class SavePaymentDocumentRequest implements StartSaving {
+  SavePaymentDocumentRequest({
+    required this.completer,
+    required this.multipartFiles,
+    required this.payment,
+    required this.isPrivate,
+  });
+
+  final Completer completer;
+  final List<MultipartFile> multipartFiles;
+  final PaymentEntity payment;
+  final bool isPrivate;
+}
+
+class SavePaymentDocumentSuccess implements StopSaving, PersistData, PersistUI {
+  SavePaymentDocumentSuccess(this.document);
+
+  final DocumentEntity document;
+}
+
+class SavePaymentDocumentFailure implements StopSaving {
+  SavePaymentDocumentFailure(this.error);
+
+  final Object error;
+}
+
 class UpdatePaymentTab implements PersistUI {
   UpdatePaymentTab({this.tabIndex});
 
@@ -410,6 +438,26 @@ void handlePaymentAction(
       showEntityActionsDialog(
         entities: [payment],
       );
+      break;
+    case EntityAction.documents:
+      final documentIds = <String>[];
+      for (var payment in payments) {
+        for (var document in (payment as PaymentEntity).documents) {
+          documentIds.add(document.id);
+        }
+      }
+      if (documentIds.isEmpty) {
+        showMessageDialog(message: localization!.noDocumentsToDownload);
+      } else {
+        store.dispatch(
+          DownloadDocumentsRequest(
+            documentIds: documentIds,
+            completer: snackBarCompleter<Null>(
+              localization!.exportedData,
+            ),
+          ),
+        );
+      }
       break;
     case EntityAction.runTemplate:
       showDialog<void>(

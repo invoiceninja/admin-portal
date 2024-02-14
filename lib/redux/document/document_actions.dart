@@ -19,6 +19,7 @@ import 'package:invoiceninja_flutter/redux/credit/credit_actions.dart';
 import 'package:invoiceninja_flutter/redux/expense/expense_actions.dart';
 import 'package:invoiceninja_flutter/redux/group/group_actions.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_actions.dart';
+import 'package:invoiceninja_flutter/redux/payment/payment_actions.dart';
 import 'package:invoiceninja_flutter/redux/product/product_actions.dart';
 import 'package:invoiceninja_flutter/redux/project/project_actions.dart';
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
@@ -501,6 +502,10 @@ void handleDocumentAction(
                     case EntityType.vendor:
                       completer.future.then<Null>((_) => store
                           .dispatch(LoadVendor(vendorId: document.parentId)));
+                      break;
+                    case EntityType.payment:
+                      completer.future.then<Null>((_) => store
+                          .dispatch(LoadPayment(paymentId: document.parentId)));
                       break;
                     default:
                       completer.future

@@ -766,7 +766,6 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                   VoidCallback onFieldSubmitted) {
                                 return DecoratedFormField(
                                   showClear: false,
-                                  autofocus: false,
                                   controller: textEditingController,
                                   keyboardType: TextInputType.text,
                                   focusNode: focusNode,

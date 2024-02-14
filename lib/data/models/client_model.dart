@@ -764,7 +764,7 @@ abstract class ClientEntity extends Object
   bool get hasCurrency =>
       settings.currencyId != null && settings.currencyId!.isNotEmpty;
 
-  String? get languageId => settings.languageId;
+  String get languageId => settings.languageId ?? kLanguageEnglish;
 
   ClientContactEntity getContact(String? contactId) =>
       contacts.firstWhere((contact) => contact.id == contactId,

@@ -76,6 +76,7 @@ class PaymentFields {
   static const String customValue2 = 'custom2';
   static const String customValue3 = 'custom3';
   static const String customValue4 = 'custom4';
+  static const String documents = 'documents';
 }
 
 abstract class PaymentEntity extends Object
@@ -124,6 +125,7 @@ abstract class PaymentEntity extends Object
       invitationId: '',
       isApplying: false,
       gatewayTypeId: '',
+      documents: BuiltList<DocumentEntity>(),
     );
   }
 
@@ -228,6 +230,8 @@ abstract class PaymentEntity extends Object
   BuiltList<PaymentableEntity> get invoices;
 
   BuiltList<PaymentableEntity> get credits;
+
+  BuiltList<DocumentEntity> get documents;
 
   bool get canBeAppliedOrRefunded => [
         kPaymentStatusCompleted,
@@ -353,6 +357,10 @@ abstract class PaymentEntity extends Object
         response =
             stateA.name.toLowerCase().compareTo(stateB.name.toLowerCase());
         break;
+      case PaymentFields.documents:
+        response =
+            paymentA!.documents.length.compareTo(paymentB!.documents.length);
+        break;
       default:
         print('## ERROR: sort by payment.$sortField is not implemented');
         break;
@@ -449,6 +457,10 @@ abstract class PaymentEntity extends Object
           store.state.designState.map, entityType)) {
         actions.add(EntityAction.runTemplate);
       }
+    }
+
+    if (!isDeleted! && multiselect) {
+      actions.add(EntityAction.documents);
     }
 
     if (actions.isNotEmpty && actions.last != null) {

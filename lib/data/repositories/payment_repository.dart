@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
+import 'package:http/http.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -38,7 +39,7 @@ class PaymentRepository {
 
   Future<BuiltList<PaymentEntity>> loadList(Credentials credentials, int page,
       int createdAt, bool filterDeleted) async {
-    String url = credentials.url+
+    String url = credentials.url +
         '/payments?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
 
     if (filterDeleted) {
@@ -61,7 +62,7 @@ class PaymentRepository {
     }
 
     final url =
-        credentials.url+ '/payments/bulk?per_page=$kMaxEntitiesPerBulkAction';
+        credentials.url + '/payments/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
@@ -73,6 +74,7 @@ class PaymentRepository {
 
   Future<PaymentEntity> saveData(Credentials credentials, PaymentEntity payment,
       {bool? sendEmail = false}) async {
+    payment = payment.rebuild((b) => b..documents.clear());
     final data = serializers.serializeWith(PaymentEntity.serializer, payment);
     dynamic response;
 
@@ -100,7 +102,7 @@ class PaymentRepository {
     final data = serializers.serializeWith(PaymentEntity.serializer, payment);
     dynamic response;
 
-    var url = credentials.url+ '/payments/refund?';
+    var url = credentials.url + '/payments/refund?';
     if (payment.sendEmail == true) {
       url += '&email_receipt=true';
     }
@@ -114,5 +116,25 @@ class PaymentRepository {
         serializers.deserializeWith(PaymentItemResponse.serializer, response)!;
 
     return paymentResponse.data;
+  }
+
+  Future<PaymentEntity> uploadDocument(
+      Credentials credentials,
+      BaseEntity entity,
+      List<MultipartFile> multipartFiles,
+      bool isPrivate) async {
+    final fields = <String, String>{
+      '_method': 'put',
+      'is_public': isPrivate ? '0' : '1',
+    };
+
+    final dynamic response = await webClient.post(
+        '${credentials.url}/payments/${entity.id}/upload', credentials.token,
+        data: fields, multipartFiles: multipartFiles);
+
+    final PaymentItemResponse paymentItemResponse =
+        serializers.deserializeWith(PaymentItemResponse.serializer, response)!;
+
+    return paymentItemResponse.data;
   }
 }

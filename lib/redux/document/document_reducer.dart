@@ -364,6 +364,14 @@ DocumentState _setLoadedCompany(
     });
   });
 
+  company.payments.forEach((payment) {
+    payment.documents.forEach((document) {
+      documents.add(document.rebuild((b) => b
+        ..parentId = payment.id
+        ..parentType = EntityType.payment));
+    });
+  });
+
   final state = documentState.rebuild((b) => b
     ..map.addAll(Map<String, DocumentEntity>.fromIterable(
       documents,

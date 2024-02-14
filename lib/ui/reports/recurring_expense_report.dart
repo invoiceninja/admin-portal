@@ -117,7 +117,6 @@ ReportResult recurringExpenseReport(
   for (var expenseId in expenseMap.keys) {
     final expense = expenseMap[expenseId]!;
     final client = clientMap[expense.clientId] ?? ClientEntity();
-    final invoice = invoiceMap[expense.invoiceId] ?? InvoiceEntity();
     final vendor = vendorMap[expense.vendorId] ?? VendorEntity();
 
     if (expense.isDeleted! && !userCompany.company.reportIncludeDeleted) {
@@ -218,15 +217,15 @@ ReportResult recurringExpenseReport(
           value = expense.privateNotes;
           break;
         case RecurringExpenseReportFields.frequency:
-          value = localization!.lookup(kFrequencies[invoice.frequencyId]);
+          value = localization!.lookup(kFrequencies[expense.frequencyId]);
           break;
         case RecurringExpenseReportFields.start_date:
-          value = invoice.nextSendDate;
+          value = expense.nextSendDate;
           break;
         case RecurringExpenseReportFields.remaining_cycles:
-          value = invoice.remainingCycles == -1
+          value = expense.remainingCycles == -1
               ? localization!.endless
-              : '${invoice.remainingCycles}';
+              : '${expense.remainingCycles}';
           break;
         case RecurringExpenseReportFields.record_state:
           value = AppLocalization.of(navigatorKey.currentContext!)!

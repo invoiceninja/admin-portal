@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/quote/quote_actions.dart';
 
 // Package imports:
@@ -34,6 +35,7 @@ List<Middleware<AppState>> createStorePaymentsMiddleware([
   final deletePayment = _deletePayment(repository);
   final restorePayment = _restorePayment(repository);
   final emailPayment = _emailPayment(repository);
+  final saveDocument = _saveDocument(repository);
 
   return [
     TypedMiddleware<AppState, ViewPaymentList>(viewPaymentList),
@@ -48,6 +50,7 @@ List<Middleware<AppState>> createStorePaymentsMiddleware([
     TypedMiddleware<AppState, DeletePaymentsRequest>(deletePayment),
     TypedMiddleware<AppState, RestorePaymentsRequest>(restorePayment),
     TypedMiddleware<AppState, EmailPaymentRequest>(emailPayment),
+    TypedMiddleware<AppState, SavePaymentDocumentRequest>(saveDocument),
   ];
 }
 
@@ -298,6 +301,17 @@ Middleware<AppState> _loadPayments(PaymentRepository repository) {
     )
         .then((data) {
       store.dispatch(LoadPaymentsSuccess(data));
+
+      final documents = <DocumentEntity>[];
+      data.forEach((product) {
+        product.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = product.id
+            ..parentType = EntityType.payment));
+        });
+      });
+      store.dispatch(LoadDocumentsSuccess(documents));
+
       if (data.length == kMaxRecordsPerPage) {
         store.dispatch(LoadPayments(
           completer: action.completer,
@@ -316,6 +330,43 @@ Middleware<AppState> _loadPayments(PaymentRepository repository) {
         action.completer!.completeError(error);
       }
     });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _saveDocument(PaymentRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as SavePaymentDocumentRequest?;
+    if (store.state.isEnterprisePlan) {
+      repository
+          .uploadDocument(
+        store.state.credentials,
+        action!.payment,
+        action.multipartFiles,
+        action.isPrivate,
+      )
+          .then((payment) {
+        store.dispatch(SavePaymentSuccess(payment));
+
+        final documents = <DocumentEntity>[];
+        payment.documents.forEach((document) {
+          documents.add(document.rebuild((b) => b
+            ..parentId = payment.id
+            ..parentType = EntityType.payment));
+        });
+        store.dispatch(LoadDocumentsSuccess(documents));
+        action.completer.complete(documents);
+      }).catchError((Object error) {
+        print(error);
+        store.dispatch(SavePaymentDocumentFailure(error));
+        action.completer.completeError(error);
+      });
+    } else {
+      const error = 'Uploading documents requires an enterprise plan';
+      store.dispatch(SavePaymentDocumentFailure(error));
+      action!.completer.completeError(error);
+    }
 
     next(action);
   };

@@ -140,7 +140,10 @@ ReportResult lineItemReport(
             } else {
               cost = productId == null ? 0.0 : productMap[productId]!.cost;
             }
-            value = lineItem.netTotal(invoice, precision) - cost;
+            value = (lineItem.netTotal(invoice, precision) *
+                    1 /
+                    invoice.exchangeRate) -
+                cost;
             if (column == InvoiceItemReportFields.markup && cost != 0) {
               value = '${round(value / cost * 100, 2)}%';
             }
@@ -229,7 +232,10 @@ ReportResult lineItemReport(
               value: value,
               currencyId: column == InvoiceItemReportFields.quantity
                   ? null
-                  : client.currencyId));
+                  : column == InvoiceItemReportFields.profit ||
+                          column == InvoiceItemReportFields.cost
+                      ? userCompany.company.currencyId
+                      : client.currencyId));
         } else {
           row.add(invoice.getReportString(value: value));
         }
