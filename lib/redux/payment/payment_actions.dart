@@ -13,6 +13,7 @@ import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -437,6 +438,26 @@ void handlePaymentAction(
       showEntityActionsDialog(
         entities: [payment],
       );
+      break;
+    case EntityAction.documents:
+      final documentIds = <String>[];
+      for (var payment in payments) {
+        for (var document in (payment as PaymentEntity).documents) {
+          documentIds.add(document.id);
+        }
+      }
+      if (documentIds.isEmpty) {
+        showMessageDialog(message: localization!.noDocumentsToDownload);
+      } else {
+        store.dispatch(
+          DownloadDocumentsRequest(
+            documentIds: documentIds,
+            completer: snackBarCompleter<Null>(
+              localization!.exportedData,
+            ),
+          ),
+        );
+      }
       break;
     case EntityAction.runTemplate:
       showDialog<void>(
