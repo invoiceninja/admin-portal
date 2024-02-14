@@ -94,7 +94,8 @@ class PaymentEditVM {
             return null;
           } else if (!state.company.enableApplyingPayments &&
               payment.invoices.isEmpty &&
-              payment.credits.isEmpty) {
+              payment.credits.isEmpty &&
+              payment.isNew) {
             showDialog<ErrorDialog>(
                 context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
