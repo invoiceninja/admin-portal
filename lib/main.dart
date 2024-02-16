@@ -110,10 +110,11 @@ void main({bool isTesting = false}) async {
     // Ignore CERT_ALREADY_IN_HASH_TABLE
   }
 
+  final prefs = await SharedPreferences.getInstance();
+
   if (isDesktopOS()) {
     await windowManager.ensureInitialized();
 
-    final prefs = await SharedPreferences.getInstance();
     windowManager.waitUntilReadyToShow(
         WindowOptions(
           center: true,
@@ -128,7 +129,7 @@ void main({bool isTesting = false}) async {
   }
 
   final store = Store<AppState>(appReducer,
-      initialState: await _initialState(isTesting),
+      initialState: await _initialState(isTesting, prefs),
       middleware: []
         ..addAll(createStoreAuthMiddleware())
         ..addAll(createStoreDocumentsMiddleware())
@@ -219,8 +220,7 @@ void main({bool isTesting = false}) async {
   */
 }
 
-Future<AppState> _initialState(bool isTesting) async {
-  final prefs = await SharedPreferences.getInstance();
+Future<AppState> _initialState(bool isTesting, SharedPreferences prefs) async {
   final prefString = prefs.getString(kSharedPrefs);
 
   final url = WebUtils.apiUrl ?? prefs.getString(kSharedPrefUrl) ?? '';
