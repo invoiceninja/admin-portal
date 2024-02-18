@@ -163,6 +163,27 @@ class _PaymentSettingsState extends State<PaymentSettings> {
                 ],
               ),
               AppDropdownButton<String>(
+                  labelText: localization.useAvailablePayments,
+                  value: settings.useUnappliedPayment,
+                  onChanged: (dynamic value) {
+                    viewModel.onSettingsChanged(settings
+                        .rebuild((b) => b..useUnappliedPayment = value));
+                  },
+                  items: [
+                    DropdownMenuItem(
+                      child: Text(localization.always),
+                      value: CompanyEntity.USE_ALWAYS,
+                    ),
+                    DropdownMenuItem(
+                      child: Text(localization.showOption),
+                      value: CompanyEntity.USE_OPTION,
+                    ),
+                    DropdownMenuItem(
+                      child: Text(localization.off),
+                      value: CompanyEntity.USE_OFF,
+                    ),
+                  ]),
+              AppDropdownButton<String>(
                   labelText: localization.useAvailableCredits,
                   value: settings.useCreditsPayment,
                   onChanged: (dynamic value) {
@@ -172,15 +193,15 @@ class _PaymentSettingsState extends State<PaymentSettings> {
                   items: [
                     DropdownMenuItem(
                       child: Text(localization.always),
-                      value: CompanyEntity.USE_CREDITS_ALWAYS,
+                      value: CompanyEntity.USE_ALWAYS,
                     ),
                     DropdownMenuItem(
                       child: Text(localization.showOption),
-                      value: CompanyEntity.USE_CREDITS_OPTION,
+                      value: CompanyEntity.USE_OPTION,
                     ),
                     DropdownMenuItem(
                       child: Text(localization.off),
-                      value: CompanyEntity.USE_CREDITS_OFF,
+                      value: CompanyEntity.USE_OFF,
                     ),
                   ]),
               EntityDropdown(
