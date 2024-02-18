@@ -1,9 +1,13 @@
 // Flutter imports:
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -235,7 +239,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                   DropdownMenuItem(
                       child: Text(localization.defaultWord),
                       value: SettingsEntity.EMAIL_SENDING_METHOD_DEFAULT),
-                  if (!kReleaseMode)
+                  if (supportsLatestFeatures('5.8.0'))
                     DropdownMenuItem(
                         child: Text('SMTP'),
                         value: SettingsEntity.EMAIL_SENDING_METHOD_SMTP),
@@ -446,6 +450,29 @@ class _EmailSettingsState extends State<EmailSettings> {
                         (b) => b..smtpVerifyPeer = value,
                       ));
                     }),
+                SizedBox(height: 20),
+                OutlinedButton(
+                    onPressed: () async {
+                      final credentials = state.credentials;
+                      final url = '${credentials.url}/smtp/check';
+                      final data = {
+                        'smtp_host': company.smtpHost,
+                        'smtp_port': company.smtpPort,
+                        'smtp_encryption': company.smtpEncryption,
+                        'smtp_username': company.smtpUsername,
+                        'smtp_password': company.smtpPassword,
+                        'smtp_local_domain': company.smtpLocalDomain,
+                        'smtp_verify_peer': company.smtpVerifyPeer,
+                      };
+                      print('## DATA: $data');
+                      await WebClient().post(url, credentials.token,
+                          data: json.encode(data));
+                      showMessageDialog(message: localization.testEmailSent);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      child: Text(localization.sendTestEmail.toUpperCase()),
+                    )),
               ],
             ],
           ),
