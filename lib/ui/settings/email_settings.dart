@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -455,6 +456,8 @@ class _EmailSettingsState extends State<EmailSettings> {
                     onPressed: () async {
                       final credentials = state.credentials;
                       final url = '${credentials.url}/smtp/check';
+                      final company = viewModel.company;
+
                       final data = {
                         'smtp_host': company.smtpHost,
                         'smtp_port': company.smtpPort,
@@ -464,10 +467,22 @@ class _EmailSettingsState extends State<EmailSettings> {
                         'smtp_local_domain': company.smtpLocalDomain,
                         'smtp_verify_peer': company.smtpVerifyPeer,
                       };
+
                       print('## DATA: $data');
-                      await WebClient().post(url, credentials.token,
-                          data: json.encode(data));
-                      showMessageDialog(message: localization.testEmailSent);
+                      final store = StoreProvider.of<AppState>(context);
+                      store.dispatch(StartSaving());
+
+                      try {
+                        final response = await WebClient().post(
+                            url, credentials.token,
+                            data: json.encode(data));
+                        store.dispatch(StopSaving());
+                        //showMessageDialog(message: localization.testEmailSent);
+                        showMessageDialog(message: '$response');
+                      } catch (error) {
+                        store.dispatch(StopSaving());
+                        showErrorDialog(message: '$error');
+                      }
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 12),
