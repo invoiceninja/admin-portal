@@ -818,6 +818,9 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'show_pdfhtml_on_mobile')
   bool? get showPdfhtmlOnMobile;
 
+  @BuiltValueField(wireName: 'use_unapplied_payment')
+  bool? get useUnappliedPayment;
+
   bool get hasAddress => address1 != null && address1!.isNotEmpty;
 
   bool get hasLogo => companyLogo != null && companyLogo!.isNotEmpty;
