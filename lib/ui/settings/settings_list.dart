@@ -423,6 +423,7 @@ class SettingsSearch extends StatelessWidget {
           'auto_bill_standard_invoices#2023-01-17',
           'client_initiated_payments#2023-03-20',
           'send_emails_to#2023-11-30',
+          'use_available_payments#2024-02-19',
         ]
       ],
       kSettingsTaxSettings: [
