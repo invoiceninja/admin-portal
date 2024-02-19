@@ -1589,8 +1589,8 @@ class _$SettingsEntitySerializer
     if (value != null) {
       result
         ..add('use_unapplied_payment')
-        ..add(
-            serializers.serialize(value, specifiedType: const FullType(bool)));
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
     }
     return result;
   }
@@ -2516,7 +2516,7 @@ class _$SettingsEntitySerializer
           break;
         case 'use_unapplied_payment':
           result.useUnappliedPayment = serializers.deserialize(value,
-              specifiedType: const FullType(bool)) as bool?;
+              specifiedType: const FullType(String)) as String?;
           break;
       }
     }
@@ -3048,7 +3048,7 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final bool? showPdfhtmlOnMobile;
   @override
-  final bool? useUnappliedPayment;
+  final String? useUnappliedPayment;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder)? updates]) =>
       (new SettingsEntityBuilder()..update(updates))._build();
@@ -5116,9 +5116,9 @@ class SettingsEntityBuilder
   set showPdfhtmlOnMobile(bool? showPdfhtmlOnMobile) =>
       _$this._showPdfhtmlOnMobile = showPdfhtmlOnMobile;
 
-  bool? _useUnappliedPayment;
-  bool? get useUnappliedPayment => _$this._useUnappliedPayment;
-  set useUnappliedPayment(bool? useUnappliedPayment) =>
+  String? _useUnappliedPayment;
+  String? get useUnappliedPayment => _$this._useUnappliedPayment;
+  set useUnappliedPayment(String? useUnappliedPayment) =>
       _$this._useUnappliedPayment = useUnappliedPayment;
 
   SettingsEntityBuilder();
