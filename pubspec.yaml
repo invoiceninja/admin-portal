@@ -96,6 +96,7 @@ dependencies:
   collection: ^1.15.0-nullsafety.4
   filesystem_picker: ^4.0.0
   device_info_plus: ^9.1.0
+  ios_open_subscriptions_settings: ^0.0.4
 
 dependency_overrides:
   intl: any

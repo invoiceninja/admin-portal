@@ -801,6 +801,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  ios_open_subscriptions_settings:
+    dependency: "direct main"
+    description:
+      name: ios_open_subscriptions_settings
+      sha256: "9ec8b1b87587287930f6968dcbc6cdfc3c9ad2f09c13a97818dfb525ddde8cce"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.4"
   js:
     dependency: transitive
     description:

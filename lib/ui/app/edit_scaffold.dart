@@ -8,10 +8,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/save_cancel_buttons.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
-import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/ui/transaction/edit/transaction_edit_vm.dart';
 import 'package:overflow_view/overflow_view.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
@@ -137,9 +135,7 @@ class EditScaffold extends StatelessWidget {
                   children: [
                     Column(
                       children: [
-                        if (showUpgradeBanner &&
-                            state.userCompany.isOwner &&
-                            (!isApple() || supportsInAppPurchase()))
+                        if (showUpgradeBanner && state.userCompany.isOwner)
                           InkWell(
                             child: IconMessage(
                               upgradeMessage,
@@ -148,15 +144,8 @@ class EditScaffold extends StatelessWidget {
                             onTap: () async {
                               if (bannerClick != null) {
                                 bannerClick();
-                              } else if (supportsInAppPurchase() &&
-                                  account.canMakeIAP) {
-                                showDialog<void>(
-                                  context: context,
-                                  builder: (context) => UpgradeDialog(),
-                                );
                               } else {
-                                launchUrl(Uri.parse(
-                                    state.userCompany.ninjaPortalUrl));
+                                initiatePurchase();
                               }
                             },
                           ),

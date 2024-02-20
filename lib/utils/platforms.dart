@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
+import 'package:ios_open_subscriptions_settings/ios_open_subscriptions_settings.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
@@ -18,6 +20,7 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 
 import 'package:invoiceninja_flutter/utils/web_stub.dart'
     if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:version/version.dart';
 
 // TODO remove this function
@@ -77,6 +80,36 @@ bool supportsInAppPurchase() {
   }
 
   return isIOS() || isAndroid() || isMacOS();
+}
+
+void initiatePurchase() {
+  final context = navigatorKey.currentContext!;
+  final store = StoreProvider.of<AppState>(context);
+  final state = store.state;
+  final account = state.account;
+
+  if (supportsInAppPurchase()) {
+    if (account.hasIapPlan) {
+      if (isIOS()) {
+        IosOpenSubscriptionsSettings.openSubscriptionsSettings();
+      } else if (isAndroid()) {
+        launchUrl(
+            Uri.parse('http://play.google.com/store/account/subscriptions'));
+      } else {
+        // TODO support viewing plans on macOS
+        launchUrl(Uri.parse(state.userCompany.ninjaPortalUrl));
+      }
+    } else if (state.isProPlan) {
+      launchUrl(Uri.parse(state.userCompany.ninjaPortalUrl));
+    } else {
+      showDialog<void>(
+        context: context,
+        builder: (context) => UpgradeDialog(),
+      );
+    }
+  } else {
+    launchUrl(Uri.parse(state.userCompany.ninjaPortalUrl));
+  }
 }
 
 bool isDesktopOS() => isMacOS() || isWindows() || isLinux();

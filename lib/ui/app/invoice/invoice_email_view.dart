@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/ui/app/icon_message.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/activity_list_tile.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
-import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/ui/credit/credit_pdf_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/invoice/invoice_pdf_vm.dart';
@@ -29,7 +28,6 @@ import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/super_editor/super_editor.dart';
 import 'package:invoiceninja_flutter/utils/templates.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class InvoiceEmailView extends StatefulWidget {
   const InvoiceEmailView({
@@ -337,18 +335,8 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                           color: Colors.white,
                         ),
                       ),
-                      onPressed: () {
-                        if (supportsInAppPurchase() &&
-                            state.account.canMakeIAP) {
-                          showDialog<void>(
-                            context: context,
-                            builder: (context) => UpgradeDialog(),
-                          );
-                        } else {
-                          launchUrl(
-                              Uri.parse(state.userCompany.ninjaPortalUrl));
-                        }
-                      }),
+                      onPressed: () => initiatePurchase(),
+                    ),
             ),
           ),
         ColoredBox(
