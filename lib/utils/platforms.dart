@@ -94,7 +94,7 @@ void initiatePurchase() {
         IosOpenSubscriptionsSettings.openSubscriptionsSettings();
       } else if (isAndroid()) {
         launchUrl(
-            Uri.parse('http://play.google.com/store/account/subscriptions'));
+            Uri.parse('https://play.google.com/store/account/subscriptions'));
       } else {
         // TODO support viewing plans on macOS
         launchUrl(Uri.parse(state.userCompany.ninjaPortalUrl));
