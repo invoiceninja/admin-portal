@@ -119,8 +119,6 @@ abstract class AccountEntity
   @BuiltValueField(wireName: 'nordigen_enabled')
   bool get nordigenEnabled;
 
-  bool get canMakeIAP => !hasIapPlan && paymentId.isEmpty;
-
   bool get isUpdateAvailable {
     if (disableAutoUpdate) {
       return false;
