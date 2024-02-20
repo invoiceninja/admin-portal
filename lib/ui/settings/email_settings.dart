@@ -240,7 +240,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                   DropdownMenuItem(
                       child: Text(localization.defaultWord),
                       value: SettingsEntity.EMAIL_SENDING_METHOD_DEFAULT),
-                  if (supportsLatestFeatures('5.8.0'))
+                  if (supportsLatestFeatures('5.8.0') && state.isProPlan)
                     DropdownMenuItem(
                         child: Text('SMTP'),
                         value: SettingsEntity.EMAIL_SENDING_METHOD_SMTP),
@@ -468,7 +468,6 @@ class _EmailSettingsState extends State<EmailSettings> {
                         'smtp_verify_peer': company.smtpVerifyPeer,
                       };
 
-                      print('## DATA: $data');
                       final store = StoreProvider.of<AppState>(context);
                       store.dispatch(StartSaving());
 
