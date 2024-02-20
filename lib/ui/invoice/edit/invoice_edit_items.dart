@@ -228,6 +228,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
     final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final company = viewModel.company!;
+    final invoice = viewModel.invoice;
 
     return AlertDialog(
       actions: [
@@ -355,7 +356,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                     });
                   },
                   labelText: localization.tax +
-                      (company.settings.enableInclusiveTaxes!
+                      (invoice?.usesInclusiveTaxes == true
                           ? ' - ${localization.inclusive}'
                           : ''),
                   initialTaxName: _taxRate1!.name,
@@ -370,7 +371,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                     });
                   },
                   labelText: localization.tax +
-                      (company.settings.enableInclusiveTaxes!
+                      (invoice?.usesInclusiveTaxes == true
                           ? ' - ${localization.inclusive}'
                           : ''),
                   initialTaxName: _taxRate2!.name,
@@ -385,7 +386,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                     });
                   },
                   labelText: localization.tax +
-                      (company.settings.enableInclusiveTaxes!
+                      (invoice?.usesInclusiveTaxes == true
                           ? ' - ${localization.inclusive}'
                           : ''),
                   initialTaxName: _taxRate3!.name,

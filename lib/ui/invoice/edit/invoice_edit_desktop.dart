@@ -1034,7 +1034,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                           invoice.applyTax(taxRate));
                                     },
                                     labelText: localization.tax +
-                                        (company.settings.enableInclusiveTaxes!
+                                        (invoice.usesInclusiveTaxes
                                             ? ' - ${localization.inclusive}'
                                             : ''),
                                     initialTaxName: invoice.taxName1,
@@ -1048,7 +1048,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                           .applyTax(taxRate, isSecond: true));
                                     },
                                     labelText: localization.tax +
-                                        (company.settings.enableInclusiveTaxes!
+                                        (invoice.usesInclusiveTaxes
                                             ? ' - ${localization.inclusive}'
                                             : ''),
                                     initialTaxName: invoice.taxName2,
@@ -1062,7 +1062,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                           .applyTax(taxRate, isThird: true));
                                     },
                                     labelText: localization.tax +
-                                        (company.settings.enableInclusiveTaxes!
+                                        (invoice.usesInclusiveTaxes
                                             ? ' - ${localization.inclusive}'
                                             : ''),
                                     initialTaxName: invoice.taxName3,

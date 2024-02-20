@@ -426,7 +426,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 onSelected: (taxRate) =>
                     viewModel.onChanged!(invoice.applyTax(taxRate)),
                 labelText: localization.tax +
-                    (company.settings.enableInclusiveTaxes!
+                    (invoice.usesInclusiveTaxes
                         ? ' - ${localization.inclusive}'
                         : ''),
                 initialTaxName: invoice.taxName1,
@@ -438,7 +438,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 onSelected: (taxRate) => viewModel
                     .onChanged!(invoice.applyTax(taxRate, isSecond: true)),
                 labelText: localization.tax +
-                    (company.settings.enableInclusiveTaxes!
+                    (invoice.usesInclusiveTaxes
                         ? ' - ${localization.inclusive}'
                         : ''),
                 initialTaxName: invoice.taxName2,
@@ -450,7 +450,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                 onSelected: (taxRate) => viewModel
                     .onChanged!(invoice.applyTax(taxRate, isThird: true)),
                 labelText: localization.tax +
-                    (company.settings.enableInclusiveTaxes!
+                    (invoice.usesInclusiveTaxes
                         ? ' - ${localization.inclusive}'
                         : ''),
                 initialTaxName: invoice.taxName3,
