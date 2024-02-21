@@ -462,8 +462,10 @@ class _EmailSettingsState extends State<EmailSettings> {
                         'smtp_host': company.smtpHost,
                         'smtp_port': company.smtpPort,
                         'smtp_encryption': company.smtpEncryption,
-                        'smtp_username': company.smtpUsername,
-                        'smtp_password': company.smtpPassword,
+                        if (company.smtpUsername != '********')
+                          'smtp_username': company.smtpUsername,
+                        if (company.smtpPassword != '********')
+                          'smtp_password': company.smtpPassword,
                         'smtp_local_domain': company.smtpLocalDomain,
                         'smtp_verify_peer': company.smtpVerifyPeer,
                       };
@@ -476,8 +478,8 @@ class _EmailSettingsState extends State<EmailSettings> {
                             url, credentials.token,
                             data: json.encode(data));
                         store.dispatch(StopSaving());
-                        //showMessageDialog(message: localization.testEmailSent);
-                        showMessageDialog(message: '$response');
+                        showMessageDialog(message: localization.testEmailSent);
+                        //showMessageDialog(message: '$response');
                       } catch (error) {
                         store.dispatch(StopSaving());
                         showErrorDialog(message: '$error');
