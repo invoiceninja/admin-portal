@@ -180,9 +180,9 @@ abstract class CompanyEntity extends Object
 
   CompanyEntity._();
 
-  static const USE_CREDITS_ALWAYS = 'always';
-  static const USE_CREDITS_OPTION = 'option';
-  static const USE_CREDITS_OFF = 'off';
+  static const USE_ALWAYS = 'always';
+  static const USE_OPTION = 'option';
+  static const USE_OFF = 'off';
 
   static const SMTP_ENCRYPTION_TLS = 'TLS';
   static const SMTP_ENCRYPTION_STARTTLS = 'STARTTLS';

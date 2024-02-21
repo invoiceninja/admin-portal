@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
-import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -377,27 +376,19 @@ class _AccountOverview extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
               child: OutlinedButton(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: IconText(
-                      icon: MdiIcons.openInNew,
-                      text: (account.isEligibleForTrial &&
-                                  !supportsInAppPurchase()
-                              ? localization.startFreeTrial
-                              : localization.changePlan)
-                          .toUpperCase(),
-                    ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: IconText(
+                    icon: MdiIcons.openInNew,
+                    text:
+                        (account.isEligibleForTrial && !supportsInAppPurchase()
+                                ? localization.startFreeTrial
+                                : localization.changePlan)
+                            .toUpperCase(),
                   ),
-                  onPressed: () {
-                    if (supportsInAppPurchase() && account.canMakeIAP) {
-                      showDialog<void>(
-                        context: context,
-                        builder: (context) => UpgradeDialog(),
-                      );
-                    } else {
-                      launchUrl(Uri.parse(state.userCompany.ninjaPortalUrl));
-                    }
-                  }),
+                ),
+                onPressed: () => initiatePurchase(),
+              ),
             ),
         ],
         FormCard(children: [

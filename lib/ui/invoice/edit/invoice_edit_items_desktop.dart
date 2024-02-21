@@ -349,9 +349,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
         label = company.getCustomFieldLabel(customField4);
       } else if ([COLUMN_TAX1, COLUMN_TAX2, COLUMN_TAX3].contains(column)) {
         label = localization!.tax +
-            (company.settings.enableInclusiveTaxes!
-                ? ' - ${localization.inclusive}'
-                : '');
+            (invoice.usesInclusiveTaxes ? ' - ${localization.inclusive}' : '');
       } else if (column == COLUMN_TAX_CATEGORY) {
         label = localization!.taxCategory;
       } else if (column == COLUMN_QUANTITY) {

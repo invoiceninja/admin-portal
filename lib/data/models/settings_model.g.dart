@@ -1585,6 +1585,13 @@ class _$SettingsEntitySerializer
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.useUnappliedPayment;
+    if (value != null) {
+      result
+        ..add('use_unapplied_payment')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -2507,6 +2514,10 @@ class _$SettingsEntitySerializer
           result.showPdfhtmlOnMobile = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
+        case 'use_unapplied_payment':
+          result.useUnappliedPayment = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
       }
     }
 
@@ -3036,6 +3047,8 @@ class _$SettingsEntity extends SettingsEntity {
   final bool? paymentEmailAllContacts;
   @override
   final bool? showPdfhtmlOnMobile;
+  @override
+  final String? useUnappliedPayment;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder)? updates]) =>
       (new SettingsEntityBuilder()..update(updates))._build();
@@ -3265,7 +3278,8 @@ class _$SettingsEntity extends SettingsEntity {
       this.defaultExpensePaymentTypeId,
       this.classification,
       this.paymentEmailAllContacts,
-      this.showPdfhtmlOnMobile})
+      this.showPdfhtmlOnMobile,
+      this.useUnappliedPayment})
       : super._();
 
   @override
@@ -3509,7 +3523,8 @@ class _$SettingsEntity extends SettingsEntity {
         defaultExpensePaymentTypeId == other.defaultExpensePaymentTypeId &&
         classification == other.classification &&
         paymentEmailAllContacts == other.paymentEmailAllContacts &&
-        showPdfhtmlOnMobile == other.showPdfhtmlOnMobile;
+        showPdfhtmlOnMobile == other.showPdfhtmlOnMobile &&
+        useUnappliedPayment == other.useUnappliedPayment;
   }
 
   int? __hashCode;
@@ -3742,6 +3757,7 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, classification.hashCode);
     _$hash = $jc(_$hash, paymentEmailAllContacts.hashCode);
     _$hash = $jc(_$hash, showPdfhtmlOnMobile.hashCode);
+    _$hash = $jc(_$hash, useUnappliedPayment.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -3978,7 +3994,8 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('defaultExpensePaymentTypeId', defaultExpensePaymentTypeId)
           ..add('classification', classification)
           ..add('paymentEmailAllContacts', paymentEmailAllContacts)
-          ..add('showPdfhtmlOnMobile', showPdfhtmlOnMobile))
+          ..add('showPdfhtmlOnMobile', showPdfhtmlOnMobile)
+          ..add('useUnappliedPayment', useUnappliedPayment))
         .toString();
   }
 }
@@ -5099,6 +5116,11 @@ class SettingsEntityBuilder
   set showPdfhtmlOnMobile(bool? showPdfhtmlOnMobile) =>
       _$this._showPdfhtmlOnMobile = showPdfhtmlOnMobile;
 
+  String? _useUnappliedPayment;
+  String? get useUnappliedPayment => _$this._useUnappliedPayment;
+  set useUnappliedPayment(String? useUnappliedPayment) =>
+      _$this._useUnappliedPayment = useUnappliedPayment;
+
   SettingsEntityBuilder();
 
   SettingsEntityBuilder get _$this {
@@ -5329,6 +5351,7 @@ class SettingsEntityBuilder
       _classification = $v.classification;
       _paymentEmailAllContacts = $v.paymentEmailAllContacts;
       _showPdfhtmlOnMobile = $v.showPdfhtmlOnMobile;
+      _useUnappliedPayment = $v.useUnappliedPayment;
       _$v = null;
     }
     return this;
@@ -5578,7 +5601,8 @@ class SettingsEntityBuilder
               defaultExpensePaymentTypeId: defaultExpensePaymentTypeId,
               classification: classification,
               paymentEmailAllContacts: paymentEmailAllContacts,
-              showPdfhtmlOnMobile: showPdfhtmlOnMobile);
+              showPdfhtmlOnMobile: showPdfhtmlOnMobile,
+              useUnappliedPayment: useUnappliedPayment);
     } catch (_) {
       late String _$failedField;
       try {

@@ -322,7 +322,26 @@ class _ImportExportState extends State<ImportExport> {
                             if (_exportFormat == ImportType.json) {
                               url = '$url/export';
                             } else {
-                              url = '$url/reports/$_exportType';
+                              // Workaround for mismatch in report
+                              // names in export vs schedules
+                              if (ExportType.ar_detailed == _exportType) {
+                                url = '$url/reports/ar_detail_report';
+                              } else if (ExportType.ar_summary == _exportType) {
+                                url = '$url/reports/ar_summary_report';
+                              } else if (ExportType.client_balance ==
+                                  _exportType) {
+                                url = '$url/reports/client_balance_report';
+                              } else if (ExportType.client_sales ==
+                                  _exportType) {
+                                url = '$url/reports/client_sales_report';
+                              } else if (ExportType.tax_summary ==
+                                  _exportType) {
+                                url = '$url/reports/tax_summary_report';
+                              } else if (ExportType.user_sales == _exportType) {
+                                url = '$url/reports/user_sales_report';
+                              } else {
+                                url = '$url/reports/$_exportType';
+                              }
                             }
 
                             setState(() => _isExporting = true);

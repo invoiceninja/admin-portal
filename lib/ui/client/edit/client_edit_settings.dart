@@ -185,6 +185,28 @@ class ClientEditSettingsState extends State<ClientEditSettings> {
               keyboardType:
                   TextInputType.numberWithOptions(decimal: true, signed: true),
             ),
+          AppDropdownButton(
+            value: client.sizeId,
+            labelText: localization.size,
+            items: memoizedSizeList(state.staticState.sizeMap)
+                .map((sizeId) => DropdownMenuItem(
+                      child: Text(state.staticState.sizeMap[sizeId]!.name),
+                      value: sizeId,
+                    ))
+                .toList(),
+            onChanged: (dynamic sizeId) => viewModel.onChanged(
+              client.rebuild((b) => b..sizeId = sizeId),
+            ),
+            showBlank: true,
+          ),
+          EntityDropdown(
+            entityType: EntityType.industry,
+            entityList: memoizedIndustryList(viewModel.staticState.industryMap),
+            labelText: localization.industry,
+            entityId: client.industryId,
+            onSelected: (SelectableEntity? industry) => viewModel.onChanged(
+                client.rebuild((b) => b..industryId = industry?.id ?? '')),
+          ),
         ],
       ],
     );

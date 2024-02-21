@@ -158,6 +158,7 @@ abstract class ClientEntity extends Object
       customValue4: '',
       routingId: '',
       isTaxExempt: false,
+      hasValidVatNumber: false,
       classification: '',
       taxData: TaxDataEntity(),
       contacts: BuiltList<ClientContactEntity>(
@@ -315,6 +316,9 @@ abstract class ClientEntity extends Object
 
   @BuiltValueField(wireName: 'is_tax_exempt')
   bool get isTaxExempt;
+
+  @BuiltValueField(wireName: 'has_valid_vat_number')
+  bool get hasValidVatNumber;
 
   @BuiltValueField(wireName: 'tax_info')
   TaxDataEntity get taxData;
@@ -794,6 +798,7 @@ abstract class ClientEntity extends Object
     ..number = ''
     ..routingId = ''
     ..isTaxExempt = false
+    ..hasValidVatNumber = false
     ..taxData.replace(TaxDataEntity())
     ..paymentBalance = 0
     ..classification = '';

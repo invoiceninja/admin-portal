@@ -34,7 +34,6 @@ import 'package:invoiceninja_flutter/ui/app/menu_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/app/tables/app_paginated_data_table.dart';
-import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/ui/reports/report_charts.dart';
 import 'package:invoiceninja_flutter/ui/reports/reports_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
@@ -44,7 +43,6 @@ import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ReportsScreen extends StatelessWidget {
   const ReportsScreen({
@@ -450,19 +448,9 @@ class ReportsScreen extends StatelessWidget {
                       HelpText(localization.upgradeToViewReports),
                       SizedBox(height: 10),
                       AppButton(
-                          label: localization.upgrade.toUpperCase(),
-                          onPressed: () {
-                            if (supportsInAppPurchase() &&
-                                state.account.canMakeIAP) {
-                              showDialog<void>(
-                                context: context,
-                                builder: (context) => UpgradeDialog(),
-                              );
-                            } else {
-                              launchUrl(
-                                  Uri.parse(state.userCompany.ninjaPortalUrl));
-                            }
-                          })
+                        label: localization.upgrade.toUpperCase(),
+                        onPressed: () => initiatePurchase(),
+                      )
                     ],
                   ),
                 ),
