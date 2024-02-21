@@ -9,6 +9,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/client/edit/client_edit_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class ClientEditNotes extends StatefulWidget {
   const ClientEditNotes({
@@ -89,13 +90,13 @@ class ClientEditNotesState extends State<ClientEditNotes> {
           : null,
       children: <Widget>[
         DecoratedFormField(
-          maxLines: 4,
+          maxLines: isMobile(context) || !isFullscreen ? 8 : 4,
           controller: _publicNotesController,
           keyboardType: TextInputType.multiline,
           label: localization.publicNotes,
         ),
         DecoratedFormField(
-          maxLines: 4,
+          maxLines: isMobile(context) || !isFullscreen ? 8 : 4,
           controller: _privateNotesController,
           keyboardType: TextInputType.multiline,
           label: localization.privateNotes,
