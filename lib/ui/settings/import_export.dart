@@ -325,11 +325,9 @@ class _ImportExportState extends State<ImportExport> {
                               // Workaround for mismatch in report
                               // names in export vs schedules
                               if (ExportType.ar_detailed == _exportType) {
-                                url =
-                                    '$url/reports/aged_receivable_detailed_report';
+                                url = '$url/reports/ar_detail_report';
                               } else if (ExportType.ar_summary == _exportType) {
-                                url =
-                                    '$url/reports/aged_receivable_summary_report';
+                                url = '$url/reports/ar_summary_report';
                               } else if (ExportType.client_balance ==
                                   _exportType) {
                                 url = '$url/reports/client_balance_report';
