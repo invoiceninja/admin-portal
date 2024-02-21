@@ -319,7 +319,16 @@ class ClientEditDetailsState extends State<ClientEditDetails> {
                 viewModel
                     .onChanged(client.rebuild((b) => b..isTaxExempt = value));
               },
-            )
+            ),
+            if (state.company.calculateTaxes)
+              SwitchListTile(
+                title: Text(localization.validVatNumber),
+                value: client.hasValidVatNumber,
+                onChanged: (value) {
+                  viewModel.onChanged(
+                      client.rebuild((b) => b..hasValidVatNumber = value));
+                },
+              ),
           ],
         ],
       ),

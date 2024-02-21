@@ -223,6 +223,9 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       'is_tax_exempt',
       serializers.serialize(object.isTaxExempt,
           specifiedType: const FullType(bool)),
+      'has_valid_vat_number',
+      serializers.serialize(object.hasValidVatNumber,
+          specifiedType: const FullType(bool)),
       'tax_info',
       serializers.serialize(object.taxData,
           specifiedType: const FullType(TaxDataEntity)),
@@ -466,6 +469,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
           break;
         case 'is_tax_exempt':
           result.isTaxExempt = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
+          break;
+        case 'has_valid_vat_number':
+          result.hasValidVatNumber = serializers.deserialize(value,
               specifiedType: const FullType(bool))! as bool;
           break;
         case 'tax_info':
@@ -1033,6 +1040,8 @@ class _$ClientEntity extends ClientEntity {
   @override
   final bool isTaxExempt;
   @override
+  final bool hasValidVatNumber;
+  @override
   final TaxDataEntity taxData;
   @override
   final String classification;
@@ -1107,6 +1116,7 @@ class _$ClientEntity extends ClientEntity {
       required this.customValue4,
       required this.routingId,
       required this.isTaxExempt,
+      required this.hasValidVatNumber,
       required this.taxData,
       required this.classification,
       required this.contacts,
@@ -1189,6 +1199,8 @@ class _$ClientEntity extends ClientEntity {
         routingId, r'ClientEntity', 'routingId');
     BuiltValueNullFieldError.checkNotNull(
         isTaxExempt, r'ClientEntity', 'isTaxExempt');
+    BuiltValueNullFieldError.checkNotNull(
+        hasValidVatNumber, r'ClientEntity', 'hasValidVatNumber');
     BuiltValueNullFieldError.checkNotNull(taxData, r'ClientEntity', 'taxData');
     BuiltValueNullFieldError.checkNotNull(
         classification, r'ClientEntity', 'classification');
@@ -1260,6 +1272,7 @@ class _$ClientEntity extends ClientEntity {
         customValue4 == other.customValue4 &&
         routingId == other.routingId &&
         isTaxExempt == other.isTaxExempt &&
+        hasValidVatNumber == other.hasValidVatNumber &&
         taxData == other.taxData &&
         classification == other.classification &&
         contacts == other.contacts &&
@@ -1320,6 +1333,7 @@ class _$ClientEntity extends ClientEntity {
     _$hash = $jc(_$hash, customValue4.hashCode);
     _$hash = $jc(_$hash, routingId.hashCode);
     _$hash = $jc(_$hash, isTaxExempt.hashCode);
+    _$hash = $jc(_$hash, hasValidVatNumber.hashCode);
     _$hash = $jc(_$hash, taxData.hashCode);
     _$hash = $jc(_$hash, classification.hashCode);
     _$hash = $jc(_$hash, contacts.hashCode);
@@ -1381,6 +1395,7 @@ class _$ClientEntity extends ClientEntity {
           ..add('customValue4', customValue4)
           ..add('routingId', routingId)
           ..add('isTaxExempt', isTaxExempt)
+          ..add('hasValidVatNumber', hasValidVatNumber)
           ..add('taxData', taxData)
           ..add('classification', classification)
           ..add('contacts', contacts)
@@ -1565,6 +1580,11 @@ class ClientEntityBuilder
   bool? get isTaxExempt => _$this._isTaxExempt;
   set isTaxExempt(bool? isTaxExempt) => _$this._isTaxExempt = isTaxExempt;
 
+  bool? _hasValidVatNumber;
+  bool? get hasValidVatNumber => _$this._hasValidVatNumber;
+  set hasValidVatNumber(bool? hasValidVatNumber) =>
+      _$this._hasValidVatNumber = hasValidVatNumber;
+
   TaxDataEntityBuilder? _taxData;
   TaxDataEntityBuilder get taxData =>
       _$this._taxData ??= new TaxDataEntityBuilder();
@@ -1689,6 +1709,7 @@ class ClientEntityBuilder
       _customValue4 = $v.customValue4;
       _routingId = $v.routingId;
       _isTaxExempt = $v.isTaxExempt;
+      _hasValidVatNumber = $v.hasValidVatNumber;
       _taxData = $v.taxData.toBuilder();
       _classification = $v.classification;
       _contacts = $v.contacts.toBuilder();
@@ -1775,6 +1796,7 @@ class ClientEntityBuilder
               customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'ClientEntity', 'customValue4'),
               routingId: BuiltValueNullFieldError.checkNotNull(routingId, r'ClientEntity', 'routingId'),
               isTaxExempt: BuiltValueNullFieldError.checkNotNull(isTaxExempt, r'ClientEntity', 'isTaxExempt'),
+              hasValidVatNumber: BuiltValueNullFieldError.checkNotNull(hasValidVatNumber, r'ClientEntity', 'hasValidVatNumber'),
               taxData: taxData.build(),
               classification: BuiltValueNullFieldError.checkNotNull(classification, r'ClientEntity', 'classification'),
               contacts: contacts.build(),
