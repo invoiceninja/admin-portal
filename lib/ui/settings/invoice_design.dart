@@ -416,51 +416,42 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           ),
                           SizedBox(height: 16),
                         ],
-                        if (supportsDesignTemplates()) ...[
-                          DesignPicker(
-                            showBlank: true,
-                            label: localization.deliveryNoteDesign,
-                            initialValue: settings.defaultDeliveryNoteDesignId,
-                            onSelected: (value) {
-                              viewModel.onSettingsChanged(settings.rebuild(
-                                  (b) => b
-                                    ..defaultDeliveryNoteDesignId = value?.id));
-                            },
-                          ),
-                          DesignPicker(
-                            showBlank: true,
-                            label: localization.statementDesign,
-                            initialValue: settings.defaultStatementDesignId,
-                            onSelected: (value) {
-                              viewModel.onSettingsChanged(settings.rebuild(
-                                  (b) =>
-                                      b..defaultStatementDesignId = value?.id));
-                            },
-                          ),
-                          DesignPicker(
-                            showBlank: true,
-                            label: localization.paymentReceiptDesign,
-                            initialValue:
-                                settings.defaultPaymentReceiptDesignId,
-                            onSelected: (value) {
-                              viewModel.onSettingsChanged(settings.rebuild(
-                                  (b) => b
-                                    ..defaultPaymentReceiptDesignId =
-                                        value?.id));
-                            },
-                          ),
-                          DesignPicker(
-                            showBlank: true,
-                            label: localization.paymentRefundDesign,
-                            initialValue: settings.defaultPaymentRefundDesignId,
-                            onSelected: (value) {
-                              viewModel.onSettingsChanged(settings.rebuild(
-                                  (b) => b
-                                    ..defaultPaymentRefundDesignId =
-                                        value?.id));
-                            },
-                          ),
-                        ],
+                        DesignPicker(
+                          showBlank: true,
+                          label: localization.deliveryNoteDesign,
+                          initialValue: settings.defaultDeliveryNoteDesignId,
+                          onSelected: (value) {
+                            viewModel.onSettingsChanged(settings.rebuild((b) =>
+                                b..defaultDeliveryNoteDesignId = value?.id));
+                          },
+                        ),
+                        DesignPicker(
+                          showBlank: true,
+                          label: localization.statementDesign,
+                          initialValue: settings.defaultStatementDesignId,
+                          onSelected: (value) {
+                            viewModel.onSettingsChanged(settings.rebuild((b) =>
+                                b..defaultStatementDesignId = value?.id));
+                          },
+                        ),
+                        DesignPicker(
+                          showBlank: true,
+                          label: localization.paymentReceiptDesign,
+                          initialValue: settings.defaultPaymentReceiptDesignId,
+                          onSelected: (value) {
+                            viewModel.onSettingsChanged(settings.rebuild((b) =>
+                                b..defaultPaymentReceiptDesignId = value?.id));
+                          },
+                        ),
+                        DesignPicker(
+                          showBlank: true,
+                          label: localization.paymentRefundDesign,
+                          initialValue: settings.defaultPaymentRefundDesignId,
+                          onSelected: (value) {
+                            viewModel.onSettingsChanged(settings.rebuild((b) =>
+                                b..defaultPaymentRefundDesignId = value?.id));
+                          },
+                        ),
                       ],
                     ),
                     FormCard(

@@ -555,12 +555,10 @@ class SettingsSearch extends StatelessWidget {
           'share_invoice_quote_columns#2023-03-20',
           'invoice_embed_documents#2023-10-27',
           'mobile_version#2024-01-29',
-          if (supportsDesignTemplates()) ...[
-            'delivery_note_design#2023-11-06',
-            'statement_design#2023-11-06',
-            'payment_receipt_design#2023-11-06',
-            'payment_refund_design#2023-11-06',
-          ],
+          'delivery_note_design#2023-11-06',
+          'statement_design#2023-11-06',
+          'payment_receipt_design#2023-11-06',
+          'payment_refund_design#2023-11-06',
         ],
       ],
       kSettingsCustomDesigns: [

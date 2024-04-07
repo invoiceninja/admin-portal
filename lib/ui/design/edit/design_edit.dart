@@ -464,18 +464,17 @@ class _DesignSettingsState extends State<DesignSettings> {
                 value: widget.draftMode,
                 onChanged: widget.isLoading ? null : widget.onDraftModeChanged,
               ),
-            if (supportsDesignTemplates())
-              SwitchListTile(
-                activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.template),
-                subtitle: Text(localization.templateHelp),
-                value: design.isTemplate,
-                onChanged: (value) {
-                  widget.viewModel.onChanged(
-                    design.rebuild((b) => b..isTemplate = value),
-                  );
-                },
-              ),
+            SwitchListTile(
+              activeColor: Theme.of(context).colorScheme.secondary,
+              title: Text(localization.template),
+              subtitle: Text(localization.templateHelp),
+              value: design.isTemplate,
+              onChanged: (value) {
+                widget.viewModel.onChanged(
+                  design.rebuild((b) => b..isTemplate = value),
+                );
+              },
+            ),
             if (design.isTemplate) ...[
               SizedBox(height: 10),
               ...[
