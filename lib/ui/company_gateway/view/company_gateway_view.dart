@@ -153,11 +153,28 @@ class _CompanyGatewayOverview extends StatelessWidget {
           label: localization.processed,
           value: formatNumber(processed, context)),
       ListDivider(),
-      if ([kGatewayStripe, kGatewayStripeConnect].contains(gateway.id)) ...[
-        Padding(
-          padding: const EdgeInsets.only(left: 16, bottom: 20, right: 16),
-          child: Row(
-            children: [
+      Padding(
+        padding: const EdgeInsets.only(left: 16, bottom: 20, right: 16),
+        child: Row(
+          children: [
+            Expanded(
+              child: AppButton(
+                iconData: isDesktop(context) ? MdiIcons.shieldCheck : null,
+                label: localization.checkCredentials.toUpperCase(),
+                onPressed: () => viewModel.onCheckCredentialsPressed(context),
+              ),
+            ),
+            SizedBox(width: kTableColumnGap),
+            Expanded(
+              child: AppButton(
+                iconData: isDesktop(context) ? MdiIcons.import : null,
+                label: localization.importCustomers.toUpperCase(),
+                onPressed: () => viewModel.onImportCustomersPressed(context),
+              ),
+            ),
+            if ([kGatewayStripe, kGatewayStripeConnect]
+                .contains(gateway.id)) ...[
+              SizedBox(width: kTableColumnGap),
               Expanded(
                 child: AppButton(
                   iconData:
@@ -166,29 +183,11 @@ class _CompanyGatewayOverview extends StatelessWidget {
                   onPressed: () => viewModel.onStripeVerifyPressed(context),
                 ),
               ),
-              SizedBox(width: kTableColumnGap),
-              Expanded(
-                child: AppButton(
-                  iconData: isDesktop(context) ? MdiIcons.import : null,
-                  label: localization.importCustomers.toUpperCase(),
-                  onPressed: () => viewModel.onImportCustomersPressed(context),
-                ),
-              ),
-            ],
-          ),
+            ]
+          ],
         ),
-        ListDivider(),
-      ] else if (!companyGateway.isCustom) ...[
-        Padding(
-          padding: const EdgeInsets.only(left: 16, bottom: 20, right: 16),
-          child: AppButton(
-            iconData: isDesktop(context) ? MdiIcons.import : null,
-            label: localization.importCustomers.toUpperCase(),
-            onPressed: () => viewModel.onImportCustomersPressed(context),
-          ),
-        ),
-        ListDivider(),
-      ],
+      ),
+      ListDivider(),
       if (gateway.supportedEvents().isNotEmpty) ...[
         ListTile(
           contentPadding: const EdgeInsets.all(22),

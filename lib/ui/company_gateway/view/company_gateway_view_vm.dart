@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:convert';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -62,6 +63,7 @@ class CompanyGatewayViewVM {
     required this.isDirty,
     required this.onImportCustomersPressed,
     required this.onStripeVerifyPressed,
+    required this.onCheckCredentialsPressed,
   });
 
   factory CompanyGatewayViewVM.fromStore(Store<AppState> store) {
@@ -153,6 +155,26 @@ class CompanyGatewayViewVM {
               });
             });
       },
+      onCheckCredentialsPressed: (BuildContext context) {
+        final localization = AppLocalization.of(context)!;
+        final webClient = WebClient();
+        final credentials = state.credentials;
+        final url =
+            '${credentials.url}/company_gateways/${companyGateway.id}/test';
+
+        store.dispatch(StartSaving());
+        webClient.post(url, credentials.token).then((dynamic response) {
+          store.dispatch(StopSaving());
+          showMessageDialog(
+            message: response['message'] == 'true'
+                ? localization.validCredentials
+                : localization.invalidCredentials,
+          );
+        }).catchError((dynamic error) {
+          store.dispatch(StopSaving());
+          showErrorDialog(message: error);
+        });
+      },
       onImportCustomersPressed: (BuildContext context) {
         final localization = AppLocalization.of(context);
         final webClient = WebClient();
@@ -190,4 +212,5 @@ class CompanyGatewayViewVM {
   final bool isDirty;
   final Function(BuildContext) onImportCustomersPressed;
   final Function(BuildContext) onStripeVerifyPressed;
+  final Function(BuildContext) onCheckCredentialsPressed;
 }
