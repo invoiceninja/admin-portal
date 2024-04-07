@@ -139,6 +139,8 @@ abstract class CompanyEntity extends Object
       smtpPassword: '',
       smtpLocalDomain: '',
       smtpVerifyPeer: true,
+      smtpFromName: '',
+      smtpFromEmail: '',
       taxData: TaxDataEntity(),
       taxConfig: TaxConfigEntity(),
       groups: BuiltList<GroupEntity>(),
@@ -352,6 +354,12 @@ abstract class CompanyEntity extends Object
 
   @BuiltValueField(wireName: 'smtp_verify_peer')
   bool get smtpVerifyPeer;
+
+  @BuiltValueField(wireName: 'smtp_from_name')
+  String get smtpFromName;
+
+  @BuiltValueField(wireName: 'smtp_from_email')
+  String get smtpFromEmail;
 
   BuiltList<GroupEntity> get groups;
 
@@ -875,6 +883,8 @@ abstract class CompanyEntity extends Object
     ..smtpPassword = ''
     ..smtpLocalDomain = ''
     ..smtpVerifyPeer = true
+    ..smtpFromName = ''
+    ..smtpFromEmail = ''
     ..taxConfig.replace(TaxConfigEntity())
     ..taxData.replace(TaxDataEntity())
     ..systemLogs.replace(BuiltList<SystemLogEntity>())

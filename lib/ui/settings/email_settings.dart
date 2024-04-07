@@ -65,6 +65,8 @@ class _EmailSettingsState extends State<EmailSettings> {
   final _smtpUsernameController = TextEditingController();
   final _smtpPasswordController = TextEditingController();
   final _smtpLocalDomainController = TextEditingController();
+  final _smtpFromEmailController = TextEditingController();
+  final _smtpFromNameController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -100,6 +102,8 @@ class _EmailSettingsState extends State<EmailSettings> {
       _mailgunDomainController,
       _customSendingEmailController,
       _eInvoiceCertificatePassphraseController,
+      _smtpFromEmailController,
+      _smtpFromNameController,
       _smtpHostController,
       _smtpPortController,
       _smtpUsernameController,
@@ -132,6 +136,8 @@ class _EmailSettingsState extends State<EmailSettings> {
     _smtpUsernameController.text = company.smtpUsername;
     _smtpPasswordController.text = company.smtpPassword;
     _smtpLocalDomainController.text = company.smtpLocalDomain;
+    _smtpFromEmailController.text = company.smtpFromEmail;
+    _smtpFromNameController.text = company.smtpFromName;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -186,6 +192,8 @@ class _EmailSettingsState extends State<EmailSettings> {
               : eInvoiceCertificatePassphrase
       ..smtpHost = _smtpHostController.text.trim()
       ..smtpPort = parseInt(_smtpPortController.text.trim())
+      ..smtpFromEmail = _smtpFromEmailController.text.trim()
+      ..smtpFromName = _smtpFromNameController.text.trim()
       ..smtpUsername = _smtpUsernameController.text.trim()
       ..smtpPassword = _smtpPasswordController.text.trim()
       ..smtpLocalDomain = _smtpLocalDomainController.text.trim());
@@ -449,6 +457,24 @@ class _EmailSettingsState extends State<EmailSettings> {
                   label: localization.password,
                   obscureText: true,
                   controller: _smtpPasswordController,
+                  keyboardType: TextInputType.text,
+                  onSavePressed: _onSavePressed,
+                  validator: (value) => value.trim().isEmpty
+                      ? localization.pleaseEnterAValue
+                      : null,
+                ),
+                DecoratedFormField(
+                  label: localization.fromEmail,
+                  controller: _smtpFromEmailController,
+                  keyboardType: TextInputType.emailAddress,
+                  onSavePressed: _onSavePressed,
+                  validator: (value) => value.trim().isEmpty
+                      ? localization.pleaseEnterAValue
+                      : null,
+                ),
+                DecoratedFormField(
+                  label: localization.fromName,
+                  controller: _smtpFromNameController,
                   keyboardType: TextInputType.text,
                   onSavePressed: _onSavePressed,
                   validator: (value) => value.trim().isEmpty
