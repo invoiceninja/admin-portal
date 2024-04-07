@@ -1052,7 +1052,7 @@ abstract class InvoiceEntity extends Object
               actions.add(EntityAction.eQuote);
             } else if (isCredit) {
               actions.add(EntityAction.eCredit);
-            } else if (isPurchaseOrder) {
+            } else if (false && isPurchaseOrder) {
               actions.add(EntityAction.ePurchaseOrder);
             }
           }
