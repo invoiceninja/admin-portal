@@ -127,6 +127,7 @@ abstract class SettingsEntity
   static const EMAIL_SENDING_METHOD_MICROSOFT = 'office365';
   static const EMAIL_SENDING_METHOD_POSTMARK = 'client_postmark';
   static const EMAIL_SENDING_METHOD_MAILGUN = 'client_mailgun';
+  static const EMAIL_SENDING_METHOD_BREVO = 'client_brevo';
   static const EMAIL_SENDING_METHOD_SMTP = 'smtp';
 
   static const LOCK_INVOICES_OFF = 'off';
@@ -823,6 +824,9 @@ abstract class SettingsEntity
 
   @BuiltValueField(wireName: 'use_unapplied_payment')
   String? get useUnappliedPayment;
+
+  @BuiltValueField(wireName: 'brevo_secret')
+  String? get brevoSecret;
 
   bool get hasAddress => address1 != null && address1!.isNotEmpty;
 

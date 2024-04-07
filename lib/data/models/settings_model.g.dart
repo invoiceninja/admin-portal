@@ -1599,6 +1599,13 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.brevoSecret;
+    if (value != null) {
+      result
+        ..add('brevo_secret')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -2529,6 +2536,10 @@ class _$SettingsEntitySerializer
           result.useUnappliedPayment = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'brevo_secret':
+          result.brevoSecret = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
       }
     }
 
@@ -3062,6 +3073,8 @@ class _$SettingsEntity extends SettingsEntity {
   final bool? showPdfhtmlOnMobile;
   @override
   final String? useUnappliedPayment;
+  @override
+  final String? brevoSecret;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder)? updates]) =>
       (new SettingsEntityBuilder()..update(updates))._build();
@@ -3293,7 +3306,8 @@ class _$SettingsEntity extends SettingsEntity {
       this.classification,
       this.paymentEmailAllContacts,
       this.showPdfhtmlOnMobile,
-      this.useUnappliedPayment})
+      this.useUnappliedPayment,
+      this.brevoSecret})
       : super._();
 
   @override
@@ -3539,7 +3553,8 @@ class _$SettingsEntity extends SettingsEntity {
         classification == other.classification &&
         paymentEmailAllContacts == other.paymentEmailAllContacts &&
         showPdfhtmlOnMobile == other.showPdfhtmlOnMobile &&
-        useUnappliedPayment == other.useUnappliedPayment;
+        useUnappliedPayment == other.useUnappliedPayment &&
+        brevoSecret == other.brevoSecret;
   }
 
   int? __hashCode;
@@ -3774,6 +3789,7 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, paymentEmailAllContacts.hashCode);
     _$hash = $jc(_$hash, showPdfhtmlOnMobile.hashCode);
     _$hash = $jc(_$hash, useUnappliedPayment.hashCode);
+    _$hash = $jc(_$hash, brevoSecret.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -4012,7 +4028,8 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('classification', classification)
           ..add('paymentEmailAllContacts', paymentEmailAllContacts)
           ..add('showPdfhtmlOnMobile', showPdfhtmlOnMobile)
-          ..add('useUnappliedPayment', useUnappliedPayment))
+          ..add('useUnappliedPayment', useUnappliedPayment)
+          ..add('brevoSecret', brevoSecret))
         .toString();
   }
 }
@@ -5142,6 +5159,10 @@ class SettingsEntityBuilder
   set useUnappliedPayment(String? useUnappliedPayment) =>
       _$this._useUnappliedPayment = useUnappliedPayment;
 
+  String? _brevoSecret;
+  String? get brevoSecret => _$this._brevoSecret;
+  set brevoSecret(String? brevoSecret) => _$this._brevoSecret = brevoSecret;
+
   SettingsEntityBuilder();
 
   SettingsEntityBuilder get _$this {
@@ -5374,6 +5395,7 @@ class SettingsEntityBuilder
       _paymentEmailAllContacts = $v.paymentEmailAllContacts;
       _showPdfhtmlOnMobile = $v.showPdfhtmlOnMobile;
       _useUnappliedPayment = $v.useUnappliedPayment;
+      _brevoSecret = $v.brevoSecret;
       _$v = null;
     }
     return this;
@@ -5625,7 +5647,8 @@ class SettingsEntityBuilder
               classification: classification,
               paymentEmailAllContacts: paymentEmailAllContacts,
               showPdfhtmlOnMobile: showPdfhtmlOnMobile,
-              useUnappliedPayment: useUnappliedPayment);
+              useUnappliedPayment: useUnappliedPayment,
+              brevoSecret: brevoSecret);
     } catch (_) {
       late String _$failedField;
       try {

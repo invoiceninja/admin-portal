@@ -55,6 +55,7 @@ class _EmailSettingsState extends State<EmailSettings> {
   final _emailStyleCustomController = TextEditingController();
   final _emailSignatureController = TextEditingController();
   final _postmarkSecretController = TextEditingController();
+  final _brevoSecretController = TextEditingController();
   final _mailgunSecretController = TextEditingController();
   final _mailgunDomainController = TextEditingController();
   final _customSendingEmailController = TextEditingController();
@@ -94,6 +95,7 @@ class _EmailSettingsState extends State<EmailSettings> {
       _emailStyleCustomController,
       _emailSignatureController,
       _postmarkSecretController,
+      _brevoSecretController,
       _mailgunSecretController,
       _mailgunDomainController,
       _customSendingEmailController,
@@ -120,6 +122,7 @@ class _EmailSettingsState extends State<EmailSettings> {
     _emailSignatureController.text = settings.emailSignature ?? '';
     _postmarkSecretController.text = settings.postmarkSecret ?? '';
     _customSendingEmailController.text = settings.customSendingEmail ?? '';
+    _brevoSecretController.text = settings.brevoSecret ?? '';
     _mailgunSecretController.text = settings.mailgunSecret ?? '';
     _mailgunDomainController.text = settings.mailgunDomain ?? '';
     _eInvoiceCertificatePassphraseController.text =
@@ -144,6 +147,7 @@ class _EmailSettingsState extends State<EmailSettings> {
     final emailStyleCustom = _emailStyleCustomController.text.trim();
     final emailSignature = _emailSignatureController.text.trim();
     final postmarkSecret = _postmarkSecretController.text.trim();
+    final brevoSecret = _brevoSecretController.text.trim();
     final mailgunSecret = _mailgunSecretController.text.trim();
     final mailgunDomain = _mailgunDomainController.text.trim();
     final customSendingEmail = _customSendingEmailController.text.trim();
@@ -164,6 +168,7 @@ class _EmailSettingsState extends State<EmailSettings> {
           isFiltered && emailSignature.isEmpty ? null : emailSignature
       ..postmarkSecret =
           isFiltered && postmarkSecret.isEmpty ? null : postmarkSecret
+      ..brevoSecret = isFiltered && brevoSecret.isEmpty ? null : brevoSecret
       ..mailgunSecret =
           isFiltered && mailgunSecret.isEmpty ? null : mailgunSecret
       ..mailgunDomain =
@@ -258,6 +263,9 @@ class _EmailSettingsState extends State<EmailSettings> {
                   DropdownMenuItem(
                       child: Text('Mailgun'),
                       value: SettingsEntity.EMAIL_SENDING_METHOD_MAILGUN),
+                  DropdownMenuItem(
+                      child: Text('Brevo'),
+                      value: SettingsEntity.EMAIL_SENDING_METHOD_BREVO),
                 ],
               ),
               if (settings.emailSendingMethod ==
@@ -379,6 +387,17 @@ class _EmailSettingsState extends State<EmailSettings> {
                               value: endpoint,
                             ))
                         .toList())
+              ] else if (settings.emailSendingMethod ==
+                  SettingsEntity.EMAIL_SENDING_METHOD_BREVO) ...[
+                DecoratedFormField(
+                  label: localization.secret,
+                  controller: _brevoSecretController,
+                  keyboardType: TextInputType.text,
+                  onSavePressed: _onSavePressed,
+                  validator: (value) => value.trim().isEmpty
+                      ? localization.pleaseEnterAValue
+                      : null,
+                ),
               ] else if (settings.emailSendingMethod ==
                       SettingsEntity.EMAIL_SENDING_METHOD_SMTP &&
                   !settingsUIState.isFiltered) ...[
