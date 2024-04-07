@@ -513,6 +513,8 @@ class _EmailSettingsState extends State<EmailSettings> {
                           'smtp_password': company.smtpPassword,
                         'smtp_local_domain': company.smtpLocalDomain,
                         'smtp_verify_peer': company.smtpVerifyPeer,
+                        'smtp_from_name': company.smtpFromName,
+                        'smtp_from_email': company.smtpFromEmail,
                       };
 
                       final store = StoreProvider.of<AppState>(context);
