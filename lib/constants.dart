@@ -284,6 +284,16 @@ const kEInvoiceTypes = [
   kEInvoiceTypeFACT1,
 ];
 
+const String kEQuoteTypeOrderX_Comfort = 'OrderX_Comfort';
+const String kEQuoteTypeOrderX_Basic = 'OrderX_Basic';
+const String kEQuoteType = 'OrderX_Extended';
+
+const kEQuoteTypes = [
+  kEQuoteTypeOrderX_Comfort,
+  kEQuoteTypeOrderX_Basic,
+  kEQuoteType,
+];
+
 const String kCountryUnitedStates = '840';
 const String kCountryAustralia = '36';
 const String kCountryCanada = '124';

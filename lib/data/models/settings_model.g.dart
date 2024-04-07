@@ -1557,6 +1557,13 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.eQuoteType;
+    if (value != null) {
+      result
+        ..add('e_quote_type')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.defaultExpensePaymentTypeId;
     if (value != null) {
       result
@@ -2498,6 +2505,10 @@ class _$SettingsEntitySerializer
           result.eInvoiceType = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'e_quote_type':
+          result.eQuoteType = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'default_expense_payment_type_id':
           result.defaultExpensePaymentTypeId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
@@ -3040,6 +3051,8 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String? eInvoiceType;
   @override
+  final String? eQuoteType;
+  @override
   final String? defaultExpensePaymentTypeId;
   @override
   final String? classification;
@@ -3275,6 +3288,7 @@ class _$SettingsEntity extends SettingsEntity {
       this.showTaskItemDescription,
       this.enableEInvoice,
       this.eInvoiceType,
+      this.eQuoteType,
       this.defaultExpensePaymentTypeId,
       this.classification,
       this.paymentEmailAllContacts,
@@ -3520,6 +3534,7 @@ class _$SettingsEntity extends SettingsEntity {
         showTaskItemDescription == other.showTaskItemDescription &&
         enableEInvoice == other.enableEInvoice &&
         eInvoiceType == other.eInvoiceType &&
+        eQuoteType == other.eQuoteType &&
         defaultExpensePaymentTypeId == other.defaultExpensePaymentTypeId &&
         classification == other.classification &&
         paymentEmailAllContacts == other.paymentEmailAllContacts &&
@@ -3753,6 +3768,7 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, showTaskItemDescription.hashCode);
     _$hash = $jc(_$hash, enableEInvoice.hashCode);
     _$hash = $jc(_$hash, eInvoiceType.hashCode);
+    _$hash = $jc(_$hash, eQuoteType.hashCode);
     _$hash = $jc(_$hash, defaultExpensePaymentTypeId.hashCode);
     _$hash = $jc(_$hash, classification.hashCode);
     _$hash = $jc(_$hash, paymentEmailAllContacts.hashCode);
@@ -3991,6 +4007,7 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('showTaskItemDescription', showTaskItemDescription)
           ..add('enableEInvoice', enableEInvoice)
           ..add('eInvoiceType', eInvoiceType)
+          ..add('eQuoteType', eQuoteType)
           ..add('defaultExpensePaymentTypeId', defaultExpensePaymentTypeId)
           ..add('classification', classification)
           ..add('paymentEmailAllContacts', paymentEmailAllContacts)
@@ -5095,6 +5112,10 @@ class SettingsEntityBuilder
   String? get eInvoiceType => _$this._eInvoiceType;
   set eInvoiceType(String? eInvoiceType) => _$this._eInvoiceType = eInvoiceType;
 
+  String? _eQuoteType;
+  String? get eQuoteType => _$this._eQuoteType;
+  set eQuoteType(String? eQuoteType) => _$this._eQuoteType = eQuoteType;
+
   String? _defaultExpensePaymentTypeId;
   String? get defaultExpensePaymentTypeId =>
       _$this._defaultExpensePaymentTypeId;
@@ -5347,6 +5368,7 @@ class SettingsEntityBuilder
       _showTaskItemDescription = $v.showTaskItemDescription;
       _enableEInvoice = $v.enableEInvoice;
       _eInvoiceType = $v.eInvoiceType;
+      _eQuoteType = $v.eQuoteType;
       _defaultExpensePaymentTypeId = $v.defaultExpensePaymentTypeId;
       _classification = $v.classification;
       _paymentEmailAllContacts = $v.paymentEmailAllContacts;
@@ -5598,6 +5620,7 @@ class SettingsEntityBuilder
               showTaskItemDescription: showTaskItemDescription,
               enableEInvoice: enableEInvoice,
               eInvoiceType: eInvoiceType,
+              eQuoteType: eQuoteType,
               defaultExpensePaymentTypeId: defaultExpensePaymentTypeId,
               classification: classification,
               paymentEmailAllContacts: paymentEmailAllContacts,

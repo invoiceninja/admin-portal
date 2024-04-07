@@ -699,6 +699,22 @@ class _EmailSettingsState extends State<EmailSettings> {
                               ))
                           .toList()),
                 ),
+                AppDropdownButton<String>(
+                    labelText: localization.eQuoteType,
+                    showBlank: settingsUIState.isFiltered,
+                    value: settings.eQuoteType,
+                    onChanged: (dynamic value) {
+                      viewModel.onSettingsChanged(
+                          settings.rebuild((b) => b..eQuoteType = value));
+                    },
+                    items: kEQuoteTypes
+                        .map((type) => DropdownMenuItem<String>(
+                              child: Text(type
+                                  .replaceFirst('_', ' ')
+                                  .replaceAll('_', '.')),
+                              value: type,
+                            ))
+                        .toList()),
                 if (!settingsUIState.isFiltered) ...[
                   SizedBox(height: 22),
                   Row(
@@ -730,7 +746,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                             }
                           },
                           child: Padding(
-                            padding: const EdgeInsets.all(8),
+                            padding: const EdgeInsets.all(12),
                             child: Text(
                                 localization.uploadCertificate.toUpperCase()),
                           ),

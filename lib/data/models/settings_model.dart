@@ -807,6 +807,9 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'e_invoice_type')
   String? get eInvoiceType;
 
+  @BuiltValueField(wireName: 'e_quote_type')
+  String? get eQuoteType;
+
   @BuiltValueField(wireName: 'default_expense_payment_type_id')
   String? get defaultExpensePaymentTypeId;
 

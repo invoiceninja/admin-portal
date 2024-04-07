@@ -633,7 +633,7 @@ class SettingsSearch extends StatelessWidget {
           'mailgun#2023-01-11',
           'email_alignment#2023-01-17',
           'show_email_footer#2023-01-17',
-          'enable_e_invoice#2023-06-11,'
+          'enable_e_invoice#2023-06-11',
         ],
       ],
       kSettingsTemplatesAndReminders: [
