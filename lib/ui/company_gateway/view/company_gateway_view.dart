@@ -171,10 +171,20 @@ class _CompanyGatewayOverview extends StatelessWidget {
                 child: AppButton(
                   iconData: isDesktop(context) ? MdiIcons.import : null,
                   label: localization.importCustomers.toUpperCase(),
-                  onPressed: () => viewModel.onStripeImportPressed(context),
+                  onPressed: () => viewModel.onImportCustomersPressed(context),
                 ),
               ),
             ],
+          ),
+        ),
+        ListDivider(),
+      ] else if (!companyGateway.isCustom) ...[
+        Padding(
+          padding: const EdgeInsets.only(left: 16, bottom: 20, right: 16),
+          child: AppButton(
+            iconData: isDesktop(context) ? MdiIcons.import : null,
+            label: localization.importCustomers.toUpperCase(),
+            onPressed: () => viewModel.onImportCustomersPressed(context),
           ),
         ),
         ListDivider(),

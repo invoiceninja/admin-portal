@@ -60,7 +60,7 @@ class CompanyGatewayViewVM {
     required this.isSaving,
     required this.isLoading,
     required this.isDirty,
-    required this.onStripeImportPressed,
+    required this.onImportCustomersPressed,
     required this.onStripeVerifyPressed,
   });
 
@@ -153,11 +153,12 @@ class CompanyGatewayViewVM {
               });
             });
       },
-      onStripeImportPressed: (BuildContext context) {
+      onImportCustomersPressed: (BuildContext context) {
         final localization = AppLocalization.of(context);
         final webClient = WebClient();
         final credentials = state.credentials;
-        final url = '${credentials.url}/stripe/import_customers';
+        final url =
+            '${credentials.url}/company_gateways/${companyGateway.id}/import_customers';
 
         passwordCallback(
             context: context,
@@ -187,6 +188,6 @@ class CompanyGatewayViewVM {
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;
-  final Function(BuildContext) onStripeImportPressed;
+  final Function(BuildContext) onImportCustomersPressed;
   final Function(BuildContext) onStripeVerifyPressed;
 }
