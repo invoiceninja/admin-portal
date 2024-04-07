@@ -99,6 +99,9 @@ const EntityAction _$updatePrices = const EntityAction._('updatePrices');
 const EntityAction _$increasePrices = const EntityAction._('increasePrices');
 const EntityAction _$setTaxCategory = const EntityAction._('setTaxCategory');
 const EntityAction _$eInvoice = const EntityAction._('eInvoice');
+const EntityAction _$eQuote = const EntityAction._('eQuote');
+const EntityAction _$eCredit = const EntityAction._('eCredit');
+const EntityAction _$ePurchaseOrder = const EntityAction._('ePurchaseOrder');
 const EntityAction _$unlink = const EntityAction._('unlink');
 const EntityAction _$runTemplate = const EntityAction._('runTemplate');
 
@@ -268,6 +271,12 @@ EntityAction _$valueOf(String name) {
       return _$setTaxCategory;
     case 'eInvoice':
       return _$eInvoice;
+    case 'eQuote':
+      return _$eQuote;
+    case 'eCredit':
+      return _$eCredit;
+    case 'ePurchaseOrder':
+      return _$ePurchaseOrder;
     case 'unlink':
       return _$unlink;
     case 'runTemplate':
@@ -361,6 +370,9 @@ final BuiltSet<EntityAction> _$values =
   _$increasePrices,
   _$setTaxCategory,
   _$eInvoice,
+  _$eQuote,
+  _$eCredit,
+  _$ePurchaseOrder,
   _$unlink,
   _$runTemplate,
 ]);

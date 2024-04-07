@@ -83,6 +83,7 @@ class VendorFields {
   static const String lastLoginAt = 'last_login_at';
   static const String contactEmail = 'contact_email';
   static const String classification = 'classification';
+  static const String routingId = 'routing_id';
 }
 
 abstract class VendorEntity extends Object
@@ -113,6 +114,7 @@ abstract class VendorEntity extends Object
       customValue2: '',
       customValue3: '',
       customValue4: '',
+      routingId: '',
       activities: BuiltList<ActivityEntity>(),
       contacts: BuiltList<VendorContactEntity>(
         <VendorContactEntity>[
@@ -218,6 +220,9 @@ abstract class VendorEntity extends Object
 
   @BuiltValueField(wireName: 'custom_value4')
   String get customValue4;
+
+  @BuiltValueField(wireName: 'routing_id')
+  String get routingId;
 
   @BuiltValueField(wireName: 'last_login')
   int get lastLogin;
@@ -523,6 +528,7 @@ abstract class VendorEntity extends Object
   static void _initializeBuilder(VendorEntityBuilder builder) => builder
     ..activities.replace(BuiltList<ActivityEntity>())
     ..lastLogin = 0
+    ..routingId = ''
     ..languageId = ''
     ..displayName = ''
     ..classification = '';

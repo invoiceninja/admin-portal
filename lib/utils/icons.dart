@@ -126,6 +126,9 @@ IconData? getEntityActionIcon(EntityAction? entityAction) {
     case EntityAction.setTaxCategory:
       return MdiIcons.tag;
     case EntityAction.eInvoice:
+    case EntityAction.eQuote:
+    case EntityAction.eCredit:
+    case EntityAction.ePurchaseOrder:
       return MdiIcons.xml;
     case EntityAction.unlink:
       return MdiIcons.pipeDisconnected;

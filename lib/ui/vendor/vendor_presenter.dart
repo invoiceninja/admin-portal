@@ -50,6 +50,9 @@ class VendorPresenter extends EntityPresenter {
       VendorFields.archivedAt,
       VendorFields.documents,
       VendorFields.contacts,
+      if (userCompany.company.settings.enableEInvoice == true) ...[
+        VendorFields.routingId,
+      ],
       if (userCompany.company.calculateTaxes) ...[
         VendorFields.classification,
       ],
@@ -78,6 +81,8 @@ class VendorPresenter extends EntityPresenter {
         return Text(vendor!.address2);
       case VendorFields.idNumber:
         return Text(vendor!.idNumber);
+      case VendorFields.routingId:
+        return Text(vendor!.routingId);
       case VendorFields.number:
         return Text(vendor!.number);
       case VendorFields.postalCode:

@@ -1045,8 +1045,16 @@ abstract class InvoiceEntity extends Object
         if (!isRecurring) {
           actions.add(EntityAction.printPdf);
           actions.add(EntityAction.download);
-          if (isInvoice && state.company.settings.enableEInvoice == true) {
-            actions.add(EntityAction.eInvoice);
+          if (state.company.settings.enableEInvoice == true) {
+            if (isInvoice) {
+              actions.add(EntityAction.eInvoice);
+            } else if (isQuote) {
+              actions.add(EntityAction.eQuote);
+            } else if (isCredit) {
+              actions.add(EntityAction.eCredit);
+            } else if (isPurchaseOrder) {
+              actions.add(EntityAction.ePurchaseOrder);
+            }
           }
         }
       }
@@ -1505,6 +1513,15 @@ abstract class InvoiceEntity extends Object
   String get invitationEInvoiceDownloadLink =>
       invitations.isEmpty ? '' : invitations.first.eInvoiceDownloadLink;
 
+  String get invitationEQuoteDownloadLink =>
+      invitations.isEmpty ? '' : invitations.first.eQuoteDownloadLink;
+
+  String get invitationECreditDownloadLink =>
+      invitations.isEmpty ? '' : invitations.first.eCreditDownloadLink;
+
+  String get invitationEPurchaseOrderDownloadLink =>
+      invitations.isEmpty ? '' : invitations.first.ePurchaseOrderDownloadLink;
+
   // ignore: unused_element
   static void _initializeBuilder(InvoiceEntityBuilder builder) => builder
     ..activities.replace(BuiltList<ActivityEntity>())
@@ -1852,6 +1869,15 @@ abstract class InvitationEntity extends Object
 
   String get eInvoiceDownloadLink =>
       '$link/download_e_invoice?t=${DateTime.now().millisecondsSinceEpoch}';
+
+  String get eQuoteDownloadLink =>
+      '$link/download_e_quote?t=${DateTime.now().millisecondsSinceEpoch}';
+
+  String get eCreditDownloadLink =>
+      '$link/download_e_credit?t=${DateTime.now().millisecondsSinceEpoch}';
+
+  String get ePurchaseOrderDownloadLink =>
+      '$link/download_e_purchase_order?t=${DateTime.now().millisecondsSinceEpoch}';
 
   String get borderlessLink => '$silentLink&borderless=true';
 

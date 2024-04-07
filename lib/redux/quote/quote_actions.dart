@@ -698,6 +698,23 @@ Future handleQuoteAction(
         store.dispatch(StopLoading());
       });
       break;
+    case EntityAction.eQuote:
+      store.dispatch(StartLoading());
+      await WebClient()
+          .get(quote.invitationEQuoteDownloadLink, state.token,
+              rawResponse: true)
+          .then((response) {
+        store.dispatch(StopLoading());
+        saveDownloadedFile(
+          response.bodyBytes,
+          quote.number + '.xml',
+          prefix: EntityType.invoice.apiValue,
+          languageId: client.languageId,
+        );
+      }).catchError((_) {
+        store.dispatch(StopLoading());
+      });
+      break;
     case EntityAction.bulkDownload:
       store.dispatch(DownloadQuotesRequest(
           snackBarCompleter<Null>(localization!.exportedData), quoteIds));
