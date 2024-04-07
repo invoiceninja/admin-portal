@@ -474,12 +474,10 @@ class _EmailSettingsState extends State<EmailSettings> {
                       store.dispatch(StartSaving());
 
                       try {
-                        final response = await WebClient().post(
-                            url, credentials.token,
+                        await WebClient().post(url, credentials.token,
                             data: json.encode(data));
                         store.dispatch(StopSaving());
                         showMessageDialog(message: localization.testEmailSent);
-                        //showMessageDialog(message: '$response');
                       } catch (error) {
                         store.dispatch(StopSaving());
                         showErrorDialog(message: '$error');
