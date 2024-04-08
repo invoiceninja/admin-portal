@@ -403,6 +403,7 @@ class SettingsSearch extends StatelessWidget {
           'military_time',
           'decimal_comma',
           'first_month_of_the_year',
+          'rappen_rounding#2024-04-08',
         ],
         [
           'custom_labels',

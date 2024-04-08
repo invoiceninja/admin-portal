@@ -822,6 +822,9 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'show_pdfhtml_on_mobile')
   bool? get showPdfhtmlOnMobile;
 
+  @BuiltValueField(wireName: 'enable_rappen_rounding')
+  bool? get enableRappenRounding;
+
   @BuiltValueField(wireName: 'use_unapplied_payment')
   String? get useUnappliedPayment;
 

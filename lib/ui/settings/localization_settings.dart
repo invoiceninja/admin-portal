@@ -208,6 +208,14 @@ class _LocalizationSettingsState extends State<LocalizationSettings>
                     onChanged: (value) => viewModel.onSettingsChanged(
                         settings.rebuild((b) => b..enableMilitaryTime = value)),
                   ),
+                  BoolDropdownButton(
+                    iconData: MdiIcons.bank,
+                    label: localization.rappenRounding,
+                    helpLabel: localization.rappenRoundingHelp,
+                    value: settings.enableRappenRounding,
+                    onChanged: (value) => viewModel.onSettingsChanged(settings
+                        .rebuild((b) => b..enableRappenRounding = value)),
+                  ),
                   if (!state.settingsUIState.isFiltered)
                     SwitchListTile(
                       value: company.useCommaAsDecimalPlace,

@@ -1592,6 +1592,13 @@ class _$SettingsEntitySerializer
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.enableRappenRounding;
+    if (value != null) {
+      result
+        ..add('enable_rappen_rounding')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.useUnappliedPayment;
     if (value != null) {
       result
@@ -2532,6 +2539,10 @@ class _$SettingsEntitySerializer
           result.showPdfhtmlOnMobile = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
+        case 'enable_rappen_rounding':
+          result.enableRappenRounding = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
         case 'use_unapplied_payment':
           result.useUnappliedPayment = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
@@ -3072,6 +3083,8 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final bool? showPdfhtmlOnMobile;
   @override
+  final bool? enableRappenRounding;
+  @override
   final String? useUnappliedPayment;
   @override
   final String? brevoSecret;
@@ -3306,6 +3319,7 @@ class _$SettingsEntity extends SettingsEntity {
       this.classification,
       this.paymentEmailAllContacts,
       this.showPdfhtmlOnMobile,
+      this.enableRappenRounding,
       this.useUnappliedPayment,
       this.brevoSecret})
       : super._();
@@ -3553,6 +3567,7 @@ class _$SettingsEntity extends SettingsEntity {
         classification == other.classification &&
         paymentEmailAllContacts == other.paymentEmailAllContacts &&
         showPdfhtmlOnMobile == other.showPdfhtmlOnMobile &&
+        enableRappenRounding == other.enableRappenRounding &&
         useUnappliedPayment == other.useUnappliedPayment &&
         brevoSecret == other.brevoSecret;
   }
@@ -3788,6 +3803,7 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, classification.hashCode);
     _$hash = $jc(_$hash, paymentEmailAllContacts.hashCode);
     _$hash = $jc(_$hash, showPdfhtmlOnMobile.hashCode);
+    _$hash = $jc(_$hash, enableRappenRounding.hashCode);
     _$hash = $jc(_$hash, useUnappliedPayment.hashCode);
     _$hash = $jc(_$hash, brevoSecret.hashCode);
     _$hash = $jf(_$hash);
@@ -4028,6 +4044,7 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('classification', classification)
           ..add('paymentEmailAllContacts', paymentEmailAllContacts)
           ..add('showPdfhtmlOnMobile', showPdfhtmlOnMobile)
+          ..add('enableRappenRounding', enableRappenRounding)
           ..add('useUnappliedPayment', useUnappliedPayment)
           ..add('brevoSecret', brevoSecret))
         .toString();
@@ -5154,6 +5171,11 @@ class SettingsEntityBuilder
   set showPdfhtmlOnMobile(bool? showPdfhtmlOnMobile) =>
       _$this._showPdfhtmlOnMobile = showPdfhtmlOnMobile;
 
+  bool? _enableRappenRounding;
+  bool? get enableRappenRounding => _$this._enableRappenRounding;
+  set enableRappenRounding(bool? enableRappenRounding) =>
+      _$this._enableRappenRounding = enableRappenRounding;
+
   String? _useUnappliedPayment;
   String? get useUnappliedPayment => _$this._useUnappliedPayment;
   set useUnappliedPayment(String? useUnappliedPayment) =>
@@ -5394,6 +5416,7 @@ class SettingsEntityBuilder
       _classification = $v.classification;
       _paymentEmailAllContacts = $v.paymentEmailAllContacts;
       _showPdfhtmlOnMobile = $v.showPdfhtmlOnMobile;
+      _enableRappenRounding = $v.enableRappenRounding;
       _useUnappliedPayment = $v.useUnappliedPayment;
       _brevoSecret = $v.brevoSecret;
       _$v = null;
@@ -5647,6 +5670,7 @@ class SettingsEntityBuilder
               classification: classification,
               paymentEmailAllContacts: paymentEmailAllContacts,
               showPdfhtmlOnMobile: showPdfhtmlOnMobile,
+              enableRappenRounding: enableRappenRounding,
               useUnappliedPayment: useUnappliedPayment,
               brevoSecret: brevoSecret);
     } catch (_) {
