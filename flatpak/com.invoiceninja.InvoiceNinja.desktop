@@ -7,6 +7,6 @@ Comment=Create invoices, accept payments, track expenses & time tasks
 Categories=Office;
 
 Icon=com.invoiceninja.InvoiceNinja
-Exec=invoiceninja_client
+Exec=invoiceninja
 Terminal=false
-StartupWMClass=invoiceninja_client
+StartupWMClass=invoiceninja
