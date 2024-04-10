@@ -846,6 +846,7 @@ void handlePurchaseOrderAction(BuildContext? context,
       });
       break;
     case EntityAction.download:
+      store.dispatch(StartLoading());
       await WebClient()
           .get(purchaseOrder.invitationDownloadLink, state.token,
               rawResponse: true)
