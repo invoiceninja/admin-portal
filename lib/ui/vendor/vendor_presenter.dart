@@ -20,7 +20,7 @@ class VendorPresenter extends EntityPresenter {
       VendorFields.name,
       VendorFields.city,
       VendorFields.phone,
-      EntityFields.state,
+      VendorFields.state,
       VendorFields.contactEmail,
       VendorFields.lastLoginAt,
     ];
