@@ -37,6 +37,7 @@ enum PurchaseOrderItemReportFields {
   dueDate,
   hasTaxes,
   taxRates,
+  taxNames,
   taxAmount,
   netTotal,
   currency,
@@ -188,6 +189,9 @@ ReportResult lineItemReport(
             break;
           case PurchaseOrderItemReportFields.taxRates:
             value = lineItem.taxRates;
+            break;
+          case PurchaseOrderItemReportFields.taxNames:
+            value = lineItem.taxNames;
             break;
           case PurchaseOrderItemReportFields.taxAmount:
             value = lineItem.taxAmount(invoice, precision);

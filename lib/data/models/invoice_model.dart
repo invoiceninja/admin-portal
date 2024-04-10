@@ -1753,7 +1753,7 @@ abstract class InvoiceItemEntity
       taxName2.isNotEmpty ||
       taxName3.isNotEmpty;
 
-  String get taxRates {
+  String get taxNames {
     final parts = <String>[];
     if (taxName1.isNotEmpty) {
       parts.add(taxName1);
@@ -1763,6 +1763,20 @@ abstract class InvoiceItemEntity
     }
     if (taxName3.isNotEmpty) {
       parts.add(taxName3);
+    }
+    return parts.join(', ');
+  }
+
+  String get taxRates {
+    final parts = <String>[];
+    if (taxName1.isNotEmpty) {
+      parts.add('$taxRate1');
+    }
+    if (taxName2.isNotEmpty) {
+      parts.add('$taxRate2');
+    }
+    if (taxName3.isNotEmpty) {
+      parts.add('$taxRate3');
     }
     return parts.join(', ');
   }

@@ -40,6 +40,7 @@ enum CreditItemReportFields {
   dueDate,
   hasTaxes,
   taxRates,
+  taxNames,
   taxAmount,
   netTotal,
   currency,
@@ -192,6 +193,9 @@ ReportResult lineItemReport(
             break;
           case CreditItemReportFields.taxRates:
             value = lineItem.taxRates;
+            break;
+          case CreditItemReportFields.taxNames:
+            value = lineItem.taxNames;
             break;
           case CreditItemReportFields.taxAmount:
             value = lineItem.taxAmount(credit, precision);
