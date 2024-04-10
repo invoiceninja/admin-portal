@@ -122,7 +122,8 @@ abstract class SettingsEntity
   static const PAGE_NUMBER_ALIGN_RIGHT = 'R';
   static const PAGE_NUMBER_ALIGN_CENTER = 'C';
 
-  static const EMAIL_SENDING_METHOD_DEFAULT = 'default';
+  static const EMAIL_SENDING_METHOD_POSTMARK_HOSTED = 'default';
+  static const EMAIL_SENDING_METHOD_MAILGUN_HOSTED = 'mailgun';
   static const EMAIL_SENDING_METHOD_GMAIL = 'gmail';
   static const EMAIL_SENDING_METHOD_MICROSOFT = 'office365';
   static const EMAIL_SENDING_METHOD_POSTMARK = 'client_postmark';

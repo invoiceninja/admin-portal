@@ -243,8 +243,13 @@ class _EmailSettingsState extends State<EmailSettings> {
                 },
                 items: [
                   DropdownMenuItem(
-                      child: Text(localization.defaultWord),
-                      value: SettingsEntity.EMAIL_SENDING_METHOD_DEFAULT),
+                      child: Text('Postmark (${localization.hosted})'),
+                      value:
+                          SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK_HOSTED),
+                  DropdownMenuItem(
+                      child: Text('Mailgun (Hosted)'),
+                      value:
+                          SettingsEntity.EMAIL_SENDING_METHOD_MAILGUN_HOSTED),
                   if (supportsLatestFeatures('5.8.0') && state.isProPlan)
                     DropdownMenuItem(
                         child: Text('SMTP'),
