@@ -197,12 +197,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'smtp_verify_peer',
       serializers.serialize(object.smtpVerifyPeer,
           specifiedType: const FullType(bool)),
-      'smtp_from_name',
-      serializers.serialize(object.smtpFromName,
-          specifiedType: const FullType(String)),
-      'smtp_from_email',
-      serializers.serialize(object.smtpFromEmail,
-          specifiedType: const FullType(String)),
       'groups',
       serializers.serialize(object.groups,
           specifiedType:
@@ -700,14 +694,6 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'smtp_verify_peer':
           result.smtpVerifyPeer = serializers.deserialize(value,
               specifiedType: const FullType(bool))! as bool;
-          break;
-        case 'smtp_from_name':
-          result.smtpFromName = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
-          break;
-        case 'smtp_from_email':
-          result.smtpFromEmail = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
           break;
         case 'groups':
           result.groups.replace(serializers.deserialize(value,
@@ -1811,10 +1797,6 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final bool smtpVerifyPeer;
   @override
-  final String smtpFromName;
-  @override
-  final String smtpFromEmail;
-  @override
   final BuiltList<GroupEntity> groups;
   @override
   final BuiltList<ActivityEntity> activities;
@@ -2013,8 +1995,6 @@ class _$CompanyEntity extends CompanyEntity {
       required this.smtpPassword,
       required this.smtpLocalDomain,
       required this.smtpVerifyPeer,
-      required this.smtpFromName,
-      required this.smtpFromEmail,
       required this.groups,
       required this.activities,
       required this.taxRates,
@@ -2192,10 +2172,6 @@ class _$CompanyEntity extends CompanyEntity {
         smtpLocalDomain, r'CompanyEntity', 'smtpLocalDomain');
     BuiltValueNullFieldError.checkNotNull(
         smtpVerifyPeer, r'CompanyEntity', 'smtpVerifyPeer');
-    BuiltValueNullFieldError.checkNotNull(
-        smtpFromName, r'CompanyEntity', 'smtpFromName');
-    BuiltValueNullFieldError.checkNotNull(
-        smtpFromEmail, r'CompanyEntity', 'smtpFromEmail');
     BuiltValueNullFieldError.checkNotNull(groups, r'CompanyEntity', 'groups');
     BuiltValueNullFieldError.checkNotNull(
         activities, r'CompanyEntity', 'activities');
@@ -2382,8 +2358,6 @@ class _$CompanyEntity extends CompanyEntity {
         smtpPassword == other.smtpPassword &&
         smtpLocalDomain == other.smtpLocalDomain &&
         smtpVerifyPeer == other.smtpVerifyPeer &&
-        smtpFromName == other.smtpFromName &&
-        smtpFromEmail == other.smtpFromEmail &&
         groups == other.groups &&
         activities == other.activities &&
         taxRates == other.taxRates &&
@@ -2516,8 +2490,6 @@ class _$CompanyEntity extends CompanyEntity {
     _$hash = $jc(_$hash, smtpPassword.hashCode);
     _$hash = $jc(_$hash, smtpLocalDomain.hashCode);
     _$hash = $jc(_$hash, smtpVerifyPeer.hashCode);
-    _$hash = $jc(_$hash, smtpFromName.hashCode);
-    _$hash = $jc(_$hash, smtpFromEmail.hashCode);
     _$hash = $jc(_$hash, groups.hashCode);
     _$hash = $jc(_$hash, activities.hashCode);
     _$hash = $jc(_$hash, taxRates.hashCode);
@@ -2649,8 +2621,6 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('smtpPassword', smtpPassword)
           ..add('smtpLocalDomain', smtpLocalDomain)
           ..add('smtpVerifyPeer', smtpVerifyPeer)
-          ..add('smtpFromName', smtpFromName)
-          ..add('smtpFromEmail', smtpFromEmail)
           ..add('groups', groups)
           ..add('activities', activities)
           ..add('taxRates', taxRates)
@@ -2986,15 +2956,6 @@ class CompanyEntityBuilder
   bool? get smtpVerifyPeer => _$this._smtpVerifyPeer;
   set smtpVerifyPeer(bool? smtpVerifyPeer) =>
       _$this._smtpVerifyPeer = smtpVerifyPeer;
-
-  String? _smtpFromName;
-  String? get smtpFromName => _$this._smtpFromName;
-  set smtpFromName(String? smtpFromName) => _$this._smtpFromName = smtpFromName;
-
-  String? _smtpFromEmail;
-  String? get smtpFromEmail => _$this._smtpFromEmail;
-  set smtpFromEmail(String? smtpFromEmail) =>
-      _$this._smtpFromEmail = smtpFromEmail;
 
   ListBuilder<GroupEntity>? _groups;
   ListBuilder<GroupEntity> get groups =>
@@ -3431,8 +3392,6 @@ class CompanyEntityBuilder
       _smtpPassword = $v.smtpPassword;
       _smtpLocalDomain = $v.smtpLocalDomain;
       _smtpVerifyPeer = $v.smtpVerifyPeer;
-      _smtpFromName = $v.smtpFromName;
-      _smtpFromEmail = $v.smtpFromEmail;
       _groups = $v.groups.toBuilder();
       _activities = $v.activities.toBuilder();
       _taxRates = $v.taxRates.toBuilder();
@@ -3595,8 +3554,6 @@ class CompanyEntityBuilder
               smtpPassword: BuiltValueNullFieldError.checkNotNull(smtpPassword, r'CompanyEntity', 'smtpPassword'),
               smtpLocalDomain: BuiltValueNullFieldError.checkNotNull(smtpLocalDomain, r'CompanyEntity', 'smtpLocalDomain'),
               smtpVerifyPeer: BuiltValueNullFieldError.checkNotNull(smtpVerifyPeer, r'CompanyEntity', 'smtpVerifyPeer'),
-              smtpFromName: BuiltValueNullFieldError.checkNotNull(smtpFromName, r'CompanyEntity', 'smtpFromName'),
-              smtpFromEmail: BuiltValueNullFieldError.checkNotNull(smtpFromEmail, r'CompanyEntity', 'smtpFromEmail'),
               groups: groups.build(),
               activities: activities.build(),
               taxRates: taxRates.build(),

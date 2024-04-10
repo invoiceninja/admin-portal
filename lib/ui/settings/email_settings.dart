@@ -65,8 +65,6 @@ class _EmailSettingsState extends State<EmailSettings> {
   final _smtpUsernameController = TextEditingController();
   final _smtpPasswordController = TextEditingController();
   final _smtpLocalDomainController = TextEditingController();
-  final _smtpFromEmailController = TextEditingController();
-  final _smtpFromNameController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -102,8 +100,6 @@ class _EmailSettingsState extends State<EmailSettings> {
       _mailgunDomainController,
       _customSendingEmailController,
       _eInvoiceCertificatePassphraseController,
-      _smtpFromEmailController,
-      _smtpFromNameController,
       _smtpHostController,
       _smtpPortController,
       _smtpUsernameController,
@@ -136,8 +132,6 @@ class _EmailSettingsState extends State<EmailSettings> {
     _smtpUsernameController.text = company.smtpUsername;
     _smtpPasswordController.text = company.smtpPassword;
     _smtpLocalDomainController.text = company.smtpLocalDomain;
-    _smtpFromEmailController.text = company.smtpFromEmail;
-    _smtpFromNameController.text = company.smtpFromName;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -192,8 +186,6 @@ class _EmailSettingsState extends State<EmailSettings> {
               : eInvoiceCertificatePassphrase
       ..smtpHost = _smtpHostController.text.trim()
       ..smtpPort = parseInt(_smtpPortController.text.trim())
-      ..smtpFromEmail = _smtpFromEmailController.text.trim()
-      ..smtpFromName = _smtpFromNameController.text.trim()
       ..smtpUsername = _smtpUsernameController.text.trim()
       ..smtpPassword = _smtpPasswordController.text.trim()
       ..smtpLocalDomain = _smtpLocalDomainController.text.trim());
@@ -464,24 +456,6 @@ class _EmailSettingsState extends State<EmailSettings> {
                       : null,
                 ),
                 DecoratedFormField(
-                  label: localization.fromEmail,
-                  controller: _smtpFromEmailController,
-                  keyboardType: TextInputType.emailAddress,
-                  onSavePressed: _onSavePressed,
-                  validator: (value) => value.trim().isEmpty
-                      ? localization.pleaseEnterAValue
-                      : null,
-                ),
-                DecoratedFormField(
-                  label: localization.fromName,
-                  controller: _smtpFromNameController,
-                  keyboardType: TextInputType.text,
-                  onSavePressed: _onSavePressed,
-                  validator: (value) => value.trim().isEmpty
-                      ? localization.pleaseEnterAValue
-                      : null,
-                ),
-                DecoratedFormField(
                   label: localization.localDomain,
                   controller: _smtpLocalDomainController,
                   keyboardType: TextInputType.url,
@@ -513,8 +487,6 @@ class _EmailSettingsState extends State<EmailSettings> {
                           'smtp_password': company.smtpPassword,
                         'smtp_local_domain': company.smtpLocalDomain,
                         'smtp_verify_peer': company.smtpVerifyPeer,
-                        'smtp_from_name': company.smtpFromName,
-                        'smtp_from_email': company.smtpFromEmail,
                       };
 
                       final store = StoreProvider.of<AppState>(context);
@@ -541,7 +513,8 @@ class _EmailSettingsState extends State<EmailSettings> {
             children: <Widget>[
               if ([
                 SettingsEntity.EMAIL_SENDING_METHOD_MAILGUN,
-                SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK
+                SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK,
+                SettingsEntity.EMAIL_SENDING_METHOD_SMTP,
               ].contains(settings.emailSendingMethod))
                 DecoratedFormField(
                   label: localization.fromEmail,
