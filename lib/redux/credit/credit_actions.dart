@@ -628,6 +628,23 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
         filterEntity: client,
       );
       break;
+    case EntityAction.eCredit:
+      store.dispatch(StartLoading());
+      await WebClient()
+          .get(credit.invitationECreditDownloadLink, state.token,
+              rawResponse: true)
+          .then((response) {
+        store.dispatch(StopLoading());
+        saveDownloadedFile(
+          response.bodyBytes,
+          credit.number + '.xml',
+          prefix: EntityType.invoice.apiValue,
+          languageId: client.languageId,
+        );
+      }).catchError((_) {
+        store.dispatch(StopLoading());
+      });
+      break;
     case EntityAction.download:
       store.dispatch(StartLoading());
       await WebClient()

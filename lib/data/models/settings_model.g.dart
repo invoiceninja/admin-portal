@@ -1557,6 +1557,13 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.eQuoteType;
+    if (value != null) {
+      result
+        ..add('e_quote_type')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.defaultExpensePaymentTypeId;
     if (value != null) {
       result
@@ -1585,10 +1592,24 @@ class _$SettingsEntitySerializer
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.enableRappenRounding;
+    if (value != null) {
+      result
+        ..add('enable_rappen_rounding')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     value = object.useUnappliedPayment;
     if (value != null) {
       result
         ..add('use_unapplied_payment')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.brevoSecret;
+    if (value != null) {
+      result
+        ..add('brevo_secret')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
@@ -2498,6 +2519,10 @@ class _$SettingsEntitySerializer
           result.eInvoiceType = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'e_quote_type':
+          result.eQuoteType = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
         case 'default_expense_payment_type_id':
           result.defaultExpensePaymentTypeId = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
@@ -2514,8 +2539,16 @@ class _$SettingsEntitySerializer
           result.showPdfhtmlOnMobile = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
           break;
+        case 'enable_rappen_rounding':
+          result.enableRappenRounding = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
         case 'use_unapplied_payment':
           result.useUnappliedPayment = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'brevo_secret':
+          result.brevoSecret = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
       }
@@ -3040,6 +3073,8 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final String? eInvoiceType;
   @override
+  final String? eQuoteType;
+  @override
   final String? defaultExpensePaymentTypeId;
   @override
   final String? classification;
@@ -3048,7 +3083,11 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final bool? showPdfhtmlOnMobile;
   @override
+  final bool? enableRappenRounding;
+  @override
   final String? useUnappliedPayment;
+  @override
+  final String? brevoSecret;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder)? updates]) =>
       (new SettingsEntityBuilder()..update(updates))._build();
@@ -3275,11 +3314,14 @@ class _$SettingsEntity extends SettingsEntity {
       this.showTaskItemDescription,
       this.enableEInvoice,
       this.eInvoiceType,
+      this.eQuoteType,
       this.defaultExpensePaymentTypeId,
       this.classification,
       this.paymentEmailAllContacts,
       this.showPdfhtmlOnMobile,
-      this.useUnappliedPayment})
+      this.enableRappenRounding,
+      this.useUnappliedPayment,
+      this.brevoSecret})
       : super._();
 
   @override
@@ -3520,11 +3562,14 @@ class _$SettingsEntity extends SettingsEntity {
         showTaskItemDescription == other.showTaskItemDescription &&
         enableEInvoice == other.enableEInvoice &&
         eInvoiceType == other.eInvoiceType &&
+        eQuoteType == other.eQuoteType &&
         defaultExpensePaymentTypeId == other.defaultExpensePaymentTypeId &&
         classification == other.classification &&
         paymentEmailAllContacts == other.paymentEmailAllContacts &&
         showPdfhtmlOnMobile == other.showPdfhtmlOnMobile &&
-        useUnappliedPayment == other.useUnappliedPayment;
+        enableRappenRounding == other.enableRappenRounding &&
+        useUnappliedPayment == other.useUnappliedPayment &&
+        brevoSecret == other.brevoSecret;
   }
 
   int? __hashCode;
@@ -3753,11 +3798,14 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, showTaskItemDescription.hashCode);
     _$hash = $jc(_$hash, enableEInvoice.hashCode);
     _$hash = $jc(_$hash, eInvoiceType.hashCode);
+    _$hash = $jc(_$hash, eQuoteType.hashCode);
     _$hash = $jc(_$hash, defaultExpensePaymentTypeId.hashCode);
     _$hash = $jc(_$hash, classification.hashCode);
     _$hash = $jc(_$hash, paymentEmailAllContacts.hashCode);
     _$hash = $jc(_$hash, showPdfhtmlOnMobile.hashCode);
+    _$hash = $jc(_$hash, enableRappenRounding.hashCode);
     _$hash = $jc(_$hash, useUnappliedPayment.hashCode);
+    _$hash = $jc(_$hash, brevoSecret.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -3991,11 +4039,14 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('showTaskItemDescription', showTaskItemDescription)
           ..add('enableEInvoice', enableEInvoice)
           ..add('eInvoiceType', eInvoiceType)
+          ..add('eQuoteType', eQuoteType)
           ..add('defaultExpensePaymentTypeId', defaultExpensePaymentTypeId)
           ..add('classification', classification)
           ..add('paymentEmailAllContacts', paymentEmailAllContacts)
           ..add('showPdfhtmlOnMobile', showPdfhtmlOnMobile)
-          ..add('useUnappliedPayment', useUnappliedPayment))
+          ..add('enableRappenRounding', enableRappenRounding)
+          ..add('useUnappliedPayment', useUnappliedPayment)
+          ..add('brevoSecret', brevoSecret))
         .toString();
   }
 }
@@ -5095,6 +5146,10 @@ class SettingsEntityBuilder
   String? get eInvoiceType => _$this._eInvoiceType;
   set eInvoiceType(String? eInvoiceType) => _$this._eInvoiceType = eInvoiceType;
 
+  String? _eQuoteType;
+  String? get eQuoteType => _$this._eQuoteType;
+  set eQuoteType(String? eQuoteType) => _$this._eQuoteType = eQuoteType;
+
   String? _defaultExpensePaymentTypeId;
   String? get defaultExpensePaymentTypeId =>
       _$this._defaultExpensePaymentTypeId;
@@ -5116,10 +5171,19 @@ class SettingsEntityBuilder
   set showPdfhtmlOnMobile(bool? showPdfhtmlOnMobile) =>
       _$this._showPdfhtmlOnMobile = showPdfhtmlOnMobile;
 
+  bool? _enableRappenRounding;
+  bool? get enableRappenRounding => _$this._enableRappenRounding;
+  set enableRappenRounding(bool? enableRappenRounding) =>
+      _$this._enableRappenRounding = enableRappenRounding;
+
   String? _useUnappliedPayment;
   String? get useUnappliedPayment => _$this._useUnappliedPayment;
   set useUnappliedPayment(String? useUnappliedPayment) =>
       _$this._useUnappliedPayment = useUnappliedPayment;
+
+  String? _brevoSecret;
+  String? get brevoSecret => _$this._brevoSecret;
+  set brevoSecret(String? brevoSecret) => _$this._brevoSecret = brevoSecret;
 
   SettingsEntityBuilder();
 
@@ -5347,11 +5411,14 @@ class SettingsEntityBuilder
       _showTaskItemDescription = $v.showTaskItemDescription;
       _enableEInvoice = $v.enableEInvoice;
       _eInvoiceType = $v.eInvoiceType;
+      _eQuoteType = $v.eQuoteType;
       _defaultExpensePaymentTypeId = $v.defaultExpensePaymentTypeId;
       _classification = $v.classification;
       _paymentEmailAllContacts = $v.paymentEmailAllContacts;
       _showPdfhtmlOnMobile = $v.showPdfhtmlOnMobile;
+      _enableRappenRounding = $v.enableRappenRounding;
       _useUnappliedPayment = $v.useUnappliedPayment;
+      _brevoSecret = $v.brevoSecret;
       _$v = null;
     }
     return this;
@@ -5598,11 +5665,14 @@ class SettingsEntityBuilder
               showTaskItemDescription: showTaskItemDescription,
               enableEInvoice: enableEInvoice,
               eInvoiceType: eInvoiceType,
+              eQuoteType: eQuoteType,
               defaultExpensePaymentTypeId: defaultExpensePaymentTypeId,
               classification: classification,
               paymentEmailAllContacts: paymentEmailAllContacts,
               showPdfhtmlOnMobile: showPdfhtmlOnMobile,
-              useUnappliedPayment: useUnappliedPayment);
+              enableRappenRounding: enableRappenRounding,
+              useUnappliedPayment: useUnappliedPayment,
+              brevoSecret: brevoSecret);
     } catch (_) {
       late String _$failedField;
       try {

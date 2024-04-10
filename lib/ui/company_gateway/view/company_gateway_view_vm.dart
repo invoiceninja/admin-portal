@@ -60,8 +60,9 @@ class CompanyGatewayViewVM {
     required this.isSaving,
     required this.isLoading,
     required this.isDirty,
-    required this.onStripeImportPressed,
+    required this.onImportCustomersPressed,
     required this.onStripeVerifyPressed,
+    required this.onCheckCredentialsPressed,
   });
 
   factory CompanyGatewayViewVM.fromStore(Store<AppState> store) {
@@ -79,103 +80,116 @@ class CompanyGatewayViewVM {
     }
 
     return CompanyGatewayViewVM(
-      state: state,
-      company: state.company,
-      isSaving: state.isSaving,
-      isLoading: state.isLoading,
-      isDirty: companyGateway.isNew,
-      companyGateway: companyGateway,
-      onRefreshed: (context) => _handleRefresh(context),
-      onBackPressed: () {
-        store.dispatch(UpdateCurrentRoute(CompanyGatewayScreen.route));
-      },
-      onEntityAction: (BuildContext context, EntityAction action) =>
-          handleEntitiesActions([companyGateway], action, autoPop: true),
-      onStripeVerifyPressed: (BuildContext context) {
-        final localization = AppLocalization.of(context);
-        final webClient = WebClient();
-        final credentials = state.credentials;
-        final url = '${credentials.url}/stripe/verify';
+        state: state,
+        company: state.company,
+        isSaving: state.isSaving,
+        isLoading: state.isLoading,
+        isDirty: companyGateway.isNew,
+        companyGateway: companyGateway,
+        onRefreshed: (context) => _handleRefresh(context),
+        onBackPressed: () {
+          store.dispatch(UpdateCurrentRoute(CompanyGatewayScreen.route));
+        },
+        onEntityAction: (BuildContext context, EntityAction action) =>
+            handleEntitiesActions([companyGateway], action, autoPop: true),
+        onStripeVerifyPressed: (BuildContext context) {
+          final localization = AppLocalization.of(context);
+          final webClient = WebClient();
+          final credentials = state.credentials;
+          final url = '${credentials.url}/stripe/verify';
 
-        passwordCallback(
-            context: context,
-            callback: (password, idToken) {
-              store.dispatch(StartSaving());
-              webClient
-                  .post(url, credentials.token,
-                      password: password, idToken: idToken)
-                  .then((dynamic response) {
-                store.dispatch(StopSaving());
+          passwordCallback(
+              context: context,
+              callback: (password, idToken) {
+                store.dispatch(StartSaving());
+                webClient
+                    .post(url, credentials.token,
+                        password: password, idToken: idToken)
+                    .then((dynamic response) {
+                  store.dispatch(StopSaving());
 
-                showDialog<void>(
-                    context: navigatorKey.currentContext!,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text(localization!.customerCount),
-                        actions: [
-                          TextButton(
-                              onPressed: () => Navigator.of(context).pop(),
-                              child: Text(localization.close.toUpperCase()))
-                        ],
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Row(
-                              children: [
-                                SizedBox(width: 120, child: Text('Stripe')),
-                                SizedBox(
+                  showDialog<void>(
+                      context: navigatorKey.currentContext!,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text(localization!.customerCount),
+                          actions: [
+                            TextButton(
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: Text(localization.close.toUpperCase()))
+                          ],
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Row(
+                                children: [
+                                  SizedBox(width: 120, child: Text('Stripe')),
+                                  SizedBox(
+                                      width: 100,
+                                      child: Text(
+                                        '${response['stripe_customer_count']}',
+                                        textAlign: TextAlign.end,
+                                      )),
+                                ],
+                              ),
+                              SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  SizedBox(width: 120, child: Text(kAppName)),
+                                  SizedBox(
                                     width: 100,
                                     child: Text(
-                                      '${response['stripe_customer_count']}',
-                                      textAlign: TextAlign.end,
-                                    )),
-                              ],
-                            ),
-                            SizedBox(height: 8),
-                            Row(
-                              children: [
-                                SizedBox(width: 120, child: Text(kAppName)),
-                                SizedBox(
-                                  width: 100,
-                                  child: Text(
-                                      '${(response['stripe_customers'] as Iterable).length}',
-                                      textAlign: TextAlign.end),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      );
-                    });
-              }).catchError((dynamic error) {
-                store.dispatch(StopSaving());
-                showErrorDialog(message: error);
+                                        '${(response['stripe_customers'] as Iterable).length}',
+                                        textAlign: TextAlign.end),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      });
+                }).catchError((dynamic error) {
+                  store.dispatch(StopSaving());
+                  showErrorDialog(message: error);
+                });
               });
-            });
-      },
-      onStripeImportPressed: (BuildContext context) {
-        final localization = AppLocalization.of(context);
-        final webClient = WebClient();
-        final credentials = state.credentials;
-        final url = '${credentials.url}/stripe/import_customers';
+        },
+        onCheckCredentialsPressed: (BuildContext context) {
+          final localization = AppLocalization.of(context)!;
+          final webClient = WebClient();
+          final credentials = state.credentials;
+          final url =
+              '${credentials.url}/company_gateways/${companyGateway.id}/test';
 
-        passwordCallback(
-            context: context,
-            callback: (password, idToken) {
-              store.dispatch(StartSaving());
-              webClient
-                  .post(url, credentials.token,
-                      password: password, idToken: idToken)
-                  .then((dynamic response) {
-                store.dispatch(StopSaving());
-                showMessageDialog(message: localization!.importedCustomers);
-              }).catchError((dynamic error) {
-                store.dispatch(StopSaving());
-                showErrorDialog(message: error);
-              });
-            });
-      },
-    );
+          store.dispatch(StartSaving());
+          webClient.post(url, credentials.token).then((dynamic response) {
+            store.dispatch(StopSaving());
+            showMessageDialog(
+              message: response['message'] == 'true'
+                  ? localization.validCredentials
+                  : localization.invalidCredentials,
+            );
+          }).catchError((dynamic error) {
+            store.dispatch(StopSaving());
+            showErrorDialog(message: error);
+          });
+        },
+        onImportCustomersPressed: (BuildContext context) {
+          final localization = AppLocalization.of(context);
+          final webClient = WebClient();
+          final credentials = state.credentials;
+          final url =
+              '${credentials.url}/company_gateways/${companyGateway.id}/import_customers';
+
+          store.dispatch(StartSaving());
+          webClient.post(url, credentials.token).then((dynamic response) {
+            store.dispatch(StopSaving());
+            showMessageDialog(message: localization!.importedCustomers);
+          }).catchError((dynamic error) {
+            store.dispatch(StopSaving());
+            showErrorDialog(message: error);
+          });
+        });
   }
 
   final AppState state;
@@ -187,6 +201,7 @@ class CompanyGatewayViewVM {
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;
-  final Function(BuildContext) onStripeImportPressed;
+  final Function(BuildContext) onImportCustomersPressed;
   final Function(BuildContext) onStripeVerifyPressed;
+  final Function(BuildContext) onCheckCredentialsPressed;
 }

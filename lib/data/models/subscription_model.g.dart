@@ -194,6 +194,9 @@ class _$SubscriptionEntitySerializer
       'purchase_page',
       serializers.serialize(object.purchasePage,
           specifiedType: const FullType(String)),
+      'steps',
+      serializers.serialize(object.steps,
+          specifiedType: const FullType(String)),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -345,6 +348,10 @@ class _$SubscriptionEntitySerializer
           break;
         case 'purchase_page':
           result.purchasePage = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'steps':
+          result.steps = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
         case 'isChanged':
@@ -714,6 +721,8 @@ class _$SubscriptionEntity extends SubscriptionEntity {
   @override
   final String purchasePage;
   @override
+  final String steps;
+  @override
   final bool? isChanged;
   @override
   final int createdAt;
@@ -759,6 +768,7 @@ class _$SubscriptionEntity extends SubscriptionEntity {
       required this.refundPeriod,
       required this.webhookConfiguration,
       required this.purchasePage,
+      required this.steps,
       this.isChanged,
       required this.createdAt,
       required this.updatedAt,
@@ -816,6 +826,8 @@ class _$SubscriptionEntity extends SubscriptionEntity {
     BuiltValueNullFieldError.checkNotNull(
         purchasePage, r'SubscriptionEntity', 'purchasePage');
     BuiltValueNullFieldError.checkNotNull(
+        steps, r'SubscriptionEntity', 'steps');
+    BuiltValueNullFieldError.checkNotNull(
         createdAt, r'SubscriptionEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
         updatedAt, r'SubscriptionEntity', 'updatedAt');
@@ -861,6 +873,7 @@ class _$SubscriptionEntity extends SubscriptionEntity {
         refundPeriod == other.refundPeriod &&
         webhookConfiguration == other.webhookConfiguration &&
         purchasePage == other.purchasePage &&
+        steps == other.steps &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -900,6 +913,7 @@ class _$SubscriptionEntity extends SubscriptionEntity {
     _$hash = $jc(_$hash, refundPeriod.hashCode);
     _$hash = $jc(_$hash, webhookConfiguration.hashCode);
     _$hash = $jc(_$hash, purchasePage.hashCode);
+    _$hash = $jc(_$hash, steps.hashCode);
     _$hash = $jc(_$hash, isChanged.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
@@ -939,6 +953,7 @@ class _$SubscriptionEntity extends SubscriptionEntity {
           ..add('refundPeriod', refundPeriod)
           ..add('webhookConfiguration', webhookConfiguration)
           ..add('purchasePage', purchasePage)
+          ..add('steps', steps)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1068,6 +1083,10 @@ class SubscriptionEntityBuilder
   String? get purchasePage => _$this._purchasePage;
   set purchasePage(String? purchasePage) => _$this._purchasePage = purchasePage;
 
+  String? _steps;
+  String? get steps => _$this._steps;
+  set steps(String? steps) => _$this._steps = steps;
+
   bool? _isChanged;
   bool? get isChanged => _$this._isChanged;
   set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
@@ -1133,6 +1152,7 @@ class SubscriptionEntityBuilder
       _refundPeriod = $v.refundPeriod;
       _webhookConfiguration = $v.webhookConfiguration.toBuilder();
       _purchasePage = $v.purchasePage;
+      _steps = $v.steps;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -1198,6 +1218,7 @@ class SubscriptionEntityBuilder
               refundPeriod: BuiltValueNullFieldError.checkNotNull(refundPeriod, r'SubscriptionEntity', 'refundPeriod'),
               webhookConfiguration: webhookConfiguration.build(),
               purchasePage: BuiltValueNullFieldError.checkNotNull(purchasePage, r'SubscriptionEntity', 'purchasePage'),
+              steps: BuiltValueNullFieldError.checkNotNull(steps, r'SubscriptionEntity', 'steps'),
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'SubscriptionEntity', 'createdAt'),
               updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'SubscriptionEntity', 'updatedAt'),

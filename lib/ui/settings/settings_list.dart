@@ -403,6 +403,7 @@ class SettingsSearch extends StatelessWidget {
           'military_time',
           'decimal_comma',
           'first_month_of_the_year',
+          'rappen_rounding#2024-04-08',
         ],
         [
           'custom_labels',
@@ -555,12 +556,10 @@ class SettingsSearch extends StatelessWidget {
           'share_invoice_quote_columns#2023-03-20',
           'invoice_embed_documents#2023-10-27',
           'mobile_version#2024-01-29',
-          if (supportsDesignTemplates()) ...[
-            'delivery_note_design#2023-11-06',
-            'statement_design#2023-11-06',
-            'payment_receipt_design#2023-11-06',
-            'payment_refund_design#2023-11-06',
-          ],
+          'delivery_note_design#2023-11-06',
+          'statement_design#2023-11-06',
+          'payment_receipt_design#2023-11-06',
+          'payment_refund_design#2023-11-06',
         ],
       ],
       kSettingsCustomDesigns: [
@@ -633,7 +632,7 @@ class SettingsSearch extends StatelessWidget {
           'mailgun#2023-01-11',
           'email_alignment#2023-01-17',
           'show_email_footer#2023-01-17',
-          'enable_e_invoice#2023-06-11,'
+          'enable_e_invoice#2023-06-11',
         ],
       ],
       kSettingsTemplatesAndReminders: [

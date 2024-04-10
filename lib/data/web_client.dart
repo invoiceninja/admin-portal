@@ -40,7 +40,9 @@ class WebClient {
       url += '&per_page=999999';
     }
 
-    url += '&t=${DateTime.now().millisecondsSinceEpoch}';
+    if (!url.contains('t=')) {
+      url += '&t=${DateTime.now().millisecondsSinceEpoch}';
+    }
 
     print('GET: $url');
 

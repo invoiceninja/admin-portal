@@ -122,7 +122,9 @@ abstract class ClientEntity extends Object
     return _$ClientEntity._(
       id: id ?? BaseEntity.nextId,
       isChanged: false,
-      settings: SettingsEntity(),
+      settings: SettingsEntity().rebuild((b) => b
+        ..languageId = state?.company.languageId ?? ''
+        ..currencyId = state?.company.currencyId ?? ''),
       name: '',
       displayName: '',
       balance: 0,

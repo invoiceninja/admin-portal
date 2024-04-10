@@ -40,6 +40,7 @@ enum QuoteItemReportFields {
   validUntil,
   hasTaxes,
   taxRates,
+  taxNames,
   taxAmount,
   netTotal,
   currency,
@@ -188,6 +189,9 @@ ReportResult lineItemReport(
             break;
           case QuoteItemReportFields.taxRates:
             value = lineItem.taxRates;
+            break;
+          case QuoteItemReportFields.taxNames:
+            value = lineItem.taxNames;
             break;
           case QuoteItemReportFields.taxAmount:
             value = lineItem.taxAmount(invoice, precision);

@@ -1,6 +1,6 @@
 name: invoiceninja_flutter
 description: Client for Invoice Ninja
-version: 5.0.156+156
+version: 5.0.157+157
 homepage: https://invoiceninja.com
 documentation: https://invoiceninja.github.io
 publish_to: none
@@ -39,7 +39,6 @@ dependencies:
   intl: 0.17.0
   flutter_slidable: ^3.0.0
   charts_flutter: ^0.12.0
-  #qr_flutter: ^4.0.0
   qr_flutter: # https://github.com/theyakka/qr.flutter/issues/174#issuecomment-1084235757
     git:
       url: https://github.com/theyakka/qr.flutter.git
@@ -58,7 +57,6 @@ dependencies:
   flutter_styled_toast: ^2.0.0
   permission_handler: ^11.0.1 # Disables Windows support to fix crash
   file_picker: ^5.2.5
-  #boardview: ^0.2.2
   boardview:
     git:
       url: https://github.com/BenPoell/FlutterBoardView.git
@@ -66,13 +64,6 @@ dependencies:
   contacts_service: ^0.6.3
   diacritic: ^0.1.3
   states_rebuilder: ^6.2.0
-  #super_editor: ^0.2.6
-  #super_editor_markdown: ^0.1.5
-  #markdown: ^5.0.0 # REMOVE THIS
-  #super_editor:
-  #  git:
-  #    url: https://github.com/superlistapp/super_editor.git
-  #    path: super_editor
   html2md: ^1.2.6
   printing: ^5.11.0
   image_cropper: ^4.0.1

@@ -134,6 +134,9 @@ class EntityAction extends EnumClass {
   static const EntityAction increasePrices = _$increasePrices;
   static const EntityAction setTaxCategory = _$setTaxCategory;
   static const EntityAction eInvoice = _$eInvoice;
+  static const EntityAction eQuote = _$eQuote;
+  static const EntityAction eCredit = _$eCredit;
+  static const EntityAction ePurchaseOrder = _$ePurchaseOrder;
   static const EntityAction unlink = _$unlink;
   static const EntityAction runTemplate = _$runTemplate;
 

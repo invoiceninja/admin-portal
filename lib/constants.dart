@@ -6,7 +6,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.156';
+const String kClientVersion = '5.0.157';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -265,6 +265,7 @@ const String kEInvoiceTypeXInvoice_Basic = 'XInvoice-Basic';
 const String kEInvoiceTypeFacturae_3_2 = 'Facturae_3.2';
 const String kEInvoiceTypeFacturae_3_2_1 = 'Facturae_3.2.1';
 const String kEInvoiceTypeFacturae_3_2_2 = 'Facturae_3.2.2';
+const String kEInvoiceTypeFACT1 = 'FACT1';
 
 const kEInvoiceTypes = [
   kEInvoiceTypeEN16931,
@@ -280,6 +281,17 @@ const kEInvoiceTypes = [
   kEInvoiceTypeFacturae_3_2_2,
   kEInvoiceTypeFacturae_3_2_1,
   kEInvoiceTypeFacturae_3_2,
+  kEInvoiceTypeFACT1,
+];
+
+const String kEQuoteTypeOrderX_Comfort = 'OrderX_Comfort';
+const String kEQuoteTypeOrderX_Basic = 'OrderX_Basic';
+const String kEQuoteType = 'OrderX_Extended';
+
+const kEQuoteTypes = [
+  kEQuoteTypeOrderX_Comfort,
+  kEQuoteTypeOrderX_Basic,
+  kEQuoteType,
 ];
 
 const String kCountryUnitedStates = '840';

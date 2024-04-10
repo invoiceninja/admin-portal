@@ -91,6 +91,9 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
       'nordigen_enabled',
       serializers.serialize(object.nordigenEnabled,
           specifiedType: const FullType(bool)),
+      'upload_extensions',
+      serializers.serialize(object.uploadExtensions,
+          specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -208,6 +211,10 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
           result.nordigenEnabled = serializers.deserialize(value,
               specifiedType: const FullType(bool))! as bool;
           break;
+        case 'upload_extensions':
+          result.uploadExtensions = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
       }
     }
 
@@ -266,6 +273,8 @@ class _$AccountEntity extends AccountEntity {
   final bool taxApiEnabled;
   @override
   final bool nordigenEnabled;
+  @override
+  final String uploadExtensions;
 
   factory _$AccountEntity([void Function(AccountEntityBuilder)? updates]) =>
       (new AccountEntityBuilder()..update(updates))._build();
@@ -295,7 +304,8 @@ class _$AccountEntity extends AccountEntity {
       required this.hasIapPlan,
       required this.paymentId,
       required this.taxApiEnabled,
-      required this.nordigenEnabled})
+      required this.nordigenEnabled,
+      required this.uploadExtensions})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'AccountEntity', 'id');
     BuiltValueNullFieldError.checkNotNull(key, r'AccountEntity', 'key');
@@ -344,6 +354,8 @@ class _$AccountEntity extends AccountEntity {
         taxApiEnabled, r'AccountEntity', 'taxApiEnabled');
     BuiltValueNullFieldError.checkNotNull(
         nordigenEnabled, r'AccountEntity', 'nordigenEnabled');
+    BuiltValueNullFieldError.checkNotNull(
+        uploadExtensions, r'AccountEntity', 'uploadExtensions');
   }
 
   @override
@@ -381,7 +393,8 @@ class _$AccountEntity extends AccountEntity {
         hasIapPlan == other.hasIapPlan &&
         paymentId == other.paymentId &&
         taxApiEnabled == other.taxApiEnabled &&
-        nordigenEnabled == other.nordigenEnabled;
+        nordigenEnabled == other.nordigenEnabled &&
+        uploadExtensions == other.uploadExtensions;
   }
 
   int? __hashCode;
@@ -414,6 +427,7 @@ class _$AccountEntity extends AccountEntity {
     _$hash = $jc(_$hash, paymentId.hashCode);
     _$hash = $jc(_$hash, taxApiEnabled.hashCode);
     _$hash = $jc(_$hash, nordigenEnabled.hashCode);
+    _$hash = $jc(_$hash, uploadExtensions.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -445,7 +459,8 @@ class _$AccountEntity extends AccountEntity {
           ..add('hasIapPlan', hasIapPlan)
           ..add('paymentId', paymentId)
           ..add('taxApiEnabled', taxApiEnabled)
-          ..add('nordigenEnabled', nordigenEnabled))
+          ..add('nordigenEnabled', nordigenEnabled)
+          ..add('uploadExtensions', uploadExtensions))
         .toString();
   }
 }
@@ -566,6 +581,11 @@ class AccountEntityBuilder
   set nordigenEnabled(bool? nordigenEnabled) =>
       _$this._nordigenEnabled = nordigenEnabled;
 
+  String? _uploadExtensions;
+  String? get uploadExtensions => _$this._uploadExtensions;
+  set uploadExtensions(String? uploadExtensions) =>
+      _$this._uploadExtensions = uploadExtensions;
+
   AccountEntityBuilder() {
     AccountEntity._initializeBuilder(this);
   }
@@ -598,6 +618,7 @@ class AccountEntityBuilder
       _paymentId = $v.paymentId;
       _taxApiEnabled = $v.taxApiEnabled;
       _nordigenEnabled = $v.nordigenEnabled;
+      _uploadExtensions = $v.uploadExtensions;
       _$v = null;
     }
     return this;
@@ -654,7 +675,8 @@ class AccountEntityBuilder
             hasIapPlan: BuiltValueNullFieldError.checkNotNull(hasIapPlan, r'AccountEntity', 'hasIapPlan'),
             paymentId: BuiltValueNullFieldError.checkNotNull(paymentId, r'AccountEntity', 'paymentId'),
             taxApiEnabled: BuiltValueNullFieldError.checkNotNull(taxApiEnabled, r'AccountEntity', 'taxApiEnabled'),
-            nordigenEnabled: BuiltValueNullFieldError.checkNotNull(nordigenEnabled, r'AccountEntity', 'nordigenEnabled'));
+            nordigenEnabled: BuiltValueNullFieldError.checkNotNull(nordigenEnabled, r'AccountEntity', 'nordigenEnabled'),
+            uploadExtensions: BuiltValueNullFieldError.checkNotNull(uploadExtensions, r'AccountEntity', 'uploadExtensions'));
     replace(_$result);
     return _$result;
   }

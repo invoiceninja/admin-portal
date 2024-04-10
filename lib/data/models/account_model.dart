@@ -20,6 +20,7 @@ abstract class AccountEntity
       planExpires: '',
       latestVersion: '',
       currentVersion: '',
+      uploadExtensions: '',
       reportErrors: reportErrors,
       debugEnabled: false,
       isDocker: false,
@@ -119,6 +120,9 @@ abstract class AccountEntity
   @BuiltValueField(wireName: 'nordigen_enabled')
   bool get nordigenEnabled;
 
+  @BuiltValueField(wireName: 'upload_extensions')
+  String get uploadExtensions;
+
   bool get isUpdateAvailable {
     if (disableAutoUpdate) {
       return false;
@@ -157,7 +161,8 @@ abstract class AccountEntity
     ..setReactAsDefaultAP = false
     ..paymentId = ''
     ..taxApiEnabled = false
-    ..nordigenEnabled = false;
+    ..nordigenEnabled = false
+    ..uploadExtensions = '';
 
   static Serializer<AccountEntity> get serializer => _$accountEntitySerializer;
 }

@@ -1,4 +1,4 @@
-// Package imports:
+/// Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -93,11 +93,17 @@ abstract class SubscriptionEntity extends Object
       optionalRecurringProductIds: '',
       registrationRequired: false,
       useInventoryManagement: false,
+      steps: DEFAULT_STEPS,
       webhookConfiguration: WebhookConfigurationEntity(),
     );
   }
 
   SubscriptionEntity._();
+
+  static const DEFAULT_STEPS = '$STEP_CART,$STEP_AUTH_LOGIN_OR_REGISTER';
+
+  static const STEP_CART = 'cart';
+  static const STEP_AUTH_LOGIN_OR_REGISTER = 'auth.login-or-register';
 
   @override
   @memoized
@@ -175,6 +181,8 @@ abstract class SubscriptionEntity extends Object
 
   @BuiltValueField(wireName: 'purchase_page')
   String get purchasePage;
+
+  String get steps;
 
   String get displayName => id;
 
@@ -265,7 +273,8 @@ abstract class SubscriptionEntity extends Object
     ..optionalProductIds = ''
     ..optionalRecurringProductIds = ''
     ..registrationRequired = false
-    ..useInventoryManagement = false;
+    ..useInventoryManagement = false
+    ..steps = DEFAULT_STEPS;
 
   static Serializer<SubscriptionEntity> get serializer =>
       _$subscriptionEntitySerializer;

@@ -55,6 +55,7 @@ enum VendorReportFields {
   updated_at,
   documents,
   last_login,
+  routing_id,
   classification,
   record_state,
   /*
@@ -319,6 +320,9 @@ ReportResult vendorReport(
           break;
         case VendorReportFields.documents:
           value = vendor.documents.length;
+          break;
+        case VendorReportFields.routing_id:
+          value = vendor.routingId;
           break;
         case VendorReportFields.classification:
           value = AppLocalization.of(navigatorKey.currentContext!)!

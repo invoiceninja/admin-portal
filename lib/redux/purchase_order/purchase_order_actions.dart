@@ -828,7 +828,25 @@ void handlePurchaseOrderAction(BuildContext? context,
                 ..designId = designId)
               .recreateInvitations(state));
       break;
+    case EntityAction.ePurchaseOrder:
+      store.dispatch(StartLoading());
+      await WebClient()
+          .get(purchaseOrder.invitationEPurchaseOrderDownloadLink, state.token,
+              rawResponse: true)
+          .then((response) {
+        store.dispatch(StopLoading());
+        saveDownloadedFile(
+          response.bodyBytes,
+          purchaseOrder.number + '.xml',
+          prefix: EntityType.invoice.apiValue,
+          languageId: vendor.languageId,
+        );
+      }).catchError((_) {
+        store.dispatch(StopLoading());
+      });
+      break;
     case EntityAction.download:
+      store.dispatch(StartLoading());
       await WebClient()
           .get(purchaseOrder.invitationDownloadLink, state.token,
               rawResponse: true)

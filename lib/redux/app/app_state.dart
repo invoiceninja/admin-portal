@@ -851,7 +851,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       isSelfHosted && account.isUpdateAvailable && userCompany.isAdmin;
 
   bool get isUsingPostmark => [
-        if (isHosted) SettingsEntity.EMAIL_SENDING_METHOD_DEFAULT,
+        if (isHosted) SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK_HOSTED,
         SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK,
       ].contains(company.settings.emailSendingMethod);
 

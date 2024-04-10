@@ -122,11 +122,13 @@ abstract class SettingsEntity
   static const PAGE_NUMBER_ALIGN_RIGHT = 'R';
   static const PAGE_NUMBER_ALIGN_CENTER = 'C';
 
-  static const EMAIL_SENDING_METHOD_DEFAULT = 'default';
+  static const EMAIL_SENDING_METHOD_POSTMARK_HOSTED = 'default';
+  static const EMAIL_SENDING_METHOD_MAILGUN_HOSTED = 'mailgun';
   static const EMAIL_SENDING_METHOD_GMAIL = 'gmail';
   static const EMAIL_SENDING_METHOD_MICROSOFT = 'office365';
   static const EMAIL_SENDING_METHOD_POSTMARK = 'client_postmark';
   static const EMAIL_SENDING_METHOD_MAILGUN = 'client_mailgun';
+  static const EMAIL_SENDING_METHOD_BREVO = 'client_brevo';
   static const EMAIL_SENDING_METHOD_SMTP = 'smtp';
 
   static const LOCK_INVOICES_OFF = 'off';
@@ -807,6 +809,9 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'e_invoice_type')
   String? get eInvoiceType;
 
+  @BuiltValueField(wireName: 'e_quote_type')
+  String? get eQuoteType;
+
   @BuiltValueField(wireName: 'default_expense_payment_type_id')
   String? get defaultExpensePaymentTypeId;
 
@@ -818,8 +823,14 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'show_pdfhtml_on_mobile')
   bool? get showPdfhtmlOnMobile;
 
+  @BuiltValueField(wireName: 'enable_rappen_rounding')
+  bool? get enableRappenRounding;
+
   @BuiltValueField(wireName: 'use_unapplied_payment')
   String? get useUnappliedPayment;
+
+  @BuiltValueField(wireName: 'brevo_secret')
+  String? get brevoSecret;
 
   bool get hasAddress => address1 != null && address1!.isNotEmpty;
 
