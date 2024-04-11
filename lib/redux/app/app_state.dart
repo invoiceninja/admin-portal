@@ -93,7 +93,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
       isSaving: false,
       isTesting: false,
       isWhiteLabeled: isWhiteLabeled,
-      dismissedNativeWarning: false,
+      dismissedFlutterWebWarning: false,
       lastError: '',
       authState: AuthState(
         url: url,
@@ -126,7 +126,7 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   bool get isWhiteLabeled;
 
-  bool get dismissedNativeWarning;
+  bool get dismissedFlutterWebWarning;
 
   String get lastError;
 

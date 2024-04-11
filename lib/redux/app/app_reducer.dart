@@ -67,8 +67,8 @@ AppState appReducer(AppState state, dynamic action) {
   return state.rebuild((b) => b
     ..isLoading = loadingReducer(state.isLoading, action)
     ..isSaving = savingReducer(state.isSaving, action)
-    ..dismissedNativeWarning =
-        dismissedNativeWarningReducer(state.dismissedNativeWarning, action)
+    ..dismissedFlutterWebWarning = dismissedFlutterWebWarningReducer(
+        state.dismissedFlutterWebWarning, action)
     ..lastError = lastErrorReducer(state.lastError, action)
     ..authState.replace(authReducer(state.authState, action))
     ..staticState.replace(staticReducer(state.staticState, action))
@@ -166,11 +166,11 @@ final lastErrorReducer = combineReducers<String>([
   }),
 ]);
 
-final dismissedNativeWarningReducer = combineReducers<bool>([
-  TypedReducer<bool, DismissNativeWarning>((state, action) {
+final dismissedFlutterWebWarningReducer = combineReducers<bool>([
+  TypedReducer<bool, DismissFlutterWebWarning>((state, action) {
     return true;
   }),
-  TypedReducer<bool, DismissNativeWarningPermanently>((state, action) {
+  TypedReducer<bool, DismissFlutterWebWarningPermanently>((state, action) {
     return true;
   }),
 ]);
