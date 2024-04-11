@@ -16,8 +16,8 @@ import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-class ChangeLayoutBanner extends StatefulWidget {
-  const ChangeLayoutBanner({
+class ImportantMessageBanner extends StatefulWidget {
+  const ImportantMessageBanner({
     Key? key,
     required this.child,
     required this.appLayout,
@@ -29,10 +29,10 @@ class ChangeLayoutBanner extends StatefulWidget {
   final AppLayout suggestedLayout;
 
   @override
-  _ChangeLayoutBannerState createState() => _ChangeLayoutBannerState();
+  _ImportantMessageBannerState createState() => _ImportantMessageBannerState();
 }
 
-class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
+class _ImportantMessageBannerState extends State<ImportantMessageBanner> {
   bool _dismissedChange = false;
 
   @override

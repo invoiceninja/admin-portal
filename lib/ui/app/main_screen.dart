@@ -338,7 +338,7 @@ class MainScreen extends StatelessWidget {
                 children: [
                   if (isWindows()) AppTitleBar(),
                   Expanded(
-                    child: ChangeLayoutBanner(
+                    child: ImportantMessageBanner(
                       appLayout: prefState.appLayout,
                       suggestedLayout: AppLayout.desktop,
                       child: Row(children: <Widget>[

@@ -500,7 +500,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                           LoginScreen.route: (context) => LoginScreen(),
                           MainScreen.route: (context) => MainScreen(),
                           DashboardScreenBuilder.route: (context) =>
-                              ChangeLayoutBanner(
+                              ImportantMessageBanner(
                                 suggestedLayout: AppLayout.mobile,
                                 appLayout: state.prefState.appLayout,
                                 child: DashboardScreenBuilder(),
