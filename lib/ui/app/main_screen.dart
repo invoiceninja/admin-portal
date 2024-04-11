@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/ui/app/app_title_bar.dart';
+import 'package:invoiceninja_flutter/ui/app/important_message_banner.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/bank_account_screen_vm.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/edit/bank_account_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/view/bank_account_view_vm.dart';
@@ -39,7 +40,6 @@ import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_border.dart';
 import 'package:invoiceninja_flutter/ui/app/blank_screen.dart';
-import 'package:invoiceninja_flutter/ui/app/change_layout_banner.dart';
 import 'package:invoiceninja_flutter/ui/app/confirm_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/desktop_session_timeout.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_top_filter.dart';
