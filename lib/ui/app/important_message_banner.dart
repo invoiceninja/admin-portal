@@ -50,8 +50,8 @@ class _ImportantMessageBannerState extends State<ImportantMessageBanner> {
 
     if (!_dismissedMessage.containsKey(MESSAGE_TYPE_FLUTTER_WEB)) {
       if (kIsWeb || !kReleaseMode) {
-        message = localization.flutterWebWarning;
-        messageType = MESSAGE_TYPE_FLUTTER_WEB;
+        //message = localization.flutterWebWarning;
+        //messageType = MESSAGE_TYPE_FLUTTER_WEB;
       }
     }
 
