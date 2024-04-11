@@ -270,7 +270,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
           Flexible(
             flex: 3,
             child: Column(
-              key: ValueKey('__invoice_${invoice.id}_${invoice.updatedAt}__'),
+              key: ValueKey('__invoice_${invoice.id}__'),
               children: <Widget>[
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -456,7 +456,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               },
                             ),
                             DatePicker(
-                              key: ValueKey('__terms_${client.id}__'),
+                              key: ValueKey(
+                                  '__due_date_${client.id}_${invoice.updatedAt}__'),
                               labelText: entityType == EntityType.invoice ||
                                       entityType == EntityType.purchaseOrder
                                   ? localization.dueDate
