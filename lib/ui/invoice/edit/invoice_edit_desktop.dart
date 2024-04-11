@@ -270,7 +270,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
           Flexible(
             flex: 3,
             child: Column(
-              key: ValueKey('__invoice_${invoice.id}__'),
+              key: ValueKey('__invoice_${invoice.id}_${invoice.updatedAt}__'),
               children: <Widget>[
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,

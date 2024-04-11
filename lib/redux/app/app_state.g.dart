@@ -30,8 +30,8 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       'isWhiteLabeled',
       serializers.serialize(object.isWhiteLabeled,
           specifiedType: const FullType(bool)),
-      'dismissedNativeWarning',
-      serializers.serialize(object.dismissedNativeWarning,
+      'dismissedFlutterWebWarning',
+      serializers.serialize(object.dismissedFlutterWebWarning,
           specifiedType: const FullType(bool)),
       'lastError',
       serializers.serialize(object.lastError,
@@ -84,8 +84,8 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           result.isWhiteLabeled = serializers.deserialize(value,
               specifiedType: const FullType(bool))! as bool;
           break;
-        case 'dismissedNativeWarning':
-          result.dismissedNativeWarning = serializers.deserialize(value,
+        case 'dismissedFlutterWebWarning':
+          result.dismissedFlutterWebWarning = serializers.deserialize(value,
               specifiedType: const FullType(bool))! as bool;
           break;
         case 'lastError':
@@ -131,7 +131,7 @@ class _$AppState extends AppState {
   @override
   final bool isWhiteLabeled;
   @override
-  final bool dismissedNativeWarning;
+  final bool dismissedFlutterWebWarning;
   @override
   final String lastError;
   @override
@@ -153,7 +153,7 @@ class _$AppState extends AppState {
       required this.isSaving,
       required this.isTesting,
       required this.isWhiteLabeled,
-      required this.dismissedNativeWarning,
+      required this.dismissedFlutterWebWarning,
       required this.lastError,
       required this.authState,
       required this.staticState,
@@ -167,7 +167,7 @@ class _$AppState extends AppState {
     BuiltValueNullFieldError.checkNotNull(
         isWhiteLabeled, r'AppState', 'isWhiteLabeled');
     BuiltValueNullFieldError.checkNotNull(
-        dismissedNativeWarning, r'AppState', 'dismissedNativeWarning');
+        dismissedFlutterWebWarning, r'AppState', 'dismissedFlutterWebWarning');
     BuiltValueNullFieldError.checkNotNull(lastError, r'AppState', 'lastError');
     BuiltValueNullFieldError.checkNotNull(authState, r'AppState', 'authState');
     BuiltValueNullFieldError.checkNotNull(
@@ -193,7 +193,7 @@ class _$AppState extends AppState {
         isSaving == other.isSaving &&
         isTesting == other.isTesting &&
         isWhiteLabeled == other.isWhiteLabeled &&
-        dismissedNativeWarning == other.dismissedNativeWarning &&
+        dismissedFlutterWebWarning == other.dismissedFlutterWebWarning &&
         lastError == other.lastError &&
         authState == other.authState &&
         staticState == other.staticState &&
@@ -211,7 +211,7 @@ class _$AppState extends AppState {
     _$hash = $jc(_$hash, isSaving.hashCode);
     _$hash = $jc(_$hash, isTesting.hashCode);
     _$hash = $jc(_$hash, isWhiteLabeled.hashCode);
-    _$hash = $jc(_$hash, dismissedNativeWarning.hashCode);
+    _$hash = $jc(_$hash, dismissedFlutterWebWarning.hashCode);
     _$hash = $jc(_$hash, lastError.hashCode);
     _$hash = $jc(_$hash, authState.hashCode);
     _$hash = $jc(_$hash, staticState.hashCode);
@@ -243,10 +243,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   set isWhiteLabeled(bool? isWhiteLabeled) =>
       _$this._isWhiteLabeled = isWhiteLabeled;
 
-  bool? _dismissedNativeWarning;
-  bool? get dismissedNativeWarning => _$this._dismissedNativeWarning;
-  set dismissedNativeWarning(bool? dismissedNativeWarning) =>
-      _$this._dismissedNativeWarning = dismissedNativeWarning;
+  bool? _dismissedFlutterWebWarning;
+  bool? get dismissedFlutterWebWarning => _$this._dismissedFlutterWebWarning;
+  set dismissedFlutterWebWarning(bool? dismissedFlutterWebWarning) =>
+      _$this._dismissedFlutterWebWarning = dismissedFlutterWebWarning;
 
   String? _lastError;
   String? get lastError => _$this._lastError;
@@ -287,7 +287,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
       _isSaving = $v.isSaving;
       _isTesting = $v.isTesting;
       _isWhiteLabeled = $v.isWhiteLabeled;
-      _dismissedNativeWarning = $v.dismissedNativeWarning;
+      _dismissedFlutterWebWarning = $v.dismissedFlutterWebWarning;
       _lastError = $v.lastError;
       _authState = $v.authState.toBuilder();
       _staticState = $v.staticState.toBuilder();
@@ -326,10 +326,10 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
                   isTesting, r'AppState', 'isTesting'),
               isWhiteLabeled: BuiltValueNullFieldError.checkNotNull(
                   isWhiteLabeled, r'AppState', 'isWhiteLabeled'),
-              dismissedNativeWarning: BuiltValueNullFieldError.checkNotNull(
-                  dismissedNativeWarning,
+              dismissedFlutterWebWarning: BuiltValueNullFieldError.checkNotNull(
+                  dismissedFlutterWebWarning,
                   r'AppState',
-                  'dismissedNativeWarning'),
+                  'dismissedFlutterWebWarning'),
               lastError: BuiltValueNullFieldError.checkNotNull(
                   lastError, r'AppState', 'lastError'),
               authState: authState.build(),

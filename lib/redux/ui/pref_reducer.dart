@@ -66,8 +66,8 @@ PrefState prefReducer(
     ..menuSidebarMode = manuSidebarReducer(state.menuSidebarMode, action)
     ..historySidebarMode =
         historySidebarReducer(state.historySidebarMode, action)
-    ..hideDesktopWarning =
-        hideDesktopWarningReducer(state.hideDesktopWarning, action)
+    ..hideFlutterWebWarning =
+        hideFlutterWebWarningReducer(state.hideFlutterWebWarning, action)
     ..hideTaskExtensionBanner =
         hideTaskExtensionBannerReducer(state.hideTaskExtensionBanner, action)
     ..hideGatewayWarning =
@@ -256,8 +256,8 @@ Reducer<String> filterReducer = combineReducers([
 ]);
 */
 
-Reducer<bool> hideDesktopWarningReducer = combineReducers([
-  TypedReducer<bool, DismissNativeWarningPermanently>((filter, action) {
+Reducer<bool> hideFlutterWebWarningReducer = combineReducers([
+  TypedReducer<bool, DismissFlutterWebWarningPermanently>((filter, action) {
     return true;
   }),
 ]);

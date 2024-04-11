@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -16,8 +17,8 @@ import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
 
-class ChangeLayoutBanner extends StatefulWidget {
-  const ChangeLayoutBanner({
+class ImportantMessageBanner extends StatefulWidget {
+  const ImportantMessageBanner({
     Key? key,
     required this.child,
     required this.appLayout,
@@ -29,11 +30,14 @@ class ChangeLayoutBanner extends StatefulWidget {
   final AppLayout suggestedLayout;
 
   @override
-  _ChangeLayoutBannerState createState() => _ChangeLayoutBannerState();
+  _ImportantMessageBannerState createState() => _ImportantMessageBannerState();
 }
 
-class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
-  bool _dismissedChange = false;
+class _ImportantMessageBannerState extends State<ImportantMessageBanner> {
+  static const MESSAGE_TYPE_LAYOUT = 'layout';
+  static const MESSAGE_TYPE_FLUTTER_WEB = 'flutter_web';
+
+  final Map<String, bool> _dismissedMessage = {};
 
   @override
   Widget build(BuildContext context) {
@@ -42,16 +46,26 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
 
     final calculatedLayout = calculateLayout(context);
     String? message;
+    String? messageType;
 
-    if (!_dismissedChange) {
+    if (!_dismissedMessage.containsKey(MESSAGE_TYPE_FLUTTER_WEB)) {
+      if (kIsWeb || !kReleaseMode) {
+        //message = localization.flutterWebWarning;
+        //messageType = MESSAGE_TYPE_FLUTTER_WEB;
+      }
+    }
+
+    if (!_dismissedMessage.containsKey(MESSAGE_TYPE_LAYOUT)) {
       if (widget.appLayout == AppLayout.mobile &&
           widget.suggestedLayout == AppLayout.mobile &&
           calculatedLayout == AppLayout.desktop) {
         message = localization.changeToDekstopLayout;
+        messageType = MESSAGE_TYPE_LAYOUT;
       } else if (widget.appLayout == AppLayout.desktop &&
           widget.suggestedLayout == AppLayout.desktop &&
           calculatedLayout == AppLayout.mobile) {
         message = localization.changeToMobileLayout;
+        messageType = MESSAGE_TYPE_LAYOUT;
       }
     }
 
@@ -81,7 +95,7 @@ class _ChangeLayoutBannerState extends State<ChangeLayoutBanner> {
                       label: localization.dismiss,
                       color: Colors.white,
                       onPressed: () {
-                        setState(() => _dismissedChange = true);
+                        setState(() => _dismissedMessage[messageType!] = true);
                       },
                     ),
                     AppTextButton(

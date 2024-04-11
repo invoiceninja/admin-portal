@@ -38,7 +38,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       textScaleFactor: 1,
       longPressSelectionIsDefault: true,
       tapSelectedToEdit: false,
-      hideDesktopWarning: false,
+      hideFlutterWebWarning: false,
       hideGatewayWarning: false,
       hideReviewApp: false,
       hideOneYearReviewApp: false,
@@ -158,7 +158,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
 
   String get darkColorTheme;
 
-  bool get hideDesktopWarning;
+  bool get hideFlutterWebWarning;
 
   bool get hideGatewayWarning;
 
@@ -269,7 +269,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..showKanban = false
     ..isPreviewVisible = false
     ..isFilterVisible = false
-    ..hideDesktopWarning = false
+    ..hideFlutterWebWarning = false
     ..hideGatewayWarning = false
     ..hideReviewApp = false
     ..hideOneYearReviewApp = false

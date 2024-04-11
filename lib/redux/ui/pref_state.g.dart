@@ -202,8 +202,8 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
       'darkColorTheme',
       serializers.serialize(object.darkColorTheme,
           specifiedType: const FullType(String)),
-      'hideDesktopWarning',
-      serializers.serialize(object.hideDesktopWarning,
+      'hideFlutterWebWarning',
+      serializers.serialize(object.hideFlutterWebWarning,
           specifiedType: const FullType(bool)),
       'hideGatewayWarning',
       serializers.serialize(object.hideGatewayWarning,
@@ -378,8 +378,8 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
           result.darkColorTheme = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
-        case 'hideDesktopWarning':
-          result.hideDesktopWarning = serializers.deserialize(value,
+        case 'hideFlutterWebWarning':
+          result.hideFlutterWebWarning = serializers.deserialize(value,
               specifiedType: const FullType(bool))! as bool;
           break;
         case 'hideGatewayWarning':
@@ -730,7 +730,7 @@ class _$PrefState extends PrefState {
   @override
   final String darkColorTheme;
   @override
-  final bool hideDesktopWarning;
+  final bool hideFlutterWebWarning;
   @override
   final bool hideGatewayWarning;
   @override
@@ -786,7 +786,7 @@ class _$PrefState extends PrefState {
       required this.enableTooltips,
       required this.colorTheme,
       required this.darkColorTheme,
-      required this.hideDesktopWarning,
+      required this.hideFlutterWebWarning,
       required this.hideGatewayWarning,
       required this.hideReviewApp,
       required this.hideOneYearReviewApp,
@@ -855,7 +855,7 @@ class _$PrefState extends PrefState {
     BuiltValueNullFieldError.checkNotNull(
         darkColorTheme, r'PrefState', 'darkColorTheme');
     BuiltValueNullFieldError.checkNotNull(
-        hideDesktopWarning, r'PrefState', 'hideDesktopWarning');
+        hideFlutterWebWarning, r'PrefState', 'hideFlutterWebWarning');
     BuiltValueNullFieldError.checkNotNull(
         hideGatewayWarning, r'PrefState', 'hideGatewayWarning');
     BuiltValueNullFieldError.checkNotNull(
@@ -919,7 +919,7 @@ class _$PrefState extends PrefState {
         enableTooltips == other.enableTooltips &&
         colorTheme == other.colorTheme &&
         darkColorTheme == other.darkColorTheme &&
-        hideDesktopWarning == other.hideDesktopWarning &&
+        hideFlutterWebWarning == other.hideFlutterWebWarning &&
         hideGatewayWarning == other.hideGatewayWarning &&
         hideReviewApp == other.hideReviewApp &&
         hideOneYearReviewApp == other.hideOneYearReviewApp &&
@@ -966,7 +966,7 @@ class _$PrefState extends PrefState {
     _$hash = $jc(_$hash, enableTooltips.hashCode);
     _$hash = $jc(_$hash, colorTheme.hashCode);
     _$hash = $jc(_$hash, darkColorTheme.hashCode);
-    _$hash = $jc(_$hash, hideDesktopWarning.hashCode);
+    _$hash = $jc(_$hash, hideFlutterWebWarning.hashCode);
     _$hash = $jc(_$hash, hideGatewayWarning.hashCode);
     _$hash = $jc(_$hash, hideReviewApp.hashCode);
     _$hash = $jc(_$hash, hideOneYearReviewApp.hashCode);
@@ -1013,7 +1013,7 @@ class _$PrefState extends PrefState {
           ..add('enableTooltips', enableTooltips)
           ..add('colorTheme', colorTheme)
           ..add('darkColorTheme', darkColorTheme)
-          ..add('hideDesktopWarning', hideDesktopWarning)
+          ..add('hideFlutterWebWarning', hideFlutterWebWarning)
           ..add('hideGatewayWarning', hideGatewayWarning)
           ..add('hideReviewApp', hideReviewApp)
           ..add('hideOneYearReviewApp', hideOneYearReviewApp)
@@ -1171,10 +1171,10 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
   set darkColorTheme(String? darkColorTheme) =>
       _$this._darkColorTheme = darkColorTheme;
 
-  bool? _hideDesktopWarning;
-  bool? get hideDesktopWarning => _$this._hideDesktopWarning;
-  set hideDesktopWarning(bool? hideDesktopWarning) =>
-      _$this._hideDesktopWarning = hideDesktopWarning;
+  bool? _hideFlutterWebWarning;
+  bool? get hideFlutterWebWarning => _$this._hideFlutterWebWarning;
+  set hideFlutterWebWarning(bool? hideFlutterWebWarning) =>
+      _$this._hideFlutterWebWarning = hideFlutterWebWarning;
 
   bool? _hideGatewayWarning;
   bool? get hideGatewayWarning => _$this._hideGatewayWarning;
@@ -1268,7 +1268,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
       _enableTooltips = $v.enableTooltips;
       _colorTheme = $v.colorTheme;
       _darkColorTheme = $v.darkColorTheme;
-      _hideDesktopWarning = $v.hideDesktopWarning;
+      _hideFlutterWebWarning = $v.hideFlutterWebWarning;
       _hideGatewayWarning = $v.hideGatewayWarning;
       _hideReviewApp = $v.hideReviewApp;
       _hideOneYearReviewApp = $v.hideOneYearReviewApp;
@@ -1340,7 +1340,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
               enableTooltips: BuiltValueNullFieldError.checkNotNull(enableTooltips, r'PrefState', 'enableTooltips'),
               colorTheme: BuiltValueNullFieldError.checkNotNull(colorTheme, r'PrefState', 'colorTheme'),
               darkColorTheme: BuiltValueNullFieldError.checkNotNull(darkColorTheme, r'PrefState', 'darkColorTheme'),
-              hideDesktopWarning: BuiltValueNullFieldError.checkNotNull(hideDesktopWarning, r'PrefState', 'hideDesktopWarning'),
+              hideFlutterWebWarning: BuiltValueNullFieldError.checkNotNull(hideFlutterWebWarning, r'PrefState', 'hideFlutterWebWarning'),
               hideGatewayWarning: BuiltValueNullFieldError.checkNotNull(hideGatewayWarning, r'PrefState', 'hideGatewayWarning'),
               hideReviewApp: BuiltValueNullFieldError.checkNotNull(hideReviewApp, r'PrefState', 'hideReviewApp'),
               hideOneYearReviewApp: BuiltValueNullFieldError.checkNotNull(hideOneYearReviewApp, r'PrefState', 'hideOneYearReviewApp'),

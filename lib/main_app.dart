@@ -11,6 +11,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:intl/intl.dart';
+import 'package:invoiceninja_flutter/ui/app/important_message_banner.dart';
 import 'package:invoiceninja_flutter/ui/app/window_manager.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/edit/bank_account_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_email_vm.dart';
@@ -28,7 +29,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:invoiceninja_flutter/redux/ui/pref_state.dart';
 import 'package:invoiceninja_flutter/ui/app/app_builder.dart';
-import 'package:invoiceninja_flutter/ui/app/change_layout_banner.dart';
 import 'package:invoiceninja_flutter/ui/app/main_screen.dart';
 import 'package:invoiceninja_flutter/ui/app/screen_imports.dart';
 import 'package:invoiceninja_flutter/ui/app/web_session_timeout.dart';
@@ -500,7 +500,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                           LoginScreen.route: (context) => LoginScreen(),
                           MainScreen.route: (context) => MainScreen(),
                           DashboardScreenBuilder.route: (context) =>
-                              ChangeLayoutBanner(
+                              ImportantMessageBanner(
                                 suggestedLayout: AppLayout.mobile,
                                 appLayout: state.prefState.appLayout,
                                 child: DashboardScreenBuilder(),
