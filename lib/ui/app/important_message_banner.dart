@@ -42,6 +42,7 @@ class _ImportantMessageBannerState extends State<ImportantMessageBanner> {
   @override
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
     final localization = AppLocalization.of(context)!;
 
     final calculatedLayout = calculateLayout(context);
@@ -49,13 +50,14 @@ class _ImportantMessageBannerState extends State<ImportantMessageBanner> {
     String? messageType;
 
     if (!_dismissedMessage.containsKey(MESSAGE_TYPE_FLUTTER_WEB)) {
-      if (kIsWeb || !kReleaseMode) {
+      if ((kIsWeb && !state.prefState.hideFlutterWebWarning) || !kReleaseMode) {
         //message = localization.flutterWebWarning;
         //messageType = MESSAGE_TYPE_FLUTTER_WEB;
       }
     }
 
-    if (!_dismissedMessage.containsKey(MESSAGE_TYPE_LAYOUT)) {
+    if (message == null &&
+        !_dismissedMessage.containsKey(MESSAGE_TYPE_LAYOUT)) {
       if (widget.appLayout == AppLayout.mobile &&
           widget.suggestedLayout == AppLayout.mobile &&
           calculatedLayout == AppLayout.desktop) {
@@ -98,27 +100,28 @@ class _ImportantMessageBannerState extends State<ImportantMessageBanner> {
                         setState(() => _dismissedMessage[messageType!] = true);
                       },
                     ),
-                    AppTextButton(
-                      label: localization.change,
-                      color: Colors.white,
-                      onPressed: () {
-                        final layout =
-                            widget.suggestedLayout == AppLayout.desktop
-                                ? AppLayout.mobile
-                                : AppLayout.desktop;
-                        store
-                            .dispatch(UpdateUserPreferences(appLayout: layout));
-                        AppBuilder.of(context)!.rebuild();
-                        WidgetsBinding.instance
-                            .addPostFrameCallback((duration) {
-                          if (layout == AppLayout.mobile) {
-                            store.dispatch(ViewDashboard());
-                          } else {
-                            store.dispatch(ViewMainScreen(addDelay: true));
-                          }
-                        });
-                      },
-                    ),
+                    if (messageType == MESSAGE_TYPE_LAYOUT)
+                      AppTextButton(
+                        label: localization.change,
+                        color: Colors.white,
+                        onPressed: () {
+                          final layout =
+                              widget.suggestedLayout == AppLayout.desktop
+                                  ? AppLayout.mobile
+                                  : AppLayout.desktop;
+                          store.dispatch(
+                              UpdateUserPreferences(appLayout: layout));
+                          AppBuilder.of(context)!.rebuild();
+                          WidgetsBinding.instance
+                              .addPostFrameCallback((duration) {
+                            if (layout == AppLayout.mobile) {
+                              store.dispatch(ViewDashboard());
+                            } else {
+                              store.dispatch(ViewMainScreen(addDelay: true));
+                            }
+                          });
+                        },
+                      ),
                   ],
                 ),
               ),
