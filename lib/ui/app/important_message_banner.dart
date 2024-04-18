@@ -100,7 +100,13 @@ class _ImportantMessageBannerState extends State<ImportantMessageBanner> {
                         setState(() => _dismissedMessage[messageType!] = true);
                       },
                     ),
-                    if (messageType == MESSAGE_TYPE_LAYOUT)
+                    if (messageType == MESSAGE_TYPE_FLUTTER_WEB)
+                      AppTextButton(onPressed: () {
+                        //final platform = getNativePlatform();
+                        //final url = getNativeAppUrl(platform);
+                        //launchUrl(Uri.parse(url));
+                      })
+                    else if (messageType == MESSAGE_TYPE_LAYOUT)
                       AppTextButton(
                         label: localization.change,
                         color: Colors.white,
