@@ -55,6 +55,10 @@ const String kFacebookUrl = 'https://www.facebook.com/invoiceninja';
 const String kYouTubeUrl =
     'https://www.youtube.com/channel/UCXAHcBvhW05PDtWYIq7WDFA/videos';
 
+const String kTemplatesYouTubeUrl =
+    'https://www.youtube.com/watch?v=kfG5vvcbYes';
+const String kTemplatesDocsUrl = 'https://invoiceninja.github.io/en/templates';
+
 const String kYodleeCoverageUrl =
     'https://www.yodlee.com/open-banking/data-connections';
 const String kNordigenCoverageUrl =
