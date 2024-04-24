@@ -1,6 +1,5 @@
 // Dart imports:
 import 'dart:convert';
-import 'dart:ui';
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
