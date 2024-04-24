@@ -109,7 +109,6 @@ void saveDownloadedFile(
   String languageId = kLanguageEnglish,
 }) async {
   if (prefix != null) {
-    /*
     final localization = AppLocalization.of(navigatorKey.currentContext!)!;
     final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
     final localeCode = store.state.staticState.languageMap[languageId]!.locale;
@@ -117,9 +116,7 @@ void saveDownloadedFile(
     fileName = localization.lookup(prefix, overrideLocaleCode: localeCode) +
         '_' +
         fileName;
-    */
 
-    final localization = AppLocalization.of(navigatorKey.currentContext!)!;
     fileName = localization.lookup(prefix) + '_' + fileName;
   }
 
