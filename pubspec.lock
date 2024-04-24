@@ -1309,10 +1309,11 @@ packages:
   rounded_loading_button:
     dependency: "direct main"
     description:
-      name: rounded_loading_button
-      sha256: ec4af194330ba688527749059b7c1a3d1ddda6c18794ec4b0696f0cb3b9784ff
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: master
+      resolved-ref: dd4b76afd72fd7f308711902d6516549a1965328
+      url: "https://github.com/scopendo/flutter_rounded_loading_button.git"
+    source: git
     version: "2.1.0"
   rxdart:
     dependency: transitive
