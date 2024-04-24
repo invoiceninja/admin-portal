@@ -4,7 +4,7 @@ workflows:
     instance_type: linux
     max_build_duration: 120
     environment:
-      flutter: 3.16.2
+      flutter: 3.19.6
       xcode: latest
       cocoapods: default
       vars:
