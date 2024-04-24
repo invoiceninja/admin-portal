@@ -26,14 +26,9 @@ workflows:
         echo "const FLUTTER_VERSION = const <String, String>" > $FCI_BUILD_DIR/lib/flutter_version.dart
         flutter --version --machine >> $FCI_BUILD_DIR/lib/flutter_version.dart
         echo ";" >> $FCI_BUILD_DIR/lib/flutter_version.dart
-      #- cat $FCI_BUILD_DIR/lib/flutter_version.dart
       - cd . && flutter packages pub get
       - flutter config --enable-linux-desktop
-      #- flutter build linux --release
       - sudo snap refresh snapcraft --channel=7.x/stable
-      #- echo $SNAPCRAFT_LOGIN_CREDENTIALS | base64 --decode > /home/builder/snapcraft-login-credentials
-      #- snapcraft login --with /home/builder/snapcraft-login-credentials
-      #- export SNAPCRAFT_STORE_CREDENTIALS=$(echo $SNAPCRAFT_LOGIN_CREDENTIALS | base64 --decode)
       - snapcraft whoami
       - snapcraft snap --output invoiceninja.snap
       - snapcraft upload invoiceninja.snap --release stable
