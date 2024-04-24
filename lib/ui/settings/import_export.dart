@@ -458,7 +458,10 @@ class _FileImportState extends State<_FileImport> {
       //data: {},
     )
         .then((dynamic result) {
-      setState(() => {_isLoading = false, _multipartFiles.clear()});
+      setState(() {
+        _isLoading = false;
+        _multipartFiles.clear();
+      });
 
       showToast(localization!.startedImport);
     }).catchError((dynamic error) {
@@ -497,7 +500,10 @@ class _FileImportState extends State<_FileImport> {
         'import_type': widget.importType.toString(),
       },
     ).then((dynamic result) {
-      setState(() => {_isLoading = false, _multipartFiles.clear()});
+      setState(() {
+        _isLoading = false;
+        _multipartFiles.clear();
+      });
 
       if (widget.importType != ImportType.csv) {
         showToast(localization!.startedImport);
