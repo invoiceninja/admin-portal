@@ -170,7 +170,7 @@ class _$StaticDataEntitySerializer
       serializers.serialize(object.bulkUpdates,
           specifiedType: const FullType(BuiltMap, const [
             const FullType(String),
-            const FullType(List, const [const FullType(String)])
+            const FullType(BuiltList, const [const FullType(String)])
           ])),
       'templates',
       serializers.serialize(object.templates,
@@ -263,7 +263,7 @@ class _$StaticDataEntitySerializer
           result.bulkUpdates.replace(serializers.deserialize(value,
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
-                const FullType(List, const [const FullType(String)])
+                const FullType(BuiltList, const [const FullType(String)])
               ]))!);
           break;
         case 'templates':
@@ -552,7 +552,7 @@ class _$StaticDataEntity extends StaticDataEntity {
   @override
   final BuiltList<InvoiceStatusEntity> invoiceStatus;
   @override
-  final BuiltMap<String, List<String>> bulkUpdates;
+  final BuiltMap<String, BuiltList<String>> bulkUpdates;
   @override
   final BuiltMap<String, TemplateEntity> templates;
 
@@ -740,10 +740,10 @@ class StaticDataEntityBuilder
   set invoiceStatus(ListBuilder<InvoiceStatusEntity>? invoiceStatus) =>
       _$this._invoiceStatus = invoiceStatus;
 
-  MapBuilder<String, List<String>>? _bulkUpdates;
-  MapBuilder<String, List<String>> get bulkUpdates =>
-      _$this._bulkUpdates ??= new MapBuilder<String, List<String>>();
-  set bulkUpdates(MapBuilder<String, List<String>>? bulkUpdates) =>
+  MapBuilder<String, BuiltList<String>>? _bulkUpdates;
+  MapBuilder<String, BuiltList<String>> get bulkUpdates =>
+      _$this._bulkUpdates ??= new MapBuilder<String, BuiltList<String>>();
+  set bulkUpdates(MapBuilder<String, BuiltList<String>>? bulkUpdates) =>
       _$this._bulkUpdates = bulkUpdates;
 
   MapBuilder<String, TemplateEntity>? _templates;

@@ -90,7 +90,7 @@ abstract class StaticDataEntity
       countries: BuiltList<CountryEntity>(),
       invoiceStatus: BuiltList<InvoiceStatusEntity>(),
       templates: BuiltMap<String, TemplateEntity>(),
-      bulkUpdates: BuiltMap<String, List<String>>(),
+      bulkUpdates: BuiltMap<String, BuiltList<String>>(),
     );
   }
 
@@ -127,7 +127,7 @@ abstract class StaticDataEntity
   BuiltList<InvoiceStatusEntity> get invoiceStatus;
 
   @BuiltValueField(wireName: 'bulk_updates')
-  BuiltMap<String, List<String>> get bulkUpdates;
+  BuiltMap<String, BuiltList<String>> get bulkUpdates;
 
   BuiltMap<String, TemplateEntity> get templates;
 
