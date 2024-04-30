@@ -199,6 +199,9 @@ class _$CompanyGatewayEntitySerializer
       'test_mode',
       serializers.serialize(object.isTestMode,
           specifiedType: const FullType(bool)),
+      'always_show_required_fields',
+      serializers.serialize(object.alwaysShowRequiredFields,
+          specifiedType: const FullType(bool)),
       'label',
       serializers.serialize(object.label,
           specifiedType: const FullType(String)),
@@ -374,6 +377,10 @@ class _$CompanyGatewayEntitySerializer
           break;
         case 'test_mode':
           result.isTestMode = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
+          break;
+        case 'always_show_required_fields':
+          result.alwaysShowRequiredFields = serializers.deserialize(value,
               specifiedType: const FullType(bool))! as bool;
           break;
         case 'label':
@@ -803,6 +810,8 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
   @override
   final bool isTestMode;
   @override
+  final bool alwaysShowRequiredFields;
+  @override
   final String label;
   @override
   final bool? isChanged;
@@ -851,6 +860,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       required this.config,
       required this.tokenBilling,
       required this.isTestMode,
+      required this.alwaysShowRequiredFields,
       required this.label,
       this.isChanged,
       required this.createdAt,
@@ -907,6 +917,8 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
         tokenBilling, r'CompanyGatewayEntity', 'tokenBilling');
     BuiltValueNullFieldError.checkNotNull(
         isTestMode, r'CompanyGatewayEntity', 'isTestMode');
+    BuiltValueNullFieldError.checkNotNull(alwaysShowRequiredFields,
+        r'CompanyGatewayEntity', 'alwaysShowRequiredFields');
     BuiltValueNullFieldError.checkNotNull(
         label, r'CompanyGatewayEntity', 'label');
     BuiltValueNullFieldError.checkNotNull(
@@ -955,6 +967,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
         config == other.config &&
         tokenBilling == other.tokenBilling &&
         isTestMode == other.isTestMode &&
+        alwaysShowRequiredFields == other.alwaysShowRequiredFields &&
         label == other.label &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
@@ -995,6 +1008,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
     _$hash = $jc(_$hash, config.hashCode);
     _$hash = $jc(_$hash, tokenBilling.hashCode);
     _$hash = $jc(_$hash, isTestMode.hashCode);
+    _$hash = $jc(_$hash, alwaysShowRequiredFields.hashCode);
     _$hash = $jc(_$hash, label.hashCode);
     _$hash = $jc(_$hash, isChanged.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
@@ -1036,6 +1050,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
           ..add('config', config)
           ..add('tokenBilling', tokenBilling)
           ..add('isTestMode', isTestMode)
+          ..add('alwaysShowRequiredFields', alwaysShowRequiredFields)
           ..add('label', label)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -1172,6 +1187,11 @@ class CompanyGatewayEntityBuilder
   bool? get isTestMode => _$this._isTestMode;
   set isTestMode(bool? isTestMode) => _$this._isTestMode = isTestMode;
 
+  bool? _alwaysShowRequiredFields;
+  bool? get alwaysShowRequiredFields => _$this._alwaysShowRequiredFields;
+  set alwaysShowRequiredFields(bool? alwaysShowRequiredFields) =>
+      _$this._alwaysShowRequiredFields = alwaysShowRequiredFields;
+
   String? _label;
   String? get label => _$this._label;
   set label(String? label) => _$this._label = label;
@@ -1242,6 +1262,7 @@ class CompanyGatewayEntityBuilder
       _config = $v.config;
       _tokenBilling = $v.tokenBilling;
       _isTestMode = $v.isTestMode;
+      _alwaysShowRequiredFields = $v.alwaysShowRequiredFields;
       _label = $v.label;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
@@ -1307,6 +1328,7 @@ class CompanyGatewayEntityBuilder
               config: BuiltValueNullFieldError.checkNotNull(config, r'CompanyGatewayEntity', 'config'),
               tokenBilling: BuiltValueNullFieldError.checkNotNull(tokenBilling, r'CompanyGatewayEntity', 'tokenBilling'),
               isTestMode: BuiltValueNullFieldError.checkNotNull(isTestMode, r'CompanyGatewayEntity', 'isTestMode'),
+              alwaysShowRequiredFields: BuiltValueNullFieldError.checkNotNull(alwaysShowRequiredFields, r'CompanyGatewayEntity', 'alwaysShowRequiredFields'),
               label: BuiltValueNullFieldError.checkNotNull(label, r'CompanyGatewayEntity', 'label'),
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'CompanyGatewayEntity', 'createdAt'),

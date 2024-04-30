@@ -81,6 +81,7 @@ abstract class CompanyGatewayEntity extends Object
       requireCustomValue2: false,
       requireCustomValue3: false,
       requireCustomValue4: false,
+      alwaysShowRequiredFields: true,
       updateDetails: true,
       config: '',
       feesAndLimitsMap: BuiltMap<String, FeesAndLimitsSettings>(),
@@ -197,6 +198,9 @@ abstract class CompanyGatewayEntity extends Object
   @BuiltValueField(wireName: 'test_mode')
   bool get isTestMode;
 
+  @BuiltValueField(wireName: 'always_show_required_fields')
+  bool get alwaysShowRequiredFields;
+
   String get label;
 
   Map<String, dynamic>? get parsedConfig =>
@@ -308,7 +312,8 @@ abstract class CompanyGatewayEntity extends Object
     ..requireCustomValue1 = false
     ..requireCustomValue2 = false
     ..requireCustomValue3 = false
-    ..requireCustomValue4 = false;
+    ..requireCustomValue4 = false
+    ..alwaysShowRequiredFields = true;
 
   static Serializer<CompanyGatewayEntity> get serializer =>
       _$companyGatewayEntitySerializer;
