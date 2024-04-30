@@ -71,6 +71,7 @@ class StaticDataFields {
   static const String gatewayTypes = 'gateway_types';
   static const String fonts = 'fonts';
   static const String banks = 'banks';
+  static const String bulkUpdates = 'bulk_updates';
 }
 
 abstract class StaticDataEntity
@@ -89,6 +90,7 @@ abstract class StaticDataEntity
       countries: BuiltList<CountryEntity>(),
       invoiceStatus: BuiltList<InvoiceStatusEntity>(),
       templates: BuiltMap<String, TemplateEntity>(),
+      bulkUpdates: BuiltMap<String, List<String>>(),
     );
   }
 
@@ -124,7 +126,14 @@ abstract class StaticDataEntity
   @BuiltValueField(wireName: 'invoice_status')
   BuiltList<InvoiceStatusEntity> get invoiceStatus;
 
+  @BuiltValueField(wireName: 'bulk_updates')
+  BuiltMap<String, List<String>> get bulkUpdates;
+
   BuiltMap<String, TemplateEntity> get templates;
+
+  // ignore: unused_element
+  static void _initializeBuilder(StaticDataEntityBuilder builder) =>
+      builder..bulkUpdates.replace(BuiltMap<String, List<String>>());
 
   static Serializer<StaticDataEntity> get serializer =>
       _$staticDataEntitySerializer;

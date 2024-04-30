@@ -166,6 +166,12 @@ class _$StaticDataEntitySerializer
       serializers.serialize(object.invoiceStatus,
           specifiedType: const FullType(
               BuiltList, const [const FullType(InvoiceStatusEntity)])),
+      'bulk_updates',
+      serializers.serialize(object.bulkUpdates,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(List, const [const FullType(String)])
+          ])),
       'templates',
       serializers.serialize(object.templates,
           specifiedType: const FullType(BuiltMap,
@@ -252,6 +258,13 @@ class _$StaticDataEntitySerializer
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(InvoiceStatusEntity)]))!
               as BuiltList<Object?>);
+          break;
+        case 'bulk_updates':
+          result.bulkUpdates.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(List, const [const FullType(String)])
+              ]))!);
           break;
         case 'templates':
           result.templates.replace(serializers.deserialize(value,
@@ -539,6 +552,8 @@ class _$StaticDataEntity extends StaticDataEntity {
   @override
   final BuiltList<InvoiceStatusEntity> invoiceStatus;
   @override
+  final BuiltMap<String, List<String>> bulkUpdates;
+  @override
   final BuiltMap<String, TemplateEntity> templates;
 
   factory _$StaticDataEntity(
@@ -557,6 +572,7 @@ class _$StaticDataEntity extends StaticDataEntity {
       required this.paymentTypes,
       required this.countries,
       required this.invoiceStatus,
+      required this.bulkUpdates,
       required this.templates})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -580,6 +596,8 @@ class _$StaticDataEntity extends StaticDataEntity {
         countries, r'StaticDataEntity', 'countries');
     BuiltValueNullFieldError.checkNotNull(
         invoiceStatus, r'StaticDataEntity', 'invoiceStatus');
+    BuiltValueNullFieldError.checkNotNull(
+        bulkUpdates, r'StaticDataEntity', 'bulkUpdates');
     BuiltValueNullFieldError.checkNotNull(
         templates, r'StaticDataEntity', 'templates');
   }
@@ -607,6 +625,7 @@ class _$StaticDataEntity extends StaticDataEntity {
         paymentTypes == other.paymentTypes &&
         countries == other.countries &&
         invoiceStatus == other.invoiceStatus &&
+        bulkUpdates == other.bulkUpdates &&
         templates == other.templates;
   }
 
@@ -626,6 +645,7 @@ class _$StaticDataEntity extends StaticDataEntity {
     _$hash = $jc(_$hash, paymentTypes.hashCode);
     _$hash = $jc(_$hash, countries.hashCode);
     _$hash = $jc(_$hash, invoiceStatus.hashCode);
+    _$hash = $jc(_$hash, bulkUpdates.hashCode);
     _$hash = $jc(_$hash, templates.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
@@ -645,6 +665,7 @@ class _$StaticDataEntity extends StaticDataEntity {
           ..add('paymentTypes', paymentTypes)
           ..add('countries', countries)
           ..add('invoiceStatus', invoiceStatus)
+          ..add('bulkUpdates', bulkUpdates)
           ..add('templates', templates))
         .toString();
   }
@@ -719,13 +740,21 @@ class StaticDataEntityBuilder
   set invoiceStatus(ListBuilder<InvoiceStatusEntity>? invoiceStatus) =>
       _$this._invoiceStatus = invoiceStatus;
 
+  MapBuilder<String, List<String>>? _bulkUpdates;
+  MapBuilder<String, List<String>> get bulkUpdates =>
+      _$this._bulkUpdates ??= new MapBuilder<String, List<String>>();
+  set bulkUpdates(MapBuilder<String, List<String>>? bulkUpdates) =>
+      _$this._bulkUpdates = bulkUpdates;
+
   MapBuilder<String, TemplateEntity>? _templates;
   MapBuilder<String, TemplateEntity> get templates =>
       _$this._templates ??= new MapBuilder<String, TemplateEntity>();
   set templates(MapBuilder<String, TemplateEntity>? templates) =>
       _$this._templates = templates;
 
-  StaticDataEntityBuilder();
+  StaticDataEntityBuilder() {
+    StaticDataEntity._initializeBuilder(this);
+  }
 
   StaticDataEntityBuilder get _$this {
     final $v = _$v;
@@ -741,6 +770,7 @@ class StaticDataEntityBuilder
       _paymentTypes = $v.paymentTypes.toBuilder();
       _countries = $v.countries.toBuilder();
       _invoiceStatus = $v.invoiceStatus.toBuilder();
+      _bulkUpdates = $v.bulkUpdates.toBuilder();
       _templates = $v.templates.toBuilder();
       _$v = null;
     }
@@ -777,6 +807,7 @@ class StaticDataEntityBuilder
               paymentTypes: paymentTypes.build(),
               countries: countries.build(),
               invoiceStatus: invoiceStatus.build(),
+              bulkUpdates: bulkUpdates.build(),
               templates: templates.build());
     } catch (_) {
       late String _$failedField;
@@ -803,6 +834,8 @@ class StaticDataEntityBuilder
         countries.build();
         _$failedField = 'invoiceStatus';
         invoiceStatus.build();
+        _$failedField = 'bulkUpdates';
+        bulkUpdates.build();
         _$failedField = 'templates';
         templates.build();
       } catch (e) {
