@@ -432,6 +432,7 @@ const String kGatewayTypeVenmo = '25';
 const String kGatewayTypeMercadoPago = '26';
 const String kGatewayTypeMyBank = '27';
 const String kGatewayTypePayLater = '28';
+const String kGatewayTypeAdvancedCards = '29';
 
 const kGatewayTypes = {
   kGatewayTypeCreditCard: 'credit_card',
@@ -462,6 +463,7 @@ const kGatewayTypes = {
   kGatewayTypeMercadoPago: 'mercado_pago',
   kGatewayTypeMyBank: 'my_bank',
   kGatewayTypePayLater: 'pay_later',
+  kGatewayTypeAdvancedCards: 'advanced_cards',
 };
 
 const String kNotificationChannelEmail = 'email';
