@@ -139,6 +139,7 @@ class EntityAction extends EnumClass {
   static const EntityAction ePurchaseOrder = _$ePurchaseOrder;
   static const EntityAction unlink = _$unlink;
   static const EntityAction runTemplate = _$runTemplate;
+  static const EntityAction bulkUpdate = _$bulkUpdate;
 
   @override
   String toString() {

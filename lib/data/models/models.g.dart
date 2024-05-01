@@ -104,6 +104,7 @@ const EntityAction _$eCredit = const EntityAction._('eCredit');
 const EntityAction _$ePurchaseOrder = const EntityAction._('ePurchaseOrder');
 const EntityAction _$unlink = const EntityAction._('unlink');
 const EntityAction _$runTemplate = const EntityAction._('runTemplate');
+const EntityAction _$bulkUpdate = const EntityAction._('bulkUpdate');
 
 EntityAction _$valueOf(String name) {
   switch (name) {
@@ -281,6 +282,8 @@ EntityAction _$valueOf(String name) {
       return _$unlink;
     case 'runTemplate':
       return _$runTemplate;
+    case 'bulkUpdate':
+      return _$bulkUpdate;
     default:
       throw new ArgumentError(name);
   }
@@ -375,6 +378,7 @@ final BuiltSet<EntityAction> _$values =
   _$ePurchaseOrder,
   _$unlink,
   _$runTemplate,
+  _$bulkUpdate,
 ]);
 
 Serializer<EntityAction> _$entityActionSerializer =
