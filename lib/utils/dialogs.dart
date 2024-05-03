@@ -614,6 +614,63 @@ void addToInvoiceDialog({
       });
 }
 
+class BulkUpdateDialog extends StatefulWidget {
+  const BulkUpdateDialog({
+    super.key,
+    required this.entityType,
+    required this.entities,
+  });
+
+  final EntityType entityType;
+  final List<BaseEntity> entities;
+
+  @override
+  State<BulkUpdateDialog> createState() => _BulkUpdateDialogState();
+}
+
+class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
+  bool _isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context)!;
+
+    return AlertDialog(
+      title: Text(localization.bulkUpdate),
+      content: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              widget.entities.length == 1
+                  ? localization.lookup(widget.entityType.snakeCase)
+                  : localization.lookup(widget.entityType.plural) +
+                      ' (${widget.entities.length})',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            SizedBox(height: 8),
+            ...widget.entities
+                .map((entity) => Text(entity.listDisplayName))
+                .toList(),
+            if (_isLoading) ...[
+              SizedBox(height: 32),
+              LinearProgressIndicator()
+            ] else ...[
+              SizedBox(height: 16),
+            ]
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          child: Text(localization.close.toUpperCase()),
+          onPressed: () => Navigator.of(context).pop(),
+        )
+      ],
+    );
+  }
+}
+
 class RunTemplateDialog extends StatefulWidget {
   const RunTemplateDialog({
     super.key,
@@ -709,14 +766,14 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
                       'action': EntityAction.runTemplate.toApiParam(),
                     };
 
-                    print('## DATA: $data');
+                    //print('## DATA: $data');
 
                     setState(() => _isLoading = true);
 
                     WebClient()
                         .post(url, credentials.token, data: jsonEncode(data))
                         .then((response) async {
-                      print('## RESPONSE: $response');
+                      //print('## RESPONSE: $response');
 
                       if (_sendEmail) {
                         setState(() => _isLoading = false);
@@ -752,10 +809,10 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    localization.lookup(widget.entities.length == 1
-                        ? widget.entityType.snakeCase
-                        : widget.entityType.plural +
-                            ' (${widget.entities.length})'),
+                    widget.entities.length == 1
+                        ? localization.lookup(widget.entityType.snakeCase)
+                        : localization.lookup(widget.entityType.plural) +
+                            ' (${widget.entities.length})',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   SizedBox(height: 8),
