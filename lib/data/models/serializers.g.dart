@@ -294,10 +294,6 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(DateFormatEntity)]),
           () => new ListBuilder<DateFormatEntity>())
       ..addBuilderFactory(
-          const FullType(
-              BuiltList, const [const FullType(DatetimeFormatEntity)]),
-          () => new ListBuilder<DatetimeFormatEntity>())
-      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(LanguageEntity)]),
           () => new ListBuilder<LanguageEntity>())
       ..addBuilderFactory(

@@ -60,7 +60,6 @@ class StaticDataFields {
   static const String industries = 'industries';
   static const String timezones = 'timezones';
   static const String dateFormats = 'date_formats';
-  static const String datetimeFormats = 'datetime_formats';
   static const String languages = 'languages';
   static const String paymentTypes = 'payment_types';
   static const String countries = 'countries';
@@ -84,7 +83,6 @@ abstract class StaticDataEntity
       gateways: BuiltList<GatewayEntity>(),
       timezones: BuiltList<TimezoneEntity>(),
       dateFormats: BuiltList<DateFormatEntity>(),
-      datetimeFormats: BuiltList<DatetimeFormatEntity>(),
       languages: BuiltList<LanguageEntity>(),
       paymentTypes: BuiltList<PaymentTypeEntity>(),
       countries: BuiltList<CountryEntity>(),
@@ -112,9 +110,6 @@ abstract class StaticDataEntity
 
   @BuiltValueField(wireName: 'date_formats')
   BuiltList<DateFormatEntity> get dateFormats;
-
-  @BuiltValueField(wireName: 'datetime_formats')
-  BuiltList<DatetimeFormatEntity> get datetimeFormats;
 
   BuiltList<LanguageEntity> get languages;
 

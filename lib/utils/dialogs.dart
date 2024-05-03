@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -633,6 +634,8 @@ class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
     final localization = AppLocalization.of(context)!;
 
     return AlertDialog(
@@ -657,7 +660,14 @@ class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
               LinearProgressIndicator()
             ] else ...[
               SizedBox(height: 16),
-            ]
+              AppDropdownButton<String>(
+                value: null,
+                onChanged: (value) {
+                  //
+                },
+                items: [], //state.staticState.
+              ),
+            ],
           ],
         ),
       ),
