@@ -769,8 +769,30 @@ class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
           onPressed: _value == null
               ? null
               : () {
-                  print('## VALUE: $_value');
-                  Navigator.of(context).pop();
+                  final credentials = state.credentials;
+                  final url =
+                      '${credentials.url}/${widget.entityType.pluralApiValue}/bulk';
+                  final data = {
+                    'ids': widget.entities.map((entity) => entity.id).toList(),
+                    'column': _field,
+                    'new_value': _value,
+                    'action': EntityAction.bulkUpdate.toApiParam(),
+                  };
+
+                  setState(() => _isLoading = true);
+
+                  WebClient()
+                      .post(url, credentials.token, data: jsonEncode(data))
+                      .then((response) async {
+                    print('## RESPONSE: $response');
+
+                    setState(() => _isLoading = false);
+                    Navigator.of(navigatorKey.currentContext!).pop();
+                    //showToast(localization.bulkUpdatedData);
+                  }).catchError((error) {
+                    print('## ERROR: $error');
+                    setState(() => _isLoading = false);
+                  });
                 },
         ),
       ],
