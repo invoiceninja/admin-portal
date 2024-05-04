@@ -700,7 +700,9 @@ class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
                   keyboardType: TextInputType.multiline,
                   label: localization.publicNotes,
                   onChanged: (value) {
-                    _value = value;
+                    setState(() {
+                      _value = value;
+                    });
                   },
                 )
               else if (_field == ClientFields.sizeId)
@@ -714,8 +716,10 @@ class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
                               value: sizeId,
                             ))
                         .toList(),
-                    onChanged: (dynamic sizeId) {
-                      _value = sizeId;
+                    onChanged: (dynamic size) {
+                      setState(() {
+                        _value = size?.id;
+                      });
                     })
               else if (_field == ClientFields.industryId)
                 EntityDropdown(
