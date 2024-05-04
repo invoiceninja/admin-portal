@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
@@ -15,6 +14,7 @@ import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -641,6 +641,7 @@ class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final company = state.company;
     final localization = AppLocalization.of(context)!;
 
     return AlertDialog(
@@ -671,13 +672,26 @@ class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
                 value: null,
                 onChanged: (value) {
                   setState(() {
+                    _value = null;
                     _field = value;
                   });
                 },
                 items: state
                     .staticState.bulkUpdates[widget.entityType.apiValue]!
+                    .where((field) {
+                      if (field.contains('custom_value')) {
+                        return company.hasCustomField(
+                            field.replaceFirst('custom_value', 'client'));
+                      }
+
+                      return true;
+                    })
                     .map((field) => DropdownMenuItem(
-                        child: Text(localization.lookup(field)), value: field))
+                        child: Text(field.contains('custom_value')
+                            ? company.getCustomFieldLabel(
+                                field.replaceFirst('custom_value', 'client'))
+                            : localization.lookup(field)),
+                        value: field))
                     .toList(),
               ),
               if (_field == ClientFields.publicNotes)
@@ -727,6 +741,16 @@ class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
                         _value = country?.id;
                       });
                     })
+              else if ((_field ?? '').contains('custom_value'))
+                CustomField(
+                  field: (_field ?? '').replaceFirst('custom_value', 'client'),
+                  value: _value,
+                  onChanged: (value) {
+                    setState(() {
+                      _value = value;
+                    });
+                  },
+                )
             ],
           ],
         ),
