@@ -749,6 +749,12 @@ Serializers _$serializers = (new Serializers().toBuilder()
               const [const FullType(String), const FullType(TemplateEntity)]),
           () => new MapBuilder<String, TemplateEntity>())
       ..addBuilderFactory(
+          const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(BuiltList, const [const FullType(String)])
+          ]),
+          () => new MapBuilder<String, BuiltList<String>>())
+      ..addBuilderFactory(
           const FullType(BuiltMap,
               const [const FullType(String), const FullType(DesignEntity)]),
           () => new MapBuilder<String, DesignEntity>())

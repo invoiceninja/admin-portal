@@ -12,10 +12,11 @@ Reducer<StaticState> staticReducer = combineReducers([
 
 StaticState staticLoadedReducer(
     StaticState staticState, LoadStaticSuccess action) {
-  final data = action.data;
+  final data = action.data!;
   return StaticState().rebuild((b) => b
     ..updatedAt = DateTime.now().millisecondsSinceEpoch
-    ..templateMap.replace(data!.templates)
+    ..templateMap.replace(data.templates)
+    ..bulkUpdates.replace(data.bulkUpdates)
     ..currencyMap.addAll(Map<String, CurrencyEntity>.fromIterable(
       data.currencies,
       key: (dynamic item) => item.id,

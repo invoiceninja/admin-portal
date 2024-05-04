@@ -7,10 +7,13 @@ import 'package:flutter/services.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
@@ -631,6 +634,8 @@ class BulkUpdateDialog extends StatefulWidget {
 
 class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
   bool _isLoading = false;
+  String? _field;
+  String? _value;
 
   @override
   Widget build(BuildContext context) {
@@ -661,12 +666,67 @@ class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
             ] else ...[
               SizedBox(height: 16),
               AppDropdownButton<String>(
+                autofocus: true,
+                labelText: localization.field,
                 value: null,
                 onChanged: (value) {
-                  //
+                  setState(() {
+                    _field = value;
+                  });
                 },
-                items: [], //state.staticState.
+                items: state
+                    .staticState.bulkUpdates[widget.entityType.apiValue]!
+                    .map((field) => DropdownMenuItem(
+                        child: Text(localization.lookup(field)), value: field))
+                    .toList(),
               ),
+              if (_field == ClientFields.publicNotes)
+                DecoratedFormField(
+                  maxLines: 4,
+                  keyboardType: TextInputType.multiline,
+                  label: localization.publicNotes,
+                  onChanged: (value) {
+                    _value = value;
+                  },
+                )
+              else if (_field == ClientFields.sizeId)
+                AppDropdownButton(
+                    value: _value,
+                    labelText: localization.size,
+                    items: memoizedSizeList(state.staticState.sizeMap)
+                        .map((sizeId) => DropdownMenuItem(
+                              child:
+                                  Text(state.staticState.sizeMap[sizeId]!.name),
+                              value: sizeId,
+                            ))
+                        .toList(),
+                    onChanged: (dynamic sizeId) {
+                      _value = sizeId;
+                    })
+              else if (_field == ClientFields.industryId)
+                EntityDropdown(
+                    entityId: _value,
+                    entityType: EntityType.industry,
+                    entityList:
+                        memoizedIndustryList(state.staticState.industryMap),
+                    labelText: localization.industry,
+                    onSelected: (SelectableEntity? industry) {
+                      setState(() {
+                        _value = industry?.id;
+                      });
+                    })
+              else if (_field == ClientFields.countryId)
+                EntityDropdown(
+                    entityId: _value,
+                    entityType: EntityType.country,
+                    entityList:
+                        memoizedCountryList(state.staticState.countryMap),
+                    labelText: localization.country,
+                    onSelected: (SelectableEntity? country) {
+                      setState(() {
+                        _value = country?.id;
+                      });
+                    })
             ],
           ],
         ),
@@ -675,7 +735,16 @@ class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
         TextButton(
           child: Text(localization.close.toUpperCase()),
           onPressed: () => Navigator.of(context).pop(),
-        )
+        ),
+        TextButton(
+          child: Text(localization.submit.toUpperCase()),
+          onPressed: _value == null
+              ? null
+              : () {
+                  print('## VALUE: $_value');
+                  Navigator.of(context).pop();
+                },
+        ),
       ],
     );
   }

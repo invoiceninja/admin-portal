@@ -108,6 +108,9 @@ class ClientFields {
   static const String routingId = 'routing_id';
   static const String isTaxExempt = 'tax_exempt';
   static const String classification = 'classification';
+  static const String sizeId = 'size_id';
+  static const String industryId = 'industry_id';
+  static const String countryId = 'country_id';
 }
 
 abstract class ClientEntity extends Object

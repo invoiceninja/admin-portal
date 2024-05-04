@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/country_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/date_format_model.dart';
-import 'package:invoiceninja_flutter/data/models/static/datetime_format_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/industry_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/invoice_status_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/language_model.dart';

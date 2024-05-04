@@ -62,6 +62,12 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
       serializers.serialize(object.templateMap,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(String), const FullType(TemplateEntity)])),
+      'bulkUpdates',
+      serializers.serialize(object.bulkUpdates,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(BuiltList, const [const FullType(String)])
+          ])),
     ];
     Object? value;
     value = object.updatedAt;
@@ -158,6 +164,13 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
                 const FullType(TemplateEntity)
               ]))!);
           break;
+        case 'bulkUpdates':
+          result.bulkUpdates.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(BuiltList, const [const FullType(String)])
+              ]))!);
+          break;
       }
     }
 
@@ -188,6 +201,8 @@ class _$StaticState extends StaticState {
   final BuiltMap<String, CountryEntity> countryMap;
   @override
   final BuiltMap<String, TemplateEntity> templateMap;
+  @override
+  final BuiltMap<String, BuiltList<String>> bulkUpdates;
 
   factory _$StaticState([void Function(StaticStateBuilder)? updates]) =>
       (new StaticStateBuilder()..update(updates))._build();
@@ -203,7 +218,8 @@ class _$StaticState extends StaticState {
       required this.languageMap,
       required this.paymentTypeMap,
       required this.countryMap,
-      required this.templateMap})
+      required this.templateMap,
+      required this.bulkUpdates})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         currencyMap, r'StaticState', 'currencyMap');
@@ -224,6 +240,8 @@ class _$StaticState extends StaticState {
         countryMap, r'StaticState', 'countryMap');
     BuiltValueNullFieldError.checkNotNull(
         templateMap, r'StaticState', 'templateMap');
+    BuiltValueNullFieldError.checkNotNull(
+        bulkUpdates, r'StaticState', 'bulkUpdates');
   }
 
   @override
@@ -247,7 +265,8 @@ class _$StaticState extends StaticState {
         languageMap == other.languageMap &&
         paymentTypeMap == other.paymentTypeMap &&
         countryMap == other.countryMap &&
-        templateMap == other.templateMap;
+        templateMap == other.templateMap &&
+        bulkUpdates == other.bulkUpdates;
   }
 
   int? __hashCode;
@@ -266,6 +285,7 @@ class _$StaticState extends StaticState {
     _$hash = $jc(_$hash, paymentTypeMap.hashCode);
     _$hash = $jc(_$hash, countryMap.hashCode);
     _$hash = $jc(_$hash, templateMap.hashCode);
+    _$hash = $jc(_$hash, bulkUpdates.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -283,7 +303,8 @@ class _$StaticState extends StaticState {
           ..add('languageMap', languageMap)
           ..add('paymentTypeMap', paymentTypeMap)
           ..add('countryMap', countryMap)
-          ..add('templateMap', templateMap))
+          ..add('templateMap', templateMap)
+          ..add('bulkUpdates', bulkUpdates))
         .toString();
   }
 }
@@ -355,7 +376,15 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
   set templateMap(MapBuilder<String, TemplateEntity>? templateMap) =>
       _$this._templateMap = templateMap;
 
-  StaticStateBuilder();
+  MapBuilder<String, BuiltList<String>>? _bulkUpdates;
+  MapBuilder<String, BuiltList<String>> get bulkUpdates =>
+      _$this._bulkUpdates ??= new MapBuilder<String, BuiltList<String>>();
+  set bulkUpdates(MapBuilder<String, BuiltList<String>>? bulkUpdates) =>
+      _$this._bulkUpdates = bulkUpdates;
+
+  StaticStateBuilder() {
+    StaticState._initializeBuilder(this);
+  }
 
   StaticStateBuilder get _$this {
     final $v = _$v;
@@ -371,6 +400,7 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
       _paymentTypeMap = $v.paymentTypeMap.toBuilder();
       _countryMap = $v.countryMap.toBuilder();
       _templateMap = $v.templateMap.toBuilder();
+      _bulkUpdates = $v.bulkUpdates.toBuilder();
       _$v = null;
     }
     return this;
@@ -405,7 +435,8 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
               languageMap: languageMap.build(),
               paymentTypeMap: paymentTypeMap.build(),
               countryMap: countryMap.build(),
-              templateMap: templateMap.build());
+              templateMap: templateMap.build(),
+              bulkUpdates: bulkUpdates.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -429,6 +460,8 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
         countryMap.build();
         _$failedField = 'templateMap';
         templateMap.build();
+        _$failedField = 'bulkUpdates';
+        bulkUpdates.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'StaticState', _$failedField, e.toString());
