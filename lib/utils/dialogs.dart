@@ -784,13 +784,12 @@ class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
                   WebClient()
                       .post(url, credentials.token, data: jsonEncode(data))
                       .then((response) async {
-                    print('## RESPONSE: $response');
-
                     setState(() => _isLoading = false);
                     Navigator.of(navigatorKey.currentContext!).pop();
-                    //showToast(localization.bulkUpdatedData);
+                    showToast(localization.bulkUpdated);
+                    store.dispatch(RefreshData());
                   }).catchError((error) {
-                    print('## ERROR: $error');
+                    showErrorDialog(message: error);
                     setState(() => _isLoading = false);
                   });
                 },
@@ -914,7 +913,7 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
                         setState(() => _isLoading = false);
                       }
                     }).catchError((error) {
-                      print('## ERROR: $error');
+                      showErrorDialog(message: error);
                       setState(() => _isLoading = false);
                     });
                   },
