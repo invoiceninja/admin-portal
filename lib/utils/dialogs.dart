@@ -755,6 +755,17 @@ class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
                     });
                   },
                 )
+              else
+                DecoratedFormField(
+                  label: localization.lookup(_field),
+                  keyboardType: TextInputType.streetAddress,
+                  initialValue: _value,
+                  onChanged: (value) {
+                    setState(() {
+                      _value = value;
+                    });
+                  },
+                )
             ],
           ],
         ),
