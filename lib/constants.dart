@@ -817,6 +817,24 @@ const String kReportGroupMonth = 'month';
 const String kReportGroupQuarter = 'quarter';
 const String kReportGroupYear = 'year';
 
+const String kRoundTo1Minute = '1_minute';
+const String kRoundTo5Minutes = '5_minutes';
+const String kRoundTo15Minutes = '15_minutes';
+const String kRoundTo30Minutes = '30_minutes';
+const String kRoundTo1Hour = '1_hour';
+const String kRoundTo1Day = '1_day';
+const String kRoundToCustom = 'custom';
+
+const kTaskRoundingOptions = {
+  kRoundTo1Minute: 60,
+  kRoundTo5Minutes: 60 * 5,
+  kRoundTo15Minutes: 60 * 15,
+  kRoundTo30Minutes: 60 * 30,
+  kRoundTo1Hour: 60 * 60,
+  kRoundTo1Day: 60 * 60 * 24,
+  kRoundToCustom: 0,
+};
+
 const int kModuleRecurringInvoices = 1;
 const int kModuleCredits = 2;
 const int kModuleQuotes = 4;

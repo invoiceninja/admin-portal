@@ -1,4 +1,5 @@
 // Flutter imports:
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 
@@ -139,6 +140,36 @@ class _TaskSettingsState extends State<TaskSettings> {
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..allowBillableTaskItems = value)),
               ),
+              SwitchListTile(
+                activeColor: Theme.of(context).colorScheme.secondary,
+                title: Text(localization.roundTasks),
+                value: settings.taskRoundingEnabled,
+                subtitle: Text(localization.roundTasksHelp),
+                onChanged: (value) => viewModel.onSettingsChanged(settings
+                    .rebuild((b) => b..taskRoundToNearest = value ? 60 : 1)),
+              ),
+              if (settings.taskRoundingEnabled) ...[
+                BoolDropdownButton(
+                  value: settings.taskRoundUp,
+                  onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b.taskRoundUp = value)),
+                  disabledLabel: localization.roundDown,
+                  enabledLabel: localization.roundUp,
+                ),
+                AppDropdownButton<int>(
+                  value: settings.taskRoundToNearest,
+                  labelText: localization.taskRoundToNearest,
+                  onChanged: (value) {
+                    //
+                  },
+                  items: kTaskRoundingOptions.keys
+                      .map((roundTo) => DropdownMenuItem(
+                            child: Text(localization.lookup(roundTo)),
+                            value: kTaskRoundingOptions[roundTo],
+                          ))
+                      .toList(),
+                ),
+              ]
             ],
           ]),
           if (!viewModel.state.settingsUIState.isFiltered)

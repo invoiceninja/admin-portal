@@ -838,6 +838,9 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'task_round_to_nearest')
   int? get taskRoundToNearest;
 
+  bool get taskRoundingEnabled =>
+      taskRoundToNearest != null && taskRoundToNearest != 1;
+
   bool get hasAddress => address1 != null && address1!.isNotEmpty;
 
   bool get hasLogo => companyLogo != null && companyLogo!.isNotEmpty;
