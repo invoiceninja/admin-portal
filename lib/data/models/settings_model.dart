@@ -832,6 +832,12 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'brevo_secret')
   String? get brevoSecret;
 
+  @BuiltValueField(wireName: 'task_round_up')
+  bool? get taskRoundUp;
+
+  @BuiltValueField(wireName: 'task_round_to_nearest')
+  int? get taskRoundToNearest;
+
   bool get hasAddress => address1 != null && address1!.isNotEmpty;
 
   bool get hasLogo => companyLogo != null && companyLogo!.isNotEmpty;
