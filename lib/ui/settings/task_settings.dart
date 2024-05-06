@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 
@@ -34,26 +33,33 @@ class _TaskSettingsState extends State<TaskSettings> {
       GlobalKey<FormState>(debugLabel: '_taskSettings');
   FocusScopeNode? _focusNode;
   final _taskRateController = TextEditingController();
+  final _taskRoundToNearestController = TextEditingController();
   late List<TextEditingController> _controllers;
+  bool _showCustomTaskRounding = false;
 
   @override
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
+
+    _showCustomTaskRounding = widget.viewModel.settings.isTaskRoundingCustom;
   }
 
   @override
   void didChangeDependencies() {
     _controllers = [
       _taskRateController,
+      _taskRoundToNearestController,
     ];
 
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    _taskRateController.text = formatNumber(
-        widget.viewModel.settings.defaultTaskRate, context,
+    final settings = widget.viewModel.settings;
+    _taskRateController.text = formatNumber(settings.defaultTaskRate, context,
         formatNumberType: FormatNumberType.inputMoney)!;
+    _taskRoundToNearestController.text =
+        (settings.taskRoundToNearest ?? 0).toString();
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -75,8 +81,10 @@ class _TaskSettingsState extends State<TaskSettings> {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final settings = viewModel.settings.rebuild((b) => b
-      ..defaultTaskRate = parseDouble(_taskRateController.text,
-          zeroIsNull: state.settingsUIState.isFiltered));
+      ..defaultTaskRate = parseDouble(_taskRateController.text.trim(),
+          zeroIsNull: state.settingsUIState.isFiltered)
+      ..taskRoundToNearest =
+          parseInt(_taskRoundToNearestController.text.trim()));
 
     if (settings != viewModel.settings) {
       viewModel.onSettingsChanged(settings);
@@ -145,8 +153,9 @@ class _TaskSettingsState extends State<TaskSettings> {
                 title: Text(localization.roundTasks),
                 value: settings.taskRoundingEnabled,
                 subtitle: Text(localization.roundTasksHelp),
-                onChanged: (value) => viewModel.onSettingsChanged(settings
-                    .rebuild((b) => b..taskRoundToNearest = value ? 60 : 1)),
+                onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild(
+                        (b) => b..taskRoundToNearest = value ? 60 * 5 : 1)),
               ),
               if (settings.taskRoundingEnabled) ...[
                 BoolDropdownButton(
@@ -157,10 +166,20 @@ class _TaskSettingsState extends State<TaskSettings> {
                   enabledLabel: localization.roundUp,
                 ),
                 AppDropdownButton<int>(
-                  value: settings.taskRoundToNearest,
+                  value:
+                      settings.isTaskRoundingCustom || _showCustomTaskRounding
+                          ? 0
+                          : settings.taskRoundToNearest,
                   labelText: localization.taskRoundToNearest,
                   onChanged: (value) {
-                    //
+                    final updated =
+                        settings.rebuild((b) => b..taskRoundToNearest = value);
+                    viewModel.onSettingsChanged(updated);
+                    setState(() {
+                      _showCustomTaskRounding = updated.isTaskRoundingCustom;
+                      _taskRoundToNearestController.text =
+                          (settings.taskRoundToNearest ?? 0).toString();
+                    });
                   },
                   items: kTaskRoundingOptions.keys
                       .map((roundTo) => DropdownMenuItem(
@@ -169,6 +188,12 @@ class _TaskSettingsState extends State<TaskSettings> {
                           ))
                       .toList(),
                 ),
+                if (_showCustomTaskRounding || settings.isTaskRoundingCustom)
+                  DecoratedFormField(
+                    keyboardType: TextInputType.number,
+                    label: localization.roundToMinutes,
+                    controller: _taskRoundToNearestController,
+                  ),
               ]
             ],
           ]),
