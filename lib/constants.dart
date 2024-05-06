@@ -1099,3 +1099,5 @@ const String kActivityEmailPurchaseOrder = '135';
 const String kActivityViewPurchaseOrder = '136';
 const String kActivityAcceptPurchaseOrder = '137';
 const String kActivityEmailPayment = '138';
+const String kActivityExpenseNotificationSent = '139';
+const String kActivityStatementSent = '140';
