@@ -59,7 +59,7 @@ class _TaskSettingsState extends State<TaskSettings> {
     _taskRateController.text = formatNumber(settings.defaultTaskRate, context,
         formatNumberType: FormatNumberType.inputMoney)!;
     _taskRoundToNearestController.text =
-        (settings.taskRoundToNearest ?? 0).toString();
+        ((settings.taskRoundToNearest ?? 0) / 60).floor().toString();
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -80,11 +80,12 @@ class _TaskSettingsState extends State<TaskSettings> {
   void _onChanged() {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
+
+    final minutes = parseInt(_taskRoundToNearestController.text.trim());
     final settings = viewModel.settings.rebuild((b) => b
       ..defaultTaskRate = parseDouble(_taskRateController.text.trim(),
           zeroIsNull: state.settingsUIState.isFiltered)
-      ..taskRoundToNearest =
-          parseInt(_taskRoundToNearestController.text.trim()));
+      ..taskRoundToNearest = minutes == null ? null : minutes * 60);
 
     if (settings != viewModel.settings) {
       viewModel.onSettingsChanged(settings);
@@ -186,7 +187,9 @@ class _TaskSettingsState extends State<TaskSettings> {
                     setState(() {
                       _showCustomTaskRounding = updated.isTaskRoundingCustom;
                       _taskRoundToNearestController.text =
-                          (settings.taskRoundToNearest ?? 0).toString();
+                          ((settings.taskRoundToNearest ?? 0) / 60)
+                              .floor()
+                              .toString();
                     });
                   },
                   items: kTaskRoundingOptions.keys
