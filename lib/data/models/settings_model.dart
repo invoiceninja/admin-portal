@@ -839,8 +839,8 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'task_round_to_nearest')
   int? get taskRoundToNearest;
 
-  bool get taskRoundingEnabled =>
-      taskRoundToNearest != null && taskRoundToNearest != 1;
+  bool? get taskRoundingEnabled =>
+      taskRoundToNearest == null ? null : taskRoundToNearest != 1;
 
   bool get isTaskRoundingCustom =>
       taskRoundToNearest == 0 ||
