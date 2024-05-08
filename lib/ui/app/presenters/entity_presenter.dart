@@ -137,6 +137,7 @@ class EntityPresenter {
       'payment',
       'expense',
       'invoice_amount',
+      'invoice_net_amount',
       'invoice_balance',
       'client_balance',
       'credit_balance',
