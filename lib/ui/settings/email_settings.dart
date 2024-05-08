@@ -247,7 +247,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                       value:
                           SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK_HOSTED),
                   DropdownMenuItem(
-                      child: Text('Mailgun (Hosted)'),
+                      child: Text('Mailgun (${localization.hosted})'),
                       value:
                           SettingsEntity.EMAIL_SENDING_METHOD_MAILGUN_HOSTED),
                   if (state.isProPlan)
