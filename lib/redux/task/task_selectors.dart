@@ -61,9 +61,11 @@ InvoiceItemEntity convertTaskToInvoiceItem({
             time.startDate != null && time.endDate != null && time.isBillable)
         .forEach((time) {
       final hours = round(time.duration.inSeconds / 3600, 3);
+      final duration = formatNumber(hours, context,
+          formatNumberType: FormatNumberType.double);
       final hoursStr = hours == 1
           ? ' • 1 ${localization.hour}'
-          : ' • $hours ${localization.hours}';
+          : ' • $duration ${localization.hours}';
 
       if (company.invoiceTaskDatelog && company.invoiceTaskTimelog) {
         final start = formatDate(time.startDate!.toIso8601String(), context,
@@ -108,9 +110,11 @@ InvoiceItemEntity convertTaskToInvoiceItem({
       for (var date in sortedDates) {
         if (company.invoiceTaskHours) {
           final hours = round(dates[date], 3);
+          final duration = formatNumber(hours, context,
+              formatNumberType: FormatNumberType.double);
           final hoursStr = hours == 1
               ? ' • 1 ${localization.hour}'
-              : ' • $hours ${localization.hours}';
+              : ' • $duration ${localization.hours}';
 
           datesStr.add(date + hoursStr);
         } else {
