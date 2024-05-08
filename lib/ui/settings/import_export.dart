@@ -375,22 +375,20 @@ class _ImportExportState extends State<ImportExport> {
                           },
                         ),
                       ),
-                      if (supportsLatestFeatures('5.8.0')) ...[
-                        SizedBox(width: kGutterWidth),
-                        Expanded(
-                            child: AppButton(
-                          label: localization.schedule,
-                          iconData: Icons.schedule,
-                          onPressed: () {
-                            createEntity(
-                                entity: ScheduleEntity(
-                                        ScheduleEntity.TEMPLATE_EMAIL_REPORT)
-                                    .rebuild((b) => b
-                                      ..parameters.reportName =
-                                          _exportType.name));
-                          },
-                        ))
-                      ],
+                      SizedBox(width: kGutterWidth),
+                      Expanded(
+                          child: AppButton(
+                        label: localization.schedule,
+                        iconData: Icons.schedule,
+                        onPressed: () {
+                          createEntity(
+                              entity: ScheduleEntity(
+                                      ScheduleEntity.TEMPLATE_EMAIL_REPORT)
+                                  .rebuild((b) => b
+                                    ..parameters.reportName =
+                                        _exportType.name));
+                        },
+                      ))
                     ],
                   )
                 ],

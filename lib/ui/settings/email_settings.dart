@@ -250,7 +250,7 @@ class _EmailSettingsState extends State<EmailSettings> {
                       child: Text('Mailgun (Hosted)'),
                       value:
                           SettingsEntity.EMAIL_SENDING_METHOD_MAILGUN_HOSTED),
-                  if (supportsLatestFeatures('5.8.0') && state.isProPlan)
+                  if (state.isProPlan)
                     DropdownMenuItem(
                         child: Text('SMTP'),
                         value: SettingsEntity.EMAIL_SENDING_METHOD_SMTP),
