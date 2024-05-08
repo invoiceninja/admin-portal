@@ -244,11 +244,11 @@ class _EmailSettingsState extends State<EmailSettings> {
                 items: [
                   if (state.isHosted) ...[
                     DropdownMenuItem(
-                        child: Text('Postmark (${localization.hosted})'),
+                        child: Text('Postmark (invoicing.co)'),
                         value: SettingsEntity
                             .EMAIL_SENDING_METHOD_POSTMARK_HOSTED),
                     DropdownMenuItem(
-                        child: Text('Mailgun (${localization.hosted})'),
+                        child: Text('Mailgun (invoicing.co)'),
                         value:
                             SettingsEntity.EMAIL_SENDING_METHOD_MAILGUN_HOSTED),
                   ] else
