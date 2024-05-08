@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/ui/settings/task_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TaskSettings extends StatefulWidget {
   const TaskSettings({
@@ -151,20 +152,21 @@ class _TaskSettingsState extends State<TaskSettings> {
                       .rebuild((b) => b..allowBillableTaskItems = value)),
                 ),
               ],
-              BoolDropdownButton(
-                label: localization.roundTasks,
-                value: settings.taskRoundingEnabled,
-                helpLabel: localization.roundTasksHelp,
-                onChanged: (value) =>
-                    viewModel.onSettingsChanged(settings.rebuild(
-                  (b) => b
-                    ..taskRoundToNearest = value == true
-                        ? 60 * 5
-                        : value == false
-                            ? 1
-                            : null,
-                )),
-              ),
+              if (supportsLatestFeatures('5.8.55'))
+                BoolDropdownButton(
+                  label: localization.roundTasks,
+                  value: settings.taskRoundingEnabled,
+                  helpLabel: localization.roundTasksHelp,
+                  onChanged: (value) =>
+                      viewModel.onSettingsChanged(settings.rebuild(
+                    (b) => b
+                      ..taskRoundToNearest = value == true
+                          ? 60 * 5
+                          : value == false
+                              ? 1
+                              : null,
+                  )),
+                ),
               if (settings.taskRoundingEnabled == true) ...[
                 BoolDropdownButton(
                   label: localization.direction,

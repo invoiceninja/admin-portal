@@ -461,7 +461,7 @@ class SettingsSearch extends StatelessWidget {
           'allow_billable_task_items#2023-03-22',
           'show_task_item_description#2023-03-22',
           'project_location#2023-06-06',
-          'round_tasks#2024-05-06',
+          if (supportsLatestFeatures('5.8.55')) 'round_tasks#2024-05-06',
         ],
       ],
       kSettingsTaskStatuses: [
