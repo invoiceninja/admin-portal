@@ -235,13 +235,6 @@ Map<String, String> _getHeaders(
 }
 
 void _checkResponse(String url, http.Response response) {
-  /*
-  debugPrint(
-      'response: ${response.statusCode} ${response.body.substring(0, min(response.body.length, 30000))}',
-      wrapWidth: 1000);
-  debugPrint('response: ${response.statusCode} ${response.body}');
-   */
-
   if (!kReleaseMode) {
     print('Response: ${formatSize(response.bodyBytes.length)}');
     if (Config.DEBUG_REQUESTS) {
