@@ -641,8 +641,9 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
           prefix: EntityType.invoice.apiValue,
           languageId: client.languageId,
         );
-      }).catchError((_) {
+      }).catchError((error) {
         store.dispatch(StopLoading());
+        showErrorDialog(message: error);
       });
       break;
     case EntityAction.download:
@@ -657,8 +658,9 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
           prefix: EntityType.credit.apiValue,
           languageId: client.languageId,
         );
-      }).catchError((_) {
+      }).catchError((error) {
         store.dispatch(StopLoading());
+        showErrorDialog(message: error);
       });
       break;
     case EntityAction.bulkDownload:

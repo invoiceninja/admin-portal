@@ -2,6 +2,7 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/entities.dart';
@@ -831,6 +832,19 @@ abstract class SettingsEntity
 
   @BuiltValueField(wireName: 'brevo_secret')
   String? get brevoSecret;
+
+  @BuiltValueField(wireName: 'task_round_up')
+  bool? get taskRoundUp;
+
+  @BuiltValueField(wireName: 'task_round_to_nearest')
+  int? get taskRoundToNearest;
+
+  bool? get taskRoundingEnabled =>
+      taskRoundToNearest == null ? null : taskRoundToNearest != 1;
+
+  bool get isTaskRoundingCustom =>
+      taskRoundToNearest == 0 ||
+      !kTaskRoundingOptions.values.contains(taskRoundToNearest);
 
   bool get hasAddress => address1 != null && address1!.isNotEmpty;
 

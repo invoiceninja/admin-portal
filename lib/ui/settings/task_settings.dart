@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/ui/settings/task_settings_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:invoiceninja_flutter/utils/platforms.dart';
 
 class TaskSettings extends StatefulWidget {
   const TaskSettings({
@@ -33,26 +34,33 @@ class _TaskSettingsState extends State<TaskSettings> {
       GlobalKey<FormState>(debugLabel: '_taskSettings');
   FocusScopeNode? _focusNode;
   final _taskRateController = TextEditingController();
+  final _taskRoundToNearestController = TextEditingController();
   late List<TextEditingController> _controllers;
+  bool _showCustomTaskRounding = false;
 
   @override
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
+
+    _showCustomTaskRounding = widget.viewModel.settings.isTaskRoundingCustom;
   }
 
   @override
   void didChangeDependencies() {
     _controllers = [
       _taskRateController,
+      _taskRoundToNearestController,
     ];
 
     _controllers
         .forEach((dynamic controller) => controller.removeListener(_onChanged));
 
-    _taskRateController.text = formatNumber(
-        widget.viewModel.settings.defaultTaskRate, context,
+    final settings = widget.viewModel.settings;
+    _taskRateController.text = formatNumber(settings.defaultTaskRate, context,
         formatNumberType: FormatNumberType.inputMoney)!;
+    _taskRoundToNearestController.text =
+        ((settings.taskRoundToNearest ?? 0) / 60).floor().toString();
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -73,9 +81,12 @@ class _TaskSettingsState extends State<TaskSettings> {
   void _onChanged() {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
+
+    final minutes = parseInt(_taskRoundToNearestController.text.trim());
     final settings = viewModel.settings.rebuild((b) => b
-      ..defaultTaskRate = parseDouble(_taskRateController.text,
-          zeroIsNull: state.settingsUIState.isFiltered));
+      ..defaultTaskRate = parseDouble(_taskRateController.text.trim(),
+          zeroIsNull: state.settingsUIState.isFiltered)
+      ..taskRoundToNearest = minutes == null ? null : minutes * 60);
 
     if (settings != viewModel.settings) {
       viewModel.onSettingsChanged(settings);
@@ -96,51 +107,109 @@ class _TaskSettingsState extends State<TaskSettings> {
         formKey: _formKey,
         focusNode: _focusNode,
         children: <Widget>[
-          FormCard(children: <Widget>[
-            DecoratedFormField(
-              controller: _taskRateController,
-              label: localization.defaultTaskRate,
-              onSavePressed: viewModel.onSavePressed,
-              isMoney: true,
-              keyboardType:
-                  TextInputType.numberWithOptions(decimal: true, signed: true),
-            ),
-            if (!viewModel.state.settingsUIState.isFiltered) ...[
-              SizedBox(height: 32),
-              SwitchListTile(
-                activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.autoStartTasks),
-                value: company.autoStartTasks,
-                subtitle: Text(localization.autoStartTasksHelp),
-                onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..autoStartTasks = value)),
+          FormCard(
+            children: <Widget>[
+              DecoratedFormField(
+                controller: _taskRateController,
+                label: localization.defaultTaskRate,
+                onSavePressed: viewModel.onSavePressed,
+                isMoney: true,
+                keyboardType: TextInputType.numberWithOptions(
+                    decimal: true, signed: true),
               ),
-              SwitchListTile(
-                activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.showTaskEndDate),
-                value: company.showTaskEndDate,
-                subtitle: Text(localization.showTaskEndDateHelp),
-                onChanged: (value) => viewModel.onCompanyChanged(
-                    company.rebuild((b) => b..showTaskEndDate = value)),
-              ),
-              SwitchListTile(
-                activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.showTaskItemDescription),
-                value: settings.showTaskItemDescription!,
-                subtitle: Text(localization.showTaskItemDescriptionHelp),
-                onChanged: (value) => viewModel.onSettingsChanged(settings
-                    .rebuild((b) => b..showTaskItemDescription = value)),
-              ),
-              SwitchListTile(
-                activeColor: Theme.of(context).colorScheme.secondary,
-                title: Text(localization.showTaskBillable),
-                value: settings.allowBillableTaskItems!,
-                subtitle: Text(localization.allowBillableTaskItemsHelp),
-                onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..allowBillableTaskItems = value)),
-              ),
+              if (!viewModel.state.settingsUIState.isFiltered) ...[
+                SizedBox(height: 32),
+                SwitchListTile(
+                  activeColor: Theme.of(context).colorScheme.secondary,
+                  title: Text(localization.autoStartTasks),
+                  value: company.autoStartTasks,
+                  subtitle: Text(localization.autoStartTasksHelp),
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild((b) => b..autoStartTasks = value)),
+                ),
+                SwitchListTile(
+                  activeColor: Theme.of(context).colorScheme.secondary,
+                  title: Text(localization.showTaskEndDate),
+                  value: company.showTaskEndDate,
+                  subtitle: Text(localization.showTaskEndDateHelp),
+                  onChanged: (value) => viewModel.onCompanyChanged(
+                      company.rebuild((b) => b..showTaskEndDate = value)),
+                ),
+                SwitchListTile(
+                  activeColor: Theme.of(context).colorScheme.secondary,
+                  title: Text(localization.showTaskItemDescription),
+                  value: settings.showTaskItemDescription!,
+                  subtitle: Text(localization.showTaskItemDescriptionHelp),
+                  onChanged: (value) => viewModel.onSettingsChanged(settings
+                      .rebuild((b) => b..showTaskItemDescription = value)),
+                ),
+                SwitchListTile(
+                  activeColor: Theme.of(context).colorScheme.secondary,
+                  title: Text(localization.showTaskBillable),
+                  value: settings.allowBillableTaskItems!,
+                  subtitle: Text(localization.allowBillableTaskItemsHelp),
+                  onChanged: (value) => viewModel.onSettingsChanged(settings
+                      .rebuild((b) => b..allowBillableTaskItems = value)),
+                ),
+              ],
+              if (supportsLatestFeatures('5.8.55'))
+                BoolDropdownButton(
+                  label: localization.roundTasks,
+                  value: settings.taskRoundingEnabled,
+                  helpLabel: localization.roundTasksHelp,
+                  onChanged: (value) =>
+                      viewModel.onSettingsChanged(settings.rebuild(
+                    (b) => b
+                      ..taskRoundToNearest = value == true
+                          ? 60 * 5
+                          : value == false
+                              ? 1
+                              : null,
+                  )),
+                ),
+              if (settings.taskRoundingEnabled == true) ...[
+                BoolDropdownButton(
+                  label: localization.direction,
+                  value: settings.taskRoundUp,
+                  onChanged: (value) => viewModel.onSettingsChanged(
+                      settings.rebuild((b) => b.taskRoundUp = value)),
+                  disabledLabel: localization.roundDown,
+                  enabledLabel: localization.roundUp,
+                ),
+                AppDropdownButton<int>(
+                  value:
+                      settings.isTaskRoundingCustom || _showCustomTaskRounding
+                          ? 0
+                          : settings.taskRoundToNearest,
+                  labelText: localization.taskRoundToNearest,
+                  onChanged: (value) {
+                    final updated =
+                        settings.rebuild((b) => b..taskRoundToNearest = value);
+                    viewModel.onSettingsChanged(updated);
+                    setState(() {
+                      _showCustomTaskRounding = updated.isTaskRoundingCustom;
+                      _taskRoundToNearestController.text =
+                          ((settings.taskRoundToNearest ?? 0) / 60)
+                              .floor()
+                              .toString();
+                    });
+                  },
+                  items: kTaskRoundingOptions.keys
+                      .map((roundTo) => DropdownMenuItem(
+                            child: Text(localization.lookup(roundTo)),
+                            value: kTaskRoundingOptions[roundTo],
+                          ))
+                      .toList(),
+                ),
+                if (_showCustomTaskRounding || settings.isTaskRoundingCustom)
+                  DecoratedFormField(
+                    keyboardType: TextInputType.number,
+                    label: localization.roundToMinutes,
+                    controller: _taskRoundToNearestController,
+                  ),
+              ],
             ],
-          ]),
+          ),
           if (!viewModel.state.settingsUIState.isFiltered)
             Padding(
               padding: const EdgeInsets.only(

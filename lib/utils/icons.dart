@@ -134,6 +134,8 @@ IconData? getEntityActionIcon(EntityAction? entityAction) {
       return MdiIcons.pipeDisconnected;
     case EntityAction.runTemplate:
       return MdiIcons.arrowRightCircleOutline;
+    case EntityAction.bulkUpdate:
+      return MdiIcons.squareEditOutline;
     default:
       return null;
   }

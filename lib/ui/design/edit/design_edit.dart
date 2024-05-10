@@ -1,6 +1,5 @@
 // Dart imports:
 import 'dart:convert';
-import 'dart:ui';
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
@@ -476,6 +475,30 @@ class _DesignSettingsState extends State<DesignSettings> {
               },
             ),
             if (design.isTemplate) ...[
+              SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                        onPressed: () =>
+                            launchUrl(Uri.parse(kTemplatesDocsUrl)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Text(localization.viewDocs),
+                        )),
+                  ),
+                  SizedBox(width: kTableColumnGap),
+                  Expanded(
+                    child: OutlinedButton(
+                        onPressed: () =>
+                            launchUrl(Uri.parse(kTemplatesYouTubeUrl)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Text(localization.watchVideo),
+                        )),
+                  ),
+                ],
+              ),
               SizedBox(height: 10),
               ...[
                 EntityType.client,

@@ -23,6 +23,7 @@ class CustomField extends StatefulWidget {
     this.onChanged,
     this.value,
     this.hideFieldLabel = false,
+    this.autofocus = false,
   });
 
   final TextEditingController? controller;
@@ -31,6 +32,7 @@ class CustomField extends StatefulWidget {
   final String field;
   final String? value;
   final bool hideFieldLabel;
+  final bool autofocus;
 
   @override
   _CustomFieldState createState() => _CustomFieldState();
@@ -80,6 +82,7 @@ class _CustomFieldState extends State<CustomField> {
           label: widget.hideFieldLabel ? null : fieldLabel,
           onChanged: widget.onChanged,
           onSavePressed: widget.onSavePressed,
+          autofocus: widget.autofocus,
         );
       case kFieldTypeMultiLineText:
         return DecoratedFormField(
@@ -89,6 +92,7 @@ class _CustomFieldState extends State<CustomField> {
           label: widget.hideFieldLabel ? null : fieldLabel,
           onChanged: widget.onChanged,
           onSavePressed: widget.onSavePressed,
+          autofocus: widget.autofocus,
         );
       case kFieldTypeSwitch:
         return BoolDropdownButton(
@@ -117,6 +121,7 @@ class _CustomFieldState extends State<CustomField> {
             }
           },
           selectedDate: widget.value,
+          autofocus: widget.autofocus,
         );
       case kFieldTypeDropdown:
         return AppDropdownButton<String>(
@@ -137,6 +142,7 @@ class _CustomFieldState extends State<CustomField> {
             }
           },
           labelText: widget.hideFieldLabel ? null : fieldLabel,
+          autofocus: widget.autofocus,
         );
       default:
         return SizedBox();

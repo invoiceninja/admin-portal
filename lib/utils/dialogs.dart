@@ -9,8 +9,12 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:invoiceninja_flutter/redux/task_status/task_status_selectors.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -614,6 +618,198 @@ void addToInvoiceDialog({
       });
 }
 
+class BulkUpdateDialog extends StatefulWidget {
+  const BulkUpdateDialog({
+    super.key,
+    required this.entityType,
+    required this.entities,
+  });
+
+  final EntityType entityType;
+  final List<BaseEntity> entities;
+
+  @override
+  State<BulkUpdateDialog> createState() => _BulkUpdateDialogState();
+}
+
+class _BulkUpdateDialogState extends State<BulkUpdateDialog> {
+  bool _isLoading = false;
+  String? _field;
+  String? _value;
+
+  @override
+  Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+    final company = state.company;
+    final localization = AppLocalization.of(context)!;
+
+    return AlertDialog(
+      title: Text(localization.bulkUpdate),
+      content: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              widget.entities.length == 1
+                  ? localization.lookup(widget.entityType.snakeCase)
+                  : localization.lookup(widget.entityType.plural) +
+                      ' (${widget.entities.length})',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            SizedBox(height: 8),
+            ...widget.entities
+                .map((entity) => Text(entity.listDisplayName))
+                .toList(),
+            if (_isLoading) ...[
+              SizedBox(height: 32),
+              LinearProgressIndicator()
+            ] else ...[
+              SizedBox(height: 16),
+              AppDropdownButton<String>(
+                autofocus: true,
+                labelText: localization.field,
+                value: null,
+                onChanged: (value) {
+                  setState(() {
+                    _value = null;
+                    _field = value;
+                  });
+                },
+                items: state
+                    .staticState.bulkUpdates[widget.entityType.apiValue]!
+                    .where((field) {
+                      if (field.contains('custom_value')) {
+                        return company.hasCustomField(
+                            field.replaceFirst('custom_value', 'client'));
+                      }
+
+                      return true;
+                    })
+                    .map((field) => DropdownMenuItem(
+                        child: Text(field.contains('custom_value')
+                            ? company.getCustomFieldLabel(
+                                field.replaceFirst('custom_value', 'client'))
+                            : localization.lookup(field)),
+                        value: field))
+                    .toList(),
+              ),
+              if (_field == ClientFields.publicNotes)
+                DecoratedFormField(
+                  maxLines: 4,
+                  keyboardType: TextInputType.multiline,
+                  label: localization.publicNotes,
+                  onChanged: (value) {
+                    setState(() {
+                      _value = value;
+                    });
+                  },
+                )
+              else if (_field == ClientFields.sizeId)
+                AppDropdownButton(
+                    value: _value,
+                    labelText: localization.size,
+                    items: memoizedSizeList(state.staticState.sizeMap)
+                        .map((sizeId) => DropdownMenuItem(
+                              child:
+                                  Text(state.staticState.sizeMap[sizeId]!.name),
+                              value: sizeId,
+                            ))
+                        .toList(),
+                    onChanged: (dynamic size) {
+                      setState(() {
+                        _value = size?.id;
+                      });
+                    })
+              else if (_field == ClientFields.industryId)
+                EntityDropdown(
+                    entityId: _value,
+                    entityType: EntityType.industry,
+                    entityList:
+                        memoizedIndustryList(state.staticState.industryMap),
+                    labelText: localization.industry,
+                    onSelected: (SelectableEntity? industry) {
+                      setState(() {
+                        _value = industry?.id;
+                      });
+                    })
+              else if (_field == ClientFields.countryId)
+                EntityDropdown(
+                    entityId: _value,
+                    entityType: EntityType.country,
+                    entityList:
+                        memoizedCountryList(state.staticState.countryMap),
+                    labelText: localization.country,
+                    onSelected: (SelectableEntity? country) {
+                      setState(() {
+                        _value = country?.id;
+                      });
+                    })
+              else if ((_field ?? '').contains('custom_value'))
+                CustomField(
+                  field: (_field ?? '').replaceFirst('custom_value', 'client'),
+                  value: _value,
+                  onChanged: (value) {
+                    setState(() {
+                      _value = value;
+                    });
+                  },
+                )
+              else
+                DecoratedFormField(
+                  label: localization.lookup(_field),
+                  keyboardType: TextInputType.streetAddress,
+                  initialValue: _value,
+                  onChanged: (value) {
+                    setState(() {
+                      _value = value;
+                    });
+                  },
+                )
+            ],
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          child: Text(localization.close.toUpperCase()),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        TextButton(
+          child: Text(localization.submit.toUpperCase()),
+          onPressed: _value == null
+              ? null
+              : () {
+                  final credentials = state.credentials;
+                  final url =
+                      '${credentials.url}/${widget.entityType.pluralApiValue}/bulk';
+                  final data = {
+                    'ids': widget.entities.map((entity) => entity.id).toList(),
+                    'column': _field,
+                    'new_value': _value,
+                    'action': EntityAction.bulkUpdate.toApiParam(),
+                  };
+
+                  setState(() => _isLoading = true);
+
+                  WebClient()
+                      .post(url, credentials.token, data: jsonEncode(data))
+                      .then((response) async {
+                    setState(() => _isLoading = false);
+                    Navigator.of(navigatorKey.currentContext!).pop();
+                    showToast(localization.bulkUpdated);
+                    store.dispatch(RefreshData());
+                  }).catchError((error) {
+                    showErrorDialog(message: error);
+                    setState(() => _isLoading = false);
+                  });
+                },
+        ),
+      ],
+    );
+  }
+}
+
 class RunTemplateDialog extends StatefulWidget {
   const RunTemplateDialog({
     super.key,
@@ -709,14 +905,14 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
                       'action': EntityAction.runTemplate.toApiParam(),
                     };
 
-                    print('## DATA: $data');
+                    //print('## DATA: $data');
 
                     setState(() => _isLoading = true);
 
                     WebClient()
                         .post(url, credentials.token, data: jsonEncode(data))
                         .then((response) async {
-                      print('## RESPONSE: $response');
+                      //print('## RESPONSE: $response');
 
                       if (_sendEmail) {
                         setState(() => _isLoading = false);
@@ -728,7 +924,7 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
                         setState(() => _isLoading = false);
                       }
                     }).catchError((error) {
-                      print('## ERROR: $error');
+                      showErrorDialog(message: error);
                       setState(() => _isLoading = false);
                     });
                   },
@@ -752,10 +948,10 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    localization.lookup(widget.entities.length == 1
-                        ? widget.entityType.snakeCase
-                        : widget.entityType.plural +
-                            ' (${widget.entities.length})'),
+                    widget.entities.length == 1
+                        ? localization.lookup(widget.entityType.snakeCase)
+                        : localization.lookup(widget.entityType.plural) +
+                            ' (${widget.entities.length})',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   SizedBox(height: 8),

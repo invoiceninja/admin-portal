@@ -6,7 +6,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.157';
+const String kClientVersion = '5.0.159';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -54,6 +54,10 @@ const String kTwitterUrl = 'https://twitter.com/invoiceninja';
 const String kFacebookUrl = 'https://www.facebook.com/invoiceninja';
 const String kYouTubeUrl =
     'https://www.youtube.com/channel/UCXAHcBvhW05PDtWYIq7WDFA/videos';
+
+const String kTemplatesYouTubeUrl =
+    'https://www.youtube.com/watch?v=kfG5vvcbYes';
+const String kTemplatesDocsUrl = 'https://invoiceninja.github.io/en/templates';
 
 const String kYodleeCoverageUrl =
     'https://www.yodlee.com/open-banking/data-connections';
@@ -428,6 +432,7 @@ const String kGatewayTypeVenmo = '25';
 const String kGatewayTypeMercadoPago = '26';
 const String kGatewayTypeMyBank = '27';
 const String kGatewayTypePayLater = '28';
+const String kGatewayTypeAdvancedCards = '29';
 
 const kGatewayTypes = {
   kGatewayTypeCreditCard: 'credit_card',
@@ -458,6 +463,7 @@ const kGatewayTypes = {
   kGatewayTypeMercadoPago: 'mercado_pago',
   kGatewayTypeMyBank: 'my_bank',
   kGatewayTypePayLater: 'pay_later',
+  kGatewayTypeAdvancedCards: 'advanced_cards',
 };
 
 const String kNotificationChannelEmail = 'email';
@@ -811,6 +817,24 @@ const String kReportGroupMonth = 'month';
 const String kReportGroupQuarter = 'quarter';
 const String kReportGroupYear = 'year';
 
+const String kRoundTo1Minute = '1_minute';
+const String kRoundTo5Minutes = '5_minutes';
+const String kRoundTo15Minutes = '15_minutes';
+const String kRoundTo30Minutes = '30_minutes';
+const String kRoundTo1Hour = '1_hour';
+const String kRoundTo1Day = '1_day';
+const String kRoundToCustom = 'custom';
+
+const kTaskRoundingOptions = {
+  kRoundTo1Minute: 60,
+  kRoundTo5Minutes: 60 * 5,
+  kRoundTo15Minutes: 60 * 15,
+  kRoundTo30Minutes: 60 * 30,
+  kRoundTo1Hour: 60 * 60,
+  kRoundTo1Day: 60 * 60 * 24,
+  kRoundToCustom: 0,
+};
+
 const int kModuleRecurringInvoices = 1;
 const int kModuleCredits = 2;
 const int kModuleQuotes = 4;
@@ -1093,3 +1117,5 @@ const String kActivityEmailPurchaseOrder = '135';
 const String kActivityViewPurchaseOrder = '136';
 const String kActivityAcceptPurchaseOrder = '137';
 const String kActivityEmailPayment = '138';
+const String kActivityExpenseNotificationSent = '139';
+const String kActivityStatementSent = '140';

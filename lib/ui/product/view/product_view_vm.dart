@@ -115,11 +115,4 @@ class ProductViewVM {
   final bool isSaving;
   final bool isLoading;
   final bool isDirty;
-
-  @override
-  bool operator ==(dynamic other) =>
-      product == other.product && company == other.company;
-
-  @override
-  int get hashCode => product.hashCode ^ company.hashCode;
 }

@@ -1613,6 +1613,19 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.taskRoundUp;
+    if (value != null) {
+      result
+        ..add('task_round_up')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.taskRoundToNearest;
+    if (value != null) {
+      result
+        ..add('task_round_to_nearest')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     return result;
   }
 
@@ -2551,6 +2564,14 @@ class _$SettingsEntitySerializer
           result.brevoSecret = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'task_round_up':
+          result.taskRoundUp = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'task_round_to_nearest':
+          result.taskRoundToNearest = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
       }
     }
 
@@ -3088,6 +3109,10 @@ class _$SettingsEntity extends SettingsEntity {
   final String? useUnappliedPayment;
   @override
   final String? brevoSecret;
+  @override
+  final bool? taskRoundUp;
+  @override
+  final int? taskRoundToNearest;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder)? updates]) =>
       (new SettingsEntityBuilder()..update(updates))._build();
@@ -3321,7 +3346,9 @@ class _$SettingsEntity extends SettingsEntity {
       this.showPdfhtmlOnMobile,
       this.enableRappenRounding,
       this.useUnappliedPayment,
-      this.brevoSecret})
+      this.brevoSecret,
+      this.taskRoundUp,
+      this.taskRoundToNearest})
       : super._();
 
   @override
@@ -3569,7 +3596,9 @@ class _$SettingsEntity extends SettingsEntity {
         showPdfhtmlOnMobile == other.showPdfhtmlOnMobile &&
         enableRappenRounding == other.enableRappenRounding &&
         useUnappliedPayment == other.useUnappliedPayment &&
-        brevoSecret == other.brevoSecret;
+        brevoSecret == other.brevoSecret &&
+        taskRoundUp == other.taskRoundUp &&
+        taskRoundToNearest == other.taskRoundToNearest;
   }
 
   int? __hashCode;
@@ -3806,6 +3835,8 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, enableRappenRounding.hashCode);
     _$hash = $jc(_$hash, useUnappliedPayment.hashCode);
     _$hash = $jc(_$hash, brevoSecret.hashCode);
+    _$hash = $jc(_$hash, taskRoundUp.hashCode);
+    _$hash = $jc(_$hash, taskRoundToNearest.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -4046,7 +4077,9 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('showPdfhtmlOnMobile', showPdfhtmlOnMobile)
           ..add('enableRappenRounding', enableRappenRounding)
           ..add('useUnappliedPayment', useUnappliedPayment)
-          ..add('brevoSecret', brevoSecret))
+          ..add('brevoSecret', brevoSecret)
+          ..add('taskRoundUp', taskRoundUp)
+          ..add('taskRoundToNearest', taskRoundToNearest))
         .toString();
   }
 }
@@ -5185,6 +5218,15 @@ class SettingsEntityBuilder
   String? get brevoSecret => _$this._brevoSecret;
   set brevoSecret(String? brevoSecret) => _$this._brevoSecret = brevoSecret;
 
+  bool? _taskRoundUp;
+  bool? get taskRoundUp => _$this._taskRoundUp;
+  set taskRoundUp(bool? taskRoundUp) => _$this._taskRoundUp = taskRoundUp;
+
+  int? _taskRoundToNearest;
+  int? get taskRoundToNearest => _$this._taskRoundToNearest;
+  set taskRoundToNearest(int? taskRoundToNearest) =>
+      _$this._taskRoundToNearest = taskRoundToNearest;
+
   SettingsEntityBuilder();
 
   SettingsEntityBuilder get _$this {
@@ -5419,6 +5461,8 @@ class SettingsEntityBuilder
       _enableRappenRounding = $v.enableRappenRounding;
       _useUnappliedPayment = $v.useUnappliedPayment;
       _brevoSecret = $v.brevoSecret;
+      _taskRoundUp = $v.taskRoundUp;
+      _taskRoundToNearest = $v.taskRoundToNearest;
       _$v = null;
     }
     return this;
@@ -5672,7 +5716,9 @@ class SettingsEntityBuilder
               showPdfhtmlOnMobile: showPdfhtmlOnMobile,
               enableRappenRounding: enableRappenRounding,
               useUnappliedPayment: useUnappliedPayment,
-              brevoSecret: brevoSecret);
+              brevoSecret: brevoSecret,
+              taskRoundUp: taskRoundUp,
+              taskRoundToNearest: taskRoundToNearest);
     } catch (_) {
       late String _$failedField;
       try {

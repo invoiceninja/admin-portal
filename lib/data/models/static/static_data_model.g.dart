@@ -146,10 +146,6 @@ class _$StaticDataEntitySerializer
       serializers.serialize(object.dateFormats,
           specifiedType: const FullType(
               BuiltList, const [const FullType(DateFormatEntity)])),
-      'datetime_formats',
-      serializers.serialize(object.datetimeFormats,
-          specifiedType: const FullType(
-              BuiltList, const [const FullType(DatetimeFormatEntity)])),
       'languages',
       serializers.serialize(object.languages,
           specifiedType: const FullType(
@@ -166,6 +162,12 @@ class _$StaticDataEntitySerializer
       serializers.serialize(object.invoiceStatus,
           specifiedType: const FullType(
               BuiltList, const [const FullType(InvoiceStatusEntity)])),
+      'bulk_updates',
+      serializers.serialize(object.bulkUpdates,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(BuiltList, const [const FullType(String)])
+          ])),
       'templates',
       serializers.serialize(object.templates,
           specifiedType: const FullType(BuiltMap,
@@ -223,12 +225,6 @@ class _$StaticDataEntitySerializer
                       BuiltList, const [const FullType(DateFormatEntity)]))!
               as BuiltList<Object?>);
           break;
-        case 'datetime_formats':
-          result.datetimeFormats.replace(serializers.deserialize(value,
-                  specifiedType: const FullType(
-                      BuiltList, const [const FullType(DatetimeFormatEntity)]))!
-              as BuiltList<Object?>);
-          break;
         case 'languages':
           result.languages.replace(serializers.deserialize(value,
                   specifiedType: const FullType(
@@ -252,6 +248,13 @@ class _$StaticDataEntitySerializer
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(InvoiceStatusEntity)]))!
               as BuiltList<Object?>);
+          break;
+        case 'bulk_updates':
+          result.bulkUpdates.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(BuiltList, const [const FullType(String)])
+              ]))!);
           break;
         case 'templates':
           result.templates.replace(serializers.deserialize(value,
@@ -529,8 +532,6 @@ class _$StaticDataEntity extends StaticDataEntity {
   @override
   final BuiltList<DateFormatEntity> dateFormats;
   @override
-  final BuiltList<DatetimeFormatEntity> datetimeFormats;
-  @override
   final BuiltList<LanguageEntity> languages;
   @override
   final BuiltList<PaymentTypeEntity> paymentTypes;
@@ -538,6 +539,8 @@ class _$StaticDataEntity extends StaticDataEntity {
   final BuiltList<CountryEntity> countries;
   @override
   final BuiltList<InvoiceStatusEntity> invoiceStatus;
+  @override
+  final BuiltMap<String, BuiltList<String>> bulkUpdates;
   @override
   final BuiltMap<String, TemplateEntity> templates;
 
@@ -552,11 +555,11 @@ class _$StaticDataEntity extends StaticDataEntity {
       required this.timezones,
       required this.gateways,
       required this.dateFormats,
-      required this.datetimeFormats,
       required this.languages,
       required this.paymentTypes,
       required this.countries,
       required this.invoiceStatus,
+      required this.bulkUpdates,
       required this.templates})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -571,8 +574,6 @@ class _$StaticDataEntity extends StaticDataEntity {
     BuiltValueNullFieldError.checkNotNull(
         dateFormats, r'StaticDataEntity', 'dateFormats');
     BuiltValueNullFieldError.checkNotNull(
-        datetimeFormats, r'StaticDataEntity', 'datetimeFormats');
-    BuiltValueNullFieldError.checkNotNull(
         languages, r'StaticDataEntity', 'languages');
     BuiltValueNullFieldError.checkNotNull(
         paymentTypes, r'StaticDataEntity', 'paymentTypes');
@@ -580,6 +581,8 @@ class _$StaticDataEntity extends StaticDataEntity {
         countries, r'StaticDataEntity', 'countries');
     BuiltValueNullFieldError.checkNotNull(
         invoiceStatus, r'StaticDataEntity', 'invoiceStatus');
+    BuiltValueNullFieldError.checkNotNull(
+        bulkUpdates, r'StaticDataEntity', 'bulkUpdates');
     BuiltValueNullFieldError.checkNotNull(
         templates, r'StaticDataEntity', 'templates');
   }
@@ -602,11 +605,11 @@ class _$StaticDataEntity extends StaticDataEntity {
         timezones == other.timezones &&
         gateways == other.gateways &&
         dateFormats == other.dateFormats &&
-        datetimeFormats == other.datetimeFormats &&
         languages == other.languages &&
         paymentTypes == other.paymentTypes &&
         countries == other.countries &&
         invoiceStatus == other.invoiceStatus &&
+        bulkUpdates == other.bulkUpdates &&
         templates == other.templates;
   }
 
@@ -621,11 +624,11 @@ class _$StaticDataEntity extends StaticDataEntity {
     _$hash = $jc(_$hash, timezones.hashCode);
     _$hash = $jc(_$hash, gateways.hashCode);
     _$hash = $jc(_$hash, dateFormats.hashCode);
-    _$hash = $jc(_$hash, datetimeFormats.hashCode);
     _$hash = $jc(_$hash, languages.hashCode);
     _$hash = $jc(_$hash, paymentTypes.hashCode);
     _$hash = $jc(_$hash, countries.hashCode);
     _$hash = $jc(_$hash, invoiceStatus.hashCode);
+    _$hash = $jc(_$hash, bulkUpdates.hashCode);
     _$hash = $jc(_$hash, templates.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
@@ -640,11 +643,11 @@ class _$StaticDataEntity extends StaticDataEntity {
           ..add('timezones', timezones)
           ..add('gateways', gateways)
           ..add('dateFormats', dateFormats)
-          ..add('datetimeFormats', datetimeFormats)
           ..add('languages', languages)
           ..add('paymentTypes', paymentTypes)
           ..add('countries', countries)
           ..add('invoiceStatus', invoiceStatus)
+          ..add('bulkUpdates', bulkUpdates)
           ..add('templates', templates))
         .toString();
   }
@@ -689,12 +692,6 @@ class StaticDataEntityBuilder
   set dateFormats(ListBuilder<DateFormatEntity>? dateFormats) =>
       _$this._dateFormats = dateFormats;
 
-  ListBuilder<DatetimeFormatEntity>? _datetimeFormats;
-  ListBuilder<DatetimeFormatEntity> get datetimeFormats =>
-      _$this._datetimeFormats ??= new ListBuilder<DatetimeFormatEntity>();
-  set datetimeFormats(ListBuilder<DatetimeFormatEntity>? datetimeFormats) =>
-      _$this._datetimeFormats = datetimeFormats;
-
   ListBuilder<LanguageEntity>? _languages;
   ListBuilder<LanguageEntity> get languages =>
       _$this._languages ??= new ListBuilder<LanguageEntity>();
@@ -719,13 +716,21 @@ class StaticDataEntityBuilder
   set invoiceStatus(ListBuilder<InvoiceStatusEntity>? invoiceStatus) =>
       _$this._invoiceStatus = invoiceStatus;
 
+  MapBuilder<String, BuiltList<String>>? _bulkUpdates;
+  MapBuilder<String, BuiltList<String>> get bulkUpdates =>
+      _$this._bulkUpdates ??= new MapBuilder<String, BuiltList<String>>();
+  set bulkUpdates(MapBuilder<String, BuiltList<String>>? bulkUpdates) =>
+      _$this._bulkUpdates = bulkUpdates;
+
   MapBuilder<String, TemplateEntity>? _templates;
   MapBuilder<String, TemplateEntity> get templates =>
       _$this._templates ??= new MapBuilder<String, TemplateEntity>();
   set templates(MapBuilder<String, TemplateEntity>? templates) =>
       _$this._templates = templates;
 
-  StaticDataEntityBuilder();
+  StaticDataEntityBuilder() {
+    StaticDataEntity._initializeBuilder(this);
+  }
 
   StaticDataEntityBuilder get _$this {
     final $v = _$v;
@@ -736,11 +741,11 @@ class StaticDataEntityBuilder
       _timezones = $v.timezones.toBuilder();
       _gateways = $v.gateways.toBuilder();
       _dateFormats = $v.dateFormats.toBuilder();
-      _datetimeFormats = $v.datetimeFormats.toBuilder();
       _languages = $v.languages.toBuilder();
       _paymentTypes = $v.paymentTypes.toBuilder();
       _countries = $v.countries.toBuilder();
       _invoiceStatus = $v.invoiceStatus.toBuilder();
+      _bulkUpdates = $v.bulkUpdates.toBuilder();
       _templates = $v.templates.toBuilder();
       _$v = null;
     }
@@ -772,11 +777,11 @@ class StaticDataEntityBuilder
               timezones: timezones.build(),
               gateways: gateways.build(),
               dateFormats: dateFormats.build(),
-              datetimeFormats: datetimeFormats.build(),
               languages: languages.build(),
               paymentTypes: paymentTypes.build(),
               countries: countries.build(),
               invoiceStatus: invoiceStatus.build(),
+              bulkUpdates: bulkUpdates.build(),
               templates: templates.build());
     } catch (_) {
       late String _$failedField;
@@ -793,8 +798,6 @@ class StaticDataEntityBuilder
         gateways.build();
         _$failedField = 'dateFormats';
         dateFormats.build();
-        _$failedField = 'datetimeFormats';
-        datetimeFormats.build();
         _$failedField = 'languages';
         languages.build();
         _$failedField = 'paymentTypes';
@@ -803,6 +806,8 @@ class StaticDataEntityBuilder
         countries.build();
         _$failedField = 'invoiceStatus';
         invoiceStatus.build();
+        _$failedField = 'bulkUpdates';
+        bulkUpdates.build();
         _$failedField = 'templates';
         templates.build();
       } catch (e) {

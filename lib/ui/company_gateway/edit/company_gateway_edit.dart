@@ -400,6 +400,14 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     SizedBox(height: 16),
                     SwitchListTile(
                       activeColor: Theme.of(context).colorScheme.secondary,
+                      title: Text(localization.alwaysShowRequiredFields),
+                      subtitle: Text(localization.alwaysShowRequiredFieldsHelp),
+                      value: companyGateway.alwaysShowRequiredFields,
+                      onChanged: (value) => viewModel.onChanged(companyGateway
+                          .rebuild((b) => b..alwaysShowRequiredFields = value)),
+                    ),
+                    SwitchListTile(
+                      activeColor: Theme.of(context).colorScheme.secondary,
                       title: Text(localization.updateAddress),
                       subtitle: Text(localization.updateAddressHelp),
                       value: companyGateway.updateDetails,

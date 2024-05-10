@@ -841,8 +841,9 @@ void handlePurchaseOrderAction(BuildContext? context,
           prefix: EntityType.invoice.apiValue,
           languageId: vendor.languageId,
         );
-      }).catchError((_) {
+      }).catchError((error) {
         store.dispatch(StopLoading());
+        showErrorDialog(message: error);
       });
       break;
     case EntityAction.download:
@@ -858,8 +859,9 @@ void handlePurchaseOrderAction(BuildContext? context,
           prefix: EntityType.purchaseOrder.apiValue,
           languageId: vendor.languageId,
         );
-      }).catchError((_) {
+      }).catchError((error) {
         store.dispatch(StopLoading());
+        showErrorDialog(message: error);
       });
 
       break;

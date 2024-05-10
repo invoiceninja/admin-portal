@@ -8,7 +8,6 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/country_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/date_format_model.dart';
-import 'package:invoiceninja_flutter/data/models/static/datetime_format_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/industry_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/invoice_status_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/language_model.dart';
@@ -60,7 +59,6 @@ class StaticDataFields {
   static const String industries = 'industries';
   static const String timezones = 'timezones';
   static const String dateFormats = 'date_formats';
-  static const String datetimeFormats = 'datetime_formats';
   static const String languages = 'languages';
   static const String paymentTypes = 'payment_types';
   static const String countries = 'countries';
@@ -71,6 +69,7 @@ class StaticDataFields {
   static const String gatewayTypes = 'gateway_types';
   static const String fonts = 'fonts';
   static const String banks = 'banks';
+  static const String bulkUpdates = 'bulk_updates';
 }
 
 abstract class StaticDataEntity
@@ -83,12 +82,12 @@ abstract class StaticDataEntity
       gateways: BuiltList<GatewayEntity>(),
       timezones: BuiltList<TimezoneEntity>(),
       dateFormats: BuiltList<DateFormatEntity>(),
-      datetimeFormats: BuiltList<DatetimeFormatEntity>(),
       languages: BuiltList<LanguageEntity>(),
       paymentTypes: BuiltList<PaymentTypeEntity>(),
       countries: BuiltList<CountryEntity>(),
       invoiceStatus: BuiltList<InvoiceStatusEntity>(),
       templates: BuiltMap<String, TemplateEntity>(),
+      bulkUpdates: BuiltMap<String, BuiltList<String>>(),
     );
   }
 
@@ -111,9 +110,6 @@ abstract class StaticDataEntity
   @BuiltValueField(wireName: 'date_formats')
   BuiltList<DateFormatEntity> get dateFormats;
 
-  @BuiltValueField(wireName: 'datetime_formats')
-  BuiltList<DatetimeFormatEntity> get datetimeFormats;
-
   BuiltList<LanguageEntity> get languages;
 
   @BuiltValueField(wireName: 'payment_types')
@@ -124,7 +120,14 @@ abstract class StaticDataEntity
   @BuiltValueField(wireName: 'invoice_status')
   BuiltList<InvoiceStatusEntity> get invoiceStatus;
 
+  @BuiltValueField(wireName: 'bulk_updates')
+  BuiltMap<String, BuiltList<String>> get bulkUpdates;
+
   BuiltMap<String, TemplateEntity> get templates;
+
+  // ignore: unused_element
+  static void _initializeBuilder(StaticDataEntityBuilder builder) =>
+      builder..bulkUpdates.replace(BuiltMap<String, List<String>>());
 
   static Serializer<StaticDataEntity> get serializer =>
       _$staticDataEntitySerializer;

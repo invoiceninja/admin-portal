@@ -1,6 +1,6 @@
 name: invoiceninja_flutter
 description: Client for Invoice Ninja
-version: 5.0.157+157
+version: 5.0.159+159
 homepage: https://invoiceninja.com
 documentation: https://invoiceninja.github.io
 publish_to: none
@@ -50,7 +50,11 @@ dependencies:
   webview_flutter: ^4.4.1
   timeago: ^3.1.0
   package_info: ^2.0.2
-  rounded_loading_button: ^2.1.0
+  #rounded_loading_button: ^2.1.0
+  rounded_loading_button: #https://github.com/chrisedg87/flutter_rounded_loading_button/issues/73
+    git:
+      url: https://github.com/scopendo/flutter_rounded_loading_button.git
+      ref: master      
   version: ^3.0.2
   # flutter_launcher_icons: ^0.9.1
   overflow_view: ^0.3.1

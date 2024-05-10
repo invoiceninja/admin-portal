@@ -773,7 +773,8 @@ abstract class ActivityEntity
       kActivityUpdateClient,
       kActivityArchiveClient,
       kActivityDeleteClient,
-      kActivityRestoreClient
+      kActivityRestoreClient,
+      kActivityStatementSent,
     ].contains(activityTypeId)) {
       return EntityType.client;
     } else if ([
@@ -841,6 +842,7 @@ abstract class ActivityEntity
       kActivityDeleteExpense,
       kActivityRestoreExpense,
       kActivityUpdateExpense,
+      kActivityExpenseNotificationSent,
     ].contains(activityTypeId)) {
       return EntityType.expense;
     } else if ([

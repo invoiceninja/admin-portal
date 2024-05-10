@@ -22,6 +22,7 @@ abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
       paymentTypeMap: BuiltMap<String, PaymentTypeEntity>(),
       countryMap: BuiltMap<String, CountryEntity>(),
       templateMap: BuiltMap<String, TemplateEntity>(),
+      bulkUpdates: BuiltMap<String, BuiltList<String>>(),
     );
   }
 
@@ -63,6 +64,12 @@ abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
   BuiltMap<String, CountryEntity> get countryMap;
 
   BuiltMap<String, TemplateEntity> get templateMap;
+
+  BuiltMap<String, BuiltList<String>> get bulkUpdates;
+
+  // ignore: unused_element
+  static void _initializeBuilder(StaticStateBuilder builder) =>
+      builder..bulkUpdates.replace(BuiltMap<String, List<String>>());
 
   static Serializer<StaticState> get serializer => _$staticStateSerializer;
 }

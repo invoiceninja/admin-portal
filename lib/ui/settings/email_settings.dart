@@ -242,15 +242,21 @@ class _EmailSettingsState extends State<EmailSettings> {
                       settings.rebuild((b) => b..emailSendingMethod = value));
                 },
                 items: [
-                  DropdownMenuItem(
-                      child: Text('Postmark (${localization.hosted})'),
-                      value:
-                          SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK_HOSTED),
-                  DropdownMenuItem(
-                      child: Text('Mailgun (Hosted)'),
-                      value:
-                          SettingsEntity.EMAIL_SENDING_METHOD_MAILGUN_HOSTED),
-                  if (supportsLatestFeatures('5.8.0') && state.isProPlan)
+                  if (state.isHosted) ...[
+                    DropdownMenuItem(
+                        child: Text('Postmark (invoicing.co)'),
+                        value: SettingsEntity
+                            .EMAIL_SENDING_METHOD_POSTMARK_HOSTED),
+                    DropdownMenuItem(
+                        child: Text('Mailgun (invoicing.co)'),
+                        value:
+                            SettingsEntity.EMAIL_SENDING_METHOD_MAILGUN_HOSTED),
+                  ] else
+                    DropdownMenuItem(
+                        child: Text(''),
+                        value: SettingsEntity
+                            .EMAIL_SENDING_METHOD_POSTMARK_HOSTED),
+                  if (state.isProPlan)
                     DropdownMenuItem(
                         child: Text('SMTP'),
                         value: SettingsEntity.EMAIL_SENDING_METHOD_SMTP),

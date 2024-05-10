@@ -43,17 +43,14 @@ class BoolDropdownButton extends StatelessWidget {
 
     if (!_showBlank &&
         (enabledLabel == null || enabledLabel == localization!.yes)) {
-      return Padding(
-        padding: const EdgeInsets.only(top: 12),
-        child: SwitchListTile(
-          title: Text(label ?? ''),
-          value: value ?? false,
-          secondary:
-              iconData != null && isDesktop(context) ? Icon(iconData) : null,
-          onChanged: (value) => onChanged(value),
-          activeColor: Theme.of(context).colorScheme.secondary,
-          subtitle: helpLabel != null ? Text(helpLabel!) : null,
-        ),
+      return SwitchListTile(
+        title: Text(label ?? ''),
+        value: value ?? false,
+        secondary:
+            iconData != null && isDesktop(context) ? Icon(iconData) : null,
+        onChanged: (value) => onChanged(value),
+        activeColor: Theme.of(context).colorScheme.secondary,
+        subtitle: helpLabel != null ? Text(helpLabel!) : null,
       );
     }
 

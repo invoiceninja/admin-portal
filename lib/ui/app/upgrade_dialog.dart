@@ -229,8 +229,7 @@ class _UpgradeDialogState extends State<UpgradeDialog> {
               TextButton(
                 style: TextButton.styleFrom(
                   backgroundColor: Colors.green[800],
-                  // ignore: deprecated_member_use
-                  primary: Colors.white,
+                  foregroundColor: Colors.white,
                 ),
                 onPressed: () {
                   if (previousPurchase != null) {
