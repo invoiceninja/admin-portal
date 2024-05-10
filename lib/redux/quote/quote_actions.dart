@@ -694,8 +694,9 @@ Future handleQuoteAction(
           prefix: EntityType.quote.apiValue,
           languageId: client.languageId,
         );
-      }).catchError((_) {
+      }).catchError((error) {
         store.dispatch(StopLoading());
+        showErrorDialog(message: error);
       });
       break;
     case EntityAction.eQuote:
@@ -711,8 +712,9 @@ Future handleQuoteAction(
           prefix: EntityType.invoice.apiValue,
           languageId: client.languageId,
         );
-      }).catchError((_) {
+      }).catchError((error) {
         store.dispatch(StopLoading());
+        showErrorDialog(message: error);
       });
       break;
     case EntityAction.bulkDownload:

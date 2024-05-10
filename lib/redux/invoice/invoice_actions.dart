@@ -788,8 +788,9 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
           prefix: EntityType.invoice.apiValue,
           languageId: client.languageId,
         );
-      }).catchError((_) {
+      }).catchError((error) {
         store.dispatch(StopLoading());
+        showErrorDialog(message: error);
       });
       break;
     case EntityAction.eInvoice:
@@ -805,8 +806,9 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
           prefix: EntityType.invoice.apiValue,
           languageId: client.languageId,
         );
-      }).catchError((_) {
+      }).catchError((error) {
         store.dispatch(StopLoading());
+        showErrorDialog(message: error);
       });
       break;
     case EntityAction.bulkDownload:
