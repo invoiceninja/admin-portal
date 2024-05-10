@@ -278,7 +278,7 @@ String _parseError(int code, String response, String? reason) {
   String message = '';
 
   if ((reason ?? '').isNotEmpty) {
-    message += reason! + ' • ';
+    message += reason!;
   }
 
   if (response.contains('DOCTYPE html')) {
@@ -286,9 +286,19 @@ String _parseError(int code, String response, String? reason) {
   }
 
   try {
-    final dynamic jsonResponse = json.decode(response);
+    final Map<String, dynamic> jsonResponse = json.decode(response);
 
-    message += jsonResponse['message'] ?? jsonResponse;
+    if (message.isNotEmpty) {
+      message += ' • ';
+    }
+
+    if (jsonResponse.containsKey('message')) {
+      message += jsonResponse['message'];
+    } else if (jsonResponse.containsKey('error')) {
+      message += jsonResponse['error'];
+    } else {
+      message += response;
+    }
 
     if (jsonResponse['errors'] != null &&
         (jsonResponse['errors'] as Map).isNotEmpty) {
