@@ -233,7 +233,7 @@ class AuthRepository {
     url += 'first_load=true';
 
     if (includeStatic) {
-      url += '&include_static=true';
+      url += '&include_static=true&einvoice=true';
     }
 
     dynamic response;
