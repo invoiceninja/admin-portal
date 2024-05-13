@@ -5,6 +5,7 @@ import 'package:built_value/serializer.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/e_invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 
 part 'static_state.g.dart';
@@ -23,6 +24,7 @@ abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
       countryMap: BuiltMap<String, CountryEntity>(),
       templateMap: BuiltMap<String, TemplateEntity>(),
       bulkUpdates: BuiltMap<String, BuiltList<String>>(),
+      eInvoiceSchema: BuiltMap<String, EInvoiceFieldEntity>(),
     );
   }
 
@@ -67,9 +69,12 @@ abstract class StaticState implements Built<StaticState, StaticStateBuilder> {
 
   BuiltMap<String, BuiltList<String>> get bulkUpdates;
 
+  BuiltMap<String, EInvoiceFieldEntity> get eInvoiceSchema;
+
   // ignore: unused_element
-  static void _initializeBuilder(StaticStateBuilder builder) =>
-      builder..bulkUpdates.replace(BuiltMap<String, List<String>>());
+  static void _initializeBuilder(StaticStateBuilder builder) => builder
+    ..bulkUpdates.replace(BuiltMap<String, List<String>>())
+    ..eInvoiceSchema.replace(BuiltMap<String, EInvoiceFieldEntity>());
 
   static Serializer<StaticState> get serializer => _$staticStateSerializer;
 }
