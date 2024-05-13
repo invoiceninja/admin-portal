@@ -122,8 +122,6 @@ class _DeviceSettingsState extends State<DeviceSettings>
     final state = viewModel.state;
     final prefState = state.prefState;
 
-    //print('## e-invoice: ${state.staticState.}');
-
     /*
     final countSessions = state.tokenState.list
         .map((tokenId) => state.tokenState.map[tokenId])
