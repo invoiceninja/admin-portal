@@ -3,9 +3,6 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 
-// Project imports:
-import 'package:invoiceninja_flutter/data/models/entities.dart';
-
 part 'e_invoice_model.g.dart';
 
 abstract class EInvoiceFieldEntity
@@ -15,6 +12,7 @@ abstract class EInvoiceFieldEntity
       type: '',
       help: '',
       choices: BuiltList<String>(),
+      elements: BuiltMap<String, EInvoiceElementEntity>(),
     );
   }
   EInvoiceFieldEntity._();
@@ -29,6 +27,8 @@ abstract class EInvoiceFieldEntity
 
   BuiltList<String> get choices;
 
+  BuiltMap<String, EInvoiceElementEntity> get elements;
+
   static Serializer<EInvoiceFieldEntity> get serializer =>
       _$eInvoiceFieldEntitySerializer;
 }
@@ -39,8 +39,9 @@ abstract class EInvoiceElementEntity
     return _$EInvoiceElementEntity._(
       baseType: '',
       help: '',
-      maxLength: 0,
       name: '',
+      maxOccurs: 0,
+      minOccurs: 0,
       resource: BuiltList<String>(),
     );
   }
@@ -58,10 +59,21 @@ abstract class EInvoiceElementEntity
 
   BuiltList<String> get resource;
 
-  @BuiltValueField(wireName: 'max_length')
-  int get maxLength;
+  @BuiltValueField(wireName: 'min_length')
+  int? get minLength;
 
-  String get help;
+  @BuiltValueField(wireName: 'max_length')
+  int? get maxLength;
+
+  @BuiltValueField(wireName: 'min_occurs')
+  int get minOccurs;
+
+  @BuiltValueField(wireName: 'max_occurs')
+  int get maxOccurs;
+
+  String? get pattern;
+
+  String? get help;
 
   static Serializer<EInvoiceElementEntity> get serializer =>
       _$eInvoiceElementEntitySerializer;

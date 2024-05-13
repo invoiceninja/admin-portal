@@ -5,6 +5,7 @@ import 'package:built_value/serializer.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
+import 'package:invoiceninja_flutter/data/models/e_invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/country_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/currency_model.dart';
 import 'package:invoiceninja_flutter/data/models/static/date_format_model.dart';
@@ -88,6 +89,7 @@ abstract class StaticDataEntity
       invoiceStatus: BuiltList<InvoiceStatusEntity>(),
       templates: BuiltMap<String, TemplateEntity>(),
       bulkUpdates: BuiltMap<String, BuiltList<String>>(),
+      eInvoiceSchema: BuiltMap<String, EInvoiceFieldEntity>(),
     );
   }
 
@@ -125,9 +127,13 @@ abstract class StaticDataEntity
 
   BuiltMap<String, TemplateEntity> get templates;
 
+  @BuiltValueField(wireName: 'einvoice_schema')
+  BuiltMap<String, EInvoiceFieldEntity> get eInvoiceSchema;
+
   // ignore: unused_element
-  static void _initializeBuilder(StaticDataEntityBuilder builder) =>
-      builder..bulkUpdates.replace(BuiltMap<String, List<String>>());
+  static void _initializeBuilder(StaticDataEntityBuilder builder) => builder
+    ..bulkUpdates.replace(BuiltMap<String, List<String>>())
+    ..eInvoiceSchema.replace(BuiltMap<String, EInvoiceFieldEntity>());
 
   static Serializer<StaticDataEntity> get serializer =>
       _$staticDataEntitySerializer;

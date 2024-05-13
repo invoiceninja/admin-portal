@@ -7,6 +7,7 @@ import 'package:built_value/standard_json_plugin.dart';
 import 'package:invoiceninja_flutter/data/models/account_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_gateway_model.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
+import 'package:invoiceninja_flutter/data/models/e_invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/gateway_token_model.dart';
 import 'package:invoiceninja_flutter/data/models/group_model.dart';
 import 'package:invoiceninja_flutter/data/models/health_check_model.dart';
@@ -177,6 +178,7 @@ part 'serializers.g.dart';
   UserTwoFactorResponse,
   PdfPreviewRequest,
   TaxDataEntity,
+  EInvoiceFieldEntity,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

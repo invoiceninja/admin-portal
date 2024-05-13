@@ -64,6 +64,8 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(DocumentListResponse.serializer)
       ..add(DocumentState.serializer)
       ..add(DocumentUIState.serializer)
+      ..add(EInvoiceElementEntity.serializer)
+      ..add(EInvoiceFieldEntity.serializer)
       ..add(EmailTemplate.serializer)
       ..add(EntityState.serializer)
       ..add(EntityType.serializer)
@@ -316,6 +318,12 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltMap,
               const [const FullType(String), const FullType(TemplateEntity)]),
           () => new MapBuilder<String, TemplateEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(EInvoiceFieldEntity)
+          ]),
+          () => new MapBuilder<String, EInvoiceFieldEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(DateFormatEntity)]),
           () => new ListBuilder<DateFormatEntity>())
@@ -573,10 +581,22 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(String)]),
           () => new ListBuilder<String>())
       ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [
             const FullType(BuiltList, const [const FullType(String)])
           ]),
           () => new ListBuilder<BuiltList<String>>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(String)]),
+          () => new ListBuilder<String>())
+      ..addBuilderFactory(
+          const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(EInvoiceElementEntity)
+          ]),
+          () => new MapBuilder<String, EInvoiceElementEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(SubscriptionEntity)]),
           () => new ListBuilder<SubscriptionEntity>())

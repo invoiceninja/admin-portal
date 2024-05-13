@@ -172,6 +172,12 @@ class _$StaticDataEntitySerializer
       serializers.serialize(object.templates,
           specifiedType: const FullType(BuiltMap,
               const [const FullType(String), const FullType(TemplateEntity)])),
+      'einvoice_schema',
+      serializers.serialize(object.eInvoiceSchema,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(EInvoiceFieldEntity)
+          ])),
     ];
 
     return result;
@@ -261,6 +267,13 @@ class _$StaticDataEntitySerializer
               specifiedType: const FullType(BuiltMap, const [
                 const FullType(String),
                 const FullType(TemplateEntity)
+              ]))!);
+          break;
+        case 'einvoice_schema':
+          result.eInvoiceSchema.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(EInvoiceFieldEntity)
               ]))!);
           break;
       }
@@ -543,6 +556,8 @@ class _$StaticDataEntity extends StaticDataEntity {
   final BuiltMap<String, BuiltList<String>> bulkUpdates;
   @override
   final BuiltMap<String, TemplateEntity> templates;
+  @override
+  final BuiltMap<String, EInvoiceFieldEntity> eInvoiceSchema;
 
   factory _$StaticDataEntity(
           [void Function(StaticDataEntityBuilder)? updates]) =>
@@ -560,7 +575,8 @@ class _$StaticDataEntity extends StaticDataEntity {
       required this.countries,
       required this.invoiceStatus,
       required this.bulkUpdates,
-      required this.templates})
+      required this.templates,
+      required this.eInvoiceSchema})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         currencies, r'StaticDataEntity', 'currencies');
@@ -585,6 +601,8 @@ class _$StaticDataEntity extends StaticDataEntity {
         bulkUpdates, r'StaticDataEntity', 'bulkUpdates');
     BuiltValueNullFieldError.checkNotNull(
         templates, r'StaticDataEntity', 'templates');
+    BuiltValueNullFieldError.checkNotNull(
+        eInvoiceSchema, r'StaticDataEntity', 'eInvoiceSchema');
   }
 
   @override
@@ -610,7 +628,8 @@ class _$StaticDataEntity extends StaticDataEntity {
         countries == other.countries &&
         invoiceStatus == other.invoiceStatus &&
         bulkUpdates == other.bulkUpdates &&
-        templates == other.templates;
+        templates == other.templates &&
+        eInvoiceSchema == other.eInvoiceSchema;
   }
 
   int? __hashCode;
@@ -630,6 +649,7 @@ class _$StaticDataEntity extends StaticDataEntity {
     _$hash = $jc(_$hash, invoiceStatus.hashCode);
     _$hash = $jc(_$hash, bulkUpdates.hashCode);
     _$hash = $jc(_$hash, templates.hashCode);
+    _$hash = $jc(_$hash, eInvoiceSchema.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -648,7 +668,8 @@ class _$StaticDataEntity extends StaticDataEntity {
           ..add('countries', countries)
           ..add('invoiceStatus', invoiceStatus)
           ..add('bulkUpdates', bulkUpdates)
-          ..add('templates', templates))
+          ..add('templates', templates)
+          ..add('eInvoiceSchema', eInvoiceSchema))
         .toString();
   }
 }
@@ -728,6 +749,12 @@ class StaticDataEntityBuilder
   set templates(MapBuilder<String, TemplateEntity>? templates) =>
       _$this._templates = templates;
 
+  MapBuilder<String, EInvoiceFieldEntity>? _eInvoiceSchema;
+  MapBuilder<String, EInvoiceFieldEntity> get eInvoiceSchema =>
+      _$this._eInvoiceSchema ??= new MapBuilder<String, EInvoiceFieldEntity>();
+  set eInvoiceSchema(MapBuilder<String, EInvoiceFieldEntity>? eInvoiceSchema) =>
+      _$this._eInvoiceSchema = eInvoiceSchema;
+
   StaticDataEntityBuilder() {
     StaticDataEntity._initializeBuilder(this);
   }
@@ -747,6 +774,7 @@ class StaticDataEntityBuilder
       _invoiceStatus = $v.invoiceStatus.toBuilder();
       _bulkUpdates = $v.bulkUpdates.toBuilder();
       _templates = $v.templates.toBuilder();
+      _eInvoiceSchema = $v.eInvoiceSchema.toBuilder();
       _$v = null;
     }
     return this;
@@ -782,7 +810,8 @@ class StaticDataEntityBuilder
               countries: countries.build(),
               invoiceStatus: invoiceStatus.build(),
               bulkUpdates: bulkUpdates.build(),
-              templates: templates.build());
+              templates: templates.build(),
+              eInvoiceSchema: eInvoiceSchema.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -810,6 +839,8 @@ class StaticDataEntityBuilder
         bulkUpdates.build();
         _$failedField = 'templates';
         templates.build();
+        _$failedField = 'eInvoiceSchema';
+        eInvoiceSchema.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'StaticDataEntity', _$failedField, e.toString());

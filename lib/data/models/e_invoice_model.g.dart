@@ -34,6 +34,12 @@ class _$EInvoiceFieldEntitySerializer
       serializers.serialize(object.choices,
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
+      'elements',
+      serializers.serialize(object.elements,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(EInvoiceElementEntity)
+          ])),
     ];
 
     return result;
@@ -64,6 +70,13 @@ class _$EInvoiceFieldEntitySerializer
                   specifiedType: const FullType(
                       BuiltList, const [const FullType(String)]))!
               as BuiltList<Object?>);
+          break;
+        case 'elements':
+          result.elements.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(EInvoiceElementEntity)
+              ]))!);
           break;
       }
     }
@@ -96,13 +109,40 @@ class _$EInvoiceElementEntitySerializer
       serializers.serialize(object.resource,
           specifiedType:
               const FullType(BuiltList, const [const FullType(String)])),
-      'max_length',
-      serializers.serialize(object.maxLength,
+      'min_occurs',
+      serializers.serialize(object.minOccurs,
           specifiedType: const FullType(int)),
-      'help',
-      serializers.serialize(object.help, specifiedType: const FullType(String)),
+      'max_occurs',
+      serializers.serialize(object.maxOccurs,
+          specifiedType: const FullType(int)),
     ];
-
+    Object? value;
+    value = object.minLength;
+    if (value != null) {
+      result
+        ..add('min_length')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.maxLength;
+    if (value != null) {
+      result
+        ..add('max_length')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
+    value = object.pattern;
+    if (value != null) {
+      result
+        ..add('pattern')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.help;
+    if (value != null) {
+      result
+        ..add('help')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -132,13 +172,29 @@ class _$EInvoiceElementEntitySerializer
                       BuiltList, const [const FullType(String)]))!
               as BuiltList<Object?>);
           break;
+        case 'min_length':
+          result.minLength = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
         case 'max_length':
           result.maxLength = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
+          break;
+        case 'min_occurs':
+          result.minOccurs = serializers.deserialize(value,
               specifiedType: const FullType(int))! as int;
+          break;
+        case 'max_occurs':
+          result.maxOccurs = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
+        case 'pattern':
+          result.pattern = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'help':
           result.help = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
+              specifiedType: const FullType(String)) as String?;
           break;
       }
     }
@@ -154,18 +210,25 @@ class _$EInvoiceFieldEntity extends EInvoiceFieldEntity {
   final String help;
   @override
   final BuiltList<String> choices;
+  @override
+  final BuiltMap<String, EInvoiceElementEntity> elements;
 
   factory _$EInvoiceFieldEntity(
           [void Function(EInvoiceFieldEntityBuilder)? updates]) =>
       (new EInvoiceFieldEntityBuilder()..update(updates))._build();
 
   _$EInvoiceFieldEntity._(
-      {required this.type, required this.help, required this.choices})
+      {required this.type,
+      required this.help,
+      required this.choices,
+      required this.elements})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(type, r'EInvoiceFieldEntity', 'type');
     BuiltValueNullFieldError.checkNotNull(help, r'EInvoiceFieldEntity', 'help');
     BuiltValueNullFieldError.checkNotNull(
         choices, r'EInvoiceFieldEntity', 'choices');
+    BuiltValueNullFieldError.checkNotNull(
+        elements, r'EInvoiceFieldEntity', 'elements');
   }
 
   @override
@@ -183,7 +246,8 @@ class _$EInvoiceFieldEntity extends EInvoiceFieldEntity {
     return other is EInvoiceFieldEntity &&
         type == other.type &&
         help == other.help &&
-        choices == other.choices;
+        choices == other.choices &&
+        elements == other.elements;
   }
 
   int? __hashCode;
@@ -194,6 +258,7 @@ class _$EInvoiceFieldEntity extends EInvoiceFieldEntity {
     _$hash = $jc(_$hash, type.hashCode);
     _$hash = $jc(_$hash, help.hashCode);
     _$hash = $jc(_$hash, choices.hashCode);
+    _$hash = $jc(_$hash, elements.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -203,7 +268,8 @@ class _$EInvoiceFieldEntity extends EInvoiceFieldEntity {
     return (newBuiltValueToStringHelper(r'EInvoiceFieldEntity')
           ..add('type', type)
           ..add('help', help)
-          ..add('choices', choices))
+          ..add('choices', choices)
+          ..add('elements', elements))
         .toString();
   }
 }
@@ -225,6 +291,12 @@ class EInvoiceFieldEntityBuilder
       _$this._choices ??= new ListBuilder<String>();
   set choices(ListBuilder<String>? choices) => _$this._choices = choices;
 
+  MapBuilder<String, EInvoiceElementEntity>? _elements;
+  MapBuilder<String, EInvoiceElementEntity> get elements =>
+      _$this._elements ??= new MapBuilder<String, EInvoiceElementEntity>();
+  set elements(MapBuilder<String, EInvoiceElementEntity>? elements) =>
+      _$this._elements = elements;
+
   EInvoiceFieldEntityBuilder();
 
   EInvoiceFieldEntityBuilder get _$this {
@@ -233,6 +305,7 @@ class EInvoiceFieldEntityBuilder
       _type = $v.type;
       _help = $v.help;
       _choices = $v.choices.toBuilder();
+      _elements = $v.elements.toBuilder();
       _$v = null;
     }
     return this;
@@ -261,12 +334,15 @@ class EInvoiceFieldEntityBuilder
                   type, r'EInvoiceFieldEntity', 'type'),
               help: BuiltValueNullFieldError.checkNotNull(
                   help, r'EInvoiceFieldEntity', 'help'),
-              choices: choices.build());
+              choices: choices.build(),
+              elements: elements.build());
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'choices';
         choices.build();
+        _$failedField = 'elements';
+        elements.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'EInvoiceFieldEntity', _$failedField, e.toString());
@@ -286,9 +362,17 @@ class _$EInvoiceElementEntity extends EInvoiceElementEntity {
   @override
   final BuiltList<String> resource;
   @override
-  final int maxLength;
+  final int? minLength;
   @override
-  final String help;
+  final int? maxLength;
+  @override
+  final int minOccurs;
+  @override
+  final int maxOccurs;
+  @override
+  final String? pattern;
+  @override
+  final String? help;
 
   factory _$EInvoiceElementEntity(
           [void Function(EInvoiceElementEntityBuilder)? updates]) =>
@@ -298,8 +382,12 @@ class _$EInvoiceElementEntity extends EInvoiceElementEntity {
       {required this.name,
       required this.baseType,
       required this.resource,
-      required this.maxLength,
-      required this.help})
+      this.minLength,
+      this.maxLength,
+      required this.minOccurs,
+      required this.maxOccurs,
+      this.pattern,
+      this.help})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         name, r'EInvoiceElementEntity', 'name');
@@ -308,9 +396,9 @@ class _$EInvoiceElementEntity extends EInvoiceElementEntity {
     BuiltValueNullFieldError.checkNotNull(
         resource, r'EInvoiceElementEntity', 'resource');
     BuiltValueNullFieldError.checkNotNull(
-        maxLength, r'EInvoiceElementEntity', 'maxLength');
+        minOccurs, r'EInvoiceElementEntity', 'minOccurs');
     BuiltValueNullFieldError.checkNotNull(
-        help, r'EInvoiceElementEntity', 'help');
+        maxOccurs, r'EInvoiceElementEntity', 'maxOccurs');
   }
 
   @override
@@ -329,7 +417,11 @@ class _$EInvoiceElementEntity extends EInvoiceElementEntity {
         name == other.name &&
         baseType == other.baseType &&
         resource == other.resource &&
+        minLength == other.minLength &&
         maxLength == other.maxLength &&
+        minOccurs == other.minOccurs &&
+        maxOccurs == other.maxOccurs &&
+        pattern == other.pattern &&
         help == other.help;
   }
 
@@ -341,7 +433,11 @@ class _$EInvoiceElementEntity extends EInvoiceElementEntity {
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, baseType.hashCode);
     _$hash = $jc(_$hash, resource.hashCode);
+    _$hash = $jc(_$hash, minLength.hashCode);
     _$hash = $jc(_$hash, maxLength.hashCode);
+    _$hash = $jc(_$hash, minOccurs.hashCode);
+    _$hash = $jc(_$hash, maxOccurs.hashCode);
+    _$hash = $jc(_$hash, pattern.hashCode);
     _$hash = $jc(_$hash, help.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
@@ -353,7 +449,11 @@ class _$EInvoiceElementEntity extends EInvoiceElementEntity {
           ..add('name', name)
           ..add('baseType', baseType)
           ..add('resource', resource)
+          ..add('minLength', minLength)
           ..add('maxLength', maxLength)
+          ..add('minOccurs', minOccurs)
+          ..add('maxOccurs', maxOccurs)
+          ..add('pattern', pattern)
           ..add('help', help))
         .toString();
   }
@@ -376,9 +476,25 @@ class EInvoiceElementEntityBuilder
       _$this._resource ??= new ListBuilder<String>();
   set resource(ListBuilder<String>? resource) => _$this._resource = resource;
 
+  int? _minLength;
+  int? get minLength => _$this._minLength;
+  set minLength(int? minLength) => _$this._minLength = minLength;
+
   int? _maxLength;
   int? get maxLength => _$this._maxLength;
   set maxLength(int? maxLength) => _$this._maxLength = maxLength;
+
+  int? _minOccurs;
+  int? get minOccurs => _$this._minOccurs;
+  set minOccurs(int? minOccurs) => _$this._minOccurs = minOccurs;
+
+  int? _maxOccurs;
+  int? get maxOccurs => _$this._maxOccurs;
+  set maxOccurs(int? maxOccurs) => _$this._maxOccurs = maxOccurs;
+
+  String? _pattern;
+  String? get pattern => _$this._pattern;
+  set pattern(String? pattern) => _$this._pattern = pattern;
 
   String? _help;
   String? get help => _$this._help;
@@ -392,7 +508,11 @@ class EInvoiceElementEntityBuilder
       _name = $v.name;
       _baseType = $v.baseType;
       _resource = $v.resource.toBuilder();
+      _minLength = $v.minLength;
       _maxLength = $v.maxLength;
+      _minOccurs = $v.minOccurs;
+      _maxOccurs = $v.maxOccurs;
+      _pattern = $v.pattern;
       _help = $v.help;
       _$v = null;
     }
@@ -423,10 +543,14 @@ class EInvoiceElementEntityBuilder
               baseType: BuiltValueNullFieldError.checkNotNull(
                   baseType, r'EInvoiceElementEntity', 'baseType'),
               resource: resource.build(),
-              maxLength: BuiltValueNullFieldError.checkNotNull(
-                  maxLength, r'EInvoiceElementEntity', 'maxLength'),
-              help: BuiltValueNullFieldError.checkNotNull(
-                  help, r'EInvoiceElementEntity', 'help'));
+              minLength: minLength,
+              maxLength: maxLength,
+              minOccurs: BuiltValueNullFieldError.checkNotNull(
+                  minOccurs, r'EInvoiceElementEntity', 'minOccurs'),
+              maxOccurs: BuiltValueNullFieldError.checkNotNull(
+                  maxOccurs, r'EInvoiceElementEntity', 'maxOccurs'),
+              pattern: pattern,
+              help: help);
     } catch (_) {
       late String _$failedField;
       try {
