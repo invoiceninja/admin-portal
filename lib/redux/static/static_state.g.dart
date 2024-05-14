@@ -68,6 +68,12 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
             const FullType(String),
             const FullType(BuiltList, const [const FullType(String)])
           ])),
+      'eInvoiceSchema',
+      serializers.serialize(object.eInvoiceSchema,
+          specifiedType: const FullType(BuiltMap, const [
+            const FullType(String),
+            const FullType(EInvoiceFieldEntity)
+          ])),
     ];
     Object? value;
     value = object.updatedAt;
@@ -171,6 +177,13 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
                 const FullType(BuiltList, const [const FullType(String)])
               ]))!);
           break;
+        case 'eInvoiceSchema':
+          result.eInvoiceSchema.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap, const [
+                const FullType(String),
+                const FullType(EInvoiceFieldEntity)
+              ]))!);
+          break;
       }
     }
 
@@ -203,6 +216,8 @@ class _$StaticState extends StaticState {
   final BuiltMap<String, TemplateEntity> templateMap;
   @override
   final BuiltMap<String, BuiltList<String>> bulkUpdates;
+  @override
+  final BuiltMap<String, EInvoiceFieldEntity> eInvoiceSchema;
 
   factory _$StaticState([void Function(StaticStateBuilder)? updates]) =>
       (new StaticStateBuilder()..update(updates))._build();
@@ -219,7 +234,8 @@ class _$StaticState extends StaticState {
       required this.paymentTypeMap,
       required this.countryMap,
       required this.templateMap,
-      required this.bulkUpdates})
+      required this.bulkUpdates,
+      required this.eInvoiceSchema})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         currencyMap, r'StaticState', 'currencyMap');
@@ -242,6 +258,8 @@ class _$StaticState extends StaticState {
         templateMap, r'StaticState', 'templateMap');
     BuiltValueNullFieldError.checkNotNull(
         bulkUpdates, r'StaticState', 'bulkUpdates');
+    BuiltValueNullFieldError.checkNotNull(
+        eInvoiceSchema, r'StaticState', 'eInvoiceSchema');
   }
 
   @override
@@ -266,7 +284,8 @@ class _$StaticState extends StaticState {
         paymentTypeMap == other.paymentTypeMap &&
         countryMap == other.countryMap &&
         templateMap == other.templateMap &&
-        bulkUpdates == other.bulkUpdates;
+        bulkUpdates == other.bulkUpdates &&
+        eInvoiceSchema == other.eInvoiceSchema;
   }
 
   int? __hashCode;
@@ -286,6 +305,7 @@ class _$StaticState extends StaticState {
     _$hash = $jc(_$hash, countryMap.hashCode);
     _$hash = $jc(_$hash, templateMap.hashCode);
     _$hash = $jc(_$hash, bulkUpdates.hashCode);
+    _$hash = $jc(_$hash, eInvoiceSchema.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -304,7 +324,8 @@ class _$StaticState extends StaticState {
           ..add('paymentTypeMap', paymentTypeMap)
           ..add('countryMap', countryMap)
           ..add('templateMap', templateMap)
-          ..add('bulkUpdates', bulkUpdates))
+          ..add('bulkUpdates', bulkUpdates)
+          ..add('eInvoiceSchema', eInvoiceSchema))
         .toString();
   }
 }
@@ -382,6 +403,12 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
   set bulkUpdates(MapBuilder<String, BuiltList<String>>? bulkUpdates) =>
       _$this._bulkUpdates = bulkUpdates;
 
+  MapBuilder<String, EInvoiceFieldEntity>? _eInvoiceSchema;
+  MapBuilder<String, EInvoiceFieldEntity> get eInvoiceSchema =>
+      _$this._eInvoiceSchema ??= new MapBuilder<String, EInvoiceFieldEntity>();
+  set eInvoiceSchema(MapBuilder<String, EInvoiceFieldEntity>? eInvoiceSchema) =>
+      _$this._eInvoiceSchema = eInvoiceSchema;
+
   StaticStateBuilder() {
     StaticState._initializeBuilder(this);
   }
@@ -401,6 +428,7 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
       _countryMap = $v.countryMap.toBuilder();
       _templateMap = $v.templateMap.toBuilder();
       _bulkUpdates = $v.bulkUpdates.toBuilder();
+      _eInvoiceSchema = $v.eInvoiceSchema.toBuilder();
       _$v = null;
     }
     return this;
@@ -436,7 +464,8 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
               paymentTypeMap: paymentTypeMap.build(),
               countryMap: countryMap.build(),
               templateMap: templateMap.build(),
-              bulkUpdates: bulkUpdates.build());
+              bulkUpdates: bulkUpdates.build(),
+              eInvoiceSchema: eInvoiceSchema.build());
     } catch (_) {
       late String _$failedField;
       try {
@@ -462,6 +491,8 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
         templateMap.build();
         _$failedField = 'bulkUpdates';
         bulkUpdates.build();
+        _$failedField = 'eInvoiceSchema';
+        eInvoiceSchema.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'StaticState', _$failedField, e.toString());

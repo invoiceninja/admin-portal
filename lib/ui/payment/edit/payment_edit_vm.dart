@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -79,12 +80,21 @@ class PaymentEditVM {
       },
       onSavePressed: (BuildContext context) {
         Debouncer.runOnComplete(() {
-          final payment = store.state.paymentUIState.editing!;
+          final state = store.state;
+          final payment = state.paymentUIState.editing!;
+          final client = state.clientState.get(payment.clientId);
+          final currency = state.staticState.currencyMap[client.currencyId]!;
           final localization = navigatorKey.localization!;
           final navigator = navigatorKey.currentState;
+
           double amount = 0;
-          payment.invoices.forEach((invoice) => amount += invoice.amount);
-          payment.credits.forEach((credit) => amount -= credit.amount);
+          payment.invoices.forEach((invoice) {
+            amount = round(amount + invoice.amount, currency.precision);
+          });
+          payment.credits.forEach((credit) {
+            amount = round(amount - credit.amount, currency.precision);
+          });
+
           if (amount < 0) {
             showDialog<ErrorDialog>(
                 context: navigatorKey.currentContext!,
