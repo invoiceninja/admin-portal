@@ -197,6 +197,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   bool get showTwoYearReviewApp =>
       !prefState.hideTwoYearReviewApp && company.daysActive > 730;
 
+  Color get greyColor => prefState.enableDarkMode
+      ? convertHexStringToColor('#AAAAAA')!
+      : convertHexStringToColor('#666666')!;
+
   Color? get linkColor => prefState.enableDarkMode
       ? convertHexStringToColor('#FFFFFF')
       : accentColor;
