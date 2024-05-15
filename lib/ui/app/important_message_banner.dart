@@ -108,6 +108,9 @@ class _ImportantMessageBannerState extends State<ImportantMessageBanner> {
                       AppTextButton(
                         label: localization.webApp,
                         onPressed: () {
+                          setState(
+                              () => _dismissedMessage[messageType!] = true);
+
                           if (state.isHosted) {
                             launchUrl(Uri.parse(kAppReactUrl));
                           } else {
@@ -144,9 +147,15 @@ class _ImportantMessageBannerState extends State<ImportantMessageBanner> {
                       AppTextButton(
                         label: localization.desktopApp,
                         onPressed: () {
+                          setState(
+                              () => _dismissedMessage[messageType!] = true);
+
                           final platform = getNativePlatform();
                           final url = getNativeAppUrl(platform);
-                          launchUrl(Uri.parse(url));
+
+                          if (url.isNotEmpty) {
+                            launchUrl(Uri.parse(url));
+                          }
                         },
                       ),
                     ] else if (messageType == MESSAGE_TYPE_LAYOUT)
