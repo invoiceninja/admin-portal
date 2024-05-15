@@ -61,7 +61,7 @@ class _ImportantMessageBannerState extends State<ImportantMessageBanner> {
 
     if (!_dismissedMessage.containsKey(MESSAGE_TYPE_FLUTTER_WEB) &&
         !state.isDemo) {
-      if ((kIsWeb && !state.prefState.hideFlutterWebWarning) || !kReleaseMode) {
+      if (kIsWeb || !kReleaseMode) {
         message = localization.flutterWebWarning;
         messageType = MESSAGE_TYPE_FLUTTER_WEB;
       }
@@ -110,7 +110,6 @@ class _ImportantMessageBannerState extends State<ImportantMessageBanner> {
                         onPressed: () {
                           setState(
                               () => _dismissedMessage[messageType!] = true);
-
                           if (state.isHosted) {
                             launchUrl(Uri.parse(kAppReactUrl));
                           } else {
@@ -147,9 +146,6 @@ class _ImportantMessageBannerState extends State<ImportantMessageBanner> {
                       AppTextButton(
                         label: localization.desktopApp,
                         onPressed: () {
-                          setState(
-                              () => _dismissedMessage[messageType!] = true);
-
                           final platform = getNativePlatform();
                           final url = getNativeAppUrl(platform);
 

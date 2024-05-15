@@ -104,10 +104,6 @@ class UpdateLastHistory implements PersistUI {
   final int page;
 }
 
-class DismissFlutterWebWarning implements PersistUI {}
-
-class DismissFlutterWebWarningPermanently implements PersistUI, PersistPrefs {}
-
 class DismissGatewayWarningPermanently implements PersistUI, PersistPrefs {}
 
 class DismissReviewAppPermanently implements PersistUI, PersistPrefs {}
