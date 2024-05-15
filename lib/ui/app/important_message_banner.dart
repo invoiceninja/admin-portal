@@ -106,6 +106,7 @@ class _ImportantMessageBannerState extends State<ImportantMessageBanner> {
                     ),
                     if (messageType == MESSAGE_TYPE_FLUTTER_WEB) ...[
                       AppTextButton(
+                        color: Colors.white,
                         label: localization.webApp,
                         onPressed: () {
                           setState(
@@ -144,6 +145,7 @@ class _ImportantMessageBannerState extends State<ImportantMessageBanner> {
                         },
                       ),
                       AppTextButton(
+                        color: Colors.white,
                         label: localization.desktopApp,
                         onPressed: () {
                           final platform = getNativePlatform();
