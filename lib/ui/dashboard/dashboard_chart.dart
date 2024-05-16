@@ -262,7 +262,7 @@ class _DashboardChartState extends State<DashboardChart> {
                   child: Text(
                     localization!.average +
                         ': ' +
-                        formatNumber(series.average, context,
+                        formatNumber(series.periodAverage, context,
                             currencyId: widget.currencyId)!,
                     style: theme.textTheme.titleLarge,
                   ),

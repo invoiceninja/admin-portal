@@ -1485,6 +1485,13 @@ abstract class DashboardField
 
   bool get isTimeFormat => format == DashboardUISettings.FORMAT_TIME;
 
+  bool get isSumCalculate => calculate == DashboardUISettings.CALCULATE_SUM;
+
+  bool get isAverageCalculate =>
+      calculate == DashboardUISettings.CALCULATE_AVERAGE;
+
+  bool get isCountCalculate => calculate == DashboardUISettings.CALCULATE_COUNT;
+
   // ignore: unused_element
   static void _initializeBuilder(DashboardFieldBuilder builder) => builder
     ..format = DashboardUISettings.FORMAT_MONEY

@@ -643,15 +643,33 @@ class DashboardPanels extends StatelessWidget {
                             if (dashboardField.period ==
                                 DashboardUISettings.PERIOD_CURRENT) {
                               final data = currentFieldMap[field]!;
-                              value = data.periodTotal;
+                              if (dashboardField.isCountCalculate) {
+                                value = data.periodCount.toDouble();
+                              } else if (dashboardField.isAverageCalculate) {
+                                value = data.periodAverage;
+                              } else {
+                                value = data.periodTotal;
+                              }
                             } else if (dashboardField.period ==
                                 DashboardUISettings.PERIOD_PREVIOUS) {
                               final data = previousFieldMap[field]!;
-                              value = data.periodTotal;
+                              if (dashboardField.isCountCalculate) {
+                                value = data.periodCount.toDouble();
+                              } else if (dashboardField.isAverageCalculate) {
+                                value = data.periodAverage;
+                              } else {
+                                value = data.periodTotal;
+                              }
                             } else if (dashboardField.period ==
                                 DashboardUISettings.PERIOD_TOTAL) {
                               final data = currentFieldMap[field]!;
-                              value = data.total;
+                              if (dashboardField.isCountCalculate) {
+                                value = data.totalCount.toDouble();
+                              } else if (dashboardField.isAverageCalculate) {
+                                value = data.totalAverage;
+                              } else {
+                                value = data.total;
+                              }
                             }
                             return FormCard(
                               padding: const EdgeInsets.all(0),
@@ -661,15 +679,21 @@ class DashboardPanels extends StatelessWidget {
                                     textAlign: TextAlign.center),
                                 SizedBox(height: 6),
                                 Text(
-                                    dashboardField.isTimeFormat
-                                        ? formatDuration(
-                                            Duration(seconds: value.toInt()))
-                                        : formatNumber(
-                                            value,
-                                            context,
-                                            currencyId: state.dashboardUIState
-                                                .settings.currencyId,
-                                          )!,
+                                    dashboardField.isCountCalculate
+                                        ? formatNumber(value, context,
+                                            formatNumberType:
+                                                FormatNumberType.int)!
+                                        : dashboardField.isTimeFormat
+                                            ? formatDuration(Duration(
+                                                seconds: value.toInt()))
+                                            : formatNumber(
+                                                value,
+                                                context,
+                                                currencyId: state
+                                                    .dashboardUIState
+                                                    .settings
+                                                    .currencyId,
+                                              )!,
                                     style: textTheme.headlineSmall,
                                     textAlign: TextAlign.center),
                                 SizedBox(height: 6),
@@ -1227,7 +1251,7 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
                       key: ValueKey('__${dashboardField}__'),
                       title: Text(localization.lookup(dashboardField.field) +
                           (dashboardField.isTimeFormat
-                              ? ' - ${localization.duration}'
+                              ? ' ${localization.duration}'
                               : '')),
                       subtitle: Text(
                           localization.lookup(dashboardField.period) +
