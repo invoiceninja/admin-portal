@@ -637,8 +637,7 @@ class DashboardPanels extends StatelessWidget {
                               .map<Widget>((dashboardField) {
                             double value = 0;
                             var field = dashboardField.field;
-                            if (dashboardField.format ==
-                                DashboardUISettings.FORMAT_TIME) {
+                            if (dashboardField.isTimeFormat) {
                               field += '_duration';
                             }
                             if (dashboardField.period ==
@@ -662,8 +661,7 @@ class DashboardPanels extends StatelessWidget {
                                     textAlign: TextAlign.center),
                                 SizedBox(height: 6),
                                 Text(
-                                    dashboardField.format ==
-                                            DashboardUISettings.FORMAT_TIME
+                                    dashboardField.isTimeFormat
                                         ? formatDuration(
                                             Duration(seconds: value.toInt()))
                                         : formatNumber(
@@ -1228,8 +1226,7 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
                     ListTile(
                       key: ValueKey('__${dashboardField}__'),
                       title: Text(localization.lookup(dashboardField.field) +
-                          (dashboardField.format ==
-                                  DashboardUISettings.FORMAT_TIME
+                          (dashboardField.isTimeFormat
                               ? ' - ${localization.duration}'
                               : '')),
                       subtitle: Text(

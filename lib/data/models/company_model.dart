@@ -1483,6 +1483,8 @@ abstract class DashboardField
 
   String get calculate;
 
+  bool get isTimeFormat => format == DashboardUISettings.FORMAT_TIME;
+
   // ignore: unused_element
   static void _initializeBuilder(DashboardFieldBuilder builder) => builder
     ..format = DashboardUISettings.FORMAT_MONEY
