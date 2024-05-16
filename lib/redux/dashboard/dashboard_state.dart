@@ -88,6 +88,12 @@ abstract class DashboardUISettings
   static const String PERIOD_PREVIOUS = 'previous_period';
   static const String PERIOD_TOTAL = 'total';
 
+  static const String FORMAT_MONEY = 'money';
+  static const String FORMAT_TIME = 'time';
+
+  static const String CALCULATE_SUM = 'sum';
+  static const String CALCULATE_AVERAGE = 'average';
+
   @override
   @memoized
   int get hashCode;

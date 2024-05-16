@@ -1280,6 +1280,8 @@ class _DashboardField extends StatefulWidget {
 class _DashboardFieldState extends State<_DashboardField> {
   String _field = '';
   String _period = '';
+  String _format = '';
+  String _calculate = '';
 
   @override
   Widget build(BuildContext context) {
@@ -1364,6 +1366,30 @@ class _DashboardFieldState extends State<_DashboardField> {
             ),
           ],
         ),
+        if ([
+          DashboardUISettings.FIELD_PAID_TASKS,
+          DashboardUISettings.FIELD_INVOICED_TASKS,
+          DashboardUISettings.FIELD_LOGGED_TASKS,
+        ].contains(_field))
+          AppDropdownButton(
+            labelText: localization.format,
+            value: _format,
+            onChanged: (dynamic value) {
+              setState(() {
+                _format = value;
+              });
+            },
+            items: [
+              DropdownMenuItem<String>(
+                child: Text(localization.money),
+                value: DashboardUISettings.FORMAT_MONEY,
+              ),
+              DropdownMenuItem<String>(
+                child: Text(localization.time),
+                value: DashboardUISettings.FORMAT_TIME,
+              ),
+            ],
+          ),
       ]),
       actions: [
         TextButton(
