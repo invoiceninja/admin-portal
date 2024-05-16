@@ -636,20 +636,22 @@ class DashboardPanels extends StatelessWidget {
                           children: state.userCompany.settings.dashboardFields
                               .map<Widget>((dashboardField) {
                             double value = 0;
+                            var field = dashboardField.field;
+                            if (dashboardField.format ==
+                                DashboardUISettings.FORMAT_TIME) {
+                              field += '_duration';
+                            }
                             if (dashboardField.period ==
                                 DashboardUISettings.PERIOD_CURRENT) {
-                              final data =
-                                  currentFieldMap[dashboardField.field]!;
+                              final data = currentFieldMap[field]!;
                               value = data.periodTotal;
                             } else if (dashboardField.period ==
                                 DashboardUISettings.PERIOD_PREVIOUS) {
-                              final data =
-                                  previousFieldMap[dashboardField.field]!;
+                              final data = previousFieldMap[field]!;
                               value = data.periodTotal;
                             } else if (dashboardField.period ==
                                 DashboardUISettings.PERIOD_TOTAL) {
-                              final data =
-                                  currentFieldMap[dashboardField.field]!;
+                              final data = currentFieldMap[field]!;
                               value = data.total;
                             }
                             return FormCard(
@@ -662,7 +664,8 @@ class DashboardPanels extends StatelessWidget {
                                 Text(
                                     dashboardField.format ==
                                             DashboardUISettings.FORMAT_TIME
-                                        ? '00:00:00'
+                                        ? formatDuration(
+                                            Duration(seconds: value.toInt()))
                                         : formatNumber(
                                             value,
                                             context,
@@ -674,11 +677,11 @@ class DashboardPanels extends StatelessWidget {
                                 SizedBox(height: 6),
                                 Text(
                                     localization.lookup(dashboardField.period) +
-                                                dashboardField.calculate ==
-                                            DashboardUISettings
-                                                .CALCULATE_AVERAGE
-                                        ? ' • ${localization.average}'
-                                        : '',
+                                        (dashboardField.calculate ==
+                                                DashboardUISettings
+                                                    .CALCULATE_AVERAGE
+                                            ? ' • ${localization.average}'
+                                            : ''),
                                     style: textTheme.bodySmall,
                                     textAlign: TextAlign.center),
                               ],
