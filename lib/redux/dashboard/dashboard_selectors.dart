@@ -715,19 +715,19 @@ List<ChartDataGroup> chartTasks(
             amount *= exchangeRate;
           }
 
-          if (task.isInvoiced) {
-            if (invoiceMap.containsKey(task.invoiceId) &&
-                invoiceMap[task.invoiceId]!.isPaid) {
-              paidData.total += amount;
-            } else {
-              invoicedData.total += amount;
-            }
-          } else {
-            loggedData.total += amount;
-          }
-
-          if (task.isBetween(
+          if (taskTime.isBetween(
               settings.startDate(company), settings.endDate(company))) {
+            if (task.isInvoiced) {
+              if (invoiceMap.containsKey(task.invoiceId) &&
+                  invoiceMap[task.invoiceId]!.isPaid) {
+                paidData.total += amount;
+              } else {
+                invoicedData.total += amount;
+              }
+            } else {
+              loggedData.total += amount;
+            }
+
             if (totals[STATUS_LOGGED]![date] == null) {
               totals[STATUS_LOGGED]![date] = 0.0;
               totals[STATUS_INVOICED]![date] = 0.0;
