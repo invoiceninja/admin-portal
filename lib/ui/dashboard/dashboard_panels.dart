@@ -1226,11 +1226,16 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
                   for (var dashboardField
                       in userCompanySettings.dashboardFields)
                     ListTile(
-                      key: ValueKey(
-                          '__${dashboardField.field}_${dashboardField.period}_'),
-                      title: Text(localization.lookup(dashboardField.field)),
-                      subtitle:
-                          Text(localization.lookup(dashboardField.period)),
+                      key: ValueKey('__${dashboardField}__'),
+                      title: Text(localization.lookup(dashboardField.field) +
+                          (dashboardField.format ==
+                                  DashboardUISettings.FORMAT_TIME
+                              ? ' - ${localization.duration}'
+                              : '')),
+                      subtitle: Text(
+                          localization.lookup(dashboardField.period) +
+                              ' • ' +
+                              localization.lookup(dashboardField.calculate)),
                       leading: IconButton(
                         icon: Icon(Icons.close),
                         onPressed: () {
@@ -1291,7 +1296,7 @@ class _DashboardField extends StatefulWidget {
 
 class _DashboardFieldState extends State<_DashboardField> {
   String _field = '';
-  String _period = '';
+  String _period = DashboardUISettings.PERIOD_CURRENT;
   String _format = DashboardUISettings.FORMAT_MONEY;
   String _calculate = DashboardUISettings.CALCULATE_SUM;
 
@@ -1378,6 +1383,29 @@ class _DashboardFieldState extends State<_DashboardField> {
             ),
           ],
         ),
+        AppDropdownButton(
+          labelText: localization.calculate,
+          value: _calculate,
+          onChanged: (dynamic value) {
+            setState(() {
+              _calculate = value;
+            });
+          },
+          items: [
+            DropdownMenuItem<String>(
+              child: Text(localization.sum),
+              value: DashboardUISettings.CALCULATE_SUM,
+            ),
+            DropdownMenuItem<String>(
+              child: Text(localization.average),
+              value: DashboardUISettings.CALCULATE_AVERAGE,
+            ),
+            DropdownMenuItem<String>(
+              child: Text(localization.count),
+              value: DashboardUISettings.CALCULATE_COUNT,
+            ),
+          ],
+        ),
         if ([
           DashboardUISettings.FIELD_PAID_TASKS,
           DashboardUISettings.FIELD_INVOICED_TASKS,
@@ -1412,13 +1440,16 @@ class _DashboardFieldState extends State<_DashboardField> {
         ),
         TextButton(
           onPressed: () {
-            if (_field.isEmpty || _period.isEmpty) {
+            if (_field.isEmpty) {
               return;
             }
 
             if (dashboardFields
-                .where(
-                    (field) => field.field == _field && field.period == _period)
+                .where((field) =>
+                    field.field == _field &&
+                    field.period == _period &&
+                    field.calculate == _field &&
+                    field.format == _format)
                 .isNotEmpty) {
               Navigator.of(context).pop();
               return;
