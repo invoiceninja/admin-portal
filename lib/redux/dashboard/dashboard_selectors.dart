@@ -687,6 +687,8 @@ List<ChartDataGroup> chartTasks(
     } else if (!settings.matchesCurrency(client.currencyId)) {
       // skip it
     } else {
+      var isIncluded = false;
+
       task.getTaskTimes().forEach((taskTime) {
         taskTime.getParts().forEach((date, duration) {
           if (settings.groupBy == kReportGroupYear) {
@@ -717,6 +719,8 @@ List<ChartDataGroup> chartTasks(
 
           if (taskTime.isBetween(
               settings.startDate(company), settings.endDate(company))) {
+            isIncluded = true;
+
             if (task.isInvoiced) {
               if (invoiceMap.containsKey(task.invoiceId) &&
                   invoiceMap[task.invoiceId]!.isPaid) {
@@ -761,15 +765,17 @@ List<ChartDataGroup> chartTasks(
         });
       });
 
-      if (task.isInvoiced) {
-        if (invoiceMap.containsKey(task.invoiceId) &&
-            invoiceMap[task.invoiceId]!.isPaid) {
-          counts[STATUS_PAID] = counts[STATUS_PAID]! + 1;
+      if (isIncluded) {
+        if (task.isInvoiced) {
+          if (invoiceMap.containsKey(task.invoiceId) &&
+              invoiceMap[task.invoiceId]!.isPaid) {
+            counts[STATUS_PAID] = counts[STATUS_PAID]! + 1;
+          } else {
+            counts[STATUS_INVOICED] = counts[STATUS_INVOICED]! + 1;
+          }
         } else {
-          counts[STATUS_INVOICED] = counts[STATUS_INVOICED]! + 1;
+          counts[STATUS_LOGGED] = counts[STATUS_LOGGED]! + 1;
         }
-      } else {
-        counts[STATUS_LOGGED] = counts[STATUS_LOGGED]! + 1;
       }
     }
   });
