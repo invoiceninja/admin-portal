@@ -152,28 +152,6 @@ abstract class TaskTime implements Built<TaskTime, TaskTimeBuilder> {
   bool get isEmpty =>
       startDate == null && endDate == null && description.isEmpty;
 
-  bool isBetween(String? startDate, String? endDate) {
-    if (startDate == null || endDate == null) {
-      return false;
-    }
-
-    final taskStartDate = convertDateTimeToSqlDate(this.startDate!.toLocal());
-    if (startDate.compareTo(taskStartDate) <= 0 &&
-        endDate.compareTo(taskStartDate) >= 0) {
-      return true;
-    }
-
-    if (this.endDate != null) {
-      final taskEndDate = convertDateTimeToSqlDate(this.endDate!.toLocal());
-      if (startDate.compareTo(taskEndDate) <= 0 &&
-          endDate.compareTo(taskEndDate) >= 0) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
   Map<String, Duration> getParts() {
     final localStartDate = startDate!.toLocal();
     final localEndDate = (endDate ?? DateTime.now()).toLocal();
