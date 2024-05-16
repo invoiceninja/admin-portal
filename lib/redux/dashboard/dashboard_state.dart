@@ -91,6 +91,7 @@ abstract class DashboardUISettings
   static const String FORMAT_MONEY = 'money';
   static const String FORMAT_TIME = 'time';
 
+  static const String CALCULATE_COUNT = 'count';
   static const String CALCULATE_SUM = 'sum';
   static const String CALCULATE_AVERAGE = 'average';
 

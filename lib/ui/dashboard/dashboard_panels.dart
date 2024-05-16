@@ -660,16 +660,25 @@ class DashboardPanels extends StatelessWidget {
                                     textAlign: TextAlign.center),
                                 SizedBox(height: 6),
                                 Text(
-                                    formatNumber(
-                                      value,
-                                      context,
-                                      currencyId: state
-                                          .dashboardUIState.settings.currencyId,
-                                    )!,
+                                    dashboardField.format ==
+                                            DashboardUISettings.FORMAT_TIME
+                                        ? '00:00:00'
+                                        : formatNumber(
+                                            value,
+                                            context,
+                                            currencyId: state.dashboardUIState
+                                                .settings.currencyId,
+                                          )!,
                                     style: textTheme.headlineSmall,
                                     textAlign: TextAlign.center),
                                 SizedBox(height: 6),
-                                Text(localization.lookup(dashboardField.period),
+                                Text(
+                                    localization.lookup(dashboardField.period) +
+                                                dashboardField.calculate ==
+                                            DashboardUISettings
+                                                .CALCULATE_AVERAGE
+                                        ? ' • ${localization.average}'
+                                        : '',
                                     style: textTheme.bodySmall,
                                     textAlign: TextAlign.center),
                               ],
@@ -1280,8 +1289,8 @@ class _DashboardField extends StatefulWidget {
 class _DashboardFieldState extends State<_DashboardField> {
   String _field = '';
   String _period = '';
-  String _format = '';
-  String _calculate = '';
+  String _format = DashboardUISettings.FORMAT_MONEY;
+  String _calculate = DashboardUISettings.CALCULATE_SUM;
 
   @override
   Widget build(BuildContext context) {
@@ -1419,6 +1428,8 @@ class _DashboardFieldState extends State<_DashboardField> {
                   DashboardField(
                     field: _field,
                     period: _period,
+                    calculate: _calculate,
+                    format: _format,
                   ),
                 ),
             )));
