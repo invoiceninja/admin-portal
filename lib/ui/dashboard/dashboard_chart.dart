@@ -161,77 +161,81 @@ class _DashboardChartState extends State<DashboardChart> {
                 scrollDirection: Axis.horizontal,
                 controller: _controller,
                 children: widget.data!.map((dataGroup) {
-                  final int index = widget.data!.indexOf(dataGroup);
-                  final bool isSelected = index == _selectedIndex;
-                  final bool isIncrease =
-                      dataGroup.periodTotal > dataGroup.previousTotal;
-                  final String changeAmount = (isIncrease ? '+' : '') +
-                      formatNumber(
-                          dataGroup.periodTotal - dataGroup.previousTotal,
-                          context,
-                          currencyId: widget.currencyId)!;
-                  final changePercent = (isIncrease ? '+' : '') +
-                      formatNumber(
-                          dataGroup.periodTotal != 0 &&
-                                  dataGroup.previousTotal != 0
-                              ? round(
-                                  (dataGroup.periodTotal -
-                                          dataGroup.previousTotal) /
-                                      dataGroup.previousTotal *
-                                      100,
-                                  2)
-                              : 0.0,
-                          context,
-                          formatNumberType: FormatNumberType.percent,
-                          currencyId: widget.currencyId)!;
-                  final String changeString = dataGroup.periodTotal == 0 ||
-                          dataGroup.previousTotal == 0 ||
-                          dataGroup.periodTotal == dataGroup.previousTotal
-                      ? (settings.enableComparison ? ' ' : '')
-                      : '$changeAmount ($changePercent)';
+                  if (dataGroup.isDuration) {
+                    return SizedBox();
+                  } else {
+                    final int index = widget.data!.indexOf(dataGroup);
+                    final bool isSelected = index == _selectedIndex;
+                    final bool isIncrease =
+                        dataGroup.periodTotal > dataGroup.previousTotal;
+                    final String changeAmount = (isIncrease ? '+' : '') +
+                        formatNumber(
+                            dataGroup.periodTotal - dataGroup.previousTotal,
+                            context,
+                            currencyId: widget.currencyId)!;
+                    final changePercent = (isIncrease ? '+' : '') +
+                        formatNumber(
+                            dataGroup.periodTotal != 0 &&
+                                    dataGroup.previousTotal != 0
+                                ? round(
+                                    (dataGroup.periodTotal -
+                                            dataGroup.previousTotal) /
+                                        dataGroup.previousTotal *
+                                        100,
+                                    2)
+                                : 0.0,
+                            context,
+                            formatNumberType: FormatNumberType.percent,
+                            currencyId: widget.currencyId)!;
+                    final String changeString = dataGroup.periodTotal == 0 ||
+                            dataGroup.previousTotal == 0 ||
+                            dataGroup.periodTotal == dataGroup.previousTotal
+                        ? (settings.enableComparison ? ' ' : '')
+                        : '$changeAmount ($changePercent)';
 
-                  return InkWell(
-                    onTap: () {
-                      setState(() {
-                        _selectedIndex = index;
-                        _selected = null;
-                      });
-                    },
-                    child: Container(
-                      color: isSelected ? state.accentColor : theme.cardColor,
-                      padding: EdgeInsets.only(
-                          left: 16, top: 16, right: 32, bottom: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(localization!.lookup(dataGroup.name),
-                              style: theme.textTheme.titleLarge!.copyWith(
-                                color: isSelected ? Colors.white : null,
-                              )),
-                          SizedBox(height: 4),
-                          Text(
-                              formatNumber(dataGroup.periodTotal, context,
-                                  currencyId: widget.currencyId)!,
-                              style: theme.textTheme.headlineSmall!.copyWith(
-                                  color: isSelected ? Colors.white : null)),
-                          SizedBox(height: 4),
-                          changeString.isNotEmpty
-                              ? Text(
-                                  changeString,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: isSelected
-                                        ? Colors.white
-                                        : (isIncrease
-                                            ? Colors.green
-                                            : Colors.red),
-                                  ),
-                                )
-                              : SizedBox(),
-                        ],
+                    return InkWell(
+                      onTap: () {
+                        setState(() {
+                          _selectedIndex = index;
+                          _selected = null;
+                        });
+                      },
+                      child: Container(
+                        color: isSelected ? state.accentColor : theme.cardColor,
+                        padding: EdgeInsets.only(
+                            left: 16, top: 16, right: 32, bottom: 16),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(localization!.lookup(dataGroup.name),
+                                style: theme.textTheme.titleLarge!.copyWith(
+                                  color: isSelected ? Colors.white : null,
+                                )),
+                            SizedBox(height: 4),
+                            Text(
+                                formatNumber(dataGroup.periodTotal, context,
+                                    currencyId: widget.currencyId)!,
+                                style: theme.textTheme.headlineSmall!.copyWith(
+                                    color: isSelected ? Colors.white : null)),
+                            SizedBox(height: 4),
+                            changeString.isNotEmpty
+                                ? Text(
+                                    changeString,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: isSelected
+                                          ? Colors.white
+                                          : (isIncrease
+                                              ? Colors.green
+                                              : Colors.red),
+                                    ),
+                                  )
+                                : SizedBox(),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  }
                 }).toList(),
               ),
             ),

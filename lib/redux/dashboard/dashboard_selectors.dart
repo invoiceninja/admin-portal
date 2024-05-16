@@ -23,6 +23,8 @@ class ChartDataGroup {
   double previousTotal = 0.0;
   double total = 0.0;
   double average = 0.0;
+
+  bool get isDuration => name.endsWith('_duration');
 }
 
 class ChartMoneyData {
@@ -657,22 +659,37 @@ List<ChartDataGroup> chartTasks(
   const STATUS_LOGGED = 'logged';
   const STATUS_INVOICED = 'invoiced';
   const STATUS_PAID = 'invoice_paid';
+  const STATUS_LOGGED_DURATION = 'logged_duration';
+  const STATUS_INVOICED_DURATION = 'invoiced_duration';
+  const STATUS_PAID_DURATION = 'invoice_paid_duration';
 
   final Map<String, int> counts = {
     STATUS_LOGGED: 0,
     STATUS_INVOICED: 0,
     STATUS_PAID: 0,
+    STATUS_LOGGED_DURATION: 0,
+    STATUS_INVOICED_DURATION: 0,
+    STATUS_PAID_DURATION: 0,
   };
 
   final Map<String, Map<String, double>> totals = {
     STATUS_LOGGED: {},
     STATUS_INVOICED: {},
     STATUS_PAID: {},
+    STATUS_LOGGED_DURATION: {},
+    STATUS_INVOICED_DURATION: {},
+    STATUS_PAID_DURATION: {},
   };
 
   final ChartDataGroup loggedData = ChartDataGroup(STATUS_LOGGED);
   final ChartDataGroup invoicedData = ChartDataGroup(STATUS_INVOICED);
   final ChartDataGroup paidData = ChartDataGroup(STATUS_PAID);
+
+  final ChartDataGroup loggedDataDuration =
+      ChartDataGroup(STATUS_LOGGED_DURATION);
+  final ChartDataGroup invoicedDataDuration =
+      ChartDataGroup(STATUS_INVOICED_DURATION);
+  final ChartDataGroup paidDataDuration = ChartDataGroup(STATUS_PAID_DURATION);
 
   taskMap.forEach((int, task) {
     final client = clientMap[task.clientId] ?? ClientEntity(id: task.clientId);
@@ -710,7 +727,9 @@ List<ChartDataGroup> chartTasks(
               task: task,
               group: group,
             )!;
-            double amount = taskRate * round(duration.inSeconds / 3600, 3);
+
+            final seconds = duration.inSeconds;
+            double amount = taskRate * round(seconds / 3600, 3);
 
             // Handle "All"
             if (settings.currencyId == kCurrencyAll &&
@@ -727,11 +746,14 @@ List<ChartDataGroup> chartTasks(
               if (invoiceMap.containsKey(task.invoiceId) &&
                   invoiceMap[task.invoiceId]!.isPaid) {
                 paidData.total += amount;
+                paidDataDuration.total += seconds;
               } else {
                 invoicedData.total += amount;
+                invoicedDataDuration.total += seconds;
               }
             } else {
               loggedData.total += amount;
+              loggedDataDuration.total += seconds;
             }
 
             if (totals[STATUS_LOGGED]![date] == null) {
@@ -742,6 +764,14 @@ List<ChartDataGroup> chartTasks(
               loggedData.entityMap[date] = [];
               invoicedData.entityMap[date] = [];
               paidData.entityMap[date] = [];
+
+              totals[STATUS_LOGGED_DURATION]![date] = 0.0;
+              totals[STATUS_INVOICED_DURATION]![date] = 0.0;
+              totals[STATUS_PAID_DURATION]![date] = 0.0;
+
+              //loggedDataDuration.entityMap[date] = [];
+              //invoicedDataDuration.entityMap[date] = [];
+              //paidDataDuration.entityMap[date] = [];
             }
 
             if (task.isInvoiced) {
@@ -751,17 +781,32 @@ List<ChartDataGroup> chartTasks(
                     totals[STATUS_PAID]![date]! + amount;
                 paidData.entityMap[date]!.add(task.id);
                 paidData.periodTotal += amount;
+
+                totals[STATUS_PAID_DURATION]![date] =
+                    totals[STATUS_PAID_DURATION]![date]! + seconds;
+                //paidDataDuration.entityMap[date]!.add(task.id);
+                paidDataDuration.periodTotal += amount;
               } else {
                 totals[STATUS_INVOICED]![date] =
                     totals[STATUS_INVOICED]![date]! + amount;
                 invoicedData.entityMap[date]!.add(task.id);
                 invoicedData.periodTotal += amount;
+
+                totals[STATUS_INVOICED_DURATION]![date] =
+                    totals[STATUS_INVOICED_DURATION]![date]! + seconds;
+                //invoicedDataDuration.entityMap[date]!.add(task.id);
+                invoicedDataDuration.periodTotal += seconds;
               }
             } else {
               totals[STATUS_LOGGED]![date] =
                   totals[STATUS_LOGGED]![date]! + amount;
               loggedData.entityMap[date]!.add(task.id);
               loggedData.periodTotal += amount;
+
+              totals[STATUS_LOGGED_DURATION]![date] =
+                  totals[STATUS_LOGGED_DURATION]![date]! + seconds;
+              //loggedDataDuration.entityMap[date]!.add(task.id);
+              loggedDataDuration.periodTotal += seconds;
             }
           }
         });
@@ -818,10 +863,23 @@ List<ChartDataGroup> chartTasks(
       ? round(paidData.periodTotal / counts[STATUS_PAID]!, 2)
       : 0;
 
+  loggedDataDuration.average = (counts[STATUS_LOGGED] ?? 0) > 0
+      ? round(loggedDataDuration.periodTotal / counts[STATUS_LOGGED]!, 2)
+      : 0;
+  invoicedDataDuration.average = (counts[STATUS_INVOICED] ?? 0) > 0
+      ? round(invoicedDataDuration.periodTotal / counts[STATUS_INVOICED]!, 2)
+      : 0;
+  paidDataDuration.average = (counts[STATUS_PAID] ?? 0) > 0
+      ? round(paidDataDuration.periodTotal / counts[STATUS_PAID]!, 2)
+      : 0;
+
   final List<ChartDataGroup> data = [
     loggedData,
     invoicedData,
     paidData,
+    loggedDataDuration,
+    invoicedDataDuration,
+    paidDataDuration,
   ];
 
   return data;

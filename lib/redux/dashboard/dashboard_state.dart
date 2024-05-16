@@ -73,6 +73,11 @@ abstract class DashboardUISettings
   static const String FIELD_LOGGED_TASKS = 'total_logged_tasks';
   static const String FIELD_INVOICED_TASKS = 'total_invoiced_tasks';
   static const String FIELD_PAID_TASKS = 'total_paid_tasks';
+  static const String FIELD_LOGGED_TASKS_DURATION =
+      'total_logged_tasks_duration';
+  static const String FIELD_INVOICED_TASKS_DURATION =
+      'total_invoiced_tasks_duration';
+  static const String FIELD_PAID_TASKS_DURATION = 'total_paid_tasks_duration';
   static const String FIELD_LOGGED_EXPENSES = 'total_logged_expenses';
   static const String FIELD_PENDING_EXPENSES = 'total_pending_expenses';
   static const String FIELD_INVOICED_EXPENSES = 'total_invoiced_expenses';

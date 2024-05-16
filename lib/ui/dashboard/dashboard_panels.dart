@@ -566,6 +566,12 @@ class DashboardPanels extends StatelessWidget {
                     DashboardUISettings.FIELD_INVOICED_TASKS:
                         currentTaskData[1],
                     DashboardUISettings.FIELD_PAID_TASKS: currentTaskData[2],
+                    DashboardUISettings.FIELD_LOGGED_TASKS_DURATION:
+                        currentTaskData[3],
+                    DashboardUISettings.FIELD_INVOICED_TASKS_DURATION:
+                        currentTaskData[4],
+                    DashboardUISettings.FIELD_PAID_TASKS_DURATION:
+                        currentTaskData[5],
                     DashboardUISettings.FIELD_LOGGED_EXPENSES:
                         currentExpenseData[0],
                     DashboardUISettings.FIELD_PENDING_EXPENSES:
@@ -599,6 +605,12 @@ class DashboardPanels extends StatelessWidget {
                     DashboardUISettings.FIELD_INVOICED_TASKS:
                         previousTaskData[1],
                     DashboardUISettings.FIELD_PAID_TASKS: currentTaskData[2],
+                    DashboardUISettings.FIELD_LOGGED_TASKS_DURATION:
+                        currentTaskData[3],
+                    DashboardUISettings.FIELD_INVOICED_TASKS_DURATION:
+                        previousTaskData[4],
+                    DashboardUISettings.FIELD_PAID_TASKS_DURATION:
+                        currentTaskData[5],
                     DashboardUISettings.FIELD_LOGGED_EXPENSES:
                         previousExpenseData[0],
                     DashboardUISettings.FIELD_PENDING_EXPENSES:
@@ -822,48 +834,52 @@ class __DashboardPanelState extends State<_DashboardPanel> {
     _previousData = widget.previousData;
 
     widget.currentData.forEach((dataGroup) {
-      final index = widget.currentData.indexOf(dataGroup);
-      dataGroup.chartSeries = <Series<dynamic, DateTime>>[];
+      if (dataGroup.isDuration) {
+        // skip it
+      } else {
+        final index = widget.currentData.indexOf(dataGroup);
+        dataGroup.chartSeries = <Series<dynamic, DateTime>>[];
 
-      if (settings.enableComparison) {
-        final List<ChartMoneyData> previous = [];
-        final currentSeries = dataGroup.rawSeries;
-        final previousSeries = widget.previousData[index].rawSeries;
+        if (settings.enableComparison) {
+          final List<ChartMoneyData> previous = [];
+          final currentSeries = dataGroup.rawSeries;
+          final previousSeries = widget.previousData[index].rawSeries;
 
-        dataGroup.previousTotal = widget.previousData[index].periodTotal;
+          dataGroup.previousTotal = widget.previousData[index].periodTotal;
 
-        for (int i = 0;
-            i < min(currentSeries.length, previousSeries.length);
-            i++) {
-          previous.add(
-              ChartMoneyData(currentSeries[i].date, previousSeries[i].amount));
+          for (int i = 0;
+              i < min(currentSeries.length, previousSeries.length);
+              i++) {
+            previous.add(ChartMoneyData(
+                currentSeries[i].date, previousSeries[i].amount));
+          }
+
+          dataGroup.chartSeries.add(
+            charts.Series<ChartMoneyData, DateTime>(
+              domainFn: (ChartMoneyData chartData, _) => chartData.date,
+              measureFn: (ChartMoneyData chartData, _) => chartData.amount,
+              colorFn: (ChartMoneyData chartData, _) =>
+                  charts.MaterialPalette.gray.shadeDefault,
+              strokeWidthPxFn: (_a, _b) => 2.5,
+              id: DashboardChart.PERIOD_PREVIOUS,
+              displayName: localization!.previous,
+              data: previous,
+            ),
+          );
         }
 
-        dataGroup.chartSeries.add(
-          charts.Series<ChartMoneyData, DateTime>(
-            domainFn: (ChartMoneyData chartData, _) => chartData.date,
-            measureFn: (ChartMoneyData chartData, _) => chartData.amount,
-            colorFn: (ChartMoneyData chartData, _) =>
-                charts.MaterialPalette.gray.shadeDefault,
-            strokeWidthPxFn: (_a, _b) => 2.5,
-            id: DashboardChart.PERIOD_PREVIOUS,
-            displayName: localization!.previous,
-            data: previous,
-          ),
-        );
+        dataGroup.chartSeries.add(charts.Series<ChartMoneyData, DateTime>(
+          domainFn: (ChartMoneyData chartData, _) => chartData.date,
+          measureFn: (ChartMoneyData chartData, _) => chartData.amount,
+          colorFn: (ChartMoneyData chartData, _) =>
+              charts.ColorUtil.fromDartColor(state.accentColor!),
+          strokeWidthPxFn: (_a, _b) => 2.5,
+          id: DashboardChart.PERIOD_CURRENT,
+          displayName:
+              settings.enableComparison ? localization!.current : widget.title,
+          data: dataGroup.rawSeries,
+        ));
       }
-
-      dataGroup.chartSeries.add(charts.Series<ChartMoneyData, DateTime>(
-        domainFn: (ChartMoneyData chartData, _) => chartData.date,
-        measureFn: (ChartMoneyData chartData, _) => chartData.amount,
-        colorFn: (ChartMoneyData chartData, _) =>
-            charts.ColorUtil.fromDartColor(state.accentColor!),
-        strokeWidthPxFn: (_a, _b) => 2.5,
-        id: DashboardChart.PERIOD_CURRENT,
-        displayName:
-            settings.enableComparison ? localization!.current : widget.title,
-        data: dataGroup.rawSeries,
-      ));
     });
 
     _chart = DashboardChart(
