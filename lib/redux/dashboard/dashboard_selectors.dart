@@ -717,44 +717,44 @@ List<ChartDataGroup> chartTasks(
             date = date.substring(0, 7) + '-01';
           }
 
+          final taskRate = taskRateSelector(
+            company: company,
+            project: project,
+            client: client,
+            task: task,
+            group: group,
+          )!;
+
+          final seconds = duration.inSeconds;
+          double amount = taskRate * round(seconds / 3600, 3);
+
+          // Handle "All"
+          if (settings.currencyId == kCurrencyAll &&
+              client.currencyId != company.currencyId) {
+            final exchangeRate = invoice.hasExchangeRate
+                ? 1 / invoice.exchangeRate
+                : getExchangeRate(currencyMap,
+                    fromCurrencyId: client.currencyId,
+                    toCurrencyId: company.currencyId);
+            amount *= exchangeRate;
+          }
+
+          if (task.isInvoiced) {
+            if (invoiceMap.containsKey(task.invoiceId) &&
+                invoiceMap[task.invoiceId]!.isPaid) {
+              paidData.total += amount;
+              paidDataDuration.total += seconds;
+            } else {
+              invoicedData.total += amount;
+              invoicedDataDuration.total += seconds;
+            }
+          } else {
+            loggedData.total += amount;
+            loggedDataDuration.total += seconds;
+          }
+
           if (startDate.compareTo(date) <= 0 && endDate.compareTo(date) >= 0) {
             isIncluded = true;
-
-            final taskRate = taskRateSelector(
-              company: company,
-              project: project,
-              client: client,
-              task: task,
-              group: group,
-            )!;
-
-            final seconds = duration.inSeconds;
-            double amount = taskRate * round(seconds / 3600, 3);
-
-            // Handle "All"
-            if (settings.currencyId == kCurrencyAll &&
-                client.currencyId != company.currencyId) {
-              final exchangeRate = invoice.hasExchangeRate
-                  ? 1 / invoice.exchangeRate
-                  : getExchangeRate(currencyMap,
-                      fromCurrencyId: client.currencyId,
-                      toCurrencyId: company.currencyId);
-              amount *= exchangeRate;
-            }
-
-            if (task.isInvoiced) {
-              if (invoiceMap.containsKey(task.invoiceId) &&
-                  invoiceMap[task.invoiceId]!.isPaid) {
-                paidData.total += amount;
-                paidDataDuration.total += seconds;
-              } else {
-                invoicedData.total += amount;
-                invoicedDataDuration.total += seconds;
-              }
-            } else {
-              loggedData.total += amount;
-              loggedDataDuration.total += seconds;
-            }
 
             if (totals[STATUS_LOGGED]![date] == null) {
               totals[STATUS_LOGGED]![date] = 0.0;
