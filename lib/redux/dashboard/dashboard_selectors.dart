@@ -670,6 +670,20 @@ List<ChartDataGroup> chartTasks(
     } else {
       var isIncluded = false;
 
+      if (task.isInvoiced) {
+        if (invoiceMap.containsKey(task.invoiceId) &&
+            invoiceMap[task.invoiceId]!.isPaid) {
+          paidData.totalCount++;
+          paidDataDuration.totalCount++;
+        } else {
+          invoicedData.totalCount++;
+          invoicedDataDuration.totalCount++;
+        }
+      } else {
+        loggedData.totalCount++;
+        loggedDataDuration.totalCount++;
+      }
+
       task.getTaskTimes().forEach((taskTime) {
         taskTime.getParts().forEach((date, duration) {
           if (settings.groupBy == kReportGroupYear) {
@@ -704,7 +718,6 @@ List<ChartDataGroup> chartTasks(
             if (invoiceMap.containsKey(task.invoiceId) &&
                 invoiceMap[task.invoiceId]!.isPaid) {
               paidData.total += amount;
-              paidData.totalCount++;
               paidDataDuration.total += seconds;
             } else {
               invoicedData.total += amount;
@@ -886,13 +899,17 @@ List<ChartDataGroup> chartExpenses(
         final invoice = invoiceMap[expense.invoiceId] ?? InvoiceEntity();
         if (invoice.isPaid) {
           paidData.total += amount;
+          paidData.totalCount++;
         } else {
           invoicedData.total += amount;
+          invoicedData.totalCount++;
         }
       } else if (expense.isPending) {
         pendingData.total += amount;
+        pendingData.totalCount++;
       } else {
         loggedData.total += amount;
+        loggedData.totalCount++;
       }
 
       if (expense.isBetween(
