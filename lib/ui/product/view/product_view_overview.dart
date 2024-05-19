@@ -110,10 +110,6 @@ class _ProductOverviewState extends State<ProductOverview> {
           formatNumberType: FormatNumberType.int);
     }
 
-    if (product.imageUrl.isNotEmpty) {
-      fields[localization.imageUrl] = product.imageUrl;
-    }
-
     return ScrollableListView(
       children: <Widget>[
         EntityHeader(
@@ -127,13 +123,24 @@ class _ProductOverviewState extends State<ProductOverview> {
         ),
         ListDivider(),
         FieldGrid(fields),
-        Padding(
-          padding: EdgeInsets.all(20),
-          child: Text(
-            product.notes,
-            style: TextStyle(fontSize: 16),
+        if (product.notes.isNotEmpty)
+          Padding(
+            padding: EdgeInsets.only(left: 20, top: 20, right: 20),
+            child: Text(
+              product.notes,
+              style: TextStyle(fontSize: 16),
+            ),
           ),
-        ),
+        if (product.imageUrl.isNotEmpty)
+          Padding(
+            padding: EdgeInsets.only(left: 20, top: 20, right: 20),
+            child: Image.network(
+              product.imageUrl,
+              width: double.infinity,
+              fit: BoxFit.contain,
+            ),
+          ),
+        SizedBox(height: 20),
       ],
     );
   }
