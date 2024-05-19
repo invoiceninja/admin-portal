@@ -843,8 +843,9 @@ abstract class SettingsEntity
       taskRoundToNearest == null ? null : taskRoundToNearest != 1;
 
   bool get isTaskRoundingCustom =>
-      taskRoundToNearest == 0 ||
-      !kTaskRoundingOptions.values.contains(taskRoundToNearest);
+      taskRoundingEnabled == true &&
+      (taskRoundToNearest == 0 ||
+          !kTaskRoundingOptions.values.contains(taskRoundToNearest));
 
   bool get hasAddress => address1 != null && address1!.isNotEmpty;
 
