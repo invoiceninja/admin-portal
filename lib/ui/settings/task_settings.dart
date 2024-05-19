@@ -161,7 +161,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                       viewModel.onSettingsChanged(settings.rebuild(
                     (b) => b
                       ..taskRoundToNearest = value == true
-                          ? 60 * 5
+                          ? 60 * 15
                           : value == false
                               ? 1
                               : null,
