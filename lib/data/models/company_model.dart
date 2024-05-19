@@ -1456,22 +1456,20 @@ abstract class RegistrationFieldEntity
 abstract class DashboardField
     implements Built<DashboardField, DashboardFieldBuilder> {
   factory DashboardField({
-    String? field,
-    String? period,
-    String? type,
+    required String field,
+    required String period,
+    String? calculate,
+    String? format,
   }) {
     return _$DashboardField._(
-      field: field ?? '',
-      period: period ?? '',
-      type: type ?? TYPE_SUM,
+      field: field,
+      period: period,
+      calculate: calculate ?? DashboardUISettings.CALCULATE_SUM,
+      format: format ?? DashboardUISettings.FORMAT_MONEY,
     );
   }
 
   DashboardField._();
-
-  static const TYPE_SUM = 'sum';
-  static const TYPE_COUNT = 'count';
-  static const TYPE_AVERAGE = 'average';
 
   @override
   @memoized
@@ -1481,11 +1479,23 @@ abstract class DashboardField
 
   String get period;
 
-  String get type;
+  String get format;
+
+  String get calculate;
+
+  bool get isTimeFormat => format == DashboardUISettings.FORMAT_TIME;
+
+  bool get isSumCalculate => calculate == DashboardUISettings.CALCULATE_SUM;
+
+  bool get isAverageCalculate =>
+      calculate == DashboardUISettings.CALCULATE_AVERAGE;
+
+  bool get isCountCalculate => calculate == DashboardUISettings.CALCULATE_COUNT;
 
   // ignore: unused_element
-  static void _initializeBuilder(DashboardFieldBuilder builder) =>
-      builder..type = TYPE_SUM;
+  static void _initializeBuilder(DashboardFieldBuilder builder) => builder
+    ..format = DashboardUISettings.FORMAT_MONEY
+    ..calculate = DashboardUISettings.CALCULATE_SUM;
 
   static Serializer<DashboardField> get serializer =>
       _$dashboardFieldSerializer;

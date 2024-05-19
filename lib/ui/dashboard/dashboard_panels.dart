@@ -566,6 +566,12 @@ class DashboardPanels extends StatelessWidget {
                     DashboardUISettings.FIELD_INVOICED_TASKS:
                         currentTaskData[1],
                     DashboardUISettings.FIELD_PAID_TASKS: currentTaskData[2],
+                    DashboardUISettings.FIELD_LOGGED_TASKS_DURATION:
+                        currentTaskData[3],
+                    DashboardUISettings.FIELD_INVOICED_TASKS_DURATION:
+                        currentTaskData[4],
+                    DashboardUISettings.FIELD_PAID_TASKS_DURATION:
+                        currentTaskData[5],
                     DashboardUISettings.FIELD_LOGGED_EXPENSES:
                         currentExpenseData[0],
                     DashboardUISettings.FIELD_PENDING_EXPENSES:
@@ -599,6 +605,12 @@ class DashboardPanels extends StatelessWidget {
                     DashboardUISettings.FIELD_INVOICED_TASKS:
                         previousTaskData[1],
                     DashboardUISettings.FIELD_PAID_TASKS: currentTaskData[2],
+                    DashboardUISettings.FIELD_LOGGED_TASKS_DURATION:
+                        currentTaskData[3],
+                    DashboardUISettings.FIELD_INVOICED_TASKS_DURATION:
+                        previousTaskData[4],
+                    DashboardUISettings.FIELD_PAID_TASKS_DURATION:
+                        currentTaskData[5],
                     DashboardUISettings.FIELD_LOGGED_EXPENSES:
                         previousExpenseData[0],
                     DashboardUISettings.FIELD_PENDING_EXPENSES:
@@ -624,21 +636,40 @@ class DashboardPanels extends StatelessWidget {
                           children: state.userCompany.settings.dashboardFields
                               .map<Widget>((dashboardField) {
                             double value = 0;
+                            var field = dashboardField.field;
+                            if (dashboardField.isTimeFormat) {
+                              field += '_duration';
+                            }
                             if (dashboardField.period ==
                                 DashboardUISettings.PERIOD_CURRENT) {
-                              final data =
-                                  currentFieldMap[dashboardField.field]!;
-                              value = data.periodTotal;
+                              final data = currentFieldMap[field]!;
+                              if (dashboardField.isCountCalculate) {
+                                value = data.periodCount.toDouble();
+                              } else if (dashboardField.isAverageCalculate) {
+                                value = data.periodAverage;
+                              } else {
+                                value = data.periodTotal;
+                              }
                             } else if (dashboardField.period ==
                                 DashboardUISettings.PERIOD_PREVIOUS) {
-                              final data =
-                                  previousFieldMap[dashboardField.field]!;
-                              value = data.periodTotal;
+                              final data = previousFieldMap[field]!;
+                              if (dashboardField.isCountCalculate) {
+                                value = data.periodCount.toDouble();
+                              } else if (dashboardField.isAverageCalculate) {
+                                value = data.periodAverage;
+                              } else {
+                                value = data.periodTotal;
+                              }
                             } else if (dashboardField.period ==
                                 DashboardUISettings.PERIOD_TOTAL) {
-                              final data =
-                                  currentFieldMap[dashboardField.field]!;
-                              value = data.total;
+                              final data = currentFieldMap[field]!;
+                              if (dashboardField.isCountCalculate) {
+                                value = data.totalCount.toDouble();
+                              } else if (dashboardField.isAverageCalculate) {
+                                value = data.totalAverage;
+                              } else {
+                                value = data.total;
+                              }
                             }
                             return FormCard(
                               padding: const EdgeInsets.all(0),
@@ -648,16 +679,31 @@ class DashboardPanels extends StatelessWidget {
                                     textAlign: TextAlign.center),
                                 SizedBox(height: 6),
                                 Text(
-                                    formatNumber(
-                                      value,
-                                      context,
-                                      currencyId: state
-                                          .dashboardUIState.settings.currencyId,
-                                    )!,
+                                    dashboardField.isCountCalculate
+                                        ? formatNumber(value, context,
+                                            formatNumberType:
+                                                FormatNumberType.int)!
+                                        : dashboardField.isTimeFormat
+                                            ? formatDuration(Duration(
+                                                seconds: value.toInt()))
+                                            : formatNumber(
+                                                value,
+                                                context,
+                                                currencyId: state
+                                                    .dashboardUIState
+                                                    .settings
+                                                    .currencyId,
+                                              )!,
                                     style: textTheme.headlineSmall,
                                     textAlign: TextAlign.center),
                                 SizedBox(height: 6),
-                                Text(localization.lookup(dashboardField.period),
+                                Text(
+                                    localization.lookup(dashboardField.period) +
+                                        (dashboardField.calculate ==
+                                                DashboardUISettings
+                                                    .CALCULATE_AVERAGE
+                                            ? ' • ${localization.average}'
+                                            : ''),
                                     style: textTheme.bodySmall,
                                     textAlign: TextAlign.center),
                               ],
@@ -822,48 +868,52 @@ class __DashboardPanelState extends State<_DashboardPanel> {
     _previousData = widget.previousData;
 
     widget.currentData.forEach((dataGroup) {
-      final index = widget.currentData.indexOf(dataGroup);
-      dataGroup.chartSeries = <Series<dynamic, DateTime>>[];
+      if (dataGroup.isDuration) {
+        // skip it
+      } else {
+        final index = widget.currentData.indexOf(dataGroup);
+        dataGroup.chartSeries = <Series<dynamic, DateTime>>[];
 
-      if (settings.enableComparison) {
-        final List<ChartMoneyData> previous = [];
-        final currentSeries = dataGroup.rawSeries;
-        final previousSeries = widget.previousData[index].rawSeries;
+        if (settings.enableComparison) {
+          final List<ChartMoneyData> previous = [];
+          final currentSeries = dataGroup.rawSeries;
+          final previousSeries = widget.previousData[index].rawSeries;
 
-        dataGroup.previousTotal = widget.previousData[index].periodTotal;
+          dataGroup.previousTotal = widget.previousData[index].periodTotal;
 
-        for (int i = 0;
-            i < min(currentSeries.length, previousSeries.length);
-            i++) {
-          previous.add(
-              ChartMoneyData(currentSeries[i].date, previousSeries[i].amount));
+          for (int i = 0;
+              i < min(currentSeries.length, previousSeries.length);
+              i++) {
+            previous.add(ChartMoneyData(
+                currentSeries[i].date, previousSeries[i].amount));
+          }
+
+          dataGroup.chartSeries.add(
+            charts.Series<ChartMoneyData, DateTime>(
+              domainFn: (ChartMoneyData chartData, _) => chartData.date,
+              measureFn: (ChartMoneyData chartData, _) => chartData.amount,
+              colorFn: (ChartMoneyData chartData, _) =>
+                  charts.MaterialPalette.gray.shadeDefault,
+              strokeWidthPxFn: (_a, _b) => 2.5,
+              id: DashboardChart.PERIOD_PREVIOUS,
+              displayName: localization!.previous,
+              data: previous,
+            ),
+          );
         }
 
-        dataGroup.chartSeries.add(
-          charts.Series<ChartMoneyData, DateTime>(
-            domainFn: (ChartMoneyData chartData, _) => chartData.date,
-            measureFn: (ChartMoneyData chartData, _) => chartData.amount,
-            colorFn: (ChartMoneyData chartData, _) =>
-                charts.MaterialPalette.gray.shadeDefault,
-            strokeWidthPxFn: (_a, _b) => 2.5,
-            id: DashboardChart.PERIOD_PREVIOUS,
-            displayName: localization!.previous,
-            data: previous,
-          ),
-        );
+        dataGroup.chartSeries.add(charts.Series<ChartMoneyData, DateTime>(
+          domainFn: (ChartMoneyData chartData, _) => chartData.date,
+          measureFn: (ChartMoneyData chartData, _) => chartData.amount,
+          colorFn: (ChartMoneyData chartData, _) =>
+              charts.ColorUtil.fromDartColor(state.accentColor!),
+          strokeWidthPxFn: (_a, _b) => 2.5,
+          id: DashboardChart.PERIOD_CURRENT,
+          displayName:
+              settings.enableComparison ? localization!.current : widget.title,
+          data: dataGroup.rawSeries,
+        ));
       }
-
-      dataGroup.chartSeries.add(charts.Series<ChartMoneyData, DateTime>(
-        domainFn: (ChartMoneyData chartData, _) => chartData.date,
-        measureFn: (ChartMoneyData chartData, _) => chartData.amount,
-        colorFn: (ChartMoneyData chartData, _) =>
-            charts.ColorUtil.fromDartColor(state.accentColor!),
-        strokeWidthPxFn: (_a, _b) => 2.5,
-        id: DashboardChart.PERIOD_CURRENT,
-        displayName:
-            settings.enableComparison ? localization!.current : widget.title,
-        data: dataGroup.rawSeries,
-      ));
     });
 
     _chart = DashboardChart(
@@ -1198,11 +1248,15 @@ class __DashboardSettingsState extends State<_DashboardSettings> {
                   for (var dashboardField
                       in userCompanySettings.dashboardFields)
                     ListTile(
-                      key: ValueKey(
-                          '__${dashboardField.field}_${dashboardField.period}_'),
-                      title: Text(localization.lookup(dashboardField.field)),
-                      subtitle:
-                          Text(localization.lookup(dashboardField.period)),
+                      key: ValueKey('__${dashboardField}__'),
+                      title: Text(localization.lookup(dashboardField.field) +
+                          (dashboardField.isTimeFormat
+                              ? ' ${localization.duration}'
+                              : '')),
+                      subtitle: Text(
+                          localization.lookup(dashboardField.period) +
+                              ' • ' +
+                              localization.lookup(dashboardField.calculate)),
                       leading: IconButton(
                         icon: Icon(Icons.close),
                         onPressed: () {
@@ -1263,7 +1317,9 @@ class _DashboardField extends StatefulWidget {
 
 class _DashboardFieldState extends State<_DashboardField> {
   String _field = '';
-  String _period = '';
+  String _period = DashboardUISettings.PERIOD_CURRENT;
+  String _format = DashboardUISettings.FORMAT_MONEY;
+  String _calculate = DashboardUISettings.CALCULATE_SUM;
 
   @override
   Widget build(BuildContext context) {
@@ -1348,6 +1404,54 @@ class _DashboardFieldState extends State<_DashboardField> {
             ),
           ],
         ),
+        AppDropdownButton(
+          labelText: localization.calculate,
+          value: _calculate,
+          onChanged: (dynamic value) {
+            setState(() {
+              _calculate = value;
+            });
+          },
+          items: [
+            DropdownMenuItem<String>(
+              child: Text(localization.sum),
+              value: DashboardUISettings.CALCULATE_SUM,
+            ),
+            DropdownMenuItem<String>(
+              child: Text(localization.average),
+              value: DashboardUISettings.CALCULATE_AVERAGE,
+            ),
+            DropdownMenuItem<String>(
+              child: Text(localization.count),
+              value: DashboardUISettings.CALCULATE_COUNT,
+            ),
+          ],
+        ),
+        if ([
+              DashboardUISettings.FIELD_PAID_TASKS,
+              DashboardUISettings.FIELD_INVOICED_TASKS,
+              DashboardUISettings.FIELD_LOGGED_TASKS,
+            ].contains(_field) &&
+            _calculate != DashboardUISettings.CALCULATE_COUNT)
+          AppDropdownButton(
+            labelText: localization.format,
+            value: _format,
+            onChanged: (dynamic value) {
+              setState(() {
+                _format = value;
+              });
+            },
+            items: [
+              DropdownMenuItem<String>(
+                child: Text(localization.money),
+                value: DashboardUISettings.FORMAT_MONEY,
+              ),
+              DropdownMenuItem<String>(
+                child: Text(localization.time),
+                value: DashboardUISettings.FORMAT_TIME,
+              ),
+            ],
+          ),
       ]),
       actions: [
         TextButton(
@@ -1358,13 +1462,16 @@ class _DashboardFieldState extends State<_DashboardField> {
         ),
         TextButton(
           onPressed: () {
-            if (_field.isEmpty || _period.isEmpty) {
+            if (_field.isEmpty) {
               return;
             }
 
             if (dashboardFields
-                .where(
-                    (field) => field.field == _field && field.period == _period)
+                .where((field) =>
+                    field.field == _field &&
+                    field.period == _period &&
+                    field.calculate == _field &&
+                    field.format == _format)
                 .isNotEmpty) {
               Navigator.of(context).pop();
               return;
@@ -1377,6 +1484,8 @@ class _DashboardFieldState extends State<_DashboardField> {
                   DashboardField(
                     field: _field,
                     period: _period,
+                    calculate: _calculate,
+                    format: _format,
                   ),
                 ),
             )));

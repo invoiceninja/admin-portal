@@ -132,13 +132,13 @@ String? calculateEndDate({
   final firstDayOfYear = DateTime.utc(year, firstMonthOfYear, 1);
   switch (dateRange) {
     case DateRange.last7Days:
-      final date = today.subtract(Duration(days: 7 * offset));
+      final date = today.subtract(Duration(days: (7 * offset) + 1));
       return convertDateTimeToSqlDate(date);
     case DateRange.last30Days:
-      final date = today.subtract(Duration(days: 30 * offset));
+      final date = today.subtract(Duration(days: (30 * offset) + 1));
       return convertDateTimeToSqlDate(date);
     case DateRange.last365Days:
-      final date = today.subtract(Duration(days: 365 * offset));
+      final date = today.subtract(Duration(days: (365 * offset) + 1));
       return convertDateTimeToSqlDate(date);
     case DateRange.thisMonth:
       final date = addMonths(firstDayOfMonth, (offset - 1) * -1)

@@ -148,6 +148,10 @@ void saveDownloadedFile(
 }
 
 Future<String?> getAppDownloadDirectory() async {
+  if (kIsWeb) {
+    return null;
+  }
+
   var path = '';
 
   final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);

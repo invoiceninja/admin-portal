@@ -980,6 +980,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               children: <Widget>[
                                 TextFormField(
                                   enabled: false,
+                                  style: TextStyle(color: state.greyColor),
                                   decoration: InputDecoration(
                                     labelText: localization.subtotal,
                                   ),
@@ -1003,6 +1004,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                     (invoice.isInvoice || invoice.isQuote))
                                   TextFormField(
                                     enabled: false,
+                                    style: TextStyle(color: state.greyColor),
                                     decoration: InputDecoration(
                                       labelText: localization.paidToDate,
                                     ),
@@ -1080,6 +1082,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                   ),
                                 TextFormField(
                                   enabled: false,
+                                  style: TextStyle(color: state.greyColor),
                                   decoration: InputDecoration(
                                     labelText: invoice.isQuote
                                         ? localization.total
@@ -1105,6 +1108,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                 if (invoice.partial != 0)
                                   TextFormField(
                                     enabled: false,
+                                    style: TextStyle(color: state.greyColor),
                                     decoration: InputDecoration(
                                       labelText: localization.partialDue,
                                     ),

@@ -1649,8 +1649,12 @@ class _$DashboardFieldSerializer
       'period',
       serializers.serialize(object.period,
           specifiedType: const FullType(String)),
-      'type',
-      serializers.serialize(object.type, specifiedType: const FullType(String)),
+      'format',
+      serializers.serialize(object.format,
+          specifiedType: const FullType(String)),
+      'calculate',
+      serializers.serialize(object.calculate,
+          specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -1676,8 +1680,12 @@ class _$DashboardFieldSerializer
           result.period = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
-        case 'type':
-          result.type = serializers.deserialize(value,
+        case 'format':
+          result.format = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'calculate':
+          result.calculate = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
       }
@@ -4973,17 +4981,24 @@ class _$DashboardField extends DashboardField {
   @override
   final String period;
   @override
-  final String type;
+  final String format;
+  @override
+  final String calculate;
 
   factory _$DashboardField([void Function(DashboardFieldBuilder)? updates]) =>
       (new DashboardFieldBuilder()..update(updates))._build();
 
   _$DashboardField._(
-      {required this.field, required this.period, required this.type})
+      {required this.field,
+      required this.period,
+      required this.format,
+      required this.calculate})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(field, r'DashboardField', 'field');
     BuiltValueNullFieldError.checkNotNull(period, r'DashboardField', 'period');
-    BuiltValueNullFieldError.checkNotNull(type, r'DashboardField', 'type');
+    BuiltValueNullFieldError.checkNotNull(format, r'DashboardField', 'format');
+    BuiltValueNullFieldError.checkNotNull(
+        calculate, r'DashboardField', 'calculate');
   }
 
   @override
@@ -5000,7 +5015,8 @@ class _$DashboardField extends DashboardField {
     return other is DashboardField &&
         field == other.field &&
         period == other.period &&
-        type == other.type;
+        format == other.format &&
+        calculate == other.calculate;
   }
 
   int? __hashCode;
@@ -5010,7 +5026,8 @@ class _$DashboardField extends DashboardField {
     var _$hash = 0;
     _$hash = $jc(_$hash, field.hashCode);
     _$hash = $jc(_$hash, period.hashCode);
-    _$hash = $jc(_$hash, type.hashCode);
+    _$hash = $jc(_$hash, format.hashCode);
+    _$hash = $jc(_$hash, calculate.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -5020,7 +5037,8 @@ class _$DashboardField extends DashboardField {
     return (newBuiltValueToStringHelper(r'DashboardField')
           ..add('field', field)
           ..add('period', period)
-          ..add('type', type))
+          ..add('format', format)
+          ..add('calculate', calculate))
         .toString();
   }
 }
@@ -5037,9 +5055,13 @@ class DashboardFieldBuilder
   String? get period => _$this._period;
   set period(String? period) => _$this._period = period;
 
-  String? _type;
-  String? get type => _$this._type;
-  set type(String? type) => _$this._type = type;
+  String? _format;
+  String? get format => _$this._format;
+  set format(String? format) => _$this._format = format;
+
+  String? _calculate;
+  String? get calculate => _$this._calculate;
+  set calculate(String? calculate) => _$this._calculate = calculate;
 
   DashboardFieldBuilder() {
     DashboardField._initializeBuilder(this);
@@ -5050,7 +5072,8 @@ class DashboardFieldBuilder
     if ($v != null) {
       _field = $v.field;
       _period = $v.period;
-      _type = $v.type;
+      _format = $v.format;
+      _calculate = $v.calculate;
       _$v = null;
     }
     return this;
@@ -5077,8 +5100,10 @@ class DashboardFieldBuilder
                 field, r'DashboardField', 'field'),
             period: BuiltValueNullFieldError.checkNotNull(
                 period, r'DashboardField', 'period'),
-            type: BuiltValueNullFieldError.checkNotNull(
-                type, r'DashboardField', 'type'));
+            format: BuiltValueNullFieldError.checkNotNull(
+                format, r'DashboardField', 'format'),
+            calculate: BuiltValueNullFieldError.checkNotNull(
+                calculate, r'DashboardField', 'calculate'));
     replace(_$result);
     return _$result;
   }
