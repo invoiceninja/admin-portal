@@ -16,6 +16,8 @@ import 'package:invoiceninja_flutter/ui/app/window_manager.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/edit/bank_account_edit_vm.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_email_vm.dart';
 import 'package:invoiceninja_flutter/ui/purchase_order/purchase_order_pdf_vm.dart';
+import 'package:invoiceninja_flutter/ui/settings/e_invoice_settings.dart';
+import 'package:invoiceninja_flutter/ui/settings/e_invoice_settings_vm.dart';
 import 'package:invoiceninja_flutter/ui/settings/payment_settings_vm.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:redux/redux.dart';
@@ -730,6 +732,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                               CreditCardsAndBanksScreen(),
                           DataVisualizationsScreen.route: (context) =>
                               DataVisualizationsScreen(),
+                          EInvoiceSettingsScreen.route: (context) =>
+                              EInvoiceSettingsScreen(),
                         }
                       : {},
                 ),
