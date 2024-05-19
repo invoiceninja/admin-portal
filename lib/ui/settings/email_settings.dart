@@ -9,7 +9,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
-import 'package:invoiceninja_flutter/utils/files.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -59,7 +58,6 @@ class _EmailSettingsState extends State<EmailSettings> {
   final _mailgunSecretController = TextEditingController();
   final _mailgunDomainController = TextEditingController();
   final _customSendingEmailController = TextEditingController();
-  final _eInvoiceCertificatePassphraseController = TextEditingController();
   final _smtpHostController = TextEditingController();
   final _smtpPortController = TextEditingController();
   final _smtpUsernameController = TextEditingController();
@@ -99,7 +97,6 @@ class _EmailSettingsState extends State<EmailSettings> {
       _mailgunSecretController,
       _mailgunDomainController,
       _customSendingEmailController,
-      _eInvoiceCertificatePassphraseController,
       _smtpHostController,
       _smtpPortController,
       _smtpUsernameController,
@@ -125,8 +122,6 @@ class _EmailSettingsState extends State<EmailSettings> {
     _brevoSecretController.text = settings.brevoSecret ?? '';
     _mailgunSecretController.text = settings.mailgunSecret ?? '';
     _mailgunDomainController.text = settings.mailgunDomain ?? '';
-    _eInvoiceCertificatePassphraseController.text =
-        company.eInvoiceCertificatePassphrase;
     _smtpHostController.text = company.smtpHost;
     _smtpPortController.text = company.smtpPort.toString();
     _smtpUsernameController.text = company.smtpUsername;
@@ -151,8 +146,6 @@ class _EmailSettingsState extends State<EmailSettings> {
     final mailgunSecret = _mailgunSecretController.text.trim();
     final mailgunDomain = _mailgunDomainController.text.trim();
     final customSendingEmail = _customSendingEmailController.text.trim();
-    final eInvoiceCertificatePassphrase =
-        _eInvoiceCertificatePassphraseController.text.trim();
 
     final viewModel = widget.viewModel;
     final isFiltered = viewModel.state.settingsUIState.isFiltered;
@@ -180,10 +173,6 @@ class _EmailSettingsState extends State<EmailSettings> {
     }
 
     final company = viewModel.company.rebuild((b) => b
-      ..eInvoiceCertificatePassphrase =
-          isFiltered && eInvoiceCertificatePassphrase.isEmpty
-              ? null
-              : eInvoiceCertificatePassphrase
       ..smtpHost = _smtpHostController.text.trim()
       ..smtpPort = parseInt(_smtpPortController.text.trim())
       ..smtpUsername = _smtpUsernameController.text.trim()
@@ -209,7 +198,6 @@ class _EmailSettingsState extends State<EmailSettings> {
     final localization = AppLocalization.of(context)!;
     final viewModel = widget.viewModel;
     final state = viewModel.state;
-    final company = viewModel.state.company;
     final settings = viewModel.settings;
     final settingsUIState = state.settingsUIState;
     final gmailUserIds = memoizedGmailUserList(viewModel.state.userState.map);
@@ -702,152 +690,6 @@ class _EmailSettingsState extends State<EmailSettings> {
                 onChanged: (value) => viewModel.onSettingsChanged(
                     settings.rebuild((b) => b..ublEmailAttachment = value)),
               ),
-              BoolDropdownButton(
-                label: localization.enableEInvoice,
-                value: settings.enableEInvoice,
-                iconData: MdiIcons.fileXmlBox,
-                onChanged: (value) => viewModel.onSettingsChanged(
-                    settings.rebuild((b) => b..enableEInvoice = value)),
-              ),
-              if (settings.enableEInvoice == true) ...[
-                Padding(
-                  padding:
-                      EdgeInsets.only(top: settingsUIState.isFiltered ? 0 : 12),
-                  child: AppDropdownButton<String>(
-                      labelText: localization.eInvoiceType,
-                      showBlank: settingsUIState.isFiltered,
-                      value: settings.eInvoiceType,
-                      onChanged: (dynamic value) {
-                        viewModel.onSettingsChanged(
-                            settings.rebuild((b) => b..eInvoiceType = value));
-                      },
-                      items: kEInvoiceTypes
-                          .map((type) => DropdownMenuItem<String>(
-                                child: Text(type
-                                    .replaceFirst('_', ' ')
-                                    .replaceAll('_', '.')),
-                                value: type,
-                              ))
-                          .toList()),
-                ),
-                AppDropdownButton<String>(
-                    labelText: localization.eQuoteType,
-                    showBlank: settingsUIState.isFiltered,
-                    value: settings.eQuoteType,
-                    onChanged: (dynamic value) {
-                      viewModel.onSettingsChanged(
-                          settings.rebuild((b) => b..eQuoteType = value));
-                    },
-                    items: kEQuoteTypes
-                        .map((type) => DropdownMenuItem<String>(
-                              child: Text(type
-                                  .replaceFirst('_', ' ')
-                                  .replaceAll('_', '.')),
-                              value: type,
-                            ))
-                        .toList()),
-                if (!settingsUIState.isFiltered) ...[
-                  SizedBox(height: 22),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: OutlinedButton(
-                          onPressed: () async {
-                            final files = await pickFiles(
-                              fileIndex: 'e_invoice_certificate',
-                              allowMultiple: false,
-                              allowedExtensions: [
-                                'p12',
-                                'pfx',
-                                'pem',
-                                'cer',
-                                'crt',
-                                'der',
-                                'txt',
-                                'p7b',
-                                'spc',
-                                'bin',
-                              ],
-                            );
-
-                            if (files != null && files.isNotEmpty) {
-                              viewModel
-                                  .onEInvoiceCertificateSelected(files.first);
-                            }
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: Text(
-                                localization.uploadCertificate.toUpperCase()),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: kTableColumnGap),
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Icon(
-                              company.hasEInvoiceCertificate
-                                  ? Icons.check_circle_outline
-                                  : Icons.circle_outlined,
-                              size: 16,
-                              color: company.hasEInvoiceCertificate
-                                  ? Colors.green
-                                  : Colors.grey,
-                            ),
-                            SizedBox(width: 8),
-                            Flexible(
-                              child: Text(
-                                company.hasEInvoiceCertificate
-                                    ? localization.certificateSet
-                                    : localization.certificateNotSet,
-                                maxLines: 2,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: DecoratedFormField(
-                          label: localization.certificatePassphrase,
-                          controller: _eInvoiceCertificatePassphraseController,
-                          keyboardType: TextInputType.text,
-                          onSavePressed: _onSavePressed,
-                        ),
-                      ),
-                      SizedBox(width: kTableColumnGap),
-                      Expanded(
-                        child: Row(children: [
-                          Icon(
-                            company.hasEInvoiceCertificatePassphrase
-                                ? Icons.check_circle_outline
-                                : Icons.circle_outlined,
-                            size: 16,
-                            color: company.hasEInvoiceCertificatePassphrase
-                                ? Colors.green
-                                : Colors.grey,
-                          ),
-                          SizedBox(width: 8),
-                          Flexible(
-                            child: Text(
-                              company.hasEInvoiceCertificatePassphrase
-                                  ? localization.passphraseSet
-                                  : localization.passphraseNotSet,
-                              maxLines: 2,
-                            ),
-                          ),
-                        ]),
-                      )
-                    ],
-                  )
-                ],
-              ],
             ],
           ),
         ],

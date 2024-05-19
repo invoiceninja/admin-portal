@@ -663,6 +663,7 @@ const String kSettingsTransactionRulesEdit = 'transaction_rules/edit';
 const String kSettingsSchedules = 'schedules';
 const String kSettingsSchedulesView = 'schedules/view';
 const String kSettingsSchedulesEdit = 'schedules/edit';
+const String kSettingsEInvoiceSettings = 'e_invoice_settings';
 
 const List<String> kAdvancedSettings = [
   kSettingsCustomDesigns,

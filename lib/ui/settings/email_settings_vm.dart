@@ -4,9 +4,7 @@ import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
-import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -51,75 +49,64 @@ class EmailSettingsVM {
     required this.settings,
     required this.onSettingsChanged,
     required this.onSavePressed,
-    required this.onEInvoiceCertificateSelected,
   });
 
   static EmailSettingsVM fromStore(Store<AppState> store) {
     final state = store.state;
 
     return EmailSettingsVM(
-        state: state,
-        company: state.uiState.settingsUIState.company,
-        settings: state.uiState.settingsUIState.settings,
-        onCompanyChanged: (company) =>
-            store.dispatch(UpdateCompany(company: company)),
-        onSettingsChanged: (settings) {
-          store.dispatch(UpdateSettings(settings: settings));
-        },
-        onSavePressed: (
-          context,
-        ) {
-          if (!state.isProPlan && !state.isTrial) {
+      state: state,
+      company: state.uiState.settingsUIState.company,
+      settings: state.uiState.settingsUIState.settings,
+      onCompanyChanged: (company) =>
+          store.dispatch(UpdateCompany(company: company)),
+      onSettingsChanged: (settings) {
+        store.dispatch(UpdateSettings(settings: settings));
+      },
+      onSavePressed: (
+        context,
+      ) {
+        if (!state.isProPlan && !state.isTrial) {
+          return;
+        }
+
+        Debouncer.runOnComplete(() {
+          final settingsUIState = store.state.uiState.settingsUIState;
+          final settings = settingsUIState.settings;
+          if (settings.emailStyle == kEmailDesignCustom &&
+              !settings.emailStyleCustom!.contains('\$body')) {
+            showErrorDialog(
+                message: AppLocalization.of(context)!
+                    .bodyVariableMissing
+                    .replaceFirst(':body', '\$body'));
             return;
           }
 
-          Debouncer.runOnComplete(() {
-            final settingsUIState = store.state.uiState.settingsUIState;
-            final settings = settingsUIState.settings;
-            if (settings.emailStyle == kEmailDesignCustom &&
-                !settings.emailStyleCustom!.contains('\$body')) {
-              showErrorDialog(
-                  message: AppLocalization.of(context)!
-                      .bodyVariableMissing
-                      .replaceFirst(':body', '\$body'));
-              return;
-            }
-
-            switch (settingsUIState.entityType) {
-              case EntityType.company:
-                final completer = snackBarCompleter<Null>(
-                    AppLocalization.of(context)!.savedSettings);
-                store.dispatch(SaveCompanyRequest(
-                  completer: completer,
-                  company: settingsUIState.company,
-                ));
-                break;
-              case EntityType.group:
-                final completer = snackBarCompleter<GroupEntity>(
-                    AppLocalization.of(context)!.savedSettings);
-                store.dispatch(SaveGroupRequest(
-                    completer: completer, group: settingsUIState.group));
-                break;
-              case EntityType.client:
-                final completer = snackBarCompleter<ClientEntity>(
-                    AppLocalization.of(context)!.savedSettings);
-                store.dispatch(SaveClientRequest(
-                    completer: completer, client: settingsUIState.client));
-                break;
-            }
-          });
-        },
-        onEInvoiceCertificateSelected: (eInvoiceCertificate) {
-          final completer = snackBarCompleter<Null>(
-              AppLocalization.of(navigatorKey.currentContext!)!
-                  .uploadedCertificate);
-          store.dispatch(
-            SaveEInvoiceCertificateRequest(
+          switch (settingsUIState.entityType) {
+            case EntityType.company:
+              final completer = snackBarCompleter<Null>(
+                  AppLocalization.of(context)!.savedSettings);
+              store.dispatch(SaveCompanyRequest(
                 completer: completer,
-                company: state.company,
-                eInvoiceCertificate: eInvoiceCertificate),
-          );
+                company: settingsUIState.company,
+              ));
+              break;
+            case EntityType.group:
+              final completer = snackBarCompleter<GroupEntity>(
+                  AppLocalization.of(context)!.savedSettings);
+              store.dispatch(SaveGroupRequest(
+                  completer: completer, group: settingsUIState.group));
+              break;
+            case EntityType.client:
+              final completer = snackBarCompleter<ClientEntity>(
+                  AppLocalization.of(context)!.savedSettings);
+              store.dispatch(SaveClientRequest(
+                  completer: completer, client: settingsUIState.client));
+              break;
+          }
         });
+      },
+    );
   }
 
   final AppState state;
@@ -128,5 +115,4 @@ class EmailSettingsVM {
   final SettingsEntity settings;
   final Function(SettingsEntity) onSettingsChanged;
   final Function(CompanyEntity) onCompanyChanged;
-  final Function(MultipartFile) onEInvoiceCertificateSelected;
 }
