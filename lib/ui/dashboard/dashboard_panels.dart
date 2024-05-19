@@ -1428,10 +1428,11 @@ class _DashboardFieldState extends State<_DashboardField> {
           ],
         ),
         if ([
-          DashboardUISettings.FIELD_PAID_TASKS,
-          DashboardUISettings.FIELD_INVOICED_TASKS,
-          DashboardUISettings.FIELD_LOGGED_TASKS,
-        ].contains(_field))
+              DashboardUISettings.FIELD_PAID_TASKS,
+              DashboardUISettings.FIELD_INVOICED_TASKS,
+              DashboardUISettings.FIELD_LOGGED_TASKS,
+            ].contains(_field) &&
+            _calculate != DashboardUISettings.CALCULATE_COUNT)
           AppDropdownButton(
             labelText: localization.format,
             value: _format,
