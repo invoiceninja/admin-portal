@@ -304,10 +304,14 @@ List<ChartDataGroup> chartQuotes({
       }
 
       activeData.total += amount;
+      activeData.totalCount++;
+
       if (quote.isApproved) {
         approvedData.total += amount;
+        approvedData.totalCount++;
       } else {
         unapprovedData.total += amount;
+        unapprovedData.totalCount++;
       }
 
       if (quote.isBetween(
@@ -503,8 +507,11 @@ List<ChartDataGroup> chartPayments(
       }
 
       activeData.total += completedAmount;
+      activeData.totalCount++;
+
       if ((payment.refunded) > 0) {
         refundedData.total += refunded;
+        refundedData.totalCount++;
       }
 
       if (payment.isBetween(
@@ -697,6 +704,7 @@ List<ChartDataGroup> chartTasks(
             if (invoiceMap.containsKey(task.invoiceId) &&
                 invoiceMap[task.invoiceId]!.isPaid) {
               paidData.total += amount;
+              paidData.totalCount++;
               paidDataDuration.total += seconds;
             } else {
               invoicedData.total += amount;
