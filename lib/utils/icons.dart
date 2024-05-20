@@ -293,6 +293,8 @@ IconData? getSettingIcon(String section) {
       return MdiIcons.bank;
     case kSettingsTransactionRules:
       return Icons.rule_folder;
+    case kSettingsEInvoiceSettings:
+      return MdiIcons.fileXmlBox;
     default:
       return null;
   }

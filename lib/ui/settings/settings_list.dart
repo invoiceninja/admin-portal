@@ -653,6 +653,11 @@ class SettingsSearch extends StatelessWidget {
           'bank_accounts#2022-09-13',
         ],
       ],
+      kSettingsEInvoiceSettings: [
+        [
+          'e_invoice_settings#2024-05-20',
+        ],
+      ],
       kSettingsTransactionRules: [
         [
           'transaction_rules#2022-11-21',
