@@ -252,6 +252,7 @@ abstract class InvoiceEntity extends Object
       saveDefaultTerms: false,
       saveDefaultFooter: false,
       taxData: TaxDataEntity(),
+      eInvoice: BuiltMap<String, dynamic>(),
     );
   }
 
@@ -576,6 +577,9 @@ abstract class InvoiceEntity extends Object
 
   @BuiltValueField(wireName: 'tax_info')
   TaxDataEntity get taxData;
+
+  @BuiltValueField(wireName: 'e_invoice')
+  BuiltMap<String, dynamic> get eInvoice;
 
   bool get isApproved {
     if (isQuote &&
@@ -1534,6 +1538,7 @@ abstract class InvoiceEntity extends Object
     ..autoBillEnabled = false
     ..nextSendDatetime = ''
     ..taxData.replace(TaxDataEntity())
+    ..eInvoice.replace(BuiltMap<String, dynamic>())
     ..subscriptionId = '';
 
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;

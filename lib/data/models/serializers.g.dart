@@ -537,6 +537,10 @@ Serializers _$serializers = (new Serializers().toBuilder()
           const FullType(BuiltList, const [const FullType(ActivityEntity)]),
           () => new ListBuilder<ActivityEntity>())
       ..addBuilderFactory(
+          const FullType(BuiltMap,
+              const [const FullType(String), const FullType(dynamic)]),
+          () => new MapBuilder<String, dynamic>())
+      ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(LanguageEntity)]),
           () => new ListBuilder<LanguageEntity>())
       ..addBuilderFactory(
