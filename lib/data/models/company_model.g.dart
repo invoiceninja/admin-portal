@@ -416,6 +416,10 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
       'e_invoice_certificate_passphrase',
       serializers.serialize(object.eInvoiceCertificatePassphrase,
           specifiedType: const FullType(String)),
+      'e_invoice',
+      serializers.serialize(object.eInvoice,
+          specifiedType: const FullType(BuiltMap,
+              const [const FullType(String), const FullType(dynamic)])),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -1008,6 +1012,11 @@ class _$CompanyEntitySerializer implements StructuredSerializer<CompanyEntity> {
         case 'e_invoice_certificate_passphrase':
           result.eInvoiceCertificatePassphrase = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
+          break;
+        case 'e_invoice':
+          result.eInvoice.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(String), const FullType(dynamic)]))!);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -1927,6 +1936,8 @@ class _$CompanyEntity extends CompanyEntity {
   @override
   final String eInvoiceCertificatePassphrase;
   @override
+  final BuiltMap<String, dynamic> eInvoice;
+  @override
   final bool? isChanged;
   @override
   final int createdAt;
@@ -2064,6 +2075,7 @@ class _$CompanyEntity extends CompanyEntity {
       required this.hasEInvoiceCertificate,
       required this.hasEInvoiceCertificatePassphrase,
       required this.eInvoiceCertificatePassphrase,
+      required this.eInvoice,
       this.isChanged,
       required this.createdAt,
       required this.updatedAt,
@@ -2293,6 +2305,8 @@ class _$CompanyEntity extends CompanyEntity {
     BuiltValueNullFieldError.checkNotNull(eInvoiceCertificatePassphrase,
         r'CompanyEntity', 'eInvoiceCertificatePassphrase');
     BuiltValueNullFieldError.checkNotNull(
+        eInvoice, r'CompanyEntity', 'eInvoice');
+    BuiltValueNullFieldError.checkNotNull(
         createdAt, r'CompanyEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
         updatedAt, r'CompanyEntity', 'updatedAt');
@@ -2428,6 +2442,7 @@ class _$CompanyEntity extends CompanyEntity {
         hasEInvoiceCertificatePassphrase ==
             other.hasEInvoiceCertificatePassphrase &&
         eInvoiceCertificatePassphrase == other.eInvoiceCertificatePassphrase &&
+        eInvoice == other.eInvoice &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -2559,6 +2574,7 @@ class _$CompanyEntity extends CompanyEntity {
     _$hash = $jc(_$hash, hasEInvoiceCertificate.hashCode);
     _$hash = $jc(_$hash, hasEInvoiceCertificatePassphrase.hashCode);
     _$hash = $jc(_$hash, eInvoiceCertificatePassphrase.hashCode);
+    _$hash = $jc(_$hash, eInvoice.hashCode);
     _$hash = $jc(_$hash, isChanged.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
@@ -2691,6 +2707,7 @@ class _$CompanyEntity extends CompanyEntity {
           ..add('hasEInvoiceCertificatePassphrase',
               hasEInvoiceCertificatePassphrase)
           ..add('eInvoiceCertificatePassphrase', eInvoiceCertificatePassphrase)
+          ..add('eInvoice', eInvoice)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -3301,6 +3318,12 @@ class CompanyEntityBuilder
   set eInvoiceCertificatePassphrase(String? eInvoiceCertificatePassphrase) =>
       _$this._eInvoiceCertificatePassphrase = eInvoiceCertificatePassphrase;
 
+  MapBuilder<String, dynamic>? _eInvoice;
+  MapBuilder<String, dynamic> get eInvoice =>
+      _$this._eInvoice ??= new MapBuilder<String, dynamic>();
+  set eInvoice(MapBuilder<String, dynamic>? eInvoice) =>
+      _$this._eInvoice = eInvoice;
+
   bool? _isChanged;
   bool? get isChanged => _$this._isChanged;
   set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
@@ -3461,6 +3484,7 @@ class CompanyEntityBuilder
       _hasEInvoiceCertificate = $v.hasEInvoiceCertificate;
       _hasEInvoiceCertificatePassphrase = $v.hasEInvoiceCertificatePassphrase;
       _eInvoiceCertificatePassphrase = $v.eInvoiceCertificatePassphrase;
+      _eInvoice = $v.eInvoice.toBuilder();
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -3623,6 +3647,7 @@ class CompanyEntityBuilder
               hasEInvoiceCertificate: BuiltValueNullFieldError.checkNotNull(hasEInvoiceCertificate, r'CompanyEntity', 'hasEInvoiceCertificate'),
               hasEInvoiceCertificatePassphrase: BuiltValueNullFieldError.checkNotNull(hasEInvoiceCertificatePassphrase, r'CompanyEntity', 'hasEInvoiceCertificatePassphrase'),
               eInvoiceCertificatePassphrase: BuiltValueNullFieldError.checkNotNull(eInvoiceCertificatePassphrase, r'CompanyEntity', 'eInvoiceCertificatePassphrase'),
+              eInvoice: eInvoice.build(),
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'CompanyEntity', 'createdAt'),
               updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'CompanyEntity', 'updatedAt'),
@@ -3711,6 +3736,9 @@ class CompanyEntityBuilder
         taxConfig.build();
         _$failedField = 'taxData';
         taxData.build();
+
+        _$failedField = 'eInvoice';
+        eInvoice.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'CompanyEntity', _$failedField, e.toString());
