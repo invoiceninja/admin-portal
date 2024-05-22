@@ -128,6 +128,9 @@ abstract class BankAccountEntity extends Object
 
   bool get isConnected => type.isNotEmpty;
 
+  bool get isDisconnected =>
+      disabledUpstream == true && nordigenInstitutionId.isNotEmpty;
+
   @override
   List<EntityAction?> getActions(
       {UserCompanyEntity? userCompany,
@@ -142,8 +145,7 @@ abstract class BankAccountEntity extends Object
       }
 
       if (!multiselect && userCompany!.canEditEntity(this)) {
-        if ((nordigenInstitutionId.isNotEmpty && disabledUpstream) ||
-            !kReleaseMode) {
+        if (isDisconnected || !kReleaseMode) {
           actions.add(EntityAction.reconnect);
         }
       }
