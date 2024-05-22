@@ -6,7 +6,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.159';
+const String kClientVersion = '5.0.160';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -663,6 +663,7 @@ const String kSettingsTransactionRulesEdit = 'transaction_rules/edit';
 const String kSettingsSchedules = 'schedules';
 const String kSettingsSchedulesView = 'schedules/view';
 const String kSettingsSchedulesEdit = 'schedules/edit';
+const String kSettingsEInvoiceSettings = 'e_invoice_settings';
 
 const List<String> kAdvancedSettings = [
   kSettingsCustomDesigns,

@@ -116,8 +116,6 @@ void saveDownloadedFile(
     fileName = localization.lookup(prefix, overrideLocaleCode: localeCode) +
         '_' +
         fileName;
-
-    fileName = localization.lookup(prefix) + '_' + fileName;
   }
 
   if (kIsWeb) {

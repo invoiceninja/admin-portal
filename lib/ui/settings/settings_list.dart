@@ -214,6 +214,11 @@ class _SettingsListState extends State<SettingsList> {
               ),
             if (showAll)
               SettingsListTile(
+                section: kSettingsEInvoiceSettings,
+                viewModel: widget.viewModel,
+              ),
+            if (showAll)
+              SettingsListTile(
                 section: kSettingsGroupSettings,
                 viewModel: widget.viewModel,
               ),
@@ -646,6 +651,11 @@ class SettingsSearch extends StatelessWidget {
       kSettingsBankAccounts: [
         [
           'bank_accounts#2022-09-13',
+        ],
+      ],
+      kSettingsEInvoiceSettings: [
+        [
+          'e_invoice_settings#2024-05-20',
         ],
       ],
       kSettingsTransactionRules: [

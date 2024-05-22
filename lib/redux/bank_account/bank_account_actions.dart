@@ -8,6 +8,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ViewBankAccountList implements PersistUI {
   ViewBankAccountList({this.force = false});
@@ -314,6 +315,10 @@ void handleBankAccountAction(BuildContext? context,
           store.dispatch(RemoveFromBankAccountMultiselect(entity: bankAccount));
         }
       }
+      break;
+    case EntityAction.reconnect:
+      final url = state.credentials.url + '/nordigen/connect';
+      launchUrl(Uri.parse(url));
       break;
     case EntityAction.more:
       showEntityActionsDialog(

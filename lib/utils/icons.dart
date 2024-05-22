@@ -101,6 +101,8 @@ IconData? getEntityActionIcon(EntityAction? entityAction) {
       return Icons.payment;
     case EntityAction.disconnect:
       return MdiIcons.lanDisconnect;
+    case EntityAction.reconnect:
+      return MdiIcons.connection;
     case EntityAction.purge:
       return Icons.delete_forever;
     case EntityAction.viewInvoice:
@@ -293,6 +295,8 @@ IconData? getSettingIcon(String section) {
       return MdiIcons.bank;
     case kSettingsTransactionRules:
       return Icons.rule_folder;
+    case kSettingsEInvoiceSettings:
+      return MdiIcons.fileXmlBox;
     default:
       return null;
   }
