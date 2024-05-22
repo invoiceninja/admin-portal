@@ -101,6 +101,8 @@ IconData? getEntityActionIcon(EntityAction? entityAction) {
       return Icons.payment;
     case EntityAction.disconnect:
       return MdiIcons.lanDisconnect;
+    case EntityAction.reconnect:
+      return MdiIcons.connection;
     case EntityAction.purge:
       return Icons.delete_forever;
     case EntityAction.viewInvoice:

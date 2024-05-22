@@ -140,6 +140,7 @@ class EntityAction extends EnumClass {
   static const EntityAction unlink = _$unlink;
   static const EntityAction runTemplate = _$runTemplate;
   static const EntityAction bulkUpdate = _$bulkUpdate;
+  static const EntityAction reconnect = _$reconnect;
 
   @override
   String toString() {
