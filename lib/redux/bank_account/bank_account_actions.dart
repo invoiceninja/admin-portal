@@ -317,7 +317,9 @@ void handleBankAccountAction(BuildContext? context,
       }
       break;
     case EntityAction.reconnect:
-      final url = state.credentials.url + '/nordigen/connect';
+      final url = state.credentials.url +
+          '/nordigen/connect/' +
+          bankAccount.nordigenInstitutionId;
       launchUrl(Uri.parse(url));
       break;
     case EntityAction.more:
