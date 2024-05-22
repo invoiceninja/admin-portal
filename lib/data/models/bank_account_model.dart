@@ -64,7 +64,6 @@ abstract class BankAccountEntity extends Object
       createdUserId: '',
       assignedUserId: '',
       archivedAt: 0,
-      // STARTER: constructor - do not remove comment
       name: '',
       status: '',
       type: '',
@@ -75,6 +74,7 @@ abstract class BankAccountEntity extends Object
       fromDate: '',
       autoSync: false,
       integrationType: '',
+      nordigenInstitutionId: '',
     );
   }
 
@@ -111,6 +111,9 @@ abstract class BankAccountEntity extends Object
   @BuiltValueField(wireName: 'integration_type')
   String get integrationType;
 
+  @BuiltValueField(wireName: 'nordigen_institution_id')
+  String get nordigenInstitutionId;
+
   double get balance;
 
   String get currency;
@@ -139,7 +142,8 @@ abstract class BankAccountEntity extends Object
       }
 
       if (!multiselect && userCompany!.canEditEntity(this)) {
-        if (disabledUpstream || !kReleaseMode) {
+        if ((nordigenInstitutionId.isNotEmpty && disabledUpstream) ||
+            !kReleaseMode) {
           actions.add(EntityAction.reconnect);
         }
       }
@@ -222,6 +226,7 @@ abstract class BankAccountEntity extends Object
     ..fromDate = ''
     ..disabledUpstream = false
     ..autoSync = false
+    ..nordigenInstitutionId = ''
     ..integrationType = '';
 
   static Serializer<BankAccountEntity> get serializer =>
