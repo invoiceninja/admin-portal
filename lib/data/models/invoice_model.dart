@@ -1337,6 +1337,9 @@ abstract class InvoiceEntity extends Object
   String? get calculateRemainingCycles =>
       remainingCycles == -1 ? 'endless' : remainingCycles as String?;
 
+  bool get isBounced =>
+      invitations.where((invitation) => invitation.isBounced).isNotEmpty;
+
   String get calculatedStatusId {
     if (isRecurring) {
       if (!isDraft && remainingCycles == 0) {
@@ -1345,6 +1348,18 @@ abstract class InvoiceEntity extends Object
         return kRecurringInvoiceStatusPending;
       }
     } else {
+      if (isBounced) {
+        if (isInvoice) {
+          return kInvoiceStatusBounced;
+        } else if (isQuote) {
+          return kQuoteStatusBounced;
+        } else if (isCredit) {
+          return kCreditStatusBounced;
+        } else if (isPurchaseOrder) {
+          return kPurchaseOrderStatusBounced;
+        }
+      }
+
       if (isPastDue && !isCancelledOrReversed) {
         if (isInvoice) {
           return kInvoiceStatusPastDue;
@@ -1923,6 +1938,10 @@ abstract class InvitationEntity extends Object
       return '';
     }
   }
+
+  bool get isBounced =>
+      emailError.isNotEmpty &&
+      emailStatus != InvitationEntity.EMAIL_STATUS_DELIVERED;
 
   @override
   bool matchesFilter(String? filter) {

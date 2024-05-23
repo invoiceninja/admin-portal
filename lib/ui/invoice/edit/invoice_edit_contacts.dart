@@ -193,8 +193,6 @@ class _ContactListTileState extends State<_ContactListTile> {
                 Clipboard.setData(ClipboardData(text: widget.invitation!.link));
                 showToast(
                     localization.copiedToClipboard.replaceFirst(':value ', ''));
-              } else if (action == localization.reactivateEmail) {
-                //
               }
             },
           )
@@ -247,9 +245,7 @@ class _ContactListTileState extends State<_ContactListTile> {
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ),
-                  if ((widget.invitation?.emailError ?? '').isNotEmpty &&
-                      widget.invitation?.emailStatus !=
-                          InvitationEntity.EMAIL_STATUS_DELIVERED &&
+                  if ((widget.invitation?.isBounced == true) &&
                       _showEmailError) ...[
                     if (state.isUsingPostmark) ...[
                       SizedBox(height: 16),
