@@ -54,6 +54,11 @@ class PurchaseOrderScreen extends StatelessWidget {
           ..id = kPurchaseOrderStatusCancelled
           ..name = localization!.cancelled,
       ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kPurchaseOrderStatusBounced
+          ..name = localization!.bounced,
+      ),
     ];
 
     return ListScaffold(
