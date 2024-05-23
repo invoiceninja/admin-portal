@@ -923,6 +923,10 @@ abstract class InvoiceEntity extends Object
           isSent &&
           !isCancelledOrReversed) {
         return true;
+      } else if (status.id == kInvoiceStatusPastDue && isInvoice && isPastDue) {
+        return true;
+      } else if (status.id == kQuoteStatusExpired && isQuote && isPastDue) {
+        return true;
       }
     }
 
@@ -1360,7 +1364,7 @@ abstract class InvoiceEntity extends Object
         }
       }
 
-      if (isPastDue && !isCancelledOrReversed) {
+      if (isPastDue) {
         if (isInvoice) {
           return kInvoiceStatusPastDue;
         } else if (isQuote) {
@@ -1389,6 +1393,10 @@ abstract class InvoiceEntity extends Object
   }
 
   bool get isPastDue {
+    if (isCancelledOrReversed) {
+      return false;
+    }
+
     final date =
         (partial != 0 && partialDueDate.isNotEmpty) ? partialDueDate : dueDate;
 
