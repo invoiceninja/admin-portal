@@ -923,6 +923,7 @@ abstract class InvoiceEntity extends Object
           isSent &&
           !isCancelledOrReversed) {
         return true;
+        // Make sure past due/expired match even if the email bounced
       } else if (status.id == kInvoiceStatusPastDue && isInvoice && isPastDue) {
         return true;
       } else if (status.id == kQuoteStatusExpired && isQuote && isPastDue) {
