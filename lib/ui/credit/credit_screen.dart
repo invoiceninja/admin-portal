@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
@@ -35,6 +36,39 @@ class CreditScreen extends StatelessWidget {
     final userCompany = state.userCompany;
     final localization = AppLocalization.of(context);
 
+    final statuses = [
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kCreditStatusDraft
+          ..name = localization!.draft,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kCreditStatusSent
+          ..name = localization!.sent,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kCreditStatusViewed
+          ..name = localization!.viewed,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kCreditStatusApplied
+          ..name = localization!.applied,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kCreditStatusPartial
+          ..name = localization!.partial,
+      ),
+      InvoiceStatusEntity().rebuild(
+        (b) => b
+          ..id = kCreditStatusBounced
+          ..name = localization!.bounced,
+      ),
+    ];
+
     return ListScaffold(
       entityType: EntityType.credit,
       onHamburgerLongPress: () => store.dispatch(StartCreditMultiselect()),
@@ -49,6 +83,10 @@ class CreditScreen extends StatelessWidget {
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterCreditsByState(state));
         },
+        onSelectedStatus: (EntityStatus status, value) {
+          store.dispatch(FilterCreditsByStatus(status));
+        },
+        statuses: statuses,
       ),
       onCheckboxPressed: () {
         if (store.state.creditListState.isInMultiselect()) {
@@ -72,6 +110,10 @@ class CreditScreen extends StatelessWidget {
         ],
         onSelectedState: (EntityState state, value) {
           store.dispatch(FilterCreditsByState(state));
+        },
+        statuses: statuses,
+        onSelectedStatus: (EntityStatus status, value) {
+          store.dispatch(FilterCreditsByStatus(status));
         },
         onCheckboxPressed: () {
           if (store.state.creditListState.isInMultiselect()) {

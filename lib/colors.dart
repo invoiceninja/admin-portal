@@ -20,6 +20,7 @@ class InvoiceStatusColors {
       kInvoiceStatusCancelled: _colorTheme!.colorDarkGray,
       kInvoiceStatusReversed: _colorTheme!.colorDarkGray,
       kInvoiceStatusViewed: _colorTheme!.colorWarning,
+      kInvoiceStatusBounced: _colorTheme!.colorDanger,
     };
   }
 }
@@ -52,6 +53,7 @@ class CreditStatusColors {
       kCreditStatusPartial: _colorTheme!.colorPrimary,
       kCreditStatusApplied: _colorTheme!.colorSuccess,
       kCreditStatusViewed: _colorTheme!.colorWarning,
+      kCreditStatusBounced: _colorTheme!.colorDanger,
     };
   }
 }
@@ -69,6 +71,7 @@ class PurchaseOrderStatusColors {
       kPurchaseOrderStatusReceived: _colorTheme!.colorSuccess,
       kPurchaseOrderStatusCancelled: _colorTheme!.colorDanger,
       kPurchaseOrderStatusViewed: _colorTheme!.colorWarning,
+      kPurchaseOrderStatusBounced: _colorTheme!.colorDanger,
     };
   }
 }
@@ -100,6 +103,7 @@ class QuoteStatusColors {
       kQuoteStatusConverted: _colorTheme!.colorSuccess,
       kQuoteStatusExpired: _colorTheme!.colorDanger,
       kQuoteStatusViewed: _colorTheme!.colorWarning,
+      kQuoteStatusBounced: _colorTheme!.colorDanger,
     };
   }
 }

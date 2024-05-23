@@ -923,6 +923,11 @@ abstract class InvoiceEntity extends Object
           isSent &&
           !isCancelledOrReversed) {
         return true;
+        // Make sure past due/expired match even if the email bounced
+      } else if (status.id == kInvoiceStatusPastDue && isInvoice && isPastDue) {
+        return true;
+      } else if (status.id == kQuoteStatusExpired && isQuote && isPastDue) {
+        return true;
       }
     }
 
@@ -1337,6 +1342,9 @@ abstract class InvoiceEntity extends Object
   String? get calculateRemainingCycles =>
       remainingCycles == -1 ? 'endless' : remainingCycles as String?;
 
+  bool get isBounced =>
+      invitations.where((invitation) => invitation.isBounced).isNotEmpty;
+
   String get calculatedStatusId {
     if (isRecurring) {
       if (!isDraft && remainingCycles == 0) {
@@ -1345,7 +1353,19 @@ abstract class InvoiceEntity extends Object
         return kRecurringInvoiceStatusPending;
       }
     } else {
-      if (isPastDue && !isCancelledOrReversed) {
+      if (isBounced) {
+        if (isInvoice) {
+          return kInvoiceStatusBounced;
+        } else if (isQuote) {
+          return kQuoteStatusBounced;
+        } else if (isCredit) {
+          return kCreditStatusBounced;
+        } else if (isPurchaseOrder) {
+          return kPurchaseOrderStatusBounced;
+        }
+      }
+
+      if (isPastDue) {
         if (isInvoice) {
           return kInvoiceStatusPastDue;
         } else if (isQuote) {
@@ -1374,6 +1394,10 @@ abstract class InvoiceEntity extends Object
   }
 
   bool get isPastDue {
+    if (isCancelledOrReversed) {
+      return false;
+    }
+
     final date =
         (partial != 0 && partialDueDate.isNotEmpty) ? partialDueDate : dueDate;
 
@@ -1923,6 +1947,10 @@ abstract class InvitationEntity extends Object
       return '';
     }
   }
+
+  bool get isBounced =>
+      emailError.isNotEmpty &&
+      emailStatus != InvitationEntity.EMAIL_STATUS_DELIVERED;
 
   @override
   bool matchesFilter(String? filter) {

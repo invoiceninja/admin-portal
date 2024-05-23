@@ -303,6 +303,7 @@ const String kCountryAustralia = '36';
 const String kCountryCanada = '124';
 const String kCountrySwitzerland = '756';
 
+const String kInvoiceStatusBounced = '-4';
 const String kInvoiceStatusViewed = '-3';
 const String kInvoiceStatusUnpaid = '-2';
 const String kInvoiceStatusPastDue = '-1';
@@ -322,6 +323,7 @@ const kInvoiceStatuses = {
   kInvoiceStatusCancelled: 'cancelled',
   kInvoiceStatusReversed: 'reversed',
   kInvoiceStatusViewed: 'viewed',
+  kInvoiceStatusBounced: 'bounced',
 };
 
 const String kRecurringInvoiceStatusDraft = '1';
@@ -352,6 +354,7 @@ const kRecurringExpenseStatuses = {
   kRecurringExpenseStatusPending: 'pending',
 };
 
+const String kQuoteStatusBounced = '-3';
 const String kQuoteStatusViewed = '-2';
 const String kQuoteStatusExpired = '-1';
 const String kQuoteStatusDraft = '1';
@@ -366,8 +369,10 @@ const kQuoteStatuses = {
   kQuoteStatusApproved: 'approved',
   kQuoteStatusConverted: 'converted',
   kQuoteStatusViewed: 'viewed',
+  kQuoteStatusBounced: 'bounced',
 };
 
+const String kCreditStatusBounced = '-2';
 const String kCreditStatusViewed = '-1';
 const String kCreditStatusDraft = '1';
 const String kCreditStatusSent = '2';
@@ -380,8 +385,10 @@ const kCreditStatuses = {
   kCreditStatusPartial: 'partial',
   kCreditStatusApplied: 'applied',
   kCreditStatusViewed: 'viewed',
+  kCreditStatusBounced: 'bounced',
 };
 
+const String kPurchaseOrderStatusBounced = '-2';
 const String kPurchaseOrderStatusViewed = '-1';
 const String kPurchaseOrderStatusDraft = '1';
 const String kPurchaseOrderStatusSent = '2';
@@ -396,6 +403,7 @@ const kPurchaseOrderStatuses = {
   kPurchaseOrderStatusReceived: 'received',
   kPurchaseOrderStatusCancelled: 'cancelled',
   kPurchaseOrderStatusViewed: 'viewed',
+  kPurchaseOrderStatusBounced: 'bounced',
 };
 
 const String kDocumentStatusPublic = '-1';
