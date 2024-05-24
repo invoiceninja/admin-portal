@@ -83,8 +83,8 @@ class BankAccountListItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(toTitleCase(bankAccount.type) +
-                (bankAccount.disabledUpstream
-                    ? ' • ${localization!.disabled}'
+                (bankAccount.isDisconnected
+                    ? ' • ${localization!.disconnected}'
                     : '')),
             EntityStateLabel(bankAccount),
           ],
