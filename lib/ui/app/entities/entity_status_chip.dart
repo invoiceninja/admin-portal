@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/colors.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class EntityStatusChip extends StatelessWidget {
   const EntityStatusChip({
@@ -29,16 +30,17 @@ class EntityStatusChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final localization = AppLocalization.of(context);
+    final localization = AppLocalization.of(context)!;
     String? label = '';
     Color? color;
+    bool isBounced = false;
 
     if (showState && !entity!.isActive) {
       if (entity!.isArchived) {
-        label = localization!.archived;
+        label = localization.archived;
         color = Colors.orange;
       } else if (entity!.isDeleted!) {
-        label = localization!.deleted;
+        label = localization.deleted;
         color = state.prefState.colorThemeModel!.colorDanger;
       }
     } else {
@@ -55,6 +57,7 @@ class EntityStatusChip extends StatelessWidget {
           label = kInvoiceStatuses[statusId];
           color = InvoiceStatusColors(state.prefState.colorThemeModel)
               .colors[statusId];
+          isBounced = invoice.isBounced;
           break;
         case EntityType.recurringInvoice:
           final invoice = entity as InvoiceEntity;
@@ -69,18 +72,21 @@ class EntityStatusChip extends StatelessWidget {
           label = kQuoteStatuses[statusId];
           color = QuoteStatusColors(state.prefState.colorThemeModel)
               .colors[statusId];
+          isBounced = quote.isBounced;
           break;
         case EntityType.credit:
           final credit = entity as InvoiceEntity;
           label = kCreditStatuses[credit.calculatedStatusId];
           color = CreditStatusColors(state.prefState.colorThemeModel)
               .colors[credit.calculatedStatusId];
+          isBounced = credit.isBounced;
           break;
         case EntityType.purchaseOrder:
           final purchaseOrder = entity as InvoiceEntity;
           label = kPurchaseOrderStatuses[purchaseOrder.calculatedStatusId];
           color = PurchaseOrderStatusColors(state.prefState.colorThemeModel)
               .colors[purchaseOrder.calculatedStatusId];
+          isBounced = purchaseOrder.isBounced;
           break;
         case EntityType.transaction:
           final transaction = entity as TransactionEntity;
@@ -108,12 +114,12 @@ class EntityStatusChip extends StatelessWidget {
           final task = entity as TaskEntity;
           final status = state.taskStatusState.get(task.statusId);
           label = task.isInvoiced
-              ? localization!.invoiced
+              ? localization.invoiced
               : task.isRunning
-                  ? localization!.running
+                  ? localization.running
                   : status.name.isNotEmpty
                       ? status.name
-                      : localization!.logged;
+                      : localization.logged;
           color = task.isInvoiced
               ? state.prefState.colorThemeModel!.colorSuccess
               : task.isRunning
@@ -127,7 +133,7 @@ class EntityStatusChip extends StatelessWidget {
           return SizedBox();
       }
 
-      label = localization!.lookup(label);
+      label = localization.lookup(label);
 
       if (label.isEmpty) {
         label = localization.logged;
@@ -136,25 +142,41 @@ class EntityStatusChip extends StatelessWidget {
 
     return Padding(
       padding: EdgeInsets.only(left: addGap ? 16 : 0),
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),
-        ),
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minWidth: width ?? 100,
-            maxWidth: width ?? 200,
-          ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 6, horizontal: 4),
-            child: Text(
-              label,
-              style: TextStyle(fontSize: 13, color: Colors.white),
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
+      child: Tooltip(
+        message: isBounced ? localization.emailBounced : '',
+        child: Stack(
+          alignment: Alignment.centerLeft,
+          children: [
+            DecoratedBox(
+              decoration: BoxDecoration(
+                color: color,
+                borderRadius: BorderRadius.all(Radius.circular(kBorderRadius)),
+              ),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minWidth: width ?? 100,
+                  maxWidth: width ?? 200,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 6, horizontal: 4),
+                  child: Text(
+                    label,
+                    style: TextStyle(fontSize: 13, color: Colors.white),
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ),
             ),
-          ),
+            if (isBounced)
+              Padding(
+                padding: const EdgeInsets.only(left: 4),
+                child: Icon(
+                  MdiIcons.alertCircleOutline,
+                  size: 16,
+                ),
+              ),
+          ],
         ),
       ),
     );

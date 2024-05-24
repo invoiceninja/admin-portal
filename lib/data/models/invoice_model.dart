@@ -923,10 +923,17 @@ abstract class InvoiceEntity extends Object
           isSent &&
           !isCancelledOrReversed) {
         return true;
-        // Make sure past due/expired match even if the email bounced
-      } else if (status.id == kInvoiceStatusPastDue && isInvoice && isPastDue) {
+      }
+
+      if (status.id == kInvoiceStatusBounced && isInvoice && isBounced) {
         return true;
-      } else if (status.id == kQuoteStatusExpired && isQuote && isPastDue) {
+      } else if (status.id == kQuoteStatusBounced && isQuote && isBounced) {
+        return true;
+      } else if (status.id == kCreditStatusBounced && isCredit && isBounced) {
+        return true;
+      } else if (status.id == kPurchaseOrderStatusBounced &&
+          isPurchaseOrder &&
+          isBounced) {
         return true;
       }
     }
@@ -1353,18 +1360,6 @@ abstract class InvoiceEntity extends Object
         return kRecurringInvoiceStatusPending;
       }
     } else {
-      if (isBounced) {
-        if (isInvoice) {
-          return kInvoiceStatusBounced;
-        } else if (isQuote) {
-          return kQuoteStatusBounced;
-        } else if (isCredit) {
-          return kCreditStatusBounced;
-        } else if (isPurchaseOrder) {
-          return kPurchaseOrderStatusBounced;
-        }
-      }
-
       if (isPastDue) {
         if (isInvoice) {
           return kInvoiceStatusPastDue;
