@@ -1,11 +1,15 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -317,10 +321,36 @@ void handleBankAccountAction(BuildContext? context,
       }
       break;
     case EntityAction.reconnect:
-      final url = state.credentials.url +
-          '/nordigen/connect/' +
-          bankAccount.nordigenInstitutionId;
-      launchUrl(Uri.parse(url));
+      final credentials = state.credentials;
+      final url = '${credentials.url}/one_time_token';
+      const integrationType = BankAccountEntity.INTEGRATION_TYPE_YODLEE;
+
+      store.dispatch(StartSaving());
+      WebClient()
+          .post(url, credentials.token,
+              data: jsonEncode({
+                'context':
+                    integrationType == BankAccountEntity.INTEGRATION_TYPE_YODLEE
+                        ? {'return_url': ''}
+                        : 'nordigen',
+              }))
+          .then((dynamic response) {
+        store.dispatch(StopSaving());
+
+        String connectUrl = cleanApiUrl(credentials.url);
+        if (integrationType == BankAccountEntity.INTEGRATION_TYPE_YODLEE) {
+          connectUrl += '/yodlee/onboard/${response['hash']}';
+        } else {
+          connectUrl +=
+              '/nordigen/connect/${response['hash']}?institution_id=' +
+                  bankAccount.nordigenInstitutionId;
+        }
+
+        launchUrl(Uri.parse(connectUrl));
+      }).catchError((dynamic error) {
+        store.dispatch(StopSaving());
+        showErrorDialog(message: '$error');
+      });
       break;
     case EntityAction.more:
       showEntityActionsDialog(
