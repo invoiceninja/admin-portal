@@ -32,7 +32,7 @@ class ExpenseCategoryRepository {
 
   Future<BuiltList<ExpenseCategoryEntity>> loadList(
       Credentials credentials) async {
-    final String url = credentials.url+ '/expense_categories?';
+    final String url = credentials.url + '/expense_categories?';
     final dynamic response = await webClient.get(url, credentials.token);
 
     final ExpenseCategoryListResponse expenseCategoryResponse = serializers
@@ -47,7 +47,7 @@ class ExpenseCategoryRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url+
+    final url = credentials.url +
         '/expense_categories/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
@@ -66,7 +66,7 @@ class ExpenseCategoryRepository {
 
     if (expenseCategory.isNew) {
       response = await webClient.post(
-          credentials.url+ '/expense_categories', credentials.token,
+          credentials.url + '/expense_categories', credentials.token,
           data: json.encode(data));
     } else {
       final url = '${credentials.url}/expense_categories/${expenseCategory.id}';

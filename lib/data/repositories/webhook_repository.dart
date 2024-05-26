@@ -31,7 +31,7 @@ class WebhookRepository {
   }
 
   Future<BuiltList<WebhookEntity>> loadList(Credentials credentials) async {
-    final url = credentials.url+ '/webhooks?';
+    final url = credentials.url + '/webhooks?';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
@@ -48,7 +48,7 @@ class WebhookRepository {
     }
 
     final url =
-        credentials.url+ '/webhooks/bulk?per_page=$kMaxEntitiesPerBulkAction';
+        credentials.url + '/webhooks/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
@@ -65,7 +65,7 @@ class WebhookRepository {
 
     if (webhook.isNew) {
       response = await webClient.post(
-          credentials.url+ '/webhooks', credentials.token,
+          credentials.url + '/webhooks', credentials.token,
           data: json.encode(data));
     } else {
       final url = '${credentials.url}/webhooks/${webhook.id}';

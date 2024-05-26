@@ -31,7 +31,7 @@ class UserRepository {
   }
 
   Future<BuiltList<UserEntity>> loadList(Credentials credentials) async {
-    final url = credentials.url+ '/users?include=company_user';
+    final url = credentials.url + '/users?include=company_user';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
@@ -52,7 +52,7 @@ class UserRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url+
+    final url = credentials.url +
         '/users/bulk?per_page=$kMaxEntitiesPerBulkAction&include=company_user';
     final dynamic response = await webClient.post(
       url,
@@ -74,7 +74,7 @@ class UserRepository {
     String? password,
     String? idToken,
   ) async {
-    final url = credentials.url+ '/users/$userId/detach_from_company';
+    final url = credentials.url + '/users/$userId/detach_from_company';
     final dynamic response = await webClient.delete(
       url,
       credentials.token,
@@ -94,7 +94,7 @@ class UserRepository {
     String? password,
     String? idToken,
   ) async {
-    final url = credentials.url+ '/users/$userId/invite';
+    final url = credentials.url + '/users/$userId/invite';
     final dynamic response = await webClient.post(
       url,
       credentials.token,
@@ -124,14 +124,14 @@ class UserRepository {
 
     if (user.isNew) {
       response = await webClient.post(
-        credentials.url+ '/users?include=company_user',
+        credentials.url + '/users?include=company_user',
         credentials.token,
         data: json.encode(data),
         password: password,
         idToken: idToken,
       );
     } else {
-      final url = credentials.url+ '/users/${user.id}?include=company_user';
+      final url = credentials.url + '/users/${user.id}?include=company_user';
       response = await webClient.put(
         url,
         credentials.token,

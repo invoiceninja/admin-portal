@@ -37,7 +37,7 @@ class TaskRepository {
 
   Future<BuiltList<TaskEntity>> loadList(Credentials credentials, int page,
       int createdAt, bool filterDeleted) async {
-    final url = credentials.url+
+    final url = credentials.url +
         '/tasks?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
 
     /* Server is incorrect if client isn't set
@@ -62,7 +62,7 @@ class TaskRepository {
     }
 
     final url =
-        credentials.url+ '/tasks/bulk?per_page=$kMaxEntitiesPerBulkAction';
+        credentials.url + '/tasks/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
@@ -74,7 +74,7 @@ class TaskRepository {
 
   Future<bool> sortTasks(Credentials credentials, List<String>? statusIds,
       Map<String, List<String>>? taskIds) async {
-    final url = credentials.url+ '/tasks/sort';
+    final url = credentials.url + '/tasks/sort';
 
     await webClient.post(url, credentials.token,
         data: json.encode({'status_ids': statusIds, 'task_ids': taskIds}));
@@ -90,9 +90,9 @@ class TaskRepository {
     String url;
 
     if (task.isNew) {
-      url = credentials.url+ '/tasks?';
+      url = credentials.url + '/tasks?';
     } else {
-      url = credentials.url+ '/tasks/${task.id}?';
+      url = credentials.url + '/tasks/${task.id}?';
     }
 
     if ([

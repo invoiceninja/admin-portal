@@ -24,7 +24,7 @@ class SettingsRepository {
     final data = serializers.serializeWith(CompanyEntity.serializer, company);
     dynamic response;
 
-    final url = credentials.url+ '/companies/${company.id}';
+    final url = credentials.url + '/companies/${company.id}';
     response = await webClient.put(
       url,
       credentials.token,
@@ -41,7 +41,7 @@ class SettingsRepository {
       CompanyEntity company, MultipartFile eInvoiceCertificate) async {
     dynamic response;
 
-    final url = credentials.url+ '/companies/${company.id}';
+    final url = credentials.url + '/companies/${company.id}';
     final fields = <String, String>{
       '_method': 'put',
     };
@@ -68,7 +68,7 @@ class SettingsRepository {
     final data = serializers.serializeWith(UserEntity.serializer, user);
     dynamic response;
 
-    final url = credentials.url+ '/users/${user.id}?include=company_user';
+    final url = credentials.url + '/users/${user.id}?include=company_user';
     response = await webClient.put(
       url,
       credentials.token,
@@ -92,7 +92,7 @@ class SettingsRepository {
   ) async {
     dynamic response;
 
-    final url = credentials.url+ '/connected_account?include=company_user';
+    final url = credentials.url + '/connected_account?include=company_user';
     response = await webClient.post(
       url,
       credentials.token,
@@ -120,7 +120,7 @@ class SettingsRepository {
   ) async {
     dynamic response;
 
-    final url = credentials.url+
+    final url = credentials.url +
         '/users/${user.id}/disconnect_oauth?include=company_user';
     response = await webClient.post(
       url,
@@ -143,7 +143,7 @@ class SettingsRepository {
   ) async {
     dynamic response;
 
-    final url = credentials.url+
+    final url = credentials.url +
         '/users/$userId/disconnect_mailer?include=company_user';
     response = await webClient.post(
       url,
@@ -166,7 +166,7 @@ class SettingsRepository {
     dynamic response;
 
     final url =
-        credentials.url+ '/connected_account/gmail?include=company_user';
+        credentials.url + '/connected_account/gmail?include=company_user';
     response = await webClient.post(
       url,
       credentials.token,
@@ -191,7 +191,7 @@ class SettingsRepository {
     final data = serializers.serializeWith(UserEntity.serializer, user);
     dynamic response;
 
-    final url = credentials.url+ '/company_users/${user.id}';
+    final url = credentials.url + '/company_users/${user.id}';
     response = await webClient.put(
       url,
       credentials.token,

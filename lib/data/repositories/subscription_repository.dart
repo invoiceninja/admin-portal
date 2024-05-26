@@ -32,7 +32,7 @@ class SubscriptionRepository {
 
   Future<BuiltList<SubscriptionEntity>> loadList(
       Credentials credentials) async {
-    final String url = credentials.url+ '/subscriptions?';
+    final String url = credentials.url + '/subscriptions?';
     final dynamic response = await webClient.get(url, credentials.token);
 
     final SubscriptionListResponse subscriptionResponse = serializers
@@ -47,7 +47,7 @@ class SubscriptionRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url+
+    final url = credentials.url +
         '/subscriptions/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
@@ -66,7 +66,7 @@ class SubscriptionRepository {
 
     if (subscription.isNew) {
       response = await webClient.post(
-          credentials.url+ '/subscriptions', credentials.token,
+          credentials.url + '/subscriptions', credentials.token,
           data: json.encode(data));
     } else {
       final url = '${credentials.url}/subscriptions/${subscription.id}';
