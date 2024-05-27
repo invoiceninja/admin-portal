@@ -19,7 +19,7 @@ const String kAppLargeTestUrl = 'https://testv5.invoicing.co';
 const String kFlutterDemoUrl = 'https://demo.invoiceninja.com';
 const String kReactDemoUrl = 'https://react.invoicing.co/demo';
 const String kWhiteLabelUrl =
-    'https://app.invoiceninja.com/buy_now/?account_key=AsFmBAeLXF0IKf7tmi0eiyZfmWW9hxMT&product_id=3';
+    'https://invoiceninja.invoicing.co/client/subscriptions/O5xe7Rwd7r/purchase?account_key=AsFmBAeLXF0IKf7tmi0eiyZfmWW9hxMT&product_id=3';
 const String kPrivacyPolicyURL = 'https://www.invoiceninja.com/privacy-policy';
 const String kTermsOfServiceURL = 'https://www.invoiceninja.com/terms';
 const String kBankingURL = 'https://invoiceninja.com/banking';
