@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dart';
@@ -44,18 +43,18 @@ class _BankAccountViewState extends State<BankAccountView> {
       onBackPressed: () => viewModel.onBackPressed(),
       body: ScrollableListView(
         children: <Widget>[
-          if (!kReleaseMode || bankAccount.isConnected) ...[
+          if (bankAccount.isConnected) ...[
             EntityHeader(
               entity: bankAccount,
               label: localization.balance,
               value: formatNumber(bankAccount.balance, context),
             ),
-            if (!kReleaseMode || bankAccount.isDisconnected) ...[
+            if (bankAccount.isDisconnected) ...[
               ListDivider(),
               Padding(
                 padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                 child: AppButton(
-                  label: localization.reconnect,
+                  label: localization.reconnect.toUpperCase(),
                   onPressed: () {
                     handleBankAccountAction(
                         context, [bankAccount], EntityAction.reconnect);
