@@ -576,7 +576,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                       child: (state.isHosted && kIsWeb)
                           ? CachedImage(
                               width: double.infinity,
-                              url: state.credentials.url+
+                              url: state.credentials.url +
                                   '/companies/' +
                                   company.id +
                                   '/logo',

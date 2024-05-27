@@ -31,7 +31,7 @@ class TaxRateRepository {
   }
 
   Future<BuiltList<TaxRateEntity>> loadList(Credentials credentials) async {
-    final url = credentials.url+ '/tax_rates?';
+    final url = credentials.url + '/tax_rates?';
 
     final dynamic response = await webClient.get(url, credentials.token);
 
@@ -47,8 +47,8 @@ class TaxRateRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url+
-        '/tax_rates/bulk?per_page=$kMaxEntitiesPerBulkAction';
+    final url =
+        credentials.url + '/tax_rates/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final dynamic response = await webClient.post(url, credentials.token,
         data: json.encode({'ids': ids, 'action': action.toApiParam()}));
 
@@ -65,10 +65,10 @@ class TaxRateRepository {
 
     if (taxRate.isNew) {
       response = await webClient.post(
-          credentials.url+ '/tax_rates', credentials.token,
+          credentials.url + '/tax_rates', credentials.token,
           data: json.encode(data));
     } else {
-      final url = credentials.url+ '/tax_rates/${taxRate.id}';
+      final url = credentials.url + '/tax_rates/${taxRate.id}';
       response =
           await webClient.put(url, credentials.token, data: json.encode(data));
     }

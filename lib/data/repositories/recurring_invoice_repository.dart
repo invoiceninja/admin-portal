@@ -34,7 +34,7 @@ class RecurringInvoiceRepository {
 
   Future<BuiltList<InvoiceEntity>> loadList(
       Credentials credentials, int page, bool filterDeleted) async {
-    String url = credentials.url+
+    String url = credentials.url +
         '/recurring_invoices?per_page=$kMaxRecordsPerPage&page=$page';
 
     if (filterDeleted) {
@@ -56,7 +56,7 @@ class RecurringInvoiceRepository {
       ids = ids.sublist(0, kMaxEntitiesPerBulkAction);
     }
 
-    final url = credentials.url+
+    final url = credentials.url +
         '/recurring_invoices/bulk?per_page=$kMaxEntitiesPerBulkAction';
     final params = {'ids': ids, 'action': action.toApiParam()};
     if (data != null) {
@@ -83,7 +83,7 @@ class RecurringInvoiceRepository {
     String url;
 
     if (recurringInvoice.isNew) {
-      url = credentials.url+
+      url = credentials.url +
           '/recurring_invoices?include=activities,history&show_dates=true';
     } else {
       url =
