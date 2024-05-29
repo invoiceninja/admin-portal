@@ -199,7 +199,12 @@ InvoiceEntity? _updateEditing(InvoiceEntity? recurringInvoice, dynamic action) {
 InvoiceEntity _addRecurringInvoiceItem(
     InvoiceEntity? recurringInvoice, AddRecurringInvoiceItem action) {
   final item = action.invoiceItem ?? InvoiceItemEntity();
-  return recurringInvoice!.rebuild((b) => b..lineItems.add(item));
+  if (action.index == null) {
+    return recurringInvoice!.rebuild((b) => b..lineItems.add(item));
+  } else {
+    return recurringInvoice!
+        .rebuild((b) => b..lineItems.insert(action.index!, item));
+  }
 }
 
 InvoiceEntity _addRecurringInvoiceItems(

@@ -169,8 +169,12 @@ class RemoveQuoteContact implements PersistUI {
 }
 
 class AddQuoteItem implements PersistUI {
-  AddQuoteItem({this.quoteItem});
+  AddQuoteItem({
+    this.quoteItem,
+    this.index,
+  });
 
+  final int? index;
   final InvoiceItemEntity? quoteItem;
 }
 

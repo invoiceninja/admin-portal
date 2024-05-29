@@ -82,7 +82,7 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
     InvoiceEntity? invoice,
     int? invoiceItemIndex,
     Function([int])? addLineItem,
-    Function([int])? cloneLineItem,
+    Function(int)? cloneLineItem,
     Function(int)? deleteLineItem,
     Function(int)? onRemoveInvoiceItemPressed,
     Function? clearSelectedInvoiceItem,
@@ -123,9 +123,13 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
                   ? InvoiceItemEntity.TYPE_TASK
                   : InvoiceItemEntity.TYPE_STANDARD)));
       },
-      cloneLineItem: ([int? index]) {
-        store.dispatch(AddInvoiceItem(
-            index: index, invoiceItem: invoice!.lineItems[index!]));
+      cloneLineItem: (int? index) {
+        store.dispatch(
+          AddInvoiceItem(
+            index: index,
+            invoiceItem: invoice!.lineItems[index!].clone,
+          ),
+        );
       },
       deleteLineItem: null,
       onRemoveInvoiceItemPressed: (index) {

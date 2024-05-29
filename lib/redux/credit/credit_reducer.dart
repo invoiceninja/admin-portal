@@ -160,8 +160,12 @@ InvoiceEntity? _updateEditing(InvoiceEntity? credit, dynamic action) {
 }
 
 InvoiceEntity _addCreditItem(InvoiceEntity? credit, AddCreditItem action) {
-  return credit!.rebuild(
-      (b) => b..lineItems.add(action.creditItem ?? InvoiceItemEntity()));
+  final item = action.creditItem ?? InvoiceItemEntity();
+  if (action.index == null) {
+    return credit!.rebuild((b) => b..lineItems.add(item));
+  } else {
+    return credit!.rebuild((b) => b..lineItems.insert(action.index!, item));
+  }
 }
 
 InvoiceEntity _addCreditItems(InvoiceEntity? credit, AddCreditItems action) {

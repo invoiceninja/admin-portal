@@ -1734,6 +1734,10 @@ abstract class InvoiceItemEntity
         calculateTaxAmount(invoice.taxRate3);
   }
 
+  InvoiceItemEntity get clone => rebuild((b) => b
+    ..expenseId = ''
+    ..taskId = '');
+
   double netTotal(InvoiceEntity invoice, int precision) =>
       total(invoice, precision) - taxAmount(invoice, precision);
 
