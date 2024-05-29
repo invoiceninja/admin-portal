@@ -102,11 +102,14 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
     Store<AppState> store,
     bool isTasks,
   ) {
+    final state = store.state;
+    final company = state.company;
+
     return InvoiceEditItemsVM(
-      state: store.state,
-      company: store.state.company,
-      invoice: store.state.invoiceUIState.editing,
-      invoiceItemIndex: store.state.invoiceUIState.editingItemIndex,
+      state: state,
+      company: company,
+      invoice: state.invoiceUIState.editing,
+      invoiceItemIndex: state.invoiceUIState.editingItemIndex,
       addLineItem: ([int? index]) {
         store.dispatch(AddInvoiceItem(
             index: index,

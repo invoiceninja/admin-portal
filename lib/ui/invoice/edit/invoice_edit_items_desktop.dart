@@ -576,10 +576,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     }
 
     if (lineItems.where((item) => item.isEmpty).isEmpty) {
-      lineItems.add(InvoiceItemEntity(
-          quantity: company.defaultQuantity || !company.enableProductQuantity
-              ? 1
-              : 0));
+      lineItems.add(InvoiceItemEntity());
     }
 
     tableHeaderColumns.addAll([
@@ -1199,7 +1196,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         final sectionIndex =
                             includedLineItems.indexOf(lineItems[index]);
                         final options = {
-                          localization.insertBelow: MdiIcons.plus,
+                          if (includedLineItems.length > 1)
+                            localization.insertBelow: MdiIcons.plus,
                           if (widget.isTasks &&
                               (lineItems[index].taskId ?? '').isNotEmpty)
                             localization.viewTask: MdiIcons.chevronDoubleRight,

@@ -64,8 +64,6 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
   void _addBlankItem(CompanyEntity company) {
     widget.onItemsSelected!([
       InvoiceItemEntity(
-        quantity:
-            company.defaultQuantity || !company.enableProductQuantity ? 1 : 0,
         typeId: _tabController.index == 1 ? InvoiceItemEntity.TYPE_TASK : null,
       )
     ]);
