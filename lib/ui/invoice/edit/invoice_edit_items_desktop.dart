@@ -575,9 +575,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       );
     }
 
-    if (lineItems.where((item) => item.isEmpty).isEmpty) {
-      lineItems.add(InvoiceItemEntity());
-    }
+    lineItems.add(InvoiceItemEntity());
 
     tableHeaderColumns.addAll([
       TableHeader(
@@ -1191,11 +1189,14 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     ),
                     PopupMenuButton<String>(
                       icon: Icon(Icons.more_vert),
-                      enabled: !lineItems[index].isEmpty,
+                      enabled: !lineItems[index].isEmpty ||
+                          index < includedLineItems.length,
                       itemBuilder: (BuildContext context) {
                         final sectionIndex =
                             includedLineItems.indexOf(lineItems[index]);
                         final options = {
+                          if (!lineItems[index].isEmpty)
+                            localization.clone: Icons.control_point_duplicate,
                           if (includedLineItems.length > 1)
                             localization.insertBelow: MdiIcons.plus,
                           if (widget.isTasks &&
@@ -1240,6 +1241,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           viewModel.onRemoveInvoiceItemPressed!(index);
                         } else if (action == localization.insertBelow) {
                           viewModel.addLineItem!(index + 1);
+                        } else if (action == localization.clone) {
+                          viewModel.cloneLineItem!(index);
                         }
                         _updateTable();
                       },

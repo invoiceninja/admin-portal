@@ -53,6 +53,7 @@ class EntityEditItemsVM {
     required this.company,
     required this.invoice,
     required this.addLineItem,
+    required this.cloneLineItem,
     required this.deleteLineItem,
     required this.invoiceItemIndex,
     required this.onRemoveInvoiceItemPressed,
@@ -66,6 +67,7 @@ class EntityEditItemsVM {
   final InvoiceEntity? invoice;
   final int? invoiceItemIndex;
   final Function? addLineItem;
+  final Function? cloneLineItem;
   final Function? deleteLineItem;
   final Function(int)? onRemoveInvoiceItemPressed;
   final Function? clearSelectedInvoiceItem;
@@ -80,6 +82,7 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
     InvoiceEntity? invoice,
     int? invoiceItemIndex,
     Function([int])? addLineItem,
+    Function([int])? cloneLineItem,
     Function(int)? deleteLineItem,
     Function(int)? onRemoveInvoiceItemPressed,
     Function? clearSelectedInvoiceItem,
@@ -90,6 +93,7 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
           company: company,
           invoice: invoice,
           addLineItem: addLineItem,
+          cloneLineItem: cloneLineItem,
           deleteLineItem: deleteLineItem,
           invoiceItemIndex: invoiceItemIndex,
           onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
@@ -104,11 +108,12 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
   ) {
     final state = store.state;
     final company = state.company;
+    final invoice = state.invoiceUIState.editing;
 
     return InvoiceEditItemsVM(
       state: state,
       company: company,
-      invoice: state.invoiceUIState.editing,
+      invoice: invoice,
       invoiceItemIndex: state.invoiceUIState.editingItemIndex,
       addLineItem: ([int? index]) {
         store.dispatch(AddInvoiceItem(
@@ -117,6 +122,10 @@ class InvoiceEditItemsVM extends EntityEditItemsVM {
               ..typeId = isTasks
                   ? InvoiceItemEntity.TYPE_TASK
                   : InvoiceItemEntity.TYPE_STANDARD)));
+      },
+      cloneLineItem: ([int? index]) {
+        store.dispatch(AddInvoiceItem(
+            index: index, invoiceItem: invoice!.lineItems[index!]));
       },
       deleteLineItem: null,
       onRemoveInvoiceItemPressed: (index) {
