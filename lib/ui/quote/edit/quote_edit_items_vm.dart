@@ -114,6 +114,7 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
       addLineItem: ([int? index]) {
         store.dispatch(
           AddQuoteItem(
+            index: index,
             quoteItem: InvoiceItemEntity(),
           ),
         );
