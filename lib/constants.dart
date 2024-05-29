@@ -731,9 +731,9 @@ final kReportMap = {
   kReportQuoteItem: ExportType.quote_items,
   kReportRecurringExpense: null,
   kReportRecurringInvoice: ExportType.recurring_invoices,
-  kReportPurchaseOrder: ExportType.purchase_order,
-  kReportPurchaseOrderItem: ExportType.purchase_order_item,
-  kReportVendor: ExportType.vendor,
+  kReportPurchaseOrder: ExportType.purchase_orders,
+  kReportPurchaseOrderItem: ExportType.purchase_order_items,
+  kReportVendor: ExportType.vendors,
   kReportTransaction: null,
 };
 
