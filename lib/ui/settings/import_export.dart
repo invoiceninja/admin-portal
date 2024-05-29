@@ -309,7 +309,8 @@ class _ImportExportState extends State<ImportExport> {
                       ]
                     ],
                   ],
-                  if (true)
+                  if (_exportFormat == ImportType.csv &&
+                      _exportType.hasDocuments)
                     Padding(
                       padding: const EdgeInsets.only(top: 16),
                       child: BoolDropdownButton(
@@ -369,6 +370,9 @@ class _ImportExportState extends State<ImportExport> {
                               'date_range': _exportDateRange,
                               'start_date': _exportStartDate,
                               'end_date': _exportEndDate,
+                              'document_email_attachment': _exportDocuments,
+                              'include_deleted':
+                                  state.company.reportIncludeDeleted,
                             };
 
                             if (_exportType == ExportType.profitloss) {

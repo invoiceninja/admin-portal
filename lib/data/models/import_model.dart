@@ -213,6 +213,22 @@ class ExportType extends EnumClass {
   static const ExportType tax_summary = _$tax_summary;
   static const ExportType user_sales = _$user_sales;
 
+  bool get hasDocuments => [
+        clients,
+        credits,
+        expenses,
+        invoices,
+        invoice_items,
+        purchase_order,
+        purchase_order_item,
+        quotes,
+        quote_items,
+        payments,
+        products,
+        tasks,
+        vendor,
+      ].contains(this);
+
   static BuiltSet<ExportType> get values => _$exportValues;
 
   static ExportType valueOf(String name) => _$exportValueOf(name);
