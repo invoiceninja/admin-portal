@@ -395,20 +395,23 @@ class _ImportExportState extends State<ImportExport> {
                           },
                         ),
                       ),
-                      SizedBox(width: kGutterWidth),
-                      Expanded(
+                      if (_exportFormat == ImportType.csv) ...[
+                        SizedBox(width: kGutterWidth),
+                        Expanded(
                           child: AppButton(
-                        label: localization.schedule,
-                        iconData: Icons.schedule,
-                        onPressed: () {
-                          createEntity(
-                              entity: ScheduleEntity(
-                                      ScheduleEntity.TEMPLATE_EMAIL_REPORT)
-                                  .rebuild((b) => b
-                                    ..parameters.reportName =
-                                        _exportType.name));
-                        },
-                      ))
+                            label: localization.schedule,
+                            iconData: Icons.schedule,
+                            onPressed: () {
+                              createEntity(
+                                  entity: ScheduleEntity(
+                                          ScheduleEntity.TEMPLATE_EMAIL_REPORT)
+                                      .rebuild((b) => b
+                                        ..parameters.reportName =
+                                            _exportType.name));
+                            },
+                          ),
+                        ),
+                      ],
                     ],
                   )
                 ],
