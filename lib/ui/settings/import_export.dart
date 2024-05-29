@@ -18,7 +18,9 @@ import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dar
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/date_picker.dart';
+import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // Project imports:
@@ -66,6 +68,7 @@ class _ImportExportState extends State<ImportExport> {
   var _exportDateRange = '';
   var _exportStartDate = '';
   var _exportEndDate = '';
+  bool _exportDocuments = false;
 
   bool _isExporting = false;
 
@@ -306,6 +309,19 @@ class _ImportExportState extends State<ImportExport> {
                       ]
                     ],
                   ],
+                  if (true)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16),
+                      child: BoolDropdownButton(
+                          iconData: getEntityIcon(EntityType.document),
+                          label: localization.attachDocuments,
+                          value: _exportDocuments,
+                          onChanged: (value) {
+                            setState(() {
+                              _exportDocuments = value == true;
+                            });
+                          }),
+                    ),
                   Row(
                     children: [
                       Expanded(
