@@ -55,6 +55,7 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
     InvoiceEntity? invoice,
     int? invoiceItemIndex,
     Function? addLineItem,
+    Function? cloneLineItem,
     Function? deleteLineItem,
     Function(int)? onRemoveInvoiceItemPressed,
     Function? onDoneInvoiceItemPressed,
@@ -65,6 +66,7 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
           company: company,
           invoice: invoice,
           addLineItem: addLineItem,
+          cloneLineItem: cloneLineItem,
           deleteLineItem: deleteLineItem,
           invoiceItemIndex: invoiceItemIndex,
           onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
@@ -77,11 +79,15 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
     Store<AppState> store,
     bool isTasks,
   ) {
+    final state = store.state;
+    final company = state.company;
+    final quote = store.state.quoteUIState.editing;
+
     return QuoteEditItemsVM(
-      state: store.state,
-      company: store.state.company,
-      invoice: store.state.quoteUIState.editing,
-      invoiceItemIndex: store.state.quoteUIState.editingItemIndex,
+      state: state,
+      company: company,
+      invoice: quote,
+      invoiceItemIndex: state.quoteUIState.editingItemIndex,
       onRemoveInvoiceItemPressed: (index) {
         store.dispatch(DeleteQuoteItem(index));
       },
@@ -103,6 +109,22 @@ class QuoteEditItemsVM extends EntityEditItemsVM {
       onMovedInvoiceItem: (oldIndex, newIndex) {
         store.dispatch(
           MoveQuoteItem(oldIndex: oldIndex, newIndex: newIndex),
+        );
+      },
+      addLineItem: ([int? index]) {
+        store.dispatch(
+          AddQuoteItem(
+            index: index,
+            quoteItem: InvoiceItemEntity(),
+          ),
+        );
+      },
+      cloneLineItem: (int? index) {
+        store.dispatch(
+          AddQuoteItem(
+            index: index,
+            quoteItem: quote!.lineItems[index!].clone,
+          ),
         );
       },
     );

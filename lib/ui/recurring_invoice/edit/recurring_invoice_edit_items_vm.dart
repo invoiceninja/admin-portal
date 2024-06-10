@@ -55,6 +55,7 @@ class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
     InvoiceEntity? invoice,
     int? invoiceItemIndex,
     Function? addLineItem,
+    Function? cloneLineItem,
     Function? deleteLineItem,
     Function(int)? onRemoveInvoiceItemPressed,
     Function? onDoneInvoiceItemPressed,
@@ -65,6 +66,7 @@ class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
           company: company,
           invoice: invoice,
           addLineItem: addLineItem,
+          cloneLineItem: cloneLineItem,
           deleteLineItem: deleteLineItem,
           invoiceItemIndex: invoiceItemIndex,
           onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
@@ -75,10 +77,14 @@ class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
 
   factory RecurringInvoiceEditItemsVM.fromStore(
       Store<AppState> store, bool isTasks) {
+    final state = store.state;
+    final company = state.company;
+    final invoice = store.state.recurringInvoiceUIState.editing;
+
     return RecurringInvoiceEditItemsVM(
-      state: store.state,
-      company: store.state.company,
-      invoice: store.state.recurringInvoiceUIState.editing,
+      state: state,
+      company: company,
+      invoice: invoice,
       invoiceItemIndex: store.state.recurringInvoiceUIState.editingItemIndex,
       onRemoveInvoiceItemPressed: (index) {
         store.dispatch(DeleteRecurringInvoiceItem(index));
@@ -101,6 +107,22 @@ class RecurringInvoiceEditItemsVM extends EntityEditItemsVM {
       onMovedInvoiceItem: (oldIndex, newIndex) {
         store.dispatch(
           MoveRecurringInvoiceItem(oldIndex: oldIndex, newIndex: newIndex),
+        );
+      },
+      addLineItem: ([int? index]) {
+        store.dispatch(
+          AddRecurringInvoiceItem(
+            index: index,
+            invoiceItem: InvoiceItemEntity(),
+          ),
+        );
+      },
+      cloneLineItem: (int? index) {
+        store.dispatch(
+          AddRecurringInvoiceItem(
+            index: index,
+            invoiceItem: invoice!.lineItems[index!].clone,
+          ),
         );
       },
     );

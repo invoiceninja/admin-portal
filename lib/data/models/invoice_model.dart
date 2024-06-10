@@ -1611,14 +1611,18 @@ class TaskItemFields {
 
 abstract class InvoiceItemEntity
     implements Built<InvoiceItemEntity, InvoiceItemEntityBuilder> {
-  factory InvoiceItemEntity(
-      {String? productKey, double? quantity, String? typeId}) {
+  factory InvoiceItemEntity({String? productKey, String? typeId}) {
+    final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
+    final state = store.state;
+    final company = state.company;
+
     return _$InvoiceItemEntity._(
       productKey: productKey ?? '',
       notes: '',
       cost: 0,
       productCost: 0,
-      quantity: quantity ?? 1,
+      quantity:
+          (company.defaultQuantity || !company.enableProductQuantity) ? 1 : 0,
       taxName1: '',
       taxRate1: 0,
       taxName2: '',
@@ -1729,6 +1733,10 @@ abstract class InvoiceItemEntity
         calculateTaxAmount(invoice.taxRate2) +
         calculateTaxAmount(invoice.taxRate3);
   }
+
+  InvoiceItemEntity get clone => rebuild((b) => b
+    ..expenseId = ''
+    ..taskId = '');
 
   double netTotal(InvoiceEntity invoice, int precision) =>
       total(invoice, precision) - taxAmount(invoice, precision);

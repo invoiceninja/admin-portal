@@ -203,15 +203,31 @@ class ExportType extends EnumClass {
   static const ExportType products = _$products;
   static const ExportType tasks = _$tasks;
   static const ExportType profitloss = _$profitloss;
-  static const ExportType vendor = _$vendor;
-  static const ExportType purchase_order = _$purchase_order;
-  static const ExportType purchase_order_item = _$purchase_order_item;
+  static const ExportType vendors = _$vendors;
+  static const ExportType purchase_orders = _$purchase_orders;
+  static const ExportType purchase_order_items = _$purchase_order_items;
   static const ExportType ar_detailed = _$ar_detailed;
   static const ExportType ar_summary = _$ar_summary;
   static const ExportType client_balance = _$client_balance;
   static const ExportType client_sales = _$client_sales;
   static const ExportType tax_summary = _$tax_summary;
   static const ExportType user_sales = _$user_sales;
+
+  bool get hasDocuments => [
+        clients,
+        credits,
+        expenses,
+        invoices,
+        invoice_items,
+        purchase_orders,
+        purchase_order_items,
+        quotes,
+        quote_items,
+        payments,
+        products,
+        tasks,
+        vendors,
+      ].contains(this);
 
   static BuiltSet<ExportType> get values => _$exportValues;
 

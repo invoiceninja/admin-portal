@@ -168,8 +168,12 @@ class RemoveCreditContact implements PersistUI {
 }
 
 class AddCreditItem implements PersistUI {
-  AddCreditItem({this.creditItem});
+  AddCreditItem({
+    this.creditItem,
+    this.index,
+  });
 
+  final int? index;
   final InvoiceItemEntity? creditItem;
 }
 

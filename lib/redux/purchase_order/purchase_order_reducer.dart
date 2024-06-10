@@ -187,8 +187,13 @@ InvoiceEntity? _updateEditing(InvoiceEntity? purchaseOrder, dynamic action) {
 
 InvoiceEntity _addPurchaseOrderItem(
     InvoiceEntity? purchaseOrder, AddPurchaseOrderItem action) {
-  return purchaseOrder!.rebuild(
-      (b) => b..lineItems.add(action.purchaseOrderItem ?? InvoiceItemEntity()));
+  final item = action.purchaseOrderItem ?? InvoiceItemEntity();
+  if (action.index == null) {
+    return purchaseOrder!.rebuild((b) => b..lineItems.add(item));
+  } else {
+    return purchaseOrder!
+        .rebuild((b) => b..lineItems.insert(action.index!, item));
+  }
 }
 
 InvoiceEntity _addPurchaseOrderItems(

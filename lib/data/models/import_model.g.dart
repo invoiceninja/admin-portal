@@ -62,10 +62,10 @@ const ExportType _$payments = const ExportType._('payments');
 const ExportType _$products = const ExportType._('products');
 const ExportType _$tasks = const ExportType._('tasks');
 const ExportType _$profitloss = const ExportType._('profitloss');
-const ExportType _$vendor = const ExportType._('vendor');
-const ExportType _$purchase_order = const ExportType._('purchase_order');
-const ExportType _$purchase_order_item =
-    const ExportType._('purchase_order_item');
+const ExportType _$vendors = const ExportType._('vendors');
+const ExportType _$purchase_orders = const ExportType._('purchase_orders');
+const ExportType _$purchase_order_items =
+    const ExportType._('purchase_order_items');
 const ExportType _$ar_detailed = const ExportType._('ar_detailed');
 const ExportType _$ar_summary = const ExportType._('ar_summary');
 const ExportType _$client_balance = const ExportType._('client_balance');
@@ -105,12 +105,12 @@ ExportType _$exportValueOf(String name) {
       return _$tasks;
     case 'profitloss':
       return _$profitloss;
-    case 'vendor':
-      return _$vendor;
-    case 'purchase_order':
-      return _$purchase_order;
-    case 'purchase_order_item':
-      return _$purchase_order_item;
+    case 'vendors':
+      return _$vendors;
+    case 'purchase_orders':
+      return _$purchase_orders;
+    case 'purchase_order_items':
+      return _$purchase_order_items;
     case 'ar_detailed':
       return _$ar_detailed;
     case 'ar_summary':
@@ -145,9 +145,9 @@ final BuiltSet<ExportType> _$exportValues =
   _$products,
   _$tasks,
   _$profitloss,
-  _$vendor,
-  _$purchase_order,
-  _$purchase_order_item,
+  _$vendors,
+  _$purchase_orders,
+  _$purchase_order_items,
   _$ar_detailed,
   _$ar_summary,
   _$client_balance,

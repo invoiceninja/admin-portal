@@ -161,8 +161,12 @@ InvoiceEntity? _updateEditing(InvoiceEntity? quote, dynamic action) {
 }
 
 InvoiceEntity _addQuoteItem(InvoiceEntity? quote, AddQuoteItem action) {
-  return quote!.rebuild(
-      (b) => b..lineItems.add(action.quoteItem ?? InvoiceItemEntity()));
+  final item = action.quoteItem ?? InvoiceItemEntity();
+  if (action.index == null) {
+    return quote!.rebuild((b) => b..lineItems.add(item));
+  } else {
+    return quote!.rebuild((b) => b..lineItems.insert(action.index!, item));
+  }
 }
 
 InvoiceEntity _addQuoteItems(InvoiceEntity? quote, AddQuoteItems action) {

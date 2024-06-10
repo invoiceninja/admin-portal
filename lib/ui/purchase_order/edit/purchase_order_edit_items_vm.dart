@@ -53,6 +53,7 @@ class PurchaseOrderEditItemsVM extends EntityEditItemsVM {
     InvoiceEntity? invoice,
     int? invoiceItemIndex,
     Function? addLineItem,
+    Function? cloneLineItem,
     Function? deleteLineItem,
     Function(int)? onRemoveInvoiceItemPressed,
     Function? onDoneInvoiceItemPressed,
@@ -63,6 +64,7 @@ class PurchaseOrderEditItemsVM extends EntityEditItemsVM {
           company: company,
           invoice: invoice,
           addLineItem: addLineItem,
+          cloneLineItem: cloneLineItem,
           deleteLineItem: deleteLineItem,
           invoiceItemIndex: invoiceItemIndex,
           onRemoveInvoiceItemPressed: onRemoveInvoiceItemPressed,
@@ -72,10 +74,14 @@ class PurchaseOrderEditItemsVM extends EntityEditItemsVM {
         );
 
   factory PurchaseOrderEditItemsVM.fromStore(Store<AppState> store) {
+    final state = store.state;
+    final company = state.company;
+    final purchaseOrder = store.state.purchaseOrderUIState.editing;
+
     return PurchaseOrderEditItemsVM(
-      state: store.state,
-      company: store.state.company,
-      invoice: store.state.purchaseOrderUIState.editing,
+      state: state,
+      company: company,
+      invoice: purchaseOrder,
       invoiceItemIndex: store.state.purchaseOrderUIState.editingItemIndex,
       onRemoveInvoiceItemPressed: (index) {
         store.dispatch(DeletePurchaseOrderItem(index));
@@ -96,6 +102,22 @@ class PurchaseOrderEditItemsVM extends EntityEditItemsVM {
       onMovedInvoiceItem: (oldIndex, newIndex) {
         store.dispatch(
           MovePurchaseOrderItem(oldIndex: oldIndex, newIndex: newIndex),
+        );
+      },
+      addLineItem: ([int? index]) {
+        store.dispatch(
+          AddPurchaseOrderItem(
+            index: index,
+            purchaseOrderItem: InvoiceItemEntity(),
+          ),
+        );
+      },
+      cloneLineItem: (int? index) {
+        store.dispatch(
+          AddPurchaseOrderItem(
+            index: index,
+            purchaseOrderItem: purchaseOrder!.lineItems[index!].clone,
+          ),
         );
       },
     );
