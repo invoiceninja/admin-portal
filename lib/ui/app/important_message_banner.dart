@@ -108,8 +108,6 @@ class _ImportantMessageBannerState extends State<ImportantMessageBanner> {
                         color: Colors.white,
                         label: localization.webApp,
                         onPressed: () {
-                          setState(
-                              () => _dismissedMessage[messageType!] = true);
                           if (state.isHosted) {
                             launchUrl(Uri.parse(kAppReactUrl));
                           } else {
