@@ -77,7 +77,7 @@ class ActivityListTile extends StatelessWidget {
       title: Text(activity.isComment
           ? (user?.fullName == null
               ? ''
-              : (user!.fullName + ': ' + activity.notes))
+              : (user!.fullName + ': ' + activity.notes.replaceAll('\n', ' ')))
           : title),
       onTap: !enableNavigation
           ? null

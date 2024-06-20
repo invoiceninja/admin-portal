@@ -1019,46 +1019,48 @@ class _AddCommentDialogState extends State<AddCommentDialog> {
 
     return AlertDialog(
       title: Text(localization.addComment),
-      actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: Text(
-            localization.cancel.toUpperCase(),
-          ),
-        ),
-        TextButton(
-          onPressed: _comment.isEmpty
-              ? null
-              : () {
-                  final credentials = state.credentials;
-                  final url = '${credentials.url}/activities/notes';
-                  final data = {
-                    'entity': widget.entityType.pluralApiValue,
-                    'entity_id': widget.entityId,
-                    'notes': _comment.trim(),
-                  };
-
-                  print('DATA: $data');
-                  setState(() => _isLoading = true);
-
-                  WebClient()
-                      .post(url, credentials.token, data: jsonEncode(data))
-                      .then((response) async {
-                    setState(() => _isLoading = false);
-                    Navigator.of(navigatorKey.currentContext!).pop();
-                    showToast(localization.addedComment);
-                  }).catchError((error) {
-                    showErrorDialog(message: error);
-                    setState(() => _isLoading = false);
-                  });
+      actions: _isLoading
+          ? []
+          : [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
                 },
-          child: Text(
-            localization.save.toUpperCase(),
-          ),
-        ),
-      ],
+                child: Text(
+                  localization.cancel.toUpperCase(),
+                ),
+              ),
+              TextButton(
+                onPressed: _comment.isEmpty
+                    ? null
+                    : () {
+                        final credentials = state.credentials;
+                        final url = '${credentials.url}/activities/notes';
+                        final data = {
+                          'entity': widget.entityType.pluralApiValue,
+                          'entity_id': widget.entityId,
+                          'notes': _comment.trim(),
+                        };
+
+                        print('DATA: $data');
+                        setState(() => _isLoading = true);
+
+                        WebClient()
+                            .post(url, credentials.token,
+                                data: jsonEncode(data))
+                            .then((response) async {
+                          Navigator.of(navigatorKey.currentContext!).pop();
+                          showToast(localization.addedComment);
+                        }).catchError((error) {
+                          showErrorDialog(message: error);
+                          setState(() => _isLoading = false);
+                        });
+                      },
+                child: Text(
+                  localization.save.toUpperCase(),
+                ),
+              ),
+            ],
       content: _isLoading
           ? LinearProgressIndicator()
           : DecoratedFormField(
