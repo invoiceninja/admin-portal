@@ -1009,10 +1009,13 @@ class AddCommentDialog extends StatefulWidget {
 
 class _AddCommentDialogState extends State<AddCommentDialog> {
   String _comment = '';
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context)!;
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
 
     return AlertDialog(
       title: Text(localization.addComment),
@@ -1029,26 +1032,48 @@ class _AddCommentDialogState extends State<AddCommentDialog> {
           onPressed: _comment.isEmpty
               ? null
               : () {
-                  //
+                  final credentials = state.credentials;
+                  final url = '${credentials.url}/activities/notes';
+                  final data = {
+                    'entity': widget.entityType.pluralApiValue,
+                    'entity_id': widget.entityId,
+                    'notes': _comment.trim(),
+                  };
+
+                  print('DATA: $data');
+                  setState(() => _isLoading = true);
+
+                  WebClient()
+                      .post(url, credentials.token, data: jsonEncode(data))
+                      .then((response) async {
+                    setState(() => _isLoading = false);
+                    Navigator.of(navigatorKey.currentContext!).pop();
+                    showToast(localization.addedComment);
+                  }).catchError((error) {
+                    showErrorDialog(message: error);
+                    setState(() => _isLoading = false);
+                  });
                 },
           child: Text(
             localization.save.toUpperCase(),
           ),
         ),
       ],
-      content: DecoratedFormField(
-        label: localization.comment,
-        keyboardType: TextInputType.multiline,
-        initialValue: _comment,
-        onChanged: (value) {
-          setState(() {
-            _comment = value;
-          });
-        },
-        minLines: 6,
-        maxLines: 6,
-        autofocus: true,
-      ),
+      content: _isLoading
+          ? LinearProgressIndicator()
+          : DecoratedFormField(
+              label: localization.comment,
+              keyboardType: TextInputType.multiline,
+              initialValue: _comment,
+              onChanged: (value) {
+                setState(() {
+                  _comment = value.trim();
+                });
+              },
+              minLines: 6,
+              maxLines: 6,
+              autofocus: true,
+            ),
     );
   }
 }
