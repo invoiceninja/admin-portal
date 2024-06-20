@@ -338,8 +338,8 @@ abstract class ProjectEntity extends Object
     return response;
   }
 
-  bool matchesName(String filter) =>
-      name.toLowerCase().contains(filter.toLowerCase());
+  bool matchesName(String? filter) =>
+      name.toLowerCase().contains((filter ?? '').toLowerCase());
 
   @override
   bool matchesFilter(String? filter) {
