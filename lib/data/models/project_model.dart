@@ -213,7 +213,7 @@ abstract class ProjectEntity extends Object
       }
 
       if (!multiselect) {
-        actions.add(EntityAction.addComment);
+        //actions.add(EntityAction.addComment);
       }
     }
 
