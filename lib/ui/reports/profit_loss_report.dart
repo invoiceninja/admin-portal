@@ -294,7 +294,7 @@ ReportResult profitAndLossReport(
               .lookup(expense.entityState);
           break;
         case ProfitAndLossReportFields.converted_amount:
-          value = expense.convertedAmount;
+          value = -expense.convertedAmount;
           break;
       }
 
