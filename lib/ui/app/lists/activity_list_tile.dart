@@ -74,7 +74,11 @@ class ActivityListTile extends StatelessWidget {
       leading: Icon(activity.isComment
           ? MdiIcons.comment
           : getEntityIcon(activity.entityType)),
-      title: Text(activity.isComment ? activity.notes : title),
+      title: Text(activity.isComment
+          ? (user?.fullName == null
+              ? ''
+              : (user!.fullName + ': ' + activity.notes))
+          : title),
       onTap: !enableNavigation
           ? null
           : () {
@@ -142,7 +146,7 @@ class ActivityListTile extends StatelessWidget {
       subtitle: Row(
         children: <Widget>[
           Flexible(
-            child: Text((activity.notes.isNotEmpty
+            child: Text((!activity.isComment && activity.notes.isNotEmpty
                     ? localization.lookup(activity.notes).trim() + '\n'
                     : '') +
                 formatDate(
