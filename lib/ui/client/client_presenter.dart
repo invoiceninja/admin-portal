@@ -31,6 +31,8 @@ class ClientPresenter extends EntityPresenter {
     return [
       ...getDefaultTableFields(userCompany),
       ...EntityPresenter.getBaseFields(),
+      ClientFields.city,
+      ClientFields.postalCode,
       ClientFields.address1,
       ClientFields.address2,
       ClientFields.country,
@@ -93,6 +95,10 @@ class ClientPresenter extends EntityPresenter {
         return Text(client!.number);
       case ClientFields.idNumber:
         return Text(client!.idNumber);
+      case ClientFields.city:
+        return Text(client!.city);
+      case ClientFields.postalCode:
+        return Text(client!.postalCode);
       case ClientFields.lastLoginAt:
         return Text(client!.lastLogin == 0
             ? ''
