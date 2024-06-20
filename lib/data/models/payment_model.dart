@@ -457,6 +457,10 @@ abstract class PaymentEntity extends Object
           store.state.designState.map, entityType)) {
         actions.add(EntityAction.runTemplate);
       }
+
+      if (!multiselect) {
+        //actions.add(EntityAction.addComment);
+      }
     }
 
     if (!isDeleted! && multiselect) {

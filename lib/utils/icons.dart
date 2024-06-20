@@ -138,6 +138,8 @@ IconData? getEntityActionIcon(EntityAction? entityAction) {
       return MdiIcons.arrowRightCircleOutline;
     case EntityAction.bulkUpdate:
       return MdiIcons.squareEditOutline;
+    case EntityAction.addComment:
+      return MdiIcons.comment;
     default:
       return null;
   }

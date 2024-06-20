@@ -3,7 +3,6 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 // Package imports:
 import 'package:built_collection/built_collection.dart';
@@ -12,6 +11,7 @@ import 'package:http/http.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
@@ -396,6 +396,16 @@ void handleExpenseAction(
           ),
         );
       }
+      break;
+    case EntityAction.addComment:
+      showDialog<void>(
+        context: navigatorKey.currentContext!,
+        barrierDismissible: false,
+        builder: (context) => AddCommentDialog(
+          entityType: EntityType.expense,
+          entityId: expense.id,
+        ),
+      );
       break;
     default:
       print('## ERROR: unhandled action $action in expense_actions');

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
@@ -200,7 +201,10 @@ class AddRecurringInvoiceSuccess implements StopSaving, PersistData, PersistUI {
 }
 
 class AddRecurringInvoiceItem implements PersistUI {
-  AddRecurringInvoiceItem({this.invoiceItem, this.index,});
+  AddRecurringInvoiceItem({
+    this.invoiceItem,
+    this.index,
+  });
 
   final int? index;
   final InvoiceItemEntity? invoiceItem;
@@ -723,6 +727,19 @@ void handleRecurringInvoiceAction(BuildContext? context,
         recurringInvoiceIds,
       ));
       break;
+    case EntityAction.addComment:
+      showDialog<void>(
+        context: navigatorKey.currentContext!,
+        barrierDismissible: false,
+        builder: (context) => AddCommentDialog(
+          entityType: EntityType.recurringInvoice,
+          entityId: recurringInvoice.id,
+        ),
+      );
+      break;
+    default:
+      print(
+          '## Error: action $action not handled in recurring_invoice_actions');
   }
 }
 

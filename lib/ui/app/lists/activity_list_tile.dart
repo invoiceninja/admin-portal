@@ -13,6 +13,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class ActivityListTile extends StatelessWidget {
   const ActivityListTile({
@@ -70,8 +71,14 @@ class ActivityListTile extends StatelessWidget {
     );
 
     return ListTile(
-      leading: Icon(getEntityIcon(activity.entityType)),
-      title: Text(title),
+      leading: Icon(activity.isComment
+          ? MdiIcons.comment
+          : getEntityIcon(activity.entityType)),
+      title: Text(activity.isComment
+          ? (user?.fullName == null
+              ? ''
+              : (user!.fullName + ': ' + activity.notes.replaceAll('\n', ' ')))
+          : title),
       onTap: !enableNavigation
           ? null
           : () {
@@ -139,7 +146,7 @@ class ActivityListTile extends StatelessWidget {
       subtitle: Row(
         children: <Widget>[
           Flexible(
-            child: Text((activity.notes.isNotEmpty
+            child: Text((!activity.isComment && activity.notes.isNotEmpty
                     ? localization.lookup(activity.notes).trim() + '\n'
                     : '') +
                 formatDate(

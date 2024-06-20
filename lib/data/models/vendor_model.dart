@@ -269,6 +269,10 @@ abstract class VendorEntity extends Object
       actions.add(EntityAction.documents);
     }
 
+    if (!isDeleted! && !multiselect) {
+      actions.add(EntityAction.addComment);
+    }
+
     if (actions.isNotEmpty && actions.last != null) {
       actions.add(null);
     }

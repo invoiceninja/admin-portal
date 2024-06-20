@@ -1128,3 +1128,4 @@ const String kActivityAcceptPurchaseOrder = '137';
 const String kActivityEmailPayment = '138';
 const String kActivityExpenseNotificationSent = '139';
 const String kActivityStatementSent = '140';
+const String kActivityComment = '141';

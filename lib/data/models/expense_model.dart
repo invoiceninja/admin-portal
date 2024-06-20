@@ -373,6 +373,10 @@ abstract class ExpenseEntity extends Object
       actions.add(EntityAction.documents);
     }
 
+    if (!isDeleted! && !multiselect) {
+      //actions.add(EntityAction.addComment);
+    }
+
     final superActions = super.getActions(userCompany: userCompany);
 
     if (actions.isNotEmpty && superActions.isNotEmpty && actions.last != null) {
