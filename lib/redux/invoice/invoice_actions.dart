@@ -883,6 +883,16 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
         ),
       );
       break;
+    case EntityAction.addComment:
+      showDialog<void>(
+        context: navigatorKey.currentContext!,
+        barrierDismissible: false,
+        builder: (context) => AddCommentDialog(
+          entityType: EntityType.invoice,
+          entityId: invoice.id,
+        ),
+      );
+      break;
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [invoice],

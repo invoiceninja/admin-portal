@@ -992,3 +992,63 @@ class _RunTemplateDialogState extends State<RunTemplateDialog> {
     );
   }
 }
+
+class AddCommentDialog extends StatefulWidget {
+  const AddCommentDialog({
+    super.key,
+    required this.entityId,
+    required this.entityType,
+  });
+
+  final String entityId;
+  final EntityType entityType;
+
+  @override
+  State<AddCommentDialog> createState() => _AddCommentDialogState();
+}
+
+class _AddCommentDialogState extends State<AddCommentDialog> {
+  String _comment = '';
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context)!;
+
+    return AlertDialog(
+      title: Text(localization.addComment),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text(
+            localization.cancel.toUpperCase(),
+          ),
+        ),
+        TextButton(
+          onPressed: _comment.isEmpty
+              ? null
+              : () {
+                  //
+                },
+          child: Text(
+            localization.save.toUpperCase(),
+          ),
+        ),
+      ],
+      content: DecoratedFormField(
+        label: localization.comment,
+        keyboardType: TextInputType.multiline,
+        initialValue: _comment,
+        onChanged: (value) {
+          setState(() {
+            _comment = value;
+          });
+        },
+        minLines: 6,
+        maxLines: 6,
+        autofocus: true,
+      ),
+    );
+  }
+}

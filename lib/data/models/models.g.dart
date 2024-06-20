@@ -106,6 +106,7 @@ const EntityAction _$unlink = const EntityAction._('unlink');
 const EntityAction _$runTemplate = const EntityAction._('runTemplate');
 const EntityAction _$bulkUpdate = const EntityAction._('bulkUpdate');
 const EntityAction _$reconnect = const EntityAction._('reconnect');
+const EntityAction _$addComment = const EntityAction._('addComment');
 
 EntityAction _$valueOf(String name) {
   switch (name) {
@@ -287,6 +288,8 @@ EntityAction _$valueOf(String name) {
       return _$bulkUpdate;
     case 'reconnect':
       return _$reconnect;
+    case 'addComment':
+      return _$addComment;
     default:
       throw new ArgumentError(name);
   }
@@ -383,6 +386,7 @@ final BuiltSet<EntityAction> _$values =
   _$runTemplate,
   _$bulkUpdate,
   _$reconnect,
+  _$addComment,
 ]);
 
 Serializer<EntityAction> _$entityActionSerializer =
