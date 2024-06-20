@@ -767,7 +767,9 @@ abstract class ActivityEntity
 
   InvoiceHistoryEntity? get history;
 
-  bool get isComment => activityTypeId.isEmpty;
+  // TODO remove isEmpty check
+  bool get isComment =>
+      activityTypeId == kActivityComment || activityTypeId.isEmpty;
 
   EntityType? get entityType {
     if (isComment) {
