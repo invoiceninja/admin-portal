@@ -767,7 +767,37 @@ abstract class ActivityEntity
 
   InvoiceHistoryEntity? get history;
 
+  bool get isComment => activityTypeId.isEmpty;
+
   EntityType? get entityType {
+    if (isComment) {
+      if ((invoiceId ?? '').isNotEmpty) {
+        return EntityType.invoice;
+      } else if ((quoteId ?? '').isNotEmpty) {
+        return EntityType.quote;
+      } else if ((creditId ?? '').isNotEmpty) {
+        return EntityType.credit;
+      } else if ((recurringInvoiceId ?? '').isNotEmpty) {
+        return EntityType.recurringInvoice;
+      } else if ((paymentId ?? '').isNotEmpty) {
+        return EntityType.payment;
+      } else if ((projectId ?? '').isNotEmpty) {
+        return EntityType.project;
+      } else if ((taskId ?? '').isNotEmpty) {
+        return EntityType.task;
+      } else if ((expenseId ?? '').isNotEmpty) {
+        return EntityType.expense;
+      } else if ((recurringExpenseId ?? '').isNotEmpty) {
+        return EntityType.recurringExpense;
+      } else if ((purchaseOrderId ?? '').isNotEmpty) {
+        return EntityType.purchaseOrder;
+      } else if ((clientId ?? '').isNotEmpty) {
+        return EntityType.client;
+      } else if ((vendorId ?? '').isNotEmpty) {
+        return EntityType.vendor;
+      }
+    }
+
     if ([
       kActivityCreateClient,
       kActivityUpdateClient,
