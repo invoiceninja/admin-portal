@@ -252,8 +252,8 @@ class FilterProjectsByCustom4 implements PersistUI {
   final String value;
 }
 
-void handleProjectAction(
-    BuildContext? context, List<BaseEntity> projects, EntityAction? action) {
+void handleProjectAction(BuildContext? context, List<BaseEntity> projects,
+    EntityAction? action) async {
   if (projects.isEmpty) {
     return;
   }
@@ -401,7 +401,7 @@ void handleProjectAction(
       );
       break;
     case EntityAction.addComment:
-      showDialog<void>(
+      final addedComment = await showDialog<bool>(
         context: navigatorKey.currentContext!,
         barrierDismissible: false,
         builder: (context) => AddCommentDialog(
@@ -409,6 +409,9 @@ void handleProjectAction(
           entityId: project.id,
         ),
       );
+      if (addedComment == true) {
+        store.dispatch(LoadProject(projectId: project.id));
+      }
       break;
     default:
       print('## Error: action $action not handled in project_actions');

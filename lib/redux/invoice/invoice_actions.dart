@@ -884,7 +884,7 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
       );
       break;
     case EntityAction.addComment:
-      showDialog<void>(
+      final addedComment = await showDialog<bool>(
         context: navigatorKey.currentContext!,
         barrierDismissible: false,
         builder: (context) => AddCommentDialog(
@@ -892,6 +892,9 @@ void handleInvoiceAction(BuildContext? context, List<BaseEntity> invoices,
           entityId: invoice.id,
         ),
       );
+      if (addedComment == true) {
+        store.dispatch(LoadInvoice(invoiceId: invoice.id));
+      }
       break;
     case EntityAction.more:
       showEntityActionsDialog(

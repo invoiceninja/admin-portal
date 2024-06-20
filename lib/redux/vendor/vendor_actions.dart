@@ -283,8 +283,8 @@ class FilterVendorsByCustom4 implements PersistUI {
   final String value;
 }
 
-void handleVendorAction(
-    BuildContext? context, List<BaseEntity> vendors, EntityAction? action) {
+void handleVendorAction(BuildContext? context, List<BaseEntity> vendors,
+    EntityAction? action) async {
   if (vendors.isEmpty) {
     return;
   }
@@ -397,7 +397,7 @@ void handleVendorAction(
       }
       break;
     case EntityAction.addComment:
-      showDialog<void>(
+      final addedComment = await showDialog<bool>(
         context: navigatorKey.currentContext!,
         barrierDismissible: false,
         builder: (context) => AddCommentDialog(
@@ -405,6 +405,9 @@ void handleVendorAction(
           entityId: vendor.id,
         ),
       );
+      if (addedComment == true) {
+        store.dispatch(LoadVendor(vendorId: vendor.id));
+      }
       break;
     default:
       print('## ERROR: unhandled action $action in vendor_actions');

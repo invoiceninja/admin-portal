@@ -880,7 +880,7 @@ void handlePurchaseOrderAction(BuildContext? context,
       );
       break;
     case EntityAction.addComment:
-      showDialog<void>(
+      final addedComment = await showDialog<bool>(
         context: navigatorKey.currentContext!,
         barrierDismissible: false,
         builder: (context) => AddCommentDialog(
@@ -888,6 +888,9 @@ void handlePurchaseOrderAction(BuildContext? context,
           entityId: purchaseOrder.id,
         ),
       );
+      if (addedComment == true) {
+        store.dispatch(LoadPurchaseOrder(purchaseOrderId: purchaseOrder.id));
+      }
       break;
     default:
       print('## ERROR: unhandled action $action in purchase_order_actions');

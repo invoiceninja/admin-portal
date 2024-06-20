@@ -562,7 +562,7 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
       );
       break;
     case EntityAction.addComment:
-      showDialog<void>(
+      final addedComment = await showDialog<bool>(
         context: navigatorKey.currentContext!,
         barrierDismissible: false,
         builder: (context) => AddCommentDialog(
@@ -570,6 +570,9 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
           entityId: client.id,
         ),
       );
+      if (addedComment == true) {
+        store.dispatch(LoadClient(clientId: client.id));
+      }
       break;
     default:
       print('## Error: action $action not handled in client_actions');

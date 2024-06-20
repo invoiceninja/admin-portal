@@ -357,7 +357,7 @@ class SaveRecurringExpenseDocumentFailure implements StopSaving {
 }
 
 void handleRecurringExpenseAction(BuildContext? context,
-    List<BaseEntity> recurringExpenses, EntityAction? action) {
+    List<BaseEntity> recurringExpenses, EntityAction? action) async {
   if (recurringExpenses.isEmpty) {
     return;
   }
@@ -461,7 +461,7 @@ void handleRecurringExpenseAction(BuildContext? context,
       }
       break;
     case EntityAction.addComment:
-      showDialog<void>(
+      final addedComment = await showDialog<bool>(
         context: navigatorKey.currentContext!,
         barrierDismissible: false,
         builder: (context) => AddCommentDialog(
@@ -469,6 +469,11 @@ void handleRecurringExpenseAction(BuildContext? context,
           entityId: recurringExpense.id,
         ),
       );
+      if (addedComment == true) {
+        store.dispatch(
+            LoadRecurringExpense(recurringExpenseId: recurringExpense.id));
+      }
+
       break;
     default:
       print('## ERROR: unhandled action $action in recurring_expense_actions');

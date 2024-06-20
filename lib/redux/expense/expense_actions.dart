@@ -254,8 +254,8 @@ class FilterExpensesByCustom4 implements PersistUI {
   final String value;
 }
 
-void handleExpenseAction(
-    BuildContext context, List<BaseEntity> expenses, EntityAction? action) {
+void handleExpenseAction(BuildContext context, List<BaseEntity> expenses,
+    EntityAction? action) async {
   final store = StoreProvider.of<AppState>(context);
   final state = store.state;
   final localization = AppLocalization.of(context);
@@ -398,7 +398,7 @@ void handleExpenseAction(
       }
       break;
     case EntityAction.addComment:
-      showDialog<void>(
+      final addedComment = await showDialog<bool>(
         context: navigatorKey.currentContext!,
         barrierDismissible: false,
         builder: (context) => AddCommentDialog(
@@ -406,6 +406,9 @@ void handleExpenseAction(
           entityId: expense.id,
         ),
       );
+      if (addedComment == true) {
+        store.dispatch(LoadExpense(expenseId: expense.id));
+      }
       break;
     default:
       print('## ERROR: unhandled action $action in expense_actions');

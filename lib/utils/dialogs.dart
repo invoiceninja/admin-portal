@@ -1024,7 +1024,7 @@ class _AddCommentDialogState extends State<AddCommentDialog> {
           : [
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pop(false);
                 },
                 child: Text(
                   localization.cancel.toUpperCase(),
@@ -1049,7 +1049,7 @@ class _AddCommentDialogState extends State<AddCommentDialog> {
                             .post(url, credentials.token,
                                 data: jsonEncode(data))
                             .then((response) async {
-                          Navigator.of(navigatorKey.currentContext!).pop();
+                          Navigator.of(navigatorKey.currentContext!).pop(true);
                           showToast(localization.addedComment);
                         }).catchError((error) {
                           showErrorDialog(message: error);

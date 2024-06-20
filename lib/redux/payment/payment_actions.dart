@@ -350,8 +350,8 @@ class UpdatePaymentTab implements PersistUI {
   final int? tabIndex;
 }
 
-void handlePaymentAction(
-    BuildContext? context, List<BaseEntity> payments, EntityAction? action) {
+void handlePaymentAction(BuildContext? context, List<BaseEntity> payments,
+    EntityAction? action) async {
   if (payments.isEmpty) {
     return;
   }
@@ -471,7 +471,7 @@ void handlePaymentAction(
       );
       break;
     case EntityAction.addComment:
-      showDialog<void>(
+      final addedComment = await showDialog<bool>(
         context: navigatorKey.currentContext!,
         barrierDismissible: false,
         builder: (context) => AddCommentDialog(
@@ -479,6 +479,9 @@ void handlePaymentAction(
           entityId: payment.id,
         ),
       );
+      if (addedComment == true) {
+        store.dispatch(LoadPayment(paymentId: payment.id));
+      }
       break;
     default:
       print('## Error: action $action not handled in client_actions');

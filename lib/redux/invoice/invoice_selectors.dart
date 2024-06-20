@@ -119,12 +119,13 @@ List<String> dropdownInvoiceSelector(
   return list;
 }
 
-var memoizedFilteredInvoiceList = memo9((SelectionState selectionState,
+var memoizedFilteredInvoiceList = memo10((SelectionState selectionState,
         BuiltMap<String, InvoiceEntity> invoiceMap,
         BuiltList<String> invoiceList,
         BuiltMap<String, ClientEntity> clientMap,
         BuiltMap<String, VendorEntity> vendorMap,
         BuiltMap<String, PaymentEntity> paymentMap,
+        BuiltMap<String, ProjectEntity> projectMap,
         ListUIState invoiceListState,
         BuiltMap<String, UserEntity> userMap,
         String? recurringPrefix) =>
@@ -135,6 +136,7 @@ var memoizedFilteredInvoiceList = memo9((SelectionState selectionState,
       clientMap,
       vendorMap,
       paymentMap,
+      projectMap,
       invoiceListState,
       userMap,
       recurringPrefix,
@@ -147,6 +149,7 @@ List<String> filteredInvoicesSelector(
   BuiltMap<String, ClientEntity> clientMap,
   BuiltMap<String, VendorEntity> vendorMap,
   BuiltMap<String, PaymentEntity> paymentMap,
+  BuiltMap<String, ProjectEntity> projectMap,
   ListUIState invoiceListState,
   BuiltMap<String, UserEntity> userMap,
   String? recurringPrefix,
@@ -170,6 +173,8 @@ List<String> filteredInvoicesSelector(
     final invoice = invoiceMap[invoiceId]!;
     final client =
         clientMap[invoice.clientId] ?? ClientEntity(id: invoice.clientId);
+    final project =
+        projectMap[invoice.projectId] ?? ProjectEntity(id: invoice.projectId);
 
     if (invoice.id == selectionState.selectedId) {
       return true;
@@ -223,7 +228,8 @@ List<String> filteredInvoicesSelector(
       return false;
     }
     if (!invoice.matchesFilter(invoiceListState.filter) &&
-        !client.matchesNameOrEmail(invoiceListState.filter)) {
+        !client.matchesNameOrEmail(invoiceListState.filter) &&
+        !project.matchesName(invoiceListState.filter)) {
       return false;
     }
     if (invoiceListState.custom1Filters.isNotEmpty &&

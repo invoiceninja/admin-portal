@@ -810,6 +810,15 @@ abstract class TaskEntity extends Object
             .toLowerCase()
             .compareTo(userB.fullName.toLowerCase());
         break;
+      case TaskFields.isInvoiced:
+        response = taskB.isInvoiced ? 1 : -1;
+        break;
+      case TaskFields.isDeleted:
+        response = taskB.isDeleted == true ? 1 : -1;
+        break;
+      case TaskFields.isRunning:
+        response = taskB.isRunning ? 1 : -1;
+        break;
       case TaskFields.status:
         final taskAStatus = taskA.isRunning
             ? -1

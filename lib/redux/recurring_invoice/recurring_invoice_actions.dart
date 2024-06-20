@@ -728,7 +728,7 @@ void handleRecurringInvoiceAction(BuildContext? context,
       ));
       break;
     case EntityAction.addComment:
-      showDialog<void>(
+      final addedComment = await showDialog<bool>(
         context: navigatorKey.currentContext!,
         barrierDismissible: false,
         builder: (context) => AddCommentDialog(
@@ -736,6 +736,10 @@ void handleRecurringInvoiceAction(BuildContext? context,
           entityId: recurringInvoice.id,
         ),
       );
+      if (addedComment == true) {
+        store.dispatch(
+            LoadRecurringInvoice(recurringInvoiceId: recurringInvoice.id));
+      }
       break;
     default:
       print(

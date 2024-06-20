@@ -353,7 +353,7 @@ class FilterTasksByCustom4 implements PersistUI {
 class UpdateKanban {}
 
 void handleTaskAction(
-    BuildContext? context, List<BaseEntity> tasks, EntityAction? action) {
+    BuildContext? context, List<BaseEntity> tasks, EntityAction? action) async {
   if (tasks.isEmpty) {
     return;
   }
@@ -555,7 +555,7 @@ void handleTaskAction(
       );
       break;
     case EntityAction.addComment:
-      showDialog<void>(
+      final addedComment = await showDialog<bool>(
         context: navigatorKey.currentContext!,
         barrierDismissible: false,
         builder: (context) => AddCommentDialog(
@@ -563,6 +563,9 @@ void handleTaskAction(
           entityId: task.id,
         ),
       );
+      if (addedComment == true) {
+        store.dispatch(LoadTask(taskId: task.id));
+      }
       break;
     default:
       print('## ERROR: unhandled action $action in task_actions');
