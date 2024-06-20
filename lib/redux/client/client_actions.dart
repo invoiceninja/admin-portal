@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
@@ -557,6 +558,16 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
         builder: (context) => BulkUpdateDialog(
           entityType: EntityType.client,
           entities: clients,
+        ),
+      );
+      break;
+    case EntityAction.addComment:
+      showDialog<void>(
+        context: navigatorKey.currentContext!,
+        barrierDismissible: false,
+        builder: (context) => AddCommentDialog(
+          entityType: EntityType.client,
+          entityId: client.id,
         ),
       );
       break;

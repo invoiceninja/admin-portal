@@ -10,6 +10,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
@@ -807,6 +808,16 @@ Future handleQuoteAction(
           ),
         );
       }
+      break;
+    case EntityAction.addComment:
+      showDialog<void>(
+        context: navigatorKey.currentContext!,
+        barrierDismissible: false,
+        builder: (context) => AddCommentDialog(
+          entityType: EntityType.quote,
+          entityId: quote.id,
+        ),
+      );
       break;
     default:
       print('## ERROR: unhandled action $action in quote_actions');

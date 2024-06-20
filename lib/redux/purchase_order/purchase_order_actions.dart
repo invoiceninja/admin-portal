@@ -468,7 +468,10 @@ class RemovePurchaseOrderContact implements PersistUI {
 }
 
 class AddPurchaseOrderItem implements PersistUI {
-  AddPurchaseOrderItem({this.purchaseOrderItem, this.index,});
+  AddPurchaseOrderItem({
+    this.purchaseOrderItem,
+    this.index,
+  });
 
   final int? index;
   final InvoiceItemEntity? purchaseOrderItem;
@@ -874,6 +877,16 @@ void handlePurchaseOrderAction(BuildContext? context,
     case EntityAction.more:
       showEntityActionsDialog(
         entities: [purchaseOrder],
+      );
+      break;
+    case EntityAction.addComment:
+      showDialog<void>(
+        context: navigatorKey.currentContext!,
+        barrierDismissible: false,
+        builder: (context) => AddCommentDialog(
+          entityType: EntityType.purchaseOrder,
+          entityId: purchaseOrder.id,
+        ),
       );
       break;
     default:
