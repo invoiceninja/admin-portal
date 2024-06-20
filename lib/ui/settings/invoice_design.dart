@@ -916,7 +916,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                           QuoteFields.date,
                           QuoteFields.validUntil,
                           QuoteFields.total,
-                          if (false) QuoteFields.project,
+                          QuoteFields.project,
                           QuoteFields.customValue1,
                           QuoteFields.customValue2,
                           QuoteFields.customValue3,
