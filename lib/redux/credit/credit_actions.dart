@@ -756,7 +756,7 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
       }
       break;
     case EntityAction.addComment:
-      showDialog<void>(
+      final addedComment = await showDialog<bool>(
         context: navigatorKey.currentContext!,
         barrierDismissible: false,
         builder: (context) => AddCommentDialog(
@@ -764,6 +764,9 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
           entityId: credit.id,
         ),
       );
+      if (addedComment == true) {
+        store.dispatch(LoadCredit(creditId: credit.id));
+      }
       break;
     default:
       print('## ERROR: unhandled action $action in credit_actions');

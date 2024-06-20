@@ -810,7 +810,7 @@ Future handleQuoteAction(
       }
       break;
     case EntityAction.addComment:
-      showDialog<void>(
+      final addedComment = await showDialog<bool>(
         context: navigatorKey.currentContext!,
         barrierDismissible: false,
         builder: (context) => AddCommentDialog(
@@ -818,6 +818,10 @@ Future handleQuoteAction(
           entityId: quote.id,
         ),
       );
+      if (addedComment == true) {
+        store.dispatch(LoadQuote(quoteId: quote.id));
+      }
+
       break;
     default:
       print('## ERROR: unhandled action $action in quote_actions');
