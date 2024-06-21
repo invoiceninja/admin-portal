@@ -1,9 +1,11 @@
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -292,7 +294,20 @@ class _AccountManagementState extends State<AccountManagement>
             FormCard(
               isLast: true,
               children: [
-                //
+                ListTile(
+                  title: Text(localization.referralUrl),
+                  subtitle: Text(
+                    company.companyKey,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  trailing: Icon(Icons.content_copy),
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: company.companyKey));
+                    showToast(localization.copiedToClipboard
+                        .replaceFirst(':value ', company.companyKey));
+                  },
+                ),
               ],
             )
           ]),
