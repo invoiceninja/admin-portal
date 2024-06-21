@@ -496,6 +496,15 @@ class _UserDetailsState extends State<UserDetails>
                       },
                     )
                   ],
+                ],
+              ),
+            ],
+          ),
+          ScrollableListView(
+            primary: true,
+            children: <Widget>[
+              FormCard(
+                children: [
                   BoolDropdownButton(
                     label: localization.userLoggedInNotification,
                     helpLabel: localization.userLoggedInNotificationHelp,
@@ -504,14 +513,9 @@ class _UserDetailsState extends State<UserDetails>
                       widget.viewModel.onChanged(user
                           .rebuild((b) => b..userLoggedInNotification = value));
                     },
-                  )
+                  ),
                 ],
               ),
-            ],
-          ),
-          ScrollableListView(
-            primary: true,
-            children: <Widget>[
               NotificationSettings(
                 user: user,
                 onChanged: (channel, options) {
