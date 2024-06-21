@@ -69,7 +69,10 @@ class _AccountManagementState extends State<AccountManagement>
 
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
-        vsync: this, length: 4, initialIndex: settingsUIState.tabIndex);
+      vsync: this,
+      length: 5,
+      initialIndex: settingsUIState.tabIndex,
+    );
     _controller!.addListener(_onTabChanged);
   }
 
@@ -189,6 +192,9 @@ class _AccountManagementState extends State<AccountManagement>
           Tab(
             text: localization.securitySettings,
           ),
+          Tab(
+            text: localization.referralProgram,
+          ),
         ],
       ),
       body: AppTabForm(
@@ -201,28 +207,30 @@ class _AccountManagementState extends State<AccountManagement>
             primary: true,
             children: <Widget>[
               FormCard(
+                  isLast: true,
                   children: kModules.keys.map((module) {
-                return CheckboxListTile(
-                  controlAffinity: ListTileControlAffinity.leading,
-                  title: Text(localization.lookup(kModules[module])),
-                  value: company.enabledModules & module != 0,
-                  activeColor: Theme.of(context).colorScheme.secondary,
-                  onChanged: (value) {
-                    int enabledModules = company.enabledModules;
-                    if (value!) {
-                      enabledModules = enabledModules | module;
-                    } else {
-                      enabledModules = enabledModules ^ module;
-                    }
-                    viewModel.onCompanyChanged(company
-                        .rebuild((b) => b..enabledModules = enabledModules));
-                  },
-                );
-              }).toList()),
+                    return CheckboxListTile(
+                      controlAffinity: ListTileControlAffinity.leading,
+                      title: Text(localization.lookup(kModules[module])),
+                      value: company.enabledModules & module != 0,
+                      activeColor: Theme.of(context).colorScheme.secondary,
+                      onChanged: (value) {
+                        int enabledModules = company.enabledModules;
+                        if (value!) {
+                          enabledModules = enabledModules | module;
+                        } else {
+                          enabledModules = enabledModules ^ module;
+                        }
+                        viewModel.onCompanyChanged(company.rebuild(
+                            (b) => b..enabledModules = enabledModules));
+                      },
+                    );
+                  }).toList()),
             ],
           ),
           ScrollableListView(primary: true, children: [
             FormCard(
+              isLast: true,
               children: [
                 LearnMoreUrl(
                   url: kGoogleAnalyticsUrl,
@@ -251,9 +259,9 @@ class _AccountManagementState extends State<AccountManagement>
             ),
           ]),
           ScrollableListView(
-            primary: true,
             children: [
               FormCard(
+                isLast: true,
                 children: [
                   AppDropdownButton<int>(
                     labelText: localization.passwordTimeout,
@@ -279,7 +287,15 @@ class _AccountManagementState extends State<AccountManagement>
                 ],
               )
             ],
-          )
+          ),
+          ScrollableListView(children: [
+            FormCard(
+              isLast: true,
+              children: [
+                //
+              ],
+            )
+          ]),
         ],
       ),
     );
