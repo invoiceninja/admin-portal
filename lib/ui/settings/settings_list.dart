@@ -397,6 +397,7 @@ class SettingsSearch extends StatelessWidget {
         ],
         [
           'user_logged_in_notification#2024-05-21',
+          'task_assigned_notification#2024-06-21',
           'notifications',
         ],
       ],
