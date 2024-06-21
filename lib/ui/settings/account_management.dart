@@ -137,6 +137,7 @@ class _AccountManagementState extends State<AccountManagement>
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final company = viewModel.company;
+    final user = state.user;
 
     final durations = [
       if (!kReleaseMode)
@@ -297,15 +298,15 @@ class _AccountManagementState extends State<AccountManagement>
                 ListTile(
                   title: Text(localization.referralUrl),
                   subtitle: Text(
-                    company.companyKey,
+                    user.referralUrl,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                   trailing: Icon(Icons.content_copy),
                   onTap: () {
-                    Clipboard.setData(ClipboardData(text: company.companyKey));
+                    Clipboard.setData(ClipboardData(text: user.referralUrl));
                     showToast(localization.copiedToClipboard
-                        .replaceFirst(':value ', company.companyKey));
+                        .replaceFirst(':value ', user.referralUrl));
                   },
                 ),
               ],

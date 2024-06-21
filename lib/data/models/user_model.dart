@@ -143,6 +143,7 @@ abstract class UserEntity extends Object
       languageId: '',
       userCompany: userCompany,
       userLoggedInNotification: true,
+      referralCode: '',
     );
   }
 
@@ -215,7 +216,13 @@ abstract class UserEntity extends Object
   @BuiltValueField(wireName: 'user_logged_in_notification')
   bool get userLoggedInNotification;
 
+  @BuiltValueField(wireName: 'referral_code')
+  String get referralCode;
+
   String get fullName => (firstName + ' ' + lastName).trim();
+
+  String get referralUrl =>
+      'https://app.invoicing.co/#/register?rc=$referralCode';
 
   bool canEdit(BaseEntity entity) =>
       entity.createdUserId == id || entity.assignedUserId == id;
@@ -347,7 +354,8 @@ abstract class UserEntity extends Object
     ..lastEmailAddress = ''
     ..oauthUserToken = ''
     ..languageId = ''
-    ..userLoggedInNotification = true;
+    ..userLoggedInNotification = true
+    ..referralCode = '';
 
   static Serializer<UserEntity> get serializer => _$userEntitySerializer;
 }
