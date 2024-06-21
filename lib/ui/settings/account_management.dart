@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
-import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -311,7 +310,30 @@ class _AccountManagementState extends State<AccountManagement>
                         .replaceFirst(':value ', user.referralUrl));
                   },
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: 16),
+                for (var plan in user.referralMeta.keys)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 10),
+                    child: Row(
+                      children: [
+                        Spacer(),
+                        SizedBox(
+                          child: Text(
+                            localization.lookup(plan),
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                          width: 120,
+                        ),
+                        Text(
+                          '${user.referralMeta[plan]}',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                  ),
+                SizedBox(height: 10),
                 AppButton(
                   onPressed: () => launchUrl(Uri.parse(kReferralURL)),
                   label: localization.learnMore.toUpperCase(),
