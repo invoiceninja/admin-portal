@@ -506,6 +506,7 @@ const String kNotificationsPurchaseOrderSent = 'purchase_order_sent';
 const String kNotificationsPurchaseOrderViewed = 'purchase_order_viewed';
 const String kNotificationsPurchaseOrderAccepted = 'purchase_order_accepted';
 const String kNotificationsInventoryThreshold = 'inventory_threshold';
+const String kNotificationsTaskAssigned = 'task_assigned';
 
 const kNotificationEvents = [
   kNotificationsInvoiceCreated,
