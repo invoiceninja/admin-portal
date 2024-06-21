@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/ui/bank_account/bank_account_screen.dart';
 import 'package:invoiceninja_flutter/ui/schedule/schedule_screen.dart';
 import 'package:invoiceninja_flutter/ui/transaction_rule/transaction_rule_screen.dart';
+import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -1344,6 +1345,11 @@ void editEntity({
             final client = state.clientState.get(invoice.clientId);
             final settings = getClientSettings(state, client);
 
+            final today = DateTime.now();
+            final todayValue = '${today.year}-${today.month}';
+            final date = convertSqlDateToDateTime(invoice.date);
+            final dateValue = '${date.year}-${date.month}';
+
             if (settings.lockInvoices ==
                     SettingsEntity.LOCK_INVOICES_WHEN_PAID &&
                 invoice.isPaid) {
@@ -1354,7 +1360,7 @@ void editEntity({
               showMessageDialog(message: localization!.sentInvoicesArelocked);
             } else if (settings.lockInvoices ==
                     SettingsEntity.LOCK_INVOICES_END_OF_MONTH &&
-                true) {
+                dateValue != todayValue) {
               showMessageDialog(
                   message: localization!.invoicesLockedEndOfMonth);
             } else {
