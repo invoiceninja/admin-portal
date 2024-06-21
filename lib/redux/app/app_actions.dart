@@ -1344,13 +1344,19 @@ void editEntity({
             final client = state.clientState.get(invoice.clientId);
             final settings = getClientSettings(state, client);
 
-            if (settings.lockInvoices == SettingsEntity.LOCK_INVOICES_PAID &&
+            if (settings.lockInvoices ==
+                    SettingsEntity.LOCK_INVOICES_WHEN_PAID &&
                 invoice.isPaid) {
               showMessageDialog(message: localization!.paidInvoicesArelocked);
             } else if (settings.lockInvoices ==
-                    SettingsEntity.LOCK_INVOICES_SENT &&
+                    SettingsEntity.LOCK_INVOICES_WHEN_SENT &&
                 invoice.isSent) {
               showMessageDialog(message: localization!.sentInvoicesArelocked);
+            } else if (settings.lockInvoices ==
+                    SettingsEntity.LOCK_INVOICES_END_OF_MONTH &&
+                true) {
+              showMessageDialog(
+                  message: localization!.invoicesLockedEndOfMonth);
             } else {
               store.dispatch(EditInvoice(
                 invoice: entity,
