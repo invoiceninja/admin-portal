@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
+import 'package:invoiceninja_flutter/ui/app/buttons/app_text_button.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -293,6 +294,7 @@ class _AccountManagementState extends State<AccountManagement>
           ),
           ScrollableListView(children: [
             FormCard(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               isLast: true,
               children: [
                 ListTile(
@@ -308,6 +310,11 @@ class _AccountManagementState extends State<AccountManagement>
                     showToast(localization.copiedToClipboard
                         .replaceFirst(':value ', user.referralUrl));
                   },
+                ),
+                SizedBox(height: 8),
+                AppButton(
+                  onPressed: () => launchUrl(Uri.parse(kReferralURL)),
+                  label: localization.learnMore.toUpperCase(),
                 ),
               ],
             )

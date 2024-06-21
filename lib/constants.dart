@@ -23,6 +23,7 @@ const String kWhiteLabelUrl =
 const String kPrivacyPolicyURL = 'https://www.invoiceninja.com/privacy-policy';
 const String kTermsOfServiceURL = 'https://www.invoiceninja.com/terms';
 const String kBankingURL = 'https://invoiceninja.com/banking';
+const String kReferralURL = 'https://invoiceninja.com/referrals';
 const String kTransifexURL =
     'https://www.transifex.com/invoice-ninja/invoice-ninja';
 const String kWebhookSiteURL = 'https://requestcatcher.com';
