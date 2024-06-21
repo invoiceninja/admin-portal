@@ -396,6 +396,8 @@ class SettingsSearch extends StatelessWidget {
           'enable_two_factor',
         ],
         [
+          'user_logged_in_notification#2024-05-21',
+          'task_assigned_notification#2024-06-21',
           'notifications',
         ],
       ],
@@ -543,6 +545,9 @@ class SettingsSearch extends StatelessWidget {
         [
           'password_timeout',
           'web_session_timeout',
+        ],
+        [
+          'referral_program#2024-06-21',
         ],
       ],
       kSettingsInvoiceDesign: [

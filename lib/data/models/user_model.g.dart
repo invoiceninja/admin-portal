@@ -309,6 +309,13 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
       'user_logged_in_notification',
       serializers.serialize(object.userLoggedInNotification,
           specifiedType: const FullType(bool)),
+      'referral_code',
+      serializers.serialize(object.referralCode,
+          specifiedType: const FullType(String)),
+      'referral_meta',
+      serializers.serialize(object.referralMeta,
+          specifiedType: const FullType(
+              BuiltMap, const [const FullType(String), const FullType(int)])),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -453,6 +460,15 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
         case 'user_logged_in_notification':
           result.userLoggedInNotification = serializers.deserialize(value,
               specifiedType: const FullType(bool))! as bool;
+          break;
+        case 'referral_code':
+          result.referralCode = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'referral_meta':
+          result.referralMeta.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(String), const FullType(int)]))!);
           break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
@@ -1031,6 +1047,10 @@ class _$UserEntity extends UserEntity {
   @override
   final bool userLoggedInNotification;
   @override
+  final String referralCode;
+  @override
+  final BuiltMap<String, int> referralMeta;
+  @override
   final bool? isChanged;
   @override
   final int createdAt;
@@ -1070,6 +1090,8 @@ class _$UserEntity extends UserEntity {
       required this.oauthProvider,
       required this.languageId,
       required this.userLoggedInNotification,
+      required this.referralCode,
+      required this.referralMeta,
       this.isChanged,
       required this.createdAt,
       required this.updatedAt,
@@ -1110,6 +1132,10 @@ class _$UserEntity extends UserEntity {
     BuiltValueNullFieldError.checkNotNull(
         userLoggedInNotification, r'UserEntity', 'userLoggedInNotification');
     BuiltValueNullFieldError.checkNotNull(
+        referralCode, r'UserEntity', 'referralCode');
+    BuiltValueNullFieldError.checkNotNull(
+        referralMeta, r'UserEntity', 'referralMeta');
+    BuiltValueNullFieldError.checkNotNull(
         createdAt, r'UserEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
         updatedAt, r'UserEntity', 'updatedAt');
@@ -1148,6 +1174,8 @@ class _$UserEntity extends UserEntity {
         oauthProvider == other.oauthProvider &&
         languageId == other.languageId &&
         userLoggedInNotification == other.userLoggedInNotification &&
+        referralCode == other.referralCode &&
+        referralMeta == other.referralMeta &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1182,6 +1210,8 @@ class _$UserEntity extends UserEntity {
     _$hash = $jc(_$hash, oauthProvider.hashCode);
     _$hash = $jc(_$hash, languageId.hashCode);
     _$hash = $jc(_$hash, userLoggedInNotification.hashCode);
+    _$hash = $jc(_$hash, referralCode.hashCode);
+    _$hash = $jc(_$hash, referralMeta.hashCode);
     _$hash = $jc(_$hash, isChanged.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
@@ -1216,6 +1246,8 @@ class _$UserEntity extends UserEntity {
           ..add('oauthProvider', oauthProvider)
           ..add('languageId', languageId)
           ..add('userLoggedInNotification', userLoggedInNotification)
+          ..add('referralCode', referralCode)
+          ..add('referralMeta', referralMeta)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1316,6 +1348,16 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
   set userLoggedInNotification(bool? userLoggedInNotification) =>
       _$this._userLoggedInNotification = userLoggedInNotification;
 
+  String? _referralCode;
+  String? get referralCode => _$this._referralCode;
+  set referralCode(String? referralCode) => _$this._referralCode = referralCode;
+
+  MapBuilder<String, int>? _referralMeta;
+  MapBuilder<String, int> get referralMeta =>
+      _$this._referralMeta ??= new MapBuilder<String, int>();
+  set referralMeta(MapBuilder<String, int>? referralMeta) =>
+      _$this._referralMeta = referralMeta;
+
   bool? _isChanged;
   bool? get isChanged => _$this._isChanged;
   set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
@@ -1376,6 +1418,8 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
       _oauthProvider = $v.oauthProvider;
       _languageId = $v.languageId;
       _userLoggedInNotification = $v.userLoggedInNotification;
+      _referralCode = $v.referralCode;
+      _referralMeta = $v.referralMeta.toBuilder();
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -1436,6 +1480,8 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
               oauthProvider: BuiltValueNullFieldError.checkNotNull(oauthProvider, r'UserEntity', 'oauthProvider'),
               languageId: BuiltValueNullFieldError.checkNotNull(languageId, r'UserEntity', 'languageId'),
               userLoggedInNotification: BuiltValueNullFieldError.checkNotNull(userLoggedInNotification, r'UserEntity', 'userLoggedInNotification'),
+              referralCode: BuiltValueNullFieldError.checkNotNull(referralCode, r'UserEntity', 'referralCode'),
+              referralMeta: referralMeta.build(),
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'UserEntity', 'createdAt'),
               updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'UserEntity', 'updatedAt'),
@@ -1449,6 +1495,9 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
       try {
         _$failedField = 'userCompany';
         _userCompany?.build();
+
+        _$failedField = 'referralMeta';
+        referralMeta.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'UserEntity', _$failedField, e.toString());

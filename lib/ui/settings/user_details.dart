@@ -496,6 +496,15 @@ class _UserDetailsState extends State<UserDetails>
                       },
                     )
                   ],
+                ],
+              ),
+            ],
+          ),
+          ScrollableListView(
+            primary: true,
+            children: <Widget>[
+              FormCard(
+                children: [
                   BoolDropdownButton(
                     label: localization.userLoggedInNotification,
                     helpLabel: localization.userLoggedInNotificationHelp,
@@ -504,14 +513,32 @@ class _UserDetailsState extends State<UserDetails>
                       widget.viewModel.onChanged(user
                           .rebuild((b) => b..userLoggedInNotification = value));
                     },
-                  )
+                  ),
+                  BoolDropdownButton(
+                    label: localization.taskAssignedNotification,
+                    helpLabel: localization.taskAssignedNotificationHelp,
+                    value: user
+                        .userCompany!.notifications[kNotificationChannelEmail]!
+                        .contains(kNotificationsTaskAssigned),
+                    onChanged: (value) {
+                      final values = user.userCompany!
+                          .notifications[kNotificationChannelEmail]!;
+                      BuiltList<String> updatedValues;
+                      if (value == true) {
+                        updatedValues = values
+                            .rebuild((b) => b..add(kNotificationsTaskAssigned));
+                      } else {
+                        updatedValues = values.rebuild(
+                            (b) => b..remove(kNotificationsTaskAssigned));
+                      }
+
+                      widget.viewModel.onChanged(user.rebuild((b) => b
+                        ..userCompany.notifications[kNotificationChannelEmail] =
+                            updatedValues));
+                    },
+                  ),
                 ],
               ),
-            ],
-          ),
-          ScrollableListView(
-            primary: true,
-            children: <Widget>[
               NotificationSettings(
                 user: user,
                 onChanged: (channel, options) {

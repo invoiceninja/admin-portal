@@ -142,8 +142,9 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                       labelText: localization.lockInvoices,
                       items: [
                         SettingsEntity.LOCK_INVOICES_OFF,
-                        SettingsEntity.LOCK_INVOICES_SENT,
-                        SettingsEntity.LOCK_INVOICES_PAID,
+                        SettingsEntity.LOCK_INVOICES_WHEN_SENT,
+                        SettingsEntity.LOCK_INVOICES_WHEN_PAID,
+                        SettingsEntity.LOCK_INVOICES_END_OF_MONTH,
                       ]
                           .map((option) => DropdownMenuItem(
                                 child: Text(localization.lookup(option)),

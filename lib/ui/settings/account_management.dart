@@ -1,9 +1,11 @@
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -69,7 +71,10 @@ class _AccountManagementState extends State<AccountManagement>
 
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
-        vsync: this, length: 4, initialIndex: settingsUIState.tabIndex);
+      vsync: this,
+      length: 5,
+      initialIndex: settingsUIState.tabIndex,
+    );
     _controller!.addListener(_onTabChanged);
   }
 
@@ -132,6 +137,7 @@ class _AccountManagementState extends State<AccountManagement>
     final viewModel = widget.viewModel;
     final state = viewModel.state;
     final company = viewModel.company;
+    final user = state.user;
 
     final durations = [
       if (!kReleaseMode)
@@ -189,6 +195,9 @@ class _AccountManagementState extends State<AccountManagement>
           Tab(
             text: localization.securitySettings,
           ),
+          Tab(
+            text: localization.referralProgram,
+          ),
         ],
       ),
       body: AppTabForm(
@@ -201,28 +210,30 @@ class _AccountManagementState extends State<AccountManagement>
             primary: true,
             children: <Widget>[
               FormCard(
+                  isLast: true,
                   children: kModules.keys.map((module) {
-                return CheckboxListTile(
-                  controlAffinity: ListTileControlAffinity.leading,
-                  title: Text(localization.lookup(kModules[module])),
-                  value: company.enabledModules & module != 0,
-                  activeColor: Theme.of(context).colorScheme.secondary,
-                  onChanged: (value) {
-                    int enabledModules = company.enabledModules;
-                    if (value!) {
-                      enabledModules = enabledModules | module;
-                    } else {
-                      enabledModules = enabledModules ^ module;
-                    }
-                    viewModel.onCompanyChanged(company
-                        .rebuild((b) => b..enabledModules = enabledModules));
-                  },
-                );
-              }).toList()),
+                    return CheckboxListTile(
+                      controlAffinity: ListTileControlAffinity.leading,
+                      title: Text(localization.lookup(kModules[module])),
+                      value: company.enabledModules & module != 0,
+                      activeColor: Theme.of(context).colorScheme.secondary,
+                      onChanged: (value) {
+                        int enabledModules = company.enabledModules;
+                        if (value!) {
+                          enabledModules = enabledModules | module;
+                        } else {
+                          enabledModules = enabledModules ^ module;
+                        }
+                        viewModel.onCompanyChanged(company.rebuild(
+                            (b) => b..enabledModules = enabledModules));
+                      },
+                    );
+                  }).toList()),
             ],
           ),
           ScrollableListView(primary: true, children: [
             FormCard(
+              isLast: true,
               children: [
                 LearnMoreUrl(
                   url: kGoogleAnalyticsUrl,
@@ -251,9 +262,9 @@ class _AccountManagementState extends State<AccountManagement>
             ),
           ]),
           ScrollableListView(
-            primary: true,
             children: [
               FormCard(
+                isLast: true,
                 children: [
                   AppDropdownButton<int>(
                     labelText: localization.passwordTimeout,
@@ -279,7 +290,57 @@ class _AccountManagementState extends State<AccountManagement>
                 ],
               )
             ],
-          )
+          ),
+          ScrollableListView(children: [
+            FormCard(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              isLast: true,
+              children: [
+                ListTile(
+                  title: Text(localization.referralUrl),
+                  subtitle: Text(
+                    user.referralUrl,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  trailing: Icon(Icons.content_copy),
+                  onTap: () {
+                    Clipboard.setData(ClipboardData(text: user.referralUrl));
+                    showToast(localization.copiedToClipboard
+                        .replaceFirst(':value ', user.referralUrl));
+                  },
+                ),
+                SizedBox(height: 16),
+                for (var plan in user.referralMeta.keys)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 10),
+                    child: Row(
+                      children: [
+                        Spacer(),
+                        SizedBox(
+                          child: Text(
+                            localization.lookup(plan),
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                          width: 120,
+                        ),
+                        Text(
+                          '${user.referralMeta[plan]}',
+                          style: Theme.of(context).textTheme.headlineSmall,
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                  ),
+                SizedBox(height: 10),
+                AppButton(
+                  onPressed: () => launchUrl(Uri.parse(kReferralURL)),
+                  label: localization.learnMore.toUpperCase(),
+                ),
+              ],
+            )
+          ]),
         ],
       ),
     );

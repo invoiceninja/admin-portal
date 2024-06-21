@@ -69,7 +69,6 @@ class StaticDataFields {
   static const String gateways = 'gateways';
   static const String gatewayTypes = 'gateway_types';
   static const String fonts = 'fonts';
-  static const String banks = 'banks';
   static const String bulkUpdates = 'bulk_updates';
 }
 

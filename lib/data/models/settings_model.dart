@@ -133,8 +133,9 @@ abstract class SettingsEntity
   static const EMAIL_SENDING_METHOD_SMTP = 'smtp';
 
   static const LOCK_INVOICES_OFF = 'off';
-  static const LOCK_INVOICES_SENT = 'when_sent';
-  static const LOCK_INVOICES_PAID = 'when_paid';
+  static const LOCK_INVOICES_WHEN_SENT = 'when_sent';
+  static const LOCK_INVOICES_WHEN_PAID = 'when_paid';
+  static const LOCK_INVOICES_END_OF_MONTH = 'end_of_month';
 
   static const AUTO_BILL_ALWAYS = 'always';
   static const AUTO_BILL_OPT_IN = 'optin';

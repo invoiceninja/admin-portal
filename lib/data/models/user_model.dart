@@ -143,6 +143,8 @@ abstract class UserEntity extends Object
       languageId: '',
       userCompany: userCompany,
       userLoggedInNotification: true,
+      referralCode: '',
+      referralMeta: BuiltMap<String, int>(),
     );
   }
 
@@ -215,7 +217,16 @@ abstract class UserEntity extends Object
   @BuiltValueField(wireName: 'user_logged_in_notification')
   bool get userLoggedInNotification;
 
+  @BuiltValueField(wireName: 'referral_code')
+  String get referralCode;
+
+  @BuiltValueField(wireName: 'referral_meta')
+  BuiltMap<String, int> get referralMeta;
+
   String get fullName => (firstName + ' ' + lastName).trim();
+
+  String get referralUrl =>
+      'https://app.invoicing.co/#/register?rc=$referralCode';
 
   bool canEdit(BaseEntity entity) =>
       entity.createdUserId == id || entity.assignedUserId == id;
@@ -347,7 +358,9 @@ abstract class UserEntity extends Object
     ..lastEmailAddress = ''
     ..oauthUserToken = ''
     ..languageId = ''
-    ..userLoggedInNotification = true;
+    ..userLoggedInNotification = true
+    ..referralCode = ''
+    ..referralMeta.replace(BuiltMap<String, int>());
 
   static Serializer<UserEntity> get serializer => _$userEntitySerializer;
 }
