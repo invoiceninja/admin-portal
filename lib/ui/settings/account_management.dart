@@ -323,7 +323,7 @@ class _AccountManagementState extends State<AccountManagement>
                             localization.lookup(plan),
                             style: Theme.of(context).textTheme.headlineSmall,
                           ),
-                          width: 120,
+                          width: 180,
                         ),
                         Text(
                           '${user.referralMeta[plan]}',
