@@ -296,44 +296,46 @@ class _AccountManagementState extends State<AccountManagement>
               crossAxisAlignment: CrossAxisAlignment.stretch,
               isLast: true,
               children: [
-                ListTile(
-                  title: Text(localization.referralUrl),
-                  subtitle: Text(
-                    user.referralUrl,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                if (isHosted(context)) ...[
+                  ListTile(
+                    title: Text(localization.referralUrl),
+                    subtitle: Text(
+                      user.referralUrl,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    trailing: Icon(Icons.content_copy),
+                    onTap: () {
+                      Clipboard.setData(ClipboardData(text: user.referralUrl));
+                      showToast(localization.copiedToClipboard
+                          .replaceFirst(':value ', user.referralUrl));
+                    },
                   ),
-                  trailing: Icon(Icons.content_copy),
-                  onTap: () {
-                    Clipboard.setData(ClipboardData(text: user.referralUrl));
-                    showToast(localization.copiedToClipboard
-                        .replaceFirst(':value ', user.referralUrl));
-                  },
-                ),
-                SizedBox(height: 16),
-                for (var plan in user.referralMeta.keys)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 40, vertical: 10),
-                    child: Row(
-                      children: [
-                        Spacer(),
-                        SizedBox(
-                          child: Text(
-                            localization.lookup(plan),
+                  SizedBox(height: 16),
+                  for (var plan in user.referralMeta.keys)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 10),
+                      child: Row(
+                        children: [
+                          Spacer(),
+                          SizedBox(
+                            child: Text(
+                              localization.lookup(plan),
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            ),
+                            width: 180,
+                          ),
+                          Text(
+                            '${user.referralMeta[plan]}',
                             style: Theme.of(context).textTheme.headlineSmall,
                           ),
-                          width: 120,
-                        ),
-                        Text(
-                          '${user.referralMeta[plan]}',
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        ),
-                        Spacer(),
-                      ],
+                          Spacer(),
+                        ],
+                      ),
                     ),
-                  ),
-                SizedBox(height: 10),
+                  SizedBox(height: 10),
+                ],
                 AppButton(
                   onPressed: () => launchUrl(Uri.parse(kReferralURL)),
                   label: localization.learnMore.toUpperCase(),
