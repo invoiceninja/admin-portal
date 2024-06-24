@@ -858,6 +858,7 @@ abstract class ActivityEntity
       kActivityDeleteQuote,
       kActivityRestoreQuote,
       kActivityApproveQuote,
+      kActivityQuoteEmailReminder1,
     ].contains(activityTypeId)) {
       return EntityType.quote;
     } else if ([
