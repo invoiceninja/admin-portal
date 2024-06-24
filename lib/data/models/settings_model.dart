@@ -840,6 +840,27 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'task_round_to_nearest')
   int? get taskRoundToNearest;
 
+  @BuiltValueField(wireName: 'email_quote_template_reminder1')
+  String? get emailQuoteBodyReminder1;
+
+  @BuiltValueField(wireName: 'email_quote_subject_reminder1')
+  String? get emailQuoteSubjectReminder1;
+
+  @BuiltValueField(wireName: 'enable_quote_reminder1')
+  bool? get enableQuoteReminder1;
+
+  @BuiltValueField(wireName: 'quote_num_days_reminder1')
+  double? get quoteNumDaysReminder1;
+
+  @BuiltValueField(wireName: 'quote_schedule_reminder1')
+  String? get quoteScheduleReminder1;
+
+  @BuiltValueField(wireName: 'quote_late_fee_amount1')
+  double? get quoteLateFeeAmount1;
+
+  @BuiltValueField(wireName: 'quote_late_fee_percent1')
+  double? get quote_late_fee_percent1;
+
   bool? get taskRoundingEnabled =>
       taskRoundToNearest == null ? null : taskRoundToNearest != 1;
 

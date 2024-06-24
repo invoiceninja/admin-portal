@@ -1626,6 +1626,55 @@ class _$SettingsEntitySerializer
         ..add('task_round_to_nearest')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
+    value = object.emailQuoteBodyReminder1;
+    if (value != null) {
+      result
+        ..add('email_quote_template_reminder1')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.emailQuoteSubjectReminder1;
+    if (value != null) {
+      result
+        ..add('email_quote_subject_reminder1')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.enableQuoteReminder1;
+    if (value != null) {
+      result
+        ..add('enable_quote_reminder1')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.quoteNumDaysReminder1;
+    if (value != null) {
+      result
+        ..add('quote_num_days_reminder1')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.quoteScheduleReminder1;
+    if (value != null) {
+      result
+        ..add('quote_schedule_reminder1')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.quoteLateFeeAmount1;
+    if (value != null) {
+      result
+        ..add('quote_late_fee_amount1')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
+    value = object.quote_late_fee_percent1;
+    if (value != null) {
+      result
+        ..add('quote_late_fee_percent1')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(double)));
+    }
     return result;
   }
 
@@ -2572,6 +2621,34 @@ class _$SettingsEntitySerializer
           result.taskRoundToNearest = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
           break;
+        case 'email_quote_template_reminder1':
+          result.emailQuoteBodyReminder1 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'email_quote_subject_reminder1':
+          result.emailQuoteSubjectReminder1 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'enable_quote_reminder1':
+          result.enableQuoteReminder1 = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'quote_num_days_reminder1':
+          result.quoteNumDaysReminder1 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
+        case 'quote_schedule_reminder1':
+          result.quoteScheduleReminder1 = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'quote_late_fee_amount1':
+          result.quoteLateFeeAmount1 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
+        case 'quote_late_fee_percent1':
+          result.quote_late_fee_percent1 = serializers.deserialize(value,
+              specifiedType: const FullType(double)) as double?;
+          break;
       }
     }
 
@@ -3113,6 +3190,20 @@ class _$SettingsEntity extends SettingsEntity {
   final bool? taskRoundUp;
   @override
   final int? taskRoundToNearest;
+  @override
+  final String? emailQuoteBodyReminder1;
+  @override
+  final String? emailQuoteSubjectReminder1;
+  @override
+  final bool? enableQuoteReminder1;
+  @override
+  final double? quoteNumDaysReminder1;
+  @override
+  final String? quoteScheduleReminder1;
+  @override
+  final double? quoteLateFeeAmount1;
+  @override
+  final double? quote_late_fee_percent1;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder)? updates]) =>
       (new SettingsEntityBuilder()..update(updates))._build();
@@ -3348,7 +3439,14 @@ class _$SettingsEntity extends SettingsEntity {
       this.useUnappliedPayment,
       this.brevoSecret,
       this.taskRoundUp,
-      this.taskRoundToNearest})
+      this.taskRoundToNearest,
+      this.emailQuoteBodyReminder1,
+      this.emailQuoteSubjectReminder1,
+      this.enableQuoteReminder1,
+      this.quoteNumDaysReminder1,
+      this.quoteScheduleReminder1,
+      this.quoteLateFeeAmount1,
+      this.quote_late_fee_percent1})
       : super._();
 
   @override
@@ -3598,7 +3696,14 @@ class _$SettingsEntity extends SettingsEntity {
         useUnappliedPayment == other.useUnappliedPayment &&
         brevoSecret == other.brevoSecret &&
         taskRoundUp == other.taskRoundUp &&
-        taskRoundToNearest == other.taskRoundToNearest;
+        taskRoundToNearest == other.taskRoundToNearest &&
+        emailQuoteBodyReminder1 == other.emailQuoteBodyReminder1 &&
+        emailQuoteSubjectReminder1 == other.emailQuoteSubjectReminder1 &&
+        enableQuoteReminder1 == other.enableQuoteReminder1 &&
+        quoteNumDaysReminder1 == other.quoteNumDaysReminder1 &&
+        quoteScheduleReminder1 == other.quoteScheduleReminder1 &&
+        quoteLateFeeAmount1 == other.quoteLateFeeAmount1 &&
+        quote_late_fee_percent1 == other.quote_late_fee_percent1;
   }
 
   int? __hashCode;
@@ -3837,6 +3942,13 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, brevoSecret.hashCode);
     _$hash = $jc(_$hash, taskRoundUp.hashCode);
     _$hash = $jc(_$hash, taskRoundToNearest.hashCode);
+    _$hash = $jc(_$hash, emailQuoteBodyReminder1.hashCode);
+    _$hash = $jc(_$hash, emailQuoteSubjectReminder1.hashCode);
+    _$hash = $jc(_$hash, enableQuoteReminder1.hashCode);
+    _$hash = $jc(_$hash, quoteNumDaysReminder1.hashCode);
+    _$hash = $jc(_$hash, quoteScheduleReminder1.hashCode);
+    _$hash = $jc(_$hash, quoteLateFeeAmount1.hashCode);
+    _$hash = $jc(_$hash, quote_late_fee_percent1.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -4079,7 +4191,14 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('useUnappliedPayment', useUnappliedPayment)
           ..add('brevoSecret', brevoSecret)
           ..add('taskRoundUp', taskRoundUp)
-          ..add('taskRoundToNearest', taskRoundToNearest))
+          ..add('taskRoundToNearest', taskRoundToNearest)
+          ..add('emailQuoteBodyReminder1', emailQuoteBodyReminder1)
+          ..add('emailQuoteSubjectReminder1', emailQuoteSubjectReminder1)
+          ..add('enableQuoteReminder1', enableQuoteReminder1)
+          ..add('quoteNumDaysReminder1', quoteNumDaysReminder1)
+          ..add('quoteScheduleReminder1', quoteScheduleReminder1)
+          ..add('quoteLateFeeAmount1', quoteLateFeeAmount1)
+          ..add('quote_late_fee_percent1', quote_late_fee_percent1))
         .toString();
   }
 }
@@ -5227,6 +5346,41 @@ class SettingsEntityBuilder
   set taskRoundToNearest(int? taskRoundToNearest) =>
       _$this._taskRoundToNearest = taskRoundToNearest;
 
+  String? _emailQuoteBodyReminder1;
+  String? get emailQuoteBodyReminder1 => _$this._emailQuoteBodyReminder1;
+  set emailQuoteBodyReminder1(String? emailQuoteBodyReminder1) =>
+      _$this._emailQuoteBodyReminder1 = emailQuoteBodyReminder1;
+
+  String? _emailQuoteSubjectReminder1;
+  String? get emailQuoteSubjectReminder1 => _$this._emailQuoteSubjectReminder1;
+  set emailQuoteSubjectReminder1(String? emailQuoteSubjectReminder1) =>
+      _$this._emailQuoteSubjectReminder1 = emailQuoteSubjectReminder1;
+
+  bool? _enableQuoteReminder1;
+  bool? get enableQuoteReminder1 => _$this._enableQuoteReminder1;
+  set enableQuoteReminder1(bool? enableQuoteReminder1) =>
+      _$this._enableQuoteReminder1 = enableQuoteReminder1;
+
+  double? _quoteNumDaysReminder1;
+  double? get quoteNumDaysReminder1 => _$this._quoteNumDaysReminder1;
+  set quoteNumDaysReminder1(double? quoteNumDaysReminder1) =>
+      _$this._quoteNumDaysReminder1 = quoteNumDaysReminder1;
+
+  String? _quoteScheduleReminder1;
+  String? get quoteScheduleReminder1 => _$this._quoteScheduleReminder1;
+  set quoteScheduleReminder1(String? quoteScheduleReminder1) =>
+      _$this._quoteScheduleReminder1 = quoteScheduleReminder1;
+
+  double? _quoteLateFeeAmount1;
+  double? get quoteLateFeeAmount1 => _$this._quoteLateFeeAmount1;
+  set quoteLateFeeAmount1(double? quoteLateFeeAmount1) =>
+      _$this._quoteLateFeeAmount1 = quoteLateFeeAmount1;
+
+  double? _quote_late_fee_percent1;
+  double? get quote_late_fee_percent1 => _$this._quote_late_fee_percent1;
+  set quote_late_fee_percent1(double? quote_late_fee_percent1) =>
+      _$this._quote_late_fee_percent1 = quote_late_fee_percent1;
+
   SettingsEntityBuilder();
 
   SettingsEntityBuilder get _$this {
@@ -5463,6 +5617,13 @@ class SettingsEntityBuilder
       _brevoSecret = $v.brevoSecret;
       _taskRoundUp = $v.taskRoundUp;
       _taskRoundToNearest = $v.taskRoundToNearest;
+      _emailQuoteBodyReminder1 = $v.emailQuoteBodyReminder1;
+      _emailQuoteSubjectReminder1 = $v.emailQuoteSubjectReminder1;
+      _enableQuoteReminder1 = $v.enableQuoteReminder1;
+      _quoteNumDaysReminder1 = $v.quoteNumDaysReminder1;
+      _quoteScheduleReminder1 = $v.quoteScheduleReminder1;
+      _quoteLateFeeAmount1 = $v.quoteLateFeeAmount1;
+      _quote_late_fee_percent1 = $v.quote_late_fee_percent1;
       _$v = null;
     }
     return this;
@@ -5718,7 +5879,14 @@ class SettingsEntityBuilder
               useUnappliedPayment: useUnappliedPayment,
               brevoSecret: brevoSecret,
               taskRoundUp: taskRoundUp,
-              taskRoundToNearest: taskRoundToNearest);
+              taskRoundToNearest: taskRoundToNearest,
+              emailQuoteBodyReminder1: emailQuoteBodyReminder1,
+              emailQuoteSubjectReminder1: emailQuoteSubjectReminder1,
+              enableQuoteReminder1: enableQuoteReminder1,
+              quoteNumDaysReminder1: quoteNumDaysReminder1,
+              quoteScheduleReminder1: quoteScheduleReminder1,
+              quoteLateFeeAmount1: quoteLateFeeAmount1,
+              quote_late_fee_percent1: quote_late_fee_percent1);
     } catch (_) {
       late String _$failedField;
       try {

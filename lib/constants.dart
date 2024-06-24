@@ -610,6 +610,10 @@ const String kReminderScheduleAfterInvoiceDate = 'after_invoice_date';
 const String kReminderScheduleBeforeDueDate = 'before_due_date';
 const String kReminderScheduleAfterDueDate = 'after_due_date';
 
+const String kQuoteReminderScheduleAfterQuoteDate = 'after_quote_date';
+const String kQuoteReminderScheduleBeforeValidUntil = 'before_valid_until_date';
+const String kQuoteReminderScheduleAfterValidUntil = 'after_valid_until_date';
+
 const String kSettingsCompanyDetails = 'company_details';
 const String kSettingsPaymentTerms = 'payment_terms';
 const String kSettingsPaymentTermView = 'payment_term/view';
