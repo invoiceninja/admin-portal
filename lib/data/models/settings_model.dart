@@ -979,8 +979,10 @@ abstract class SettingsEntity
         return emailSubjectCustom3;
       case EmailTemplate.purchase_order:
         return emailSubjectPurchaseOrder;
+      case EmailTemplate.quote_reminder1:
+        return emailSubjectQuoteReminder1;
       default:
-        return 'Error: template not defined for $emailTemplate';
+        return 'Error: subject template not defined for $emailTemplate';
     }
   }
 
@@ -1014,8 +1016,10 @@ abstract class SettingsEntity
         return emailBodyCustom3;
       case EmailTemplate.purchase_order:
         return emailBodyPurchaseOrder;
+      case EmailTemplate.quote_reminder1:
+        return emailBodyQuoteReminder1;
       default:
-        return 'Error: template not defined for $template';
+        return 'Error: body template not defined for $template';
     }
   }
 
