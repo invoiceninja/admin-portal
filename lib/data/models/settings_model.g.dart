@@ -1668,7 +1668,7 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
-    value = object.quote_late_fee_percent1;
+    value = object.quoteLateFeePercent1;
     if (value != null) {
       result
         ..add('quote_late_fee_percent1')
@@ -2646,7 +2646,7 @@ class _$SettingsEntitySerializer
               specifiedType: const FullType(double)) as double?;
           break;
         case 'quote_late_fee_percent1':
-          result.quote_late_fee_percent1 = serializers.deserialize(value,
+          result.quoteLateFeePercent1 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double?;
           break;
       }
@@ -3203,7 +3203,7 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final double? quoteLateFeeAmount1;
   @override
-  final double? quote_late_fee_percent1;
+  final double? quoteLateFeePercent1;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder)? updates]) =>
       (new SettingsEntityBuilder()..update(updates))._build();
@@ -3446,7 +3446,7 @@ class _$SettingsEntity extends SettingsEntity {
       this.quoteNumDaysReminder1,
       this.quoteScheduleReminder1,
       this.quoteLateFeeAmount1,
-      this.quote_late_fee_percent1})
+      this.quoteLateFeePercent1})
       : super._();
 
   @override
@@ -3703,7 +3703,7 @@ class _$SettingsEntity extends SettingsEntity {
         quoteNumDaysReminder1 == other.quoteNumDaysReminder1 &&
         quoteScheduleReminder1 == other.quoteScheduleReminder1 &&
         quoteLateFeeAmount1 == other.quoteLateFeeAmount1 &&
-        quote_late_fee_percent1 == other.quote_late_fee_percent1;
+        quoteLateFeePercent1 == other.quoteLateFeePercent1;
   }
 
   int? __hashCode;
@@ -3948,7 +3948,7 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, quoteNumDaysReminder1.hashCode);
     _$hash = $jc(_$hash, quoteScheduleReminder1.hashCode);
     _$hash = $jc(_$hash, quoteLateFeeAmount1.hashCode);
-    _$hash = $jc(_$hash, quote_late_fee_percent1.hashCode);
+    _$hash = $jc(_$hash, quoteLateFeePercent1.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -4198,7 +4198,7 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('quoteNumDaysReminder1', quoteNumDaysReminder1)
           ..add('quoteScheduleReminder1', quoteScheduleReminder1)
           ..add('quoteLateFeeAmount1', quoteLateFeeAmount1)
-          ..add('quote_late_fee_percent1', quote_late_fee_percent1))
+          ..add('quoteLateFeePercent1', quoteLateFeePercent1))
         .toString();
   }
 }
@@ -5376,10 +5376,10 @@ class SettingsEntityBuilder
   set quoteLateFeeAmount1(double? quoteLateFeeAmount1) =>
       _$this._quoteLateFeeAmount1 = quoteLateFeeAmount1;
 
-  double? _quote_late_fee_percent1;
-  double? get quote_late_fee_percent1 => _$this._quote_late_fee_percent1;
-  set quote_late_fee_percent1(double? quote_late_fee_percent1) =>
-      _$this._quote_late_fee_percent1 = quote_late_fee_percent1;
+  double? _quoteLateFeePercent1;
+  double? get quoteLateFeePercent1 => _$this._quoteLateFeePercent1;
+  set quoteLateFeePercent1(double? quoteLateFeePercent1) =>
+      _$this._quoteLateFeePercent1 = quoteLateFeePercent1;
 
   SettingsEntityBuilder();
 
@@ -5623,7 +5623,7 @@ class SettingsEntityBuilder
       _quoteNumDaysReminder1 = $v.quoteNumDaysReminder1;
       _quoteScheduleReminder1 = $v.quoteScheduleReminder1;
       _quoteLateFeeAmount1 = $v.quoteLateFeeAmount1;
-      _quote_late_fee_percent1 = $v.quote_late_fee_percent1;
+      _quoteLateFeePercent1 = $v.quoteLateFeePercent1;
       _$v = null;
     }
     return this;
@@ -5886,7 +5886,7 @@ class SettingsEntityBuilder
               quoteNumDaysReminder1: quoteNumDaysReminder1,
               quoteScheduleReminder1: quoteScheduleReminder1,
               quoteLateFeeAmount1: quoteLateFeeAmount1,
-              quote_late_fee_percent1: quote_late_fee_percent1);
+              quoteLateFeePercent1: quoteLateFeePercent1);
     } catch (_) {
       late String _$failedField;
       try {

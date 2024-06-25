@@ -859,7 +859,7 @@ abstract class SettingsEntity
   double? get quoteLateFeeAmount1;
 
   @BuiltValueField(wireName: 'quote_late_fee_percent1')
-  double? get quote_late_fee_percent1;
+  double? get quoteLateFeePercent1;
 
   bool? get taskRoundingEnabled =>
       taskRoundToNearest == null ? null : taskRoundToNearest != 1;
