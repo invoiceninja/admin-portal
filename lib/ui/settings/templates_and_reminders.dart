@@ -252,6 +252,10 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       settings = settings.rebuild((b) => b
         ..emailBodyPurchaseOrder = body
         ..emailSubjectPurchaseOrder = subject);
+    } else if (_selectedTemplate == EmailTemplate.quote_reminder1) {
+      settings = settings.rebuild((b) => b
+        ..emailBodyQuoteReminder1 = body
+        ..emailSubjectQuoteReminder1 = subject);
     }
 
     if (settings != widget.viewModel.settings) {

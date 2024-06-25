@@ -841,19 +841,19 @@ abstract class SettingsEntity
   int? get taskRoundToNearest;
 
   @BuiltValueField(wireName: 'email_quote_template_reminder1')
-  String? get emailQuoteBodyReminder1;
+  String? get emailBodyQuoteReminder1;
 
   @BuiltValueField(wireName: 'email_quote_subject_reminder1')
-  String? get emailQuoteSubjectReminder1;
+  String? get emailSubjectQuoteReminder1;
 
   @BuiltValueField(wireName: 'enable_quote_reminder1')
   bool? get enableQuoteReminder1;
 
   @BuiltValueField(wireName: 'quote_num_days_reminder1')
-  double? get quoteNumDaysReminder1;
+  double? get numDaysQuoteReminder1;
 
   @BuiltValueField(wireName: 'quote_schedule_reminder1')
-  String? get quoteScheduleReminder1;
+  String? get scheduleQuoteReminder1;
 
   @BuiltValueField(wireName: 'quote_late_fee_amount1')
   double? get quoteLateFeeAmount1;
