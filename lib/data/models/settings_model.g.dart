@@ -1651,8 +1651,7 @@ class _$SettingsEntitySerializer
     if (value != null) {
       result
         ..add('quote_num_days_reminder1')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(double)));
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
     value = object.scheduleQuoteReminder1;
     if (value != null) {
@@ -2635,7 +2634,7 @@ class _$SettingsEntitySerializer
           break;
         case 'quote_num_days_reminder1':
           result.numDaysQuoteReminder1 = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double?;
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'quote_schedule_reminder1':
           result.scheduleQuoteReminder1 = serializers.deserialize(value,
@@ -3197,7 +3196,7 @@ class _$SettingsEntity extends SettingsEntity {
   @override
   final bool? enableQuoteReminder1;
   @override
-  final double? numDaysQuoteReminder1;
+  final int? numDaysQuoteReminder1;
   @override
   final String? scheduleQuoteReminder1;
   @override
@@ -5361,9 +5360,9 @@ class SettingsEntityBuilder
   set enableQuoteReminder1(bool? enableQuoteReminder1) =>
       _$this._enableQuoteReminder1 = enableQuoteReminder1;
 
-  double? _numDaysQuoteReminder1;
-  double? get numDaysQuoteReminder1 => _$this._numDaysQuoteReminder1;
-  set numDaysQuoteReminder1(double? numDaysQuoteReminder1) =>
+  int? _numDaysQuoteReminder1;
+  int? get numDaysQuoteReminder1 => _$this._numDaysQuoteReminder1;
+  set numDaysQuoteReminder1(int? numDaysQuoteReminder1) =>
       _$this._numDaysQuoteReminder1 = numDaysQuoteReminder1;
 
   String? _scheduleQuoteReminder1;

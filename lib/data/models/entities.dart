@@ -306,10 +306,10 @@ class EmailTemplate extends EnumClass {
   static const EmailTemplate reminder2 = _$reminder2_email;
   static const EmailTemplate reminder3 = _$reminder3_email;
   static const EmailTemplate reminder_endless = _$reminder_endless_email;
+  static const EmailTemplate quote_reminder1 = _$quote_reminder1_email;
   static const EmailTemplate custom1 = _$custom1_email;
   static const EmailTemplate custom2 = _$custom2_email;
   static const EmailTemplate custom3 = _$custom3_email;
-  static const EmailTemplate quote_reminder1 = _$quote_reminder1_email;
 
   static BuiltSet<EmailTemplate> get values => _$templateValues;
 

@@ -247,11 +247,11 @@ const EmailTemplate _$reminder2_email = const EmailTemplate._('reminder2');
 const EmailTemplate _$reminder3_email = const EmailTemplate._('reminder3');
 const EmailTemplate _$reminder_endless_email =
     const EmailTemplate._('reminder_endless');
+const EmailTemplate _$quote_reminder1_email =
+    const EmailTemplate._('quote_reminder1');
 const EmailTemplate _$custom1_email = const EmailTemplate._('custom1');
 const EmailTemplate _$custom2_email = const EmailTemplate._('custom2');
 const EmailTemplate _$custom3_email = const EmailTemplate._('custom3');
-const EmailTemplate _$quote_reminder1_email =
-    const EmailTemplate._('quote_reminder1');
 
 EmailTemplate _$templateValueOf(String name) {
   switch (name) {
@@ -277,14 +277,14 @@ EmailTemplate _$templateValueOf(String name) {
       return _$reminder3_email;
     case 'reminder_endless':
       return _$reminder_endless_email;
+    case 'quote_reminder1':
+      return _$quote_reminder1_email;
     case 'custom1':
       return _$custom1_email;
     case 'custom2':
       return _$custom2_email;
     case 'custom3':
       return _$custom3_email;
-    case 'quote_reminder1':
-      return _$quote_reminder1_email;
     default:
       throw new ArgumentError(name);
   }
@@ -303,10 +303,10 @@ final BuiltSet<EmailTemplate> _$templateValues =
   _$reminder2_email,
   _$reminder3_email,
   _$reminder_endless_email,
+  _$quote_reminder1_email,
   _$custom1_email,
   _$custom2_email,
   _$custom3_email,
-  _$quote_reminder1_email,
 ]);
 
 const UserPermission _$create = const UserPermission._('create');

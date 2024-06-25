@@ -376,7 +376,10 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                         ].contains(value) &&
                         !company.isModuleEnabled(EntityType.invoice)) {
                       return false;
-                    } else if (value == EmailTemplate.quote &&
+                    } else if ([
+                          EmailTemplate.quote,
+                          EmailTemplate.quote_reminder1,
+                        ].contains(value) &&
                         !company.isModuleEnabled(EntityType.quote)) {
                       return false;
                     } else if (value == EmailTemplate.credit &&
@@ -486,6 +489,25 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                         ..scheduleReminder3 = schedule
                         ..lateFeeAmount3 = feeAmount
                         ..lateFeePercent3 = feePercent));
+                    }),
+              if (template == EmailTemplate.quote_reminder1)
+                ReminderSettings(
+                    key: ValueKey('__quote_reminder1_${template}__'),
+                    viewModel: viewModel,
+                    enabled: settings.enableQuoteReminder1,
+                    numDays: settings.numDaysQuoteReminder1,
+                    schedule: settings.scheduleQuoteReminder1,
+                    feeAmount: settings.quoteLateFeeAmount1,
+                    feePercent: settings.quoteLateFeePercent1,
+                    onChanged:
+                        (enabled, days, schedule, feeAmount, feePercent) {
+                      _updateReminders = true;
+                      viewModel.onSettingsChanged(settings.rebuild((b) => b
+                        ..enableQuoteReminder1 = enabled
+                        ..numDaysQuoteReminder1 = days
+                        ..scheduleQuoteReminder1 = schedule
+                        ..quoteLateFeeAmount1 = feeAmount
+                        ..quoteLateFeePercent1 = feePercent));
                     }),
               if (template == EmailTemplate.reminder_endless)
                 FormCard(

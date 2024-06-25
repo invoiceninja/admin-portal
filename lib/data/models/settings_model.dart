@@ -850,7 +850,7 @@ abstract class SettingsEntity
   bool? get enableQuoteReminder1;
 
   @BuiltValueField(wireName: 'quote_num_days_reminder1')
-  double? get numDaysQuoteReminder1;
+  int? get numDaysQuoteReminder1;
 
   @BuiltValueField(wireName: 'quote_schedule_reminder1')
   String? get scheduleQuoteReminder1;
