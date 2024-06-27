@@ -840,6 +840,27 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'task_round_to_nearest')
   int? get taskRoundToNearest;
 
+  @BuiltValueField(wireName: 'email_quote_template_reminder1')
+  String? get emailBodyQuoteReminder1;
+
+  @BuiltValueField(wireName: 'email_quote_subject_reminder1')
+  String? get emailSubjectQuoteReminder1;
+
+  @BuiltValueField(wireName: 'enable_quote_reminder1')
+  bool? get enableQuoteReminder1;
+
+  @BuiltValueField(wireName: 'quote_num_days_reminder1')
+  int? get numDaysQuoteReminder1;
+
+  @BuiltValueField(wireName: 'quote_schedule_reminder1')
+  String? get scheduleQuoteReminder1;
+
+  @BuiltValueField(wireName: 'quote_late_fee_amount1')
+  double? get quoteLateFeeAmount1;
+
+  @BuiltValueField(wireName: 'quote_late_fee_percent1')
+  double? get quoteLateFeePercent1;
+
   bool? get taskRoundingEnabled =>
       taskRoundToNearest == null ? null : taskRoundToNearest != 1;
 
@@ -958,8 +979,10 @@ abstract class SettingsEntity
         return emailSubjectCustom3;
       case EmailTemplate.purchase_order:
         return emailSubjectPurchaseOrder;
+      case EmailTemplate.quote_reminder1:
+        return emailSubjectQuoteReminder1;
       default:
-        return 'Error: template not defined for $emailTemplate';
+        return 'Error: subject template not defined for $emailTemplate';
     }
   }
 
@@ -993,8 +1016,10 @@ abstract class SettingsEntity
         return emailBodyCustom3;
       case EmailTemplate.purchase_order:
         return emailBodyPurchaseOrder;
+      case EmailTemplate.quote_reminder1:
+        return emailBodyQuoteReminder1;
       default:
-        return 'Error: template not defined for $template';
+        return 'Error: body template not defined for $template';
     }
   }
 

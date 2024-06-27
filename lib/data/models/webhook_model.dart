@@ -136,6 +136,7 @@ abstract class WebhookEntity extends Object
   static const EVENT_SENT_QUOTE = '61';
   static const EVENT_SENT_CREDIT = '62';
   static const EVENT_SENT_PURCHASE_ORDER = '63';
+  static const EVENT_REMIND_QUOTE = '64';
 
   static const EVENT_MAP = {
     EVENT_CREATE_CLIENT: 'create_client',
@@ -156,6 +157,7 @@ abstract class WebhookEntity extends Object
     EVENT_UPDATE_QUOTE: 'update_quote',
     EVENT_APPROVE_QUOTE: 'approve_quote',
     EVENT_EXPIRED_QUOTE: 'expired_quote',
+    EVENT_REMIND_QUOTE: 'remind_quote',
     EVENT_ARCHIVE_QUOTE: 'archive_quote',
     EVENT_RESTORE_QUOTE: 'restore_quote',
     EVENT_DELETE_QUOTE: 'delete_quote',

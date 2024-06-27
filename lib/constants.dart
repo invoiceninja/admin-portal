@@ -6,7 +6,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.160';
+const String kClientVersion = '5.0.161';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -610,6 +610,10 @@ const String kReminderScheduleAfterInvoiceDate = 'after_invoice_date';
 const String kReminderScheduleBeforeDueDate = 'before_due_date';
 const String kReminderScheduleAfterDueDate = 'after_due_date';
 
+const String kQuoteReminderScheduleAfterQuoteDate = 'after_quote_date';
+const String kQuoteReminderScheduleBeforeValidUntil = 'before_valid_until_date';
+const String kQuoteReminderScheduleAfterValidUntil = 'after_valid_until_date';
+
 const String kSettingsCompanyDetails = 'company_details';
 const String kSettingsPaymentTerms = 'payment_terms';
 const String kSettingsPaymentTermView = 'payment_term/view';
@@ -1131,3 +1135,4 @@ const String kActivityEmailPayment = '138';
 const String kActivityExpenseNotificationSent = '139';
 const String kActivityStatementSent = '140';
 const String kActivityComment = '141';
+const String kActivityQuoteEmailReminder1 = '142';
