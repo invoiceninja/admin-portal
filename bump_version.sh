@@ -18,4 +18,4 @@ echo "const FLUTTER_VERSION = const <String, String>" > lib/flutter_version.dart
 flutter --version --machine >> lib/flutter_version.dart
 echo ";" >> lib/flutter_version.dart
 sed -i "y/\"/'/" lib/flutter_version.dart
-dart dartfmt lib
+dart format lib

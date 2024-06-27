@@ -450,7 +450,7 @@ else
     flutter packages pub run build_runner build --delete-conflicting-outputs
 
     echo "Clean up"
-    flutter dartfmt lib
+    dart format lib
 fi
 
 echo "Successfully completed"
