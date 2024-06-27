@@ -157,6 +157,7 @@ abstract class WebhookEntity extends Object
     EVENT_UPDATE_QUOTE: 'update_quote',
     EVENT_APPROVE_QUOTE: 'approve_quote',
     EVENT_EXPIRED_QUOTE: 'expired_quote',
+    EVENT_REMIND_QUOTE: 'remind_quote',
     EVENT_ARCHIVE_QUOTE: 'archive_quote',
     EVENT_RESTORE_QUOTE: 'restore_quote',
     EVENT_DELETE_QUOTE: 'delete_quote',
@@ -202,7 +203,6 @@ abstract class WebhookEntity extends Object
     EVENT_DELETE_PURCHASE_ORDER: 'delete_purchase_order',
     EVENT_RESTORE_PURCHASE_ORDER: 'restore_purchase_order',
     EVENT_ARCHIVE_PURCHASE_ORDER: 'archive_purchase_order',
-    EVENT_REMIND_QUOTE: 'remind_quote',
   };
 
   @override
