@@ -493,6 +493,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
               if (template == EmailTemplate.quote_reminder1)
                 ReminderSettings(
                     key: ValueKey('__quote_reminder1_${template}__'),
+                    isQuote: true,
                     viewModel: viewModel,
                     enabled: settings.enableQuoteReminder1,
                     numDays: settings.numDaysQuoteReminder1,
@@ -622,6 +623,7 @@ class ReminderSettings extends StatefulWidget {
     required this.numDays,
     required this.feeAmount,
     required this.feePercent,
+    this.isQuote = false,
   }) : super(key: key);
 
   final TemplatesAndRemindersVM viewModel;
@@ -630,6 +632,7 @@ class ReminderSettings extends StatefulWidget {
   final double? feeAmount;
   final double? feePercent;
   final String? schedule;
+  final bool isQuote;
   final Function(bool?, int?, String?, double?, double?) onChanged;
 
   @override
@@ -722,20 +725,35 @@ class _ReminderSettingsState extends State<ReminderSettings> {
                 _schedule = value;
                 _onChanged();
               },
-              items: [
-                DropdownMenuItem(
-                  child: Text(localization.afterInvoiceDate),
-                  value: kReminderScheduleAfterInvoiceDate,
-                ),
-                DropdownMenuItem(
-                  child: Text(localization.beforeDueDate),
-                  value: kReminderScheduleBeforeDueDate,
-                ),
-                DropdownMenuItem(
-                  child: Text(localization.afterDueDate),
-                  value: kReminderScheduleAfterDueDate,
-                ),
-              ],
+              items: widget.isQuote
+                  ? [
+                      DropdownMenuItem(
+                        child: Text(localization.afterQuoteDate),
+                        value: kQuoteReminderScheduleAfterQuoteDate,
+                      ),
+                      DropdownMenuItem(
+                        child: Text(localization.beforeValidUntil),
+                        value: kQuoteReminderScheduleBeforeValidUntil,
+                      ),
+                      DropdownMenuItem(
+                        child: Text(localization.afterValidUntil),
+                        value: kQuoteReminderScheduleAfterValidUntil,
+                      ),
+                    ]
+                  : [
+                      DropdownMenuItem(
+                        child: Text(localization.afterInvoiceDate),
+                        value: kReminderScheduleAfterInvoiceDate,
+                      ),
+                      DropdownMenuItem(
+                        child: Text(localization.beforeDueDate),
+                        value: kReminderScheduleBeforeDueDate,
+                      ),
+                      DropdownMenuItem(
+                        child: Text(localization.afterDueDate),
+                        value: kReminderScheduleAfterDueDate,
+                      ),
+                    ],
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 10),
