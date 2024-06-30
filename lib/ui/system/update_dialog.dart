@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
@@ -37,6 +38,23 @@ enum UpdateState {
 class _UpdateDialogState extends State<UpdateDialog> {
   UpdateState updateState = UpdateState.initial;
   String? updateResponse;
+  String? phpVersion;
+
+  @override
+  void initState() {
+    super.initState();
+
+    http
+        .read(Uri.parse(
+            'https://github.com/invoiceninja/invoiceninja/blob/v5-develop/composer.json?raw=true'))
+        .then((value) {
+      final data = jsonDecode(value);
+      setState(() {
+        phpVersion = data['require']['php'] ?? '';
+        phpVersion = phpVersion!.replaceFirst('^', '');
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +121,9 @@ class _UpdateDialogState extends State<UpdateDialog> {
                         trailing: Icon(Icons.copy),
                       ),
                     ],
+                    SizedBox(height: 20),
+                    Text(localization.latestRequiresPhpVersion
+                        .replaceFirst(':version', phpVersion ?? '...')),
                   ],
                 ),
       actions: <Widget>[
