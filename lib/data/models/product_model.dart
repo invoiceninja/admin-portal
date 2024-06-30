@@ -343,7 +343,7 @@ abstract class ProductEntity extends Object
         actions.add(EntityAction.newInvoice);
       }
 
-      if (userCompany!.canCreate(EntityType.quote) && !isDeleted!) {
+      if (userCompany.canCreate(EntityType.quote) && !isDeleted!) {
         actions.add(EntityAction.newQuote);
       }
 
