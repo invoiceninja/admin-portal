@@ -97,6 +97,8 @@ UIState uiReducer(UIState state, dynamic action) {
     ..filter = filterReducer(state.filter, action)
     ..filterClearedAt = filterClearedAtReducer(state.filterClearedAt, action)
     ..lastActivityAt = lastActivityReducer(state.lastActivityAt, action)
+    ..dismissedFlutterWebWarning = dismissedFlutterWebWarningReducer(
+        state.dismissedFlutterWebWarning, action)
     ..selectedCompanyIndex =
         selectedCompanyIndexReducer(state.selectedCompanyIndex, action)
     ..previousRoute = state.currentRoute == currentRoute
@@ -189,6 +191,12 @@ UIState uiReducer(UIState state, dynamic action) {
 Reducer<int> lastActivityReducer = combineReducers([
   TypedReducer<int, UpdateCurrentRoute>((state, action) {
     return DateTime.now().millisecondsSinceEpoch;
+  }),
+]);
+
+Reducer<bool> dismissedFlutterWebWarningReducer = combineReducers([
+  TypedReducer<bool, DismissFlutterWebWarning>((state, action) {
+    return true;
   }),
 ]);
 

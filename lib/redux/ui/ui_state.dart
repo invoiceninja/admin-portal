@@ -61,6 +61,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
       lastActivityAt: 0,
       currentRoute: currentRoute ?? LoginScreen.route,
       previousRoute: '',
+      dismissedFlutterWebWarning: false,
       previewStack: BuiltList<EntityType>(),
       filterStack: BuiltList<BaseEntity>(),
       dashboardUIState: DashboardUIState(),
@@ -125,6 +126,8 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   String get currentRoute;
 
   String get previousRoute;
+
+  bool get dismissedFlutterWebWarning;
 
   EntityType? get loadingEntityType;
 
@@ -295,6 +298,7 @@ abstract class UIState implements Built<UIState, UIStateBuilder> {
   // ignore: unused_element
   static void _initializeBuilder(UIStateBuilder builder) => builder
     ..lastActivityAt = 0
+    ..dismissedFlutterWebWarning = false
     ..filterStack.replace(BuiltList<BaseEntity>());
 
   static Serializer<UIState> get serializer => _$uIStateSerializer;
