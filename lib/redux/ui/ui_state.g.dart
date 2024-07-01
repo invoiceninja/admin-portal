@@ -27,6 +27,9 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
       'previousRoute',
       serializers.serialize(object.previousRoute,
           specifiedType: const FullType(String)),
+      'dismissedFlutterWebWarning',
+      serializers.serialize(object.dismissedFlutterWebWarning,
+          specifiedType: const FullType(bool)),
       'previewStack',
       serializers.serialize(object.previewStack,
           specifiedType:
@@ -178,6 +181,10 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
         case 'previousRoute':
           result.previousRoute = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
+          break;
+        case 'dismissedFlutterWebWarning':
+          result.dismissedFlutterWebWarning = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'loadingEntityType':
           result.loadingEntityType = serializers.deserialize(value,
@@ -373,6 +380,8 @@ class _$UIState extends UIState {
   @override
   final String previousRoute;
   @override
+  final bool dismissedFlutterWebWarning;
+  @override
   final EntityType? loadingEntityType;
   @override
   final BuiltList<EntityType> previewStack;
@@ -456,6 +465,7 @@ class _$UIState extends UIState {
       {required this.selectedCompanyIndex,
       required this.currentRoute,
       required this.previousRoute,
+      required this.dismissedFlutterWebWarning,
       this.loadingEntityType,
       required this.previewStack,
       required this.filterStack,
@@ -501,6 +511,8 @@ class _$UIState extends UIState {
         currentRoute, r'UIState', 'currentRoute');
     BuiltValueNullFieldError.checkNotNull(
         previousRoute, r'UIState', 'previousRoute');
+    BuiltValueNullFieldError.checkNotNull(
+        dismissedFlutterWebWarning, r'UIState', 'dismissedFlutterWebWarning');
     BuiltValueNullFieldError.checkNotNull(
         previewStack, r'UIState', 'previewStack');
     BuiltValueNullFieldError.checkNotNull(
@@ -589,6 +601,7 @@ class _$UIState extends UIState {
         selectedCompanyIndex == other.selectedCompanyIndex &&
         currentRoute == other.currentRoute &&
         previousRoute == other.previousRoute &&
+        dismissedFlutterWebWarning == other.dismissedFlutterWebWarning &&
         loadingEntityType == other.loadingEntityType &&
         previewStack == other.previewStack &&
         filterStack == other.filterStack &&
@@ -637,6 +650,7 @@ class _$UIState extends UIState {
     _$hash = $jc(_$hash, selectedCompanyIndex.hashCode);
     _$hash = $jc(_$hash, currentRoute.hashCode);
     _$hash = $jc(_$hash, previousRoute.hashCode);
+    _$hash = $jc(_$hash, dismissedFlutterWebWarning.hashCode);
     _$hash = $jc(_$hash, loadingEntityType.hashCode);
     _$hash = $jc(_$hash, previewStack.hashCode);
     _$hash = $jc(_$hash, filterStack.hashCode);
@@ -685,6 +699,7 @@ class _$UIState extends UIState {
           ..add('selectedCompanyIndex', selectedCompanyIndex)
           ..add('currentRoute', currentRoute)
           ..add('previousRoute', previousRoute)
+          ..add('dismissedFlutterWebWarning', dismissedFlutterWebWarning)
           ..add('loadingEntityType', loadingEntityType)
           ..add('previewStack', previewStack)
           ..add('filterStack', filterStack)
@@ -743,6 +758,11 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
   String? get previousRoute => _$this._previousRoute;
   set previousRoute(String? previousRoute) =>
       _$this._previousRoute = previousRoute;
+
+  bool? _dismissedFlutterWebWarning;
+  bool? get dismissedFlutterWebWarning => _$this._dismissedFlutterWebWarning;
+  set dismissedFlutterWebWarning(bool? dismissedFlutterWebWarning) =>
+      _$this._dismissedFlutterWebWarning = dismissedFlutterWebWarning;
 
   EntityType? _loadingEntityType;
   EntityType? get loadingEntityType => _$this._loadingEntityType;
@@ -982,6 +1002,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
       _selectedCompanyIndex = $v.selectedCompanyIndex;
       _currentRoute = $v.currentRoute;
       _previousRoute = $v.previousRoute;
+      _dismissedFlutterWebWarning = $v.dismissedFlutterWebWarning;
       _loadingEntityType = $v.loadingEntityType;
       _previewStack = $v.previewStack.toBuilder();
       _filterStack = $v.filterStack.toBuilder();
@@ -1050,6 +1071,10 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
                   currentRoute, r'UIState', 'currentRoute'),
               previousRoute: BuiltValueNullFieldError.checkNotNull(
                   previousRoute, r'UIState', 'previousRoute'),
+              dismissedFlutterWebWarning: BuiltValueNullFieldError.checkNotNull(
+                  dismissedFlutterWebWarning,
+                  r'UIState',
+                  'dismissedFlutterWebWarning'),
               loadingEntityType: loadingEntityType,
               previewStack: previewStack.build(),
               filterStack: filterStack.build(),

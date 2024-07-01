@@ -110,6 +110,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
   Widget build(BuildContext context) {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
+    final account = state.account;
     final localization = AppLocalization.of(context);
     final webPhpVersion =
         _parseVersion(_response?.phpVersion.currentPHPVersion ?? '');
@@ -173,7 +174,8 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                   ),
                   */
                 if (_response!.filePermissions != 'Ok' &&
-                    !state.account.disableAutoUpdate)
+                    !account.disableAutoUpdate &&
+                    !account.isDocker)
                   _HealthListTile(
                     title: 'Invalid File Permissions',
                     isValid: false,
@@ -181,7 +183,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     url: '$kDocsUrl/self-host-installation/#file-permissions',
                   ),
                 /*
-                if (!state.account.isDocker) ...[
+                if (!account.isDocker) ...[
                   if (!_response.openBasedir)
                     _HealthListTile(
                       title: 'Open Basedir',
@@ -197,7 +199,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                       ),
                 ],
                 */
-                if (!state.account.isDocker &&
+                if (!account.isDocker &&
                     phpMemoryLimitDouble! > 100 &&
                     phpMemoryLimitDouble < 1024)
                   _HealthListTile(

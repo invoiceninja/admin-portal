@@ -61,6 +61,7 @@ class _ImportantMessageBannerState extends State<ImportantMessageBanner> {
 
     if (kIsWeb &&
         !_dismissedMessage.containsKey(MESSAGE_TYPE_FLUTTER_WEB) &&
+        !state.uiState.dismissedFlutterWebWarning &&
         !state.isDemo) {
       message = localization.flutterWebWarning;
       messageType = MESSAGE_TYPE_FLUTTER_WEB;
@@ -180,6 +181,9 @@ class _ImportantMessageBannerState extends State<ImportantMessageBanner> {
                       color: Colors.white,
                       onPressed: () {
                         setState(() => _dismissedMessage[messageType!] = true);
+                        if (messageType == MESSAGE_TYPE_FLUTTER_WEB) {
+                          store.dispatch(DismissFlutterWebWarning());
+                        }
                       },
                     ),
                   ],
