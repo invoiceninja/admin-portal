@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:convert';
+import 'dart:io';
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
@@ -16,6 +17,7 @@ import 'package:invoiceninja_flutter/ui/app/sms_verification.dart';
 import 'package:invoiceninja_flutter/ui/app/upgrade_dialog.dart';
 import 'package:invoiceninja_flutter/utils/app_review.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:redux/redux.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -1396,10 +1398,15 @@ void _showAbout(BuildContext context) async {
                           builder: (context) => UpgradeDialog(),
                         );
                       } else {
+                        final directory =
+                            await getApplicationDocumentsDirectory();
                         showMessageDialog(
                             message: FLUTTER_VERSION['channel']!.toUpperCase() +
                                 ' • ' +
-                                FLUTTER_VERSION['frameworkVersion']!,
+                                FLUTTER_VERSION['frameworkVersion']! +
+                                '\n\n${directory.path}' +
+                                Platform.pathSeparator +
+                                'invoiceninja',
                             secondaryActions: [
                               TextButton(
                                 child: Text(localization.logout.toUpperCase()),
