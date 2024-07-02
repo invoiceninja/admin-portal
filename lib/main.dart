@@ -125,6 +125,10 @@ void main({bool isTesting = false}) async {
         ), () async {
       await windowManager.show();
       await windowManager.focus();
+
+      if (prefs.getBool(kSharedPrefMaximized) == true) {
+        windowManager.maximize();
+      }
     });
   }
 
