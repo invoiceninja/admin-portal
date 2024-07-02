@@ -184,8 +184,10 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                         (b) => b..paymentDate = convertDateTimeToSqlDate()));
                   }
                 } else {
-                  viewModel
-                      .onChanged!(expense.rebuild((b) => b..paymentDate = ''));
+                  viewModel.onChanged!(expense.rebuild((b) => b
+                    ..paymentDate = ''
+                    ..paymentTypeId = ''
+                    ..transactionReference = ''));
                   WidgetsBinding.instance.addPostFrameCallback((duration) {
                     _transactionReferenceController.text = '';
                   });
