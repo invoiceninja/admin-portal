@@ -25,22 +25,12 @@ class _WindowManagerState extends State<WindowManager> with WindowListener {
       _initManager();
     }
 
-    if (isApple()) {
-      _initWidgets();
-    }
-
     super.initState();
   }
 
   void _initManager() async {
     await windowManager.setPreventClose(true);
     setState(() {});
-  }
-
-  void _initWidgets() async {
-    //print("## SET DATA");
-    //await UserDefaults.setString('widgetData', 'hello', 'group.com.invoiceninja.app');
-    //await WidgetKit.reloadAllTimelines();
   }
 
   @override
