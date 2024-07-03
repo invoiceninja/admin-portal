@@ -1674,6 +1674,13 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(double)));
     }
+    value = object.mergeEInvoiceToPdf;
+    if (value != null) {
+      result
+        ..add('merge_e_invoice_to_pdf')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     return result;
   }
 
@@ -2648,6 +2655,10 @@ class _$SettingsEntitySerializer
           result.quoteLateFeePercent1 = serializers.deserialize(value,
               specifiedType: const FullType(double)) as double?;
           break;
+        case 'merge_e_invoice_to_pdf':
+          result.mergeEInvoiceToPdf = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
       }
     }
 
@@ -3203,6 +3214,8 @@ class _$SettingsEntity extends SettingsEntity {
   final double? quoteLateFeeAmount1;
   @override
   final double? quoteLateFeePercent1;
+  @override
+  final bool? mergeEInvoiceToPdf;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder)? updates]) =>
       (new SettingsEntityBuilder()..update(updates))._build();
@@ -3445,7 +3458,8 @@ class _$SettingsEntity extends SettingsEntity {
       this.numDaysQuoteReminder1,
       this.scheduleQuoteReminder1,
       this.quoteLateFeeAmount1,
-      this.quoteLateFeePercent1})
+      this.quoteLateFeePercent1,
+      this.mergeEInvoiceToPdf})
       : super._();
 
   @override
@@ -3702,7 +3716,8 @@ class _$SettingsEntity extends SettingsEntity {
         numDaysQuoteReminder1 == other.numDaysQuoteReminder1 &&
         scheduleQuoteReminder1 == other.scheduleQuoteReminder1 &&
         quoteLateFeeAmount1 == other.quoteLateFeeAmount1 &&
-        quoteLateFeePercent1 == other.quoteLateFeePercent1;
+        quoteLateFeePercent1 == other.quoteLateFeePercent1 &&
+        mergeEInvoiceToPdf == other.mergeEInvoiceToPdf;
   }
 
   int? __hashCode;
@@ -3948,6 +3963,7 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, scheduleQuoteReminder1.hashCode);
     _$hash = $jc(_$hash, quoteLateFeeAmount1.hashCode);
     _$hash = $jc(_$hash, quoteLateFeePercent1.hashCode);
+    _$hash = $jc(_$hash, mergeEInvoiceToPdf.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -4197,7 +4213,8 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('numDaysQuoteReminder1', numDaysQuoteReminder1)
           ..add('scheduleQuoteReminder1', scheduleQuoteReminder1)
           ..add('quoteLateFeeAmount1', quoteLateFeeAmount1)
-          ..add('quoteLateFeePercent1', quoteLateFeePercent1))
+          ..add('quoteLateFeePercent1', quoteLateFeePercent1)
+          ..add('mergeEInvoiceToPdf', mergeEInvoiceToPdf))
         .toString();
   }
 }
@@ -5380,6 +5397,11 @@ class SettingsEntityBuilder
   set quoteLateFeePercent1(double? quoteLateFeePercent1) =>
       _$this._quoteLateFeePercent1 = quoteLateFeePercent1;
 
+  bool? _mergeEInvoiceToPdf;
+  bool? get mergeEInvoiceToPdf => _$this._mergeEInvoiceToPdf;
+  set mergeEInvoiceToPdf(bool? mergeEInvoiceToPdf) =>
+      _$this._mergeEInvoiceToPdf = mergeEInvoiceToPdf;
+
   SettingsEntityBuilder();
 
   SettingsEntityBuilder get _$this {
@@ -5623,6 +5645,7 @@ class SettingsEntityBuilder
       _scheduleQuoteReminder1 = $v.scheduleQuoteReminder1;
       _quoteLateFeeAmount1 = $v.quoteLateFeeAmount1;
       _quoteLateFeePercent1 = $v.quoteLateFeePercent1;
+      _mergeEInvoiceToPdf = $v.mergeEInvoiceToPdf;
       _$v = null;
     }
     return this;
@@ -5885,7 +5908,8 @@ class SettingsEntityBuilder
               numDaysQuoteReminder1: numDaysQuoteReminder1,
               scheduleQuoteReminder1: scheduleQuoteReminder1,
               quoteLateFeeAmount1: quoteLateFeeAmount1,
-              quoteLateFeePercent1: quoteLateFeePercent1);
+              quoteLateFeePercent1: quoteLateFeePercent1,
+              mergeEInvoiceToPdf: mergeEInvoiceToPdf);
     } catch (_) {
       late String _$failedField;
       try {

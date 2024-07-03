@@ -665,6 +665,7 @@ class SettingsSearch extends StatelessWidget {
       kSettingsEInvoiceSettings: [
         [
           'e_invoice_settings#2024-05-20',
+          'merge_to_pdf#2024-07-03',
         ],
       ],
       kSettingsTransactionRules: [

@@ -861,6 +861,9 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'quote_late_fee_percent1')
   double? get quoteLateFeePercent1;
 
+  @BuiltValueField(wireName: 'merge_e_invoice_to_pdf')
+  bool? get mergeEInvoiceToPdf;
+
   bool? get taskRoundingEnabled =>
       taskRoundToNearest == null ? null : taskRoundToNearest != 1;
 
