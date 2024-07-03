@@ -684,7 +684,9 @@ abstract class ClientEntity extends Object
         actions.add(EntityAction.runTemplate);
       }
 
-      if (!multiselect) {
+      if (multiselect) {
+        actions.add(EntityAction.assignGroup);
+      } else {
         actions.add(EntityAction.addComment);
       }
     }

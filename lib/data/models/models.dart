@@ -142,6 +142,7 @@ class EntityAction extends EnumClass {
   static const EntityAction bulkUpdate = _$bulkUpdate;
   static const EntityAction reconnect = _$reconnect;
   static const EntityAction addComment = _$addComment;
+  static const EntityAction assignGroup = _$assignGroup;
 
   @override
   String toString() {

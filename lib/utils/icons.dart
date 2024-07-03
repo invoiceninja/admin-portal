@@ -140,6 +140,8 @@ IconData? getEntityActionIcon(EntityAction? entityAction) {
       return MdiIcons.squareEditOutline;
     case EntityAction.addComment:
       return MdiIcons.comment;
+    case EntityAction.assignGroup:
+      return MdiIcons.accountMultiple;
     default:
       return null;
   }

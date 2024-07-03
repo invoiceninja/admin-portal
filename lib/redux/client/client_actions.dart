@@ -541,6 +541,14 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
         ),
       );
       break;
+    case EntityAction.assignGroup:
+      showDialog<void>(
+        context: context,
+        builder: (context) => _AssignGroupDialog(
+            //client: client,
+            ),
+      );
+      break;
     case EntityAction.runTemplate:
       showDialog<void>(
         context: context,
@@ -625,6 +633,24 @@ class UpdateClientTab implements PersistUI {
   UpdateClientTab({this.tabIndex});
 
   final int? tabIndex;
+}
+
+class _AssignGroupDialog extends StatefulWidget {
+  const _AssignGroupDialog({super.key});
+
+  @override
+  State<_AssignGroupDialog> createState() => __AssignGroupDialogState();
+}
+
+class __AssignGroupDialogState extends State<_AssignGroupDialog> {
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context)!;
+
+    return AlertDialog(
+      title: Text(localization.assignGroup),
+    );
+  }
 }
 
 class _MergClientPicker extends StatefulWidget {
