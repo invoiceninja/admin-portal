@@ -178,6 +178,16 @@ class _WorkflowSettingsState extends State<WorkflowSettings>
                           settings.rebuild((b) => b..autoArchiveQuote = value)),
                       iconData: Icons.archive,
                     ),
+                    if (!state.settingsUIState.isFiltered)
+                      BoolDropdownButton(
+                        value: company.useQuoteTermsOnConversion,
+                        onChanged: (value) => viewModel.onCompanyChanged(
+                            company.rebuild(
+                                (b) => b..useQuoteTermsOnConversion = value)),
+                        label: localization.useQuoteTerms,
+                        helpLabel: localization.useQuoteTermsHelp,
+                        iconData: getEntityIcon(EntityType.quote),
+                      ),
                   ],
                 ),
               ],

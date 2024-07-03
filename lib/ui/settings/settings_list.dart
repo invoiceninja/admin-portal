@@ -370,14 +370,12 @@ class SettingsSearch extends StatelessWidget {
         ],
         [
           'defaults',
-          'payment_terms',
           'invoice_terms',
           'invoice_footer',
           'quote_terms',
           'quote_footer',
           'credit_terms',
           'credit_footer',
-          'use_quote_terms#2022-05-17',
         ],
         [
           'default_documents',
@@ -418,6 +416,7 @@ class SettingsSearch extends StatelessWidget {
       ],
       kSettingsPaymentSettings: [
         [
+          'payment_terms',
           'company_gateways',
           'auto_bill',
           'auto_bill_on',
@@ -497,6 +496,7 @@ class SettingsSearch extends StatelessWidget {
           'auto_archive_paid_invoices',
           'auto_archive_cancelled_invoices',
           'lock_invoices',
+          'use_quote_terms#2022-05-17',
         ],
         [
           'auto_convert',

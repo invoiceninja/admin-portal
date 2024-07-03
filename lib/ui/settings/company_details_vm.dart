@@ -56,7 +56,6 @@ class CompanyDetailsVM {
     required this.onSavePressed,
     required this.onUploadLogo,
     required this.onDeleteLogo,
-    required this.onConfigurePaymentTermsPressed,
     required this.onUploadDocuments,
   });
 
@@ -141,13 +140,6 @@ class CompanyDetailsVM {
         store.dispatch(UploadLogoRequest(
             completer: completer, multipartFile: multipartFile, type: type));
       },
-      onConfigurePaymentTermsPressed: (context) {
-        if (state.paymentTermState.list.isEmpty) {
-          store.dispatch(ViewSettings(section: kSettingsPaymentTermEdit));
-        } else {
-          store.dispatch(ViewSettings(section: kSettingsPaymentTerms));
-        }
-      },
       onUploadDocuments: (BuildContext context,
           List<MultipartFile> multipartFile, bool isPrivate) {
         final completer = Completer<List<DocumentEntity>>();
@@ -176,6 +168,5 @@ class CompanyDetailsVM {
   final Function(BuildContext) onSavePressed;
   final Function(BuildContext, MultipartFile) onUploadLogo;
   final Function(BuildContext) onDeleteLogo;
-  final Function(BuildContext) onConfigurePaymentTermsPressed;
   final Function(BuildContext, List<MultipartFile>, bool) onUploadDocuments;
 }

@@ -12,7 +12,6 @@ import 'package:file_picker/file_picker.dart';
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
-import 'package:invoiceninja_flutter/redux/payment_term/payment_term_selectors.dart';
 import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/blank_screen.dart';
@@ -23,7 +22,6 @@ import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/design_picker.dart';
@@ -33,7 +31,6 @@ import 'package:invoiceninja_flutter/ui/settings/company_details_vm.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/files.dart';
-import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class CompanyDetails extends StatefulWidget {
@@ -592,70 +589,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
           ScrollableListView(
             primary: true,
             children: <Widget>[
-              FormCard(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  if (company.isModuleEnabled(EntityType.invoice))
-                    AppDropdownButton<String>(
-                      showBlank: true,
-                      labelText: localization.invoicePaymentTerms,
-                      items: memoizedDropdownPaymentTermList(
-                              state.paymentTermState.map,
-                              state.paymentTermState.list)
-                          .map((paymentTermId) {
-                        final paymentTerm =
-                            state.paymentTermState.map[paymentTermId]!;
-                        return DropdownMenuItem<String>(
-                          child: Text(paymentTerm.numDays == 0
-                              ? localization.dueOnReceipt
-                              : paymentTerm.name),
-                          value: paymentTerm.numDays.toString(),
-                        );
-                      }).toList(),
-                      value: '${settings.defaultPaymentTerms}',
-                      onChanged: (dynamic numDays) {
-                        viewModel.onSettingsChanged(settings.rebuild((b) => b
-                          ..defaultPaymentTerms =
-                              numDays == null ? null : '$numDays'));
-                      },
-                    ),
-                  if (company.isModuleEnabled(EntityType.quote))
-                    AppDropdownButton<String>(
-                      showBlank: true,
-                      labelText: localization.quoteValidUntil,
-                      items: memoizedDropdownPaymentTermList(
-                              state.paymentTermState.map,
-                              state.paymentTermState.list)
-                          .map((paymentTermId) {
-                        final paymentTerm =
-                            state.paymentTermState.map[paymentTermId]!;
-                        return DropdownMenuItem<String>(
-                          child: Text(paymentTerm.numDays == 0
-                              ? localization.dueOnReceipt
-                              : paymentTerm.name),
-                          value: paymentTerm.numDays.toString(),
-                        );
-                      }).toList(),
-                      value: '${settings.defaultValidUntil}',
-                      onChanged: (dynamic numDays) {
-                        viewModel.onSettingsChanged(settings.rebuild((b) => b
-                          ..defaultValidUntil =
-                              numDays == null ? null : '$numDays'));
-                      },
-                    ),
-                ],
-              ),
-              if (!state.uiState.settingsUIState.isFiltered)
-                Padding(
-                  padding:
-                      const EdgeInsets.only(bottom: 10, left: 16, right: 16),
-                  child: AppButton(
-                    iconData: Icons.settings,
-                    label: localization.configurePaymentTerms.toUpperCase(),
-                    onPressed: () =>
-                        viewModel.onConfigurePaymentTermsPressed(context),
-                  ),
-                ),
               if (!state.isProPlan)
                 FormCard(children: <Widget>[
                   if (company.isModuleEnabled(EntityType.invoice))
@@ -691,20 +624,6 @@ class _CompanyDetailsState extends State<CompanyDetails>
                               b..defaultPurchaseOrderDesignId = value!.id)),
                     ),
                 ]),
-              if (!state.settingsUIState.isFiltered)
-                FormCard(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      BoolDropdownButton(
-                        value: company.useQuoteTermsOnConversion,
-                        onChanged: (value) => viewModel.onCompanyChanged(
-                            company.rebuild(
-                                (b) => b..useQuoteTermsOnConversion = value)),
-                        label: localization.useQuoteTerms,
-                        helpLabel: localization.useQuoteTermsHelp,
-                        iconData: getEntityIcon(EntityType.quote),
-                      ),
-                    ]),
               FormCard(
                 isLast: true,
                 children: <Widget>[
