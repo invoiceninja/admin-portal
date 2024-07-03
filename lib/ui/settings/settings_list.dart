@@ -370,14 +370,12 @@ class SettingsSearch extends StatelessWidget {
         ],
         [
           'defaults',
-          'payment_terms',
           'invoice_terms',
           'invoice_footer',
           'quote_terms',
           'quote_footer',
           'credit_terms',
           'credit_footer',
-          'use_quote_terms#2022-05-17',
         ],
         [
           'default_documents',
@@ -421,18 +419,23 @@ class SettingsSearch extends StatelessWidget {
           'company_gateways',
           'auto_bill',
           'auto_bill_on',
-          'payment_type',
-          'online_payment_email',
-          'manual_payment_email',
           'use_available_credits',
           'admin_initiated_payments#2022-06-06',
           'allow_over_payment',
           'allow_under_payment',
           'auto_bill_standard_invoices#2023-01-17',
           'client_initiated_payments#2023-03-20',
-          'send_emails_to#2023-11-30',
           'use_available_payments#2024-02-19',
-        ]
+        ],
+        [
+          'payment_type',
+          'payment_terms',
+        ],
+        [
+          'online_payment_email',
+          'manual_payment_email',
+          'send_emails_to#2023-11-30',
+        ],
       ],
       kSettingsTaxSettings: [
         [
@@ -500,6 +503,7 @@ class SettingsSearch extends StatelessWidget {
         ],
         [
           'auto_convert',
+          'use_quote_terms#2022-05-17',
         ],
       ],
       kSettingsImportExport: [
@@ -661,6 +665,7 @@ class SettingsSearch extends StatelessWidget {
       kSettingsEInvoiceSettings: [
         [
           'e_invoice_settings#2024-05-20',
+          'merge_to_pdf#2024-07-03',
         ],
       ],
       kSettingsTransactionRules: [

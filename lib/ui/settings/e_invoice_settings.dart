@@ -140,6 +140,14 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
                     settings.rebuild((b) => b..enableEInvoice = value)),
               ),
               if (settings.enableEInvoice == true) ...[
+                BoolDropdownButton(
+                  label: localization.mergeToPdf,
+                  value: settings.mergeEInvoiceToPdf,
+                  iconData: MdiIcons.callMerge,
+                  onChanged: (value) => viewModel.onSettingsChanged(
+                    settings.rebuild((b) => b..mergeEInvoiceToPdf = value),
+                  ),
+                ),
                 Padding(
                   padding:
                       EdgeInsets.only(top: settingsUIState.isFiltered ? 0 : 12),

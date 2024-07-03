@@ -49,6 +49,7 @@ class PaymentSettingsVM {
     required this.onSettingsChanged,
     required this.settings,
     required this.onConfigureGatewaysPressed,
+    required this.onConfigurePaymentTermsPressed,
   });
 
   static PaymentSettingsVM fromStore(Store<AppState> store) {
@@ -87,6 +88,13 @@ class PaymentSettingsVM {
           }
         });
       },
+      onConfigurePaymentTermsPressed: (context) {
+        if (state.paymentTermState.list.isEmpty) {
+          store.dispatch(ViewSettings(section: kSettingsPaymentTermEdit));
+        } else {
+          store.dispatch(ViewSettings(section: kSettingsPaymentTerms));
+        }
+      },
       onConfigureGatewaysPressed: (context) {
         store.dispatch(ViewSettings(section: kSettingsCompanyGateways));
       },
@@ -99,5 +107,6 @@ class PaymentSettingsVM {
   final Function(BuildContext) onSavePressed;
   final Function(CompanyEntity) onCompanyChanged;
   final Function(SettingsEntity) onSettingsChanged;
+  final Function(BuildContext) onConfigurePaymentTermsPressed;
   final Function(BuildContext) onConfigureGatewaysPressed;
 }

@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=Invoice Ninja
-Comment=Online Invoicing
+Comment=Create invoices, accept payments, track expenses & time tasks
 Exec=invoiceninja
 Icon=${SNAP}/meta/gui/invoiceninja.png
 Terminal=false
 Type=Application
-Categories=Office;
+Categories=Office;Finance;

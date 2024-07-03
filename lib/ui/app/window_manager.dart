@@ -25,22 +25,12 @@ class _WindowManagerState extends State<WindowManager> with WindowListener {
       _initManager();
     }
 
-    if (isApple()) {
-      _initWidgets();
-    }
-
     super.initState();
   }
 
   void _initManager() async {
     await windowManager.setPreventClose(true);
     setState(() {});
-  }
-
-  void _initWidgets() async {
-    //print("## SET DATA");
-    //await UserDefaults.setString('widgetData', 'hello', 'group.com.invoiceninja.app');
-    //await WidgetKit.reloadAllTimelines();
   }
 
   @override
@@ -71,6 +61,33 @@ class _WindowManagerState extends State<WindowManager> with WindowListener {
         },
       );
     }
+  }
+
+  @override
+  void onWindowMaximize() async {
+    if (!isDesktopOS()) {
+      return;
+    }
+
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool(kSharedPrefMaximized, true);
+  }
+
+  @override
+  void onWindowUnmaximize() async {
+    if (!isDesktopOS()) {
+      return;
+    }
+
+    // This method is auto called when the app starts, we skip it
+    // if the app state hasn't been loaded yet
+    final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
+    if (!store.state.isLoaded) {
+      return;
+    }
+
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool(kSharedPrefMaximized, false);
   }
 
   @override

@@ -38,3 +38,5 @@ parts:
     source: .
     plugin: flutter
     flutter-target: lib/main.dart
+    organize:
+      invoiceninja.desktop: snap/gui/invoiceninja.desktop
