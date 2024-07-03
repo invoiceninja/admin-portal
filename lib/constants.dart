@@ -955,6 +955,8 @@ List<String> kCustomLabels = [
   'payment_date',
   'phone',
   'po_number',
+  'product',
+  'products',
   'quantity',
   'quote',
   'rate',
