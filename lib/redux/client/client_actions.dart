@@ -549,6 +549,7 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
     case EntityAction.assignGroup:
       showDialog<void>(
         context: context,
+        barrierDismissible: false,
         builder: (context) => _AssignGroupDialog(
           clients: clients,
         ),
