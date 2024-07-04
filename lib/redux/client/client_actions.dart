@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:convert';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -7,7 +8,9 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
@@ -639,7 +642,6 @@ class UpdateClientTab implements PersistUI {
 
 class _AssignGroupDialog extends StatefulWidget {
   const _AssignGroupDialog({
-    super.key,
     required this.clients,
   });
 
@@ -661,6 +663,45 @@ class __AssignGroupDialogState extends State<_AssignGroupDialog> {
 
     return AlertDialog(
       title: Text(localization.assignGroup),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text(
+            localization.cancel.toUpperCase(),
+          ),
+        ),
+        TextButton(
+          onPressed: _groupId.isEmpty
+              ? null
+              : () {
+                  final credentials = state.credentials;
+                  final url = '${credentials.url}/clients/bulk';
+                  final data = {
+                    'ids': widget.clients.map((entity) => entity.id).toList(),
+                    'group_settings_id': _groupId,
+                    'action': EntityAction.assignGroup.toApiParam(),
+                  };
+
+                  setState(() => _isLoading = true);
+
+                  WebClient()
+                      .post(url, credentials.token, data: jsonEncode(data))
+                      .then((response) async {
+                    setState(() => _isLoading = false);
+                    Navigator.of(navigatorKey.currentContext!).pop();
+                    showToast(localization.exportedData);
+                  }).catchError((error) {
+                    showErrorDialog(message: error);
+                    setState(() => _isLoading = false);
+                  });
+                },
+          child: Text(
+            localization.submit.toUpperCase(),
+          ),
+        ),
+      ],
       content: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -686,7 +727,9 @@ class __AssignGroupDialogState extends State<_AssignGroupDialog> {
                   entityIds: memoizedGroupList(state.groupState.map),
                   entityId: _groupId,
                   onChanged: (groupId) {
-                    _groupId = groupId;
+                    setState(() {
+                      _groupId = groupId;
+                    });
                   }),
             ],
           ],
