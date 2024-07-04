@@ -668,12 +668,11 @@ class __AssignGroupDialogState extends State<_AssignGroupDialog> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          child: Text(
-            localization.cancel.toUpperCase(),
-          ),
+          child: Text((_isLoading ? localization.cancel : localization.close)
+              .toUpperCase()),
         ),
         TextButton(
-          onPressed: _groupId.isEmpty
+          onPressed: _groupId.isEmpty || _isLoading
               ? null
               : () {
                   final credentials = state.credentials;
@@ -691,7 +690,8 @@ class __AssignGroupDialogState extends State<_AssignGroupDialog> {
                       .then((response) async {
                     setState(() => _isLoading = false);
                     Navigator.of(navigatorKey.currentContext!).pop();
-                    showToast(localization.exportedData);
+                    showToast(localization.assignedGroup);
+                    store.dispatch(RefreshData());
                   }).catchError((error) {
                     showErrorDialog(message: error);
                     setState(() => _isLoading = false);
