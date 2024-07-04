@@ -10,7 +10,9 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -545,8 +547,8 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
       showDialog<void>(
         context: context,
         builder: (context) => _AssignGroupDialog(
-            //client: client,
-            ),
+          clients: clients,
+        ),
       );
       break;
     case EntityAction.runTemplate:
@@ -636,19 +638,60 @@ class UpdateClientTab implements PersistUI {
 }
 
 class _AssignGroupDialog extends StatefulWidget {
-  const _AssignGroupDialog({super.key});
+  const _AssignGroupDialog({
+    super.key,
+    required this.clients,
+  });
+
+  final List<BaseEntity> clients;
 
   @override
   State<_AssignGroupDialog> createState() => __AssignGroupDialogState();
 }
 
 class __AssignGroupDialogState extends State<_AssignGroupDialog> {
+  String _groupId = '';
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context)!;
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
 
     return AlertDialog(
       title: Text(localization.assignGroup),
+      content: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              widget.clients.length == 1
+                  ? localization.lookup(EntityType.client.snakeCase)
+                  : localization.lookup(EntityType.client.plural) +
+                      ' (${widget.clients.length})',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            SizedBox(height: 8),
+            ...widget.clients
+                .map((entity) => Text(entity.listDisplayName))
+                .toList(),
+            if (_isLoading) ...[
+              SizedBox(height: 32),
+              LinearProgressIndicator()
+            ] else ...[
+              SizedBox(height: 16),
+              DynamicSelector(
+                  entityType: EntityType.group,
+                  entityIds: memoizedGroupList(state.groupState.map),
+                  entityId: _groupId,
+                  onChanged: (groupId) {
+                    _groupId = groupId;
+                  }),
+            ],
+          ],
+        ),
+      ),
     );
   }
 }
