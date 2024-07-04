@@ -248,6 +248,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                   SizedBox(height: 8),
                   ...vendor.contacts.map((contact) {
                     return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
                           child: Column(
@@ -294,26 +295,14 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                                     CustomFieldType.vendorContact4,
                                     contact.customValue4)),
                               SizedBox(height: 8),
-                              if (!hasMultipleContacts) ...[
-                                PortalLinks(
-                                  viewLink: contact.silentLink,
-                                  copyLink: contact.link,
-                                  client: null,
-                                  style: PortalLinkStyle.buttons,
-                                ),
-                                SizedBox(height: 16),
-                              ] else
-                                SizedBox(height: 8),
                             ],
                           ),
                         ),
-                        if (hasMultipleContacts)
-                          PortalLinks(
-                            client: null,
-                            viewLink: contact.silentLink,
-                            copyLink: contact.link,
-                            style: PortalLinkStyle.dropdown,
-                          )
+                        PortalLinks(
+                          client: null,
+                          viewLink: contact.silentLink,
+                          copyLink: contact.link,
+                        )
                       ],
                     );
                   }).toList()

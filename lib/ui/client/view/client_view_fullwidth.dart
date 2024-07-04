@@ -387,26 +387,14 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                                     CustomFieldType.contact4,
                                     contact.customValue4)),
                               SizedBox(height: 8),
-                              if (!hasMultipleContacts) ...[
-                                PortalLinks(
-                                  viewLink: contact.silentLink,
-                                  copyLink: contact.link,
-                                  client: client,
-                                  style: PortalLinkStyle.buttons,
-                                ),
-                                SizedBox(height: 16),
-                              ] else
-                                SizedBox(height: 8),
                             ],
                           ),
                         ),
-                        if (hasMultipleContacts)
-                          PortalLinks(
-                            client: client,
-                            viewLink: contact.silentLink,
-                            copyLink: contact.link,
-                            style: PortalLinkStyle.dropdown,
-                          )
+                        PortalLinks(
+                          client: client,
+                          viewLink: contact.silentLink,
+                          copyLink: contact.link,
+                        )
                       ],
                     );
                   }).toList(),
