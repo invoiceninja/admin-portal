@@ -6,24 +6,17 @@ import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-enum PortalLinkStyle {
-  buttons,
-  dropdown,
-}
-
 class PortalLinks extends StatelessWidget {
   const PortalLinks({
     Key? key,
     required this.viewLink,
     required this.copyLink,
     required this.client,
-    this.style,
   }) : super(key: key);
 
   final String viewLink;
   final String copyLink;
   final ClientEntity? client;
-  final PortalLinkStyle? style;
 
   @override
   Widget build(BuildContext context) {
@@ -46,53 +39,25 @@ class PortalLinks extends StatelessWidget {
       showToast(localization!.copiedToClipboard.replaceFirst(':value ', ''));
     };
 
-    if (style == PortalLinkStyle.dropdown) {
-      return PopupMenuButton<String>(
-        itemBuilder: (BuildContext context) => [
-          PopupMenuItem(
-            child: IconText(
-                text: localization!.viewPortal, icon: Icons.open_in_new),
-            value: localization.viewPortal,
-          ),
-          PopupMenuItem(
-            child: IconText(text: localization.copyLink, icon: Icons.copy),
-            value: localization.copyLink,
-          ),
-        ],
-        onSelected: (value) {
-          if (value == localization!.viewPortal) {
-            viewLinkPressed();
-          } else {
-            copyLinkPressed();
-          }
-        },
-      );
-    } else {
-      return Row(
-        children: [
-          Expanded(
-            child: OutlinedButton(
-                onPressed: viewLinkPressed,
-                child: Text(
-                  localization!.viewPortal,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                )),
-          ),
-          SizedBox(width: 8),
-          Expanded(
-            child: OutlinedButton(
-                onPressed: copyLinkPressed,
-                child: Text(
-                  localization.copyLink,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                )),
-          ),
-        ],
-      );
-    }
+    return PopupMenuButton<String>(
+      itemBuilder: (BuildContext context) => [
+        PopupMenuItem(
+          child:
+              IconText(text: localization!.viewPortal, icon: Icons.open_in_new),
+          value: localization.viewPortal,
+        ),
+        PopupMenuItem(
+          child: IconText(text: localization.copyLink, icon: Icons.copy),
+          value: localization.copyLink,
+        ),
+      ],
+      onSelected: (value) {
+        if (value == localization!.viewPortal) {
+          viewLinkPressed();
+        } else {
+          copyLinkPressed();
+        }
+      },
+    );
   }
 }

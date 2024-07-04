@@ -107,6 +107,7 @@ const EntityAction _$runTemplate = const EntityAction._('runTemplate');
 const EntityAction _$bulkUpdate = const EntityAction._('bulkUpdate');
 const EntityAction _$reconnect = const EntityAction._('reconnect');
 const EntityAction _$addComment = const EntityAction._('addComment');
+const EntityAction _$assignGroup = const EntityAction._('assignGroup');
 
 EntityAction _$valueOf(String name) {
   switch (name) {
@@ -290,6 +291,8 @@ EntityAction _$valueOf(String name) {
       return _$reconnect;
     case 'addComment':
       return _$addComment;
+    case 'assignGroup':
+      return _$assignGroup;
     default:
       throw new ArgumentError(name);
   }
@@ -387,6 +390,7 @@ final BuiltSet<EntityAction> _$values =
   _$bulkUpdate,
   _$reconnect,
   _$addComment,
+  _$assignGroup,
 ]);
 
 Serializer<EntityAction> _$entityActionSerializer =

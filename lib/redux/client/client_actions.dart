@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:convert';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -7,10 +8,14 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/client_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/dynamic_selector.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -541,6 +546,15 @@ void handleClientAction(BuildContext? context, List<BaseEntity> clients,
         ),
       );
       break;
+    case EntityAction.assignGroup:
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => _AssignGroupDialog(
+          clients: clients,
+        ),
+      );
+      break;
     case EntityAction.runTemplate:
       showDialog<void>(
         context: context,
@@ -625,6 +639,105 @@ class UpdateClientTab implements PersistUI {
   UpdateClientTab({this.tabIndex});
 
   final int? tabIndex;
+}
+
+class _AssignGroupDialog extends StatefulWidget {
+  const _AssignGroupDialog({
+    required this.clients,
+  });
+
+  final List<BaseEntity> clients;
+
+  @override
+  State<_AssignGroupDialog> createState() => __AssignGroupDialogState();
+}
+
+class __AssignGroupDialogState extends State<_AssignGroupDialog> {
+  String _groupId = '';
+  bool _isLoading = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context)!;
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+
+    return AlertDialog(
+      title: Text(localization.assignGroup),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text((_isLoading ? localization.cancel : localization.close)
+              .toUpperCase()),
+        ),
+        TextButton(
+          onPressed: _groupId.isEmpty || _isLoading
+              ? null
+              : () {
+                  final credentials = state.credentials;
+                  final url = '${credentials.url}/clients/bulk';
+                  final data = {
+                    'ids': widget.clients.map((entity) => entity.id).toList(),
+                    'group_settings_id': _groupId,
+                    'action': EntityAction.assignGroup.toApiParam(),
+                  };
+
+                  setState(() => _isLoading = true);
+
+                  WebClient()
+                      .post(url, credentials.token, data: jsonEncode(data))
+                      .then((response) async {
+                    setState(() => _isLoading = false);
+                    Navigator.of(navigatorKey.currentContext!).pop();
+                    showToast(localization.assignedGroup);
+                    store.dispatch(RefreshData());
+                  }).catchError((error) {
+                    showErrorDialog(message: error);
+                    setState(() => _isLoading = false);
+                  });
+                },
+          child: Text(
+            localization.submit.toUpperCase(),
+          ),
+        ),
+      ],
+      content: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              widget.clients.length == 1
+                  ? localization.lookup(EntityType.client.snakeCase)
+                  : localization.lookup(EntityType.client.plural) +
+                      ' (${widget.clients.length})',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            SizedBox(height: 8),
+            ...widget.clients
+                .map((entity) => Text(entity.listDisplayName))
+                .toList(),
+            if (_isLoading) ...[
+              SizedBox(height: 32),
+              LinearProgressIndicator()
+            ] else ...[
+              SizedBox(height: 16),
+              DynamicSelector(
+                  entityType: EntityType.group,
+                  entityIds: memoizedGroupList(state.groupState.map),
+                  entityId: _groupId,
+                  onChanged: (groupId) {
+                    setState(() {
+                      _groupId = groupId;
+                    });
+                  }),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 class _MergClientPicker extends StatefulWidget {
