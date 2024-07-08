@@ -610,6 +610,8 @@ abstract class CompanyEntity extends Object
 
   bool get hasItemTaxes => numberOfItemTaxRates > 0;
 
+  bool get hasExpenseTaxes => numberOfExpenseTaxRates > 0;
+
   bool get hasTaxes => hasInvoiceTaxes || hasItemTaxes;
 
   bool get isSmall => !isLarge;
