@@ -108,8 +108,6 @@ class _InvoiceItemSelectorState extends State<InvoiceItemSelector>
 
   void _toggleEntity(BaseEntity entity) {
     setState(() {
-      _filter = '';
-      _textController.text = '';
       if (_selected.contains(entity)) {
         _selected.remove(entity);
       } else {
