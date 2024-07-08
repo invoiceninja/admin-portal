@@ -175,7 +175,7 @@ abstract class CompanyEntity extends Object
       transactions: BuiltList<TransactionEntity>(),
       transactionRules: BuiltList<TransactionRuleEntity>(),
       schedules: BuiltList<ScheduleEntity>(),
-      eInvoice: BuiltMap<String, dynamic>(),
+      //eInvoice: BuiltMap<String, dynamic>(),
     );
   }
 
@@ -518,8 +518,8 @@ abstract class CompanyEntity extends Object
   @BuiltValueField(wireName: 'e_invoice_certificate_passphrase')
   String get eInvoiceCertificatePassphrase;
 
-  @BuiltValueField(wireName: 'e_invoice')
-  BuiltMap<String, dynamic> get eInvoice;
+  //@BuiltValueField(wireName: 'e_invoice')
+  //BuiltMap<String, dynamic> get eInvoice;
 
   String get displayName => settings.name ?? '';
 
@@ -891,8 +891,8 @@ abstract class CompanyEntity extends Object
     ..bankAccounts.replace(BuiltList<BankAccountEntity>())
     ..transactions.replace(BuiltList<TransactionEntity>())
     ..transactionRules.replace(BuiltList<TransactionRuleEntity>())
-    ..schedules.replace(BuiltList<ScheduleEntity>())
-    ..eInvoice.replace(BuiltMap<String, dynamic>());
+    ..schedules.replace(BuiltList<ScheduleEntity>());
+    //..eInvoice.replace(BuiltMap<String, dynamic>())
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
