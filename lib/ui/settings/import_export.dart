@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/data/models/schedule_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_actions.dart';
 import 'package:invoiceninja_flutter/redux/bank_account/bank_account_selectors.dart';
+import 'package:invoiceninja_flutter/redux/settings/settings_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
@@ -53,10 +54,12 @@ class ImportExport extends StatefulWidget {
   _ImportExportState createState() => _ImportExportState();
 }
 
-class _ImportExportState extends State<ImportExport> {
+class _ImportExportState extends State<ImportExport>
+    with SingleTickerProviderStateMixin {
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_importExport');
 
+  TabController? _controller;
   FocusScopeNode? _focusNode;
   bool autoValidate = false;
   PreImportResponse? _response;
@@ -151,11 +154,23 @@ class _ImportExportState extends State<ImportExport> {
   void initState() {
     super.initState();
     _focusNode = FocusScopeNode();
+
+    final state = widget.viewModel.state;
+    _controller = TabController(
+        vsync: this, length: 2, initialIndex: state.settingsUIState.tabIndex);
+    _controller!.addListener(_onTabChanged);
+  }
+
+  void _onTabChanged() {
+    final store = StoreProvider.of<AppState>(context);
+    store.dispatch(UpdateSettingsTab(tabIndex: _controller!.index));
   }
 
   @override
   void dispose() {
     _focusNode!.dispose();
+    _controller!.removeListener(_onTabChanged);
+    _controller!.dispose();
     super.dispose();
   }
 
@@ -169,256 +184,280 @@ class _ImportExportState extends State<ImportExport> {
         automaticallyImplyLeading: isMobile(context),
         title: Text(localization.importExport),
         actions: <Widget>[],
+        bottom: TabBar(
+          controller: _controller,
+          isScrollable: false,
+          tabs: [
+            Tab(
+              text: localization.import,
+            ),
+            Tab(
+              text: localization.export,
+            ),
+          ],
+        ),
       ),
-      body: AppForm(
+      body: AppTabForm(
         formKey: _formKey,
         focusNode: _focusNode,
-        child: ScrollableListView(
-          primary: true,
-          children: [
-            if (_response == null)
-              _FileImport(
-                importType: _importFormat,
-                onUploaded: (response) => {
-                  if (_importFormat == ImportType.csv)
-                    {
-                      setState(() => _response = response),
-                    }
-                  else
-                    {
-                      showToast(localization.startedImport),
-                    }
-                },
-                onImportTypeChanged: (importType) =>
-                    setState(() => _importFormat = importType!),
-              )
-            else
-              _FileMapper(
-                key: ValueKey(_response!.hash),
-                importType: _importFormat,
-                formKey: _formKey,
-                response: _response,
-                onCancelPressed: () => setState(() => _response = null),
-              ),
-            FormCard(
-              isLast: true,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                if (_isExporting)
-                  LinearProgressIndicator()
-                else ...[
-                  InputDecorator(
-                    decoration:
-                        InputDecoration(labelText: localization.exportFormat),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton<ImportType>(
-                          isDense: true,
-                          value: _exportFormat,
-                          onChanged: (dynamic value) {
-                            setState(() {
-                              _exportFormat = value;
-                            });
-                          },
-                          items: [
-                            ImportType.csv,
-                            ImportType.json,
-                          ]
-                              .map((importType) => DropdownMenuItem<ImportType>(
-                                  value: importType,
-                                  child:
-                                      Text(localization.lookup('$importType'))))
-                              .toList()),
+        tabController: _controller,
+        children: [
+          ScrollableListView(
+            primary: true,
+            children: [
+              if (_response == null)
+                _FileImport(
+                  importType: _importFormat,
+                  onUploaded: (response) => {
+                    if (_importFormat == ImportType.csv)
+                      {
+                        setState(() => _response = response),
+                      }
+                    else
+                      {
+                        showToast(localization.startedImport),
+                      }
+                  },
+                  onImportTypeChanged: (importType) =>
+                      setState(() => _importFormat = importType!),
+                )
+              else
+                _FileMapper(
+                  key: ValueKey(_response!.hash),
+                  importType: _importFormat,
+                  formKey: _formKey,
+                  response: _response,
+                  onCancelPressed: () => setState(() => _response = null),
+                ),
+            ],
+          ),
+          ScrollableListView(
+            children: [
+              FormCard(
+                isLast: true,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (_isExporting)
+                    LinearProgressIndicator()
+                  else ...[
+                    InputDecorator(
+                      decoration:
+                          InputDecoration(labelText: localization.exportFormat),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<ImportType>(
+                            isDense: true,
+                            value: _exportFormat,
+                            onChanged: (dynamic value) {
+                              setState(() {
+                                _exportFormat = value;
+                              });
+                            },
+                            items: [
+                              ImportType.csv,
+                              ImportType.json,
+                            ]
+                                .map((importType) =>
+                                    DropdownMenuItem<ImportType>(
+                                        value: importType,
+                                        child: Text(localization
+                                            .lookup('$importType'))))
+                                .toList()),
+                      ),
                     ),
-                  ),
-                  if (_exportFormat == ImportType.csv) ...[
-                    AppDropdownButton<ExportType>(
-                      value: _exportType,
-                      labelText: localization.exportType,
-                      onChanged: (dynamic value) {
-                        setState(() {
-                          _exportType = value;
-                        });
-                      },
-                      items: ExportType.values
-                          .map((importType) => DropdownMenuItem<ExportType>(
-                              value: importType,
-                              child: Text(localization.lookup('$importType'))))
-                          .toList(),
-                    ),
-                    if (DATE_FIELDS.containsKey(_exportType)) ...[
-                      AppDropdownButton<String>(
-                        value: _exportDate,
-                        labelText: localization.date,
-                        showBlank: true,
+                    if (_exportFormat == ImportType.csv) ...[
+                      AppDropdownButton<ExportType>(
+                        value: _exportType,
+                        labelText: localization.exportType,
                         onChanged: (dynamic value) {
                           setState(() {
-                            _exportDate = value;
+                            _exportType = value;
                           });
                         },
-                        items: DATE_FIELDS[_exportType]!
-                            .map((dateField) => DropdownMenuItem<String>(
-                                value: dateField,
-                                child: Text(localization.lookup('$dateField'))))
+                        items: ExportType.values
+                            .map((importType) => DropdownMenuItem<ExportType>(
+                                value: importType,
+                                child:
+                                    Text(localization.lookup('$importType'))))
                             .toList(),
                       ),
-                      if (_exportDate.isNotEmpty)
+                      if (DATE_FIELDS.containsKey(_exportType)) ...[
                         AppDropdownButton<String>(
-                          labelText: localization.dateRange,
-                          value: _exportDateRange,
+                          value: _exportDate,
+                          labelText: localization.date,
+                          showBlank: true,
                           onChanged: (dynamic value) {
                             setState(() {
-                              _exportDateRange = value;
+                              _exportDate = value;
                             });
                           },
-                          items: DATE_RANGES.map(
-                            (dateRange) {
-                              String? label = '';
-                              if (dateRange == 'last7') {
-                                label = localization.last7Days;
-                              } else if (dateRange == 'last30') {
-                                label = localization.last30Days;
-                              } else {
-                                label = localization.lookup('$dateRange');
-                              }
-                              return DropdownMenuItem<String>(
-                                value: dateRange,
-                                child: Text(label),
-                              );
+                          items: DATE_FIELDS[_exportType]!
+                              .map((dateField) => DropdownMenuItem<String>(
+                                  value: dateField,
+                                  child:
+                                      Text(localization.lookup('$dateField'))))
+                              .toList(),
+                        ),
+                        if (_exportDate.isNotEmpty)
+                          AppDropdownButton<String>(
+                            labelText: localization.dateRange,
+                            value: _exportDateRange,
+                            onChanged: (dynamic value) {
+                              setState(() {
+                                _exportDateRange = value;
+                              });
                             },
-                          ).toList(),
-                        ),
-                      if (_exportDateRange == 'custom') ...[
-                        DatePicker(
-                          labelText: localization.startDate,
-                          onSelected: (date, _) {
-                            setState(() {
-                              _exportStartDate = date;
-                            });
-                          },
-                          selectedDate: _exportStartDate,
-                        ),
-                        DatePicker(
-                          labelText: localization.endDate,
-                          onSelected: (date, _) {
-                            setState(() {
-                              _exportEndDate = date;
-                            });
-                          },
-                          selectedDate: _exportEndDate,
-                        ),
-                      ]
+                            items: DATE_RANGES.map(
+                              (dateRange) {
+                                String? label = '';
+                                if (dateRange == 'last7') {
+                                  label = localization.last7Days;
+                                } else if (dateRange == 'last30') {
+                                  label = localization.last30Days;
+                                } else {
+                                  label = localization.lookup('$dateRange');
+                                }
+                                return DropdownMenuItem<String>(
+                                  value: dateRange,
+                                  child: Text(label),
+                                );
+                              },
+                            ).toList(),
+                          ),
+                        if (_exportDateRange == 'custom') ...[
+                          DatePicker(
+                            labelText: localization.startDate,
+                            onSelected: (date, _) {
+                              setState(() {
+                                _exportStartDate = date;
+                              });
+                            },
+                            selectedDate: _exportStartDate,
+                          ),
+                          DatePicker(
+                            labelText: localization.endDate,
+                            onSelected: (date, _) {
+                              setState(() {
+                                _exportEndDate = date;
+                              });
+                            },
+                            selectedDate: _exportEndDate,
+                          ),
+                        ]
+                      ],
                     ],
-                  ],
-                  if (_exportFormat == ImportType.csv &&
-                      _exportType.hasDocuments)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 16),
-                      child: BoolDropdownButton(
-                          iconData: getEntityIcon(EntityType.document),
-                          label: localization.attachDocuments,
-                          value: _exportDocuments,
-                          onChanged: (value) {
-                            setState(() {
-                              _exportDocuments = value == true;
-                            });
-                          }),
-                    ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: AppButton(
-                          iconData: MdiIcons.export,
-                          label: localization.export.toUpperCase(),
-                          onPressed: () {
-                            final webClient = WebClient();
-                            final state =
-                                StoreProvider.of<AppState>(context).state;
-                            final credentials = state.credentials;
-                            String? url = credentials.url;
-
-                            if (_exportFormat == ImportType.json) {
-                              url = '$url/export';
-                            } else {
-                              // Workaround for mismatch in report
-                              // names in export vs schedules
-                              if (ExportType.ar_detailed == _exportType) {
-                                url = '$url/reports/ar_detail_report';
-                              } else if (ExportType.ar_summary == _exportType) {
-                                url = '$url/reports/ar_summary_report';
-                              } else if (ExportType.client_balance ==
-                                  _exportType) {
-                                url = '$url/reports/client_balance_report';
-                              } else if (ExportType.client_sales ==
-                                  _exportType) {
-                                url = '$url/reports/client_sales_report';
-                              } else if (ExportType.tax_summary ==
-                                  _exportType) {
-                                url = '$url/reports/tax_summary_report';
-                              } else if (ExportType.user_sales == _exportType) {
-                                url = '$url/reports/user_sales_report';
-                              } else {
-                                url = '$url/reports/$_exportType';
-                              }
-                            }
-
-                            setState(() => _isExporting = true);
-
-                            final data = {
-                              'send_email': true,
-                              'report_keys': <String>[],
-                              'date_key': _exportDate,
-                              'date_range': _exportDateRange,
-                              'start_date': _exportStartDate,
-                              'end_date': _exportEndDate,
-                              'document_email_attachment': _exportDocuments,
-                              'include_deleted':
-                                  state.company.reportIncludeDeleted,
-                            };
-
-                            if (_exportType == ExportType.profitloss) {
-                              data['is_income_billed'] = true;
-                              data['is_expense_billed'] = true;
-                              data['include_tax'] = true;
-                            }
-
-                            webClient
-                                .post(url, credentials.token,
-                                    data: json.encode(data))
-                                .then((dynamic result) {
-                              setState(() => _isExporting = false);
-                              showMessageDialog(
-                                  message: localization.exportedData);
-                            }).catchError((dynamic error) {
-                              setState(() => _isExporting = false);
-                              showErrorDialog(message: '$error');
-                            });
-                          },
-                        ),
+                    if (_exportFormat == ImportType.csv &&
+                        _exportType.hasDocuments)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16),
+                        child: BoolDropdownButton(
+                            iconData: getEntityIcon(EntityType.document),
+                            label: localization.attachDocuments,
+                            value: _exportDocuments,
+                            onChanged: (value) {
+                              setState(() {
+                                _exportDocuments = value == true;
+                              });
+                            }),
                       ),
-                      if (_exportFormat == ImportType.csv) ...[
-                        SizedBox(width: kGutterWidth),
+                    Row(
+                      children: [
                         Expanded(
                           child: AppButton(
-                            label: localization.schedule,
-                            iconData: Icons.schedule,
+                            iconData: MdiIcons.export,
+                            label: localization.export.toUpperCase(),
                             onPressed: () {
-                              createEntity(
-                                  entity: ScheduleEntity(
-                                          ScheduleEntity.TEMPLATE_EMAIL_REPORT)
-                                      .rebuild((b) => b
-                                        ..parameters.reportName =
-                                            _exportType.name));
+                              final webClient = WebClient();
+                              final state =
+                                  StoreProvider.of<AppState>(context).state;
+                              final credentials = state.credentials;
+                              String? url = credentials.url;
+
+                              if (_exportFormat == ImportType.json) {
+                                url = '$url/export';
+                              } else {
+                                // Workaround for mismatch in report
+                                // names in export vs schedules
+                                if (ExportType.ar_detailed == _exportType) {
+                                  url = '$url/reports/ar_detail_report';
+                                } else if (ExportType.ar_summary ==
+                                    _exportType) {
+                                  url = '$url/reports/ar_summary_report';
+                                } else if (ExportType.client_balance ==
+                                    _exportType) {
+                                  url = '$url/reports/client_balance_report';
+                                } else if (ExportType.client_sales ==
+                                    _exportType) {
+                                  url = '$url/reports/client_sales_report';
+                                } else if (ExportType.tax_summary ==
+                                    _exportType) {
+                                  url = '$url/reports/tax_summary_report';
+                                } else if (ExportType.user_sales ==
+                                    _exportType) {
+                                  url = '$url/reports/user_sales_report';
+                                } else {
+                                  url = '$url/reports/$_exportType';
+                                }
+                              }
+
+                              setState(() => _isExporting = true);
+
+                              final data = {
+                                'send_email': true,
+                                'report_keys': <String>[],
+                                'date_key': _exportDate,
+                                'date_range': _exportDateRange,
+                                'start_date': _exportStartDate,
+                                'end_date': _exportEndDate,
+                                'document_email_attachment': _exportDocuments,
+                                'include_deleted':
+                                    state.company.reportIncludeDeleted,
+                              };
+
+                              if (_exportType == ExportType.profitloss) {
+                                data['is_income_billed'] = true;
+                                data['is_expense_billed'] = true;
+                                data['include_tax'] = true;
+                              }
+
+                              webClient
+                                  .post(url, credentials.token,
+                                      data: json.encode(data))
+                                  .then((dynamic result) {
+                                setState(() => _isExporting = false);
+                                showMessageDialog(
+                                    message: localization.exportedData);
+                              }).catchError((dynamic error) {
+                                setState(() => _isExporting = false);
+                                showErrorDialog(message: '$error');
+                              });
                             },
                           ),
                         ),
+                        if (_exportFormat == ImportType.csv) ...[
+                          SizedBox(width: kGutterWidth),
+                          Expanded(
+                            child: AppButton(
+                              label: localization.schedule,
+                              iconData: Icons.schedule,
+                              onPressed: () {
+                                createEntity(
+                                    entity: ScheduleEntity(ScheduleEntity
+                                            .TEMPLATE_EMAIL_REPORT)
+                                        .rebuild((b) => b
+                                          ..parameters.reportName =
+                                              _exportType.name));
+                              },
+                            ),
+                          ),
+                        ],
                       ],
-                    ],
-                  )
+                    )
+                  ],
                 ],
-              ],
-            )
-          ],
-        ),
+              )
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -657,7 +696,10 @@ class _FileImportState extends State<_FileImport> {
       ));
 
     return FormCard(
-        crossAxisAlignment: CrossAxisAlignment.stretch, children: children);
+      isLast: true,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: children,
+    );
   }
 }
 

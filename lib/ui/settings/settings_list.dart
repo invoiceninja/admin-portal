@@ -509,6 +509,8 @@ class SettingsSearch extends StatelessWidget {
       kSettingsImportExport: [
         [
           'import',
+        ],
+        [
           'export',
         ],
       ],
