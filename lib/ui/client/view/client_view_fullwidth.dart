@@ -394,6 +394,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                           client: client,
                           viewLink: contact.silentLink,
                           copyLink: contact.link,
+                          style: PortalLinkStyle.dropdown,
                         )
                       ],
                     );

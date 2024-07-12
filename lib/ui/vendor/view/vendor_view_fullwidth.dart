@@ -302,6 +302,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                           client: null,
                           viewLink: contact.silentLink,
                           copyLink: contact.link,
+                          style: PortalLinkStyle.dropdown,
                         )
                       ],
                     );
