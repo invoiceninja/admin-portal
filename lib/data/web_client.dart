@@ -1,12 +1,14 @@
 // Dart imports:
 import 'dart:convert';
 import 'dart:core';
+import 'dart:io';
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 //import 'package:flutter_redux/flutter_redux.dart';
 
 // Package imports:
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -19,9 +21,28 @@ import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
+import 'package:invoiceninja_flutter/utils/connection_status.dart';
 
 class WebClient {
   const WebClient();
+
+  Future<bool> _isOnline() async {
+    final ConnectionStatusSingleton connectionStatus =
+        ConnectionStatusSingleton.getInstance();
+    await connectionStatus.checkConnection();
+    return connectionStatus.hasConnection;
+  }
+
+  Future<void> _cacheData(String key, dynamic data) async {
+    final box = await Hive.openBox('cachedResponses');
+    await box.put(key, data);
+  }
+
+  Future<dynamic> _getCachedData(String key) async {
+    final box = await Hive.openBox('cachedResponses');
+    final data = box.get(key);
+    return data;
+  }
 
   Future<dynamic> get(
     String url,
@@ -46,24 +67,35 @@ class WebClient {
 
     print('GET: $url');
 
-    final client = http.Client();
-    final http.Response response = await client.get(
-      Uri.parse(url),
-      headers: _getHeaders(url, token),
-    );
-    client.close();
+    final isOnline = await _isOnline();
+    if (isOnline) {
+      final client = http.Client();
+      final http.Response response = await client.get(
+        Uri.parse(url),
+        headers: _getHeaders(url, token),
+      );
+      client.close();
 
-    _checkResponse(url, response);
+      _checkResponse(url, response);
 
-    if (rawResponse) {
-      return response;
+      if (rawResponse) {
+        return response;
+      }
+
+      final dynamic jsonResponse = json.decode(response.body);
+
+      // Cache the response
+      await _cacheData(url, jsonResponse);
+
+      return jsonResponse;
+    } else {
+      final cachedData = await _getCachedData(url);
+      if (cachedData != null) {
+        print('Returning cached data');
+        return cachedData;
+      }
+      throw 'No internet connection available';
     }
-
-    final dynamic jsonResponse = json.decode(response.body);
-
-    //debugPrint(response.body, wrapWidth: 1000);
-
-    return jsonResponse;
   }
 
   Future<dynamic> post(
@@ -88,40 +120,56 @@ class WebClient {
     }
     http.Response response;
 
-    if (multipartFiles != null) {
-      response = await _uploadFiles(url, token, multipartFiles, data: data);
+    final isOnline = await _isOnline();
+    print("isOnline: $isOnline");
+    if (isOnline) {
+      if (multipartFiles != null) {
+        response = await _uploadFiles(url, token, multipartFiles, data: data);
+      } else {
+        final headers = _getHeaders(
+          url,
+          token,
+          secret: secret,
+          password: password,
+          idToken: idToken,
+        );
+        //print('Headers: $headers');
+
+        final client = http.Client();
+        response = await client
+            .post(
+              Uri.parse(url),
+              body: data,
+              headers: headers,
+            )
+            .timeout(
+              Duration(
+                seconds: rawResponse ? kMaxRawPostSeconds : kMaxPostSeconds,
+              ),
+            );
+        client.close();
+      }
+
+      _checkResponse(url, response);
+
+      if (rawResponse) {
+        return response;
+      }
+
+      final dynamic jsonResponse = json.decode(response.body);
+
+      // Cache the response
+      await _cacheData(url + data, jsonResponse);
+
+      return jsonResponse;
     } else {
-      final headers = _getHeaders(
-        url,
-        token,
-        secret: secret,
-        password: password,
-        idToken: idToken,
-      );
-      //print('Headers: $headers');
-
-      final client = http.Client();
-      response = await client
-          .post(
-            Uri.parse(url),
-            body: data,
-            headers: headers,
-          )
-          .timeout(
-            Duration(
-              seconds: rawResponse ? kMaxRawPostSeconds : kMaxPostSeconds,
-            ),
-          );
-      client.close();
+      final cachedData = await _getCachedData(url + data);
+      if (cachedData != null) {
+        print('Returning cached data');
+        return cachedData;
+      }
+      throw 'No internet connection available';
     }
-
-    _checkResponse(url, response);
-
-    if (rawResponse) {
-      return response;
-    }
-
-    return json.decode(response.body);
   }
 
   Future<dynamic> put(
