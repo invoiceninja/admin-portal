@@ -1,14 +1,13 @@
 // Dart imports:
 import 'dart:convert';
 import 'dart:core';
-import 'dart:io';
 
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 //import 'package:flutter_redux/flutter_redux.dart';
 
 // Package imports:
-import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
