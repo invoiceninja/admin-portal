@@ -13,7 +13,6 @@ import 'package:redux_logging/redux_logging.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 // import 'package:bitsdojo_window/bitsdojo_window.dart';
 
 // Project imports:
@@ -101,7 +100,6 @@ emyPxgcYxn/eR44/KJ4EBs+lVDR3veyJm+kXQ99b21/+jh5Xos1AnX5iItreGCc=
 ''';
 
 void main({bool isTesting = false}) async {
-  await Hive.initFlutter();
   final ConnectionStatusSingleton connectionStatus =
       ConnectionStatusSingleton.getInstance();
   connectionStatus.initialize();

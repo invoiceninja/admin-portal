@@ -86,7 +86,6 @@ dependencies:
   device_info_plus: ^9.1.0
   ios_open_subscriptions_settings: ^0.0.4
   connectivity_plus: ^6.0.3
-  hive_flutter: ^1.1.0
 
 dependency_overrides:
   intl: any

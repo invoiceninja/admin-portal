@@ -7,7 +7,6 @@ import 'package:flutter/foundation.dart';
 //import 'package:flutter_redux/flutter_redux.dart';
 
 // Package imports:
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
@@ -30,17 +29,6 @@ class WebClient {
         ConnectionStatusSingleton.getInstance();
     await connectionStatus.checkConnection();
     return connectionStatus.hasConnection;
-  }
-
-  Future<void> _cacheData(String key, dynamic data) async {
-    final box = await Hive.openBox('cachedResponses');
-    await box.put(key, data);
-  }
-
-  Future<dynamic> _getCachedData(String key) async {
-    final box = await Hive.openBox('cachedResponses');
-    final data = box.get(key);
-    return data;
   }
 
   Future<dynamic> get(
@@ -67,6 +55,8 @@ class WebClient {
     print('GET: $url');
 
     final isOnline = await _isOnline();
+    print("isOnline: $isOnline");
+
     if (isOnline) {
       final client = http.Client();
       final http.Response response = await client.get(
@@ -83,17 +73,9 @@ class WebClient {
 
       final dynamic jsonResponse = json.decode(response.body);
 
-      // Cache the response
-      await _cacheData(url, jsonResponse);
-
       return jsonResponse;
     } else {
-      final cachedData = await _getCachedData(url);
-      if (cachedData != null) {
-        print('Returning cached data');
-        return cachedData;
-      }
-      throw 'No internet connection available';
+      return Future.error("No internet connection available.");
     }
   }
 
@@ -121,6 +103,7 @@ class WebClient {
 
     final isOnline = await _isOnline();
     print("isOnline: $isOnline");
+
     if (isOnline) {
       if (multipartFiles != null) {
         response = await _uploadFiles(url, token, multipartFiles, data: data);
@@ -157,17 +140,9 @@ class WebClient {
 
       final dynamic jsonResponse = json.decode(response.body);
 
-      // Cache the response
-      await _cacheData(url + data, jsonResponse);
-
       return jsonResponse;
     } else {
-      final cachedData = await _getCachedData(url + data);
-      if (cachedData != null) {
-        print('Returning cached data');
-        return cachedData;
-      }
-      throw 'No internet connection available';
+      return Future.error("No internet connection available.");
     }
   }
 
@@ -191,27 +166,34 @@ class WebClient {
     }
     http.Response response;
 
-    if (multipartFile != null) {
-      response = await _uploadFiles(url, token, [multipartFile],
-          data: data, method: 'PUT');
+    final isOnline = await _isOnline();
+    print("isOnline: $isOnline");
+
+    if (isOnline) {
+      if (multipartFile != null) {
+        response = await _uploadFiles(url, token, [multipartFile],
+            data: data, method: 'PUT');
+      } else {
+        final client = http.Client();
+        response = await client.put(
+          Uri.parse(url),
+          body: data,
+          headers: _getHeaders(
+            url,
+            token,
+            password: password,
+            idToken: idToken,
+          ),
+        );
+        client.close();
+      }
+
+      _checkResponse(url, response);
+
+      return json.decode(response.body);
     } else {
-      final client = http.Client();
-      response = await client.put(
-        Uri.parse(url),
-        body: data,
-        headers: _getHeaders(
-          url,
-          token,
-          password: password,
-          idToken: idToken,
-        ),
-      );
-      client.close();
+      return Future.error("No internet connection available.");
     }
-
-    _checkResponse(url, response);
-
-    return json.decode(response.body);
   }
 
   Future<dynamic> delete(
@@ -229,22 +211,29 @@ class WebClient {
 
     print('Delete: $url');
 
-    final client = http.Client();
-    final http.Response response = await client.delete(
-      Uri.parse(url),
-      headers: _getHeaders(
-        url,
-        token,
-        password: password,
-        idToken: idToken,
-      ),
-      body: data,
-    );
-    client.close();
+    final isOnline = await _isOnline();
+    print("isOnline: $isOnline");
 
-    _checkResponse(url, response);
+    if (isOnline) {
+      final client = http.Client();
+      final http.Response response = await client.delete(
+        Uri.parse(url),
+        headers: _getHeaders(
+          url,
+          token,
+          password: password,
+          idToken: idToken,
+        ),
+        body: data,
+      );
+      client.close();
 
-    return json.decode(response.body);
+      _checkResponse(url, response);
+
+      return json.decode(response.body);
+    } else {
+      return Future.error("No internet connection available.");
+    }
   }
 }
 
