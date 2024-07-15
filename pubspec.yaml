@@ -88,7 +88,6 @@ dependencies:
   hive: ^2.2.3
   connectivity_plus: ^6.0.3
   hive_flutter: ^1.1.0
-  flutter_offline: ^4.0.0
 
 dependency_overrides:
   intl: any

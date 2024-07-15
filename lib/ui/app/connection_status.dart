@@ -1,11 +1,8 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:invoiceninja_flutter/utils/connection_status.dart';
 
 class ConnStatusBannerState extends State<ConnStatusBanner> {
-  late StreamSubscription _connectionChangeStream;
-
   bool isOffline = false;
 
   @override
@@ -14,8 +11,7 @@ class ConnStatusBannerState extends State<ConnStatusBanner> {
 
     final ConnectionStatusSingleton connectionStatus =
         ConnectionStatusSingleton.getInstance();
-    _connectionChangeStream =
-        connectionStatus.connectionChange.listen(connectionChanged);
+    connectionStatus.connectionChange.listen(connectionChanged);
 
     setState(() {
       isOffline = !connectionStatus.hasConnection;
