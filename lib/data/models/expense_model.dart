@@ -128,7 +128,9 @@ abstract class ExpenseEntity extends Object
       paymentDate: (company?.markExpensesPaid ?? false)
           ? convertDateTimeToSqlDate()
           : '',
-      paymentTypeId: company?.settings.defaultExpensePaymentTypeId ?? '',
+      paymentTypeId: (company?.markExpensesPaid == true)
+          ? company?.settings.defaultExpensePaymentTypeId ?? ''
+          : '',
       exchangeRate: 1,
       currencyId: (vendor != null && vendor.hasCurrency)
           ? vendor.currencyId
