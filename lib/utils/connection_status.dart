@@ -46,7 +46,7 @@ class ConnectionStatusSingleton {
   }
 
   Future<bool> checkConnection() async {
-    bool previousConnection = hasConnection;
+    final previousConnection = hasConnection;
 
     hasConnection = await isConnected;
 

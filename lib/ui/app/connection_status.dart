@@ -38,7 +38,7 @@ class ConnStatusBannerState extends State<ConnStatusBanner> {
   }
 
   @override
-  Widget build(BuildContext ctxt) {
+  Widget build(BuildContext context) {
     return shouldShowOnlineBanner
         ? Container(
             color: Colors.green,
@@ -54,7 +54,7 @@ class ConnStatusBannerState extends State<ConnStatusBanner> {
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 12,
-                            fontFamily: "Roboto"),
+                            fontFamily: 'Roboto'),
                       ),
                     ),
                   ),
@@ -77,7 +77,7 @@ class ConnStatusBannerState extends State<ConnStatusBanner> {
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 12,
-                                fontFamily: "Roboto"),
+                                fontFamily: 'Roboto'),
                           ),
                         ),
                       ),

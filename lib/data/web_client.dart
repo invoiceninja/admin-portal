@@ -74,7 +74,7 @@ class WebClient {
 
       return jsonResponse;
     } else {
-      return Future.error("No internet connection available.");
+      return Future.error('No internet connection available');
     }
   }
 
@@ -140,7 +140,7 @@ class WebClient {
 
       return jsonResponse;
     } else {
-      return Future.error("No internet connection available.");
+      return Future.error('No internet connection available');
     }
   }
 
@@ -189,7 +189,7 @@ class WebClient {
 
       return json.decode(response.body);
     } else {
-      return Future.error("No internet connection available.");
+      return Future.error('No internet connection available');
     }
   }
 
@@ -228,7 +228,7 @@ class WebClient {
 
       return json.decode(response.body);
     } else {
-      return Future.error("No internet connection available.");
+      return Future.error('No internet connection available');
     }
   }
 }
