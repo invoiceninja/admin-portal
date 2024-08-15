@@ -323,7 +323,7 @@ void handleBankAccountAction(BuildContext? context,
     case EntityAction.reconnect:
       final credentials = state.credentials;
       final url = '${credentials.url}/one_time_token';
-      const integrationType = BankAccountEntity.INTEGRATION_TYPE_YODLEE;
+      final integrationType = bankAccount.integrationType;
 
       store.dispatch(StartSaving());
       WebClient()
