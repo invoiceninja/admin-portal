@@ -755,6 +755,16 @@ Future handleCreditAction(BuildContext context, List<BaseEntity> credits,
         );
       }
       break;
+    case EntityAction.runTemplate:
+      showDialog<void>(
+        context: navigatorKey.currentContext!,
+        barrierDismissible: false,
+        builder: (context) => RunTemplateDialog(
+          entityType: EntityType.credit,
+          entities: credits,
+        ),
+      );
+      break;
     case EntityAction.addComment:
       final addedComment = await showDialog<bool>(
         context: navigatorKey.currentContext!,

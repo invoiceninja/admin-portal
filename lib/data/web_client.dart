@@ -19,9 +19,17 @@ import 'package:invoiceninja_flutter/.env.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/strings.dart';
+import 'package:invoiceninja_flutter/utils/connection_status.dart';
 
 class WebClient {
   const WebClient();
+
+  Future<bool> _isOnline() async {
+    final ConnectionStatusSingleton connectionStatus =
+        ConnectionStatusSingleton.getInstance();
+    await connectionStatus.checkConnection();
+    return connectionStatus.hasConnection;
+  }
 
   Future<dynamic> get(
     String url,
@@ -46,24 +54,28 @@ class WebClient {
 
     print('GET: $url');
 
-    final client = http.Client();
-    final http.Response response = await client.get(
-      Uri.parse(url),
-      headers: _getHeaders(url, token),
-    );
-    client.close();
+    final isOnline = await _isOnline();
 
-    _checkResponse(url, response);
+    if (isOnline) {
+      final client = http.Client();
+      final http.Response response = await client.get(
+        Uri.parse(url),
+        headers: _getHeaders(url, token),
+      );
+      client.close();
 
-    if (rawResponse) {
-      return response;
+      _checkResponse(url, response);
+
+      if (rawResponse) {
+        return response;
+      }
+
+      final dynamic jsonResponse = json.decode(response.body);
+
+      return jsonResponse;
+    } else {
+      return Future.error('No internet connection available');
     }
-
-    final dynamic jsonResponse = json.decode(response.body);
-
-    //debugPrint(response.body, wrapWidth: 1000);
-
-    return jsonResponse;
   }
 
   Future<dynamic> post(
@@ -88,40 +100,48 @@ class WebClient {
     }
     http.Response response;
 
-    if (multipartFiles != null) {
-      response = await _uploadFiles(url, token, multipartFiles, data: data);
+    final isOnline = await _isOnline();
+
+    if (isOnline) {
+      if (multipartFiles != null) {
+        response = await _uploadFiles(url, token, multipartFiles, data: data);
+      } else {
+        final headers = _getHeaders(
+          url,
+          token,
+          secret: secret,
+          password: password,
+          idToken: idToken,
+        );
+        //print('Headers: $headers');
+
+        final client = http.Client();
+        response = await client
+            .post(
+              Uri.parse(url),
+              body: data,
+              headers: headers,
+            )
+            .timeout(
+              Duration(
+                seconds: rawResponse ? kMaxRawPostSeconds : kMaxPostSeconds,
+              ),
+            );
+        client.close();
+      }
+
+      _checkResponse(url, response);
+
+      if (rawResponse) {
+        return response;
+      }
+
+      final dynamic jsonResponse = json.decode(response.body);
+
+      return jsonResponse;
     } else {
-      final headers = _getHeaders(
-        url,
-        token,
-        secret: secret,
-        password: password,
-        idToken: idToken,
-      );
-      //print('Headers: $headers');
-
-      final client = http.Client();
-      response = await client
-          .post(
-            Uri.parse(url),
-            body: data,
-            headers: headers,
-          )
-          .timeout(
-            Duration(
-              seconds: rawResponse ? kMaxRawPostSeconds : kMaxPostSeconds,
-            ),
-          );
-      client.close();
+      return Future.error('No internet connection available');
     }
-
-    _checkResponse(url, response);
-
-    if (rawResponse) {
-      return response;
-    }
-
-    return json.decode(response.body);
   }
 
   Future<dynamic> put(
@@ -144,27 +164,33 @@ class WebClient {
     }
     http.Response response;
 
-    if (multipartFile != null) {
-      response = await _uploadFiles(url, token, [multipartFile],
-          data: data, method: 'PUT');
+    final isOnline = await _isOnline();
+
+    if (isOnline) {
+      if (multipartFile != null) {
+        response = await _uploadFiles(url, token, [multipartFile],
+            data: data, method: 'PUT');
+      } else {
+        final client = http.Client();
+        response = await client.put(
+          Uri.parse(url),
+          body: data,
+          headers: _getHeaders(
+            url,
+            token,
+            password: password,
+            idToken: idToken,
+          ),
+        );
+        client.close();
+      }
+
+      _checkResponse(url, response);
+
+      return json.decode(response.body);
     } else {
-      final client = http.Client();
-      response = await client.put(
-        Uri.parse(url),
-        body: data,
-        headers: _getHeaders(
-          url,
-          token,
-          password: password,
-          idToken: idToken,
-        ),
-      );
-      client.close();
+      return Future.error('No internet connection available');
     }
-
-    _checkResponse(url, response);
-
-    return json.decode(response.body);
   }
 
   Future<dynamic> delete(
@@ -182,22 +208,28 @@ class WebClient {
 
     print('Delete: $url');
 
-    final client = http.Client();
-    final http.Response response = await client.delete(
-      Uri.parse(url),
-      headers: _getHeaders(
-        url,
-        token,
-        password: password,
-        idToken: idToken,
-      ),
-      body: data,
-    );
-    client.close();
+    final isOnline = await _isOnline();
 
-    _checkResponse(url, response);
+    if (isOnline) {
+      final client = http.Client();
+      final http.Response response = await client.delete(
+        Uri.parse(url),
+        headers: _getHeaders(
+          url,
+          token,
+          password: password,
+          idToken: idToken,
+        ),
+        body: data,
+      );
+      client.close();
 
-    return json.decode(response.body);
+      _checkResponse(url, response);
+
+      return json.decode(response.body);
+    } else {
+      return Future.error('No internet connection available');
+    }
   }
 }
 

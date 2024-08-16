@@ -320,8 +320,7 @@ abstract class InvoiceEntity extends Object
         ..lineItems.replace(lineItems
             .where((lineItem) =>
                 lineItem.typeId != InvoiceItemEntity.TYPE_UNPAID_FEE)
-            .map((lineItem) => lineItem
-                .rebuild((b) => b..typeId = InvoiceItemEntity.TYPE_STANDARD))
+            .map((lineItem) => lineItem.clone)
             .toList())
         ..invitations.replace(
           invitations
@@ -1651,7 +1650,6 @@ abstract class InvoiceItemEntity
   static const TYPE_UNPAID_FEE = '3';
   static const TYPE_PAID_FEE = '4';
   static const TYPE_LATE_FEE = '5';
-  static const TYPE_EXPENSE = '6';
 
   @override
   @memoized
@@ -1761,7 +1759,7 @@ abstract class InvoiceItemEntity
 
   bool get isTask => typeId == TYPE_TASK;
 
-  bool get isExpense => typeId == TYPE_EXPENSE;
+  bool get isExpense => (expenseId ?? '').isNotEmpty;
 
   bool get hasOverrideTax => taxCategoryId == kTaxCategoryOverrideTax;
 

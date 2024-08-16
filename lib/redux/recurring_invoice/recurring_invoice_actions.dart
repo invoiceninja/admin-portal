@@ -727,6 +727,16 @@ void handleRecurringInvoiceAction(BuildContext? context,
         recurringInvoiceIds,
       ));
       break;
+    case EntityAction.runTemplate:
+      showDialog<void>(
+        context: navigatorKey.currentContext!,
+        barrierDismissible: false,
+        builder: (context) => RunTemplateDialog(
+          entityType: EntityType.recurringInvoice,
+          entities: recurringInvoices,
+        ),
+      );
+      break;
     case EntityAction.addComment:
       final addedComment = await showDialog<bool>(
         context: navigatorKey.currentContext!,

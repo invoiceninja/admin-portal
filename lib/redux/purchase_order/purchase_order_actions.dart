@@ -879,6 +879,16 @@ void handlePurchaseOrderAction(BuildContext? context,
         entities: [purchaseOrder],
       );
       break;
+    case EntityAction.runTemplate:
+      showDialog<void>(
+        context: navigatorKey.currentContext!,
+        barrierDismissible: false,
+        builder: (context) => RunTemplateDialog(
+          entityType: EntityType.purchaseOrder,
+          entities: purchaseOrders,
+        ),
+      );
+      break;
     case EntityAction.addComment:
       final addedComment = await showDialog<bool>(
         context: navigatorKey.currentContext!,

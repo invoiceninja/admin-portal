@@ -3,6 +3,7 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  connectivity_plus
   desktop_drop
   file_selector_windows
   local_auth_windows

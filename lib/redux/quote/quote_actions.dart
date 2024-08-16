@@ -809,6 +809,16 @@ Future handleQuoteAction(
         );
       }
       break;
+    case EntityAction.runTemplate:
+      showDialog<void>(
+        context: navigatorKey.currentContext!,
+        barrierDismissible: false,
+        builder: (context) => RunTemplateDialog(
+          entityType: EntityType.quote,
+          entities: quotes,
+        ),
+      );
+      break;
     case EntityAction.addComment:
       final addedComment = await showDialog<bool>(
         context: navigatorKey.currentContext!,
