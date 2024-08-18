@@ -71,6 +71,8 @@ class _EntityDropdownState extends State<EntityDropdown> {
   String _filter = '';
   BuiltMap<String?, SelectableEntity?>? _entityMap;
   final _scrollController = ScrollController();
+  final ValueNotifier<OptionsViewOpenDirection> autocompletePositionNotifier =
+      ValueNotifier(OptionsViewOpenDirection.down);
 
   @override
   void initState() {
@@ -253,6 +255,28 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
     // TODO remove DEMO_MODE check
     if (isNotMobile(context) && !Config.DEMO_MODE) {
+      
+      // Checking available spaces to set OptionsViewOpenDirection
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final RenderBox? box = context.findRenderObject() as RenderBox?;
+        if (box == null) {
+          return;
+        }
+
+        final position = box.localToGlobal(Offset.zero);
+        final screenHeight = MediaQuery.of(context).size.height;
+        final widgetBottomPosition = position.dy + box.size.height;
+
+        final availableSpaceBelow = screenHeight - widgetBottomPosition;
+
+        if (availableSpaceBelow < 270) {
+          autocompletePositionNotifier.value = OptionsViewOpenDirection.up;
+        }
+      });
+      
+      return ValueListenableBuilder<OptionsViewOpenDirection>(
+          valueListenable: autocompletePositionNotifier,
+          builder: (context, width, _child) {
       return RawAutocomplete<SelectableEntity>(
         focusNode: _focusNode,
         textEditingController: _textController,
@@ -351,6 +375,7 @@ class _EntityDropdownState extends State<EntityDropdown> {
             suffixIconButton: iconButton,
           );
         },
+        optionsViewOpenDirection: autocompletePositionNotifier.value,
         optionsViewBuilder: (BuildContext context,
             AutocompleteOnSelected<SelectableEntity> onSelected,
             Iterable<SelectableEntity> options) {
@@ -361,7 +386,9 @@ class _EntityDropdownState extends State<EntityDropdown> {
           return Theme(
             data: theme,
             child: Align(
-              alignment: Alignment.topLeft,
+              alignment: autocompletePositionNotifier.value == OptionsViewOpenDirection.up
+                      ? Alignment.bottomLeft
+                      : Alignment.topLeft,
               child: Material(
                 elevation: 4,
                 child: AppBorder(
@@ -412,6 +439,8 @@ class _EntityDropdownState extends State<EntityDropdown> {
             ),
           );
         },
+      );
+      },
       );
     }
 
