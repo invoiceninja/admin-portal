@@ -322,6 +322,26 @@ class _PaymentSettingsState extends State<PaymentSettings>
                       onChanged: (value) => viewModel.onCompanyChanged(company
                           .rebuild((b) => b..convertPaymentCurrency = value)),
                     ),
+                  BoolDropdownButton(
+                    value: settings.paymentFlow ==
+                            SettingsEntity.PAYMENT_FLOW_SMOOTH
+                        ? true
+                        : settings.paymentFlow ==
+                                SettingsEntity.PAYMENT_FLOW_DEFAULT
+                            ? false
+                            : state.settingsUIState.isFiltered
+                                ? null
+                                : false,
+                    onChanged: (value) =>
+                        viewModel.onSettingsChanged(settings.rebuild((b) => b
+                          ..paymentFlow = value == true
+                              ? SettingsEntity.PAYMENT_FLOW_SMOOTH
+                              : value == false
+                                  ? SettingsEntity.PAYMENT_FLOW_DEFAULT
+                                  : null)),
+                    label: localization.onePageCheckout,
+                    helpLabel: localization.onePageCheckoutHelp,
+                  ),
                 ],
               ),
             ],

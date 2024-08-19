@@ -426,6 +426,7 @@ class SettingsSearch extends StatelessWidget {
           'auto_bill_standard_invoices#2023-01-17',
           'client_initiated_payments#2023-03-20',
           'use_available_payments#2024-02-19',
+          'one_page_checkout#2024-08-19',
         ],
         [
           'payment_type',
