@@ -213,8 +213,11 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                                         final updatedRule = await showDialog<
                                                 TransactionRuleCriteriaEntity>(
                                             context: context,
-                                            builder: (context) =>
-                                                _RuleCriteria(criteria: rule));
+                                            builder: (context) => _RuleCriteria(
+                                                  criteria: rule,
+                                                  type:
+                                                      transactionRule.appliesTo,
+                                                ));
                                         if (updatedRule != null) {
                                           final index = transactionRule.rules
                                               .indexOf(rule);
@@ -248,7 +251,9 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                         final rule =
                             await showDialog<TransactionRuleCriteriaEntity>(
                                 context: context,
-                                builder: (context) => _RuleCriteria());
+                                builder: (context) => _RuleCriteria(
+                                      type: transactionRule.appliesTo,
+                                    ));
 
                         if (rule != null) {
                           viewModel.onChanged(transactionRule
@@ -326,10 +331,12 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
 class _RuleCriteria extends StatefulWidget {
   const _RuleCriteria({
     Key? key,
+    required this.type,
     this.criteria,
   }) : super(key: key);
 
   final TransactionRuleCriteriaEntity? criteria;
+  final String type;
 
   @override
   State<_RuleCriteria> createState() => __RuleCriteriaState();
@@ -388,16 +395,65 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                         : TransactionRuleCriteriaEntity.NUMBER_OPERATOR_EQUALS);
                 });
               },
-              items: [
-                DropdownMenuItem<String>(
-                  child: Text(localization.description),
-                  value: TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION,
-                ),
-                DropdownMenuItem<String>(
-                  child: Text(localization.amount),
-                  value: TransactionRuleCriteriaEntity.SEARCH_KEY_AMOUNT,
-                ),
-              ],
+              items: widget.type == TransactionEntity.TYPE_WITHDRAWL
+                  ? [
+                      DropdownMenuItem<String>(
+                        child: Text(localization.description),
+                        value: TransactionRuleCriteriaEntity
+                            .SEARCH_KEY_DESCRIPTION,
+                      ),
+                      DropdownMenuItem<String>(
+                        child: Text(localization.amount),
+                        value: TransactionRuleCriteriaEntity.SEARCH_KEY_AMOUNT,
+                      ),
+                    ]
+                  : [
+                      DropdownMenuItem<String>(
+                        child: Text(
+                            localization.client + ' - ' + localization.email),
+                        value: TransactionRuleCriteriaEntity
+                            .SEARCH_KEY_CLIENT_EMAIL,
+                      ),
+                      DropdownMenuItem<String>(
+                        child: Text(localization.client +
+                            ' - ' +
+                            localization.idNumber),
+                        value: TransactionRuleCriteriaEntity
+                            .SEARCH_KEY_CLIENT_ID_NUMBER,
+                      ),
+                      DropdownMenuItem<String>(
+                        child: Text(
+                            localization.invoice + ' - ' + localization.number),
+                        value: TransactionRuleCriteriaEntity
+                            .SEARCH_KEY_INVOICE_NUMBER,
+                      ),
+                      DropdownMenuItem<String>(
+                        child: Text(
+                            localization.invoice + ' - ' + localization.amount),
+                        value: TransactionRuleCriteriaEntity
+                            .SEARCH_KEY_INVOICE_AMOUNT,
+                      ),
+                      DropdownMenuItem<String>(
+                        child: Text(localization.invoice +
+                            ' - ' +
+                            localization.poNumber),
+                        value: TransactionRuleCriteriaEntity
+                            .SEARCH_KEY_INVOICE_PO_NUMBER,
+                      ),
+                      DropdownMenuItem<String>(
+                        child: Text(
+                            localization.payment + ' - ' + localization.amount),
+                        value: TransactionRuleCriteriaEntity
+                            .SEARCH_KEY_PAYMENT_AMOUNT,
+                      ),
+                      DropdownMenuItem<String>(
+                        child: Text(localization.payment +
+                            ' - ' +
+                            localization.transactionReference),
+                        value: TransactionRuleCriteriaEntity
+                            .SEARCH_KEY_PAYMENT_TRANSACTION_REFERENCE,
+                      ),
+                    ],
             ),
             AppDropdownButton<String>(
               labelText: localization.operator,
@@ -407,8 +463,15 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                   _criteria = _criteria!.rebuild((b) => b..operator = value);
                 });
               },
-              items: _criteria!.searchKey ==
-                      TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION
+              items: [
+                TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION,
+                TransactionRuleCriteriaEntity
+                    .SEARCH_KEY_PAYMENT_TRANSACTION_REFERENCE,
+                TransactionRuleCriteriaEntity.SEARCH_KEY_INVOICE_NUMBER,
+                TransactionRuleCriteriaEntity.SEARCH_KEY_CLIENT_ID_NUMBER,
+                TransactionRuleCriteriaEntity.SEARCH_KEY_CLIENT_EMAIL,
+                TransactionRuleCriteriaEntity.SEARCH_KEY_INVOICE_PO_NUMBER,
+              ].contains(_criteria!.searchKey)
                   ? [
                       DropdownMenuItem<String>(
                         child: Text(localization.contains),
