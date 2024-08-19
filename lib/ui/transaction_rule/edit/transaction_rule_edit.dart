@@ -166,42 +166,26 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                   children: [
                     if (transactionRule.rules.isNotEmpty) ...[
                       Row(
-                        children: transactionRule.appliesTo ==
-                                TransactionEntity.TYPE_WITHDRAWL
-                            ? [
-                                Expanded(
-                                    child: Text(
-                                  localization.field,
-                                  style: textStyle,
-                                )),
-                                Expanded(
-                                  child: Text(
-                                    localization.operator,
-                                    style: textStyle,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    localization.value,
-                                    style: textStyle,
-                                  ),
-                                ),
-                                SizedBox(width: 100),
-                              ]
-                            : [
-                                Expanded(
-                                  child: Text(
-                                    localization.operator,
-                                    style: textStyle,
-                                  ),
-                                ),
-                                Expanded(
-                                    child: Text(
-                                  localization.field,
-                                  style: textStyle,
-                                )),
-                                SizedBox(width: 100),
-                              ],
+                        children: [
+                          Expanded(
+                              child: Text(
+                            localization.field,
+                            style: textStyle,
+                          )),
+                          Expanded(
+                            child: Text(
+                              localization.operator,
+                              style: textStyle,
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              localization.value,
+                              style: textStyle,
+                            ),
+                          ),
+                          SizedBox(width: 100),
+                        ],
                       ),
                       SizedBox(height: 4),
                       for (var rule in transactionRule.rules)
@@ -225,6 +209,12 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                                       )
                                     ]
                                   : [
+                                      Expanded(
+                                        child: Text(
+                                            rule.searchKey.contains('amount')
+                                                ? localization.amount
+                                                : localization.description),
+                                      ),
                                       Expanded(
                                         child: Text(
                                             localization.lookup(rule.operator)),
