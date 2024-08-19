@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/expense_category_model.dart';
+import 'package:invoiceninja_flutter/data/models/transaction_model.dart';
 import 'package:invoiceninja_flutter/data/models/transaction_rule_model.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/expense_category/expense_category_actions.dart';
@@ -124,6 +126,19 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                           : null,
                     ),
                     SizedBox(height: 16),
+                    BoolDropdownButton(
+                      label: localization.appliesTo,
+                      value: transactionRule.appliesTo ==
+                          TransactionEntity.TYPE_WITHDRAWL,
+                      onChanged: (value) {
+                        viewModel.onChanged(transactionRule.rebuild((b) => b
+                          ..appliesTo = (value == true
+                              ? TransactionEntity.TYPE_WITHDRAWL
+                              : TransactionEntity.TYPE_DEPOSIT)));
+                      },
+                      enabledLabel: localization.withdrawal,
+                      disabledLabel: localization.deposit,
+                    ),
                     SwitchListTile(
                       title: Text(localization.matchAllRules),
                       subtitle: Text(localization.matchAllRulesHelp),
@@ -250,52 +265,55 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                     ),
                   ],
                 ),
-                FormCard(
-                  children: [
-                    EntityDropdown(
-                      entityType: EntityType.vendor,
-                      entityId: transactionRule.vendorId,
-                      entityList: memoizedDropdownVendorList(
-                          state.vendorState.map,
-                          state.vendorState.list,
-                          state.userState.map,
-                          state.staticState),
-                      labelText: localization.vendor,
-                      onSelected: (vendor) {
-                        viewModel.onChanged(transactionRule
-                            .rebuild((b) => b..vendorId = vendor?.id ?? ''));
-                      },
-                      onCreateNew: (completer, name) {
-                        store.dispatch(SaveVendorRequest(
-                            vendor:
-                                VendorEntity().rebuild((b) => b..name = name),
-                            completer: completer));
-                      },
-                    ),
-                    EntityDropdown(
-                      entityType: EntityType.expenseCategory,
-                      entityId: transactionRule.categoryId,
-                      entityList: memoizedDropdownExpenseCategoryList(
-                        state.expenseCategoryState.map,
-                        state.expenseCategoryState.list,
-                        state.staticState,
-                        state.userState.map,
-                        transactionRule.categoryId,
+                if (transactionRule.appliesTo ==
+                    TransactionEntity.TYPE_WITHDRAWL)
+                  FormCard(
+                    isLast: true,
+                    children: [
+                      EntityDropdown(
+                        entityType: EntityType.vendor,
+                        entityId: transactionRule.vendorId,
+                        entityList: memoizedDropdownVendorList(
+                            state.vendorState.map,
+                            state.vendorState.list,
+                            state.userState.map,
+                            state.staticState),
+                        labelText: localization.vendor,
+                        onSelected: (vendor) {
+                          viewModel.onChanged(transactionRule
+                              .rebuild((b) => b..vendorId = vendor?.id ?? ''));
+                        },
+                        onCreateNew: (completer, name) {
+                          store.dispatch(SaveVendorRequest(
+                              vendor:
+                                  VendorEntity().rebuild((b) => b..name = name),
+                              completer: completer));
+                        },
                       ),
-                      labelText: localization.category,
-                      onSelected: (category) {
-                        viewModel.onChanged(transactionRule.rebuild(
-                            (b) => b..categoryId = category?.id ?? ''));
-                      },
-                      onCreateNew: (completer, name) {
-                        store.dispatch(SaveExpenseCategoryRequest(
-                            expenseCategory: ExpenseCategoryEntity()
-                                .rebuild((b) => b..name = name),
-                            completer: completer));
-                      },
-                    ),
-                  ],
-                ),
+                      EntityDropdown(
+                        entityType: EntityType.expenseCategory,
+                        entityId: transactionRule.categoryId,
+                        entityList: memoizedDropdownExpenseCategoryList(
+                          state.expenseCategoryState.map,
+                          state.expenseCategoryState.list,
+                          state.staticState,
+                          state.userState.map,
+                          transactionRule.categoryId,
+                        ),
+                        labelText: localization.category,
+                        onSelected: (category) {
+                          viewModel.onChanged(transactionRule.rebuild(
+                              (b) => b..categoryId = category?.id ?? ''));
+                        },
+                        onCreateNew: (completer, name) {
+                          store.dispatch(SaveExpenseCategoryRequest(
+                              expenseCategory: ExpenseCategoryEntity()
+                                  .rebuild((b) => b..name = name),
+                              completer: completer));
+                        },
+                      ),
+                    ],
+                  ),
               ],
             );
           },
