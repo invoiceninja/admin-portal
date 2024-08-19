@@ -364,8 +364,9 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
     if (_criteria!.searchKey.isEmpty ||
         _criteria!.operator.isEmpty ||
         (_criteria!.value.isEmpty &&
-            _criteria!.operator !=
-                TransactionRuleCriteriaEntity.STRING_OPERATOR_IS_EMPTY)) {
+            (_criteria!.operator !=
+                    TransactionRuleCriteriaEntity.STRING_OPERATOR_IS_EMPTY &&
+                widget.type == TransactionEntity.TYPE_WITHDRAWL))) {
       return;
     }
 
@@ -382,79 +383,34 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            AppDropdownButton<String>(
-              labelText: localization.field,
-              value: _criteria!.searchKey,
-              onChanged: (dynamic value) {
-                setState(() {
-                  _criteria = _criteria!.rebuild((b) => b
-                    ..searchKey = value
-                    ..operator = value ==
-                            TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION
-                        ? TransactionRuleCriteriaEntity.STRING_OPERATOR_CONTAINS
-                        : TransactionRuleCriteriaEntity.NUMBER_OPERATOR_EQUALS);
-                });
-              },
-              items: widget.type == TransactionEntity.TYPE_WITHDRAWL
-                  ? [
-                      DropdownMenuItem<String>(
-                        child: Text(localization.description),
-                        value: TransactionRuleCriteriaEntity
-                            .SEARCH_KEY_DESCRIPTION,
-                      ),
-                      DropdownMenuItem<String>(
-                        child: Text(localization.amount),
-                        value: TransactionRuleCriteriaEntity.SEARCH_KEY_AMOUNT,
-                      ),
-                    ]
-                  : [
-                      DropdownMenuItem<String>(
-                        child: Text(
-                            localization.client + ' - ' + localization.email),
-                        value: TransactionRuleCriteriaEntity
-                            .SEARCH_KEY_CLIENT_EMAIL,
-                      ),
-                      DropdownMenuItem<String>(
-                        child: Text(localization.client +
-                            ' - ' +
-                            localization.idNumber),
-                        value: TransactionRuleCriteriaEntity
-                            .SEARCH_KEY_CLIENT_ID_NUMBER,
-                      ),
-                      DropdownMenuItem<String>(
-                        child: Text(
-                            localization.invoice + ' - ' + localization.number),
-                        value: TransactionRuleCriteriaEntity
-                            .SEARCH_KEY_INVOICE_NUMBER,
-                      ),
-                      DropdownMenuItem<String>(
-                        child: Text(
-                            localization.invoice + ' - ' + localization.amount),
-                        value: TransactionRuleCriteriaEntity
-                            .SEARCH_KEY_INVOICE_AMOUNT,
-                      ),
-                      DropdownMenuItem<String>(
-                        child: Text(localization.invoice +
-                            ' - ' +
-                            localization.poNumber),
-                        value: TransactionRuleCriteriaEntity
-                            .SEARCH_KEY_INVOICE_PO_NUMBER,
-                      ),
-                      DropdownMenuItem<String>(
-                        child: Text(
-                            localization.payment + ' - ' + localization.amount),
-                        value: TransactionRuleCriteriaEntity
-                            .SEARCH_KEY_PAYMENT_AMOUNT,
-                      ),
-                      DropdownMenuItem<String>(
-                        child: Text(localization.payment +
-                            ' - ' +
-                            localization.transactionReference),
-                        value: TransactionRuleCriteriaEntity
-                            .SEARCH_KEY_PAYMENT_TRANSACTION_REFERENCE,
-                      ),
-                    ],
-            ),
+            if (widget.type == TransactionEntity.TYPE_WITHDRAWL)
+              AppDropdownButton<String>(
+                labelText: localization.field,
+                value: _criteria!.searchKey,
+                onChanged: (dynamic value) {
+                  setState(() {
+                    _criteria = _criteria!.rebuild((b) => b
+                      ..searchKey = value
+                      ..operator = value ==
+                              TransactionRuleCriteriaEntity
+                                  .SEARCH_KEY_DESCRIPTION
+                          ? TransactionRuleCriteriaEntity
+                              .STRING_OPERATOR_CONTAINS
+                          : TransactionRuleCriteriaEntity
+                              .NUMBER_OPERATOR_EQUALS);
+                  });
+                },
+                items: [
+                  DropdownMenuItem<String>(
+                    child: Text(localization.description),
+                    value: TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION,
+                  ),
+                  DropdownMenuItem<String>(
+                    child: Text(localization.amount),
+                    value: TransactionRuleCriteriaEntity.SEARCH_KEY_AMOUNT,
+                  ),
+                ],
+              ),
             AppDropdownButton<String>(
               labelText: localization.operator,
               value: _criteria!.operator,
@@ -526,8 +482,9 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                       ),
                     ],
             ),
-            if (_criteria!.operator !=
-                TransactionRuleCriteriaEntity.STRING_OPERATOR_IS_EMPTY)
+            if (widget.type == TransactionEntity.TYPE_WITHDRAWL &&
+                _criteria!.operator !=
+                    TransactionRuleCriteriaEntity.STRING_OPERATOR_IS_EMPTY)
               DecoratedFormField(
                 autofocus: true,
                 label: localization.value,
@@ -542,7 +499,70 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                 validator: (value) => value.trim().isEmpty
                     ? localization.pleaseEnterAValue
                     : null,
-              )
+              ),
+            if (widget.type == TransactionEntity.TYPE_DEPOSIT)
+              AppDropdownButton<String>(
+                labelText: localization.field,
+                value: _criteria!.searchKey,
+                onChanged: (dynamic value) {
+                  setState(() {
+                    _criteria = _criteria!.rebuild((b) => b
+                      ..searchKey = value
+                      ..operator = value ==
+                              TransactionRuleCriteriaEntity
+                                  .SEARCH_KEY_DESCRIPTION
+                          ? TransactionRuleCriteriaEntity
+                              .STRING_OPERATOR_CONTAINS
+                          : TransactionRuleCriteriaEntity
+                              .NUMBER_OPERATOR_EQUALS);
+                  });
+                },
+                items: [
+                  DropdownMenuItem<String>(
+                    child:
+                        Text(localization.client + ' - ' + localization.email),
+                    value:
+                        TransactionRuleCriteriaEntity.SEARCH_KEY_CLIENT_EMAIL,
+                  ),
+                  DropdownMenuItem<String>(
+                    child: Text(
+                        localization.client + ' - ' + localization.idNumber),
+                    value: TransactionRuleCriteriaEntity
+                        .SEARCH_KEY_CLIENT_ID_NUMBER,
+                  ),
+                  DropdownMenuItem<String>(
+                    child: Text(
+                        localization.invoice + ' - ' + localization.number),
+                    value:
+                        TransactionRuleCriteriaEntity.SEARCH_KEY_INVOICE_NUMBER,
+                  ),
+                  DropdownMenuItem<String>(
+                    child: Text(
+                        localization.invoice + ' - ' + localization.amount),
+                    value:
+                        TransactionRuleCriteriaEntity.SEARCH_KEY_INVOICE_AMOUNT,
+                  ),
+                  DropdownMenuItem<String>(
+                    child: Text(
+                        localization.invoice + ' - ' + localization.poNumber),
+                    value: TransactionRuleCriteriaEntity
+                        .SEARCH_KEY_INVOICE_PO_NUMBER,
+                  ),
+                  DropdownMenuItem<String>(
+                    child: Text(
+                        localization.payment + ' - ' + localization.amount),
+                    value:
+                        TransactionRuleCriteriaEntity.SEARCH_KEY_PAYMENT_AMOUNT,
+                  ),
+                  DropdownMenuItem<String>(
+                    child: Text(localization.payment +
+                        ' - ' +
+                        localization.transactionReference),
+                    value: TransactionRuleCriteriaEntity
+                        .SEARCH_KEY_PAYMENT_TRANSACTION_REFERENCE,
+                  ),
+                ],
+              ),
           ],
         ),
       ),
