@@ -434,6 +434,16 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                     value: TransactionRuleCriteriaEntity.SEARCH_KEY_AMOUNT,
                   ),
                 ],
+              )
+            else
+              DecoratedFormField(
+                key: ValueKey('__search_key_${_criteria?.searchKey ?? ''}__'),
+                keyboardType: TextInputType.text,
+                enabled: false,
+                label: localization.field,
+                initialValue: _criteria?.searchKey.contains('amount') == true
+                    ? localization.amount
+                    : localization.description,
               ),
             AppDropdownButton<String>(
               labelText: localization.operator,
