@@ -442,6 +442,14 @@ class _ClientPortalState extends State<ClientPortal>
                         .rebuild((b) => b..enablePortalDashboard = value)),
                   ),
                   BoolDropdownButton(
+                    label: localization.mobileVersion,
+                    helpLabel: localization.showPdfhtmlMobileHelp,
+                    value: settings.showPdfhtmlOnMobile ?? true,
+                    iconData: Icons.mobile_friendly,
+                    onChanged: (value) => viewModel.onSettingsChanged(settings
+                        .rebuild((b) => b..showPdfhtmlOnMobile = value)),
+                  ),
+                  BoolDropdownButton(
                       label: localization.clientDocumentUpload,
                       helpLabel: localization.documentUploadHelp,
                       value: settings.enableClientPortalUploads,

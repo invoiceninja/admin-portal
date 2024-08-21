@@ -613,14 +613,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                 settings
                                     .rebuild((b) => b..embedDocuments = value)),
                           ),
-                        BoolDropdownButton(
-                          label: localization.mobileVersion,
-                          value: settings.showPdfhtmlOnMobile ?? true,
-                          iconData: Icons.mobile_friendly,
-                          onChanged: (value) => viewModel.onSettingsChanged(
-                              settings.rebuild(
-                                  (b) => b..showPdfhtmlOnMobile = value)),
-                        ),
                       ],
                     ),
                     FormCard(

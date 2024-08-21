@@ -573,7 +573,6 @@ class SettingsSearch extends StatelessWidget {
           'show_shipping_address#2023-01-29',
           'share_invoice_quote_columns#2023-03-20',
           'invoice_embed_documents#2023-10-27',
-          'mobile_version#2024-01-29',
           'delivery_note_design#2023-11-06',
           'statement_design#2023-11-06',
           'payment_receipt_design#2023-11-06',
@@ -612,6 +611,7 @@ class SettingsSearch extends StatelessWidget {
           'client_document_upload',
           'vendor_document_upload#2022-07-06',
           'accept_purchase_order_number#2023-02-02',
+          'mobile_version#2024-01-29',
         ],
         [
           'client_registration',
