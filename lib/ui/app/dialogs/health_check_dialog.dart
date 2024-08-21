@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -135,7 +136,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
           : SingleChildScrollView(
               child: Column(
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   _HealthListTile(
                     title: 'System Health',
@@ -172,14 +173,19 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                               _response!.queueData.pending > 0
                           ? _HealthCheckLevel.Warning
                           : null,
+                      buttonLabel: _response!.queueData.lastError.isNotEmpty
+                          ? 'View Last Queue Error'
+                          : null,
+                      buttonCallback: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                title: Text('Last Error'),
+                                content: SelectableText(
+                                  _response!.queueData.lastError,
+                                )));
+                      },
                     ),
-                    if (_response!.queueData.lastError.isNotEmpty)
-                      OutlinedButton(
-                        onPressed: () {
-                          //
-                        },
-                        child: Text('View Last Queue Error'),
-                      ),
                   ],
                   /*
                   if (!_response.execEnabled)
@@ -292,6 +298,8 @@ class _HealthListTile extends StatelessWidget {
     this.level,
     this.subtitle,
     this.url,
+    this.buttonLabel,
+    this.buttonCallback,
   });
 
   final String title;
@@ -299,17 +307,33 @@ class _HealthListTile extends StatelessWidget {
   final _HealthCheckLevel? level;
   final String? subtitle;
   final String? url;
+  final String? buttonLabel;
+  final Function? buttonCallback;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(title),
-      subtitle: Text(
-        subtitle != null
-            ? subtitle!
-            : (level != null
-                ? level.toString()
-                : (isValid ? 'Passed' : 'Failed')),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            subtitle != null
+                ? subtitle!
+                : (level != null
+                    ? level.toString()
+                    : (isValid ? 'Passed' : 'Failed')),
+          ),
+          if (buttonLabel != null)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: OutlinedButton(
+                  onPressed: () {
+                    buttonCallback!();
+                  },
+                  child: Text(buttonLabel!)),
+            ),
+        ],
       ),
       trailing: Icon(
         level == _HealthCheckLevel.Warning
