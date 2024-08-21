@@ -146,50 +146,9 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     isValid: _response!.systemHealth,
                     buttonLabel: 'View Last Error',
                     buttonCallback: () async {
-                      final webClient = WebClient();
-                      final state = StoreProvider.of<AppState>(context).state;
-                      final credentials = state.credentials;
-                      final url = '${credentials.url}/last_error';
-
-                      webClient
-                          .get(url, credentials.token)
-                          .then((dynamic response) {
-                        final data = serializers.deserializeWith(
-                            HealthCheckLastErrorResponse.serializer, response);
-
-                        if (data!.lastError.isEmpty) {
-                          showMessageDialog(message: 'No errors found');
-                        } else {
-                          showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                  title: Text('Last Error'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        showToast(localization.copiedToClipboard
-                                            .replaceFirst(':value', ''));
-                                        Clipboard.setData(ClipboardData(
-                                            text: data.lastError));
-                                      },
-                                      child: Text(
-                                        localization!.copy.toUpperCase(),
-                                      ),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text(
-                                        localization.close.toUpperCase(),
-                                      ),
-                                    ),
-                                  ],
-                                  content: SelectableText(
-                                    '${data.lastError}',
-                                  )));
-                        }
-                      });
+                      showDialog(
+                          context: context,
+                          builder: (context) => _LastError(state: state));
                     },
                   ),
                   _HealthListTile(
@@ -420,5 +379,72 @@ class _HealthListTile extends StatelessWidget {
       ),
       onTap: url != null ? () => launchUrl(Uri.parse(url!)) : null,
     );
+  }
+}
+
+class _LastError extends StatefulWidget {
+  const _LastError({
+    required this.state,
+  });
+
+  final AppState state;
+
+  @override
+  State<_LastError> createState() => __LastErrorState();
+}
+
+class __LastErrorState extends State<_LastError> {
+  HealthCheckLastErrorResponse? _response;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final webClient = WebClient();
+    final credentials = widget.state.credentials;
+    final url = '${credentials.url}/last_error';
+
+    webClient.get(url, credentials.token).then((dynamic response) {
+      setState(() {
+        _response = serializers.deserializeWith(
+            HealthCheckLastErrorResponse.serializer, response);
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return AlertDialog(
+        title: Text('Last Error'),
+        actions: [
+          if (_response != null && _response!.lastError.isNotEmpty)
+            TextButton(
+              onPressed: () {
+                showToast(
+                    localization.copiedToClipboard.replaceFirst(':value', ''));
+                Clipboard.setData(ClipboardData(text: _response!.lastError));
+              },
+              child: Text(
+                localization!.copy.toUpperCase(),
+              ),
+            ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              localization!.close.toUpperCase(),
+            ),
+          ),
+        ],
+        content: _response == null
+            ? LinearProgressIndicator()
+            : SelectableText(
+                _response!.lastError.isEmpty
+                    ? 'No errors found'
+                    : '${_response!.lastError}',
+              ));
   }
 }
