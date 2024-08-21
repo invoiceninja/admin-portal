@@ -100,12 +100,12 @@ emyPxgcYxn/eR44/KJ4EBs+lVDR3veyJm+kXQ99b21/+jh5Xos1AnX5iItreGCc=
 ''';
 
 void main({bool isTesting = false}) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  _registerErrorHandlers();
+
   final ConnectionStatusSingleton connectionStatus =
       ConnectionStatusSingleton.getInstance();
   connectionStatus.initialize();
-
-  WidgetsFlutterBinding.ensureInitialized();
-  _registerErrorHandlers();
 
   try {
     SecurityContext.defaultContext.setTrustedCertificatesBytes(
