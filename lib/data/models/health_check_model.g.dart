@@ -10,6 +10,8 @@ Serializer<HealthCheckResponse> _$healthCheckResponseSerializer =
     new _$HealthCheckResponseSerializer();
 Serializer<HealthCheckPHPResponse> _$healthCheckPHPResponseSerializer =
     new _$HealthCheckPHPResponseSerializer();
+Serializer<HealthCheckQueueResponse> _$healthCheckQueueResponseSerializer =
+    new _$HealthCheckQueueResponseSerializer();
 
 class _$HealthCheckResponseSerializer
     implements StructuredSerializer<HealthCheckResponse> {
@@ -32,6 +34,9 @@ class _$HealthCheckResponseSerializer
       'php_version',
       serializers.serialize(object.phpVersion,
           specifiedType: const FullType(HealthCheckPHPResponse)),
+      'queue_data',
+      serializers.serialize(object.queueData,
+          specifiedType: const FullType(HealthCheckQueueResponse)),
       'env_writable',
       serializers.serialize(object.envWritable,
           specifiedType: const FullType(bool)),
@@ -68,6 +73,9 @@ class _$HealthCheckResponseSerializer
       'exchange_rate_api_not_configured',
       serializers.serialize(object.exchangeRateApiNotConfigured,
           specifiedType: const FullType(bool)),
+      'pending_migration',
+      serializers.serialize(object.pendingMigration,
+          specifiedType: const FullType(bool)),
       'queue',
       serializers.serialize(object.queue,
           specifiedType: const FullType(String)),
@@ -96,6 +104,11 @@ class _$HealthCheckResponseSerializer
           result.phpVersion.replace(serializers.deserialize(value,
                   specifiedType: const FullType(HealthCheckPHPResponse))!
               as HealthCheckPHPResponse);
+          break;
+        case 'queue_data':
+          result.queueData.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(HealthCheckQueueResponse))!
+              as HealthCheckQueueResponse);
           break;
         case 'env_writable':
           result.envWritable = serializers.deserialize(value,
@@ -143,6 +156,10 @@ class _$HealthCheckResponseSerializer
           break;
         case 'exchange_rate_api_not_configured':
           result.exchangeRateApiNotConfigured = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
+          break;
+        case 'pending_migration':
+          result.pendingMigration = serializers.deserialize(value,
               specifiedType: const FullType(bool))! as bool;
           break;
         case 'queue':
@@ -229,11 +246,71 @@ class _$HealthCheckPHPResponseSerializer
   }
 }
 
+class _$HealthCheckQueueResponseSerializer
+    implements StructuredSerializer<HealthCheckQueueResponse> {
+  @override
+  final Iterable<Type> types = const [
+    HealthCheckQueueResponse,
+    _$HealthCheckQueueResponse
+  ];
+  @override
+  final String wireName = 'HealthCheckQueueResponse';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, HealthCheckQueueResponse object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'failed',
+      serializers.serialize(object.failed, specifiedType: const FullType(int)),
+      'pending',
+      serializers.serialize(object.pending, specifiedType: const FullType(int)),
+      'last_error',
+      serializers.serialize(object.lastError,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  HealthCheckQueueResponse deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new HealthCheckQueueResponseBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'failed':
+          result.failed = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
+        case 'pending':
+          result.pending = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
+        case 'last_error':
+          result.lastError = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
 class _$HealthCheckResponse extends HealthCheckResponse {
   @override
   final bool systemHealth;
   @override
   final HealthCheckPHPResponse phpVersion;
+  @override
+  final HealthCheckQueueResponse queueData;
   @override
   final bool envWritable;
   @override
@@ -259,6 +336,8 @@ class _$HealthCheckResponse extends HealthCheckResponse {
   @override
   final bool exchangeRateApiNotConfigured;
   @override
+  final bool pendingMigration;
+  @override
   final String queue;
 
   factory _$HealthCheckResponse(
@@ -268,6 +347,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
   _$HealthCheckResponse._(
       {required this.systemHealth,
       required this.phpVersion,
+      required this.queueData,
       required this.envWritable,
       required this.dbCheck,
       required this.cacheEnabled,
@@ -280,12 +360,15 @@ class _$HealthCheckResponse extends HealthCheckResponse {
       required this.pdfEngine,
       required this.trailingSlash,
       required this.exchangeRateApiNotConfigured,
+      required this.pendingMigration,
       required this.queue})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         systemHealth, r'HealthCheckResponse', 'systemHealth');
     BuiltValueNullFieldError.checkNotNull(
         phpVersion, r'HealthCheckResponse', 'phpVersion');
+    BuiltValueNullFieldError.checkNotNull(
+        queueData, r'HealthCheckResponse', 'queueData');
     BuiltValueNullFieldError.checkNotNull(
         envWritable, r'HealthCheckResponse', 'envWritable');
     BuiltValueNullFieldError.checkNotNull(
@@ -311,6 +394,8 @@ class _$HealthCheckResponse extends HealthCheckResponse {
     BuiltValueNullFieldError.checkNotNull(exchangeRateApiNotConfigured,
         r'HealthCheckResponse', 'exchangeRateApiNotConfigured');
     BuiltValueNullFieldError.checkNotNull(
+        pendingMigration, r'HealthCheckResponse', 'pendingMigration');
+    BuiltValueNullFieldError.checkNotNull(
         queue, r'HealthCheckResponse', 'queue');
   }
 
@@ -329,6 +414,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
     return other is HealthCheckResponse &&
         systemHealth == other.systemHealth &&
         phpVersion == other.phpVersion &&
+        queueData == other.queueData &&
         envWritable == other.envWritable &&
         dbCheck == other.dbCheck &&
         cacheEnabled == other.cacheEnabled &&
@@ -341,6 +427,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
         pdfEngine == other.pdfEngine &&
         trailingSlash == other.trailingSlash &&
         exchangeRateApiNotConfigured == other.exchangeRateApiNotConfigured &&
+        pendingMigration == other.pendingMigration &&
         queue == other.queue;
   }
 
@@ -351,6 +438,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
     var _$hash = 0;
     _$hash = $jc(_$hash, systemHealth.hashCode);
     _$hash = $jc(_$hash, phpVersion.hashCode);
+    _$hash = $jc(_$hash, queueData.hashCode);
     _$hash = $jc(_$hash, envWritable.hashCode);
     _$hash = $jc(_$hash, dbCheck.hashCode);
     _$hash = $jc(_$hash, cacheEnabled.hashCode);
@@ -363,6 +451,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
     _$hash = $jc(_$hash, pdfEngine.hashCode);
     _$hash = $jc(_$hash, trailingSlash.hashCode);
     _$hash = $jc(_$hash, exchangeRateApiNotConfigured.hashCode);
+    _$hash = $jc(_$hash, pendingMigration.hashCode);
     _$hash = $jc(_$hash, queue.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
@@ -373,6 +462,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
     return (newBuiltValueToStringHelper(r'HealthCheckResponse')
           ..add('systemHealth', systemHealth)
           ..add('phpVersion', phpVersion)
+          ..add('queueData', queueData)
           ..add('envWritable', envWritable)
           ..add('dbCheck', dbCheck)
           ..add('cacheEnabled', cacheEnabled)
@@ -385,6 +475,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
           ..add('pdfEngine', pdfEngine)
           ..add('trailingSlash', trailingSlash)
           ..add('exchangeRateApiNotConfigured', exchangeRateApiNotConfigured)
+          ..add('pendingMigration', pendingMigration)
           ..add('queue', queue))
         .toString();
   }
@@ -403,6 +494,12 @@ class HealthCheckResponseBuilder
       _$this._phpVersion ??= new HealthCheckPHPResponseBuilder();
   set phpVersion(HealthCheckPHPResponseBuilder? phpVersion) =>
       _$this._phpVersion = phpVersion;
+
+  HealthCheckQueueResponseBuilder? _queueData;
+  HealthCheckQueueResponseBuilder get queueData =>
+      _$this._queueData ??= new HealthCheckQueueResponseBuilder();
+  set queueData(HealthCheckQueueResponseBuilder? queueData) =>
+      _$this._queueData = queueData;
 
   bool? _envWritable;
   bool? get envWritable => _$this._envWritable;
@@ -457,6 +554,11 @@ class HealthCheckResponseBuilder
   set exchangeRateApiNotConfigured(bool? exchangeRateApiNotConfigured) =>
       _$this._exchangeRateApiNotConfigured = exchangeRateApiNotConfigured;
 
+  bool? _pendingMigration;
+  bool? get pendingMigration => _$this._pendingMigration;
+  set pendingMigration(bool? pendingMigration) =>
+      _$this._pendingMigration = pendingMigration;
+
   String? _queue;
   String? get queue => _$this._queue;
   set queue(String? queue) => _$this._queue = queue;
@@ -470,6 +572,7 @@ class HealthCheckResponseBuilder
     if ($v != null) {
       _systemHealth = $v.systemHealth;
       _phpVersion = $v.phpVersion.toBuilder();
+      _queueData = $v.queueData.toBuilder();
       _envWritable = $v.envWritable;
       _dbCheck = $v.dbCheck;
       _cacheEnabled = $v.cacheEnabled;
@@ -482,6 +585,7 @@ class HealthCheckResponseBuilder
       _pdfEngine = $v.pdfEngine;
       _trailingSlash = $v.trailingSlash;
       _exchangeRateApiNotConfigured = $v.exchangeRateApiNotConfigured;
+      _pendingMigration = $v.pendingMigration;
       _queue = $v.queue;
       _$v = null;
     }
@@ -510,6 +614,7 @@ class HealthCheckResponseBuilder
               systemHealth: BuiltValueNullFieldError.checkNotNull(
                   systemHealth, r'HealthCheckResponse', 'systemHealth'),
               phpVersion: phpVersion.build(),
+              queueData: queueData.build(),
               envWritable: BuiltValueNullFieldError.checkNotNull(
                   envWritable, r'HealthCheckResponse', 'envWritable'),
               dbCheck: BuiltValueNullFieldError.checkNotNull(
@@ -529,12 +634,15 @@ class HealthCheckResponseBuilder
               pdfEngine: BuiltValueNullFieldError.checkNotNull(pdfEngine, r'HealthCheckResponse', 'pdfEngine'),
               trailingSlash: BuiltValueNullFieldError.checkNotNull(trailingSlash, r'HealthCheckResponse', 'trailingSlash'),
               exchangeRateApiNotConfigured: BuiltValueNullFieldError.checkNotNull(exchangeRateApiNotConfigured, r'HealthCheckResponse', 'exchangeRateApiNotConfigured'),
+              pendingMigration: BuiltValueNullFieldError.checkNotNull(pendingMigration, r'HealthCheckResponse', 'pendingMigration'),
               queue: BuiltValueNullFieldError.checkNotNull(queue, r'HealthCheckResponse', 'queue'));
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'phpVersion';
         phpVersion.build();
+        _$failedField = 'queueData';
+        queueData.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'HealthCheckResponse', _$failedField, e.toString());
@@ -704,6 +812,127 @@ class HealthCheckPHPResponseBuilder
                 isOkay, r'HealthCheckPHPResponse', 'isOkay'),
             memoryLimit: BuiltValueNullFieldError.checkNotNull(
                 memoryLimit, r'HealthCheckPHPResponse', 'memoryLimit'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$HealthCheckQueueResponse extends HealthCheckQueueResponse {
+  @override
+  final int failed;
+  @override
+  final int pending;
+  @override
+  final String lastError;
+
+  factory _$HealthCheckQueueResponse(
+          [void Function(HealthCheckQueueResponseBuilder)? updates]) =>
+      (new HealthCheckQueueResponseBuilder()..update(updates))._build();
+
+  _$HealthCheckQueueResponse._(
+      {required this.failed, required this.pending, required this.lastError})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        failed, r'HealthCheckQueueResponse', 'failed');
+    BuiltValueNullFieldError.checkNotNull(
+        pending, r'HealthCheckQueueResponse', 'pending');
+    BuiltValueNullFieldError.checkNotNull(
+        lastError, r'HealthCheckQueueResponse', 'lastError');
+  }
+
+  @override
+  HealthCheckQueueResponse rebuild(
+          void Function(HealthCheckQueueResponseBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  HealthCheckQueueResponseBuilder toBuilder() =>
+      new HealthCheckQueueResponseBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is HealthCheckQueueResponse &&
+        failed == other.failed &&
+        pending == other.pending &&
+        lastError == other.lastError;
+  }
+
+  int? __hashCode;
+  @override
+  int get hashCode {
+    if (__hashCode != null) return __hashCode!;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, failed.hashCode);
+    _$hash = $jc(_$hash, pending.hashCode);
+    _$hash = $jc(_$hash, lastError.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'HealthCheckQueueResponse')
+          ..add('failed', failed)
+          ..add('pending', pending)
+          ..add('lastError', lastError))
+        .toString();
+  }
+}
+
+class HealthCheckQueueResponseBuilder
+    implements
+        Builder<HealthCheckQueueResponse, HealthCheckQueueResponseBuilder> {
+  _$HealthCheckQueueResponse? _$v;
+
+  int? _failed;
+  int? get failed => _$this._failed;
+  set failed(int? failed) => _$this._failed = failed;
+
+  int? _pending;
+  int? get pending => _$this._pending;
+  set pending(int? pending) => _$this._pending = pending;
+
+  String? _lastError;
+  String? get lastError => _$this._lastError;
+  set lastError(String? lastError) => _$this._lastError = lastError;
+
+  HealthCheckQueueResponseBuilder();
+
+  HealthCheckQueueResponseBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _failed = $v.failed;
+      _pending = $v.pending;
+      _lastError = $v.lastError;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(HealthCheckQueueResponse other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$HealthCheckQueueResponse;
+  }
+
+  @override
+  void update(void Function(HealthCheckQueueResponseBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  HealthCheckQueueResponse build() => _build();
+
+  _$HealthCheckQueueResponse _build() {
+    final _$result = _$v ??
+        new _$HealthCheckQueueResponse._(
+            failed: BuiltValueNullFieldError.checkNotNull(
+                failed, r'HealthCheckQueueResponse', 'failed'),
+            pending: BuiltValueNullFieldError.checkNotNull(
+                pending, r'HealthCheckQueueResponse', 'pending'),
+            lastError: BuiltValueNullFieldError.checkNotNull(
+                lastError, r'HealthCheckQueueResponse', 'lastError'));
     replace(_$result);
     return _$result;
   }

@@ -19,7 +19,9 @@ abstract class HealthCheckResponse
       pdfEngine: '',
       pendingJobs: 0,
       phantomEnabled: false,
+      pendingMigration: false,
       phpVersion: HealthCheckPHPResponse(),
+      queueData: HealthCheckQueueResponse(),
       queue: '',
       systemHealth: false,
       trailingSlash: false,
@@ -37,6 +39,9 @@ abstract class HealthCheckResponse
 
   @BuiltValueField(wireName: 'php_version')
   HealthCheckPHPResponse get phpVersion;
+
+  @BuiltValueField(wireName: 'queue_data')
+  HealthCheckQueueResponse get queueData;
 
   @BuiltValueField(wireName: 'env_writable')
   bool get envWritable;
@@ -74,12 +79,17 @@ abstract class HealthCheckResponse
   @BuiltValueField(wireName: 'exchange_rate_api_not_configured')
   bool get exchangeRateApiNotConfigured;
 
+  @BuiltValueField(wireName: 'pending_migration')
+  bool get pendingMigration;
+
   String get queue;
 
   // ignore: unused_element
   static void _initializeBuilder(HealthCheckResponseBuilder builder) => builder
     ..trailingSlash = false
-    ..filePermissions = '';
+    ..pendingMigration = false
+    ..filePermissions = ''
+    ..queueData.replace(HealthCheckQueueResponse());
 
   static Serializer<HealthCheckResponse> get serializer =>
       _$healthCheckResponseSerializer;
@@ -123,4 +133,32 @@ abstract class HealthCheckPHPResponse
 
   static Serializer<HealthCheckPHPResponse> get serializer =>
       _$healthCheckPHPResponseSerializer;
+}
+
+abstract class HealthCheckQueueResponse
+    implements
+        Built<HealthCheckQueueResponse, HealthCheckQueueResponseBuilder> {
+  factory HealthCheckQueueResponse() {
+    return _$HealthCheckQueueResponse._(
+      failed: 0,
+      pending: 0,
+      lastError: '',
+    );
+  }
+
+  HealthCheckQueueResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  int get failed;
+
+  int get pending;
+
+  @BuiltValueField(wireName: 'last_error')
+  String get lastError;
+
+  static Serializer<HealthCheckQueueResponse> get serializer =>
+      _$healthCheckQueueResponseSerializer;
 }
