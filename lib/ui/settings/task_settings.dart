@@ -60,7 +60,7 @@ class _TaskSettingsState extends State<TaskSettings> {
     _taskRateController.text = formatNumber(settings.defaultTaskRate, context,
         formatNumberType: FormatNumberType.inputMoney)!;
     _taskRoundToNearestController.text =
-        ((settings.taskRoundToNearest ?? 0) / 60).floor().toString();
+        (settings.taskRoundToNearest ?? 0).toString();
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -82,11 +82,11 @@ class _TaskSettingsState extends State<TaskSettings> {
     final viewModel = widget.viewModel;
     final state = viewModel.state;
 
-    final minutes = parseInt(_taskRoundToNearestController.text.trim());
+    final seconds = parseInt(_taskRoundToNearestController.text.trim());
     final settings = viewModel.settings.rebuild((b) => b
       ..defaultTaskRate = parseDouble(_taskRateController.text.trim(),
           zeroIsNull: state.settingsUIState.isFiltered)
-      ..taskRoundToNearest = minutes == null ? null : minutes * 60);
+      ..taskRoundToNearest = seconds == null ? null : seconds);
 
     if (settings != viewModel.settings) {
       viewModel.onSettingsChanged(settings);
@@ -189,9 +189,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                     setState(() {
                       _showCustomTaskRounding = updated.isTaskRoundingCustom;
                       _taskRoundToNearestController.text =
-                          ((settings.taskRoundToNearest ?? 0) / 60)
-                              .floor()
-                              .toString();
+                          (settings.taskRoundToNearest ?? 0).toString();
                     });
                   },
                   items: kTaskRoundingOptions.keys
@@ -204,7 +202,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                 if (_showCustomTaskRounding || settings.isTaskRoundingCustom)
                   DecoratedFormField(
                     keyboardType: TextInputType.number,
-                    label: localization.roundToMinutes,
+                    label: localization.roundToSeconds,
                     controller: _taskRoundToNearestController,
                   ),
               ],

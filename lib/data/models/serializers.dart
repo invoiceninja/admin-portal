@@ -179,6 +179,7 @@ part 'serializers.g.dart';
   PdfPreviewRequest,
   TaxDataEntity,
   EInvoiceFieldEntity,
+  HealthCheckLastErrorResponse,
 ])
 final Serializers serializers =
     (_$serializers.toBuilder()..addPlugin(StandardJsonPlugin())).build();

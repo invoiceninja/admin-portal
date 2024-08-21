@@ -4,9 +4,11 @@ import 'dart:async';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -132,112 +134,171 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                 Text('${localization!.loading}...'),
               ],
             )
-          : Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _HealthListTile(
-                  title: 'System Health',
-                  subtitle:
-                      'Email: ${_response!.emailDriver}\nQueue: ${_response!.queue}\nPDF: ${_response!.pdfEngine.replaceFirst(' Generator', '')}',
-                  isValid: _response!.systemHealth,
-                ),
-                _HealthListTile(
-                  title: 'Database Check',
-                  isValid: _response!.dbCheck,
-                ),
-                _HealthListTile(
-                  title: 'PHP Info',
-                  // TODO move this logic to the backend
-                  isValid: _response!.phpVersion.isOkay &&
-                      webPhpVersion.startsWith('v8') &&
-                      (cliPhpVersion.startsWith('v8') ||
-                          !cliPhpVersion.startsWith('v')),
-                  subtitle: 'Web: $webPhpVersion\nCLI: $cliPhpVersion' +
-                      (phpMemoryLimit.isNotEmpty
-                          ? '\nMemory Limit: $phpMemoryLimit'
-                          : ''),
-                ),
-                /*
-                if (!_response.execEnabled)
+          : SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
                   _HealthListTile(
-                    title: 'PHP Exec',
-                    isValid: false,
-                    subtitle: 'Not enabled',
+                    title: 'System Health',
+                    subtitle:
+                        'Email: ${_response!.emailDriver}\nQueue: ${_response!.queue}\nPDF: ${_response!.pdfEngine.replaceFirst(' Generator', '')}',
+                    isValid: _response!.systemHealth,
+                    buttonLabel: 'View Last Error',
+                    buttonCallback: () async {
+                      showDialog(
+                          context: context,
+                          builder: (context) => _LastError(state: state));
+                    },
                   ),
-                  */
-                /*
-                if (_response.pendingJobs > 0)
                   _HealthListTile(
-                    title: 'Pending Jobs',
-                    subtitle: 'Count: ${_response.pendingJobs}',
-                    isWarning: true,
+                    title: 'Database Check',
+                    isValid: _response!.dbCheck && !_response!.pendingMigration,
+                    subtitle: _response!.pendingMigration
+                        ? 'There are pending migrations, run \'php artisan migrate\''
+                        : null,
                   ),
-                  */
-                if (_response!.filePermissions != 'Ok' &&
-                    !account.disableAutoUpdate &&
-                    !account.isDocker)
                   _HealthListTile(
-                    title: 'Invalid File Permissions',
-                    isValid: false,
-                    subtitle: _response!.filePermissions,
-                    url: '$kDocsUrl/self-host-installation/#file-permissions',
+                    title: 'PHP Info',
+                    // TODO move this logic to the backend
+                    isValid: _response!.phpVersion.isOkay &&
+                        webPhpVersion.startsWith('v8') &&
+                        (cliPhpVersion.startsWith('v8') ||
+                            !cliPhpVersion.startsWith('v')),
+                    subtitle: 'Web: $webPhpVersion\nCLI: $cliPhpVersion' +
+                        (phpMemoryLimit.isNotEmpty
+                            ? '\nMemory Limit: $phpMemoryLimit'
+                            : ''),
                   ),
-                /*
-                if (!account.isDocker) ...[
-                  if (!_response.openBasedir)
+                  if (_response!.queue != 'sync') ...[
                     _HealthListTile(
-                      title: 'Open Basedir',
-                      isWarning: true,
+                      title: 'Queue',
+                      isValid: _response!.queueData.failed == 0,
+                      subtitle:
+                          'Pending Jobs: ${_response!.queueData.pending}\nFailed Jobs: ${_response!.queueData.failed}',
+                      level: _response!.queueData.failed == 0 &&
+                              _response!.queueData.pending > 0
+                          ? _HealthCheckLevel.Warning
+                          : null,
+                      buttonLabel: _response!.queueData.lastError.isNotEmpty
+                          ? 'View Last Queue Error'
+                          : null,
+                      buttonCallback: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                title: Text('Last Queue Error'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      showToast(localization.copiedToClipboard
+                                          .replaceFirst(':value', ''));
+                                      Clipboard.setData(ClipboardData(
+                                          text:
+                                              _response!.queueData.lastError));
+                                    },
+                                    child: Text(
+                                      localization!.copy.toUpperCase(),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text(
+                                      localization.close.toUpperCase(),
+                                    ),
+                                  ),
+                                ],
+                                content: SelectableText(
+                                  _response!.queueData.lastError,
+                                )));
+                      },
+                    ),
+                  ],
+                  /*
+                  if (!_response.execEnabled)
+                    _HealthListTile(
+                      title: 'PHP Exec',
+                      isValid: false,
                       subtitle: 'Not enabled',
                     ),
-                    if (!_response.cacheEnabled)
+                    */
+                  /*
+                  if (_response.pendingJobs > 0)
+                    _HealthListTile(
+                      title: 'Pending Jobs',
+                      subtitle: 'Count: ${_response.pendingJobs}',
+                      isWarning: true,
+                    ),
+                    */
+                  if (_response!.filePermissions != 'Ok' &&
+                      !account.disableAutoUpdate &&
+                      !account.isDocker)
+                    _HealthListTile(
+                      title: 'Invalid File Permissions',
+                      isValid: false,
+                      subtitle: _response!.filePermissions,
+                      url: '$kDocsUrl/self-host-installation/#file-permissions',
+                    ),
+                  /*
+                  if (!account.isDocker) ...[
+                    if (!_response.openBasedir)
                       _HealthListTile(
-                        title: 'Config not cached',
-                        subtitle:
-                            'Run php artisan optimize to improve performance',
+                        title: 'Open Basedir',
                         isWarning: true,
+                        subtitle: 'Not enabled',
                       ),
+                      if (!_response.cacheEnabled)
+                        _HealthListTile(
+                          title: 'Config not cached',
+                          subtitle:
+                              'Run php artisan optimize to improve performance',
+                          isWarning: true,
+                        ),
+                  ],
+                  */
+                  if (!account.isDocker &&
+                      phpMemoryLimitDouble! > 100 &&
+                      phpMemoryLimitDouble < 1024)
+                    _HealthListTile(
+                      title: 'PHP memory limit is too low',
+                      subtitle:
+                          'Increase the limit to 1024M to support the in-app update',
+                      level: _HealthCheckLevel.Warning,
+                    ),
+                  if (_response!.queue == 'sync')
+                    _HealthListTile(
+                      title: 'Queue not enabled',
+                      subtitle: 'Enable the queue for improved performance',
+                      level: _HealthCheckLevel.Info,
+                      url:
+                          '$kDocsUrl/self-host-installation/#final-setup-steps',
+                    ),
+                  if (!_response!.pdfEngine.toLowerCase().startsWith('snappdf'))
+                    _HealthListTile(
+                      title: 'SnapPDF not enabled',
+                      subtitle: 'Use SnapPDF to generate PDF files locally',
+                      level: _HealthCheckLevel.Info,
+                      url:
+                          '$kDocsUrl/self-host-troubleshooting/#pdf-conversion-issues',
+                    ),
+                  if (_response!.trailingSlash)
+                    _HealthListTile(
+                      title: 'APP_URL has trailing slash',
+                      subtitle: 'Remove the slash in the .env file',
+                      level: _HealthCheckLevel.Warning,
+                    ),
+                  if (_response!.exchangeRateApiNotConfigured)
+                    _HealthListTile(
+                      title: 'Exchange Rate API Not Enabled',
+                      subtitle: 'Add an Open Exchange key to the .env file',
+                      level: _HealthCheckLevel.Info,
+                      url:
+                          '$kDocsUrl/self-host-installation/#currency-conversion',
+                    ),
                 ],
-                */
-                if (!account.isDocker &&
-                    phpMemoryLimitDouble! > 100 &&
-                    phpMemoryLimitDouble < 1024)
-                  _HealthListTile(
-                    title: 'PHP memory limit is too low',
-                    subtitle:
-                        'Increase the limit to 1024M to support the in-app update',
-                    level: _HealthCheckLevel.Warning,
-                  ),
-                if (_response!.queue == 'sync')
-                  _HealthListTile(
-                    title: 'Queue not enabled',
-                    subtitle: 'Enable the queue for improved performance',
-                    level: _HealthCheckLevel.Info,
-                    url: '$kDocsUrl/self-host-installation/#final-setup-steps',
-                  ),
-                if (!_response!.pdfEngine.toLowerCase().startsWith('snappdf'))
-                  _HealthListTile(
-                    title: 'SnapPDF not enabled',
-                    subtitle: 'Use SnapPDF to generate PDF files locally',
-                    level: _HealthCheckLevel.Info,
-                    url:
-                        '$kDocsUrl/self-host-troubleshooting/#pdf-conversion-issues',
-                  ),
-                if (_response!.trailingSlash)
-                  _HealthListTile(
-                    title: 'APP_URL has trailing slash',
-                    subtitle: 'Remove the slash in the .env file',
-                    level: _HealthCheckLevel.Warning,
-                  ),
-                if (_response!.exchangeRateApiNotConfigured)
-                  _HealthListTile(
-                    title: 'Exchange Rate API Not Enabled',
-                    subtitle: 'Add an Open Exchange key to the .env file',
-                    level: _HealthCheckLevel.Info,
-                    url:
-                        '$kDocsUrl/self-host-installation/#currency-conversion',
-                  ),
-              ],
+              ),
             ),
       actions: _response == null
           ? []
@@ -266,6 +327,8 @@ class _HealthListTile extends StatelessWidget {
     this.level,
     this.subtitle,
     this.url,
+    this.buttonLabel,
+    this.buttonCallback,
   });
 
   final String title;
@@ -273,17 +336,34 @@ class _HealthListTile extends StatelessWidget {
   final _HealthCheckLevel? level;
   final String? subtitle;
   final String? url;
+  final String? buttonLabel;
+  final Function? buttonCallback;
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(title),
-      subtitle: Text(
-        subtitle != null
-            ? subtitle!
-            : (level != null
-                ? level.toString()
-                : (isValid ? 'Passed' : 'Failed')),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            subtitle != null
+                ? subtitle!
+                : (level != null
+                    ? level.toString()
+                    : (isValid ? 'Passed' : 'Failed')),
+          ),
+          if (buttonLabel != null)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 4, top: 12),
+              child: OutlinedButton(
+                onPressed: () {
+                  buttonCallback!();
+                },
+                child: Text(buttonLabel!),
+              ),
+            ),
+        ],
       ),
       trailing: Icon(
         level == _HealthCheckLevel.Warning
@@ -299,5 +379,72 @@ class _HealthListTile extends StatelessWidget {
       ),
       onTap: url != null ? () => launchUrl(Uri.parse(url!)) : null,
     );
+  }
+}
+
+class _LastError extends StatefulWidget {
+  const _LastError({
+    required this.state,
+  });
+
+  final AppState state;
+
+  @override
+  State<_LastError> createState() => __LastErrorState();
+}
+
+class __LastErrorState extends State<_LastError> {
+  HealthCheckLastErrorResponse? _response;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final webClient = WebClient();
+    final credentials = widget.state.credentials;
+    final url = '${credentials.url}/last_error';
+
+    webClient.get(url, credentials.token).then((dynamic response) {
+      setState(() {
+        _response = serializers.deserializeWith(
+            HealthCheckLastErrorResponse.serializer, response);
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context);
+
+    return AlertDialog(
+        title: Text('Last Error'),
+        actions: [
+          if (_response != null && _response!.lastError.isNotEmpty)
+            TextButton(
+              onPressed: () {
+                showToast(
+                    localization.copiedToClipboard.replaceFirst(':value', ''));
+                Clipboard.setData(ClipboardData(text: _response!.lastError));
+              },
+              child: Text(
+                localization!.copy.toUpperCase(),
+              ),
+            ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              localization!.close.toUpperCase(),
+            ),
+          ),
+        ],
+        content: _response == null
+            ? LinearProgressIndicator()
+            : SelectableText(
+                _response!.lastError.isEmpty
+                    ? 'No errors found'
+                    : '${_response!.lastError}',
+              ));
   }
 }
