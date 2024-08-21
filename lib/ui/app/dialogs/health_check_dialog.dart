@@ -144,6 +144,10 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                     subtitle:
                         'Email: ${_response!.emailDriver}\nQueue: ${_response!.queue}\nPDF: ${_response!.pdfEngine.replaceFirst(' Generator', '')}',
                     isValid: _response!.systemHealth,
+                    buttonLabel: 'View Last Error',
+                    buttonCallback: () {
+                      //
+                    },
                   ),
                   _HealthListTile(
                     title: 'Database Check',
@@ -169,7 +173,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                       title: 'Queue',
                       isValid: _response!.queueData.failed == 0,
                       subtitle:
-                          'Pending Jobs: ${_response!.queueData.pending}\nFailed Jobs: ${_response!.queueData.failed}\n',
+                          'Pending Jobs: ${_response!.queueData.pending}\nFailed Jobs: ${_response!.queueData.failed}',
                       level: _response!.queueData.failed == 0 &&
                               _response!.queueData.pending > 0
                           ? _HealthCheckLevel.Warning
@@ -349,12 +353,13 @@ class _HealthListTile extends StatelessWidget {
           ),
           if (buttonLabel != null)
             Padding(
-              padding: const EdgeInsets.only(bottom: 8),
+              padding: const EdgeInsets.only(bottom: 4, top: 12),
               child: OutlinedButton(
-                  onPressed: () {
-                    buttonCallback!();
-                  },
-                  child: Text(buttonLabel!)),
+                onPressed: () {
+                  buttonCallback!();
+                },
+                child: Text(buttonLabel!),
+              ),
             ),
         ],
       ),
