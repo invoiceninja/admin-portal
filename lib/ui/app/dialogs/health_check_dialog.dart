@@ -143,7 +143,10 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                 ),
                 _HealthListTile(
                   title: 'Database Check',
-                  isValid: _response!.dbCheck,
+                  isValid: _response!.dbCheck && !_response!.pendingMigration,
+                  subtitle: _response!.pendingMigration
+                      ? localization!.pendingMigrationsHelp
+                      : null,
                 ),
                 _HealthListTile(
                   title: 'PHP Info',
