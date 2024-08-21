@@ -25,6 +25,10 @@ class WebClient {
   const WebClient();
 
   Future<bool> _isOnline() async {
+    if (!isMobileOS()) {
+      return true;
+    }
+
     final ConnectionStatusSingleton connectionStatus =
         ConnectionStatusSingleton.getInstance();
     await connectionStatus.checkConnection();
