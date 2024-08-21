@@ -888,7 +888,8 @@ List<ChartDataGroup> chartExpenses(
       // Handle "All"
       if (settings.currencyId == kCurrencyAll &&
           currencyId != company.currencyId) {
-        final exchangeRate = expense.hasExchangeRate
+        final exchangeRate = expense.hasExchangeRate &&
+                expense.invoiceCurrencyId == company.currencyId
             ? expense.exchangeRate
             : getExchangeRate(currencyMap,
                 fromCurrencyId: currencyId, toCurrencyId: company.currencyId);

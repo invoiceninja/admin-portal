@@ -156,6 +156,9 @@ abstract class SettingsEntity
   static const MAILGUN_ENDPOINT_US = 'api.mailgun.net';
   static const MAILGUN_ENDPOINT_EU = 'api.eu.mailgun.net';
 
+  static const PAYMENT_FLOW_DEFAULT = 'default';
+  static const PAYMENT_FLOW_SMOOTH = 'smooth';
+
   @BuiltValueField(wireName: 'timezone_id')
   String? get timezoneId;
 
@@ -863,6 +866,9 @@ abstract class SettingsEntity
 
   @BuiltValueField(wireName: 'merge_e_invoice_to_pdf')
   bool? get mergeEInvoiceToPdf;
+
+  @BuiltValueField(wireName: 'payment_flow')
+  String? get paymentFlow;
 
   bool? get taskRoundingEnabled =>
       taskRoundToNearest == null ? null : taskRoundToNearest != 1;

@@ -191,8 +191,8 @@ abstract class TransactionRuleCriteriaEntity
   factory TransactionRuleCriteriaEntity(
       {String? searchKey, String? operator, String? value}) {
     return _$TransactionRuleCriteriaEntity._(
-      searchKey: searchKey ?? SEARCH_KEY_DESCRIPTION,
-      operator: operator ?? STRING_OPERATOR_CONTAINS,
+      searchKey: searchKey ?? '',
+      operator: operator ?? '',
       value: value ?? '',
     );
   }
@@ -201,6 +201,15 @@ abstract class TransactionRuleCriteriaEntity
 
   static const SEARCH_KEY_DESCRIPTION = 'description';
   static const SEARCH_KEY_AMOUNT = 'amount';
+
+  static const SEARCH_KEY_CLIENT_EMAIL = 'client.email';
+  static const SEARCH_KEY_CLIENT_ID_NUMBER = 'client.id_number';
+  static const SEARCH_KEY_INVOICE_NUMBER = 'invoice.number';
+  static const SEARCH_KEY_INVOICE_AMOUNT = 'invoice.amount';
+  static const SEARCH_KEY_INVOICE_PO_NUMBER = 'invoice.po_number';
+  static const SEARCH_KEY_PAYMENT_AMOUNT = 'payment.amount';
+  static const SEARCH_KEY_PAYMENT_TRANSACTION_REFERENCE =
+      'payment.transaction_reference';
 
   static const NUMBER_OPERATOR_EQUALS = '=';
   static const NUMBER_OPERATOR_GREATER_THAN = '>';

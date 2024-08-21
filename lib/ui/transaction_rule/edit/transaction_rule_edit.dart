@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/expense_category_model.dart';
+import 'package:invoiceninja_flutter/data/models/transaction_model.dart';
 import 'package:invoiceninja_flutter/data/models/transaction_rule_model.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/expense_category/expense_category_actions.dart';
@@ -124,6 +126,20 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                           : null,
                     ),
                     SizedBox(height: 16),
+                    if (false)
+                      BoolDropdownButton(
+                        label: localization.appliesTo,
+                        value: transactionRule.appliesTo ==
+                            TransactionEntity.TYPE_WITHDRAWL,
+                        onChanged: (value) {
+                          viewModel.onChanged(transactionRule.rebuild((b) => b
+                            ..appliesTo = (value == true
+                                ? TransactionEntity.TYPE_WITHDRAWL
+                                : TransactionEntity.TYPE_DEPOSIT)));
+                        },
+                        enabledLabel: localization.withdrawal,
+                        disabledLabel: localization.deposit,
+                      ),
                     SwitchListTile(
                       title: Text(localization.matchAllRules),
                       subtitle: Text(localization.matchAllRulesHelp),
@@ -178,16 +194,40 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                           padding: const EdgeInsets.symmetric(vertical: 4),
                           child: Row(
                             children: [
-                              Expanded(
-                                child:
-                                    Text(localization.lookup(rule.searchKey)),
-                              ),
-                              Expanded(
-                                child: Text(localization.lookup(rule.operator)),
-                              ),
-                              Expanded(
-                                child: Text(rule.value),
-                              ),
+                              ...(transactionRule.appliesTo ==
+                                      TransactionEntity.TYPE_WITHDRAWL
+                                  ? [
+                                      Expanded(
+                                        child: Text(localization
+                                            .lookup(rule.searchKey)),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                            localization.lookup(rule.operator)),
+                                      ),
+                                      Expanded(
+                                        child: Text(rule.value),
+                                      )
+                                    ]
+                                  : [
+                                      Expanded(
+                                        child: Text(
+                                            rule.searchKey.contains('amount')
+                                                ? localization.amount
+                                                : localization.description),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                            localization.lookup(rule.operator)),
+                                      ),
+                                      Expanded(
+                                        child: Text(localization.lookup(
+                                                rule.searchKey.split('.')[0]) +
+                                            ' - ' +
+                                            localization.lookup(
+                                                rule.searchKey.split('.')[1])),
+                                      ),
+                                    ]),
                               SizedBox(
                                 width: 100,
                                 child: Row(
@@ -198,8 +238,11 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                                         final updatedRule = await showDialog<
                                                 TransactionRuleCriteriaEntity>(
                                             context: context,
-                                            builder: (context) =>
-                                                _RuleCriteria(criteria: rule));
+                                            builder: (context) => _RuleCriteria(
+                                                  criteria: rule,
+                                                  type:
+                                                      transactionRule.appliesTo,
+                                                ));
                                         if (updatedRule != null) {
                                           final index = transactionRule.rules
                                               .indexOf(rule);
@@ -233,7 +276,9 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                         final rule =
                             await showDialog<TransactionRuleCriteriaEntity>(
                                 context: context,
-                                builder: (context) => _RuleCriteria());
+                                builder: (context) => _RuleCriteria(
+                                      type: transactionRule.appliesTo,
+                                    ));
 
                         if (rule != null) {
                           viewModel.onChanged(transactionRule
@@ -250,52 +295,55 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                     ),
                   ],
                 ),
-                FormCard(
-                  children: [
-                    EntityDropdown(
-                      entityType: EntityType.vendor,
-                      entityId: transactionRule.vendorId,
-                      entityList: memoizedDropdownVendorList(
-                          state.vendorState.map,
-                          state.vendorState.list,
-                          state.userState.map,
-                          state.staticState),
-                      labelText: localization.vendor,
-                      onSelected: (vendor) {
-                        viewModel.onChanged(transactionRule
-                            .rebuild((b) => b..vendorId = vendor?.id ?? ''));
-                      },
-                      onCreateNew: (completer, name) {
-                        store.dispatch(SaveVendorRequest(
-                            vendor:
-                                VendorEntity().rebuild((b) => b..name = name),
-                            completer: completer));
-                      },
-                    ),
-                    EntityDropdown(
-                      entityType: EntityType.expenseCategory,
-                      entityId: transactionRule.categoryId,
-                      entityList: memoizedDropdownExpenseCategoryList(
-                        state.expenseCategoryState.map,
-                        state.expenseCategoryState.list,
-                        state.staticState,
-                        state.userState.map,
-                        transactionRule.categoryId,
+                if (transactionRule.appliesTo ==
+                    TransactionEntity.TYPE_WITHDRAWL)
+                  FormCard(
+                    isLast: true,
+                    children: [
+                      EntityDropdown(
+                        entityType: EntityType.vendor,
+                        entityId: transactionRule.vendorId,
+                        entityList: memoizedDropdownVendorList(
+                            state.vendorState.map,
+                            state.vendorState.list,
+                            state.userState.map,
+                            state.staticState),
+                        labelText: localization.vendor,
+                        onSelected: (vendor) {
+                          viewModel.onChanged(transactionRule
+                              .rebuild((b) => b..vendorId = vendor?.id ?? ''));
+                        },
+                        onCreateNew: (completer, name) {
+                          store.dispatch(SaveVendorRequest(
+                              vendor:
+                                  VendorEntity().rebuild((b) => b..name = name),
+                              completer: completer));
+                        },
                       ),
-                      labelText: localization.category,
-                      onSelected: (category) {
-                        viewModel.onChanged(transactionRule.rebuild(
-                            (b) => b..categoryId = category?.id ?? ''));
-                      },
-                      onCreateNew: (completer, name) {
-                        store.dispatch(SaveExpenseCategoryRequest(
-                            expenseCategory: ExpenseCategoryEntity()
-                                .rebuild((b) => b..name = name),
-                            completer: completer));
-                      },
-                    ),
-                  ],
-                ),
+                      EntityDropdown(
+                        entityType: EntityType.expenseCategory,
+                        entityId: transactionRule.categoryId,
+                        entityList: memoizedDropdownExpenseCategoryList(
+                          state.expenseCategoryState.map,
+                          state.expenseCategoryState.list,
+                          state.staticState,
+                          state.userState.map,
+                          transactionRule.categoryId,
+                        ),
+                        labelText: localization.category,
+                        onSelected: (category) {
+                          viewModel.onChanged(transactionRule.rebuild(
+                              (b) => b..categoryId = category?.id ?? ''));
+                        },
+                        onCreateNew: (completer, name) {
+                          store.dispatch(SaveExpenseCategoryRequest(
+                              expenseCategory: ExpenseCategoryEntity()
+                                  .rebuild((b) => b..name = name),
+                              completer: completer));
+                        },
+                      ),
+                    ],
+                  ),
               ],
             );
           },
@@ -308,10 +356,12 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
 class _RuleCriteria extends StatefulWidget {
   const _RuleCriteria({
     Key? key,
+    required this.type,
     this.criteria,
   }) : super(key: key);
 
   final TransactionRuleCriteriaEntity? criteria;
+  final String type;
 
   @override
   State<_RuleCriteria> createState() => __RuleCriteriaState();
@@ -339,8 +389,9 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
     if (_criteria!.searchKey.isEmpty ||
         _criteria!.operator.isEmpty ||
         (_criteria!.value.isEmpty &&
-            _criteria!.operator !=
-                TransactionRuleCriteriaEntity.STRING_OPERATOR_IS_EMPTY)) {
+            (_criteria!.operator !=
+                    TransactionRuleCriteriaEntity.STRING_OPERATOR_IS_EMPTY &&
+                widget.type == TransactionEntity.TYPE_WITHDRAWL))) {
       return;
     }
 
@@ -357,30 +408,44 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            AppDropdownButton<String>(
-              labelText: localization.field,
-              value: _criteria!.searchKey,
-              onChanged: (dynamic value) {
-                setState(() {
-                  _criteria = _criteria!.rebuild((b) => b
-                    ..searchKey = value
-                    ..operator = value ==
-                            TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION
-                        ? TransactionRuleCriteriaEntity.STRING_OPERATOR_CONTAINS
-                        : TransactionRuleCriteriaEntity.NUMBER_OPERATOR_EQUALS);
-                });
-              },
-              items: [
-                DropdownMenuItem<String>(
-                  child: Text(localization.description),
-                  value: TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION,
-                ),
-                DropdownMenuItem<String>(
-                  child: Text(localization.amount),
-                  value: TransactionRuleCriteriaEntity.SEARCH_KEY_AMOUNT,
-                ),
-              ],
-            ),
+            if (widget.type == TransactionEntity.TYPE_WITHDRAWL)
+              AppDropdownButton<String>(
+                labelText: localization.field,
+                value: _criteria!.searchKey,
+                onChanged: (dynamic value) {
+                  setState(() {
+                    _criteria = _criteria!.rebuild((b) => b
+                      ..searchKey = value
+                      ..operator = value ==
+                              TransactionRuleCriteriaEntity
+                                  .SEARCH_KEY_DESCRIPTION
+                          ? TransactionRuleCriteriaEntity
+                              .STRING_OPERATOR_CONTAINS
+                          : TransactionRuleCriteriaEntity
+                              .NUMBER_OPERATOR_EQUALS);
+                  });
+                },
+                items: [
+                  DropdownMenuItem<String>(
+                    child: Text(localization.description),
+                    value: TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION,
+                  ),
+                  DropdownMenuItem<String>(
+                    child: Text(localization.amount),
+                    value: TransactionRuleCriteriaEntity.SEARCH_KEY_AMOUNT,
+                  ),
+                ],
+              )
+            else
+              DecoratedFormField(
+                key: ValueKey('__search_key_${_criteria?.searchKey ?? ''}__'),
+                keyboardType: TextInputType.text,
+                enabled: false,
+                label: localization.field,
+                initialValue: _criteria?.searchKey.contains('amount') == true
+                    ? localization.amount
+                    : localization.description,
+              ),
             AppDropdownButton<String>(
               labelText: localization.operator,
               value: _criteria!.operator,
@@ -389,8 +454,15 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                   _criteria = _criteria!.rebuild((b) => b..operator = value);
                 });
               },
-              items: _criteria!.searchKey ==
-                      TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION
+              items: [
+                TransactionRuleCriteriaEntity.SEARCH_KEY_DESCRIPTION,
+                TransactionRuleCriteriaEntity
+                    .SEARCH_KEY_PAYMENT_TRANSACTION_REFERENCE,
+                TransactionRuleCriteriaEntity.SEARCH_KEY_INVOICE_NUMBER,
+                TransactionRuleCriteriaEntity.SEARCH_KEY_CLIENT_ID_NUMBER,
+                TransactionRuleCriteriaEntity.SEARCH_KEY_CLIENT_EMAIL,
+                TransactionRuleCriteriaEntity.SEARCH_KEY_INVOICE_PO_NUMBER,
+              ].contains(_criteria!.searchKey)
                   ? [
                       DropdownMenuItem<String>(
                         child: Text(localization.contains),
@@ -445,8 +517,9 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                       ),
                     ],
             ),
-            if (_criteria!.operator !=
-                TransactionRuleCriteriaEntity.STRING_OPERATOR_IS_EMPTY)
+            if (widget.type == TransactionEntity.TYPE_WITHDRAWL &&
+                _criteria!.operator !=
+                    TransactionRuleCriteriaEntity.STRING_OPERATOR_IS_EMPTY)
               DecoratedFormField(
                 autofocus: true,
                 label: localization.value,
@@ -461,7 +534,70 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                 validator: (value) => value.trim().isEmpty
                     ? localization.pleaseEnterAValue
                     : null,
-              )
+              ),
+            if (widget.type == TransactionEntity.TYPE_DEPOSIT)
+              AppDropdownButton<String>(
+                labelText: localization.field,
+                value: _criteria!.searchKey,
+                onChanged: (dynamic value) {
+                  setState(() {
+                    _criteria = _criteria!.rebuild((b) => b
+                      ..searchKey = value
+                      ..operator = value ==
+                              TransactionRuleCriteriaEntity
+                                  .SEARCH_KEY_DESCRIPTION
+                          ? TransactionRuleCriteriaEntity
+                              .STRING_OPERATOR_CONTAINS
+                          : TransactionRuleCriteriaEntity
+                              .NUMBER_OPERATOR_EQUALS);
+                  });
+                },
+                items: [
+                  DropdownMenuItem<String>(
+                    child:
+                        Text(localization.client + ' - ' + localization.email),
+                    value:
+                        TransactionRuleCriteriaEntity.SEARCH_KEY_CLIENT_EMAIL,
+                  ),
+                  DropdownMenuItem<String>(
+                    child: Text(
+                        localization.client + ' - ' + localization.idNumber),
+                    value: TransactionRuleCriteriaEntity
+                        .SEARCH_KEY_CLIENT_ID_NUMBER,
+                  ),
+                  DropdownMenuItem<String>(
+                    child: Text(
+                        localization.invoice + ' - ' + localization.number),
+                    value:
+                        TransactionRuleCriteriaEntity.SEARCH_KEY_INVOICE_NUMBER,
+                  ),
+                  DropdownMenuItem<String>(
+                    child: Text(
+                        localization.invoice + ' - ' + localization.amount),
+                    value:
+                        TransactionRuleCriteriaEntity.SEARCH_KEY_INVOICE_AMOUNT,
+                  ),
+                  DropdownMenuItem<String>(
+                    child: Text(
+                        localization.invoice + ' - ' + localization.poNumber),
+                    value: TransactionRuleCriteriaEntity
+                        .SEARCH_KEY_INVOICE_PO_NUMBER,
+                  ),
+                  DropdownMenuItem<String>(
+                    child: Text(
+                        localization.payment + ' - ' + localization.amount),
+                    value:
+                        TransactionRuleCriteriaEntity.SEARCH_KEY_PAYMENT_AMOUNT,
+                  ),
+                  DropdownMenuItem<String>(
+                    child: Text(localization.payment +
+                        ' - ' +
+                        localization.transactionReference),
+                    value: TransactionRuleCriteriaEntity
+                        .SEARCH_KEY_PAYMENT_TRANSACTION_REFERENCE,
+                  ),
+                ],
+              ),
           ],
         ),
       ),

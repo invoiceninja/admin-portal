@@ -1354,7 +1354,7 @@ void editEntity({
 
             if (settings.lockInvoices ==
                     SettingsEntity.LOCK_INVOICES_WHEN_PAID &&
-                invoice.isPaid) {
+                (invoice.isPaid || invoice.isPartial)) {
               showMessageDialog(message: localization!.paidInvoicesArelocked);
             } else if (settings.lockInvoices ==
                     SettingsEntity.LOCK_INVOICES_WHEN_SENT &&

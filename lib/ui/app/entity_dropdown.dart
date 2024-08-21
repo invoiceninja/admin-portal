@@ -71,6 +71,8 @@ class _EntityDropdownState extends State<EntityDropdown> {
   String _filter = '';
   BuiltMap<String?, SelectableEntity?>? _entityMap;
   final _scrollController = ScrollController();
+  final ValueNotifier<OptionsViewOpenDirection> autocompletePositionNotifier =
+      ValueNotifier(OptionsViewOpenDirection.down);
 
   @override
   void initState() {
@@ -253,163 +255,192 @@ class _EntityDropdownState extends State<EntityDropdown> {
 
     // TODO remove DEMO_MODE check
     if (isNotMobile(context) && !Config.DEMO_MODE) {
-      return RawAutocomplete<SelectableEntity>(
-        focusNode: _focusNode,
-        textEditingController: _textController,
-        optionsBuilder: (TextEditingValue textEditingValue) {
-          final options = (widget.entityList ?? widget.entityMap!.keys.toList())
-              .map((entityId) => _entityMap![entityId])
-              .whereType<SelectableEntity>()
-              .where((entity) => entity.matchesFilter(textEditingValue.text))
-              .where((element) => !widget.excludeIds.contains(element.id))
-              .toList();
+      // Checking available spaces to set OptionsViewOpenDirection
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final RenderBox? box = context.findRenderObject() as RenderBox?;
+        if (box == null) {
+          return;
+        }
 
-          if (options.length == 1 && options[0].id == widget.entityId) {
-            return <SelectableEntity>[];
-          }
+        final position = box.localToGlobal(Offset.zero);
+        final screenHeight = MediaQuery.of(context).size.height;
+        final widgetBottomPosition = position.dy + box.size.height;
 
-          if (widget.onCreateNew != null &&
-              options.isEmpty &&
-              _filter.trim().isNotEmpty &&
-              textEditingValue.text.trim().isNotEmpty &&
-              state.userCompany.canCreate(widget.entityType)) {
-            options.add(_AutocompleteEntity(name: textEditingValue.text));
-          }
+        final availableSpaceBelow = screenHeight - widgetBottomPosition;
 
-          return options;
-        },
-        displayStringForOption: (entity) => entity.listDisplayName,
-        onSelected: (entity) {
-          _filter = '';
-          /*
+        if (availableSpaceBelow < 270) {
+          autocompletePositionNotifier.value = OptionsViewOpenDirection.up;
+        }
+      });
+
+      return ValueListenableBuilder<OptionsViewOpenDirection>(
+        valueListenable: autocompletePositionNotifier,
+        builder: (context, width, _child) {
+          return RawAutocomplete<SelectableEntity>(
+            focusNode: _focusNode,
+            textEditingController: _textController,
+            optionsBuilder: (TextEditingValue textEditingValue) {
+              final options = (widget.entityList ??
+                      widget.entityMap!.keys.toList())
+                  .map((entityId) => _entityMap![entityId])
+                  .whereType<SelectableEntity>()
+                  .where(
+                      (entity) => entity.matchesFilter(textEditingValue.text))
+                  .where((element) => !widget.excludeIds.contains(element.id))
+                  .toList();
+
+              if (options.length == 1 && options[0].id == widget.entityId) {
+                return <SelectableEntity>[];
+              }
+
+              if (widget.onCreateNew != null &&
+                  options.isEmpty &&
+                  _filter.trim().isNotEmpty &&
+                  textEditingValue.text.trim().isNotEmpty &&
+                  state.userCompany.canCreate(widget.entityType)) {
+                options.add(_AutocompleteEntity(name: textEditingValue.text));
+              }
+
+              return options;
+            },
+            displayStringForOption: (entity) => entity.listDisplayName,
+            onSelected: (entity) {
+              _filter = '';
+              /*
           _textController.text = widget.overrideSuggestedLabel != null
               ? widget.overrideSuggestedLabel(entity)
               : entity?.listDisplayName;
               */
 
-          if (entity.id == widget.entityId) {
-            return;
-          }
+              if (entity.id == widget.entityId) {
+                return;
+              }
 
-          void _wrapUp(SelectableEntity entity) {
-            widget.onSelected(entity);
-            _focusNode.requestFocus();
+              void _wrapUp(SelectableEntity entity) {
+                widget.onSelected(entity);
+                _focusNode.requestFocus();
 
-            WidgetsBinding.instance.addPostFrameCallback((duration) {
-              _textController.selection = TextSelection.fromPosition(
-                  TextPosition(offset: _textController.text.length));
-            });
-          }
+                WidgetsBinding.instance.addPostFrameCallback((duration) {
+                  _textController.selection = TextSelection.fromPosition(
+                      TextPosition(offset: _textController.text.length));
+                });
+              }
 
-          if (entity.id == _AutocompleteEntity.KEY) {
-            final name = (entity as _AutocompleteEntity).name!.trim();
-            _textController.text = name;
+              if (entity.id == _AutocompleteEntity.KEY) {
+                final name = (entity as _AutocompleteEntity).name!.trim();
+                _textController.text = name;
 
-            _focusNode.removeListener(_onFocusChanged);
-            _focusNode.requestFocus();
-            WidgetsBinding.instance.addPostFrameCallback((duration) {
-              _textController.selection = TextSelection.fromPosition(
-                  TextPosition(offset: _textController.text.length));
-            });
+                _focusNode.removeListener(_onFocusChanged);
+                _focusNode.requestFocus();
+                WidgetsBinding.instance.addPostFrameCallback((duration) {
+                  _textController.selection = TextSelection.fromPosition(
+                      TextPosition(offset: _textController.text.length));
+                });
 
-            final completer = Completer<SelectableEntity>();
-            completer.future.then((value) {
-              showToast(AppLocalization.of(navigatorKey.currentContext!)!
-                  .createdRecord);
-              _wrapUp(value);
-              _focusNode.addListener(_onFocusChanged);
-            }).catchError((dynamic error) {
-              _focusNode.addListener(_onFocusChanged);
-            });
-            widget.onCreateNew!(completer, name);
-          } else {
-            _wrapUp(entity);
-          }
-        },
-        fieldViewBuilder: (BuildContext context,
-            TextEditingController textEditingController,
-            FocusNode focusNode,
-            VoidCallback onFieldSubmitted) {
-          return DecoratedFormField(
-            validator: widget.validator,
-            showClear: showClear,
-            label: widget.labelText,
-            autofocus:
-                (widget.autofocus ?? false) && (widget.entityId ?? '').isEmpty,
-            controller: textEditingController,
-            focusNode: focusNode,
-            keyboardType: TextInputType.text,
-            onFieldSubmitted: (String value) {
-              onFieldSubmitted();
-            },
-            onChanged: (value) {
-              _filter = value;
-              if (hasValue) {
-                widget.onSelected(null);
+                final completer = Completer<SelectableEntity>();
+                completer.future.then((value) {
+                  showToast(AppLocalization.of(navigatorKey.currentContext!)!
+                      .createdRecord);
+                  _wrapUp(value);
+                  _focusNode.addListener(_onFocusChanged);
+                }).catchError((dynamic error) {
+                  _focusNode.addListener(_onFocusChanged);
+                });
+                widget.onCreateNew!(completer, name);
+              } else {
+                _wrapUp(entity);
               }
             },
-            suffixIconButton: iconButton,
-          );
-        },
-        optionsViewBuilder: (BuildContext context,
-            AutocompleteOnSelected<SelectableEntity> onSelected,
-            Iterable<SelectableEntity> options) {
-          if (hasValue) {
-            return SizedBox();
-          }
+            fieldViewBuilder: (BuildContext context,
+                TextEditingController textEditingController,
+                FocusNode focusNode,
+                VoidCallback onFieldSubmitted) {
+              return DecoratedFormField(
+                validator: widget.validator,
+                showClear: showClear,
+                label: widget.labelText,
+                autofocus: (widget.autofocus ?? false) &&
+                    (widget.entityId ?? '').isEmpty,
+                controller: textEditingController,
+                focusNode: focusNode,
+                keyboardType: TextInputType.text,
+                onFieldSubmitted: (String value) {
+                  onFieldSubmitted();
+                },
+                onChanged: (value) {
+                  _filter = value;
+                  if (hasValue) {
+                    widget.onSelected(null);
+                  }
+                },
+                suffixIconButton: iconButton,
+              );
+            },
+            optionsViewOpenDirection: autocompletePositionNotifier.value,
+            optionsViewBuilder: (BuildContext context,
+                AutocompleteOnSelected<SelectableEntity> onSelected,
+                Iterable<SelectableEntity> options) {
+              if (hasValue) {
+                return SizedBox();
+              }
 
-          return Theme(
-            data: theme,
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Material(
-                elevation: 4,
-                child: AppBorder(
-                  child: Container(
-                    color: Theme.of(context).cardColor,
-                    width: 250,
-                    constraints: BoxConstraints(maxHeight: 270),
-                    child: Scrollbar(
-                      controller: _scrollController,
-                      thumbVisibility: true,
-                      child: ScrollableListViewBuilder(
-                        scrollController: _scrollController,
-                        itemCount: options.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Builder(builder: (BuildContext context) {
-                            final highlightedIndex =
-                                AutocompleteHighlightedOption.of(context);
-                            if (highlightedIndex == index) {
-                              WidgetsBinding.instance
-                                  .addPostFrameCallback((timeStamp) {
-                                Scrollable.ensureVisible(context);
+              return Theme(
+                data: theme,
+                child: Align(
+                  alignment: autocompletePositionNotifier.value ==
+                          OptionsViewOpenDirection.up
+                      ? Alignment.bottomLeft
+                      : Alignment.topLeft,
+                  child: Material(
+                    elevation: 4,
+                    child: AppBorder(
+                      child: Container(
+                        color: Theme.of(context).cardColor,
+                        width: 250,
+                        constraints: BoxConstraints(maxHeight: 270),
+                        child: Scrollbar(
+                          controller: _scrollController,
+                          thumbVisibility: true,
+                          child: ScrollableListViewBuilder(
+                            scrollController: _scrollController,
+                            itemCount: options.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Builder(builder: (BuildContext context) {
+                                final highlightedIndex =
+                                    AutocompleteHighlightedOption.of(context);
+                                if (highlightedIndex == index) {
+                                  WidgetsBinding.instance
+                                      .addPostFrameCallback((timeStamp) {
+                                    Scrollable.ensureVisible(context);
+                                  });
+                                }
+                                return Container(
+                                  color: highlightedIndex == index
+                                      ? convertHexStringToColor(
+                                          state.prefState.enableDarkMode
+                                              ? kDefaultDarkSelectedColor
+                                              : kDefaultLightSelectedColor)
+                                      : Theme.of(context).cardColor,
+                                  child: EntityAutocompleteListTile(
+                                    onTap: (entity) => onSelected(entity),
+                                    entity: options.elementAt(index),
+                                    filter: _filter,
+                                    overrideSuggestedAmount:
+                                        widget.overrideSuggestedAmount,
+                                    overrideSuggestedLabel:
+                                        widget.overrideSuggestedLabel,
+                                  ),
+                                );
                               });
-                            }
-                            return Container(
-                              color: highlightedIndex == index
-                                  ? convertHexStringToColor(
-                                      state.prefState.enableDarkMode
-                                          ? kDefaultDarkSelectedColor
-                                          : kDefaultLightSelectedColor)
-                                  : Theme.of(context).cardColor,
-                              child: EntityAutocompleteListTile(
-                                onTap: (entity) => onSelected(entity),
-                                entity: options.elementAt(index),
-                                filter: _filter,
-                                overrideSuggestedAmount:
-                                    widget.overrideSuggestedAmount,
-                                overrideSuggestedLabel:
-                                    widget.overrideSuggestedLabel,
-                              ),
-                            );
-                          });
-                        },
+                            },
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ),
+              );
+            },
           );
         },
       );

@@ -892,7 +892,7 @@ abstract class CompanyEntity extends Object
     ..transactions.replace(BuiltList<TransactionEntity>())
     ..transactionRules.replace(BuiltList<TransactionRuleEntity>())
     ..schedules.replace(BuiltList<ScheduleEntity>());
-    //..eInvoice.replace(BuiltMap<String, dynamic>())
+  //..eInvoice.replace(BuiltMap<String, dynamic>())
 
   static Serializer<CompanyEntity> get serializer => _$companyEntitySerializer;
 }
