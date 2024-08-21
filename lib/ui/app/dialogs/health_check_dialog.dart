@@ -132,115 +132,138 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                 Text('${localization!.loading}...'),
               ],
             )
-          : Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _HealthListTile(
-                  title: 'System Health',
-                  subtitle:
-                      'Email: ${_response!.emailDriver}\nQueue: ${_response!.queue}\nPDF: ${_response!.pdfEngine.replaceFirst(' Generator', '')}',
-                  isValid: _response!.systemHealth,
-                ),
-                _HealthListTile(
-                  title: 'Database Check',
-                  isValid: _response!.dbCheck && !_response!.pendingMigration,
-                  subtitle: _response!.pendingMigration
-                      ? localization!.pendingMigrationsHelp
-                      : null,
-                ),
-                _HealthListTile(
-                  title: 'PHP Info',
-                  // TODO move this logic to the backend
-                  isValid: _response!.phpVersion.isOkay &&
-                      webPhpVersion.startsWith('v8') &&
-                      (cliPhpVersion.startsWith('v8') ||
-                          !cliPhpVersion.startsWith('v')),
-                  subtitle: 'Web: $webPhpVersion\nCLI: $cliPhpVersion' +
-                      (phpMemoryLimit.isNotEmpty
-                          ? '\nMemory Limit: $phpMemoryLimit'
-                          : ''),
-                ),
-                /*
-                if (!_response.execEnabled)
+          : SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
                   _HealthListTile(
-                    title: 'PHP Exec',
-                    isValid: false,
-                    subtitle: 'Not enabled',
+                    title: 'System Health',
+                    subtitle:
+                        'Email: ${_response!.emailDriver}\nQueue: ${_response!.queue}\nPDF: ${_response!.pdfEngine.replaceFirst(' Generator', '')}',
+                    isValid: _response!.systemHealth,
                   ),
-                  */
-                /*
-                if (_response.pendingJobs > 0)
                   _HealthListTile(
-                    title: 'Pending Jobs',
-                    subtitle: 'Count: ${_response.pendingJobs}',
-                    isWarning: true,
+                    title: 'Database Check',
+                    isValid: _response!.dbCheck && !_response!.pendingMigration,
+                    subtitle: _response!.pendingMigration
+                        ? 'There are pending migrations, run \'php artisan migrate\''
+                        : null,
                   ),
-                  */
-                if (_response!.filePermissions != 'Ok' &&
-                    !account.disableAutoUpdate &&
-                    !account.isDocker)
                   _HealthListTile(
-                    title: 'Invalid File Permissions',
-                    isValid: false,
-                    subtitle: _response!.filePermissions,
-                    url: '$kDocsUrl/self-host-installation/#file-permissions',
+                    title: 'PHP Info',
+                    // TODO move this logic to the backend
+                    isValid: _response!.phpVersion.isOkay &&
+                        webPhpVersion.startsWith('v8') &&
+                        (cliPhpVersion.startsWith('v8') ||
+                            !cliPhpVersion.startsWith('v')),
+                    subtitle: 'Web: $webPhpVersion\nCLI: $cliPhpVersion' +
+                        (phpMemoryLimit.isNotEmpty
+                            ? '\nMemory Limit: $phpMemoryLimit'
+                            : ''),
                   ),
-                /*
-                if (!account.isDocker) ...[
-                  if (!_response.openBasedir)
+                  if (_response!.queue != 'sync') ...[
                     _HealthListTile(
-                      title: 'Open Basedir',
-                      isWarning: true,
+                      title: 'Queue',
+                      isValid: _response!.queueData.failed == 0,
+                      subtitle:
+                          'Pending Jobs: ${_response!.queueData.pending}\nFailed Jobs: ${_response!.queueData.failed}\n',
+                      level: _response!.queueData.failed == 0 &&
+                              _response!.queueData.pending > 0
+                          ? _HealthCheckLevel.Warning
+                          : null,
+                    ),
+                    if (_response!.queueData.lastError.isNotEmpty)
+                      OutlinedButton(
+                        onPressed: () {
+                          //
+                        },
+                        child: Text('View Last Queue Error'),
+                      ),
+                  ],
+                  /*
+                  if (!_response.execEnabled)
+                    _HealthListTile(
+                      title: 'PHP Exec',
+                      isValid: false,
                       subtitle: 'Not enabled',
                     ),
-                    if (!_response.cacheEnabled)
+                    */
+                  /*
+                  if (_response.pendingJobs > 0)
+                    _HealthListTile(
+                      title: 'Pending Jobs',
+                      subtitle: 'Count: ${_response.pendingJobs}',
+                      isWarning: true,
+                    ),
+                    */
+                  if (_response!.filePermissions != 'Ok' &&
+                      !account.disableAutoUpdate &&
+                      !account.isDocker)
+                    _HealthListTile(
+                      title: 'Invalid File Permissions',
+                      isValid: false,
+                      subtitle: _response!.filePermissions,
+                      url: '$kDocsUrl/self-host-installation/#file-permissions',
+                    ),
+                  /*
+                  if (!account.isDocker) ...[
+                    if (!_response.openBasedir)
                       _HealthListTile(
-                        title: 'Config not cached',
-                        subtitle:
-                            'Run php artisan optimize to improve performance',
+                        title: 'Open Basedir',
                         isWarning: true,
+                        subtitle: 'Not enabled',
                       ),
+                      if (!_response.cacheEnabled)
+                        _HealthListTile(
+                          title: 'Config not cached',
+                          subtitle:
+                              'Run php artisan optimize to improve performance',
+                          isWarning: true,
+                        ),
+                  ],
+                  */
+                  if (!account.isDocker &&
+                      phpMemoryLimitDouble! > 100 &&
+                      phpMemoryLimitDouble < 1024)
+                    _HealthListTile(
+                      title: 'PHP memory limit is too low',
+                      subtitle:
+                          'Increase the limit to 1024M to support the in-app update',
+                      level: _HealthCheckLevel.Warning,
+                    ),
+                  if (_response!.queue == 'sync')
+                    _HealthListTile(
+                      title: 'Queue not enabled',
+                      subtitle: 'Enable the queue for improved performance',
+                      level: _HealthCheckLevel.Info,
+                      url:
+                          '$kDocsUrl/self-host-installation/#final-setup-steps',
+                    ),
+                  if (!_response!.pdfEngine.toLowerCase().startsWith('snappdf'))
+                    _HealthListTile(
+                      title: 'SnapPDF not enabled',
+                      subtitle: 'Use SnapPDF to generate PDF files locally',
+                      level: _HealthCheckLevel.Info,
+                      url:
+                          '$kDocsUrl/self-host-troubleshooting/#pdf-conversion-issues',
+                    ),
+                  if (_response!.trailingSlash)
+                    _HealthListTile(
+                      title: 'APP_URL has trailing slash',
+                      subtitle: 'Remove the slash in the .env file',
+                      level: _HealthCheckLevel.Warning,
+                    ),
+                  if (_response!.exchangeRateApiNotConfigured)
+                    _HealthListTile(
+                      title: 'Exchange Rate API Not Enabled',
+                      subtitle: 'Add an Open Exchange key to the .env file',
+                      level: _HealthCheckLevel.Info,
+                      url:
+                          '$kDocsUrl/self-host-installation/#currency-conversion',
+                    ),
                 ],
-                */
-                if (!account.isDocker &&
-                    phpMemoryLimitDouble! > 100 &&
-                    phpMemoryLimitDouble < 1024)
-                  _HealthListTile(
-                    title: 'PHP memory limit is too low',
-                    subtitle:
-                        'Increase the limit to 1024M to support the in-app update',
-                    level: _HealthCheckLevel.Warning,
-                  ),
-                if (_response!.queue == 'sync')
-                  _HealthListTile(
-                    title: 'Queue not enabled',
-                    subtitle: 'Enable the queue for improved performance',
-                    level: _HealthCheckLevel.Info,
-                    url: '$kDocsUrl/self-host-installation/#final-setup-steps',
-                  ),
-                if (!_response!.pdfEngine.toLowerCase().startsWith('snappdf'))
-                  _HealthListTile(
-                    title: 'SnapPDF not enabled',
-                    subtitle: 'Use SnapPDF to generate PDF files locally',
-                    level: _HealthCheckLevel.Info,
-                    url:
-                        '$kDocsUrl/self-host-troubleshooting/#pdf-conversion-issues',
-                  ),
-                if (_response!.trailingSlash)
-                  _HealthListTile(
-                    title: 'APP_URL has trailing slash',
-                    subtitle: 'Remove the slash in the .env file',
-                    level: _HealthCheckLevel.Warning,
-                  ),
-                if (_response!.exchangeRateApiNotConfigured)
-                  _HealthListTile(
-                    title: 'Exchange Rate API Not Enabled',
-                    subtitle: 'Add an Open Exchange key to the .env file',
-                    level: _HealthCheckLevel.Info,
-                    url:
-                        '$kDocsUrl/self-host-installation/#currency-conversion',
-                  ),
-              ],
+              ),
             ),
       actions: _response == null
           ? []
