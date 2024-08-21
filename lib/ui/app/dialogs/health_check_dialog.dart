@@ -4,11 +4,12 @@ import 'dart:async';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
-import 'package:invoiceninja_flutter/ui/app/copy_to_clipboard.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -180,7 +181,29 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                         showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
-                                title: Text('Last Error'),
+                                title: Text('Last Queue Error'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      showToast(localization.copiedToClipboard
+                                          .replaceFirst(':value', ''));
+                                      Clipboard.setData(ClipboardData(
+                                          text:
+                                              _response!.queueData.lastError));
+                                    },
+                                    child: Text(
+                                      localization!.copy.toUpperCase(),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text(
+                                      localization.close.toUpperCase(),
+                                    ),
+                                  ),
+                                ],
                                 content: SelectableText(
                                   _response!.queueData.lastError,
                                 )));
