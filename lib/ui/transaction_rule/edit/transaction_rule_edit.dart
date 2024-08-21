@@ -126,19 +126,20 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                           : null,
                     ),
                     SizedBox(height: 16),
-                    BoolDropdownButton(
-                      label: localization.appliesTo,
-                      value: transactionRule.appliesTo ==
-                          TransactionEntity.TYPE_WITHDRAWL,
-                      onChanged: (value) {
-                        viewModel.onChanged(transactionRule.rebuild((b) => b
-                          ..appliesTo = (value == true
-                              ? TransactionEntity.TYPE_WITHDRAWL
-                              : TransactionEntity.TYPE_DEPOSIT)));
-                      },
-                      enabledLabel: localization.withdrawal,
-                      disabledLabel: localization.deposit,
-                    ),
+                    if (false)
+                      BoolDropdownButton(
+                        label: localization.appliesTo,
+                        value: transactionRule.appliesTo ==
+                            TransactionEntity.TYPE_WITHDRAWL,
+                        onChanged: (value) {
+                          viewModel.onChanged(transactionRule.rebuild((b) => b
+                            ..appliesTo = (value == true
+                                ? TransactionEntity.TYPE_WITHDRAWL
+                                : TransactionEntity.TYPE_DEPOSIT)));
+                        },
+                        enabledLabel: localization.withdrawal,
+                        disabledLabel: localization.deposit,
+                      ),
                     SwitchListTile(
                       title: Text(localization.matchAllRules),
                       subtitle: Text(localization.matchAllRulesHelp),
