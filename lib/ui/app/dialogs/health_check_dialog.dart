@@ -170,7 +170,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                             ? '\nMemory Limit: $phpMemoryLimit'
                             : ''),
                   ),
-                  if (_response!.queue != 'sync') ...[
+                  if (_response!.queue == 'database') ...[
                     _HealthListTile(
                       title: 'Queue',
                       isValid: _response!.queueData.failed == 0,
