@@ -162,3 +162,26 @@ abstract class HealthCheckQueueResponse
   static Serializer<HealthCheckQueueResponse> get serializer =>
       _$healthCheckQueueResponseSerializer;
 }
+
+abstract class HealthCheckLastErrorResponse
+    implements
+        Built<HealthCheckLastErrorResponse,
+            HealthCheckLastErrorResponseBuilder> {
+  factory HealthCheckLastErrorResponse() {
+    return _$HealthCheckLastErrorResponse._(
+      lastError: '',
+    );
+  }
+
+  HealthCheckLastErrorResponse._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  @BuiltValueField(wireName: 'last_error')
+  String get lastError;
+
+  static Serializer<HealthCheckLastErrorResponse> get serializer =>
+      _$healthCheckLastErrorResponseSerializer;
+}

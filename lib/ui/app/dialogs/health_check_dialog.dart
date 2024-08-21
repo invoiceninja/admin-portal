@@ -145,8 +145,51 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                         'Email: ${_response!.emailDriver}\nQueue: ${_response!.queue}\nPDF: ${_response!.pdfEngine.replaceFirst(' Generator', '')}',
                     isValid: _response!.systemHealth,
                     buttonLabel: 'View Last Error',
-                    buttonCallback: () {
-                      //
+                    buttonCallback: () async {
+                      final webClient = WebClient();
+                      final state = StoreProvider.of<AppState>(context).state;
+                      final credentials = state.credentials;
+                      final url = '${credentials.url}/last_error';
+
+                      webClient
+                          .get(url, credentials.token)
+                          .then((dynamic response) {
+                        if (!kReleaseMode) {
+                          print('## response: $response');
+                        }
+
+                        final data = serializers.deserializeWith(
+                            HealthCheckLastErrorResponse.serializer, response);
+
+                        showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                                title: Text('Last Queue Error'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      showToast(localization.copiedToClipboard
+                                          .replaceFirst(':value', ''));
+                                      Clipboard.setData(ClipboardData(
+                                          text: data?.lastError ?? ''));
+                                    },
+                                    child: Text(
+                                      localization!.copy.toUpperCase(),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text(
+                                      localization.close.toUpperCase(),
+                                    ),
+                                  ),
+                                ],
+                                content: SelectableText(
+                                  '${data?.lastError}',
+                                )));
+                      });
                     },
                   ),
                   _HealthListTile(

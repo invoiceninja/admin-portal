@@ -12,6 +12,9 @@ Serializer<HealthCheckPHPResponse> _$healthCheckPHPResponseSerializer =
     new _$HealthCheckPHPResponseSerializer();
 Serializer<HealthCheckQueueResponse> _$healthCheckQueueResponseSerializer =
     new _$HealthCheckQueueResponseSerializer();
+Serializer<HealthCheckLastErrorResponse>
+    _$healthCheckLastErrorResponseSerializer =
+    new _$HealthCheckLastErrorResponseSerializer();
 
 class _$HealthCheckResponseSerializer
     implements StructuredSerializer<HealthCheckResponse> {
@@ -293,6 +296,52 @@ class _$HealthCheckQueueResponseSerializer
           result.pending = serializers.deserialize(value,
               specifiedType: const FullType(int))! as int;
           break;
+        case 'last_error':
+          result.lastError = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$HealthCheckLastErrorResponseSerializer
+    implements StructuredSerializer<HealthCheckLastErrorResponse> {
+  @override
+  final Iterable<Type> types = const [
+    HealthCheckLastErrorResponse,
+    _$HealthCheckLastErrorResponse
+  ];
+  @override
+  final String wireName = 'HealthCheckLastErrorResponse';
+
+  @override
+  Iterable<Object?> serialize(
+      Serializers serializers, HealthCheckLastErrorResponse object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'last_error',
+      serializers.serialize(object.lastError,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  HealthCheckLastErrorResponse deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new HealthCheckLastErrorResponseBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
         case 'last_error':
           result.lastError = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
@@ -933,6 +982,98 @@ class HealthCheckQueueResponseBuilder
                 pending, r'HealthCheckQueueResponse', 'pending'),
             lastError: BuiltValueNullFieldError.checkNotNull(
                 lastError, r'HealthCheckQueueResponse', 'lastError'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$HealthCheckLastErrorResponse extends HealthCheckLastErrorResponse {
+  @override
+  final String lastError;
+
+  factory _$HealthCheckLastErrorResponse(
+          [void Function(HealthCheckLastErrorResponseBuilder)? updates]) =>
+      (new HealthCheckLastErrorResponseBuilder()..update(updates))._build();
+
+  _$HealthCheckLastErrorResponse._({required this.lastError}) : super._() {
+    BuiltValueNullFieldError.checkNotNull(
+        lastError, r'HealthCheckLastErrorResponse', 'lastError');
+  }
+
+  @override
+  HealthCheckLastErrorResponse rebuild(
+          void Function(HealthCheckLastErrorResponseBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  HealthCheckLastErrorResponseBuilder toBuilder() =>
+      new HealthCheckLastErrorResponseBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is HealthCheckLastErrorResponse &&
+        lastError == other.lastError;
+  }
+
+  int? __hashCode;
+  @override
+  int get hashCode {
+    if (__hashCode != null) return __hashCode!;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, lastError.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'HealthCheckLastErrorResponse')
+          ..add('lastError', lastError))
+        .toString();
+  }
+}
+
+class HealthCheckLastErrorResponseBuilder
+    implements
+        Builder<HealthCheckLastErrorResponse,
+            HealthCheckLastErrorResponseBuilder> {
+  _$HealthCheckLastErrorResponse? _$v;
+
+  String? _lastError;
+  String? get lastError => _$this._lastError;
+  set lastError(String? lastError) => _$this._lastError = lastError;
+
+  HealthCheckLastErrorResponseBuilder();
+
+  HealthCheckLastErrorResponseBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _lastError = $v.lastError;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(HealthCheckLastErrorResponse other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$HealthCheckLastErrorResponse;
+  }
+
+  @override
+  void update(void Function(HealthCheckLastErrorResponseBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  HealthCheckLastErrorResponse build() => _build();
+
+  _$HealthCheckLastErrorResponse _build() {
+    final _$result = _$v ??
+        new _$HealthCheckLastErrorResponse._(
+            lastError: BuiltValueNullFieldError.checkNotNull(
+                lastError, r'HealthCheckLastErrorResponse', 'lastError'));
     replace(_$result);
     return _$result;
   }
