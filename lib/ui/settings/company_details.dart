@@ -539,7 +539,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                         Expanded(
                           child: AppButton(
                             width: double.infinity,
-                            label: localization.uploadLogo.toUpperCase(),
+                            label: localization.uploadLogoShort.toUpperCase(),
                             iconData: Icons.cloud_upload,
                             onPressed: () async {
                               if (state.settingsUIState.isChanged) {
