@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/ui/app/sms_verification.dart';
 // Package imports:
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -76,6 +77,7 @@ class _LoginState extends State<LoginView> {
   bool _tokenLogin = false;
   bool _isSelfHosted = false;
   bool _createAccount = false;
+  bool _showSettings = false;
 
   bool _recoverPassword = false;
   bool _disable2FA = false;
@@ -796,16 +798,18 @@ class _LoginState extends State<LoginView> {
                         )
                       else
                         InkWell(
-                          onTap: () => launchUrl(Uri.parse(kDocsUrl)),
+                          onTap: () => setState(() {
+                            _showSettings = !_showSettings;
+                          }),
                           child: Padding(
                             padding: const EdgeInsets.all(14),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.book, size: 16),
+                                Icon(Icons.settings, size: 16),
                                 SizedBox(width: 8),
-                                Text(localization!.documentation)
+                                Text(localization!.settings)
                               ],
                             ),
                           ),
@@ -815,7 +819,36 @@ class _LoginState extends State<LoginView> {
               ),
             ],
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 8),
+          if (_showSettings) ...[
+            FormCard(
+              forceNarrow: true,
+              internalPadding: const EdgeInsets.all(0),
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: horizontalPadding, vertical: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      DecoratedFormField(
+                        autofocus: true,
+                        label: localization!.sslHostOverride,
+                        keyboardType: TextInputType.text,
+                        onChanged: (value) async {
+                          final prefs = await SharedPreferences.getInstance();
+                          prefs.setString(kSharedPrefHostOverride, value);
+                        },
+                      ),
+                      SizedBox(height: 8),
+                      Text(localization.restartAppToApplyChange),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+          ]
         ],
       ),
     );
