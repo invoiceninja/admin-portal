@@ -6,7 +6,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.162';
+const String kClientVersion = '5.0.163';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -119,6 +119,7 @@ const String kSharedPrefToken = 'checksum';
 const String kSharedPrefWidth = 'width';
 const String kSharedPrefHeight = 'height';
 const String kSharedPrefMaximized = 'maximized';
+const String kSharedPrefHostOverride = 'host_override';
 
 const String kProductProPlanMonth = 'pro_plan';
 const String kProductEnterprisePlanMonth_2 = 'enterprise_plan';

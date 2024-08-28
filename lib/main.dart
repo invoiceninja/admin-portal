@@ -99,7 +99,25 @@ emyPxgcYxn/eR44/KJ4EBs+lVDR3veyJm+kXQ99b21/+jh5Xos1AnX5iItreGCc=
 -----END CERTIFICATE-----
 ''';
 
+// https://www.reddit.com/r/flutterhelp/comments/1cnb3q0/certificate_verify_failed_whats_the_right/
+class MyHttpOverrides extends HttpOverrides {
+  MyHttpOverrides(this.host);
+  final String host;
+
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port) {
+        return this.host == host;
+      };
+  }
+}
+
 void main({bool isTesting = false}) async {
+  final prefs = await SharedPreferences.getInstance();
+  HttpOverrides.global =
+      MyHttpOverrides(prefs.getString(kSharedPrefHostOverride) ?? '');
+
   WidgetsFlutterBinding.ensureInitialized();
   _registerErrorHandlers();
 
@@ -114,8 +132,6 @@ void main({bool isTesting = false}) async {
   } catch (e) {
     // Ignore CERT_ALREADY_IN_HASH_TABLE
   }
-
-  final prefs = await SharedPreferences.getInstance();
 
   if (isDesktopOS()) {
     await windowManager.ensureInitialized();
