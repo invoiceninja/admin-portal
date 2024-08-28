@@ -59,6 +59,7 @@ class _LoginState extends State<LoginView> {
   final _secretController = TextEditingController();
   final _oneTimePasswordController = TextEditingController();
   final _tokenController = TextEditingController();
+  final _hostOverrideController = TextEditingController();
 
   final _buttonController = RoundedLoadingButtonController();
 
@@ -120,6 +121,11 @@ class _LoginState extends State<LoginView> {
     if (_urlController.text.isEmpty) {
       _urlController.text = widget.viewModel.authState.url;
     }
+
+    SharedPreferences.getInstance().then((value) {
+      _hostOverrideController.text =
+          value.getString(kSharedPrefHostOverride) ?? '';
+    });
   }
 
   @override
@@ -132,6 +138,7 @@ class _LoginState extends State<LoginView> {
     _secretController.dispose();
     _oneTimePasswordController.dispose();
     _tokenController.dispose();
+    _hostOverrideController.dispose();
 
     super.dispose();
   }
@@ -833,7 +840,9 @@ class _LoginState extends State<LoginView> {
                     children: [
                       DecoratedFormField(
                         autofocus: true,
+                        hint: 'domain.com',
                         label: localization!.sslHostOverride,
+                        controller: _hostOverrideController,
                         keyboardType: TextInputType.text,
                         onChanged: (value) async {
                           final prefs = await SharedPreferences.getInstance();
