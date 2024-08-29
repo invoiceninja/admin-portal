@@ -826,6 +826,9 @@ abstract class ActivityEntity
       kActivityEmailReminder3,
       kActivityEmailReminderEndless,
       kActivityEmailInvoiceFailed,
+      kActivityAutoBillSuccess,
+      kActivityAutoBillFailure,
+      kActivityEInvoiceSuccess,
     ].contains(activityTypeId)) {
       return EntityType.invoice;
     } else if ([

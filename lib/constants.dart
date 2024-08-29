@@ -1140,3 +1140,6 @@ const String kActivityExpenseNotificationSent = '139';
 const String kActivityStatementSent = '140';
 const String kActivityComment = '141';
 const String kActivityQuoteEmailReminder1 = '142';
+const String kActivityAutoBillSuccess = '143';
+const String kActivityAutoBillFailure = '144';
+const String kActivityEInvoiceSuccess = '145';
