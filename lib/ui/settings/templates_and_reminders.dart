@@ -216,6 +216,10 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
       settings = settings.rebuild((b) => b
         ..emailBodyPaymentPartial = body
         ..emailSubjectPaymentPartial = subject);
+    } else if (_selectedTemplate == EmailTemplate.payment_failed) {
+      settings = settings.rebuild((b) => b
+        ..emailBodyPaymentFailed = body
+        ..emailSubjectPaymentFailed = subject);
     } else if (_selectedTemplate == EmailTemplate.reminder1) {
       settings = settings.rebuild((b) => b
         ..emailBodyReminder1 = body
@@ -373,6 +377,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                           EmailTemplate.statement,
                           EmailTemplate.payment,
                           EmailTemplate.payment_partial,
+                          EmailTemplate.payment_failed,
                         ].contains(value) &&
                         !company.isModuleEnabled(EntityType.invoice)) {
                       return false;
@@ -563,6 +568,7 @@ class _TemplatesAndRemindersState extends State<TemplatesAndReminders>
                 showInvoiceAsQuote: template == EmailTemplate.quote,
                 showInvoiceAsInvoices: [
                   EmailTemplate.payment,
+                  EmailTemplate.payment_partial,
                   EmailTemplate.payment_partial,
                 ].contains(template),
               ),

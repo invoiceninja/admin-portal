@@ -239,6 +239,8 @@ const EmailTemplate _$quote_email = const EmailTemplate._('quote');
 const EmailTemplate _$payment_email = const EmailTemplate._('payment');
 const EmailTemplate _$payment_partial_email =
     const EmailTemplate._('payment_partial');
+const EmailTemplate _$payment_failed_email =
+    const EmailTemplate._('payment_failed');
 const EmailTemplate _$credit_email = const EmailTemplate._('credit');
 const EmailTemplate _$purchase_order = const EmailTemplate._('purchase_order');
 const EmailTemplate _$statement_email = const EmailTemplate._('statement');
@@ -263,6 +265,8 @@ EmailTemplate _$templateValueOf(String name) {
       return _$payment_email;
     case 'payment_partial':
       return _$payment_partial_email;
+    case 'payment_failed':
+      return _$payment_failed_email;
     case 'credit':
       return _$credit_email;
     case 'purchase_order':
@@ -296,6 +300,7 @@ final BuiltSet<EmailTemplate> _$templateValues =
   _$quote_email,
   _$payment_email,
   _$payment_partial_email,
+  _$payment_failed_email,
   _$credit_email,
   _$purchase_order,
   _$statement_email,
