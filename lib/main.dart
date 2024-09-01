@@ -114,11 +114,12 @@ class MyHttpOverrides extends HttpOverrides {
 }
 
 void main({bool isTesting = false}) async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   final prefs = await SharedPreferences.getInstance();
   HttpOverrides.global =
       MyHttpOverrides(prefs.getString(kSharedPrefHostOverride) ?? '');
 
-  WidgetsFlutterBinding.ensureInitialized();
   _registerErrorHandlers();
 
   final ConnectionStatusSingleton connectionStatus =
