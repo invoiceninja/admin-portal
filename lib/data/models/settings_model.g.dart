@@ -1688,6 +1688,20 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.emailSubjectPaymentFailed;
+    if (value != null) {
+      result
+        ..add('email_subject_payment_failed')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.emailBodyPaymentFailed;
+    if (value != null) {
+      result
+        ..add('email_template_payment_failed')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -2670,6 +2684,14 @@ class _$SettingsEntitySerializer
           result.paymentFlow = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'email_subject_payment_failed':
+          result.emailSubjectPaymentFailed = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'email_template_payment_failed':
+          result.emailBodyPaymentFailed = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
       }
     }
 
@@ -3229,6 +3251,10 @@ class _$SettingsEntity extends SettingsEntity {
   final bool? mergeEInvoiceToPdf;
   @override
   final String? paymentFlow;
+  @override
+  final String? emailSubjectPaymentFailed;
+  @override
+  final String? emailBodyPaymentFailed;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder)? updates]) =>
       (new SettingsEntityBuilder()..update(updates))._build();
@@ -3473,7 +3499,9 @@ class _$SettingsEntity extends SettingsEntity {
       this.quoteLateFeeAmount1,
       this.quoteLateFeePercent1,
       this.mergeEInvoiceToPdf,
-      this.paymentFlow})
+      this.paymentFlow,
+      this.emailSubjectPaymentFailed,
+      this.emailBodyPaymentFailed})
       : super._();
 
   @override
@@ -3732,7 +3760,9 @@ class _$SettingsEntity extends SettingsEntity {
         quoteLateFeeAmount1 == other.quoteLateFeeAmount1 &&
         quoteLateFeePercent1 == other.quoteLateFeePercent1 &&
         mergeEInvoiceToPdf == other.mergeEInvoiceToPdf &&
-        paymentFlow == other.paymentFlow;
+        paymentFlow == other.paymentFlow &&
+        emailSubjectPaymentFailed == other.emailSubjectPaymentFailed &&
+        emailBodyPaymentFailed == other.emailBodyPaymentFailed;
   }
 
   int? __hashCode;
@@ -3980,6 +4010,8 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, quoteLateFeePercent1.hashCode);
     _$hash = $jc(_$hash, mergeEInvoiceToPdf.hashCode);
     _$hash = $jc(_$hash, paymentFlow.hashCode);
+    _$hash = $jc(_$hash, emailSubjectPaymentFailed.hashCode);
+    _$hash = $jc(_$hash, emailBodyPaymentFailed.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -4231,7 +4263,9 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('quoteLateFeeAmount1', quoteLateFeeAmount1)
           ..add('quoteLateFeePercent1', quoteLateFeePercent1)
           ..add('mergeEInvoiceToPdf', mergeEInvoiceToPdf)
-          ..add('paymentFlow', paymentFlow))
+          ..add('paymentFlow', paymentFlow)
+          ..add('emailSubjectPaymentFailed', emailSubjectPaymentFailed)
+          ..add('emailBodyPaymentFailed', emailBodyPaymentFailed))
         .toString();
   }
 }
@@ -5423,6 +5457,16 @@ class SettingsEntityBuilder
   String? get paymentFlow => _$this._paymentFlow;
   set paymentFlow(String? paymentFlow) => _$this._paymentFlow = paymentFlow;
 
+  String? _emailSubjectPaymentFailed;
+  String? get emailSubjectPaymentFailed => _$this._emailSubjectPaymentFailed;
+  set emailSubjectPaymentFailed(String? emailSubjectPaymentFailed) =>
+      _$this._emailSubjectPaymentFailed = emailSubjectPaymentFailed;
+
+  String? _emailBodyPaymentFailed;
+  String? get emailBodyPaymentFailed => _$this._emailBodyPaymentFailed;
+  set emailBodyPaymentFailed(String? emailBodyPaymentFailed) =>
+      _$this._emailBodyPaymentFailed = emailBodyPaymentFailed;
+
   SettingsEntityBuilder();
 
   SettingsEntityBuilder get _$this {
@@ -5668,6 +5712,8 @@ class SettingsEntityBuilder
       _quoteLateFeePercent1 = $v.quoteLateFeePercent1;
       _mergeEInvoiceToPdf = $v.mergeEInvoiceToPdf;
       _paymentFlow = $v.paymentFlow;
+      _emailSubjectPaymentFailed = $v.emailSubjectPaymentFailed;
+      _emailBodyPaymentFailed = $v.emailBodyPaymentFailed;
       _$v = null;
     }
     return this;
@@ -5932,7 +5978,9 @@ class SettingsEntityBuilder
               quoteLateFeeAmount1: quoteLateFeeAmount1,
               quoteLateFeePercent1: quoteLateFeePercent1,
               mergeEInvoiceToPdf: mergeEInvoiceToPdf,
-              paymentFlow: paymentFlow);
+              paymentFlow: paymentFlow,
+              emailSubjectPaymentFailed: emailSubjectPaymentFailed,
+              emailBodyPaymentFailed: emailBodyPaymentFailed);
     } catch (_) {
       late String _$failedField;
       try {

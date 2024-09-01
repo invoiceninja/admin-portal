@@ -870,6 +870,12 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'payment_flow')
   String? get paymentFlow;
 
+  @BuiltValueField(wireName: 'email_subject_payment_failed')
+  String? get emailSubjectPaymentFailed;
+
+  @BuiltValueField(wireName: 'email_template_payment_failed')
+  String? get emailBodyPaymentFailed;
+
   bool? get taskRoundingEnabled =>
       taskRoundToNearest == null ? null : taskRoundToNearest != 1;
 
@@ -970,6 +976,8 @@ abstract class SettingsEntity
         return emailSubjectPayment;
       case EmailTemplate.payment_partial:
         return emailSubjectPaymentPartial;
+      case EmailTemplate.payment_failed:
+        return emailSubjectPaymentFailed;
       case EmailTemplate.reminder1:
         return emailSubjectReminder1;
       case EmailTemplate.reminder2:
@@ -1007,6 +1015,8 @@ abstract class SettingsEntity
         return emailBodyPayment;
       case EmailTemplate.payment_partial:
         return emailBodyPaymentPartial;
+      case EmailTemplate.payment_failed:
+        return emailBodyPaymentFailed;
       case EmailTemplate.reminder1:
         return emailBodyReminder1;
       case EmailTemplate.reminder2:
