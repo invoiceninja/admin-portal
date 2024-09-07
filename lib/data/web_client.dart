@@ -55,7 +55,6 @@ class WebClient {
     print('GET: $url');
 
     final isOnline = await _isOnline();
-    print("isOnline: $isOnline");
 
     if (isOnline) {
       final client = http.Client();
@@ -102,7 +101,6 @@ class WebClient {
     http.Response response;
 
     final isOnline = await _isOnline();
-    print("isOnline: $isOnline");
 
     if (isOnline) {
       if (multipartFiles != null) {
@@ -167,7 +165,6 @@ class WebClient {
     http.Response response;
 
     final isOnline = await _isOnline();
-    print("isOnline: $isOnline");
 
     if (isOnline) {
       if (multipartFile != null) {
@@ -212,7 +209,6 @@ class WebClient {
     print('Delete: $url');
 
     final isOnline = await _isOnline();
-    print("isOnline: $isOnline");
 
     if (isOnline) {
       final client = http.Client();
