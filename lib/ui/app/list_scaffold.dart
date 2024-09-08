@@ -16,7 +16,6 @@ import 'package:invoiceninja_flutter/ui/app/history_drawer_vm.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
-import 'package:invoiceninja_flutter/ui/app/connection_status.dart';
 import 'menu_drawer_vm.dart';
 
 class ListScaffold extends StatelessWidget {
@@ -212,7 +211,6 @@ class ListScaffold extends StatelessWidget {
             ),
             body: Container(
               child: Column(children: [
-                if (isMobile(context)) ConnStatusBanner(),
                 Expanded(
                   child: ClipRect(
                     child: body,
