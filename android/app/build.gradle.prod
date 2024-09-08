@@ -50,7 +50,7 @@ android {
     defaultConfig {
         applicationId "com.invoiceninja.app"
         minSdkVersion 19
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
