@@ -1,6 +1,6 @@
 name: invoiceninja_flutter
 description: Client for Invoice Ninja
-version: 5.0.165+165
+version: 5.0.167+167
 homepage: https://invoiceninja.com
 documentation: https://invoiceninja.github.io
 publish_to: none
@@ -85,7 +85,6 @@ dependencies:
   filesystem_picker: ^4.0.0
   device_info_plus: ^9.1.0
   ios_open_subscriptions_settings: ^0.0.4
-  connectivity_plus: ^6.0.3
 
 dependency_overrides:
   intl: any

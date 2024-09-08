@@ -21,7 +21,6 @@ import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/serializers.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
-import 'package:invoiceninja_flutter/utils/connection_status.dart';
 import 'package:invoiceninja_flutter/redux/app/app_middleware.dart';
 import 'package:invoiceninja_flutter/redux/app/app_reducer.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
@@ -121,10 +120,6 @@ void main({bool isTesting = false}) async {
       MyHttpOverrides(prefs.getString(kSharedPrefHostOverride) ?? '');
 
   _registerErrorHandlers();
-
-  final ConnectionStatusSingleton connectionStatus =
-      ConnectionStatusSingleton.getInstance();
-  connectionStatus.initialize();
 
   try {
     SecurityContext.defaultContext.setTrustedCertificatesBytes(
