@@ -45,7 +45,7 @@ packages:
     dependency: "direct overridden"
     description:
       path: attributed_text
-      ref: stable
+      ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
       resolved-ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
       url: "https://github.com/superlistapp/super_editor"
     source: git
@@ -1572,7 +1572,7 @@ packages:
     dependency: "direct overridden"
     description:
       path: super_editor
-      ref: stable
+      ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
       resolved-ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
       url: "https://github.com/superlistapp/super_editor"
     source: git
@@ -1581,7 +1581,7 @@ packages:
     dependency: "direct overridden"
     description:
       path: super_editor_markdown
-      ref: stable
+      ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
       resolved-ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
       url: "https://github.com/superlistapp/super_editor"
     source: git
@@ -1590,7 +1590,7 @@ packages:
     dependency: "direct overridden"
     description:
       path: super_text_layout
-      ref: stable
+      ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
       resolved-ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
       url: "https://github.com/superlistapp/super_editor"
     source: git
