@@ -210,6 +210,12 @@ class _$SubscriptionEntitySerializer
       serializers.serialize(object.id, specifiedType: const FullType(String)),
     ];
     Object? value;
+    value = object.remainingCycles;
+    if (value != null) {
+      result
+        ..add('remaining_cycles')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     value = object.isChanged;
     if (value != null) {
       result
@@ -284,6 +290,10 @@ class _$SubscriptionEntitySerializer
         case 'use_inventory_management':
           result.useInventoryManagement = serializers.deserialize(value,
               specifiedType: const FullType(bool))! as bool;
+          break;
+        case 'remaining_cycles':
+          result.remainingCycles = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
           break;
         case 'frequency_id':
           result.frequencyId = serializers.deserialize(value,
@@ -689,6 +699,8 @@ class _$SubscriptionEntity extends SubscriptionEntity {
   @override
   final bool useInventoryManagement;
   @override
+  final int? remainingCycles;
+  @override
   final String frequencyId;
   @override
   final String autoBill;
@@ -752,6 +764,7 @@ class _$SubscriptionEntity extends SubscriptionEntity {
       required this.optionalRecurringProductIds,
       required this.registrationRequired,
       required this.useInventoryManagement,
+      this.remainingCycles,
       required this.frequencyId,
       required this.autoBill,
       required this.promoCode,
@@ -857,6 +870,7 @@ class _$SubscriptionEntity extends SubscriptionEntity {
         optionalRecurringProductIds == other.optionalRecurringProductIds &&
         registrationRequired == other.registrationRequired &&
         useInventoryManagement == other.useInventoryManagement &&
+        remainingCycles == other.remainingCycles &&
         frequencyId == other.frequencyId &&
         autoBill == other.autoBill &&
         promoCode == other.promoCode &&
@@ -897,6 +911,7 @@ class _$SubscriptionEntity extends SubscriptionEntity {
     _$hash = $jc(_$hash, optionalRecurringProductIds.hashCode);
     _$hash = $jc(_$hash, registrationRequired.hashCode);
     _$hash = $jc(_$hash, useInventoryManagement.hashCode);
+    _$hash = $jc(_$hash, remainingCycles.hashCode);
     _$hash = $jc(_$hash, frequencyId.hashCode);
     _$hash = $jc(_$hash, autoBill.hashCode);
     _$hash = $jc(_$hash, promoCode.hashCode);
@@ -937,6 +952,7 @@ class _$SubscriptionEntity extends SubscriptionEntity {
           ..add('optionalRecurringProductIds', optionalRecurringProductIds)
           ..add('registrationRequired', registrationRequired)
           ..add('useInventoryManagement', useInventoryManagement)
+          ..add('remainingCycles', remainingCycles)
           ..add('frequencyId', frequencyId)
           ..add('autoBill', autoBill)
           ..add('promoCode', promoCode)
@@ -1007,6 +1023,11 @@ class SubscriptionEntityBuilder
   bool? get useInventoryManagement => _$this._useInventoryManagement;
   set useInventoryManagement(bool? useInventoryManagement) =>
       _$this._useInventoryManagement = useInventoryManagement;
+
+  int? _remainingCycles;
+  int? get remainingCycles => _$this._remainingCycles;
+  set remainingCycles(int? remainingCycles) =>
+      _$this._remainingCycles = remainingCycles;
 
   String? _frequencyId;
   String? get frequencyId => _$this._frequencyId;
@@ -1136,6 +1157,7 @@ class SubscriptionEntityBuilder
       _optionalRecurringProductIds = $v.optionalRecurringProductIds;
       _registrationRequired = $v.registrationRequired;
       _useInventoryManagement = $v.useInventoryManagement;
+      _remainingCycles = $v.remainingCycles;
       _frequencyId = $v.frequencyId;
       _autoBill = $v.autoBill;
       _promoCode = $v.promoCode;
@@ -1202,6 +1224,7 @@ class SubscriptionEntityBuilder
               registrationRequired: BuiltValueNullFieldError.checkNotNull(
                   registrationRequired, r'SubscriptionEntity', 'registrationRequired'),
               useInventoryManagement: BuiltValueNullFieldError.checkNotNull(useInventoryManagement, r'SubscriptionEntity', 'useInventoryManagement'),
+              remainingCycles: remainingCycles,
               frequencyId: BuiltValueNullFieldError.checkNotNull(frequencyId, r'SubscriptionEntity', 'frequencyId'),
               autoBill: BuiltValueNullFieldError.checkNotNull(autoBill, r'SubscriptionEntity', 'autoBill'),
               promoCode: BuiltValueNullFieldError.checkNotNull(promoCode, r'SubscriptionEntity', 'promoCode'),

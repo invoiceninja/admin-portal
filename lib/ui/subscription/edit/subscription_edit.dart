@@ -449,6 +449,26 @@ class _SubscriptionEditState extends State<SubscriptionEdit>
                                 child: Text(localization.lookup(entry.value)),
                               ))
                           .toList()),
+                  AppDropdownButton<int>(
+                    labelText: localization.remainingCycles,
+                    value: subscription.remainingCycles,
+                    blankValue: null,
+                    onChanged: (dynamic value) => viewModel.onChanged(
+                        subscription
+                            .rebuild((b) => b..remainingCycles = value)),
+                    items: [
+                      DropdownMenuItem(
+                        child: Text(localization.endless),
+                        value: -1,
+                      ),
+                      ...List<int>.generate(61, (i) => i)
+                          .map((value) => DropdownMenuItem(
+                                child: Text('$value'),
+                                value: value,
+                              ))
+                          .toList()
+                    ],
+                  ),
                   AppDropdownButton<String>(
                     labelText: localization.autoBill,
                     value: subscription.autoBill,
