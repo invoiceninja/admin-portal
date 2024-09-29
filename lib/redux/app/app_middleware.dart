@@ -288,6 +288,17 @@ Middleware<AppState> _createLoadState(
         } else {
           store.dispatch(ViewMainScreen());
         }
+
+        final prefs = await SharedPreferences.getInstance();
+        final companyId = prefs.getString(kSharedPrefCompanyId);
+        if (companyId != null) {
+          final index = companyStates.indexWhere(
+              (companyState) => companyState?.company.id == companyId);
+          if (index > 0) {
+            store.dispatch(SelectCompany(companyIndex: index));
+          }
+        }
+
         WidgetsBinding.instance.addPostFrameCallback((duration) {
           store.dispatch(ViewDashboard());
         });

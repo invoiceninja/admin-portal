@@ -120,6 +120,7 @@ const String kSharedPrefWidth = 'width';
 const String kSharedPrefHeight = 'height';
 const String kSharedPrefMaximized = 'maximized';
 const String kSharedPrefHostOverride = 'host_override';
+const String kSharedPrefCompanyId = 'company_id';
 
 const String kProductProPlanMonth = 'pro_plan';
 const String kProductEnterprisePlanMonth_2 = 'enterprise_plan';
