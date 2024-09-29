@@ -105,6 +105,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
       kGatewayStripeConnect,
       kGatewayWePay,
       kGatewayPayPalPlatform,
+      kGatewayGoCardlessOAuth,
     ];
 
     final disableSave = (connectGateways.contains(companyGateway.gatewayId) &&

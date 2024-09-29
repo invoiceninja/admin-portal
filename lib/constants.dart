@@ -535,6 +535,7 @@ const kNotificationEvents = [
 
 const String kGatewayStripe = 'd14dd26a37cecc30fdd65700bfb55b23';
 const String kGatewayStripeConnect = 'd14dd26a47cecc30fdd65700bfb67b34';
+const String kGatewayGoCardlessOAuth = '...';
 const String kGatewayAuthorizeNet = '3b6621f970ab18887c4f6dca78d3f8bb';
 const String kGatewayCheckoutCom = '3758e7f7c6f4cecf0f4f348b9a00f456';
 const String kGatewayPayPalREST = '80af24a6a691230bbec33e930ab40665';
