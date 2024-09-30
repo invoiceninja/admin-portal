@@ -94,6 +94,7 @@ abstract class SubscriptionEntity extends Object
       registrationRequired: false,
       useInventoryManagement: false,
       steps: DEFAULT_STEPS,
+      remainingCycles: -1,
       webhookConfiguration: WebhookConfigurationEntity(),
     );
   }
@@ -134,6 +135,9 @@ abstract class SubscriptionEntity extends Object
 
   @BuiltValueField(wireName: 'use_inventory_management')
   bool get useInventoryManagement;
+
+  @BuiltValueField(wireName: 'remaining_cycles')
+  int? get remainingCycles;
 
   @BuiltValueField(wireName: 'frequency_id')
   String get frequencyId;
@@ -272,6 +276,7 @@ abstract class SubscriptionEntity extends Object
   static void _initializeBuilder(SubscriptionEntityBuilder builder) => builder
     ..optionalProductIds = ''
     ..optionalRecurringProductIds = ''
+    ..remainingCycles = -1
     ..registrationRequired = false
     ..useInventoryManagement = false
     ..steps = DEFAULT_STEPS;

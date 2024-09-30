@@ -157,6 +157,10 @@ class CompanyGatewayEditVM {
                 launchUrl(Uri.parse(
                     '${cleanApiUrl(credentials.url)}/paypal?hash=${response['hash']}'));
                 break;
+              case kGatewayGoCardlessOAuth:
+                launchUrl(Uri.parse(
+                    '${cleanApiUrl(credentials.url)}/gocardless/oauth/connect/${response['hash']}'));
+                break;
             }
           }).catchError((dynamic error) {
             store.dispatch(StopSaving());

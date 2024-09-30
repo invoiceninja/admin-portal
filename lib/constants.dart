@@ -6,7 +6,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.170';
+const String kClientVersion = '5.0.171';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -120,6 +120,7 @@ const String kSharedPrefWidth = 'width';
 const String kSharedPrefHeight = 'height';
 const String kSharedPrefMaximized = 'maximized';
 const String kSharedPrefHostOverride = 'host_override';
+const String kSharedPrefCompanyId = 'company_id';
 
 const String kProductProPlanMonth = 'pro_plan';
 const String kProductEnterprisePlanMonth_2 = 'enterprise_plan';
@@ -535,6 +536,7 @@ const kNotificationEvents = [
 
 const String kGatewayStripe = 'd14dd26a37cecc30fdd65700bfb55b23';
 const String kGatewayStripeConnect = 'd14dd26a47cecc30fdd65700bfb67b34';
+const String kGatewayGoCardlessOAuth = 'b9886f9257f0c6ee7c302f1c74475f6c';
 const String kGatewayAuthorizeNet = '3b6621f970ab18887c4f6dca78d3f8bb';
 const String kGatewayCheckoutCom = '3758e7f7c6f4cecf0f4f348b9a00f456';
 const String kGatewayPayPalREST = '80af24a6a691230bbec33e930ab40665';

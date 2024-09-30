@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -24,6 +25,7 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/oauth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MenuDrawerBuilder extends StatelessWidget {
   const MenuDrawerBuilder({Key? key}) : super(key: key);
@@ -95,6 +97,9 @@ class MenuDrawerVM {
         checkForChanges(
             store: store,
             callback: () {
+              SharedPreferences.getInstance().then(
+                  (prefs) => prefs.setString(kSharedPrefCompanyId, company.id));
+
               store.dispatch(ClearEntityFilter());
               store.dispatch(DiscardChanges());
               store.dispatch(SelectCompany(companyIndex: index));
