@@ -24,6 +24,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/discount_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/vendor_picker.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/invoice/edit/invoice_edit_details_vm.dart';
@@ -151,6 +152,7 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
         state.getEntity(invoice.entityType, invoice.id) as InvoiceEntity?;
 
     final client = state.clientState.get(invoice.clientId);
+    final vendor = state.vendorState.get(invoice.vendorId);
     final settings = getClientSettings(state, client);
     final terms = widget.entityType == EntityType.quote
         ? settings.defaultValidUntil
@@ -167,26 +169,79 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
           children: <Widget>[
             invoice.isNew
                 ? invoice.isPurchaseOrder
-                    ? VendorPicker(
-                        autofocus: true,
-                        vendorId: invoice.vendorId,
-                        vendorState: state.vendorState,
-                        onSelected: (vendor) {
-                          viewModel.onVendorChanged!(
-                              context, invoice, vendor as VendorEntity?);
-                        },
-                        onAddPressed: (completer) =>
-                            viewModel.onAddVendorPressed!(context, completer),
+                    ? Column(
+                        children: [
+                          VendorPicker(
+                            autofocus: true,
+                            vendorId: invoice.vendorId,
+                            vendorState: state.vendorState,
+                            onSelected: (vendor) {
+                              viewModel.onVendorChanged!(
+                                  context, invoice, vendor as VendorEntity?);
+                            },
+                            onAddPressed: (completer) => viewModel
+                                .onAddVendorPressed!(context, completer),
+                          ),
+                          SizedBox(height: 4),
+                          if (vendor.privateNotes.isNotEmpty)
+                            Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8),
+                                child: IconText(
+                                  text: vendor.privateNotes,
+                                  icon: Icons.lock,
+                                  iconSize: 16,
+                                  maxLines: 3,
+                                )),
+                          if (vendor.publicNotes.isNotEmpty)
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top: vendor.publicNotes.isEmpty ? 8 : 0,
+                                  bottom: 8),
+                              child: IconText(
+                                text: vendor.publicNotes,
+                                icon: Icons.note,
+                                iconSize: 16,
+                                maxLines: 3,
+                              ),
+                            ),
+                        ],
                       )
-                    : ClientPicker(
-                        autofocus: true,
-                        showNotes: true,
-                        clientId: invoice.clientId,
-                        clientState: state.clientState,
-                        onSelected: (client) => viewModel.onClientChanged!(
-                            context, invoice, client as ClientEntity?),
-                        onAddPressed: (completer) =>
-                            viewModel.onAddClientPressed!(context, completer),
+                    : Column(
+                        children: [
+                          ClientPicker(
+                            autofocus: true,
+                            clientId: invoice.clientId,
+                            clientState: state.clientState,
+                            onSelected: (client) => viewModel.onClientChanged!(
+                                context, invoice, client as ClientEntity?),
+                            onAddPressed: (completer) => viewModel
+                                .onAddClientPressed!(context, completer),
+                          ),
+                          SizedBox(height: 4),
+                          if (client.privateNotes.isNotEmpty)
+                            Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 8),
+                                child: IconText(
+                                  text: client.privateNotes,
+                                  icon: Icons.lock,
+                                  iconSize: 16,
+                                  maxLines: 3,
+                                )),
+                          if (client.publicNotes.isNotEmpty)
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  top: client.publicNotes.isEmpty ? 8 : 0,
+                                  bottom: 8),
+                              child: IconText(
+                                text: client.publicNotes,
+                                icon: Icons.note,
+                                iconSize: 16,
+                                maxLines: 3,
+                              ),
+                            ),
+                        ],
                       )
                 : DecoratedFormField(
                     controller: _invoiceNumberController,

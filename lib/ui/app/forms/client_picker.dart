@@ -13,7 +13,6 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/client/client_selectors.dart';
 import 'package:invoiceninja_flutter/redux/client/client_state.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
-import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientPicker extends StatelessWidget {
@@ -26,7 +25,6 @@ class ClientPicker extends StatelessWidget {
     this.autofocus,
     this.excludeIds = const [],
     this.isRequired = true,
-    this.showNotes = false,
   }) : super(key: key);
 
   final String? clientId;
@@ -36,14 +34,12 @@ class ClientPicker extends StatelessWidget {
   final bool? autofocus;
   final List<String> excludeIds;
   final bool isRequired;
-  final bool showNotes;
 
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
-    final client = state.clientState.get(clientId ?? '');
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,29 +59,6 @@ class ClientPicker extends StatelessWidget {
           onAddPressed: onAddPressed,
           excludeIds: excludeIds,
         ),
-        if (showNotes) ...[
-          SizedBox(height: 4),
-          if (client.publicNotes.isNotEmpty)
-            Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: IconText(
-                  text: client.privateNotes,
-                  icon: Icons.lock,
-                  iconSize: 16,
-                  maxLines: 3,
-                )),
-          if (client.privateNotes.isNotEmpty)
-            Padding(
-              padding: EdgeInsets.only(
-                  top: client.publicNotes.isEmpty ? 8 : 0, bottom: 8),
-              child: IconText(
-                text: client.publicNotes,
-                icon: Icons.note,
-                iconSize: 16,
-                maxLines: 3,
-              ),
-            ),
-        ]
       ],
     );
   }

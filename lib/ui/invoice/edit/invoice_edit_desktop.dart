@@ -43,6 +43,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/project_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/user_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/vendor_picker.dart';
 import 'package:invoiceninja_flutter/ui/app/help_text.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/invoice/tax_rate_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/presenters/entity_presenter.dart';
 import 'package:invoiceninja_flutter/ui/credit/edit/credit_edit_items_vm.dart';
@@ -301,7 +302,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             else
                               ClientPicker(
                                 autofocus: true,
-                                showNotes: true,
                                 clientId: invoice.clientId,
                                 clientState: state.clientState,
                                 onSelected: (client) {
@@ -342,7 +342,63 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                 ),
                               ),
                             ),
-                          SizedBox(height: 12),
+                          SizedBox(height: 4),
+                          if (invoice.isPurchaseOrder)
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (vendor.privateNotes.isNotEmpty)
+                                  Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8),
+                                      child: IconText(
+                                        text: vendor.privateNotes,
+                                        icon: Icons.lock,
+                                        iconSize: 16,
+                                        maxLines: 3,
+                                      )),
+                                if (vendor.publicNotes.isNotEmpty)
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: vendor.publicNotes.isEmpty ? 8 : 0,
+                                        bottom: 8),
+                                    child: IconText(
+                                      text: vendor.publicNotes,
+                                      icon: Icons.note,
+                                      iconSize: 16,
+                                      maxLines: 3,
+                                    ),
+                                  ),
+                              ],
+                            )
+                          else
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (client.privateNotes.isNotEmpty)
+                                  Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8),
+                                      child: IconText(
+                                        text: client.privateNotes,
+                                        icon: Icons.lock,
+                                        iconSize: 16,
+                                        maxLines: 3,
+                                      )),
+                                if (client.publicNotes.isNotEmpty)
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: client.publicNotes.isEmpty ? 8 : 0,
+                                        bottom: 8),
+                                    child: IconText(
+                                      text: client.publicNotes,
+                                      icon: Icons.note,
+                                      iconSize: 16,
+                                      maxLines: 3,
+                                    ),
+                                  ),
+                              ],
+                            ),
                           ConstrainedBox(
                             constraints: BoxConstraints(maxHeight: 186),
                             child: InvoiceEditContactsScreen(
