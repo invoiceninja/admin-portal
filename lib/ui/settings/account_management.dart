@@ -534,7 +534,6 @@ class _AccountOverview extends StatelessWidget {
                           context: context,
                           title: localization.applyLicense,
                           field: localization.license,
-                          maxLength: 24,
                           callback: (value) {
                             final state = viewModel.state;
                             final credentials = state.credentials;
