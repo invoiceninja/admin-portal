@@ -179,6 +179,8 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                             viewModel.onAddVendorPressed!(context, completer),
                       )
                     : ClientPicker(
+                        autofocus: true,
+                        showNotes: true,
                         clientId: invoice.clientId,
                         clientState: state.clientState,
                         onSelected: (client) => viewModel.onClientChanged!(

@@ -9,6 +9,8 @@ class IconText extends StatelessWidget {
     this.style,
     this.alignment,
     this.copyToClipboard = false,
+    this.iconSize,
+    this.maxLines,
   });
 
   final String? text;
@@ -16,6 +18,8 @@ class IconText extends StatelessWidget {
   final TextStyle? style;
   final MainAxisAlignment? alignment;
   final bool copyToClipboard;
+  final double? iconSize;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,11 @@ class IconText extends StatelessWidget {
       mainAxisAlignment: alignment ?? MainAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Icon(icon, color: style?.color),
+        Icon(
+          icon,
+          color: style?.color,
+          size: iconSize,
+        ),
         SizedBox(width: 10),
         Flexible(
           child: copyToClipboard
@@ -33,11 +41,13 @@ class IconText extends StatelessWidget {
                     text ?? '',
                     style: style,
                     overflow: TextOverflow.ellipsis,
+                    maxLines: maxLines,
                   ))
               : Text(
                   text ?? '',
                   style: style,
                   overflow: TextOverflow.ellipsis,
+                  maxLines: maxLines,
                 ),
         ),
       ],

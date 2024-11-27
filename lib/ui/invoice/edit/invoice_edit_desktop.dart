@@ -301,6 +301,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                             else
                               ClientPicker(
                                 autofocus: true,
+                                showNotes: true,
                                 clientId: invoice.clientId,
                                 clientState: state.clientState,
                                 onSelected: (client) {
