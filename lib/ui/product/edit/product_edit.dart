@@ -91,11 +91,13 @@ class _ProductEditState extends State<ProductEdit> {
       context,
       formatNumberType: FormatNumberType.int,
     )!;
-    _maxQuantityController.text = formatNumber(
-      product.maxQuantity.toDouble(),
-      context,
-      formatNumberType: FormatNumberType.int,
-    )!;
+    _maxQuantityController.text = product.maxQuantity == 0
+        ? ''
+        : formatNumber(
+            product.maxQuantity.toDouble(),
+            context,
+            formatNumberType: FormatNumberType.int,
+          )!;
     _imageUrlController.text = product.imageUrl;
     _notificationThresholdController.text =
         product.stockNotificationThreshold == 0
