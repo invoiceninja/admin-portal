@@ -92,6 +92,7 @@ class _VendorViewFullwidthState extends State<VendorViewFullwidth>
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 SizedBox(height: 8),
+                if (vendor.isTaxExempt) Text(localization.isTaxExempt),
                 if (vendor.idNumber.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 1),

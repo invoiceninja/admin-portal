@@ -54,6 +54,7 @@ class VendorPresenter extends EntityPresenter {
         VendorFields.routingId,
       ],
       if (userCompany.company.calculateTaxes) ...[
+        VendorFields.isTaxExempt,
         VendorFields.classification,
       ],
     ];
@@ -90,6 +91,8 @@ class VendorPresenter extends EntityPresenter {
       case VendorFields.countryId:
         return Text(
             state.staticState.countryMap[vendor!.countryId]?.name ?? '');
+      case VendorFields.isTaxExempt:
+        return Text(vendor!.isTaxExempt ? localization!.yes : localization!.no);
       case VendorFields.privateNotes:
         return TableTooltip(message: vendor!.privateNotes);
       case VendorFields.publicNotes:

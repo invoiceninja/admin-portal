@@ -178,6 +178,9 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
       'routing_id',
       serializers.serialize(object.routingId,
           specifiedType: const FullType(String)),
+      'is_tax_exempt',
+      serializers.serialize(object.isTaxExempt,
+          specifiedType: const FullType(bool)),
       'last_login',
       serializers.serialize(object.lastLogin,
           specifiedType: const FullType(int)),
@@ -349,6 +352,10 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
         case 'routing_id':
           result.routingId = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
+          break;
+        case 'is_tax_exempt':
+          result.isTaxExempt = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'last_login':
           result.lastLogin = serializers.deserialize(value,
@@ -853,6 +860,8 @@ class _$VendorEntity extends VendorEntity {
   @override
   final String routingId;
   @override
+  final bool isTaxExempt;
+  @override
   final int lastLogin;
   @override
   final String classification;
@@ -906,6 +915,7 @@ class _$VendorEntity extends VendorEntity {
       required this.customValue3,
       required this.customValue4,
       required this.routingId,
+      required this.isTaxExempt,
       required this.lastLogin,
       required this.classification,
       required this.contacts,
@@ -959,6 +969,8 @@ class _$VendorEntity extends VendorEntity {
     BuiltValueNullFieldError.checkNotNull(
         routingId, r'VendorEntity', 'routingId');
     BuiltValueNullFieldError.checkNotNull(
+        isTaxExempt, r'VendorEntity', 'isTaxExempt');
+    BuiltValueNullFieldError.checkNotNull(
         lastLogin, r'VendorEntity', 'lastLogin');
     BuiltValueNullFieldError.checkNotNull(
         classification, r'VendorEntity', 'classification');
@@ -1010,6 +1022,7 @@ class _$VendorEntity extends VendorEntity {
         customValue3 == other.customValue3 &&
         customValue4 == other.customValue4 &&
         routingId == other.routingId &&
+        isTaxExempt == other.isTaxExempt &&
         lastLogin == other.lastLogin &&
         classification == other.classification &&
         contacts == other.contacts &&
@@ -1052,6 +1065,7 @@ class _$VendorEntity extends VendorEntity {
     _$hash = $jc(_$hash, customValue3.hashCode);
     _$hash = $jc(_$hash, customValue4.hashCode);
     _$hash = $jc(_$hash, routingId.hashCode);
+    _$hash = $jc(_$hash, isTaxExempt.hashCode);
     _$hash = $jc(_$hash, lastLogin.hashCode);
     _$hash = $jc(_$hash, classification.hashCode);
     _$hash = $jc(_$hash, contacts.hashCode);
@@ -1095,6 +1109,7 @@ class _$VendorEntity extends VendorEntity {
           ..add('customValue3', customValue3)
           ..add('customValue4', customValue4)
           ..add('routingId', routingId)
+          ..add('isTaxExempt', isTaxExempt)
           ..add('lastLogin', lastLogin)
           ..add('classification', classification)
           ..add('contacts', contacts)
@@ -1208,6 +1223,10 @@ class VendorEntityBuilder
   String? get routingId => _$this._routingId;
   set routingId(String? routingId) => _$this._routingId = routingId;
 
+  bool? _isTaxExempt;
+  bool? get isTaxExempt => _$this._isTaxExempt;
+  set isTaxExempt(bool? isTaxExempt) => _$this._isTaxExempt = isTaxExempt;
+
   int? _lastLogin;
   int? get lastLogin => _$this._lastLogin;
   set lastLogin(int? lastLogin) => _$this._lastLogin = lastLogin;
@@ -1299,6 +1318,7 @@ class VendorEntityBuilder
       _customValue3 = $v.customValue3;
       _customValue4 = $v.customValue4;
       _routingId = $v.routingId;
+      _isTaxExempt = $v.isTaxExempt;
       _lastLogin = $v.lastLogin;
       _classification = $v.classification;
       _contacts = $v.contacts.toBuilder();
@@ -1368,6 +1388,7 @@ class VendorEntityBuilder
               customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'VendorEntity', 'customValue3'),
               customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'VendorEntity', 'customValue4'),
               routingId: BuiltValueNullFieldError.checkNotNull(routingId, r'VendorEntity', 'routingId'),
+              isTaxExempt: BuiltValueNullFieldError.checkNotNull(isTaxExempt, r'VendorEntity', 'isTaxExempt'),
               lastLogin: BuiltValueNullFieldError.checkNotNull(lastLogin, r'VendorEntity', 'lastLogin'),
               classification: BuiltValueNullFieldError.checkNotNull(classification, r'VendorEntity', 'classification'),
               contacts: contacts.build(),

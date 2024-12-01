@@ -20,13 +20,15 @@ class InvoiceTaxDetails extends StatelessWidget {
     final localization = AppLocalization.of(context)!;
     final state = StoreProvider.of<AppState>(context).state;
     final client = state.clientState.get(invoice.clientId);
+    final vendor = state.vendorState.get(invoice.vendorId);
     final taxData = invoice.isNew ? client.taxData : invoice.taxData;
 
     return AlertDialog(
       title: Text(localization.taxDetails),
       content: SizedBox(
         width: isDesktop(context) ? 500 : null,
-        child: client.isTaxExempt
+        child: (invoice.isPurchaseOrder && vendor.isTaxExempt) ||
+                (!invoice.isPurchaseOrder && client.isTaxExempt)
             ? SizedBox(
                 child: HelpText(localization.isTaxExempt),
                 height: 100,

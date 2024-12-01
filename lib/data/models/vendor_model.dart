@@ -84,6 +84,7 @@ class VendorFields {
   static const String contactEmail = 'contact_email';
   static const String classification = 'classification';
   static const String routingId = 'routing_id';
+  static const String isTaxExempt = 'is_tax_exempt';
 }
 
 abstract class VendorEntity extends Object
@@ -124,6 +125,7 @@ abstract class VendorEntity extends Object
       updatedAt: 0,
       archivedAt: 0,
       isDeleted: false,
+      isTaxExempt: false,
       assignedUserId: user?.id ?? '',
       createdUserId: '',
       createdAt: 0,
@@ -223,6 +225,9 @@ abstract class VendorEntity extends Object
 
   @BuiltValueField(wireName: 'routing_id')
   String get routingId;
+
+  @BuiltValueField(wireName: 'is_tax_exempt')
+  bool get isTaxExempt;
 
   @BuiltValueField(wireName: 'last_login')
   int get lastLogin;
@@ -534,6 +539,7 @@ abstract class VendorEntity extends Object
     ..lastLogin = 0
     ..routingId = ''
     ..languageId = ''
+    ..isTaxExempt = false
     ..displayName = ''
     ..classification = '';
 
