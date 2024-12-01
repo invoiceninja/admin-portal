@@ -354,6 +354,17 @@ void handleVendorAction(BuildContext? context, List<BaseEntity> vendors,
       store.dispatch(
           DeleteVendorRequest(snackBarCompleter<Null>(message), vendorIds));
       break;
+    case EntityAction.bulkUpdate:
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => BulkUpdateDialog(
+          entityType: EntityType.vendor,
+          entities: vendors,
+        ),
+      );
+      break;
+
     case EntityAction.toggleMultiselect:
       if (!store.state.vendorListState.isInMultiselect()) {
         store.dispatch(StartVendorMultiselect());

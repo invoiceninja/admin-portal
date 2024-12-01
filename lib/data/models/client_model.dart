@@ -691,7 +691,7 @@ abstract class ClientEntity extends Object
       }
     }
 
-    if (!isDeleted! && multiselect) {
+    if (!isDeleted!) {
       actions.add(EntityAction.bulkUpdate);
     }
 
