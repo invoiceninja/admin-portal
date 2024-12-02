@@ -22,15 +22,17 @@ class VendorPicker extends StatelessWidget {
     required this.vendorId,
     required this.vendorState,
     required this.onSelected,
-    required this.onAddPressed,
+    this.onAddPressed,
     this.autofocus,
+    this.excludeIds = const [],
   });
 
-  final String vendorId;
+  final String? vendorId;
   final VendorState vendorState;
   final Function(SelectableEntity?) onSelected;
-  final Function(Completer<SelectableEntity> completer) onAddPressed;
+  final Function(Completer<SelectableEntity> completer)? onAddPressed;
   final bool? autofocus;
+  final List<String> excludeIds;
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +58,7 @@ class VendorPicker extends StatelessWidget {
             vendor: VendorEntity().rebuild((b) => b..name = name),
             completer: completer));
       },
+      excludeIds: excludeIds,
     );
   }
 }

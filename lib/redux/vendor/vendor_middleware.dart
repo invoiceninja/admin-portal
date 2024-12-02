@@ -29,6 +29,7 @@ List<Middleware<AppState>> createStoreVendorsMiddleware([
   final loadVendors = _loadVendors(repository);
   final loadVendor = _loadVendor(repository);
   final saveVendor = _saveVendor(repository);
+  final mergeVendors = _mergeVendors(repository);
   final archiveVendor = _archiveVendor(repository);
   final deleteVendor = _deleteVendor(repository);
   final restoreVendor = _restoreVendor(repository);
@@ -41,6 +42,7 @@ List<Middleware<AppState>> createStoreVendorsMiddleware([
     TypedMiddleware<AppState, LoadVendors>(loadVendors),
     TypedMiddleware<AppState, LoadVendor>(loadVendor),
     TypedMiddleware<AppState, SaveVendorRequest>(saveVendor),
+    TypedMiddleware<AppState, MergeVendorsRequest>(mergeVendors),
     TypedMiddleware<AppState, ArchiveVendorRequest>(archiveVendor),
     TypedMiddleware<AppState, DeleteVendorRequest>(deleteVendor),
     TypedMiddleware<AppState, RestoreVendorRequest>(restoreVendor),
@@ -112,6 +114,34 @@ Middleware<AppState> _archiveVendor(VendorRepository repository) {
       print(error);
       store.dispatch(ArchiveVendorFailure(prevVendors));
       action.completer.completeError(error);
+    });
+
+    next(action);
+  };
+}
+
+Middleware<AppState> _mergeVendors(VendorRepository repository) {
+  return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
+    final action = dynamicAction as MergeVendorsRequest;
+    repository
+        .merge(
+      credentials: store.state.credentials,
+      vendorId: action.vendorId,
+      mergeIntoVendorId: action.mergeIntoVendorId,
+      idToken: action.idToken,
+      password: action.password,
+    )
+        .then((client) {
+      store.dispatch(MergeVendorsSuccess(action.vendorId));
+      store.dispatch(RefreshData());
+      if (action.completer != null) {
+        action.completer!.complete(null);
+      }
+    }).catchError((Object error) {
+      store.dispatch(MergeVendorsFailure(error as List<VendorEntity>));
+      if (action.completer != null) {
+        action.completer!.completeError(error);
+      }
     });
 
     next(action);

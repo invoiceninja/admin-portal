@@ -284,6 +284,10 @@ abstract class VendorEntity extends Object
     }
     */
 
+    if (userCompany!.isAdmin && !multiselect) {
+      actions.add(EntityAction.merge);
+    }
+
     if (actions.isNotEmpty && actions.last != null) {
       actions.add(null);
     }
