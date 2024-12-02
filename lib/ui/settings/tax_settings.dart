@@ -41,6 +41,7 @@ class _TaxSettingsState extends State<TaxSettings> {
     kTaxRegionUnitedStates: false,
     kTaxRegionEurope: false,
     kTaxRegionAustralia: false,
+    kTaxRegionUnitedKingdom: false,
   };
 
   @override
@@ -71,6 +72,8 @@ class _TaxSettingsState extends State<TaxSettings> {
       region = kTaxRegionUnitedStates;
     } else if (company.settings.countryId == kCountryAustralia) {
       region = kTaxRegionAustralia;
+    } else if (company.settings.countryId == kCountryUnitedKingdom) {
+      region = kTaxRegionUnitedKingdom;
     }
 
     if (taxConfig.regions.containsKey(region)) {
