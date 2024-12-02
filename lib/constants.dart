@@ -1145,3 +1145,6 @@ const String kActivityQuoteEmailReminder1 = '142';
 const String kActivityAutoBillSuccess = '143';
 const String kActivityAutoBillFailure = '144';
 const String kActivityEInvoiceSuccess = '145';
+const String kActivityEInvoiceDeliverySuccess = '146';
+const String kActivityEInvoiceDeliveryFailure = '147';
+const String kActivityEExpenseCreated = '148';
