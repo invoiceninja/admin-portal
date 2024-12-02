@@ -41,25 +41,20 @@ class ClientPicker extends StatelessWidget {
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        EntityDropdown(
-          entityType: EntityType.client,
-          labelText: localization.client,
-          entityId: clientId,
-          autofocus: autofocus,
-          entityList: memoizedDropdownClientList(clientState.map,
-              clientState.list, state.userState.map, state.staticState),
-          entityMap: clientState.map,
-          validator: (String? val) => isRequired && (val ?? '').trim().isEmpty
-              ? AppLocalization.of(context)!.pleaseSelectAClient
-              : null,
-          onSelected: onSelected,
-          onAddPressed: onAddPressed,
-          excludeIds: excludeIds,
-        ),
-      ],
+    return EntityDropdown(
+      entityType: EntityType.client,
+      labelText: localization.client,
+      entityId: clientId,
+      autofocus: autofocus,
+      entityList: memoizedDropdownClientList(clientState.map, clientState.list,
+          state.userState.map, state.staticState),
+      entityMap: clientState.map,
+      validator: (String? val) => isRequired && (val ?? '').trim().isEmpty
+          ? AppLocalization.of(context)!.pleaseSelectAClient
+          : null,
+      onSelected: onSelected,
+      onAddPressed: onAddPressed,
+      excludeIds: excludeIds,
     );
   }
 }
