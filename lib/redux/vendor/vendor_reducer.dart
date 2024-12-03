@@ -266,6 +266,7 @@ final vendorsReducer = combineReducers<VendorState>([
   TypedReducer<VendorState, ArchiveVendorSuccess>(_archiveVendorSuccess),
   TypedReducer<VendorState, DeleteVendorSuccess>(_deleteVendorSuccess),
   TypedReducer<VendorState, RestoreVendorSuccess>(_restoreVendorSuccess),
+  TypedReducer<VendorState, MergeVendorsSuccess>(_mergeVendorSuccess),
 ]);
 
 VendorState _archiveVendorSuccess(
@@ -323,4 +324,11 @@ VendorState _setLoadedCompany(
     VendorState vendorState, LoadCompanySuccess action) {
   final company = action.userCompany.company;
   return vendorState.loadVendors(company.vendors);
+}
+
+VendorState _mergeVendorSuccess(
+    VendorState vendorState, MergeVendorsSuccess action) {
+  return vendorState.rebuild((b) => b
+    ..map.remove(action.vendorId)
+    ..list.remove(action.vendorId));
 }

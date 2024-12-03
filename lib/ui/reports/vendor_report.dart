@@ -58,6 +58,7 @@ enum VendorReportFields {
   routing_id,
   classification,
   record_state,
+  tax_exempt,
   /*
   contact_last_login,
   shipping_address1,
@@ -331,6 +332,9 @@ ReportResult vendorReport(
         case VendorReportFields.record_state:
           value = AppLocalization.of(navigatorKey.currentContext!)!
               .lookup(vendor.entityState);
+          break;
+        case VendorReportFields.tax_exempt:
+          value = vendor.isTaxExempt;
           break;
       }
 

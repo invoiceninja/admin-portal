@@ -290,6 +290,15 @@ class VendorEditDetailsState extends State<VendorEditDetails> {
                       ))
                   .toList(),
             ),
+          SizedBox(height: 20),
+          SwitchListTile(
+            title: Text(localization.isTaxExempt),
+            value: vendor.isTaxExempt,
+            onChanged: (value) {
+              viewModel
+                  .onChanged(vendor.rebuild((b) => b..isTaxExempt = value));
+            },
+          ),
         ],
       ),
     );

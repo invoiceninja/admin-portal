@@ -303,6 +303,7 @@ const kEQuoteTypes = [
 ];
 
 const String kCountryUnitedStates = '840';
+const String kCountryUnitedKingdom = '826';
 const String kCountryAustralia = '36';
 const String kCountryCanada = '124';
 const String kCountrySwitzerland = '756';
@@ -829,6 +830,7 @@ const String kDefaultLightBorderColor = '#dfdfdf';
 const String kTaxRegionUnitedStates = 'US';
 const String kTaxRegionEurope = 'EU';
 const String kTaxRegionAustralia = 'AU';
+const String kTaxRegionUnitedKingdom = 'UK';
 
 const String kReportGroupDay = 'day';
 const String kReportGroupWeek = 'week';
@@ -1145,3 +1147,6 @@ const String kActivityQuoteEmailReminder1 = '142';
 const String kActivityAutoBillSuccess = '143';
 const String kActivityAutoBillFailure = '144';
 const String kActivityEInvoiceSuccess = '145';
+const String kActivityEInvoiceDeliverySuccess = '146';
+const String kActivityEInvoiceDeliveryFailure = '147';
+const String kActivityEExpenseCreated = '148';

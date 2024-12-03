@@ -89,6 +89,24 @@ class VendorRepository {
     return vendorResponse.data;
   }
 
+  Future<VendorEntity> merge({
+    required Credentials credentials,
+    required String? vendorId,
+    required String? mergeIntoVendorId,
+    required String? password,
+    required String? idToken,
+  }) async {
+    final url = credentials.url + '/vendors/$mergeIntoVendorId/$vendorId/merge';
+
+    final dynamic response = await webClient.post(url, credentials.token,
+        password: password, idToken: idToken);
+
+    final VendorItemResponse clientResponse =
+        serializers.deserializeWith(VendorItemResponse.serializer, response)!;
+
+    return clientResponse.data;
+  }
+
   Future<VendorEntity> uploadDocument(
       Credentials credentials,
       BaseEntity entity,

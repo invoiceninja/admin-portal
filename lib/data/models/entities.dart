@@ -830,6 +830,8 @@ abstract class ActivityEntity
       kActivityAutoBillSuccess,
       kActivityAutoBillFailure,
       kActivityEInvoiceSuccess,
+      kActivityEInvoiceDeliverySuccess,
+      kActivityEInvoiceDeliveryFailure,
     ].contains(activityTypeId)) {
       return EntityType.invoice;
     } else if ([
@@ -881,6 +883,7 @@ abstract class ActivityEntity
       kActivityRestoreExpense,
       kActivityUpdateExpense,
       kActivityExpenseNotificationSent,
+      kActivityEExpenseCreated,
     ].contains(activityTypeId)) {
       return EntityType.expense;
     } else if ([
@@ -1016,6 +1019,8 @@ abstract class ActivityEntity
     activity = activity.replaceFirst(
         ':recurring_expense', vendor?.name ?? ''); // TODO implement
     activity = activity.replaceAll('  ', ' ');
+
+    activity = activity.replaceFirst(' - :notes', '');
 
     return activity;
   }

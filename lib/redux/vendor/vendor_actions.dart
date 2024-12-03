@@ -16,6 +16,7 @@ import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/vendor_picker.dart';
 import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -173,6 +174,34 @@ class ArchiveVendorFailure implements StopSaving {
   ArchiveVendorFailure(this.vendors);
 
   final List<VendorEntity?> vendors;
+}
+
+class MergeVendorsRequest implements StartSaving {
+  MergeVendorsRequest({
+    this.completer,
+    this.vendorId,
+    this.mergeIntoVendorId,
+    this.password,
+    this.idToken,
+  });
+
+  final Completer? completer;
+  final String? vendorId;
+  final String? mergeIntoVendorId;
+  final String? password;
+  final String? idToken;
+}
+
+class MergeVendorsSuccess implements StopSaving, PersistData {
+  MergeVendorsSuccess(this.vendorId);
+
+  final String? vendorId;
+}
+
+class MergeVendorsFailure implements StopSaving {
+  MergeVendorsFailure(this.vendors);
+
+  final List<VendorEntity> vendors;
 }
 
 class DeleteVendorRequest implements StartSaving {
@@ -354,6 +383,24 @@ void handleVendorAction(BuildContext? context, List<BaseEntity> vendors,
       store.dispatch(
           DeleteVendorRequest(snackBarCompleter<Null>(message), vendorIds));
       break;
+    case EntityAction.bulkUpdate:
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => BulkUpdateDialog(
+          entityType: EntityType.vendor,
+          entities: vendors,
+        ),
+      );
+      break;
+    case EntityAction.merge:
+      showDialog<void>(
+        context: context,
+        builder: (context) => _MergVendorPicker(
+          vendor: vendor,
+        ),
+      );
+      break;
     case EntityAction.toggleMultiselect:
       if (!store.state.vendorListState.isInMultiselect()) {
         store.dispatch(StartVendorMultiselect());
@@ -461,4 +508,68 @@ class UpdateVendorTab implements PersistUI {
   UpdateVendorTab({this.tabIndex});
 
   final int? tabIndex;
+}
+
+class _MergVendorPicker extends StatefulWidget {
+  const _MergVendorPicker({
+    Key? key,
+    required this.vendor,
+  }) : super(key: key);
+
+  final VendorEntity? vendor;
+
+  @override
+  State<_MergVendorPicker> createState() => __MergVendorPickerState();
+}
+
+class __MergVendorPickerState extends State<_MergVendorPicker> {
+  String? _mergeIntoVendorId;
+
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context)!;
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+
+    return AlertDialog(
+      title: Text(localization.mergeInto),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          VendorPicker(
+            vendorId: _mergeIntoVendorId,
+            vendorState: state.vendorState,
+            excludeIds: [widget.vendor!.id],
+            onSelected: (vendor) =>
+                setState(() => _mergeIntoVendorId = vendor?.id),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(localization.close),
+        ),
+        TextButton(
+          onPressed: () {
+            passwordCallback(
+                context: context,
+                callback: (password, idToken) {
+                  store.dispatch(MergeVendorsRequest(
+                    vendorId: widget.vendor!.id,
+                    idToken: idToken,
+                    password: password,
+                    mergeIntoVendorId: _mergeIntoVendorId,
+                    completer: snackBarCompleter<Null>(
+                      localization.mergedVendors,
+                    ),
+                  ));
+                  Navigator.of(context).pop();
+                });
+          },
+          child: Text(localization.merge),
+        ),
+      ],
+    );
+  }
 }

@@ -207,6 +207,7 @@ abstract class TaxConfigSubregionEntity
       taxRate: 0,
       reducedTaxRate: 0,
       taxName: '',
+      vatNumber: '',
     );
   }
 
@@ -228,13 +229,17 @@ abstract class TaxConfigSubregionEntity
   @BuiltValueField(wireName: 'reduced_tax_rate')
   double get reducedTaxRate;
 
+  @BuiltValueField(wireName: 'vat_number')
+  String get vatNumber;
+
   // ignore: unused_element
   static void _initializeBuilder(TaxConfigSubregionEntityBuilder builder) =>
       builder
         ..applyTax = false
         ..taxName = ''
         ..reducedTaxRate = 0
-        ..taxRate = 0;
+        ..taxRate = 0
+        ..vatNumber = '';
 
   static Serializer<TaxConfigSubregionEntity> get serializer =>
       _$taxConfigSubregionEntitySerializer;

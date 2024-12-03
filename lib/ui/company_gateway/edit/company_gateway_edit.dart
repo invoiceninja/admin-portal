@@ -108,7 +108,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
       kGatewayGoCardlessOAuth,
     ];
 
-    final disableSave = (connectGateways.contains(companyGateway.gatewayId) &&
+    final disableSave = (state.isHosted &&
+            connectGateways.contains(companyGateway.gatewayId) &&
             companyGateway.isNew) ||
         state.isDemo;
     final enabledGatewayIds = (gateway?.options.keys ?? []).where(
@@ -170,7 +171,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                         );
                       },
                     ),
-                  if (connectGateways.contains(companyGateway.gatewayId))
+                  if (state.isHosted &
+                      connectGateways.contains(companyGateway.gatewayId))
                     if (companyGateway.isNew ||
                         (companyGateway.gatewayId == kGatewayStripeConnect &&
                             accountId.isEmpty)) ...[
