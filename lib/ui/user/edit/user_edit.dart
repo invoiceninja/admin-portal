@@ -194,7 +194,8 @@ class _UserEditState extends State<UserEdit>
                         ? localization.pleaseEnterAFirstName
                         : null,
                     onSavePressed: _onSavePressed,
-                    keyboardType: TextInputType.name,
+                    keyboardType: TextInputType.text,
+                    textCapitalization: TextCapitalization.words,
                   ),
                   DecoratedFormField(
                     label: localization.lastName,
@@ -203,7 +204,8 @@ class _UserEditState extends State<UserEdit>
                         ? localization.pleaseEnterALastName
                         : null,
                     onSavePressed: _onSavePressed,
-                    keyboardType: TextInputType.name,
+                    keyboardType: TextInputType.text,
+                    textCapitalization: TextCapitalization.words,
                   ),
                   DecoratedFormField(
                     label: localization.email,

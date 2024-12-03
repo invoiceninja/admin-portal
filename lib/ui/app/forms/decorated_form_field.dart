@@ -38,6 +38,7 @@ class DecoratedFormField extends StatefulWidget {
     this.isPercent = false,
     this.showClear = true,
     this.inputFormatters,
+    this.textCapitalization = TextCapitalization.none,
   }) : super(key: key);
 
   final TextEditingController? controller;
@@ -66,6 +67,7 @@ class DecoratedFormField extends StatefulWidget {
   final bool isPercent;
   final bool showClear;
   final List<TextInputFormatter>? inputFormatters;
+  final TextCapitalization textCapitalization;
 
   @override
   _DecoratedFormFieldState createState() => _DecoratedFormFieldState();
@@ -156,6 +158,7 @@ class _DecoratedFormFieldState extends State<DecoratedFormField> {
           : enterShouldSubmit || kIsWeb
               ? TextInputAction.done
               : TextInputAction.next,
+      textCapitalization: widget.textCapitalization,
       onChanged: (value) {
         _showClear = true;
         if (widget.onChanged != null) {
