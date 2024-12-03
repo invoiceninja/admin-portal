@@ -287,6 +287,9 @@ class _$TaxConfigSubregionEntitySerializer
       'reduced_tax_rate',
       serializers.serialize(object.reducedTaxRate,
           specifiedType: const FullType(double)),
+      'vat_number',
+      serializers.serialize(object.vatNumber,
+          specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -319,6 +322,10 @@ class _$TaxConfigSubregionEntitySerializer
         case 'reduced_tax_rate':
           result.reducedTaxRate = serializers.deserialize(value,
               specifiedType: const FullType(double))! as double;
+          break;
+        case 'vat_number':
+          result.vatNumber = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -870,6 +877,8 @@ class _$TaxConfigSubregionEntity extends TaxConfigSubregionEntity {
   final String taxName;
   @override
   final double reducedTaxRate;
+  @override
+  final String vatNumber;
 
   factory _$TaxConfigSubregionEntity(
           [void Function(TaxConfigSubregionEntityBuilder)? updates]) =>
@@ -879,7 +888,8 @@ class _$TaxConfigSubregionEntity extends TaxConfigSubregionEntity {
       {required this.applyTax,
       required this.taxRate,
       required this.taxName,
-      required this.reducedTaxRate})
+      required this.reducedTaxRate,
+      required this.vatNumber})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         applyTax, r'TaxConfigSubregionEntity', 'applyTax');
@@ -889,6 +899,8 @@ class _$TaxConfigSubregionEntity extends TaxConfigSubregionEntity {
         taxName, r'TaxConfigSubregionEntity', 'taxName');
     BuiltValueNullFieldError.checkNotNull(
         reducedTaxRate, r'TaxConfigSubregionEntity', 'reducedTaxRate');
+    BuiltValueNullFieldError.checkNotNull(
+        vatNumber, r'TaxConfigSubregionEntity', 'vatNumber');
   }
 
   @override
@@ -907,7 +919,8 @@ class _$TaxConfigSubregionEntity extends TaxConfigSubregionEntity {
         applyTax == other.applyTax &&
         taxRate == other.taxRate &&
         taxName == other.taxName &&
-        reducedTaxRate == other.reducedTaxRate;
+        reducedTaxRate == other.reducedTaxRate &&
+        vatNumber == other.vatNumber;
   }
 
   int? __hashCode;
@@ -919,6 +932,7 @@ class _$TaxConfigSubregionEntity extends TaxConfigSubregionEntity {
     _$hash = $jc(_$hash, taxRate.hashCode);
     _$hash = $jc(_$hash, taxName.hashCode);
     _$hash = $jc(_$hash, reducedTaxRate.hashCode);
+    _$hash = $jc(_$hash, vatNumber.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -929,7 +943,8 @@ class _$TaxConfigSubregionEntity extends TaxConfigSubregionEntity {
           ..add('applyTax', applyTax)
           ..add('taxRate', taxRate)
           ..add('taxName', taxName)
-          ..add('reducedTaxRate', reducedTaxRate))
+          ..add('reducedTaxRate', reducedTaxRate)
+          ..add('vatNumber', vatNumber))
         .toString();
   }
 }
@@ -956,6 +971,10 @@ class TaxConfigSubregionEntityBuilder
   set reducedTaxRate(double? reducedTaxRate) =>
       _$this._reducedTaxRate = reducedTaxRate;
 
+  String? _vatNumber;
+  String? get vatNumber => _$this._vatNumber;
+  set vatNumber(String? vatNumber) => _$this._vatNumber = vatNumber;
+
   TaxConfigSubregionEntityBuilder() {
     TaxConfigSubregionEntity._initializeBuilder(this);
   }
@@ -967,6 +986,7 @@ class TaxConfigSubregionEntityBuilder
       _taxRate = $v.taxRate;
       _taxName = $v.taxName;
       _reducedTaxRate = $v.reducedTaxRate;
+      _vatNumber = $v.vatNumber;
       _$v = null;
     }
     return this;
@@ -996,7 +1016,9 @@ class TaxConfigSubregionEntityBuilder
             taxName: BuiltValueNullFieldError.checkNotNull(
                 taxName, r'TaxConfigSubregionEntity', 'taxName'),
             reducedTaxRate: BuiltValueNullFieldError.checkNotNull(
-                reducedTaxRate, r'TaxConfigSubregionEntity', 'reducedTaxRate'));
+                reducedTaxRate, r'TaxConfigSubregionEntity', 'reducedTaxRate'),
+            vatNumber: BuiltValueNullFieldError.checkNotNull(
+                vatNumber, r'TaxConfigSubregionEntity', 'vatNumber'));
     replace(_$result);
     return _$result;
   }
