@@ -525,7 +525,8 @@ class _EmailSettingsState extends State<EmailSettings> {
                 label: localization.fromName,
                 controller: _fromNameController,
                 onSavePressed: _onSavePressed,
-                keyboardType: TextInputType.name,
+                keyboardType: TextInputType.text,
+                textCapitalization: TextCapitalization.words,
               ),
               DecoratedFormField(
                 label: localization.replyToEmail,
@@ -537,7 +538,8 @@ class _EmailSettingsState extends State<EmailSettings> {
                 label: localization.replyToName,
                 controller: _replyToNameController,
                 onSavePressed: _onSavePressed,
-                keyboardType: TextInputType.name,
+                keyboardType: TextInputType.text,
+                textCapitalization: TextCapitalization.words,
               ),
               DecoratedFormField(
                 label: localization.bccEmail,

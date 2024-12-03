@@ -212,7 +212,8 @@ class _SettingsWizardState extends State<SettingsWizard> {
     final firstName = DecoratedFormField(
       label: localization.firstName,
       controller: _firstNameController,
-      keyboardType: TextInputType.name,
+      keyboardType: TextInputType.text,
+      textCapitalization: TextCapitalization.words,
       autofillHints: [AutofillHints.givenName],
       validator: (value) =>
           value.isEmpty ? localization.pleaseEnterAValue : null,
@@ -221,7 +222,8 @@ class _SettingsWizardState extends State<SettingsWizard> {
     final lastName = DecoratedFormField(
       label: localization.lastName,
       controller: _lastNameController,
-      keyboardType: TextInputType.name,
+      keyboardType: TextInputType.text,
+      textCapitalization: TextCapitalization.words,
       autofillHints: [AutofillHints.familyName],
       validator: (value) =>
           value.isEmpty ? localization.pleaseEnterAValue : null,

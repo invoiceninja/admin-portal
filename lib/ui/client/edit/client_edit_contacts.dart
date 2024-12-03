@@ -294,7 +294,8 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                   : null,
           onSavePressed: (_) => _onDoneContactPressed(),
           label: localization.firstName,
-          keyboardType: TextInputType.name,
+          keyboardType: TextInputType.text,
+          textCapitalization: TextCapitalization.words,
         ),
         DecoratedFormField(
           controller: _lastNameController,
@@ -304,7 +305,8 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
                   ? AppLocalization.of(context)!.pleaseEnterAClientOrContactName
                   : null,
           onSavePressed: (_) => _onDoneContactPressed(),
-          keyboardType: TextInputType.name,
+          keyboardType: TextInputType.text,
+          textCapitalization: TextCapitalization.words,
         ),
         DecoratedFormField(
           controller: _emailController,
