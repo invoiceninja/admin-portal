@@ -289,16 +289,6 @@ Middleware<AppState> _createLoadState(
           store.dispatch(ViewMainScreen());
         }
 
-        final prefs = await SharedPreferences.getInstance();
-        final companyId = prefs.getString(kSharedPrefCompanyId);
-        if (companyId != null) {
-          final index = companyStates.indexWhere(
-              (companyState) => companyState?.company.id == companyId);
-          if (index > 0) {
-            store.dispatch(SelectCompany(companyIndex: index));
-          }
-        }
-
         WidgetsBinding.instance.addPostFrameCallback((duration) {
           store.dispatch(ViewDashboard());
         });
@@ -483,7 +473,21 @@ Middleware<AppState> _createDataRefreshed() {
     final response = action.data!;
     final loadedStaticData = response.static.currencies.isNotEmpty;
     final state = store.state;
-    final selectedCompanyIndex = state.uiState.selectedCompanyIndex;
+    int selectedCompanyIndex = state.uiState.selectedCompanyIndex;
+
+    // Fallback to ensure the last or primary company is selected
+    if (state.companies.isEmpty) {
+      final prefs = await SharedPreferences.getInstance();
+      String? companyId = prefs.getString(kSharedPrefCompanyId);
+      companyId ??= store.state.account.defaultCompanyId;
+      if (companyId.isNotEmpty) {
+        final index = response.userCompanies
+            .indexWhere((companyState) => companyState.company.id == companyId);
+        if (index > 0) {
+          selectedCompanyIndex = index;
+        }
+      }
+    }
 
     if (loadedStaticData) {
       store.dispatch(LoadStaticSuccess(data: response.static));
