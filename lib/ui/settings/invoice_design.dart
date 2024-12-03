@@ -174,7 +174,6 @@ class _InvoiceDesignState extends State<InvoiceDesign>
     final state = viewModel.state;
     final settings = viewModel.settings;
     final company = viewModel.company;
-    final isFiltered = state.uiState.settingsUIState.isFiltered;
 
     final tabs = [
       localization.generalSettings,
@@ -295,8 +294,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                         b..defaultInvoiceDesignId = value!.id));
                               },
                             ),
-                            if (!isFiltered &&
-                                _wasInvoiceDesignChanged &&
+                            if (_wasInvoiceDesignChanged &&
                                 state.userCompany.isAdmin)
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 8),
@@ -324,8 +322,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                         b..defaultQuoteDesignId = value!.id));
                               },
                             ),
-                            if (!isFiltered &&
-                                _wasQuoteDesignChanged &&
+                            if (_wasQuoteDesignChanged &&
                                 state.userCompany.isAdmin)
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 8),
@@ -353,8 +350,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                         b..defaultCreditDesignId = value!.id));
                               },
                             ),
-                            if (!isFiltered &&
-                                _wasCreditDesignChanged &&
+                            if (_wasCreditDesignChanged &&
                                 state.userCompany.isAdmin)
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 8),
@@ -385,8 +381,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                                           value!.id));
                               },
                             ),
-                            if (!isFiltered &&
-                                _wasPurchaseOrderDesignChanged &&
+                            if (_wasPurchaseOrderDesignChanged &&
                                 state.userCompany.isAdmin)
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 8),
