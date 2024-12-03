@@ -1020,7 +1020,9 @@ abstract class ActivityEntity
         ':recurring_expense', vendor?.name ?? ''); // TODO implement
     activity = activity.replaceAll('  ', ' ');
 
+    // Fix for extra notes value
     activity = activity.replaceFirst(' - :notes', '');
+    activity = activity.replaceFirst(':notes', '');
 
     return activity;
   }

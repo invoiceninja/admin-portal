@@ -111,13 +111,65 @@ class InvoiceDesignVM {
                 break;
               case EntityType.group:
                 final completer = snackBarCompleter<GroupEntity>(
-                    AppLocalization.of(context)!.savedSettings);
+                    AppLocalization.of(context)!.savedSettings)
+                  ..future.then<Null>((_) {
+                    final webClient = WebClient();
+                    final credentials = state.credentials;
+                    final url = '${credentials.url}/designs/set/default';
+                    final settings = store.state.company.settings;
+                    entityTypes.forEach((entityType) {
+                      webClient
+                          .post(
+                        url,
+                        credentials.token,
+                        data: json.encode({
+                          'entity': entityType.snakeCase,
+                          'design_id': settings.getDesignId(entityType),
+                          'settings_level': 'group_settings',
+                          'group_settings_id': settingsUIState.group.id,
+                        }),
+                      )
+                          .then((dynamic response) {
+                        showToast(
+                            AppLocalization.of(navigatorKey.currentContext!)!
+                                .savedSettings);
+                      }).catchError((dynamic error) {
+                        showErrorDialog(message: '$error');
+                      });
+                    });
+                  });
                 store.dispatch(SaveGroupRequest(
                     completer: completer, group: settingsUIState.group));
                 break;
               case EntityType.client:
                 final completer = snackBarCompleter<ClientEntity>(
-                    AppLocalization.of(context)!.savedSettings);
+                    AppLocalization.of(context)!.savedSettings)
+                  ..future.then<Null>((_) {
+                    final webClient = WebClient();
+                    final credentials = state.credentials;
+                    final url = '${credentials.url}/designs/set/default';
+                    final settings = store.state.company.settings;
+                    entityTypes.forEach((entityType) {
+                      webClient
+                          .post(
+                        url,
+                        credentials.token,
+                        data: json.encode({
+                          'entity': entityType.snakeCase,
+                          'design_id': settings.getDesignId(entityType),
+                          'settings_level': 'client',
+                          'client_id': settingsUIState.client.id,
+                        }),
+                      )
+                          .then((dynamic response) {
+                        showToast(
+                            AppLocalization.of(navigatorKey.currentContext!)!
+                                .savedSettings);
+                      }).catchError((dynamic error) {
+                        showErrorDialog(message: '$error');
+                      });
+                    });
+                  });
                 store.dispatch(SaveClientRequest(
                     completer: completer, client: settingsUIState.client));
                 break;
