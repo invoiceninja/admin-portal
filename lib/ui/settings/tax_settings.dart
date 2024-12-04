@@ -395,7 +395,6 @@ class _EditSubregionDialog extends StatefulWidget {
 
 class __EditSubregionDialogState extends State<_EditSubregionDialog> {
   String _taxName = '';
-  String _vatNumber = '';
   double? _taxRate = 0;
   double? _reducedTaxRate = 0;
 
@@ -407,7 +406,6 @@ class __EditSubregionDialogState extends State<_EditSubregionDialog> {
     _taxName = subregionConfig.taxName;
     _taxRate = subregionConfig.taxRate;
     _reducedTaxRate = subregionConfig.reducedTaxRate;
-    _vatNumber = subregionConfig.vatNumber;
   }
 
   void _onDone() {
@@ -421,13 +419,10 @@ class __EditSubregionDialogState extends State<_EditSubregionDialog> {
     viewModel.onCompanyChanged(company.rebuild((b) => b
       ..taxConfig.replace(taxConfig.rebuild((b) => b
         ..regions[widget.region] = taxConfigRegion.rebuild((b) => b
-          ..subregions[widget.subregion] = taxConfigSubregion!.rebuild(
-            (b) => b
-              ..taxName = _taxName
-              ..taxRate = _taxRate
-              ..reducedTaxRate = _reducedTaxRate
-              ..vatNumber = _vatNumber,
-          ))))));
+          ..subregions[widget.subregion] = taxConfigSubregion!.rebuild((b) => b
+            ..taxName = _taxName
+            ..taxRate = _taxRate
+            ..reducedTaxRate = _reducedTaxRate))))));
 
     Navigator.of(context).pop();
   }
@@ -473,13 +468,6 @@ class __EditSubregionDialogState extends State<_EditSubregionDialog> {
             initialValue: formatNumber(subregionData.reducedTaxRate, context,
                 formatNumberType: FormatNumberType.inputAmount),
             onChanged: (value) => _reducedTaxRate = parseDouble(value),
-            onSavePressed: (context) => _onDone(),
-          ),
-          DecoratedFormField(
-            label: localization.vatNumber,
-            keyboardType: TextInputType.text,
-            initialValue: subregionData.vatNumber,
-            onChanged: (value) => _vatNumber = value.trim(),
             onSavePressed: (context) => _onDone(),
           ),
         ],
