@@ -132,6 +132,8 @@ abstract class TaxConfigEntity
     return _$TaxConfigEntity._(
       version: '',
       sellerSubregion: '',
+      actsAsSender: false,
+      actsAsReceiver: false,
       regions: BuiltMap<String, TaxConfigRegionEntity>(),
     );
   }
@@ -147,12 +149,20 @@ abstract class TaxConfigEntity
   @BuiltValueField(wireName: 'seller_subregion')
   String get sellerSubregion;
 
+  @BuiltValueField(wireName: 'acts_as_sender')
+  bool get actsAsSender;
+
+  @BuiltValueField(wireName: 'acts_as_receiver')
+  bool get actsAsReceiver;
+
   BuiltMap<String, TaxConfigRegionEntity> get regions;
 
   // ignore: unused_element
   static void _initializeBuilder(TaxConfigEntityBuilder builder) => builder
     ..version = ''
     ..sellerSubregion = ''
+    ..actsAsSender = false
+    ..actsAsReceiver = false
     ..regions.replace(BuiltMap<String, TaxConfigRegionEntity>());
 
   static Serializer<TaxConfigEntity> get serializer =>

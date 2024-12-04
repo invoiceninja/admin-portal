@@ -143,6 +143,12 @@ class _$TaxConfigEntitySerializer
       'seller_subregion',
       serializers.serialize(object.sellerSubregion,
           specifiedType: const FullType(String)),
+      'acts_as_sender',
+      serializers.serialize(object.actsAsSender,
+          specifiedType: const FullType(bool)),
+      'acts_as_receiver',
+      serializers.serialize(object.actsAsReceiver,
+          specifiedType: const FullType(bool)),
       'regions',
       serializers.serialize(object.regions,
           specifiedType: const FullType(BuiltMap, const [
@@ -173,6 +179,14 @@ class _$TaxConfigEntitySerializer
         case 'seller_subregion':
           result.sellerSubregion = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
+          break;
+        case 'acts_as_sender':
+          result.actsAsSender = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
+          break;
+        case 'acts_as_receiver':
+          result.actsAsReceiver = serializers.deserialize(value,
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'regions':
           result.regions.replace(serializers.deserialize(value,
@@ -581,6 +595,10 @@ class _$TaxConfigEntity extends TaxConfigEntity {
   @override
   final String sellerSubregion;
   @override
+  final bool actsAsSender;
+  @override
+  final bool actsAsReceiver;
+  @override
   final BuiltMap<String, TaxConfigRegionEntity> regions;
 
   factory _$TaxConfigEntity([void Function(TaxConfigEntityBuilder)? updates]) =>
@@ -589,12 +607,18 @@ class _$TaxConfigEntity extends TaxConfigEntity {
   _$TaxConfigEntity._(
       {required this.version,
       required this.sellerSubregion,
+      required this.actsAsSender,
+      required this.actsAsReceiver,
       required this.regions})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
         version, r'TaxConfigEntity', 'version');
     BuiltValueNullFieldError.checkNotNull(
         sellerSubregion, r'TaxConfigEntity', 'sellerSubregion');
+    BuiltValueNullFieldError.checkNotNull(
+        actsAsSender, r'TaxConfigEntity', 'actsAsSender');
+    BuiltValueNullFieldError.checkNotNull(
+        actsAsReceiver, r'TaxConfigEntity', 'actsAsReceiver');
     BuiltValueNullFieldError.checkNotNull(
         regions, r'TaxConfigEntity', 'regions');
   }
@@ -613,6 +637,8 @@ class _$TaxConfigEntity extends TaxConfigEntity {
     return other is TaxConfigEntity &&
         version == other.version &&
         sellerSubregion == other.sellerSubregion &&
+        actsAsSender == other.actsAsSender &&
+        actsAsReceiver == other.actsAsReceiver &&
         regions == other.regions;
   }
 
@@ -623,6 +649,8 @@ class _$TaxConfigEntity extends TaxConfigEntity {
     var _$hash = 0;
     _$hash = $jc(_$hash, version.hashCode);
     _$hash = $jc(_$hash, sellerSubregion.hashCode);
+    _$hash = $jc(_$hash, actsAsSender.hashCode);
+    _$hash = $jc(_$hash, actsAsReceiver.hashCode);
     _$hash = $jc(_$hash, regions.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
@@ -633,6 +661,8 @@ class _$TaxConfigEntity extends TaxConfigEntity {
     return (newBuiltValueToStringHelper(r'TaxConfigEntity')
           ..add('version', version)
           ..add('sellerSubregion', sellerSubregion)
+          ..add('actsAsSender', actsAsSender)
+          ..add('actsAsReceiver', actsAsReceiver)
           ..add('regions', regions))
         .toString();
   }
@@ -651,6 +681,15 @@ class TaxConfigEntityBuilder
   set sellerSubregion(String? sellerSubregion) =>
       _$this._sellerSubregion = sellerSubregion;
 
+  bool? _actsAsSender;
+  bool? get actsAsSender => _$this._actsAsSender;
+  set actsAsSender(bool? actsAsSender) => _$this._actsAsSender = actsAsSender;
+
+  bool? _actsAsReceiver;
+  bool? get actsAsReceiver => _$this._actsAsReceiver;
+  set actsAsReceiver(bool? actsAsReceiver) =>
+      _$this._actsAsReceiver = actsAsReceiver;
+
   MapBuilder<String, TaxConfigRegionEntity>? _regions;
   MapBuilder<String, TaxConfigRegionEntity> get regions =>
       _$this._regions ??= new MapBuilder<String, TaxConfigRegionEntity>();
@@ -666,6 +705,8 @@ class TaxConfigEntityBuilder
     if ($v != null) {
       _version = $v.version;
       _sellerSubregion = $v.sellerSubregion;
+      _actsAsSender = $v.actsAsSender;
+      _actsAsReceiver = $v.actsAsReceiver;
       _regions = $v.regions.toBuilder();
       _$v = null;
     }
@@ -695,6 +736,10 @@ class TaxConfigEntityBuilder
                   version, r'TaxConfigEntity', 'version'),
               sellerSubregion: BuiltValueNullFieldError.checkNotNull(
                   sellerSubregion, r'TaxConfigEntity', 'sellerSubregion'),
+              actsAsSender: BuiltValueNullFieldError.checkNotNull(
+                  actsAsSender, r'TaxConfigEntity', 'actsAsSender'),
+              actsAsReceiver: BuiltValueNullFieldError.checkNotNull(
+                  actsAsReceiver, r'TaxConfigEntity', 'actsAsReceiver'),
               regions: regions.build());
     } catch (_) {
       late String _$failedField;
