@@ -54,7 +54,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
   TabController? _controller;
 
   // ignore: unused_field
-  String _gatewayTypeId = kGatewayTypeCreditCard;
+  String _gatewayTypeId = '';
 
   @override
   void initState() {
@@ -64,19 +64,22 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
 
   @override
   void didChangeDependencies() {
-    final companyGateway = widget.viewModel.companyGateway;
-    final gateway =
-        widget.viewModel.state.staticState.gatewayMap[companyGateway.gatewayId];
+    if (_gatewayTypeId.isEmpty) {
+      final companyGateway = widget.viewModel.companyGateway;
+      final gateway = widget
+          .viewModel.state.staticState.gatewayMap[companyGateway.gatewayId];
 
-    final enabledGatewayIds = (gateway?.options.keys ?? []).where(
-        (gatewayTypeId) => companyGateway
-            .getSettingsForGatewayTypeId(gatewayTypeId)
-            .isEnabled);
+      final enabledGatewayIds = (gateway?.options.keys ?? []).where(
+          (gatewayTypeId) => companyGateway
+              .getSettingsForGatewayTypeId(gatewayTypeId)
+              .isEnabled);
 
-    if (enabledGatewayIds.isNotEmpty) {
-      _gatewayTypeId = enabledGatewayIds.first;
-    } else {
-      _gatewayTypeId = gateway?.defaultGatewayTypeId ?? kGatewayTypeCreditCard;
+      if (enabledGatewayIds.isNotEmpty) {
+        _gatewayTypeId = enabledGatewayIds.first;
+      } else {
+        _gatewayTypeId =
+            gateway?.defaultGatewayTypeId ?? kGatewayTypeCreditCard;
+      }
     }
 
     super.didChangeDependencies();
