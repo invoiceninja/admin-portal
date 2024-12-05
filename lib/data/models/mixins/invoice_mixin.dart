@@ -239,6 +239,8 @@ abstract mixin class CalculateInvoiceTotal {
         }
       }
 
+      lineTotal = round(lineTotal, precision);
+
       if (taxRate1 != 0) {
         itemTax += round(lineTotal * taxRate1 / 100, precision);
       }
