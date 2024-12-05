@@ -166,6 +166,8 @@ class EntityPresenter {
       'withdrawal',
       'deposit',
       'documents',
+      'applied',
+      'refunded',
     ].contains(field);
 
     return value;

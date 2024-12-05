@@ -48,6 +48,9 @@ enum PaymentReportFields {
   invoices,
   credits,
   record_state,
+  refunded,
+  applied,
+  status,
 }
 
 var memoizedPaymentReport = memo8(
@@ -276,6 +279,15 @@ ReportResult paymentReport(
         case PaymentReportFields.record_state:
           value = AppLocalization.of(navigatorKey.currentContext!)!
               .lookup(payment.entityState);
+          break;
+        case PaymentReportFields.refunded:
+          value = payment.refunded;
+          break;
+        case PaymentReportFields.applied:
+          value = payment.applied;
+          break;
+        case PaymentReportFields.status:
+          value = kPaymentStatuses[payment.calculatedStatusId] ?? '';
           break;
       }
 
