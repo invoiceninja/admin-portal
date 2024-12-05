@@ -183,7 +183,7 @@ abstract mixin class CalculateInvoiceTotal {
     final double qty = round(item.quantity, 5);
     final double cost = round(item.cost, 5);
     final double itemDiscount = round(item.discount, 5);
-    double lineTotal = qty * cost;
+    double lineTotal = round(qty * cost, precision);
 
     if (discount != 0) {
       if (isAmountDiscount) {
@@ -219,7 +219,7 @@ abstract mixin class CalculateInvoiceTotal {
       final double taxRate1 = round(item.taxRate1, 3);
       final double taxRate2 = round(item.taxRate2, 3);
       final double taxRate3 = round(item.taxRate3, 3);
-      double lineTotal = qty * cost;
+      double lineTotal = round(qty * cost, precision);
 
       if (discount != 0) {
         if (isAmountDiscount) {
@@ -309,7 +309,7 @@ abstract mixin class CalculateInvoiceTotal {
       final double cost = round(item.cost, 5);
       final double discount = round(item.discount, 5);
 
-      double lineTotal = qty * cost;
+      double lineTotal = round(qty * cost, precision);
 
       if (discount != 0) {
         if (isAmountDiscount) {
