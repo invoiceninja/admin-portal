@@ -52,6 +52,11 @@ android {
         multiDexEnabled true
     }
 
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
+
     buildTypes {
         release {
             signingConfig signingConfigs.debug
