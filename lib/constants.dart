@@ -767,6 +767,7 @@ const String kPermissionViewAll = 'view_all';
 const String kPermissionEditAll = 'edit_all';
 const String kPermissionViewReports = 'view_reports';
 const String kPermissionViewDashboard = 'view_dashboard';
+const String kPermissionDisableEmails = 'disable_emails';
 
 const String kPaymentStatusPartiallyUnapplied = '-2';
 const String kPaymentStatusUnapplied = '-1';

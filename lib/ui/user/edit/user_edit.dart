@@ -348,6 +348,38 @@ class _UserEditState extends State<UserEdit>
                           },
                     activeColor: Theme.of(context).colorScheme.secondary,
                   ),
+                  SwitchListTile(
+                    title: Text(localization.sendEmails),
+                    subtitle: Text(localization.sendEmailsPermission),
+                    value: userCompany.isAdmin
+                        ? true
+                        : !userCompany.permissions
+                            .contains(kPermissionDisableEmails),
+                    onChanged: userCompany.isAdmin
+                        ? null
+                        : (value) {
+                            final permissions = userCompany.permissions
+                                .split(',')
+                                .where((element) => element.isNotEmpty)
+                                .toList();
+                            if (value) {
+                              if (permissions
+                                  .contains(kPermissionDisableEmails)) {
+                                permissions.remove(kPermissionDisableEmails);
+                              }
+                            } else {
+                              if (!permissions
+                                  .contains(kPermissionDisableEmails)) {
+                                permissions.add(kPermissionDisableEmails);
+                              }
+                            }
+
+                            viewModel.onUserChanged(user.rebuild((b) => b
+                              ..userCompany.permissions =
+                                  permissions.join(',')));
+                          },
+                    activeColor: Theme.of(context).colorScheme.secondary,
+                  ),
                 ],
               ),
               if (!userCompany.isAdmin)
