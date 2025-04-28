@@ -1702,6 +1702,20 @@ class _$SettingsEntitySerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.enableClientProfileUpdate;
+    if (value != null) {
+      result
+        ..add('enable_client_profile_update')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.preferenceProductNotesForHtmlView;
+    if (value != null) {
+      result
+        ..add('preference_product_notes_for_html_view')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
     return result;
   }
 
@@ -2692,6 +2706,14 @@ class _$SettingsEntitySerializer
           result.emailBodyPaymentFailed = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'enable_client_profile_update':
+          result.enableClientProfileUpdate = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'preference_product_notes_for_html_view':
+          result.preferenceProductNotesForHtmlView = serializers
+              .deserialize(value, specifiedType: const FullType(bool)) as bool?;
+          break;
       }
     }
 
@@ -3255,6 +3277,10 @@ class _$SettingsEntity extends SettingsEntity {
   final String? emailSubjectPaymentFailed;
   @override
   final String? emailBodyPaymentFailed;
+  @override
+  final bool? enableClientProfileUpdate;
+  @override
+  final bool? preferenceProductNotesForHtmlView;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder)? updates]) =>
       (new SettingsEntityBuilder()..update(updates))._build();
@@ -3501,7 +3527,9 @@ class _$SettingsEntity extends SettingsEntity {
       this.mergeEInvoiceToPdf,
       this.paymentFlow,
       this.emailSubjectPaymentFailed,
-      this.emailBodyPaymentFailed})
+      this.emailBodyPaymentFailed,
+      this.enableClientProfileUpdate,
+      this.preferenceProductNotesForHtmlView})
       : super._();
 
   @override
@@ -3762,7 +3790,10 @@ class _$SettingsEntity extends SettingsEntity {
         mergeEInvoiceToPdf == other.mergeEInvoiceToPdf &&
         paymentFlow == other.paymentFlow &&
         emailSubjectPaymentFailed == other.emailSubjectPaymentFailed &&
-        emailBodyPaymentFailed == other.emailBodyPaymentFailed;
+        emailBodyPaymentFailed == other.emailBodyPaymentFailed &&
+        enableClientProfileUpdate == other.enableClientProfileUpdate &&
+        preferenceProductNotesForHtmlView ==
+            other.preferenceProductNotesForHtmlView;
   }
 
   int? __hashCode;
@@ -4012,6 +4043,8 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, paymentFlow.hashCode);
     _$hash = $jc(_$hash, emailSubjectPaymentFailed.hashCode);
     _$hash = $jc(_$hash, emailBodyPaymentFailed.hashCode);
+    _$hash = $jc(_$hash, enableClientProfileUpdate.hashCode);
+    _$hash = $jc(_$hash, preferenceProductNotesForHtmlView.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -4265,7 +4298,10 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('mergeEInvoiceToPdf', mergeEInvoiceToPdf)
           ..add('paymentFlow', paymentFlow)
           ..add('emailSubjectPaymentFailed', emailSubjectPaymentFailed)
-          ..add('emailBodyPaymentFailed', emailBodyPaymentFailed))
+          ..add('emailBodyPaymentFailed', emailBodyPaymentFailed)
+          ..add('enableClientProfileUpdate', enableClientProfileUpdate)
+          ..add('preferenceProductNotesForHtmlView',
+              preferenceProductNotesForHtmlView))
         .toString();
   }
 }
@@ -5467,6 +5503,19 @@ class SettingsEntityBuilder
   set emailBodyPaymentFailed(String? emailBodyPaymentFailed) =>
       _$this._emailBodyPaymentFailed = emailBodyPaymentFailed;
 
+  bool? _enableClientProfileUpdate;
+  bool? get enableClientProfileUpdate => _$this._enableClientProfileUpdate;
+  set enableClientProfileUpdate(bool? enableClientProfileUpdate) =>
+      _$this._enableClientProfileUpdate = enableClientProfileUpdate;
+
+  bool? _preferenceProductNotesForHtmlView;
+  bool? get preferenceProductNotesForHtmlView =>
+      _$this._preferenceProductNotesForHtmlView;
+  set preferenceProductNotesForHtmlView(
+          bool? preferenceProductNotesForHtmlView) =>
+      _$this._preferenceProductNotesForHtmlView =
+          preferenceProductNotesForHtmlView;
+
   SettingsEntityBuilder();
 
   SettingsEntityBuilder get _$this {
@@ -5714,6 +5763,8 @@ class SettingsEntityBuilder
       _paymentFlow = $v.paymentFlow;
       _emailSubjectPaymentFailed = $v.emailSubjectPaymentFailed;
       _emailBodyPaymentFailed = $v.emailBodyPaymentFailed;
+      _enableClientProfileUpdate = $v.enableClientProfileUpdate;
+      _preferenceProductNotesForHtmlView = $v.preferenceProductNotesForHtmlView;
       _$v = null;
     }
     return this;
@@ -5980,7 +6031,10 @@ class SettingsEntityBuilder
               mergeEInvoiceToPdf: mergeEInvoiceToPdf,
               paymentFlow: paymentFlow,
               emailSubjectPaymentFailed: emailSubjectPaymentFailed,
-              emailBodyPaymentFailed: emailBodyPaymentFailed);
+              emailBodyPaymentFailed: emailBodyPaymentFailed,
+              enableClientProfileUpdate: enableClientProfileUpdate,
+              preferenceProductNotesForHtmlView:
+                  preferenceProductNotesForHtmlView);
     } catch (_) {
       late String _$failedField;
       try {

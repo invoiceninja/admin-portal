@@ -876,6 +876,12 @@ abstract class SettingsEntity
   @BuiltValueField(wireName: 'email_template_payment_failed')
   String? get emailBodyPaymentFailed;
 
+  @BuiltValueField(wireName: 'enable_client_profile_update')
+  bool? get enableClientProfileUpdate;
+
+  @BuiltValueField(wireName: 'preference_product_notes_for_html_view')
+  bool? get preferenceProductNotesForHtmlView;
+
   bool? get taskRoundingEnabled =>
       taskRoundToNearest == null ? null : taskRoundToNearest != 1;
 
