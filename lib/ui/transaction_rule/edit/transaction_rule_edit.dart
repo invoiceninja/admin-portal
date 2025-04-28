@@ -4,7 +4,6 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/expense_category_model.dart';
 import 'package:invoiceninja_flutter/data/models/transaction_model.dart';
 import 'package:invoiceninja_flutter/data/models/transaction_rule_model.dart';
-import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/data/models/vendor_model.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/expense_category/expense_category_actions.dart';
@@ -126,7 +125,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                           : null,
                     ),
                     SizedBox(height: 16),
-                    if (false)
+                    /*
                       BoolDropdownButton(
                         label: localization.appliesTo,
                         value: transactionRule.appliesTo ==
@@ -140,6 +139,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
                         enabledLabel: localization.withdrawal,
                         disabledLabel: localization.deposit,
                       ),
+                    */
                     SwitchListTile(
                       title: Text(localization.matchAllRules),
                       subtitle: Text(localization.matchAllRulesHelp),
