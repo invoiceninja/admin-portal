@@ -484,6 +484,15 @@ class _ClientPortalState extends State<ClientPortal>
                       onChanged: (value) => viewModel.onSettingsChanged(
                           settings.rebuild(
                               (b) => b..enableClientProfileUpdate = value))),
+                  BoolDropdownButton(
+                      label: localization.preferenceProductNotesForHtmlView,
+                      helpLabel:
+                          localization.preferenceProductNotesForHtmlViewHelp,
+                      value: settings.preferenceProductNotesForHtmlView,
+                      iconData: Icons.mobile_friendly,
+                      onChanged: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild((b) =>
+                              b..preferenceProductNotesForHtmlView = value))),
                   /*
                   if (!state.settingsUIState.isFiltered)
                     BoolDropdownButton(

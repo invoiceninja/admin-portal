@@ -612,6 +612,7 @@ class SettingsSearch extends StatelessWidget {
           'accept_purchase_order_number#2023-02-02',
           'mobile_version#2024-01-29',
           'enable_client_profile_update#2025-04-28',
+          'preference_product_notes_for_html_view#2025-04-29',
         ],
         [
           'client_registration',
