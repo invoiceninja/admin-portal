@@ -1015,6 +1015,14 @@ abstract class LocationEntity extends Object
       id: BaseEntity.nextId,
       isChanged: false,
       name: '',
+      address1: '',      
+      address2: '',
+      city: '',
+      countryId: '',
+      isShipping: false,
+      phone: '',
+      postalCode: '',
+      state: '',      
       createdAt: 0,
       updatedAt: 0,
       archivedAt: 0,
@@ -1031,8 +1039,26 @@ abstract class LocationEntity extends Object
   @memoized
   int get hashCode;
 
-  @BuiltValueField(wireName: 'name')
   String get name;
+
+  String get address1;
+
+  String get address2;
+
+  String get phone;
+
+  String get city;
+
+  String get state;
+
+  @BuiltValueField(wireName: 'postal_code')
+  String get postalCode;
+
+  @BuiltValueField(wireName: 'country_id')
+  String get countryId;
+
+  @BuiltValueField(wireName: 'is_shipping_location')
+  bool get isShipping;
 
   @BuiltValueField(wireName: 'custom_value1')
   String get customValue1;
