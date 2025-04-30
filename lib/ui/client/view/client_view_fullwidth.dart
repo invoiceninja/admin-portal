@@ -15,6 +15,7 @@ import 'package:invoiceninja_flutter/ui/app/portal_links.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_activity.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_documents.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_ledger.dart';
+import 'package:invoiceninja_flutter/ui/client/view/client_view_locations.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_payment_methods.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_system_logs.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
@@ -495,6 +496,13 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                                     key: ValueKey(viewModel.client.id),
                                   ),
                                 ),
+                              RefreshIndicator(
+                                onRefresh: () => viewModel.onRefreshed(context),
+                                child: ClientViewLocations(
+                                  viewModel: viewModel,
+                                  key: ValueKey(viewModel.client.id),
+                                ),
+                              ),
                               RefreshIndicator(
                                 onRefresh: () => viewModel.onRefreshed(context),
                                 child: ClientViewLedger(
