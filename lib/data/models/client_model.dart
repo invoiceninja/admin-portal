@@ -175,6 +175,7 @@ abstract class ClientEntity extends Object
       ledger: BuiltList<LedgerEntity>(),
       gatewayTokens: BuiltList<GatewayTokenEntity>(),
       systemLogs: BuiltList<SystemLogEntity>(),
+      locations: BuiltList<LocationEntity>(),
       loadedAt: 0,
       updatedAt: 0,
       archivedAt: 0,
@@ -344,6 +345,8 @@ abstract class ClientEntity extends Object
 
   @BuiltValueField(wireName: 'system_logs')
   BuiltList<SystemLogEntity> get systemLogs;
+
+  BuiltList<LocationEntity> get locations;
 
   //String get last_login;
   //String get custom_messages;
@@ -815,6 +818,7 @@ abstract class ClientEntity extends Object
     ..isTaxExempt = false
     ..hasValidVatNumber = false
     ..taxData.replace(TaxDataEntity())
+    ..locations.replace(BuiltList<LocationEntity>())
     ..paymentBalance = 0
     ..classification = '';
 
@@ -985,4 +989,99 @@ abstract class ClientContactEntity extends Object
 
   static Serializer<ClientContactEntity> get serializer =>
       _$clientContactEntitySerializer;
+}
+
+class LocationFields {
+  static const String name = 'name';
+  static const String address1 = 'address1';
+  static const String address2 = 'address2';
+  static const String phone = 'phone';
+  static const String city = 'city';
+  static const String state = 'state';
+  static const String postalCode = 'postal_code';
+  static const String countryId = 'country_id';
+  static const String customValue1 = 'custom_value1';
+  static const String customValue2 = 'custom_value2';
+  static const String customValue3 = 'custom_value3';
+  static const String customValue4 = 'custom_value4';
+  static const String isShipping = 'is_shipping_location';
+}
+
+abstract class LocationEntity extends Object
+    with BaseEntity, SelectableEntity
+    implements Built<LocationEntity, LocationEntityBuilder> {
+  factory LocationEntity() {
+    return _$LocationEntity._(
+      id: BaseEntity.nextId,
+      isChanged: false,
+      name: '',
+      createdAt: 0,
+      updatedAt: 0,
+      archivedAt: 0,
+      customValue1: '',
+      customValue2: '',
+      customValue3: '',
+      customValue4: '',
+    );
+  }
+
+  LocationEntity._();
+
+  @override
+  @memoized
+  int get hashCode;
+
+  @BuiltValueField(wireName: 'name')
+  String get name;
+
+  @BuiltValueField(wireName: 'custom_value1')
+  String get customValue1;
+
+  @BuiltValueField(wireName: 'custom_value2')
+  String get customValue2;
+
+  @BuiltValueField(wireName: 'custom_value3')
+  String get customValue3;
+
+  @BuiltValueField(wireName: 'custom_value4')
+  String get customValue4;
+
+  @override
+  EntityType get entityType {
+    return EntityType.client;
+  }
+
+  @override
+  bool matchesFilter(String? filter) {
+    return matchesStrings(
+      haystacks: [
+        name,
+      ],
+      needle: filter,
+    );
+  }
+
+  @override
+  String? matchesFilterValue(String? filter) {
+    return matchesStringsValue(
+      haystacks: [
+        name,
+      ],
+      needle: filter,
+    );
+  }
+
+  @override
+  String get listDisplayName {
+    return name;
+  }
+
+  @override
+  double? get listDisplayAmount => null;
+
+  @override
+  FormatNumberType get listDisplayAmountType => FormatNumberType.money;
+
+  static Serializer<LocationEntity> get serializer =>
+      _$locationEntitySerializer;
 }

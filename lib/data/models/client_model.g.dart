@@ -14,6 +14,8 @@ Serializer<ClientEntity> _$clientEntitySerializer =
     new _$ClientEntitySerializer();
 Serializer<ClientContactEntity> _$clientContactEntitySerializer =
     new _$ClientContactEntitySerializer();
+Serializer<LocationEntity> _$locationEntitySerializer =
+    new _$LocationEntitySerializer();
 
 class _$ClientListResponseSerializer
     implements StructuredSerializer<ClientListResponse> {
@@ -256,6 +258,10 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
       serializers.serialize(object.systemLogs,
           specifiedType: const FullType(
               BuiltList, const [const FullType(SystemLogEntity)])),
+      'locations',
+      serializers.serialize(object.locations,
+          specifiedType: const FullType(
+              BuiltList, const [const FullType(LocationEntity)])),
       'created_at',
       serializers.serialize(object.createdAt,
           specifiedType: const FullType(int)),
@@ -519,6 +525,12 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
                       BuiltList, const [const FullType(SystemLogEntity)]))!
               as BuiltList<Object?>);
           break;
+        case 'locations':
+          result.locations.replace(serializers.deserialize(value,
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(LocationEntity)]))!
+              as BuiltList<Object?>);
+          break;
         case 'isChanged':
           result.isChanged = serializers.deserialize(value,
               specifiedType: const FullType(bool)) as bool?;
@@ -724,6 +736,146 @@ class _$ClientContactEntitySerializer
           break;
         case 'link':
           result.link = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'isChanged':
+          result.isChanged = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'created_at':
+          result.createdAt = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
+        case 'updated_at':
+          result.updatedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
+        case 'archived_at':
+          result.archivedAt = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
+        case 'is_deleted':
+          result.isDeleted = serializers.deserialize(value,
+              specifiedType: const FullType(bool)) as bool?;
+          break;
+        case 'user_id':
+          result.createdUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'assigned_user_id':
+          result.assignedUserId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'id':
+          result.id = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$LocationEntitySerializer
+    implements StructuredSerializer<LocationEntity> {
+  @override
+  final Iterable<Type> types = const [LocationEntity, _$LocationEntity];
+  @override
+  final String wireName = 'LocationEntity';
+
+  @override
+  Iterable<Object?> serialize(Serializers serializers, LocationEntity object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object?>[
+      'name',
+      serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'custom_value1',
+      serializers.serialize(object.customValue1,
+          specifiedType: const FullType(String)),
+      'custom_value2',
+      serializers.serialize(object.customValue2,
+          specifiedType: const FullType(String)),
+      'custom_value3',
+      serializers.serialize(object.customValue3,
+          specifiedType: const FullType(String)),
+      'custom_value4',
+      serializers.serialize(object.customValue4,
+          specifiedType: const FullType(String)),
+      'created_at',
+      serializers.serialize(object.createdAt,
+          specifiedType: const FullType(int)),
+      'updated_at',
+      serializers.serialize(object.updatedAt,
+          specifiedType: const FullType(int)),
+      'archived_at',
+      serializers.serialize(object.archivedAt,
+          specifiedType: const FullType(int)),
+      'id',
+      serializers.serialize(object.id, specifiedType: const FullType(String)),
+    ];
+    Object? value;
+    value = object.isChanged;
+    if (value != null) {
+      result
+        ..add('isChanged')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.isDeleted;
+    if (value != null) {
+      result
+        ..add('is_deleted')
+        ..add(
+            serializers.serialize(value, specifiedType: const FullType(bool)));
+    }
+    value = object.createdUserId;
+    if (value != null) {
+      result
+        ..add('user_id')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.assignedUserId;
+    if (value != null) {
+      result
+        ..add('assigned_user_id')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    return result;
+  }
+
+  @override
+  LocationEntity deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new LocationEntityBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current! as String;
+      iterator.moveNext();
+      final Object? value = iterator.current;
+      switch (key) {
+        case 'name':
+          result.name = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'custom_value1':
+          result.customValue1 = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'custom_value2':
+          result.customValue2 = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'custom_value3':
+          result.customValue3 = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
+          break;
+        case 'custom_value4':
+          result.customValue4 = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
         case 'isChanged':
@@ -1058,6 +1210,8 @@ class _$ClientEntity extends ClientEntity {
   @override
   final BuiltList<SystemLogEntity> systemLogs;
   @override
+  final BuiltList<LocationEntity> locations;
+  @override
   final bool? isChanged;
   @override
   final int createdAt;
@@ -1125,6 +1279,7 @@ class _$ClientEntity extends ClientEntity {
       required this.gatewayTokens,
       required this.documents,
       required this.systemLogs,
+      required this.locations,
       this.isChanged,
       required this.createdAt,
       required this.updatedAt,
@@ -1216,6 +1371,8 @@ class _$ClientEntity extends ClientEntity {
     BuiltValueNullFieldError.checkNotNull(
         systemLogs, r'ClientEntity', 'systemLogs');
     BuiltValueNullFieldError.checkNotNull(
+        locations, r'ClientEntity', 'locations');
+    BuiltValueNullFieldError.checkNotNull(
         createdAt, r'ClientEntity', 'createdAt');
     BuiltValueNullFieldError.checkNotNull(
         updatedAt, r'ClientEntity', 'updatedAt');
@@ -1281,6 +1438,7 @@ class _$ClientEntity extends ClientEntity {
         gatewayTokens == other.gatewayTokens &&
         documents == other.documents &&
         systemLogs == other.systemLogs &&
+        locations == other.locations &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1342,6 +1500,7 @@ class _$ClientEntity extends ClientEntity {
     _$hash = $jc(_$hash, gatewayTokens.hashCode);
     _$hash = $jc(_$hash, documents.hashCode);
     _$hash = $jc(_$hash, systemLogs.hashCode);
+    _$hash = $jc(_$hash, locations.hashCode);
     _$hash = $jc(_$hash, isChanged.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
@@ -1404,6 +1563,7 @@ class _$ClientEntity extends ClientEntity {
           ..add('gatewayTokens', gatewayTokens)
           ..add('documents', documents)
           ..add('systemLogs', systemLogs)
+          ..add('locations', locations)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
           ..add('updatedAt', updatedAt)
@@ -1630,6 +1790,12 @@ class ClientEntityBuilder
   set systemLogs(ListBuilder<SystemLogEntity>? systemLogs) =>
       _$this._systemLogs = systemLogs;
 
+  ListBuilder<LocationEntity>? _locations;
+  ListBuilder<LocationEntity> get locations =>
+      _$this._locations ??= new ListBuilder<LocationEntity>();
+  set locations(ListBuilder<LocationEntity>? locations) =>
+      _$this._locations = locations;
+
   bool? _isChanged;
   bool? get isChanged => _$this._isChanged;
   set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
@@ -1718,6 +1884,7 @@ class ClientEntityBuilder
       _gatewayTokens = $v.gatewayTokens.toBuilder();
       _documents = $v.documents.toBuilder();
       _systemLogs = $v.systemLogs.toBuilder();
+      _locations = $v.locations.toBuilder();
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
       _updatedAt = $v.updatedAt;
@@ -1805,6 +1972,7 @@ class ClientEntityBuilder
               gatewayTokens: gatewayTokens.build(),
               documents: documents.build(),
               systemLogs: systemLogs.build(),
+              locations: locations.build(),
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'ClientEntity', 'createdAt'),
               updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'ClientEntity', 'updatedAt'),
@@ -1834,6 +2002,8 @@ class ClientEntityBuilder
         documents.build();
         _$failedField = 'systemLogs';
         systemLogs.build();
+        _$failedField = 'locations';
+        locations.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'ClientEntity', _$failedField, e.toString());
@@ -2226,6 +2396,264 @@ class ClientContactEntityBuilder
             createdUserId: createdUserId,
             assignedUserId: assignedUserId,
             id: BuiltValueNullFieldError.checkNotNull(id, r'ClientContactEntity', 'id'));
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$LocationEntity extends LocationEntity {
+  @override
+  final String name;
+  @override
+  final String customValue1;
+  @override
+  final String customValue2;
+  @override
+  final String customValue3;
+  @override
+  final String customValue4;
+  @override
+  final bool? isChanged;
+  @override
+  final int createdAt;
+  @override
+  final int updatedAt;
+  @override
+  final int archivedAt;
+  @override
+  final bool? isDeleted;
+  @override
+  final String? createdUserId;
+  @override
+  final String? assignedUserId;
+  @override
+  final String id;
+
+  factory _$LocationEntity([void Function(LocationEntityBuilder)? updates]) =>
+      (new LocationEntityBuilder()..update(updates))._build();
+
+  _$LocationEntity._(
+      {required this.name,
+      required this.customValue1,
+      required this.customValue2,
+      required this.customValue3,
+      required this.customValue4,
+      this.isChanged,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.archivedAt,
+      this.isDeleted,
+      this.createdUserId,
+      this.assignedUserId,
+      required this.id})
+      : super._() {
+    BuiltValueNullFieldError.checkNotNull(name, r'LocationEntity', 'name');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue1, r'LocationEntity', 'customValue1');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue2, r'LocationEntity', 'customValue2');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue3, r'LocationEntity', 'customValue3');
+    BuiltValueNullFieldError.checkNotNull(
+        customValue4, r'LocationEntity', 'customValue4');
+    BuiltValueNullFieldError.checkNotNull(
+        createdAt, r'LocationEntity', 'createdAt');
+    BuiltValueNullFieldError.checkNotNull(
+        updatedAt, r'LocationEntity', 'updatedAt');
+    BuiltValueNullFieldError.checkNotNull(
+        archivedAt, r'LocationEntity', 'archivedAt');
+    BuiltValueNullFieldError.checkNotNull(id, r'LocationEntity', 'id');
+  }
+
+  @override
+  LocationEntity rebuild(void Function(LocationEntityBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  LocationEntityBuilder toBuilder() =>
+      new LocationEntityBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is LocationEntity &&
+        name == other.name &&
+        customValue1 == other.customValue1 &&
+        customValue2 == other.customValue2 &&
+        customValue3 == other.customValue3 &&
+        customValue4 == other.customValue4 &&
+        isChanged == other.isChanged &&
+        createdAt == other.createdAt &&
+        updatedAt == other.updatedAt &&
+        archivedAt == other.archivedAt &&
+        isDeleted == other.isDeleted &&
+        createdUserId == other.createdUserId &&
+        assignedUserId == other.assignedUserId &&
+        id == other.id;
+  }
+
+  int? __hashCode;
+  @override
+  int get hashCode {
+    if (__hashCode != null) return __hashCode!;
+    var _$hash = 0;
+    _$hash = $jc(_$hash, name.hashCode);
+    _$hash = $jc(_$hash, customValue1.hashCode);
+    _$hash = $jc(_$hash, customValue2.hashCode);
+    _$hash = $jc(_$hash, customValue3.hashCode);
+    _$hash = $jc(_$hash, customValue4.hashCode);
+    _$hash = $jc(_$hash, isChanged.hashCode);
+    _$hash = $jc(_$hash, createdAt.hashCode);
+    _$hash = $jc(_$hash, updatedAt.hashCode);
+    _$hash = $jc(_$hash, archivedAt.hashCode);
+    _$hash = $jc(_$hash, isDeleted.hashCode);
+    _$hash = $jc(_$hash, createdUserId.hashCode);
+    _$hash = $jc(_$hash, assignedUserId.hashCode);
+    _$hash = $jc(_$hash, id.hashCode);
+    _$hash = $jf(_$hash);
+    return __hashCode ??= _$hash;
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper(r'LocationEntity')
+          ..add('name', name)
+          ..add('customValue1', customValue1)
+          ..add('customValue2', customValue2)
+          ..add('customValue3', customValue3)
+          ..add('customValue4', customValue4)
+          ..add('isChanged', isChanged)
+          ..add('createdAt', createdAt)
+          ..add('updatedAt', updatedAt)
+          ..add('archivedAt', archivedAt)
+          ..add('isDeleted', isDeleted)
+          ..add('createdUserId', createdUserId)
+          ..add('assignedUserId', assignedUserId)
+          ..add('id', id))
+        .toString();
+  }
+}
+
+class LocationEntityBuilder
+    implements Builder<LocationEntity, LocationEntityBuilder> {
+  _$LocationEntity? _$v;
+
+  String? _name;
+  String? get name => _$this._name;
+  set name(String? name) => _$this._name = name;
+
+  String? _customValue1;
+  String? get customValue1 => _$this._customValue1;
+  set customValue1(String? customValue1) => _$this._customValue1 = customValue1;
+
+  String? _customValue2;
+  String? get customValue2 => _$this._customValue2;
+  set customValue2(String? customValue2) => _$this._customValue2 = customValue2;
+
+  String? _customValue3;
+  String? get customValue3 => _$this._customValue3;
+  set customValue3(String? customValue3) => _$this._customValue3 = customValue3;
+
+  String? _customValue4;
+  String? get customValue4 => _$this._customValue4;
+  set customValue4(String? customValue4) => _$this._customValue4 = customValue4;
+
+  bool? _isChanged;
+  bool? get isChanged => _$this._isChanged;
+  set isChanged(bool? isChanged) => _$this._isChanged = isChanged;
+
+  int? _createdAt;
+  int? get createdAt => _$this._createdAt;
+  set createdAt(int? createdAt) => _$this._createdAt = createdAt;
+
+  int? _updatedAt;
+  int? get updatedAt => _$this._updatedAt;
+  set updatedAt(int? updatedAt) => _$this._updatedAt = updatedAt;
+
+  int? _archivedAt;
+  int? get archivedAt => _$this._archivedAt;
+  set archivedAt(int? archivedAt) => _$this._archivedAt = archivedAt;
+
+  bool? _isDeleted;
+  bool? get isDeleted => _$this._isDeleted;
+  set isDeleted(bool? isDeleted) => _$this._isDeleted = isDeleted;
+
+  String? _createdUserId;
+  String? get createdUserId => _$this._createdUserId;
+  set createdUserId(String? createdUserId) =>
+      _$this._createdUserId = createdUserId;
+
+  String? _assignedUserId;
+  String? get assignedUserId => _$this._assignedUserId;
+  set assignedUserId(String? assignedUserId) =>
+      _$this._assignedUserId = assignedUserId;
+
+  String? _id;
+  String? get id => _$this._id;
+  set id(String? id) => _$this._id = id;
+
+  LocationEntityBuilder();
+
+  LocationEntityBuilder get _$this {
+    final $v = _$v;
+    if ($v != null) {
+      _name = $v.name;
+      _customValue1 = $v.customValue1;
+      _customValue2 = $v.customValue2;
+      _customValue3 = $v.customValue3;
+      _customValue4 = $v.customValue4;
+      _isChanged = $v.isChanged;
+      _createdAt = $v.createdAt;
+      _updatedAt = $v.updatedAt;
+      _archivedAt = $v.archivedAt;
+      _isDeleted = $v.isDeleted;
+      _createdUserId = $v.createdUserId;
+      _assignedUserId = $v.assignedUserId;
+      _id = $v.id;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(LocationEntity other) {
+    ArgumentError.checkNotNull(other, 'other');
+    _$v = other as _$LocationEntity;
+  }
+
+  @override
+  void update(void Function(LocationEntityBuilder)? updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  LocationEntity build() => _build();
+
+  _$LocationEntity _build() {
+    final _$result = _$v ??
+        new _$LocationEntity._(
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'LocationEntity', 'name'),
+            customValue1: BuiltValueNullFieldError.checkNotNull(
+                customValue1, r'LocationEntity', 'customValue1'),
+            customValue2: BuiltValueNullFieldError.checkNotNull(
+                customValue2, r'LocationEntity', 'customValue2'),
+            customValue3: BuiltValueNullFieldError.checkNotNull(
+                customValue3, r'LocationEntity', 'customValue3'),
+            customValue4: BuiltValueNullFieldError.checkNotNull(
+                customValue4, r'LocationEntity', 'customValue4'),
+            isChanged: isChanged,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, r'LocationEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, r'LocationEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(
+                archivedAt, r'LocationEntity', 'archivedAt'),
+            isDeleted: isDeleted,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, r'LocationEntity', 'id'));
     replace(_$result);
     return _$result;
   }

@@ -118,6 +118,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(LanguageListResponse.serializer)
       ..add(LedgerEntity.serializer)
       ..add(ListUIState.serializer)
+      ..add(LocationEntity.serializer)
       ..add(LoginResponse.serializer)
       ..add(ModuleLayout.serializer)
       ..add(PaymentEntity.serializer)
@@ -266,6 +267,9 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(SystemLogEntity)]),
           () => new ListBuilder<SystemLogEntity>())
+      ..addBuilderFactory(
+          const FullType(BuiltList, const [const FullType(LocationEntity)]),
+          () => new ListBuilder<LocationEntity>())
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(ClientEntity)]),
           () => new ListBuilder<ClientEntity>())

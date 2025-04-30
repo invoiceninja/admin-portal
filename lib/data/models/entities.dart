@@ -66,6 +66,7 @@ class EntityType extends EnumClass {
   static const EntityType dateFormat = _$dateFormat;
   static const EntityType font = _$font;
   static const EntityType purchaseOrder = _$purchaseOrder;
+  static const EntityType location = _$location;
 
   String get plural {
     if (this == EntityType.expenseCategory) {
