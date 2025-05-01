@@ -211,6 +211,7 @@ IconData getEntityIcon(EntityType? entityType) {
     case EntityType.document:
       return Icons.photo;
     case EntityType.company:
+    case EntityType.location:
       return Icons.business;
     default:
       return MdiIcons.crosshairsQuestion;

@@ -618,6 +618,20 @@ abstract class CompanyEntity extends Object
 
   bool get hasName => (settings.name ?? '').isNotEmpty;
 
+  String cityStateOrder() {
+    if (settings.pdfVariables == null ||
+        !settings.pdfVariables!.containsKey(kPdfFieldsCompanyAddress)) {
+      return CompanyFields.cityStatePostal;
+    }
+
+    if (settings.pdfVariables![kPdfFieldsCompanyAddress]!
+        .contains(CompanyFields.cityStatePostal)) {
+      return CompanyFields.cityStatePostal;
+    } else {
+      return CompanyFields.postalCityState;
+    }
+  }
+
   bool get hasCustomSurcharge =>
       hasCustomField(CustomFieldType.surcharge1) ||
       hasCustomField(CustomFieldType.surcharge2) ||

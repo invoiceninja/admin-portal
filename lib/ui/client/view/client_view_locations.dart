@@ -3,18 +3,16 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/data/models/company_model.dart';
 
 // Project imports:
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
-import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
-import 'package:invoiceninja_flutter/ui/app/entities/entity_actions_dialog.dart';
 import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
-import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -39,8 +37,7 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
   @override
   Widget build(BuildContext context) {
     final client = widget.viewModel!.client;
-    final ledgers =
-        client.ledger.where((ledger) => ledger.adjustment != 0).toList();
+    final locations = client.locations;
 
     if (client.isStale) {
       return LoadingIndicator();
@@ -48,118 +45,56 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
 
     return ScrollableListViewBuilder(
       padding: const EdgeInsets.symmetric(vertical: 16),
-      itemCount: ledgers.length + 1,
+      itemCount: locations.length,
       separatorBuilder: (context, index) => ListDivider(),
       itemBuilder: (BuildContext context, index) {
         final store = StoreProvider.of<AppState>(context);
-        final localization = AppLocalization.of(context);
         final state = store.state;
 
-        if (index == ledgers.length) {
-          return ListTile(
-            leading: Icon(getEntityIcon(EntityType.client)),
-            title: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Flexible(child: Text(localization!.clientCreated)),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 2),
-                    child: Text(
-                      formatNumber(
-                        0,
-                        context,
-                        clientId: client.id,
-                      )!,
-                      textAlign: TextAlign.end,
-                    ),
-                  ),
-                ]),
-            subtitle: Text(
-              formatDate(
-                convertTimestampToDateString(client.createdAt),
-                context,
-                showTime: true,
-              ),
-            ),
-          );
-        }
-
-        final ledger = ledgers[index];
-        final entity = state.getEntityMap(ledger.entityType)![ledger.entityId];
-
-        if (entity == null) {
-          print('Error: unable to find entity $ledger');
-          return SizedBox();
-        }
+        final location = locations[index];
 
         return ListTile(
-          onTap: () => viewEntity(entity: entity as BaseEntity),
-          onLongPress: () =>
-              showEntityActionsDialog(entities: [entity as BaseEntity]),
-          title: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //onTap: () => viewEntity(entity: entity as BaseEntity),
+          title: Text(location.name),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Flexible(
-                child: Text(
-                  '${localization!.lookup('${ledger.entityType}')}  ›  ${entity.listDisplayName}',
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 2),
-                child: Text(
-                  formatNumber(
-                    ledger.balance,
-                    context,
-                    clientId: client.id,
-                  )!,
-                  textAlign: TextAlign.end,
-                ),
-              ),
+              if (location.address1.isNotEmpty) Text(location.address1),
+              if (location.address2.isNotEmpty) Text(location.address2),
+              if (location.city.isNotEmpty ||
+                  location.state.isNotEmpty ||
+                  location.postalCode.isNotEmpty)
+                if (state.company.cityStateOrder() ==
+                    CompanyFields.cityStatePostal)
+                  Row(
+                    children: [
+                      if (location.city.isNotEmpty) Text(location.city),
+                      if (location.city.isNotEmpty && location.state.isNotEmpty)
+                        Text(', '),
+                      if (location.state.isNotEmpty) Text(location.state),
+                      if (location.city.isNotEmpty && location.state.isNotEmpty)
+                        Text(' '),
+                      if (location.postalCode.isNotEmpty)
+                        Text(location.postalCode),
+                    ],
+                  )
+                else
+                  Row(
+                    children: [
+                      if (location.postalCode.isNotEmpty)
+                        Text(location.postalCode),
+                      if (location.postalCode.isNotEmpty &&
+                          location.city.isNotEmpty)
+                        Text(' '),
+                      if (location.city.isNotEmpty) Text(location.city),
+                      if (location.city.isNotEmpty && location.state.isNotEmpty)
+                        Text(', '),
+                      if (location.state.isNotEmpty) Text(location.state),
+                    ],
+                  ),
             ],
           ),
-          subtitle: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: Text(
-                  formatDate(
-                    convertTimestampToDateString(ledger.createdAt),
-                    context,
-                    showTime: true,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 4),
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    color: ledger.adjustment <= 0
-                        ? state.prefState.colorThemeModel!.colorSuccess
-                        : state.prefState.colorThemeModel!.colorDanger,
-                    borderRadius:
-                        BorderRadius.all(Radius.circular(kBorderRadius)),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(4),
-                    child: Text(
-                      (ledger.adjustment > 0 ? '+' : '') +
-                          formatNumber(
-                            ledger.adjustment,
-                            context,
-                            clientId: client.id,
-                          )!,
-                      style: TextStyle(color: Colors.white),
-                      textAlign: TextAlign.end,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          leading: Icon(getEntityIcon(ledger.entityType)),
+          leading: Icon(getEntityIcon(EntityType.location)),
         );
       },
     );
