@@ -417,7 +417,7 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                     bottom: kMobileDialogPadding,
                     left: kMobileDialogPadding / 2),
                 child: DefaultTabController(
-                  length: company.isModuleEnabled(EntityType.document) ? 5 : 4,
+                  length: company.isModuleEnabled(EntityType.document) ? 6 : 5,
                   child: SizedBox(
                     height: minHeight,
                     child: Column(
@@ -440,6 +440,11 @@ class _ClientViewFullwidthState extends State<ClientViewFullwidth>
                                     ? localization.documents
                                     : '${localization.documents} (${documents.length})',
                               ),
+                            Tab(
+                              text: client.locations.isEmpty
+                                  ? localization.locations
+                                  : '${localization.locations} (${client.locations.length})',
+                            ),
                             Tab(
                               text: localization.ledger,
                             ),
