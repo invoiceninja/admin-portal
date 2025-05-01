@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 
 // Project imports:
@@ -14,7 +13,6 @@ import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
-import 'package:invoiceninja_flutter/utils/localization.dart';
 
 class ClientViewLocations extends StatefulWidget {
   const ClientViewLocations({Key? key, this.viewModel}) : super(key: key);
