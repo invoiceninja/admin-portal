@@ -131,7 +131,9 @@ class _ClientViewState extends State<ClientView>
                   : '${localization.documents} (${documents.length})',
             ),
           Tab(
-            text: localization.locations,
+            text: client.locations.isEmpty
+                ? localization.locations
+                : '${localization.locations} (${client.locations.length})',
           ),
           Tab(
             text: localization.ledger,
