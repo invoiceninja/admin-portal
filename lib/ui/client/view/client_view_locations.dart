@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
-import 'package:invoiceninja_flutter/ui/app/lists/list_divider.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
@@ -52,7 +52,7 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
         child: AppButton(
             label: localization.addLocation,
             onPressed: () {
-              //
+              showDialog(context: context, builder: (_) => _LocationModal());
             }),
       ),
       SizedBox(height: 10),
@@ -105,5 +105,33 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
               ))
           .toList(),
     ]);
+  }
+}
+
+class _LocationModal extends StatefulWidget {
+  const _LocationModal({this.location});
+
+  final LocationEntity? location;
+
+  @override
+  State<_LocationModal> createState() => __LocationModalState();
+}
+
+class __LocationModalState extends State<_LocationModal> {
+  @override
+  Widget build(BuildContext context) {
+    final localization = AppLocalization.of(context)!;
+
+    return AlertDialog(
+      title: Text(widget.location == null
+          ? localization.addLocation
+          : localization.editLocation),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(localization.cancel.toUpperCase()),
+        ),
+      ],
+    );
   }
 }
