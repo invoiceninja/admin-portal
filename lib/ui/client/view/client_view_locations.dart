@@ -58,7 +58,11 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
       SizedBox(height: 10),
       ...locations
           .map((location) => ListTile(
-                //onTap: () => viewEntity(entity: entity as BaseEntity),
+                onTap: () => showDialog(
+                    context: context,
+                    builder: (_) => _LocationModal(
+                          location: location,
+                        )),
                 title: Text(location.name),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
