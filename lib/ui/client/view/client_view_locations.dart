@@ -25,6 +25,7 @@ import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
+import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/icons.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
@@ -247,6 +248,7 @@ class __LocationModalState extends State<_LocationModal> {
         showToast(localization.addedLocation);
         store.dispatch(LoadClient(clientId: location.clientId));
       }).catchError((error) {
+        showErrorDialog(message: error);
         setState(() => _isLoading = false);
       });
     } else {
@@ -261,6 +263,7 @@ class __LocationModalState extends State<_LocationModal> {
         showToast(localization.updatedLocation);
         store.dispatch(LoadClient(clientId: location.clientId));
       }).catchError((error) {
+        showErrorDialog(message: error);
         setState(() => _isLoading = false);
       });
     }
