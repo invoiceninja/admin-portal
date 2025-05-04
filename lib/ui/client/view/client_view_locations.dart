@@ -12,6 +12,7 @@ import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
@@ -58,6 +59,7 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
             onPressed: () {
               showDialog(
                   context: context,
+                  barrierDismissible: false,
                   builder: (_) => _LocationModal(
                         location: LocationEntity(),
                       ));
@@ -68,6 +70,7 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
           .map((location) => ListTile(
                 onTap: () => showDialog(
                     context: context,
+                    barrierDismissible: false,
                     builder: (_) => _LocationModal(
                           location: location,
                         )),
@@ -144,7 +147,8 @@ class __LocationModalState extends State<_LocationModal> {
 
   static final GlobalKey<FormState> _formKey =
       GlobalKey<FormState>(debugLabel: '_locationEdit');
-  //final _debouncer = Debouncer();
+  final FocusScopeNode _focusNode = FocusScopeNode();
+
   late List<TextEditingController> _controllers;
   var _location = LocationEntity();
 
@@ -155,57 +159,37 @@ class __LocationModalState extends State<_LocationModal> {
     if (widget.location.isOld) {
       _location = widget.location;
     }
-  }
 
-  @override
-  void didChangeDependencies() {
-    _controllers = [
-      _nameController,
-      _phoneController,
-      _address1Controller,
-      _address2Controller,
-      _cityController,
-      _stateController,
-      _postalCodeController,
-      _custom1Controller,
-      _custom2Controller,
-      _custom3Controller,
-      _custom4Controller,
-    ];
-
-    _controllers
-        .forEach((dynamic controller) => controller.removeListener(_onChanged));
-
-    final location = widget.location;
-    _nameController.text = location.name;
-    _phoneController.text = location.phone;
-    _address1Controller.text = location.address1;
-    _address2Controller.text = location.address2;
-    _cityController.text = location.city;
-    _stateController.text = location.state;
-    _postalCodeController.text = location.postalCode;
-    _custom1Controller.text = location.customValue1;
-    _custom2Controller.text = location.customValue2;
-    _custom3Controller.text = location.customValue3;
-    _custom4Controller.text = location.customValue4;
-
-    _controllers
-        .forEach((dynamic controller) => controller.addListener(_onChanged));
-
-    super.didChangeDependencies();
+    _nameController.text = _location.name;
+    _phoneController.text = _location.phone;
+    _address1Controller.text = _location.address1;
+    _address2Controller.text = _location.address2;
+    _cityController.text = _location.city;
+    _stateController.text = _location.state;
+    _postalCodeController.text = _location.postalCode;
+    _custom1Controller.text = _location.customValue1;
+    _custom2Controller.text = _location.customValue2;
+    _custom3Controller.text = _location.customValue3;
+    _custom4Controller.text = _location.customValue4;
   }
 
   @override
   void dispose() {
+    _focusNode.dispose();
     _controllers.forEach((dynamic controller) {
-      controller.removeListener(_onChanged);
       controller.dispose();
     });
 
     super.dispose();
   }
 
-  void _onChanged() {
+  void _onSavePressed(BuildContext context) {
+    final bool isValid = _formKey.currentState!.validate();
+
+    if (!isValid) {
+      return;
+    }
+
     final location = _location.rebuild((b) => b
       ..name = _nameController.text.trim()
       ..phone = _phoneController.text.trim()
@@ -218,114 +202,109 @@ class __LocationModalState extends State<_LocationModal> {
       ..customValue2 = _custom2Controller.text.trim()
       ..customValue3 = _custom3Controller.text.trim()
       ..customValue4 = _custom4Controller.text.trim());
-    if (_location != widget.location) {
-      /*
-      _debouncer.run(() {
-        viewModel.onChanged(client);
-      });
-      */
-    }
-  }
-
-  void _onSavePressed(BuildContext context) {
-    final bool isValid = _formKey.currentState!.validate();
-
-    if (!isValid) {
-      return;
-    }
 
     //widget.viewModel.onSavePressed(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
     final localization = AppLocalization.of(context)!;
-    final location = widget.location;
+    final location = _location;
 
     return AlertDialog(
-      title: Text(widget.location.isNew
+      title: Text(location.isNew
           ? localization.addLocation
           : localization.editLocation),
-      content: Flex(
-        direction: Axis.vertical,
-        children: [
-          DecoratedFormField(
-            label: localization.name,
-            controller: _nameController,
-            onSavePressed: _onSavePressed,
-            keyboardType: TextInputType.text,
-          ),
-          DecoratedFormField(
-            controller: _address1Controller,
-            label: localization.address1,
-            //onSavePressed: viewModel.onSavePressed,
-            keyboardType: TextInputType.streetAddress,
-          ),
-          DecoratedFormField(
-            autocorrect: false,
-            controller: _address2Controller,
-            label: localization.address2,
-            //onSavePressed: viewModel.onSavePressed,
-            keyboardType: TextInputType.text,
-          ),
-          DecoratedFormField(
-            autocorrect: false,
-            controller: _cityController,
-            label: localization.city,
-            //onSavePressed: viewModel.onSavePressed,
-            keyboardType: TextInputType.text,
-          ),
-          DecoratedFormField(
-            autocorrect: false,
-            controller: _stateController,
-            label: localization.state,
-            //onSavePressed: viewModel.onSavePressed,
-            keyboardType: TextInputType.text,
-          ),
-          DecoratedFormField(
-            autocorrect: false,
-            controller: _postalCodeController,
-            label: localization.postalCode,
-            //onSavePressed: viewModel.onSavePressed,
-            keyboardType: TextInputType.text,
-          ),
-          EntityDropdown(
+      content: AppForm(
+        focusNode: _focusNode,
+        formKey: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            DecoratedFormField(
+              label: localization.name,
+              controller: _nameController,
+              onSavePressed: _onSavePressed,
+              keyboardType: TextInputType.text,
+            ),
+            DecoratedFormField(
+              controller: _address1Controller,
+              label: localization.address1,
+              keyboardType: TextInputType.streetAddress,
+            ),
+            DecoratedFormField(
+              autocorrect: false,
+              controller: _address2Controller,
+              label: localization.address2,
+              keyboardType: TextInputType.text,
+            ),
+            DecoratedFormField(
+              autocorrect: false,
+              controller: _cityController,
+              label: localization.city,
+              keyboardType: TextInputType.text,
+            ),
+            DecoratedFormField(
+              autocorrect: false,
+              controller: _stateController,
+              label: localization.state,
+              keyboardType: TextInputType.text,
+            ),
+            DecoratedFormField(
+              autocorrect: false,
+              controller: _postalCodeController,
+              label: localization.postalCode,
+              keyboardType: TextInputType.text,
+            ),
+            EntityDropdown(
               entityType: EntityType.country,
-              //entityList: memoizedCountryList(viewModel.staticState.countryMap),
+              entityList: memoizedCountryList(state.staticState.countryMap),
               labelText: localization.country,
-              entityId: location.countryId,
-              onSelected: (SelectableEntity? country) =>
-                  _location.rebuild((b) => b..countryId = country?.id ?? '')),
-          CustomField(
-            controller: _custom1Controller,
-            field: CustomFieldType.location1,
-            value: location.customValue1,
-            onSavePressed: _onSavePressed,
-          ),
-          CustomField(
-            controller: _custom2Controller,
-            field: CustomFieldType.location2,
-            value: location.customValue2,
-            onSavePressed: _onSavePressed,
-          ),
-          CustomField(
-            controller: _custom3Controller,
-            field: CustomFieldType.location3,
-            value: location.customValue3,
-            onSavePressed: _onSavePressed,
-          ),
-          CustomField(
-            controller: _custom4Controller,
-            field: CustomFieldType.location4,
-            value: location.customValue4,
-            onSavePressed: _onSavePressed,
-          ),
-        ],
+              entityId: _location.countryId,
+              onSelected: (SelectableEntity? country) {
+                setState(() {
+                  _location = _location
+                      .rebuild((b) => b..countryId = country?.id ?? '');
+                });
+              },
+            ),
+            CustomField(
+              controller: _custom1Controller,
+              field: CustomFieldType.location1,
+              value: location.customValue1,
+              onSavePressed: _onSavePressed,
+            ),
+            CustomField(
+              controller: _custom2Controller,
+              field: CustomFieldType.location2,
+              value: location.customValue2,
+              onSavePressed: _onSavePressed,
+            ),
+            CustomField(
+              controller: _custom3Controller,
+              field: CustomFieldType.location3,
+              value: location.customValue3,
+              onSavePressed: _onSavePressed,
+            ),
+            CustomField(
+              controller: _custom4Controller,
+              field: CustomFieldType.location4,
+              value: location.customValue4,
+              onSavePressed: _onSavePressed,
+            ),
+          ],
+        ),
       ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
           child: Text(localization.cancel.toUpperCase()),
+        ),
+        TextButton(
+          onPressed: () => _onSavePressed(context),
+          child: Text(localization.save.toUpperCase()),
         ),
       ],
     );
