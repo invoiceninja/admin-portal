@@ -139,6 +139,19 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
                       value: localization.delete,
                     ),
                   ],
+                  onSelected: (value) {
+                    if (value == localization.delete) {
+                      final url =
+                          state.credentials.url + '/locations/${location.id}';
+                      WebClient().delete(url, state.token).then((value) {
+                        showToast(localization.deletedLocation);
+                        store.dispatch(
+                            LoadClient(clientId: widget.viewModel!.client.id));
+                      }).catchError((error) {
+                        showErrorDialog(message: error);
+                      });
+                    }
+                  },
                 ),
               ))
           .toList(),
