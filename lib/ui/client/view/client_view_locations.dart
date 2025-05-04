@@ -20,6 +20,7 @@ import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/bool_dropdown_button.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
@@ -387,6 +388,13 @@ class __LocationModalState extends State<_LocationModal> {
                 controller: _phoneController,
                 keyboardType: TextInputType.phone,
               ),
+              BoolDropdownButton(
+                value: _location.isShipping,
+                onChanged: (value) => setState(() {
+                  _location = _location.rebuild((b) => b..isShipping = value);
+                }),
+                label: localization.isShipping,
+              )
             ],
           ),
         ),
