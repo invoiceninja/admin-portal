@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -8,7 +10,11 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/entities.dart';
+import 'package:invoiceninja_flutter/data/models/serializers.dart';
+import 'package:invoiceninja_flutter/data/web_client.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/client/client_actions.dart';
 import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
@@ -61,6 +67,7 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
                   context: context,
                   barrierDismissible: false,
                   builder: (_) => _LocationModal(
+                        client: widget.viewModel!.client,
                         location: LocationEntity(),
                       ));
             }),
@@ -72,6 +79,7 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
                     context: context,
                     barrierDismissible: false,
                     builder: (_) => _LocationModal(
+                          client: widget.viewModel!.client,
                           location: location,
                         )),
                 title: Text(location.name),
@@ -124,9 +132,10 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
 }
 
 class _LocationModal extends StatefulWidget {
-  const _LocationModal({required this.location});
+  const _LocationModal({required this.client, required this.location});
 
   final LocationEntity location;
+  final ClientEntity client;
 
   @override
   State<_LocationModal> createState() => __LocationModalState();
@@ -150,15 +159,27 @@ class __LocationModalState extends State<_LocationModal> {
   final FocusScopeNode _focusNode = FocusScopeNode();
 
   late List<TextEditingController> _controllers;
-  var _location = LocationEntity();
+  late LocationEntity _location;
 
   @override
   void initState() {
     super.initState();
 
-    if (widget.location.isOld) {
-      _location = widget.location;
-    }
+    _location = widget.location;
+
+    _controllers = [
+      _nameController,
+      _phoneController,
+      _address1Controller,
+      _address2Controller,
+      _cityController,
+      _stateController,
+      _postalCodeController,
+      _custom1Controller,
+      _custom2Controller,
+      _custom3Controller,
+      _custom4Controller,
+    ];
 
     _nameController.text = _location.name;
     _phoneController.text = _location.phone;
@@ -183,7 +204,10 @@ class __LocationModalState extends State<_LocationModal> {
     super.dispose();
   }
 
-  void _onSavePressed(BuildContext context) {
+  void _onSavePressed(BuildContext context) async {
+    final store = StoreProvider.of<AppState>(context);
+    final state = store.state;
+
     final bool isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
@@ -204,6 +228,20 @@ class __LocationModalState extends State<_LocationModal> {
       ..customValue4 = _custom4Controller.text.trim());
 
     //widget.viewModel.onSavePressed(context);
+
+    final webClient = WebClient();
+    final data =
+        serializers.serializeWith(LocationEntity.serializer, _location);
+
+    if (location.isNew) {
+      await webClient.post('/locations', state.token, data: json.encode(data));
+    } else {
+      await webClient.put('/locations/{$location.id}', state.token,
+          data: json.encode(data));
+    }
+
+    Navigator.of(navigatorKey.currentContext!).pop();
+    store.dispatch(LoadClient(clientId: location.clientId));
   }
 
   @override
