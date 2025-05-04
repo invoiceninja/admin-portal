@@ -220,81 +220,84 @@ class __LocationModalState extends State<_LocationModal> {
       content: AppForm(
         focusNode: _focusNode,
         formKey: _formKey,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            DecoratedFormField(
-              label: localization.name,
-              controller: _nameController,
-              onSavePressed: _onSavePressed,
-              keyboardType: TextInputType.text,
-            ),
-            DecoratedFormField(
-              controller: _address1Controller,
-              label: localization.address1,
-              keyboardType: TextInputType.streetAddress,
-            ),
-            DecoratedFormField(
-              autocorrect: false,
-              controller: _address2Controller,
-              label: localization.address2,
-              keyboardType: TextInputType.text,
-            ),
-            DecoratedFormField(
-              autocorrect: false,
-              controller: _cityController,
-              label: localization.city,
-              keyboardType: TextInputType.text,
-            ),
-            DecoratedFormField(
-              autocorrect: false,
-              controller: _stateController,
-              label: localization.state,
-              keyboardType: TextInputType.text,
-            ),
-            DecoratedFormField(
-              autocorrect: false,
-              controller: _postalCodeController,
-              label: localization.postalCode,
-              keyboardType: TextInputType.text,
-            ),
-            EntityDropdown(
-              entityType: EntityType.country,
-              entityList: memoizedCountryList(state.staticState.countryMap),
-              labelText: localization.country,
-              entityId: _location.countryId,
-              onSelected: (SelectableEntity? country) {
-                setState(() {
-                  _location = _location
-                      .rebuild((b) => b..countryId = country?.id ?? '');
-                });
-              },
-            ),
-            CustomField(
-              controller: _custom1Controller,
-              field: CustomFieldType.location1,
-              value: location.customValue1,
-              onSavePressed: _onSavePressed,
-            ),
-            CustomField(
-              controller: _custom2Controller,
-              field: CustomFieldType.location2,
-              value: location.customValue2,
-              onSavePressed: _onSavePressed,
-            ),
-            CustomField(
-              controller: _custom3Controller,
-              field: CustomFieldType.location3,
-              value: location.customValue3,
-              onSavePressed: _onSavePressed,
-            ),
-            CustomField(
-              controller: _custom4Controller,
-              field: CustomFieldType.location4,
-              value: location.customValue4,
-              onSavePressed: _onSavePressed,
-            ),
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              DecoratedFormField(
+                label: localization.name,
+                controller: _nameController,
+                onSavePressed: _onSavePressed,
+                keyboardType: TextInputType.text,
+              ),
+              DecoratedFormField(
+                controller: _address1Controller,
+                label: localization.address1,
+                keyboardType: TextInputType.streetAddress,
+              ),
+              DecoratedFormField(
+                autocorrect: false,
+                controller: _address2Controller,
+                label: localization.address2,
+                keyboardType: TextInputType.text,
+              ),
+              DecoratedFormField(
+                autocorrect: false,
+                controller: _cityController,
+                label: localization.city,
+                keyboardType: TextInputType.text,
+              ),
+              DecoratedFormField(
+                autocorrect: false,
+                controller: _stateController,
+                label: localization.state,
+                keyboardType: TextInputType.text,
+              ),
+              DecoratedFormField(
+                autocorrect: false,
+                controller: _postalCodeController,
+                label: localization.postalCode,
+                keyboardType: TextInputType.text,
+              ),
+              EntityDropdown(
+                entityType: EntityType.country,
+                entityList: memoizedCountryList(state.staticState.countryMap),
+                labelText: localization.country,
+                entityId: _location.countryId,
+                onSelected: (SelectableEntity? country) {
+                  setState(() {
+                    _location = _location
+                        .rebuild((b) => b..countryId = country?.id ?? '');
+                  });
+                },
+              ),
+              CustomField(
+                controller: _custom1Controller,
+                field: CustomFieldType.location1,
+                value: location.customValue1,
+              ),
+              CustomField(
+                controller: _custom2Controller,
+                field: CustomFieldType.location2,
+                value: location.customValue2,
+              ),
+              CustomField(
+                controller: _custom3Controller,
+                field: CustomFieldType.location3,
+                value: location.customValue3,
+              ),
+              CustomField(
+                controller: _custom4Controller,
+                field: CustomFieldType.location4,
+                value: location.customValue4,
+              ),
+              DecoratedFormField(
+                label: localization.phone,
+                controller: _phoneController,
+                keyboardType: TextInputType.phone,
+              ),
+            ],
+          ),
         ),
       ),
       actions: [
