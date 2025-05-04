@@ -68,7 +68,6 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
             onPressed: () {
               showDialog(
                   context: context,
-                  barrierDismissible: false,
                   builder: (_) => _LocationModal(
                         location: LocationEntity(
                           clientId: widget.viewModel!.client.id,
@@ -82,7 +81,6 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
           .map((location) => ListTile(
                 onTap: () => showDialog(
                     context: context,
-                    barrierDismissible: false,
                     builder: (_) => _LocationModal(
                           location: location,
                         )),
