@@ -11,6 +11,7 @@ import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
@@ -129,6 +130,7 @@ class _LocationModal extends StatefulWidget {
 
 class __LocationModalState extends State<_LocationModal> {
   final _nameController = TextEditingController();
+  final _phoneController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
   final _custom3Controller = TextEditingController();
@@ -143,6 +145,7 @@ class __LocationModalState extends State<_LocationModal> {
   void didChangeDependencies() {
     _controllers = [
       _nameController,
+      _phoneController,
       _custom1Controller,
       _custom2Controller,
       _custom3Controller,
@@ -154,6 +157,11 @@ class __LocationModalState extends State<_LocationModal> {
 
     final location = widget.location;
     _nameController.text = location.name;
+    _phoneController.text = location.phone;
+    _custom1Controller.text = location.customValue1;
+    _custom2Controller.text = location.customValue2;
+    _custom3Controller.text = location.customValue3;
+    _custom4Controller.text = location.customValue4;
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -174,6 +182,7 @@ class __LocationModalState extends State<_LocationModal> {
   void _onChanged() {
     final location = widget.location.rebuild((b) => b
       ..name = _nameController.text.trim()
+      ..phone = _phoneController.text.trim()
       ..customValue1 = _custom1Controller.text.trim()
       ..customValue2 = _custom2Controller.text.trim()
       ..customValue3 = _custom3Controller.text.trim()
@@ -200,23 +209,46 @@ class __LocationModalState extends State<_LocationModal> {
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context)!;
+    final location = widget.location;
 
     return AlertDialog(
       title: Text(widget.location.isNew
           ? localization.addLocation
           : localization.editLocation),
-      content: FormCard(
-        child: Flex(
-          direction: Axis.vertical,
-          children: [
-            DecoratedFormField(
-              label: localization.name,
-              controller: _nameController,
-              onSavePressed: _onSavePressed,
-              keyboardType: TextInputType.text,
-            ),
-          ],
-        ),
+      content: Flex(
+        direction: Axis.vertical,
+        children: [
+          DecoratedFormField(
+            label: localization.name,
+            controller: _nameController,
+            onSavePressed: _onSavePressed,
+            keyboardType: TextInputType.text,
+          ),
+          CustomField(
+            controller: _custom1Controller,
+            field: CustomFieldType.location1,
+            value: location.customValue1,
+            onSavePressed: _onSavePressed,
+          ),
+          CustomField(
+            controller: _custom2Controller,
+            field: CustomFieldType.location2,
+            value: location.customValue2,
+            onSavePressed: _onSavePressed,
+          ),
+          CustomField(
+            controller: _custom3Controller,
+            field: CustomFieldType.location3,
+            value: location.customValue3,
+            onSavePressed: _onSavePressed,
+          ),
+          CustomField(
+            controller: _custom4Controller,
+            field: CustomFieldType.location4,
+            value: location.customValue4,
+            onSavePressed: _onSavePressed,
+          ),
+        ],
       ),
       actions: [
         TextButton(
