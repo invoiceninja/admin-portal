@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/data/models/client_model.dart';
 import 'package:invoiceninja_flutter/data/models/company_model.dart';
 
@@ -160,6 +161,7 @@ class __LocationModalState extends State<_LocationModal> {
 
   late List<TextEditingController> _controllers;
   late LocationEntity _location;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -205,6 +207,7 @@ class __LocationModalState extends State<_LocationModal> {
   }
 
   void _onSavePressed(BuildContext context) async {
+    final localization = AppLocalization.of(context)!;
     final store = StoreProvider.of<AppState>(context);
     final state = store.state;
 
@@ -227,28 +230,40 @@ class __LocationModalState extends State<_LocationModal> {
       ..customValue3 = _custom3Controller.text.trim()
       ..customValue4 = _custom4Controller.text.trim());
 
-    //widget.viewModel.onSavePressed(context);
-
     final webClient = WebClient();
-    final data =
-        serializers.serializeWith(LocationEntity.serializer, _location);
+    final data = serializers.serializeWith(LocationEntity.serializer, location);
+
+    setState(() => _isLoading = true);
 
     if (location.isNew) {
-      await webClient.post(
+      webClient
+          .post(
         state.credentials.url + '/locations',
         state.token,
         data: json.encode(data),
-      );
+      )
+          .then((value) {
+        Navigator.of(navigatorKey.currentContext!).pop();
+        showToast(localization.addedLocation);
+        store.dispatch(LoadClient(clientId: location.clientId));
+      }).catchError((error) {
+        setState(() => _isLoading = false);
+      });
     } else {
-      await webClient.put(
+      await webClient
+          .put(
         state.credentials.url + '/locations/${location.id}',
         state.token,
         data: json.encode(data),
-      );
+      )
+          .then((value) {
+        Navigator.of(navigatorKey.currentContext!).pop();
+        showToast(localization.updatedLocation);
+        store.dispatch(LoadClient(clientId: location.clientId));
+      }).catchError((error) {
+        setState(() => _isLoading = false);
+      });
     }
-
-    Navigator.of(navigatorKey.currentContext!).pop();
-    store.dispatch(LoadClient(clientId: location.clientId));
   }
 
   @override
@@ -345,16 +360,24 @@ class __LocationModalState extends State<_LocationModal> {
           ),
         ),
       ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(localization.cancel.toUpperCase()),
-        ),
-        TextButton(
-          onPressed: () => _onSavePressed(context),
-          child: Text(localization.save.toUpperCase()),
-        ),
-      ],
+      actions: _isLoading
+          ? [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                child: LinearProgressIndicator(),
+              )
+            ]
+          : [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text(localization.cancel.toUpperCase()),
+              ),
+              TextButton(
+                onPressed: () => _onSavePressed(context),
+                child: Text(localization.save.toUpperCase()),
+              ),
+            ],
     );
   }
 }
