@@ -70,8 +70,10 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
                   context: context,
                   barrierDismissible: false,
                   builder: (_) => _LocationModal(
-                        client: widget.viewModel!.client,
-                        location: LocationEntity(),
+                        location: LocationEntity(
+                          clientId: widget.viewModel!.client.id,
+                          countryId: state.company.settings.countryId,
+                        ),
                       ));
             }),
       ),
@@ -82,7 +84,6 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
                     context: context,
                     barrierDismissible: false,
                     builder: (_) => _LocationModal(
-                          client: widget.viewModel!.client,
                           location: location,
                         )),
                 title: Text(location.name),
@@ -141,15 +142,19 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
                   ],
                   onSelected: (value) {
                     if (value == localization.delete) {
-                      final url =
-                          state.credentials.url + '/locations/${location.id}';
-                      WebClient().delete(url, state.token).then((value) {
-                        showToast(localization.deletedLocation);
-                        store.dispatch(
-                            LoadClient(clientId: widget.viewModel!.client.id));
-                      }).catchError((error) {
-                        showErrorDialog(message: error);
-                      });
+                      confirmCallback(
+                          context: context,
+                          callback: (_) {
+                            final url = state.credentials.url +
+                                '/locations/${location.id}';
+                            WebClient().delete(url, state.token).then((value) {
+                              showToast(localization.deletedLocation);
+                              store.dispatch(LoadClient(
+                                  clientId: widget.viewModel!.client.id));
+                            }).catchError((error) {
+                              showErrorDialog(message: error);
+                            });
+                          });
                     }
                   },
                 ),
@@ -160,10 +165,9 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
 }
 
 class _LocationModal extends StatefulWidget {
-  const _LocationModal({required this.client, required this.location});
+  const _LocationModal({required this.location});
 
   final LocationEntity location;
-  final ClientEntity client;
 
   @override
   State<_LocationModal> createState() => __LocationModalState();
@@ -316,8 +320,8 @@ class __LocationModalState extends State<_LocationModal> {
               DecoratedFormField(
                 label: localization.name,
                 controller: _nameController,
-                onSavePressed: _onSavePressed,
                 keyboardType: TextInputType.text,
+                autofocus: true,
               ),
               DecoratedFormField(
                 controller: _address1Controller,

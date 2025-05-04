@@ -1010,7 +1010,7 @@ class LocationFields {
 abstract class LocationEntity extends Object
     with BaseEntity, SelectableEntity
     implements Built<LocationEntity, LocationEntityBuilder> {
-  factory LocationEntity({String? clientId}) {
+  factory LocationEntity({String? clientId, String? countryId}) {
     return _$LocationEntity._(
       id: BaseEntity.nextId,
       isChanged: false,
@@ -1019,7 +1019,7 @@ abstract class LocationEntity extends Object
       address1: '',      
       address2: '',
       city: '',
-      countryId: '',
+      countryId: countryId ?? '',
       isShipping: false,
       phone: '',
       postalCode: '',
