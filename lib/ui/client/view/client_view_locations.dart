@@ -9,8 +9,9 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 // Project imports:
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
+import 'package:invoiceninja_flutter/redux/static/static_selectors.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
-import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
@@ -131,6 +132,11 @@ class _LocationModal extends StatefulWidget {
 class __LocationModalState extends State<_LocationModal> {
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
+  final _address1Controller = TextEditingController();
+  final _address2Controller = TextEditingController();
+  final _cityController = TextEditingController();
+  final _stateController = TextEditingController();
+  final _postalCodeController = TextEditingController();
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
   final _custom3Controller = TextEditingController();
@@ -140,12 +146,27 @@ class __LocationModalState extends State<_LocationModal> {
       GlobalKey<FormState>(debugLabel: '_locationEdit');
   //final _debouncer = Debouncer();
   late List<TextEditingController> _controllers;
+  var _location = LocationEntity();
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.location.isOld) {
+      _location = widget.location;
+    }
+  }
 
   @override
   void didChangeDependencies() {
     _controllers = [
       _nameController,
       _phoneController,
+      _address1Controller,
+      _address2Controller,
+      _cityController,
+      _stateController,
+      _postalCodeController,
       _custom1Controller,
       _custom2Controller,
       _custom3Controller,
@@ -158,6 +179,11 @@ class __LocationModalState extends State<_LocationModal> {
     final location = widget.location;
     _nameController.text = location.name;
     _phoneController.text = location.phone;
+    _address1Controller.text = location.address1;
+    _address2Controller.text = location.address2;
+    _cityController.text = location.city;
+    _stateController.text = location.state;
+    _postalCodeController.text = location.postalCode;
     _custom1Controller.text = location.customValue1;
     _custom2Controller.text = location.customValue2;
     _custom3Controller.text = location.customValue3;
@@ -180,14 +206,19 @@ class __LocationModalState extends State<_LocationModal> {
   }
 
   void _onChanged() {
-    final location = widget.location.rebuild((b) => b
+    final location = _location.rebuild((b) => b
       ..name = _nameController.text.trim()
       ..phone = _phoneController.text.trim()
+      ..address1 = _address1Controller.text.trim()
+      ..address2 = _address2Controller.text.trim()
+      ..city = _cityController.text.trim()
+      ..state = _stateController.text.trim()
+      ..postalCode = _postalCodeController.text.trim()
       ..customValue1 = _custom1Controller.text.trim()
       ..customValue2 = _custom2Controller.text.trim()
       ..customValue3 = _custom3Controller.text.trim()
       ..customValue4 = _custom4Controller.text.trim());
-    if (location != widget.location) {
+    if (_location != widget.location) {
       /*
       _debouncer.run(() {
         viewModel.onChanged(client);
@@ -224,6 +255,47 @@ class __LocationModalState extends State<_LocationModal> {
             onSavePressed: _onSavePressed,
             keyboardType: TextInputType.text,
           ),
+          DecoratedFormField(
+            controller: _address1Controller,
+            label: localization.address1,
+            //onSavePressed: viewModel.onSavePressed,
+            keyboardType: TextInputType.streetAddress,
+          ),
+          DecoratedFormField(
+            autocorrect: false,
+            controller: _address2Controller,
+            label: localization.address2,
+            //onSavePressed: viewModel.onSavePressed,
+            keyboardType: TextInputType.text,
+          ),
+          DecoratedFormField(
+            autocorrect: false,
+            controller: _cityController,
+            label: localization.city,
+            //onSavePressed: viewModel.onSavePressed,
+            keyboardType: TextInputType.text,
+          ),
+          DecoratedFormField(
+            autocorrect: false,
+            controller: _stateController,
+            label: localization.state,
+            //onSavePressed: viewModel.onSavePressed,
+            keyboardType: TextInputType.text,
+          ),
+          DecoratedFormField(
+            autocorrect: false,
+            controller: _postalCodeController,
+            label: localization.postalCode,
+            //onSavePressed: viewModel.onSavePressed,
+            keyboardType: TextInputType.text,
+          ),
+          EntityDropdown(
+              entityType: EntityType.country,
+              //entityList: memoizedCountryList(viewModel.staticState.countryMap),
+              labelText: localization.country,
+              entityId: location.countryId,
+              onSelected: (SelectableEntity? country) =>
+                  _location.rebuild((b) => b..countryId = country?.id ?? '')),
           CustomField(
             controller: _custom1Controller,
             field: CustomFieldType.location1,
