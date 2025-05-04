@@ -22,6 +22,7 @@ import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/app_form.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/custom_field.dart';
 import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
+import 'package:invoiceninja_flutter/ui/app/icon_text.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
@@ -127,6 +128,18 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
                   ],
                 ),
                 leading: Icon(getEntityIcon(EntityType.location)),
+                trailing: PopupMenuButton<String>(
+                  child: Icon(Icons.more_vert),
+                  itemBuilder: (BuildContext context) => [
+                    PopupMenuItem<String>(
+                      child: IconText(
+                        icon: Icons.delete,
+                        text: localization.delete,
+                      ),
+                      value: localization.delete,
+                    ),
+                  ],
+                ),
               ))
           .toList(),
     ]);
