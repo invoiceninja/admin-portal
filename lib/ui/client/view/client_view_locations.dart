@@ -234,10 +234,17 @@ class __LocationModalState extends State<_LocationModal> {
         serializers.serializeWith(LocationEntity.serializer, _location);
 
     if (location.isNew) {
-      await webClient.post('/locations', state.token, data: json.encode(data));
+      await webClient.post(
+        state.credentials.url + '/locations',
+        state.token,
+        data: json.encode(data),
+      );
     } else {
-      await webClient.put('/locations/{$location.id}', state.token,
-          data: json.encode(data));
+      await webClient.put(
+        state.credentials.url + '/locations/${location.id}',
+        state.token,
+        data: json.encode(data),
+      );
     }
 
     Navigator.of(navigatorKey.currentContext!).pop();
