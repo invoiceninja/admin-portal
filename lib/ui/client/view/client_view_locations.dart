@@ -10,6 +10,8 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/ui/app/buttons/elevated_button.dart';
+import 'package:invoiceninja_flutter/ui/app/form_card.dart';
+import 'package:invoiceninja_flutter/ui/app/forms/decorated_form_field.dart';
 import 'package:invoiceninja_flutter/ui/app/loading_indicator.dart';
 import 'package:invoiceninja_flutter/ui/app/scrollable_listview.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
@@ -52,7 +54,11 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
         child: AppButton(
             label: localization.addLocation,
             onPressed: () {
-              showDialog(context: context, builder: (_) => _LocationModal());
+              showDialog(
+                  context: context,
+                  builder: (_) => _LocationModal(
+                        location: LocationEntity(),
+                      ));
             }),
       ),
       SizedBox(height: 10),
@@ -113,23 +119,105 @@ class _ClientViewLocationsState extends State<ClientViewLocations> {
 }
 
 class _LocationModal extends StatefulWidget {
-  const _LocationModal({this.location});
+  const _LocationModal({required this.location});
 
-  final LocationEntity? location;
+  final LocationEntity location;
 
   @override
   State<_LocationModal> createState() => __LocationModalState();
 }
 
 class __LocationModalState extends State<_LocationModal> {
+  final _nameController = TextEditingController();
+  final _custom1Controller = TextEditingController();
+  final _custom2Controller = TextEditingController();
+  final _custom3Controller = TextEditingController();
+  final _custom4Controller = TextEditingController();
+
+  static final GlobalKey<FormState> _formKey =
+      GlobalKey<FormState>(debugLabel: '_locationEdit');
+  //final _debouncer = Debouncer();
+  late List<TextEditingController> _controllers;
+
+  @override
+  void didChangeDependencies() {
+    _controllers = [
+      _nameController,
+      _custom1Controller,
+      _custom2Controller,
+      _custom3Controller,
+      _custom4Controller,
+    ];
+
+    _controllers
+        .forEach((dynamic controller) => controller.removeListener(_onChanged));
+
+    final location = widget.location;
+    _nameController.text = location.name;
+
+    _controllers
+        .forEach((dynamic controller) => controller.addListener(_onChanged));
+
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    _controllers.forEach((dynamic controller) {
+      controller.removeListener(_onChanged);
+      controller.dispose();
+    });
+
+    super.dispose();
+  }
+
+  void _onChanged() {
+    final location = widget.location.rebuild((b) => b
+      ..name = _nameController.text.trim()
+      ..customValue1 = _custom1Controller.text.trim()
+      ..customValue2 = _custom2Controller.text.trim()
+      ..customValue3 = _custom3Controller.text.trim()
+      ..customValue4 = _custom4Controller.text.trim());
+    if (location != widget.location) {
+      /*
+      _debouncer.run(() {
+        viewModel.onChanged(client);
+      });
+      */
+    }
+  }
+
+  void _onSavePressed(BuildContext context) {
+    final bool isValid = _formKey.currentState!.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    //widget.viewModel.onSavePressed(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     final localization = AppLocalization.of(context)!;
 
     return AlertDialog(
-      title: Text(widget.location == null
+      title: Text(widget.location.isNew
           ? localization.addLocation
           : localization.editLocation),
+      content: FormCard(
+        child: Flex(
+          direction: Axis.vertical,
+          children: [
+            DecoratedFormField(
+              label: localization.name,
+              controller: _nameController,
+              onSavePressed: _onSavePressed,
+              keyboardType: TextInputType.text,
+            ),
+          ],
+        ),
+      ),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(),
