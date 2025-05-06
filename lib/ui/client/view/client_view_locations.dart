@@ -174,7 +174,6 @@ class _LocationModal extends StatefulWidget {
 
 class __LocationModalState extends State<_LocationModal> {
   final _nameController = TextEditingController();
-  final _phoneController = TextEditingController();
   final _address1Controller = TextEditingController();
   final _address2Controller = TextEditingController();
   final _cityController = TextEditingController();
@@ -201,7 +200,6 @@ class __LocationModalState extends State<_LocationModal> {
 
     _controllers = [
       _nameController,
-      _phoneController,
       _address1Controller,
       _address2Controller,
       _cityController,
@@ -214,7 +212,6 @@ class __LocationModalState extends State<_LocationModal> {
     ];
 
     _nameController.text = _location.name;
-    _phoneController.text = _location.phone;
     _address1Controller.text = _location.address1;
     _address2Controller.text = _location.address2;
     _cityController.text = _location.city;
@@ -249,7 +246,6 @@ class __LocationModalState extends State<_LocationModal> {
 
     final location = _location.rebuild((b) => b
       ..name = _nameController.text.trim()
-      ..phone = _phoneController.text.trim()
       ..address1 = _address1Controller.text.trim()
       ..address2 = _address2Controller.text.trim()
       ..city = _cityController.text.trim()
@@ -383,11 +379,7 @@ class __LocationModalState extends State<_LocationModal> {
                 field: CustomFieldType.location4,
                 value: location.customValue4,
               ),
-              DecoratedFormField(
-                label: localization.phone,
-                controller: _phoneController,
-                keyboardType: TextInputType.phone,
-              ),
+              SizedBox(height: 10),
               BoolDropdownButton(
                 value: _location.isShipping,
                 onChanged: (value) => setState(() {

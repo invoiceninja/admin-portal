@@ -995,7 +995,6 @@ class LocationFields {
   static const String name = 'name';
   static const String address1 = 'address1';
   static const String address2 = 'address2';
-  static const String phone = 'phone';
   static const String city = 'city';
   static const String state = 'state';
   static const String postalCode = 'postal_code';
@@ -1021,7 +1020,6 @@ abstract class LocationEntity extends Object
       city: '',
       countryId: countryId ?? '',
       isShipping: false,
-      phone: '',
       postalCode: '',
       state: '',      
       createdAt: 0,
@@ -1045,8 +1043,6 @@ abstract class LocationEntity extends Object
   String get address1;
 
   String get address2;
-
-  String get phone;
 
   String get city;
 

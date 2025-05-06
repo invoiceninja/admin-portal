@@ -796,9 +796,6 @@ class _$LocationEntitySerializer
       'address2',
       serializers.serialize(object.address2,
           specifiedType: const FullType(String)),
-      'phone',
-      serializers.serialize(object.phone,
-          specifiedType: const FullType(String)),
       'city',
       serializers.serialize(object.city, specifiedType: const FullType(String)),
       'state',
@@ -894,10 +891,6 @@ class _$LocationEntitySerializer
           break;
         case 'address2':
           result.address2 = serializers.deserialize(value,
-              specifiedType: const FullType(String))! as String;
-          break;
-        case 'phone':
-          result.phone = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
         case 'city':
@@ -2471,8 +2464,6 @@ class _$LocationEntity extends LocationEntity {
   @override
   final String address2;
   @override
-  final String phone;
-  @override
   final String city;
   @override
   final String state;
@@ -2516,7 +2507,6 @@ class _$LocationEntity extends LocationEntity {
       {required this.name,
       required this.address1,
       required this.address2,
-      required this.phone,
       required this.city,
       required this.state,
       required this.clientId,
@@ -2541,7 +2531,6 @@ class _$LocationEntity extends LocationEntity {
         address1, r'LocationEntity', 'address1');
     BuiltValueNullFieldError.checkNotNull(
         address2, r'LocationEntity', 'address2');
-    BuiltValueNullFieldError.checkNotNull(phone, r'LocationEntity', 'phone');
     BuiltValueNullFieldError.checkNotNull(city, r'LocationEntity', 'city');
     BuiltValueNullFieldError.checkNotNull(state, r'LocationEntity', 'state');
     BuiltValueNullFieldError.checkNotNull(
@@ -2584,7 +2573,6 @@ class _$LocationEntity extends LocationEntity {
         name == other.name &&
         address1 == other.address1 &&
         address2 == other.address2 &&
-        phone == other.phone &&
         city == other.city &&
         state == other.state &&
         clientId == other.clientId &&
@@ -2613,7 +2601,6 @@ class _$LocationEntity extends LocationEntity {
     _$hash = $jc(_$hash, name.hashCode);
     _$hash = $jc(_$hash, address1.hashCode);
     _$hash = $jc(_$hash, address2.hashCode);
-    _$hash = $jc(_$hash, phone.hashCode);
     _$hash = $jc(_$hash, city.hashCode);
     _$hash = $jc(_$hash, state.hashCode);
     _$hash = $jc(_$hash, clientId.hashCode);
@@ -2642,7 +2629,6 @@ class _$LocationEntity extends LocationEntity {
           ..add('name', name)
           ..add('address1', address1)
           ..add('address2', address2)
-          ..add('phone', phone)
           ..add('city', city)
           ..add('state', state)
           ..add('clientId', clientId)
@@ -2680,10 +2666,6 @@ class LocationEntityBuilder
   String? _address2;
   String? get address2 => _$this._address2;
   set address2(String? address2) => _$this._address2 = address2;
-
-  String? _phone;
-  String? get phone => _$this._phone;
-  set phone(String? phone) => _$this._phone = phone;
 
   String? _city;
   String? get city => _$this._city;
@@ -2767,7 +2749,6 @@ class LocationEntityBuilder
       _name = $v.name;
       _address1 = $v.address1;
       _address2 = $v.address2;
-      _phone = $v.phone;
       _city = $v.city;
       _state = $v.state;
       _clientId = $v.clientId;
@@ -2814,8 +2795,6 @@ class LocationEntityBuilder
                 address1, r'LocationEntity', 'address1'),
             address2: BuiltValueNullFieldError.checkNotNull(
                 address2, r'LocationEntity', 'address2'),
-            phone: BuiltValueNullFieldError.checkNotNull(
-                phone, r'LocationEntity', 'phone'),
             city: BuiltValueNullFieldError.checkNotNull(
                 city, r'LocationEntity', 'city'),
             state: BuiltValueNullFieldError.checkNotNull(
@@ -2828,7 +2807,8 @@ class LocationEntityBuilder
                 countryId, r'LocationEntity', 'countryId'),
             isShipping: BuiltValueNullFieldError.checkNotNull(
                 isShipping, r'LocationEntity', 'isShipping'),
-            customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, r'LocationEntity', 'customValue1'),
+            customValue1: BuiltValueNullFieldError.checkNotNull(
+                customValue1, r'LocationEntity', 'customValue1'),
             customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, r'LocationEntity', 'customValue2'),
             customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'LocationEntity', 'customValue3'),
             customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'LocationEntity', 'customValue4'),
