@@ -405,6 +405,20 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               entityType: invoice.entityType,
                             ),
                           ),
+                          if (client.locations.isNotEmpty)
+                            AppDropdownButton(
+                                showBlank: true,
+                                labelText: localization.location,
+                                value: invoice.locationId,
+                                onChanged: (locationId) {
+                                  viewModel.onChanged!(invoice.rebuild(
+                                      (b) => b..locationId = locationId));
+                                },
+                                items: client.locations
+                                    .map((location) => DropdownMenuItem(
+                                        value: location.id,
+                                        child: Text(location.name)))
+                                    .toList()),
                         ],
                       ),
                     ),

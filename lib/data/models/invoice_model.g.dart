@@ -382,6 +382,13 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
             specifiedType: const FullType(
                 BuiltList, const [const FullType(InvoiceScheduleEntity)])));
     }
+    value = object.locationId;
+    if (value != null) {
+      result
+        ..add('location_id')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.loadedAt;
     if (value != null) {
       result
@@ -703,6 +710,10 @@ class _$InvoiceEntitySerializer implements StructuredSerializer<InvoiceEntity> {
         case 'tax_info':
           result.taxData.replace(serializers.deserialize(value,
               specifiedType: const FullType(TaxDataEntity))! as TaxDataEntity);
+          break;
+        case 'location_id':
+          result.locationId = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'loadedAt':
           result.loadedAt = serializers.deserialize(value,
@@ -1582,6 +1593,8 @@ class _$InvoiceEntity extends InvoiceEntity {
   @override
   final TaxDataEntity taxData;
   @override
+  final String? locationId;
+  @override
   final int? loadedAt;
   @override
   final bool? isChanged;
@@ -1672,6 +1685,7 @@ class _$InvoiceEntity extends InvoiceEntity {
       required this.saveDefaultTerms,
       required this.saveDefaultFooter,
       required this.taxData,
+      this.locationId,
       this.loadedAt,
       this.isChanged,
       required this.createdAt,
@@ -1867,6 +1881,7 @@ class _$InvoiceEntity extends InvoiceEntity {
         saveDefaultTerms == other.saveDefaultTerms &&
         saveDefaultFooter == other.saveDefaultFooter &&
         taxData == other.taxData &&
+        locationId == other.locationId &&
         isChanged == other.isChanged &&
         createdAt == other.createdAt &&
         updatedAt == other.updatedAt &&
@@ -1948,6 +1963,7 @@ class _$InvoiceEntity extends InvoiceEntity {
     _$hash = $jc(_$hash, saveDefaultTerms.hashCode);
     _$hash = $jc(_$hash, saveDefaultFooter.hashCode);
     _$hash = $jc(_$hash, taxData.hashCode);
+    _$hash = $jc(_$hash, locationId.hashCode);
     _$hash = $jc(_$hash, isChanged.hashCode);
     _$hash = $jc(_$hash, createdAt.hashCode);
     _$hash = $jc(_$hash, updatedAt.hashCode);
@@ -2030,6 +2046,7 @@ class _$InvoiceEntity extends InvoiceEntity {
           ..add('saveDefaultTerms', saveDefaultTerms)
           ..add('saveDefaultFooter', saveDefaultFooter)
           ..add('taxData', taxData)
+          ..add('locationId', locationId)
           ..add('loadedAt', loadedAt)
           ..add('isChanged', isChanged)
           ..add('createdAt', createdAt)
@@ -2341,6 +2358,10 @@ class InvoiceEntityBuilder
       _$this._taxData ??= new TaxDataEntityBuilder();
   set taxData(TaxDataEntityBuilder? taxData) => _$this._taxData = taxData;
 
+  String? _locationId;
+  String? get locationId => _$this._locationId;
+  set locationId(String? locationId) => _$this._locationId = locationId;
+
   int? _loadedAt;
   int? get loadedAt => _$this._loadedAt;
   set loadedAt(int? loadedAt) => _$this._loadedAt = loadedAt;
@@ -2456,6 +2477,7 @@ class InvoiceEntityBuilder
       _saveDefaultTerms = $v.saveDefaultTerms;
       _saveDefaultFooter = $v.saveDefaultFooter;
       _taxData = $v.taxData.toBuilder();
+      _locationId = $v.locationId;
       _loadedAt = $v.loadedAt;
       _isChanged = $v.isChanged;
       _createdAt = $v.createdAt;
@@ -2564,6 +2586,7 @@ class InvoiceEntityBuilder
               saveDefaultTerms: BuiltValueNullFieldError.checkNotNull(saveDefaultTerms, r'InvoiceEntity', 'saveDefaultTerms'),
               saveDefaultFooter: BuiltValueNullFieldError.checkNotNull(saveDefaultFooter, r'InvoiceEntity', 'saveDefaultFooter'),
               taxData: taxData.build(),
+              locationId: locationId,
               loadedAt: loadedAt,
               isChanged: isChanged,
               createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'InvoiceEntity', 'createdAt'),

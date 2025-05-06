@@ -253,6 +253,7 @@ abstract class InvoiceEntity extends Object
       saveDefaultFooter: false,
       taxData: TaxDataEntity(),
       //eInvoice: BuiltMap<String, dynamic>(),
+      locationId: '',
     );
   }
 
@@ -576,6 +577,9 @@ abstract class InvoiceEntity extends Object
 
   @BuiltValueField(wireName: 'tax_info')
   TaxDataEntity get taxData;
+
+  @BuiltValueField(wireName: 'location_id')
+  String? get locationId;
 
   //@BuiltValueField(wireName: 'e_invoice')
   //BuiltMap<String, dynamic> get eInvoice;
@@ -1561,7 +1565,8 @@ abstract class InvoiceEntity extends Object
     ..nextSendDatetime = ''
     ..taxData.replace(TaxDataEntity())
     //..eInvoice.replace(BuiltMap<String, dynamic>())
-    ..subscriptionId = '';
+    ..subscriptionId = ''
+    ..locationId = '';
 
   static Serializer<InvoiceEntity> get serializer => _$invoiceEntitySerializer;
 }
