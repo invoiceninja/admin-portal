@@ -341,6 +341,7 @@ abstract class InvoiceEntity extends Object
     final settings = getClientSettings(state, client);
 
     return rebuild((b) => b
+      ..locationId = ''
       ..exchangeRate = exchangeRate
       ..taxName1 = state.company.numberOfInvoiceTaxRates >= 1 &&
               (settings.defaultTaxName1 ?? '').isNotEmpty
