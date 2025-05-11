@@ -526,11 +526,20 @@ abstract class ExpenseEntity extends Object
       case ExpenseFields.taxName2:
         response = expenseA!.taxName2.compareTo(expenseB!.taxName2);
         break;
+      case ExpenseFields.taxName3:
+        response = expenseA!.taxName3.compareTo(expenseB!.taxName3);
+        break;
       case ExpenseFields.taxRate1:
         response = expenseA!.taxRate1.compareTo(expenseB!.taxRate1);
         break;
       case ExpenseFields.taxRate2:
         response = expenseA!.taxRate2.compareTo(expenseB!.taxRate2);
+        break;
+      case ExpenseFields.taxRate3:
+        response = expenseA!.taxRate3.compareTo(expenseB!.taxRate3);
+        break;
+      case ExpenseFields.taxAmount:
+        response = expenseA!.taxAmount.compareTo(expenseB!.taxAmount);
         break;
       case ExpenseFields.invoiceId:
         final invoiceA = invoiceMap[expenseA!.invoiceId] ?? InvoiceEntity();
