@@ -125,6 +125,7 @@ class _CustomFieldState extends State<CustomField> {
         );
       case kFieldTypeDropdown:
         return AppDropdownButton<String>(
+          showBlank: true,
           value: _value,
           items: fieldOptions
               .map((option) => DropdownMenuItem<String>(
