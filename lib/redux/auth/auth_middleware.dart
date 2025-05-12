@@ -209,6 +209,7 @@ Middleware<AppState> _createOAuthSignUpRequest(AuthRepository repository) {
       referralCode: state.authState.referralCode,
       firstName: action.firstName,
       lastName: action.lastName,
+      email: action.email,
     )
         .then((data) {
       _saveAuthLocal(kAppProductionUrl);

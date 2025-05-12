@@ -58,6 +58,7 @@ class AuthRepository {
     required String provider,
     String? firstName = '',
     String? lastName = '',
+    String? email = '',
   }) async {
     final credentials = {
       'terms_of_service': true,
@@ -69,6 +70,7 @@ class AuthRepository {
       'platform': getPlatformName(),
       'first_name': firstName,
       'last_name': lastName,
+      'email': email,
     };
 
     return sendRequest(
