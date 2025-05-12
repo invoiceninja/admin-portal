@@ -45,6 +45,11 @@ void loadEmailTemplate({
     template = 'email_template_$template';
   }
 
+  // Fix for difference in template name
+  if (template == 'email_template_quote_reminder1') {
+    template = 'email_quote_template_reminder1';
+  }
+
   webClient
       .post(url, credentials.token,
           data: json.encode({

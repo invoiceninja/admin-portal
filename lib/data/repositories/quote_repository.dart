@@ -68,7 +68,10 @@ class QuoteRepository {
         data: json.encode({
           'ids': ids,
           'action': action.toApiParam(),
-          if (template != null) 'email_type': 'email_template_$template',
+          if (template != null)
+            'email_type': (template == EmailTemplate.quote_reminder1)
+                ? 'email_quote_template_reminder1'
+                : 'email_template_$template',
         }));
 
     final InvoiceListResponse invoiceResponse =
@@ -133,7 +136,9 @@ class QuoteRepository {
     final data = {
       'entity': '${EntityType.quote.apiValue}',
       'entity_id': quote.id,
-      'template': 'email_template_$template',
+      'template': (template == EmailTemplate.quote_reminder1)
+          ? 'email_quote_template_reminder1'
+          : 'email_template_$template',
       'body': body,
       'subject': subject,
       'cc_email': ccEmail,
