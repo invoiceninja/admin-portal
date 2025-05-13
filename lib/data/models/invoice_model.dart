@@ -1047,7 +1047,7 @@ abstract class InvoiceEntity extends Object
               actions.add(EntityAction.bulkSendEmail);
             } else {
               actions.add(EntityAction.sendEmail);
-              if (isUnpaid) {
+              if (isUnpaid && state.isProPlan) {
                 actions.add(EntityAction.schedule);
               }
             }
