@@ -933,6 +933,7 @@ const List<String> kLanguages = [
   'sv',
   'th',
   'tr_TR',
+  'vi',
   'zh_TW',
 ];
 
