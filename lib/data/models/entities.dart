@@ -66,6 +66,7 @@ class EntityType extends EnumClass {
   static const EntityType dateFormat = _$dateFormat;
   static const EntityType font = _$font;
   static const EntityType purchaseOrder = _$purchaseOrder;
+  static const EntityType location = _$location;
 
   String get plural {
     if (this == EntityType.expenseCategory) {
@@ -633,6 +634,12 @@ class CustomFieldType {
   static const String contact2 = 'contact2';
   static const String contact3 = 'contact3';
   static const String contact4 = 'contact4';
+
+  static const String location = 'location';
+  static const String location1 = 'location1';
+  static const String location2 = 'location2';
+  static const String location3 = 'location3';
+  static const String location4 = 'location4';
 
   static const String vendorContact = 'vendor_contact';
   static const String vendorContact1 = 'vendor_contact1';

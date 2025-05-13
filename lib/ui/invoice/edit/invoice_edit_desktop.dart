@@ -251,8 +251,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
             !item.isEmpty && item.typeId == InvoiceItemEntity.TYPE_TASK)
         .length;
 
-    final showTasksTable = (invoice.hasTasks || company.showTasksTable) &&
-        (invoice.isInvoice || invoice.isQuote);
+    final showTasksTable = invoice.hasTasks ||
+        (company.showTasksTable && (invoice.isInvoice || invoice.isQuote));
 
     final settings = getClientSettings(state, client);
     final terms = entityType == EntityType.quote
@@ -342,6 +342,20 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                 ),
                               ),
                             ),
+                          if (client.locations.isNotEmpty)
+                            AppDropdownButton(
+                                showBlank: true,
+                                labelText: localization.location,
+                                value: invoice.locationId,
+                                onChanged: (locationId) {
+                                  viewModel.onChanged!(invoice.rebuild(
+                                      (b) => b..locationId = locationId));
+                                },
+                                items: client.locations
+                                    .map((location) => DropdownMenuItem(
+                                        value: location.id,
+                                        child: Text(location.name)))
+                                    .toList()),
                           SizedBox(height: 4),
                           if (invoice.isPurchaseOrder)
                             Column(

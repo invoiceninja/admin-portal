@@ -335,6 +335,7 @@ class LoginVM {
             idToken: credentials.identityToken,
             firstName: credentials.givenName,
             lastName: credentials.familyName,
+            email: credentials.email,
           ));
           completer.future.then<Null>(
               (_) => _handleLogin(context: context, isSignUp: true));

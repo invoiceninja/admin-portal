@@ -91,7 +91,10 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
           selectedTemplate = EmailTemplate.invoice;
         break;
       case EntityType.quote:
-        selectedTemplate = EmailTemplate.quote;
+        if (invoice.lastSentDate.isNotEmpty)
+          selectedTemplate = EmailTemplate.quote_reminder1;
+        else
+          selectedTemplate = EmailTemplate.quote;
         break;
       case EntityType.credit:
         selectedTemplate = EmailTemplate.credit;
@@ -248,6 +251,11 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
                       DropdownMenuItem<EmailTemplate>(
                         child: Text(localization.endlessReminder),
                         value: EmailTemplate.reminder_endless,
+                      ),
+                    ] else if (invoice.isQuote) ...[
+                      DropdownMenuItem<EmailTemplate>(
+                        child: Text(localization.firstReminder),
+                        value: EmailTemplate.quote_reminder1,
                       ),
                     ],
                     if ((settings.emailSubjectCustom1 ?? '').isNotEmpty)

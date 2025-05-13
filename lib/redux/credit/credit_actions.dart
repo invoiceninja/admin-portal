@@ -102,9 +102,10 @@ class LoadCredit {
 }
 
 class LoadCredits {
-  LoadCredits({this.completer});
+  LoadCredits({this.completer, this.page = 1});
 
   final Completer? completer;
+  final int page;
 }
 
 class LoadCreditRequest implements StartLoading {}

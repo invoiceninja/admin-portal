@@ -17,6 +17,7 @@ import 'package:invoiceninja_flutter/ui/client/view/client_view_details.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_documents.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_fullwidth.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_ledger.dart';
+import 'package:invoiceninja_flutter/ui/client/view/client_view_locations.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_overview.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_system_logs.dart';
 import 'package:invoiceninja_flutter/ui/client/view/client_view_vm.dart';
@@ -51,7 +52,7 @@ class _ClientViewState extends State<ClientView>
     final state = widget.viewModel.state;
     _controller = TabController(
         vsync: this,
-        length: state.company.isModuleEnabled(EntityType.document) ? 6 : 5,
+        length: state.company.isModuleEnabled(EntityType.document) ? 7 : 6,
         initialIndex: widget.isFilter ? 0 : state.clientUIState.tabIndex);
     _controller!.addListener(_onTabChanged);
   }
@@ -130,6 +131,11 @@ class _ClientViewState extends State<ClientView>
                   : '${localization.documents} (${documents.length})',
             ),
           Tab(
+            text: client.locations.isEmpty
+                ? localization.locations
+                : '${localization.locations} (${client.locations.length})',
+          ),
+          Tab(
             text: localization.ledger,
           ),
           Tab(
@@ -161,6 +167,13 @@ class _ClientViewState extends State<ClientView>
                   RefreshIndicator(
                     onRefresh: () => viewModel.onRefreshed(context),
                     child: ClientViewDocuments(
+                      viewModel: viewModel,
+                      key: ValueKey(viewModel.client.id),
+                    ),
+                  ),
+                  RefreshIndicator(
+                    onRefresh: () => viewModel.onRefreshed(context),
+                    child: ClientViewLocations(
                       viewModel: viewModel,
                       key: ValueKey(viewModel.client.id),
                     ),

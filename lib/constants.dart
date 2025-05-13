@@ -6,7 +6,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.172';
+const String kClientVersion = '5.0.173';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -767,6 +767,7 @@ const String kPermissionViewAll = 'view_all';
 const String kPermissionEditAll = 'edit_all';
 const String kPermissionViewReports = 'view_reports';
 const String kPermissionViewDashboard = 'view_dashboard';
+const String kPermissionDisableEmails = 'disable_emails';
 
 const String kPaymentStatusPartiallyUnapplied = '-2';
 const String kPaymentStatusUnapplied = '-1';
@@ -932,6 +933,7 @@ const List<String> kLanguages = [
   'sv',
   'th',
   'tr_TR',
+  'vi',
   'zh_TW',
 ];
 
@@ -1150,3 +1152,4 @@ const String kActivityEInvoiceSuccess = '145';
 const String kActivityEInvoiceDeliverySuccess = '146';
 const String kActivityEInvoiceDeliveryFailure = '147';
 const String kActivityEExpenseCreated = '148';
+const String kActivityEmailCredit = '149';

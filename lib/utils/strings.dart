@@ -173,6 +173,8 @@ String? matchesStringsValue({
     return null;
   }
 
+  needle = needle.trim();
+
   String? match;
   haystacks!.forEach((haystack) {
     final value = matchesStringValue(

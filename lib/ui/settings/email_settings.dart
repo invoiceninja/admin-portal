@@ -480,10 +480,8 @@ class _EmailSettingsState extends State<EmailSettings> {
                         'smtp_host': company.smtpHost,
                         'smtp_port': company.smtpPort,
                         'smtp_encryption': company.smtpEncryption,
-                        if (company.smtpUsername != '********')
-                          'smtp_username': company.smtpUsername,
-                        if (company.smtpPassword != '********')
-                          'smtp_password': company.smtpPassword,
+                        'smtp_username': company.smtpUsername,
+                        'smtp_password': company.smtpPassword,
                         'smtp_local_domain': company.smtpLocalDomain,
                         'smtp_verify_peer': company.smtpVerifyPeer,
                       };

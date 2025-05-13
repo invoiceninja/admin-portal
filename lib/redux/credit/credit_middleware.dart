@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/redux/document/document_actions.dart';
 
 // Package imports:
@@ -332,13 +333,17 @@ Middleware<AppState> _loadCredit(CreditRepository repository) {
 
 Middleware<AppState> _loadCredits(CreditRepository repository) {
   return (Store<AppState> store, dynamic dynamicAction, NextDispatcher next) {
-    final action = dynamicAction as LoadCredits?;
+    final action = dynamicAction as LoadCredits;
     final state = store.state;
 
     store.dispatch(LoadCreditsRequest());
     repository
         .loadList(
-            state.credentials, state.createdAtLimit, state.filterDeletedClients)
+      state.credentials,
+      action.page,
+      state.createdAtLimit,
+      state.filterDeletedClients,
+    )
         .then((data) {
       store.dispatch(LoadCreditsSuccess(data));
 
@@ -352,14 +357,21 @@ Middleware<AppState> _loadCredits(CreditRepository repository) {
       });
       store.dispatch(LoadDocumentsSuccess(documents));
 
-      if (action!.completer != null) {
-        action.completer!.complete(documents.firstOrNull);
+      if (data.length == kMaxRecordsPerPage) {
+        store.dispatch(LoadCredits(
+          completer: action.completer,
+          page: action.page + 1,
+        ));
+      } else {
+        if (action.completer != null) {
+          action.completer!.complete(null);
+        }
+        store.dispatch(LoadProjects());
       }
-      store.dispatch(LoadProjects());
     }).catchError((Object error) {
       print(error);
       store.dispatch(LoadCreditsFailure(error));
-      if (action!.completer != null) {
+      if (action.completer != null) {
         action.completer!.completeError(error);
       }
     });

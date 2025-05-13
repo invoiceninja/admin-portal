@@ -37,9 +37,10 @@ class CreditRepository {
     return creditResponse.data;
   }
 
-  Future<BuiltList<InvoiceEntity>> loadList(
-      Credentials credentials, int createdAt, bool filterDeleted) async {
-    String url = credentials.url + '/credits?created_at=$createdAt';
+  Future<BuiltList<InvoiceEntity>> loadList(Credentials credentials, int page,
+      int createdAt, bool filterDeleted) async {
+    String url = credentials.url +
+        '/credits?per_page=$kMaxRecordsPerPage&page=$page&created_at=$createdAt';
 
     if (filterDeleted) {
       url += '&filter_deleted_clients=true';

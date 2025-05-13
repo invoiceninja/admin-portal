@@ -476,6 +476,24 @@ class _ClientPortalState extends State<ClientPortal>
                         onChanged: (value) => viewModel.onSettingsChanged(
                             settings.rebuild(
                                 (b) => b..acceptPurchaseOrderNumber = value))),
+                  BoolDropdownButton(
+                      label: localization.enableClientProfileUpdate,
+                      helpLabel: localization.enableClientProfileUpdateHelp,
+                      value: settings.enableClientProfileUpdate,
+                      iconData: Icons.edit_square,
+                      onChanged: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild(
+                              (b) => b..enableClientProfileUpdate = value))),
+                  BoolDropdownButton(
+                      label: localization.preferenceProductNotesForHtmlView,
+                      helpLabel:
+                          localization.preferenceProductNotesForHtmlViewHelp,
+                      value: settings.preferenceProductNotesForHtmlView,
+                      iconData: Icons.mobile_friendly,
+                      onChanged: (value) => viewModel.onSettingsChanged(
+                          settings.rebuild((b) =>
+                              b..preferenceProductNotesForHtmlView = value))),
+                  /*
                   if (!state.settingsUIState.isFiltered)
                     BoolDropdownButton(
                       label: localization.storefront,
@@ -485,6 +503,7 @@ class _ClientPortalState extends State<ClientPortal>
                       onChanged: (value) => viewModel.onCompanyChanged(
                           company.rebuild((b) => b..enableShopApi = value)),
                     ),
+                  */
                   if (!state.isDemo && state.company.enableShopApi) ...[
                     SizedBox(height: 16),
                     ListDivider(),
