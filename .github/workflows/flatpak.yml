@@ -63,13 +63,13 @@ jobs:
           mv Hashes.txt "$baseDir"/
 
       - name: Upload app archive to workflow
-        uses: actions/upload-artifact@v3.1.3
+        uses: actions/upload-artifact@v3.0.2
         with:
           name: Invoice-Ninja-Archive
           path: Invoice-Ninja-Linux-Portable.tar.gz
 
       - name: Upload app archive hash to workflow
-        uses: actions/upload-artifact@v3.1.3
+        uses: actions/upload-artifact@v3.0.2
         with:
           name: Invoice-Ninja-Hash
           path: Hashes.txt
