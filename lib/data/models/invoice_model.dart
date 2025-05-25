@@ -1719,6 +1719,23 @@ abstract class InvoiceItemEntity
   @BuiltValueField(wireName: 'tax_id')
   String get taxCategoryId;
 
+  double netTotal(InvoiceEntity invoice, int precision) =>
+      total(invoice, precision) - taxAmount(invoice, precision);
+
+  double total(InvoiceEntity invoice, int precision) {
+    var total = quantity * cost;
+
+    if (discount != 0) {
+      if (invoice.isAmountDiscount) {
+        total = total - discount;
+      } else {
+        total = total - (discount / 100 * total);
+      }
+    }
+
+    return round(total, precision);
+  }
+
   double taxAmount(InvoiceEntity invoice, int precision) {
     double calculateTaxAmount(double rate) {
       double taxAmount;
@@ -1745,23 +1762,6 @@ abstract class InvoiceItemEntity
   InvoiceItemEntity get clone => rebuild((b) => b
     ..expenseId = ''
     ..taskId = '');
-
-  double netTotal(InvoiceEntity invoice, int precision) =>
-      total(invoice, precision) - taxAmount(invoice, precision);
-
-  double total(InvoiceEntity invoice, int precision) {
-    var total = quantity * cost;
-
-    if (discount != 0) {
-      if (invoice.isAmountDiscount) {
-        total = total - discount;
-      } else {
-        total = total - (discount / 100 * total);
-      }
-    }
-
-    return round(total, precision);
-  }
 
   bool get isTask => typeId == TYPE_TASK;
 

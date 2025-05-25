@@ -165,7 +165,10 @@ ReportResult lineItemReport(
             value = lineItem.notes;
             break;
           case InvoiceItemReportFields.total:
-            value = lineItem.total(invoice, precision);
+            value = invoice.usesInclusiveTaxes
+                ? lineItem.total(invoice, precision)
+                : lineItem.total(invoice, precision) +
+                    lineItem.taxAmount(invoice, precision);
             break;
           case InvoiceItemReportFields.productKey:
             value = lineItem.productKey;
@@ -201,7 +204,9 @@ ReportResult lineItemReport(
             value = lineItem.taxAmount(invoice, precision);
             break;
           case InvoiceItemReportFields.netTotal:
-            value = lineItem.netTotal(invoice, precision);
+            value = invoice.usesInclusiveTaxes
+                ? lineItem.netTotal(invoice, precision)
+                : lineItem.total(invoice, precision);
             break;
           case InvoiceItemReportFields.currency:
             value =

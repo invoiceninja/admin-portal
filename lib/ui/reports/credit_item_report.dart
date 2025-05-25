@@ -165,7 +165,10 @@ ReportResult lineItemReport(
             value = lineItem.notes;
             break;
           case CreditItemReportFields.total:
-            value = lineItem.total(credit, precision);
+            value = credit.usesInclusiveTaxes
+                ? lineItem.total(credit, precision)
+                : lineItem.total(credit, precision) +
+                    lineItem.taxAmount(credit, precision);
             break;
           case CreditItemReportFields.productKey:
             value = lineItem.productKey;
@@ -201,7 +204,9 @@ ReportResult lineItemReport(
             value = lineItem.taxAmount(credit, precision);
             break;
           case CreditItemReportFields.netTotal:
-            value = lineItem.netTotal(credit, precision);
+            value = credit.usesInclusiveTaxes
+                ? lineItem.netTotal(credit, precision)
+                : lineItem.total(credit, precision);
             break;
           case CreditItemReportFields.currency:
             value =
