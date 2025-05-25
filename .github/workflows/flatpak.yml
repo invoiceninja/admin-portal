@@ -19,7 +19,7 @@ jobs:
     env:
       api_secret: ${{ secrets.api_secret }}
       commit_secret: ${{ secrets.commit_secret }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -63,19 +63,19 @@ jobs:
           mv Hashes.txt "$baseDir"/
 
       - name: Upload app archive to workflow
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Invoice-Ninja-Archive
           path: Invoice-Ninja-Linux-Portable.tar.gz
 
       - name: Upload app archive hash to workflow
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Invoice-Ninja-Hash
           path: Hashes.txt
 
       - name: Download artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           path: artifacts
 
