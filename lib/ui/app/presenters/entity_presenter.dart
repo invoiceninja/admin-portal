@@ -168,6 +168,8 @@ class EntityPresenter {
       'documents',
       'applied',
       'refunded',
+      'profit',
+      'markup',
     ].contains(field);
 
     return value;
