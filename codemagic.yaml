@@ -29,7 +29,6 @@ workflows:
       - cd . && flutter packages pub get
       - flutter config --enable-linux-desktop
       - sudo snap refresh snapcraft --channel=7.x/stable
-      - snapcraft login --with snapcraft_credentials
       - snapcraft whoami
       - snapcraft snap --output invoiceninja.snap
       - snapcraft upload invoiceninja.snap --release stable
