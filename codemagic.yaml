@@ -32,6 +32,7 @@ workflows:
       - cd . && flutter packages pub get
       - flutter config --enable-linux-desktop
       - flutter build linux --release
+      - sudo snap install snapcraft --classic
       - sudo snap refresh snapcraft --channel=7.x/stable
       - snapcraft whoami
       - SNAPCRAFT_BUILD_ENVIRONMENT=host snapcraft
