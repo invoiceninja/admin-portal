@@ -20,6 +20,8 @@ workflows:
           source: true
     scripts:
       - |
+        sudo apt-get update
+        sudo apt-get install -y libcurl4-openssl-dev        
         flutter doctor
         flutter version 3.19.6
         cp $FCI_BUILD_DIR/android/app/build.gradle.prod $FCI_BUILD_DIR/android/app/build.gradle

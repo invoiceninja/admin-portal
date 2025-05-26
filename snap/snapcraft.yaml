@@ -42,6 +42,7 @@ parts:
     plugin: dump
     source: build/linux/x64/release/bundle
     stage-packages:
+      - libcurl4
       - libgtk-3-0
       - libglib2.0-0
       - libstdc++6
