@@ -21,24 +21,47 @@ With Invoice Ninja, all your earnings, expenses, clients and vendors are stored 
 
 All of these features combine to help you receive the money you deserve and reduce the amount of time you spend on repetitive invoicing tasks. Spend less time on paperwork and more time at your craft."
 confinement: strict
-base: core18
+base: core22
 grade: stable
 
 apps:
   invoiceninja:
     command: invoiceninja
-    extensions: [flutter-stable]
     plugs:
       - network
-      - home
+      - network-bind
       - desktop
+      - desktop-legacy
+      - wayland
+      - x11
+      - unity7
+      - home
 
 parts:
   invoiceninja:
-    source: .
-    plugin: flutter
-    flutter-target: lib/main.dart
-    build-packages:
-      - libcurl4-openssl-dev
-    organize:
-      invoiceninja.desktop: snap/gui/invoiceninja.desktop
+    plugin: dump
+    source: build/linux/x64/release/bundle
+    stage-packages:
+      - libgtk-3-0
+      - libglib2.0-0
+      - libstdc++6
+      - libgdk-pixbuf2.0-0
+      - libx11-6
+      - libxcb1
+      - libxcomposite1
+      - libxdamage1
+      - libxext6
+      - libxfixes3
+      - libxi6
+      - libxrandr2
+      - libxrender1
+      - libxss1
+      - libxtst6
+      - libnss3
+      - libatk1.0-0
+      - libatk-bridge2.0-0
+      - libcups2
+      - libpango-1.0-0
+      - libpangocairo-1.0-0
+      - libgdk-pixbuf2.0-0
+      - libgtk-3-0
