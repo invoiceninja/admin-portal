@@ -21,6 +21,7 @@ workflows:
     scripts:
       - |
         flutter doctor
+        flutter version 3.19.6
         cp $FCI_BUILD_DIR/android/app/build.gradle.prod $FCI_BUILD_DIR/android/app/build.gradle
         cp $FCI_BUILD_DIR/lib/.env.dart.example $FCI_BUILD_DIR/lib/.env.dart
         echo "const FLUTTER_VERSION = const <String, String>" > $FCI_BUILD_DIR/lib/flutter_version.dart

@@ -37,7 +37,6 @@ parts:
   invoiceninja:
     source: .
     plugin: flutter
-    flutter-channel: "3.19/stable"
     flutter-target: lib/main.dart
     organize:
       invoiceninja.desktop: snap/gui/invoiceninja.desktop
