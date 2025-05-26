@@ -35,7 +35,7 @@ workflows:
       - sudo snap install snapcraft --classic
       - sudo snap refresh snapcraft --channel=7.x/stable
       - snapcraft whoami
-      - SNAPCRAFT_BUILD_ENVIRONMENT=host snapcraft
+      - SNAPCRAFT_BUILD_ENVIRONMENT=host sudo snapcraft -v
       - mv *.snap invoiceninja.snap
       - snapcraft upload invoiceninja.snap --release=stable
     artifacts:
