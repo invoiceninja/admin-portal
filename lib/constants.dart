@@ -1153,3 +1153,4 @@ const String kActivityEInvoiceDeliverySuccess = '146';
 const String kActivityEInvoiceDeliveryFailure = '147';
 const String kActivityEExpenseCreated = '148';
 const String kActivityEmailCredit = '149';
+const String kActivityAccountDeleted = '150';
