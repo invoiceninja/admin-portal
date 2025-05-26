@@ -34,7 +34,7 @@ workflows:
       - flutter build linux --release
       - sudo snap refresh snapcraft --channel=7.x/stable
       - snapcraft whoami
-      - snapcraft
+      - SNAPCRAFT_BUILD_ENVIRONMENT=host snapcraft
       - mv *.snap invoiceninja.snap
       - snapcraft upload invoiceninja.snap --release=stable
     artifacts:
