@@ -36,6 +36,8 @@ apps:
       - x11
       - unity7
       - home
+      - opengl
+      - accessibility
 
 parts:
   invoiceninja:
@@ -66,3 +68,8 @@ parts:
       - libpangocairo-1.0-0
       - libgdk-pixbuf2.0-0
       - libgtk-3-0
+      - libgl1
+      - libgl1-mesa-glx
+      - libegl1
+      - libegl1-mesa
+      - libgles2
