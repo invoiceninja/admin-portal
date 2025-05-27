@@ -205,7 +205,7 @@ void main({bool isTesting = false}) async {
         options.release = const String.fromEnvironment('SENTRY_RELEASE',
             defaultValue: kClientVersion);
         options.dist = kClientVersion;
-        options.beforeSend = (SentryEvent event, {dynamic hint}) {
+        options.beforeSend = (SentryEvent event, Hint hint) {
           final state = store.state;
           final account = state.account;
           final reportErrors = account.reportErrors;
@@ -214,7 +214,7 @@ void main({bool isTesting = false}) async {
             return null;
           }
 
-          event = event.copyWith(
+          return event.copyWith(
             environment: '${store.state.environment}'.split('.').last,
             /*
             extra: <String, dynamic>{
@@ -223,8 +223,6 @@ void main({bool isTesting = false}) async {
             },
             */
           );
-
-          return event;
         };
       },
       appRunner: () => runApp(InvoiceNinjaApp(store: store)),

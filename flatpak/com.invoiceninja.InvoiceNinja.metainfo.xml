@@ -50,7 +50,19 @@
   </screenshots>
   <content_rating type="oars-1.1"/>
   <releases>
-    <release version="5.0.174" date="2025-05-25"/>
+    <release version="5.0.175" date="2025-05-27"/>
+    <release version="5.0.174" date="2025-05-25">
+      - Added: Client locations 
+      - Added: Settings &gt; User Management &gt; Permissions &gt; Send Emails 
+      - Added: Settings &gt; Client Portal &gt; Allow clients to update their profile 
+      - Added: Settings &gt; Client Portal &gt; Display HTML version of entity when viewing on mobile
+      - Added: Support manually sending quote reminders 
+      - Fixed: Incorrect total and net total in invoice items reports with exclusive taxes #714
+      - Fixed: Expenses tax amount column isn’t sortable #711
+      - Fixed: Show option to clear custom dropdown field #706
+      - Fixed: Pagination issue when loading credits 
+      - Fixed: Send test email fails once SMTP credentials are saved 
+    </release>
     <release version="5.0.173" date="2025-05-13"/>
     <release version="5.0.172" date="2024-12-03"/>
     <release version="5.0.171" date="2024-09-29"/>
