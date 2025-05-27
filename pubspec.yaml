@@ -1,6 +1,6 @@
 name: invoiceninja_flutter
 description: Client for Invoice Ninja
-version: 5.0.175+175
+version: 5.0.176+176
 homepage: https://invoiceninja.com
 documentation: https://invoiceninja.github.io
 publish_to: none
@@ -37,15 +37,15 @@ dependencies:
   url_launcher_ios: ^6.3.2
   share_plus: ^7.1.0
   intl: 0.17.0
-  flutter_slidable: ^3.0.0
-  charts_flutter: ^0.12.0
+  flutter_slidable: ^3.1.2
+  nimble_charts: ^0.5.0-beta
   qr_flutter: # https://github.com/theyakka/qr.flutter/issues/174#issuecomment-1084235757
     git:
       url: https://github.com/theyakka/qr.flutter.git
   local_auth: ^2.1.5
-  sentry_flutter: ^8.14.2
+  sentry_flutter: ^7.16.0
   image_picker: ^1.0.4
-  flutter_colorpicker: ^1.0.3
+  flutter_colorpicker: ^1.1.0
   flutter_json_viewer: ^1.0.1
   webview_flutter: ^4.4.1
   timeago: ^3.1.0
@@ -57,7 +57,7 @@ dependencies:
       ref: master      
   version: ^3.0.2
   # flutter_launcher_icons: ^0.9.1
-  overflow_view: ^0.3.1
+  overflow_view: ^0.5.0
   flutter_styled_toast: ^2.0.0
   permission_handler: ^11.0.1 # Disables Windows support to fix crash
   file_picker: ^5.2.5
@@ -91,26 +91,33 @@ dependency_overrides:
   intl: any
   navigation_builder: ^0.0.3
   states_rebuilder: ^6.3.0
+  win32: ^5.5.1
+  image: ^4.5.4
   super_editor:
     git:
       url: https://github.com/superlistapp/super_editor
       path: super_editor
-      ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
+      #ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
+      ref: stable
   super_editor_markdown:
     git:
       url: https://github.com/superlistapp/super_editor
       path: super_editor_markdown
-      ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
+      #ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
+      ref: stable
   super_text_layout:
     git:
       url: https://github.com/superlistapp/super_editor
       path: super_text_layout
-      ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
+      #ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
+      ref: stable
   attributed_text:
     git:
       url: https://github.com/superlistapp/super_editor
       path: attributed_text
-      ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
+      #ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
+      ref: stable
+  http: ^1.2.2
 
 dev_dependencies:
   flutter_driver:

@@ -32,7 +32,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.19.6'
+          flutter-version: '3.32.0'
           #channel: 'stable'
 
       - name: Init Flutter
@@ -86,7 +86,7 @@ jobs:
           draft: false
           prerelease: false
           title: "Latest Release"
-          automatic_release_tag: "v5.0.175"
+          automatic_release_tag: "v5.0.176"
           files: |
             ${{ github.workspace }}/artifacts/Invoice-Ninja-Archive
             ${{ github.workspace }}/artifacts/Invoice-Ninja-Hash

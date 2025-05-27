@@ -461,7 +461,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                               ? accentColor
                               : const Color(0xFF5dabf4),
                           scaffoldBackgroundColor: const Color(0xFFF3F4F6),
-                          tabBarTheme: TabBarTheme(
+                          tabBarTheme: TabBarThemeData(
                             labelColor:
                                 hasAccentColor ? Colors.white : Colors.black,
                             unselectedLabelColor: hasAccentColor

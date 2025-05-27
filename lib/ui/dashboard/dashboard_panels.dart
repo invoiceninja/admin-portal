@@ -5,8 +5,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:charts_common/common.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:nimble_charts/flutter.dart' as charts;
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
@@ -39,6 +38,7 @@ import 'package:invoiceninja_flutter/ui/dashboard/dashboard_screen_vm.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:invoiceninja_flutter/utils/platforms.dart';
+import 'package:nimble_charts/flutter.dart';
 
 enum DashboardSections {
   messages,

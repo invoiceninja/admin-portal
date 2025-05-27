@@ -50,6 +50,7 @@
   </screenshots>
   <content_rating type="oars-1.1"/>
   <releases>
+    <release version="5.0.176" date="2025-05-27"/>
     <release version="5.0.175" date="2025-05-27"/>
     <release version="5.0.174" date="2025-05-25">
       - Added: Client locations 

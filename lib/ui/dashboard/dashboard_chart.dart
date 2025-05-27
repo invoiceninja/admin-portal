@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:nimble_charts/flutter.dart' as charts;
 import 'package:flutter_redux/flutter_redux.dart';
 
 // Project imports:
