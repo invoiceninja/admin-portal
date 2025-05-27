@@ -37,7 +37,6 @@ apps:
       - unity7
       - home
       - opengl
-      - accessibility
 
 parts:
   invoiceninja:
