@@ -25,7 +25,7 @@ const String kTermsOfServiceURL = 'https://www.invoiceninja.com/terms';
 const String kBankingURL = 'https://invoiceninja.com/banking';
 const String kReferralURL = 'https://invoiceninja.com/referrals';
 const String kTransifexURL =
-    'https://www.transifex.com/invoice-ninja/invoice-ninja';
+    'https://www.transifex.com/invoice-ninja/invoice-ninja/';
 const String kWebhookSiteURL = 'https://requestcatcher.com';
 const String kZipTaxURL = 'https://zip-tax.com';
 const String kSourceCodeBackend =
