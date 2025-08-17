@@ -5,7 +5,9 @@ import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 // Package imports:
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/.env.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:redux/redux.dart';
 import 'package:msal_js/msal_js.dart';
 
@@ -75,10 +77,19 @@ class WebUtils {
     Function(String, String) succesCallback,
     Function(dynamic) failureCallback,
   ) async {
+
+    final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
+    final state = store.state;
+
+    String clientId = Config.MICROSOFT_CLIENT_ID;
+    if (state.isSelfHosted) {
+      clientId = WebUtils.getHtmlValue('microsoft-client-id') ?? '';
+    }
+
     final config = Configuration()
       ..auth = (BrowserAuthOptions()
         ..redirectUri = cleanApiUrl(apiUrl)
-        ..clientId = Config.MICROSOFT_CLIENT_ID);
+        ..clientId = clientId);
 
     final publicClientApp = PublicClientApplication(config);
     final loginRequest = PopupRequest()..scopes = ['user.read'];
