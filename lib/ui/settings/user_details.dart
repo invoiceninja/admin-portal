@@ -41,6 +41,9 @@ import 'package:invoiceninja_flutter/utils/completers.dart';
 import 'package:invoiceninja_flutter/utils/dialogs.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 
+import 'package:invoiceninja_flutter/utils/web_stub.dart'
+    if (dart.library.html) 'package:invoiceninja_flutter/utils/web.dart';
+
 class UserDetails extends StatefulWidget {
   const UserDetails({
     Key? key,
@@ -68,10 +71,13 @@ class _UserDetailsState extends State<UserDetails>
 
   List<TextEditingController> _controllers = [];
   final _debouncer = Debouncer();
+  late String _microsoftClientId;
 
   @override
   void initState() {
     super.initState();
+
+    _microsoftClientId = WebUtils.getHtmlValue('microsoft-client-id') ?? '';
 
     final settingsUIState = widget.viewModel.state.settingsUIState;
     _controller = TabController(
@@ -357,8 +363,7 @@ class _UserDetailsState extends State<UserDetails>
                     left: 18, top: 20, right: 18, bottom: 10),
                 child: Row(
                   children: [
-                    if (state.isHosted &&
-                        (!kReleaseMode || !isDesktopOS())) ...[
+                    if (!kReleaseMode || !isDesktopOS()) ...[
                       if (user.isConnectedToGoogle) ...[
                         googleButton,
                         SizedBox(width: kTableColumnGap),
@@ -372,7 +377,12 @@ class _UserDetailsState extends State<UserDetails>
                       ] else if (user.isConnectedToApple) ...[
                         appleButton,
                         SizedBox(width: kTableColumnGap),
-                      ] else ...[
+                      ] else if (kIsWeb &&
+                          state.isSelfHosted &&
+                          _microsoftClientId.isNotEmpty) ...[
+                        SizedBox(width: kTableColumnGap),
+                        microsoftButton,
+                      ] else if (state.isHosted) ...[
                         googleButton,
                         SizedBox(width: kTableColumnGap),
                         if (kIsWeb) microsoftButton else gmailButton,

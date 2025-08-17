@@ -99,11 +99,19 @@ class _LoginState extends State<LoginView> {
       }
     }
 
+    final microsoftClientId =
+        WebUtils.getHtmlValue('microsoft-client-id') ?? '';
+
     _loginTypes = [
       LOGIN_TYPE_EMAIL,
-      if (!kReleaseMode || supportsGoogleOAuth()) LOGIN_TYPE_GOOGLE,
-      if (!kReleaseMode || supportsMicrosoftOAuth()) LOGIN_TYPE_MICROSOFT,
-      if (!kReleaseMode || supportsAppleOAuth()) LOGIN_TYPE_APPLE,
+      if (!kReleaseMode || (!_isSelfHosted && supportsGoogleOAuth()))
+        LOGIN_TYPE_GOOGLE,
+      if (!kReleaseMode ||
+          ((!_isSelfHosted || microsoftClientId.isNotEmpty) &&
+              supportsMicrosoftOAuth()))
+        LOGIN_TYPE_MICROSOFT,
+      if (!kReleaseMode || (!_isSelfHosted && supportsAppleOAuth()))
+        LOGIN_TYPE_APPLE,
     ];
 
     if (!kReleaseMode && Config.TEST_EMAIL.isNotEmpty) {
@@ -434,7 +442,7 @@ class _LoginState extends State<LoginView> {
                             ),
                           ),
                         ],
-                        if (!_isSelfHosted && _loginTypes!.length > 1) ...[
+                        if (_loginTypes!.length > 1) ...[
                           RuledText(localization!.selectMethod),
                           Padding(
                             padding: const EdgeInsets.only(bottom: 20),

@@ -252,10 +252,10 @@ class _EmailSettingsState extends State<EmailSettings> {
                     DropdownMenuItem(
                         child: Text('Gmail'),
                         value: SettingsEntity.EMAIL_SENDING_METHOD_GMAIL),
-                    DropdownMenuItem(
-                        child: Text('Microsoft'),
-                        value: SettingsEntity.EMAIL_SENDING_METHOD_MICROSOFT),
                   ],
+                  DropdownMenuItem(
+                      child: Text('Microsoft'),
+                      value: SettingsEntity.EMAIL_SENDING_METHOD_MICROSOFT),
                   DropdownMenuItem(
                       child: Text('Postmark'),
                       value: SettingsEntity.EMAIL_SENDING_METHOD_POSTMARK),
