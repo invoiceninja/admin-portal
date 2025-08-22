@@ -118,7 +118,7 @@ List<ChartDataGroup> _chartInvoices({
 
     if (!invoice.isSent ||
         invoice.isDeleted! ||
-        invoice.isCancelledOrReversed ||
+        invoice.isCancelledOrReversedOrReplaced ||
         client.isDeleted! ||
         date.isEmpty) {
       // skip it

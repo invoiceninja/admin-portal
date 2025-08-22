@@ -318,6 +318,7 @@ const String kInvoiceStatusPartial = '3';
 const String kInvoiceStatusPaid = '4';
 const String kInvoiceStatusCancelled = '5';
 const String kInvoiceStatusReversed = '6';
+const String kInvoiceStatusReplaced = '7';
 
 const kInvoiceStatuses = {
   kInvoiceStatusPastDue: 'past_due',
@@ -329,6 +330,7 @@ const kInvoiceStatuses = {
   kInvoiceStatusReversed: 'reversed',
   kInvoiceStatusViewed: 'viewed',
   kInvoiceStatusBounced: 'bounced',
+  kInvoiceStatusReplaced: 'replaced',
 };
 
 const String kRecurringInvoiceStatusDraft = '1';

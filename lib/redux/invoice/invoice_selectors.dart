@@ -99,7 +99,7 @@ List<String> dropdownInvoiceSelector(
     }
     return invoice.isActive &&
         invoice.isUnpaid &&
-        !invoice.isCancelledOrReversed;
+        !invoice.isCancelledOrReversedOrReplaced;
   }).toList();
 
   list.sort((invoiceAId, invoiceBId) {

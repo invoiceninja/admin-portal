@@ -66,7 +66,7 @@ List<String> dropdownQuoteSelector(
     }
     return invoice.isActive &&
         !invoice.isApproved &&
-        !invoice.isCancelledOrReversed;
+        !invoice.isCancelledOrReversedOrReplaced;
   }).toList();
 
   list.sort((invoiceAId, invoiceBId) {
