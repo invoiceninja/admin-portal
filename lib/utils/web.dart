@@ -2,7 +2,7 @@
 import 'dart:convert';
 import 'dart:html';
 import 'dart:typed_data';
-import 'dart:ui' as ui;
+import 'dart:ui_web' as ui;
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
