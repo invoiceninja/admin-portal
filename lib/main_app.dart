@@ -438,7 +438,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                             background: Colors.black,
                           ),
                           bottomAppBarTheme:
-                              BottomAppBarTheme(color: const Color(0xFF1B1C1E)),
+                              BottomAppBarThemeData(color: const Color(0xFF1B1C1E)),
                         )
                       : ThemeData(
                           useMaterial3: false,
@@ -492,7 +492,7 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                             background: Colors.white,
                           ),
                           bottomAppBarTheme:
-                              BottomAppBarTheme(color: Colors.white),
+                              BottomAppBarThemeData(color: Colors.white),
                         ),
                   title: kAppName,
                   onGenerateRoute: isMobile(context) ? null : generateRoute,
