@@ -10,10 +10,6 @@ class GoogleOAuth {
     return false;
   }
 
-  static Future<bool> requestGmailScope() async {
-    return false;
-  }
-
   /*
   static Future<bool> grantOfflineAccess(Function(String, String, String) successCallback, Function errorCallback) async {
     //
