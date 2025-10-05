@@ -223,7 +223,7 @@ void main({bool isTesting = false}) async {
             },
             */
           );
-        };        
+        };
       },
       appRunner: () => runApp(InvoiceNinjaApp(store: store)),
     );

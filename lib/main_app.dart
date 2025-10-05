@@ -437,8 +437,8 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                             primary: accentColor,
                             background: Colors.black,
                           ),
-                          bottomAppBarTheme:
-                              BottomAppBarThemeData(color: const Color(0xFF1B1C1E)),
+                          bottomAppBarTheme: BottomAppBarThemeData(
+                              color: const Color(0xFF1B1C1E)),
                         )
                       : ThemeData(
                           useMaterial3: false,

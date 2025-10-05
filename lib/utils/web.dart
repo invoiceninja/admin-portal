@@ -77,7 +77,6 @@ class WebUtils {
     Function(String, String) succesCallback,
     Function(dynamic) failureCallback,
   ) async {
-
     final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
     final state = store.state;
 

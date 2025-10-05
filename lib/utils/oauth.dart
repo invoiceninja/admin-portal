@@ -5,7 +5,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 /// - `clientId` is optional (some platforms use it, e.g. iOS/macOS).
 /// - `serverClientId` (your Web client ID) is needed if you want a reliable ID token.
 const String? kClientId = null;
-const String? kServerClientId = '640903115046-37ltu6s2j07gcqkssmf5feofj4isnsju.apps.googleusercontent.com';
+const String? kServerClientId =
+    '640903115046-37ltu6s2j07gcqkssmf5feofj4isnsju.apps.googleusercontent.com';
 
 class GoogleOAuth {
   static bool _initialized = false;
