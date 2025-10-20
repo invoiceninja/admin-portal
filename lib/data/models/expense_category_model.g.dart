@@ -8,12 +8,12 @@ part of 'expense_category_model.dart';
 
 Serializer<ExpenseCategoryListResponse>
     _$expenseCategoryListResponseSerializer =
-    new _$ExpenseCategoryListResponseSerializer();
+    _$ExpenseCategoryListResponseSerializer();
 Serializer<ExpenseCategoryItemResponse>
     _$expenseCategoryItemResponseSerializer =
-    new _$ExpenseCategoryItemResponseSerializer();
+    _$ExpenseCategoryItemResponseSerializer();
 Serializer<ExpenseCategoryEntity> _$expenseCategoryEntitySerializer =
-    new _$ExpenseCategoryEntitySerializer();
+    _$ExpenseCategoryEntitySerializer();
 
 class _$ExpenseCategoryListResponseSerializer
     implements StructuredSerializer<ExpenseCategoryListResponse> {
@@ -43,7 +43,7 @@ class _$ExpenseCategoryListResponseSerializer
   ExpenseCategoryListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ExpenseCategoryListResponseBuilder();
+    final result = ExpenseCategoryListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -91,7 +91,7 @@ class _$ExpenseCategoryItemResponseSerializer
   ExpenseCategoryItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ExpenseCategoryItemResponseBuilder();
+    final result = ExpenseCategoryItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -179,7 +179,7 @@ class _$ExpenseCategoryEntitySerializer
   ExpenseCategoryEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ExpenseCategoryEntityBuilder();
+    final result = ExpenseCategoryEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -240,13 +240,9 @@ class _$ExpenseCategoryListResponse extends ExpenseCategoryListResponse {
 
   factory _$ExpenseCategoryListResponse(
           [void Function(ExpenseCategoryListResponseBuilder)? updates]) =>
-      (new ExpenseCategoryListResponseBuilder()..update(updates))._build();
+      (ExpenseCategoryListResponseBuilder()..update(updates))._build();
 
-  _$ExpenseCategoryListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'ExpenseCategoryListResponse', 'data');
-  }
-
+  _$ExpenseCategoryListResponse._({required this.data}) : super._();
   @override
   ExpenseCategoryListResponse rebuild(
           void Function(ExpenseCategoryListResponseBuilder) updates) =>
@@ -254,7 +250,7 @@ class _$ExpenseCategoryListResponse extends ExpenseCategoryListResponse {
 
   @override
   ExpenseCategoryListResponseBuilder toBuilder() =>
-      new ExpenseCategoryListResponseBuilder()..replace(this);
+      ExpenseCategoryListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -288,7 +284,7 @@ class ExpenseCategoryListResponseBuilder
 
   ListBuilder<ExpenseCategoryEntity>? _data;
   ListBuilder<ExpenseCategoryEntity> get data =>
-      _$this._data ??= new ListBuilder<ExpenseCategoryEntity>();
+      _$this._data ??= ListBuilder<ExpenseCategoryEntity>();
   set data(ListBuilder<ExpenseCategoryEntity>? data) => _$this._data = data;
 
   ExpenseCategoryListResponseBuilder();
@@ -304,7 +300,6 @@ class ExpenseCategoryListResponseBuilder
 
   @override
   void replace(ExpenseCategoryListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ExpenseCategoryListResponse;
   }
 
@@ -319,14 +314,17 @@ class ExpenseCategoryListResponseBuilder
   _$ExpenseCategoryListResponse _build() {
     _$ExpenseCategoryListResponse _$result;
     try {
-      _$result = _$v ?? new _$ExpenseCategoryListResponse._(data: data.build());
+      _$result = _$v ??
+          _$ExpenseCategoryListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ExpenseCategoryListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -342,13 +340,9 @@ class _$ExpenseCategoryItemResponse extends ExpenseCategoryItemResponse {
 
   factory _$ExpenseCategoryItemResponse(
           [void Function(ExpenseCategoryItemResponseBuilder)? updates]) =>
-      (new ExpenseCategoryItemResponseBuilder()..update(updates))._build();
+      (ExpenseCategoryItemResponseBuilder()..update(updates))._build();
 
-  _$ExpenseCategoryItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'ExpenseCategoryItemResponse', 'data');
-  }
-
+  _$ExpenseCategoryItemResponse._({required this.data}) : super._();
   @override
   ExpenseCategoryItemResponse rebuild(
           void Function(ExpenseCategoryItemResponseBuilder) updates) =>
@@ -356,7 +350,7 @@ class _$ExpenseCategoryItemResponse extends ExpenseCategoryItemResponse {
 
   @override
   ExpenseCategoryItemResponseBuilder toBuilder() =>
-      new ExpenseCategoryItemResponseBuilder()..replace(this);
+      ExpenseCategoryItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -390,7 +384,7 @@ class ExpenseCategoryItemResponseBuilder
 
   ExpenseCategoryEntityBuilder? _data;
   ExpenseCategoryEntityBuilder get data =>
-      _$this._data ??= new ExpenseCategoryEntityBuilder();
+      _$this._data ??= ExpenseCategoryEntityBuilder();
   set data(ExpenseCategoryEntityBuilder? data) => _$this._data = data;
 
   ExpenseCategoryItemResponseBuilder();
@@ -406,7 +400,6 @@ class ExpenseCategoryItemResponseBuilder
 
   @override
   void replace(ExpenseCategoryItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ExpenseCategoryItemResponse;
   }
 
@@ -421,14 +414,17 @@ class ExpenseCategoryItemResponseBuilder
   _$ExpenseCategoryItemResponse _build() {
     _$ExpenseCategoryItemResponse _$result;
     try {
-      _$result = _$v ?? new _$ExpenseCategoryItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$ExpenseCategoryItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ExpenseCategoryItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -462,7 +458,7 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
 
   factory _$ExpenseCategoryEntity(
           [void Function(ExpenseCategoryEntityBuilder)? updates]) =>
-      (new ExpenseCategoryEntityBuilder()..update(updates))._build();
+      (ExpenseCategoryEntityBuilder()..update(updates))._build();
 
   _$ExpenseCategoryEntity._(
       {required this.name,
@@ -475,20 +471,7 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        name, r'ExpenseCategoryEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(
-        color, r'ExpenseCategoryEntity', 'color');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'ExpenseCategoryEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'ExpenseCategoryEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'ExpenseCategoryEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'ExpenseCategoryEntity', 'id');
-  }
-
+      : super._();
   @override
   ExpenseCategoryEntity rebuild(
           void Function(ExpenseCategoryEntityBuilder) updates) =>
@@ -496,7 +479,7 @@ class _$ExpenseCategoryEntity extends ExpenseCategoryEntity {
 
   @override
   ExpenseCategoryEntityBuilder toBuilder() =>
-      new ExpenseCategoryEntityBuilder()..replace(this);
+      ExpenseCategoryEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -620,7 +603,6 @@ class ExpenseCategoryEntityBuilder
 
   @override
   void replace(ExpenseCategoryEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ExpenseCategoryEntity;
   }
 
@@ -634,23 +616,24 @@ class ExpenseCategoryEntityBuilder
 
   _$ExpenseCategoryEntity _build() {
     final _$result = _$v ??
-        new _$ExpenseCategoryEntity._(
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'ExpenseCategoryEntity', 'name'),
-            color: BuiltValueNullFieldError.checkNotNull(
-                color, r'ExpenseCategoryEntity', 'color'),
-            isChanged: isChanged,
-            createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, r'ExpenseCategoryEntity', 'createdAt'),
-            updatedAt: BuiltValueNullFieldError.checkNotNull(
-                updatedAt, r'ExpenseCategoryEntity', 'updatedAt'),
-            archivedAt: BuiltValueNullFieldError.checkNotNull(
-                archivedAt, r'ExpenseCategoryEntity', 'archivedAt'),
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            id: BuiltValueNullFieldError.checkNotNull(
-                id, r'ExpenseCategoryEntity', 'id'));
+        _$ExpenseCategoryEntity._(
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'ExpenseCategoryEntity', 'name'),
+          color: BuiltValueNullFieldError.checkNotNull(
+              color, r'ExpenseCategoryEntity', 'color'),
+          isChanged: isChanged,
+          createdAt: BuiltValueNullFieldError.checkNotNull(
+              createdAt, r'ExpenseCategoryEntity', 'createdAt'),
+          updatedAt: BuiltValueNullFieldError.checkNotNull(
+              updatedAt, r'ExpenseCategoryEntity', 'updatedAt'),
+          archivedAt: BuiltValueNullFieldError.checkNotNull(
+              archivedAt, r'ExpenseCategoryEntity', 'archivedAt'),
+          isDeleted: isDeleted,
+          createdUserId: createdUserId,
+          assignedUserId: assignedUserId,
+          id: BuiltValueNullFieldError.checkNotNull(
+              id, r'ExpenseCategoryEntity', 'id'),
+        );
     replace(_$result);
     return _$result;
   }

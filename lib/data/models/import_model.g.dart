@@ -31,12 +31,12 @@ ImportType _$typeValueOf(String name) {
     case 'zoho':
       return _$zoho;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
 final BuiltSet<ImportType> _$typeValues =
-    new BuiltSet<ImportType>(const <ImportType>[
+    BuiltSet<ImportType>(const <ImportType>[
   _$csv,
   _$json,
   _$freshbooks,
@@ -124,12 +124,12 @@ ExportType _$exportValueOf(String name) {
     case 'user_sales':
       return _$user_sales;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
 final BuiltSet<ExportType> _$exportValues =
-    new BuiltSet<ExportType>(const <ExportType>[
+    BuiltSet<ExportType>(const <ExportType>[
   _$activities,
   _$clients,
   _$client_contacts,
@@ -157,16 +157,16 @@ final BuiltSet<ExportType> _$exportValues =
 ]);
 
 Serializer<PreImportResponse> _$preImportResponseSerializer =
-    new _$PreImportResponseSerializer();
+    _$PreImportResponseSerializer();
 Serializer<PreImportResponseEntityDetails>
     _$preImportResponseEntityDetailsSerializer =
-    new _$PreImportResponseEntityDetailsSerializer();
+    _$PreImportResponseEntityDetailsSerializer();
 Serializer<ImportRequest> _$importRequestSerializer =
-    new _$ImportRequestSerializer();
+    _$ImportRequestSerializer();
 Serializer<ImportRequestMapping> _$importRequestMappingSerializer =
-    new _$ImportRequestMappingSerializer();
-Serializer<ImportType> _$importTypeSerializer = new _$ImportTypeSerializer();
-Serializer<ExportType> _$exportTypeSerializer = new _$ExportTypeSerializer();
+    _$ImportRequestMappingSerializer();
+Serializer<ImportType> _$importTypeSerializer = _$ImportTypeSerializer();
+Serializer<ExportType> _$exportTypeSerializer = _$ExportTypeSerializer();
 
 class _$PreImportResponseSerializer
     implements StructuredSerializer<PreImportResponse> {
@@ -196,7 +196,7 @@ class _$PreImportResponseSerializer
   PreImportResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new PreImportResponseBuilder();
+    final result = PreImportResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -255,7 +255,7 @@ class _$PreImportResponseEntityDetailsSerializer
   PreImportResponseEntityDetails deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new PreImportResponseEntityDetailsBuilder();
+    final result = PreImportResponseEntityDetailsBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -318,7 +318,7 @@ class _$ImportRequestSerializer implements StructuredSerializer<ImportRequest> {
   ImportRequest deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ImportRequestBuilder();
+    final result = ImportRequestBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -384,7 +384,7 @@ class _$ImportRequestMappingSerializer
   ImportRequestMapping deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ImportRequestMappingBuilder();
+    final result = ImportRequestMappingBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -446,22 +446,17 @@ class _$PreImportResponse extends PreImportResponse {
 
   factory _$PreImportResponse(
           [void Function(PreImportResponseBuilder)? updates]) =>
-      (new PreImportResponseBuilder()..update(updates))._build();
+      (PreImportResponseBuilder()..update(updates))._build();
 
   _$PreImportResponse._({required this.hash, required this.mappings})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(hash, r'PreImportResponse', 'hash');
-    BuiltValueNullFieldError.checkNotNull(
-        mappings, r'PreImportResponse', 'mappings');
-  }
-
+      : super._();
   @override
   PreImportResponse rebuild(void Function(PreImportResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   PreImportResponseBuilder toBuilder() =>
-      new PreImportResponseBuilder()..replace(this);
+      PreImportResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -501,8 +496,7 @@ class PreImportResponseBuilder
 
   MapBuilder<String, PreImportResponseEntityDetails>? _mappings;
   MapBuilder<String, PreImportResponseEntityDetails> get mappings =>
-      _$this._mappings ??=
-          new MapBuilder<String, PreImportResponseEntityDetails>();
+      _$this._mappings ??= MapBuilder<String, PreImportResponseEntityDetails>();
   set mappings(MapBuilder<String, PreImportResponseEntityDetails>? mappings) =>
       _$this._mappings = mappings;
 
@@ -520,7 +514,6 @@ class PreImportResponseBuilder
 
   @override
   void replace(PreImportResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PreImportResponse;
   }
 
@@ -536,17 +529,18 @@ class PreImportResponseBuilder
     _$PreImportResponse _$result;
     try {
       _$result = _$v ??
-          new _$PreImportResponse._(
-              hash: BuiltValueNullFieldError.checkNotNull(
-                  hash, r'PreImportResponse', 'hash'),
-              mappings: mappings.build());
+          _$PreImportResponse._(
+            hash: BuiltValueNullFieldError.checkNotNull(
+                hash, r'PreImportResponse', 'hash'),
+            mappings: mappings.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'mappings';
         mappings.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'PreImportResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -564,17 +558,11 @@ class _$PreImportResponseEntityDetails extends PreImportResponseEntityDetails {
 
   factory _$PreImportResponseEntityDetails(
           [void Function(PreImportResponseEntityDetailsBuilder)? updates]) =>
-      (new PreImportResponseEntityDetailsBuilder()..update(updates))._build();
+      (PreImportResponseEntityDetailsBuilder()..update(updates))._build();
 
   _$PreImportResponseEntityDetails._(
       {required this.available, required this.headers})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        available, r'PreImportResponseEntityDetails', 'available');
-    BuiltValueNullFieldError.checkNotNull(
-        headers, r'PreImportResponseEntityDetails', 'headers');
-  }
-
+      : super._();
   @override
   PreImportResponseEntityDetails rebuild(
           void Function(PreImportResponseEntityDetailsBuilder) updates) =>
@@ -582,7 +570,7 @@ class _$PreImportResponseEntityDetails extends PreImportResponseEntityDetails {
 
   @override
   PreImportResponseEntityDetailsBuilder toBuilder() =>
-      new PreImportResponseEntityDetailsBuilder()..replace(this);
+      PreImportResponseEntityDetailsBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -620,13 +608,13 @@ class PreImportResponseEntityDetailsBuilder
 
   ListBuilder<String>? _available;
   ListBuilder<String> get available =>
-      _$this._available ??= new ListBuilder<String>();
+      _$this._available ??= ListBuilder<String>();
   set available(ListBuilder<String>? available) =>
       _$this._available = available;
 
   ListBuilder<BuiltList<String>>? _headers;
   ListBuilder<BuiltList<String>> get headers =>
-      _$this._headers ??= new ListBuilder<BuiltList<String>>();
+      _$this._headers ??= ListBuilder<BuiltList<String>>();
   set headers(ListBuilder<BuiltList<String>>? headers) =>
       _$this._headers = headers;
 
@@ -644,7 +632,6 @@ class PreImportResponseEntityDetailsBuilder
 
   @override
   void replace(PreImportResponseEntityDetails other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PreImportResponseEntityDetails;
   }
 
@@ -660,8 +647,10 @@ class PreImportResponseEntityDetailsBuilder
     _$PreImportResponseEntityDetails _$result;
     try {
       _$result = _$v ??
-          new _$PreImportResponseEntityDetails._(
-              available: available.build(), headers: headers.build());
+          _$PreImportResponseEntityDetails._(
+            available: available.build(),
+            headers: headers.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -670,7 +659,7 @@ class PreImportResponseEntityDetailsBuilder
         _$failedField = 'headers';
         headers.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'PreImportResponseEntityDetails', _$failedField, e.toString());
       }
       rethrow;
@@ -693,7 +682,7 @@ class _$ImportRequest extends ImportRequest {
   final BuiltMap<String, ImportRequestMapping> columnMap;
 
   factory _$ImportRequest([void Function(ImportRequestBuilder)? updates]) =>
-      (new ImportRequestBuilder()..update(updates))._build();
+      (ImportRequestBuilder()..update(updates))._build();
 
   _$ImportRequest._(
       {required this.hash,
@@ -701,24 +690,13 @@ class _$ImportRequest extends ImportRequest {
       required this.bankAccountId,
       required this.skipHeader,
       required this.columnMap})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(hash, r'ImportRequest', 'hash');
-    BuiltValueNullFieldError.checkNotNull(
-        importType, r'ImportRequest', 'importType');
-    BuiltValueNullFieldError.checkNotNull(
-        bankAccountId, r'ImportRequest', 'bankAccountId');
-    BuiltValueNullFieldError.checkNotNull(
-        skipHeader, r'ImportRequest', 'skipHeader');
-    BuiltValueNullFieldError.checkNotNull(
-        columnMap, r'ImportRequest', 'columnMap');
-  }
-
+      : super._();
   @override
   ImportRequest rebuild(void Function(ImportRequestBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ImportRequestBuilder toBuilder() => new ImportRequestBuilder()..replace(this);
+  ImportRequestBuilder toBuilder() => ImportRequestBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -780,7 +758,7 @@ class ImportRequestBuilder
 
   MapBuilder<String, ImportRequestMapping>? _columnMap;
   MapBuilder<String, ImportRequestMapping> get columnMap =>
-      _$this._columnMap ??= new MapBuilder<String, ImportRequestMapping>();
+      _$this._columnMap ??= MapBuilder<String, ImportRequestMapping>();
   set columnMap(MapBuilder<String, ImportRequestMapping>? columnMap) =>
       _$this._columnMap = columnMap;
 
@@ -801,7 +779,6 @@ class ImportRequestBuilder
 
   @override
   void replace(ImportRequest other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ImportRequest;
   }
 
@@ -817,23 +794,24 @@ class ImportRequestBuilder
     _$ImportRequest _$result;
     try {
       _$result = _$v ??
-          new _$ImportRequest._(
-              hash: BuiltValueNullFieldError.checkNotNull(
-                  hash, r'ImportRequest', 'hash'),
-              importType: BuiltValueNullFieldError.checkNotNull(
-                  importType, r'ImportRequest', 'importType'),
-              bankAccountId: BuiltValueNullFieldError.checkNotNull(
-                  bankAccountId, r'ImportRequest', 'bankAccountId'),
-              skipHeader: BuiltValueNullFieldError.checkNotNull(
-                  skipHeader, r'ImportRequest', 'skipHeader'),
-              columnMap: columnMap.build());
+          _$ImportRequest._(
+            hash: BuiltValueNullFieldError.checkNotNull(
+                hash, r'ImportRequest', 'hash'),
+            importType: BuiltValueNullFieldError.checkNotNull(
+                importType, r'ImportRequest', 'importType'),
+            bankAccountId: BuiltValueNullFieldError.checkNotNull(
+                bankAccountId, r'ImportRequest', 'bankAccountId'),
+            skipHeader: BuiltValueNullFieldError.checkNotNull(
+                skipHeader, r'ImportRequest', 'skipHeader'),
+            columnMap: columnMap.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'columnMap';
         columnMap.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ImportRequest', _$failedField, e.toString());
       }
       rethrow;
@@ -849,13 +827,9 @@ class _$ImportRequestMapping extends ImportRequestMapping {
 
   factory _$ImportRequestMapping(
           [void Function(ImportRequestMappingBuilder)? updates]) =>
-      (new ImportRequestMappingBuilder()..update(updates))._build();
+      (ImportRequestMappingBuilder()..update(updates))._build();
 
-  _$ImportRequestMapping._({required this.mapping}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        mapping, r'ImportRequestMapping', 'mapping');
-  }
-
+  _$ImportRequestMapping._({required this.mapping}) : super._();
   @override
   ImportRequestMapping rebuild(
           void Function(ImportRequestMappingBuilder) updates) =>
@@ -863,7 +837,7 @@ class _$ImportRequestMapping extends ImportRequestMapping {
 
   @override
   ImportRequestMappingBuilder toBuilder() =>
-      new ImportRequestMappingBuilder()..replace(this);
+      ImportRequestMappingBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -895,7 +869,7 @@ class ImportRequestMappingBuilder
 
   MapBuilder<int, String>? _mapping;
   MapBuilder<int, String> get mapping =>
-      _$this._mapping ??= new MapBuilder<int, String>();
+      _$this._mapping ??= MapBuilder<int, String>();
   set mapping(MapBuilder<int, String>? mapping) => _$this._mapping = mapping;
 
   ImportRequestMappingBuilder();
@@ -911,7 +885,6 @@ class ImportRequestMappingBuilder
 
   @override
   void replace(ImportRequestMapping other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ImportRequestMapping;
   }
 
@@ -926,14 +899,17 @@ class ImportRequestMappingBuilder
   _$ImportRequestMapping _build() {
     _$ImportRequestMapping _$result;
     try {
-      _$result = _$v ?? new _$ImportRequestMapping._(mapping: mapping.build());
+      _$result = _$v ??
+          _$ImportRequestMapping._(
+            mapping: mapping.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'mapping';
         mapping.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ImportRequestMapping', _$failedField, e.toString());
       }
       rethrow;

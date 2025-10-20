@@ -7,10 +7,10 @@ part of 'token_model.dart';
 // **************************************************************************
 
 Serializer<TokenListResponse> _$tokenListResponseSerializer =
-    new _$TokenListResponseSerializer();
+    _$TokenListResponseSerializer();
 Serializer<TokenItemResponse> _$tokenItemResponseSerializer =
-    new _$TokenItemResponseSerializer();
-Serializer<TokenEntity> _$tokenEntitySerializer = new _$TokenEntitySerializer();
+    _$TokenItemResponseSerializer();
+Serializer<TokenEntity> _$tokenEntitySerializer = _$TokenEntitySerializer();
 
 class _$TokenListResponseSerializer
     implements StructuredSerializer<TokenListResponse> {
@@ -36,7 +36,7 @@ class _$TokenListResponseSerializer
   TokenListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TokenListResponseBuilder();
+    final result = TokenListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -80,7 +80,7 @@ class _$TokenItemResponseSerializer
   TokenItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TokenItemResponseBuilder();
+    final result = TokenItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -164,7 +164,7 @@ class _$TokenEntitySerializer implements StructuredSerializer<TokenEntity> {
   @override
   TokenEntity deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TokenEntityBuilder();
+    final result = TokenEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -229,19 +229,16 @@ class _$TokenListResponse extends TokenListResponse {
 
   factory _$TokenListResponse(
           [void Function(TokenListResponseBuilder)? updates]) =>
-      (new TokenListResponseBuilder()..update(updates))._build();
+      (TokenListResponseBuilder()..update(updates))._build();
 
-  _$TokenListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'TokenListResponse', 'data');
-  }
-
+  _$TokenListResponse._({required this.data}) : super._();
   @override
   TokenListResponse rebuild(void Function(TokenListResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   TokenListResponseBuilder toBuilder() =>
-      new TokenListResponseBuilder()..replace(this);
+      TokenListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -273,7 +270,7 @@ class TokenListResponseBuilder
 
   ListBuilder<TokenEntity>? _data;
   ListBuilder<TokenEntity> get data =>
-      _$this._data ??= new ListBuilder<TokenEntity>();
+      _$this._data ??= ListBuilder<TokenEntity>();
   set data(ListBuilder<TokenEntity>? data) => _$this._data = data;
 
   TokenListResponseBuilder();
@@ -289,7 +286,6 @@ class TokenListResponseBuilder
 
   @override
   void replace(TokenListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TokenListResponse;
   }
 
@@ -304,14 +300,17 @@ class TokenListResponseBuilder
   _$TokenListResponse _build() {
     _$TokenListResponse _$result;
     try {
-      _$result = _$v ?? new _$TokenListResponse._(data: data.build());
+      _$result = _$v ??
+          _$TokenListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TokenListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -327,19 +326,16 @@ class _$TokenItemResponse extends TokenItemResponse {
 
   factory _$TokenItemResponse(
           [void Function(TokenItemResponseBuilder)? updates]) =>
-      (new TokenItemResponseBuilder()..update(updates))._build();
+      (TokenItemResponseBuilder()..update(updates))._build();
 
-  _$TokenItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'TokenItemResponse', 'data');
-  }
-
+  _$TokenItemResponse._({required this.data}) : super._();
   @override
   TokenItemResponse rebuild(void Function(TokenItemResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   TokenItemResponseBuilder toBuilder() =>
-      new TokenItemResponseBuilder()..replace(this);
+      TokenItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -370,7 +366,7 @@ class TokenItemResponseBuilder
   _$TokenItemResponse? _$v;
 
   TokenEntityBuilder? _data;
-  TokenEntityBuilder get data => _$this._data ??= new TokenEntityBuilder();
+  TokenEntityBuilder get data => _$this._data ??= TokenEntityBuilder();
   set data(TokenEntityBuilder? data) => _$this._data = data;
 
   TokenItemResponseBuilder();
@@ -386,7 +382,6 @@ class TokenItemResponseBuilder
 
   @override
   void replace(TokenItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TokenItemResponse;
   }
 
@@ -401,14 +396,17 @@ class TokenItemResponseBuilder
   _$TokenItemResponse _build() {
     _$TokenItemResponse _$result;
     try {
-      _$result = _$v ?? new _$TokenItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$TokenItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TokenItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -443,7 +441,7 @@ class _$TokenEntity extends TokenEntity {
   final String id;
 
   factory _$TokenEntity([void Function(TokenEntityBuilder)? updates]) =>
-      (new TokenEntityBuilder()..update(updates))._build();
+      (TokenEntityBuilder()..update(updates))._build();
 
   _$TokenEntity._(
       {required this.isSystem,
@@ -457,25 +455,13 @@ class _$TokenEntity extends TokenEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(isSystem, r'TokenEntity', 'isSystem');
-    BuiltValueNullFieldError.checkNotNull(token, r'TokenEntity', 'token');
-    BuiltValueNullFieldError.checkNotNull(name, r'TokenEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'TokenEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'TokenEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'TokenEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'TokenEntity', 'id');
-  }
-
+      : super._();
   @override
   TokenEntity rebuild(void Function(TokenEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  TokenEntityBuilder toBuilder() => new TokenEntityBuilder()..replace(this);
+  TokenEntityBuilder toBuilder() => TokenEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -604,7 +590,6 @@ class TokenEntityBuilder implements Builder<TokenEntity, TokenEntityBuilder> {
 
   @override
   void replace(TokenEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TokenEntity;
   }
 
@@ -618,25 +603,25 @@ class TokenEntityBuilder implements Builder<TokenEntity, TokenEntityBuilder> {
 
   _$TokenEntity _build() {
     final _$result = _$v ??
-        new _$TokenEntity._(
-            isSystem: BuiltValueNullFieldError.checkNotNull(
-                isSystem, r'TokenEntity', 'isSystem'),
-            token: BuiltValueNullFieldError.checkNotNull(
-                token, r'TokenEntity', 'token'),
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'TokenEntity', 'name'),
-            isChanged: isChanged,
-            createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, r'TokenEntity', 'createdAt'),
-            updatedAt: BuiltValueNullFieldError.checkNotNull(
-                updatedAt, r'TokenEntity', 'updatedAt'),
-            archivedAt: BuiltValueNullFieldError.checkNotNull(
-                archivedAt, r'TokenEntity', 'archivedAt'),
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            id: BuiltValueNullFieldError.checkNotNull(
-                id, r'TokenEntity', 'id'));
+        _$TokenEntity._(
+          isSystem: BuiltValueNullFieldError.checkNotNull(
+              isSystem, r'TokenEntity', 'isSystem'),
+          token: BuiltValueNullFieldError.checkNotNull(
+              token, r'TokenEntity', 'token'),
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'TokenEntity', 'name'),
+          isChanged: isChanged,
+          createdAt: BuiltValueNullFieldError.checkNotNull(
+              createdAt, r'TokenEntity', 'createdAt'),
+          updatedAt: BuiltValueNullFieldError.checkNotNull(
+              updatedAt, r'TokenEntity', 'updatedAt'),
+          archivedAt: BuiltValueNullFieldError.checkNotNull(
+              archivedAt, r'TokenEntity', 'archivedAt'),
+          isDeleted: isDeleted,
+          createdUserId: createdUserId,
+          assignedUserId: assignedUserId,
+          id: BuiltValueNullFieldError.checkNotNull(id, r'TokenEntity', 'id'),
+        );
     replace(_$result);
     return _$result;
   }

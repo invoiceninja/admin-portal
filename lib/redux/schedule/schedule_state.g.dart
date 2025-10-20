@@ -7,9 +7,9 @@ part of 'schedule_state.dart';
 // **************************************************************************
 
 Serializer<ScheduleState> _$scheduleStateSerializer =
-    new _$ScheduleStateSerializer();
+    _$ScheduleStateSerializer();
 Serializer<ScheduleUIState> _$scheduleUIStateSerializer =
-    new _$ScheduleUIStateSerializer();
+    _$ScheduleUIStateSerializer();
 
 class _$ScheduleStateSerializer implements StructuredSerializer<ScheduleState> {
   @override
@@ -38,7 +38,7 @@ class _$ScheduleStateSerializer implements StructuredSerializer<ScheduleState> {
   ScheduleState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ScheduleStateBuilder();
+    final result = ScheduleStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -113,7 +113,7 @@ class _$ScheduleUIStateSerializer
   ScheduleUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ScheduleUIStateBuilder();
+    final result = ScheduleUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -156,19 +156,15 @@ class _$ScheduleState extends ScheduleState {
   final BuiltList<String> list;
 
   factory _$ScheduleState([void Function(ScheduleStateBuilder)? updates]) =>
-      (new ScheduleStateBuilder()..update(updates))._build();
+      (ScheduleStateBuilder()..update(updates))._build();
 
-  _$ScheduleState._({required this.map, required this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, r'ScheduleState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, r'ScheduleState', 'list');
-  }
-
+  _$ScheduleState._({required this.map, required this.list}) : super._();
   @override
   ScheduleState rebuild(void Function(ScheduleStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ScheduleStateBuilder toBuilder() => new ScheduleStateBuilder()..replace(this);
+  ScheduleStateBuilder toBuilder() => ScheduleStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -202,11 +198,11 @@ class ScheduleStateBuilder
 
   MapBuilder<String, ScheduleEntity>? _map;
   MapBuilder<String, ScheduleEntity> get map =>
-      _$this._map ??= new MapBuilder<String, ScheduleEntity>();
+      _$this._map ??= MapBuilder<String, ScheduleEntity>();
   set map(MapBuilder<String, ScheduleEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
-  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  ListBuilder<String> get list => _$this._list ??= ListBuilder<String>();
   set list(ListBuilder<String>? list) => _$this._list = list;
 
   ScheduleStateBuilder();
@@ -223,7 +219,6 @@ class ScheduleStateBuilder
 
   @override
   void replace(ScheduleState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ScheduleState;
   }
 
@@ -238,8 +233,11 @@ class ScheduleStateBuilder
   _$ScheduleState _build() {
     _$ScheduleState _$result;
     try {
-      _$result =
-          _$v ?? new _$ScheduleState._(map: map.build(), list: list.build());
+      _$result = _$v ??
+          _$ScheduleState._(
+            map: map.build(),
+            list: list.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -248,7 +246,7 @@ class ScheduleStateBuilder
         _$failedField = 'list';
         list.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ScheduleState', _$failedField, e.toString());
       }
       rethrow;
@@ -275,7 +273,7 @@ class _$ScheduleUIState extends ScheduleUIState {
   final Completer<Null>? cancelCompleter;
 
   factory _$ScheduleUIState([void Function(ScheduleUIStateBuilder)? updates]) =>
-      (new ScheduleUIStateBuilder()..update(updates))._build();
+      (ScheduleUIStateBuilder()..update(updates))._build();
 
   _$ScheduleUIState._(
       {this.editing,
@@ -285,20 +283,13 @@ class _$ScheduleUIState extends ScheduleUIState {
       required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        listUIState, r'ScheduleUIState', 'listUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        tabIndex, r'ScheduleUIState', 'tabIndex');
-  }
-
+      : super._();
   @override
   ScheduleUIState rebuild(void Function(ScheduleUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ScheduleUIStateBuilder toBuilder() =>
-      new ScheduleUIStateBuilder()..replace(this);
+  ScheduleUIStateBuilder toBuilder() => ScheduleUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -349,12 +340,12 @@ class ScheduleUIStateBuilder
 
   ScheduleEntityBuilder? _editing;
   ScheduleEntityBuilder get editing =>
-      _$this._editing ??= new ScheduleEntityBuilder();
+      _$this._editing ??= ScheduleEntityBuilder();
   set editing(ScheduleEntityBuilder? editing) => _$this._editing = editing;
 
   ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
-      _$this._listUIState ??= new ListUIStateBuilder();
+      _$this._listUIState ??= ListUIStateBuilder();
   set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
@@ -400,7 +391,6 @@ class ScheduleUIStateBuilder
 
   @override
   void replace(ScheduleUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ScheduleUIState;
   }
 
@@ -416,15 +406,16 @@ class ScheduleUIStateBuilder
     _$ScheduleUIState _$result;
     try {
       _$result = _$v ??
-          new _$ScheduleUIState._(
-              editing: _editing?.build(),
-              listUIState: listUIState.build(),
-              selectedId: selectedId,
-              forceSelected: forceSelected,
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'ScheduleUIState', 'tabIndex'),
-              saveCompleter: saveCompleter,
-              cancelCompleter: cancelCompleter);
+          _$ScheduleUIState._(
+            editing: _editing?.build(),
+            listUIState: listUIState.build(),
+            selectedId: selectedId,
+            forceSelected: forceSelected,
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'ScheduleUIState', 'tabIndex'),
+            saveCompleter: saveCompleter,
+            cancelCompleter: cancelCompleter,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -433,7 +424,7 @@ class ScheduleUIStateBuilder
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ScheduleUIState', _$failedField, e.toString());
       }
       rethrow;

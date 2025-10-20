@@ -6,7 +6,7 @@ part of 'app_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<AppState> _$appStateSerializer = new _$AppStateSerializer();
+Serializer<AppState> _$appStateSerializer = _$AppStateSerializer();
 
 class _$AppStateSerializer implements StructuredSerializer<AppState> {
   @override
@@ -57,7 +57,7 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
   @override
   AppState deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new AppStateBuilder();
+    final result = AppStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -137,7 +137,7 @@ class _$AppState extends AppState {
   final BuiltList<UserCompanyState> userCompanyStates;
 
   factory _$AppState([void Function(AppStateBuilder)? updates]) =>
-      (new AppStateBuilder()..update(updates))._build();
+      (AppStateBuilder()..update(updates))._build();
 
   _$AppState._(
       {required this.isLoading,
@@ -150,28 +150,13 @@ class _$AppState extends AppState {
       required this.prefState,
       required this.uiState,
       required this.userCompanyStates})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(isLoading, r'AppState', 'isLoading');
-    BuiltValueNullFieldError.checkNotNull(isSaving, r'AppState', 'isSaving');
-    BuiltValueNullFieldError.checkNotNull(isTesting, r'AppState', 'isTesting');
-    BuiltValueNullFieldError.checkNotNull(
-        isWhiteLabeled, r'AppState', 'isWhiteLabeled');
-    BuiltValueNullFieldError.checkNotNull(lastError, r'AppState', 'lastError');
-    BuiltValueNullFieldError.checkNotNull(authState, r'AppState', 'authState');
-    BuiltValueNullFieldError.checkNotNull(
-        staticState, r'AppState', 'staticState');
-    BuiltValueNullFieldError.checkNotNull(prefState, r'AppState', 'prefState');
-    BuiltValueNullFieldError.checkNotNull(uiState, r'AppState', 'uiState');
-    BuiltValueNullFieldError.checkNotNull(
-        userCompanyStates, r'AppState', 'userCompanyStates');
-  }
-
+      : super._();
   @override
   AppState rebuild(void Function(AppStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  AppStateBuilder toBuilder() => new AppStateBuilder()..replace(this);
+  AppStateBuilder toBuilder() => AppStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -234,28 +219,26 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   set lastError(String? lastError) => _$this._lastError = lastError;
 
   AuthStateBuilder? _authState;
-  AuthStateBuilder get authState =>
-      _$this._authState ??= new AuthStateBuilder();
+  AuthStateBuilder get authState => _$this._authState ??= AuthStateBuilder();
   set authState(AuthStateBuilder? authState) => _$this._authState = authState;
 
   StaticStateBuilder? _staticState;
   StaticStateBuilder get staticState =>
-      _$this._staticState ??= new StaticStateBuilder();
+      _$this._staticState ??= StaticStateBuilder();
   set staticState(StaticStateBuilder? staticState) =>
       _$this._staticState = staticState;
 
   PrefStateBuilder? _prefState;
-  PrefStateBuilder get prefState =>
-      _$this._prefState ??= new PrefStateBuilder();
+  PrefStateBuilder get prefState => _$this._prefState ??= PrefStateBuilder();
   set prefState(PrefStateBuilder? prefState) => _$this._prefState = prefState;
 
   UIStateBuilder? _uiState;
-  UIStateBuilder get uiState => _$this._uiState ??= new UIStateBuilder();
+  UIStateBuilder get uiState => _$this._uiState ??= UIStateBuilder();
   set uiState(UIStateBuilder? uiState) => _$this._uiState = uiState;
 
   ListBuilder<UserCompanyState>? _userCompanyStates;
   ListBuilder<UserCompanyState> get userCompanyStates =>
-      _$this._userCompanyStates ??= new ListBuilder<UserCompanyState>();
+      _$this._userCompanyStates ??= ListBuilder<UserCompanyState>();
   set userCompanyStates(ListBuilder<UserCompanyState>? userCompanyStates) =>
       _$this._userCompanyStates = userCompanyStates;
 
@@ -281,7 +264,6 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
 
   @override
   void replace(AppState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$AppState;
   }
 
@@ -297,22 +279,23 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
     _$AppState _$result;
     try {
       _$result = _$v ??
-          new _$AppState._(
-              isLoading: BuiltValueNullFieldError.checkNotNull(
-                  isLoading, r'AppState', 'isLoading'),
-              isSaving: BuiltValueNullFieldError.checkNotNull(
-                  isSaving, r'AppState', 'isSaving'),
-              isTesting: BuiltValueNullFieldError.checkNotNull(
-                  isTesting, r'AppState', 'isTesting'),
-              isWhiteLabeled: BuiltValueNullFieldError.checkNotNull(
-                  isWhiteLabeled, r'AppState', 'isWhiteLabeled'),
-              lastError: BuiltValueNullFieldError.checkNotNull(
-                  lastError, r'AppState', 'lastError'),
-              authState: authState.build(),
-              staticState: staticState.build(),
-              prefState: prefState.build(),
-              uiState: uiState.build(),
-              userCompanyStates: userCompanyStates.build());
+          _$AppState._(
+            isLoading: BuiltValueNullFieldError.checkNotNull(
+                isLoading, r'AppState', 'isLoading'),
+            isSaving: BuiltValueNullFieldError.checkNotNull(
+                isSaving, r'AppState', 'isSaving'),
+            isTesting: BuiltValueNullFieldError.checkNotNull(
+                isTesting, r'AppState', 'isTesting'),
+            isWhiteLabeled: BuiltValueNullFieldError.checkNotNull(
+                isWhiteLabeled, r'AppState', 'isWhiteLabeled'),
+            lastError: BuiltValueNullFieldError.checkNotNull(
+                lastError, r'AppState', 'lastError'),
+            authState: authState.build(),
+            staticState: staticState.build(),
+            prefState: prefState.build(),
+            uiState: uiState.build(),
+            userCompanyStates: userCompanyStates.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -327,7 +310,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         _$failedField = 'userCompanyStates';
         userCompanyStates.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'AppState', _$failedField, e.toString());
       }
       rethrow;

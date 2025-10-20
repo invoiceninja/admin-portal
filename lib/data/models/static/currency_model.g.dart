@@ -7,11 +7,11 @@ part of 'currency_model.dart';
 // **************************************************************************
 
 Serializer<CurrencyListResponse> _$currencyListResponseSerializer =
-    new _$CurrencyListResponseSerializer();
+    _$CurrencyListResponseSerializer();
 Serializer<CurrencyItemResponse> _$currencyItemResponseSerializer =
-    new _$CurrencyItemResponseSerializer();
+    _$CurrencyItemResponseSerializer();
 Serializer<CurrencyEntity> _$currencyEntitySerializer =
-    new _$CurrencyEntitySerializer();
+    _$CurrencyEntitySerializer();
 
 class _$CurrencyListResponseSerializer
     implements StructuredSerializer<CurrencyListResponse> {
@@ -41,7 +41,7 @@ class _$CurrencyListResponseSerializer
   CurrencyListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new CurrencyListResponseBuilder();
+    final result = CurrencyListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -89,7 +89,7 @@ class _$CurrencyItemResponseSerializer
   CurrencyItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new CurrencyItemResponseBuilder();
+    final result = CurrencyItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -153,7 +153,7 @@ class _$CurrencyEntitySerializer
   CurrencyEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new CurrencyEntityBuilder();
+    final result = CurrencyEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -210,13 +210,9 @@ class _$CurrencyListResponse extends CurrencyListResponse {
 
   factory _$CurrencyListResponse(
           [void Function(CurrencyListResponseBuilder)? updates]) =>
-      (new CurrencyListResponseBuilder()..update(updates))._build();
+      (CurrencyListResponseBuilder()..update(updates))._build();
 
-  _$CurrencyListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'CurrencyListResponse', 'data');
-  }
-
+  _$CurrencyListResponse._({required this.data}) : super._();
   @override
   CurrencyListResponse rebuild(
           void Function(CurrencyListResponseBuilder) updates) =>
@@ -224,7 +220,7 @@ class _$CurrencyListResponse extends CurrencyListResponse {
 
   @override
   CurrencyListResponseBuilder toBuilder() =>
-      new CurrencyListResponseBuilder()..replace(this);
+      CurrencyListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -256,7 +252,7 @@ class CurrencyListResponseBuilder
 
   ListBuilder<CurrencyEntity>? _data;
   ListBuilder<CurrencyEntity> get data =>
-      _$this._data ??= new ListBuilder<CurrencyEntity>();
+      _$this._data ??= ListBuilder<CurrencyEntity>();
   set data(ListBuilder<CurrencyEntity>? data) => _$this._data = data;
 
   CurrencyListResponseBuilder();
@@ -272,7 +268,6 @@ class CurrencyListResponseBuilder
 
   @override
   void replace(CurrencyListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CurrencyListResponse;
   }
 
@@ -287,14 +282,17 @@ class CurrencyListResponseBuilder
   _$CurrencyListResponse _build() {
     _$CurrencyListResponse _$result;
     try {
-      _$result = _$v ?? new _$CurrencyListResponse._(data: data.build());
+      _$result = _$v ??
+          _$CurrencyListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'CurrencyListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -310,13 +308,9 @@ class _$CurrencyItemResponse extends CurrencyItemResponse {
 
   factory _$CurrencyItemResponse(
           [void Function(CurrencyItemResponseBuilder)? updates]) =>
-      (new CurrencyItemResponseBuilder()..update(updates))._build();
+      (CurrencyItemResponseBuilder()..update(updates))._build();
 
-  _$CurrencyItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'CurrencyItemResponse', 'data');
-  }
-
+  _$CurrencyItemResponse._({required this.data}) : super._();
   @override
   CurrencyItemResponse rebuild(
           void Function(CurrencyItemResponseBuilder) updates) =>
@@ -324,7 +318,7 @@ class _$CurrencyItemResponse extends CurrencyItemResponse {
 
   @override
   CurrencyItemResponseBuilder toBuilder() =>
-      new CurrencyItemResponseBuilder()..replace(this);
+      CurrencyItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -355,8 +349,7 @@ class CurrencyItemResponseBuilder
   _$CurrencyItemResponse? _$v;
 
   CurrencyEntityBuilder? _data;
-  CurrencyEntityBuilder get data =>
-      _$this._data ??= new CurrencyEntityBuilder();
+  CurrencyEntityBuilder get data => _$this._data ??= CurrencyEntityBuilder();
   set data(CurrencyEntityBuilder? data) => _$this._data = data;
 
   CurrencyItemResponseBuilder();
@@ -372,7 +365,6 @@ class CurrencyItemResponseBuilder
 
   @override
   void replace(CurrencyItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CurrencyItemResponse;
   }
 
@@ -387,14 +379,17 @@ class CurrencyItemResponseBuilder
   _$CurrencyItemResponse _build() {
     _$CurrencyItemResponse _$result;
     try {
-      _$result = _$v ?? new _$CurrencyItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$CurrencyItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'CurrencyItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -425,7 +420,7 @@ class _$CurrencyEntity extends CurrencyEntity {
   final String id;
 
   factory _$CurrencyEntity([void Function(CurrencyEntityBuilder)? updates]) =>
-      (new CurrencyEntityBuilder()..update(updates))._build();
+      (CurrencyEntityBuilder()..update(updates))._build();
 
   _$CurrencyEntity._(
       {required this.name,
@@ -437,30 +432,13 @@ class _$CurrencyEntity extends CurrencyEntity {
       required this.swapCurrencySymbol,
       required this.exchangeRate,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'CurrencyEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(symbol, r'CurrencyEntity', 'symbol');
-    BuiltValueNullFieldError.checkNotNull(
-        precision, r'CurrencyEntity', 'precision');
-    BuiltValueNullFieldError.checkNotNull(
-        thousandSeparator, r'CurrencyEntity', 'thousandSeparator');
-    BuiltValueNullFieldError.checkNotNull(
-        decimalSeparator, r'CurrencyEntity', 'decimalSeparator');
-    BuiltValueNullFieldError.checkNotNull(code, r'CurrencyEntity', 'code');
-    BuiltValueNullFieldError.checkNotNull(
-        swapCurrencySymbol, r'CurrencyEntity', 'swapCurrencySymbol');
-    BuiltValueNullFieldError.checkNotNull(
-        exchangeRate, r'CurrencyEntity', 'exchangeRate');
-    BuiltValueNullFieldError.checkNotNull(id, r'CurrencyEntity', 'id');
-  }
-
+      : super._();
   @override
   CurrencyEntity rebuild(void Function(CurrencyEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  CurrencyEntityBuilder toBuilder() =>
-      new CurrencyEntityBuilder()..replace(this);
+  CurrencyEntityBuilder toBuilder() => CurrencyEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -575,7 +553,6 @@ class CurrencyEntityBuilder
 
   @override
   void replace(CurrencyEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CurrencyEntity;
   }
 
@@ -589,24 +566,26 @@ class CurrencyEntityBuilder
 
   _$CurrencyEntity _build() {
     final _$result = _$v ??
-        new _$CurrencyEntity._(
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'CurrencyEntity', 'name'),
-            symbol: BuiltValueNullFieldError.checkNotNull(
-                symbol, r'CurrencyEntity', 'symbol'),
-            precision: BuiltValueNullFieldError.checkNotNull(
-                precision, r'CurrencyEntity', 'precision'),
-            thousandSeparator: BuiltValueNullFieldError.checkNotNull(
-                thousandSeparator, r'CurrencyEntity', 'thousandSeparator'),
-            decimalSeparator: BuiltValueNullFieldError.checkNotNull(
-                decimalSeparator, r'CurrencyEntity', 'decimalSeparator'),
-            code: BuiltValueNullFieldError.checkNotNull(
-                code, r'CurrencyEntity', 'code'),
-            swapCurrencySymbol: BuiltValueNullFieldError.checkNotNull(
-                swapCurrencySymbol, r'CurrencyEntity', 'swapCurrencySymbol'),
-            exchangeRate: BuiltValueNullFieldError.checkNotNull(
-                exchangeRate, r'CurrencyEntity', 'exchangeRate'),
-            id: BuiltValueNullFieldError.checkNotNull(id, r'CurrencyEntity', 'id'));
+        _$CurrencyEntity._(
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'CurrencyEntity', 'name'),
+          symbol: BuiltValueNullFieldError.checkNotNull(
+              symbol, r'CurrencyEntity', 'symbol'),
+          precision: BuiltValueNullFieldError.checkNotNull(
+              precision, r'CurrencyEntity', 'precision'),
+          thousandSeparator: BuiltValueNullFieldError.checkNotNull(
+              thousandSeparator, r'CurrencyEntity', 'thousandSeparator'),
+          decimalSeparator: BuiltValueNullFieldError.checkNotNull(
+              decimalSeparator, r'CurrencyEntity', 'decimalSeparator'),
+          code: BuiltValueNullFieldError.checkNotNull(
+              code, r'CurrencyEntity', 'code'),
+          swapCurrencySymbol: BuiltValueNullFieldError.checkNotNull(
+              swapCurrencySymbol, r'CurrencyEntity', 'swapCurrencySymbol'),
+          exchangeRate: BuiltValueNullFieldError.checkNotNull(
+              exchangeRate, r'CurrencyEntity', 'exchangeRate'),
+          id: BuiltValueNullFieldError.checkNotNull(
+              id, r'CurrencyEntity', 'id'),
+        );
     replace(_$result);
     return _$result;
   }

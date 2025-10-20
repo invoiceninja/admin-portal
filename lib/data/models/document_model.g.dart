@@ -7,11 +7,11 @@ part of 'document_model.dart';
 // **************************************************************************
 
 Serializer<DocumentListResponse> _$documentListResponseSerializer =
-    new _$DocumentListResponseSerializer();
+    _$DocumentListResponseSerializer();
 Serializer<DocumentItemResponse> _$documentItemResponseSerializer =
-    new _$DocumentItemResponseSerializer();
+    _$DocumentItemResponseSerializer();
 Serializer<DocumentEntity> _$documentEntitySerializer =
-    new _$DocumentEntitySerializer();
+    _$DocumentEntitySerializer();
 
 class _$DocumentListResponseSerializer
     implements StructuredSerializer<DocumentListResponse> {
@@ -41,7 +41,7 @@ class _$DocumentListResponseSerializer
   DocumentListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new DocumentListResponseBuilder();
+    final result = DocumentListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -89,7 +89,7 @@ class _$DocumentItemResponseSerializer
   DocumentItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new DocumentItemResponseBuilder();
+    final result = DocumentItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -205,7 +205,7 @@ class _$DocumentEntitySerializer
   DocumentEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new DocumentEntityBuilder();
+    final result = DocumentEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -306,13 +306,9 @@ class _$DocumentListResponse extends DocumentListResponse {
 
   factory _$DocumentListResponse(
           [void Function(DocumentListResponseBuilder)? updates]) =>
-      (new DocumentListResponseBuilder()..update(updates))._build();
+      (DocumentListResponseBuilder()..update(updates))._build();
 
-  _$DocumentListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'DocumentListResponse', 'data');
-  }
-
+  _$DocumentListResponse._({required this.data}) : super._();
   @override
   DocumentListResponse rebuild(
           void Function(DocumentListResponseBuilder) updates) =>
@@ -320,7 +316,7 @@ class _$DocumentListResponse extends DocumentListResponse {
 
   @override
   DocumentListResponseBuilder toBuilder() =>
-      new DocumentListResponseBuilder()..replace(this);
+      DocumentListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -352,7 +348,7 @@ class DocumentListResponseBuilder
 
   ListBuilder<DocumentEntity>? _data;
   ListBuilder<DocumentEntity> get data =>
-      _$this._data ??= new ListBuilder<DocumentEntity>();
+      _$this._data ??= ListBuilder<DocumentEntity>();
   set data(ListBuilder<DocumentEntity>? data) => _$this._data = data;
 
   DocumentListResponseBuilder();
@@ -368,7 +364,6 @@ class DocumentListResponseBuilder
 
   @override
   void replace(DocumentListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DocumentListResponse;
   }
 
@@ -383,14 +378,17 @@ class DocumentListResponseBuilder
   _$DocumentListResponse _build() {
     _$DocumentListResponse _$result;
     try {
-      _$result = _$v ?? new _$DocumentListResponse._(data: data.build());
+      _$result = _$v ??
+          _$DocumentListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'DocumentListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -406,13 +404,9 @@ class _$DocumentItemResponse extends DocumentItemResponse {
 
   factory _$DocumentItemResponse(
           [void Function(DocumentItemResponseBuilder)? updates]) =>
-      (new DocumentItemResponseBuilder()..update(updates))._build();
+      (DocumentItemResponseBuilder()..update(updates))._build();
 
-  _$DocumentItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'DocumentItemResponse', 'data');
-  }
-
+  _$DocumentItemResponse._({required this.data}) : super._();
   @override
   DocumentItemResponse rebuild(
           void Function(DocumentItemResponseBuilder) updates) =>
@@ -420,7 +414,7 @@ class _$DocumentItemResponse extends DocumentItemResponse {
 
   @override
   DocumentItemResponseBuilder toBuilder() =>
-      new DocumentItemResponseBuilder()..replace(this);
+      DocumentItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -451,8 +445,7 @@ class DocumentItemResponseBuilder
   _$DocumentItemResponse? _$v;
 
   DocumentEntityBuilder? _data;
-  DocumentEntityBuilder get data =>
-      _$this._data ??= new DocumentEntityBuilder();
+  DocumentEntityBuilder get data => _$this._data ??= DocumentEntityBuilder();
   set data(DocumentEntityBuilder? data) => _$this._data = data;
 
   DocumentItemResponseBuilder();
@@ -468,7 +461,6 @@ class DocumentItemResponseBuilder
 
   @override
   void replace(DocumentItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DocumentItemResponse;
   }
 
@@ -483,14 +475,17 @@ class DocumentItemResponseBuilder
   _$DocumentItemResponse _build() {
     _$DocumentItemResponse _$result;
     try {
-      _$result = _$v ?? new _$DocumentItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$DocumentItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'DocumentItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -545,7 +540,7 @@ class _$DocumentEntity extends DocumentEntity {
   final String id;
 
   factory _$DocumentEntity([void Function(DocumentEntityBuilder)? updates]) =>
-      (new DocumentEntityBuilder()..update(updates))._build();
+      (DocumentEntityBuilder()..update(updates))._build();
 
   _$DocumentEntity._(
       {required this.name,
@@ -569,36 +564,13 @@ class _$DocumentEntity extends DocumentEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'DocumentEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(hash, r'DocumentEntity', 'hash');
-    BuiltValueNullFieldError.checkNotNull(type, r'DocumentEntity', 'type');
-    BuiltValueNullFieldError.checkNotNull(url, r'DocumentEntity', 'url');
-    BuiltValueNullFieldError.checkNotNull(width, r'DocumentEntity', 'width');
-    BuiltValueNullFieldError.checkNotNull(height, r'DocumentEntity', 'height');
-    BuiltValueNullFieldError.checkNotNull(size, r'DocumentEntity', 'size');
-    BuiltValueNullFieldError.checkNotNull(
-        preview, r'DocumentEntity', 'preview');
-    BuiltValueNullFieldError.checkNotNull(
-        isDefault, r'DocumentEntity', 'isDefault');
-    BuiltValueNullFieldError.checkNotNull(
-        isPublic, r'DocumentEntity', 'isPublic');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'DocumentEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'DocumentEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'DocumentEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'DocumentEntity', 'id');
-  }
-
+      : super._();
   @override
   DocumentEntity rebuild(void Function(DocumentEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  DocumentEntityBuilder toBuilder() =>
-      new DocumentEntityBuilder()..replace(this);
+  DocumentEntityBuilder toBuilder() => DocumentEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -810,7 +782,6 @@ class DocumentEntityBuilder
 
   @override
   void replace(DocumentEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DocumentEntity;
   }
 
@@ -824,40 +795,43 @@ class DocumentEntityBuilder
 
   _$DocumentEntity _build() {
     final _$result = _$v ??
-        new _$DocumentEntity._(
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'DocumentEntity', 'name'),
-            hash: BuiltValueNullFieldError.checkNotNull(
-                hash, r'DocumentEntity', 'hash'),
-            type: BuiltValueNullFieldError.checkNotNull(
-                type, r'DocumentEntity', 'type'),
-            url: BuiltValueNullFieldError.checkNotNull(
-                url, r'DocumentEntity', 'url'),
-            width: BuiltValueNullFieldError.checkNotNull(
-                width, r'DocumentEntity', 'width'),
-            height: BuiltValueNullFieldError.checkNotNull(
-                height, r'DocumentEntity', 'height'),
-            size: BuiltValueNullFieldError.checkNotNull(
-                size, r'DocumentEntity', 'size'),
-            preview: BuiltValueNullFieldError.checkNotNull(
-                preview, r'DocumentEntity', 'preview'),
-            data: data,
-            isDefault: BuiltValueNullFieldError.checkNotNull(
-                isDefault, r'DocumentEntity', 'isDefault'),
-            isPublic: BuiltValueNullFieldError.checkNotNull(
-                isPublic, r'DocumentEntity', 'isPublic'),
-            parentId: parentId,
-            parentType: parentType,
-            isChanged: isChanged,
-            createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, r'DocumentEntity', 'createdAt'),
-            updatedAt:
-                BuiltValueNullFieldError.checkNotNull(updatedAt, r'DocumentEntity', 'updatedAt'),
-            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'DocumentEntity', 'archivedAt'),
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            id: BuiltValueNullFieldError.checkNotNull(id, r'DocumentEntity', 'id'));
+        _$DocumentEntity._(
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'DocumentEntity', 'name'),
+          hash: BuiltValueNullFieldError.checkNotNull(
+              hash, r'DocumentEntity', 'hash'),
+          type: BuiltValueNullFieldError.checkNotNull(
+              type, r'DocumentEntity', 'type'),
+          url: BuiltValueNullFieldError.checkNotNull(
+              url, r'DocumentEntity', 'url'),
+          width: BuiltValueNullFieldError.checkNotNull(
+              width, r'DocumentEntity', 'width'),
+          height: BuiltValueNullFieldError.checkNotNull(
+              height, r'DocumentEntity', 'height'),
+          size: BuiltValueNullFieldError.checkNotNull(
+              size, r'DocumentEntity', 'size'),
+          preview: BuiltValueNullFieldError.checkNotNull(
+              preview, r'DocumentEntity', 'preview'),
+          data: data,
+          isDefault: BuiltValueNullFieldError.checkNotNull(
+              isDefault, r'DocumentEntity', 'isDefault'),
+          isPublic: BuiltValueNullFieldError.checkNotNull(
+              isPublic, r'DocumentEntity', 'isPublic'),
+          parentId: parentId,
+          parentType: parentType,
+          isChanged: isChanged,
+          createdAt: BuiltValueNullFieldError.checkNotNull(
+              createdAt, r'DocumentEntity', 'createdAt'),
+          updatedAt: BuiltValueNullFieldError.checkNotNull(
+              updatedAt, r'DocumentEntity', 'updatedAt'),
+          archivedAt: BuiltValueNullFieldError.checkNotNull(
+              archivedAt, r'DocumentEntity', 'archivedAt'),
+          isDeleted: isDeleted,
+          createdUserId: createdUserId,
+          assignedUserId: assignedUserId,
+          id: BuiltValueNullFieldError.checkNotNull(
+              id, r'DocumentEntity', 'id'),
+        );
     replace(_$result);
     return _$result;
   }

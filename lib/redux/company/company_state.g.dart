@@ -7,7 +7,7 @@ part of 'company_state.dart';
 // **************************************************************************
 
 Serializer<UserCompanyState> _$userCompanyStateSerializer =
-    new _$UserCompanyStateSerializer();
+    _$UserCompanyStateSerializer();
 
 class _$UserCompanyStateSerializer
     implements StructuredSerializer<UserCompanyState> {
@@ -122,7 +122,7 @@ class _$UserCompanyStateSerializer
   UserCompanyState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new UserCompanyStateBuilder();
+    final result = UserCompanyStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -339,7 +339,7 @@ class _$UserCompanyState extends UserCompanyState {
 
   factory _$UserCompanyState(
           [void Function(UserCompanyStateBuilder)? updates]) =>
-      (new UserCompanyStateBuilder()..update(updates))._build();
+      (UserCompanyStateBuilder()..update(updates))._build();
 
   _$UserCompanyState._(
       {required this.lastUpdated,
@@ -373,78 +373,14 @@ class _$UserCompanyState extends UserCompanyState {
       required this.taxRateState,
       required this.companyGatewayState,
       required this.groupState})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        lastUpdated, r'UserCompanyState', 'lastUpdated');
-    BuiltValueNullFieldError.checkNotNull(
-        userCompany, r'UserCompanyState', 'userCompany');
-    BuiltValueNullFieldError.checkNotNull(
-        documentState, r'UserCompanyState', 'documentState');
-    BuiltValueNullFieldError.checkNotNull(
-        productState, r'UserCompanyState', 'productState');
-    BuiltValueNullFieldError.checkNotNull(
-        clientState, r'UserCompanyState', 'clientState');
-    BuiltValueNullFieldError.checkNotNull(
-        invoiceState, r'UserCompanyState', 'invoiceState');
-    BuiltValueNullFieldError.checkNotNull(
-        expenseState, r'UserCompanyState', 'expenseState');
-    BuiltValueNullFieldError.checkNotNull(
-        vendorState, r'UserCompanyState', 'vendorState');
-    BuiltValueNullFieldError.checkNotNull(
-        taskState, r'UserCompanyState', 'taskState');
-    BuiltValueNullFieldError.checkNotNull(
-        projectState, r'UserCompanyState', 'projectState');
-    BuiltValueNullFieldError.checkNotNull(
-        paymentState, r'UserCompanyState', 'paymentState');
-    BuiltValueNullFieldError.checkNotNull(
-        quoteState, r'UserCompanyState', 'quoteState');
-    BuiltValueNullFieldError.checkNotNull(
-        scheduleState, r'UserCompanyState', 'scheduleState');
-    BuiltValueNullFieldError.checkNotNull(
-        transactionRuleState, r'UserCompanyState', 'transactionRuleState');
-    BuiltValueNullFieldError.checkNotNull(
-        transactionState, r'UserCompanyState', 'transactionState');
-    BuiltValueNullFieldError.checkNotNull(
-        bankAccountState, r'UserCompanyState', 'bankAccountState');
-    BuiltValueNullFieldError.checkNotNull(
-        purchaseOrderState, r'UserCompanyState', 'purchaseOrderState');
-    BuiltValueNullFieldError.checkNotNull(
-        recurringExpenseState, r'UserCompanyState', 'recurringExpenseState');
-    BuiltValueNullFieldError.checkNotNull(
-        subscriptionState, r'UserCompanyState', 'subscriptionState');
-    BuiltValueNullFieldError.checkNotNull(
-        taskStatusState, r'UserCompanyState', 'taskStatusState');
-    BuiltValueNullFieldError.checkNotNull(
-        expenseCategoryState, r'UserCompanyState', 'expenseCategoryState');
-    BuiltValueNullFieldError.checkNotNull(
-        recurringInvoiceState, r'UserCompanyState', 'recurringInvoiceState');
-    BuiltValueNullFieldError.checkNotNull(
-        webhookState, r'UserCompanyState', 'webhookState');
-    BuiltValueNullFieldError.checkNotNull(
-        tokenState, r'UserCompanyState', 'tokenState');
-    BuiltValueNullFieldError.checkNotNull(
-        paymentTermState, r'UserCompanyState', 'paymentTermState');
-    BuiltValueNullFieldError.checkNotNull(
-        designState, r'UserCompanyState', 'designState');
-    BuiltValueNullFieldError.checkNotNull(
-        creditState, r'UserCompanyState', 'creditState');
-    BuiltValueNullFieldError.checkNotNull(
-        userState, r'UserCompanyState', 'userState');
-    BuiltValueNullFieldError.checkNotNull(
-        taxRateState, r'UserCompanyState', 'taxRateState');
-    BuiltValueNullFieldError.checkNotNull(
-        companyGatewayState, r'UserCompanyState', 'companyGatewayState');
-    BuiltValueNullFieldError.checkNotNull(
-        groupState, r'UserCompanyState', 'groupState');
-  }
-
+      : super._();
   @override
   UserCompanyState rebuild(void Function(UserCompanyStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   UserCompanyStateBuilder toBuilder() =>
-      new UserCompanyStateBuilder()..replace(this);
+      UserCompanyStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -571,181 +507,179 @@ class UserCompanyStateBuilder
 
   UserCompanyEntityBuilder? _userCompany;
   UserCompanyEntityBuilder get userCompany =>
-      _$this._userCompany ??= new UserCompanyEntityBuilder();
+      _$this._userCompany ??= UserCompanyEntityBuilder();
   set userCompany(UserCompanyEntityBuilder? userCompany) =>
       _$this._userCompany = userCompany;
 
   DocumentStateBuilder? _documentState;
   DocumentStateBuilder get documentState =>
-      _$this._documentState ??= new DocumentStateBuilder();
+      _$this._documentState ??= DocumentStateBuilder();
   set documentState(DocumentStateBuilder? documentState) =>
       _$this._documentState = documentState;
 
   ProductStateBuilder? _productState;
   ProductStateBuilder get productState =>
-      _$this._productState ??= new ProductStateBuilder();
+      _$this._productState ??= ProductStateBuilder();
   set productState(ProductStateBuilder? productState) =>
       _$this._productState = productState;
 
   ClientStateBuilder? _clientState;
   ClientStateBuilder get clientState =>
-      _$this._clientState ??= new ClientStateBuilder();
+      _$this._clientState ??= ClientStateBuilder();
   set clientState(ClientStateBuilder? clientState) =>
       _$this._clientState = clientState;
 
   InvoiceStateBuilder? _invoiceState;
   InvoiceStateBuilder get invoiceState =>
-      _$this._invoiceState ??= new InvoiceStateBuilder();
+      _$this._invoiceState ??= InvoiceStateBuilder();
   set invoiceState(InvoiceStateBuilder? invoiceState) =>
       _$this._invoiceState = invoiceState;
 
   ExpenseStateBuilder? _expenseState;
   ExpenseStateBuilder get expenseState =>
-      _$this._expenseState ??= new ExpenseStateBuilder();
+      _$this._expenseState ??= ExpenseStateBuilder();
   set expenseState(ExpenseStateBuilder? expenseState) =>
       _$this._expenseState = expenseState;
 
   VendorStateBuilder? _vendorState;
   VendorStateBuilder get vendorState =>
-      _$this._vendorState ??= new VendorStateBuilder();
+      _$this._vendorState ??= VendorStateBuilder();
   set vendorState(VendorStateBuilder? vendorState) =>
       _$this._vendorState = vendorState;
 
   TaskStateBuilder? _taskState;
-  TaskStateBuilder get taskState =>
-      _$this._taskState ??= new TaskStateBuilder();
+  TaskStateBuilder get taskState => _$this._taskState ??= TaskStateBuilder();
   set taskState(TaskStateBuilder? taskState) => _$this._taskState = taskState;
 
   ProjectStateBuilder? _projectState;
   ProjectStateBuilder get projectState =>
-      _$this._projectState ??= new ProjectStateBuilder();
+      _$this._projectState ??= ProjectStateBuilder();
   set projectState(ProjectStateBuilder? projectState) =>
       _$this._projectState = projectState;
 
   PaymentStateBuilder? _paymentState;
   PaymentStateBuilder get paymentState =>
-      _$this._paymentState ??= new PaymentStateBuilder();
+      _$this._paymentState ??= PaymentStateBuilder();
   set paymentState(PaymentStateBuilder? paymentState) =>
       _$this._paymentState = paymentState;
 
   QuoteStateBuilder? _quoteState;
   QuoteStateBuilder get quoteState =>
-      _$this._quoteState ??= new QuoteStateBuilder();
+      _$this._quoteState ??= QuoteStateBuilder();
   set quoteState(QuoteStateBuilder? quoteState) =>
       _$this._quoteState = quoteState;
 
   ScheduleStateBuilder? _scheduleState;
   ScheduleStateBuilder get scheduleState =>
-      _$this._scheduleState ??= new ScheduleStateBuilder();
+      _$this._scheduleState ??= ScheduleStateBuilder();
   set scheduleState(ScheduleStateBuilder? scheduleState) =>
       _$this._scheduleState = scheduleState;
 
   TransactionRuleStateBuilder? _transactionRuleState;
   TransactionRuleStateBuilder get transactionRuleState =>
-      _$this._transactionRuleState ??= new TransactionRuleStateBuilder();
+      _$this._transactionRuleState ??= TransactionRuleStateBuilder();
   set transactionRuleState(TransactionRuleStateBuilder? transactionRuleState) =>
       _$this._transactionRuleState = transactionRuleState;
 
   TransactionStateBuilder? _transactionState;
   TransactionStateBuilder get transactionState =>
-      _$this._transactionState ??= new TransactionStateBuilder();
+      _$this._transactionState ??= TransactionStateBuilder();
   set transactionState(TransactionStateBuilder? transactionState) =>
       _$this._transactionState = transactionState;
 
   BankAccountStateBuilder? _bankAccountState;
   BankAccountStateBuilder get bankAccountState =>
-      _$this._bankAccountState ??= new BankAccountStateBuilder();
+      _$this._bankAccountState ??= BankAccountStateBuilder();
   set bankAccountState(BankAccountStateBuilder? bankAccountState) =>
       _$this._bankAccountState = bankAccountState;
 
   PurchaseOrderStateBuilder? _purchaseOrderState;
   PurchaseOrderStateBuilder get purchaseOrderState =>
-      _$this._purchaseOrderState ??= new PurchaseOrderStateBuilder();
+      _$this._purchaseOrderState ??= PurchaseOrderStateBuilder();
   set purchaseOrderState(PurchaseOrderStateBuilder? purchaseOrderState) =>
       _$this._purchaseOrderState = purchaseOrderState;
 
   RecurringExpenseStateBuilder? _recurringExpenseState;
   RecurringExpenseStateBuilder get recurringExpenseState =>
-      _$this._recurringExpenseState ??= new RecurringExpenseStateBuilder();
+      _$this._recurringExpenseState ??= RecurringExpenseStateBuilder();
   set recurringExpenseState(
           RecurringExpenseStateBuilder? recurringExpenseState) =>
       _$this._recurringExpenseState = recurringExpenseState;
 
   SubscriptionStateBuilder? _subscriptionState;
   SubscriptionStateBuilder get subscriptionState =>
-      _$this._subscriptionState ??= new SubscriptionStateBuilder();
+      _$this._subscriptionState ??= SubscriptionStateBuilder();
   set subscriptionState(SubscriptionStateBuilder? subscriptionState) =>
       _$this._subscriptionState = subscriptionState;
 
   TaskStatusStateBuilder? _taskStatusState;
   TaskStatusStateBuilder get taskStatusState =>
-      _$this._taskStatusState ??= new TaskStatusStateBuilder();
+      _$this._taskStatusState ??= TaskStatusStateBuilder();
   set taskStatusState(TaskStatusStateBuilder? taskStatusState) =>
       _$this._taskStatusState = taskStatusState;
 
   ExpenseCategoryStateBuilder? _expenseCategoryState;
   ExpenseCategoryStateBuilder get expenseCategoryState =>
-      _$this._expenseCategoryState ??= new ExpenseCategoryStateBuilder();
+      _$this._expenseCategoryState ??= ExpenseCategoryStateBuilder();
   set expenseCategoryState(ExpenseCategoryStateBuilder? expenseCategoryState) =>
       _$this._expenseCategoryState = expenseCategoryState;
 
   RecurringInvoiceStateBuilder? _recurringInvoiceState;
   RecurringInvoiceStateBuilder get recurringInvoiceState =>
-      _$this._recurringInvoiceState ??= new RecurringInvoiceStateBuilder();
+      _$this._recurringInvoiceState ??= RecurringInvoiceStateBuilder();
   set recurringInvoiceState(
           RecurringInvoiceStateBuilder? recurringInvoiceState) =>
       _$this._recurringInvoiceState = recurringInvoiceState;
 
   WebhookStateBuilder? _webhookState;
   WebhookStateBuilder get webhookState =>
-      _$this._webhookState ??= new WebhookStateBuilder();
+      _$this._webhookState ??= WebhookStateBuilder();
   set webhookState(WebhookStateBuilder? webhookState) =>
       _$this._webhookState = webhookState;
 
   TokenStateBuilder? _tokenState;
   TokenStateBuilder get tokenState =>
-      _$this._tokenState ??= new TokenStateBuilder();
+      _$this._tokenState ??= TokenStateBuilder();
   set tokenState(TokenStateBuilder? tokenState) =>
       _$this._tokenState = tokenState;
 
   PaymentTermStateBuilder? _paymentTermState;
   PaymentTermStateBuilder get paymentTermState =>
-      _$this._paymentTermState ??= new PaymentTermStateBuilder();
+      _$this._paymentTermState ??= PaymentTermStateBuilder();
   set paymentTermState(PaymentTermStateBuilder? paymentTermState) =>
       _$this._paymentTermState = paymentTermState;
 
   DesignStateBuilder? _designState;
   DesignStateBuilder get designState =>
-      _$this._designState ??= new DesignStateBuilder();
+      _$this._designState ??= DesignStateBuilder();
   set designState(DesignStateBuilder? designState) =>
       _$this._designState = designState;
 
   CreditStateBuilder? _creditState;
   CreditStateBuilder get creditState =>
-      _$this._creditState ??= new CreditStateBuilder();
+      _$this._creditState ??= CreditStateBuilder();
   set creditState(CreditStateBuilder? creditState) =>
       _$this._creditState = creditState;
 
   UserStateBuilder? _userState;
-  UserStateBuilder get userState =>
-      _$this._userState ??= new UserStateBuilder();
+  UserStateBuilder get userState => _$this._userState ??= UserStateBuilder();
   set userState(UserStateBuilder? userState) => _$this._userState = userState;
 
   TaxRateStateBuilder? _taxRateState;
   TaxRateStateBuilder get taxRateState =>
-      _$this._taxRateState ??= new TaxRateStateBuilder();
+      _$this._taxRateState ??= TaxRateStateBuilder();
   set taxRateState(TaxRateStateBuilder? taxRateState) =>
       _$this._taxRateState = taxRateState;
 
   CompanyGatewayStateBuilder? _companyGatewayState;
   CompanyGatewayStateBuilder get companyGatewayState =>
-      _$this._companyGatewayState ??= new CompanyGatewayStateBuilder();
+      _$this._companyGatewayState ??= CompanyGatewayStateBuilder();
   set companyGatewayState(CompanyGatewayStateBuilder? companyGatewayState) =>
       _$this._companyGatewayState = companyGatewayState;
 
   GroupStateBuilder? _groupState;
   GroupStateBuilder get groupState =>
-      _$this._groupState ??= new GroupStateBuilder();
+      _$this._groupState ??= GroupStateBuilder();
   set groupState(GroupStateBuilder? groupState) =>
       _$this._groupState = groupState;
 
@@ -792,7 +726,6 @@ class UserCompanyStateBuilder
 
   @override
   void replace(UserCompanyState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$UserCompanyState;
   }
 
@@ -808,39 +741,40 @@ class UserCompanyStateBuilder
     _$UserCompanyState _$result;
     try {
       _$result = _$v ??
-          new _$UserCompanyState._(
-              lastUpdated: BuiltValueNullFieldError.checkNotNull(
-                  lastUpdated, r'UserCompanyState', 'lastUpdated'),
-              userCompany: userCompany.build(),
-              documentState: documentState.build(),
-              productState: productState.build(),
-              clientState: clientState.build(),
-              invoiceState: invoiceState.build(),
-              expenseState: expenseState.build(),
-              vendorState: vendorState.build(),
-              taskState: taskState.build(),
-              projectState: projectState.build(),
-              paymentState: paymentState.build(),
-              quoteState: quoteState.build(),
-              scheduleState: scheduleState.build(),
-              transactionRuleState: transactionRuleState.build(),
-              transactionState: transactionState.build(),
-              bankAccountState: bankAccountState.build(),
-              purchaseOrderState: purchaseOrderState.build(),
-              recurringExpenseState: recurringExpenseState.build(),
-              subscriptionState: subscriptionState.build(),
-              taskStatusState: taskStatusState.build(),
-              expenseCategoryState: expenseCategoryState.build(),
-              recurringInvoiceState: recurringInvoiceState.build(),
-              webhookState: webhookState.build(),
-              tokenState: tokenState.build(),
-              paymentTermState: paymentTermState.build(),
-              designState: designState.build(),
-              creditState: creditState.build(),
-              userState: userState.build(),
-              taxRateState: taxRateState.build(),
-              companyGatewayState: companyGatewayState.build(),
-              groupState: groupState.build());
+          _$UserCompanyState._(
+            lastUpdated: BuiltValueNullFieldError.checkNotNull(
+                lastUpdated, r'UserCompanyState', 'lastUpdated'),
+            userCompany: userCompany.build(),
+            documentState: documentState.build(),
+            productState: productState.build(),
+            clientState: clientState.build(),
+            invoiceState: invoiceState.build(),
+            expenseState: expenseState.build(),
+            vendorState: vendorState.build(),
+            taskState: taskState.build(),
+            projectState: projectState.build(),
+            paymentState: paymentState.build(),
+            quoteState: quoteState.build(),
+            scheduleState: scheduleState.build(),
+            transactionRuleState: transactionRuleState.build(),
+            transactionState: transactionState.build(),
+            bankAccountState: bankAccountState.build(),
+            purchaseOrderState: purchaseOrderState.build(),
+            recurringExpenseState: recurringExpenseState.build(),
+            subscriptionState: subscriptionState.build(),
+            taskStatusState: taskStatusState.build(),
+            expenseCategoryState: expenseCategoryState.build(),
+            recurringInvoiceState: recurringInvoiceState.build(),
+            webhookState: webhookState.build(),
+            tokenState: tokenState.build(),
+            paymentTermState: paymentTermState.build(),
+            designState: designState.build(),
+            creditState: creditState.build(),
+            userState: userState.build(),
+            taxRateState: taxRateState.build(),
+            companyGatewayState: companyGatewayState.build(),
+            groupState: groupState.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -905,7 +839,7 @@ class UserCompanyStateBuilder
         _$failedField = 'groupState';
         groupState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'UserCompanyState', _$failedField, e.toString());
       }
       rethrow;

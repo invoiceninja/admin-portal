@@ -7,7 +7,7 @@ part of 'document_status_model.dart';
 // **************************************************************************
 
 Serializer<DocumentStatusEntity> _$documentStatusEntitySerializer =
-    new _$DocumentStatusEntitySerializer();
+    _$DocumentStatusEntitySerializer();
 
 class _$DocumentStatusEntitySerializer
     implements StructuredSerializer<DocumentStatusEntity> {
@@ -37,7 +37,7 @@ class _$DocumentStatusEntitySerializer
   DocumentStatusEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new DocumentStatusEntityBuilder();
+    final result = DocumentStatusEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -68,14 +68,9 @@ class _$DocumentStatusEntity extends DocumentStatusEntity {
 
   factory _$DocumentStatusEntity(
           [void Function(DocumentStatusEntityBuilder)? updates]) =>
-      (new DocumentStatusEntityBuilder()..update(updates))._build();
+      (DocumentStatusEntityBuilder()..update(updates))._build();
 
-  _$DocumentStatusEntity._({required this.id, required this.name}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(id, r'DocumentStatusEntity', 'id');
-    BuiltValueNullFieldError.checkNotNull(
-        name, r'DocumentStatusEntity', 'name');
-  }
-
+  _$DocumentStatusEntity._({required this.id, required this.name}) : super._();
   @override
   DocumentStatusEntity rebuild(
           void Function(DocumentStatusEntityBuilder) updates) =>
@@ -83,7 +78,7 @@ class _$DocumentStatusEntity extends DocumentStatusEntity {
 
   @override
   DocumentStatusEntityBuilder toBuilder() =>
-      new DocumentStatusEntityBuilder()..replace(this);
+      DocumentStatusEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -139,7 +134,6 @@ class DocumentStatusEntityBuilder
 
   @override
   void replace(DocumentStatusEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DocumentStatusEntity;
   }
 
@@ -153,11 +147,12 @@ class DocumentStatusEntityBuilder
 
   _$DocumentStatusEntity _build() {
     final _$result = _$v ??
-        new _$DocumentStatusEntity._(
-            id: BuiltValueNullFieldError.checkNotNull(
-                id, r'DocumentStatusEntity', 'id'),
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'DocumentStatusEntity', 'name'));
+        _$DocumentStatusEntity._(
+          id: BuiltValueNullFieldError.checkNotNull(
+              id, r'DocumentStatusEntity', 'id'),
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'DocumentStatusEntity', 'name'),
+        );
     replace(_$result);
     return _$result;
   }

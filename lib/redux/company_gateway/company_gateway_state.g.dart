@@ -7,9 +7,9 @@ part of 'company_gateway_state.dart';
 // **************************************************************************
 
 Serializer<CompanyGatewayState> _$companyGatewayStateSerializer =
-    new _$CompanyGatewayStateSerializer();
+    _$CompanyGatewayStateSerializer();
 Serializer<CompanyGatewayUIState> _$companyGatewayUIStateSerializer =
-    new _$CompanyGatewayUIStateSerializer();
+    _$CompanyGatewayUIStateSerializer();
 
 class _$CompanyGatewayStateSerializer
     implements StructuredSerializer<CompanyGatewayState> {
@@ -45,7 +45,7 @@ class _$CompanyGatewayStateSerializer
   CompanyGatewayState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new CompanyGatewayStateBuilder();
+    final result = CompanyGatewayStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -124,7 +124,7 @@ class _$CompanyGatewayUIStateSerializer
   CompanyGatewayUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new CompanyGatewayUIStateBuilder();
+    final result = CompanyGatewayUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -168,13 +168,9 @@ class _$CompanyGatewayState extends CompanyGatewayState {
 
   factory _$CompanyGatewayState(
           [void Function(CompanyGatewayStateBuilder)? updates]) =>
-      (new CompanyGatewayStateBuilder()..update(updates))._build();
+      (CompanyGatewayStateBuilder()..update(updates))._build();
 
-  _$CompanyGatewayState._({required this.map, required this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, r'CompanyGatewayState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, r'CompanyGatewayState', 'list');
-  }
-
+  _$CompanyGatewayState._({required this.map, required this.list}) : super._();
   @override
   CompanyGatewayState rebuild(
           void Function(CompanyGatewayStateBuilder) updates) =>
@@ -182,7 +178,7 @@ class _$CompanyGatewayState extends CompanyGatewayState {
 
   @override
   CompanyGatewayStateBuilder toBuilder() =>
-      new CompanyGatewayStateBuilder()..replace(this);
+      CompanyGatewayStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -218,11 +214,11 @@ class CompanyGatewayStateBuilder
 
   MapBuilder<String, CompanyGatewayEntity>? _map;
   MapBuilder<String, CompanyGatewayEntity> get map =>
-      _$this._map ??= new MapBuilder<String, CompanyGatewayEntity>();
+      _$this._map ??= MapBuilder<String, CompanyGatewayEntity>();
   set map(MapBuilder<String, CompanyGatewayEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
-  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  ListBuilder<String> get list => _$this._list ??= ListBuilder<String>();
   set list(ListBuilder<String>? list) => _$this._list = list;
 
   CompanyGatewayStateBuilder();
@@ -239,7 +235,6 @@ class CompanyGatewayStateBuilder
 
   @override
   void replace(CompanyGatewayState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CompanyGatewayState;
   }
 
@@ -255,7 +250,10 @@ class CompanyGatewayStateBuilder
     _$CompanyGatewayState _$result;
     try {
       _$result = _$v ??
-          new _$CompanyGatewayState._(map: map.build(), list: list.build());
+          _$CompanyGatewayState._(
+            map: map.build(),
+            list: list.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -264,7 +262,7 @@ class CompanyGatewayStateBuilder
         _$failedField = 'list';
         list.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'CompanyGatewayState', _$failedField, e.toString());
       }
       rethrow;
@@ -292,7 +290,7 @@ class _$CompanyGatewayUIState extends CompanyGatewayUIState {
 
   factory _$CompanyGatewayUIState(
           [void Function(CompanyGatewayUIStateBuilder)? updates]) =>
-      (new CompanyGatewayUIStateBuilder()..update(updates))._build();
+      (CompanyGatewayUIStateBuilder()..update(updates))._build();
 
   _$CompanyGatewayUIState._(
       {this.editing,
@@ -302,13 +300,7 @@ class _$CompanyGatewayUIState extends CompanyGatewayUIState {
       required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        listUIState, r'CompanyGatewayUIState', 'listUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        tabIndex, r'CompanyGatewayUIState', 'tabIndex');
-  }
-
+      : super._();
   @override
   CompanyGatewayUIState rebuild(
           void Function(CompanyGatewayUIStateBuilder) updates) =>
@@ -316,7 +308,7 @@ class _$CompanyGatewayUIState extends CompanyGatewayUIState {
 
   @override
   CompanyGatewayUIStateBuilder toBuilder() =>
-      new CompanyGatewayUIStateBuilder()..replace(this);
+      CompanyGatewayUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -367,13 +359,13 @@ class CompanyGatewayUIStateBuilder
 
   CompanyGatewayEntityBuilder? _editing;
   CompanyGatewayEntityBuilder get editing =>
-      _$this._editing ??= new CompanyGatewayEntityBuilder();
+      _$this._editing ??= CompanyGatewayEntityBuilder();
   set editing(CompanyGatewayEntityBuilder? editing) =>
       _$this._editing = editing;
 
   ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
-      _$this._listUIState ??= new ListUIStateBuilder();
+      _$this._listUIState ??= ListUIStateBuilder();
   set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
@@ -419,7 +411,6 @@ class CompanyGatewayUIStateBuilder
 
   @override
   void replace(CompanyGatewayUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CompanyGatewayUIState;
   }
 
@@ -435,15 +426,16 @@ class CompanyGatewayUIStateBuilder
     _$CompanyGatewayUIState _$result;
     try {
       _$result = _$v ??
-          new _$CompanyGatewayUIState._(
-              editing: _editing?.build(),
-              listUIState: listUIState.build(),
-              selectedId: selectedId,
-              forceSelected: forceSelected,
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'CompanyGatewayUIState', 'tabIndex'),
-              saveCompleter: saveCompleter,
-              cancelCompleter: cancelCompleter);
+          _$CompanyGatewayUIState._(
+            editing: _editing?.build(),
+            listUIState: listUIState.build(),
+            selectedId: selectedId,
+            forceSelected: forceSelected,
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'CompanyGatewayUIState', 'tabIndex'),
+            saveCompleter: saveCompleter,
+            cancelCompleter: cancelCompleter,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -452,7 +444,7 @@ class CompanyGatewayUIStateBuilder
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'CompanyGatewayUIState', _$failedField, e.toString());
       }
       rethrow;

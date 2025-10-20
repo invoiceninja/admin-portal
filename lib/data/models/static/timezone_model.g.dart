@@ -7,11 +7,11 @@ part of 'timezone_model.dart';
 // **************************************************************************
 
 Serializer<TimezoneListResponse> _$timezoneListResponseSerializer =
-    new _$TimezoneListResponseSerializer();
+    _$TimezoneListResponseSerializer();
 Serializer<TimezoneItemResponse> _$timezoneItemResponseSerializer =
-    new _$TimezoneItemResponseSerializer();
+    _$TimezoneItemResponseSerializer();
 Serializer<TimezoneEntity> _$timezoneEntitySerializer =
-    new _$TimezoneEntitySerializer();
+    _$TimezoneEntitySerializer();
 
 class _$TimezoneListResponseSerializer
     implements StructuredSerializer<TimezoneListResponse> {
@@ -41,7 +41,7 @@ class _$TimezoneListResponseSerializer
   TimezoneListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TimezoneListResponseBuilder();
+    final result = TimezoneListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -89,7 +89,7 @@ class _$TimezoneItemResponseSerializer
   TimezoneItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TimezoneItemResponseBuilder();
+    final result = TimezoneItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -136,7 +136,7 @@ class _$TimezoneEntitySerializer
   TimezoneEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TimezoneEntityBuilder();
+    final result = TimezoneEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -169,13 +169,9 @@ class _$TimezoneListResponse extends TimezoneListResponse {
 
   factory _$TimezoneListResponse(
           [void Function(TimezoneListResponseBuilder)? updates]) =>
-      (new TimezoneListResponseBuilder()..update(updates))._build();
+      (TimezoneListResponseBuilder()..update(updates))._build();
 
-  _$TimezoneListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'TimezoneListResponse', 'data');
-  }
-
+  _$TimezoneListResponse._({required this.data}) : super._();
   @override
   TimezoneListResponse rebuild(
           void Function(TimezoneListResponseBuilder) updates) =>
@@ -183,7 +179,7 @@ class _$TimezoneListResponse extends TimezoneListResponse {
 
   @override
   TimezoneListResponseBuilder toBuilder() =>
-      new TimezoneListResponseBuilder()..replace(this);
+      TimezoneListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -215,7 +211,7 @@ class TimezoneListResponseBuilder
 
   ListBuilder<TimezoneEntity>? _data;
   ListBuilder<TimezoneEntity> get data =>
-      _$this._data ??= new ListBuilder<TimezoneEntity>();
+      _$this._data ??= ListBuilder<TimezoneEntity>();
   set data(ListBuilder<TimezoneEntity>? data) => _$this._data = data;
 
   TimezoneListResponseBuilder();
@@ -231,7 +227,6 @@ class TimezoneListResponseBuilder
 
   @override
   void replace(TimezoneListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TimezoneListResponse;
   }
 
@@ -246,14 +241,17 @@ class TimezoneListResponseBuilder
   _$TimezoneListResponse _build() {
     _$TimezoneListResponse _$result;
     try {
-      _$result = _$v ?? new _$TimezoneListResponse._(data: data.build());
+      _$result = _$v ??
+          _$TimezoneListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TimezoneListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -269,13 +267,9 @@ class _$TimezoneItemResponse extends TimezoneItemResponse {
 
   factory _$TimezoneItemResponse(
           [void Function(TimezoneItemResponseBuilder)? updates]) =>
-      (new TimezoneItemResponseBuilder()..update(updates))._build();
+      (TimezoneItemResponseBuilder()..update(updates))._build();
 
-  _$TimezoneItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'TimezoneItemResponse', 'data');
-  }
-
+  _$TimezoneItemResponse._({required this.data}) : super._();
   @override
   TimezoneItemResponse rebuild(
           void Function(TimezoneItemResponseBuilder) updates) =>
@@ -283,7 +277,7 @@ class _$TimezoneItemResponse extends TimezoneItemResponse {
 
   @override
   TimezoneItemResponseBuilder toBuilder() =>
-      new TimezoneItemResponseBuilder()..replace(this);
+      TimezoneItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -314,8 +308,7 @@ class TimezoneItemResponseBuilder
   _$TimezoneItemResponse? _$v;
 
   TimezoneEntityBuilder? _data;
-  TimezoneEntityBuilder get data =>
-      _$this._data ??= new TimezoneEntityBuilder();
+  TimezoneEntityBuilder get data => _$this._data ??= TimezoneEntityBuilder();
   set data(TimezoneEntityBuilder? data) => _$this._data = data;
 
   TimezoneItemResponseBuilder();
@@ -331,7 +324,6 @@ class TimezoneItemResponseBuilder
 
   @override
   void replace(TimezoneItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TimezoneItemResponse;
   }
 
@@ -346,14 +338,17 @@ class TimezoneItemResponseBuilder
   _$TimezoneItemResponse _build() {
     _$TimezoneItemResponse _$result;
     try {
-      _$result = _$v ?? new _$TimezoneItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$TimezoneItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TimezoneItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -372,24 +367,17 @@ class _$TimezoneEntity extends TimezoneEntity {
   final String id;
 
   factory _$TimezoneEntity([void Function(TimezoneEntityBuilder)? updates]) =>
-      (new TimezoneEntityBuilder()..update(updates))._build();
+      (TimezoneEntityBuilder()..update(updates))._build();
 
   _$TimezoneEntity._(
       {required this.name, required this.location, required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'TimezoneEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(
-        location, r'TimezoneEntity', 'location');
-    BuiltValueNullFieldError.checkNotNull(id, r'TimezoneEntity', 'id');
-  }
-
+      : super._();
   @override
   TimezoneEntity rebuild(void Function(TimezoneEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  TimezoneEntityBuilder toBuilder() =>
-      new TimezoneEntityBuilder()..replace(this);
+  TimezoneEntityBuilder toBuilder() => TimezoneEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -453,7 +441,6 @@ class TimezoneEntityBuilder
 
   @override
   void replace(TimezoneEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TimezoneEntity;
   }
 
@@ -467,13 +454,14 @@ class TimezoneEntityBuilder
 
   _$TimezoneEntity _build() {
     final _$result = _$v ??
-        new _$TimezoneEntity._(
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'TimezoneEntity', 'name'),
-            location: BuiltValueNullFieldError.checkNotNull(
-                location, r'TimezoneEntity', 'location'),
-            id: BuiltValueNullFieldError.checkNotNull(
-                id, r'TimezoneEntity', 'id'));
+        _$TimezoneEntity._(
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'TimezoneEntity', 'name'),
+          location: BuiltValueNullFieldError.checkNotNull(
+              location, r'TimezoneEntity', 'location'),
+          id: BuiltValueNullFieldError.checkNotNull(
+              id, r'TimezoneEntity', 'id'),
+        );
     replace(_$result);
     return _$result;
   }

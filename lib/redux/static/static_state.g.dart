@@ -6,7 +6,7 @@ part of 'static_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<StaticState> _$staticStateSerializer = new _$StaticStateSerializer();
+Serializer<StaticState> _$staticStateSerializer = _$StaticStateSerializer();
 
 class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
   @override
@@ -88,7 +88,7 @@ class _$StaticStateSerializer implements StructuredSerializer<StaticState> {
   @override
   StaticState deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new StaticStateBuilder();
+    final result = StaticStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -220,7 +220,7 @@ class _$StaticState extends StaticState {
   final BuiltMap<String, EInvoiceFieldEntity> eInvoiceSchema;
 
   factory _$StaticState([void Function(StaticStateBuilder)? updates]) =>
-      (new StaticStateBuilder()..update(updates))._build();
+      (StaticStateBuilder()..update(updates))._build();
 
   _$StaticState._(
       {this.updatedAt,
@@ -236,38 +236,13 @@ class _$StaticState extends StaticState {
       required this.templateMap,
       required this.bulkUpdates,
       required this.eInvoiceSchema})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        currencyMap, r'StaticState', 'currencyMap');
-    BuiltValueNullFieldError.checkNotNull(sizeMap, r'StaticState', 'sizeMap');
-    BuiltValueNullFieldError.checkNotNull(
-        gatewayMap, r'StaticState', 'gatewayMap');
-    BuiltValueNullFieldError.checkNotNull(
-        industryMap, r'StaticState', 'industryMap');
-    BuiltValueNullFieldError.checkNotNull(
-        timezoneMap, r'StaticState', 'timezoneMap');
-    BuiltValueNullFieldError.checkNotNull(
-        dateFormatMap, r'StaticState', 'dateFormatMap');
-    BuiltValueNullFieldError.checkNotNull(
-        languageMap, r'StaticState', 'languageMap');
-    BuiltValueNullFieldError.checkNotNull(
-        paymentTypeMap, r'StaticState', 'paymentTypeMap');
-    BuiltValueNullFieldError.checkNotNull(
-        countryMap, r'StaticState', 'countryMap');
-    BuiltValueNullFieldError.checkNotNull(
-        templateMap, r'StaticState', 'templateMap');
-    BuiltValueNullFieldError.checkNotNull(
-        bulkUpdates, r'StaticState', 'bulkUpdates');
-    BuiltValueNullFieldError.checkNotNull(
-        eInvoiceSchema, r'StaticState', 'eInvoiceSchema');
-  }
-
+      : super._();
   @override
   StaticState rebuild(void Function(StaticStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  StaticStateBuilder toBuilder() => new StaticStateBuilder()..replace(this);
+  StaticStateBuilder toBuilder() => StaticStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -339,73 +314,73 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
 
   MapBuilder<String, CurrencyEntity>? _currencyMap;
   MapBuilder<String, CurrencyEntity> get currencyMap =>
-      _$this._currencyMap ??= new MapBuilder<String, CurrencyEntity>();
+      _$this._currencyMap ??= MapBuilder<String, CurrencyEntity>();
   set currencyMap(MapBuilder<String, CurrencyEntity>? currencyMap) =>
       _$this._currencyMap = currencyMap;
 
   MapBuilder<String, SizeEntity>? _sizeMap;
   MapBuilder<String, SizeEntity> get sizeMap =>
-      _$this._sizeMap ??= new MapBuilder<String, SizeEntity>();
+      _$this._sizeMap ??= MapBuilder<String, SizeEntity>();
   set sizeMap(MapBuilder<String, SizeEntity>? sizeMap) =>
       _$this._sizeMap = sizeMap;
 
   MapBuilder<String, GatewayEntity>? _gatewayMap;
   MapBuilder<String, GatewayEntity> get gatewayMap =>
-      _$this._gatewayMap ??= new MapBuilder<String, GatewayEntity>();
+      _$this._gatewayMap ??= MapBuilder<String, GatewayEntity>();
   set gatewayMap(MapBuilder<String, GatewayEntity>? gatewayMap) =>
       _$this._gatewayMap = gatewayMap;
 
   MapBuilder<String, IndustryEntity>? _industryMap;
   MapBuilder<String, IndustryEntity> get industryMap =>
-      _$this._industryMap ??= new MapBuilder<String, IndustryEntity>();
+      _$this._industryMap ??= MapBuilder<String, IndustryEntity>();
   set industryMap(MapBuilder<String, IndustryEntity>? industryMap) =>
       _$this._industryMap = industryMap;
 
   MapBuilder<String, TimezoneEntity>? _timezoneMap;
   MapBuilder<String, TimezoneEntity> get timezoneMap =>
-      _$this._timezoneMap ??= new MapBuilder<String, TimezoneEntity>();
+      _$this._timezoneMap ??= MapBuilder<String, TimezoneEntity>();
   set timezoneMap(MapBuilder<String, TimezoneEntity>? timezoneMap) =>
       _$this._timezoneMap = timezoneMap;
 
   MapBuilder<String, DateFormatEntity>? _dateFormatMap;
   MapBuilder<String, DateFormatEntity> get dateFormatMap =>
-      _$this._dateFormatMap ??= new MapBuilder<String, DateFormatEntity>();
+      _$this._dateFormatMap ??= MapBuilder<String, DateFormatEntity>();
   set dateFormatMap(MapBuilder<String, DateFormatEntity>? dateFormatMap) =>
       _$this._dateFormatMap = dateFormatMap;
 
   MapBuilder<String, LanguageEntity>? _languageMap;
   MapBuilder<String, LanguageEntity> get languageMap =>
-      _$this._languageMap ??= new MapBuilder<String, LanguageEntity>();
+      _$this._languageMap ??= MapBuilder<String, LanguageEntity>();
   set languageMap(MapBuilder<String, LanguageEntity>? languageMap) =>
       _$this._languageMap = languageMap;
 
   MapBuilder<String, PaymentTypeEntity>? _paymentTypeMap;
   MapBuilder<String, PaymentTypeEntity> get paymentTypeMap =>
-      _$this._paymentTypeMap ??= new MapBuilder<String, PaymentTypeEntity>();
+      _$this._paymentTypeMap ??= MapBuilder<String, PaymentTypeEntity>();
   set paymentTypeMap(MapBuilder<String, PaymentTypeEntity>? paymentTypeMap) =>
       _$this._paymentTypeMap = paymentTypeMap;
 
   MapBuilder<String, CountryEntity>? _countryMap;
   MapBuilder<String, CountryEntity> get countryMap =>
-      _$this._countryMap ??= new MapBuilder<String, CountryEntity>();
+      _$this._countryMap ??= MapBuilder<String, CountryEntity>();
   set countryMap(MapBuilder<String, CountryEntity>? countryMap) =>
       _$this._countryMap = countryMap;
 
   MapBuilder<String, TemplateEntity>? _templateMap;
   MapBuilder<String, TemplateEntity> get templateMap =>
-      _$this._templateMap ??= new MapBuilder<String, TemplateEntity>();
+      _$this._templateMap ??= MapBuilder<String, TemplateEntity>();
   set templateMap(MapBuilder<String, TemplateEntity>? templateMap) =>
       _$this._templateMap = templateMap;
 
   MapBuilder<String, BuiltList<String>>? _bulkUpdates;
   MapBuilder<String, BuiltList<String>> get bulkUpdates =>
-      _$this._bulkUpdates ??= new MapBuilder<String, BuiltList<String>>();
+      _$this._bulkUpdates ??= MapBuilder<String, BuiltList<String>>();
   set bulkUpdates(MapBuilder<String, BuiltList<String>>? bulkUpdates) =>
       _$this._bulkUpdates = bulkUpdates;
 
   MapBuilder<String, EInvoiceFieldEntity>? _eInvoiceSchema;
   MapBuilder<String, EInvoiceFieldEntity> get eInvoiceSchema =>
-      _$this._eInvoiceSchema ??= new MapBuilder<String, EInvoiceFieldEntity>();
+      _$this._eInvoiceSchema ??= MapBuilder<String, EInvoiceFieldEntity>();
   set eInvoiceSchema(MapBuilder<String, EInvoiceFieldEntity>? eInvoiceSchema) =>
       _$this._eInvoiceSchema = eInvoiceSchema;
 
@@ -436,7 +411,6 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
 
   @override
   void replace(StaticState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$StaticState;
   }
 
@@ -452,20 +426,21 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
     _$StaticState _$result;
     try {
       _$result = _$v ??
-          new _$StaticState._(
-              updatedAt: updatedAt,
-              currencyMap: currencyMap.build(),
-              sizeMap: sizeMap.build(),
-              gatewayMap: gatewayMap.build(),
-              industryMap: industryMap.build(),
-              timezoneMap: timezoneMap.build(),
-              dateFormatMap: dateFormatMap.build(),
-              languageMap: languageMap.build(),
-              paymentTypeMap: paymentTypeMap.build(),
-              countryMap: countryMap.build(),
-              templateMap: templateMap.build(),
-              bulkUpdates: bulkUpdates.build(),
-              eInvoiceSchema: eInvoiceSchema.build());
+          _$StaticState._(
+            updatedAt: updatedAt,
+            currencyMap: currencyMap.build(),
+            sizeMap: sizeMap.build(),
+            gatewayMap: gatewayMap.build(),
+            industryMap: industryMap.build(),
+            timezoneMap: timezoneMap.build(),
+            dateFormatMap: dateFormatMap.build(),
+            languageMap: languageMap.build(),
+            paymentTypeMap: paymentTypeMap.build(),
+            countryMap: countryMap.build(),
+            templateMap: templateMap.build(),
+            bulkUpdates: bulkUpdates.build(),
+            eInvoiceSchema: eInvoiceSchema.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -494,7 +469,7 @@ class StaticStateBuilder implements Builder<StaticState, StaticStateBuilder> {
         _$failedField = 'eInvoiceSchema';
         eInvoiceSchema.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'StaticState', _$failedField, e.toString());
       }
       rethrow;

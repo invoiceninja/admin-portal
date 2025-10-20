@@ -6,10 +6,9 @@ part of 'webhook_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<WebhookState> _$webhookStateSerializer =
-    new _$WebhookStateSerializer();
+Serializer<WebhookState> _$webhookStateSerializer = _$WebhookStateSerializer();
 Serializer<WebhookUIState> _$webhookUIStateSerializer =
-    new _$WebhookUIStateSerializer();
+    _$WebhookUIStateSerializer();
 
 class _$WebhookStateSerializer implements StructuredSerializer<WebhookState> {
   @override
@@ -38,7 +37,7 @@ class _$WebhookStateSerializer implements StructuredSerializer<WebhookState> {
   WebhookState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new WebhookStateBuilder();
+    final result = WebhookStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -113,7 +112,7 @@ class _$WebhookUIStateSerializer
   WebhookUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new WebhookUIStateBuilder();
+    final result = WebhookUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -155,19 +154,15 @@ class _$WebhookState extends WebhookState {
   final BuiltList<String> list;
 
   factory _$WebhookState([void Function(WebhookStateBuilder)? updates]) =>
-      (new WebhookStateBuilder()..update(updates))._build();
+      (WebhookStateBuilder()..update(updates))._build();
 
-  _$WebhookState._({required this.map, required this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, r'WebhookState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, r'WebhookState', 'list');
-  }
-
+  _$WebhookState._({required this.map, required this.list}) : super._();
   @override
   WebhookState rebuild(void Function(WebhookStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  WebhookStateBuilder toBuilder() => new WebhookStateBuilder()..replace(this);
+  WebhookStateBuilder toBuilder() => WebhookStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -201,11 +196,11 @@ class WebhookStateBuilder
 
   MapBuilder<String, WebhookEntity>? _map;
   MapBuilder<String, WebhookEntity> get map =>
-      _$this._map ??= new MapBuilder<String, WebhookEntity>();
+      _$this._map ??= MapBuilder<String, WebhookEntity>();
   set map(MapBuilder<String, WebhookEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
-  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  ListBuilder<String> get list => _$this._list ??= ListBuilder<String>();
   set list(ListBuilder<String>? list) => _$this._list = list;
 
   WebhookStateBuilder();
@@ -222,7 +217,6 @@ class WebhookStateBuilder
 
   @override
   void replace(WebhookState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$WebhookState;
   }
 
@@ -237,8 +231,11 @@ class WebhookStateBuilder
   _$WebhookState _build() {
     _$WebhookState _$result;
     try {
-      _$result =
-          _$v ?? new _$WebhookState._(map: map.build(), list: list.build());
+      _$result = _$v ??
+          _$WebhookState._(
+            map: map.build(),
+            list: list.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -247,7 +244,7 @@ class WebhookStateBuilder
         _$failedField = 'list';
         list.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'WebhookState', _$failedField, e.toString());
       }
       rethrow;
@@ -274,7 +271,7 @@ class _$WebhookUIState extends WebhookUIState {
   final Completer<Null>? cancelCompleter;
 
   factory _$WebhookUIState([void Function(WebhookUIStateBuilder)? updates]) =>
-      (new WebhookUIStateBuilder()..update(updates))._build();
+      (WebhookUIStateBuilder()..update(updates))._build();
 
   _$WebhookUIState._(
       {this.editing,
@@ -284,20 +281,13 @@ class _$WebhookUIState extends WebhookUIState {
       required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        listUIState, r'WebhookUIState', 'listUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        tabIndex, r'WebhookUIState', 'tabIndex');
-  }
-
+      : super._();
   @override
   WebhookUIState rebuild(void Function(WebhookUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  WebhookUIStateBuilder toBuilder() =>
-      new WebhookUIStateBuilder()..replace(this);
+  WebhookUIStateBuilder toBuilder() => WebhookUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -348,12 +338,12 @@ class WebhookUIStateBuilder
 
   WebhookEntityBuilder? _editing;
   WebhookEntityBuilder get editing =>
-      _$this._editing ??= new WebhookEntityBuilder();
+      _$this._editing ??= WebhookEntityBuilder();
   set editing(WebhookEntityBuilder? editing) => _$this._editing = editing;
 
   ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
-      _$this._listUIState ??= new ListUIStateBuilder();
+      _$this._listUIState ??= ListUIStateBuilder();
   set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
@@ -399,7 +389,6 @@ class WebhookUIStateBuilder
 
   @override
   void replace(WebhookUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$WebhookUIState;
   }
 
@@ -415,15 +404,16 @@ class WebhookUIStateBuilder
     _$WebhookUIState _$result;
     try {
       _$result = _$v ??
-          new _$WebhookUIState._(
-              editing: _editing?.build(),
-              listUIState: listUIState.build(),
-              selectedId: selectedId,
-              forceSelected: forceSelected,
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'WebhookUIState', 'tabIndex'),
-              saveCompleter: saveCompleter,
-              cancelCompleter: cancelCompleter);
+          _$WebhookUIState._(
+            editing: _editing?.build(),
+            listUIState: listUIState.build(),
+            selectedId: selectedId,
+            forceSelected: forceSelected,
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'WebhookUIState', 'tabIndex'),
+            saveCompleter: saveCompleter,
+            cancelCompleter: cancelCompleter,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -432,7 +422,7 @@ class WebhookUIStateBuilder
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'WebhookUIState', _$failedField, e.toString());
       }
       rethrow;

@@ -7,7 +7,7 @@ part of 'account_model.dart';
 // **************************************************************************
 
 Serializer<AccountEntity> _$accountEntitySerializer =
-    new _$AccountEntitySerializer();
+    _$AccountEntitySerializer();
 
 class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
   @override
@@ -103,7 +103,7 @@ class _$AccountEntitySerializer implements StructuredSerializer<AccountEntity> {
   AccountEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new AccountEntityBuilder();
+    final result = AccountEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -277,7 +277,7 @@ class _$AccountEntity extends AccountEntity {
   final String uploadExtensions;
 
   factory _$AccountEntity([void Function(AccountEntityBuilder)? updates]) =>
-      (new AccountEntityBuilder()..update(updates))._build();
+      (AccountEntityBuilder()..update(updates))._build();
 
   _$AccountEntity._(
       {required this.id,
@@ -306,64 +306,13 @@ class _$AccountEntity extends AccountEntity {
       required this.taxApiEnabled,
       required this.nordigenEnabled,
       required this.uploadExtensions})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(id, r'AccountEntity', 'id');
-    BuiltValueNullFieldError.checkNotNull(key, r'AccountEntity', 'key');
-    BuiltValueNullFieldError.checkNotNull(
-        trialStarted, r'AccountEntity', 'trialStarted');
-    BuiltValueNullFieldError.checkNotNull(
-        defaultUrl, r'AccountEntity', 'defaultUrl');
-    BuiltValueNullFieldError.checkNotNull(
-        reportErrors, r'AccountEntity', 'reportErrors');
-    BuiltValueNullFieldError.checkNotNull(plan, r'AccountEntity', 'plan');
-    BuiltValueNullFieldError.checkNotNull(
-        planExpires, r'AccountEntity', 'planExpires');
-    BuiltValueNullFieldError.checkNotNull(
-        latestVersion, r'AccountEntity', 'latestVersion');
-    BuiltValueNullFieldError.checkNotNull(
-        currentVersion, r'AccountEntity', 'currentVersion');
-    BuiltValueNullFieldError.checkNotNull(
-        debugEnabled, r'AccountEntity', 'debugEnabled');
-    BuiltValueNullFieldError.checkNotNull(
-        isDocker, r'AccountEntity', 'isDocker');
-    BuiltValueNullFieldError.checkNotNull(
-        isMigrated, r'AccountEntity', 'isMigrated');
-    BuiltValueNullFieldError.checkNotNull(
-        isHosted, r'AccountEntity', 'isHosted');
-    BuiltValueNullFieldError.checkNotNull(
-        isSchedulerRunning, r'AccountEntity', 'isSchedulerRunning');
-    BuiltValueNullFieldError.checkNotNull(
-        disableAutoUpdate, r'AccountEntity', 'disableAutoUpdate');
-    BuiltValueNullFieldError.checkNotNull(
-        defaultCompanyId, r'AccountEntity', 'defaultCompanyId');
-    BuiltValueNullFieldError.checkNotNull(
-        hostedClientCount, r'AccountEntity', 'hostedClientCount');
-    BuiltValueNullFieldError.checkNotNull(
-        hostedCompanyCount, r'AccountEntity', 'hostedCompanyCount');
-    BuiltValueNullFieldError.checkNotNull(
-        setReactAsDefaultAP, r'AccountEntity', 'setReactAsDefaultAP');
-    BuiltValueNullFieldError.checkNotNull(
-        accountSmsVerified, r'AccountEntity', 'accountSmsVerified');
-    BuiltValueNullFieldError.checkNotNull(
-        trialDaysLeft, r'AccountEntity', 'trialDaysLeft');
-    BuiltValueNullFieldError.checkNotNull(
-        hasIapPlan, r'AccountEntity', 'hasIapPlan');
-    BuiltValueNullFieldError.checkNotNull(
-        paymentId, r'AccountEntity', 'paymentId');
-    BuiltValueNullFieldError.checkNotNull(
-        taxApiEnabled, r'AccountEntity', 'taxApiEnabled');
-    BuiltValueNullFieldError.checkNotNull(
-        nordigenEnabled, r'AccountEntity', 'nordigenEnabled');
-    BuiltValueNullFieldError.checkNotNull(
-        uploadExtensions, r'AccountEntity', 'uploadExtensions');
-  }
-
+      : super._();
   @override
   AccountEntity rebuild(void Function(AccountEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  AccountEntityBuilder toBuilder() => new AccountEntityBuilder()..replace(this);
+  AccountEntityBuilder toBuilder() => AccountEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -626,7 +575,6 @@ class AccountEntityBuilder
 
   @override
   void replace(AccountEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$AccountEntity;
   }
 
@@ -640,43 +588,59 @@ class AccountEntityBuilder
 
   _$AccountEntity _build() {
     final _$result = _$v ??
-        new _$AccountEntity._(
-            id: BuiltValueNullFieldError.checkNotNull(
-                id, r'AccountEntity', 'id'),
-            key: BuiltValueNullFieldError.checkNotNull(
-                key, r'AccountEntity', 'key'),
-            trialStarted: BuiltValueNullFieldError.checkNotNull(
-                trialStarted, r'AccountEntity', 'trialStarted'),
-            defaultUrl: BuiltValueNullFieldError.checkNotNull(
-                defaultUrl, r'AccountEntity', 'defaultUrl'),
-            reportErrors: BuiltValueNullFieldError.checkNotNull(
-                reportErrors, r'AccountEntity', 'reportErrors'),
-            plan: BuiltValueNullFieldError.checkNotNull(
-                plan, r'AccountEntity', 'plan'),
-            planExpires: BuiltValueNullFieldError.checkNotNull(
-                planExpires, r'AccountEntity', 'planExpires'),
-            latestVersion: BuiltValueNullFieldError.checkNotNull(
-                latestVersion, r'AccountEntity', 'latestVersion'),
-            currentVersion: BuiltValueNullFieldError.checkNotNull(
-                currentVersion, r'AccountEntity', 'currentVersion'),
-            debugEnabled:
-                BuiltValueNullFieldError.checkNotNull(debugEnabled, r'AccountEntity', 'debugEnabled'),
-            isDocker: BuiltValueNullFieldError.checkNotNull(isDocker, r'AccountEntity', 'isDocker'),
-            isMigrated: BuiltValueNullFieldError.checkNotNull(isMigrated, r'AccountEntity', 'isMigrated'),
-            isHosted: BuiltValueNullFieldError.checkNotNull(isHosted, r'AccountEntity', 'isHosted'),
-            isSchedulerRunning: BuiltValueNullFieldError.checkNotNull(isSchedulerRunning, r'AccountEntity', 'isSchedulerRunning'),
-            disableAutoUpdate: BuiltValueNullFieldError.checkNotNull(disableAutoUpdate, r'AccountEntity', 'disableAutoUpdate'),
-            defaultCompanyId: BuiltValueNullFieldError.checkNotNull(defaultCompanyId, r'AccountEntity', 'defaultCompanyId'),
-            hostedClientCount: BuiltValueNullFieldError.checkNotNull(hostedClientCount, r'AccountEntity', 'hostedClientCount'),
-            hostedCompanyCount: BuiltValueNullFieldError.checkNotNull(hostedCompanyCount, r'AccountEntity', 'hostedCompanyCount'),
-            setReactAsDefaultAP: BuiltValueNullFieldError.checkNotNull(setReactAsDefaultAP, r'AccountEntity', 'setReactAsDefaultAP'),
-            accountSmsVerified: BuiltValueNullFieldError.checkNotNull(accountSmsVerified, r'AccountEntity', 'accountSmsVerified'),
-            trialDaysLeft: BuiltValueNullFieldError.checkNotNull(trialDaysLeft, r'AccountEntity', 'trialDaysLeft'),
-            hasIapPlan: BuiltValueNullFieldError.checkNotNull(hasIapPlan, r'AccountEntity', 'hasIapPlan'),
-            paymentId: BuiltValueNullFieldError.checkNotNull(paymentId, r'AccountEntity', 'paymentId'),
-            taxApiEnabled: BuiltValueNullFieldError.checkNotNull(taxApiEnabled, r'AccountEntity', 'taxApiEnabled'),
-            nordigenEnabled: BuiltValueNullFieldError.checkNotNull(nordigenEnabled, r'AccountEntity', 'nordigenEnabled'),
-            uploadExtensions: BuiltValueNullFieldError.checkNotNull(uploadExtensions, r'AccountEntity', 'uploadExtensions'));
+        _$AccountEntity._(
+          id: BuiltValueNullFieldError.checkNotNull(id, r'AccountEntity', 'id'),
+          key: BuiltValueNullFieldError.checkNotNull(
+              key, r'AccountEntity', 'key'),
+          trialStarted: BuiltValueNullFieldError.checkNotNull(
+              trialStarted, r'AccountEntity', 'trialStarted'),
+          defaultUrl: BuiltValueNullFieldError.checkNotNull(
+              defaultUrl, r'AccountEntity', 'defaultUrl'),
+          reportErrors: BuiltValueNullFieldError.checkNotNull(
+              reportErrors, r'AccountEntity', 'reportErrors'),
+          plan: BuiltValueNullFieldError.checkNotNull(
+              plan, r'AccountEntity', 'plan'),
+          planExpires: BuiltValueNullFieldError.checkNotNull(
+              planExpires, r'AccountEntity', 'planExpires'),
+          latestVersion: BuiltValueNullFieldError.checkNotNull(
+              latestVersion, r'AccountEntity', 'latestVersion'),
+          currentVersion: BuiltValueNullFieldError.checkNotNull(
+              currentVersion, r'AccountEntity', 'currentVersion'),
+          debugEnabled: BuiltValueNullFieldError.checkNotNull(
+              debugEnabled, r'AccountEntity', 'debugEnabled'),
+          isDocker: BuiltValueNullFieldError.checkNotNull(
+              isDocker, r'AccountEntity', 'isDocker'),
+          isMigrated: BuiltValueNullFieldError.checkNotNull(
+              isMigrated, r'AccountEntity', 'isMigrated'),
+          isHosted: BuiltValueNullFieldError.checkNotNull(
+              isHosted, r'AccountEntity', 'isHosted'),
+          isSchedulerRunning: BuiltValueNullFieldError.checkNotNull(
+              isSchedulerRunning, r'AccountEntity', 'isSchedulerRunning'),
+          disableAutoUpdate: BuiltValueNullFieldError.checkNotNull(
+              disableAutoUpdate, r'AccountEntity', 'disableAutoUpdate'),
+          defaultCompanyId: BuiltValueNullFieldError.checkNotNull(
+              defaultCompanyId, r'AccountEntity', 'defaultCompanyId'),
+          hostedClientCount: BuiltValueNullFieldError.checkNotNull(
+              hostedClientCount, r'AccountEntity', 'hostedClientCount'),
+          hostedCompanyCount: BuiltValueNullFieldError.checkNotNull(
+              hostedCompanyCount, r'AccountEntity', 'hostedCompanyCount'),
+          setReactAsDefaultAP: BuiltValueNullFieldError.checkNotNull(
+              setReactAsDefaultAP, r'AccountEntity', 'setReactAsDefaultAP'),
+          accountSmsVerified: BuiltValueNullFieldError.checkNotNull(
+              accountSmsVerified, r'AccountEntity', 'accountSmsVerified'),
+          trialDaysLeft: BuiltValueNullFieldError.checkNotNull(
+              trialDaysLeft, r'AccountEntity', 'trialDaysLeft'),
+          hasIapPlan: BuiltValueNullFieldError.checkNotNull(
+              hasIapPlan, r'AccountEntity', 'hasIapPlan'),
+          paymentId: BuiltValueNullFieldError.checkNotNull(
+              paymentId, r'AccountEntity', 'paymentId'),
+          taxApiEnabled: BuiltValueNullFieldError.checkNotNull(
+              taxApiEnabled, r'AccountEntity', 'taxApiEnabled'),
+          nordigenEnabled: BuiltValueNullFieldError.checkNotNull(
+              nordigenEnabled, r'AccountEntity', 'nordigenEnabled'),
+          uploadExtensions: BuiltValueNullFieldError.checkNotNull(
+              uploadExtensions, r'AccountEntity', 'uploadExtensions'),
+        );
     replace(_$result);
     return _$result;
   }

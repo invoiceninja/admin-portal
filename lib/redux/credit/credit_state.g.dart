@@ -6,9 +6,9 @@ part of 'credit_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<CreditState> _$creditStateSerializer = new _$CreditStateSerializer();
+Serializer<CreditState> _$creditStateSerializer = _$CreditStateSerializer();
 Serializer<CreditUIState> _$creditUIStateSerializer =
-    new _$CreditUIStateSerializer();
+    _$CreditUIStateSerializer();
 
 class _$CreditStateSerializer implements StructuredSerializer<CreditState> {
   @override
@@ -36,7 +36,7 @@ class _$CreditStateSerializer implements StructuredSerializer<CreditState> {
   @override
   CreditState deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new CreditStateBuilder();
+    final result = CreditStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -110,7 +110,7 @@ class _$CreditUIStateSerializer implements StructuredSerializer<CreditUIState> {
   CreditUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new CreditUIStateBuilder();
+    final result = CreditUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -152,19 +152,15 @@ class _$CreditState extends CreditState {
   final BuiltList<String> list;
 
   factory _$CreditState([void Function(CreditStateBuilder)? updates]) =>
-      (new CreditStateBuilder()..update(updates))._build();
+      (CreditStateBuilder()..update(updates))._build();
 
-  _$CreditState._({required this.map, required this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, r'CreditState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, r'CreditState', 'list');
-  }
-
+  _$CreditState._({required this.map, required this.list}) : super._();
   @override
   CreditState rebuild(void Function(CreditStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  CreditStateBuilder toBuilder() => new CreditStateBuilder()..replace(this);
+  CreditStateBuilder toBuilder() => CreditStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -197,11 +193,11 @@ class CreditStateBuilder implements Builder<CreditState, CreditStateBuilder> {
 
   MapBuilder<String, InvoiceEntity>? _map;
   MapBuilder<String, InvoiceEntity> get map =>
-      _$this._map ??= new MapBuilder<String, InvoiceEntity>();
+      _$this._map ??= MapBuilder<String, InvoiceEntity>();
   set map(MapBuilder<String, InvoiceEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
-  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  ListBuilder<String> get list => _$this._list ??= ListBuilder<String>();
   set list(ListBuilder<String>? list) => _$this._list = list;
 
   CreditStateBuilder();
@@ -218,7 +214,6 @@ class CreditStateBuilder implements Builder<CreditState, CreditStateBuilder> {
 
   @override
   void replace(CreditState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CreditState;
   }
 
@@ -233,8 +228,11 @@ class CreditStateBuilder implements Builder<CreditState, CreditStateBuilder> {
   _$CreditState _build() {
     _$CreditState _$result;
     try {
-      _$result =
-          _$v ?? new _$CreditState._(map: map.build(), list: list.build());
+      _$result = _$v ??
+          _$CreditState._(
+            map: map.build(),
+            list: list.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -243,7 +241,7 @@ class CreditStateBuilder implements Builder<CreditState, CreditStateBuilder> {
         _$failedField = 'list';
         list.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'CreditState', _$failedField, e.toString());
       }
       rethrow;
@@ -274,7 +272,7 @@ class _$CreditUIState extends CreditUIState {
   final Completer<Null>? cancelCompleter;
 
   factory _$CreditUIState([void Function(CreditUIStateBuilder)? updates]) =>
-      (new CreditUIStateBuilder()..update(updates))._build();
+      (CreditUIStateBuilder()..update(updates))._build();
 
   _$CreditUIState._(
       {this.editing,
@@ -286,19 +284,13 @@ class _$CreditUIState extends CreditUIState {
       required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        listUIState, r'CreditUIState', 'listUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        tabIndex, r'CreditUIState', 'tabIndex');
-  }
-
+      : super._();
   @override
   CreditUIState rebuild(void Function(CreditUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  CreditUIStateBuilder toBuilder() => new CreditUIStateBuilder()..replace(this);
+  CreditUIStateBuilder toBuilder() => CreditUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -355,7 +347,7 @@ class CreditUIStateBuilder
 
   InvoiceEntityBuilder? _editing;
   InvoiceEntityBuilder get editing =>
-      _$this._editing ??= new InvoiceEntityBuilder();
+      _$this._editing ??= InvoiceEntityBuilder();
   set editing(InvoiceEntityBuilder? editing) => _$this._editing = editing;
 
   int? _editingItemIndex;
@@ -370,7 +362,7 @@ class CreditUIStateBuilder
 
   ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
-      _$this._listUIState ??= new ListUIStateBuilder();
+      _$this._listUIState ??= ListUIStateBuilder();
   set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
@@ -418,7 +410,6 @@ class CreditUIStateBuilder
 
   @override
   void replace(CreditUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CreditUIState;
   }
 
@@ -434,17 +425,18 @@ class CreditUIStateBuilder
     _$CreditUIState _$result;
     try {
       _$result = _$v ??
-          new _$CreditUIState._(
-              editing: _editing?.build(),
-              editingItemIndex: editingItemIndex,
-              historyActivityId: historyActivityId,
-              listUIState: listUIState.build(),
-              selectedId: selectedId,
-              forceSelected: forceSelected,
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'CreditUIState', 'tabIndex'),
-              saveCompleter: saveCompleter,
-              cancelCompleter: cancelCompleter);
+          _$CreditUIState._(
+            editing: _editing?.build(),
+            editingItemIndex: editingItemIndex,
+            historyActivityId: historyActivityId,
+            listUIState: listUIState.build(),
+            selectedId: selectedId,
+            forceSelected: forceSelected,
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'CreditUIState', 'tabIndex'),
+            saveCompleter: saveCompleter,
+            cancelCompleter: cancelCompleter,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -454,7 +446,7 @@ class CreditUIStateBuilder
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'CreditUIState', _$failedField, e.toString());
       }
       rethrow;

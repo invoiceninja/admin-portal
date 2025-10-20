@@ -6,8 +6,8 @@ part of 'user_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<UserState> _$userStateSerializer = new _$UserStateSerializer();
-Serializer<UserUIState> _$userUIStateSerializer = new _$UserUIStateSerializer();
+Serializer<UserState> _$userStateSerializer = _$UserStateSerializer();
+Serializer<UserUIState> _$userUIStateSerializer = _$UserUIStateSerializer();
 
 class _$UserStateSerializer implements StructuredSerializer<UserState> {
   @override
@@ -35,7 +35,7 @@ class _$UserStateSerializer implements StructuredSerializer<UserState> {
   @override
   UserState deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new UserStateBuilder();
+    final result = UserStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -108,7 +108,7 @@ class _$UserUIStateSerializer implements StructuredSerializer<UserUIState> {
   @override
   UserUIState deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new UserUIStateBuilder();
+    final result = UserUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -150,19 +150,15 @@ class _$UserState extends UserState {
   final BuiltList<String> list;
 
   factory _$UserState([void Function(UserStateBuilder)? updates]) =>
-      (new UserStateBuilder()..update(updates))._build();
+      (UserStateBuilder()..update(updates))._build();
 
-  _$UserState._({required this.map, required this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, r'UserState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, r'UserState', 'list');
-  }
-
+  _$UserState._({required this.map, required this.list}) : super._();
   @override
   UserState rebuild(void Function(UserStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  UserStateBuilder toBuilder() => new UserStateBuilder()..replace(this);
+  UserStateBuilder toBuilder() => UserStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -195,11 +191,11 @@ class UserStateBuilder implements Builder<UserState, UserStateBuilder> {
 
   MapBuilder<String, UserEntity>? _map;
   MapBuilder<String, UserEntity> get map =>
-      _$this._map ??= new MapBuilder<String, UserEntity>();
+      _$this._map ??= MapBuilder<String, UserEntity>();
   set map(MapBuilder<String, UserEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
-  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  ListBuilder<String> get list => _$this._list ??= ListBuilder<String>();
   set list(ListBuilder<String>? list) => _$this._list = list;
 
   UserStateBuilder();
@@ -216,7 +212,6 @@ class UserStateBuilder implements Builder<UserState, UserStateBuilder> {
 
   @override
   void replace(UserState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$UserState;
   }
 
@@ -231,7 +226,11 @@ class UserStateBuilder implements Builder<UserState, UserStateBuilder> {
   _$UserState _build() {
     _$UserState _$result;
     try {
-      _$result = _$v ?? new _$UserState._(map: map.build(), list: list.build());
+      _$result = _$v ??
+          _$UserState._(
+            map: map.build(),
+            list: list.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -240,7 +239,7 @@ class UserStateBuilder implements Builder<UserState, UserStateBuilder> {
         _$failedField = 'list';
         list.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'UserState', _$failedField, e.toString());
       }
       rethrow;
@@ -267,7 +266,7 @@ class _$UserUIState extends UserUIState {
   final Completer<Null>? cancelCompleter;
 
   factory _$UserUIState([void Function(UserUIStateBuilder)? updates]) =>
-      (new UserUIStateBuilder()..update(updates))._build();
+      (UserUIStateBuilder()..update(updates))._build();
 
   _$UserUIState._(
       {this.editing,
@@ -277,18 +276,13 @@ class _$UserUIState extends UserUIState {
       required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        listUIState, r'UserUIState', 'listUIState');
-    BuiltValueNullFieldError.checkNotNull(tabIndex, r'UserUIState', 'tabIndex');
-  }
-
+      : super._();
   @override
   UserUIState rebuild(void Function(UserUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  UserUIStateBuilder toBuilder() => new UserUIStateBuilder()..replace(this);
+  UserUIStateBuilder toBuilder() => UserUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -337,12 +331,12 @@ class UserUIStateBuilder implements Builder<UserUIState, UserUIStateBuilder> {
   _$UserUIState? _$v;
 
   UserEntityBuilder? _editing;
-  UserEntityBuilder get editing => _$this._editing ??= new UserEntityBuilder();
+  UserEntityBuilder get editing => _$this._editing ??= UserEntityBuilder();
   set editing(UserEntityBuilder? editing) => _$this._editing = editing;
 
   ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
-      _$this._listUIState ??= new ListUIStateBuilder();
+      _$this._listUIState ??= ListUIStateBuilder();
   set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
@@ -388,7 +382,6 @@ class UserUIStateBuilder implements Builder<UserUIState, UserUIStateBuilder> {
 
   @override
   void replace(UserUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$UserUIState;
   }
 
@@ -404,15 +397,16 @@ class UserUIStateBuilder implements Builder<UserUIState, UserUIStateBuilder> {
     _$UserUIState _$result;
     try {
       _$result = _$v ??
-          new _$UserUIState._(
-              editing: _editing?.build(),
-              listUIState: listUIState.build(),
-              selectedId: selectedId,
-              forceSelected: forceSelected,
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'UserUIState', 'tabIndex'),
-              saveCompleter: saveCompleter,
-              cancelCompleter: cancelCompleter);
+          _$UserUIState._(
+            editing: _editing?.build(),
+            listUIState: listUIState.build(),
+            selectedId: selectedId,
+            forceSelected: forceSelected,
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'UserUIState', 'tabIndex'),
+            saveCompleter: saveCompleter,
+            cancelCompleter: cancelCompleter,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -421,7 +415,7 @@ class UserUIStateBuilder implements Builder<UserUIState, UserUIStateBuilder> {
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'UserUIState', _$failedField, e.toString());
       }
       rethrow;

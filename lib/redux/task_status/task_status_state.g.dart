@@ -7,9 +7,9 @@ part of 'task_status_state.dart';
 // **************************************************************************
 
 Serializer<TaskStatusState> _$taskStatusStateSerializer =
-    new _$TaskStatusStateSerializer();
+    _$TaskStatusStateSerializer();
 Serializer<TaskStatusUIState> _$taskStatusUIStateSerializer =
-    new _$TaskStatusUIStateSerializer();
+    _$TaskStatusUIStateSerializer();
 
 class _$TaskStatusStateSerializer
     implements StructuredSerializer<TaskStatusState> {
@@ -41,7 +41,7 @@ class _$TaskStatusStateSerializer
   TaskStatusState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TaskStatusStateBuilder();
+    final result = TaskStatusStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -116,7 +116,7 @@ class _$TaskStatusUIStateSerializer
   TaskStatusUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TaskStatusUIStateBuilder();
+    final result = TaskStatusUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -159,20 +159,15 @@ class _$TaskStatusState extends TaskStatusState {
   final BuiltList<String> list;
 
   factory _$TaskStatusState([void Function(TaskStatusStateBuilder)? updates]) =>
-      (new TaskStatusStateBuilder()..update(updates))._build();
+      (TaskStatusStateBuilder()..update(updates))._build();
 
-  _$TaskStatusState._({required this.map, required this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, r'TaskStatusState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, r'TaskStatusState', 'list');
-  }
-
+  _$TaskStatusState._({required this.map, required this.list}) : super._();
   @override
   TaskStatusState rebuild(void Function(TaskStatusStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  TaskStatusStateBuilder toBuilder() =>
-      new TaskStatusStateBuilder()..replace(this);
+  TaskStatusStateBuilder toBuilder() => TaskStatusStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -206,11 +201,11 @@ class TaskStatusStateBuilder
 
   MapBuilder<String, TaskStatusEntity>? _map;
   MapBuilder<String, TaskStatusEntity> get map =>
-      _$this._map ??= new MapBuilder<String, TaskStatusEntity>();
+      _$this._map ??= MapBuilder<String, TaskStatusEntity>();
   set map(MapBuilder<String, TaskStatusEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
-  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  ListBuilder<String> get list => _$this._list ??= ListBuilder<String>();
   set list(ListBuilder<String>? list) => _$this._list = list;
 
   TaskStatusStateBuilder();
@@ -227,7 +222,6 @@ class TaskStatusStateBuilder
 
   @override
   void replace(TaskStatusState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaskStatusState;
   }
 
@@ -242,8 +236,11 @@ class TaskStatusStateBuilder
   _$TaskStatusState _build() {
     _$TaskStatusState _$result;
     try {
-      _$result =
-          _$v ?? new _$TaskStatusState._(map: map.build(), list: list.build());
+      _$result = _$v ??
+          _$TaskStatusState._(
+            map: map.build(),
+            list: list.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -252,7 +249,7 @@ class TaskStatusStateBuilder
         _$failedField = 'list';
         list.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TaskStatusState', _$failedField, e.toString());
       }
       rethrow;
@@ -280,7 +277,7 @@ class _$TaskStatusUIState extends TaskStatusUIState {
 
   factory _$TaskStatusUIState(
           [void Function(TaskStatusUIStateBuilder)? updates]) =>
-      (new TaskStatusUIStateBuilder()..update(updates))._build();
+      (TaskStatusUIStateBuilder()..update(updates))._build();
 
   _$TaskStatusUIState._(
       {this.editing,
@@ -290,20 +287,14 @@ class _$TaskStatusUIState extends TaskStatusUIState {
       required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        listUIState, r'TaskStatusUIState', 'listUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        tabIndex, r'TaskStatusUIState', 'tabIndex');
-  }
-
+      : super._();
   @override
   TaskStatusUIState rebuild(void Function(TaskStatusUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   TaskStatusUIStateBuilder toBuilder() =>
-      new TaskStatusUIStateBuilder()..replace(this);
+      TaskStatusUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -354,12 +345,12 @@ class TaskStatusUIStateBuilder
 
   TaskStatusEntityBuilder? _editing;
   TaskStatusEntityBuilder get editing =>
-      _$this._editing ??= new TaskStatusEntityBuilder();
+      _$this._editing ??= TaskStatusEntityBuilder();
   set editing(TaskStatusEntityBuilder? editing) => _$this._editing = editing;
 
   ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
-      _$this._listUIState ??= new ListUIStateBuilder();
+      _$this._listUIState ??= ListUIStateBuilder();
   set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
@@ -405,7 +396,6 @@ class TaskStatusUIStateBuilder
 
   @override
   void replace(TaskStatusUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaskStatusUIState;
   }
 
@@ -421,15 +411,16 @@ class TaskStatusUIStateBuilder
     _$TaskStatusUIState _$result;
     try {
       _$result = _$v ??
-          new _$TaskStatusUIState._(
-              editing: _editing?.build(),
-              listUIState: listUIState.build(),
-              selectedId: selectedId,
-              forceSelected: forceSelected,
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'TaskStatusUIState', 'tabIndex'),
-              saveCompleter: saveCompleter,
-              cancelCompleter: cancelCompleter);
+          _$TaskStatusUIState._(
+            editing: _editing?.build(),
+            listUIState: listUIState.build(),
+            selectedId: selectedId,
+            forceSelected: forceSelected,
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'TaskStatusUIState', 'tabIndex'),
+            saveCompleter: saveCompleter,
+            cancelCompleter: cancelCompleter,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -438,7 +429,7 @@ class TaskStatusUIStateBuilder
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TaskStatusUIState', _$failedField, e.toString());
       }
       rethrow;

@@ -6,7 +6,7 @@ part of 'ui_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<UIState> _$uIStateSerializer = new _$UIStateSerializer();
+Serializer<UIState> _$uIStateSerializer = _$UIStateSerializer();
 
 class _$UIStateSerializer implements StructuredSerializer<UIState> {
   @override
@@ -162,7 +162,7 @@ class _$UIStateSerializer implements StructuredSerializer<UIState> {
   @override
   UIState deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new UIStateBuilder();
+    final result = UIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -459,7 +459,7 @@ class _$UIState extends UIState {
   final ReportsUIState reportsUIState;
 
   factory _$UIState([void Function(UIStateBuilder)? updates]) =>
-      (new UIStateBuilder()..update(updates))._build();
+      (UIStateBuilder()..update(updates))._build();
 
   _$UIState._(
       {required this.selectedCompanyIndex,
@@ -504,95 +504,13 @@ class _$UIState extends UIState {
       required this.quoteUIState,
       required this.settingsUIState,
       required this.reportsUIState})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        selectedCompanyIndex, r'UIState', 'selectedCompanyIndex');
-    BuiltValueNullFieldError.checkNotNull(
-        currentRoute, r'UIState', 'currentRoute');
-    BuiltValueNullFieldError.checkNotNull(
-        previousRoute, r'UIState', 'previousRoute');
-    BuiltValueNullFieldError.checkNotNull(
-        dismissedFlutterWebWarning, r'UIState', 'dismissedFlutterWebWarning');
-    BuiltValueNullFieldError.checkNotNull(
-        previewStack, r'UIState', 'previewStack');
-    BuiltValueNullFieldError.checkNotNull(
-        filterStack, r'UIState', 'filterStack');
-    BuiltValueNullFieldError.checkNotNull(
-        filterClearedAt, r'UIState', 'filterClearedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        lastActivityAt, r'UIState', 'lastActivityAt');
-    BuiltValueNullFieldError.checkNotNull(
-        dashboardUIState, r'UIState', 'dashboardUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        productUIState, r'UIState', 'productUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        clientUIState, r'UIState', 'clientUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        invoiceUIState, r'UIState', 'invoiceUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        scheduleUIState, r'UIState', 'scheduleUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        transactionRuleUIState, r'UIState', 'transactionRuleUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        transactionUIState, r'UIState', 'transactionUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        bankAccountUIState, r'UIState', 'bankAccountUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        purchaseOrderUIState, r'UIState', 'purchaseOrderUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        recurringExpenseUIState, r'UIState', 'recurringExpenseUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        subscriptionUIState, r'UIState', 'subscriptionUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        taskStatusUIState, r'UIState', 'taskStatusUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        expenseCategoryUIState, r'UIState', 'expenseCategoryUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        recurringInvoiceUIState, r'UIState', 'recurringInvoiceUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        webhookUIState, r'UIState', 'webhookUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        tokenUIState, r'UIState', 'tokenUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        paymentTermUIState, r'UIState', 'paymentTermUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        designUIState, r'UIState', 'designUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        creditUIState, r'UIState', 'creditUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        userUIState, r'UIState', 'userUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        taxRateUIState, r'UIState', 'taxRateUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        companyGatewayUIState, r'UIState', 'companyGatewayUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        groupUIState, r'UIState', 'groupUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        documentUIState, r'UIState', 'documentUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        expenseUIState, r'UIState', 'expenseUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        vendorUIState, r'UIState', 'vendorUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        taskUIState, r'UIState', 'taskUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        projectUIState, r'UIState', 'projectUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        paymentUIState, r'UIState', 'paymentUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        quoteUIState, r'UIState', 'quoteUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        settingsUIState, r'UIState', 'settingsUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        reportsUIState, r'UIState', 'reportsUIState');
-  }
-
+      : super._();
   @override
   UIState rebuild(void Function(UIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  UIStateBuilder toBuilder() => new UIStateBuilder()..replace(this);
+  UIStateBuilder toBuilder() => UIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -771,13 +689,13 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
 
   ListBuilder<EntityType>? _previewStack;
   ListBuilder<EntityType> get previewStack =>
-      _$this._previewStack ??= new ListBuilder<EntityType>();
+      _$this._previewStack ??= ListBuilder<EntityType>();
   set previewStack(ListBuilder<EntityType>? previewStack) =>
       _$this._previewStack = previewStack;
 
   ListBuilder<BaseEntity>? _filterStack;
   ListBuilder<BaseEntity> get filterStack =>
-      _$this._filterStack ??= new ListBuilder<BaseEntity>();
+      _$this._filterStack ??= ListBuilder<BaseEntity>();
   set filterStack(ListBuilder<BaseEntity>? filterStack) =>
       _$this._filterStack = filterStack;
 
@@ -797,198 +715,198 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
 
   DashboardUIStateBuilder? _dashboardUIState;
   DashboardUIStateBuilder get dashboardUIState =>
-      _$this._dashboardUIState ??= new DashboardUIStateBuilder();
+      _$this._dashboardUIState ??= DashboardUIStateBuilder();
   set dashboardUIState(DashboardUIStateBuilder? dashboardUIState) =>
       _$this._dashboardUIState = dashboardUIState;
 
   ProductUIStateBuilder? _productUIState;
   ProductUIStateBuilder get productUIState =>
-      _$this._productUIState ??= new ProductUIStateBuilder();
+      _$this._productUIState ??= ProductUIStateBuilder();
   set productUIState(ProductUIStateBuilder? productUIState) =>
       _$this._productUIState = productUIState;
 
   ClientUIStateBuilder? _clientUIState;
   ClientUIStateBuilder get clientUIState =>
-      _$this._clientUIState ??= new ClientUIStateBuilder();
+      _$this._clientUIState ??= ClientUIStateBuilder();
   set clientUIState(ClientUIStateBuilder? clientUIState) =>
       _$this._clientUIState = clientUIState;
 
   InvoiceUIStateBuilder? _invoiceUIState;
   InvoiceUIStateBuilder get invoiceUIState =>
-      _$this._invoiceUIState ??= new InvoiceUIStateBuilder();
+      _$this._invoiceUIState ??= InvoiceUIStateBuilder();
   set invoiceUIState(InvoiceUIStateBuilder? invoiceUIState) =>
       _$this._invoiceUIState = invoiceUIState;
 
   ScheduleUIStateBuilder? _scheduleUIState;
   ScheduleUIStateBuilder get scheduleUIState =>
-      _$this._scheduleUIState ??= new ScheduleUIStateBuilder();
+      _$this._scheduleUIState ??= ScheduleUIStateBuilder();
   set scheduleUIState(ScheduleUIStateBuilder? scheduleUIState) =>
       _$this._scheduleUIState = scheduleUIState;
 
   TransactionRuleUIStateBuilder? _transactionRuleUIState;
   TransactionRuleUIStateBuilder get transactionRuleUIState =>
-      _$this._transactionRuleUIState ??= new TransactionRuleUIStateBuilder();
+      _$this._transactionRuleUIState ??= TransactionRuleUIStateBuilder();
   set transactionRuleUIState(
           TransactionRuleUIStateBuilder? transactionRuleUIState) =>
       _$this._transactionRuleUIState = transactionRuleUIState;
 
   TransactionUIStateBuilder? _transactionUIState;
   TransactionUIStateBuilder get transactionUIState =>
-      _$this._transactionUIState ??= new TransactionUIStateBuilder();
+      _$this._transactionUIState ??= TransactionUIStateBuilder();
   set transactionUIState(TransactionUIStateBuilder? transactionUIState) =>
       _$this._transactionUIState = transactionUIState;
 
   BankAccountUIStateBuilder? _bankAccountUIState;
   BankAccountUIStateBuilder get bankAccountUIState =>
-      _$this._bankAccountUIState ??= new BankAccountUIStateBuilder();
+      _$this._bankAccountUIState ??= BankAccountUIStateBuilder();
   set bankAccountUIState(BankAccountUIStateBuilder? bankAccountUIState) =>
       _$this._bankAccountUIState = bankAccountUIState;
 
   PurchaseOrderUIStateBuilder? _purchaseOrderUIState;
   PurchaseOrderUIStateBuilder get purchaseOrderUIState =>
-      _$this._purchaseOrderUIState ??= new PurchaseOrderUIStateBuilder();
+      _$this._purchaseOrderUIState ??= PurchaseOrderUIStateBuilder();
   set purchaseOrderUIState(PurchaseOrderUIStateBuilder? purchaseOrderUIState) =>
       _$this._purchaseOrderUIState = purchaseOrderUIState;
 
   RecurringExpenseUIStateBuilder? _recurringExpenseUIState;
   RecurringExpenseUIStateBuilder get recurringExpenseUIState =>
-      _$this._recurringExpenseUIState ??= new RecurringExpenseUIStateBuilder();
+      _$this._recurringExpenseUIState ??= RecurringExpenseUIStateBuilder();
   set recurringExpenseUIState(
           RecurringExpenseUIStateBuilder? recurringExpenseUIState) =>
       _$this._recurringExpenseUIState = recurringExpenseUIState;
 
   SubscriptionUIStateBuilder? _subscriptionUIState;
   SubscriptionUIStateBuilder get subscriptionUIState =>
-      _$this._subscriptionUIState ??= new SubscriptionUIStateBuilder();
+      _$this._subscriptionUIState ??= SubscriptionUIStateBuilder();
   set subscriptionUIState(SubscriptionUIStateBuilder? subscriptionUIState) =>
       _$this._subscriptionUIState = subscriptionUIState;
 
   TaskStatusUIStateBuilder? _taskStatusUIState;
   TaskStatusUIStateBuilder get taskStatusUIState =>
-      _$this._taskStatusUIState ??= new TaskStatusUIStateBuilder();
+      _$this._taskStatusUIState ??= TaskStatusUIStateBuilder();
   set taskStatusUIState(TaskStatusUIStateBuilder? taskStatusUIState) =>
       _$this._taskStatusUIState = taskStatusUIState;
 
   ExpenseCategoryUIStateBuilder? _expenseCategoryUIState;
   ExpenseCategoryUIStateBuilder get expenseCategoryUIState =>
-      _$this._expenseCategoryUIState ??= new ExpenseCategoryUIStateBuilder();
+      _$this._expenseCategoryUIState ??= ExpenseCategoryUIStateBuilder();
   set expenseCategoryUIState(
           ExpenseCategoryUIStateBuilder? expenseCategoryUIState) =>
       _$this._expenseCategoryUIState = expenseCategoryUIState;
 
   RecurringInvoiceUIStateBuilder? _recurringInvoiceUIState;
   RecurringInvoiceUIStateBuilder get recurringInvoiceUIState =>
-      _$this._recurringInvoiceUIState ??= new RecurringInvoiceUIStateBuilder();
+      _$this._recurringInvoiceUIState ??= RecurringInvoiceUIStateBuilder();
   set recurringInvoiceUIState(
           RecurringInvoiceUIStateBuilder? recurringInvoiceUIState) =>
       _$this._recurringInvoiceUIState = recurringInvoiceUIState;
 
   WebhookUIStateBuilder? _webhookUIState;
   WebhookUIStateBuilder get webhookUIState =>
-      _$this._webhookUIState ??= new WebhookUIStateBuilder();
+      _$this._webhookUIState ??= WebhookUIStateBuilder();
   set webhookUIState(WebhookUIStateBuilder? webhookUIState) =>
       _$this._webhookUIState = webhookUIState;
 
   TokenUIStateBuilder? _tokenUIState;
   TokenUIStateBuilder get tokenUIState =>
-      _$this._tokenUIState ??= new TokenUIStateBuilder();
+      _$this._tokenUIState ??= TokenUIStateBuilder();
   set tokenUIState(TokenUIStateBuilder? tokenUIState) =>
       _$this._tokenUIState = tokenUIState;
 
   PaymentTermUIStateBuilder? _paymentTermUIState;
   PaymentTermUIStateBuilder get paymentTermUIState =>
-      _$this._paymentTermUIState ??= new PaymentTermUIStateBuilder();
+      _$this._paymentTermUIState ??= PaymentTermUIStateBuilder();
   set paymentTermUIState(PaymentTermUIStateBuilder? paymentTermUIState) =>
       _$this._paymentTermUIState = paymentTermUIState;
 
   DesignUIStateBuilder? _designUIState;
   DesignUIStateBuilder get designUIState =>
-      _$this._designUIState ??= new DesignUIStateBuilder();
+      _$this._designUIState ??= DesignUIStateBuilder();
   set designUIState(DesignUIStateBuilder? designUIState) =>
       _$this._designUIState = designUIState;
 
   CreditUIStateBuilder? _creditUIState;
   CreditUIStateBuilder get creditUIState =>
-      _$this._creditUIState ??= new CreditUIStateBuilder();
+      _$this._creditUIState ??= CreditUIStateBuilder();
   set creditUIState(CreditUIStateBuilder? creditUIState) =>
       _$this._creditUIState = creditUIState;
 
   UserUIStateBuilder? _userUIState;
   UserUIStateBuilder get userUIState =>
-      _$this._userUIState ??= new UserUIStateBuilder();
+      _$this._userUIState ??= UserUIStateBuilder();
   set userUIState(UserUIStateBuilder? userUIState) =>
       _$this._userUIState = userUIState;
 
   TaxRateUIStateBuilder? _taxRateUIState;
   TaxRateUIStateBuilder get taxRateUIState =>
-      _$this._taxRateUIState ??= new TaxRateUIStateBuilder();
+      _$this._taxRateUIState ??= TaxRateUIStateBuilder();
   set taxRateUIState(TaxRateUIStateBuilder? taxRateUIState) =>
       _$this._taxRateUIState = taxRateUIState;
 
   CompanyGatewayUIStateBuilder? _companyGatewayUIState;
   CompanyGatewayUIStateBuilder get companyGatewayUIState =>
-      _$this._companyGatewayUIState ??= new CompanyGatewayUIStateBuilder();
+      _$this._companyGatewayUIState ??= CompanyGatewayUIStateBuilder();
   set companyGatewayUIState(
           CompanyGatewayUIStateBuilder? companyGatewayUIState) =>
       _$this._companyGatewayUIState = companyGatewayUIState;
 
   GroupUIStateBuilder? _groupUIState;
   GroupUIStateBuilder get groupUIState =>
-      _$this._groupUIState ??= new GroupUIStateBuilder();
+      _$this._groupUIState ??= GroupUIStateBuilder();
   set groupUIState(GroupUIStateBuilder? groupUIState) =>
       _$this._groupUIState = groupUIState;
 
   DocumentUIStateBuilder? _documentUIState;
   DocumentUIStateBuilder get documentUIState =>
-      _$this._documentUIState ??= new DocumentUIStateBuilder();
+      _$this._documentUIState ??= DocumentUIStateBuilder();
   set documentUIState(DocumentUIStateBuilder? documentUIState) =>
       _$this._documentUIState = documentUIState;
 
   ExpenseUIStateBuilder? _expenseUIState;
   ExpenseUIStateBuilder get expenseUIState =>
-      _$this._expenseUIState ??= new ExpenseUIStateBuilder();
+      _$this._expenseUIState ??= ExpenseUIStateBuilder();
   set expenseUIState(ExpenseUIStateBuilder? expenseUIState) =>
       _$this._expenseUIState = expenseUIState;
 
   VendorUIStateBuilder? _vendorUIState;
   VendorUIStateBuilder get vendorUIState =>
-      _$this._vendorUIState ??= new VendorUIStateBuilder();
+      _$this._vendorUIState ??= VendorUIStateBuilder();
   set vendorUIState(VendorUIStateBuilder? vendorUIState) =>
       _$this._vendorUIState = vendorUIState;
 
   TaskUIStateBuilder? _taskUIState;
   TaskUIStateBuilder get taskUIState =>
-      _$this._taskUIState ??= new TaskUIStateBuilder();
+      _$this._taskUIState ??= TaskUIStateBuilder();
   set taskUIState(TaskUIStateBuilder? taskUIState) =>
       _$this._taskUIState = taskUIState;
 
   ProjectUIStateBuilder? _projectUIState;
   ProjectUIStateBuilder get projectUIState =>
-      _$this._projectUIState ??= new ProjectUIStateBuilder();
+      _$this._projectUIState ??= ProjectUIStateBuilder();
   set projectUIState(ProjectUIStateBuilder? projectUIState) =>
       _$this._projectUIState = projectUIState;
 
   PaymentUIStateBuilder? _paymentUIState;
   PaymentUIStateBuilder get paymentUIState =>
-      _$this._paymentUIState ??= new PaymentUIStateBuilder();
+      _$this._paymentUIState ??= PaymentUIStateBuilder();
   set paymentUIState(PaymentUIStateBuilder? paymentUIState) =>
       _$this._paymentUIState = paymentUIState;
 
   QuoteUIStateBuilder? _quoteUIState;
   QuoteUIStateBuilder get quoteUIState =>
-      _$this._quoteUIState ??= new QuoteUIStateBuilder();
+      _$this._quoteUIState ??= QuoteUIStateBuilder();
   set quoteUIState(QuoteUIStateBuilder? quoteUIState) =>
       _$this._quoteUIState = quoteUIState;
 
   SettingsUIStateBuilder? _settingsUIState;
   SettingsUIStateBuilder get settingsUIState =>
-      _$this._settingsUIState ??= new SettingsUIStateBuilder();
+      _$this._settingsUIState ??= SettingsUIStateBuilder();
   set settingsUIState(SettingsUIStateBuilder? settingsUIState) =>
       _$this._settingsUIState = settingsUIState;
 
   ReportsUIStateBuilder? _reportsUIState;
   ReportsUIStateBuilder get reportsUIState =>
-      _$this._reportsUIState ??= new ReportsUIStateBuilder();
+      _$this._reportsUIState ??= ReportsUIStateBuilder();
   set reportsUIState(ReportsUIStateBuilder? reportsUIState) =>
       _$this._reportsUIState = reportsUIState;
 
@@ -1048,7 +966,6 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
 
   @override
   void replace(UIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$UIState;
   }
 
@@ -1064,57 +981,58 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
     _$UIState _$result;
     try {
       _$result = _$v ??
-          new _$UIState._(
-              selectedCompanyIndex: BuiltValueNullFieldError.checkNotNull(
-                  selectedCompanyIndex, r'UIState', 'selectedCompanyIndex'),
-              currentRoute: BuiltValueNullFieldError.checkNotNull(
-                  currentRoute, r'UIState', 'currentRoute'),
-              previousRoute: BuiltValueNullFieldError.checkNotNull(
-                  previousRoute, r'UIState', 'previousRoute'),
-              dismissedFlutterWebWarning: BuiltValueNullFieldError.checkNotNull(
-                  dismissedFlutterWebWarning,
-                  r'UIState',
-                  'dismissedFlutterWebWarning'),
-              loadingEntityType: loadingEntityType,
-              previewStack: previewStack.build(),
-              filterStack: filterStack.build(),
-              filter: filter,
-              filterClearedAt: BuiltValueNullFieldError.checkNotNull(
-                  filterClearedAt, r'UIState', 'filterClearedAt'),
-              lastActivityAt: BuiltValueNullFieldError.checkNotNull(
-                  lastActivityAt, r'UIState', 'lastActivityAt'),
-              dashboardUIState: dashboardUIState.build(),
-              productUIState: productUIState.build(),
-              clientUIState: clientUIState.build(),
-              invoiceUIState: invoiceUIState.build(),
-              scheduleUIState: scheduleUIState.build(),
-              transactionRuleUIState: transactionRuleUIState.build(),
-              transactionUIState: transactionUIState.build(),
-              bankAccountUIState: bankAccountUIState.build(),
-              purchaseOrderUIState: purchaseOrderUIState.build(),
-              recurringExpenseUIState: recurringExpenseUIState.build(),
-              subscriptionUIState: subscriptionUIState.build(),
-              taskStatusUIState: taskStatusUIState.build(),
-              expenseCategoryUIState: expenseCategoryUIState.build(),
-              recurringInvoiceUIState: recurringInvoiceUIState.build(),
-              webhookUIState: webhookUIState.build(),
-              tokenUIState: tokenUIState.build(),
-              paymentTermUIState: paymentTermUIState.build(),
-              designUIState: designUIState.build(),
-              creditUIState: creditUIState.build(),
-              userUIState: userUIState.build(),
-              taxRateUIState: taxRateUIState.build(),
-              companyGatewayUIState: companyGatewayUIState.build(),
-              groupUIState: groupUIState.build(),
-              documentUIState: documentUIState.build(),
-              expenseUIState: expenseUIState.build(),
-              vendorUIState: vendorUIState.build(),
-              taskUIState: taskUIState.build(),
-              projectUIState: projectUIState.build(),
-              paymentUIState: paymentUIState.build(),
-              quoteUIState: quoteUIState.build(),
-              settingsUIState: settingsUIState.build(),
-              reportsUIState: reportsUIState.build());
+          _$UIState._(
+            selectedCompanyIndex: BuiltValueNullFieldError.checkNotNull(
+                selectedCompanyIndex, r'UIState', 'selectedCompanyIndex'),
+            currentRoute: BuiltValueNullFieldError.checkNotNull(
+                currentRoute, r'UIState', 'currentRoute'),
+            previousRoute: BuiltValueNullFieldError.checkNotNull(
+                previousRoute, r'UIState', 'previousRoute'),
+            dismissedFlutterWebWarning: BuiltValueNullFieldError.checkNotNull(
+                dismissedFlutterWebWarning,
+                r'UIState',
+                'dismissedFlutterWebWarning'),
+            loadingEntityType: loadingEntityType,
+            previewStack: previewStack.build(),
+            filterStack: filterStack.build(),
+            filter: filter,
+            filterClearedAt: BuiltValueNullFieldError.checkNotNull(
+                filterClearedAt, r'UIState', 'filterClearedAt'),
+            lastActivityAt: BuiltValueNullFieldError.checkNotNull(
+                lastActivityAt, r'UIState', 'lastActivityAt'),
+            dashboardUIState: dashboardUIState.build(),
+            productUIState: productUIState.build(),
+            clientUIState: clientUIState.build(),
+            invoiceUIState: invoiceUIState.build(),
+            scheduleUIState: scheduleUIState.build(),
+            transactionRuleUIState: transactionRuleUIState.build(),
+            transactionUIState: transactionUIState.build(),
+            bankAccountUIState: bankAccountUIState.build(),
+            purchaseOrderUIState: purchaseOrderUIState.build(),
+            recurringExpenseUIState: recurringExpenseUIState.build(),
+            subscriptionUIState: subscriptionUIState.build(),
+            taskStatusUIState: taskStatusUIState.build(),
+            expenseCategoryUIState: expenseCategoryUIState.build(),
+            recurringInvoiceUIState: recurringInvoiceUIState.build(),
+            webhookUIState: webhookUIState.build(),
+            tokenUIState: tokenUIState.build(),
+            paymentTermUIState: paymentTermUIState.build(),
+            designUIState: designUIState.build(),
+            creditUIState: creditUIState.build(),
+            userUIState: userUIState.build(),
+            taxRateUIState: taxRateUIState.build(),
+            companyGatewayUIState: companyGatewayUIState.build(),
+            groupUIState: groupUIState.build(),
+            documentUIState: documentUIState.build(),
+            expenseUIState: expenseUIState.build(),
+            vendorUIState: vendorUIState.build(),
+            taskUIState: taskUIState.build(),
+            projectUIState: projectUIState.build(),
+            paymentUIState: paymentUIState.build(),
+            quoteUIState: quoteUIState.build(),
+            settingsUIState: settingsUIState.build(),
+            reportsUIState: reportsUIState.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -1188,7 +1106,7 @@ class UIStateBuilder implements Builder<UIState, UIStateBuilder> {
         _$failedField = 'reportsUIState';
         reportsUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'UIState', _$failedField, e.toString());
       }
       rethrow;

@@ -7,9 +7,9 @@ part of 'credit_model.dart';
 // **************************************************************************
 
 Serializer<CreditListResponse> _$creditListResponseSerializer =
-    new _$CreditListResponseSerializer();
+    _$CreditListResponseSerializer();
 Serializer<CreditItemResponse> _$creditItemResponseSerializer =
-    new _$CreditItemResponseSerializer();
+    _$CreditItemResponseSerializer();
 
 class _$CreditListResponseSerializer
     implements StructuredSerializer<CreditListResponse> {
@@ -36,7 +36,7 @@ class _$CreditListResponseSerializer
   CreditListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new CreditListResponseBuilder();
+    final result = CreditListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -81,7 +81,7 @@ class _$CreditItemResponseSerializer
   CreditItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new CreditItemResponseBuilder();
+    final result = CreditItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -106,12 +106,9 @@ class _$CreditListResponse extends CreditListResponse {
 
   factory _$CreditListResponse(
           [void Function(CreditListResponseBuilder)? updates]) =>
-      (new CreditListResponseBuilder()..update(updates))._build();
+      (CreditListResponseBuilder()..update(updates))._build();
 
-  _$CreditListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'CreditListResponse', 'data');
-  }
-
+  _$CreditListResponse._({required this.data}) : super._();
   @override
   CreditListResponse rebuild(
           void Function(CreditListResponseBuilder) updates) =>
@@ -119,7 +116,7 @@ class _$CreditListResponse extends CreditListResponse {
 
   @override
   CreditListResponseBuilder toBuilder() =>
-      new CreditListResponseBuilder()..replace(this);
+      CreditListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -151,7 +148,7 @@ class CreditListResponseBuilder
 
   ListBuilder<InvoiceEntity>? _data;
   ListBuilder<InvoiceEntity> get data =>
-      _$this._data ??= new ListBuilder<InvoiceEntity>();
+      _$this._data ??= ListBuilder<InvoiceEntity>();
   set data(ListBuilder<InvoiceEntity>? data) => _$this._data = data;
 
   CreditListResponseBuilder();
@@ -167,7 +164,6 @@ class CreditListResponseBuilder
 
   @override
   void replace(CreditListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CreditListResponse;
   }
 
@@ -182,14 +178,17 @@ class CreditListResponseBuilder
   _$CreditListResponse _build() {
     _$CreditListResponse _$result;
     try {
-      _$result = _$v ?? new _$CreditListResponse._(data: data.build());
+      _$result = _$v ??
+          _$CreditListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'CreditListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -205,12 +204,9 @@ class _$CreditItemResponse extends CreditItemResponse {
 
   factory _$CreditItemResponse(
           [void Function(CreditItemResponseBuilder)? updates]) =>
-      (new CreditItemResponseBuilder()..update(updates))._build();
+      (CreditItemResponseBuilder()..update(updates))._build();
 
-  _$CreditItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'CreditItemResponse', 'data');
-  }
-
+  _$CreditItemResponse._({required this.data}) : super._();
   @override
   CreditItemResponse rebuild(
           void Function(CreditItemResponseBuilder) updates) =>
@@ -218,7 +214,7 @@ class _$CreditItemResponse extends CreditItemResponse {
 
   @override
   CreditItemResponseBuilder toBuilder() =>
-      new CreditItemResponseBuilder()..replace(this);
+      CreditItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -249,7 +245,7 @@ class CreditItemResponseBuilder
   _$CreditItemResponse? _$v;
 
   InvoiceEntityBuilder? _data;
-  InvoiceEntityBuilder get data => _$this._data ??= new InvoiceEntityBuilder();
+  InvoiceEntityBuilder get data => _$this._data ??= InvoiceEntityBuilder();
   set data(InvoiceEntityBuilder? data) => _$this._data = data;
 
   CreditItemResponseBuilder();
@@ -265,7 +261,6 @@ class CreditItemResponseBuilder
 
   @override
   void replace(CreditItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CreditItemResponse;
   }
 
@@ -280,14 +275,17 @@ class CreditItemResponseBuilder
   _$CreditItemResponse _build() {
     _$CreditItemResponse _$result;
     try {
-      _$result = _$v ?? new _$CreditItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$CreditItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'CreditItemResponse', _$failedField, e.toString());
       }
       rethrow;

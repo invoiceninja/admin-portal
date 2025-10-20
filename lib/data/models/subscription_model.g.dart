@@ -7,13 +7,13 @@ part of 'subscription_model.dart';
 // **************************************************************************
 
 Serializer<SubscriptionListResponse> _$subscriptionListResponseSerializer =
-    new _$SubscriptionListResponseSerializer();
+    _$SubscriptionListResponseSerializer();
 Serializer<SubscriptionItemResponse> _$subscriptionItemResponseSerializer =
-    new _$SubscriptionItemResponseSerializer();
+    _$SubscriptionItemResponseSerializer();
 Serializer<SubscriptionEntity> _$subscriptionEntitySerializer =
-    new _$SubscriptionEntitySerializer();
+    _$SubscriptionEntitySerializer();
 Serializer<WebhookConfigurationEntity> _$webhookConfigurationEntitySerializer =
-    new _$WebhookConfigurationEntitySerializer();
+    _$WebhookConfigurationEntitySerializer();
 
 class _$SubscriptionListResponseSerializer
     implements StructuredSerializer<SubscriptionListResponse> {
@@ -43,7 +43,7 @@ class _$SubscriptionListResponseSerializer
   SubscriptionListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new SubscriptionListResponseBuilder();
+    final result = SubscriptionListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -91,7 +91,7 @@ class _$SubscriptionItemResponseSerializer
   SubscriptionItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new SubscriptionItemResponseBuilder();
+    final result = SubscriptionItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -251,7 +251,7 @@ class _$SubscriptionEntitySerializer
   SubscriptionEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new SubscriptionEntityBuilder();
+    final result = SubscriptionEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -443,7 +443,7 @@ class _$WebhookConfigurationEntitySerializer
   WebhookConfigurationEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new WebhookConfigurationEntityBuilder();
+    final result = WebhookConfigurationEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -485,13 +485,9 @@ class _$SubscriptionListResponse extends SubscriptionListResponse {
 
   factory _$SubscriptionListResponse(
           [void Function(SubscriptionListResponseBuilder)? updates]) =>
-      (new SubscriptionListResponseBuilder()..update(updates))._build();
+      (SubscriptionListResponseBuilder()..update(updates))._build();
 
-  _$SubscriptionListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'SubscriptionListResponse', 'data');
-  }
-
+  _$SubscriptionListResponse._({required this.data}) : super._();
   @override
   SubscriptionListResponse rebuild(
           void Function(SubscriptionListResponseBuilder) updates) =>
@@ -499,7 +495,7 @@ class _$SubscriptionListResponse extends SubscriptionListResponse {
 
   @override
   SubscriptionListResponseBuilder toBuilder() =>
-      new SubscriptionListResponseBuilder()..replace(this);
+      SubscriptionListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -532,7 +528,7 @@ class SubscriptionListResponseBuilder
 
   ListBuilder<SubscriptionEntity>? _data;
   ListBuilder<SubscriptionEntity> get data =>
-      _$this._data ??= new ListBuilder<SubscriptionEntity>();
+      _$this._data ??= ListBuilder<SubscriptionEntity>();
   set data(ListBuilder<SubscriptionEntity>? data) => _$this._data = data;
 
   SubscriptionListResponseBuilder();
@@ -548,7 +544,6 @@ class SubscriptionListResponseBuilder
 
   @override
   void replace(SubscriptionListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SubscriptionListResponse;
   }
 
@@ -563,14 +558,17 @@ class SubscriptionListResponseBuilder
   _$SubscriptionListResponse _build() {
     _$SubscriptionListResponse _$result;
     try {
-      _$result = _$v ?? new _$SubscriptionListResponse._(data: data.build());
+      _$result = _$v ??
+          _$SubscriptionListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'SubscriptionListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -586,13 +584,9 @@ class _$SubscriptionItemResponse extends SubscriptionItemResponse {
 
   factory _$SubscriptionItemResponse(
           [void Function(SubscriptionItemResponseBuilder)? updates]) =>
-      (new SubscriptionItemResponseBuilder()..update(updates))._build();
+      (SubscriptionItemResponseBuilder()..update(updates))._build();
 
-  _$SubscriptionItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'SubscriptionItemResponse', 'data');
-  }
-
+  _$SubscriptionItemResponse._({required this.data}) : super._();
   @override
   SubscriptionItemResponse rebuild(
           void Function(SubscriptionItemResponseBuilder) updates) =>
@@ -600,7 +594,7 @@ class _$SubscriptionItemResponse extends SubscriptionItemResponse {
 
   @override
   SubscriptionItemResponseBuilder toBuilder() =>
-      new SubscriptionItemResponseBuilder()..replace(this);
+      SubscriptionItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -633,7 +627,7 @@ class SubscriptionItemResponseBuilder
 
   SubscriptionEntityBuilder? _data;
   SubscriptionEntityBuilder get data =>
-      _$this._data ??= new SubscriptionEntityBuilder();
+      _$this._data ??= SubscriptionEntityBuilder();
   set data(SubscriptionEntityBuilder? data) => _$this._data = data;
 
   SubscriptionItemResponseBuilder();
@@ -649,7 +643,6 @@ class SubscriptionItemResponseBuilder
 
   @override
   void replace(SubscriptionItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SubscriptionItemResponse;
   }
 
@@ -664,14 +657,17 @@ class SubscriptionItemResponseBuilder
   _$SubscriptionItemResponse _build() {
     _$SubscriptionItemResponse _$result;
     try {
-      _$result = _$v ?? new _$SubscriptionItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$SubscriptionItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'SubscriptionItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -753,7 +749,7 @@ class _$SubscriptionEntity extends SubscriptionEntity {
 
   factory _$SubscriptionEntity(
           [void Function(SubscriptionEntityBuilder)? updates]) =>
-      (new SubscriptionEntityBuilder()..update(updates))._build();
+      (SubscriptionEntityBuilder()..update(updates))._build();
 
   _$SubscriptionEntity._(
       {required this.name,
@@ -790,65 +786,7 @@ class _$SubscriptionEntity extends SubscriptionEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'SubscriptionEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(
-        groupId, r'SubscriptionEntity', 'groupId');
-    BuiltValueNullFieldError.checkNotNull(
-        productIds, r'SubscriptionEntity', 'productIds');
-    BuiltValueNullFieldError.checkNotNull(
-        recurringProductIds, r'SubscriptionEntity', 'recurringProductIds');
-    BuiltValueNullFieldError.checkNotNull(
-        optionalProductIds, r'SubscriptionEntity', 'optionalProductIds');
-    BuiltValueNullFieldError.checkNotNull(optionalRecurringProductIds,
-        r'SubscriptionEntity', 'optionalRecurringProductIds');
-    BuiltValueNullFieldError.checkNotNull(
-        registrationRequired, r'SubscriptionEntity', 'registrationRequired');
-    BuiltValueNullFieldError.checkNotNull(useInventoryManagement,
-        r'SubscriptionEntity', 'useInventoryManagement');
-    BuiltValueNullFieldError.checkNotNull(
-        frequencyId, r'SubscriptionEntity', 'frequencyId');
-    BuiltValueNullFieldError.checkNotNull(
-        autoBill, r'SubscriptionEntity', 'autoBill');
-    BuiltValueNullFieldError.checkNotNull(
-        promoCode, r'SubscriptionEntity', 'promoCode');
-    BuiltValueNullFieldError.checkNotNull(
-        promoDiscount, r'SubscriptionEntity', 'promoDiscount');
-    BuiltValueNullFieldError.checkNotNull(
-        price, r'SubscriptionEntity', 'price');
-    BuiltValueNullFieldError.checkNotNull(
-        isAmountDiscount, r'SubscriptionEntity', 'isAmountDiscount');
-    BuiltValueNullFieldError.checkNotNull(
-        allowCancellation, r'SubscriptionEntity', 'allowCancellation');
-    BuiltValueNullFieldError.checkNotNull(
-        perSeatEnabled, r'SubscriptionEntity', 'perSeatEnabled');
-    BuiltValueNullFieldError.checkNotNull(
-        maxSeatsLimit, r'SubscriptionEntity', 'maxSeatsLimit');
-    BuiltValueNullFieldError.checkNotNull(
-        trialEnabled, r'SubscriptionEntity', 'trialEnabled');
-    BuiltValueNullFieldError.checkNotNull(
-        trialDuration, r'SubscriptionEntity', 'trialDuration');
-    BuiltValueNullFieldError.checkNotNull(
-        allowQueryOverrides, r'SubscriptionEntity', 'allowQueryOverrides');
-    BuiltValueNullFieldError.checkNotNull(
-        allowPlanChanges, r'SubscriptionEntity', 'allowPlanChanges');
-    BuiltValueNullFieldError.checkNotNull(
-        refundPeriod, r'SubscriptionEntity', 'refundPeriod');
-    BuiltValueNullFieldError.checkNotNull(
-        webhookConfiguration, r'SubscriptionEntity', 'webhookConfiguration');
-    BuiltValueNullFieldError.checkNotNull(
-        purchasePage, r'SubscriptionEntity', 'purchasePage');
-    BuiltValueNullFieldError.checkNotNull(
-        steps, r'SubscriptionEntity', 'steps');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'SubscriptionEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'SubscriptionEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'SubscriptionEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'SubscriptionEntity', 'id');
-  }
-
+      : super._();
   @override
   SubscriptionEntity rebuild(
           void Function(SubscriptionEntityBuilder) updates) =>
@@ -856,7 +794,7 @@ class _$SubscriptionEntity extends SubscriptionEntity {
 
   @override
   SubscriptionEntityBuilder toBuilder() =>
-      new SubscriptionEntityBuilder()..replace(this);
+      SubscriptionEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1095,7 +1033,7 @@ class SubscriptionEntityBuilder
 
   WebhookConfigurationEntityBuilder? _webhookConfiguration;
   WebhookConfigurationEntityBuilder get webhookConfiguration =>
-      _$this._webhookConfiguration ??= new WebhookConfigurationEntityBuilder();
+      _$this._webhookConfiguration ??= WebhookConfigurationEntityBuilder();
   set webhookConfiguration(
           WebhookConfigurationEntityBuilder? webhookConfiguration) =>
       _$this._webhookConfiguration = webhookConfiguration;
@@ -1190,7 +1128,6 @@ class SubscriptionEntityBuilder
 
   @override
   void replace(SubscriptionEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SubscriptionEntity;
   }
 
@@ -1206,57 +1143,89 @@ class SubscriptionEntityBuilder
     _$SubscriptionEntity _$result;
     try {
       _$result = _$v ??
-          new _$SubscriptionEntity._(
-              name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'SubscriptionEntity', 'name'),
-              groupId: BuiltValueNullFieldError.checkNotNull(
-                  groupId, r'SubscriptionEntity', 'groupId'),
-              productIds: BuiltValueNullFieldError.checkNotNull(
-                  productIds, r'SubscriptionEntity', 'productIds'),
-              recurringProductIds: BuiltValueNullFieldError.checkNotNull(
-                  recurringProductIds, r'SubscriptionEntity', 'recurringProductIds'),
-              optionalProductIds: BuiltValueNullFieldError.checkNotNull(
-                  optionalProductIds, r'SubscriptionEntity', 'optionalProductIds'),
-              optionalRecurringProductIds: BuiltValueNullFieldError.checkNotNull(
-                  optionalRecurringProductIds,
-                  r'SubscriptionEntity',
-                  'optionalRecurringProductIds'),
-              registrationRequired: BuiltValueNullFieldError.checkNotNull(
-                  registrationRequired, r'SubscriptionEntity', 'registrationRequired'),
-              useInventoryManagement: BuiltValueNullFieldError.checkNotNull(useInventoryManagement, r'SubscriptionEntity', 'useInventoryManagement'),
-              remainingCycles: remainingCycles,
-              frequencyId: BuiltValueNullFieldError.checkNotNull(frequencyId, r'SubscriptionEntity', 'frequencyId'),
-              autoBill: BuiltValueNullFieldError.checkNotNull(autoBill, r'SubscriptionEntity', 'autoBill'),
-              promoCode: BuiltValueNullFieldError.checkNotNull(promoCode, r'SubscriptionEntity', 'promoCode'),
-              promoDiscount: BuiltValueNullFieldError.checkNotNull(promoDiscount, r'SubscriptionEntity', 'promoDiscount'),
-              price: BuiltValueNullFieldError.checkNotNull(price, r'SubscriptionEntity', 'price'),
-              isAmountDiscount: BuiltValueNullFieldError.checkNotNull(isAmountDiscount, r'SubscriptionEntity', 'isAmountDiscount'),
-              allowCancellation: BuiltValueNullFieldError.checkNotNull(allowCancellation, r'SubscriptionEntity', 'allowCancellation'),
-              perSeatEnabled: BuiltValueNullFieldError.checkNotNull(perSeatEnabled, r'SubscriptionEntity', 'perSeatEnabled'),
-              maxSeatsLimit: BuiltValueNullFieldError.checkNotNull(maxSeatsLimit, r'SubscriptionEntity', 'maxSeatsLimit'),
-              trialEnabled: BuiltValueNullFieldError.checkNotNull(trialEnabled, r'SubscriptionEntity', 'trialEnabled'),
-              trialDuration: BuiltValueNullFieldError.checkNotNull(trialDuration, r'SubscriptionEntity', 'trialDuration'),
-              allowQueryOverrides: BuiltValueNullFieldError.checkNotNull(allowQueryOverrides, r'SubscriptionEntity', 'allowQueryOverrides'),
-              allowPlanChanges: BuiltValueNullFieldError.checkNotNull(allowPlanChanges, r'SubscriptionEntity', 'allowPlanChanges'),
-              refundPeriod: BuiltValueNullFieldError.checkNotNull(refundPeriod, r'SubscriptionEntity', 'refundPeriod'),
-              webhookConfiguration: webhookConfiguration.build(),
-              purchasePage: BuiltValueNullFieldError.checkNotNull(purchasePage, r'SubscriptionEntity', 'purchasePage'),
-              steps: BuiltValueNullFieldError.checkNotNull(steps, r'SubscriptionEntity', 'steps'),
-              isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'SubscriptionEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'SubscriptionEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'SubscriptionEntity', 'archivedAt'),
-              isDeleted: isDeleted,
-              createdUserId: createdUserId,
-              assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(id, r'SubscriptionEntity', 'id'));
+          _$SubscriptionEntity._(
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'SubscriptionEntity', 'name'),
+            groupId: BuiltValueNullFieldError.checkNotNull(
+                groupId, r'SubscriptionEntity', 'groupId'),
+            productIds: BuiltValueNullFieldError.checkNotNull(
+                productIds, r'SubscriptionEntity', 'productIds'),
+            recurringProductIds: BuiltValueNullFieldError.checkNotNull(
+                recurringProductIds,
+                r'SubscriptionEntity',
+                'recurringProductIds'),
+            optionalProductIds: BuiltValueNullFieldError.checkNotNull(
+                optionalProductIds,
+                r'SubscriptionEntity',
+                'optionalProductIds'),
+            optionalRecurringProductIds: BuiltValueNullFieldError.checkNotNull(
+                optionalRecurringProductIds,
+                r'SubscriptionEntity',
+                'optionalRecurringProductIds'),
+            registrationRequired: BuiltValueNullFieldError.checkNotNull(
+                registrationRequired,
+                r'SubscriptionEntity',
+                'registrationRequired'),
+            useInventoryManagement: BuiltValueNullFieldError.checkNotNull(
+                useInventoryManagement,
+                r'SubscriptionEntity',
+                'useInventoryManagement'),
+            remainingCycles: remainingCycles,
+            frequencyId: BuiltValueNullFieldError.checkNotNull(
+                frequencyId, r'SubscriptionEntity', 'frequencyId'),
+            autoBill: BuiltValueNullFieldError.checkNotNull(
+                autoBill, r'SubscriptionEntity', 'autoBill'),
+            promoCode: BuiltValueNullFieldError.checkNotNull(
+                promoCode, r'SubscriptionEntity', 'promoCode'),
+            promoDiscount: BuiltValueNullFieldError.checkNotNull(
+                promoDiscount, r'SubscriptionEntity', 'promoDiscount'),
+            price: BuiltValueNullFieldError.checkNotNull(
+                price, r'SubscriptionEntity', 'price'),
+            isAmountDiscount: BuiltValueNullFieldError.checkNotNull(
+                isAmountDiscount, r'SubscriptionEntity', 'isAmountDiscount'),
+            allowCancellation: BuiltValueNullFieldError.checkNotNull(
+                allowCancellation, r'SubscriptionEntity', 'allowCancellation'),
+            perSeatEnabled: BuiltValueNullFieldError.checkNotNull(
+                perSeatEnabled, r'SubscriptionEntity', 'perSeatEnabled'),
+            maxSeatsLimit: BuiltValueNullFieldError.checkNotNull(
+                maxSeatsLimit, r'SubscriptionEntity', 'maxSeatsLimit'),
+            trialEnabled: BuiltValueNullFieldError.checkNotNull(
+                trialEnabled, r'SubscriptionEntity', 'trialEnabled'),
+            trialDuration: BuiltValueNullFieldError.checkNotNull(
+                trialDuration, r'SubscriptionEntity', 'trialDuration'),
+            allowQueryOverrides: BuiltValueNullFieldError.checkNotNull(
+                allowQueryOverrides,
+                r'SubscriptionEntity',
+                'allowQueryOverrides'),
+            allowPlanChanges: BuiltValueNullFieldError.checkNotNull(
+                allowPlanChanges, r'SubscriptionEntity', 'allowPlanChanges'),
+            refundPeriod: BuiltValueNullFieldError.checkNotNull(
+                refundPeriod, r'SubscriptionEntity', 'refundPeriod'),
+            webhookConfiguration: webhookConfiguration.build(),
+            purchasePage: BuiltValueNullFieldError.checkNotNull(
+                purchasePage, r'SubscriptionEntity', 'purchasePage'),
+            steps: BuiltValueNullFieldError.checkNotNull(
+                steps, r'SubscriptionEntity', 'steps'),
+            isChanged: isChanged,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, r'SubscriptionEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, r'SubscriptionEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(
+                archivedAt, r'SubscriptionEntity', 'archivedAt'),
+            isDeleted: isDeleted,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, r'SubscriptionEntity', 'id'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'webhookConfiguration';
         webhookConfiguration.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'SubscriptionEntity', _$failedField, e.toString());
       }
       rethrow;
@@ -1280,7 +1249,7 @@ class _$WebhookConfigurationEntity extends WebhookConfigurationEntity {
 
   factory _$WebhookConfigurationEntity(
           [void Function(WebhookConfigurationEntityBuilder)? updates]) =>
-      (new WebhookConfigurationEntityBuilder()..update(updates))._build();
+      (WebhookConfigurationEntityBuilder()..update(updates))._build();
 
   _$WebhookConfigurationEntity._(
       {required this.returnUrl,
@@ -1288,19 +1257,7 @@ class _$WebhookConfigurationEntity extends WebhookConfigurationEntity {
       required this.postPurchaseRestMethod,
       required this.postPurchaseHeaders,
       required this.postPurchaseBody})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        returnUrl, r'WebhookConfigurationEntity', 'returnUrl');
-    BuiltValueNullFieldError.checkNotNull(
-        postPurchaseUrl, r'WebhookConfigurationEntity', 'postPurchaseUrl');
-    BuiltValueNullFieldError.checkNotNull(postPurchaseRestMethod,
-        r'WebhookConfigurationEntity', 'postPurchaseRestMethod');
-    BuiltValueNullFieldError.checkNotNull(postPurchaseHeaders,
-        r'WebhookConfigurationEntity', 'postPurchaseHeaders');
-    BuiltValueNullFieldError.checkNotNull(
-        postPurchaseBody, r'WebhookConfigurationEntity', 'postPurchaseBody');
-  }
-
+      : super._();
   @override
   WebhookConfigurationEntity rebuild(
           void Function(WebhookConfigurationEntityBuilder) updates) =>
@@ -1308,7 +1265,7 @@ class _$WebhookConfigurationEntity extends WebhookConfigurationEntity {
 
   @override
   WebhookConfigurationEntityBuilder toBuilder() =>
-      new WebhookConfigurationEntityBuilder()..replace(this);
+      WebhookConfigurationEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1368,7 +1325,7 @@ class WebhookConfigurationEntityBuilder
 
   MapBuilder<String, String>? _postPurchaseHeaders;
   MapBuilder<String, String> get postPurchaseHeaders =>
-      _$this._postPurchaseHeaders ??= new MapBuilder<String, String>();
+      _$this._postPurchaseHeaders ??= MapBuilder<String, String>();
   set postPurchaseHeaders(MapBuilder<String, String>? postPurchaseHeaders) =>
       _$this._postPurchaseHeaders = postPurchaseHeaders;
 
@@ -1396,7 +1353,6 @@ class WebhookConfigurationEntityBuilder
 
   @override
   void replace(WebhookConfigurationEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$WebhookConfigurationEntity;
   }
 
@@ -1412,29 +1368,30 @@ class WebhookConfigurationEntityBuilder
     _$WebhookConfigurationEntity _$result;
     try {
       _$result = _$v ??
-          new _$WebhookConfigurationEntity._(
-              returnUrl: BuiltValueNullFieldError.checkNotNull(
-                  returnUrl, r'WebhookConfigurationEntity', 'returnUrl'),
-              postPurchaseUrl: BuiltValueNullFieldError.checkNotNull(
-                  postPurchaseUrl,
-                  r'WebhookConfigurationEntity',
-                  'postPurchaseUrl'),
-              postPurchaseRestMethod: BuiltValueNullFieldError.checkNotNull(
-                  postPurchaseRestMethod,
-                  r'WebhookConfigurationEntity',
-                  'postPurchaseRestMethod'),
-              postPurchaseHeaders: postPurchaseHeaders.build(),
-              postPurchaseBody: BuiltValueNullFieldError.checkNotNull(
-                  postPurchaseBody,
-                  r'WebhookConfigurationEntity',
-                  'postPurchaseBody'));
+          _$WebhookConfigurationEntity._(
+            returnUrl: BuiltValueNullFieldError.checkNotNull(
+                returnUrl, r'WebhookConfigurationEntity', 'returnUrl'),
+            postPurchaseUrl: BuiltValueNullFieldError.checkNotNull(
+                postPurchaseUrl,
+                r'WebhookConfigurationEntity',
+                'postPurchaseUrl'),
+            postPurchaseRestMethod: BuiltValueNullFieldError.checkNotNull(
+                postPurchaseRestMethod,
+                r'WebhookConfigurationEntity',
+                'postPurchaseRestMethod'),
+            postPurchaseHeaders: postPurchaseHeaders.build(),
+            postPurchaseBody: BuiltValueNullFieldError.checkNotNull(
+                postPurchaseBody,
+                r'WebhookConfigurationEntity',
+                'postPurchaseBody'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'postPurchaseHeaders';
         postPurchaseHeaders.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'WebhookConfigurationEntity', _$failedField, e.toString());
       }
       rethrow;

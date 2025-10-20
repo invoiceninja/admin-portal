@@ -7,10 +7,10 @@ part of 'group_model.dart';
 // **************************************************************************
 
 Serializer<GroupListResponse> _$groupListResponseSerializer =
-    new _$GroupListResponseSerializer();
+    _$GroupListResponseSerializer();
 Serializer<GroupItemResponse> _$groupItemResponseSerializer =
-    new _$GroupItemResponseSerializer();
-Serializer<GroupEntity> _$groupEntitySerializer = new _$GroupEntitySerializer();
+    _$GroupItemResponseSerializer();
+Serializer<GroupEntity> _$groupEntitySerializer = _$GroupEntitySerializer();
 
 class _$GroupListResponseSerializer
     implements StructuredSerializer<GroupListResponse> {
@@ -36,7 +36,7 @@ class _$GroupListResponseSerializer
   GroupListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new GroupListResponseBuilder();
+    final result = GroupListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -80,7 +80,7 @@ class _$GroupItemResponseSerializer
   GroupItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new GroupItemResponseBuilder();
+    final result = GroupItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -165,7 +165,7 @@ class _$GroupEntitySerializer implements StructuredSerializer<GroupEntity> {
   @override
   GroupEntity deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new GroupEntityBuilder();
+    final result = GroupEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -233,19 +233,16 @@ class _$GroupListResponse extends GroupListResponse {
 
   factory _$GroupListResponse(
           [void Function(GroupListResponseBuilder)? updates]) =>
-      (new GroupListResponseBuilder()..update(updates))._build();
+      (GroupListResponseBuilder()..update(updates))._build();
 
-  _$GroupListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'GroupListResponse', 'data');
-  }
-
+  _$GroupListResponse._({required this.data}) : super._();
   @override
   GroupListResponse rebuild(void Function(GroupListResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   GroupListResponseBuilder toBuilder() =>
-      new GroupListResponseBuilder()..replace(this);
+      GroupListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -277,7 +274,7 @@ class GroupListResponseBuilder
 
   ListBuilder<GroupEntity>? _data;
   ListBuilder<GroupEntity> get data =>
-      _$this._data ??= new ListBuilder<GroupEntity>();
+      _$this._data ??= ListBuilder<GroupEntity>();
   set data(ListBuilder<GroupEntity>? data) => _$this._data = data;
 
   GroupListResponseBuilder();
@@ -293,7 +290,6 @@ class GroupListResponseBuilder
 
   @override
   void replace(GroupListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$GroupListResponse;
   }
 
@@ -308,14 +304,17 @@ class GroupListResponseBuilder
   _$GroupListResponse _build() {
     _$GroupListResponse _$result;
     try {
-      _$result = _$v ?? new _$GroupListResponse._(data: data.build());
+      _$result = _$v ??
+          _$GroupListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'GroupListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -331,19 +330,16 @@ class _$GroupItemResponse extends GroupItemResponse {
 
   factory _$GroupItemResponse(
           [void Function(GroupItemResponseBuilder)? updates]) =>
-      (new GroupItemResponseBuilder()..update(updates))._build();
+      (GroupItemResponseBuilder()..update(updates))._build();
 
-  _$GroupItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'GroupItemResponse', 'data');
-  }
-
+  _$GroupItemResponse._({required this.data}) : super._();
   @override
   GroupItemResponse rebuild(void Function(GroupItemResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   GroupItemResponseBuilder toBuilder() =>
-      new GroupItemResponseBuilder()..replace(this);
+      GroupItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -374,7 +370,7 @@ class GroupItemResponseBuilder
   _$GroupItemResponse? _$v;
 
   GroupEntityBuilder? _data;
-  GroupEntityBuilder get data => _$this._data ??= new GroupEntityBuilder();
+  GroupEntityBuilder get data => _$this._data ??= GroupEntityBuilder();
   set data(GroupEntityBuilder? data) => _$this._data = data;
 
   GroupItemResponseBuilder();
@@ -390,7 +386,6 @@ class GroupItemResponseBuilder
 
   @override
   void replace(GroupItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$GroupItemResponse;
   }
 
@@ -405,14 +400,17 @@ class GroupItemResponseBuilder
   _$GroupItemResponse _build() {
     _$GroupItemResponse _$result;
     try {
-      _$result = _$v ?? new _$GroupItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$GroupItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'GroupItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -447,7 +445,7 @@ class _$GroupEntity extends GroupEntity {
   final String id;
 
   factory _$GroupEntity([void Function(GroupEntityBuilder)? updates]) =>
-      (new GroupEntityBuilder()..update(updates))._build();
+      (GroupEntityBuilder()..update(updates))._build();
 
   _$GroupEntity._(
       {required this.name,
@@ -461,26 +459,13 @@ class _$GroupEntity extends GroupEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'GroupEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(settings, r'GroupEntity', 'settings');
-    BuiltValueNullFieldError.checkNotNull(
-        documents, r'GroupEntity', 'documents');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'GroupEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'GroupEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'GroupEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'GroupEntity', 'id');
-  }
-
+      : super._();
   @override
   GroupEntity rebuild(void Function(GroupEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  GroupEntityBuilder toBuilder() => new GroupEntityBuilder()..replace(this);
+  GroupEntityBuilder toBuilder() => GroupEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -546,12 +531,12 @@ class GroupEntityBuilder implements Builder<GroupEntity, GroupEntityBuilder> {
 
   SettingsEntityBuilder? _settings;
   SettingsEntityBuilder get settings =>
-      _$this._settings ??= new SettingsEntityBuilder();
+      _$this._settings ??= SettingsEntityBuilder();
   set settings(SettingsEntityBuilder? settings) => _$this._settings = settings;
 
   ListBuilder<DocumentEntity>? _documents;
   ListBuilder<DocumentEntity> get documents =>
-      _$this._documents ??= new ListBuilder<DocumentEntity>();
+      _$this._documents ??= ListBuilder<DocumentEntity>();
   set documents(ListBuilder<DocumentEntity>? documents) =>
       _$this._documents = documents;
 
@@ -614,7 +599,6 @@ class GroupEntityBuilder implements Builder<GroupEntity, GroupEntityBuilder> {
 
   @override
   void replace(GroupEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$GroupEntity;
   }
 
@@ -630,23 +614,23 @@ class GroupEntityBuilder implements Builder<GroupEntity, GroupEntityBuilder> {
     _$GroupEntity _$result;
     try {
       _$result = _$v ??
-          new _$GroupEntity._(
-              name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'GroupEntity', 'name'),
-              settings: settings.build(),
-              documents: documents.build(),
-              isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(
-                  createdAt, r'GroupEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(
-                  updatedAt, r'GroupEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(
-                  archivedAt, r'GroupEntity', 'archivedAt'),
-              isDeleted: isDeleted,
-              createdUserId: createdUserId,
-              assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(
-                  id, r'GroupEntity', 'id'));
+          _$GroupEntity._(
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'GroupEntity', 'name'),
+            settings: settings.build(),
+            documents: documents.build(),
+            isChanged: isChanged,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, r'GroupEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, r'GroupEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(
+                archivedAt, r'GroupEntity', 'archivedAt'),
+            isDeleted: isDeleted,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            id: BuiltValueNullFieldError.checkNotNull(id, r'GroupEntity', 'id'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -655,7 +639,7 @@ class GroupEntityBuilder implements Builder<GroupEntity, GroupEntityBuilder> {
         _$failedField = 'documents';
         documents.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'GroupEntity', _$failedField, e.toString());
       }
       rethrow;

@@ -16,11 +16,11 @@ AppLayout _$valueOf(String name) {
     case 'desktop':
       return _$desktop;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
-final BuiltSet<AppLayout> _$values = new BuiltSet<AppLayout>(const <AppLayout>[
+final BuiltSet<AppLayout> _$values = BuiltSet<AppLayout>(const <AppLayout>[
   _$mobile,
   _$desktop,
 ]);
@@ -35,12 +35,12 @@ ModuleLayout _$moduleLayoutValueOf(String name) {
     case 'table':
       return _$table;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
 final BuiltSet<ModuleLayout> _$moduleLayoutValues =
-    new BuiltSet<ModuleLayout>(const <ModuleLayout>[
+    BuiltSet<ModuleLayout>(const <ModuleLayout>[
   _$list,
   _$table,
 ]);
@@ -55,12 +55,12 @@ AppSidebar _$valueOfSidebar(String name) {
     case 'history':
       return _$history;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
 final BuiltSet<AppSidebar> _$valuesSidebar =
-    new BuiltSet<AppSidebar>(const <AppSidebar>[
+    BuiltSet<AppSidebar>(const <AppSidebar>[
   _$menu,
   _$history,
 ]);
@@ -78,30 +78,29 @@ AppSidebarMode _$valueOfSidebarMode(String name) {
     case 'collapse':
       return _$collapse;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
 final BuiltSet<AppSidebarMode> _$valuesSidebarMode =
-    new BuiltSet<AppSidebarMode>(const <AppSidebarMode>[
+    BuiltSet<AppSidebarMode>(const <AppSidebarMode>[
   _$float,
   _$visible,
   _$collapse,
 ]);
 
-Serializer<PrefState> _$prefStateSerializer = new _$PrefStateSerializer();
+Serializer<PrefState> _$prefStateSerializer = _$PrefStateSerializer();
 Serializer<PrefStateSortField> _$prefStateSortFieldSerializer =
-    new _$PrefStateSortFieldSerializer();
+    _$PrefStateSortFieldSerializer();
 Serializer<CompanyPrefState> _$companyPrefStateSerializer =
-    new _$CompanyPrefStateSerializer();
-Serializer<AppLayout> _$appLayoutSerializer = new _$AppLayoutSerializer();
-Serializer<ModuleLayout> _$moduleLayoutSerializer =
-    new _$ModuleLayoutSerializer();
-Serializer<AppSidebar> _$appSidebarSerializer = new _$AppSidebarSerializer();
+    _$CompanyPrefStateSerializer();
+Serializer<AppLayout> _$appLayoutSerializer = _$AppLayoutSerializer();
+Serializer<ModuleLayout> _$moduleLayoutSerializer = _$ModuleLayoutSerializer();
+Serializer<AppSidebar> _$appSidebarSerializer = _$AppSidebarSerializer();
 Serializer<AppSidebarMode> _$appSidebarModeSerializer =
-    new _$AppSidebarModeSerializer();
+    _$AppSidebarModeSerializer();
 Serializer<HistoryRecord> _$historyRecordSerializer =
-    new _$HistoryRecordSerializer();
+    _$HistoryRecordSerializer();
 
 class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
   @override
@@ -249,7 +248,7 @@ class _$PrefStateSerializer implements StructuredSerializer<PrefState> {
   @override
   PrefState deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new PrefStateBuilder();
+    final result = PrefStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -459,7 +458,7 @@ class _$PrefStateSortFieldSerializer
   PrefStateSortField deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new PrefStateSortFieldBuilder();
+    final result = PrefStateSortFieldBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -506,7 +505,7 @@ class _$CompanyPrefStateSerializer
   CompanyPrefState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new CompanyPrefStateBuilder();
+    final result = CompanyPrefStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -634,7 +633,7 @@ class _$HistoryRecordSerializer implements StructuredSerializer<HistoryRecord> {
   HistoryRecord deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new HistoryRecordBuilder();
+    final result = HistoryRecordBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -746,7 +745,7 @@ class _$PrefState extends PrefState {
   final BuiltMap<String, CompanyPrefState> companyPrefs;
 
   factory _$PrefState([void Function(PrefStateBuilder)? updates]) =>
-      (new PrefStateBuilder()..update(updates))._build();
+      (PrefStateBuilder()..update(updates))._build();
 
   _$PrefState._(
       {required this.appLayout,
@@ -788,92 +787,13 @@ class _$PrefState extends PrefState {
       required this.donwloadsFolder,
       required this.sortFields,
       required this.companyPrefs})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(appLayout, r'PrefState', 'appLayout');
-    BuiltValueNullFieldError.checkNotNull(
-        moduleLayout, r'PrefState', 'moduleLayout');
-    BuiltValueNullFieldError.checkNotNull(
-        menuSidebarMode, r'PrefState', 'menuSidebarMode');
-    BuiltValueNullFieldError.checkNotNull(
-        historySidebarMode, r'PrefState', 'historySidebarMode');
-    BuiltValueNullFieldError.checkNotNull(
-        useSidebarEditor, r'PrefState', 'useSidebarEditor');
-    BuiltValueNullFieldError.checkNotNull(
-        useSidebarViewer, r'PrefState', 'useSidebarViewer');
-    BuiltValueNullFieldError.checkNotNull(
-        customColors, r'PrefState', 'customColors');
-    BuiltValueNullFieldError.checkNotNull(
-        darkCustomColors, r'PrefState', 'darkCustomColors');
-    BuiltValueNullFieldError.checkNotNull(
-        statementIncludes, r'PrefState', 'statementIncludes');
-    BuiltValueNullFieldError.checkNotNull(
-        isPreviewVisible, r'PrefState', 'isPreviewVisible');
-    BuiltValueNullFieldError.checkNotNull(
-        isMenuVisible, r'PrefState', 'isMenuVisible');
-    BuiltValueNullFieldError.checkNotNull(
-        showKanban, r'PrefState', 'showKanban');
-    BuiltValueNullFieldError.checkNotNull(
-        showPdfPreview, r'PrefState', 'showPdfPreview');
-    BuiltValueNullFieldError.checkNotNull(
-        showPdfPreviewSideBySide, r'PrefState', 'showPdfPreviewSideBySide');
-    BuiltValueNullFieldError.checkNotNull(
-        enableTouchEvents, r'PrefState', 'enableTouchEvents');
-    BuiltValueNullFieldError.checkNotNull(
-        enableFlexibleSearch, r'PrefState', 'enableFlexibleSearch');
-    BuiltValueNullFieldError.checkNotNull(
-        isHistoryVisible, r'PrefState', 'isHistoryVisible');
-    BuiltValueNullFieldError.checkNotNull(
-        darkModeType, r'PrefState', 'darkModeType');
-    BuiltValueNullFieldError.checkNotNull(
-        enableDarkModeSystem, r'PrefState', 'enableDarkModeSystem');
-    BuiltValueNullFieldError.checkNotNull(
-        isFilterVisible, r'PrefState', 'isFilterVisible');
-    BuiltValueNullFieldError.checkNotNull(
-        persistData, r'PrefState', 'persistData');
-    BuiltValueNullFieldError.checkNotNull(longPressSelectionIsDefault,
-        r'PrefState', 'longPressSelectionIsDefault');
-    BuiltValueNullFieldError.checkNotNull(
-        requireAuthentication, r'PrefState', 'requireAuthentication');
-    BuiltValueNullFieldError.checkNotNull(
-        tapSelectedToEdit, r'PrefState', 'tapSelectedToEdit');
-    BuiltValueNullFieldError.checkNotNull(
-        rowsPerPage, r'PrefState', 'rowsPerPage');
-    BuiltValueNullFieldError.checkNotNull(
-        enableTooltips, r'PrefState', 'enableTooltips');
-    BuiltValueNullFieldError.checkNotNull(
-        colorTheme, r'PrefState', 'colorTheme');
-    BuiltValueNullFieldError.checkNotNull(
-        darkColorTheme, r'PrefState', 'darkColorTheme');
-    BuiltValueNullFieldError.checkNotNull(
-        hideGatewayWarning, r'PrefState', 'hideGatewayWarning');
-    BuiltValueNullFieldError.checkNotNull(
-        hideReviewApp, r'PrefState', 'hideReviewApp');
-    BuiltValueNullFieldError.checkNotNull(
-        hideOneYearReviewApp, r'PrefState', 'hideOneYearReviewApp');
-    BuiltValueNullFieldError.checkNotNull(
-        hideTwoYearReviewApp, r'PrefState', 'hideTwoYearReviewApp');
-    BuiltValueNullFieldError.checkNotNull(
-        hideTaskExtensionBanner, r'PrefState', 'hideTaskExtensionBanner');
-    BuiltValueNullFieldError.checkNotNull(
-        editAfterSaving, r'PrefState', 'editAfterSaving');
-    BuiltValueNullFieldError.checkNotNull(
-        enableNativeBrowser, r'PrefState', 'enableNativeBrowser');
-    BuiltValueNullFieldError.checkNotNull(
-        textScaleFactor, r'PrefState', 'textScaleFactor');
-    BuiltValueNullFieldError.checkNotNull(
-        donwloadsFolder, r'PrefState', 'donwloadsFolder');
-    BuiltValueNullFieldError.checkNotNull(
-        sortFields, r'PrefState', 'sortFields');
-    BuiltValueNullFieldError.checkNotNull(
-        companyPrefs, r'PrefState', 'companyPrefs');
-  }
-
+      : super._();
   @override
   PrefState rebuild(void Function(PrefStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  PrefStateBuilder toBuilder() => new PrefStateBuilder()..replace(this);
+  PrefStateBuilder toBuilder() => PrefStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1038,31 +958,31 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
 
   MapBuilder<EntityType, bool>? _useSidebarEditor;
   MapBuilder<EntityType, bool> get useSidebarEditor =>
-      _$this._useSidebarEditor ??= new MapBuilder<EntityType, bool>();
+      _$this._useSidebarEditor ??= MapBuilder<EntityType, bool>();
   set useSidebarEditor(MapBuilder<EntityType, bool>? useSidebarEditor) =>
       _$this._useSidebarEditor = useSidebarEditor;
 
   MapBuilder<EntityType, bool>? _useSidebarViewer;
   MapBuilder<EntityType, bool> get useSidebarViewer =>
-      _$this._useSidebarViewer ??= new MapBuilder<EntityType, bool>();
+      _$this._useSidebarViewer ??= MapBuilder<EntityType, bool>();
   set useSidebarViewer(MapBuilder<EntityType, bool>? useSidebarViewer) =>
       _$this._useSidebarViewer = useSidebarViewer;
 
   MapBuilder<String, String>? _customColors;
   MapBuilder<String, String> get customColors =>
-      _$this._customColors ??= new MapBuilder<String, String>();
+      _$this._customColors ??= MapBuilder<String, String>();
   set customColors(MapBuilder<String, String>? customColors) =>
       _$this._customColors = customColors;
 
   MapBuilder<String, String>? _darkCustomColors;
   MapBuilder<String, String> get darkCustomColors =>
-      _$this._darkCustomColors ??= new MapBuilder<String, String>();
+      _$this._darkCustomColors ??= MapBuilder<String, String>();
   set darkCustomColors(MapBuilder<String, String>? darkCustomColors) =>
       _$this._darkCustomColors = darkCustomColors;
 
   ListBuilder<String>? _statementIncludes;
   ListBuilder<String> get statementIncludes =>
-      _$this._statementIncludes ??= new ListBuilder<String>();
+      _$this._statementIncludes ??= ListBuilder<String>();
   set statementIncludes(ListBuilder<String>? statementIncludes) =>
       _$this._statementIncludes = statementIncludes;
 
@@ -1203,13 +1123,13 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
 
   MapBuilder<EntityType, PrefStateSortField>? _sortFields;
   MapBuilder<EntityType, PrefStateSortField> get sortFields =>
-      _$this._sortFields ??= new MapBuilder<EntityType, PrefStateSortField>();
+      _$this._sortFields ??= MapBuilder<EntityType, PrefStateSortField>();
   set sortFields(MapBuilder<EntityType, PrefStateSortField>? sortFields) =>
       _$this._sortFields = sortFields;
 
   MapBuilder<String, CompanyPrefState>? _companyPrefs;
   MapBuilder<String, CompanyPrefState> get companyPrefs =>
-      _$this._companyPrefs ??= new MapBuilder<String, CompanyPrefState>();
+      _$this._companyPrefs ??= MapBuilder<String, CompanyPrefState>();
   set companyPrefs(MapBuilder<String, CompanyPrefState>? companyPrefs) =>
       _$this._companyPrefs = companyPrefs;
 
@@ -1266,7 +1186,6 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
 
   @override
   void replace(PrefState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PrefState;
   }
 
@@ -1282,54 +1201,85 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
     _$PrefState _$result;
     try {
       _$result = _$v ??
-          new _$PrefState._(
-              appLayout: BuiltValueNullFieldError.checkNotNull(
-                  appLayout, r'PrefState', 'appLayout'),
-              moduleLayout: BuiltValueNullFieldError.checkNotNull(
-                  moduleLayout, r'PrefState', 'moduleLayout'),
-              menuSidebarMode: BuiltValueNullFieldError.checkNotNull(
-                  menuSidebarMode, r'PrefState', 'menuSidebarMode'),
-              historySidebarMode: BuiltValueNullFieldError.checkNotNull(
-                  historySidebarMode, r'PrefState', 'historySidebarMode'),
-              useSidebarEditor: useSidebarEditor.build(),
-              useSidebarViewer: useSidebarViewer.build(),
-              customColors: customColors.build(),
-              darkCustomColors: darkCustomColors.build(),
-              statementIncludes: statementIncludes.build(),
-              isPreviewVisible: BuiltValueNullFieldError.checkNotNull(
-                  isPreviewVisible, r'PrefState', 'isPreviewVisible'),
-              isMenuVisible: BuiltValueNullFieldError.checkNotNull(
-                  isMenuVisible, r'PrefState', 'isMenuVisible'),
-              showKanban: BuiltValueNullFieldError.checkNotNull(
-                  showKanban, r'PrefState', 'showKanban'),
-              showPdfPreview:
-                  BuiltValueNullFieldError.checkNotNull(showPdfPreview, r'PrefState', 'showPdfPreview'),
-              showPdfPreviewSideBySide: BuiltValueNullFieldError.checkNotNull(showPdfPreviewSideBySide, r'PrefState', 'showPdfPreviewSideBySide'),
-              enableTouchEvents: BuiltValueNullFieldError.checkNotNull(enableTouchEvents, r'PrefState', 'enableTouchEvents'),
-              enableFlexibleSearch: BuiltValueNullFieldError.checkNotNull(enableFlexibleSearch, r'PrefState', 'enableFlexibleSearch'),
-              isHistoryVisible: BuiltValueNullFieldError.checkNotNull(isHistoryVisible, r'PrefState', 'isHistoryVisible'),
-              darkModeType: BuiltValueNullFieldError.checkNotNull(darkModeType, r'PrefState', 'darkModeType'),
-              enableDarkModeSystem: BuiltValueNullFieldError.checkNotNull(enableDarkModeSystem, r'PrefState', 'enableDarkModeSystem'),
-              isFilterVisible: BuiltValueNullFieldError.checkNotNull(isFilterVisible, r'PrefState', 'isFilterVisible'),
-              persistData: BuiltValueNullFieldError.checkNotNull(persistData, r'PrefState', 'persistData'),
-              longPressSelectionIsDefault: BuiltValueNullFieldError.checkNotNull(longPressSelectionIsDefault, r'PrefState', 'longPressSelectionIsDefault'),
-              requireAuthentication: BuiltValueNullFieldError.checkNotNull(requireAuthentication, r'PrefState', 'requireAuthentication'),
-              tapSelectedToEdit: BuiltValueNullFieldError.checkNotNull(tapSelectedToEdit, r'PrefState', 'tapSelectedToEdit'),
-              rowsPerPage: BuiltValueNullFieldError.checkNotNull(rowsPerPage, r'PrefState', 'rowsPerPage'),
-              enableTooltips: BuiltValueNullFieldError.checkNotNull(enableTooltips, r'PrefState', 'enableTooltips'),
-              colorTheme: BuiltValueNullFieldError.checkNotNull(colorTheme, r'PrefState', 'colorTheme'),
-              darkColorTheme: BuiltValueNullFieldError.checkNotNull(darkColorTheme, r'PrefState', 'darkColorTheme'),
-              hideGatewayWarning: BuiltValueNullFieldError.checkNotNull(hideGatewayWarning, r'PrefState', 'hideGatewayWarning'),
-              hideReviewApp: BuiltValueNullFieldError.checkNotNull(hideReviewApp, r'PrefState', 'hideReviewApp'),
-              hideOneYearReviewApp: BuiltValueNullFieldError.checkNotNull(hideOneYearReviewApp, r'PrefState', 'hideOneYearReviewApp'),
-              hideTwoYearReviewApp: BuiltValueNullFieldError.checkNotNull(hideTwoYearReviewApp, r'PrefState', 'hideTwoYearReviewApp'),
-              hideTaskExtensionBanner: BuiltValueNullFieldError.checkNotNull(hideTaskExtensionBanner, r'PrefState', 'hideTaskExtensionBanner'),
-              editAfterSaving: BuiltValueNullFieldError.checkNotNull(editAfterSaving, r'PrefState', 'editAfterSaving'),
-              enableNativeBrowser: BuiltValueNullFieldError.checkNotNull(enableNativeBrowser, r'PrefState', 'enableNativeBrowser'),
-              textScaleFactor: BuiltValueNullFieldError.checkNotNull(textScaleFactor, r'PrefState', 'textScaleFactor'),
-              donwloadsFolder: BuiltValueNullFieldError.checkNotNull(donwloadsFolder, r'PrefState', 'donwloadsFolder'),
-              sortFields: sortFields.build(),
-              companyPrefs: companyPrefs.build());
+          _$PrefState._(
+            appLayout: BuiltValueNullFieldError.checkNotNull(
+                appLayout, r'PrefState', 'appLayout'),
+            moduleLayout: BuiltValueNullFieldError.checkNotNull(
+                moduleLayout, r'PrefState', 'moduleLayout'),
+            menuSidebarMode: BuiltValueNullFieldError.checkNotNull(
+                menuSidebarMode, r'PrefState', 'menuSidebarMode'),
+            historySidebarMode: BuiltValueNullFieldError.checkNotNull(
+                historySidebarMode, r'PrefState', 'historySidebarMode'),
+            useSidebarEditor: useSidebarEditor.build(),
+            useSidebarViewer: useSidebarViewer.build(),
+            customColors: customColors.build(),
+            darkCustomColors: darkCustomColors.build(),
+            statementIncludes: statementIncludes.build(),
+            isPreviewVisible: BuiltValueNullFieldError.checkNotNull(
+                isPreviewVisible, r'PrefState', 'isPreviewVisible'),
+            isMenuVisible: BuiltValueNullFieldError.checkNotNull(
+                isMenuVisible, r'PrefState', 'isMenuVisible'),
+            showKanban: BuiltValueNullFieldError.checkNotNull(
+                showKanban, r'PrefState', 'showKanban'),
+            showPdfPreview: BuiltValueNullFieldError.checkNotNull(
+                showPdfPreview, r'PrefState', 'showPdfPreview'),
+            showPdfPreviewSideBySide: BuiltValueNullFieldError.checkNotNull(
+                showPdfPreviewSideBySide,
+                r'PrefState',
+                'showPdfPreviewSideBySide'),
+            enableTouchEvents: BuiltValueNullFieldError.checkNotNull(
+                enableTouchEvents, r'PrefState', 'enableTouchEvents'),
+            enableFlexibleSearch: BuiltValueNullFieldError.checkNotNull(
+                enableFlexibleSearch, r'PrefState', 'enableFlexibleSearch'),
+            isHistoryVisible: BuiltValueNullFieldError.checkNotNull(
+                isHistoryVisible, r'PrefState', 'isHistoryVisible'),
+            darkModeType: BuiltValueNullFieldError.checkNotNull(
+                darkModeType, r'PrefState', 'darkModeType'),
+            enableDarkModeSystem: BuiltValueNullFieldError.checkNotNull(
+                enableDarkModeSystem, r'PrefState', 'enableDarkModeSystem'),
+            isFilterVisible: BuiltValueNullFieldError.checkNotNull(
+                isFilterVisible, r'PrefState', 'isFilterVisible'),
+            persistData: BuiltValueNullFieldError.checkNotNull(
+                persistData, r'PrefState', 'persistData'),
+            longPressSelectionIsDefault: BuiltValueNullFieldError.checkNotNull(
+                longPressSelectionIsDefault,
+                r'PrefState',
+                'longPressSelectionIsDefault'),
+            requireAuthentication: BuiltValueNullFieldError.checkNotNull(
+                requireAuthentication, r'PrefState', 'requireAuthentication'),
+            tapSelectedToEdit: BuiltValueNullFieldError.checkNotNull(
+                tapSelectedToEdit, r'PrefState', 'tapSelectedToEdit'),
+            rowsPerPage: BuiltValueNullFieldError.checkNotNull(
+                rowsPerPage, r'PrefState', 'rowsPerPage'),
+            enableTooltips: BuiltValueNullFieldError.checkNotNull(
+                enableTooltips, r'PrefState', 'enableTooltips'),
+            colorTheme: BuiltValueNullFieldError.checkNotNull(
+                colorTheme, r'PrefState', 'colorTheme'),
+            darkColorTheme: BuiltValueNullFieldError.checkNotNull(
+                darkColorTheme, r'PrefState', 'darkColorTheme'),
+            hideGatewayWarning: BuiltValueNullFieldError.checkNotNull(
+                hideGatewayWarning, r'PrefState', 'hideGatewayWarning'),
+            hideReviewApp: BuiltValueNullFieldError.checkNotNull(
+                hideReviewApp, r'PrefState', 'hideReviewApp'),
+            hideOneYearReviewApp: BuiltValueNullFieldError.checkNotNull(
+                hideOneYearReviewApp, r'PrefState', 'hideOneYearReviewApp'),
+            hideTwoYearReviewApp: BuiltValueNullFieldError.checkNotNull(
+                hideTwoYearReviewApp, r'PrefState', 'hideTwoYearReviewApp'),
+            hideTaskExtensionBanner: BuiltValueNullFieldError.checkNotNull(
+                hideTaskExtensionBanner,
+                r'PrefState',
+                'hideTaskExtensionBanner'),
+            editAfterSaving: BuiltValueNullFieldError.checkNotNull(
+                editAfterSaving, r'PrefState', 'editAfterSaving'),
+            enableNativeBrowser: BuiltValueNullFieldError.checkNotNull(
+                enableNativeBrowser, r'PrefState', 'enableNativeBrowser'),
+            textScaleFactor: BuiltValueNullFieldError.checkNotNull(
+                textScaleFactor, r'PrefState', 'textScaleFactor'),
+            donwloadsFolder: BuiltValueNullFieldError.checkNotNull(
+                donwloadsFolder, r'PrefState', 'donwloadsFolder'),
+            sortFields: sortFields.build(),
+            companyPrefs: companyPrefs.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -1349,7 +1299,7 @@ class PrefStateBuilder implements Builder<PrefState, PrefStateBuilder> {
         _$failedField = 'companyPrefs';
         companyPrefs.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'PrefState', _$failedField, e.toString());
       }
       rethrow;
@@ -1367,16 +1317,10 @@ class _$PrefStateSortField extends PrefStateSortField {
 
   factory _$PrefStateSortField(
           [void Function(PrefStateSortFieldBuilder)? updates]) =>
-      (new PrefStateSortFieldBuilder()..update(updates))._build();
+      (PrefStateSortFieldBuilder()..update(updates))._build();
 
   _$PrefStateSortField._({required this.field, required this.ascending})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        field, r'PrefStateSortField', 'field');
-    BuiltValueNullFieldError.checkNotNull(
-        ascending, r'PrefStateSortField', 'ascending');
-  }
-
+      : super._();
   @override
   PrefStateSortField rebuild(
           void Function(PrefStateSortFieldBuilder) updates) =>
@@ -1384,7 +1328,7 @@ class _$PrefStateSortField extends PrefStateSortField {
 
   @override
   PrefStateSortFieldBuilder toBuilder() =>
-      new PrefStateSortFieldBuilder()..replace(this);
+      PrefStateSortFieldBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1440,7 +1384,6 @@ class PrefStateSortFieldBuilder
 
   @override
   void replace(PrefStateSortField other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PrefStateSortField;
   }
 
@@ -1454,11 +1397,12 @@ class PrefStateSortFieldBuilder
 
   _$PrefStateSortField _build() {
     final _$result = _$v ??
-        new _$PrefStateSortField._(
-            field: BuiltValueNullFieldError.checkNotNull(
-                field, r'PrefStateSortField', 'field'),
-            ascending: BuiltValueNullFieldError.checkNotNull(
-                ascending, r'PrefStateSortField', 'ascending'));
+        _$PrefStateSortField._(
+          field: BuiltValueNullFieldError.checkNotNull(
+              field, r'PrefStateSortField', 'field'),
+          ascending: BuiltValueNullFieldError.checkNotNull(
+              ascending, r'PrefStateSortField', 'ascending'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -1470,20 +1414,16 @@ class _$CompanyPrefState extends CompanyPrefState {
 
   factory _$CompanyPrefState(
           [void Function(CompanyPrefStateBuilder)? updates]) =>
-      (new CompanyPrefStateBuilder()..update(updates))._build();
+      (CompanyPrefStateBuilder()..update(updates))._build();
 
-  _$CompanyPrefState._({required this.historyList}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        historyList, r'CompanyPrefState', 'historyList');
-  }
-
+  _$CompanyPrefState._({required this.historyList}) : super._();
   @override
   CompanyPrefState rebuild(void Function(CompanyPrefStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   CompanyPrefStateBuilder toBuilder() =>
-      new CompanyPrefStateBuilder()..replace(this);
+      CompanyPrefStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1515,7 +1455,7 @@ class CompanyPrefStateBuilder
 
   ListBuilder<HistoryRecord>? _historyList;
   ListBuilder<HistoryRecord> get historyList =>
-      _$this._historyList ??= new ListBuilder<HistoryRecord>();
+      _$this._historyList ??= ListBuilder<HistoryRecord>();
   set historyList(ListBuilder<HistoryRecord>? historyList) =>
       _$this._historyList = historyList;
 
@@ -1532,7 +1472,6 @@ class CompanyPrefStateBuilder
 
   @override
   void replace(CompanyPrefState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CompanyPrefState;
   }
 
@@ -1547,15 +1486,17 @@ class CompanyPrefStateBuilder
   _$CompanyPrefState _build() {
     _$CompanyPrefState _$result;
     try {
-      _$result =
-          _$v ?? new _$CompanyPrefState._(historyList: historyList.build());
+      _$result = _$v ??
+          _$CompanyPrefState._(
+            historyList: historyList.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'historyList';
         historyList.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'CompanyPrefState', _$failedField, e.toString());
       }
       rethrow;
@@ -1576,23 +1517,17 @@ class _$HistoryRecord extends HistoryRecord {
   final int timestamp;
 
   factory _$HistoryRecord([void Function(HistoryRecordBuilder)? updates]) =>
-      (new HistoryRecordBuilder()..update(updates))._build();
+      (HistoryRecordBuilder()..update(updates))._build();
 
   _$HistoryRecord._(
       {this.id, required this.entityType, this.page, required this.timestamp})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        entityType, r'HistoryRecord', 'entityType');
-    BuiltValueNullFieldError.checkNotNull(
-        timestamp, r'HistoryRecord', 'timestamp');
-  }
-
+      : super._();
   @override
   HistoryRecord rebuild(void Function(HistoryRecordBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  HistoryRecordBuilder toBuilder() => new HistoryRecordBuilder()..replace(this);
+  HistoryRecordBuilder toBuilder() => HistoryRecordBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1664,7 +1599,6 @@ class HistoryRecordBuilder
 
   @override
   void replace(HistoryRecord other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$HistoryRecord;
   }
 
@@ -1678,13 +1612,14 @@ class HistoryRecordBuilder
 
   _$HistoryRecord _build() {
     final _$result = _$v ??
-        new _$HistoryRecord._(
-            id: id,
-            entityType: BuiltValueNullFieldError.checkNotNull(
-                entityType, r'HistoryRecord', 'entityType'),
-            page: page,
-            timestamp: BuiltValueNullFieldError.checkNotNull(
-                timestamp, r'HistoryRecord', 'timestamp'));
+        _$HistoryRecord._(
+          id: id,
+          entityType: BuiltValueNullFieldError.checkNotNull(
+              entityType, r'HistoryRecord', 'entityType'),
+          page: page,
+          timestamp: BuiltValueNullFieldError.checkNotNull(
+              timestamp, r'HistoryRecord', 'timestamp'),
+        );
     replace(_$result);
     return _$result;
   }

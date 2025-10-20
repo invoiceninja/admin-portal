@@ -7,13 +7,13 @@ part of 'tax_model.dart';
 // **************************************************************************
 
 Serializer<TaxDataEntity> _$taxDataEntitySerializer =
-    new _$TaxDataEntitySerializer();
+    _$TaxDataEntitySerializer();
 Serializer<TaxConfigEntity> _$taxConfigEntitySerializer =
-    new _$TaxConfigEntitySerializer();
+    _$TaxConfigEntitySerializer();
 Serializer<TaxConfigRegionEntity> _$taxConfigRegionEntitySerializer =
-    new _$TaxConfigRegionEntitySerializer();
+    _$TaxConfigRegionEntitySerializer();
 Serializer<TaxConfigSubregionEntity> _$taxConfigSubregionEntitySerializer =
-    new _$TaxConfigSubregionEntitySerializer();
+    _$TaxConfigSubregionEntitySerializer();
 
 class _$TaxDataEntitySerializer implements StructuredSerializer<TaxDataEntity> {
   @override
@@ -67,7 +67,7 @@ class _$TaxDataEntitySerializer implements StructuredSerializer<TaxDataEntity> {
   TaxDataEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TaxDataEntityBuilder();
+    final result = TaxDataEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -164,7 +164,7 @@ class _$TaxConfigEntitySerializer
   TaxConfigEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TaxConfigEntityBuilder();
+    final result = TaxConfigEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -240,7 +240,7 @@ class _$TaxConfigRegionEntitySerializer
   TaxConfigRegionEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TaxConfigRegionEntityBuilder();
+    final result = TaxConfigRegionEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -313,7 +313,7 @@ class _$TaxConfigSubregionEntitySerializer
   TaxConfigSubregionEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TaxConfigSubregionEntityBuilder();
+    final result = TaxConfigSubregionEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -373,7 +373,7 @@ class _$TaxDataEntity extends TaxDataEntity {
   final double districtSalesTax;
 
   factory _$TaxDataEntity([void Function(TaxDataEntityBuilder)? updates]) =>
-      (new TaxDataEntityBuilder()..update(updates))._build();
+      (TaxDataEntityBuilder()..update(updates))._build();
 
   _$TaxDataEntity._(
       {required this.geoPostalCode,
@@ -387,36 +387,13 @@ class _$TaxDataEntity extends TaxDataEntity {
       required this.countySalesTax,
       required this.countyTaxCode,
       required this.districtSalesTax})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        geoPostalCode, r'TaxDataEntity', 'geoPostalCode');
-    BuiltValueNullFieldError.checkNotNull(geoCity, r'TaxDataEntity', 'geoCity');
-    BuiltValueNullFieldError.checkNotNull(
-        geoCounty, r'TaxDataEntity', 'geoCounty');
-    BuiltValueNullFieldError.checkNotNull(
-        geoState, r'TaxDataEntity', 'geoState');
-    BuiltValueNullFieldError.checkNotNull(
-        taxSales, r'TaxDataEntity', 'taxSales');
-    BuiltValueNullFieldError.checkNotNull(
-        stateSalesTax, r'TaxDataEntity', 'stateSalesTax');
-    BuiltValueNullFieldError.checkNotNull(
-        citySalesTax, r'TaxDataEntity', 'citySalesTax');
-    BuiltValueNullFieldError.checkNotNull(
-        cityTaxCode, r'TaxDataEntity', 'cityTaxCode');
-    BuiltValueNullFieldError.checkNotNull(
-        countySalesTax, r'TaxDataEntity', 'countySalesTax');
-    BuiltValueNullFieldError.checkNotNull(
-        countyTaxCode, r'TaxDataEntity', 'countyTaxCode');
-    BuiltValueNullFieldError.checkNotNull(
-        districtSalesTax, r'TaxDataEntity', 'districtSalesTax');
-  }
-
+      : super._();
   @override
   TaxDataEntity rebuild(void Function(TaxDataEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  TaxDataEntityBuilder toBuilder() => new TaxDataEntityBuilder()..replace(this);
+  TaxDataEntityBuilder toBuilder() => TaxDataEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -549,7 +526,6 @@ class TaxDataEntityBuilder
 
   @override
   void replace(TaxDataEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaxDataEntity;
   }
 
@@ -563,27 +539,30 @@ class TaxDataEntityBuilder
 
   _$TaxDataEntity _build() {
     final _$result = _$v ??
-        new _$TaxDataEntity._(
-            geoPostalCode: BuiltValueNullFieldError.checkNotNull(
-                geoPostalCode, r'TaxDataEntity', 'geoPostalCode'),
-            geoCity: BuiltValueNullFieldError.checkNotNull(
-                geoCity, r'TaxDataEntity', 'geoCity'),
-            geoCounty: BuiltValueNullFieldError.checkNotNull(
-                geoCounty, r'TaxDataEntity', 'geoCounty'),
-            geoState: BuiltValueNullFieldError.checkNotNull(
-                geoState, r'TaxDataEntity', 'geoState'),
-            taxSales: BuiltValueNullFieldError.checkNotNull(
-                taxSales, r'TaxDataEntity', 'taxSales'),
-            stateSalesTax: BuiltValueNullFieldError.checkNotNull(
-                stateSalesTax, r'TaxDataEntity', 'stateSalesTax'),
-            citySalesTax: BuiltValueNullFieldError.checkNotNull(
-                citySalesTax, r'TaxDataEntity', 'citySalesTax'),
-            cityTaxCode: BuiltValueNullFieldError.checkNotNull(
-                cityTaxCode, r'TaxDataEntity', 'cityTaxCode'),
-            countySalesTax:
-                BuiltValueNullFieldError.checkNotNull(countySalesTax, r'TaxDataEntity', 'countySalesTax'),
-            countyTaxCode: BuiltValueNullFieldError.checkNotNull(countyTaxCode, r'TaxDataEntity', 'countyTaxCode'),
-            districtSalesTax: BuiltValueNullFieldError.checkNotNull(districtSalesTax, r'TaxDataEntity', 'districtSalesTax'));
+        _$TaxDataEntity._(
+          geoPostalCode: BuiltValueNullFieldError.checkNotNull(
+              geoPostalCode, r'TaxDataEntity', 'geoPostalCode'),
+          geoCity: BuiltValueNullFieldError.checkNotNull(
+              geoCity, r'TaxDataEntity', 'geoCity'),
+          geoCounty: BuiltValueNullFieldError.checkNotNull(
+              geoCounty, r'TaxDataEntity', 'geoCounty'),
+          geoState: BuiltValueNullFieldError.checkNotNull(
+              geoState, r'TaxDataEntity', 'geoState'),
+          taxSales: BuiltValueNullFieldError.checkNotNull(
+              taxSales, r'TaxDataEntity', 'taxSales'),
+          stateSalesTax: BuiltValueNullFieldError.checkNotNull(
+              stateSalesTax, r'TaxDataEntity', 'stateSalesTax'),
+          citySalesTax: BuiltValueNullFieldError.checkNotNull(
+              citySalesTax, r'TaxDataEntity', 'citySalesTax'),
+          cityTaxCode: BuiltValueNullFieldError.checkNotNull(
+              cityTaxCode, r'TaxDataEntity', 'cityTaxCode'),
+          countySalesTax: BuiltValueNullFieldError.checkNotNull(
+              countySalesTax, r'TaxDataEntity', 'countySalesTax'),
+          countyTaxCode: BuiltValueNullFieldError.checkNotNull(
+              countyTaxCode, r'TaxDataEntity', 'countyTaxCode'),
+          districtSalesTax: BuiltValueNullFieldError.checkNotNull(
+              districtSalesTax, r'TaxDataEntity', 'districtSalesTax'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -602,7 +581,7 @@ class _$TaxConfigEntity extends TaxConfigEntity {
   final BuiltMap<String, TaxConfigRegionEntity> regions;
 
   factory _$TaxConfigEntity([void Function(TaxConfigEntityBuilder)? updates]) =>
-      (new TaxConfigEntityBuilder()..update(updates))._build();
+      (TaxConfigEntityBuilder()..update(updates))._build();
 
   _$TaxConfigEntity._(
       {required this.version,
@@ -610,26 +589,13 @@ class _$TaxConfigEntity extends TaxConfigEntity {
       required this.actsAsSender,
       required this.actsAsReceiver,
       required this.regions})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        version, r'TaxConfigEntity', 'version');
-    BuiltValueNullFieldError.checkNotNull(
-        sellerSubregion, r'TaxConfigEntity', 'sellerSubregion');
-    BuiltValueNullFieldError.checkNotNull(
-        actsAsSender, r'TaxConfigEntity', 'actsAsSender');
-    BuiltValueNullFieldError.checkNotNull(
-        actsAsReceiver, r'TaxConfigEntity', 'actsAsReceiver');
-    BuiltValueNullFieldError.checkNotNull(
-        regions, r'TaxConfigEntity', 'regions');
-  }
-
+      : super._();
   @override
   TaxConfigEntity rebuild(void Function(TaxConfigEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  TaxConfigEntityBuilder toBuilder() =>
-      new TaxConfigEntityBuilder()..replace(this);
+  TaxConfigEntityBuilder toBuilder() => TaxConfigEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -692,7 +658,7 @@ class TaxConfigEntityBuilder
 
   MapBuilder<String, TaxConfigRegionEntity>? _regions;
   MapBuilder<String, TaxConfigRegionEntity> get regions =>
-      _$this._regions ??= new MapBuilder<String, TaxConfigRegionEntity>();
+      _$this._regions ??= MapBuilder<String, TaxConfigRegionEntity>();
   set regions(MapBuilder<String, TaxConfigRegionEntity>? regions) =>
       _$this._regions = regions;
 
@@ -715,7 +681,6 @@ class TaxConfigEntityBuilder
 
   @override
   void replace(TaxConfigEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaxConfigEntity;
   }
 
@@ -731,23 +696,24 @@ class TaxConfigEntityBuilder
     _$TaxConfigEntity _$result;
     try {
       _$result = _$v ??
-          new _$TaxConfigEntity._(
-              version: BuiltValueNullFieldError.checkNotNull(
-                  version, r'TaxConfigEntity', 'version'),
-              sellerSubregion: BuiltValueNullFieldError.checkNotNull(
-                  sellerSubregion, r'TaxConfigEntity', 'sellerSubregion'),
-              actsAsSender: BuiltValueNullFieldError.checkNotNull(
-                  actsAsSender, r'TaxConfigEntity', 'actsAsSender'),
-              actsAsReceiver: BuiltValueNullFieldError.checkNotNull(
-                  actsAsReceiver, r'TaxConfigEntity', 'actsAsReceiver'),
-              regions: regions.build());
+          _$TaxConfigEntity._(
+            version: BuiltValueNullFieldError.checkNotNull(
+                version, r'TaxConfigEntity', 'version'),
+            sellerSubregion: BuiltValueNullFieldError.checkNotNull(
+                sellerSubregion, r'TaxConfigEntity', 'sellerSubregion'),
+            actsAsSender: BuiltValueNullFieldError.checkNotNull(
+                actsAsSender, r'TaxConfigEntity', 'actsAsSender'),
+            actsAsReceiver: BuiltValueNullFieldError.checkNotNull(
+                actsAsReceiver, r'TaxConfigEntity', 'actsAsReceiver'),
+            regions: regions.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'regions';
         regions.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TaxConfigEntity', _$failedField, e.toString());
       }
       rethrow;
@@ -769,24 +735,14 @@ class _$TaxConfigRegionEntity extends TaxConfigRegionEntity {
 
   factory _$TaxConfigRegionEntity(
           [void Function(TaxConfigRegionEntityBuilder)? updates]) =>
-      (new TaxConfigRegionEntityBuilder()..update(updates))._build();
+      (TaxConfigRegionEntityBuilder()..update(updates))._build();
 
   _$TaxConfigRegionEntity._(
       {required this.hasSalesAboveThreshold,
       required this.taxAll,
       required this.taxThreshold,
       required this.subregions})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(hasSalesAboveThreshold,
-        r'TaxConfigRegionEntity', 'hasSalesAboveThreshold');
-    BuiltValueNullFieldError.checkNotNull(
-        taxAll, r'TaxConfigRegionEntity', 'taxAll');
-    BuiltValueNullFieldError.checkNotNull(
-        taxThreshold, r'TaxConfigRegionEntity', 'taxThreshold');
-    BuiltValueNullFieldError.checkNotNull(
-        subregions, r'TaxConfigRegionEntity', 'subregions');
-  }
-
+      : super._();
   @override
   TaxConfigRegionEntity rebuild(
           void Function(TaxConfigRegionEntityBuilder) updates) =>
@@ -794,7 +750,7 @@ class _$TaxConfigRegionEntity extends TaxConfigRegionEntity {
 
   @override
   TaxConfigRegionEntityBuilder toBuilder() =>
-      new TaxConfigRegionEntityBuilder()..replace(this);
+      TaxConfigRegionEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -849,7 +805,7 @@ class TaxConfigRegionEntityBuilder
 
   MapBuilder<String, TaxConfigSubregionEntity>? _subregions;
   MapBuilder<String, TaxConfigSubregionEntity> get subregions =>
-      _$this._subregions ??= new MapBuilder<String, TaxConfigSubregionEntity>();
+      _$this._subregions ??= MapBuilder<String, TaxConfigSubregionEntity>();
   set subregions(MapBuilder<String, TaxConfigSubregionEntity>? subregions) =>
       _$this._subregions = subregions;
 
@@ -871,7 +827,6 @@ class TaxConfigRegionEntityBuilder
 
   @override
   void replace(TaxConfigRegionEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaxConfigRegionEntity;
   }
 
@@ -887,23 +842,24 @@ class TaxConfigRegionEntityBuilder
     _$TaxConfigRegionEntity _$result;
     try {
       _$result = _$v ??
-          new _$TaxConfigRegionEntity._(
-              hasSalesAboveThreshold: BuiltValueNullFieldError.checkNotNull(
-                  hasSalesAboveThreshold,
-                  r'TaxConfigRegionEntity',
-                  'hasSalesAboveThreshold'),
-              taxAll: BuiltValueNullFieldError.checkNotNull(
-                  taxAll, r'TaxConfigRegionEntity', 'taxAll'),
-              taxThreshold: BuiltValueNullFieldError.checkNotNull(
-                  taxThreshold, r'TaxConfigRegionEntity', 'taxThreshold'),
-              subregions: subregions.build());
+          _$TaxConfigRegionEntity._(
+            hasSalesAboveThreshold: BuiltValueNullFieldError.checkNotNull(
+                hasSalesAboveThreshold,
+                r'TaxConfigRegionEntity',
+                'hasSalesAboveThreshold'),
+            taxAll: BuiltValueNullFieldError.checkNotNull(
+                taxAll, r'TaxConfigRegionEntity', 'taxAll'),
+            taxThreshold: BuiltValueNullFieldError.checkNotNull(
+                taxThreshold, r'TaxConfigRegionEntity', 'taxThreshold'),
+            subregions: subregions.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'subregions';
         subregions.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TaxConfigRegionEntity', _$failedField, e.toString());
       }
       rethrow;
@@ -927,7 +883,7 @@ class _$TaxConfigSubregionEntity extends TaxConfigSubregionEntity {
 
   factory _$TaxConfigSubregionEntity(
           [void Function(TaxConfigSubregionEntityBuilder)? updates]) =>
-      (new TaxConfigSubregionEntityBuilder()..update(updates))._build();
+      (TaxConfigSubregionEntityBuilder()..update(updates))._build();
 
   _$TaxConfigSubregionEntity._(
       {required this.applyTax,
@@ -935,19 +891,7 @@ class _$TaxConfigSubregionEntity extends TaxConfigSubregionEntity {
       required this.taxName,
       required this.reducedTaxRate,
       required this.vatNumber})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        applyTax, r'TaxConfigSubregionEntity', 'applyTax');
-    BuiltValueNullFieldError.checkNotNull(
-        taxRate, r'TaxConfigSubregionEntity', 'taxRate');
-    BuiltValueNullFieldError.checkNotNull(
-        taxName, r'TaxConfigSubregionEntity', 'taxName');
-    BuiltValueNullFieldError.checkNotNull(
-        reducedTaxRate, r'TaxConfigSubregionEntity', 'reducedTaxRate');
-    BuiltValueNullFieldError.checkNotNull(
-        vatNumber, r'TaxConfigSubregionEntity', 'vatNumber');
-  }
-
+      : super._();
   @override
   TaxConfigSubregionEntity rebuild(
           void Function(TaxConfigSubregionEntityBuilder) updates) =>
@@ -955,7 +899,7 @@ class _$TaxConfigSubregionEntity extends TaxConfigSubregionEntity {
 
   @override
   TaxConfigSubregionEntityBuilder toBuilder() =>
-      new TaxConfigSubregionEntityBuilder()..replace(this);
+      TaxConfigSubregionEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1039,7 +983,6 @@ class TaxConfigSubregionEntityBuilder
 
   @override
   void replace(TaxConfigSubregionEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaxConfigSubregionEntity;
   }
 
@@ -1053,17 +996,18 @@ class TaxConfigSubregionEntityBuilder
 
   _$TaxConfigSubregionEntity _build() {
     final _$result = _$v ??
-        new _$TaxConfigSubregionEntity._(
-            applyTax: BuiltValueNullFieldError.checkNotNull(
-                applyTax, r'TaxConfigSubregionEntity', 'applyTax'),
-            taxRate: BuiltValueNullFieldError.checkNotNull(
-                taxRate, r'TaxConfigSubregionEntity', 'taxRate'),
-            taxName: BuiltValueNullFieldError.checkNotNull(
-                taxName, r'TaxConfigSubregionEntity', 'taxName'),
-            reducedTaxRate: BuiltValueNullFieldError.checkNotNull(
-                reducedTaxRate, r'TaxConfigSubregionEntity', 'reducedTaxRate'),
-            vatNumber: BuiltValueNullFieldError.checkNotNull(
-                vatNumber, r'TaxConfigSubregionEntity', 'vatNumber'));
+        _$TaxConfigSubregionEntity._(
+          applyTax: BuiltValueNullFieldError.checkNotNull(
+              applyTax, r'TaxConfigSubregionEntity', 'applyTax'),
+          taxRate: BuiltValueNullFieldError.checkNotNull(
+              taxRate, r'TaxConfigSubregionEntity', 'taxRate'),
+          taxName: BuiltValueNullFieldError.checkNotNull(
+              taxName, r'TaxConfigSubregionEntity', 'taxName'),
+          reducedTaxRate: BuiltValueNullFieldError.checkNotNull(
+              reducedTaxRate, r'TaxConfigSubregionEntity', 'reducedTaxRate'),
+          vatNumber: BuiltValueNullFieldError.checkNotNull(
+              vatNumber, r'TaxConfigSubregionEntity', 'vatNumber'),
+        );
     replace(_$result);
     return _$result;
   }

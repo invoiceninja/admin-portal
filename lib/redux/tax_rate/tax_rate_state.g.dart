@@ -6,10 +6,9 @@ part of 'tax_rate_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<TaxRateState> _$taxRateStateSerializer =
-    new _$TaxRateStateSerializer();
+Serializer<TaxRateState> _$taxRateStateSerializer = _$TaxRateStateSerializer();
 Serializer<TaxRateUIState> _$taxRateUIStateSerializer =
-    new _$TaxRateUIStateSerializer();
+    _$TaxRateUIStateSerializer();
 
 class _$TaxRateStateSerializer implements StructuredSerializer<TaxRateState> {
   @override
@@ -38,7 +37,7 @@ class _$TaxRateStateSerializer implements StructuredSerializer<TaxRateState> {
   TaxRateState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TaxRateStateBuilder();
+    final result = TaxRateStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -113,7 +112,7 @@ class _$TaxRateUIStateSerializer
   TaxRateUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TaxRateUIStateBuilder();
+    final result = TaxRateUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -155,19 +154,15 @@ class _$TaxRateState extends TaxRateState {
   final BuiltList<String> list;
 
   factory _$TaxRateState([void Function(TaxRateStateBuilder)? updates]) =>
-      (new TaxRateStateBuilder()..update(updates))._build();
+      (TaxRateStateBuilder()..update(updates))._build();
 
-  _$TaxRateState._({required this.map, required this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, r'TaxRateState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, r'TaxRateState', 'list');
-  }
-
+  _$TaxRateState._({required this.map, required this.list}) : super._();
   @override
   TaxRateState rebuild(void Function(TaxRateStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  TaxRateStateBuilder toBuilder() => new TaxRateStateBuilder()..replace(this);
+  TaxRateStateBuilder toBuilder() => TaxRateStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -201,11 +196,11 @@ class TaxRateStateBuilder
 
   MapBuilder<String, TaxRateEntity>? _map;
   MapBuilder<String, TaxRateEntity> get map =>
-      _$this._map ??= new MapBuilder<String, TaxRateEntity>();
+      _$this._map ??= MapBuilder<String, TaxRateEntity>();
   set map(MapBuilder<String, TaxRateEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
-  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  ListBuilder<String> get list => _$this._list ??= ListBuilder<String>();
   set list(ListBuilder<String>? list) => _$this._list = list;
 
   TaxRateStateBuilder();
@@ -222,7 +217,6 @@ class TaxRateStateBuilder
 
   @override
   void replace(TaxRateState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaxRateState;
   }
 
@@ -237,8 +231,11 @@ class TaxRateStateBuilder
   _$TaxRateState _build() {
     _$TaxRateState _$result;
     try {
-      _$result =
-          _$v ?? new _$TaxRateState._(map: map.build(), list: list.build());
+      _$result = _$v ??
+          _$TaxRateState._(
+            map: map.build(),
+            list: list.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -247,7 +244,7 @@ class TaxRateStateBuilder
         _$failedField = 'list';
         list.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TaxRateState', _$failedField, e.toString());
       }
       rethrow;
@@ -274,7 +271,7 @@ class _$TaxRateUIState extends TaxRateUIState {
   final Completer<Null>? cancelCompleter;
 
   factory _$TaxRateUIState([void Function(TaxRateUIStateBuilder)? updates]) =>
-      (new TaxRateUIStateBuilder()..update(updates))._build();
+      (TaxRateUIStateBuilder()..update(updates))._build();
 
   _$TaxRateUIState._(
       {this.editing,
@@ -284,20 +281,13 @@ class _$TaxRateUIState extends TaxRateUIState {
       required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        listUIState, r'TaxRateUIState', 'listUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        tabIndex, r'TaxRateUIState', 'tabIndex');
-  }
-
+      : super._();
   @override
   TaxRateUIState rebuild(void Function(TaxRateUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  TaxRateUIStateBuilder toBuilder() =>
-      new TaxRateUIStateBuilder()..replace(this);
+  TaxRateUIStateBuilder toBuilder() => TaxRateUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -348,12 +338,12 @@ class TaxRateUIStateBuilder
 
   TaxRateEntityBuilder? _editing;
   TaxRateEntityBuilder get editing =>
-      _$this._editing ??= new TaxRateEntityBuilder();
+      _$this._editing ??= TaxRateEntityBuilder();
   set editing(TaxRateEntityBuilder? editing) => _$this._editing = editing;
 
   ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
-      _$this._listUIState ??= new ListUIStateBuilder();
+      _$this._listUIState ??= ListUIStateBuilder();
   set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
@@ -399,7 +389,6 @@ class TaxRateUIStateBuilder
 
   @override
   void replace(TaxRateUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaxRateUIState;
   }
 
@@ -415,15 +404,16 @@ class TaxRateUIStateBuilder
     _$TaxRateUIState _$result;
     try {
       _$result = _$v ??
-          new _$TaxRateUIState._(
-              editing: _editing?.build(),
-              listUIState: listUIState.build(),
-              selectedId: selectedId,
-              forceSelected: forceSelected,
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'TaxRateUIState', 'tabIndex'),
-              saveCompleter: saveCompleter,
-              cancelCompleter: cancelCompleter);
+          _$TaxRateUIState._(
+            editing: _editing?.build(),
+            listUIState: listUIState.build(),
+            selectedId: selectedId,
+            forceSelected: forceSelected,
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'TaxRateUIState', 'tabIndex'),
+            saveCompleter: saveCompleter,
+            cancelCompleter: cancelCompleter,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -432,7 +422,7 @@ class TaxRateUIStateBuilder
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TaxRateUIState', _$failedField, e.toString());
       }
       rethrow;

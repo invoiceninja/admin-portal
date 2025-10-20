@@ -7,11 +7,11 @@ part of 'task_model.dart';
 // **************************************************************************
 
 Serializer<TaskListResponse> _$taskListResponseSerializer =
-    new _$TaskListResponseSerializer();
+    _$TaskListResponseSerializer();
 Serializer<TaskItemResponse> _$taskItemResponseSerializer =
-    new _$TaskItemResponseSerializer();
-Serializer<TaskTime> _$taskTimeSerializer = new _$TaskTimeSerializer();
-Serializer<TaskEntity> _$taskEntitySerializer = new _$TaskEntitySerializer();
+    _$TaskItemResponseSerializer();
+Serializer<TaskTime> _$taskTimeSerializer = _$TaskTimeSerializer();
+Serializer<TaskEntity> _$taskEntitySerializer = _$TaskEntitySerializer();
 
 class _$TaskListResponseSerializer
     implements StructuredSerializer<TaskListResponse> {
@@ -37,7 +37,7 @@ class _$TaskListResponseSerializer
   TaskListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TaskListResponseBuilder();
+    final result = TaskListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -81,7 +81,7 @@ class _$TaskItemResponseSerializer
   TaskItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TaskItemResponseBuilder();
+    final result = TaskItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -138,7 +138,7 @@ class _$TaskTimeSerializer implements StructuredSerializer<TaskTime> {
   @override
   TaskTime deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TaskTimeBuilder();
+    final result = TaskTimeBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -271,7 +271,7 @@ class _$TaskEntitySerializer implements StructuredSerializer<TaskEntity> {
   @override
   TaskEntity deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TaskEntityBuilder();
+    final result = TaskEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -382,19 +382,16 @@ class _$TaskListResponse extends TaskListResponse {
 
   factory _$TaskListResponse(
           [void Function(TaskListResponseBuilder)? updates]) =>
-      (new TaskListResponseBuilder()..update(updates))._build();
+      (TaskListResponseBuilder()..update(updates))._build();
 
-  _$TaskListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'TaskListResponse', 'data');
-  }
-
+  _$TaskListResponse._({required this.data}) : super._();
   @override
   TaskListResponse rebuild(void Function(TaskListResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   TaskListResponseBuilder toBuilder() =>
-      new TaskListResponseBuilder()..replace(this);
+      TaskListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -425,7 +422,7 @@ class TaskListResponseBuilder
 
   ListBuilder<TaskEntity>? _data;
   ListBuilder<TaskEntity> get data =>
-      _$this._data ??= new ListBuilder<TaskEntity>();
+      _$this._data ??= ListBuilder<TaskEntity>();
   set data(ListBuilder<TaskEntity>? data) => _$this._data = data;
 
   TaskListResponseBuilder();
@@ -441,7 +438,6 @@ class TaskListResponseBuilder
 
   @override
   void replace(TaskListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaskListResponse;
   }
 
@@ -456,14 +452,17 @@ class TaskListResponseBuilder
   _$TaskListResponse _build() {
     _$TaskListResponse _$result;
     try {
-      _$result = _$v ?? new _$TaskListResponse._(data: data.build());
+      _$result = _$v ??
+          _$TaskListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TaskListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -479,19 +478,16 @@ class _$TaskItemResponse extends TaskItemResponse {
 
   factory _$TaskItemResponse(
           [void Function(TaskItemResponseBuilder)? updates]) =>
-      (new TaskItemResponseBuilder()..update(updates))._build();
+      (TaskItemResponseBuilder()..update(updates))._build();
 
-  _$TaskItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'TaskItemResponse', 'data');
-  }
-
+  _$TaskItemResponse._({required this.data}) : super._();
   @override
   TaskItemResponse rebuild(void Function(TaskItemResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   TaskItemResponseBuilder toBuilder() =>
-      new TaskItemResponseBuilder()..replace(this);
+      TaskItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -521,7 +517,7 @@ class TaskItemResponseBuilder
   _$TaskItemResponse? _$v;
 
   TaskEntityBuilder? _data;
-  TaskEntityBuilder get data => _$this._data ??= new TaskEntityBuilder();
+  TaskEntityBuilder get data => _$this._data ??= TaskEntityBuilder();
   set data(TaskEntityBuilder? data) => _$this._data = data;
 
   TaskItemResponseBuilder();
@@ -537,7 +533,6 @@ class TaskItemResponseBuilder
 
   @override
   void replace(TaskItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaskItemResponse;
   }
 
@@ -552,14 +547,17 @@ class TaskItemResponseBuilder
   _$TaskItemResponse _build() {
     _$TaskItemResponse _$result;
     try {
-      _$result = _$v ?? new _$TaskItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$TaskItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TaskItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -580,26 +578,20 @@ class _$TaskTime extends TaskTime {
   final bool isBillable;
 
   factory _$TaskTime([void Function(TaskTimeBuilder)? updates]) =>
-      (new TaskTimeBuilder()..update(updates))._build();
+      (TaskTimeBuilder()..update(updates))._build();
 
   _$TaskTime._(
       {this.startDate,
       this.endDate,
       required this.description,
       required this.isBillable})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        description, r'TaskTime', 'description');
-    BuiltValueNullFieldError.checkNotNull(
-        isBillable, r'TaskTime', 'isBillable');
-  }
-
+      : super._();
   @override
   TaskTime rebuild(void Function(TaskTimeBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  TaskTimeBuilder toBuilder() => new TaskTimeBuilder()..replace(this);
+  TaskTimeBuilder toBuilder() => TaskTimeBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -670,7 +662,6 @@ class TaskTimeBuilder implements Builder<TaskTime, TaskTimeBuilder> {
 
   @override
   void replace(TaskTime other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaskTime;
   }
 
@@ -684,13 +675,14 @@ class TaskTimeBuilder implements Builder<TaskTime, TaskTimeBuilder> {
 
   _$TaskTime _build() {
     final _$result = _$v ??
-        new _$TaskTime._(
-            startDate: startDate,
-            endDate: endDate,
-            description: BuiltValueNullFieldError.checkNotNull(
-                description, r'TaskTime', 'description'),
-            isBillable: BuiltValueNullFieldError.checkNotNull(
-                isBillable, r'TaskTime', 'isBillable'));
+        _$TaskTime._(
+          startDate: startDate,
+          endDate: endDate,
+          description: BuiltValueNullFieldError.checkNotNull(
+              description, r'TaskTime', 'description'),
+          isBillable: BuiltValueNullFieldError.checkNotNull(
+              isBillable, r'TaskTime', 'isBillable'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -743,7 +735,7 @@ class _$TaskEntity extends TaskEntity {
   final String id;
 
   factory _$TaskEntity([void Function(TaskEntityBuilder)? updates]) =>
-      (new TaskEntityBuilder()..update(updates))._build();
+      (TaskEntityBuilder()..update(updates))._build();
 
   _$TaskEntity._(
       {required this.description,
@@ -768,43 +760,13 @@ class _$TaskEntity extends TaskEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        description, r'TaskEntity', 'description');
-    BuiltValueNullFieldError.checkNotNull(number, r'TaskEntity', 'number');
-    BuiltValueNullFieldError.checkNotNull(
-        invoiceId, r'TaskEntity', 'invoiceId');
-    BuiltValueNullFieldError.checkNotNull(clientId, r'TaskEntity', 'clientId');
-    BuiltValueNullFieldError.checkNotNull(rate, r'TaskEntity', 'rate');
-    BuiltValueNullFieldError.checkNotNull(
-        projectId, r'TaskEntity', 'projectId');
-    BuiltValueNullFieldError.checkNotNull(timeLog, r'TaskEntity', 'timeLog');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue1, r'TaskEntity', 'customValue1');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue2, r'TaskEntity', 'customValue2');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue3, r'TaskEntity', 'customValue3');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue4, r'TaskEntity', 'customValue4');
-    BuiltValueNullFieldError.checkNotNull(statusId, r'TaskEntity', 'statusId');
-    BuiltValueNullFieldError.checkNotNull(
-        documents, r'TaskEntity', 'documents');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'TaskEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'TaskEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'TaskEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'TaskEntity', 'id');
-  }
-
+      : super._();
   @override
   TaskEntity rebuild(void Function(TaskEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  TaskEntityBuilder toBuilder() => new TaskEntityBuilder()..replace(this);
+  TaskEntityBuilder toBuilder() => TaskEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -951,7 +913,7 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
 
   ListBuilder<DocumentEntity>? _documents;
   ListBuilder<DocumentEntity> get documents =>
-      _$this._documents ??= new ListBuilder<DocumentEntity>();
+      _$this._documents ??= ListBuilder<DocumentEntity>();
   set documents(ListBuilder<DocumentEntity>? documents) =>
       _$this._documents = documents;
 
@@ -1023,7 +985,6 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
 
   @override
   void replace(TaskEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaskEntity;
   }
 
@@ -1039,45 +1000,52 @@ class TaskEntityBuilder implements Builder<TaskEntity, TaskEntityBuilder> {
     _$TaskEntity _$result;
     try {
       _$result = _$v ??
-          new _$TaskEntity._(
-              description: BuiltValueNullFieldError.checkNotNull(
-                  description, r'TaskEntity', 'description'),
-              number: BuiltValueNullFieldError.checkNotNull(
-                  number, r'TaskEntity', 'number'),
-              invoiceId: BuiltValueNullFieldError.checkNotNull(
-                  invoiceId, r'TaskEntity', 'invoiceId'),
-              clientId: BuiltValueNullFieldError.checkNotNull(
-                  clientId, r'TaskEntity', 'clientId'),
-              rate: BuiltValueNullFieldError.checkNotNull(
-                  rate, r'TaskEntity', 'rate'),
-              projectId: BuiltValueNullFieldError.checkNotNull(
-                  projectId, r'TaskEntity', 'projectId'),
-              timeLog: BuiltValueNullFieldError.checkNotNull(
-                  timeLog, r'TaskEntity', 'timeLog'),
-              customValue1: BuiltValueNullFieldError.checkNotNull(
-                  customValue1, r'TaskEntity', 'customValue1'),
-              customValue2:
-                  BuiltValueNullFieldError.checkNotNull(customValue2, r'TaskEntity', 'customValue2'),
-              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'TaskEntity', 'customValue3'),
-              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'TaskEntity', 'customValue4'),
-              statusId: BuiltValueNullFieldError.checkNotNull(statusId, r'TaskEntity', 'statusId'),
-              statusOrder: statusOrder,
-              documents: documents.build(),
-              isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'TaskEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'TaskEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'TaskEntity', 'archivedAt'),
-              isDeleted: isDeleted,
-              createdUserId: createdUserId,
-              assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(id, r'TaskEntity', 'id'));
+          _$TaskEntity._(
+            description: BuiltValueNullFieldError.checkNotNull(
+                description, r'TaskEntity', 'description'),
+            number: BuiltValueNullFieldError.checkNotNull(
+                number, r'TaskEntity', 'number'),
+            invoiceId: BuiltValueNullFieldError.checkNotNull(
+                invoiceId, r'TaskEntity', 'invoiceId'),
+            clientId: BuiltValueNullFieldError.checkNotNull(
+                clientId, r'TaskEntity', 'clientId'),
+            rate: BuiltValueNullFieldError.checkNotNull(
+                rate, r'TaskEntity', 'rate'),
+            projectId: BuiltValueNullFieldError.checkNotNull(
+                projectId, r'TaskEntity', 'projectId'),
+            timeLog: BuiltValueNullFieldError.checkNotNull(
+                timeLog, r'TaskEntity', 'timeLog'),
+            customValue1: BuiltValueNullFieldError.checkNotNull(
+                customValue1, r'TaskEntity', 'customValue1'),
+            customValue2: BuiltValueNullFieldError.checkNotNull(
+                customValue2, r'TaskEntity', 'customValue2'),
+            customValue3: BuiltValueNullFieldError.checkNotNull(
+                customValue3, r'TaskEntity', 'customValue3'),
+            customValue4: BuiltValueNullFieldError.checkNotNull(
+                customValue4, r'TaskEntity', 'customValue4'),
+            statusId: BuiltValueNullFieldError.checkNotNull(
+                statusId, r'TaskEntity', 'statusId'),
+            statusOrder: statusOrder,
+            documents: documents.build(),
+            isChanged: isChanged,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, r'TaskEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, r'TaskEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(
+                archivedAt, r'TaskEntity', 'archivedAt'),
+            isDeleted: isDeleted,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            id: BuiltValueNullFieldError.checkNotNull(id, r'TaskEntity', 'id'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'documents';
         documents.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TaskEntity', _$failedField, e.toString());
       }
       rethrow;

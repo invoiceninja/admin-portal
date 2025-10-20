@@ -6,7 +6,7 @@ part of 'auth_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<AuthState> _$authStateSerializer = new _$AuthStateSerializer();
+Serializer<AuthState> _$authStateSerializer = _$AuthStateSerializer();
 
 class _$AuthStateSerializer implements StructuredSerializer<AuthState> {
   @override
@@ -43,7 +43,7 @@ class _$AuthStateSerializer implements StructuredSerializer<AuthState> {
   @override
   AuthState deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new AuthStateBuilder();
+    final result = AuthStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -97,7 +97,7 @@ class _$AuthState extends AuthState {
   final String referralCode;
 
   factory _$AuthState([void Function(AuthStateBuilder)? updates]) =>
-      (new AuthStateBuilder()..update(updates))._build();
+      (AuthStateBuilder()..update(updates))._build();
 
   _$AuthState._(
       {required this.email,
@@ -106,25 +106,13 @@ class _$AuthState extends AuthState {
       required this.isAuthenticated,
       required this.lastEnteredPasswordAt,
       required this.referralCode})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(email, r'AuthState', 'email');
-    BuiltValueNullFieldError.checkNotNull(url, r'AuthState', 'url');
-    BuiltValueNullFieldError.checkNotNull(
-        isInitialized, r'AuthState', 'isInitialized');
-    BuiltValueNullFieldError.checkNotNull(
-        isAuthenticated, r'AuthState', 'isAuthenticated');
-    BuiltValueNullFieldError.checkNotNull(
-        lastEnteredPasswordAt, r'AuthState', 'lastEnteredPasswordAt');
-    BuiltValueNullFieldError.checkNotNull(
-        referralCode, r'AuthState', 'referralCode');
-  }
-
+      : super._();
   @override
   AuthState rebuild(void Function(AuthStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  AuthStateBuilder toBuilder() => new AuthStateBuilder()..replace(this);
+  AuthStateBuilder toBuilder() => AuthStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -216,7 +204,6 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
 
   @override
   void replace(AuthState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$AuthState;
   }
 
@@ -230,19 +217,19 @@ class AuthStateBuilder implements Builder<AuthState, AuthStateBuilder> {
 
   _$AuthState _build() {
     final _$result = _$v ??
-        new _$AuthState._(
-            email: BuiltValueNullFieldError.checkNotNull(
-                email, r'AuthState', 'email'),
-            url:
-                BuiltValueNullFieldError.checkNotNull(url, r'AuthState', 'url'),
-            isInitialized: BuiltValueNullFieldError.checkNotNull(
-                isInitialized, r'AuthState', 'isInitialized'),
-            isAuthenticated: BuiltValueNullFieldError.checkNotNull(
-                isAuthenticated, r'AuthState', 'isAuthenticated'),
-            lastEnteredPasswordAt: BuiltValueNullFieldError.checkNotNull(
-                lastEnteredPasswordAt, r'AuthState', 'lastEnteredPasswordAt'),
-            referralCode: BuiltValueNullFieldError.checkNotNull(
-                referralCode, r'AuthState', 'referralCode'));
+        _$AuthState._(
+          email: BuiltValueNullFieldError.checkNotNull(
+              email, r'AuthState', 'email'),
+          url: BuiltValueNullFieldError.checkNotNull(url, r'AuthState', 'url'),
+          isInitialized: BuiltValueNullFieldError.checkNotNull(
+              isInitialized, r'AuthState', 'isInitialized'),
+          isAuthenticated: BuiltValueNullFieldError.checkNotNull(
+              isAuthenticated, r'AuthState', 'isAuthenticated'),
+          lastEnteredPasswordAt: BuiltValueNullFieldError.checkNotNull(
+              lastEnteredPasswordAt, r'AuthState', 'lastEnteredPasswordAt'),
+          referralCode: BuiltValueNullFieldError.checkNotNull(
+              referralCode, r'AuthState', 'referralCode'),
+        );
     replace(_$result);
     return _$result;
   }

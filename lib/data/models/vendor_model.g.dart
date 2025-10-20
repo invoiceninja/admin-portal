@@ -7,13 +7,12 @@ part of 'vendor_model.dart';
 // **************************************************************************
 
 Serializer<VendorListResponse> _$vendorListResponseSerializer =
-    new _$VendorListResponseSerializer();
+    _$VendorListResponseSerializer();
 Serializer<VendorItemResponse> _$vendorItemResponseSerializer =
-    new _$VendorItemResponseSerializer();
-Serializer<VendorEntity> _$vendorEntitySerializer =
-    new _$VendorEntitySerializer();
+    _$VendorItemResponseSerializer();
+Serializer<VendorEntity> _$vendorEntitySerializer = _$VendorEntitySerializer();
 Serializer<VendorContactEntity> _$vendorContactEntitySerializer =
-    new _$VendorContactEntitySerializer();
+    _$VendorContactEntitySerializer();
 
 class _$VendorListResponseSerializer
     implements StructuredSerializer<VendorListResponse> {
@@ -40,7 +39,7 @@ class _$VendorListResponseSerializer
   VendorListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new VendorListResponseBuilder();
+    final result = VendorListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -85,7 +84,7 @@ class _$VendorItemResponseSerializer
   VendorItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new VendorItemResponseBuilder();
+    final result = VendorItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -253,7 +252,7 @@ class _$VendorEntitySerializer implements StructuredSerializer<VendorEntity> {
   VendorEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new VendorEntityBuilder();
+    final result = VendorEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -520,7 +519,7 @@ class _$VendorContactEntitySerializer
   VendorContactEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new VendorContactEntityBuilder();
+    final result = VendorContactEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -621,12 +620,9 @@ class _$VendorListResponse extends VendorListResponse {
 
   factory _$VendorListResponse(
           [void Function(VendorListResponseBuilder)? updates]) =>
-      (new VendorListResponseBuilder()..update(updates))._build();
+      (VendorListResponseBuilder()..update(updates))._build();
 
-  _$VendorListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'VendorListResponse', 'data');
-  }
-
+  _$VendorListResponse._({required this.data}) : super._();
   @override
   VendorListResponse rebuild(
           void Function(VendorListResponseBuilder) updates) =>
@@ -634,7 +630,7 @@ class _$VendorListResponse extends VendorListResponse {
 
   @override
   VendorListResponseBuilder toBuilder() =>
-      new VendorListResponseBuilder()..replace(this);
+      VendorListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -666,7 +662,7 @@ class VendorListResponseBuilder
 
   ListBuilder<VendorEntity>? _data;
   ListBuilder<VendorEntity> get data =>
-      _$this._data ??= new ListBuilder<VendorEntity>();
+      _$this._data ??= ListBuilder<VendorEntity>();
   set data(ListBuilder<VendorEntity>? data) => _$this._data = data;
 
   VendorListResponseBuilder();
@@ -682,7 +678,6 @@ class VendorListResponseBuilder
 
   @override
   void replace(VendorListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$VendorListResponse;
   }
 
@@ -697,14 +692,17 @@ class VendorListResponseBuilder
   _$VendorListResponse _build() {
     _$VendorListResponse _$result;
     try {
-      _$result = _$v ?? new _$VendorListResponse._(data: data.build());
+      _$result = _$v ??
+          _$VendorListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'VendorListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -720,12 +718,9 @@ class _$VendorItemResponse extends VendorItemResponse {
 
   factory _$VendorItemResponse(
           [void Function(VendorItemResponseBuilder)? updates]) =>
-      (new VendorItemResponseBuilder()..update(updates))._build();
+      (VendorItemResponseBuilder()..update(updates))._build();
 
-  _$VendorItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'VendorItemResponse', 'data');
-  }
-
+  _$VendorItemResponse._({required this.data}) : super._();
   @override
   VendorItemResponse rebuild(
           void Function(VendorItemResponseBuilder) updates) =>
@@ -733,7 +728,7 @@ class _$VendorItemResponse extends VendorItemResponse {
 
   @override
   VendorItemResponseBuilder toBuilder() =>
-      new VendorItemResponseBuilder()..replace(this);
+      VendorItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -764,7 +759,7 @@ class VendorItemResponseBuilder
   _$VendorItemResponse? _$v;
 
   VendorEntityBuilder? _data;
-  VendorEntityBuilder get data => _$this._data ??= new VendorEntityBuilder();
+  VendorEntityBuilder get data => _$this._data ??= VendorEntityBuilder();
   set data(VendorEntityBuilder? data) => _$this._data = data;
 
   VendorItemResponseBuilder();
@@ -780,7 +775,6 @@ class VendorItemResponseBuilder
 
   @override
   void replace(VendorItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$VendorItemResponse;
   }
 
@@ -795,14 +789,17 @@ class VendorItemResponseBuilder
   _$VendorItemResponse _build() {
     _$VendorItemResponse _$result;
     try {
-      _$result = _$v ?? new _$VendorItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$VendorItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'VendorItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -889,7 +886,7 @@ class _$VendorEntity extends VendorEntity {
   final String id;
 
   factory _$VendorEntity([void Function(VendorEntityBuilder)? updates]) =>
-      (new VendorEntityBuilder()..update(updates))._build();
+      (VendorEntityBuilder()..update(updates))._build();
 
   _$VendorEntity._(
       {this.loadedAt,
@@ -929,72 +926,13 @@ class _$VendorEntity extends VendorEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'VendorEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(
-        displayName, r'VendorEntity', 'displayName');
-    BuiltValueNullFieldError.checkNotNull(
-        address1, r'VendorEntity', 'address1');
-    BuiltValueNullFieldError.checkNotNull(
-        address2, r'VendorEntity', 'address2');
-    BuiltValueNullFieldError.checkNotNull(city, r'VendorEntity', 'city');
-    BuiltValueNullFieldError.checkNotNull(state, r'VendorEntity', 'state');
-    BuiltValueNullFieldError.checkNotNull(
-        postalCode, r'VendorEntity', 'postalCode');
-    BuiltValueNullFieldError.checkNotNull(
-        countryId, r'VendorEntity', 'countryId');
-    BuiltValueNullFieldError.checkNotNull(
-        languageId, r'VendorEntity', 'languageId');
-    BuiltValueNullFieldError.checkNotNull(phone, r'VendorEntity', 'phone');
-    BuiltValueNullFieldError.checkNotNull(
-        privateNotes, r'VendorEntity', 'privateNotes');
-    BuiltValueNullFieldError.checkNotNull(
-        publicNotes, r'VendorEntity', 'publicNotes');
-    BuiltValueNullFieldError.checkNotNull(website, r'VendorEntity', 'website');
-    BuiltValueNullFieldError.checkNotNull(number, r'VendorEntity', 'number');
-    BuiltValueNullFieldError.checkNotNull(
-        vatNumber, r'VendorEntity', 'vatNumber');
-    BuiltValueNullFieldError.checkNotNull(
-        idNumber, r'VendorEntity', 'idNumber');
-    BuiltValueNullFieldError.checkNotNull(
-        currencyId, r'VendorEntity', 'currencyId');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue1, r'VendorEntity', 'customValue1');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue2, r'VendorEntity', 'customValue2');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue3, r'VendorEntity', 'customValue3');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue4, r'VendorEntity', 'customValue4');
-    BuiltValueNullFieldError.checkNotNull(
-        routingId, r'VendorEntity', 'routingId');
-    BuiltValueNullFieldError.checkNotNull(
-        isTaxExempt, r'VendorEntity', 'isTaxExempt');
-    BuiltValueNullFieldError.checkNotNull(
-        lastLogin, r'VendorEntity', 'lastLogin');
-    BuiltValueNullFieldError.checkNotNull(
-        classification, r'VendorEntity', 'classification');
-    BuiltValueNullFieldError.checkNotNull(
-        contacts, r'VendorEntity', 'contacts');
-    BuiltValueNullFieldError.checkNotNull(
-        activities, r'VendorEntity', 'activities');
-    BuiltValueNullFieldError.checkNotNull(
-        documents, r'VendorEntity', 'documents');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'VendorEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'VendorEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'VendorEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'VendorEntity', 'id');
-  }
-
+      : super._();
   @override
   VendorEntity rebuild(void Function(VendorEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  VendorEntityBuilder toBuilder() => new VendorEntityBuilder()..replace(this);
+  VendorEntityBuilder toBuilder() => VendorEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1238,19 +1176,19 @@ class VendorEntityBuilder
 
   ListBuilder<VendorContactEntity>? _contacts;
   ListBuilder<VendorContactEntity> get contacts =>
-      _$this._contacts ??= new ListBuilder<VendorContactEntity>();
+      _$this._contacts ??= ListBuilder<VendorContactEntity>();
   set contacts(ListBuilder<VendorContactEntity>? contacts) =>
       _$this._contacts = contacts;
 
   ListBuilder<ActivityEntity>? _activities;
   ListBuilder<ActivityEntity> get activities =>
-      _$this._activities ??= new ListBuilder<ActivityEntity>();
+      _$this._activities ??= ListBuilder<ActivityEntity>();
   set activities(ListBuilder<ActivityEntity>? activities) =>
       _$this._activities = activities;
 
   ListBuilder<DocumentEntity>? _documents;
   ListBuilder<DocumentEntity> get documents =>
-      _$this._documents ??= new ListBuilder<DocumentEntity>();
+      _$this._documents ??= ListBuilder<DocumentEntity>();
   set documents(ListBuilder<DocumentEntity>? documents) =>
       _$this._documents = documents;
 
@@ -1339,7 +1277,6 @@ class VendorEntityBuilder
 
   @override
   void replace(VendorEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$VendorEntity;
   }
 
@@ -1355,53 +1292,74 @@ class VendorEntityBuilder
     _$VendorEntity _$result;
     try {
       _$result = _$v ??
-          new _$VendorEntity._(
-              loadedAt: loadedAt,
-              name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'VendorEntity', 'name'),
-              displayName: BuiltValueNullFieldError.checkNotNull(
-                  displayName, r'VendorEntity', 'displayName'),
-              address1: BuiltValueNullFieldError.checkNotNull(
-                  address1, r'VendorEntity', 'address1'),
-              address2: BuiltValueNullFieldError.checkNotNull(
-                  address2, r'VendorEntity', 'address2'),
-              city: BuiltValueNullFieldError.checkNotNull(
-                  city, r'VendorEntity', 'city'),
-              state: BuiltValueNullFieldError.checkNotNull(
-                  state, r'VendorEntity', 'state'),
-              postalCode: BuiltValueNullFieldError.checkNotNull(
-                  postalCode, r'VendorEntity', 'postalCode'),
-              countryId: BuiltValueNullFieldError.checkNotNull(
-                  countryId, r'VendorEntity', 'countryId'),
-              languageId:
-                  BuiltValueNullFieldError.checkNotNull(languageId, r'VendorEntity', 'languageId'),
-              phone: BuiltValueNullFieldError.checkNotNull(phone, r'VendorEntity', 'phone'),
-              privateNotes: BuiltValueNullFieldError.checkNotNull(privateNotes, r'VendorEntity', 'privateNotes'),
-              publicNotes: BuiltValueNullFieldError.checkNotNull(publicNotes, r'VendorEntity', 'publicNotes'),
-              website: BuiltValueNullFieldError.checkNotNull(website, r'VendorEntity', 'website'),
-              number: BuiltValueNullFieldError.checkNotNull(number, r'VendorEntity', 'number'),
-              vatNumber: BuiltValueNullFieldError.checkNotNull(vatNumber, r'VendorEntity', 'vatNumber'),
-              idNumber: BuiltValueNullFieldError.checkNotNull(idNumber, r'VendorEntity', 'idNumber'),
-              currencyId: BuiltValueNullFieldError.checkNotNull(currencyId, r'VendorEntity', 'currencyId'),
-              customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, r'VendorEntity', 'customValue1'),
-              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, r'VendorEntity', 'customValue2'),
-              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'VendorEntity', 'customValue3'),
-              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'VendorEntity', 'customValue4'),
-              routingId: BuiltValueNullFieldError.checkNotNull(routingId, r'VendorEntity', 'routingId'),
-              isTaxExempt: BuiltValueNullFieldError.checkNotNull(isTaxExempt, r'VendorEntity', 'isTaxExempt'),
-              lastLogin: BuiltValueNullFieldError.checkNotNull(lastLogin, r'VendorEntity', 'lastLogin'),
-              classification: BuiltValueNullFieldError.checkNotNull(classification, r'VendorEntity', 'classification'),
-              contacts: contacts.build(),
-              activities: activities.build(),
-              documents: documents.build(),
-              isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'VendorEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'VendorEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'VendorEntity', 'archivedAt'),
-              isDeleted: isDeleted,
-              createdUserId: createdUserId,
-              assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(id, r'VendorEntity', 'id'));
+          _$VendorEntity._(
+            loadedAt: loadedAt,
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'VendorEntity', 'name'),
+            displayName: BuiltValueNullFieldError.checkNotNull(
+                displayName, r'VendorEntity', 'displayName'),
+            address1: BuiltValueNullFieldError.checkNotNull(
+                address1, r'VendorEntity', 'address1'),
+            address2: BuiltValueNullFieldError.checkNotNull(
+                address2, r'VendorEntity', 'address2'),
+            city: BuiltValueNullFieldError.checkNotNull(
+                city, r'VendorEntity', 'city'),
+            state: BuiltValueNullFieldError.checkNotNull(
+                state, r'VendorEntity', 'state'),
+            postalCode: BuiltValueNullFieldError.checkNotNull(
+                postalCode, r'VendorEntity', 'postalCode'),
+            countryId: BuiltValueNullFieldError.checkNotNull(
+                countryId, r'VendorEntity', 'countryId'),
+            languageId: BuiltValueNullFieldError.checkNotNull(
+                languageId, r'VendorEntity', 'languageId'),
+            phone: BuiltValueNullFieldError.checkNotNull(
+                phone, r'VendorEntity', 'phone'),
+            privateNotes: BuiltValueNullFieldError.checkNotNull(
+                privateNotes, r'VendorEntity', 'privateNotes'),
+            publicNotes: BuiltValueNullFieldError.checkNotNull(
+                publicNotes, r'VendorEntity', 'publicNotes'),
+            website: BuiltValueNullFieldError.checkNotNull(
+                website, r'VendorEntity', 'website'),
+            number: BuiltValueNullFieldError.checkNotNull(
+                number, r'VendorEntity', 'number'),
+            vatNumber: BuiltValueNullFieldError.checkNotNull(
+                vatNumber, r'VendorEntity', 'vatNumber'),
+            idNumber: BuiltValueNullFieldError.checkNotNull(
+                idNumber, r'VendorEntity', 'idNumber'),
+            currencyId: BuiltValueNullFieldError.checkNotNull(
+                currencyId, r'VendorEntity', 'currencyId'),
+            customValue1: BuiltValueNullFieldError.checkNotNull(
+                customValue1, r'VendorEntity', 'customValue1'),
+            customValue2: BuiltValueNullFieldError.checkNotNull(
+                customValue2, r'VendorEntity', 'customValue2'),
+            customValue3: BuiltValueNullFieldError.checkNotNull(
+                customValue3, r'VendorEntity', 'customValue3'),
+            customValue4: BuiltValueNullFieldError.checkNotNull(
+                customValue4, r'VendorEntity', 'customValue4'),
+            routingId: BuiltValueNullFieldError.checkNotNull(
+                routingId, r'VendorEntity', 'routingId'),
+            isTaxExempt: BuiltValueNullFieldError.checkNotNull(
+                isTaxExempt, r'VendorEntity', 'isTaxExempt'),
+            lastLogin: BuiltValueNullFieldError.checkNotNull(
+                lastLogin, r'VendorEntity', 'lastLogin'),
+            classification: BuiltValueNullFieldError.checkNotNull(
+                classification, r'VendorEntity', 'classification'),
+            contacts: contacts.build(),
+            activities: activities.build(),
+            documents: documents.build(),
+            isChanged: isChanged,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, r'VendorEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, r'VendorEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(
+                archivedAt, r'VendorEntity', 'archivedAt'),
+            isDeleted: isDeleted,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, r'VendorEntity', 'id'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -1412,7 +1370,7 @@ class VendorEntityBuilder
         _$failedField = 'documents';
         documents.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'VendorEntity', _$failedField, e.toString());
       }
       rethrow;
@@ -1466,7 +1424,7 @@ class _$VendorContactEntity extends VendorContactEntity {
 
   factory _$VendorContactEntity(
           [void Function(VendorContactEntityBuilder)? updates]) =>
-      (new VendorContactEntityBuilder()..update(updates))._build();
+      (VendorContactEntityBuilder()..update(updates))._build();
 
   _$VendorContactEntity._(
       {required this.firstName,
@@ -1489,39 +1447,7 @@ class _$VendorContactEntity extends VendorContactEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        firstName, r'VendorContactEntity', 'firstName');
-    BuiltValueNullFieldError.checkNotNull(
-        lastName, r'VendorContactEntity', 'lastName');
-    BuiltValueNullFieldError.checkNotNull(
-        email, r'VendorContactEntity', 'email');
-    BuiltValueNullFieldError.checkNotNull(
-        isPrimary, r'VendorContactEntity', 'isPrimary');
-    BuiltValueNullFieldError.checkNotNull(
-        sendEmail, r'VendorContactEntity', 'sendEmail');
-    BuiltValueNullFieldError.checkNotNull(
-        phone, r'VendorContactEntity', 'phone');
-    BuiltValueNullFieldError.checkNotNull(
-        password, r'VendorContactEntity', 'password');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue1, r'VendorContactEntity', 'customValue1');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue2, r'VendorContactEntity', 'customValue2');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue3, r'VendorContactEntity', 'customValue3');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue4, r'VendorContactEntity', 'customValue4');
-    BuiltValueNullFieldError.checkNotNull(link, r'VendorContactEntity', 'link');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'VendorContactEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'VendorContactEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'VendorContactEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'VendorContactEntity', 'id');
-  }
-
+      : super._();
   @override
   VendorContactEntity rebuild(
           void Function(VendorContactEntityBuilder) updates) =>
@@ -1529,7 +1455,7 @@ class _$VendorContactEntity extends VendorContactEntity {
 
   @override
   VendorContactEntityBuilder toBuilder() =>
-      new VendorContactEntityBuilder()..replace(this);
+      VendorContactEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1733,7 +1659,6 @@ class VendorContactEntityBuilder
 
   @override
   void replace(VendorContactEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$VendorContactEntity;
   }
 
@@ -1747,36 +1672,44 @@ class VendorContactEntityBuilder
 
   _$VendorContactEntity _build() {
     final _$result = _$v ??
-        new _$VendorContactEntity._(
-            firstName: BuiltValueNullFieldError.checkNotNull(
-                firstName, r'VendorContactEntity', 'firstName'),
-            lastName: BuiltValueNullFieldError.checkNotNull(
-                lastName, r'VendorContactEntity', 'lastName'),
-            email: BuiltValueNullFieldError.checkNotNull(
-                email, r'VendorContactEntity', 'email'),
-            isPrimary: BuiltValueNullFieldError.checkNotNull(
-                isPrimary, r'VendorContactEntity', 'isPrimary'),
-            sendEmail: BuiltValueNullFieldError.checkNotNull(
-                sendEmail, r'VendorContactEntity', 'sendEmail'),
-            phone: BuiltValueNullFieldError.checkNotNull(
-                phone, r'VendorContactEntity', 'phone'),
-            password: BuiltValueNullFieldError.checkNotNull(
-                password, r'VendorContactEntity', 'password'),
-            customValue1: BuiltValueNullFieldError.checkNotNull(
-                customValue1, r'VendorContactEntity', 'customValue1'),
-            customValue2:
-                BuiltValueNullFieldError.checkNotNull(customValue2, r'VendorContactEntity', 'customValue2'),
-            customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'VendorContactEntity', 'customValue3'),
-            customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'VendorContactEntity', 'customValue4'),
-            link: BuiltValueNullFieldError.checkNotNull(link, r'VendorContactEntity', 'link'),
-            isChanged: isChanged,
-            createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'VendorContactEntity', 'createdAt'),
-            updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'VendorContactEntity', 'updatedAt'),
-            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'VendorContactEntity', 'archivedAt'),
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            id: BuiltValueNullFieldError.checkNotNull(id, r'VendorContactEntity', 'id'));
+        _$VendorContactEntity._(
+          firstName: BuiltValueNullFieldError.checkNotNull(
+              firstName, r'VendorContactEntity', 'firstName'),
+          lastName: BuiltValueNullFieldError.checkNotNull(
+              lastName, r'VendorContactEntity', 'lastName'),
+          email: BuiltValueNullFieldError.checkNotNull(
+              email, r'VendorContactEntity', 'email'),
+          isPrimary: BuiltValueNullFieldError.checkNotNull(
+              isPrimary, r'VendorContactEntity', 'isPrimary'),
+          sendEmail: BuiltValueNullFieldError.checkNotNull(
+              sendEmail, r'VendorContactEntity', 'sendEmail'),
+          phone: BuiltValueNullFieldError.checkNotNull(
+              phone, r'VendorContactEntity', 'phone'),
+          password: BuiltValueNullFieldError.checkNotNull(
+              password, r'VendorContactEntity', 'password'),
+          customValue1: BuiltValueNullFieldError.checkNotNull(
+              customValue1, r'VendorContactEntity', 'customValue1'),
+          customValue2: BuiltValueNullFieldError.checkNotNull(
+              customValue2, r'VendorContactEntity', 'customValue2'),
+          customValue3: BuiltValueNullFieldError.checkNotNull(
+              customValue3, r'VendorContactEntity', 'customValue3'),
+          customValue4: BuiltValueNullFieldError.checkNotNull(
+              customValue4, r'VendorContactEntity', 'customValue4'),
+          link: BuiltValueNullFieldError.checkNotNull(
+              link, r'VendorContactEntity', 'link'),
+          isChanged: isChanged,
+          createdAt: BuiltValueNullFieldError.checkNotNull(
+              createdAt, r'VendorContactEntity', 'createdAt'),
+          updatedAt: BuiltValueNullFieldError.checkNotNull(
+              updatedAt, r'VendorContactEntity', 'updatedAt'),
+          archivedAt: BuiltValueNullFieldError.checkNotNull(
+              archivedAt, r'VendorContactEntity', 'archivedAt'),
+          isDeleted: isDeleted,
+          createdUserId: createdUserId,
+          assignedUserId: assignedUserId,
+          id: BuiltValueNullFieldError.checkNotNull(
+              id, r'VendorContactEntity', 'id'),
+        );
     replace(_$result);
     return _$result;
   }

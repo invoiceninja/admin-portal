@@ -294,12 +294,12 @@ EntityAction _$valueOf(String name) {
     case 'assignGroup':
       return _$assignGroup;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
 final BuiltSet<EntityAction> _$values =
-    new BuiltSet<EntityAction>(const <EntityAction>[
+    BuiltSet<EntityAction>(const <EntityAction>[
   _$edit,
   _$archive,
   _$delete,
@@ -393,8 +393,7 @@ final BuiltSet<EntityAction> _$values =
   _$assignGroup,
 ]);
 
-Serializer<EntityAction> _$entityActionSerializer =
-    new _$EntityActionSerializer();
+Serializer<EntityAction> _$entityActionSerializer = _$EntityActionSerializer();
 
 class _$EntityActionSerializer implements PrimitiveSerializer<EntityAction> {
   @override

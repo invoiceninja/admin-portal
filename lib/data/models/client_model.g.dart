@@ -7,15 +7,14 @@ part of 'client_model.dart';
 // **************************************************************************
 
 Serializer<ClientListResponse> _$clientListResponseSerializer =
-    new _$ClientListResponseSerializer();
+    _$ClientListResponseSerializer();
 Serializer<ClientItemResponse> _$clientItemResponseSerializer =
-    new _$ClientItemResponseSerializer();
-Serializer<ClientEntity> _$clientEntitySerializer =
-    new _$ClientEntitySerializer();
+    _$ClientItemResponseSerializer();
+Serializer<ClientEntity> _$clientEntitySerializer = _$ClientEntitySerializer();
 Serializer<ClientContactEntity> _$clientContactEntitySerializer =
-    new _$ClientContactEntitySerializer();
+    _$ClientContactEntitySerializer();
 Serializer<LocationEntity> _$locationEntitySerializer =
-    new _$LocationEntitySerializer();
+    _$LocationEntitySerializer();
 
 class _$ClientListResponseSerializer
     implements StructuredSerializer<ClientListResponse> {
@@ -42,7 +41,7 @@ class _$ClientListResponseSerializer
   ClientListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ClientListResponseBuilder();
+    final result = ClientListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -87,7 +86,7 @@ class _$ClientItemResponseSerializer
   ClientItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ClientItemResponseBuilder();
+    final result = ClientItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -316,7 +315,7 @@ class _$ClientEntitySerializer implements StructuredSerializer<ClientEntity> {
   ClientEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ClientEntityBuilder();
+    final result = ClientEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -674,7 +673,7 @@ class _$ClientContactEntitySerializer
   ClientContactEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ClientContactEntityBuilder();
+    final result = ClientContactEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -873,7 +872,7 @@ class _$LocationEntitySerializer
   LocationEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new LocationEntityBuilder();
+    final result = LocationEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -978,12 +977,9 @@ class _$ClientListResponse extends ClientListResponse {
 
   factory _$ClientListResponse(
           [void Function(ClientListResponseBuilder)? updates]) =>
-      (new ClientListResponseBuilder()..update(updates))._build();
+      (ClientListResponseBuilder()..update(updates))._build();
 
-  _$ClientListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'ClientListResponse', 'data');
-  }
-
+  _$ClientListResponse._({required this.data}) : super._();
   @override
   ClientListResponse rebuild(
           void Function(ClientListResponseBuilder) updates) =>
@@ -991,7 +987,7 @@ class _$ClientListResponse extends ClientListResponse {
 
   @override
   ClientListResponseBuilder toBuilder() =>
-      new ClientListResponseBuilder()..replace(this);
+      ClientListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1023,7 +1019,7 @@ class ClientListResponseBuilder
 
   ListBuilder<ClientEntity>? _data;
   ListBuilder<ClientEntity> get data =>
-      _$this._data ??= new ListBuilder<ClientEntity>();
+      _$this._data ??= ListBuilder<ClientEntity>();
   set data(ListBuilder<ClientEntity>? data) => _$this._data = data;
 
   ClientListResponseBuilder();
@@ -1039,7 +1035,6 @@ class ClientListResponseBuilder
 
   @override
   void replace(ClientListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ClientListResponse;
   }
 
@@ -1054,14 +1049,17 @@ class ClientListResponseBuilder
   _$ClientListResponse _build() {
     _$ClientListResponse _$result;
     try {
-      _$result = _$v ?? new _$ClientListResponse._(data: data.build());
+      _$result = _$v ??
+          _$ClientListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ClientListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -1077,12 +1075,9 @@ class _$ClientItemResponse extends ClientItemResponse {
 
   factory _$ClientItemResponse(
           [void Function(ClientItemResponseBuilder)? updates]) =>
-      (new ClientItemResponseBuilder()..update(updates))._build();
+      (ClientItemResponseBuilder()..update(updates))._build();
 
-  _$ClientItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'ClientItemResponse', 'data');
-  }
-
+  _$ClientItemResponse._({required this.data}) : super._();
   @override
   ClientItemResponse rebuild(
           void Function(ClientItemResponseBuilder) updates) =>
@@ -1090,7 +1085,7 @@ class _$ClientItemResponse extends ClientItemResponse {
 
   @override
   ClientItemResponseBuilder toBuilder() =>
-      new ClientItemResponseBuilder()..replace(this);
+      ClientItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1121,7 +1116,7 @@ class ClientItemResponseBuilder
   _$ClientItemResponse? _$v;
 
   ClientEntityBuilder? _data;
-  ClientEntityBuilder get data => _$this._data ??= new ClientEntityBuilder();
+  ClientEntityBuilder get data => _$this._data ??= ClientEntityBuilder();
   set data(ClientEntityBuilder? data) => _$this._data = data;
 
   ClientItemResponseBuilder();
@@ -1137,7 +1132,6 @@ class ClientItemResponseBuilder
 
   @override
   void replace(ClientItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ClientItemResponse;
   }
 
@@ -1152,14 +1146,17 @@ class ClientItemResponseBuilder
   _$ClientItemResponse _build() {
     _$ClientItemResponse _$result;
     try {
-      _$result = _$v ?? new _$ClientItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$ClientItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ClientItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -1284,7 +1281,7 @@ class _$ClientEntity extends ClientEntity {
   final String id;
 
   factory _$ClientEntity([void Function(ClientEntityBuilder)? updates]) =>
-      (new ClientEntityBuilder()..update(updates))._build();
+      (ClientEntityBuilder()..update(updates))._build();
 
   _$ClientEntity._(
       {required this.groupId,
@@ -1343,105 +1340,13 @@ class _$ClientEntity extends ClientEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(groupId, r'ClientEntity', 'groupId');
-    BuiltValueNullFieldError.checkNotNull(name, r'ClientEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(
-        displayName, r'ClientEntity', 'displayName');
-    BuiltValueNullFieldError.checkNotNull(balance, r'ClientEntity', 'balance');
-    BuiltValueNullFieldError.checkNotNull(
-        creditBalance, r'ClientEntity', 'creditBalance');
-    BuiltValueNullFieldError.checkNotNull(
-        paymentBalance, r'ClientEntity', 'paymentBalance');
-    BuiltValueNullFieldError.checkNotNull(
-        paidToDate, r'ClientEntity', 'paidToDate');
-    BuiltValueNullFieldError.checkNotNull(
-        clientHash, r'ClientEntity', 'clientHash');
-    BuiltValueNullFieldError.checkNotNull(
-        address1, r'ClientEntity', 'address1');
-    BuiltValueNullFieldError.checkNotNull(
-        address2, r'ClientEntity', 'address2');
-    BuiltValueNullFieldError.checkNotNull(city, r'ClientEntity', 'city');
-    BuiltValueNullFieldError.checkNotNull(state, r'ClientEntity', 'state');
-    BuiltValueNullFieldError.checkNotNull(
-        postalCode, r'ClientEntity', 'postalCode');
-    BuiltValueNullFieldError.checkNotNull(
-        countryId, r'ClientEntity', 'countryId');
-    BuiltValueNullFieldError.checkNotNull(phone, r'ClientEntity', 'phone');
-    BuiltValueNullFieldError.checkNotNull(
-        privateNotes, r'ClientEntity', 'privateNotes');
-    BuiltValueNullFieldError.checkNotNull(
-        publicNotes, r'ClientEntity', 'publicNotes');
-    BuiltValueNullFieldError.checkNotNull(website, r'ClientEntity', 'website');
-    BuiltValueNullFieldError.checkNotNull(
-        industryId, r'ClientEntity', 'industryId');
-    BuiltValueNullFieldError.checkNotNull(sizeId, r'ClientEntity', 'sizeId');
-    BuiltValueNullFieldError.checkNotNull(
-        vatNumber, r'ClientEntity', 'vatNumber');
-    BuiltValueNullFieldError.checkNotNull(
-        idNumber, r'ClientEntity', 'idNumber');
-    BuiltValueNullFieldError.checkNotNull(number, r'ClientEntity', 'number');
-    BuiltValueNullFieldError.checkNotNull(
-        shippingAddress1, r'ClientEntity', 'shippingAddress1');
-    BuiltValueNullFieldError.checkNotNull(
-        shippingAddress2, r'ClientEntity', 'shippingAddress2');
-    BuiltValueNullFieldError.checkNotNull(
-        shippingCity, r'ClientEntity', 'shippingCity');
-    BuiltValueNullFieldError.checkNotNull(
-        shippingState, r'ClientEntity', 'shippingState');
-    BuiltValueNullFieldError.checkNotNull(
-        shippingPostalCode, r'ClientEntity', 'shippingPostalCode');
-    BuiltValueNullFieldError.checkNotNull(
-        shippingCountryId, r'ClientEntity', 'shippingCountryId');
-    BuiltValueNullFieldError.checkNotNull(
-        settings, r'ClientEntity', 'settings');
-    BuiltValueNullFieldError.checkNotNull(
-        lastLogin, r'ClientEntity', 'lastLogin');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue1, r'ClientEntity', 'customValue1');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue2, r'ClientEntity', 'customValue2');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue3, r'ClientEntity', 'customValue3');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue4, r'ClientEntity', 'customValue4');
-    BuiltValueNullFieldError.checkNotNull(
-        routingId, r'ClientEntity', 'routingId');
-    BuiltValueNullFieldError.checkNotNull(
-        isTaxExempt, r'ClientEntity', 'isTaxExempt');
-    BuiltValueNullFieldError.checkNotNull(
-        hasValidVatNumber, r'ClientEntity', 'hasValidVatNumber');
-    BuiltValueNullFieldError.checkNotNull(taxData, r'ClientEntity', 'taxData');
-    BuiltValueNullFieldError.checkNotNull(
-        classification, r'ClientEntity', 'classification');
-    BuiltValueNullFieldError.checkNotNull(
-        contacts, r'ClientEntity', 'contacts');
-    BuiltValueNullFieldError.checkNotNull(
-        activities, r'ClientEntity', 'activities');
-    BuiltValueNullFieldError.checkNotNull(ledger, r'ClientEntity', 'ledger');
-    BuiltValueNullFieldError.checkNotNull(
-        gatewayTokens, r'ClientEntity', 'gatewayTokens');
-    BuiltValueNullFieldError.checkNotNull(
-        documents, r'ClientEntity', 'documents');
-    BuiltValueNullFieldError.checkNotNull(
-        systemLogs, r'ClientEntity', 'systemLogs');
-    BuiltValueNullFieldError.checkNotNull(
-        locations, r'ClientEntity', 'locations');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'ClientEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'ClientEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'ClientEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'ClientEntity', 'id');
-  }
-
+      : super._();
   @override
   ClientEntity rebuild(void Function(ClientEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ClientEntityBuilder toBuilder() => new ClientEntityBuilder()..replace(this);
+  ClientEntityBuilder toBuilder() => ClientEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1764,7 +1669,7 @@ class ClientEntityBuilder
 
   SettingsEntityBuilder? _settings;
   SettingsEntityBuilder get settings =>
-      _$this._settings ??= new SettingsEntityBuilder();
+      _$this._settings ??= SettingsEntityBuilder();
   set settings(SettingsEntityBuilder? settings) => _$this._settings = settings;
 
   int? _lastLogin;
@@ -1802,7 +1707,7 @@ class ClientEntityBuilder
 
   TaxDataEntityBuilder? _taxData;
   TaxDataEntityBuilder get taxData =>
-      _$this._taxData ??= new TaxDataEntityBuilder();
+      _$this._taxData ??= TaxDataEntityBuilder();
   set taxData(TaxDataEntityBuilder? taxData) => _$this._taxData = taxData;
 
   String? _classification;
@@ -1812,42 +1717,42 @@ class ClientEntityBuilder
 
   ListBuilder<ClientContactEntity>? _contacts;
   ListBuilder<ClientContactEntity> get contacts =>
-      _$this._contacts ??= new ListBuilder<ClientContactEntity>();
+      _$this._contacts ??= ListBuilder<ClientContactEntity>();
   set contacts(ListBuilder<ClientContactEntity>? contacts) =>
       _$this._contacts = contacts;
 
   ListBuilder<ActivityEntity>? _activities;
   ListBuilder<ActivityEntity> get activities =>
-      _$this._activities ??= new ListBuilder<ActivityEntity>();
+      _$this._activities ??= ListBuilder<ActivityEntity>();
   set activities(ListBuilder<ActivityEntity>? activities) =>
       _$this._activities = activities;
 
   ListBuilder<LedgerEntity>? _ledger;
   ListBuilder<LedgerEntity> get ledger =>
-      _$this._ledger ??= new ListBuilder<LedgerEntity>();
+      _$this._ledger ??= ListBuilder<LedgerEntity>();
   set ledger(ListBuilder<LedgerEntity>? ledger) => _$this._ledger = ledger;
 
   ListBuilder<GatewayTokenEntity>? _gatewayTokens;
   ListBuilder<GatewayTokenEntity> get gatewayTokens =>
-      _$this._gatewayTokens ??= new ListBuilder<GatewayTokenEntity>();
+      _$this._gatewayTokens ??= ListBuilder<GatewayTokenEntity>();
   set gatewayTokens(ListBuilder<GatewayTokenEntity>? gatewayTokens) =>
       _$this._gatewayTokens = gatewayTokens;
 
   ListBuilder<DocumentEntity>? _documents;
   ListBuilder<DocumentEntity> get documents =>
-      _$this._documents ??= new ListBuilder<DocumentEntity>();
+      _$this._documents ??= ListBuilder<DocumentEntity>();
   set documents(ListBuilder<DocumentEntity>? documents) =>
       _$this._documents = documents;
 
   ListBuilder<SystemLogEntity>? _systemLogs;
   ListBuilder<SystemLogEntity> get systemLogs =>
-      _$this._systemLogs ??= new ListBuilder<SystemLogEntity>();
+      _$this._systemLogs ??= ListBuilder<SystemLogEntity>();
   set systemLogs(ListBuilder<SystemLogEntity>? systemLogs) =>
       _$this._systemLogs = systemLogs;
 
   ListBuilder<LocationEntity>? _locations;
   ListBuilder<LocationEntity> get locations =>
-      _$this._locations ??= new ListBuilder<LocationEntity>();
+      _$this._locations ??= ListBuilder<LocationEntity>();
   set locations(ListBuilder<LocationEntity>? locations) =>
       _$this._locations = locations;
 
@@ -1955,7 +1860,6 @@ class ClientEntityBuilder
 
   @override
   void replace(ClientEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ClientEntity;
   }
 
@@ -1971,71 +1875,106 @@ class ClientEntityBuilder
     _$ClientEntity _$result;
     try {
       _$result = _$v ??
-          new _$ClientEntity._(
-              groupId: BuiltValueNullFieldError.checkNotNull(
-                  groupId, r'ClientEntity', 'groupId'),
-              loadedAt: loadedAt,
-              name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'ClientEntity', 'name'),
-              displayName: BuiltValueNullFieldError.checkNotNull(
-                  displayName, r'ClientEntity', 'displayName'),
-              balance: BuiltValueNullFieldError.checkNotNull(
-                  balance, r'ClientEntity', 'balance'),
-              creditBalance: BuiltValueNullFieldError.checkNotNull(
-                  creditBalance, r'ClientEntity', 'creditBalance'),
-              paymentBalance: BuiltValueNullFieldError.checkNotNull(
-                  paymentBalance, r'ClientEntity', 'paymentBalance'),
-              paidToDate: BuiltValueNullFieldError.checkNotNull(
-                  paidToDate, r'ClientEntity', 'paidToDate'),
-              clientHash: BuiltValueNullFieldError.checkNotNull(
-                  clientHash, r'ClientEntity', 'clientHash'),
-              address1: BuiltValueNullFieldError.checkNotNull(address1, r'ClientEntity', 'address1'),
-              address2: BuiltValueNullFieldError.checkNotNull(address2, r'ClientEntity', 'address2'),
-              city: BuiltValueNullFieldError.checkNotNull(city, r'ClientEntity', 'city'),
-              state: BuiltValueNullFieldError.checkNotNull(state, r'ClientEntity', 'state'),
-              postalCode: BuiltValueNullFieldError.checkNotNull(postalCode, r'ClientEntity', 'postalCode'),
-              countryId: BuiltValueNullFieldError.checkNotNull(countryId, r'ClientEntity', 'countryId'),
-              phone: BuiltValueNullFieldError.checkNotNull(phone, r'ClientEntity', 'phone'),
-              privateNotes: BuiltValueNullFieldError.checkNotNull(privateNotes, r'ClientEntity', 'privateNotes'),
-              publicNotes: BuiltValueNullFieldError.checkNotNull(publicNotes, r'ClientEntity', 'publicNotes'),
-              website: BuiltValueNullFieldError.checkNotNull(website, r'ClientEntity', 'website'),
-              industryId: BuiltValueNullFieldError.checkNotNull(industryId, r'ClientEntity', 'industryId'),
-              sizeId: BuiltValueNullFieldError.checkNotNull(sizeId, r'ClientEntity', 'sizeId'),
-              vatNumber: BuiltValueNullFieldError.checkNotNull(vatNumber, r'ClientEntity', 'vatNumber'),
-              idNumber: BuiltValueNullFieldError.checkNotNull(idNumber, r'ClientEntity', 'idNumber'),
-              number: BuiltValueNullFieldError.checkNotNull(number, r'ClientEntity', 'number'),
-              shippingAddress1: BuiltValueNullFieldError.checkNotNull(shippingAddress1, r'ClientEntity', 'shippingAddress1'),
-              shippingAddress2: BuiltValueNullFieldError.checkNotNull(shippingAddress2, r'ClientEntity', 'shippingAddress2'),
-              shippingCity: BuiltValueNullFieldError.checkNotNull(shippingCity, r'ClientEntity', 'shippingCity'),
-              shippingState: BuiltValueNullFieldError.checkNotNull(shippingState, r'ClientEntity', 'shippingState'),
-              shippingPostalCode: BuiltValueNullFieldError.checkNotNull(shippingPostalCode, r'ClientEntity', 'shippingPostalCode'),
-              shippingCountryId: BuiltValueNullFieldError.checkNotNull(shippingCountryId, r'ClientEntity', 'shippingCountryId'),
-              settings: settings.build(),
-              lastLogin: BuiltValueNullFieldError.checkNotNull(lastLogin, r'ClientEntity', 'lastLogin'),
-              customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, r'ClientEntity', 'customValue1'),
-              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, r'ClientEntity', 'customValue2'),
-              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'ClientEntity', 'customValue3'),
-              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'ClientEntity', 'customValue4'),
-              routingId: BuiltValueNullFieldError.checkNotNull(routingId, r'ClientEntity', 'routingId'),
-              isTaxExempt: BuiltValueNullFieldError.checkNotNull(isTaxExempt, r'ClientEntity', 'isTaxExempt'),
-              hasValidVatNumber: BuiltValueNullFieldError.checkNotNull(hasValidVatNumber, r'ClientEntity', 'hasValidVatNumber'),
-              taxData: taxData.build(),
-              classification: BuiltValueNullFieldError.checkNotNull(classification, r'ClientEntity', 'classification'),
-              contacts: contacts.build(),
-              activities: activities.build(),
-              ledger: ledger.build(),
-              gatewayTokens: gatewayTokens.build(),
-              documents: documents.build(),
-              systemLogs: systemLogs.build(),
-              locations: locations.build(),
-              isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'ClientEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'ClientEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'ClientEntity', 'archivedAt'),
-              isDeleted: isDeleted,
-              createdUserId: createdUserId,
-              assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(id, r'ClientEntity', 'id'));
+          _$ClientEntity._(
+            groupId: BuiltValueNullFieldError.checkNotNull(
+                groupId, r'ClientEntity', 'groupId'),
+            loadedAt: loadedAt,
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'ClientEntity', 'name'),
+            displayName: BuiltValueNullFieldError.checkNotNull(
+                displayName, r'ClientEntity', 'displayName'),
+            balance: BuiltValueNullFieldError.checkNotNull(
+                balance, r'ClientEntity', 'balance'),
+            creditBalance: BuiltValueNullFieldError.checkNotNull(
+                creditBalance, r'ClientEntity', 'creditBalance'),
+            paymentBalance: BuiltValueNullFieldError.checkNotNull(
+                paymentBalance, r'ClientEntity', 'paymentBalance'),
+            paidToDate: BuiltValueNullFieldError.checkNotNull(
+                paidToDate, r'ClientEntity', 'paidToDate'),
+            clientHash: BuiltValueNullFieldError.checkNotNull(
+                clientHash, r'ClientEntity', 'clientHash'),
+            address1: BuiltValueNullFieldError.checkNotNull(
+                address1, r'ClientEntity', 'address1'),
+            address2: BuiltValueNullFieldError.checkNotNull(
+                address2, r'ClientEntity', 'address2'),
+            city: BuiltValueNullFieldError.checkNotNull(
+                city, r'ClientEntity', 'city'),
+            state: BuiltValueNullFieldError.checkNotNull(
+                state, r'ClientEntity', 'state'),
+            postalCode: BuiltValueNullFieldError.checkNotNull(
+                postalCode, r'ClientEntity', 'postalCode'),
+            countryId: BuiltValueNullFieldError.checkNotNull(
+                countryId, r'ClientEntity', 'countryId'),
+            phone: BuiltValueNullFieldError.checkNotNull(
+                phone, r'ClientEntity', 'phone'),
+            privateNotes: BuiltValueNullFieldError.checkNotNull(
+                privateNotes, r'ClientEntity', 'privateNotes'),
+            publicNotes: BuiltValueNullFieldError.checkNotNull(
+                publicNotes, r'ClientEntity', 'publicNotes'),
+            website: BuiltValueNullFieldError.checkNotNull(
+                website, r'ClientEntity', 'website'),
+            industryId: BuiltValueNullFieldError.checkNotNull(
+                industryId, r'ClientEntity', 'industryId'),
+            sizeId: BuiltValueNullFieldError.checkNotNull(
+                sizeId, r'ClientEntity', 'sizeId'),
+            vatNumber: BuiltValueNullFieldError.checkNotNull(
+                vatNumber, r'ClientEntity', 'vatNumber'),
+            idNumber: BuiltValueNullFieldError.checkNotNull(
+                idNumber, r'ClientEntity', 'idNumber'),
+            number: BuiltValueNullFieldError.checkNotNull(
+                number, r'ClientEntity', 'number'),
+            shippingAddress1: BuiltValueNullFieldError.checkNotNull(
+                shippingAddress1, r'ClientEntity', 'shippingAddress1'),
+            shippingAddress2: BuiltValueNullFieldError.checkNotNull(
+                shippingAddress2, r'ClientEntity', 'shippingAddress2'),
+            shippingCity: BuiltValueNullFieldError.checkNotNull(
+                shippingCity, r'ClientEntity', 'shippingCity'),
+            shippingState: BuiltValueNullFieldError.checkNotNull(
+                shippingState, r'ClientEntity', 'shippingState'),
+            shippingPostalCode: BuiltValueNullFieldError.checkNotNull(
+                shippingPostalCode, r'ClientEntity', 'shippingPostalCode'),
+            shippingCountryId: BuiltValueNullFieldError.checkNotNull(
+                shippingCountryId, r'ClientEntity', 'shippingCountryId'),
+            settings: settings.build(),
+            lastLogin: BuiltValueNullFieldError.checkNotNull(
+                lastLogin, r'ClientEntity', 'lastLogin'),
+            customValue1: BuiltValueNullFieldError.checkNotNull(
+                customValue1, r'ClientEntity', 'customValue1'),
+            customValue2: BuiltValueNullFieldError.checkNotNull(
+                customValue2, r'ClientEntity', 'customValue2'),
+            customValue3: BuiltValueNullFieldError.checkNotNull(
+                customValue3, r'ClientEntity', 'customValue3'),
+            customValue4: BuiltValueNullFieldError.checkNotNull(
+                customValue4, r'ClientEntity', 'customValue4'),
+            routingId: BuiltValueNullFieldError.checkNotNull(
+                routingId, r'ClientEntity', 'routingId'),
+            isTaxExempt: BuiltValueNullFieldError.checkNotNull(
+                isTaxExempt, r'ClientEntity', 'isTaxExempt'),
+            hasValidVatNumber: BuiltValueNullFieldError.checkNotNull(
+                hasValidVatNumber, r'ClientEntity', 'hasValidVatNumber'),
+            taxData: taxData.build(),
+            classification: BuiltValueNullFieldError.checkNotNull(
+                classification, r'ClientEntity', 'classification'),
+            contacts: contacts.build(),
+            activities: activities.build(),
+            ledger: ledger.build(),
+            gatewayTokens: gatewayTokens.build(),
+            documents: documents.build(),
+            systemLogs: systemLogs.build(),
+            locations: locations.build(),
+            isChanged: isChanged,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, r'ClientEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, r'ClientEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(
+                archivedAt, r'ClientEntity', 'archivedAt'),
+            isDeleted: isDeleted,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, r'ClientEntity', 'id'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -2060,7 +1999,7 @@ class ClientEntityBuilder
         _$failedField = 'locations';
         locations.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ClientEntity', _$failedField, e.toString());
       }
       rethrow;
@@ -2118,7 +2057,7 @@ class _$ClientContactEntity extends ClientContactEntity {
 
   factory _$ClientContactEntity(
           [void Function(ClientContactEntityBuilder)? updates]) =>
-      (new ClientContactEntityBuilder()..update(updates))._build();
+      (ClientContactEntityBuilder()..update(updates))._build();
 
   _$ClientContactEntity._(
       {required this.firstName,
@@ -2143,43 +2082,7 @@ class _$ClientContactEntity extends ClientContactEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        firstName, r'ClientContactEntity', 'firstName');
-    BuiltValueNullFieldError.checkNotNull(
-        lastName, r'ClientContactEntity', 'lastName');
-    BuiltValueNullFieldError.checkNotNull(
-        email, r'ClientContactEntity', 'email');
-    BuiltValueNullFieldError.checkNotNull(
-        password, r'ClientContactEntity', 'password');
-    BuiltValueNullFieldError.checkNotNull(
-        phone, r'ClientContactEntity', 'phone');
-    BuiltValueNullFieldError.checkNotNull(
-        contactKey, r'ClientContactEntity', 'contactKey');
-    BuiltValueNullFieldError.checkNotNull(
-        isPrimary, r'ClientContactEntity', 'isPrimary');
-    BuiltValueNullFieldError.checkNotNull(
-        sendEmail, r'ClientContactEntity', 'sendEmail');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue1, r'ClientContactEntity', 'customValue1');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue2, r'ClientContactEntity', 'customValue2');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue3, r'ClientContactEntity', 'customValue3');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue4, r'ClientContactEntity', 'customValue4');
-    BuiltValueNullFieldError.checkNotNull(
-        lastLogin, r'ClientContactEntity', 'lastLogin');
-    BuiltValueNullFieldError.checkNotNull(link, r'ClientContactEntity', 'link');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'ClientContactEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'ClientContactEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'ClientContactEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'ClientContactEntity', 'id');
-  }
-
+      : super._();
   @override
   ClientContactEntity rebuild(
           void Function(ClientContactEntityBuilder) updates) =>
@@ -2187,7 +2090,7 @@ class _$ClientContactEntity extends ClientContactEntity {
 
   @override
   ClientContactEntityBuilder toBuilder() =>
-      new ClientContactEntityBuilder()..replace(this);
+      ClientContactEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -2405,7 +2308,6 @@ class ClientContactEntityBuilder
 
   @override
   void replace(ClientContactEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ClientContactEntity;
   }
 
@@ -2419,38 +2321,48 @@ class ClientContactEntityBuilder
 
   _$ClientContactEntity _build() {
     final _$result = _$v ??
-        new _$ClientContactEntity._(
-            firstName: BuiltValueNullFieldError.checkNotNull(
-                firstName, r'ClientContactEntity', 'firstName'),
-            lastName: BuiltValueNullFieldError.checkNotNull(
-                lastName, r'ClientContactEntity', 'lastName'),
-            email: BuiltValueNullFieldError.checkNotNull(
-                email, r'ClientContactEntity', 'email'),
-            password: BuiltValueNullFieldError.checkNotNull(
-                password, r'ClientContactEntity', 'password'),
-            phone: BuiltValueNullFieldError.checkNotNull(
-                phone, r'ClientContactEntity', 'phone'),
-            contactKey: BuiltValueNullFieldError.checkNotNull(
-                contactKey, r'ClientContactEntity', 'contactKey'),
-            isPrimary: BuiltValueNullFieldError.checkNotNull(
-                isPrimary, r'ClientContactEntity', 'isPrimary'),
-            sendEmail: BuiltValueNullFieldError.checkNotNull(
-                sendEmail, r'ClientContactEntity', 'sendEmail'),
-            customValue1:
-                BuiltValueNullFieldError.checkNotNull(customValue1, r'ClientContactEntity', 'customValue1'),
-            customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, r'ClientContactEntity', 'customValue2'),
-            customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'ClientContactEntity', 'customValue3'),
-            customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'ClientContactEntity', 'customValue4'),
-            lastLogin: BuiltValueNullFieldError.checkNotNull(lastLogin, r'ClientContactEntity', 'lastLogin'),
-            link: BuiltValueNullFieldError.checkNotNull(link, r'ClientContactEntity', 'link'),
-            isChanged: isChanged,
-            createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'ClientContactEntity', 'createdAt'),
-            updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'ClientContactEntity', 'updatedAt'),
-            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'ClientContactEntity', 'archivedAt'),
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            id: BuiltValueNullFieldError.checkNotNull(id, r'ClientContactEntity', 'id'));
+        _$ClientContactEntity._(
+          firstName: BuiltValueNullFieldError.checkNotNull(
+              firstName, r'ClientContactEntity', 'firstName'),
+          lastName: BuiltValueNullFieldError.checkNotNull(
+              lastName, r'ClientContactEntity', 'lastName'),
+          email: BuiltValueNullFieldError.checkNotNull(
+              email, r'ClientContactEntity', 'email'),
+          password: BuiltValueNullFieldError.checkNotNull(
+              password, r'ClientContactEntity', 'password'),
+          phone: BuiltValueNullFieldError.checkNotNull(
+              phone, r'ClientContactEntity', 'phone'),
+          contactKey: BuiltValueNullFieldError.checkNotNull(
+              contactKey, r'ClientContactEntity', 'contactKey'),
+          isPrimary: BuiltValueNullFieldError.checkNotNull(
+              isPrimary, r'ClientContactEntity', 'isPrimary'),
+          sendEmail: BuiltValueNullFieldError.checkNotNull(
+              sendEmail, r'ClientContactEntity', 'sendEmail'),
+          customValue1: BuiltValueNullFieldError.checkNotNull(
+              customValue1, r'ClientContactEntity', 'customValue1'),
+          customValue2: BuiltValueNullFieldError.checkNotNull(
+              customValue2, r'ClientContactEntity', 'customValue2'),
+          customValue3: BuiltValueNullFieldError.checkNotNull(
+              customValue3, r'ClientContactEntity', 'customValue3'),
+          customValue4: BuiltValueNullFieldError.checkNotNull(
+              customValue4, r'ClientContactEntity', 'customValue4'),
+          lastLogin: BuiltValueNullFieldError.checkNotNull(
+              lastLogin, r'ClientContactEntity', 'lastLogin'),
+          link: BuiltValueNullFieldError.checkNotNull(
+              link, r'ClientContactEntity', 'link'),
+          isChanged: isChanged,
+          createdAt: BuiltValueNullFieldError.checkNotNull(
+              createdAt, r'ClientContactEntity', 'createdAt'),
+          updatedAt: BuiltValueNullFieldError.checkNotNull(
+              updatedAt, r'ClientContactEntity', 'updatedAt'),
+          archivedAt: BuiltValueNullFieldError.checkNotNull(
+              archivedAt, r'ClientContactEntity', 'archivedAt'),
+          isDeleted: isDeleted,
+          createdUserId: createdUserId,
+          assignedUserId: assignedUserId,
+          id: BuiltValueNullFieldError.checkNotNull(
+              id, r'ClientContactEntity', 'id'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -2501,7 +2413,7 @@ class _$LocationEntity extends LocationEntity {
   final String id;
 
   factory _$LocationEntity([void Function(LocationEntityBuilder)? updates]) =>
-      (new LocationEntityBuilder()..update(updates))._build();
+      (LocationEntityBuilder()..update(updates))._build();
 
   _$LocationEntity._(
       {required this.name,
@@ -2525,46 +2437,13 @@ class _$LocationEntity extends LocationEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'LocationEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(
-        address1, r'LocationEntity', 'address1');
-    BuiltValueNullFieldError.checkNotNull(
-        address2, r'LocationEntity', 'address2');
-    BuiltValueNullFieldError.checkNotNull(city, r'LocationEntity', 'city');
-    BuiltValueNullFieldError.checkNotNull(state, r'LocationEntity', 'state');
-    BuiltValueNullFieldError.checkNotNull(
-        clientId, r'LocationEntity', 'clientId');
-    BuiltValueNullFieldError.checkNotNull(
-        postalCode, r'LocationEntity', 'postalCode');
-    BuiltValueNullFieldError.checkNotNull(
-        countryId, r'LocationEntity', 'countryId');
-    BuiltValueNullFieldError.checkNotNull(
-        isShipping, r'LocationEntity', 'isShipping');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue1, r'LocationEntity', 'customValue1');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue2, r'LocationEntity', 'customValue2');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue3, r'LocationEntity', 'customValue3');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue4, r'LocationEntity', 'customValue4');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'LocationEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'LocationEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'LocationEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'LocationEntity', 'id');
-  }
-
+      : super._();
   @override
   LocationEntity rebuild(void Function(LocationEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  LocationEntityBuilder toBuilder() =>
-      new LocationEntityBuilder()..replace(this);
+  LocationEntityBuilder toBuilder() => LocationEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -2774,7 +2653,6 @@ class LocationEntityBuilder
 
   @override
   void replace(LocationEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$LocationEntity;
   }
 
@@ -2788,38 +2666,46 @@ class LocationEntityBuilder
 
   _$LocationEntity _build() {
     final _$result = _$v ??
-        new _$LocationEntity._(
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'LocationEntity', 'name'),
-            address1: BuiltValueNullFieldError.checkNotNull(
-                address1, r'LocationEntity', 'address1'),
-            address2: BuiltValueNullFieldError.checkNotNull(
-                address2, r'LocationEntity', 'address2'),
-            city: BuiltValueNullFieldError.checkNotNull(
-                city, r'LocationEntity', 'city'),
-            state: BuiltValueNullFieldError.checkNotNull(
-                state, r'LocationEntity', 'state'),
-            clientId: BuiltValueNullFieldError.checkNotNull(
-                clientId, r'LocationEntity', 'clientId'),
-            postalCode: BuiltValueNullFieldError.checkNotNull(
-                postalCode, r'LocationEntity', 'postalCode'),
-            countryId: BuiltValueNullFieldError.checkNotNull(
-                countryId, r'LocationEntity', 'countryId'),
-            isShipping: BuiltValueNullFieldError.checkNotNull(
-                isShipping, r'LocationEntity', 'isShipping'),
-            customValue1: BuiltValueNullFieldError.checkNotNull(
-                customValue1, r'LocationEntity', 'customValue1'),
-            customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, r'LocationEntity', 'customValue2'),
-            customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'LocationEntity', 'customValue3'),
-            customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'LocationEntity', 'customValue4'),
-            isChanged: isChanged,
-            createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'LocationEntity', 'createdAt'),
-            updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'LocationEntity', 'updatedAt'),
-            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'LocationEntity', 'archivedAt'),
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            id: BuiltValueNullFieldError.checkNotNull(id, r'LocationEntity', 'id'));
+        _$LocationEntity._(
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'LocationEntity', 'name'),
+          address1: BuiltValueNullFieldError.checkNotNull(
+              address1, r'LocationEntity', 'address1'),
+          address2: BuiltValueNullFieldError.checkNotNull(
+              address2, r'LocationEntity', 'address2'),
+          city: BuiltValueNullFieldError.checkNotNull(
+              city, r'LocationEntity', 'city'),
+          state: BuiltValueNullFieldError.checkNotNull(
+              state, r'LocationEntity', 'state'),
+          clientId: BuiltValueNullFieldError.checkNotNull(
+              clientId, r'LocationEntity', 'clientId'),
+          postalCode: BuiltValueNullFieldError.checkNotNull(
+              postalCode, r'LocationEntity', 'postalCode'),
+          countryId: BuiltValueNullFieldError.checkNotNull(
+              countryId, r'LocationEntity', 'countryId'),
+          isShipping: BuiltValueNullFieldError.checkNotNull(
+              isShipping, r'LocationEntity', 'isShipping'),
+          customValue1: BuiltValueNullFieldError.checkNotNull(
+              customValue1, r'LocationEntity', 'customValue1'),
+          customValue2: BuiltValueNullFieldError.checkNotNull(
+              customValue2, r'LocationEntity', 'customValue2'),
+          customValue3: BuiltValueNullFieldError.checkNotNull(
+              customValue3, r'LocationEntity', 'customValue3'),
+          customValue4: BuiltValueNullFieldError.checkNotNull(
+              customValue4, r'LocationEntity', 'customValue4'),
+          isChanged: isChanged,
+          createdAt: BuiltValueNullFieldError.checkNotNull(
+              createdAt, r'LocationEntity', 'createdAt'),
+          updatedAt: BuiltValueNullFieldError.checkNotNull(
+              updatedAt, r'LocationEntity', 'updatedAt'),
+          archivedAt: BuiltValueNullFieldError.checkNotNull(
+              archivedAt, r'LocationEntity', 'archivedAt'),
+          isDeleted: isDeleted,
+          createdUserId: createdUserId,
+          assignedUserId: assignedUserId,
+          id: BuiltValueNullFieldError.checkNotNull(
+              id, r'LocationEntity', 'id'),
+        );
     replace(_$result);
     return _$result;
   }

@@ -6,9 +6,8 @@ part of 'group_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<GroupState> _$groupStateSerializer = new _$GroupStateSerializer();
-Serializer<GroupUIState> _$groupUIStateSerializer =
-    new _$GroupUIStateSerializer();
+Serializer<GroupState> _$groupStateSerializer = _$GroupStateSerializer();
+Serializer<GroupUIState> _$groupUIStateSerializer = _$GroupUIStateSerializer();
 
 class _$GroupStateSerializer implements StructuredSerializer<GroupState> {
   @override
@@ -36,7 +35,7 @@ class _$GroupStateSerializer implements StructuredSerializer<GroupState> {
   @override
   GroupState deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new GroupStateBuilder();
+    final result = GroupStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -110,7 +109,7 @@ class _$GroupUIStateSerializer implements StructuredSerializer<GroupUIState> {
   GroupUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new GroupUIStateBuilder();
+    final result = GroupUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -152,19 +151,15 @@ class _$GroupState extends GroupState {
   final BuiltList<String> list;
 
   factory _$GroupState([void Function(GroupStateBuilder)? updates]) =>
-      (new GroupStateBuilder()..update(updates))._build();
+      (GroupStateBuilder()..update(updates))._build();
 
-  _$GroupState._({required this.map, required this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, r'GroupState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, r'GroupState', 'list');
-  }
-
+  _$GroupState._({required this.map, required this.list}) : super._();
   @override
   GroupState rebuild(void Function(GroupStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  GroupStateBuilder toBuilder() => new GroupStateBuilder()..replace(this);
+  GroupStateBuilder toBuilder() => GroupStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -197,11 +192,11 @@ class GroupStateBuilder implements Builder<GroupState, GroupStateBuilder> {
 
   MapBuilder<String, GroupEntity>? _map;
   MapBuilder<String, GroupEntity> get map =>
-      _$this._map ??= new MapBuilder<String, GroupEntity>();
+      _$this._map ??= MapBuilder<String, GroupEntity>();
   set map(MapBuilder<String, GroupEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
-  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  ListBuilder<String> get list => _$this._list ??= ListBuilder<String>();
   set list(ListBuilder<String>? list) => _$this._list = list;
 
   GroupStateBuilder();
@@ -218,7 +213,6 @@ class GroupStateBuilder implements Builder<GroupState, GroupStateBuilder> {
 
   @override
   void replace(GroupState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$GroupState;
   }
 
@@ -233,8 +227,11 @@ class GroupStateBuilder implements Builder<GroupState, GroupStateBuilder> {
   _$GroupState _build() {
     _$GroupState _$result;
     try {
-      _$result =
-          _$v ?? new _$GroupState._(map: map.build(), list: list.build());
+      _$result = _$v ??
+          _$GroupState._(
+            map: map.build(),
+            list: list.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -243,7 +240,7 @@ class GroupStateBuilder implements Builder<GroupState, GroupStateBuilder> {
         _$failedField = 'list';
         list.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'GroupState', _$failedField, e.toString());
       }
       rethrow;
@@ -270,7 +267,7 @@ class _$GroupUIState extends GroupUIState {
   final Completer<Null>? cancelCompleter;
 
   factory _$GroupUIState([void Function(GroupUIStateBuilder)? updates]) =>
-      (new GroupUIStateBuilder()..update(updates))._build();
+      (GroupUIStateBuilder()..update(updates))._build();
 
   _$GroupUIState._(
       {this.editing,
@@ -280,19 +277,13 @@ class _$GroupUIState extends GroupUIState {
       required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        listUIState, r'GroupUIState', 'listUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        tabIndex, r'GroupUIState', 'tabIndex');
-  }
-
+      : super._();
   @override
   GroupUIState rebuild(void Function(GroupUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  GroupUIStateBuilder toBuilder() => new GroupUIStateBuilder()..replace(this);
+  GroupUIStateBuilder toBuilder() => GroupUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -342,13 +333,12 @@ class GroupUIStateBuilder
   _$GroupUIState? _$v;
 
   GroupEntityBuilder? _editing;
-  GroupEntityBuilder get editing =>
-      _$this._editing ??= new GroupEntityBuilder();
+  GroupEntityBuilder get editing => _$this._editing ??= GroupEntityBuilder();
   set editing(GroupEntityBuilder? editing) => _$this._editing = editing;
 
   ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
-      _$this._listUIState ??= new ListUIStateBuilder();
+      _$this._listUIState ??= ListUIStateBuilder();
   set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
@@ -394,7 +384,6 @@ class GroupUIStateBuilder
 
   @override
   void replace(GroupUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$GroupUIState;
   }
 
@@ -410,15 +399,16 @@ class GroupUIStateBuilder
     _$GroupUIState _$result;
     try {
       _$result = _$v ??
-          new _$GroupUIState._(
-              editing: _editing?.build(),
-              listUIState: listUIState.build(),
-              selectedId: selectedId,
-              forceSelected: forceSelected,
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'GroupUIState', 'tabIndex'),
-              saveCompleter: saveCompleter,
-              cancelCompleter: cancelCompleter);
+          _$GroupUIState._(
+            editing: _editing?.build(),
+            listUIState: listUIState.build(),
+            selectedId: selectedId,
+            forceSelected: forceSelected,
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'GroupUIState', 'tabIndex'),
+            saveCompleter: saveCompleter,
+            cancelCompleter: cancelCompleter,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -427,7 +417,7 @@ class GroupUIStateBuilder
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'GroupUIState', _$failedField, e.toString());
       }
       rethrow;

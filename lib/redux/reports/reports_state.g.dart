@@ -7,7 +7,7 @@ part of 'reports_state.dart';
 // **************************************************************************
 
 Serializer<ReportsUIState> _$reportsUIStateSerializer =
-    new _$ReportsUIStateSerializer();
+    _$ReportsUIStateSerializer();
 
 class _$ReportsUIStateSerializer
     implements StructuredSerializer<ReportsUIState> {
@@ -54,7 +54,7 @@ class _$ReportsUIStateSerializer
   ReportsUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ReportsUIStateBuilder();
+    final result = ReportsUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -121,7 +121,7 @@ class _$ReportsUIState extends ReportsUIState {
   final BuiltMap<String, String> filters;
 
   factory _$ReportsUIState([void Function(ReportsUIStateBuilder)? updates]) =>
-      (new ReportsUIStateBuilder()..update(updates))._build();
+      (ReportsUIStateBuilder()..update(updates))._build();
 
   _$ReportsUIState._(
       {required this.report,
@@ -132,29 +132,13 @@ class _$ReportsUIState extends ReportsUIState {
       required this.customStartDate,
       required this.customEndDate,
       required this.filters})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(report, r'ReportsUIState', 'report');
-    BuiltValueNullFieldError.checkNotNull(group, r'ReportsUIState', 'group');
-    BuiltValueNullFieldError.checkNotNull(
-        selectedGroup, r'ReportsUIState', 'selectedGroup');
-    BuiltValueNullFieldError.checkNotNull(chart, r'ReportsUIState', 'chart');
-    BuiltValueNullFieldError.checkNotNull(
-        subgroup, r'ReportsUIState', 'subgroup');
-    BuiltValueNullFieldError.checkNotNull(
-        customStartDate, r'ReportsUIState', 'customStartDate');
-    BuiltValueNullFieldError.checkNotNull(
-        customEndDate, r'ReportsUIState', 'customEndDate');
-    BuiltValueNullFieldError.checkNotNull(
-        filters, r'ReportsUIState', 'filters');
-  }
-
+      : super._();
   @override
   ReportsUIState rebuild(void Function(ReportsUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ReportsUIStateBuilder toBuilder() =>
-      new ReportsUIStateBuilder()..replace(this);
+  ReportsUIStateBuilder toBuilder() => ReportsUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -239,7 +223,7 @@ class ReportsUIStateBuilder
 
   MapBuilder<String, String>? _filters;
   MapBuilder<String, String> get filters =>
-      _$this._filters ??= new MapBuilder<String, String>();
+      _$this._filters ??= MapBuilder<String, String>();
   set filters(MapBuilder<String, String>? filters) => _$this._filters = filters;
 
   ReportsUIStateBuilder();
@@ -262,7 +246,6 @@ class ReportsUIStateBuilder
 
   @override
   void replace(ReportsUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ReportsUIState;
   }
 
@@ -278,29 +261,30 @@ class ReportsUIStateBuilder
     _$ReportsUIState _$result;
     try {
       _$result = _$v ??
-          new _$ReportsUIState._(
-              report: BuiltValueNullFieldError.checkNotNull(
-                  report, r'ReportsUIState', 'report'),
-              group: BuiltValueNullFieldError.checkNotNull(
-                  group, r'ReportsUIState', 'group'),
-              selectedGroup: BuiltValueNullFieldError.checkNotNull(
-                  selectedGroup, r'ReportsUIState', 'selectedGroup'),
-              chart: BuiltValueNullFieldError.checkNotNull(
-                  chart, r'ReportsUIState', 'chart'),
-              subgroup: BuiltValueNullFieldError.checkNotNull(
-                  subgroup, r'ReportsUIState', 'subgroup'),
-              customStartDate: BuiltValueNullFieldError.checkNotNull(
-                  customStartDate, r'ReportsUIState', 'customStartDate'),
-              customEndDate: BuiltValueNullFieldError.checkNotNull(
-                  customEndDate, r'ReportsUIState', 'customEndDate'),
-              filters: filters.build());
+          _$ReportsUIState._(
+            report: BuiltValueNullFieldError.checkNotNull(
+                report, r'ReportsUIState', 'report'),
+            group: BuiltValueNullFieldError.checkNotNull(
+                group, r'ReportsUIState', 'group'),
+            selectedGroup: BuiltValueNullFieldError.checkNotNull(
+                selectedGroup, r'ReportsUIState', 'selectedGroup'),
+            chart: BuiltValueNullFieldError.checkNotNull(
+                chart, r'ReportsUIState', 'chart'),
+            subgroup: BuiltValueNullFieldError.checkNotNull(
+                subgroup, r'ReportsUIState', 'subgroup'),
+            customStartDate: BuiltValueNullFieldError.checkNotNull(
+                customStartDate, r'ReportsUIState', 'customStartDate'),
+            customEndDate: BuiltValueNullFieldError.checkNotNull(
+                customEndDate, r'ReportsUIState', 'customEndDate'),
+            filters: filters.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'filters';
         filters.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ReportsUIState', _$failedField, e.toString());
       }
       rethrow;

@@ -6,10 +6,9 @@ part of 'project_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<ProjectState> _$projectStateSerializer =
-    new _$ProjectStateSerializer();
+Serializer<ProjectState> _$projectStateSerializer = _$ProjectStateSerializer();
 Serializer<ProjectUIState> _$projectUIStateSerializer =
-    new _$ProjectUIStateSerializer();
+    _$ProjectUIStateSerializer();
 
 class _$ProjectStateSerializer implements StructuredSerializer<ProjectState> {
   @override
@@ -38,7 +37,7 @@ class _$ProjectStateSerializer implements StructuredSerializer<ProjectState> {
   ProjectState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ProjectStateBuilder();
+    final result = ProjectStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -113,7 +112,7 @@ class _$ProjectUIStateSerializer
   ProjectUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ProjectUIStateBuilder();
+    final result = ProjectUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -155,19 +154,15 @@ class _$ProjectState extends ProjectState {
   final BuiltList<String> list;
 
   factory _$ProjectState([void Function(ProjectStateBuilder)? updates]) =>
-      (new ProjectStateBuilder()..update(updates))._build();
+      (ProjectStateBuilder()..update(updates))._build();
 
-  _$ProjectState._({required this.map, required this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, r'ProjectState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, r'ProjectState', 'list');
-  }
-
+  _$ProjectState._({required this.map, required this.list}) : super._();
   @override
   ProjectState rebuild(void Function(ProjectStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ProjectStateBuilder toBuilder() => new ProjectStateBuilder()..replace(this);
+  ProjectStateBuilder toBuilder() => ProjectStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -201,11 +196,11 @@ class ProjectStateBuilder
 
   MapBuilder<String, ProjectEntity>? _map;
   MapBuilder<String, ProjectEntity> get map =>
-      _$this._map ??= new MapBuilder<String, ProjectEntity>();
+      _$this._map ??= MapBuilder<String, ProjectEntity>();
   set map(MapBuilder<String, ProjectEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
-  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  ListBuilder<String> get list => _$this._list ??= ListBuilder<String>();
   set list(ListBuilder<String>? list) => _$this._list = list;
 
   ProjectStateBuilder();
@@ -222,7 +217,6 @@ class ProjectStateBuilder
 
   @override
   void replace(ProjectState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ProjectState;
   }
 
@@ -237,8 +231,11 @@ class ProjectStateBuilder
   _$ProjectState _build() {
     _$ProjectState _$result;
     try {
-      _$result =
-          _$v ?? new _$ProjectState._(map: map.build(), list: list.build());
+      _$result = _$v ??
+          _$ProjectState._(
+            map: map.build(),
+            list: list.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -247,7 +244,7 @@ class ProjectStateBuilder
         _$failedField = 'list';
         list.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ProjectState', _$failedField, e.toString());
       }
       rethrow;
@@ -274,7 +271,7 @@ class _$ProjectUIState extends ProjectUIState {
   final Completer<Null>? cancelCompleter;
 
   factory _$ProjectUIState([void Function(ProjectUIStateBuilder)? updates]) =>
-      (new ProjectUIStateBuilder()..update(updates))._build();
+      (ProjectUIStateBuilder()..update(updates))._build();
 
   _$ProjectUIState._(
       {this.editing,
@@ -284,20 +281,13 @@ class _$ProjectUIState extends ProjectUIState {
       required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        listUIState, r'ProjectUIState', 'listUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        tabIndex, r'ProjectUIState', 'tabIndex');
-  }
-
+      : super._();
   @override
   ProjectUIState rebuild(void Function(ProjectUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ProjectUIStateBuilder toBuilder() =>
-      new ProjectUIStateBuilder()..replace(this);
+  ProjectUIStateBuilder toBuilder() => ProjectUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -348,12 +338,12 @@ class ProjectUIStateBuilder
 
   ProjectEntityBuilder? _editing;
   ProjectEntityBuilder get editing =>
-      _$this._editing ??= new ProjectEntityBuilder();
+      _$this._editing ??= ProjectEntityBuilder();
   set editing(ProjectEntityBuilder? editing) => _$this._editing = editing;
 
   ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
-      _$this._listUIState ??= new ListUIStateBuilder();
+      _$this._listUIState ??= ListUIStateBuilder();
   set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
@@ -399,7 +389,6 @@ class ProjectUIStateBuilder
 
   @override
   void replace(ProjectUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ProjectUIState;
   }
 
@@ -415,15 +404,16 @@ class ProjectUIStateBuilder
     _$ProjectUIState _$result;
     try {
       _$result = _$v ??
-          new _$ProjectUIState._(
-              editing: _editing?.build(),
-              listUIState: listUIState.build(),
-              selectedId: selectedId,
-              forceSelected: forceSelected,
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'ProjectUIState', 'tabIndex'),
-              saveCompleter: saveCompleter,
-              cancelCompleter: cancelCompleter);
+          _$ProjectUIState._(
+            editing: _editing?.build(),
+            listUIState: listUIState.build(),
+            selectedId: selectedId,
+            forceSelected: forceSelected,
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'ProjectUIState', 'tabIndex'),
+            saveCompleter: saveCompleter,
+            cancelCompleter: cancelCompleter,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -432,7 +422,7 @@ class ProjectUIStateBuilder
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ProjectUIState', _$failedField, e.toString());
       }
       rethrow;

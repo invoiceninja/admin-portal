@@ -6,9 +6,8 @@ part of 'token_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<TokenState> _$tokenStateSerializer = new _$TokenStateSerializer();
-Serializer<TokenUIState> _$tokenUIStateSerializer =
-    new _$TokenUIStateSerializer();
+Serializer<TokenState> _$tokenStateSerializer = _$TokenStateSerializer();
+Serializer<TokenUIState> _$tokenUIStateSerializer = _$TokenUIStateSerializer();
 
 class _$TokenStateSerializer implements StructuredSerializer<TokenState> {
   @override
@@ -36,7 +35,7 @@ class _$TokenStateSerializer implements StructuredSerializer<TokenState> {
   @override
   TokenState deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TokenStateBuilder();
+    final result = TokenStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -110,7 +109,7 @@ class _$TokenUIStateSerializer implements StructuredSerializer<TokenUIState> {
   TokenUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TokenUIStateBuilder();
+    final result = TokenUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -152,19 +151,15 @@ class _$TokenState extends TokenState {
   final BuiltList<String> list;
 
   factory _$TokenState([void Function(TokenStateBuilder)? updates]) =>
-      (new TokenStateBuilder()..update(updates))._build();
+      (TokenStateBuilder()..update(updates))._build();
 
-  _$TokenState._({required this.map, required this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, r'TokenState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, r'TokenState', 'list');
-  }
-
+  _$TokenState._({required this.map, required this.list}) : super._();
   @override
   TokenState rebuild(void Function(TokenStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  TokenStateBuilder toBuilder() => new TokenStateBuilder()..replace(this);
+  TokenStateBuilder toBuilder() => TokenStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -197,11 +192,11 @@ class TokenStateBuilder implements Builder<TokenState, TokenStateBuilder> {
 
   MapBuilder<String, TokenEntity>? _map;
   MapBuilder<String, TokenEntity> get map =>
-      _$this._map ??= new MapBuilder<String, TokenEntity>();
+      _$this._map ??= MapBuilder<String, TokenEntity>();
   set map(MapBuilder<String, TokenEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
-  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  ListBuilder<String> get list => _$this._list ??= ListBuilder<String>();
   set list(ListBuilder<String>? list) => _$this._list = list;
 
   TokenStateBuilder();
@@ -218,7 +213,6 @@ class TokenStateBuilder implements Builder<TokenState, TokenStateBuilder> {
 
   @override
   void replace(TokenState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TokenState;
   }
 
@@ -233,8 +227,11 @@ class TokenStateBuilder implements Builder<TokenState, TokenStateBuilder> {
   _$TokenState _build() {
     _$TokenState _$result;
     try {
-      _$result =
-          _$v ?? new _$TokenState._(map: map.build(), list: list.build());
+      _$result = _$v ??
+          _$TokenState._(
+            map: map.build(),
+            list: list.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -243,7 +240,7 @@ class TokenStateBuilder implements Builder<TokenState, TokenStateBuilder> {
         _$failedField = 'list';
         list.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TokenState', _$failedField, e.toString());
       }
       rethrow;
@@ -270,7 +267,7 @@ class _$TokenUIState extends TokenUIState {
   final Completer<Null>? cancelCompleter;
 
   factory _$TokenUIState([void Function(TokenUIStateBuilder)? updates]) =>
-      (new TokenUIStateBuilder()..update(updates))._build();
+      (TokenUIStateBuilder()..update(updates))._build();
 
   _$TokenUIState._(
       {this.editing,
@@ -280,19 +277,13 @@ class _$TokenUIState extends TokenUIState {
       required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        listUIState, r'TokenUIState', 'listUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        tabIndex, r'TokenUIState', 'tabIndex');
-  }
-
+      : super._();
   @override
   TokenUIState rebuild(void Function(TokenUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  TokenUIStateBuilder toBuilder() => new TokenUIStateBuilder()..replace(this);
+  TokenUIStateBuilder toBuilder() => TokenUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -342,13 +333,12 @@ class TokenUIStateBuilder
   _$TokenUIState? _$v;
 
   TokenEntityBuilder? _editing;
-  TokenEntityBuilder get editing =>
-      _$this._editing ??= new TokenEntityBuilder();
+  TokenEntityBuilder get editing => _$this._editing ??= TokenEntityBuilder();
   set editing(TokenEntityBuilder? editing) => _$this._editing = editing;
 
   ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
-      _$this._listUIState ??= new ListUIStateBuilder();
+      _$this._listUIState ??= ListUIStateBuilder();
   set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
@@ -394,7 +384,6 @@ class TokenUIStateBuilder
 
   @override
   void replace(TokenUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TokenUIState;
   }
 
@@ -410,15 +399,16 @@ class TokenUIStateBuilder
     _$TokenUIState _$result;
     try {
       _$result = _$v ??
-          new _$TokenUIState._(
-              editing: _editing?.build(),
-              listUIState: listUIState.build(),
-              selectedId: selectedId,
-              forceSelected: forceSelected,
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'TokenUIState', 'tabIndex'),
-              saveCompleter: saveCompleter,
-              cancelCompleter: cancelCompleter);
+          _$TokenUIState._(
+            editing: _editing?.build(),
+            listUIState: listUIState.build(),
+            selectedId: selectedId,
+            forceSelected: forceSelected,
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'TokenUIState', 'tabIndex'),
+            saveCompleter: saveCompleter,
+            cancelCompleter: cancelCompleter,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -427,7 +417,7 @@ class TokenUIStateBuilder
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TokenUIState', _$failedField, e.toString());
       }
       rethrow;

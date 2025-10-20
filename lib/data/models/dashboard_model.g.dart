@@ -43,11 +43,11 @@ DateRange _$valueOf(String name) {
     case 'custom':
       return _$custom;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
-final BuiltSet<DateRange> _$values = new BuiltSet<DateRange>(const <DateRange>[
+final BuiltSet<DateRange> _$values = BuiltSet<DateRange>(const <DateRange>[
   _$last7Days,
   _$last30Days,
   _$last365Days,
@@ -77,20 +77,20 @@ DateRangeComparison _$comparisonValueOf(String name) {
     case 'customRange':
       return _$customRange;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
 final BuiltSet<DateRangeComparison> _$comparisonValues =
-    new BuiltSet<DateRangeComparison>(const <DateRangeComparison>[
+    BuiltSet<DateRangeComparison>(const <DateRangeComparison>[
   _$previousPeriod,
   _$previousYear,
   _$customRange,
 ]);
 
-Serializer<DateRange> _$dateRangeSerializer = new _$DateRangeSerializer();
+Serializer<DateRange> _$dateRangeSerializer = _$DateRangeSerializer();
 Serializer<DateRangeComparison> _$dateRangeComparisonSerializer =
-    new _$DateRangeComparisonSerializer();
+    _$DateRangeComparisonSerializer();
 
 class _$DateRangeSerializer implements PrimitiveSerializer<DateRange> {
   @override

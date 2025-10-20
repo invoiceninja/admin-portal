@@ -7,13 +7,13 @@ part of 'transaction_model.dart';
 // **************************************************************************
 
 Serializer<TransactionListResponse> _$transactionListResponseSerializer =
-    new _$TransactionListResponseSerializer();
+    _$TransactionListResponseSerializer();
 Serializer<TransactionItemResponse> _$transactionItemResponseSerializer =
-    new _$TransactionItemResponseSerializer();
+    _$TransactionItemResponseSerializer();
 Serializer<TransactionEntity> _$transactionEntitySerializer =
-    new _$TransactionEntitySerializer();
+    _$TransactionEntitySerializer();
 Serializer<TransactionStatusEntity> _$transactionStatusEntitySerializer =
-    new _$TransactionStatusEntitySerializer();
+    _$TransactionStatusEntitySerializer();
 
 class _$TransactionListResponseSerializer
     implements StructuredSerializer<TransactionListResponse> {
@@ -43,7 +43,7 @@ class _$TransactionListResponseSerializer
   TransactionListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TransactionListResponseBuilder();
+    final result = TransactionListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -91,7 +91,7 @@ class _$TransactionItemResponseSerializer
   TransactionItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TransactionItemResponseBuilder();
+    final result = TransactionItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -227,7 +227,7 @@ class _$TransactionEntitySerializer
   TransactionEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TransactionEntityBuilder();
+    final result = TransactionEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -374,7 +374,7 @@ class _$TransactionStatusEntitySerializer
   TransactionStatusEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TransactionStatusEntityBuilder();
+    final result = TransactionStatusEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -403,13 +403,9 @@ class _$TransactionListResponse extends TransactionListResponse {
 
   factory _$TransactionListResponse(
           [void Function(TransactionListResponseBuilder)? updates]) =>
-      (new TransactionListResponseBuilder()..update(updates))._build();
+      (TransactionListResponseBuilder()..update(updates))._build();
 
-  _$TransactionListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'TransactionListResponse', 'data');
-  }
-
+  _$TransactionListResponse._({required this.data}) : super._();
   @override
   TransactionListResponse rebuild(
           void Function(TransactionListResponseBuilder) updates) =>
@@ -417,7 +413,7 @@ class _$TransactionListResponse extends TransactionListResponse {
 
   @override
   TransactionListResponseBuilder toBuilder() =>
-      new TransactionListResponseBuilder()..replace(this);
+      TransactionListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -450,7 +446,7 @@ class TransactionListResponseBuilder
 
   ListBuilder<TransactionEntity>? _data;
   ListBuilder<TransactionEntity> get data =>
-      _$this._data ??= new ListBuilder<TransactionEntity>();
+      _$this._data ??= ListBuilder<TransactionEntity>();
   set data(ListBuilder<TransactionEntity>? data) => _$this._data = data;
 
   TransactionListResponseBuilder();
@@ -466,7 +462,6 @@ class TransactionListResponseBuilder
 
   @override
   void replace(TransactionListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TransactionListResponse;
   }
 
@@ -481,14 +476,17 @@ class TransactionListResponseBuilder
   _$TransactionListResponse _build() {
     _$TransactionListResponse _$result;
     try {
-      _$result = _$v ?? new _$TransactionListResponse._(data: data.build());
+      _$result = _$v ??
+          _$TransactionListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TransactionListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -504,13 +502,9 @@ class _$TransactionItemResponse extends TransactionItemResponse {
 
   factory _$TransactionItemResponse(
           [void Function(TransactionItemResponseBuilder)? updates]) =>
-      (new TransactionItemResponseBuilder()..update(updates))._build();
+      (TransactionItemResponseBuilder()..update(updates))._build();
 
-  _$TransactionItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'TransactionItemResponse', 'data');
-  }
-
+  _$TransactionItemResponse._({required this.data}) : super._();
   @override
   TransactionItemResponse rebuild(
           void Function(TransactionItemResponseBuilder) updates) =>
@@ -518,7 +512,7 @@ class _$TransactionItemResponse extends TransactionItemResponse {
 
   @override
   TransactionItemResponseBuilder toBuilder() =>
-      new TransactionItemResponseBuilder()..replace(this);
+      TransactionItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -551,7 +545,7 @@ class TransactionItemResponseBuilder
 
   TransactionEntityBuilder? _data;
   TransactionEntityBuilder get data =>
-      _$this._data ??= new TransactionEntityBuilder();
+      _$this._data ??= TransactionEntityBuilder();
   set data(TransactionEntityBuilder? data) => _$this._data = data;
 
   TransactionItemResponseBuilder();
@@ -567,7 +561,6 @@ class TransactionItemResponseBuilder
 
   @override
   void replace(TransactionItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TransactionItemResponse;
   }
 
@@ -582,14 +575,17 @@ class TransactionItemResponseBuilder
   _$TransactionItemResponse _build() {
     _$TransactionItemResponse _$result;
     try {
-      _$result = _$v ?? new _$TransactionItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$TransactionItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TransactionItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -659,7 +655,7 @@ class _$TransactionEntity extends TransactionEntity {
 
   factory _$TransactionEntity(
           [void Function(TransactionEntityBuilder)? updates]) =>
-      (new TransactionEntityBuilder()..update(updates))._build();
+      (TransactionEntityBuilder()..update(updates))._build();
 
   _$TransactionEntity._(
       {required this.amount,
@@ -690,56 +686,14 @@ class _$TransactionEntity extends TransactionEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        amount, r'TransactionEntity', 'amount');
-    BuiltValueNullFieldError.checkNotNull(
-        currencyId, r'TransactionEntity', 'currencyId');
-    BuiltValueNullFieldError.checkNotNull(
-        category, r'TransactionEntity', 'category');
-    BuiltValueNullFieldError.checkNotNull(
-        baseType, r'TransactionEntity', 'baseType');
-    BuiltValueNullFieldError.checkNotNull(date, r'TransactionEntity', 'date');
-    BuiltValueNullFieldError.checkNotNull(
-        bankAccountId, r'TransactionEntity', 'bankAccountId');
-    BuiltValueNullFieldError.checkNotNull(
-        description, r'TransactionEntity', 'description');
-    BuiltValueNullFieldError.checkNotNull(
-        statusId, r'TransactionEntity', 'statusId');
-    BuiltValueNullFieldError.checkNotNull(
-        categoryId, r'TransactionEntity', 'categoryId');
-    BuiltValueNullFieldError.checkNotNull(
-        invoiceIds, r'TransactionEntity', 'invoiceIds');
-    BuiltValueNullFieldError.checkNotNull(
-        paymentId, r'TransactionEntity', 'paymentId');
-    BuiltValueNullFieldError.checkNotNull(
-        expenseId, r'TransactionEntity', 'expenseId');
-    BuiltValueNullFieldError.checkNotNull(
-        vendorId, r'TransactionEntity', 'vendorId');
-    BuiltValueNullFieldError.checkNotNull(
-        transactionId, r'TransactionEntity', 'transactionId');
-    BuiltValueNullFieldError.checkNotNull(
-        transactionRuleId, r'TransactionEntity', 'transactionRuleId');
-    BuiltValueNullFieldError.checkNotNull(
-        participantName, r'TransactionEntity', 'participantName');
-    BuiltValueNullFieldError.checkNotNull(
-        participant, r'TransactionEntity', 'participant');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'TransactionEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'TransactionEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'TransactionEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'TransactionEntity', 'id');
-  }
-
+      : super._();
   @override
   TransactionEntity rebuild(void Function(TransactionEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   TransactionEntityBuilder toBuilder() =>
-      new TransactionEntityBuilder()..replace(this);
+      TransactionEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1014,7 +968,6 @@ class TransactionEntityBuilder
 
   @override
   void replace(TransactionEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TransactionEntity;
   }
 
@@ -1028,44 +981,57 @@ class TransactionEntityBuilder
 
   _$TransactionEntity _build() {
     final _$result = _$v ??
-        new _$TransactionEntity._(
-            amount: BuiltValueNullFieldError.checkNotNull(
-                amount, r'TransactionEntity', 'amount'),
-            currencyId: BuiltValueNullFieldError.checkNotNull(
-                currencyId, r'TransactionEntity', 'currencyId'),
-            category: BuiltValueNullFieldError.checkNotNull(
-                category, r'TransactionEntity', 'category'),
-            baseType: BuiltValueNullFieldError.checkNotNull(
-                baseType, r'TransactionEntity', 'baseType'),
-            date: BuiltValueNullFieldError.checkNotNull(
-                date, r'TransactionEntity', 'date'),
-            bankAccountId: BuiltValueNullFieldError.checkNotNull(
-                bankAccountId, r'TransactionEntity', 'bankAccountId'),
-            description: BuiltValueNullFieldError.checkNotNull(
-                description, r'TransactionEntity', 'description'),
-            statusId: BuiltValueNullFieldError.checkNotNull(
-                statusId, r'TransactionEntity', 'statusId'),
-            categoryId:
-                BuiltValueNullFieldError.checkNotNull(categoryId, r'TransactionEntity', 'categoryId'),
-            invoiceIds: BuiltValueNullFieldError.checkNotNull(invoiceIds, r'TransactionEntity', 'invoiceIds'),
-            paymentId: BuiltValueNullFieldError.checkNotNull(paymentId, r'TransactionEntity', 'paymentId'),
-            expenseId: BuiltValueNullFieldError.checkNotNull(expenseId, r'TransactionEntity', 'expenseId'),
-            vendorId: BuiltValueNullFieldError.checkNotNull(vendorId, r'TransactionEntity', 'vendorId'),
-            transactionId: BuiltValueNullFieldError.checkNotNull(transactionId, r'TransactionEntity', 'transactionId'),
-            transactionRuleId: BuiltValueNullFieldError.checkNotNull(transactionRuleId, r'TransactionEntity', 'transactionRuleId'),
-            participantName: BuiltValueNullFieldError.checkNotNull(participantName, r'TransactionEntity', 'participantName'),
-            participant: BuiltValueNullFieldError.checkNotNull(participant, r'TransactionEntity', 'participant'),
-            pendingVendorId: pendingVendorId,
-            pendingCategoryId: pendingCategoryId,
-            pendingExpenseId: pendingExpenseId,
-            isChanged: isChanged,
-            createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'TransactionEntity', 'createdAt'),
-            updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'TransactionEntity', 'updatedAt'),
-            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'TransactionEntity', 'archivedAt'),
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            id: BuiltValueNullFieldError.checkNotNull(id, r'TransactionEntity', 'id'));
+        _$TransactionEntity._(
+          amount: BuiltValueNullFieldError.checkNotNull(
+              amount, r'TransactionEntity', 'amount'),
+          currencyId: BuiltValueNullFieldError.checkNotNull(
+              currencyId, r'TransactionEntity', 'currencyId'),
+          category: BuiltValueNullFieldError.checkNotNull(
+              category, r'TransactionEntity', 'category'),
+          baseType: BuiltValueNullFieldError.checkNotNull(
+              baseType, r'TransactionEntity', 'baseType'),
+          date: BuiltValueNullFieldError.checkNotNull(
+              date, r'TransactionEntity', 'date'),
+          bankAccountId: BuiltValueNullFieldError.checkNotNull(
+              bankAccountId, r'TransactionEntity', 'bankAccountId'),
+          description: BuiltValueNullFieldError.checkNotNull(
+              description, r'TransactionEntity', 'description'),
+          statusId: BuiltValueNullFieldError.checkNotNull(
+              statusId, r'TransactionEntity', 'statusId'),
+          categoryId: BuiltValueNullFieldError.checkNotNull(
+              categoryId, r'TransactionEntity', 'categoryId'),
+          invoiceIds: BuiltValueNullFieldError.checkNotNull(
+              invoiceIds, r'TransactionEntity', 'invoiceIds'),
+          paymentId: BuiltValueNullFieldError.checkNotNull(
+              paymentId, r'TransactionEntity', 'paymentId'),
+          expenseId: BuiltValueNullFieldError.checkNotNull(
+              expenseId, r'TransactionEntity', 'expenseId'),
+          vendorId: BuiltValueNullFieldError.checkNotNull(
+              vendorId, r'TransactionEntity', 'vendorId'),
+          transactionId: BuiltValueNullFieldError.checkNotNull(
+              transactionId, r'TransactionEntity', 'transactionId'),
+          transactionRuleId: BuiltValueNullFieldError.checkNotNull(
+              transactionRuleId, r'TransactionEntity', 'transactionRuleId'),
+          participantName: BuiltValueNullFieldError.checkNotNull(
+              participantName, r'TransactionEntity', 'participantName'),
+          participant: BuiltValueNullFieldError.checkNotNull(
+              participant, r'TransactionEntity', 'participant'),
+          pendingVendorId: pendingVendorId,
+          pendingCategoryId: pendingCategoryId,
+          pendingExpenseId: pendingExpenseId,
+          isChanged: isChanged,
+          createdAt: BuiltValueNullFieldError.checkNotNull(
+              createdAt, r'TransactionEntity', 'createdAt'),
+          updatedAt: BuiltValueNullFieldError.checkNotNull(
+              updatedAt, r'TransactionEntity', 'updatedAt'),
+          archivedAt: BuiltValueNullFieldError.checkNotNull(
+              archivedAt, r'TransactionEntity', 'archivedAt'),
+          isDeleted: isDeleted,
+          createdUserId: createdUserId,
+          assignedUserId: assignedUserId,
+          id: BuiltValueNullFieldError.checkNotNull(
+              id, r'TransactionEntity', 'id'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -1079,15 +1045,10 @@ class _$TransactionStatusEntity extends TransactionStatusEntity {
 
   factory _$TransactionStatusEntity(
           [void Function(TransactionStatusEntityBuilder)? updates]) =>
-      (new TransactionStatusEntityBuilder()..update(updates))._build();
+      (TransactionStatusEntityBuilder()..update(updates))._build();
 
   _$TransactionStatusEntity._({required this.id, required this.name})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(id, r'TransactionStatusEntity', 'id');
-    BuiltValueNullFieldError.checkNotNull(
-        name, r'TransactionStatusEntity', 'name');
-  }
-
+      : super._();
   @override
   TransactionStatusEntity rebuild(
           void Function(TransactionStatusEntityBuilder) updates) =>
@@ -1095,7 +1056,7 @@ class _$TransactionStatusEntity extends TransactionStatusEntity {
 
   @override
   TransactionStatusEntityBuilder toBuilder() =>
-      new TransactionStatusEntityBuilder()..replace(this);
+      TransactionStatusEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1152,7 +1113,6 @@ class TransactionStatusEntityBuilder
 
   @override
   void replace(TransactionStatusEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TransactionStatusEntity;
   }
 
@@ -1166,11 +1126,12 @@ class TransactionStatusEntityBuilder
 
   _$TransactionStatusEntity _build() {
     final _$result = _$v ??
-        new _$TransactionStatusEntity._(
-            id: BuiltValueNullFieldError.checkNotNull(
-                id, r'TransactionStatusEntity', 'id'),
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'TransactionStatusEntity', 'name'));
+        _$TransactionStatusEntity._(
+          id: BuiltValueNullFieldError.checkNotNull(
+              id, r'TransactionStatusEntity', 'id'),
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'TransactionStatusEntity', 'name'),
+        );
     replace(_$result);
     return _$result;
   }

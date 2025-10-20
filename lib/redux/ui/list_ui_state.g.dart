@@ -6,7 +6,7 @@ part of 'list_ui_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<ListUIState> _$listUIStateSerializer = new _$ListUIStateSerializer();
+Serializer<ListUIState> _$listUIStateSerializer = _$ListUIStateSerializer();
 
 class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
   @override
@@ -74,7 +74,7 @@ class _$ListUIStateSerializer implements StructuredSerializer<ListUIState> {
   @override
   ListUIState deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ListUIStateBuilder();
+    final result = ListUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -172,7 +172,7 @@ class _$ListUIState extends ListUIState {
   final BuiltList<String>? selectedIds;
 
   factory _$ListUIState([void Function(ListUIStateBuilder)? updates]) =>
-      (new ListUIStateBuilder()..update(updates))._build();
+      (ListUIStateBuilder()..update(updates))._build();
 
   _$ListUIState._(
       {this.filter,
@@ -186,33 +186,13 @@ class _$ListUIState extends ListUIState {
       required this.custom3Filters,
       required this.custom4Filters,
       this.selectedIds})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        filterClearedAt, r'ListUIState', 'filterClearedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        sortField, r'ListUIState', 'sortField');
-    BuiltValueNullFieldError.checkNotNull(
-        sortAscending, r'ListUIState', 'sortAscending');
-    BuiltValueNullFieldError.checkNotNull(
-        stateFilters, r'ListUIState', 'stateFilters');
-    BuiltValueNullFieldError.checkNotNull(
-        statusFilters, r'ListUIState', 'statusFilters');
-    BuiltValueNullFieldError.checkNotNull(
-        custom1Filters, r'ListUIState', 'custom1Filters');
-    BuiltValueNullFieldError.checkNotNull(
-        custom2Filters, r'ListUIState', 'custom2Filters');
-    BuiltValueNullFieldError.checkNotNull(
-        custom3Filters, r'ListUIState', 'custom3Filters');
-    BuiltValueNullFieldError.checkNotNull(
-        custom4Filters, r'ListUIState', 'custom4Filters');
-  }
-
+      : super._();
   @override
   ListUIState rebuild(void Function(ListUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ListUIStateBuilder toBuilder() => new ListUIStateBuilder()..replace(this);
+  ListUIStateBuilder toBuilder() => ListUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -292,43 +272,43 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
 
   ListBuilder<EntityState>? _stateFilters;
   ListBuilder<EntityState> get stateFilters =>
-      _$this._stateFilters ??= new ListBuilder<EntityState>();
+      _$this._stateFilters ??= ListBuilder<EntityState>();
   set stateFilters(ListBuilder<EntityState>? stateFilters) =>
       _$this._stateFilters = stateFilters;
 
   ListBuilder<EntityStatus>? _statusFilters;
   ListBuilder<EntityStatus> get statusFilters =>
-      _$this._statusFilters ??= new ListBuilder<EntityStatus>();
+      _$this._statusFilters ??= ListBuilder<EntityStatus>();
   set statusFilters(ListBuilder<EntityStatus>? statusFilters) =>
       _$this._statusFilters = statusFilters;
 
   ListBuilder<String>? _custom1Filters;
   ListBuilder<String> get custom1Filters =>
-      _$this._custom1Filters ??= new ListBuilder<String>();
+      _$this._custom1Filters ??= ListBuilder<String>();
   set custom1Filters(ListBuilder<String>? custom1Filters) =>
       _$this._custom1Filters = custom1Filters;
 
   ListBuilder<String>? _custom2Filters;
   ListBuilder<String> get custom2Filters =>
-      _$this._custom2Filters ??= new ListBuilder<String>();
+      _$this._custom2Filters ??= ListBuilder<String>();
   set custom2Filters(ListBuilder<String>? custom2Filters) =>
       _$this._custom2Filters = custom2Filters;
 
   ListBuilder<String>? _custom3Filters;
   ListBuilder<String> get custom3Filters =>
-      _$this._custom3Filters ??= new ListBuilder<String>();
+      _$this._custom3Filters ??= ListBuilder<String>();
   set custom3Filters(ListBuilder<String>? custom3Filters) =>
       _$this._custom3Filters = custom3Filters;
 
   ListBuilder<String>? _custom4Filters;
   ListBuilder<String> get custom4Filters =>
-      _$this._custom4Filters ??= new ListBuilder<String>();
+      _$this._custom4Filters ??= ListBuilder<String>();
   set custom4Filters(ListBuilder<String>? custom4Filters) =>
       _$this._custom4Filters = custom4Filters;
 
   ListBuilder<String>? _selectedIds;
   ListBuilder<String> get selectedIds =>
-      _$this._selectedIds ??= new ListBuilder<String>();
+      _$this._selectedIds ??= ListBuilder<String>();
   set selectedIds(ListBuilder<String>? selectedIds) =>
       _$this._selectedIds = selectedIds;
 
@@ -355,7 +335,6 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
 
   @override
   void replace(ListUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ListUIState;
   }
 
@@ -371,21 +350,22 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
     _$ListUIState _$result;
     try {
       _$result = _$v ??
-          new _$ListUIState._(
-              filter: filter,
-              filterClearedAt: BuiltValueNullFieldError.checkNotNull(
-                  filterClearedAt, r'ListUIState', 'filterClearedAt'),
-              sortField: BuiltValueNullFieldError.checkNotNull(
-                  sortField, r'ListUIState', 'sortField'),
-              sortAscending: BuiltValueNullFieldError.checkNotNull(
-                  sortAscending, r'ListUIState', 'sortAscending'),
-              stateFilters: stateFilters.build(),
-              statusFilters: statusFilters.build(),
-              custom1Filters: custom1Filters.build(),
-              custom2Filters: custom2Filters.build(),
-              custom3Filters: custom3Filters.build(),
-              custom4Filters: custom4Filters.build(),
-              selectedIds: _selectedIds?.build());
+          _$ListUIState._(
+            filter: filter,
+            filterClearedAt: BuiltValueNullFieldError.checkNotNull(
+                filterClearedAt, r'ListUIState', 'filterClearedAt'),
+            sortField: BuiltValueNullFieldError.checkNotNull(
+                sortField, r'ListUIState', 'sortField'),
+            sortAscending: BuiltValueNullFieldError.checkNotNull(
+                sortAscending, r'ListUIState', 'sortAscending'),
+            stateFilters: stateFilters.build(),
+            statusFilters: statusFilters.build(),
+            custom1Filters: custom1Filters.build(),
+            custom2Filters: custom2Filters.build(),
+            custom3Filters: custom3Filters.build(),
+            custom4Filters: custom4Filters.build(),
+            selectedIds: _selectedIds?.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -404,7 +384,7 @@ class ListUIStateBuilder implements Builder<ListUIState, ListUIStateBuilder> {
         _$failedField = 'selectedIds';
         _selectedIds?.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ListUIState', _$failedField, e.toString());
       }
       rethrow;

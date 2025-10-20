@@ -6,10 +6,9 @@ part of 'payment_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<PaymentState> _$paymentStateSerializer =
-    new _$PaymentStateSerializer();
+Serializer<PaymentState> _$paymentStateSerializer = _$PaymentStateSerializer();
 Serializer<PaymentUIState> _$paymentUIStateSerializer =
-    new _$PaymentUIStateSerializer();
+    _$PaymentUIStateSerializer();
 
 class _$PaymentStateSerializer implements StructuredSerializer<PaymentState> {
   @override
@@ -38,7 +37,7 @@ class _$PaymentStateSerializer implements StructuredSerializer<PaymentState> {
   PaymentState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new PaymentStateBuilder();
+    final result = PaymentStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -113,7 +112,7 @@ class _$PaymentUIStateSerializer
   PaymentUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new PaymentUIStateBuilder();
+    final result = PaymentUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -155,19 +154,15 @@ class _$PaymentState extends PaymentState {
   final BuiltList<String> list;
 
   factory _$PaymentState([void Function(PaymentStateBuilder)? updates]) =>
-      (new PaymentStateBuilder()..update(updates))._build();
+      (PaymentStateBuilder()..update(updates))._build();
 
-  _$PaymentState._({required this.map, required this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, r'PaymentState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, r'PaymentState', 'list');
-  }
-
+  _$PaymentState._({required this.map, required this.list}) : super._();
   @override
   PaymentState rebuild(void Function(PaymentStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  PaymentStateBuilder toBuilder() => new PaymentStateBuilder()..replace(this);
+  PaymentStateBuilder toBuilder() => PaymentStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -201,11 +196,11 @@ class PaymentStateBuilder
 
   MapBuilder<String, PaymentEntity>? _map;
   MapBuilder<String, PaymentEntity> get map =>
-      _$this._map ??= new MapBuilder<String, PaymentEntity>();
+      _$this._map ??= MapBuilder<String, PaymentEntity>();
   set map(MapBuilder<String, PaymentEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
-  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  ListBuilder<String> get list => _$this._list ??= ListBuilder<String>();
   set list(ListBuilder<String>? list) => _$this._list = list;
 
   PaymentStateBuilder();
@@ -222,7 +217,6 @@ class PaymentStateBuilder
 
   @override
   void replace(PaymentState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PaymentState;
   }
 
@@ -237,8 +231,11 @@ class PaymentStateBuilder
   _$PaymentState _build() {
     _$PaymentState _$result;
     try {
-      _$result =
-          _$v ?? new _$PaymentState._(map: map.build(), list: list.build());
+      _$result = _$v ??
+          _$PaymentState._(
+            map: map.build(),
+            list: list.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -247,7 +244,7 @@ class PaymentStateBuilder
         _$failedField = 'list';
         list.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'PaymentState', _$failedField, e.toString());
       }
       rethrow;
@@ -274,7 +271,7 @@ class _$PaymentUIState extends PaymentUIState {
   final Completer<Null>? cancelCompleter;
 
   factory _$PaymentUIState([void Function(PaymentUIStateBuilder)? updates]) =>
-      (new PaymentUIStateBuilder()..update(updates))._build();
+      (PaymentUIStateBuilder()..update(updates))._build();
 
   _$PaymentUIState._(
       {this.editing,
@@ -284,20 +281,13 @@ class _$PaymentUIState extends PaymentUIState {
       required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        listUIState, r'PaymentUIState', 'listUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        tabIndex, r'PaymentUIState', 'tabIndex');
-  }
-
+      : super._();
   @override
   PaymentUIState rebuild(void Function(PaymentUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  PaymentUIStateBuilder toBuilder() =>
-      new PaymentUIStateBuilder()..replace(this);
+  PaymentUIStateBuilder toBuilder() => PaymentUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -348,12 +338,12 @@ class PaymentUIStateBuilder
 
   PaymentEntityBuilder? _editing;
   PaymentEntityBuilder get editing =>
-      _$this._editing ??= new PaymentEntityBuilder();
+      _$this._editing ??= PaymentEntityBuilder();
   set editing(PaymentEntityBuilder? editing) => _$this._editing = editing;
 
   ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
-      _$this._listUIState ??= new ListUIStateBuilder();
+      _$this._listUIState ??= ListUIStateBuilder();
   set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
@@ -399,7 +389,6 @@ class PaymentUIStateBuilder
 
   @override
   void replace(PaymentUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PaymentUIState;
   }
 
@@ -415,15 +404,16 @@ class PaymentUIStateBuilder
     _$PaymentUIState _$result;
     try {
       _$result = _$v ??
-          new _$PaymentUIState._(
-              editing: _editing?.build(),
-              listUIState: listUIState.build(),
-              selectedId: selectedId,
-              forceSelected: forceSelected,
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'PaymentUIState', 'tabIndex'),
-              saveCompleter: saveCompleter,
-              cancelCompleter: cancelCompleter);
+          _$PaymentUIState._(
+            editing: _editing?.build(),
+            listUIState: listUIState.build(),
+            selectedId: selectedId,
+            forceSelected: forceSelected,
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'PaymentUIState', 'tabIndex'),
+            saveCompleter: saveCompleter,
+            cancelCompleter: cancelCompleter,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -432,7 +422,7 @@ class PaymentUIStateBuilder
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'PaymentUIState', _$failedField, e.toString());
       }
       rethrow;

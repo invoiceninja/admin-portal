@@ -7,13 +7,13 @@ part of 'gateway_token_model.dart';
 // **************************************************************************
 
 Serializer<GatewayTokenListResponse> _$gatewayTokenListResponseSerializer =
-    new _$GatewayTokenListResponseSerializer();
+    _$GatewayTokenListResponseSerializer();
 Serializer<GatewayTokenItemResponse> _$gatewayTokenItemResponseSerializer =
-    new _$GatewayTokenItemResponseSerializer();
+    _$GatewayTokenItemResponseSerializer();
 Serializer<GatewayTokenEntity> _$gatewayTokenEntitySerializer =
-    new _$GatewayTokenEntitySerializer();
+    _$GatewayTokenEntitySerializer();
 Serializer<GatewayTokenMetaEntity> _$gatewayTokenMetaEntitySerializer =
-    new _$GatewayTokenMetaEntitySerializer();
+    _$GatewayTokenMetaEntitySerializer();
 
 class _$GatewayTokenListResponseSerializer
     implements StructuredSerializer<GatewayTokenListResponse> {
@@ -43,7 +43,7 @@ class _$GatewayTokenListResponseSerializer
   GatewayTokenListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new GatewayTokenListResponseBuilder();
+    final result = GatewayTokenListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -91,7 +91,7 @@ class _$GatewayTokenItemResponseSerializer
   GatewayTokenItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new GatewayTokenItemResponseBuilder();
+    final result = GatewayTokenItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -189,7 +189,7 @@ class _$GatewayTokenEntitySerializer
   GatewayTokenEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new GatewayTokenEntityBuilder();
+    final result = GatewayTokenEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -318,7 +318,7 @@ class _$GatewayTokenMetaEntitySerializer
   GatewayTokenMetaEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new GatewayTokenMetaEntityBuilder();
+    final result = GatewayTokenMetaEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -359,13 +359,9 @@ class _$GatewayTokenListResponse extends GatewayTokenListResponse {
 
   factory _$GatewayTokenListResponse(
           [void Function(GatewayTokenListResponseBuilder)? updates]) =>
-      (new GatewayTokenListResponseBuilder()..update(updates))._build();
+      (GatewayTokenListResponseBuilder()..update(updates))._build();
 
-  _$GatewayTokenListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'GatewayTokenListResponse', 'data');
-  }
-
+  _$GatewayTokenListResponse._({required this.data}) : super._();
   @override
   GatewayTokenListResponse rebuild(
           void Function(GatewayTokenListResponseBuilder) updates) =>
@@ -373,7 +369,7 @@ class _$GatewayTokenListResponse extends GatewayTokenListResponse {
 
   @override
   GatewayTokenListResponseBuilder toBuilder() =>
-      new GatewayTokenListResponseBuilder()..replace(this);
+      GatewayTokenListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -406,7 +402,7 @@ class GatewayTokenListResponseBuilder
 
   ListBuilder<GatewayTokenEntity>? _data;
   ListBuilder<GatewayTokenEntity> get data =>
-      _$this._data ??= new ListBuilder<GatewayTokenEntity>();
+      _$this._data ??= ListBuilder<GatewayTokenEntity>();
   set data(ListBuilder<GatewayTokenEntity>? data) => _$this._data = data;
 
   GatewayTokenListResponseBuilder();
@@ -422,7 +418,6 @@ class GatewayTokenListResponseBuilder
 
   @override
   void replace(GatewayTokenListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$GatewayTokenListResponse;
   }
 
@@ -437,14 +432,17 @@ class GatewayTokenListResponseBuilder
   _$GatewayTokenListResponse _build() {
     _$GatewayTokenListResponse _$result;
     try {
-      _$result = _$v ?? new _$GatewayTokenListResponse._(data: data.build());
+      _$result = _$v ??
+          _$GatewayTokenListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'GatewayTokenListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -460,13 +458,9 @@ class _$GatewayTokenItemResponse extends GatewayTokenItemResponse {
 
   factory _$GatewayTokenItemResponse(
           [void Function(GatewayTokenItemResponseBuilder)? updates]) =>
-      (new GatewayTokenItemResponseBuilder()..update(updates))._build();
+      (GatewayTokenItemResponseBuilder()..update(updates))._build();
 
-  _$GatewayTokenItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'GatewayTokenItemResponse', 'data');
-  }
-
+  _$GatewayTokenItemResponse._({required this.data}) : super._();
   @override
   GatewayTokenItemResponse rebuild(
           void Function(GatewayTokenItemResponseBuilder) updates) =>
@@ -474,7 +468,7 @@ class _$GatewayTokenItemResponse extends GatewayTokenItemResponse {
 
   @override
   GatewayTokenItemResponseBuilder toBuilder() =>
-      new GatewayTokenItemResponseBuilder()..replace(this);
+      GatewayTokenItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -507,7 +501,7 @@ class GatewayTokenItemResponseBuilder
 
   GatewayTokenEntityBuilder? _data;
   GatewayTokenEntityBuilder get data =>
-      _$this._data ??= new GatewayTokenEntityBuilder();
+      _$this._data ??= GatewayTokenEntityBuilder();
   set data(GatewayTokenEntityBuilder? data) => _$this._data = data;
 
   GatewayTokenItemResponseBuilder();
@@ -523,7 +517,6 @@ class GatewayTokenItemResponseBuilder
 
   @override
   void replace(GatewayTokenItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$GatewayTokenItemResponse;
   }
 
@@ -538,14 +531,17 @@ class GatewayTokenItemResponseBuilder
   _$GatewayTokenItemResponse _build() {
     _$GatewayTokenItemResponse _$result;
     try {
-      _$result = _$v ?? new _$GatewayTokenItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$GatewayTokenItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'GatewayTokenItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -587,7 +583,7 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
 
   factory _$GatewayTokenEntity(
           [void Function(GatewayTokenEntityBuilder)? updates]) =>
-      (new GatewayTokenEntityBuilder()..update(updates))._build();
+      (GatewayTokenEntityBuilder()..update(updates))._build();
 
   _$GatewayTokenEntity._(
       {required this.token,
@@ -604,27 +600,7 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        token, r'GatewayTokenEntity', 'token');
-    BuiltValueNullFieldError.checkNotNull(
-        customerReference, r'GatewayTokenEntity', 'customerReference');
-    BuiltValueNullFieldError.checkNotNull(
-        companyGatewayId, r'GatewayTokenEntity', 'companyGatewayId');
-    BuiltValueNullFieldError.checkNotNull(
-        gatewayTypeId, r'GatewayTokenEntity', 'gatewayTypeId');
-    BuiltValueNullFieldError.checkNotNull(
-        isDefault, r'GatewayTokenEntity', 'isDefault');
-    BuiltValueNullFieldError.checkNotNull(meta, r'GatewayTokenEntity', 'meta');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'GatewayTokenEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'GatewayTokenEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'GatewayTokenEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'GatewayTokenEntity', 'id');
-  }
-
+      : super._();
   @override
   GatewayTokenEntity rebuild(
           void Function(GatewayTokenEntityBuilder) updates) =>
@@ -632,7 +608,7 @@ class _$GatewayTokenEntity extends GatewayTokenEntity {
 
   @override
   GatewayTokenEntityBuilder toBuilder() =>
-      new GatewayTokenEntityBuilder()..replace(this);
+      GatewayTokenEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -727,7 +703,7 @@ class GatewayTokenEntityBuilder
 
   GatewayTokenMetaEntityBuilder? _meta;
   GatewayTokenMetaEntityBuilder get meta =>
-      _$this._meta ??= new GatewayTokenMetaEntityBuilder();
+      _$this._meta ??= GatewayTokenMetaEntityBuilder();
   set meta(GatewayTokenMetaEntityBuilder? meta) => _$this._meta = meta;
 
   bool? _isChanged;
@@ -790,7 +766,6 @@ class GatewayTokenEntityBuilder
 
   @override
   void replace(GatewayTokenEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$GatewayTokenEntity;
   }
 
@@ -806,36 +781,38 @@ class GatewayTokenEntityBuilder
     _$GatewayTokenEntity _$result;
     try {
       _$result = _$v ??
-          new _$GatewayTokenEntity._(
-              token: BuiltValueNullFieldError.checkNotNull(
-                  token, r'GatewayTokenEntity', 'token'),
-              customerReference: BuiltValueNullFieldError.checkNotNull(
-                  customerReference, r'GatewayTokenEntity', 'customerReference'),
-              companyGatewayId: BuiltValueNullFieldError.checkNotNull(
-                  companyGatewayId, r'GatewayTokenEntity', 'companyGatewayId'),
-              gatewayTypeId: BuiltValueNullFieldError.checkNotNull(
-                  gatewayTypeId, r'GatewayTokenEntity', 'gatewayTypeId'),
-              isDefault: BuiltValueNullFieldError.checkNotNull(
-                  isDefault, r'GatewayTokenEntity', 'isDefault'),
-              meta: meta.build(),
-              isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(
-                  createdAt, r'GatewayTokenEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(
-                  updatedAt, r'GatewayTokenEntity', 'updatedAt'),
-              archivedAt:
-                  BuiltValueNullFieldError.checkNotNull(archivedAt, r'GatewayTokenEntity', 'archivedAt'),
-              isDeleted: isDeleted,
-              createdUserId: createdUserId,
-              assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(id, r'GatewayTokenEntity', 'id'));
+          _$GatewayTokenEntity._(
+            token: BuiltValueNullFieldError.checkNotNull(
+                token, r'GatewayTokenEntity', 'token'),
+            customerReference: BuiltValueNullFieldError.checkNotNull(
+                customerReference, r'GatewayTokenEntity', 'customerReference'),
+            companyGatewayId: BuiltValueNullFieldError.checkNotNull(
+                companyGatewayId, r'GatewayTokenEntity', 'companyGatewayId'),
+            gatewayTypeId: BuiltValueNullFieldError.checkNotNull(
+                gatewayTypeId, r'GatewayTokenEntity', 'gatewayTypeId'),
+            isDefault: BuiltValueNullFieldError.checkNotNull(
+                isDefault, r'GatewayTokenEntity', 'isDefault'),
+            meta: meta.build(),
+            isChanged: isChanged,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, r'GatewayTokenEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, r'GatewayTokenEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(
+                archivedAt, r'GatewayTokenEntity', 'archivedAt'),
+            isDeleted: isDeleted,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, r'GatewayTokenEntity', 'id'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'meta';
         meta.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'GatewayTokenEntity', _$failedField, e.toString());
       }
       rethrow;
@@ -859,12 +836,11 @@ class _$GatewayTokenMetaEntity extends GatewayTokenMetaEntity {
 
   factory _$GatewayTokenMetaEntity(
           [void Function(GatewayTokenMetaEntityBuilder)? updates]) =>
-      (new GatewayTokenMetaEntityBuilder()..update(updates))._build();
+      (GatewayTokenMetaEntityBuilder()..update(updates))._build();
 
   _$GatewayTokenMetaEntity._(
       {this.brand, this.last4, this.type, this.expMonth, this.expYear})
       : super._();
-
   @override
   GatewayTokenMetaEntity rebuild(
           void Function(GatewayTokenMetaEntityBuilder) updates) =>
@@ -872,7 +848,7 @@ class _$GatewayTokenMetaEntity extends GatewayTokenMetaEntity {
 
   @override
   GatewayTokenMetaEntityBuilder toBuilder() =>
-      new GatewayTokenMetaEntityBuilder()..replace(this);
+      GatewayTokenMetaEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -952,7 +928,6 @@ class GatewayTokenMetaEntityBuilder
 
   @override
   void replace(GatewayTokenMetaEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$GatewayTokenMetaEntity;
   }
 
@@ -966,12 +941,13 @@ class GatewayTokenMetaEntityBuilder
 
   _$GatewayTokenMetaEntity _build() {
     final _$result = _$v ??
-        new _$GatewayTokenMetaEntity._(
-            brand: brand,
-            last4: last4,
-            type: type,
-            expMonth: expMonth,
-            expYear: expYear);
+        _$GatewayTokenMetaEntity._(
+          brand: brand,
+          last4: last4,
+          type: type,
+          expMonth: expMonth,
+          expYear: expYear,
+        );
     replace(_$result);
     return _$result;
   }

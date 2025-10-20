@@ -7,10 +7,10 @@ part of 'size_model.dart';
 // **************************************************************************
 
 Serializer<SizeListResponse> _$sizeListResponseSerializer =
-    new _$SizeListResponseSerializer();
+    _$SizeListResponseSerializer();
 Serializer<SizeItemResponse> _$sizeItemResponseSerializer =
-    new _$SizeItemResponseSerializer();
-Serializer<SizeEntity> _$sizeEntitySerializer = new _$SizeEntitySerializer();
+    _$SizeItemResponseSerializer();
+Serializer<SizeEntity> _$sizeEntitySerializer = _$SizeEntitySerializer();
 
 class _$SizeListResponseSerializer
     implements StructuredSerializer<SizeListResponse> {
@@ -36,7 +36,7 @@ class _$SizeListResponseSerializer
   SizeListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new SizeListResponseBuilder();
+    final result = SizeListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -80,7 +80,7 @@ class _$SizeItemResponseSerializer
   SizeItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new SizeItemResponseBuilder();
+    final result = SizeItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -121,7 +121,7 @@ class _$SizeEntitySerializer implements StructuredSerializer<SizeEntity> {
   @override
   SizeEntity deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new SizeEntityBuilder();
+    final result = SizeEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -150,19 +150,16 @@ class _$SizeListResponse extends SizeListResponse {
 
   factory _$SizeListResponse(
           [void Function(SizeListResponseBuilder)? updates]) =>
-      (new SizeListResponseBuilder()..update(updates))._build();
+      (SizeListResponseBuilder()..update(updates))._build();
 
-  _$SizeListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'SizeListResponse', 'data');
-  }
-
+  _$SizeListResponse._({required this.data}) : super._();
   @override
   SizeListResponse rebuild(void Function(SizeListResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   SizeListResponseBuilder toBuilder() =>
-      new SizeListResponseBuilder()..replace(this);
+      SizeListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -193,7 +190,7 @@ class SizeListResponseBuilder
 
   ListBuilder<SizeEntity>? _data;
   ListBuilder<SizeEntity> get data =>
-      _$this._data ??= new ListBuilder<SizeEntity>();
+      _$this._data ??= ListBuilder<SizeEntity>();
   set data(ListBuilder<SizeEntity>? data) => _$this._data = data;
 
   SizeListResponseBuilder();
@@ -209,7 +206,6 @@ class SizeListResponseBuilder
 
   @override
   void replace(SizeListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SizeListResponse;
   }
 
@@ -224,14 +220,17 @@ class SizeListResponseBuilder
   _$SizeListResponse _build() {
     _$SizeListResponse _$result;
     try {
-      _$result = _$v ?? new _$SizeListResponse._(data: data.build());
+      _$result = _$v ??
+          _$SizeListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'SizeListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -247,19 +246,16 @@ class _$SizeItemResponse extends SizeItemResponse {
 
   factory _$SizeItemResponse(
           [void Function(SizeItemResponseBuilder)? updates]) =>
-      (new SizeItemResponseBuilder()..update(updates))._build();
+      (SizeItemResponseBuilder()..update(updates))._build();
 
-  _$SizeItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'SizeItemResponse', 'data');
-  }
-
+  _$SizeItemResponse._({required this.data}) : super._();
   @override
   SizeItemResponse rebuild(void Function(SizeItemResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   SizeItemResponseBuilder toBuilder() =>
-      new SizeItemResponseBuilder()..replace(this);
+      SizeItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -289,7 +285,7 @@ class SizeItemResponseBuilder
   _$SizeItemResponse? _$v;
 
   SizeEntityBuilder? _data;
-  SizeEntityBuilder get data => _$this._data ??= new SizeEntityBuilder();
+  SizeEntityBuilder get data => _$this._data ??= SizeEntityBuilder();
   set data(SizeEntityBuilder? data) => _$this._data = data;
 
   SizeItemResponseBuilder();
@@ -305,7 +301,6 @@ class SizeItemResponseBuilder
 
   @override
   void replace(SizeItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SizeItemResponse;
   }
 
@@ -320,14 +315,17 @@ class SizeItemResponseBuilder
   _$SizeItemResponse _build() {
     _$SizeItemResponse _$result;
     try {
-      _$result = _$v ?? new _$SizeItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$SizeItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'SizeItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -344,19 +342,15 @@ class _$SizeEntity extends SizeEntity {
   final String id;
 
   factory _$SizeEntity([void Function(SizeEntityBuilder)? updates]) =>
-      (new SizeEntityBuilder()..update(updates))._build();
+      (SizeEntityBuilder()..update(updates))._build();
 
-  _$SizeEntity._({required this.name, required this.id}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'SizeEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(id, r'SizeEntity', 'id');
-  }
-
+  _$SizeEntity._({required this.name, required this.id}) : super._();
   @override
   SizeEntity rebuild(void Function(SizeEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  SizeEntityBuilder toBuilder() => new SizeEntityBuilder()..replace(this);
+  SizeEntityBuilder toBuilder() => SizeEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -409,7 +403,6 @@ class SizeEntityBuilder implements Builder<SizeEntity, SizeEntityBuilder> {
 
   @override
   void replace(SizeEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SizeEntity;
   }
 
@@ -423,10 +416,11 @@ class SizeEntityBuilder implements Builder<SizeEntity, SizeEntityBuilder> {
 
   _$SizeEntity _build() {
     final _$result = _$v ??
-        new _$SizeEntity._(
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'SizeEntity', 'name'),
-            id: BuiltValueNullFieldError.checkNotNull(id, r'SizeEntity', 'id'));
+        _$SizeEntity._(
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'SizeEntity', 'name'),
+          id: BuiltValueNullFieldError.checkNotNull(id, r'SizeEntity', 'id'),
+        );
     replace(_$result);
     return _$result;
   }

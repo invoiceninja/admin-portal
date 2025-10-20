@@ -8,15 +8,15 @@ part of 'transaction_rule_model.dart';
 
 Serializer<TransactionRuleListResponse>
     _$transactionRuleListResponseSerializer =
-    new _$TransactionRuleListResponseSerializer();
+    _$TransactionRuleListResponseSerializer();
 Serializer<TransactionRuleItemResponse>
     _$transactionRuleItemResponseSerializer =
-    new _$TransactionRuleItemResponseSerializer();
+    _$TransactionRuleItemResponseSerializer();
 Serializer<TransactionRuleEntity> _$transactionRuleEntitySerializer =
-    new _$TransactionRuleEntitySerializer();
+    _$TransactionRuleEntitySerializer();
 Serializer<TransactionRuleCriteriaEntity>
     _$transactionRuleCriteriaEntitySerializer =
-    new _$TransactionRuleCriteriaEntitySerializer();
+    _$TransactionRuleCriteriaEntitySerializer();
 
 class _$TransactionRuleListResponseSerializer
     implements StructuredSerializer<TransactionRuleListResponse> {
@@ -46,7 +46,7 @@ class _$TransactionRuleListResponseSerializer
   TransactionRuleListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TransactionRuleListResponseBuilder();
+    final result = TransactionRuleListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -94,7 +94,7 @@ class _$TransactionRuleItemResponseSerializer
   TransactionRuleItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TransactionRuleItemResponseBuilder();
+    final result = TransactionRuleItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -198,7 +198,7 @@ class _$TransactionRuleEntitySerializer
   TransactionRuleEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TransactionRuleEntityBuilder();
+    final result = TransactionRuleEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -308,7 +308,7 @@ class _$TransactionRuleCriteriaEntitySerializer
   TransactionRuleCriteriaEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TransactionRuleCriteriaEntityBuilder();
+    final result = TransactionRuleCriteriaEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -341,13 +341,9 @@ class _$TransactionRuleListResponse extends TransactionRuleListResponse {
 
   factory _$TransactionRuleListResponse(
           [void Function(TransactionRuleListResponseBuilder)? updates]) =>
-      (new TransactionRuleListResponseBuilder()..update(updates))._build();
+      (TransactionRuleListResponseBuilder()..update(updates))._build();
 
-  _$TransactionRuleListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'TransactionRuleListResponse', 'data');
-  }
-
+  _$TransactionRuleListResponse._({required this.data}) : super._();
   @override
   TransactionRuleListResponse rebuild(
           void Function(TransactionRuleListResponseBuilder) updates) =>
@@ -355,7 +351,7 @@ class _$TransactionRuleListResponse extends TransactionRuleListResponse {
 
   @override
   TransactionRuleListResponseBuilder toBuilder() =>
-      new TransactionRuleListResponseBuilder()..replace(this);
+      TransactionRuleListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -389,7 +385,7 @@ class TransactionRuleListResponseBuilder
 
   ListBuilder<TransactionRuleEntity>? _data;
   ListBuilder<TransactionRuleEntity> get data =>
-      _$this._data ??= new ListBuilder<TransactionRuleEntity>();
+      _$this._data ??= ListBuilder<TransactionRuleEntity>();
   set data(ListBuilder<TransactionRuleEntity>? data) => _$this._data = data;
 
   TransactionRuleListResponseBuilder();
@@ -405,7 +401,6 @@ class TransactionRuleListResponseBuilder
 
   @override
   void replace(TransactionRuleListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TransactionRuleListResponse;
   }
 
@@ -420,14 +415,17 @@ class TransactionRuleListResponseBuilder
   _$TransactionRuleListResponse _build() {
     _$TransactionRuleListResponse _$result;
     try {
-      _$result = _$v ?? new _$TransactionRuleListResponse._(data: data.build());
+      _$result = _$v ??
+          _$TransactionRuleListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TransactionRuleListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -443,13 +441,9 @@ class _$TransactionRuleItemResponse extends TransactionRuleItemResponse {
 
   factory _$TransactionRuleItemResponse(
           [void Function(TransactionRuleItemResponseBuilder)? updates]) =>
-      (new TransactionRuleItemResponseBuilder()..update(updates))._build();
+      (TransactionRuleItemResponseBuilder()..update(updates))._build();
 
-  _$TransactionRuleItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'TransactionRuleItemResponse', 'data');
-  }
-
+  _$TransactionRuleItemResponse._({required this.data}) : super._();
   @override
   TransactionRuleItemResponse rebuild(
           void Function(TransactionRuleItemResponseBuilder) updates) =>
@@ -457,7 +451,7 @@ class _$TransactionRuleItemResponse extends TransactionRuleItemResponse {
 
   @override
   TransactionRuleItemResponseBuilder toBuilder() =>
-      new TransactionRuleItemResponseBuilder()..replace(this);
+      TransactionRuleItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -491,7 +485,7 @@ class TransactionRuleItemResponseBuilder
 
   TransactionRuleEntityBuilder? _data;
   TransactionRuleEntityBuilder get data =>
-      _$this._data ??= new TransactionRuleEntityBuilder();
+      _$this._data ??= TransactionRuleEntityBuilder();
   set data(TransactionRuleEntityBuilder? data) => _$this._data = data;
 
   TransactionRuleItemResponseBuilder();
@@ -507,7 +501,6 @@ class TransactionRuleItemResponseBuilder
 
   @override
   void replace(TransactionRuleItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TransactionRuleItemResponse;
   }
 
@@ -522,14 +515,17 @@ class TransactionRuleItemResponseBuilder
   _$TransactionRuleItemResponse _build() {
     _$TransactionRuleItemResponse _$result;
     try {
-      _$result = _$v ?? new _$TransactionRuleItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$TransactionRuleItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TransactionRuleItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -573,7 +569,7 @@ class _$TransactionRuleEntity extends TransactionRuleEntity {
 
   factory _$TransactionRuleEntity(
           [void Function(TransactionRuleEntityBuilder)? updates]) =>
-      (new TransactionRuleEntityBuilder()..update(updates))._build();
+      (TransactionRuleEntityBuilder()..update(updates))._build();
 
   _$TransactionRuleEntity._(
       {required this.name,
@@ -591,30 +587,7 @@ class _$TransactionRuleEntity extends TransactionRuleEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        name, r'TransactionRuleEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(
-        matchesOnAll, r'TransactionRuleEntity', 'matchesOnAll');
-    BuiltValueNullFieldError.checkNotNull(
-        autoConvert, r'TransactionRuleEntity', 'autoConvert');
-    BuiltValueNullFieldError.checkNotNull(
-        appliesTo, r'TransactionRuleEntity', 'appliesTo');
-    BuiltValueNullFieldError.checkNotNull(
-        vendorId, r'TransactionRuleEntity', 'vendorId');
-    BuiltValueNullFieldError.checkNotNull(
-        categoryId, r'TransactionRuleEntity', 'categoryId');
-    BuiltValueNullFieldError.checkNotNull(
-        rules, r'TransactionRuleEntity', 'rules');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'TransactionRuleEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'TransactionRuleEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'TransactionRuleEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'TransactionRuleEntity', 'id');
-  }
-
+      : super._();
   @override
   TransactionRuleEntity rebuild(
           void Function(TransactionRuleEntityBuilder) updates) =>
@@ -622,7 +595,7 @@ class _$TransactionRuleEntity extends TransactionRuleEntity {
 
   @override
   TransactionRuleEntityBuilder toBuilder() =>
-      new TransactionRuleEntityBuilder()..replace(this);
+      TransactionRuleEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -721,7 +694,7 @@ class TransactionRuleEntityBuilder
 
   ListBuilder<TransactionRuleCriteriaEntity>? _rules;
   ListBuilder<TransactionRuleCriteriaEntity> get rules =>
-      _$this._rules ??= new ListBuilder<TransactionRuleCriteriaEntity>();
+      _$this._rules ??= ListBuilder<TransactionRuleCriteriaEntity>();
   set rules(ListBuilder<TransactionRuleCriteriaEntity>? rules) =>
       _$this._rules = rules;
 
@@ -786,7 +759,6 @@ class TransactionRuleEntityBuilder
 
   @override
   void replace(TransactionRuleEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TransactionRuleEntity;
   }
 
@@ -802,37 +774,40 @@ class TransactionRuleEntityBuilder
     _$TransactionRuleEntity _$result;
     try {
       _$result = _$v ??
-          new _$TransactionRuleEntity._(
-              name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'TransactionRuleEntity', 'name'),
-              matchesOnAll: BuiltValueNullFieldError.checkNotNull(
-                  matchesOnAll, r'TransactionRuleEntity', 'matchesOnAll'),
-              autoConvert: BuiltValueNullFieldError.checkNotNull(
-                  autoConvert, r'TransactionRuleEntity', 'autoConvert'),
-              appliesTo: BuiltValueNullFieldError.checkNotNull(
-                  appliesTo, r'TransactionRuleEntity', 'appliesTo'),
-              vendorId: BuiltValueNullFieldError.checkNotNull(
-                  vendorId, r'TransactionRuleEntity', 'vendorId'),
-              categoryId: BuiltValueNullFieldError.checkNotNull(
-                  categoryId, r'TransactionRuleEntity', 'categoryId'),
-              rules: rules.build(),
-              isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(
-                  createdAt, r'TransactionRuleEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(
-                  updatedAt, r'TransactionRuleEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'TransactionRuleEntity', 'archivedAt'),
-              isDeleted: isDeleted,
-              createdUserId: createdUserId,
-              assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(id, r'TransactionRuleEntity', 'id'));
+          _$TransactionRuleEntity._(
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'TransactionRuleEntity', 'name'),
+            matchesOnAll: BuiltValueNullFieldError.checkNotNull(
+                matchesOnAll, r'TransactionRuleEntity', 'matchesOnAll'),
+            autoConvert: BuiltValueNullFieldError.checkNotNull(
+                autoConvert, r'TransactionRuleEntity', 'autoConvert'),
+            appliesTo: BuiltValueNullFieldError.checkNotNull(
+                appliesTo, r'TransactionRuleEntity', 'appliesTo'),
+            vendorId: BuiltValueNullFieldError.checkNotNull(
+                vendorId, r'TransactionRuleEntity', 'vendorId'),
+            categoryId: BuiltValueNullFieldError.checkNotNull(
+                categoryId, r'TransactionRuleEntity', 'categoryId'),
+            rules: rules.build(),
+            isChanged: isChanged,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, r'TransactionRuleEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, r'TransactionRuleEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(
+                archivedAt, r'TransactionRuleEntity', 'archivedAt'),
+            isDeleted: isDeleted,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, r'TransactionRuleEntity', 'id'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'rules';
         rules.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TransactionRuleEntity', _$failedField, e.toString());
       }
       rethrow;
@@ -852,19 +827,11 @@ class _$TransactionRuleCriteriaEntity extends TransactionRuleCriteriaEntity {
 
   factory _$TransactionRuleCriteriaEntity(
           [void Function(TransactionRuleCriteriaEntityBuilder)? updates]) =>
-      (new TransactionRuleCriteriaEntityBuilder()..update(updates))._build();
+      (TransactionRuleCriteriaEntityBuilder()..update(updates))._build();
 
   _$TransactionRuleCriteriaEntity._(
       {required this.searchKey, required this.operator, required this.value})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        searchKey, r'TransactionRuleCriteriaEntity', 'searchKey');
-    BuiltValueNullFieldError.checkNotNull(
-        operator, r'TransactionRuleCriteriaEntity', 'operator');
-    BuiltValueNullFieldError.checkNotNull(
-        value, r'TransactionRuleCriteriaEntity', 'value');
-  }
-
+      : super._();
   @override
   TransactionRuleCriteriaEntity rebuild(
           void Function(TransactionRuleCriteriaEntityBuilder) updates) =>
@@ -872,7 +839,7 @@ class _$TransactionRuleCriteriaEntity extends TransactionRuleCriteriaEntity {
 
   @override
   TransactionRuleCriteriaEntityBuilder toBuilder() =>
-      new TransactionRuleCriteriaEntityBuilder()..replace(this);
+      TransactionRuleCriteriaEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -940,7 +907,6 @@ class TransactionRuleCriteriaEntityBuilder
 
   @override
   void replace(TransactionRuleCriteriaEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TransactionRuleCriteriaEntity;
   }
 
@@ -954,13 +920,14 @@ class TransactionRuleCriteriaEntityBuilder
 
   _$TransactionRuleCriteriaEntity _build() {
     final _$result = _$v ??
-        new _$TransactionRuleCriteriaEntity._(
-            searchKey: BuiltValueNullFieldError.checkNotNull(
-                searchKey, r'TransactionRuleCriteriaEntity', 'searchKey'),
-            operator: BuiltValueNullFieldError.checkNotNull(
-                operator, r'TransactionRuleCriteriaEntity', 'operator'),
-            value: BuiltValueNullFieldError.checkNotNull(
-                value, r'TransactionRuleCriteriaEntity', 'value'));
+        _$TransactionRuleCriteriaEntity._(
+          searchKey: BuiltValueNullFieldError.checkNotNull(
+              searchKey, r'TransactionRuleCriteriaEntity', 'searchKey'),
+          operator: BuiltValueNullFieldError.checkNotNull(
+              operator, r'TransactionRuleCriteriaEntity', 'operator'),
+          value: BuiltValueNullFieldError.checkNotNull(
+              value, r'TransactionRuleCriteriaEntity', 'value'),
+        );
     replace(_$result);
     return _$result;
   }

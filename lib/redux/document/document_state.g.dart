@@ -7,9 +7,9 @@ part of 'document_state.dart';
 // **************************************************************************
 
 Serializer<DocumentState> _$documentStateSerializer =
-    new _$DocumentStateSerializer();
+    _$DocumentStateSerializer();
 Serializer<DocumentUIState> _$documentUIStateSerializer =
-    new _$DocumentUIStateSerializer();
+    _$DocumentUIStateSerializer();
 
 class _$DocumentStateSerializer implements StructuredSerializer<DocumentState> {
   @override
@@ -38,7 +38,7 @@ class _$DocumentStateSerializer implements StructuredSerializer<DocumentState> {
   DocumentState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new DocumentStateBuilder();
+    final result = DocumentStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -113,7 +113,7 @@ class _$DocumentUIStateSerializer
   DocumentUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new DocumentUIStateBuilder();
+    final result = DocumentUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -156,19 +156,15 @@ class _$DocumentState extends DocumentState {
   final BuiltList<String> list;
 
   factory _$DocumentState([void Function(DocumentStateBuilder)? updates]) =>
-      (new DocumentStateBuilder()..update(updates))._build();
+      (DocumentStateBuilder()..update(updates))._build();
 
-  _$DocumentState._({required this.map, required this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, r'DocumentState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, r'DocumentState', 'list');
-  }
-
+  _$DocumentState._({required this.map, required this.list}) : super._();
   @override
   DocumentState rebuild(void Function(DocumentStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  DocumentStateBuilder toBuilder() => new DocumentStateBuilder()..replace(this);
+  DocumentStateBuilder toBuilder() => DocumentStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -202,11 +198,11 @@ class DocumentStateBuilder
 
   MapBuilder<String, DocumentEntity>? _map;
   MapBuilder<String, DocumentEntity> get map =>
-      _$this._map ??= new MapBuilder<String, DocumentEntity>();
+      _$this._map ??= MapBuilder<String, DocumentEntity>();
   set map(MapBuilder<String, DocumentEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
-  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  ListBuilder<String> get list => _$this._list ??= ListBuilder<String>();
   set list(ListBuilder<String>? list) => _$this._list = list;
 
   DocumentStateBuilder();
@@ -223,7 +219,6 @@ class DocumentStateBuilder
 
   @override
   void replace(DocumentState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DocumentState;
   }
 
@@ -238,8 +233,11 @@ class DocumentStateBuilder
   _$DocumentState _build() {
     _$DocumentState _$result;
     try {
-      _$result =
-          _$v ?? new _$DocumentState._(map: map.build(), list: list.build());
+      _$result = _$v ??
+          _$DocumentState._(
+            map: map.build(),
+            list: list.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -248,7 +246,7 @@ class DocumentStateBuilder
         _$failedField = 'list';
         list.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'DocumentState', _$failedField, e.toString());
       }
       rethrow;
@@ -275,7 +273,7 @@ class _$DocumentUIState extends DocumentUIState {
   final Completer<Null>? cancelCompleter;
 
   factory _$DocumentUIState([void Function(DocumentUIStateBuilder)? updates]) =>
-      (new DocumentUIStateBuilder()..update(updates))._build();
+      (DocumentUIStateBuilder()..update(updates))._build();
 
   _$DocumentUIState._(
       {this.editing,
@@ -285,20 +283,13 @@ class _$DocumentUIState extends DocumentUIState {
       required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        listUIState, r'DocumentUIState', 'listUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        tabIndex, r'DocumentUIState', 'tabIndex');
-  }
-
+      : super._();
   @override
   DocumentUIState rebuild(void Function(DocumentUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  DocumentUIStateBuilder toBuilder() =>
-      new DocumentUIStateBuilder()..replace(this);
+  DocumentUIStateBuilder toBuilder() => DocumentUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -349,12 +340,12 @@ class DocumentUIStateBuilder
 
   DocumentEntityBuilder? _editing;
   DocumentEntityBuilder get editing =>
-      _$this._editing ??= new DocumentEntityBuilder();
+      _$this._editing ??= DocumentEntityBuilder();
   set editing(DocumentEntityBuilder? editing) => _$this._editing = editing;
 
   ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
-      _$this._listUIState ??= new ListUIStateBuilder();
+      _$this._listUIState ??= ListUIStateBuilder();
   set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
@@ -400,7 +391,6 @@ class DocumentUIStateBuilder
 
   @override
   void replace(DocumentUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DocumentUIState;
   }
 
@@ -416,15 +406,16 @@ class DocumentUIStateBuilder
     _$DocumentUIState _$result;
     try {
       _$result = _$v ??
-          new _$DocumentUIState._(
-              editing: _editing?.build(),
-              listUIState: listUIState.build(),
-              selectedId: selectedId,
-              forceSelected: forceSelected,
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'DocumentUIState', 'tabIndex'),
-              saveCompleter: saveCompleter,
-              cancelCompleter: cancelCompleter);
+          _$DocumentUIState._(
+            editing: _editing?.build(),
+            listUIState: listUIState.build(),
+            selectedId: selectedId,
+            forceSelected: forceSelected,
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'DocumentUIState', 'tabIndex'),
+            saveCompleter: saveCompleter,
+            cancelCompleter: cancelCompleter,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -433,7 +424,7 @@ class DocumentUIStateBuilder
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'DocumentUIState', _$failedField, e.toString());
       }
       rethrow;

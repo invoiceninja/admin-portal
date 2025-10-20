@@ -6,7 +6,7 @@ part of 'font_model.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<FontEntity> _$fontEntitySerializer = new _$FontEntitySerializer();
+Serializer<FontEntity> _$fontEntitySerializer = _$FontEntitySerializer();
 
 class _$FontEntitySerializer implements StructuredSerializer<FontEntity> {
   @override
@@ -30,7 +30,7 @@ class _$FontEntitySerializer implements StructuredSerializer<FontEntity> {
   @override
   FontEntity deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new FontEntityBuilder();
+    final result = FontEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -60,19 +60,15 @@ class _$FontEntity extends FontEntity {
   final String id;
 
   factory _$FontEntity([void Function(FontEntityBuilder)? updates]) =>
-      (new FontEntityBuilder()..update(updates))._build();
+      (FontEntityBuilder()..update(updates))._build();
 
-  _$FontEntity._({required this.name, required this.id}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'FontEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(id, r'FontEntity', 'id');
-  }
-
+  _$FontEntity._({required this.name, required this.id}) : super._();
   @override
   FontEntity rebuild(void Function(FontEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  FontEntityBuilder toBuilder() => new FontEntityBuilder()..replace(this);
+  FontEntityBuilder toBuilder() => FontEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -125,7 +121,6 @@ class FontEntityBuilder implements Builder<FontEntity, FontEntityBuilder> {
 
   @override
   void replace(FontEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$FontEntity;
   }
 
@@ -139,10 +134,11 @@ class FontEntityBuilder implements Builder<FontEntity, FontEntityBuilder> {
 
   _$FontEntity _build() {
     final _$result = _$v ??
-        new _$FontEntity._(
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'FontEntity', 'name'),
-            id: BuiltValueNullFieldError.checkNotNull(id, r'FontEntity', 'id'));
+        _$FontEntity._(
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'FontEntity', 'name'),
+          id: BuiltValueNullFieldError.checkNotNull(id, r'FontEntity', 'id'),
+        );
     replace(_$result);
     return _$result;
   }
