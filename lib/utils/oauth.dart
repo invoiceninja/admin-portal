@@ -60,7 +60,7 @@ class GoogleOAuth {
       'profile',
     ]);
     if (authz != null) {
-      accessToken = authz.accessToken ?? '';
+      accessToken = authz.accessToken;
     }
 
     callback(idToken, accessToken);
@@ -90,7 +90,7 @@ class GoogleOAuth {
       'profile',
     ]);
     if (authz != null) {
-      accessToken = authz.accessToken ?? '';
+      accessToken = authz.accessToken;
     }
 
     callback(idToken, accessToken);
