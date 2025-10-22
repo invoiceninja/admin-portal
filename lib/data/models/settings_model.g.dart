@@ -1716,6 +1716,41 @@ class _$SettingsEntitySerializer
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.sesSecretKey;
+    if (value != null) {
+      result
+        ..add('ses_secret_key')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.sesAccessKey;
+    if (value != null) {
+      result
+        ..add('ses_access_key')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.sesRegion;
+    if (value != null) {
+      result
+        ..add('ses_region')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.sesTopicArn;
+    if (value != null) {
+      result
+        ..add('ses_topic_arn')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.sesFromAddress;
+    if (value != null) {
+      result
+        ..add('ses_from_address')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -2714,6 +2749,26 @@ class _$SettingsEntitySerializer
           result.preferenceProductNotesForHtmlView = serializers
               .deserialize(value, specifiedType: const FullType(bool)) as bool?;
           break;
+        case 'ses_secret_key':
+          result.sesSecretKey = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'ses_access_key':
+          result.sesAccessKey = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'ses_region':
+          result.sesRegion = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'ses_topic_arn':
+          result.sesTopicArn = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'ses_from_address':
+          result.sesFromAddress = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
       }
     }
 
@@ -3281,6 +3336,16 @@ class _$SettingsEntity extends SettingsEntity {
   final bool? enableClientProfileUpdate;
   @override
   final bool? preferenceProductNotesForHtmlView;
+  @override
+  final String? sesSecretKey;
+  @override
+  final String? sesAccessKey;
+  @override
+  final String? sesRegion;
+  @override
+  final String? sesTopicArn;
+  @override
+  final String? sesFromAddress;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder)? updates]) =>
       (SettingsEntityBuilder()..update(updates))._build();
@@ -3529,7 +3594,12 @@ class _$SettingsEntity extends SettingsEntity {
       this.emailSubjectPaymentFailed,
       this.emailBodyPaymentFailed,
       this.enableClientProfileUpdate,
-      this.preferenceProductNotesForHtmlView})
+      this.preferenceProductNotesForHtmlView,
+      this.sesSecretKey,
+      this.sesAccessKey,
+      this.sesRegion,
+      this.sesTopicArn,
+      this.sesFromAddress})
       : super._();
   @override
   SettingsEntity rebuild(void Function(SettingsEntityBuilder) updates) =>
@@ -3791,7 +3861,12 @@ class _$SettingsEntity extends SettingsEntity {
         emailBodyPaymentFailed == other.emailBodyPaymentFailed &&
         enableClientProfileUpdate == other.enableClientProfileUpdate &&
         preferenceProductNotesForHtmlView ==
-            other.preferenceProductNotesForHtmlView;
+            other.preferenceProductNotesForHtmlView &&
+        sesSecretKey == other.sesSecretKey &&
+        sesAccessKey == other.sesAccessKey &&
+        sesRegion == other.sesRegion &&
+        sesTopicArn == other.sesTopicArn &&
+        sesFromAddress == other.sesFromAddress;
   }
 
   int? __hashCode;
@@ -4043,6 +4118,11 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, emailBodyPaymentFailed.hashCode);
     _$hash = $jc(_$hash, enableClientProfileUpdate.hashCode);
     _$hash = $jc(_$hash, preferenceProductNotesForHtmlView.hashCode);
+    _$hash = $jc(_$hash, sesSecretKey.hashCode);
+    _$hash = $jc(_$hash, sesAccessKey.hashCode);
+    _$hash = $jc(_$hash, sesRegion.hashCode);
+    _$hash = $jc(_$hash, sesTopicArn.hashCode);
+    _$hash = $jc(_$hash, sesFromAddress.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -4299,7 +4379,12 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('emailBodyPaymentFailed', emailBodyPaymentFailed)
           ..add('enableClientProfileUpdate', enableClientProfileUpdate)
           ..add('preferenceProductNotesForHtmlView',
-              preferenceProductNotesForHtmlView))
+              preferenceProductNotesForHtmlView)
+          ..add('sesSecretKey', sesSecretKey)
+          ..add('sesAccessKey', sesAccessKey)
+          ..add('sesRegion', sesRegion)
+          ..add('sesTopicArn', sesTopicArn)
+          ..add('sesFromAddress', sesFromAddress))
         .toString();
   }
 }
@@ -5514,6 +5599,27 @@ class SettingsEntityBuilder
       _$this._preferenceProductNotesForHtmlView =
           preferenceProductNotesForHtmlView;
 
+  String? _sesSecretKey;
+  String? get sesSecretKey => _$this._sesSecretKey;
+  set sesSecretKey(String? sesSecretKey) => _$this._sesSecretKey = sesSecretKey;
+
+  String? _sesAccessKey;
+  String? get sesAccessKey => _$this._sesAccessKey;
+  set sesAccessKey(String? sesAccessKey) => _$this._sesAccessKey = sesAccessKey;
+
+  String? _sesRegion;
+  String? get sesRegion => _$this._sesRegion;
+  set sesRegion(String? sesRegion) => _$this._sesRegion = sesRegion;
+
+  String? _sesTopicArn;
+  String? get sesTopicArn => _$this._sesTopicArn;
+  set sesTopicArn(String? sesTopicArn) => _$this._sesTopicArn = sesTopicArn;
+
+  String? _sesFromAddress;
+  String? get sesFromAddress => _$this._sesFromAddress;
+  set sesFromAddress(String? sesFromAddress) =>
+      _$this._sesFromAddress = sesFromAddress;
+
   SettingsEntityBuilder();
 
   SettingsEntityBuilder get _$this {
@@ -5763,6 +5869,11 @@ class SettingsEntityBuilder
       _emailBodyPaymentFailed = $v.emailBodyPaymentFailed;
       _enableClientProfileUpdate = $v.enableClientProfileUpdate;
       _preferenceProductNotesForHtmlView = $v.preferenceProductNotesForHtmlView;
+      _sesSecretKey = $v.sesSecretKey;
+      _sesAccessKey = $v.sesAccessKey;
+      _sesRegion = $v.sesRegion;
+      _sesTopicArn = $v.sesTopicArn;
+      _sesFromAddress = $v.sesFromAddress;
       _$v = null;
     }
     return this;
@@ -6032,6 +6143,11 @@ class SettingsEntityBuilder
             enableClientProfileUpdate: enableClientProfileUpdate,
             preferenceProductNotesForHtmlView:
                 preferenceProductNotesForHtmlView,
+            sesSecretKey: sesSecretKey,
+            sesAccessKey: sesAccessKey,
+            sesRegion: sesRegion,
+            sesTopicArn: sesTopicArn,
+            sesFromAddress: sesFromAddress,
           );
     } catch (_) {
       late String _$failedField;

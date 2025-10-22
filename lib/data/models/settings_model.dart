@@ -125,12 +125,14 @@ abstract class SettingsEntity
 
   static const EMAIL_SENDING_METHOD_POSTMARK_HOSTED = 'default';
   static const EMAIL_SENDING_METHOD_MAILGUN_HOSTED = 'mailgun';
+  static const EMAIL_SENDING_METHOD_SES_HOSTED = 'ses';
   static const EMAIL_SENDING_METHOD_GMAIL = 'gmail';
   static const EMAIL_SENDING_METHOD_MICROSOFT = 'office365';
   static const EMAIL_SENDING_METHOD_POSTMARK = 'client_postmark';
   static const EMAIL_SENDING_METHOD_MAILGUN = 'client_mailgun';
   static const EMAIL_SENDING_METHOD_BREVO = 'client_brevo';
   static const EMAIL_SENDING_METHOD_SMTP = 'smtp';
+  static const EMAIL_SENDING_METHOD_SES = 'client_ses';
 
   static const LOCK_INVOICES_OFF = 'off';
   static const LOCK_INVOICES_WHEN_SENT = 'when_sent';
@@ -881,6 +883,21 @@ abstract class SettingsEntity
 
   @BuiltValueField(wireName: 'preference_product_notes_for_html_view')
   bool? get preferenceProductNotesForHtmlView;
+
+  @BuiltValueField(wireName: 'ses_secret_key')
+  String? get sesSecretKey;
+
+  @BuiltValueField(wireName: 'ses_access_key')
+  String? get sesAccessKey;
+
+  @BuiltValueField(wireName: 'ses_region')
+  String? get sesRegion;
+
+  @BuiltValueField(wireName: 'ses_topic_arn')
+  String? get sesTopicArn;
+
+  @BuiltValueField(wireName: 'ses_from_address')
+  String? get sesFromAddress;
 
   bool? get taskRoundingEnabled =>
       taskRoundToNearest == null ? null : taskRoundToNearest != 1;
