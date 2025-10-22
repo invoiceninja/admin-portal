@@ -111,6 +111,7 @@ class ClientFields {
   static const String sizeId = 'size_id';
   static const String industryId = 'industry_id';
   static const String countryId = 'country_id';
+  static const String locationName = 'location_name';
 }
 
 abstract class ClientEntity extends Object

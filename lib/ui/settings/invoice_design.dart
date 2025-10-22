@@ -729,6 +729,7 @@ class _InvoiceDesignState extends State<InvoiceDesign>
                         ClientFields.postalCityState,
                         ClientFields.postalCity,
                         ClientFields.country,
+                        ClientFields.locationName,
                         ClientFields.custom1,
                         ClientFields.custom2,
                         ClientFields.custom3,
