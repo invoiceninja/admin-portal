@@ -56,6 +56,7 @@ class ActivityListTile extends StatelessWidget {
       title,
       localization.system,
       localization.recurring,
+      activity.notes,
       user: user,
       client: client,
       invoice: invoice,
@@ -143,19 +144,10 @@ class ActivityListTile extends StatelessWidget {
               }
             },
       trailing: enableNavigation ? Icon(Icons.navigate_next) : null,
-      subtitle: Row(
-        children: <Widget>[
-          Flexible(
-            child: Text((!activity.isComment && activity.notes.isNotEmpty
-                    ? localization.lookup(activity.notes).trim() + '\n'
-                    : '') +
-                formatDate(
-                    convertTimestampToDateString(activity.createdAt), context,
-                    showTime: true, showSeconds: false) +
-                ((activity.ip ?? '').isNotEmpty ? ' • ' + activity.ip! : '')),
-          ),
-        ],
-      ),
+      subtitle: Text(formatDate(
+              convertTimestampToDateString(activity.createdAt), context,
+              showTime: true, showSeconds: false) +
+          ((activity.ip ?? '').isNotEmpty ? ' • ' + activity.ip! : '')),
     );
   }
 }

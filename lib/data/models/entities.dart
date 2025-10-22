@@ -816,6 +816,8 @@ abstract class ActivityEntity
       kActivityDeleteClient,
       kActivityRestoreClient,
       kActivityStatementSent,
+      kActivityMergedClients,
+      kActivityPurgedClient,
     ].contains(activityTypeId)) {
       return EntityType.client;
     } else if ([
@@ -881,6 +883,7 @@ abstract class ActivityEntity
       kActivityUpdateVendor,
       kActivityDeleteVendor,
       kActivityRestoreVendor,
+      kActivityMergedVendors,
     ].contains(activityTypeId)) {
       return EntityType.vendor;
     } else if ([
@@ -954,7 +957,8 @@ abstract class ActivityEntity
   String getDescription(
     String? activity,
     String? systemString,
-    String? recurringString, {
+    String? recurringString,
+    String? notes, {
     UserEntity? user,
     ClientEntity? client,
     InvoiceEntity? invoice,
@@ -1026,10 +1030,7 @@ abstract class ActivityEntity
     activity = activity.replaceFirst(
         ':recurring_expense', vendor?.name ?? ''); // TODO implement
     activity = activity.replaceAll('  ', ' ');
-
-    // Fix for extra notes value
-    activity = activity.replaceFirst(' - :notes', '');
-    activity = activity.replaceFirst(':notes', '');
+    activity = activity.replaceFirst(':notes', notes ?? '');
 
     return activity;
   }
