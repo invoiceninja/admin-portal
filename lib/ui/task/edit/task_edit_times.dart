@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -43,6 +45,22 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
       return;
     }
 
+    int? index;
+
+    final List<dynamic> rawTaskTimes =
+        task.timeLog.isNotEmpty ? jsonDecode(task.timeLog) : <dynamic>[];
+    for (var i = 0; i < rawTaskTimes.length; i++) {
+      final each = rawTaskTimes[i] as List<dynamic>;
+      if (each[0] * 1000 == taskTime.startDate?.millisecondsSinceEpoch &&
+          each[1] * 1000 == taskTime.endDate?.millisecondsSinceEpoch) {
+        index = i;
+      }
+    }
+
+    if (index == null) {
+      return;
+    }
+
     showDialog<ResponsivePadding>(
         barrierDismissible: false,
         context: context,
@@ -50,10 +68,10 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
           return TimeEditDetails(
             viewModel: viewModel,
             taskTime: taskTime,
-            index: taskTimes.indexOf(
-                taskTimes.firstWhere((time) => time.equalTo(taskTime))),
+            index: index!,
           );
         });
+    ;
   }
 
   @override
