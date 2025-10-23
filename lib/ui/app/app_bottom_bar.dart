@@ -587,17 +587,30 @@ class CustomFieldSelector extends StatelessWidget {
           color: Theme.of(context).colorScheme.background,
           child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
             Column(
-              children: customValues.map<Widget>((customField) {
-                return CheckboxListTile(
-                  key: Key(customField.toString()),
-                  title: Text(customField),
+              children: [
+                ...customValues.map<Widget>((customField) {
+                  return CheckboxListTile(
+                    key: Key(customField.toString()),
+                    title: Text(customField),
+                    controlAffinity: ListTileControlAffinity.leading,
+                    value: customFilters!.contains(customField),
+                    activeColor: Theme.of(context).colorScheme.secondary,
+                    dense: true,
+                    onChanged: (value) => onSelected(customField),
+                  );
+                }).toList(),
+                CheckboxListTile(
+                  key: Key('_empty_'),
+                  title: Text(
+                    AppLocalization.of(context)!.empty,
+                  ),
                   controlAffinity: ListTileControlAffinity.leading,
-                  value: customFilters!.contains(customField),
+                  value: customFilters!.contains(''),
                   activeColor: Theme.of(context).colorScheme.secondary,
                   dense: true,
-                  onChanged: (value) => onSelected(customField),
-                );
-              }).toList(),
+                  onChanged: (value) => onSelected(''),
+                ),
+              ],
             ),
           ]),
         );
