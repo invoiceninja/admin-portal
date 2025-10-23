@@ -49,20 +49,22 @@ class ScheduleListItem extends StatelessWidget {
       final entity =
           state.getEntityMap(entityType)![schedule.parameters.entityId];
 
-      if (entityType == EntityType.purchaseOrder) {
-        final vendor =
-            state.vendorState.get((entity as BelongsToVendor).vendorId);
-        title += ': ' + vendor.name;
-      } else {
-        final client =
-            state.clientState.get((entity as BelongsToClient).clientId!);
-        title += ': ' + client.displayName;
-      }
+      if (entity != null) {
+        if (entityType == EntityType.purchaseOrder) {
+          final vendor =
+              state.vendorState.get((entity as BelongsToVendor).vendorId);
+          title += ': ' + vendor.name;
+        } else {
+          final client =
+              state.clientState.get((entity as BelongsToClient).clientId!);
+          title += ': ' + client.displayName;
+        }
 
-      subtitle += ' • ' +
-          localization.lookup(schedule.parameters.entityType) +
-          ' ' +
-          (entity?.listDisplayName ?? '');
+        subtitle += ' • ' +
+            localization.lookup(schedule.parameters.entityType) +
+            ' ' +
+            entity.listDisplayName;
+      }
     } else if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT) {
       if (schedule.parameters.clients!.isEmpty) {
         title += ': ' + localization.allClients;

@@ -61,7 +61,7 @@ class _ScheduleViewState extends State<ScheduleView> {
           if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_RECORD)
             FieldGrid({
               localization.lookup(schedule.parameters.entityType):
-                  entity!.listDisplayName
+                  entity?.listDisplayName
             })
           else if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_STATEMENT)
             FieldGrid({

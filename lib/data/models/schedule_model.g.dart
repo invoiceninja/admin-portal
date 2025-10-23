@@ -315,6 +315,13 @@ class _$ScheduleParametersSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.template;
+    if (value != null) {
+      result
+        ..add('template')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.clients;
     if (value != null) {
       result
@@ -381,6 +388,10 @@ class _$ScheduleParametersSerializer
           break;
         case 'status':
           result.status = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'template':
+          result.template = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
         case 'clients':
@@ -884,6 +895,8 @@ class _$ScheduleParameters extends ScheduleParameters {
   @override
   final String? status;
   @override
+  final String? template;
+  @override
   final BuiltList<String>? clients;
   @override
   final String? entityType;
@@ -903,6 +916,7 @@ class _$ScheduleParameters extends ScheduleParameters {
       this.showAgingTable,
       this.onlyClientsWithInvoices,
       this.status,
+      this.template,
       this.clients,
       this.entityType,
       this.entityId,
@@ -927,6 +941,7 @@ class _$ScheduleParameters extends ScheduleParameters {
         showAgingTable == other.showAgingTable &&
         onlyClientsWithInvoices == other.onlyClientsWithInvoices &&
         status == other.status &&
+        template == other.template &&
         clients == other.clients &&
         entityType == other.entityType &&
         entityId == other.entityId &&
@@ -944,6 +959,7 @@ class _$ScheduleParameters extends ScheduleParameters {
     _$hash = $jc(_$hash, showAgingTable.hashCode);
     _$hash = $jc(_$hash, onlyClientsWithInvoices.hashCode);
     _$hash = $jc(_$hash, status.hashCode);
+    _$hash = $jc(_$hash, template.hashCode);
     _$hash = $jc(_$hash, clients.hashCode);
     _$hash = $jc(_$hash, entityType.hashCode);
     _$hash = $jc(_$hash, entityId.hashCode);
@@ -961,6 +977,7 @@ class _$ScheduleParameters extends ScheduleParameters {
           ..add('showAgingTable', showAgingTable)
           ..add('onlyClientsWithInvoices', onlyClientsWithInvoices)
           ..add('status', status)
+          ..add('template', template)
           ..add('clients', clients)
           ..add('entityType', entityType)
           ..add('entityId', entityId)
@@ -1001,6 +1018,10 @@ class ScheduleParametersBuilder
   String? get status => _$this._status;
   set status(String? status) => _$this._status = status;
 
+  String? _template;
+  String? get template => _$this._template;
+  set template(String? template) => _$this._template = template;
+
   ListBuilder<String>? _clients;
   ListBuilder<String> get clients => _$this._clients ??= ListBuilder<String>();
   set clients(ListBuilder<String>? clients) => _$this._clients = clients;
@@ -1028,6 +1049,7 @@ class ScheduleParametersBuilder
       _showAgingTable = $v.showAgingTable;
       _onlyClientsWithInvoices = $v.onlyClientsWithInvoices;
       _status = $v.status;
+      _template = $v.template;
       _clients = $v.clients?.toBuilder();
       _entityType = $v.entityType;
       _entityId = $v.entityId;
@@ -1061,6 +1083,7 @@ class ScheduleParametersBuilder
             showAgingTable: showAgingTable,
             onlyClientsWithInvoices: onlyClientsWithInvoices,
             status: status,
+            template: template,
             clients: _clients?.build(),
             entityType: entityType,
             entityId: entityId,

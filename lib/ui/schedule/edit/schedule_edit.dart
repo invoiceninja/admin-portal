@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
 import 'package:invoiceninja_flutter/data/models/dashboard_model.dart';
 import 'package:invoiceninja_flutter/data/models/import_model.dart';
 import 'package:invoiceninja_flutter/data/models/models.dart';
+import 'package:invoiceninja_flutter/redux/app/app_state.dart';
 import 'package:invoiceninja_flutter/redux/credit/credit_selectors.dart';
 import 'package:invoiceninja_flutter/redux/invoice/invoice_selectors.dart';
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_selectors.dart';
@@ -80,6 +82,20 @@ class _ScheduleEditState extends State<ScheduleEdit> {
 
     if (!isValid) {
       return;
+    }
+
+    final viewModel = widget.viewModel;
+    final state = viewModel.state;
+    final schedule = viewModel.schedule;
+
+    if (schedule.template == ScheduleEntity.TEMPLATE_EMAIL_RECORD) {
+      final entityType = EntityType.valueOf(schedule.parameters.entityType!);
+      final entity =
+          state.getEntityMap(entityType)![schedule.parameters.entityId];
+
+      if (entity == null) {
+        return;
+      }
     }
 
     widget.viewModel.onSavePressed(context);
@@ -454,7 +470,59 @@ class _ScheduleEditState extends State<ScheduleEdit> {
                             viewModel.onChanged(schedule.rebuild((b) =>
                                 b..parameters.entityId = value?.id ?? ''));
                           },
-                        )
+                        ),
+                      AppDropdownButton<String>(
+                          labelText: localization.template,
+                          value: parameters.template,
+                          onChanged: (value) {
+                            viewModel.onChanged(schedule.rebuild(
+                                (b) => b..parameters.template = value));
+                          },
+                          items: [
+                            if (parameters.entityType ==
+                                EntityType.invoice.toString()) ...[
+                              DropdownMenuItem(
+                                  child: Text(localization.initialEmail),
+                                  value: EmailTemplate.invoice.toString()),
+                              DropdownMenuItem(
+                                  child: Text(localization.firstReminder),
+                                  value: EmailTemplate.reminder1.toString()),
+                              DropdownMenuItem(
+                                  child: Text(localization.secondReminder),
+                                  value: EmailTemplate.reminder2.toString()),
+                              DropdownMenuItem(
+                                  child: Text(localization.thirdReminder),
+                                  value: EmailTemplate.reminder3.toString()),
+                            ] else if (parameters.entityType ==
+                                EntityType.quote.toString()) ...[
+                              DropdownMenuItem(
+                                  child: Text(localization.initialEmail),
+                                  value: EmailTemplate.quote.toString()),
+                              DropdownMenuItem(
+                                  child: Text(localization.firstReminder),
+                                  value:
+                                      EmailTemplate.quote_reminder1.toString()),
+                            ] else if (parameters.entityType ==
+                                EntityType.credit.toString())
+                              DropdownMenuItem(
+                                  child: Text(localization.initialEmail),
+                                  value: EmailTemplate.credit.toString())
+                            else if (parameters.entityType ==
+                                EntityType.purchaseOrder.toString())
+                              DropdownMenuItem(
+                                  child: Text(localization.initialEmail),
+                                  value:
+                                      EmailTemplate.purchase_order.toString()),
+                            DropdownMenuItem(
+                                child: Text(localization.firstCustom),
+                                value: EmailTemplate.custom1.toString()),
+                            DropdownMenuItem(
+                                child: Text(localization.secondCustom),
+                                value: EmailTemplate.custom2.toString()),
+                            DropdownMenuItem(
+                                child: Text(localization.thirdCustom),
+                                value: EmailTemplate.custom3.toString()),
+                          ]),
                     ],
                   ),
                 ],

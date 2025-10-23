@@ -248,6 +248,8 @@ abstract class ScheduleParameters
 
   String? get status;
 
+  String? get template;
+
   BuiltList<String>? get clients;
 
   @BuiltValueField(wireName: 'entity')
