@@ -147,6 +147,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     }
   }
 
+  /*
   /// Returns the text alignment of the currently selected text node.
   ///
   /// Throws an exception if the currently selected node is not a text node.
@@ -183,6 +184,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     final selectedNode = widget.document.getNodeById(selection.extent.nodeId);
     return selectedNode is ParagraphNode;
   }
+  */
 
   /// Converts the currently selected text node into a new type of
   /// text node, represented by [newType].
@@ -290,6 +292,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     ]);
   }
 
+  /*
   /// Toggles superscript styling for the current selected text.
   void _toggleSuperscript() {
     widget.editor!.execute([
@@ -400,6 +403,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
       });
     }
   }
+  */
 
   /// Takes the text from the [urlController] and applies it as a link
   /// attribution to the currently selected text.
@@ -467,6 +471,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     return SpanRange(startOffset, endOffset + 1);
   }
 
+  /*
   /// Changes the alignment of the current selected text node
   /// to reflect [newAlignment].
   void _changeAlignment(TextAlign? newAlignment) {
@@ -481,6 +486,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
       ),
     ]);
   }
+  */
 
   /// Returns the localized name for the given [_TextType], e.g.,
   /// "Paragraph" or "Header 1".
@@ -520,6 +526,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     }
   }
 
+  /*
   /// Called when the user selects an alignment on the toolbar.
   void _onAlignmentSelected(SuperEditorDemoIconItem? selectedItem) {
     if (selectedItem != null) {
@@ -529,6 +536,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
       });
     }
   }
+  */
 
   @override
   Widget build(BuildContext context) {
@@ -674,6 +682,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     );
   }
 
+  /*
   Widget _buildAlignmentSelector() {
     final alignment = _getCurrentTextAlignment();
     return SuperEditorDemoIconItemSelector(
@@ -699,6 +708,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
       onSelected: _onAlignmentSelected,
     );
   }
+  */
 
   Widget _buildBlockTypeSelector() {
     final currentBlockType = _getCurrentTextType();
@@ -783,6 +793,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     );
   }
 
+  /*
   IconData _buildTextAlignIcon(TextAlign align) {
     switch (align) {
       case TextAlign.left:
@@ -797,6 +808,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
         return Icons.format_align_justify;
     }
   }
+  */
 }
 
 enum _TextType {

@@ -139,7 +139,6 @@ dev_dependencies:
   msix: ^3.5.1
   import_sorter: ^4.6.0
 
-  redux: any
 flutter:
 
   uses-material-design: true

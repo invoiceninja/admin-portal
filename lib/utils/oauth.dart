@@ -125,6 +125,7 @@ class GoogleOAuth {
     }
   }
 
+  /*
   static Future<GoogleSignInAccount?> _requireAuthenticatedUser() async {
     // Try to reuse an authenticated user:
     final existing =
@@ -150,4 +151,5 @@ class GoogleOAuth {
       return false;
     }
   }
+  */
 }
