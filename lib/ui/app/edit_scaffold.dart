@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -111,7 +110,7 @@ class EditScaffold extends StatelessWidget {
           ((isEnabled && onSavePressed != null) || isCancelEnabled))
         EntityAction.back,
       EntityAction.save,
-      ...(actions ?? []).whereNotNull(),
+      ...(actions ?? []).nonNulls,
     ];
 
     final textStyle = Theme.of(context)

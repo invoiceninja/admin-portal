@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -67,7 +66,7 @@ class PaymentPresenter extends EntityPresenter {
             children: payment!.invoicePaymentables
                 .map((paymentable) =>
                     state.invoiceState.map[paymentable.invoiceId])
-                .whereNotNull()
+                .nonNulls
                 .map((invoice) => Padding(
                       padding: const EdgeInsets.only(right: 8),
                       child: LinkTextRelatedEntity(

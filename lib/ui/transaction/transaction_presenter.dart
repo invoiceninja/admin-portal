@@ -1,4 +1,3 @@
-import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -102,7 +101,7 @@ class TransactionPresenter extends EntityPresenter {
             children: transaction.invoiceIds
                 .split(',')
                 .map((invoiceId) => state.invoiceState.map[invoiceId])
-                .whereNotNull()
+                .nonNulls
                 .map((invoice) => Padding(
                       padding: const EdgeInsets.only(right: 8),
                       child: LinkTextRelatedEntity(
@@ -119,7 +118,7 @@ class TransactionPresenter extends EntityPresenter {
             children: transaction.expenseId
                 .split(',')
                 .map((expenseId) => state.expenseState.map[expenseId])
-                .whereNotNull()
+                .nonNulls
                 .map((expense) => Padding(
                       padding: const EdgeInsets.only(right: 8),
                       child: LinkTextRelatedEntity(

@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:flutter/material.dart';
 import 'package:html2md/html2md.dart' as html2md;
 
@@ -205,8 +204,7 @@ class _InvoiceEmailViewState extends State<InvoiceEmailView>
               Expanded(
                   child: Text(localization.to +
                       ': ' +
-                      contacts
-                          .whereNotNull()
+                      contacts.nonNulls
                           .map((contact) => invoice.isPurchaseOrder
                               ? (contact as VendorContactEntity).fullNameOrEmail
                               : (contact as ClientContactEntity)

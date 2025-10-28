@@ -74,7 +74,6 @@ class AccountManagementVM {
           final companyLength = state.companies.length;
           final deleteCompleter = Completer<Null>()
             ..future.then<Null>((_) {
-              final context = navigatorKey.currentContext;
               final state = store.state;
               if (companyLength == 1) {
                 store.dispatch(UserLogout());

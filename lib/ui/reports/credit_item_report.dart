@@ -1,6 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
-import 'package:collection/collection.dart' show IterableNullableExtension;
+
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -85,7 +85,7 @@ ReportResult lineItemReport(
   if (lineItemReportSettings.columns.isNotEmpty) {
     columns = BuiltList(lineItemReportSettings.columns
         .map((e) => EnumUtils.fromString(CreditItemReportFields.values, e))
-        .whereNotNull()
+        .nonNulls
         .toList());
   } else {
     columns = BuiltList(defaultColumns);

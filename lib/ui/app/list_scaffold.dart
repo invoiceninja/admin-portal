@@ -126,7 +126,7 @@ class ListScaffold extends StatelessWidget {
 
     return PopScope(
         canPop: !isSettings,
-        onPopInvoked: (_) {
+        onPopInvokedWithResult: (_, __) {
           if (!isSettings) {
             store.dispatch(ViewDashboard());
           }

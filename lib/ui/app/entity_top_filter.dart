@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:collection/collection.dart' show IterableNullableExtension;
+
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -297,7 +297,7 @@ class EntityTopFilterHeader extends StatelessWidget {
           includeEdit: true,
           userCompany: state.userCompany,
         )
-        .whereNotNull();
+        .nonNulls;
     final textStyle = Theme.of(context)
         .textTheme
         .bodyMedium!

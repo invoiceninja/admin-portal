@@ -1,6 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
-import 'package:collection/collection.dart' show IterableNullableExtension;
+
 import 'package:intl/intl.dart';
 import 'package:memoize/memoize.dart';
 
@@ -69,7 +69,7 @@ ReportResult documentReport(
   if (documentReportSettings.columns.isNotEmpty) {
     columns = BuiltList(documentReportSettings.columns
         .map((e) => EnumUtils.fromString(DocumentReportFields.values, e))
-        .whereNotNull()
+        .nonNulls
         .toList());
   } else {
     columns = BuiltList(defaultColumns);

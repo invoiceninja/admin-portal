@@ -1,6 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
-import 'package:collection/collection.dart' show IterableNullableExtension;
+
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
@@ -123,7 +123,7 @@ ReportResult purchaseOrderReport(
   if (purchaseOrderReportSettings.columns.isNotEmpty) {
     columns = BuiltList(purchaseOrderReportSettings.columns
         .map((e) => EnumUtils.fromString(PurchaseOrderReportFields.values, e))
-        .whereNotNull()
+        .nonNulls
         .toList());
   } else {
     columns = BuiltList(defaultColumns);

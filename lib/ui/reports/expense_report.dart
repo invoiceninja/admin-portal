@@ -1,6 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
-import 'package:collection/collection.dart' show IterableNullableExtension;
+
 import 'package:invoiceninja_flutter/redux/reports/reports_selectors.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:invoiceninja_flutter/main_app.dart';
@@ -119,7 +119,7 @@ ReportResult expenseReport(
   if (expenseReportSettings.columns.isNotEmpty) {
     columns = BuiltList(expenseReportSettings.columns
         .map((e) => EnumUtils.fromString(ExpenseReportFields.values, e))
-        .whereNotNull()
+        .nonNulls
         .toList());
   } else {
     columns = BuiltList(defaultColumns);
