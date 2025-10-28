@@ -166,7 +166,7 @@ class RecurringExpenseListItem extends StatelessWidget {
                                     .titleSmall!
                                     .copyWith(
                                       color: textColor!
-                                          .withOpacity(kLighterOpacity),
+                                          .withValues(alpha: kLighterOpacity),
                                     )),
                           ],
                         ),
@@ -229,7 +229,8 @@ class RecurringExpenseListItem extends StatelessWidget {
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                              color: textColor!.withOpacity(kLighterOpacity),
+                              color:
+                                  textColor!.withValues(alpha: kLighterOpacity),
                             )),
                     EntityStateLabel(expense),
                   ],

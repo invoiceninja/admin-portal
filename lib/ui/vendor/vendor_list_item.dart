@@ -133,7 +133,7 @@ class VendorListItem extends StatelessWidget {
                                       .titleSmall!
                                       .copyWith(
                                         color: textColor!
-                                            .withOpacity(kLighterOpacity),
+                                            .withValues(alpha: kLighterOpacity),
                                       )),
                           ],
                         ),
@@ -198,8 +198,8 @@ class VendorListItem extends StatelessWidget {
                                 .textTheme
                                 .titleSmall!
                                 .copyWith(
-                                  color:
-                                      textColor!.withOpacity(kLighterOpacity),
+                                  color: textColor!
+                                      .withValues(alpha: kLighterOpacity),
                                 ))
                         : Text(vendor.number),
                     EntityStateLabel(vendor),

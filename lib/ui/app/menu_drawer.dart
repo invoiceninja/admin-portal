@@ -833,7 +833,7 @@ class _DrawerTileState extends State<DrawerTile> {
         .textTheme
         .bodyLarge!
         .color!
-        .withOpacity(isSelected ? 1 : .7);
+        .withValues(alpha: isSelected ? 1 : .7);
 
     if (isSelected) {
       if (activeColor.isNotEmpty) {

@@ -145,7 +145,8 @@ class _SuperEditorDemoTextItemSelectorState
       SuperEditorDemoTextItem item, bool isActive, VoidCallback onTap) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: isActive ? Colors.grey.withOpacity(0.2) : Colors.transparent,
+        color:
+            isActive ? Colors.grey.withValues(alpha: 0.2) : Colors.transparent,
       ),
       child: InkWell(
         onTap: onTap,
@@ -313,7 +314,8 @@ class _SuperEditorDemoIconItemSelectorState
       bool isActive, VoidCallback onTap) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: isActive ? Colors.grey.withOpacity(0.2) : Colors.transparent,
+        color:
+            isActive ? Colors.grey.withValues(alpha: 0.2) : Colors.transparent,
       ),
       child: InkWell(
         onTap: onTap,

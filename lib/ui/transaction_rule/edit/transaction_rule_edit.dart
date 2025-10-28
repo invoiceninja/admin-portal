@@ -98,7 +98,7 @@ class _TransactionRuleEditState extends State<TransactionRuleEdit> {
     final state = viewModel.state;
 
     final textColor = Theme.of(context).textTheme.bodyLarge!.color!;
-    final textStyle = TextStyle(color: textColor.withOpacity(.65));
+    final textStyle = TextStyle(color: textColor.withValues(alpha: .65));
 
     return EditScaffold(
       title: transactionRule.isNew

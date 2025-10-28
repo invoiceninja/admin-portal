@@ -437,7 +437,9 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                             surface: Colors.black,
                           ),
                           bottomAppBarTheme: BottomAppBarThemeData(
-                              color: const Color(0xFF1B1C1E)), tabBarTheme: TabBarThemeData(indicatorColor: accentColor),
+                              color: const Color(0xFF1B1C1E)),
+                          tabBarTheme:
+                              TabBarThemeData(indicatorColor: accentColor),
                         )
                       : ThemeData(
                           useMaterial3: false,
@@ -463,14 +465,15 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                             labelColor:
                                 hasAccentColor ? Colors.white : Colors.black,
                             unselectedLabelColor: hasAccentColor
-                                ? Colors.white.withOpacity(.65)
-                                : Colors.black.withOpacity(.65),
+                                ? Colors.white.withValues(alpha: .65)
+                                : Colors.black.withValues(alpha: .65),
                           ),
                           iconTheme: IconThemeData(
                             color: hasAccentColor ? null : accentColor,
                           ),
                           appBarTheme: AppBarTheme(
-                            backgroundColor: hasAccentColor ? accentColor : Colors.white,
+                            backgroundColor:
+                                hasAccentColor ? accentColor : Colors.white,
                             iconTheme: IconThemeData(
                               color:
                                   hasAccentColor ? Colors.white : accentColor,
