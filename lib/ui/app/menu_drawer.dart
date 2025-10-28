@@ -1668,7 +1668,7 @@ class _ContactUsDialogState extends State<ContactUsDialog> {
         .then((dynamic response) async {
       setState(() => _isSaving = false);
       await showDialog<MessageDialog>(
-          context: context,
+          context: navigatorKey.currentContext!,
           builder: (BuildContext context) {
             return MessageDialog(localization!.yourMessageHasBeenReceived);
           });

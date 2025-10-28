@@ -91,8 +91,8 @@ class AccountManagementVM {
                     store.dispatch(ViewDashboard());
                     AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
 
-                    if (Navigator.of(context!).canPop()) {
-                      Navigator.of(context).pop();
+                    if (Navigator.of(navigatorKey.currentContext!).canPop()) {
+                      Navigator.of(navigatorKey.currentContext!).pop();
                     }
                   });
                 store.dispatch(

@@ -125,7 +125,8 @@ class ExpenseViewVM extends AbstractExpenseViewVM {
             expense: expense,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context)!.uploadedDocument);
+          showToast(AppLocalization.of(navigatorKey.currentContext!)!
+              .uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
               context: navigatorKey.currentContext!,

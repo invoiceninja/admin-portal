@@ -383,9 +383,8 @@ class EntityTopFilterHeader extends StatelessWidget {
                         return OutlinedButton(
                           style: action == EntityAction.edit
                               ? ButtonStyle(
-                                  backgroundColor: WidgetStateProperty.all(
-                                      state.prefState.colorThemeModel!
-                                          .colorSuccess))
+                                  backgroundColor: WidgetStateProperty.all(state
+                                      .prefState.colorThemeModel!.colorSuccess))
                               : null,
                           child: IconText(
                             icon: getEntityActionIcon(action),

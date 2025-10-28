@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:redux/redux.dart';
@@ -87,17 +88,17 @@ class ScheduleEditVM {
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(ScheduleViewScreen.route));
               if (schedule.isNew) {
-                Navigator.of(context)
+                Navigator.of(navigatorKey.currentContext!)
                     .pushReplacementNamed(ScheduleViewScreen.route);
               } else {
-                Navigator.of(context).pop(savedSchedule);
+                Navigator.of(navigatorKey.currentContext!).pop(savedSchedule);
               }
             } else {
               viewEntity(entity: savedSchedule, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
-                context: context,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
                   return ErrorDialog(error);
                 });

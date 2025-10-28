@@ -199,15 +199,15 @@ class EditScaffold extends StatelessWidget {
                                 }
 
                                 return OutlinedButton(
-                                  style: action == EntityAction.save &&
-                                          isEnabled
-                                      ? ButtonStyle(
-                                          backgroundColor:
-                                              WidgetStateProperty.all(state
-                                                  .prefState
-                                                  .colorThemeModel!
-                                                  .colorSuccess))
-                                      : null,
+                                  style:
+                                      action == EntityAction.save && isEnabled
+                                          ? ButtonStyle(
+                                              backgroundColor:
+                                                  WidgetStateProperty.all(state
+                                                      .prefState
+                                                      .colorThemeModel!
+                                                      .colorSuccess))
+                                          : null,
                                   child: ConstrainedBox(
                                     constraints: BoxConstraints(
                                         minWidth: isDesktop(context) ? 60 : 0),

@@ -276,7 +276,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                             ? localization
                                 .lookup(kGatewayTypes[gatewayTypeId] ?? '')
                             : '$gatewayTypeId'),
-                        activeThumbColor: Theme.of(context).colorScheme.secondary,
+                        activeThumbColor:
+                            Theme.of(context).colorScheme.secondary,
                         value: companyGateway
                             .getSettingsForGatewayTypeId(gatewayTypeId)
                             .isEnabled,

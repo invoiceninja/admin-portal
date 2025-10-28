@@ -90,10 +90,11 @@ class PaymentTermEditVM {
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(PaymentTermScreen.route));
               if (paymentTerm.isNew) {
-                Navigator.of(context)
+                Navigator.of(navigatorKey.currentContext!)
                     .pushReplacementNamed(PaymentTermScreen.route);
               } else {
-                Navigator.of(context).pop(savedPaymentTerm);
+                Navigator.of(navigatorKey.currentContext!)
+                    .pop(savedPaymentTerm);
               }
             } else {
               viewEntity(entity: savedPaymentTerm, force: true);

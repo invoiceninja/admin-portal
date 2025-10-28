@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -178,7 +179,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
 
       final Completer<PaymentEntity> completer = Completer<PaymentEntity>();
       completer.future.then((value) {
-        Navigator.of(context).pop();
+        Navigator.of(navigatorKey.currentContext!).pop();
       });
 
       viewModel.onRefundPressed(context, completer);

@@ -553,13 +553,17 @@ class _AccountOverview extends StatelessWidget {
                               credentials.token,
                             )
                                 .then((dynamic response) {
-                              if (Navigator.of(context).canPop()) {
-                                Navigator.of(context).pop();
+                              if (Navigator.of(navigatorKey.currentContext!)
+                                  .canPop()) {
+                                Navigator.of(navigatorKey.currentContext!)
+                                    .pop();
                               }
                               viewModel.onAppliedLicense();
                             }).catchError((dynamic error) {
-                              if (Navigator.of(context).canPop()) {
-                                Navigator.of(context).pop();
+                              if (Navigator.of(navigatorKey.currentContext!)
+                                  .canPop()) {
+                                Navigator.of(navigatorKey.currentContext!)
+                                    .pop();
                               }
                               showErrorDialog(message: '$error');
                             });

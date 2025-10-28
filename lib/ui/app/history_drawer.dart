@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/company/company_selectors.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -262,7 +263,7 @@ class _HistoryListTileState extends State<HistoryListTile> {
                   completer: state.prefState.isHistoryFloated
                       ? (Completer<Null>()
                         ..future.then<Null>((_) {
-                          Navigator.pop(context);
+                          Navigator.pop(navigatorKey.currentContext!);
                         }))
                       : null,
                 );

@@ -249,7 +249,8 @@ class _DeviceSettingsState extends State<DeviceSettings>
                         value: prefState.enableNativeBrowser,
                         onChanged: (value) => viewModel
                             .onEnableNativeBrowserChanged(context, value),
-                        activeThumbColor: Theme.of(context).colorScheme.secondary,
+                        activeThumbColor:
+                            Theme.of(context).colorScheme.secondary,
                         secondary: Icon(MdiIcons.filePdfBox),
                       ),
                     SizedBox(height: 10),
@@ -342,7 +343,8 @@ class _DeviceSettingsState extends State<DeviceSettings>
                           secondary: Icon(prefState.requireAuthentication
                               ? MdiIcons.lock
                               : MdiIcons.lockOpen),
-                          activeThumbColor: Theme.of(context).colorScheme.secondary,
+                          activeThumbColor:
+                              Theme.of(context).colorScheme.secondary,
                         );
                       } else {
                         return SizedBox();

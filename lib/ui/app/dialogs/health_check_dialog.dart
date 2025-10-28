@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -71,7 +72,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
             HealthCheckResponse.serializer, response);
       });
     }).catchError((dynamic error) {
-      Navigator.of(context).pop();
+      Navigator.of(navigatorKey.currentContext!).pop();
       showErrorDialog(message: error);
     });
   }
