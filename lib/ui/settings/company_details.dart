@@ -322,6 +322,7 @@ class _CompanyDetailsState extends State<CompanyDetails>
                         */
                     onSavePressed: viewModel.onSavePressed,
                     keyboardType: TextInputType.text,
+                    textCapitalization: TextCapitalization.words,
                   ),
                   DecoratedFormField(
                     label: localization.idNumber,
