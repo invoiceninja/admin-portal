@@ -82,7 +82,6 @@ Future<List<MultipartFile>?> _pickFiles({
     type: fileType ?? FileType.custom,
     allowedExtensions:
         fileType == FileType.image ? [] : allowedExtensions ?? [],
-    allowCompression: true,
     withData: true,
     allowMultiple: allowMultiple,
   );

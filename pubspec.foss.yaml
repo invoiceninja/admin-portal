@@ -20,6 +20,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  web: ^1.0.0
   # google_sign_in: ^7.2.0
   # in_app_review: ^2.0.4
   # in_app_purchase: ^3.2.3

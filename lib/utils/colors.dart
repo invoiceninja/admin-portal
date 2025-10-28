@@ -18,8 +18,9 @@ Color? convertHexStringToColor(String? value) {
 
 String? convertColorToHexString(Color color) {
   try {
-    final hex = color.value.toRadixString(16);
-    return '#' + hex.substring(2, hex.length);
+    final hex =
+        color.toARGB32().toRadixString(16).padLeft(8, '0').toUpperCase();
+    return '#$hex';
   } catch (e) {
     return null;
   }

@@ -15,7 +15,9 @@ class GoogleOAuth {
 
   /// Call once during app startup.
   static Future<void> init() async {
-    if (_initialized) return;
+    if (_initialized) {
+      return;
+    }
     await GoogleSignIn.instance.initialize(
       clientId: kClientId,
       serverClientId: kServerClientId,
