@@ -232,39 +232,36 @@ class _AppBottomBarState extends State<AppBottomBar> {
           builder: (BuildContext context, listUIState) {
             return Container(
               color: Theme.of(context).colorScheme.surface,
-              child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: widget.sortFields.map((sortField) {
-                    final field = sortField;
-                    return InkWell(
-                      onTap: () => widget.onSelectedSortField!(sortField),
-                      child: IgnorePointer(
-                        child: RadioListTile<String>(
-                          dense: true,
-                          title: Text(
-                              AppLocalization.of(context)!.lookup(sortField)),
-                          subtitle: sortField == listUIState.sortField
-                              ? Text(listUIState.sortAscending
-                                  ? AppLocalization.of(context)!.ascending
-                                  : AppLocalization.of(context)!.descending)
-                              : null,
-                          groupValue: listUIState.sortField,
-                          activeColor: Theme.of(context).colorScheme.secondary,
-                          onChanged: (String? value) {
-                            if (value == null &&
-                                listUIState.sortField == field) {
-                              // Is re-selecting
-                              widget.onSelectedSortField!(field);
-                            } else if (value != null) {
-                              widget.onSelectedSortField!(value);
-                            }
-                          },
-                          value: field,
-                          toggleable: true,
+              child: RadioGroup<String>(
+                groupValue: listUIState.sortField,
+                onChanged: (String? value) {
+                  widget.onSelectedSortField!(value ?? '');
+                },
+                child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: widget.sortFields.map((sortField) {
+                      final field = sortField;
+                      return InkWell(
+                        onTap: () => widget.onSelectedSortField!(sortField),
+                        child: IgnorePointer(
+                          child: RadioListTile<String>(
+                            dense: true,
+                            title: Text(
+                                AppLocalization.of(context)!.lookup(sortField)),
+                            subtitle: sortField == listUIState.sortField
+                                ? Text(listUIState.sortAscending
+                                    ? AppLocalization.of(context)!.ascending
+                                    : AppLocalization.of(context)!.descending)
+                                : null,
+                            activeColor:
+                                Theme.of(context).colorScheme.secondary,
+                            value: field,
+                            toggleable: true,
+                          ),
                         ),
-                      ),
-                    );
-                  }).toList()),
+                      );
+                    }).toList()),
+              ),
             );
           },
         );
