@@ -82,5 +82,6 @@ key.properties
 google-services.json
 GoogleService-Info.plist
 android/app/build.gradle
+android/app/build.gradle.kts
 android/app/release/
 .fvm
