@@ -568,7 +568,7 @@ class _ExampleEditorState extends State<ExampleEditor> {
       anchor: _imageSelectionAnchor,
       composer: _composer,
       setWidth: (nodeId, width) {
-        print("Applying width $width to node $nodeId");
+        print('Applying width $width to node $nodeId');
         final node = _doc.getNodeById(nodeId)!;
         final currentStyles =
             SingleColumnLayoutComponentStyles.fromMetadata(node);
@@ -601,7 +601,7 @@ final _darkModeStyles = [
     },
   ),
   StyleRule(
-    const BlockSelector("header1"),
+    const BlockSelector('header1'),
     (doc, docNode) {
       return {
         Styles.textStyle: const TextStyle(
@@ -611,7 +611,7 @@ final _darkModeStyles = [
     },
   ),
   StyleRule(
-    const BlockSelector("header2"),
+    const BlockSelector('header2'),
     (doc, docNode) {
       return {
         Styles.textStyle: const TextStyle(

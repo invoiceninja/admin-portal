@@ -21,7 +21,7 @@ class DashboardActivity extends StatelessWidget {
     final activities = company.activities;
 
     return Material(
-      color: Theme.of(context).colorScheme.background,
+      color: Theme.of(context).colorScheme.surface,
       child: ScrollableListViewBuilder(
         itemCount: activities.length,
         separatorBuilder: (context, index) => ListDivider(),

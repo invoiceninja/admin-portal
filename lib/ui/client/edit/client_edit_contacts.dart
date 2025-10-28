@@ -364,7 +364,7 @@ class ContactEditDetailsState extends State<ContactEditDetails> {
           Padding(
             padding: const EdgeInsets.only(top: 20),
             child: SwitchListTile(
-                activeColor: Theme.of(context).colorScheme.secondary,
+                activeThumbColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.addToInvoices),
                 value: _contact!.sendEmail,
                 onChanged: (value) {

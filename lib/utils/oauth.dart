@@ -48,7 +48,7 @@ class GoogleOAuth {
     }
 
     // AUTHENTICATION → ID TOKEN
-    final idToken = (await account.authentication).idToken ?? '';
+    final idToken = account.authentication.idToken ?? '';
 
     // AUTHORIZATION → ACCESS TOKEN (only if you actually need one)
     // If you don't need an access token, you can skip this block or return ''.
@@ -80,7 +80,7 @@ class GoogleOAuth {
       return false;
     }
 
-    final idToken = (await account.authentication).idToken ?? '';
+    final idToken = account.authentication.idToken ?? '';
 
     String accessToken = '';
     final authz =

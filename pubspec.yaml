@@ -87,6 +87,14 @@ dependencies:
   device_info_plus: ^9.1.0
   ios_open_subscriptions_settings: ^0.0.4
 
+  redux: any
+  in_app_purchase_android: any
+  in_app_purchase_storekit: any
+  overlord: any
+  super_editor: any
+  follow_the_leader: any
+  super_editor_markdown: any
+  archive: any
 dependency_overrides:
   intl: any
   navigation_builder: ^0.0.3
@@ -131,6 +139,7 @@ dev_dependencies:
   msix: ^3.5.1
   import_sorter: ^4.6.0
 
+  redux: any
 flutter:
 
   uses-material-design: true

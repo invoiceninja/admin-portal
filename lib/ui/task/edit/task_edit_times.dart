@@ -71,7 +71,6 @@ class _TaskEditTimesState extends State<TaskEditTimes> {
             index: index!,
           );
         });
-    ;
   }
 
   @override

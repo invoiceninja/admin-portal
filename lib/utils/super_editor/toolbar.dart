@@ -81,7 +81,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
     _urlController = ImeAttributedTextEditingController(
         controller: SingleLineAttributedTextEditingController(_applyLink)) //
       ..onPerformActionPressed = _onPerformAction
-      ..text = AttributedText("https://");
+      ..text = AttributedText('https://');
   }
 
   @override
@@ -742,7 +742,7 @@ class _EditorToolbarState extends State<EditorToolbar> {
                 hintBehavior: HintBehavior.displayHintUntilTextEntered,
                 hintBuilder: (context) {
                   return const Text(
-                    "enter a url...",
+                    'enter a url...',
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 16,

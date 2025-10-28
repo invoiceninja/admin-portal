@@ -965,7 +965,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                                       .inclusiveTaxes,
                                                   child: SwitchListTile(
                                                     dense: true,
-                                                    activeColor:
+                                                    activeThumbColor:
                                                         Theme.of(context)
                                                             .colorScheme
                                                             .secondary,
@@ -992,7 +992,7 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                                       .autoBillEnabled,
                                                   child: SwitchListTile(
                                                     dense: true,
-                                                    activeColor:
+                                                    activeThumbColor:
                                                         Theme.of(context)
                                                             .colorScheme
                                                             .secondary,

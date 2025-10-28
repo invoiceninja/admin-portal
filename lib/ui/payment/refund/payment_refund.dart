@@ -143,7 +143,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
           FormCard(
             children: <Widget>[
               SwitchListTile(
-                activeColor: Theme.of(context).colorScheme.secondary,
+                activeThumbColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.sendEmail),
                 value: payment.sendEmail ?? false,
                 subtitle: Text(localization.emailReceipt),
@@ -152,7 +152,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
               ),
               if (gateway.supportsRefunds(payment.gatewayTypeId))
                 SwitchListTile(
-                  activeColor: Theme.of(context).colorScheme.secondary,
+                  activeThumbColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.gatewayRefund),
                   value: payment.gatewayRefund ?? false,
                   subtitle: Text(localization.gatewayRefundHelp),

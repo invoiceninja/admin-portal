@@ -49,7 +49,7 @@ class BoolDropdownButton extends StatelessWidget {
         secondary:
             iconData != null && isDesktop(context) ? Icon(iconData) : null,
         onChanged: (value) => onChanged(value),
-        activeColor: Theme.of(context).colorScheme.secondary,
+        activeThumbColor: Theme.of(context).colorScheme.secondary,
         subtitle: helpLabel != null ? Text(helpLabel!) : null,
       );
     }

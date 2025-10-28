@@ -306,7 +306,7 @@ class _ProductEditState extends State<ProductEdit> {
                   if (company.stockNotification) ...[
                     SizedBox(height: 16),
                     SwitchListTile(
-                      activeColor: Theme.of(context).colorScheme.secondary,
+                      activeThumbColor: Theme.of(context).colorScheme.secondary,
                       title: Text(localization.stockNotifications),
                       value: product.stockNotification,
                       onChanged: (value) => viewModel.onChanged(

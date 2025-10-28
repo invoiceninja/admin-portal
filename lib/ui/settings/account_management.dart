@@ -463,7 +463,7 @@ class _AccountOverview extends StatelessWidget {
             },
             title: Text(localization.activateCompany),
             subtitle: Text(localization.activateCompanyHelp),
-            activeColor: Theme.of(context).colorScheme.secondary,
+            activeThumbColor: Theme.of(context).colorScheme.secondary,
           ),
           SwitchListTile(
             value: company.markdownEnabled,
@@ -473,7 +473,7 @@ class _AccountOverview extends StatelessWidget {
             },
             title: Text(localization.enablePdfMarkdown),
             subtitle: Text(localization.enableMarkdownHelp),
-            activeColor: Theme.of(context).colorScheme.secondary,
+            activeThumbColor: Theme.of(context).colorScheme.secondary,
           ),
           SwitchListTile(
             value: company.markdownEmailEnabled,
@@ -483,7 +483,7 @@ class _AccountOverview extends StatelessWidget {
             },
             title: Text(localization.enableEmailMarkdown),
             subtitle: Text(localization.enableEmailMarkdownHelp),
-            activeColor: Theme.of(context).colorScheme.secondary,
+            activeThumbColor: Theme.of(context).colorScheme.secondary,
           ),
         ]),
         FormCard(
@@ -496,7 +496,7 @@ class _AccountOverview extends StatelessWidget {
               },
               title: Text(localization.includeDrafts),
               subtitle: Text(localization.includeDraftsHelp),
-              activeColor: Theme.of(context).colorScheme.secondary,
+              activeThumbColor: Theme.of(context).colorScheme.secondary,
             ),
             SwitchListTile(
               value: company.reportIncludeDeleted,
@@ -506,7 +506,7 @@ class _AccountOverview extends StatelessWidget {
               },
               title: Text(localization.includeDeleted),
               subtitle: Text(localization.includeDeletedHelp),
-              activeColor: Theme.of(context).colorScheme.secondary,
+              activeThumbColor: Theme.of(context).colorScheme.secondary,
             ),
           ],
         ),

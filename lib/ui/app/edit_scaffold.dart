@@ -203,7 +203,7 @@ class EditScaffold extends StatelessWidget {
                                           isEnabled
                                       ? ButtonStyle(
                                           backgroundColor:
-                                              MaterialStateProperty.all(state
+                                              WidgetStateProperty.all(state
                                                   .prefState
                                                   .colorThemeModel!
                                                   .colorSuccess))
@@ -344,7 +344,7 @@ class EditScaffold extends StatelessWidget {
                           OutlinedButton(
                             style: isEnabled
                                 ? ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
+                                    backgroundColor: WidgetStateProperty.all(
                                         state.prefState.colorThemeModel!
                                             .colorSuccess))
                                 : null,

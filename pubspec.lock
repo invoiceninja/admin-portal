@@ -18,7 +18,7 @@ packages:
     source: hosted
     version: "7.7.1"
   archive:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: archive
       sha256: "2fde1607386ab523f7a36bb3e7edb43bd58e6edaf2ffb29d8a6d578b297fdbbd"
@@ -501,7 +501,7 @@ packages:
     source: sdk
     version: "0.0.0"
   follow_the_leader:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: follow_the_leader
       sha256: "798baf5211ca2461c8462d4c8e94f57bf989758f8204056d607eb9a20f1cf794"
@@ -746,7 +746,7 @@ packages:
     source: hosted
     version: "3.2.3"
   in_app_purchase_android:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: in_app_purchase_android
       sha256: "9f320659b13e34529cd7d53508f7ead500f03b42e7a2435bd4efce5210546051"
@@ -762,7 +762,7 @@ packages:
     source: hosted
     version: "1.4.0"
   in_app_purchase_storekit:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: in_app_purchase_storekit
       sha256: aedbeea5beae10af3e5c380b65049842715b2bb014983e2a48b9006473f33cd9
@@ -1034,7 +1034,7 @@ packages:
     source: hosted
     version: "0.5.0"
   overlord:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: overlord
       sha256: "576256bc9ce3fb0ae3042bbb26eed67bdb26a5045dd7e3c851aae65b0bbab2f5"
@@ -1315,7 +1315,7 @@ packages:
     source: hosted
     version: "3.2.2"
   redux:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: redux
       sha256: "1e86ed5b1a9a717922d0a0ca41f9bf49c1a587d50050e9426fc65b14e85ec4d7"
@@ -1593,7 +1593,7 @@ packages:
     source: hosted
     version: "1.4.1"
   super_editor:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       path: super_editor
       ref: stable
@@ -1602,7 +1602,7 @@ packages:
     source: git
     version: "0.3.0-dev.10"
   super_editor_markdown:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       path: super_editor_markdown
       ref: stable

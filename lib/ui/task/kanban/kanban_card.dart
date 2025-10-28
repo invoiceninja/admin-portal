@@ -160,7 +160,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
                   width: 1),
               borderRadius: BorderRadius.circular(kBorderRadius),
             ),
-            color: Theme.of(context).colorScheme.background,
+            color: Theme.of(context).colorScheme.surface,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

@@ -664,13 +664,13 @@ class _FileImportState extends State<_FileImport> {
           ),
         ),
         SwitchListTile(
-          activeColor: Theme.of(context).colorScheme.secondary,
+          activeThumbColor: Theme.of(context).colorScheme.secondary,
           title: Text(localization.importSettings),
           value: _importJsonSettings,
           onChanged: (value) => setState(() => _importJsonSettings = value),
         ),
         SwitchListTile(
-          activeColor: Theme.of(context).colorScheme.secondary,
+          activeThumbColor: Theme.of(context).colorScheme.secondary,
           title: Text(localization.importData),
           value: _importJsonData,
           onChanged: (value) => setState(() => _importJsonData = value),
@@ -766,7 +766,7 @@ class __FileMapperState extends State<_FileMapper> {
 
     final List<Widget> children = [
       SwitchListTile(
-        activeColor: Theme.of(context).colorScheme.secondary,
+        activeThumbColor: Theme.of(context).colorScheme.secondary,
         title: Text(AppLocalization.of(context)!.firstRowAsColumnNames),
         value: _useFirstRowAsHeaders,
         onChanged: (value) => setState(() => _useFirstRowAsHeaders = value),
@@ -973,7 +973,7 @@ class _FieldMapper extends StatelessWidget {
         Expanded(
             child: DropdownButtonFormField<String>(
           isExpanded: true,
-          value: available.contains(mappedTo) ? mappedTo : null,
+          initialValue: available.contains(mappedTo) ? mappedTo : null,
           validator: (value) => (value ?? '').isNotEmpty &&
                   mapping!.values.where((element) => element == value).length >
                       1
