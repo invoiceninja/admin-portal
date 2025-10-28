@@ -70,7 +70,7 @@ dependencies:
   states_rebuilder: ^6.2.0
   html2md: ^1.2.6
   printing: ^5.11.0
-  image_cropper: ^9.1.0
+  image_cropper: ^11.0.0
   msal_js: ^2.14.0
   sign_in_with_apple: ^7.0.1
   window_manager: ^0.3.0
