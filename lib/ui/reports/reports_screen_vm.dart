@@ -1,5 +1,6 @@
 // Dart imports:
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io' as file;
 
 // Flutter imports:
@@ -546,7 +547,10 @@ class ReportsScreenVM {
 
             final filePath = directory + file.Platform.pathSeparator + filename;
             final csvFile = file.File(filePath);
-            await csvFile.writeAsString(csvData);
+            
+            // Add UTF-8 BOM to prevent encoding issues
+            final bom = utf8.encode('\uFEFF');
+            await csvFile.writeAsBytes([...bom, ...utf8.encode(csvData)]);
 
             if (isDesktopOS()) {
               showToast(localization!.fileSavedInPath
