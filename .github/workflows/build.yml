@@ -112,7 +112,7 @@ jobs:
           cd invoiceninja_foss
           git checkout v5-develop
           cp ../build/web/main.dart.js ./public/main.foss.dart.js
-          cp ../build/web/main.dart.js.map ./public/main.foss.dart.js.map
+          #cp ../build/web/main.dart.js.map ./public/main.foss.dart.js.map
           git add .
           git commit -m 'Admin Portal - Selfhosted'
           git push
