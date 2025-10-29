@@ -7,9 +7,9 @@ part of 'settings_model.dart';
 // **************************************************************************
 
 Serializer<SettingsEntity> _$settingsEntitySerializer =
-    new _$SettingsEntitySerializer();
+    _$SettingsEntitySerializer();
 Serializer<PdfPreviewRequest> _$pdfPreviewRequestSerializer =
-    new _$PdfPreviewRequestSerializer();
+    _$PdfPreviewRequestSerializer();
 
 class _$SettingsEntitySerializer
     implements StructuredSerializer<SettingsEntity> {
@@ -1716,6 +1716,41 @@ class _$SettingsEntitySerializer
         ..add(
             serializers.serialize(value, specifiedType: const FullType(bool)));
     }
+    value = object.sesSecretKey;
+    if (value != null) {
+      result
+        ..add('ses_secret_key')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.sesAccessKey;
+    if (value != null) {
+      result
+        ..add('ses_access_key')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.sesRegion;
+    if (value != null) {
+      result
+        ..add('ses_region')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.sesTopicArn;
+    if (value != null) {
+      result
+        ..add('ses_topic_arn')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.sesFromAddress;
+    if (value != null) {
+      result
+        ..add('ses_from_address')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -1723,7 +1758,7 @@ class _$SettingsEntitySerializer
   SettingsEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new SettingsEntityBuilder();
+    final result = SettingsEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -2714,6 +2749,26 @@ class _$SettingsEntitySerializer
           result.preferenceProductNotesForHtmlView = serializers
               .deserialize(value, specifiedType: const FullType(bool)) as bool?;
           break;
+        case 'ses_secret_key':
+          result.sesSecretKey = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'ses_access_key':
+          result.sesAccessKey = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'ses_region':
+          result.sesRegion = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'ses_topic_arn':
+          result.sesTopicArn = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'ses_from_address':
+          result.sesFromAddress = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
       }
     }
 
@@ -2756,7 +2811,7 @@ class _$PdfPreviewRequestSerializer
   PdfPreviewRequest deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new PdfPreviewRequestBuilder();
+    final result = PdfPreviewRequestBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -3281,9 +3336,19 @@ class _$SettingsEntity extends SettingsEntity {
   final bool? enableClientProfileUpdate;
   @override
   final bool? preferenceProductNotesForHtmlView;
+  @override
+  final String? sesSecretKey;
+  @override
+  final String? sesAccessKey;
+  @override
+  final String? sesRegion;
+  @override
+  final String? sesTopicArn;
+  @override
+  final String? sesFromAddress;
 
   factory _$SettingsEntity([void Function(SettingsEntityBuilder)? updates]) =>
-      (new SettingsEntityBuilder()..update(updates))._build();
+      (SettingsEntityBuilder()..update(updates))._build();
 
   _$SettingsEntity._(
       {this.timezoneId,
@@ -3529,16 +3594,19 @@ class _$SettingsEntity extends SettingsEntity {
       this.emailSubjectPaymentFailed,
       this.emailBodyPaymentFailed,
       this.enableClientProfileUpdate,
-      this.preferenceProductNotesForHtmlView})
+      this.preferenceProductNotesForHtmlView,
+      this.sesSecretKey,
+      this.sesAccessKey,
+      this.sesRegion,
+      this.sesTopicArn,
+      this.sesFromAddress})
       : super._();
-
   @override
   SettingsEntity rebuild(void Function(SettingsEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  SettingsEntityBuilder toBuilder() =>
-      new SettingsEntityBuilder()..replace(this);
+  SettingsEntityBuilder toBuilder() => SettingsEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -3793,7 +3861,12 @@ class _$SettingsEntity extends SettingsEntity {
         emailBodyPaymentFailed == other.emailBodyPaymentFailed &&
         enableClientProfileUpdate == other.enableClientProfileUpdate &&
         preferenceProductNotesForHtmlView ==
-            other.preferenceProductNotesForHtmlView;
+            other.preferenceProductNotesForHtmlView &&
+        sesSecretKey == other.sesSecretKey &&
+        sesAccessKey == other.sesAccessKey &&
+        sesRegion == other.sesRegion &&
+        sesTopicArn == other.sesTopicArn &&
+        sesFromAddress == other.sesFromAddress;
   }
 
   int? __hashCode;
@@ -4045,6 +4118,11 @@ class _$SettingsEntity extends SettingsEntity {
     _$hash = $jc(_$hash, emailBodyPaymentFailed.hashCode);
     _$hash = $jc(_$hash, enableClientProfileUpdate.hashCode);
     _$hash = $jc(_$hash, preferenceProductNotesForHtmlView.hashCode);
+    _$hash = $jc(_$hash, sesSecretKey.hashCode);
+    _$hash = $jc(_$hash, sesAccessKey.hashCode);
+    _$hash = $jc(_$hash, sesRegion.hashCode);
+    _$hash = $jc(_$hash, sesTopicArn.hashCode);
+    _$hash = $jc(_$hash, sesFromAddress.hashCode);
     _$hash = $jf(_$hash);
     return __hashCode ??= _$hash;
   }
@@ -4301,7 +4379,12 @@ class _$SettingsEntity extends SettingsEntity {
           ..add('emailBodyPaymentFailed', emailBodyPaymentFailed)
           ..add('enableClientProfileUpdate', enableClientProfileUpdate)
           ..add('preferenceProductNotesForHtmlView',
-              preferenceProductNotesForHtmlView))
+              preferenceProductNotesForHtmlView)
+          ..add('sesSecretKey', sesSecretKey)
+          ..add('sesAccessKey', sesAccessKey)
+          ..add('sesRegion', sesRegion)
+          ..add('sesTopicArn', sesTopicArn)
+          ..add('sesFromAddress', sesFromAddress))
         .toString();
   }
 }
@@ -4495,7 +4578,7 @@ class SettingsEntityBuilder
 
   MapBuilder<String?, String>? _translations;
   MapBuilder<String?, String> get translations =>
-      _$this._translations ??= new MapBuilder<String?, String>();
+      _$this._translations ??= MapBuilder<String?, String>();
   set translations(MapBuilder<String?, String>? translations) =>
       _$this._translations = translations;
 
@@ -4758,7 +4841,7 @@ class SettingsEntityBuilder
 
   MapBuilder<String, BuiltList<String>>? _pdfVariables;
   MapBuilder<String, BuiltList<String>> get pdfVariables =>
-      _$this._pdfVariables ??= new MapBuilder<String, BuiltList<String>>();
+      _$this._pdfVariables ??= MapBuilder<String, BuiltList<String>>();
   set pdfVariables(MapBuilder<String, BuiltList<String>>? pdfVariables) =>
       _$this._pdfVariables = pdfVariables;
 
@@ -5516,6 +5599,27 @@ class SettingsEntityBuilder
       _$this._preferenceProductNotesForHtmlView =
           preferenceProductNotesForHtmlView;
 
+  String? _sesSecretKey;
+  String? get sesSecretKey => _$this._sesSecretKey;
+  set sesSecretKey(String? sesSecretKey) => _$this._sesSecretKey = sesSecretKey;
+
+  String? _sesAccessKey;
+  String? get sesAccessKey => _$this._sesAccessKey;
+  set sesAccessKey(String? sesAccessKey) => _$this._sesAccessKey = sesAccessKey;
+
+  String? _sesRegion;
+  String? get sesRegion => _$this._sesRegion;
+  set sesRegion(String? sesRegion) => _$this._sesRegion = sesRegion;
+
+  String? _sesTopicArn;
+  String? get sesTopicArn => _$this._sesTopicArn;
+  set sesTopicArn(String? sesTopicArn) => _$this._sesTopicArn = sesTopicArn;
+
+  String? _sesFromAddress;
+  String? get sesFromAddress => _$this._sesFromAddress;
+  set sesFromAddress(String? sesFromAddress) =>
+      _$this._sesFromAddress = sesFromAddress;
+
   SettingsEntityBuilder();
 
   SettingsEntityBuilder get _$this {
@@ -5765,6 +5869,11 @@ class SettingsEntityBuilder
       _emailBodyPaymentFailed = $v.emailBodyPaymentFailed;
       _enableClientProfileUpdate = $v.enableClientProfileUpdate;
       _preferenceProductNotesForHtmlView = $v.preferenceProductNotesForHtmlView;
+      _sesSecretKey = $v.sesSecretKey;
+      _sesAccessKey = $v.sesAccessKey;
+      _sesRegion = $v.sesRegion;
+      _sesTopicArn = $v.sesTopicArn;
+      _sesFromAddress = $v.sesFromAddress;
       _$v = null;
     }
     return this;
@@ -5772,7 +5881,6 @@ class SettingsEntityBuilder
 
   @override
   void replace(SettingsEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SettingsEntity;
   }
 
@@ -5788,253 +5896,259 @@ class SettingsEntityBuilder
     _$SettingsEntity _$result;
     try {
       _$result = _$v ??
-          new _$SettingsEntity._(
-              timezoneId: timezoneId,
-              dateFormatId: dateFormatId,
-              enableMilitaryTime: enableMilitaryTime,
-              languageId: languageId,
-              showCurrencyCode: showCurrencyCode,
-              currencyId: currencyId,
-              customValue1: customValue1,
-              customValue2: customValue2,
-              customValue3: customValue3,
-              customValue4: customValue4,
-              defaultPaymentTerms: defaultPaymentTerms,
-              defaultValidUntil: defaultValidUntil,
-              companyGatewayIds: companyGatewayIds,
-              defaultTaskRate: defaultTaskRate,
-              sendReminders: sendReminders,
-              enablePortal: enablePortal,
-              enablePortalDashboard: enablePortalDashboard,
-              enablePortalTasks: enablePortalTasks,
-              enableClientPortalUploads: enableClientPortalUploads,
-              enableVendorPortalUploads: enableVendorPortalUploads,
-              emailStyle: emailStyle,
-              replyToEmail: replyToEmail,
-              replyToName: replyToName,
-              emailFromName: emailFromName,
-              bccEmail: bccEmail,
-              pdfEmailAttachment: pdfEmailAttachment,
-              ublEmailAttachment: ublEmailAttachment,
-              documentEmailAttachment: documentEmailAttachment,
-              emailStyleCustom: emailStyleCustom,
-              customMessageDashboard: customMessageDashboard,
-              customMessageUnpaidInvoice: customMessageUnpaidInvoice,
-              customMessagePaidInvoice: customMessagePaidInvoice,
-              customMessageUnapprovedQuote: customMessageUnapprovedQuote,
-              autoArchiveInvoice: autoArchiveInvoice,
-              autoArchiveInvoiceCancelled: autoArchiveInvoiceCancelled,
-              autoArchiveQuote: autoArchiveQuote,
-              autoEmailInvoice: autoEmailInvoice,
-              autoConvertQuote: autoConvertQuote,
-              enableInclusiveTaxes: enableInclusiveTaxes,
-              translations: _translations?.build(),
-              taskNumberPattern: taskNumberPattern,
-              taskNumberCounter: taskNumberCounter,
-              expenseNumberPattern: expenseNumberPattern,
-              expenseNumberCounter: expenseNumberCounter,
-              recurringExpenseNumberPattern: recurringExpenseNumberPattern,
-              recurringExpenseNumberCounter: recurringExpenseNumberCounter,
-              vendorNumberPattern: vendorNumberPattern,
-              vendorNumberCounter: vendorNumberCounter,
-              ticketNumberPattern: ticketNumberPattern,
-              ticketNumberCounter: ticketNumberCounter,
-              paymentNumberPattern: paymentNumberPattern,
-              paymentNumberCounter: paymentNumberCounter,
-              projectNumberPattern: projectNumberPattern,
-              projectNumberCounter: projectNumberCounter,
-              invoiceNumberPattern: invoiceNumberPattern,
-              invoiceNumberCounter: invoiceNumberCounter,
-              recurringInvoiceNumberPattern: recurringInvoiceNumberPattern,
-              recurringInvoiceNumberCounter: recurringInvoiceNumberCounter,
-              quoteNumberPattern: quoteNumberPattern,
-              quoteNumberCounter: quoteNumberCounter,
-              clientNumberPattern: clientNumberPattern,
-              clientNumberCounter: clientNumberCounter,
-              creditNumberPattern: creditNumberPattern,
-              creditNumberCounter: creditNumberCounter,
-              recurringNumberPrefix: recurringNumberPrefix,
-              resetCounterFrequencyId: resetCounterFrequencyId,
-              resetCounterDate: resetCounterDate,
-              counterPadding: counterPadding,
-              sharedInvoiceQuoteCounter: sharedInvoiceQuoteCounter,
-              sharedInvoiceCreditCounter: sharedInvoiceCreditCounter,
-              defaultInvoiceTerms: defaultInvoiceTerms,
-              defaultQuoteTerms: defaultQuoteTerms,
-              defaultQuoteFooter: defaultQuoteFooter,
-              defaultCreditTerms: defaultCreditTerms,
-              defaultCreditFooter: defaultCreditFooter,
-              defaultInvoiceDesignId: defaultInvoiceDesignId,
-              defaultQuoteDesignId: defaultQuoteDesignId,
-              defaultCreditDesignId: defaultCreditDesignId,
-              defaultDeliveryNoteDesignId: defaultDeliveryNoteDesignId,
-              defaultStatementDesignId: defaultStatementDesignId,
-              defaultPaymentReceiptDesignId: defaultPaymentReceiptDesignId,
-              defaultPaymentRefundDesignId: defaultPaymentRefundDesignId,
-              defaultInvoiceFooter: defaultInvoiceFooter,
-              defaultTaxName1: defaultTaxName1,
-              defaultTaxRate1: defaultTaxRate1,
-              defaultTaxName2: defaultTaxName2,
-              defaultTaxRate2: defaultTaxRate2,
-              defaultTaxName3: defaultTaxName3,
-              defaultTaxRate3: defaultTaxRate3,
-              defaultPaymentTypeId: defaultPaymentTypeId,
-              pdfVariables: _pdfVariables?.build(),
-              emailSignature: emailSignature,
-              emailSubjectInvoice: emailSubjectInvoice,
-              emailSubjectQuote: emailSubjectQuote,
-              emailSubjectCredit: emailSubjectCredit,
-              emailSubjectPayment: emailSubjectPayment,
-              emailSubjectPaymentPartial: emailSubjectPaymentPartial,
-              emailBodyInvoice: emailBodyInvoice,
-              emailBodyQuote: emailBodyQuote,
-              emailBodyCredit: emailBodyCredit,
-              emailBodyPayment: emailBodyPayment,
-              emailBodyPaymentPartial: emailBodyPaymentPartial,
-              emailSubjectReminder1: emailSubjectReminder1,
-              emailSubjectReminder2: emailSubjectReminder2,
-              emailSubjectReminder3: emailSubjectReminder3,
-              emailBodyReminder1: emailBodyReminder1,
-              emailBodyReminder2: emailBodyReminder2,
-              emailBodyReminder3: emailBodyReminder3,
-              emailSubjectCustom1: emailSubjectCustom1,
-              emailBodyCustom1: emailBodyCustom1,
-              emailSubjectCustom2: emailSubjectCustom2,
-              emailBodyCustom2: emailBodyCustom2,
-              emailSubjectCustom3: emailSubjectCustom3,
-              emailBodyCustom3: emailBodyCustom3,
-              emailSubjectStatement: emailSubjectStatement,
-              emailBodyStatement: emailBodyStatement,
-              emailSubjectPurchaseOrder: emailSubjectPurchaseOrder,
-              emailBodyPurchaseOrder: emailBodyPurchaseOrder,
-              enablePortalPassword: enablePortalPassword,
-              signatureOnPdf: signatureOnPdf,
-              enableEmailMarkup: enableEmailMarkup,
-              showAcceptInvoiceTerms: showAcceptInvoiceTerms,
-              showAcceptQuoteTerms: showAcceptQuoteTerms,
-              requireInvoiceSignature: requireInvoiceSignature,
-              requireQuoteSignature: requireQuoteSignature,
-              name: name,
-              companyLogo: companyLogo,
-              website: website,
-              address1: address1,
-              address2: address2,
-              city: city,
-              state: state,
-              postalCode: postalCode,
-              phone: phone,
-              email: email,
-              countryId: countryId,
-              vatNumber: vatNumber,
-              idNumber: idNumber,
-              pageSize: pageSize,
-              pageLayout: pageLayout,
-              fontSize: fontSize,
-              primaryColor: primaryColor,
-              secondaryColor: secondaryColor,
-              primaryFont: primaryFont,
-              secondaryFont: secondaryFont,
-              hidePaidToDate: hidePaidToDate,
-              embedDocuments: embedDocuments,
-              allPagesHeader: allPagesHeader,
-              allPagesFooter: allPagesFooter,
-              enableReminder1: enableReminder1,
-              enableReminder2: enableReminder2,
-              enableReminder3: enableReminder3,
-              enableReminderEndless: enableReminderEndless,
-              numDaysReminder1: numDaysReminder1,
-              numDaysReminder2: numDaysReminder2,
-              numDaysReminder3: numDaysReminder3,
-              scheduleReminder1: scheduleReminder1,
-              scheduleReminder2: scheduleReminder2,
-              scheduleReminder3: scheduleReminder3,
-              endlessReminderFrequencyId: endlessReminderFrequencyId,
-              lateFeeAmount1: lateFeeAmount1,
-              lateFeeAmount2: lateFeeAmount2,
-              lateFeeAmount3: lateFeeAmount3,
-              lateFeeAmountEndless: lateFeeAmountEndless,
-              lateFeePercent1: lateFeePercent1,
-              lateFeePercent2: lateFeePercent2,
-              lateFeePercent3: lateFeePercent3,
-              lateFeePercentEndless: lateFeePercentEndless,
-              emailSubjectReminderEndless: emailSubjectReminderEndless,
-              emailBodyReminderEndless: emailBodyReminderEndless,
-              clientOnlinePaymentNotification: clientOnlinePaymentNotification,
-              clientManualPaymentNotification: clientManualPaymentNotification,
-              clientMarkPaidPaymentNotification:
-                  clientMarkPaidPaymentNotification,
-              counterNumberApplied: counterNumberApplied,
-              emailSendingMethod: emailSendingMethod,
-              gmailSendingUserId: gmailSendingUserId,
-              clientPortalTerms: clientPortalTerms,
-              clientPortalPrivacy: clientPortalPrivacy,
-              lockInvoices: lockInvoices,
-              autoBill: autoBill,
-              autoBillStandardInvoices: autoBillStandardInvoices,
-              clientPortalAllowUnderPayment: clientPortalAllowUnderPayment,
-              clientPortalAllowOverPayment: clientPortalAllowOverPayment,
-              autoBillDate: autoBillDate,
-              clientPortalUnderPaymentMinimum: clientPortalUnderPaymentMinimum,
-              useCreditsPayment: useCreditsPayment,
-              clientPortalCustomHeader: clientPortalCustomHeader,
-              clientPortalCustomCss: clientPortalCustomCss,
-              clientPortalCustomFooter: clientPortalCustomFooter,
-              clientPortalCustomJs: clientPortalCustomJs,
-              hideEmptyColumnsOnPdf: hideEmptyColumnsOnPdf,
-              entitySendTime: entitySendTime,
-              clientPortalTasks: clientPortalTasks,
-              pageNumbering: pageNumbering,
-              pageNumberingAlignment: pageNumberingAlignment,
-              requirePurchaseOrderSignature: requirePurchaseOrderSignature,
-              defaultPurchaseOrderTerms: defaultPurchaseOrderTerms,
-              defaultPurchaseOrderDesignId: defaultPurchaseOrderDesignId,
-              defaultPurchaseOrderFooter: defaultPurchaseOrderFooter,
-              purchaseOrderNumberPattern: purchaseOrderNumberPattern,
-              purchaseOrderNumberCounter: purchaseOrderNumberCounter,
-              qrIban: qrIban,
-              besrId: besrId,
-              postmarkSecret: postmarkSecret,
-              mailgunSecret: mailgunSecret,
-              mailgunDomain: mailgunDomain,
-              mailgunEndpoint: mailgunEndpoint,
-              emailAlignment: emailAlignment,
-              showEmailFooter: showEmailFooter,
-              companyLogoSize: companyLogoSize,
-              showPaidStamp: showPaidStamp,
-              showShippingAddress: showShippingAddress,
-              customSendingEmail: customSendingEmail,
-              acceptPurchaseOrderNumber: acceptPurchaseOrderNumber,
-              clientInitiatedPayments: clientInitiatedPayments,
-              clientInitiatedPaymentsMinimum: clientInitiatedPaymentsMinimum,
-              shareInvoiceQuoteColumns: shareInvoiceQuoteColumns,
-              allowBillableTaskItems: allowBillableTaskItems,
-              showTaskItemDescription: showTaskItemDescription,
-              enableEInvoice: enableEInvoice,
-              eInvoiceType: eInvoiceType,
-              eQuoteType: eQuoteType,
-              defaultExpensePaymentTypeId: defaultExpensePaymentTypeId,
-              classification: classification,
-              paymentEmailAllContacts: paymentEmailAllContacts,
-              showPdfhtmlOnMobile: showPdfhtmlOnMobile,
-              enableRappenRounding: enableRappenRounding,
-              useUnappliedPayment: useUnappliedPayment,
-              brevoSecret: brevoSecret,
-              taskRoundUp: taskRoundUp,
-              taskRoundToNearest: taskRoundToNearest,
-              emailBodyQuoteReminder1: emailBodyQuoteReminder1,
-              emailSubjectQuoteReminder1: emailSubjectQuoteReminder1,
-              enableQuoteReminder1: enableQuoteReminder1,
-              numDaysQuoteReminder1: numDaysQuoteReminder1,
-              scheduleQuoteReminder1: scheduleQuoteReminder1,
-              quoteLateFeeAmount1: quoteLateFeeAmount1,
-              quoteLateFeePercent1: quoteLateFeePercent1,
-              mergeEInvoiceToPdf: mergeEInvoiceToPdf,
-              paymentFlow: paymentFlow,
-              emailSubjectPaymentFailed: emailSubjectPaymentFailed,
-              emailBodyPaymentFailed: emailBodyPaymentFailed,
-              enableClientProfileUpdate: enableClientProfileUpdate,
-              preferenceProductNotesForHtmlView:
-                  preferenceProductNotesForHtmlView);
+          _$SettingsEntity._(
+            timezoneId: timezoneId,
+            dateFormatId: dateFormatId,
+            enableMilitaryTime: enableMilitaryTime,
+            languageId: languageId,
+            showCurrencyCode: showCurrencyCode,
+            currencyId: currencyId,
+            customValue1: customValue1,
+            customValue2: customValue2,
+            customValue3: customValue3,
+            customValue4: customValue4,
+            defaultPaymentTerms: defaultPaymentTerms,
+            defaultValidUntil: defaultValidUntil,
+            companyGatewayIds: companyGatewayIds,
+            defaultTaskRate: defaultTaskRate,
+            sendReminders: sendReminders,
+            enablePortal: enablePortal,
+            enablePortalDashboard: enablePortalDashboard,
+            enablePortalTasks: enablePortalTasks,
+            enableClientPortalUploads: enableClientPortalUploads,
+            enableVendorPortalUploads: enableVendorPortalUploads,
+            emailStyle: emailStyle,
+            replyToEmail: replyToEmail,
+            replyToName: replyToName,
+            emailFromName: emailFromName,
+            bccEmail: bccEmail,
+            pdfEmailAttachment: pdfEmailAttachment,
+            ublEmailAttachment: ublEmailAttachment,
+            documentEmailAttachment: documentEmailAttachment,
+            emailStyleCustom: emailStyleCustom,
+            customMessageDashboard: customMessageDashboard,
+            customMessageUnpaidInvoice: customMessageUnpaidInvoice,
+            customMessagePaidInvoice: customMessagePaidInvoice,
+            customMessageUnapprovedQuote: customMessageUnapprovedQuote,
+            autoArchiveInvoice: autoArchiveInvoice,
+            autoArchiveInvoiceCancelled: autoArchiveInvoiceCancelled,
+            autoArchiveQuote: autoArchiveQuote,
+            autoEmailInvoice: autoEmailInvoice,
+            autoConvertQuote: autoConvertQuote,
+            enableInclusiveTaxes: enableInclusiveTaxes,
+            translations: _translations?.build(),
+            taskNumberPattern: taskNumberPattern,
+            taskNumberCounter: taskNumberCounter,
+            expenseNumberPattern: expenseNumberPattern,
+            expenseNumberCounter: expenseNumberCounter,
+            recurringExpenseNumberPattern: recurringExpenseNumberPattern,
+            recurringExpenseNumberCounter: recurringExpenseNumberCounter,
+            vendorNumberPattern: vendorNumberPattern,
+            vendorNumberCounter: vendorNumberCounter,
+            ticketNumberPattern: ticketNumberPattern,
+            ticketNumberCounter: ticketNumberCounter,
+            paymentNumberPattern: paymentNumberPattern,
+            paymentNumberCounter: paymentNumberCounter,
+            projectNumberPattern: projectNumberPattern,
+            projectNumberCounter: projectNumberCounter,
+            invoiceNumberPattern: invoiceNumberPattern,
+            invoiceNumberCounter: invoiceNumberCounter,
+            recurringInvoiceNumberPattern: recurringInvoiceNumberPattern,
+            recurringInvoiceNumberCounter: recurringInvoiceNumberCounter,
+            quoteNumberPattern: quoteNumberPattern,
+            quoteNumberCounter: quoteNumberCounter,
+            clientNumberPattern: clientNumberPattern,
+            clientNumberCounter: clientNumberCounter,
+            creditNumberPattern: creditNumberPattern,
+            creditNumberCounter: creditNumberCounter,
+            recurringNumberPrefix: recurringNumberPrefix,
+            resetCounterFrequencyId: resetCounterFrequencyId,
+            resetCounterDate: resetCounterDate,
+            counterPadding: counterPadding,
+            sharedInvoiceQuoteCounter: sharedInvoiceQuoteCounter,
+            sharedInvoiceCreditCounter: sharedInvoiceCreditCounter,
+            defaultInvoiceTerms: defaultInvoiceTerms,
+            defaultQuoteTerms: defaultQuoteTerms,
+            defaultQuoteFooter: defaultQuoteFooter,
+            defaultCreditTerms: defaultCreditTerms,
+            defaultCreditFooter: defaultCreditFooter,
+            defaultInvoiceDesignId: defaultInvoiceDesignId,
+            defaultQuoteDesignId: defaultQuoteDesignId,
+            defaultCreditDesignId: defaultCreditDesignId,
+            defaultDeliveryNoteDesignId: defaultDeliveryNoteDesignId,
+            defaultStatementDesignId: defaultStatementDesignId,
+            defaultPaymentReceiptDesignId: defaultPaymentReceiptDesignId,
+            defaultPaymentRefundDesignId: defaultPaymentRefundDesignId,
+            defaultInvoiceFooter: defaultInvoiceFooter,
+            defaultTaxName1: defaultTaxName1,
+            defaultTaxRate1: defaultTaxRate1,
+            defaultTaxName2: defaultTaxName2,
+            defaultTaxRate2: defaultTaxRate2,
+            defaultTaxName3: defaultTaxName3,
+            defaultTaxRate3: defaultTaxRate3,
+            defaultPaymentTypeId: defaultPaymentTypeId,
+            pdfVariables: _pdfVariables?.build(),
+            emailSignature: emailSignature,
+            emailSubjectInvoice: emailSubjectInvoice,
+            emailSubjectQuote: emailSubjectQuote,
+            emailSubjectCredit: emailSubjectCredit,
+            emailSubjectPayment: emailSubjectPayment,
+            emailSubjectPaymentPartial: emailSubjectPaymentPartial,
+            emailBodyInvoice: emailBodyInvoice,
+            emailBodyQuote: emailBodyQuote,
+            emailBodyCredit: emailBodyCredit,
+            emailBodyPayment: emailBodyPayment,
+            emailBodyPaymentPartial: emailBodyPaymentPartial,
+            emailSubjectReminder1: emailSubjectReminder1,
+            emailSubjectReminder2: emailSubjectReminder2,
+            emailSubjectReminder3: emailSubjectReminder3,
+            emailBodyReminder1: emailBodyReminder1,
+            emailBodyReminder2: emailBodyReminder2,
+            emailBodyReminder3: emailBodyReminder3,
+            emailSubjectCustom1: emailSubjectCustom1,
+            emailBodyCustom1: emailBodyCustom1,
+            emailSubjectCustom2: emailSubjectCustom2,
+            emailBodyCustom2: emailBodyCustom2,
+            emailSubjectCustom3: emailSubjectCustom3,
+            emailBodyCustom3: emailBodyCustom3,
+            emailSubjectStatement: emailSubjectStatement,
+            emailBodyStatement: emailBodyStatement,
+            emailSubjectPurchaseOrder: emailSubjectPurchaseOrder,
+            emailBodyPurchaseOrder: emailBodyPurchaseOrder,
+            enablePortalPassword: enablePortalPassword,
+            signatureOnPdf: signatureOnPdf,
+            enableEmailMarkup: enableEmailMarkup,
+            showAcceptInvoiceTerms: showAcceptInvoiceTerms,
+            showAcceptQuoteTerms: showAcceptQuoteTerms,
+            requireInvoiceSignature: requireInvoiceSignature,
+            requireQuoteSignature: requireQuoteSignature,
+            name: name,
+            companyLogo: companyLogo,
+            website: website,
+            address1: address1,
+            address2: address2,
+            city: city,
+            state: state,
+            postalCode: postalCode,
+            phone: phone,
+            email: email,
+            countryId: countryId,
+            vatNumber: vatNumber,
+            idNumber: idNumber,
+            pageSize: pageSize,
+            pageLayout: pageLayout,
+            fontSize: fontSize,
+            primaryColor: primaryColor,
+            secondaryColor: secondaryColor,
+            primaryFont: primaryFont,
+            secondaryFont: secondaryFont,
+            hidePaidToDate: hidePaidToDate,
+            embedDocuments: embedDocuments,
+            allPagesHeader: allPagesHeader,
+            allPagesFooter: allPagesFooter,
+            enableReminder1: enableReminder1,
+            enableReminder2: enableReminder2,
+            enableReminder3: enableReminder3,
+            enableReminderEndless: enableReminderEndless,
+            numDaysReminder1: numDaysReminder1,
+            numDaysReminder2: numDaysReminder2,
+            numDaysReminder3: numDaysReminder3,
+            scheduleReminder1: scheduleReminder1,
+            scheduleReminder2: scheduleReminder2,
+            scheduleReminder3: scheduleReminder3,
+            endlessReminderFrequencyId: endlessReminderFrequencyId,
+            lateFeeAmount1: lateFeeAmount1,
+            lateFeeAmount2: lateFeeAmount2,
+            lateFeeAmount3: lateFeeAmount3,
+            lateFeeAmountEndless: lateFeeAmountEndless,
+            lateFeePercent1: lateFeePercent1,
+            lateFeePercent2: lateFeePercent2,
+            lateFeePercent3: lateFeePercent3,
+            lateFeePercentEndless: lateFeePercentEndless,
+            emailSubjectReminderEndless: emailSubjectReminderEndless,
+            emailBodyReminderEndless: emailBodyReminderEndless,
+            clientOnlinePaymentNotification: clientOnlinePaymentNotification,
+            clientManualPaymentNotification: clientManualPaymentNotification,
+            clientMarkPaidPaymentNotification:
+                clientMarkPaidPaymentNotification,
+            counterNumberApplied: counterNumberApplied,
+            emailSendingMethod: emailSendingMethod,
+            gmailSendingUserId: gmailSendingUserId,
+            clientPortalTerms: clientPortalTerms,
+            clientPortalPrivacy: clientPortalPrivacy,
+            lockInvoices: lockInvoices,
+            autoBill: autoBill,
+            autoBillStandardInvoices: autoBillStandardInvoices,
+            clientPortalAllowUnderPayment: clientPortalAllowUnderPayment,
+            clientPortalAllowOverPayment: clientPortalAllowOverPayment,
+            autoBillDate: autoBillDate,
+            clientPortalUnderPaymentMinimum: clientPortalUnderPaymentMinimum,
+            useCreditsPayment: useCreditsPayment,
+            clientPortalCustomHeader: clientPortalCustomHeader,
+            clientPortalCustomCss: clientPortalCustomCss,
+            clientPortalCustomFooter: clientPortalCustomFooter,
+            clientPortalCustomJs: clientPortalCustomJs,
+            hideEmptyColumnsOnPdf: hideEmptyColumnsOnPdf,
+            entitySendTime: entitySendTime,
+            clientPortalTasks: clientPortalTasks,
+            pageNumbering: pageNumbering,
+            pageNumberingAlignment: pageNumberingAlignment,
+            requirePurchaseOrderSignature: requirePurchaseOrderSignature,
+            defaultPurchaseOrderTerms: defaultPurchaseOrderTerms,
+            defaultPurchaseOrderDesignId: defaultPurchaseOrderDesignId,
+            defaultPurchaseOrderFooter: defaultPurchaseOrderFooter,
+            purchaseOrderNumberPattern: purchaseOrderNumberPattern,
+            purchaseOrderNumberCounter: purchaseOrderNumberCounter,
+            qrIban: qrIban,
+            besrId: besrId,
+            postmarkSecret: postmarkSecret,
+            mailgunSecret: mailgunSecret,
+            mailgunDomain: mailgunDomain,
+            mailgunEndpoint: mailgunEndpoint,
+            emailAlignment: emailAlignment,
+            showEmailFooter: showEmailFooter,
+            companyLogoSize: companyLogoSize,
+            showPaidStamp: showPaidStamp,
+            showShippingAddress: showShippingAddress,
+            customSendingEmail: customSendingEmail,
+            acceptPurchaseOrderNumber: acceptPurchaseOrderNumber,
+            clientInitiatedPayments: clientInitiatedPayments,
+            clientInitiatedPaymentsMinimum: clientInitiatedPaymentsMinimum,
+            shareInvoiceQuoteColumns: shareInvoiceQuoteColumns,
+            allowBillableTaskItems: allowBillableTaskItems,
+            showTaskItemDescription: showTaskItemDescription,
+            enableEInvoice: enableEInvoice,
+            eInvoiceType: eInvoiceType,
+            eQuoteType: eQuoteType,
+            defaultExpensePaymentTypeId: defaultExpensePaymentTypeId,
+            classification: classification,
+            paymentEmailAllContacts: paymentEmailAllContacts,
+            showPdfhtmlOnMobile: showPdfhtmlOnMobile,
+            enableRappenRounding: enableRappenRounding,
+            useUnappliedPayment: useUnappliedPayment,
+            brevoSecret: brevoSecret,
+            taskRoundUp: taskRoundUp,
+            taskRoundToNearest: taskRoundToNearest,
+            emailBodyQuoteReminder1: emailBodyQuoteReminder1,
+            emailSubjectQuoteReminder1: emailSubjectQuoteReminder1,
+            enableQuoteReminder1: enableQuoteReminder1,
+            numDaysQuoteReminder1: numDaysQuoteReminder1,
+            scheduleQuoteReminder1: scheduleQuoteReminder1,
+            quoteLateFeeAmount1: quoteLateFeeAmount1,
+            quoteLateFeePercent1: quoteLateFeePercent1,
+            mergeEInvoiceToPdf: mergeEInvoiceToPdf,
+            paymentFlow: paymentFlow,
+            emailSubjectPaymentFailed: emailSubjectPaymentFailed,
+            emailBodyPaymentFailed: emailBodyPaymentFailed,
+            enableClientProfileUpdate: enableClientProfileUpdate,
+            preferenceProductNotesForHtmlView:
+                preferenceProductNotesForHtmlView,
+            sesSecretKey: sesSecretKey,
+            sesAccessKey: sesAccessKey,
+            sesRegion: sesRegion,
+            sesTopicArn: sesTopicArn,
+            sesFromAddress: sesFromAddress,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -6044,7 +6158,7 @@ class SettingsEntityBuilder
         _$failedField = 'pdfVariables';
         _pdfVariables?.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'SettingsEntity', _$failedField, e.toString());
       }
       rethrow;
@@ -6068,7 +6182,7 @@ class _$PdfPreviewRequest extends PdfPreviewRequest {
 
   factory _$PdfPreviewRequest(
           [void Function(PdfPreviewRequestBuilder)? updates]) =>
-      (new PdfPreviewRequestBuilder()..update(updates))._build();
+      (PdfPreviewRequestBuilder()..update(updates))._build();
 
   _$PdfPreviewRequest._(
       {required this.entityType,
@@ -6076,26 +6190,14 @@ class _$PdfPreviewRequest extends PdfPreviewRequest {
       required this.settings,
       required this.groupId,
       required this.clientId})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        entityType, r'PdfPreviewRequest', 'entityType');
-    BuiltValueNullFieldError.checkNotNull(
-        settingsType, r'PdfPreviewRequest', 'settingsType');
-    BuiltValueNullFieldError.checkNotNull(
-        settings, r'PdfPreviewRequest', 'settings');
-    BuiltValueNullFieldError.checkNotNull(
-        groupId, r'PdfPreviewRequest', 'groupId');
-    BuiltValueNullFieldError.checkNotNull(
-        clientId, r'PdfPreviewRequest', 'clientId');
-  }
-
+      : super._();
   @override
   PdfPreviewRequest rebuild(void Function(PdfPreviewRequestBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   PdfPreviewRequestBuilder toBuilder() =>
-      new PdfPreviewRequestBuilder()..replace(this);
+      PdfPreviewRequestBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -6148,7 +6250,7 @@ class PdfPreviewRequestBuilder
 
   SettingsEntityBuilder? _settings;
   SettingsEntityBuilder get settings =>
-      _$this._settings ??= new SettingsEntityBuilder();
+      _$this._settings ??= SettingsEntityBuilder();
   set settings(SettingsEntityBuilder? settings) => _$this._settings = settings;
 
   String? _groupId;
@@ -6176,7 +6278,6 @@ class PdfPreviewRequestBuilder
 
   @override
   void replace(PdfPreviewRequest other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PdfPreviewRequest;
   }
 
@@ -6192,23 +6293,24 @@ class PdfPreviewRequestBuilder
     _$PdfPreviewRequest _$result;
     try {
       _$result = _$v ??
-          new _$PdfPreviewRequest._(
-              entityType: BuiltValueNullFieldError.checkNotNull(
-                  entityType, r'PdfPreviewRequest', 'entityType'),
-              settingsType: BuiltValueNullFieldError.checkNotNull(
-                  settingsType, r'PdfPreviewRequest', 'settingsType'),
-              settings: settings.build(),
-              groupId: BuiltValueNullFieldError.checkNotNull(
-                  groupId, r'PdfPreviewRequest', 'groupId'),
-              clientId: BuiltValueNullFieldError.checkNotNull(
-                  clientId, r'PdfPreviewRequest', 'clientId'));
+          _$PdfPreviewRequest._(
+            entityType: BuiltValueNullFieldError.checkNotNull(
+                entityType, r'PdfPreviewRequest', 'entityType'),
+            settingsType: BuiltValueNullFieldError.checkNotNull(
+                settingsType, r'PdfPreviewRequest', 'settingsType'),
+            settings: settings.build(),
+            groupId: BuiltValueNullFieldError.checkNotNull(
+                groupId, r'PdfPreviewRequest', 'groupId'),
+            clientId: BuiltValueNullFieldError.checkNotNull(
+                clientId, r'PdfPreviewRequest', 'clientId'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'settings';
         settings.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'PdfPreviewRequest', _$failedField, e.toString());
       }
       rethrow;

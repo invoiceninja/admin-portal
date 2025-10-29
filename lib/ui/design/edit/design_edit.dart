@@ -457,14 +457,14 @@ class _DesignSettingsState extends State<DesignSettings> {
             // TODO remove this once browser supported on all platforms
             if (!kReleaseMode || kIsWeb || isMobileOS())
               SwitchListTile(
-                activeColor: Theme.of(context).colorScheme.secondary,
+                activeThumbColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.draftMode),
                 subtitle: Text(localization.draftModeHelp),
                 value: widget.draftMode,
                 onChanged: widget.isLoading ? null : widget.onDraftModeChanged,
               ),
             SwitchListTile(
-              activeColor: Theme.of(context).colorScheme.secondary,
+              activeThumbColor: Theme.of(context).colorScheme.secondary,
               title: Text(localization.template),
               subtitle: Text(localization.templateHelp),
               value: design.isTemplate,

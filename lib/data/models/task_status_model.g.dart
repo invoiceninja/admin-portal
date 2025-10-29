@@ -7,11 +7,11 @@ part of 'task_status_model.dart';
 // **************************************************************************
 
 Serializer<TaskStatusListResponse> _$taskStatusListResponseSerializer =
-    new _$TaskStatusListResponseSerializer();
+    _$TaskStatusListResponseSerializer();
 Serializer<TaskStatusItemResponse> _$taskStatusItemResponseSerializer =
-    new _$TaskStatusItemResponseSerializer();
+    _$TaskStatusItemResponseSerializer();
 Serializer<TaskStatusEntity> _$taskStatusEntitySerializer =
-    new _$TaskStatusEntitySerializer();
+    _$TaskStatusEntitySerializer();
 
 class _$TaskStatusListResponseSerializer
     implements StructuredSerializer<TaskStatusListResponse> {
@@ -41,7 +41,7 @@ class _$TaskStatusListResponseSerializer
   TaskStatusListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TaskStatusListResponseBuilder();
+    final result = TaskStatusListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -89,7 +89,7 @@ class _$TaskStatusItemResponseSerializer
   TaskStatusItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TaskStatusItemResponseBuilder();
+    final result = TaskStatusItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -179,7 +179,7 @@ class _$TaskStatusEntitySerializer
   TaskStatusEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TaskStatusEntityBuilder();
+    final result = TaskStatusEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -244,13 +244,9 @@ class _$TaskStatusListResponse extends TaskStatusListResponse {
 
   factory _$TaskStatusListResponse(
           [void Function(TaskStatusListResponseBuilder)? updates]) =>
-      (new TaskStatusListResponseBuilder()..update(updates))._build();
+      (TaskStatusListResponseBuilder()..update(updates))._build();
 
-  _$TaskStatusListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'TaskStatusListResponse', 'data');
-  }
-
+  _$TaskStatusListResponse._({required this.data}) : super._();
   @override
   TaskStatusListResponse rebuild(
           void Function(TaskStatusListResponseBuilder) updates) =>
@@ -258,7 +254,7 @@ class _$TaskStatusListResponse extends TaskStatusListResponse {
 
   @override
   TaskStatusListResponseBuilder toBuilder() =>
-      new TaskStatusListResponseBuilder()..replace(this);
+      TaskStatusListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -290,7 +286,7 @@ class TaskStatusListResponseBuilder
 
   ListBuilder<TaskStatusEntity>? _data;
   ListBuilder<TaskStatusEntity> get data =>
-      _$this._data ??= new ListBuilder<TaskStatusEntity>();
+      _$this._data ??= ListBuilder<TaskStatusEntity>();
   set data(ListBuilder<TaskStatusEntity>? data) => _$this._data = data;
 
   TaskStatusListResponseBuilder();
@@ -306,7 +302,6 @@ class TaskStatusListResponseBuilder
 
   @override
   void replace(TaskStatusListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaskStatusListResponse;
   }
 
@@ -321,14 +316,17 @@ class TaskStatusListResponseBuilder
   _$TaskStatusListResponse _build() {
     _$TaskStatusListResponse _$result;
     try {
-      _$result = _$v ?? new _$TaskStatusListResponse._(data: data.build());
+      _$result = _$v ??
+          _$TaskStatusListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TaskStatusListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -344,13 +342,9 @@ class _$TaskStatusItemResponse extends TaskStatusItemResponse {
 
   factory _$TaskStatusItemResponse(
           [void Function(TaskStatusItemResponseBuilder)? updates]) =>
-      (new TaskStatusItemResponseBuilder()..update(updates))._build();
+      (TaskStatusItemResponseBuilder()..update(updates))._build();
 
-  _$TaskStatusItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'TaskStatusItemResponse', 'data');
-  }
-
+  _$TaskStatusItemResponse._({required this.data}) : super._();
   @override
   TaskStatusItemResponse rebuild(
           void Function(TaskStatusItemResponseBuilder) updates) =>
@@ -358,7 +352,7 @@ class _$TaskStatusItemResponse extends TaskStatusItemResponse {
 
   @override
   TaskStatusItemResponseBuilder toBuilder() =>
-      new TaskStatusItemResponseBuilder()..replace(this);
+      TaskStatusItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -390,7 +384,7 @@ class TaskStatusItemResponseBuilder
 
   TaskStatusEntityBuilder? _data;
   TaskStatusEntityBuilder get data =>
-      _$this._data ??= new TaskStatusEntityBuilder();
+      _$this._data ??= TaskStatusEntityBuilder();
   set data(TaskStatusEntityBuilder? data) => _$this._data = data;
 
   TaskStatusItemResponseBuilder();
@@ -406,7 +400,6 @@ class TaskStatusItemResponseBuilder
 
   @override
   void replace(TaskStatusItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaskStatusItemResponse;
   }
 
@@ -421,14 +414,17 @@ class TaskStatusItemResponseBuilder
   _$TaskStatusItemResponse _build() {
     _$TaskStatusItemResponse _$result;
     try {
-      _$result = _$v ?? new _$TaskStatusItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$TaskStatusItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TaskStatusItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -464,7 +460,7 @@ class _$TaskStatusEntity extends TaskStatusEntity {
 
   factory _$TaskStatusEntity(
           [void Function(TaskStatusEntityBuilder)? updates]) =>
-      (new TaskStatusEntityBuilder()..update(updates))._build();
+      (TaskStatusEntityBuilder()..update(updates))._build();
 
   _$TaskStatusEntity._(
       {required this.name,
@@ -478,25 +474,14 @@ class _$TaskStatusEntity extends TaskStatusEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'TaskStatusEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(color, r'TaskStatusEntity', 'color');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'TaskStatusEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'TaskStatusEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'TaskStatusEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'TaskStatusEntity', 'id');
-  }
-
+      : super._();
   @override
   TaskStatusEntity rebuild(void Function(TaskStatusEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   TaskStatusEntityBuilder toBuilder() =>
-      new TaskStatusEntityBuilder()..replace(this);
+      TaskStatusEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -628,7 +613,6 @@ class TaskStatusEntityBuilder
 
   @override
   void replace(TaskStatusEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaskStatusEntity;
   }
 
@@ -642,24 +626,25 @@ class TaskStatusEntityBuilder
 
   _$TaskStatusEntity _build() {
     final _$result = _$v ??
-        new _$TaskStatusEntity._(
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'TaskStatusEntity', 'name'),
-            color: BuiltValueNullFieldError.checkNotNull(
-                color, r'TaskStatusEntity', 'color'),
-            statusOrder: statusOrder,
-            isChanged: isChanged,
-            createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, r'TaskStatusEntity', 'createdAt'),
-            updatedAt: BuiltValueNullFieldError.checkNotNull(
-                updatedAt, r'TaskStatusEntity', 'updatedAt'),
-            archivedAt: BuiltValueNullFieldError.checkNotNull(
-                archivedAt, r'TaskStatusEntity', 'archivedAt'),
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            id: BuiltValueNullFieldError.checkNotNull(
-                id, r'TaskStatusEntity', 'id'));
+        _$TaskStatusEntity._(
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'TaskStatusEntity', 'name'),
+          color: BuiltValueNullFieldError.checkNotNull(
+              color, r'TaskStatusEntity', 'color'),
+          statusOrder: statusOrder,
+          isChanged: isChanged,
+          createdAt: BuiltValueNullFieldError.checkNotNull(
+              createdAt, r'TaskStatusEntity', 'createdAt'),
+          updatedAt: BuiltValueNullFieldError.checkNotNull(
+              updatedAt, r'TaskStatusEntity', 'updatedAt'),
+          archivedAt: BuiltValueNullFieldError.checkNotNull(
+              archivedAt, r'TaskStatusEntity', 'archivedAt'),
+          isDeleted: isDeleted,
+          createdUserId: createdUserId,
+          assignedUserId: assignedUserId,
+          id: BuiltValueNullFieldError.checkNotNull(
+              id, r'TaskStatusEntity', 'id'),
+        );
     replace(_$result);
     return _$result;
   }

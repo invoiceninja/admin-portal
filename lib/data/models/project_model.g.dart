@@ -7,11 +7,11 @@ part of 'project_model.dart';
 // **************************************************************************
 
 Serializer<ProjectListResponse> _$projectListResponseSerializer =
-    new _$ProjectListResponseSerializer();
+    _$ProjectListResponseSerializer();
 Serializer<ProjectItemResponse> _$projectItemResponseSerializer =
-    new _$ProjectItemResponseSerializer();
+    _$ProjectItemResponseSerializer();
 Serializer<ProjectEntity> _$projectEntitySerializer =
-    new _$ProjectEntitySerializer();
+    _$ProjectEntitySerializer();
 
 class _$ProjectListResponseSerializer
     implements StructuredSerializer<ProjectListResponse> {
@@ -41,7 +41,7 @@ class _$ProjectListResponseSerializer
   ProjectListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ProjectListResponseBuilder();
+    final result = ProjectListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -89,7 +89,7 @@ class _$ProjectItemResponseSerializer
   ProjectItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ProjectItemResponseBuilder();
+    final result = ProjectItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -211,7 +211,7 @@ class _$ProjectEntitySerializer implements StructuredSerializer<ProjectEntity> {
   ProjectEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ProjectEntityBuilder();
+    final result = ProjectEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -326,12 +326,9 @@ class _$ProjectListResponse extends ProjectListResponse {
 
   factory _$ProjectListResponse(
           [void Function(ProjectListResponseBuilder)? updates]) =>
-      (new ProjectListResponseBuilder()..update(updates))._build();
+      (ProjectListResponseBuilder()..update(updates))._build();
 
-  _$ProjectListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'ProjectListResponse', 'data');
-  }
-
+  _$ProjectListResponse._({required this.data}) : super._();
   @override
   ProjectListResponse rebuild(
           void Function(ProjectListResponseBuilder) updates) =>
@@ -339,7 +336,7 @@ class _$ProjectListResponse extends ProjectListResponse {
 
   @override
   ProjectListResponseBuilder toBuilder() =>
-      new ProjectListResponseBuilder()..replace(this);
+      ProjectListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -371,7 +368,7 @@ class ProjectListResponseBuilder
 
   ListBuilder<ProjectEntity>? _data;
   ListBuilder<ProjectEntity> get data =>
-      _$this._data ??= new ListBuilder<ProjectEntity>();
+      _$this._data ??= ListBuilder<ProjectEntity>();
   set data(ListBuilder<ProjectEntity>? data) => _$this._data = data;
 
   ProjectListResponseBuilder();
@@ -387,7 +384,6 @@ class ProjectListResponseBuilder
 
   @override
   void replace(ProjectListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ProjectListResponse;
   }
 
@@ -402,14 +398,17 @@ class ProjectListResponseBuilder
   _$ProjectListResponse _build() {
     _$ProjectListResponse _$result;
     try {
-      _$result = _$v ?? new _$ProjectListResponse._(data: data.build());
+      _$result = _$v ??
+          _$ProjectListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ProjectListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -425,12 +424,9 @@ class _$ProjectItemResponse extends ProjectItemResponse {
 
   factory _$ProjectItemResponse(
           [void Function(ProjectItemResponseBuilder)? updates]) =>
-      (new ProjectItemResponseBuilder()..update(updates))._build();
+      (ProjectItemResponseBuilder()..update(updates))._build();
 
-  _$ProjectItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'ProjectItemResponse', 'data');
-  }
-
+  _$ProjectItemResponse._({required this.data}) : super._();
   @override
   ProjectItemResponse rebuild(
           void Function(ProjectItemResponseBuilder) updates) =>
@@ -438,7 +434,7 @@ class _$ProjectItemResponse extends ProjectItemResponse {
 
   @override
   ProjectItemResponseBuilder toBuilder() =>
-      new ProjectItemResponseBuilder()..replace(this);
+      ProjectItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -469,7 +465,7 @@ class ProjectItemResponseBuilder
   _$ProjectItemResponse? _$v;
 
   ProjectEntityBuilder? _data;
-  ProjectEntityBuilder get data => _$this._data ??= new ProjectEntityBuilder();
+  ProjectEntityBuilder get data => _$this._data ??= ProjectEntityBuilder();
   set data(ProjectEntityBuilder? data) => _$this._data = data;
 
   ProjectItemResponseBuilder();
@@ -485,7 +481,6 @@ class ProjectItemResponseBuilder
 
   @override
   void replace(ProjectItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ProjectItemResponse;
   }
 
@@ -500,14 +495,17 @@ class ProjectItemResponseBuilder
   _$ProjectItemResponse _build() {
     _$ProjectItemResponse _$result;
     try {
-      _$result = _$v ?? new _$ProjectItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$ProjectItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ProjectItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -566,7 +564,7 @@ class _$ProjectEntity extends ProjectEntity {
   final String id;
 
   factory _$ProjectEntity([void Function(ProjectEntityBuilder)? updates]) =>
-      (new ProjectEntityBuilder()..update(updates))._build();
+      (ProjectEntityBuilder()..update(updates))._build();
 
   _$ProjectEntity._(
       {required this.name,
@@ -592,48 +590,13 @@ class _$ProjectEntity extends ProjectEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'ProjectEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(color, r'ProjectEntity', 'color');
-    BuiltValueNullFieldError.checkNotNull(
-        clientId, r'ProjectEntity', 'clientId');
-    BuiltValueNullFieldError.checkNotNull(
-        taskRate, r'ProjectEntity', 'taskRate');
-    BuiltValueNullFieldError.checkNotNull(dueDate, r'ProjectEntity', 'dueDate');
-    BuiltValueNullFieldError.checkNotNull(
-        privateNotes, r'ProjectEntity', 'privateNotes');
-    BuiltValueNullFieldError.checkNotNull(
-        publicNotes, r'ProjectEntity', 'publicNotes');
-    BuiltValueNullFieldError.checkNotNull(
-        budgetedHours, r'ProjectEntity', 'budgetedHours');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue1, r'ProjectEntity', 'customValue1');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue2, r'ProjectEntity', 'customValue2');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue3, r'ProjectEntity', 'customValue3');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue4, r'ProjectEntity', 'customValue4');
-    BuiltValueNullFieldError.checkNotNull(number, r'ProjectEntity', 'number');
-    BuiltValueNullFieldError.checkNotNull(
-        totalHours, r'ProjectEntity', 'totalHours');
-    BuiltValueNullFieldError.checkNotNull(
-        documents, r'ProjectEntity', 'documents');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'ProjectEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'ProjectEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'ProjectEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'ProjectEntity', 'id');
-  }
-
+      : super._();
   @override
   ProjectEntity rebuild(void Function(ProjectEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ProjectEntityBuilder toBuilder() => new ProjectEntityBuilder()..replace(this);
+  ProjectEntityBuilder toBuilder() => ProjectEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -789,7 +752,7 @@ class ProjectEntityBuilder
 
   ListBuilder<DocumentEntity>? _documents;
   ListBuilder<DocumentEntity> get documents =>
-      _$this._documents ??= new ListBuilder<DocumentEntity>();
+      _$this._documents ??= ListBuilder<DocumentEntity>();
   set documents(ListBuilder<DocumentEntity>? documents) =>
       _$this._documents = documents;
 
@@ -864,7 +827,6 @@ class ProjectEntityBuilder
 
   @override
   void replace(ProjectEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ProjectEntity;
   }
 
@@ -880,46 +842,56 @@ class ProjectEntityBuilder
     _$ProjectEntity _$result;
     try {
       _$result = _$v ??
-          new _$ProjectEntity._(
-              name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'ProjectEntity', 'name'),
-              color: BuiltValueNullFieldError.checkNotNull(
-                  color, r'ProjectEntity', 'color'),
-              clientId: BuiltValueNullFieldError.checkNotNull(
-                  clientId, r'ProjectEntity', 'clientId'),
-              taskRate: BuiltValueNullFieldError.checkNotNull(
-                  taskRate, r'ProjectEntity', 'taskRate'),
-              dueDate: BuiltValueNullFieldError.checkNotNull(
-                  dueDate, r'ProjectEntity', 'dueDate'),
-              privateNotes: BuiltValueNullFieldError.checkNotNull(
-                  privateNotes, r'ProjectEntity', 'privateNotes'),
-              publicNotes: BuiltValueNullFieldError.checkNotNull(
-                  publicNotes, r'ProjectEntity', 'publicNotes'),
-              budgetedHours: BuiltValueNullFieldError.checkNotNull(
-                  budgetedHours, r'ProjectEntity', 'budgetedHours'),
-              customValue1: BuiltValueNullFieldError.checkNotNull(
-                  customValue1, r'ProjectEntity', 'customValue1'),
-              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, r'ProjectEntity', 'customValue2'),
-              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'ProjectEntity', 'customValue3'),
-              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'ProjectEntity', 'customValue4'),
-              number: BuiltValueNullFieldError.checkNotNull(number, r'ProjectEntity', 'number'),
-              totalHours: BuiltValueNullFieldError.checkNotNull(totalHours, r'ProjectEntity', 'totalHours'),
-              documents: documents.build(),
-              isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'ProjectEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'ProjectEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'ProjectEntity', 'archivedAt'),
-              isDeleted: isDeleted,
-              createdUserId: createdUserId,
-              assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(id, r'ProjectEntity', 'id'));
+          _$ProjectEntity._(
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'ProjectEntity', 'name'),
+            color: BuiltValueNullFieldError.checkNotNull(
+                color, r'ProjectEntity', 'color'),
+            clientId: BuiltValueNullFieldError.checkNotNull(
+                clientId, r'ProjectEntity', 'clientId'),
+            taskRate: BuiltValueNullFieldError.checkNotNull(
+                taskRate, r'ProjectEntity', 'taskRate'),
+            dueDate: BuiltValueNullFieldError.checkNotNull(
+                dueDate, r'ProjectEntity', 'dueDate'),
+            privateNotes: BuiltValueNullFieldError.checkNotNull(
+                privateNotes, r'ProjectEntity', 'privateNotes'),
+            publicNotes: BuiltValueNullFieldError.checkNotNull(
+                publicNotes, r'ProjectEntity', 'publicNotes'),
+            budgetedHours: BuiltValueNullFieldError.checkNotNull(
+                budgetedHours, r'ProjectEntity', 'budgetedHours'),
+            customValue1: BuiltValueNullFieldError.checkNotNull(
+                customValue1, r'ProjectEntity', 'customValue1'),
+            customValue2: BuiltValueNullFieldError.checkNotNull(
+                customValue2, r'ProjectEntity', 'customValue2'),
+            customValue3: BuiltValueNullFieldError.checkNotNull(
+                customValue3, r'ProjectEntity', 'customValue3'),
+            customValue4: BuiltValueNullFieldError.checkNotNull(
+                customValue4, r'ProjectEntity', 'customValue4'),
+            number: BuiltValueNullFieldError.checkNotNull(
+                number, r'ProjectEntity', 'number'),
+            totalHours: BuiltValueNullFieldError.checkNotNull(
+                totalHours, r'ProjectEntity', 'totalHours'),
+            documents: documents.build(),
+            isChanged: isChanged,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, r'ProjectEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, r'ProjectEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(
+                archivedAt, r'ProjectEntity', 'archivedAt'),
+            isDeleted: isDeleted,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, r'ProjectEntity', 'id'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'documents';
         documents.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ProjectEntity', _$failedField, e.toString());
       }
       rethrow;

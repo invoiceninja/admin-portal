@@ -74,7 +74,6 @@ class AccountManagementVM {
           final companyLength = state.companies.length;
           final deleteCompleter = Completer<Null>()
             ..future.then<Null>((_) {
-              final context = navigatorKey.currentContext;
               final state = store.state;
               if (companyLength == 1) {
                 store.dispatch(UserLogout());
@@ -91,8 +90,8 @@ class AccountManagementVM {
                     store.dispatch(ViewDashboard());
                     AppBuilder.of(navigatorKey.currentContext!)!.rebuild();
 
-                    if (Navigator.of(context!).canPop()) {
-                      Navigator.of(context).pop();
+                    if (Navigator.of(navigatorKey.currentContext!).canPop()) {
+                      Navigator.of(navigatorKey.currentContext!).pop();
                     }
                   });
                 store.dispatch(

@@ -7,13 +7,13 @@ part of 'static_data_model.dart';
 // **************************************************************************
 
 Serializer<StaticDataListResponse> _$staticDataListResponseSerializer =
-    new _$StaticDataListResponseSerializer();
+    _$StaticDataListResponseSerializer();
 Serializer<StaticDataItemResponse> _$staticDataItemResponseSerializer =
-    new _$StaticDataItemResponseSerializer();
+    _$StaticDataItemResponseSerializer();
 Serializer<StaticDataEntity> _$staticDataEntitySerializer =
-    new _$StaticDataEntitySerializer();
+    _$StaticDataEntitySerializer();
 Serializer<TemplateEntity> _$templateEntitySerializer =
-    new _$TemplateEntitySerializer();
+    _$TemplateEntitySerializer();
 
 class _$StaticDataListResponseSerializer
     implements StructuredSerializer<StaticDataListResponse> {
@@ -43,7 +43,7 @@ class _$StaticDataListResponseSerializer
   StaticDataListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new StaticDataListResponseBuilder();
+    final result = StaticDataListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -91,7 +91,7 @@ class _$StaticDataItemResponseSerializer
   StaticDataItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new StaticDataItemResponseBuilder();
+    final result = StaticDataItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -187,7 +187,7 @@ class _$StaticDataEntitySerializer
   StaticDataEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new StaticDataEntityBuilder();
+    final result = StaticDataEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -308,7 +308,7 @@ class _$TemplateEntitySerializer
   TemplateEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TemplateEntityBuilder();
+    final result = TemplateEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -337,13 +337,9 @@ class _$StaticDataListResponse extends StaticDataListResponse {
 
   factory _$StaticDataListResponse(
           [void Function(StaticDataListResponseBuilder)? updates]) =>
-      (new StaticDataListResponseBuilder()..update(updates))._build();
+      (StaticDataListResponseBuilder()..update(updates))._build();
 
-  _$StaticDataListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'StaticDataListResponse', 'data');
-  }
-
+  _$StaticDataListResponse._({required this.data}) : super._();
   @override
   StaticDataListResponse rebuild(
           void Function(StaticDataListResponseBuilder) updates) =>
@@ -351,7 +347,7 @@ class _$StaticDataListResponse extends StaticDataListResponse {
 
   @override
   StaticDataListResponseBuilder toBuilder() =>
-      new StaticDataListResponseBuilder()..replace(this);
+      StaticDataListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -383,7 +379,7 @@ class StaticDataListResponseBuilder
 
   ListBuilder<StaticDataEntity>? _data;
   ListBuilder<StaticDataEntity> get data =>
-      _$this._data ??= new ListBuilder<StaticDataEntity>();
+      _$this._data ??= ListBuilder<StaticDataEntity>();
   set data(ListBuilder<StaticDataEntity>? data) => _$this._data = data;
 
   StaticDataListResponseBuilder();
@@ -399,7 +395,6 @@ class StaticDataListResponseBuilder
 
   @override
   void replace(StaticDataListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$StaticDataListResponse;
   }
 
@@ -414,14 +409,17 @@ class StaticDataListResponseBuilder
   _$StaticDataListResponse _build() {
     _$StaticDataListResponse _$result;
     try {
-      _$result = _$v ?? new _$StaticDataListResponse._(data: data.build());
+      _$result = _$v ??
+          _$StaticDataListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'StaticDataListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -437,13 +435,9 @@ class _$StaticDataItemResponse extends StaticDataItemResponse {
 
   factory _$StaticDataItemResponse(
           [void Function(StaticDataItemResponseBuilder)? updates]) =>
-      (new StaticDataItemResponseBuilder()..update(updates))._build();
+      (StaticDataItemResponseBuilder()..update(updates))._build();
 
-  _$StaticDataItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'StaticDataItemResponse', 'data');
-  }
-
+  _$StaticDataItemResponse._({required this.data}) : super._();
   @override
   StaticDataItemResponse rebuild(
           void Function(StaticDataItemResponseBuilder) updates) =>
@@ -451,7 +445,7 @@ class _$StaticDataItemResponse extends StaticDataItemResponse {
 
   @override
   StaticDataItemResponseBuilder toBuilder() =>
-      new StaticDataItemResponseBuilder()..replace(this);
+      StaticDataItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -483,7 +477,7 @@ class StaticDataItemResponseBuilder
 
   StaticDataEntityBuilder? _data;
   StaticDataEntityBuilder get data =>
-      _$this._data ??= new StaticDataEntityBuilder();
+      _$this._data ??= StaticDataEntityBuilder();
   set data(StaticDataEntityBuilder? data) => _$this._data = data;
 
   StaticDataItemResponseBuilder();
@@ -499,7 +493,6 @@ class StaticDataItemResponseBuilder
 
   @override
   void replace(StaticDataItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$StaticDataItemResponse;
   }
 
@@ -514,14 +507,17 @@ class StaticDataItemResponseBuilder
   _$StaticDataItemResponse _build() {
     _$StaticDataItemResponse _$result;
     try {
-      _$result = _$v ?? new _$StaticDataItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$StaticDataItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'StaticDataItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -561,7 +557,7 @@ class _$StaticDataEntity extends StaticDataEntity {
 
   factory _$StaticDataEntity(
           [void Function(StaticDataEntityBuilder)? updates]) =>
-      (new StaticDataEntityBuilder()..update(updates))._build();
+      (StaticDataEntityBuilder()..update(updates))._build();
 
   _$StaticDataEntity._(
       {required this.currencies,
@@ -577,41 +573,14 @@ class _$StaticDataEntity extends StaticDataEntity {
       required this.bulkUpdates,
       required this.templates,
       required this.eInvoiceSchema})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        currencies, r'StaticDataEntity', 'currencies');
-    BuiltValueNullFieldError.checkNotNull(sizes, r'StaticDataEntity', 'sizes');
-    BuiltValueNullFieldError.checkNotNull(
-        industries, r'StaticDataEntity', 'industries');
-    BuiltValueNullFieldError.checkNotNull(
-        timezones, r'StaticDataEntity', 'timezones');
-    BuiltValueNullFieldError.checkNotNull(
-        gateways, r'StaticDataEntity', 'gateways');
-    BuiltValueNullFieldError.checkNotNull(
-        dateFormats, r'StaticDataEntity', 'dateFormats');
-    BuiltValueNullFieldError.checkNotNull(
-        languages, r'StaticDataEntity', 'languages');
-    BuiltValueNullFieldError.checkNotNull(
-        paymentTypes, r'StaticDataEntity', 'paymentTypes');
-    BuiltValueNullFieldError.checkNotNull(
-        countries, r'StaticDataEntity', 'countries');
-    BuiltValueNullFieldError.checkNotNull(
-        invoiceStatus, r'StaticDataEntity', 'invoiceStatus');
-    BuiltValueNullFieldError.checkNotNull(
-        bulkUpdates, r'StaticDataEntity', 'bulkUpdates');
-    BuiltValueNullFieldError.checkNotNull(
-        templates, r'StaticDataEntity', 'templates');
-    BuiltValueNullFieldError.checkNotNull(
-        eInvoiceSchema, r'StaticDataEntity', 'eInvoiceSchema');
-  }
-
+      : super._();
   @override
   StaticDataEntity rebuild(void Function(StaticDataEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   StaticDataEntityBuilder toBuilder() =>
-      new StaticDataEntityBuilder()..replace(this);
+      StaticDataEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -680,78 +649,78 @@ class StaticDataEntityBuilder
 
   ListBuilder<CurrencyEntity>? _currencies;
   ListBuilder<CurrencyEntity> get currencies =>
-      _$this._currencies ??= new ListBuilder<CurrencyEntity>();
+      _$this._currencies ??= ListBuilder<CurrencyEntity>();
   set currencies(ListBuilder<CurrencyEntity>? currencies) =>
       _$this._currencies = currencies;
 
   ListBuilder<SizeEntity>? _sizes;
   ListBuilder<SizeEntity> get sizes =>
-      _$this._sizes ??= new ListBuilder<SizeEntity>();
+      _$this._sizes ??= ListBuilder<SizeEntity>();
   set sizes(ListBuilder<SizeEntity>? sizes) => _$this._sizes = sizes;
 
   ListBuilder<IndustryEntity>? _industries;
   ListBuilder<IndustryEntity> get industries =>
-      _$this._industries ??= new ListBuilder<IndustryEntity>();
+      _$this._industries ??= ListBuilder<IndustryEntity>();
   set industries(ListBuilder<IndustryEntity>? industries) =>
       _$this._industries = industries;
 
   ListBuilder<TimezoneEntity>? _timezones;
   ListBuilder<TimezoneEntity> get timezones =>
-      _$this._timezones ??= new ListBuilder<TimezoneEntity>();
+      _$this._timezones ??= ListBuilder<TimezoneEntity>();
   set timezones(ListBuilder<TimezoneEntity>? timezones) =>
       _$this._timezones = timezones;
 
   ListBuilder<GatewayEntity>? _gateways;
   ListBuilder<GatewayEntity> get gateways =>
-      _$this._gateways ??= new ListBuilder<GatewayEntity>();
+      _$this._gateways ??= ListBuilder<GatewayEntity>();
   set gateways(ListBuilder<GatewayEntity>? gateways) =>
       _$this._gateways = gateways;
 
   ListBuilder<DateFormatEntity>? _dateFormats;
   ListBuilder<DateFormatEntity> get dateFormats =>
-      _$this._dateFormats ??= new ListBuilder<DateFormatEntity>();
+      _$this._dateFormats ??= ListBuilder<DateFormatEntity>();
   set dateFormats(ListBuilder<DateFormatEntity>? dateFormats) =>
       _$this._dateFormats = dateFormats;
 
   ListBuilder<LanguageEntity>? _languages;
   ListBuilder<LanguageEntity> get languages =>
-      _$this._languages ??= new ListBuilder<LanguageEntity>();
+      _$this._languages ??= ListBuilder<LanguageEntity>();
   set languages(ListBuilder<LanguageEntity>? languages) =>
       _$this._languages = languages;
 
   ListBuilder<PaymentTypeEntity>? _paymentTypes;
   ListBuilder<PaymentTypeEntity> get paymentTypes =>
-      _$this._paymentTypes ??= new ListBuilder<PaymentTypeEntity>();
+      _$this._paymentTypes ??= ListBuilder<PaymentTypeEntity>();
   set paymentTypes(ListBuilder<PaymentTypeEntity>? paymentTypes) =>
       _$this._paymentTypes = paymentTypes;
 
   ListBuilder<CountryEntity>? _countries;
   ListBuilder<CountryEntity> get countries =>
-      _$this._countries ??= new ListBuilder<CountryEntity>();
+      _$this._countries ??= ListBuilder<CountryEntity>();
   set countries(ListBuilder<CountryEntity>? countries) =>
       _$this._countries = countries;
 
   ListBuilder<InvoiceStatusEntity>? _invoiceStatus;
   ListBuilder<InvoiceStatusEntity> get invoiceStatus =>
-      _$this._invoiceStatus ??= new ListBuilder<InvoiceStatusEntity>();
+      _$this._invoiceStatus ??= ListBuilder<InvoiceStatusEntity>();
   set invoiceStatus(ListBuilder<InvoiceStatusEntity>? invoiceStatus) =>
       _$this._invoiceStatus = invoiceStatus;
 
   MapBuilder<String, BuiltList<String>>? _bulkUpdates;
   MapBuilder<String, BuiltList<String>> get bulkUpdates =>
-      _$this._bulkUpdates ??= new MapBuilder<String, BuiltList<String>>();
+      _$this._bulkUpdates ??= MapBuilder<String, BuiltList<String>>();
   set bulkUpdates(MapBuilder<String, BuiltList<String>>? bulkUpdates) =>
       _$this._bulkUpdates = bulkUpdates;
 
   MapBuilder<String, TemplateEntity>? _templates;
   MapBuilder<String, TemplateEntity> get templates =>
-      _$this._templates ??= new MapBuilder<String, TemplateEntity>();
+      _$this._templates ??= MapBuilder<String, TemplateEntity>();
   set templates(MapBuilder<String, TemplateEntity>? templates) =>
       _$this._templates = templates;
 
   MapBuilder<String, EInvoiceFieldEntity>? _eInvoiceSchema;
   MapBuilder<String, EInvoiceFieldEntity> get eInvoiceSchema =>
-      _$this._eInvoiceSchema ??= new MapBuilder<String, EInvoiceFieldEntity>();
+      _$this._eInvoiceSchema ??= MapBuilder<String, EInvoiceFieldEntity>();
   set eInvoiceSchema(MapBuilder<String, EInvoiceFieldEntity>? eInvoiceSchema) =>
       _$this._eInvoiceSchema = eInvoiceSchema;
 
@@ -782,7 +751,6 @@ class StaticDataEntityBuilder
 
   @override
   void replace(StaticDataEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$StaticDataEntity;
   }
 
@@ -798,20 +766,21 @@ class StaticDataEntityBuilder
     _$StaticDataEntity _$result;
     try {
       _$result = _$v ??
-          new _$StaticDataEntity._(
-              currencies: currencies.build(),
-              sizes: sizes.build(),
-              industries: industries.build(),
-              timezones: timezones.build(),
-              gateways: gateways.build(),
-              dateFormats: dateFormats.build(),
-              languages: languages.build(),
-              paymentTypes: paymentTypes.build(),
-              countries: countries.build(),
-              invoiceStatus: invoiceStatus.build(),
-              bulkUpdates: bulkUpdates.build(),
-              templates: templates.build(),
-              eInvoiceSchema: eInvoiceSchema.build());
+          _$StaticDataEntity._(
+            currencies: currencies.build(),
+            sizes: sizes.build(),
+            industries: industries.build(),
+            timezones: timezones.build(),
+            gateways: gateways.build(),
+            dateFormats: dateFormats.build(),
+            languages: languages.build(),
+            paymentTypes: paymentTypes.build(),
+            countries: countries.build(),
+            invoiceStatus: invoiceStatus.build(),
+            bulkUpdates: bulkUpdates.build(),
+            templates: templates.build(),
+            eInvoiceSchema: eInvoiceSchema.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -842,7 +811,7 @@ class StaticDataEntityBuilder
         _$failedField = 'eInvoiceSchema';
         eInvoiceSchema.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'StaticDataEntity', _$failedField, e.toString());
       }
       rethrow;
@@ -859,21 +828,15 @@ class _$TemplateEntity extends TemplateEntity {
   final String body;
 
   factory _$TemplateEntity([void Function(TemplateEntityBuilder)? updates]) =>
-      (new TemplateEntityBuilder()..update(updates))._build();
+      (TemplateEntityBuilder()..update(updates))._build();
 
-  _$TemplateEntity._({required this.subject, required this.body}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        subject, r'TemplateEntity', 'subject');
-    BuiltValueNullFieldError.checkNotNull(body, r'TemplateEntity', 'body');
-  }
-
+  _$TemplateEntity._({required this.subject, required this.body}) : super._();
   @override
   TemplateEntity rebuild(void Function(TemplateEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  TemplateEntityBuilder toBuilder() =>
-      new TemplateEntityBuilder()..replace(this);
+  TemplateEntityBuilder toBuilder() => TemplateEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -929,7 +892,6 @@ class TemplateEntityBuilder
 
   @override
   void replace(TemplateEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TemplateEntity;
   }
 
@@ -943,11 +905,12 @@ class TemplateEntityBuilder
 
   _$TemplateEntity _build() {
     final _$result = _$v ??
-        new _$TemplateEntity._(
-            subject: BuiltValueNullFieldError.checkNotNull(
-                subject, r'TemplateEntity', 'subject'),
-            body: BuiltValueNullFieldError.checkNotNull(
-                body, r'TemplateEntity', 'body'));
+        _$TemplateEntity._(
+          subject: BuiltValueNullFieldError.checkNotNull(
+              subject, r'TemplateEntity', 'subject'),
+          body: BuiltValueNullFieldError.checkNotNull(
+              body, r'TemplateEntity', 'body'),
+        );
     replace(_$result);
     return _$result;
   }

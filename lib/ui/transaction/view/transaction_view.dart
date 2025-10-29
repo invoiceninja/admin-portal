@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
@@ -190,7 +189,7 @@ class _MatchDepositsState extends State<_MatchDeposits> {
       _selectedInvoices = transactions.first.invoiceIds
           .split(',')
           .map((invoiceId) => state.invoiceState.map[invoiceId])
-          .whereNotNull()
+          .nonNulls
           .toList();
     }
 

@@ -149,7 +149,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
               store.state.getListState(widget.entityType).stateFilters,
           builder: (BuildContext context, stateFilters) {
             return Container(
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.surface,
               child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 Column(
                   children: EntityState.values.map<Widget>((state) {
@@ -190,7 +190,7 @@ class _AppBottomBarState extends State<AppBottomBar> {
               store.state.getListState(widget.entityType).statusFilters,
           builder: (BuildContext context, statusFilters) {
             return Container(
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.surface,
               child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
                 Column(
                   children: widget.statuses.map((status) {
@@ -231,40 +231,37 @@ class _AppBottomBarState extends State<AppBottomBar> {
               store.state.getListState(widget.entityType),
           builder: (BuildContext context, listUIState) {
             return Container(
-              color: Theme.of(context).colorScheme.background,
-              child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: widget.sortFields.map((sortField) {
-                    final field = sortField;
-                    return InkWell(
-                      onTap: () => widget.onSelectedSortField!(sortField),
-                      child: IgnorePointer(
-                        child: RadioListTile<String>(
-                          dense: true,
-                          title: Text(
-                              AppLocalization.of(context)!.lookup(sortField)),
-                          subtitle: sortField == listUIState.sortField
-                              ? Text(listUIState.sortAscending
-                                  ? AppLocalization.of(context)!.ascending
-                                  : AppLocalization.of(context)!.descending)
-                              : null,
-                          groupValue: listUIState.sortField,
-                          activeColor: Theme.of(context).colorScheme.secondary,
-                          onChanged: (String? value) {
-                            if (value == null &&
-                                listUIState.sortField == field) {
-                              // Is re-selecting
-                              widget.onSelectedSortField!(field);
-                            } else if (value != null) {
-                              widget.onSelectedSortField!(value);
-                            }
-                          },
-                          value: field,
-                          toggleable: true,
+              color: Theme.of(context).colorScheme.surface,
+              child: RadioGroup<String>(
+                groupValue: listUIState.sortField,
+                onChanged: (String? value) {
+                  widget.onSelectedSortField!(value ?? '');
+                },
+                child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: widget.sortFields.map((sortField) {
+                      final field = sortField;
+                      return InkWell(
+                        onTap: () => widget.onSelectedSortField!(sortField),
+                        child: IgnorePointer(
+                          child: RadioListTile<String>(
+                            dense: true,
+                            title: Text(
+                                AppLocalization.of(context)!.lookup(sortField)),
+                            subtitle: sortField == listUIState.sortField
+                                ? Text(listUIState.sortAscending
+                                    ? AppLocalization.of(context)!.ascending
+                                    : AppLocalization.of(context)!.descending)
+                                : null,
+                            activeColor:
+                                Theme.of(context).colorScheme.secondary,
+                            value: field,
+                            toggleable: true,
+                          ),
                         ),
-                      ),
-                    );
-                  }).toList()),
+                      );
+                    }).toList()),
+              ),
             );
           },
         );
@@ -584,20 +581,33 @@ class CustomFieldSelector extends StatelessWidget {
           store.state.getListState(entityType).getCustomFilters(customNumber),
       builder: (BuildContext context, customFilters) {
         return Container(
-          color: Theme.of(context).colorScheme.background,
+          color: Theme.of(context).colorScheme.surface,
           child: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
             Column(
-              children: customValues.map<Widget>((customField) {
-                return CheckboxListTile(
-                  key: Key(customField.toString()),
-                  title: Text(customField),
+              children: [
+                ...customValues.map<Widget>((customField) {
+                  return CheckboxListTile(
+                    key: Key(customField.toString()),
+                    title: Text(customField),
+                    controlAffinity: ListTileControlAffinity.leading,
+                    value: customFilters!.contains(customField),
+                    activeColor: Theme.of(context).colorScheme.secondary,
+                    dense: true,
+                    onChanged: (value) => onSelected(customField),
+                  );
+                }).toList(),
+                CheckboxListTile(
+                  key: Key('_empty_'),
+                  title: Text(
+                    AppLocalization.of(context)!.empty,
+                  ),
                   controlAffinity: ListTileControlAffinity.leading,
-                  value: customFilters!.contains(customField),
+                  value: customFilters!.contains(''),
                   activeColor: Theme.of(context).colorScheme.secondary,
                   dense: true,
-                  onChanged: (value) => onSelected(customField),
-                );
-              }).toList(),
+                  onChanged: (value) => onSelected(''),
+                ),
+              ],
             ),
           ]),
         );

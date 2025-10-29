@@ -47,7 +47,7 @@ Completer<Null> popCompleter(BuildContext context, dynamic result) {
   final Completer<Null> completer = Completer<Null>();
 
   completer.future.then<Null>((_) {
-    Navigator.of(context).pop<dynamic>(result);
+    Navigator.of(navigatorKey.currentContext!).pop<dynamic>(result);
   }).catchError((Object error) {
     showDialog<ErrorDialog>(
         context: navigatorKey.currentContext!,

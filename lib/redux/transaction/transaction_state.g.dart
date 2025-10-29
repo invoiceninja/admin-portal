@@ -7,9 +7,9 @@ part of 'transaction_state.dart';
 // **************************************************************************
 
 Serializer<TransactionState> _$transactionStateSerializer =
-    new _$TransactionStateSerializer();
+    _$TransactionStateSerializer();
 Serializer<TransactionUIState> _$transactionUIStateSerializer =
-    new _$TransactionUIStateSerializer();
+    _$TransactionUIStateSerializer();
 
 class _$TransactionStateSerializer
     implements StructuredSerializer<TransactionState> {
@@ -41,7 +41,7 @@ class _$TransactionStateSerializer
   TransactionState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TransactionStateBuilder();
+    final result = TransactionStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -117,7 +117,7 @@ class _$TransactionUIStateSerializer
   TransactionUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TransactionUIStateBuilder();
+    final result = TransactionUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -161,20 +161,16 @@ class _$TransactionState extends TransactionState {
 
   factory _$TransactionState(
           [void Function(TransactionStateBuilder)? updates]) =>
-      (new TransactionStateBuilder()..update(updates))._build();
+      (TransactionStateBuilder()..update(updates))._build();
 
-  _$TransactionState._({required this.map, required this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, r'TransactionState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, r'TransactionState', 'list');
-  }
-
+  _$TransactionState._({required this.map, required this.list}) : super._();
   @override
   TransactionState rebuild(void Function(TransactionStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   TransactionStateBuilder toBuilder() =>
-      new TransactionStateBuilder()..replace(this);
+      TransactionStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -208,11 +204,11 @@ class TransactionStateBuilder
 
   MapBuilder<String, TransactionEntity>? _map;
   MapBuilder<String, TransactionEntity> get map =>
-      _$this._map ??= new MapBuilder<String, TransactionEntity>();
+      _$this._map ??= MapBuilder<String, TransactionEntity>();
   set map(MapBuilder<String, TransactionEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
-  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  ListBuilder<String> get list => _$this._list ??= ListBuilder<String>();
   set list(ListBuilder<String>? list) => _$this._list = list;
 
   TransactionStateBuilder();
@@ -229,7 +225,6 @@ class TransactionStateBuilder
 
   @override
   void replace(TransactionState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TransactionState;
   }
 
@@ -244,8 +239,11 @@ class TransactionStateBuilder
   _$TransactionState _build() {
     _$TransactionState _$result;
     try {
-      _$result =
-          _$v ?? new _$TransactionState._(map: map.build(), list: list.build());
+      _$result = _$v ??
+          _$TransactionState._(
+            map: map.build(),
+            list: list.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -254,7 +252,7 @@ class TransactionStateBuilder
         _$failedField = 'list';
         list.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TransactionState', _$failedField, e.toString());
       }
       rethrow;
@@ -282,7 +280,7 @@ class _$TransactionUIState extends TransactionUIState {
 
   factory _$TransactionUIState(
           [void Function(TransactionUIStateBuilder)? updates]) =>
-      (new TransactionUIStateBuilder()..update(updates))._build();
+      (TransactionUIStateBuilder()..update(updates))._build();
 
   _$TransactionUIState._(
       {this.editing,
@@ -292,13 +290,7 @@ class _$TransactionUIState extends TransactionUIState {
       required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        listUIState, r'TransactionUIState', 'listUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        tabIndex, r'TransactionUIState', 'tabIndex');
-  }
-
+      : super._();
   @override
   TransactionUIState rebuild(
           void Function(TransactionUIStateBuilder) updates) =>
@@ -306,7 +298,7 @@ class _$TransactionUIState extends TransactionUIState {
 
   @override
   TransactionUIStateBuilder toBuilder() =>
-      new TransactionUIStateBuilder()..replace(this);
+      TransactionUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -357,12 +349,12 @@ class TransactionUIStateBuilder
 
   TransactionEntityBuilder? _editing;
   TransactionEntityBuilder get editing =>
-      _$this._editing ??= new TransactionEntityBuilder();
+      _$this._editing ??= TransactionEntityBuilder();
   set editing(TransactionEntityBuilder? editing) => _$this._editing = editing;
 
   ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
-      _$this._listUIState ??= new ListUIStateBuilder();
+      _$this._listUIState ??= ListUIStateBuilder();
   set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
@@ -408,7 +400,6 @@ class TransactionUIStateBuilder
 
   @override
   void replace(TransactionUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TransactionUIState;
   }
 
@@ -424,15 +415,16 @@ class TransactionUIStateBuilder
     _$TransactionUIState _$result;
     try {
       _$result = _$v ??
-          new _$TransactionUIState._(
-              editing: _editing?.build(),
-              listUIState: listUIState.build(),
-              selectedId: selectedId,
-              forceSelected: forceSelected,
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'TransactionUIState', 'tabIndex'),
-              saveCompleter: saveCompleter,
-              cancelCompleter: cancelCompleter);
+          _$TransactionUIState._(
+            editing: _editing?.build(),
+            listUIState: listUIState.build(),
+            selectedId: selectedId,
+            forceSelected: forceSelected,
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'TransactionUIState', 'tabIndex'),
+            saveCompleter: saveCompleter,
+            cancelCompleter: cancelCompleter,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -441,7 +433,7 @@ class TransactionUIStateBuilder
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TransactionUIState', _$failedField, e.toString());
       }
       rethrow;

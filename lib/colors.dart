@@ -19,6 +19,7 @@ class InvoiceStatusColors {
       kInvoiceStatusPastDue: _colorTheme!.colorDanger,
       kInvoiceStatusCancelled: _colorTheme!.colorDarkGray,
       kInvoiceStatusReversed: _colorTheme!.colorDarkGray,
+      kInvoiceStatusReplaced: _colorTheme!.colorDarkGray,
       kInvoiceStatusViewed: _colorTheme!.colorWarning,
       kInvoiceStatusBounced: _colorTheme!.colorDanger,
     };

@@ -153,6 +153,10 @@ class _CustomFieldsState extends State<CustomFields>
               viewModel: viewModel,
               fieldType: CustomFieldType.contact,
             ),
+            CustomFieldsSettings(
+              viewModel: viewModel,
+              fieldType: CustomFieldType.location,
+            ),
           ]),
           ScrollableListView(
             children: <Widget>[

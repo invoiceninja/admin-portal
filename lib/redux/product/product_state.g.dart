@@ -6,10 +6,9 @@ part of 'product_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<ProductState> _$productStateSerializer =
-    new _$ProductStateSerializer();
+Serializer<ProductState> _$productStateSerializer = _$ProductStateSerializer();
 Serializer<ProductUIState> _$productUIStateSerializer =
-    new _$ProductUIStateSerializer();
+    _$ProductUIStateSerializer();
 
 class _$ProductStateSerializer implements StructuredSerializer<ProductState> {
   @override
@@ -38,7 +37,7 @@ class _$ProductStateSerializer implements StructuredSerializer<ProductState> {
   ProductState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ProductStateBuilder();
+    final result = ProductStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -113,7 +112,7 @@ class _$ProductUIStateSerializer
   ProductUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ProductUIStateBuilder();
+    final result = ProductUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -155,19 +154,15 @@ class _$ProductState extends ProductState {
   final BuiltList<String> list;
 
   factory _$ProductState([void Function(ProductStateBuilder)? updates]) =>
-      (new ProductStateBuilder()..update(updates))._build();
+      (ProductStateBuilder()..update(updates))._build();
 
-  _$ProductState._({required this.map, required this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, r'ProductState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, r'ProductState', 'list');
-  }
-
+  _$ProductState._({required this.map, required this.list}) : super._();
   @override
   ProductState rebuild(void Function(ProductStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ProductStateBuilder toBuilder() => new ProductStateBuilder()..replace(this);
+  ProductStateBuilder toBuilder() => ProductStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -201,11 +196,11 @@ class ProductStateBuilder
 
   MapBuilder<String, ProductEntity>? _map;
   MapBuilder<String, ProductEntity> get map =>
-      _$this._map ??= new MapBuilder<String, ProductEntity>();
+      _$this._map ??= MapBuilder<String, ProductEntity>();
   set map(MapBuilder<String, ProductEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
-  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  ListBuilder<String> get list => _$this._list ??= ListBuilder<String>();
   set list(ListBuilder<String>? list) => _$this._list = list;
 
   ProductStateBuilder();
@@ -222,7 +217,6 @@ class ProductStateBuilder
 
   @override
   void replace(ProductState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ProductState;
   }
 
@@ -237,8 +231,11 @@ class ProductStateBuilder
   _$ProductState _build() {
     _$ProductState _$result;
     try {
-      _$result =
-          _$v ?? new _$ProductState._(map: map.build(), list: list.build());
+      _$result = _$v ??
+          _$ProductState._(
+            map: map.build(),
+            list: list.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -247,7 +244,7 @@ class ProductStateBuilder
         _$failedField = 'list';
         list.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ProductState', _$failedField, e.toString());
       }
       rethrow;
@@ -274,7 +271,7 @@ class _$ProductUIState extends ProductUIState {
   final Completer<Null>? cancelCompleter;
 
   factory _$ProductUIState([void Function(ProductUIStateBuilder)? updates]) =>
-      (new ProductUIStateBuilder()..update(updates))._build();
+      (ProductUIStateBuilder()..update(updates))._build();
 
   _$ProductUIState._(
       {this.editing,
@@ -284,20 +281,13 @@ class _$ProductUIState extends ProductUIState {
       required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        listUIState, r'ProductUIState', 'listUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        tabIndex, r'ProductUIState', 'tabIndex');
-  }
-
+      : super._();
   @override
   ProductUIState rebuild(void Function(ProductUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ProductUIStateBuilder toBuilder() =>
-      new ProductUIStateBuilder()..replace(this);
+  ProductUIStateBuilder toBuilder() => ProductUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -348,12 +338,12 @@ class ProductUIStateBuilder
 
   ProductEntityBuilder? _editing;
   ProductEntityBuilder get editing =>
-      _$this._editing ??= new ProductEntityBuilder();
+      _$this._editing ??= ProductEntityBuilder();
   set editing(ProductEntityBuilder? editing) => _$this._editing = editing;
 
   ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
-      _$this._listUIState ??= new ListUIStateBuilder();
+      _$this._listUIState ??= ListUIStateBuilder();
   set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
@@ -399,7 +389,6 @@ class ProductUIStateBuilder
 
   @override
   void replace(ProductUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ProductUIState;
   }
 
@@ -415,15 +404,16 @@ class ProductUIStateBuilder
     _$ProductUIState _$result;
     try {
       _$result = _$v ??
-          new _$ProductUIState._(
-              editing: _editing?.build(),
-              listUIState: listUIState.build(),
-              selectedId: selectedId,
-              forceSelected: forceSelected,
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'ProductUIState', 'tabIndex'),
-              saveCompleter: saveCompleter,
-              cancelCompleter: cancelCompleter);
+          _$ProductUIState._(
+            editing: _editing?.build(),
+            listUIState: listUIState.build(),
+            selectedId: selectedId,
+            forceSelected: forceSelected,
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'ProductUIState', 'tabIndex'),
+            saveCompleter: saveCompleter,
+            cancelCompleter: cancelCompleter,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -432,7 +422,7 @@ class ProductUIStateBuilder
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ProductUIState', _$failedField, e.toString());
       }
       rethrow;

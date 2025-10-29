@@ -82,7 +82,6 @@ Future<List<MultipartFile>?> _pickFiles({
     type: fileType ?? FileType.custom,
     allowedExtensions:
         fileType == FileType.image ? [] : allowedExtensions ?? [],
-    allowCompression: true,
     withData: true,
     allowMultiple: allowMultiple,
   );
@@ -139,7 +138,9 @@ void saveDownloadedFile(
             .fileSavedInPath
             .replaceFirst(':path', directory));
       } else {
-        await Share.shareXFiles([XFile(filePath)]);
+        await SharePlus.instance.share(ShareParams(
+          files: [XFile(filePath)],
+        ));
       }
     }
   }

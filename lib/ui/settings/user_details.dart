@@ -604,7 +604,7 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
         _secret = response.data.secret;
       });
     }).catchError((dynamic error) {
-      Navigator.of(context).pop();
+      Navigator.of(navigatorKey.currentContext!).pop();
       showErrorDialog(message: error);
     });
   }
@@ -639,10 +639,11 @@ class _EnableTwoFactorState extends State<_EnableTwoFactor> {
             }))
         .then((dynamic data) {
       setState(() => _isLoading = false);
-      showToast(AppLocalization.of(context)!.enabledTwoFactor);
-      final store = StoreProvider.of<AppState>(context);
+      showToast(
+          AppLocalization.of(navigatorKey.currentContext!)!.enabledTwoFactor);
+      final store = StoreProvider.of<AppState>(navigatorKey.currentContext!);
       store.dispatch(RefreshData());
-      Navigator.of(context).pop();
+      Navigator.of(navigatorKey.currentContext!).pop();
     }).catchError((Object error) {
       setState(() => _isLoading = false);
       showErrorDialog(message: '$error');

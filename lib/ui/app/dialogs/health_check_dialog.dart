@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/utils/formatting.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -71,7 +72,7 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
             HealthCheckResponse.serializer, response);
       });
     }).catchError((dynamic error) {
-      Navigator.of(context).pop();
+      Navigator.of(navigatorKey.currentContext!).pop();
       showErrorDialog(message: error);
     });
   }
@@ -260,11 +261,11 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                   */
                   if (!account.isDocker &&
                       phpMemoryLimitDouble! > 100 &&
-                      phpMemoryLimitDouble < 1024)
+                      phpMemoryLimitDouble < 2048)
                     _HealthListTile(
                       title: 'PHP memory limit is too low',
                       subtitle:
-                          'Increase the limit to 1024M to support the in-app update',
+                          'Increase the limit to 2 GB to support the in-app update',
                       level: _HealthCheckLevel.Warning,
                     ),
                   if (_response!.queue == 'sync')

@@ -43,7 +43,7 @@ Client application for [Invoice Ninja](https://github.com/invoiceninja/invoiceni
 
 - Support running the code unsigned on Android
 
-    `cp android/app/build.gradle.dev android/app/build.gradle`
+    `cp android/app/build.gradle.dev.kts android/app/build.gradle.kts`
 
 - Run the app
 
@@ -58,12 +58,12 @@ Note: if you don't have an Invoice Ninja backend setup you can test the app with
 ## Steps to remove non-FOSS code
 
 ```
-cp android/build.gradle.foss android/build.gradle
 cp lib/utils/oauth.dart.foss lib/utils/oauth.dart
 cp lib/utils/app_review.dart.foss lib/utils/app_review.dart
 cp lib/ui/app/upgrade_dialog.dart.foss lib/ui/app/upgrade_dialog.dart
 cp lib/ui/app/pinput.dart.foss lib/ui/app/pinput.dart
 cp android/app/src/main/AndroidManifest.foss.xml android/app/src/main/AndroidManifest.xml
+cp android/settings.gradle.foss.kts android/settings.gradle.kts
 cp pubspec.foss.yaml pubspec.yaml 
 rm pubspec.lock
 ```

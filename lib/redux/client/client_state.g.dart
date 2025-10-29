@@ -6,9 +6,9 @@ part of 'client_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<ClientState> _$clientStateSerializer = new _$ClientStateSerializer();
+Serializer<ClientState> _$clientStateSerializer = _$ClientStateSerializer();
 Serializer<ClientUIState> _$clientUIStateSerializer =
-    new _$ClientUIStateSerializer();
+    _$ClientUIStateSerializer();
 
 class _$ClientStateSerializer implements StructuredSerializer<ClientState> {
   @override
@@ -36,7 +36,7 @@ class _$ClientStateSerializer implements StructuredSerializer<ClientState> {
   @override
   ClientState deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ClientStateBuilder();
+    final result = ClientStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -117,7 +117,7 @@ class _$ClientUIStateSerializer implements StructuredSerializer<ClientUIState> {
   ClientUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ClientUIStateBuilder();
+    final result = ClientUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -164,19 +164,15 @@ class _$ClientState extends ClientState {
   final BuiltList<String> list;
 
   factory _$ClientState([void Function(ClientStateBuilder)? updates]) =>
-      (new ClientStateBuilder()..update(updates))._build();
+      (ClientStateBuilder()..update(updates))._build();
 
-  _$ClientState._({required this.map, required this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, r'ClientState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, r'ClientState', 'list');
-  }
-
+  _$ClientState._({required this.map, required this.list}) : super._();
   @override
   ClientState rebuild(void Function(ClientStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ClientStateBuilder toBuilder() => new ClientStateBuilder()..replace(this);
+  ClientStateBuilder toBuilder() => ClientStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -209,11 +205,11 @@ class ClientStateBuilder implements Builder<ClientState, ClientStateBuilder> {
 
   MapBuilder<String, ClientEntity>? _map;
   MapBuilder<String, ClientEntity> get map =>
-      _$this._map ??= new MapBuilder<String, ClientEntity>();
+      _$this._map ??= MapBuilder<String, ClientEntity>();
   set map(MapBuilder<String, ClientEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
-  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  ListBuilder<String> get list => _$this._list ??= ListBuilder<String>();
   set list(ListBuilder<String>? list) => _$this._list = list;
 
   ClientStateBuilder();
@@ -230,7 +226,6 @@ class ClientStateBuilder implements Builder<ClientState, ClientStateBuilder> {
 
   @override
   void replace(ClientState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ClientState;
   }
 
@@ -245,8 +240,11 @@ class ClientStateBuilder implements Builder<ClientState, ClientStateBuilder> {
   _$ClientState _build() {
     _$ClientState _$result;
     try {
-      _$result =
-          _$v ?? new _$ClientState._(map: map.build(), list: list.build());
+      _$result = _$v ??
+          _$ClientState._(
+            map: map.build(),
+            list: list.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -255,7 +253,7 @@ class ClientStateBuilder implements Builder<ClientState, ClientStateBuilder> {
         _$failedField = 'list';
         list.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ClientState', _$failedField, e.toString());
       }
       rethrow;
@@ -284,7 +282,7 @@ class _$ClientUIState extends ClientUIState {
   final Completer<Null>? cancelCompleter;
 
   factory _$ClientUIState([void Function(ClientUIStateBuilder)? updates]) =>
-      (new ClientUIStateBuilder()..update(updates))._build();
+      (ClientUIStateBuilder()..update(updates))._build();
 
   _$ClientUIState._(
       {this.editing,
@@ -295,19 +293,13 @@ class _$ClientUIState extends ClientUIState {
       required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        listUIState, r'ClientUIState', 'listUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        tabIndex, r'ClientUIState', 'tabIndex');
-  }
-
+      : super._();
   @override
   ClientUIState rebuild(void Function(ClientUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ClientUIStateBuilder toBuilder() => new ClientUIStateBuilder()..replace(this);
+  ClientUIStateBuilder toBuilder() => ClientUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -360,19 +352,18 @@ class ClientUIStateBuilder
   _$ClientUIState? _$v;
 
   ClientEntityBuilder? _editing;
-  ClientEntityBuilder get editing =>
-      _$this._editing ??= new ClientEntityBuilder();
+  ClientEntityBuilder get editing => _$this._editing ??= ClientEntityBuilder();
   set editing(ClientEntityBuilder? editing) => _$this._editing = editing;
 
   ClientContactEntityBuilder? _editingContact;
   ClientContactEntityBuilder get editingContact =>
-      _$this._editingContact ??= new ClientContactEntityBuilder();
+      _$this._editingContact ??= ClientContactEntityBuilder();
   set editingContact(ClientContactEntityBuilder? editingContact) =>
       _$this._editingContact = editingContact;
 
   ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
-      _$this._listUIState ??= new ListUIStateBuilder();
+      _$this._listUIState ??= ListUIStateBuilder();
   set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
@@ -419,7 +410,6 @@ class ClientUIStateBuilder
 
   @override
   void replace(ClientUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ClientUIState;
   }
 
@@ -435,16 +425,17 @@ class ClientUIStateBuilder
     _$ClientUIState _$result;
     try {
       _$result = _$v ??
-          new _$ClientUIState._(
-              editing: _editing?.build(),
-              editingContact: _editingContact?.build(),
-              listUIState: listUIState.build(),
-              selectedId: selectedId,
-              forceSelected: forceSelected,
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'ClientUIState', 'tabIndex'),
-              saveCompleter: saveCompleter,
-              cancelCompleter: cancelCompleter);
+          _$ClientUIState._(
+            editing: _editing?.build(),
+            editingContact: _editingContact?.build(),
+            listUIState: listUIState.build(),
+            selectedId: selectedId,
+            forceSelected: forceSelected,
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'ClientUIState', 'tabIndex'),
+            saveCompleter: saveCompleter,
+            cancelCompleter: cancelCompleter,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -455,7 +446,7 @@ class ClientUIStateBuilder
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ClientUIState', _$failedField, e.toString());
       }
       rethrow;

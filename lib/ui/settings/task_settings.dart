@@ -120,7 +120,7 @@ class _TaskSettingsState extends State<TaskSettings> {
               if (!viewModel.state.settingsUIState.isFiltered) ...[
                 SizedBox(height: 32),
                 SwitchListTile(
-                  activeColor: Theme.of(context).colorScheme.secondary,
+                  activeThumbColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.autoStartTasks),
                   value: company.autoStartTasks,
                   subtitle: Text(localization.autoStartTasksHelp),
@@ -128,7 +128,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                       company.rebuild((b) => b..autoStartTasks = value)),
                 ),
                 SwitchListTile(
-                  activeColor: Theme.of(context).colorScheme.secondary,
+                  activeThumbColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.showTaskEndDate),
                   value: company.showTaskEndDate,
                   subtitle: Text(localization.showTaskEndDateHelp),
@@ -136,7 +136,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                       company.rebuild((b) => b..showTaskEndDate = value)),
                 ),
                 SwitchListTile(
-                  activeColor: Theme.of(context).colorScheme.secondary,
+                  activeThumbColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.showTaskItemDescription),
                   value: settings.showTaskItemDescription!,
                   subtitle: Text(localization.showTaskItemDescriptionHelp),
@@ -144,7 +144,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                       .rebuild((b) => b..showTaskItemDescription = value)),
                 ),
                 SwitchListTile(
-                  activeColor: Theme.of(context).colorScheme.secondary,
+                  activeThumbColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.showTaskBillable),
                   value: settings.allowBillableTaskItems!,
                   subtitle: Text(localization.allowBillableTaskItemsHelp),
@@ -222,7 +222,7 @@ class _TaskSettingsState extends State<TaskSettings> {
             children: <Widget>[
               if (!viewModel.state.settingsUIState.isFiltered) ...[
                 SwitchListTile(
-                  activeColor: Theme.of(context).colorScheme.secondary,
+                  activeThumbColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.invoiceTaskDatelog),
                   value: company.invoiceTaskDatelog,
                   subtitle: Text(localization.invoiceTaskDatelogHelp),
@@ -230,7 +230,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                       company.rebuild((b) => b..invoiceTaskDatelog = value)),
                 ),
                 SwitchListTile(
-                  activeColor: Theme.of(context).colorScheme.secondary,
+                  activeThumbColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.invoiceTaskTimelog),
                   value: company.invoiceTaskTimelog,
                   subtitle: Text(localization.invoiceTaskTimelogHelp),
@@ -238,7 +238,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                       company.rebuild((b) => b..invoiceTaskTimelog = value)),
                 ),
                 SwitchListTile(
-                  activeColor: Theme.of(context).colorScheme.secondary,
+                  activeThumbColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.invoiceTaskHours),
                   value: company.invoiceTaskHours,
                   subtitle: Text(localization.invoiceTaskHoursHelp),
@@ -247,7 +247,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                 ),
                 if (settings.showTaskItemDescription == true)
                   SwitchListTile(
-                    activeColor: Theme.of(context).colorScheme.secondary,
+                    activeThumbColor: Theme.of(context).colorScheme.secondary,
                     title: Text(localization.invoiceTaskItemDescription),
                     value: company.invoiceTaskItemDescription,
                     subtitle: Text(localization.invoiceTaskItemDescriptionHelp),
@@ -255,7 +255,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                         .rebuild((b) => b..invoiceTaskItemDescription = value)),
                   ),
                 SwitchListTile(
-                  activeColor: Theme.of(context).colorScheme.secondary,
+                  activeThumbColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.invoiceTaskProject),
                   value: company.invoiceTaskProject,
                   subtitle: Text(localization.invoiceTaskProjectHelp),
@@ -289,7 +289,7 @@ class _TaskSettingsState extends State<TaskSettings> {
             FormCard(
               children: [
                 SwitchListTile(
-                  activeColor: Theme.of(context).colorScheme.secondary,
+                  activeThumbColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.showTasksTable),
                   value: company.showTasksTable,
                   subtitle: Text(localization.showTasksTableHelp),
@@ -297,7 +297,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                       company.rebuild((b) => b..showTasksTable = value)),
                 ),
                 SwitchListTile(
-                  activeColor: Theme.of(context).colorScheme.secondary,
+                  activeThumbColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.lockInvoicedTasks),
                   value: company.invoiceTaskLock,
                   subtitle: Text(localization.lockInvoicedTasksHelp),
@@ -305,7 +305,7 @@ class _TaskSettingsState extends State<TaskSettings> {
                       company.rebuild((b) => b..invoiceTaskLock = value)),
                 ),
                 SwitchListTile(
-                  activeColor: Theme.of(context).colorScheme.secondary,
+                  activeThumbColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.addDocumentsToInvoice),
                   value: company.invoiceTaskDocuments,
                   subtitle: Text(localization.addDocumentsToInvoiceHelp),

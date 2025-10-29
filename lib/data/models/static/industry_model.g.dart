@@ -7,11 +7,11 @@ part of 'industry_model.dart';
 // **************************************************************************
 
 Serializer<IndustryListResponse> _$industryListResponseSerializer =
-    new _$IndustryListResponseSerializer();
+    _$IndustryListResponseSerializer();
 Serializer<IndustryItemResponse> _$industryItemResponseSerializer =
-    new _$IndustryItemResponseSerializer();
+    _$IndustryItemResponseSerializer();
 Serializer<IndustryEntity> _$industryEntitySerializer =
-    new _$IndustryEntitySerializer();
+    _$IndustryEntitySerializer();
 
 class _$IndustryListResponseSerializer
     implements StructuredSerializer<IndustryListResponse> {
@@ -41,7 +41,7 @@ class _$IndustryListResponseSerializer
   IndustryListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new IndustryListResponseBuilder();
+    final result = IndustryListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -89,7 +89,7 @@ class _$IndustryItemResponseSerializer
   IndustryItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new IndustryItemResponseBuilder();
+    final result = IndustryItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -133,7 +133,7 @@ class _$IndustryEntitySerializer
   IndustryEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new IndustryEntityBuilder();
+    final result = IndustryEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -162,13 +162,9 @@ class _$IndustryListResponse extends IndustryListResponse {
 
   factory _$IndustryListResponse(
           [void Function(IndustryListResponseBuilder)? updates]) =>
-      (new IndustryListResponseBuilder()..update(updates))._build();
+      (IndustryListResponseBuilder()..update(updates))._build();
 
-  _$IndustryListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'IndustryListResponse', 'data');
-  }
-
+  _$IndustryListResponse._({required this.data}) : super._();
   @override
   IndustryListResponse rebuild(
           void Function(IndustryListResponseBuilder) updates) =>
@@ -176,7 +172,7 @@ class _$IndustryListResponse extends IndustryListResponse {
 
   @override
   IndustryListResponseBuilder toBuilder() =>
-      new IndustryListResponseBuilder()..replace(this);
+      IndustryListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -208,7 +204,7 @@ class IndustryListResponseBuilder
 
   ListBuilder<IndustryEntity>? _data;
   ListBuilder<IndustryEntity> get data =>
-      _$this._data ??= new ListBuilder<IndustryEntity>();
+      _$this._data ??= ListBuilder<IndustryEntity>();
   set data(ListBuilder<IndustryEntity>? data) => _$this._data = data;
 
   IndustryListResponseBuilder();
@@ -224,7 +220,6 @@ class IndustryListResponseBuilder
 
   @override
   void replace(IndustryListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$IndustryListResponse;
   }
 
@@ -239,14 +234,17 @@ class IndustryListResponseBuilder
   _$IndustryListResponse _build() {
     _$IndustryListResponse _$result;
     try {
-      _$result = _$v ?? new _$IndustryListResponse._(data: data.build());
+      _$result = _$v ??
+          _$IndustryListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'IndustryListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -262,13 +260,9 @@ class _$IndustryItemResponse extends IndustryItemResponse {
 
   factory _$IndustryItemResponse(
           [void Function(IndustryItemResponseBuilder)? updates]) =>
-      (new IndustryItemResponseBuilder()..update(updates))._build();
+      (IndustryItemResponseBuilder()..update(updates))._build();
 
-  _$IndustryItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'IndustryItemResponse', 'data');
-  }
-
+  _$IndustryItemResponse._({required this.data}) : super._();
   @override
   IndustryItemResponse rebuild(
           void Function(IndustryItemResponseBuilder) updates) =>
@@ -276,7 +270,7 @@ class _$IndustryItemResponse extends IndustryItemResponse {
 
   @override
   IndustryItemResponseBuilder toBuilder() =>
-      new IndustryItemResponseBuilder()..replace(this);
+      IndustryItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -307,8 +301,7 @@ class IndustryItemResponseBuilder
   _$IndustryItemResponse? _$v;
 
   IndustryEntityBuilder? _data;
-  IndustryEntityBuilder get data =>
-      _$this._data ??= new IndustryEntityBuilder();
+  IndustryEntityBuilder get data => _$this._data ??= IndustryEntityBuilder();
   set data(IndustryEntityBuilder? data) => _$this._data = data;
 
   IndustryItemResponseBuilder();
@@ -324,7 +317,6 @@ class IndustryItemResponseBuilder
 
   @override
   void replace(IndustryItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$IndustryItemResponse;
   }
 
@@ -339,14 +331,17 @@ class IndustryItemResponseBuilder
   _$IndustryItemResponse _build() {
     _$IndustryItemResponse _$result;
     try {
-      _$result = _$v ?? new _$IndustryItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$IndustryItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'IndustryItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -363,20 +358,15 @@ class _$IndustryEntity extends IndustryEntity {
   final String id;
 
   factory _$IndustryEntity([void Function(IndustryEntityBuilder)? updates]) =>
-      (new IndustryEntityBuilder()..update(updates))._build();
+      (IndustryEntityBuilder()..update(updates))._build();
 
-  _$IndustryEntity._({required this.name, required this.id}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'IndustryEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(id, r'IndustryEntity', 'id');
-  }
-
+  _$IndustryEntity._({required this.name, required this.id}) : super._();
   @override
   IndustryEntity rebuild(void Function(IndustryEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  IndustryEntityBuilder toBuilder() =>
-      new IndustryEntityBuilder()..replace(this);
+  IndustryEntityBuilder toBuilder() => IndustryEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -430,7 +420,6 @@ class IndustryEntityBuilder
 
   @override
   void replace(IndustryEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$IndustryEntity;
   }
 
@@ -444,11 +433,12 @@ class IndustryEntityBuilder
 
   _$IndustryEntity _build() {
     final _$result = _$v ??
-        new _$IndustryEntity._(
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'IndustryEntity', 'name'),
-            id: BuiltValueNullFieldError.checkNotNull(
-                id, r'IndustryEntity', 'id'));
+        _$IndustryEntity._(
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'IndustryEntity', 'name'),
+          id: BuiltValueNullFieldError.checkNotNull(
+              id, r'IndustryEntity', 'id'),
+        );
     replace(_$result);
     return _$result;
   }

@@ -7,15 +7,15 @@ part of 'expense_model.dart';
 // **************************************************************************
 
 Serializer<ExpenseListResponse> _$expenseListResponseSerializer =
-    new _$ExpenseListResponseSerializer();
+    _$ExpenseListResponseSerializer();
 Serializer<ExpenseItemResponse> _$expenseItemResponseSerializer =
-    new _$ExpenseItemResponseSerializer();
+    _$ExpenseItemResponseSerializer();
 Serializer<ExpenseEntity> _$expenseEntitySerializer =
-    new _$ExpenseEntitySerializer();
+    _$ExpenseEntitySerializer();
 Serializer<ExpenseScheduleEntity> _$expenseScheduleEntitySerializer =
-    new _$ExpenseScheduleEntitySerializer();
+    _$ExpenseScheduleEntitySerializer();
 Serializer<ExpenseStatusEntity> _$expenseStatusEntitySerializer =
-    new _$ExpenseStatusEntitySerializer();
+    _$ExpenseStatusEntitySerializer();
 
 class _$ExpenseListResponseSerializer
     implements StructuredSerializer<ExpenseListResponse> {
@@ -45,7 +45,7 @@ class _$ExpenseListResponseSerializer
   ExpenseListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ExpenseListResponseBuilder();
+    final result = ExpenseListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -93,7 +93,7 @@ class _$ExpenseItemResponseSerializer
   ExpenseItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ExpenseItemResponseBuilder();
+    final result = ExpenseItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -346,7 +346,7 @@ class _$ExpenseEntitySerializer implements StructuredSerializer<ExpenseEntity> {
   ExpenseEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ExpenseEntityBuilder();
+    final result = ExpenseEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -604,7 +604,7 @@ class _$ExpenseScheduleEntitySerializer
   ExpenseScheduleEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ExpenseScheduleEntityBuilder();
+    final result = ExpenseScheduleEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -651,7 +651,7 @@ class _$ExpenseStatusEntitySerializer
   ExpenseStatusEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ExpenseStatusEntityBuilder();
+    final result = ExpenseStatusEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -680,12 +680,9 @@ class _$ExpenseListResponse extends ExpenseListResponse {
 
   factory _$ExpenseListResponse(
           [void Function(ExpenseListResponseBuilder)? updates]) =>
-      (new ExpenseListResponseBuilder()..update(updates))._build();
+      (ExpenseListResponseBuilder()..update(updates))._build();
 
-  _$ExpenseListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'ExpenseListResponse', 'data');
-  }
-
+  _$ExpenseListResponse._({required this.data}) : super._();
   @override
   ExpenseListResponse rebuild(
           void Function(ExpenseListResponseBuilder) updates) =>
@@ -693,7 +690,7 @@ class _$ExpenseListResponse extends ExpenseListResponse {
 
   @override
   ExpenseListResponseBuilder toBuilder() =>
-      new ExpenseListResponseBuilder()..replace(this);
+      ExpenseListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -725,7 +722,7 @@ class ExpenseListResponseBuilder
 
   ListBuilder<ExpenseEntity>? _data;
   ListBuilder<ExpenseEntity> get data =>
-      _$this._data ??= new ListBuilder<ExpenseEntity>();
+      _$this._data ??= ListBuilder<ExpenseEntity>();
   set data(ListBuilder<ExpenseEntity>? data) => _$this._data = data;
 
   ExpenseListResponseBuilder();
@@ -741,7 +738,6 @@ class ExpenseListResponseBuilder
 
   @override
   void replace(ExpenseListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ExpenseListResponse;
   }
 
@@ -756,14 +752,17 @@ class ExpenseListResponseBuilder
   _$ExpenseListResponse _build() {
     _$ExpenseListResponse _$result;
     try {
-      _$result = _$v ?? new _$ExpenseListResponse._(data: data.build());
+      _$result = _$v ??
+          _$ExpenseListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ExpenseListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -779,12 +778,9 @@ class _$ExpenseItemResponse extends ExpenseItemResponse {
 
   factory _$ExpenseItemResponse(
           [void Function(ExpenseItemResponseBuilder)? updates]) =>
-      (new ExpenseItemResponseBuilder()..update(updates))._build();
+      (ExpenseItemResponseBuilder()..update(updates))._build();
 
-  _$ExpenseItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'ExpenseItemResponse', 'data');
-  }
-
+  _$ExpenseItemResponse._({required this.data}) : super._();
   @override
   ExpenseItemResponse rebuild(
           void Function(ExpenseItemResponseBuilder) updates) =>
@@ -792,7 +788,7 @@ class _$ExpenseItemResponse extends ExpenseItemResponse {
 
   @override
   ExpenseItemResponseBuilder toBuilder() =>
-      new ExpenseItemResponseBuilder()..replace(this);
+      ExpenseItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -823,7 +819,7 @@ class ExpenseItemResponseBuilder
   _$ExpenseItemResponse? _$v;
 
   ExpenseEntityBuilder? _data;
-  ExpenseEntityBuilder get data => _$this._data ??= new ExpenseEntityBuilder();
+  ExpenseEntityBuilder get data => _$this._data ??= ExpenseEntityBuilder();
   set data(ExpenseEntityBuilder? data) => _$this._data = data;
 
   ExpenseItemResponseBuilder();
@@ -839,7 +835,6 @@ class ExpenseItemResponseBuilder
 
   @override
   void replace(ExpenseItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ExpenseItemResponse;
   }
 
@@ -854,14 +849,17 @@ class ExpenseItemResponseBuilder
   _$ExpenseItemResponse _build() {
     _$ExpenseItemResponse _$result;
     try {
-      _$result = _$v ?? new _$ExpenseItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$ExpenseItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ExpenseItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -980,7 +978,7 @@ class _$ExpenseEntity extends ExpenseEntity {
   final String id;
 
   factory _$ExpenseEntity([void Function(ExpenseEntityBuilder)? updates]) =>
-      (new ExpenseEntityBuilder()..update(updates))._build();
+      (ExpenseEntityBuilder()..update(updates))._build();
 
   _$ExpenseEntity._(
       {required this.privateNotes,
@@ -1036,89 +1034,13 @@ class _$ExpenseEntity extends ExpenseEntity {
       this.assignedUserId,
       this.entityType,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        privateNotes, r'ExpenseEntity', 'privateNotes');
-    BuiltValueNullFieldError.checkNotNull(
-        publicNotes, r'ExpenseEntity', 'publicNotes');
-    BuiltValueNullFieldError.checkNotNull(
-        shouldBeInvoiced, r'ExpenseEntity', 'shouldBeInvoiced');
-    BuiltValueNullFieldError.checkNotNull(
-        invoiceDocuments, r'ExpenseEntity', 'invoiceDocuments');
-    BuiltValueNullFieldError.checkNotNull(
-        transactionId, r'ExpenseEntity', 'transactionId');
-    BuiltValueNullFieldError.checkNotNull(
-        transactionReference, r'ExpenseEntity', 'transactionReference');
-    BuiltValueNullFieldError.checkNotNull(bankId, r'ExpenseEntity', 'bankId');
-    BuiltValueNullFieldError.checkNotNull(
-        currencyId, r'ExpenseEntity', 'currencyId');
-    BuiltValueNullFieldError.checkNotNull(
-        categoryId, r'ExpenseEntity', 'categoryId');
-    BuiltValueNullFieldError.checkNotNull(amount, r'ExpenseEntity', 'amount');
-    BuiltValueNullFieldError.checkNotNull(
-        paymentDate, r'ExpenseEntity', 'paymentDate');
-    BuiltValueNullFieldError.checkNotNull(
-        exchangeRate, r'ExpenseEntity', 'exchangeRate');
-    BuiltValueNullFieldError.checkNotNull(
-        invoiceCurrencyId, r'ExpenseEntity', 'invoiceCurrencyId');
-    BuiltValueNullFieldError.checkNotNull(
-        paymentTypeId, r'ExpenseEntity', 'paymentTypeId');
-    BuiltValueNullFieldError.checkNotNull(
-        taxName1, r'ExpenseEntity', 'taxName1');
-    BuiltValueNullFieldError.checkNotNull(
-        taxName2, r'ExpenseEntity', 'taxName2');
-    BuiltValueNullFieldError.checkNotNull(
-        taxRate1, r'ExpenseEntity', 'taxRate1');
-    BuiltValueNullFieldError.checkNotNull(
-        taxRate2, r'ExpenseEntity', 'taxRate2');
-    BuiltValueNullFieldError.checkNotNull(
-        taxName3, r'ExpenseEntity', 'taxName3');
-    BuiltValueNullFieldError.checkNotNull(
-        taxRate3, r'ExpenseEntity', 'taxRate3');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue1, r'ExpenseEntity', 'customValue1');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue2, r'ExpenseEntity', 'customValue2');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue3, r'ExpenseEntity', 'customValue3');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue4, r'ExpenseEntity', 'customValue4');
-    BuiltValueNullFieldError.checkNotNull(
-        taxAmount1, r'ExpenseEntity', 'taxAmount1');
-    BuiltValueNullFieldError.checkNotNull(
-        taxAmount2, r'ExpenseEntity', 'taxAmount2');
-    BuiltValueNullFieldError.checkNotNull(
-        taxAmount3, r'ExpenseEntity', 'taxAmount3');
-    BuiltValueNullFieldError.checkNotNull(
-        usesInclusiveTaxes, r'ExpenseEntity', 'usesInclusiveTaxes');
-    BuiltValueNullFieldError.checkNotNull(
-        documents, r'ExpenseEntity', 'documents');
-    BuiltValueNullFieldError.checkNotNull(number, r'ExpenseEntity', 'number');
-    BuiltValueNullFieldError.checkNotNull(
-        recurringExpenseId, r'ExpenseEntity', 'recurringExpenseId');
-    BuiltValueNullFieldError.checkNotNull(
-        frequencyId, r'ExpenseEntity', 'frequencyId');
-    BuiltValueNullFieldError.checkNotNull(
-        lastSentDate, r'ExpenseEntity', 'lastSentDate');
-    BuiltValueNullFieldError.checkNotNull(
-        nextSendDate, r'ExpenseEntity', 'nextSendDate');
-    BuiltValueNullFieldError.checkNotNull(
-        remainingCycles, r'ExpenseEntity', 'remainingCycles');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'ExpenseEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'ExpenseEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'ExpenseEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'ExpenseEntity', 'id');
-  }
-
+      : super._();
   @override
   ExpenseEntity rebuild(void Function(ExpenseEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ExpenseEntityBuilder toBuilder() => new ExpenseEntityBuilder()..replace(this);
+  ExpenseEntityBuilder toBuilder() => ExpenseEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1453,7 +1375,7 @@ class ExpenseEntityBuilder
 
   ListBuilder<DocumentEntity>? _documents;
   ListBuilder<DocumentEntity> get documents =>
-      _$this._documents ??= new ListBuilder<DocumentEntity>();
+      _$this._documents ??= ListBuilder<DocumentEntity>();
   set documents(ListBuilder<DocumentEntity>? documents) =>
       _$this._documents = documents;
 
@@ -1485,7 +1407,7 @@ class ExpenseEntityBuilder
 
   ListBuilder<ExpenseScheduleEntity>? _recurringDates;
   ListBuilder<ExpenseScheduleEntity> get recurringDates =>
-      _$this._recurringDates ??= new ListBuilder<ExpenseScheduleEntity>();
+      _$this._recurringDates ??= ListBuilder<ExpenseScheduleEntity>();
   set recurringDates(ListBuilder<ExpenseScheduleEntity>? recurringDates) =>
       _$this._recurringDates = recurringDates;
 
@@ -1598,7 +1520,6 @@ class ExpenseEntityBuilder
 
   @override
   void replace(ExpenseEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ExpenseEntity;
   }
 
@@ -1614,67 +1535,99 @@ class ExpenseEntityBuilder
     _$ExpenseEntity _$result;
     try {
       _$result = _$v ??
-          new _$ExpenseEntity._(
-              privateNotes: BuiltValueNullFieldError.checkNotNull(
-                  privateNotes, r'ExpenseEntity', 'privateNotes'),
-              publicNotes: BuiltValueNullFieldError.checkNotNull(
-                  publicNotes, r'ExpenseEntity', 'publicNotes'),
-              shouldBeInvoiced: BuiltValueNullFieldError.checkNotNull(
-                  shouldBeInvoiced, r'ExpenseEntity', 'shouldBeInvoiced'),
-              invoiceDocuments: BuiltValueNullFieldError.checkNotNull(
-                  invoiceDocuments, r'ExpenseEntity', 'invoiceDocuments'),
-              transactionId: BuiltValueNullFieldError.checkNotNull(
-                  transactionId, r'ExpenseEntity', 'transactionId'),
-              transactionReference: BuiltValueNullFieldError.checkNotNull(
-                  transactionReference, r'ExpenseEntity', 'transactionReference'),
-              bankId: BuiltValueNullFieldError.checkNotNull(
-                  bankId, r'ExpenseEntity', 'bankId'),
-              currencyId: BuiltValueNullFieldError.checkNotNull(currencyId, r'ExpenseEntity', 'currencyId'),
-              categoryId: BuiltValueNullFieldError.checkNotNull(categoryId, r'ExpenseEntity', 'categoryId'),
-              amount: BuiltValueNullFieldError.checkNotNull(amount, r'ExpenseEntity', 'amount'),
-              date: date,
-              paymentDate: BuiltValueNullFieldError.checkNotNull(paymentDate, r'ExpenseEntity', 'paymentDate'),
-              exchangeRate: BuiltValueNullFieldError.checkNotNull(exchangeRate, r'ExpenseEntity', 'exchangeRate'),
-              invoiceCurrencyId: BuiltValueNullFieldError.checkNotNull(invoiceCurrencyId, r'ExpenseEntity', 'invoiceCurrencyId'),
-              paymentTypeId: BuiltValueNullFieldError.checkNotNull(paymentTypeId, r'ExpenseEntity', 'paymentTypeId'),
-              taxName1: BuiltValueNullFieldError.checkNotNull(taxName1, r'ExpenseEntity', 'taxName1'),
-              taxName2: BuiltValueNullFieldError.checkNotNull(taxName2, r'ExpenseEntity', 'taxName2'),
-              taxRate1: BuiltValueNullFieldError.checkNotNull(taxRate1, r'ExpenseEntity', 'taxRate1'),
-              taxRate2: BuiltValueNullFieldError.checkNotNull(taxRate2, r'ExpenseEntity', 'taxRate2'),
-              taxName3: BuiltValueNullFieldError.checkNotNull(taxName3, r'ExpenseEntity', 'taxName3'),
-              taxRate3: BuiltValueNullFieldError.checkNotNull(taxRate3, r'ExpenseEntity', 'taxRate3'),
-              clientId: clientId,
-              invoiceId: invoiceId,
-              vendorId: vendorId,
-              projectId: projectId,
-              statusId: statusId,
-              customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, r'ExpenseEntity', 'customValue1'),
-              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, r'ExpenseEntity', 'customValue2'),
-              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'ExpenseEntity', 'customValue3'),
-              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'ExpenseEntity', 'customValue4'),
-              taxAmount1: BuiltValueNullFieldError.checkNotNull(taxAmount1, r'ExpenseEntity', 'taxAmount1'),
-              taxAmount2: BuiltValueNullFieldError.checkNotNull(taxAmount2, r'ExpenseEntity', 'taxAmount2'),
-              taxAmount3: BuiltValueNullFieldError.checkNotNull(taxAmount3, r'ExpenseEntity', 'taxAmount3'),
-              usesInclusiveTaxes: BuiltValueNullFieldError.checkNotNull(usesInclusiveTaxes, r'ExpenseEntity', 'usesInclusiveTaxes'),
-              calculateTaxByAmount: calculateTaxByAmount,
-              documents: documents.build(),
-              number: BuiltValueNullFieldError.checkNotNull(number, r'ExpenseEntity', 'number'),
-              recurringExpenseId: BuiltValueNullFieldError.checkNotNull(recurringExpenseId, r'ExpenseEntity', 'recurringExpenseId'),
-              frequencyId: BuiltValueNullFieldError.checkNotNull(frequencyId, r'ExpenseEntity', 'frequencyId'),
-              lastSentDate: BuiltValueNullFieldError.checkNotNull(lastSentDate, r'ExpenseEntity', 'lastSentDate'),
-              nextSendDate: BuiltValueNullFieldError.checkNotNull(nextSendDate, r'ExpenseEntity', 'nextSendDate'),
-              remainingCycles: BuiltValueNullFieldError.checkNotNull(remainingCycles, r'ExpenseEntity', 'remainingCycles'),
-              recurringDates: _recurringDates?.build(),
-              loadedAt: loadedAt,
-              isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'ExpenseEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'ExpenseEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'ExpenseEntity', 'archivedAt'),
-              isDeleted: isDeleted,
-              createdUserId: createdUserId,
-              assignedUserId: assignedUserId,
-              entityType: entityType,
-              id: BuiltValueNullFieldError.checkNotNull(id, r'ExpenseEntity', 'id'));
+          _$ExpenseEntity._(
+            privateNotes: BuiltValueNullFieldError.checkNotNull(
+                privateNotes, r'ExpenseEntity', 'privateNotes'),
+            publicNotes: BuiltValueNullFieldError.checkNotNull(
+                publicNotes, r'ExpenseEntity', 'publicNotes'),
+            shouldBeInvoiced: BuiltValueNullFieldError.checkNotNull(
+                shouldBeInvoiced, r'ExpenseEntity', 'shouldBeInvoiced'),
+            invoiceDocuments: BuiltValueNullFieldError.checkNotNull(
+                invoiceDocuments, r'ExpenseEntity', 'invoiceDocuments'),
+            transactionId: BuiltValueNullFieldError.checkNotNull(
+                transactionId, r'ExpenseEntity', 'transactionId'),
+            transactionReference: BuiltValueNullFieldError.checkNotNull(
+                transactionReference, r'ExpenseEntity', 'transactionReference'),
+            bankId: BuiltValueNullFieldError.checkNotNull(
+                bankId, r'ExpenseEntity', 'bankId'),
+            currencyId: BuiltValueNullFieldError.checkNotNull(
+                currencyId, r'ExpenseEntity', 'currencyId'),
+            categoryId: BuiltValueNullFieldError.checkNotNull(
+                categoryId, r'ExpenseEntity', 'categoryId'),
+            amount: BuiltValueNullFieldError.checkNotNull(
+                amount, r'ExpenseEntity', 'amount'),
+            date: date,
+            paymentDate: BuiltValueNullFieldError.checkNotNull(
+                paymentDate, r'ExpenseEntity', 'paymentDate'),
+            exchangeRate: BuiltValueNullFieldError.checkNotNull(
+                exchangeRate, r'ExpenseEntity', 'exchangeRate'),
+            invoiceCurrencyId: BuiltValueNullFieldError.checkNotNull(
+                invoiceCurrencyId, r'ExpenseEntity', 'invoiceCurrencyId'),
+            paymentTypeId: BuiltValueNullFieldError.checkNotNull(
+                paymentTypeId, r'ExpenseEntity', 'paymentTypeId'),
+            taxName1: BuiltValueNullFieldError.checkNotNull(
+                taxName1, r'ExpenseEntity', 'taxName1'),
+            taxName2: BuiltValueNullFieldError.checkNotNull(
+                taxName2, r'ExpenseEntity', 'taxName2'),
+            taxRate1: BuiltValueNullFieldError.checkNotNull(
+                taxRate1, r'ExpenseEntity', 'taxRate1'),
+            taxRate2: BuiltValueNullFieldError.checkNotNull(
+                taxRate2, r'ExpenseEntity', 'taxRate2'),
+            taxName3: BuiltValueNullFieldError.checkNotNull(
+                taxName3, r'ExpenseEntity', 'taxName3'),
+            taxRate3: BuiltValueNullFieldError.checkNotNull(
+                taxRate3, r'ExpenseEntity', 'taxRate3'),
+            clientId: clientId,
+            invoiceId: invoiceId,
+            vendorId: vendorId,
+            projectId: projectId,
+            statusId: statusId,
+            customValue1: BuiltValueNullFieldError.checkNotNull(
+                customValue1, r'ExpenseEntity', 'customValue1'),
+            customValue2: BuiltValueNullFieldError.checkNotNull(
+                customValue2, r'ExpenseEntity', 'customValue2'),
+            customValue3: BuiltValueNullFieldError.checkNotNull(
+                customValue3, r'ExpenseEntity', 'customValue3'),
+            customValue4: BuiltValueNullFieldError.checkNotNull(
+                customValue4, r'ExpenseEntity', 'customValue4'),
+            taxAmount1: BuiltValueNullFieldError.checkNotNull(
+                taxAmount1, r'ExpenseEntity', 'taxAmount1'),
+            taxAmount2: BuiltValueNullFieldError.checkNotNull(
+                taxAmount2, r'ExpenseEntity', 'taxAmount2'),
+            taxAmount3: BuiltValueNullFieldError.checkNotNull(
+                taxAmount3, r'ExpenseEntity', 'taxAmount3'),
+            usesInclusiveTaxes: BuiltValueNullFieldError.checkNotNull(
+                usesInclusiveTaxes, r'ExpenseEntity', 'usesInclusiveTaxes'),
+            calculateTaxByAmount: calculateTaxByAmount,
+            documents: documents.build(),
+            number: BuiltValueNullFieldError.checkNotNull(
+                number, r'ExpenseEntity', 'number'),
+            recurringExpenseId: BuiltValueNullFieldError.checkNotNull(
+                recurringExpenseId, r'ExpenseEntity', 'recurringExpenseId'),
+            frequencyId: BuiltValueNullFieldError.checkNotNull(
+                frequencyId, r'ExpenseEntity', 'frequencyId'),
+            lastSentDate: BuiltValueNullFieldError.checkNotNull(
+                lastSentDate, r'ExpenseEntity', 'lastSentDate'),
+            nextSendDate: BuiltValueNullFieldError.checkNotNull(
+                nextSendDate, r'ExpenseEntity', 'nextSendDate'),
+            remainingCycles: BuiltValueNullFieldError.checkNotNull(
+                remainingCycles, r'ExpenseEntity', 'remainingCycles'),
+            recurringDates: _recurringDates?.build(),
+            loadedAt: loadedAt,
+            isChanged: isChanged,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, r'ExpenseEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, r'ExpenseEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(
+                archivedAt, r'ExpenseEntity', 'archivedAt'),
+            isDeleted: isDeleted,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            entityType: entityType,
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, r'ExpenseEntity', 'id'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -1684,7 +1637,7 @@ class ExpenseEntityBuilder
         _$failedField = 'recurringDates';
         _recurringDates?.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ExpenseEntity', _$failedField, e.toString());
       }
       rethrow;
@@ -1700,13 +1653,9 @@ class _$ExpenseScheduleEntity extends ExpenseScheduleEntity {
 
   factory _$ExpenseScheduleEntity(
           [void Function(ExpenseScheduleEntityBuilder)? updates]) =>
-      (new ExpenseScheduleEntityBuilder()..update(updates))._build();
+      (ExpenseScheduleEntityBuilder()..update(updates))._build();
 
-  _$ExpenseScheduleEntity._({required this.sendDate}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        sendDate, r'ExpenseScheduleEntity', 'sendDate');
-  }
-
+  _$ExpenseScheduleEntity._({required this.sendDate}) : super._();
   @override
   ExpenseScheduleEntity rebuild(
           void Function(ExpenseScheduleEntityBuilder) updates) =>
@@ -1714,7 +1663,7 @@ class _$ExpenseScheduleEntity extends ExpenseScheduleEntity {
 
   @override
   ExpenseScheduleEntityBuilder toBuilder() =>
-      new ExpenseScheduleEntityBuilder()..replace(this);
+      ExpenseScheduleEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1761,7 +1710,6 @@ class ExpenseScheduleEntityBuilder
 
   @override
   void replace(ExpenseScheduleEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ExpenseScheduleEntity;
   }
 
@@ -1775,9 +1723,10 @@ class ExpenseScheduleEntityBuilder
 
   _$ExpenseScheduleEntity _build() {
     final _$result = _$v ??
-        new _$ExpenseScheduleEntity._(
-            sendDate: BuiltValueNullFieldError.checkNotNull(
-                sendDate, r'ExpenseScheduleEntity', 'sendDate'));
+        _$ExpenseScheduleEntity._(
+          sendDate: BuiltValueNullFieldError.checkNotNull(
+              sendDate, r'ExpenseScheduleEntity', 'sendDate'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -1791,13 +1740,9 @@ class _$ExpenseStatusEntity extends ExpenseStatusEntity {
 
   factory _$ExpenseStatusEntity(
           [void Function(ExpenseStatusEntityBuilder)? updates]) =>
-      (new ExpenseStatusEntityBuilder()..update(updates))._build();
+      (ExpenseStatusEntityBuilder()..update(updates))._build();
 
-  _$ExpenseStatusEntity._({required this.id, required this.name}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(id, r'ExpenseStatusEntity', 'id');
-    BuiltValueNullFieldError.checkNotNull(name, r'ExpenseStatusEntity', 'name');
-  }
-
+  _$ExpenseStatusEntity._({required this.id, required this.name}) : super._();
   @override
   ExpenseStatusEntity rebuild(
           void Function(ExpenseStatusEntityBuilder) updates) =>
@@ -1805,7 +1750,7 @@ class _$ExpenseStatusEntity extends ExpenseStatusEntity {
 
   @override
   ExpenseStatusEntityBuilder toBuilder() =>
-      new ExpenseStatusEntityBuilder()..replace(this);
+      ExpenseStatusEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1859,7 +1804,6 @@ class ExpenseStatusEntityBuilder
 
   @override
   void replace(ExpenseStatusEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ExpenseStatusEntity;
   }
 
@@ -1873,11 +1817,12 @@ class ExpenseStatusEntityBuilder
 
   _$ExpenseStatusEntity _build() {
     final _$result = _$v ??
-        new _$ExpenseStatusEntity._(
-            id: BuiltValueNullFieldError.checkNotNull(
-                id, r'ExpenseStatusEntity', 'id'),
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'ExpenseStatusEntity', 'name'));
+        _$ExpenseStatusEntity._(
+          id: BuiltValueNullFieldError.checkNotNull(
+              id, r'ExpenseStatusEntity', 'id'),
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'ExpenseStatusEntity', 'name'),
+        );
     replace(_$result);
     return _$result;
   }

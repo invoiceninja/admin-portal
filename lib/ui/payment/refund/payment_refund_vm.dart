@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -88,21 +89,22 @@ class PaymentRefundVM {
         store.dispatch(
             RefundPaymentRequest(completer: completer, payment: payment));
         return completer.future.then((savedPayment) {
-          showToast(AppLocalization.of(context)!.refundedPayment);
-          if (isMobile(context)) {
+          showToast(AppLocalization.of(navigatorKey.currentContext!)!
+              .refundedPayment);
+          if (isMobile(navigatorKey.currentContext!)) {
             store.dispatch(UpdateCurrentRoute(PaymentViewScreen.route));
             if (payment.isNew) {
-              Navigator.of(context)
+              Navigator.of(navigatorKey.currentContext!)
                   .pushReplacementNamed(PaymentViewScreen.route);
             } else {
-              Navigator.of(context).pop(savedPayment);
+              Navigator.of(navigatorKey.currentContext!).pop(savedPayment);
             }
           } else {
             viewEntity(entity: savedPayment, force: true);
           }
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
-              context: context,
+              context: navigatorKey.currentContext!,
               builder: (BuildContext context) {
                 return ErrorDialog(error);
               });

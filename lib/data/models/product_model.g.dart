@@ -7,11 +7,11 @@ part of 'product_model.dart';
 // **************************************************************************
 
 Serializer<ProductListResponse> _$productListResponseSerializer =
-    new _$ProductListResponseSerializer();
+    _$ProductListResponseSerializer();
 Serializer<ProductItemResponse> _$productItemResponseSerializer =
-    new _$ProductItemResponseSerializer();
+    _$ProductItemResponseSerializer();
 Serializer<ProductEntity> _$productEntitySerializer =
-    new _$ProductEntitySerializer();
+    _$ProductEntitySerializer();
 
 class _$ProductListResponseSerializer
     implements StructuredSerializer<ProductListResponse> {
@@ -41,7 +41,7 @@ class _$ProductListResponseSerializer
   ProductListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ProductListResponseBuilder();
+    final result = ProductListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -89,7 +89,7 @@ class _$ProductItemResponseSerializer
   ProductItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ProductItemResponseBuilder();
+    final result = ProductItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -232,7 +232,7 @@ class _$ProductEntitySerializer implements StructuredSerializer<ProductEntity> {
   ProductEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ProductEntityBuilder();
+    final result = ProductEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -375,12 +375,9 @@ class _$ProductListResponse extends ProductListResponse {
 
   factory _$ProductListResponse(
           [void Function(ProductListResponseBuilder)? updates]) =>
-      (new ProductListResponseBuilder()..update(updates))._build();
+      (ProductListResponseBuilder()..update(updates))._build();
 
-  _$ProductListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'ProductListResponse', 'data');
-  }
-
+  _$ProductListResponse._({required this.data}) : super._();
   @override
   ProductListResponse rebuild(
           void Function(ProductListResponseBuilder) updates) =>
@@ -388,7 +385,7 @@ class _$ProductListResponse extends ProductListResponse {
 
   @override
   ProductListResponseBuilder toBuilder() =>
-      new ProductListResponseBuilder()..replace(this);
+      ProductListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -420,7 +417,7 @@ class ProductListResponseBuilder
 
   ListBuilder<ProductEntity>? _data;
   ListBuilder<ProductEntity> get data =>
-      _$this._data ??= new ListBuilder<ProductEntity>();
+      _$this._data ??= ListBuilder<ProductEntity>();
   set data(ListBuilder<ProductEntity>? data) => _$this._data = data;
 
   ProductListResponseBuilder();
@@ -436,7 +433,6 @@ class ProductListResponseBuilder
 
   @override
   void replace(ProductListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ProductListResponse;
   }
 
@@ -451,14 +447,17 @@ class ProductListResponseBuilder
   _$ProductListResponse _build() {
     _$ProductListResponse _$result;
     try {
-      _$result = _$v ?? new _$ProductListResponse._(data: data.build());
+      _$result = _$v ??
+          _$ProductListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ProductListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -474,12 +473,9 @@ class _$ProductItemResponse extends ProductItemResponse {
 
   factory _$ProductItemResponse(
           [void Function(ProductItemResponseBuilder)? updates]) =>
-      (new ProductItemResponseBuilder()..update(updates))._build();
+      (ProductItemResponseBuilder()..update(updates))._build();
 
-  _$ProductItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'ProductItemResponse', 'data');
-  }
-
+  _$ProductItemResponse._({required this.data}) : super._();
   @override
   ProductItemResponse rebuild(
           void Function(ProductItemResponseBuilder) updates) =>
@@ -487,7 +483,7 @@ class _$ProductItemResponse extends ProductItemResponse {
 
   @override
   ProductItemResponseBuilder toBuilder() =>
-      new ProductItemResponseBuilder()..replace(this);
+      ProductItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -518,7 +514,7 @@ class ProductItemResponseBuilder
   _$ProductItemResponse? _$v;
 
   ProductEntityBuilder? _data;
-  ProductEntityBuilder get data => _$this._data ??= new ProductEntityBuilder();
+  ProductEntityBuilder get data => _$this._data ??= ProductEntityBuilder();
   set data(ProductEntityBuilder? data) => _$this._data = data;
 
   ProductItemResponseBuilder();
@@ -534,7 +530,6 @@ class ProductItemResponseBuilder
 
   @override
   void replace(ProductItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ProductItemResponse;
   }
 
@@ -549,14 +544,17 @@ class ProductItemResponseBuilder
   _$ProductItemResponse _build() {
     _$ProductItemResponse _$result;
     try {
-      _$result = _$v ?? new _$ProductItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$ProductItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ProductItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -629,7 +627,7 @@ class _$ProductEntity extends ProductEntity {
   final String id;
 
   factory _$ProductEntity([void Function(ProductEntityBuilder)? updates]) =>
-      (new ProductEntityBuilder()..update(updates))._build();
+      (ProductEntityBuilder()..update(updates))._build();
 
   _$ProductEntity._(
       {required this.productKey,
@@ -662,63 +660,13 @@ class _$ProductEntity extends ProductEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        productKey, r'ProductEntity', 'productKey');
-    BuiltValueNullFieldError.checkNotNull(notes, r'ProductEntity', 'notes');
-    BuiltValueNullFieldError.checkNotNull(cost, r'ProductEntity', 'cost');
-    BuiltValueNullFieldError.checkNotNull(price, r'ProductEntity', 'price');
-    BuiltValueNullFieldError.checkNotNull(
-        quantity, r'ProductEntity', 'quantity');
-    BuiltValueNullFieldError.checkNotNull(
-        taxName1, r'ProductEntity', 'taxName1');
-    BuiltValueNullFieldError.checkNotNull(
-        taxRate1, r'ProductEntity', 'taxRate1');
-    BuiltValueNullFieldError.checkNotNull(
-        taxName2, r'ProductEntity', 'taxName2');
-    BuiltValueNullFieldError.checkNotNull(
-        taxRate2, r'ProductEntity', 'taxRate2');
-    BuiltValueNullFieldError.checkNotNull(
-        taxName3, r'ProductEntity', 'taxName3');
-    BuiltValueNullFieldError.checkNotNull(
-        taxRate3, r'ProductEntity', 'taxRate3');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue1, r'ProductEntity', 'customValue1');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue2, r'ProductEntity', 'customValue2');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue3, r'ProductEntity', 'customValue3');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue4, r'ProductEntity', 'customValue4');
-    BuiltValueNullFieldError.checkNotNull(
-        stockQuantity, r'ProductEntity', 'stockQuantity');
-    BuiltValueNullFieldError.checkNotNull(stockNotificationThreshold,
-        r'ProductEntity', 'stockNotificationThreshold');
-    BuiltValueNullFieldError.checkNotNull(
-        stockNotification, r'ProductEntity', 'stockNotification');
-    BuiltValueNullFieldError.checkNotNull(
-        imageUrl, r'ProductEntity', 'imageUrl');
-    BuiltValueNullFieldError.checkNotNull(
-        maxQuantity, r'ProductEntity', 'maxQuantity');
-    BuiltValueNullFieldError.checkNotNull(
-        taxCategoryId, r'ProductEntity', 'taxCategoryId');
-    BuiltValueNullFieldError.checkNotNull(
-        documents, r'ProductEntity', 'documents');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'ProductEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'ProductEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'ProductEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'ProductEntity', 'id');
-  }
-
+      : super._();
   @override
   ProductEntity rebuild(void Function(ProductEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ProductEntityBuilder toBuilder() => new ProductEntityBuilder()..replace(this);
+  ProductEntityBuilder toBuilder() => ProductEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -926,7 +874,7 @@ class ProductEntityBuilder
 
   ListBuilder<DocumentEntity>? _documents;
   ListBuilder<DocumentEntity> get documents =>
-      _$this._documents ??= new ListBuilder<DocumentEntity>();
+      _$this._documents ??= ListBuilder<DocumentEntity>();
   set documents(ListBuilder<DocumentEntity>? documents) =>
       _$this._documents = documents;
 
@@ -1008,7 +956,6 @@ class ProductEntityBuilder
 
   @override
   void replace(ProductEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ProductEntity;
   }
 
@@ -1024,53 +971,72 @@ class ProductEntityBuilder
     _$ProductEntity _$result;
     try {
       _$result = _$v ??
-          new _$ProductEntity._(
-              productKey: BuiltValueNullFieldError.checkNotNull(
-                  productKey, r'ProductEntity', 'productKey'),
-              notes: BuiltValueNullFieldError.checkNotNull(
-                  notes, r'ProductEntity', 'notes'),
-              cost: BuiltValueNullFieldError.checkNotNull(
-                  cost, r'ProductEntity', 'cost'),
-              price: BuiltValueNullFieldError.checkNotNull(
-                  price, r'ProductEntity', 'price'),
-              quantity: BuiltValueNullFieldError.checkNotNull(
-                  quantity, r'ProductEntity', 'quantity'),
-              taxName1: BuiltValueNullFieldError.checkNotNull(
-                  taxName1, r'ProductEntity', 'taxName1'),
-              taxRate1: BuiltValueNullFieldError.checkNotNull(
-                  taxRate1, r'ProductEntity', 'taxRate1'),
-              taxName2: BuiltValueNullFieldError.checkNotNull(
-                  taxName2, r'ProductEntity', 'taxName2'),
-              taxRate2: BuiltValueNullFieldError.checkNotNull(
-                  taxRate2, r'ProductEntity', 'taxRate2'),
-              taxName3: BuiltValueNullFieldError.checkNotNull(taxName3, r'ProductEntity', 'taxName3'),
-              taxRate3: BuiltValueNullFieldError.checkNotNull(taxRate3, r'ProductEntity', 'taxRate3'),
-              customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, r'ProductEntity', 'customValue1'),
-              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, r'ProductEntity', 'customValue2'),
-              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'ProductEntity', 'customValue3'),
-              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'ProductEntity', 'customValue4'),
-              stockQuantity: BuiltValueNullFieldError.checkNotNull(stockQuantity, r'ProductEntity', 'stockQuantity'),
-              stockNotificationThreshold: BuiltValueNullFieldError.checkNotNull(stockNotificationThreshold, r'ProductEntity', 'stockNotificationThreshold'),
-              stockNotification: BuiltValueNullFieldError.checkNotNull(stockNotification, r'ProductEntity', 'stockNotification'),
-              imageUrl: BuiltValueNullFieldError.checkNotNull(imageUrl, r'ProductEntity', 'imageUrl'),
-              maxQuantity: BuiltValueNullFieldError.checkNotNull(maxQuantity, r'ProductEntity', 'maxQuantity'),
-              taxCategoryId: BuiltValueNullFieldError.checkNotNull(taxCategoryId, r'ProductEntity', 'taxCategoryId'),
-              documents: documents.build(),
-              isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'ProductEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'ProductEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'ProductEntity', 'archivedAt'),
-              isDeleted: isDeleted,
-              createdUserId: createdUserId,
-              assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(id, r'ProductEntity', 'id'));
+          _$ProductEntity._(
+            productKey: BuiltValueNullFieldError.checkNotNull(
+                productKey, r'ProductEntity', 'productKey'),
+            notes: BuiltValueNullFieldError.checkNotNull(
+                notes, r'ProductEntity', 'notes'),
+            cost: BuiltValueNullFieldError.checkNotNull(
+                cost, r'ProductEntity', 'cost'),
+            price: BuiltValueNullFieldError.checkNotNull(
+                price, r'ProductEntity', 'price'),
+            quantity: BuiltValueNullFieldError.checkNotNull(
+                quantity, r'ProductEntity', 'quantity'),
+            taxName1: BuiltValueNullFieldError.checkNotNull(
+                taxName1, r'ProductEntity', 'taxName1'),
+            taxRate1: BuiltValueNullFieldError.checkNotNull(
+                taxRate1, r'ProductEntity', 'taxRate1'),
+            taxName2: BuiltValueNullFieldError.checkNotNull(
+                taxName2, r'ProductEntity', 'taxName2'),
+            taxRate2: BuiltValueNullFieldError.checkNotNull(
+                taxRate2, r'ProductEntity', 'taxRate2'),
+            taxName3: BuiltValueNullFieldError.checkNotNull(
+                taxName3, r'ProductEntity', 'taxName3'),
+            taxRate3: BuiltValueNullFieldError.checkNotNull(
+                taxRate3, r'ProductEntity', 'taxRate3'),
+            customValue1: BuiltValueNullFieldError.checkNotNull(
+                customValue1, r'ProductEntity', 'customValue1'),
+            customValue2: BuiltValueNullFieldError.checkNotNull(
+                customValue2, r'ProductEntity', 'customValue2'),
+            customValue3: BuiltValueNullFieldError.checkNotNull(
+                customValue3, r'ProductEntity', 'customValue3'),
+            customValue4: BuiltValueNullFieldError.checkNotNull(
+                customValue4, r'ProductEntity', 'customValue4'),
+            stockQuantity: BuiltValueNullFieldError.checkNotNull(
+                stockQuantity, r'ProductEntity', 'stockQuantity'),
+            stockNotificationThreshold: BuiltValueNullFieldError.checkNotNull(
+                stockNotificationThreshold,
+                r'ProductEntity',
+                'stockNotificationThreshold'),
+            stockNotification: BuiltValueNullFieldError.checkNotNull(
+                stockNotification, r'ProductEntity', 'stockNotification'),
+            imageUrl: BuiltValueNullFieldError.checkNotNull(
+                imageUrl, r'ProductEntity', 'imageUrl'),
+            maxQuantity: BuiltValueNullFieldError.checkNotNull(
+                maxQuantity, r'ProductEntity', 'maxQuantity'),
+            taxCategoryId: BuiltValueNullFieldError.checkNotNull(
+                taxCategoryId, r'ProductEntity', 'taxCategoryId'),
+            documents: documents.build(),
+            isChanged: isChanged,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, r'ProductEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, r'ProductEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(
+                archivedAt, r'ProductEntity', 'archivedAt'),
+            isDeleted: isDeleted,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, r'ProductEntity', 'id'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'documents';
         documents.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ProductEntity', _$failedField, e.toString());
       }
       rethrow;

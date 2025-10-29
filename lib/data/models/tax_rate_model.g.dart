@@ -7,11 +7,11 @@ part of 'tax_rate_model.dart';
 // **************************************************************************
 
 Serializer<TaxRateListResponse> _$taxRateListResponseSerializer =
-    new _$TaxRateListResponseSerializer();
+    _$TaxRateListResponseSerializer();
 Serializer<TaxRateItemResponse> _$taxRateItemResponseSerializer =
-    new _$TaxRateItemResponseSerializer();
+    _$TaxRateItemResponseSerializer();
 Serializer<TaxRateEntity> _$taxRateEntitySerializer =
-    new _$TaxRateEntitySerializer();
+    _$TaxRateEntitySerializer();
 
 class _$TaxRateListResponseSerializer
     implements StructuredSerializer<TaxRateListResponse> {
@@ -41,7 +41,7 @@ class _$TaxRateListResponseSerializer
   TaxRateListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TaxRateListResponseBuilder();
+    final result = TaxRateListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -89,7 +89,7 @@ class _$TaxRateItemResponseSerializer
   TaxRateItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TaxRateItemResponseBuilder();
+    final result = TaxRateItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -170,7 +170,7 @@ class _$TaxRateEntitySerializer implements StructuredSerializer<TaxRateEntity> {
   TaxRateEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new TaxRateEntityBuilder();
+    final result = TaxRateEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -231,12 +231,9 @@ class _$TaxRateListResponse extends TaxRateListResponse {
 
   factory _$TaxRateListResponse(
           [void Function(TaxRateListResponseBuilder)? updates]) =>
-      (new TaxRateListResponseBuilder()..update(updates))._build();
+      (TaxRateListResponseBuilder()..update(updates))._build();
 
-  _$TaxRateListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'TaxRateListResponse', 'data');
-  }
-
+  _$TaxRateListResponse._({required this.data}) : super._();
   @override
   TaxRateListResponse rebuild(
           void Function(TaxRateListResponseBuilder) updates) =>
@@ -244,7 +241,7 @@ class _$TaxRateListResponse extends TaxRateListResponse {
 
   @override
   TaxRateListResponseBuilder toBuilder() =>
-      new TaxRateListResponseBuilder()..replace(this);
+      TaxRateListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -276,7 +273,7 @@ class TaxRateListResponseBuilder
 
   ListBuilder<TaxRateEntity>? _data;
   ListBuilder<TaxRateEntity> get data =>
-      _$this._data ??= new ListBuilder<TaxRateEntity>();
+      _$this._data ??= ListBuilder<TaxRateEntity>();
   set data(ListBuilder<TaxRateEntity>? data) => _$this._data = data;
 
   TaxRateListResponseBuilder();
@@ -292,7 +289,6 @@ class TaxRateListResponseBuilder
 
   @override
   void replace(TaxRateListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaxRateListResponse;
   }
 
@@ -307,14 +303,17 @@ class TaxRateListResponseBuilder
   _$TaxRateListResponse _build() {
     _$TaxRateListResponse _$result;
     try {
-      _$result = _$v ?? new _$TaxRateListResponse._(data: data.build());
+      _$result = _$v ??
+          _$TaxRateListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TaxRateListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -330,12 +329,9 @@ class _$TaxRateItemResponse extends TaxRateItemResponse {
 
   factory _$TaxRateItemResponse(
           [void Function(TaxRateItemResponseBuilder)? updates]) =>
-      (new TaxRateItemResponseBuilder()..update(updates))._build();
+      (TaxRateItemResponseBuilder()..update(updates))._build();
 
-  _$TaxRateItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'TaxRateItemResponse', 'data');
-  }
-
+  _$TaxRateItemResponse._({required this.data}) : super._();
   @override
   TaxRateItemResponse rebuild(
           void Function(TaxRateItemResponseBuilder) updates) =>
@@ -343,7 +339,7 @@ class _$TaxRateItemResponse extends TaxRateItemResponse {
 
   @override
   TaxRateItemResponseBuilder toBuilder() =>
-      new TaxRateItemResponseBuilder()..replace(this);
+      TaxRateItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -374,7 +370,7 @@ class TaxRateItemResponseBuilder
   _$TaxRateItemResponse? _$v;
 
   TaxRateEntityBuilder? _data;
-  TaxRateEntityBuilder get data => _$this._data ??= new TaxRateEntityBuilder();
+  TaxRateEntityBuilder get data => _$this._data ??= TaxRateEntityBuilder();
   set data(TaxRateEntityBuilder? data) => _$this._data = data;
 
   TaxRateItemResponseBuilder();
@@ -390,7 +386,6 @@ class TaxRateItemResponseBuilder
 
   @override
   void replace(TaxRateItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaxRateItemResponse;
   }
 
@@ -405,14 +400,17 @@ class TaxRateItemResponseBuilder
   _$TaxRateItemResponse _build() {
     _$TaxRateItemResponse _$result;
     try {
-      _$result = _$v ?? new _$TaxRateItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$TaxRateItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'TaxRateItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -445,7 +443,7 @@ class _$TaxRateEntity extends TaxRateEntity {
   final String id;
 
   factory _$TaxRateEntity([void Function(TaxRateEntityBuilder)? updates]) =>
-      (new TaxRateEntityBuilder()..update(updates))._build();
+      (TaxRateEntityBuilder()..update(updates))._build();
 
   _$TaxRateEntity._(
       {required this.name,
@@ -458,24 +456,13 @@ class _$TaxRateEntity extends TaxRateEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'TaxRateEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(rate, r'TaxRateEntity', 'rate');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'TaxRateEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'TaxRateEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'TaxRateEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'TaxRateEntity', 'id');
-  }
-
+      : super._();
   @override
   TaxRateEntity rebuild(void Function(TaxRateEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  TaxRateEntityBuilder toBuilder() => new TaxRateEntityBuilder()..replace(this);
+  TaxRateEntityBuilder toBuilder() => TaxRateEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -597,7 +584,6 @@ class TaxRateEntityBuilder
 
   @override
   void replace(TaxRateEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$TaxRateEntity;
   }
 
@@ -611,23 +597,23 @@ class TaxRateEntityBuilder
 
   _$TaxRateEntity _build() {
     final _$result = _$v ??
-        new _$TaxRateEntity._(
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'TaxRateEntity', 'name'),
-            rate: BuiltValueNullFieldError.checkNotNull(
-                rate, r'TaxRateEntity', 'rate'),
-            isChanged: isChanged,
-            createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, r'TaxRateEntity', 'createdAt'),
-            updatedAt: BuiltValueNullFieldError.checkNotNull(
-                updatedAt, r'TaxRateEntity', 'updatedAt'),
-            archivedAt: BuiltValueNullFieldError.checkNotNull(
-                archivedAt, r'TaxRateEntity', 'archivedAt'),
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            id: BuiltValueNullFieldError.checkNotNull(
-                id, r'TaxRateEntity', 'id'));
+        _$TaxRateEntity._(
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'TaxRateEntity', 'name'),
+          rate: BuiltValueNullFieldError.checkNotNull(
+              rate, r'TaxRateEntity', 'rate'),
+          isChanged: isChanged,
+          createdAt: BuiltValueNullFieldError.checkNotNull(
+              createdAt, r'TaxRateEntity', 'createdAt'),
+          updatedAt: BuiltValueNullFieldError.checkNotNull(
+              updatedAt, r'TaxRateEntity', 'updatedAt'),
+          archivedAt: BuiltValueNullFieldError.checkNotNull(
+              archivedAt, r'TaxRateEntity', 'archivedAt'),
+          isDeleted: isDeleted,
+          createdUserId: createdUserId,
+          assignedUserId: assignedUserId,
+          id: BuiltValueNullFieldError.checkNotNull(id, r'TaxRateEntity', 'id'),
+        );
     replace(_$result);
     return _$result;
   }

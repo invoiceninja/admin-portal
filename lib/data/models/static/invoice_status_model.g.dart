@@ -7,7 +7,7 @@ part of 'invoice_status_model.dart';
 // **************************************************************************
 
 Serializer<InvoiceStatusEntity> _$invoiceStatusEntitySerializer =
-    new _$InvoiceStatusEntitySerializer();
+    _$InvoiceStatusEntitySerializer();
 
 class _$InvoiceStatusEntitySerializer
     implements StructuredSerializer<InvoiceStatusEntity> {
@@ -37,7 +37,7 @@ class _$InvoiceStatusEntitySerializer
   InvoiceStatusEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new InvoiceStatusEntityBuilder();
+    final result = InvoiceStatusEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -68,13 +68,9 @@ class _$InvoiceStatusEntity extends InvoiceStatusEntity {
 
   factory _$InvoiceStatusEntity(
           [void Function(InvoiceStatusEntityBuilder)? updates]) =>
-      (new InvoiceStatusEntityBuilder()..update(updates))._build();
+      (InvoiceStatusEntityBuilder()..update(updates))._build();
 
-  _$InvoiceStatusEntity._({required this.id, required this.name}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(id, r'InvoiceStatusEntity', 'id');
-    BuiltValueNullFieldError.checkNotNull(name, r'InvoiceStatusEntity', 'name');
-  }
-
+  _$InvoiceStatusEntity._({required this.id, required this.name}) : super._();
   @override
   InvoiceStatusEntity rebuild(
           void Function(InvoiceStatusEntityBuilder) updates) =>
@@ -82,7 +78,7 @@ class _$InvoiceStatusEntity extends InvoiceStatusEntity {
 
   @override
   InvoiceStatusEntityBuilder toBuilder() =>
-      new InvoiceStatusEntityBuilder()..replace(this);
+      InvoiceStatusEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -136,7 +132,6 @@ class InvoiceStatusEntityBuilder
 
   @override
   void replace(InvoiceStatusEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$InvoiceStatusEntity;
   }
 
@@ -150,11 +145,12 @@ class InvoiceStatusEntityBuilder
 
   _$InvoiceStatusEntity _build() {
     final _$result = _$v ??
-        new _$InvoiceStatusEntity._(
-            id: BuiltValueNullFieldError.checkNotNull(
-                id, r'InvoiceStatusEntity', 'id'),
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'InvoiceStatusEntity', 'name'));
+        _$InvoiceStatusEntity._(
+          id: BuiltValueNullFieldError.checkNotNull(
+              id, r'InvoiceStatusEntity', 'id'),
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'InvoiceStatusEntity', 'name'),
+        );
     replace(_$result);
     return _$result;
   }

@@ -37,6 +37,7 @@
 **/android/gradlew.bat
 **/android/local.properties
 **/android/**/GeneratedPluginRegistrant.java
+**/android/build/
 
 # iOS/XCode related
 **/ios/**/*.mode1v3
@@ -81,5 +82,6 @@ key.properties
 google-services.json
 GoogleService-Info.plist
 android/app/build.gradle
+android/app/build.gradle.kts
 android/app/release/
 .fvm

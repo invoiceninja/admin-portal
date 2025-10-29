@@ -207,6 +207,7 @@ class _SettingsWizardState extends State<SettingsWizard> {
       validator: (value) =>
           value.isEmpty ? localization.pleaseEnterAValue : null,
       keyboardType: TextInputType.text,
+      textCapitalization: TextCapitalization.words,
     );
 
     final firstName = DecoratedFormField(

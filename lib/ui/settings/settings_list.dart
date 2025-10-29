@@ -103,7 +103,7 @@ class _SettingsListState extends State<SettingsList> {
                 ),
               ),
             Container(
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.surface,
               padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
               child: Text(
                 localization!.basicSettings,
@@ -174,7 +174,7 @@ class _SettingsListState extends State<SettingsList> {
                 viewModel: widget.viewModel,
               ),
             Container(
-              color: Theme.of(context).colorScheme.background,
+              color: Theme.of(context).colorScheme.surface,
               padding: const EdgeInsets.only(left: 19, top: 16, bottom: 16),
               child: Text(
                 localization.advancedSettings,

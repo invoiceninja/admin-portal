@@ -7,7 +7,7 @@ part of 'settings_state.dart';
 // **************************************************************************
 
 Serializer<SettingsUIState> _$settingsUIStateSerializer =
-    new _$SettingsUIStateSerializer();
+    _$SettingsUIStateSerializer();
 
 class _$SettingsUIStateSerializer
     implements StructuredSerializer<SettingsUIState> {
@@ -87,7 +87,7 @@ class _$SettingsUIStateSerializer
   SettingsUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new SettingsUIStateBuilder();
+    final result = SettingsUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -213,7 +213,7 @@ class _$SettingsUIState extends SettingsUIState {
   final bool showPdfPreview;
 
   factory _$SettingsUIState([void Function(SettingsUIStateBuilder)? updates]) =>
-      (new SettingsUIStateBuilder()..update(updates))._build();
+      (SettingsUIStateBuilder()..update(updates))._build();
 
   _$SettingsUIState._(
       {required this.company,
@@ -234,47 +234,13 @@ class _$SettingsUIState extends SettingsUIState {
       required this.filterClearedAt,
       required this.showNewSettings,
       required this.showPdfPreview})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        company, r'SettingsUIState', 'company');
-    BuiltValueNullFieldError.checkNotNull(
-        origCompany, r'SettingsUIState', 'origCompany');
-    BuiltValueNullFieldError.checkNotNull(client, r'SettingsUIState', 'client');
-    BuiltValueNullFieldError.checkNotNull(
-        origClient, r'SettingsUIState', 'origClient');
-    BuiltValueNullFieldError.checkNotNull(group, r'SettingsUIState', 'group');
-    BuiltValueNullFieldError.checkNotNull(
-        origGroup, r'SettingsUIState', 'origGroup');
-    BuiltValueNullFieldError.checkNotNull(user, r'SettingsUIState', 'user');
-    BuiltValueNullFieldError.checkNotNull(
-        origUser, r'SettingsUIState', 'origUser');
-    BuiltValueNullFieldError.checkNotNull(
-        entityType, r'SettingsUIState', 'entityType');
-    BuiltValueNullFieldError.checkNotNull(
-        isChanged, r'SettingsUIState', 'isChanged');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'SettingsUIState', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        section, r'SettingsUIState', 'section');
-    BuiltValueNullFieldError.checkNotNull(
-        tabIndex, r'SettingsUIState', 'tabIndex');
-    BuiltValueNullFieldError.checkNotNull(
-        selectedTemplate, r'SettingsUIState', 'selectedTemplate');
-    BuiltValueNullFieldError.checkNotNull(
-        filterClearedAt, r'SettingsUIState', 'filterClearedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        showNewSettings, r'SettingsUIState', 'showNewSettings');
-    BuiltValueNullFieldError.checkNotNull(
-        showPdfPreview, r'SettingsUIState', 'showPdfPreview');
-  }
-
+      : super._();
   @override
   SettingsUIState rebuild(void Function(SettingsUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  SettingsUIStateBuilder toBuilder() =>
-      new SettingsUIStateBuilder()..replace(this);
+  SettingsUIStateBuilder toBuilder() => SettingsUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -358,42 +324,40 @@ class SettingsUIStateBuilder
 
   CompanyEntityBuilder? _company;
   CompanyEntityBuilder get company =>
-      _$this._company ??= new CompanyEntityBuilder();
+      _$this._company ??= CompanyEntityBuilder();
   set company(CompanyEntityBuilder? company) => _$this._company = company;
 
   CompanyEntityBuilder? _origCompany;
   CompanyEntityBuilder get origCompany =>
-      _$this._origCompany ??= new CompanyEntityBuilder();
+      _$this._origCompany ??= CompanyEntityBuilder();
   set origCompany(CompanyEntityBuilder? origCompany) =>
       _$this._origCompany = origCompany;
 
   ClientEntityBuilder? _client;
-  ClientEntityBuilder get client =>
-      _$this._client ??= new ClientEntityBuilder();
+  ClientEntityBuilder get client => _$this._client ??= ClientEntityBuilder();
   set client(ClientEntityBuilder? client) => _$this._client = client;
 
   ClientEntityBuilder? _origClient;
   ClientEntityBuilder get origClient =>
-      _$this._origClient ??= new ClientEntityBuilder();
+      _$this._origClient ??= ClientEntityBuilder();
   set origClient(ClientEntityBuilder? origClient) =>
       _$this._origClient = origClient;
 
   GroupEntityBuilder? _group;
-  GroupEntityBuilder get group => _$this._group ??= new GroupEntityBuilder();
+  GroupEntityBuilder get group => _$this._group ??= GroupEntityBuilder();
   set group(GroupEntityBuilder? group) => _$this._group = group;
 
   GroupEntityBuilder? _origGroup;
   GroupEntityBuilder get origGroup =>
-      _$this._origGroup ??= new GroupEntityBuilder();
+      _$this._origGroup ??= GroupEntityBuilder();
   set origGroup(GroupEntityBuilder? origGroup) => _$this._origGroup = origGroup;
 
   UserEntityBuilder? _user;
-  UserEntityBuilder get user => _$this._user ??= new UserEntityBuilder();
+  UserEntityBuilder get user => _$this._user ??= UserEntityBuilder();
   set user(UserEntityBuilder? user) => _$this._user = user;
 
   UserEntityBuilder? _origUser;
-  UserEntityBuilder get origUser =>
-      _$this._origUser ??= new UserEntityBuilder();
+  UserEntityBuilder get origUser => _$this._origUser ??= UserEntityBuilder();
   set origUser(UserEntityBuilder? origUser) => _$this._origUser = origUser;
 
   EntityType? _entityType;
@@ -472,7 +436,6 @@ class SettingsUIStateBuilder
 
   @override
   void replace(SettingsUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SettingsUIState;
   }
 
@@ -488,34 +451,35 @@ class SettingsUIStateBuilder
     _$SettingsUIState _$result;
     try {
       _$result = _$v ??
-          new _$SettingsUIState._(
-              company: company.build(),
-              origCompany: origCompany.build(),
-              client: client.build(),
-              origClient: origClient.build(),
-              group: group.build(),
-              origGroup: origGroup.build(),
-              user: user.build(),
-              origUser: origUser.build(),
-              entityType: BuiltValueNullFieldError.checkNotNull(
-                  entityType, r'SettingsUIState', 'entityType'),
-              isChanged: BuiltValueNullFieldError.checkNotNull(
-                  isChanged, r'SettingsUIState', 'isChanged'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(
-                  updatedAt, r'SettingsUIState', 'updatedAt'),
-              section: BuiltValueNullFieldError.checkNotNull(
-                  section, r'SettingsUIState', 'section'),
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'SettingsUIState', 'tabIndex'),
-              selectedTemplate: BuiltValueNullFieldError.checkNotNull(
-                  selectedTemplate, r'SettingsUIState', 'selectedTemplate'),
-              filter: filter,
-              filterClearedAt: BuiltValueNullFieldError.checkNotNull(
-                  filterClearedAt, r'SettingsUIState', 'filterClearedAt'),
-              showNewSettings: BuiltValueNullFieldError.checkNotNull(
-                  showNewSettings, r'SettingsUIState', 'showNewSettings'),
-              showPdfPreview:
-                  BuiltValueNullFieldError.checkNotNull(showPdfPreview, r'SettingsUIState', 'showPdfPreview'));
+          _$SettingsUIState._(
+            company: company.build(),
+            origCompany: origCompany.build(),
+            client: client.build(),
+            origClient: origClient.build(),
+            group: group.build(),
+            origGroup: origGroup.build(),
+            user: user.build(),
+            origUser: origUser.build(),
+            entityType: BuiltValueNullFieldError.checkNotNull(
+                entityType, r'SettingsUIState', 'entityType'),
+            isChanged: BuiltValueNullFieldError.checkNotNull(
+                isChanged, r'SettingsUIState', 'isChanged'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, r'SettingsUIState', 'updatedAt'),
+            section: BuiltValueNullFieldError.checkNotNull(
+                section, r'SettingsUIState', 'section'),
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'SettingsUIState', 'tabIndex'),
+            selectedTemplate: BuiltValueNullFieldError.checkNotNull(
+                selectedTemplate, r'SettingsUIState', 'selectedTemplate'),
+            filter: filter,
+            filterClearedAt: BuiltValueNullFieldError.checkNotNull(
+                filterClearedAt, r'SettingsUIState', 'filterClearedAt'),
+            showNewSettings: BuiltValueNullFieldError.checkNotNull(
+                showNewSettings, r'SettingsUIState', 'showNewSettings'),
+            showPdfPreview: BuiltValueNullFieldError.checkNotNull(
+                showPdfPreview, r'SettingsUIState', 'showPdfPreview'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -536,7 +500,7 @@ class SettingsUIStateBuilder
         _$failedField = 'origUser';
         origUser.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'SettingsUIState', _$failedField, e.toString());
       }
       rethrow;

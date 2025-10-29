@@ -10,6 +10,7 @@ import 'package:invoiceninja_flutter/data/models/company_model.dart';
 import 'package:invoiceninja_flutter/data/models/entities.dart';
 import 'package:invoiceninja_flutter/data/models/invoice_model.dart';
 import 'package:invoiceninja_flutter/data/models/payment_model.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/ui/app/edit_scaffold.dart';
 import 'package:invoiceninja_flutter/ui/app/entity_dropdown.dart';
 import 'package:invoiceninja_flutter/ui/app/form_card.dart';
@@ -143,7 +144,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
           FormCard(
             children: <Widget>[
               SwitchListTile(
-                activeColor: Theme.of(context).colorScheme.secondary,
+                activeThumbColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.sendEmail),
                 value: payment.sendEmail ?? false,
                 subtitle: Text(localization.emailReceipt),
@@ -152,7 +153,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
               ),
               if (gateway.supportsRefunds(payment.gatewayTypeId))
                 SwitchListTile(
-                  activeColor: Theme.of(context).colorScheme.secondary,
+                  activeThumbColor: Theme.of(context).colorScheme.secondary,
                   title: Text(localization.gatewayRefund),
                   value: payment.gatewayRefund ?? false,
                   subtitle: Text(localization.gatewayRefundHelp),
@@ -178,7 +179,7 @@ class _PaymentRefundState extends State<PaymentRefund> {
 
       final Completer<PaymentEntity> completer = Completer<PaymentEntity>();
       completer.future.then((value) {
-        Navigator.of(context).pop();
+        Navigator.of(navigatorKey.currentContext!).pop();
       });
 
       viewModel.onRefundPressed(context, completer);

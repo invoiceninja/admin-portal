@@ -6,9 +6,8 @@ part of 'quote_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<QuoteState> _$quoteStateSerializer = new _$QuoteStateSerializer();
-Serializer<QuoteUIState> _$quoteUIStateSerializer =
-    new _$QuoteUIStateSerializer();
+Serializer<QuoteState> _$quoteStateSerializer = _$QuoteStateSerializer();
+Serializer<QuoteUIState> _$quoteUIStateSerializer = _$QuoteUIStateSerializer();
 
 class _$QuoteStateSerializer implements StructuredSerializer<QuoteState> {
   @override
@@ -36,7 +35,7 @@ class _$QuoteStateSerializer implements StructuredSerializer<QuoteState> {
   @override
   QuoteState deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new QuoteStateBuilder();
+    final result = QuoteStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -110,7 +109,7 @@ class _$QuoteUIStateSerializer implements StructuredSerializer<QuoteUIState> {
   QuoteUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new QuoteUIStateBuilder();
+    final result = QuoteUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -152,19 +151,15 @@ class _$QuoteState extends QuoteState {
   final BuiltList<String> list;
 
   factory _$QuoteState([void Function(QuoteStateBuilder)? updates]) =>
-      (new QuoteStateBuilder()..update(updates))._build();
+      (QuoteStateBuilder()..update(updates))._build();
 
-  _$QuoteState._({required this.map, required this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, r'QuoteState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, r'QuoteState', 'list');
-  }
-
+  _$QuoteState._({required this.map, required this.list}) : super._();
   @override
   QuoteState rebuild(void Function(QuoteStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  QuoteStateBuilder toBuilder() => new QuoteStateBuilder()..replace(this);
+  QuoteStateBuilder toBuilder() => QuoteStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -197,11 +192,11 @@ class QuoteStateBuilder implements Builder<QuoteState, QuoteStateBuilder> {
 
   MapBuilder<String, InvoiceEntity>? _map;
   MapBuilder<String, InvoiceEntity> get map =>
-      _$this._map ??= new MapBuilder<String, InvoiceEntity>();
+      _$this._map ??= MapBuilder<String, InvoiceEntity>();
   set map(MapBuilder<String, InvoiceEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
-  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  ListBuilder<String> get list => _$this._list ??= ListBuilder<String>();
   set list(ListBuilder<String>? list) => _$this._list = list;
 
   QuoteStateBuilder();
@@ -218,7 +213,6 @@ class QuoteStateBuilder implements Builder<QuoteState, QuoteStateBuilder> {
 
   @override
   void replace(QuoteState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$QuoteState;
   }
 
@@ -233,8 +227,11 @@ class QuoteStateBuilder implements Builder<QuoteState, QuoteStateBuilder> {
   _$QuoteState _build() {
     _$QuoteState _$result;
     try {
-      _$result =
-          _$v ?? new _$QuoteState._(map: map.build(), list: list.build());
+      _$result = _$v ??
+          _$QuoteState._(
+            map: map.build(),
+            list: list.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -243,7 +240,7 @@ class QuoteStateBuilder implements Builder<QuoteState, QuoteStateBuilder> {
         _$failedField = 'list';
         list.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'QuoteState', _$failedField, e.toString());
       }
       rethrow;
@@ -274,7 +271,7 @@ class _$QuoteUIState extends QuoteUIState {
   final Completer<Null>? cancelCompleter;
 
   factory _$QuoteUIState([void Function(QuoteUIStateBuilder)? updates]) =>
-      (new QuoteUIStateBuilder()..update(updates))._build();
+      (QuoteUIStateBuilder()..update(updates))._build();
 
   _$QuoteUIState._(
       {this.editing,
@@ -286,19 +283,13 @@ class _$QuoteUIState extends QuoteUIState {
       required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        listUIState, r'QuoteUIState', 'listUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        tabIndex, r'QuoteUIState', 'tabIndex');
-  }
-
+      : super._();
   @override
   QuoteUIState rebuild(void Function(QuoteUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  QuoteUIStateBuilder toBuilder() => new QuoteUIStateBuilder()..replace(this);
+  QuoteUIStateBuilder toBuilder() => QuoteUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -355,7 +346,7 @@ class QuoteUIStateBuilder
 
   InvoiceEntityBuilder? _editing;
   InvoiceEntityBuilder get editing =>
-      _$this._editing ??= new InvoiceEntityBuilder();
+      _$this._editing ??= InvoiceEntityBuilder();
   set editing(InvoiceEntityBuilder? editing) => _$this._editing = editing;
 
   int? _editingItemIndex;
@@ -370,7 +361,7 @@ class QuoteUIStateBuilder
 
   ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
-      _$this._listUIState ??= new ListUIStateBuilder();
+      _$this._listUIState ??= ListUIStateBuilder();
   set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
@@ -418,7 +409,6 @@ class QuoteUIStateBuilder
 
   @override
   void replace(QuoteUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$QuoteUIState;
   }
 
@@ -434,17 +424,18 @@ class QuoteUIStateBuilder
     _$QuoteUIState _$result;
     try {
       _$result = _$v ??
-          new _$QuoteUIState._(
-              editing: _editing?.build(),
-              editingItemIndex: editingItemIndex,
-              historyActivityId: historyActivityId,
-              listUIState: listUIState.build(),
-              selectedId: selectedId,
-              forceSelected: forceSelected,
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'QuoteUIState', 'tabIndex'),
-              saveCompleter: saveCompleter,
-              cancelCompleter: cancelCompleter);
+          _$QuoteUIState._(
+            editing: _editing?.build(),
+            editingItemIndex: editingItemIndex,
+            historyActivityId: historyActivityId,
+            listUIState: listUIState.build(),
+            selectedId: selectedId,
+            forceSelected: forceSelected,
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'QuoteUIState', 'tabIndex'),
+            saveCompleter: saveCompleter,
+            cancelCompleter: cancelCompleter,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -454,7 +445,7 @@ class QuoteUIStateBuilder
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'QuoteUIState', _$failedField, e.toString());
       }
       rethrow;

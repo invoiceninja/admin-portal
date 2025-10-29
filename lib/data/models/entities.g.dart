@@ -157,12 +157,12 @@ EntityType _$typeValueOf(String name) {
     case 'location':
       return _$location;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
 final BuiltSet<EntityType> _$typeValues =
-    new BuiltSet<EntityType>(const <EntityType>[
+    BuiltSet<EntityType>(const <EntityType>[
   _$dashboard,
   _$reports,
   _$settings,
@@ -227,12 +227,12 @@ EntityState _$valueOf(String name) {
     case 'deleted':
       return _$deleted;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
 final BuiltSet<EntityState> _$values =
-    new BuiltSet<EntityState>(const <EntityState>[
+    BuiltSet<EntityState>(const <EntityState>[
   _$active,
   _$archived,
   _$deleted,
@@ -294,12 +294,12 @@ EmailTemplate _$templateValueOf(String name) {
     case 'custom3':
       return _$custom3_email;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
 final BuiltSet<EmailTemplate> _$templateValues =
-    new BuiltSet<EmailTemplate>(const <EmailTemplate>[
+    BuiltSet<EmailTemplate>(const <EmailTemplate>[
   _$invoice_email,
   _$quote_email,
   _$payment_email,
@@ -331,31 +331,29 @@ UserPermission _$permissionValueOf(String name) {
     case 'view':
       return _$view;
     default:
-      throw new ArgumentError(name);
+      throw ArgumentError(name);
   }
 }
 
 final BuiltSet<UserPermission> _$permissionValues =
-    new BuiltSet<UserPermission>(const <UserPermission>[
+    BuiltSet<UserPermission>(const <UserPermission>[
   _$create,
   _$edit,
   _$view,
 ]);
 
-Serializer<EntityType> _$entityTypeSerializer = new _$EntityTypeSerializer();
-Serializer<EntityState> _$entityStateSerializer = new _$EntityStateSerializer();
+Serializer<EntityType> _$entityTypeSerializer = _$EntityTypeSerializer();
+Serializer<EntityState> _$entityStateSerializer = _$EntityStateSerializer();
 Serializer<EmailTemplate> _$emailTemplateSerializer =
-    new _$EmailTemplateSerializer();
+    _$EmailTemplateSerializer();
 Serializer<UserPermission> _$userPermissionSerializer =
-    new _$UserPermissionSerializer();
-Serializer<ErrorMessage> _$errorMessageSerializer =
-    new _$ErrorMessageSerializer();
+    _$UserPermissionSerializer();
+Serializer<ErrorMessage> _$errorMessageSerializer = _$ErrorMessageSerializer();
 Serializer<LoginResponse> _$loginResponseSerializer =
-    new _$LoginResponseSerializer();
+    _$LoginResponseSerializer();
 Serializer<ActivityEntity> _$activityEntitySerializer =
-    new _$ActivityEntitySerializer();
-Serializer<LedgerEntity> _$ledgerEntitySerializer =
-    new _$LedgerEntitySerializer();
+    _$ActivityEntitySerializer();
+Serializer<LedgerEntity> _$ledgerEntitySerializer = _$LedgerEntitySerializer();
 
 class _$EntityTypeSerializer implements PrimitiveSerializer<EntityType> {
   @override
@@ -448,7 +446,7 @@ class _$ErrorMessageSerializer implements StructuredSerializer<ErrorMessage> {
   ErrorMessage deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ErrorMessageBuilder();
+    final result = ErrorMessageBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -493,7 +491,7 @@ class _$LoginResponseSerializer implements StructuredSerializer<LoginResponse> {
   LoginResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new LoginResponseBuilder();
+    final result = LoginResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -682,7 +680,7 @@ class _$ActivityEntitySerializer
   ActivityEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ActivityEntityBuilder();
+    final result = ActivityEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -846,7 +844,7 @@ class _$LedgerEntitySerializer implements StructuredSerializer<LedgerEntity> {
   LedgerEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new LedgerEntityBuilder();
+    final result = LedgerEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -894,18 +892,15 @@ class _$ErrorMessage extends ErrorMessage {
   final String message;
 
   factory _$ErrorMessage([void Function(ErrorMessageBuilder)? updates]) =>
-      (new ErrorMessageBuilder()..update(updates))._build();
+      (ErrorMessageBuilder()..update(updates))._build();
 
-  _$ErrorMessage._({required this.message}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(message, r'ErrorMessage', 'message');
-  }
-
+  _$ErrorMessage._({required this.message}) : super._();
   @override
   ErrorMessage rebuild(void Function(ErrorMessageBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ErrorMessageBuilder toBuilder() => new ErrorMessageBuilder()..replace(this);
+  ErrorMessageBuilder toBuilder() => ErrorMessageBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -952,7 +947,6 @@ class ErrorMessageBuilder
 
   @override
   void replace(ErrorMessage other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ErrorMessage;
   }
 
@@ -966,9 +960,10 @@ class ErrorMessageBuilder
 
   _$ErrorMessage _build() {
     final _$result = _$v ??
-        new _$ErrorMessage._(
-            message: BuiltValueNullFieldError.checkNotNull(
-                message, r'ErrorMessage', 'message'));
+        _$ErrorMessage._(
+          message: BuiltValueNullFieldError.checkNotNull(
+              message, r'ErrorMessage', 'message'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -981,21 +976,16 @@ class _$LoginResponse extends LoginResponse {
   final StaticDataEntity static;
 
   factory _$LoginResponse([void Function(LoginResponseBuilder)? updates]) =>
-      (new LoginResponseBuilder()..update(updates))._build();
+      (LoginResponseBuilder()..update(updates))._build();
 
   _$LoginResponse._({required this.userCompanies, required this.static})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        userCompanies, r'LoginResponse', 'userCompanies');
-    BuiltValueNullFieldError.checkNotNull(static, r'LoginResponse', 'static');
-  }
-
+      : super._();
   @override
   LoginResponse rebuild(void Function(LoginResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  LoginResponseBuilder toBuilder() => new LoginResponseBuilder()..replace(this);
+  LoginResponseBuilder toBuilder() => LoginResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1031,13 +1021,13 @@ class LoginResponseBuilder
 
   ListBuilder<UserCompanyEntity>? _userCompanies;
   ListBuilder<UserCompanyEntity> get userCompanies =>
-      _$this._userCompanies ??= new ListBuilder<UserCompanyEntity>();
+      _$this._userCompanies ??= ListBuilder<UserCompanyEntity>();
   set userCompanies(ListBuilder<UserCompanyEntity>? userCompanies) =>
       _$this._userCompanies = userCompanies;
 
   StaticDataEntityBuilder? _static;
   StaticDataEntityBuilder get static =>
-      _$this._static ??= new StaticDataEntityBuilder();
+      _$this._static ??= StaticDataEntityBuilder();
   set static(StaticDataEntityBuilder? static) => _$this._static = static;
 
   LoginResponseBuilder();
@@ -1054,7 +1044,6 @@ class LoginResponseBuilder
 
   @override
   void replace(LoginResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$LoginResponse;
   }
 
@@ -1070,8 +1059,10 @@ class LoginResponseBuilder
     _$LoginResponse _$result;
     try {
       _$result = _$v ??
-          new _$LoginResponse._(
-              userCompanies: userCompanies.build(), static: static.build());
+          _$LoginResponse._(
+            userCompanies: userCompanies.build(),
+            static: static.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -1080,7 +1071,7 @@ class LoginResponseBuilder
         _$failedField = 'static';
         static.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'LoginResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -1141,7 +1132,7 @@ class _$ActivityEntity extends ActivityEntity {
   final InvoiceHistoryEntity? history;
 
   factory _$ActivityEntity([void Function(ActivityEntityBuilder)? updates]) =>
-      (new ActivityEntityBuilder()..update(updates))._build();
+      (ActivityEntityBuilder()..update(updates))._build();
 
   _$ActivityEntity._(
       {required this.notes,
@@ -1168,25 +1159,13 @@ class _$ActivityEntity extends ActivityEntity {
       this.vendorContactId,
       this.tokenId,
       this.history})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(notes, r'ActivityEntity', 'notes');
-    BuiltValueNullFieldError.checkNotNull(key, r'ActivityEntity', 'key');
-    BuiltValueNullFieldError.checkNotNull(
-        activityTypeId, r'ActivityEntity', 'activityTypeId');
-    BuiltValueNullFieldError.checkNotNull(userId, r'ActivityEntity', 'userId');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'ActivityEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'ActivityEntity', 'createdAt');
-  }
-
+      : super._();
   @override
   ActivityEntity rebuild(void Function(ActivityEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ActivityEntityBuilder toBuilder() =>
-      new ActivityEntityBuilder()..replace(this);
+  ActivityEntityBuilder toBuilder() => ActivityEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1385,7 +1364,7 @@ class ActivityEntityBuilder
 
   InvoiceHistoryEntityBuilder? _history;
   InvoiceHistoryEntityBuilder get history =>
-      _$this._history ??= new InvoiceHistoryEntityBuilder();
+      _$this._history ??= InvoiceHistoryEntityBuilder();
   set history(InvoiceHistoryEntityBuilder? history) =>
       _$this._history = history;
 
@@ -1427,7 +1406,6 @@ class ActivityEntityBuilder
 
   @override
   void replace(ActivityEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ActivityEntity;
   }
 
@@ -1443,44 +1421,45 @@ class ActivityEntityBuilder
     _$ActivityEntity _$result;
     try {
       _$result = _$v ??
-          new _$ActivityEntity._(
-              notes: BuiltValueNullFieldError.checkNotNull(
-                  notes, r'ActivityEntity', 'notes'),
-              key: BuiltValueNullFieldError.checkNotNull(
-                  key, r'ActivityEntity', 'key'),
-              activityTypeId: BuiltValueNullFieldError.checkNotNull(
-                  activityTypeId, r'ActivityEntity', 'activityTypeId'),
-              clientId: clientId,
-              userId: BuiltValueNullFieldError.checkNotNull(
-                  userId, r'ActivityEntity', 'userId'),
-              invoiceId: invoiceId,
-              recurringInvoiceId: recurringInvoiceId,
-              recurringExpenseId: recurringExpenseId,
-              purchaseOrderId: purchaseOrderId,
-              quoteId: quoteId,
-              paymentId: paymentId,
-              creditId: creditId,
-              updatedAt: BuiltValueNullFieldError.checkNotNull(
-                  updatedAt, r'ActivityEntity', 'updatedAt'),
-              createdAt: BuiltValueNullFieldError.checkNotNull(
-                  createdAt, r'ActivityEntity', 'createdAt'),
-              expenseId: expenseId,
-              isSystem: isSystem,
-              ip: ip,
-              contactId: contactId,
-              taskId: taskId,
-              projectId: projectId,
-              vendorId: vendorId,
-              vendorContactId: vendorContactId,
-              tokenId: tokenId,
-              history: _history?.build());
+          _$ActivityEntity._(
+            notes: BuiltValueNullFieldError.checkNotNull(
+                notes, r'ActivityEntity', 'notes'),
+            key: BuiltValueNullFieldError.checkNotNull(
+                key, r'ActivityEntity', 'key'),
+            activityTypeId: BuiltValueNullFieldError.checkNotNull(
+                activityTypeId, r'ActivityEntity', 'activityTypeId'),
+            clientId: clientId,
+            userId: BuiltValueNullFieldError.checkNotNull(
+                userId, r'ActivityEntity', 'userId'),
+            invoiceId: invoiceId,
+            recurringInvoiceId: recurringInvoiceId,
+            recurringExpenseId: recurringExpenseId,
+            purchaseOrderId: purchaseOrderId,
+            quoteId: quoteId,
+            paymentId: paymentId,
+            creditId: creditId,
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, r'ActivityEntity', 'updatedAt'),
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, r'ActivityEntity', 'createdAt'),
+            expenseId: expenseId,
+            isSystem: isSystem,
+            ip: ip,
+            contactId: contactId,
+            taskId: taskId,
+            projectId: projectId,
+            vendorId: vendorId,
+            vendorContactId: vendorContactId,
+            tokenId: tokenId,
+            history: _history?.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'history';
         _history?.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ActivityEntity', _$failedField, e.toString());
       }
       rethrow;
@@ -1507,7 +1486,7 @@ class _$LedgerEntity extends LedgerEntity {
   final String? paymentId;
 
   factory _$LedgerEntity([void Function(LedgerEntityBuilder)? updates]) =>
-      (new LedgerEntityBuilder()..update(updates))._build();
+      (LedgerEntityBuilder()..update(updates))._build();
 
   _$LedgerEntity._(
       {required this.notes,
@@ -1517,21 +1496,13 @@ class _$LedgerEntity extends LedgerEntity {
       this.invoiceId,
       this.creditId,
       this.paymentId})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(notes, r'LedgerEntity', 'notes');
-    BuiltValueNullFieldError.checkNotNull(balance, r'LedgerEntity', 'balance');
-    BuiltValueNullFieldError.checkNotNull(
-        adjustment, r'LedgerEntity', 'adjustment');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'LedgerEntity', 'createdAt');
-  }
-
+      : super._();
   @override
   LedgerEntity rebuild(void Function(LedgerEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  LedgerEntityBuilder toBuilder() => new LedgerEntityBuilder()..replace(this);
+  LedgerEntityBuilder toBuilder() => LedgerEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1627,7 +1598,6 @@ class LedgerEntityBuilder
 
   @override
   void replace(LedgerEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$LedgerEntity;
   }
 
@@ -1641,18 +1611,19 @@ class LedgerEntityBuilder
 
   _$LedgerEntity _build() {
     final _$result = _$v ??
-        new _$LedgerEntity._(
-            notes: BuiltValueNullFieldError.checkNotNull(
-                notes, r'LedgerEntity', 'notes'),
-            balance: BuiltValueNullFieldError.checkNotNull(
-                balance, r'LedgerEntity', 'balance'),
-            adjustment: BuiltValueNullFieldError.checkNotNull(
-                adjustment, r'LedgerEntity', 'adjustment'),
-            createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, r'LedgerEntity', 'createdAt'),
-            invoiceId: invoiceId,
-            creditId: creditId,
-            paymentId: paymentId);
+        _$LedgerEntity._(
+          notes: BuiltValueNullFieldError.checkNotNull(
+              notes, r'LedgerEntity', 'notes'),
+          balance: BuiltValueNullFieldError.checkNotNull(
+              balance, r'LedgerEntity', 'balance'),
+          adjustment: BuiltValueNullFieldError.checkNotNull(
+              adjustment, r'LedgerEntity', 'adjustment'),
+          createdAt: BuiltValueNullFieldError.checkNotNull(
+              createdAt, r'LedgerEntity', 'createdAt'),
+          invoiceId: invoiceId,
+          creditId: creditId,
+          paymentId: paymentId,
+        );
     replace(_$result);
     return _$result;
   }

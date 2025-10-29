@@ -350,6 +350,8 @@ class FilterTasksByCustom4 implements PersistUI {
   final String value;
 }
 
+class ClearTaskStatusFilter {}
+
 class UpdateKanban {}
 
 void handleTaskAction(

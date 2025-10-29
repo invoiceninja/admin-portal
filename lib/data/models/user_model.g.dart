@@ -7,16 +7,16 @@ part of 'user_model.dart';
 // **************************************************************************
 
 Serializer<UserListResponse> _$userListResponseSerializer =
-    new _$UserListResponseSerializer();
+    _$UserListResponseSerializer();
 Serializer<UserItemResponse> _$userItemResponseSerializer =
-    new _$UserItemResponseSerializer();
+    _$UserItemResponseSerializer();
 Serializer<UserTwoFactorResponse> _$userTwoFactorResponseSerializer =
-    new _$UserTwoFactorResponseSerializer();
+    _$UserTwoFactorResponseSerializer();
 Serializer<UserTwoFactorData> _$userTwoFactorDataSerializer =
-    new _$UserTwoFactorDataSerializer();
+    _$UserTwoFactorDataSerializer();
 Serializer<UserCompanyItemResponse> _$userCompanyItemResponseSerializer =
-    new _$UserCompanyItemResponseSerializer();
-Serializer<UserEntity> _$userEntitySerializer = new _$UserEntitySerializer();
+    _$UserCompanyItemResponseSerializer();
+Serializer<UserEntity> _$userEntitySerializer = _$UserEntitySerializer();
 
 class _$UserListResponseSerializer
     implements StructuredSerializer<UserListResponse> {
@@ -42,7 +42,7 @@ class _$UserListResponseSerializer
   UserListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new UserListResponseBuilder();
+    final result = UserListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -86,7 +86,7 @@ class _$UserItemResponseSerializer
   UserItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new UserItemResponseBuilder();
+    final result = UserItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -132,7 +132,7 @@ class _$UserTwoFactorResponseSerializer
   UserTwoFactorResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new UserTwoFactorResponseBuilder();
+    final result = UserTwoFactorResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -178,7 +178,7 @@ class _$UserTwoFactorDataSerializer
   UserTwoFactorData deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new UserTwoFactorDataBuilder();
+    final result = UserTwoFactorDataBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -228,7 +228,7 @@ class _$UserCompanyItemResponseSerializer
   UserCompanyItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new UserCompanyItemResponseBuilder();
+    final result = UserCompanyItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -376,7 +376,7 @@ class _$UserEntitySerializer implements StructuredSerializer<UserEntity> {
   @override
   UserEntity deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new UserEntityBuilder();
+    final result = UserEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -515,19 +515,16 @@ class _$UserListResponse extends UserListResponse {
 
   factory _$UserListResponse(
           [void Function(UserListResponseBuilder)? updates]) =>
-      (new UserListResponseBuilder()..update(updates))._build();
+      (UserListResponseBuilder()..update(updates))._build();
 
-  _$UserListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'UserListResponse', 'data');
-  }
-
+  _$UserListResponse._({required this.data}) : super._();
   @override
   UserListResponse rebuild(void Function(UserListResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   UserListResponseBuilder toBuilder() =>
-      new UserListResponseBuilder()..replace(this);
+      UserListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -558,7 +555,7 @@ class UserListResponseBuilder
 
   ListBuilder<UserEntity>? _data;
   ListBuilder<UserEntity> get data =>
-      _$this._data ??= new ListBuilder<UserEntity>();
+      _$this._data ??= ListBuilder<UserEntity>();
   set data(ListBuilder<UserEntity>? data) => _$this._data = data;
 
   UserListResponseBuilder();
@@ -574,7 +571,6 @@ class UserListResponseBuilder
 
   @override
   void replace(UserListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$UserListResponse;
   }
 
@@ -589,14 +585,17 @@ class UserListResponseBuilder
   _$UserListResponse _build() {
     _$UserListResponse _$result;
     try {
-      _$result = _$v ?? new _$UserListResponse._(data: data.build());
+      _$result = _$v ??
+          _$UserListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'UserListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -612,19 +611,16 @@ class _$UserItemResponse extends UserItemResponse {
 
   factory _$UserItemResponse(
           [void Function(UserItemResponseBuilder)? updates]) =>
-      (new UserItemResponseBuilder()..update(updates))._build();
+      (UserItemResponseBuilder()..update(updates))._build();
 
-  _$UserItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'UserItemResponse', 'data');
-  }
-
+  _$UserItemResponse._({required this.data}) : super._();
   @override
   UserItemResponse rebuild(void Function(UserItemResponseBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   UserItemResponseBuilder toBuilder() =>
-      new UserItemResponseBuilder()..replace(this);
+      UserItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -654,7 +650,7 @@ class UserItemResponseBuilder
   _$UserItemResponse? _$v;
 
   UserEntityBuilder? _data;
-  UserEntityBuilder get data => _$this._data ??= new UserEntityBuilder();
+  UserEntityBuilder get data => _$this._data ??= UserEntityBuilder();
   set data(UserEntityBuilder? data) => _$this._data = data;
 
   UserItemResponseBuilder();
@@ -670,7 +666,6 @@ class UserItemResponseBuilder
 
   @override
   void replace(UserItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$UserItemResponse;
   }
 
@@ -685,14 +680,17 @@ class UserItemResponseBuilder
   _$UserItemResponse _build() {
     _$UserItemResponse _$result;
     try {
-      _$result = _$v ?? new _$UserItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$UserItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'UserItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -708,13 +706,9 @@ class _$UserTwoFactorResponse extends UserTwoFactorResponse {
 
   factory _$UserTwoFactorResponse(
           [void Function(UserTwoFactorResponseBuilder)? updates]) =>
-      (new UserTwoFactorResponseBuilder()..update(updates))._build();
+      (UserTwoFactorResponseBuilder()..update(updates))._build();
 
-  _$UserTwoFactorResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'UserTwoFactorResponse', 'data');
-  }
-
+  _$UserTwoFactorResponse._({required this.data}) : super._();
   @override
   UserTwoFactorResponse rebuild(
           void Function(UserTwoFactorResponseBuilder) updates) =>
@@ -722,7 +716,7 @@ class _$UserTwoFactorResponse extends UserTwoFactorResponse {
 
   @override
   UserTwoFactorResponseBuilder toBuilder() =>
-      new UserTwoFactorResponseBuilder()..replace(this);
+      UserTwoFactorResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -754,7 +748,7 @@ class UserTwoFactorResponseBuilder
 
   UserTwoFactorDataBuilder? _data;
   UserTwoFactorDataBuilder get data =>
-      _$this._data ??= new UserTwoFactorDataBuilder();
+      _$this._data ??= UserTwoFactorDataBuilder();
   set data(UserTwoFactorDataBuilder? data) => _$this._data = data;
 
   UserTwoFactorResponseBuilder();
@@ -770,7 +764,6 @@ class UserTwoFactorResponseBuilder
 
   @override
   void replace(UserTwoFactorResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$UserTwoFactorResponse;
   }
 
@@ -785,14 +778,17 @@ class UserTwoFactorResponseBuilder
   _$UserTwoFactorResponse _build() {
     _$UserTwoFactorResponse _$result;
     try {
-      _$result = _$v ?? new _$UserTwoFactorResponse._(data: data.build());
+      _$result = _$v ??
+          _$UserTwoFactorResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'UserTwoFactorResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -810,23 +806,17 @@ class _$UserTwoFactorData extends UserTwoFactorData {
 
   factory _$UserTwoFactorData(
           [void Function(UserTwoFactorDataBuilder)? updates]) =>
-      (new UserTwoFactorDataBuilder()..update(updates))._build();
+      (UserTwoFactorDataBuilder()..update(updates))._build();
 
   _$UserTwoFactorData._({required this.secret, required this.qrCode})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        secret, r'UserTwoFactorData', 'secret');
-    BuiltValueNullFieldError.checkNotNull(
-        qrCode, r'UserTwoFactorData', 'qrCode');
-  }
-
+      : super._();
   @override
   UserTwoFactorData rebuild(void Function(UserTwoFactorDataBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   UserTwoFactorDataBuilder toBuilder() =>
-      new UserTwoFactorDataBuilder()..replace(this);
+      UserTwoFactorDataBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -882,7 +872,6 @@ class UserTwoFactorDataBuilder
 
   @override
   void replace(UserTwoFactorData other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$UserTwoFactorData;
   }
 
@@ -896,11 +885,12 @@ class UserTwoFactorDataBuilder
 
   _$UserTwoFactorData _build() {
     final _$result = _$v ??
-        new _$UserTwoFactorData._(
-            secret: BuiltValueNullFieldError.checkNotNull(
-                secret, r'UserTwoFactorData', 'secret'),
-            qrCode: BuiltValueNullFieldError.checkNotNull(
-                qrCode, r'UserTwoFactorData', 'qrCode'));
+        _$UserTwoFactorData._(
+          secret: BuiltValueNullFieldError.checkNotNull(
+              secret, r'UserTwoFactorData', 'secret'),
+          qrCode: BuiltValueNullFieldError.checkNotNull(
+              qrCode, r'UserTwoFactorData', 'qrCode'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -912,13 +902,9 @@ class _$UserCompanyItemResponse extends UserCompanyItemResponse {
 
   factory _$UserCompanyItemResponse(
           [void Function(UserCompanyItemResponseBuilder)? updates]) =>
-      (new UserCompanyItemResponseBuilder()..update(updates))._build();
+      (UserCompanyItemResponseBuilder()..update(updates))._build();
 
-  _$UserCompanyItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'UserCompanyItemResponse', 'data');
-  }
-
+  _$UserCompanyItemResponse._({required this.data}) : super._();
   @override
   UserCompanyItemResponse rebuild(
           void Function(UserCompanyItemResponseBuilder) updates) =>
@@ -926,7 +912,7 @@ class _$UserCompanyItemResponse extends UserCompanyItemResponse {
 
   @override
   UserCompanyItemResponseBuilder toBuilder() =>
-      new UserCompanyItemResponseBuilder()..replace(this);
+      UserCompanyItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -959,7 +945,7 @@ class UserCompanyItemResponseBuilder
 
   UserCompanyEntityBuilder? _data;
   UserCompanyEntityBuilder get data =>
-      _$this._data ??= new UserCompanyEntityBuilder();
+      _$this._data ??= UserCompanyEntityBuilder();
   set data(UserCompanyEntityBuilder? data) => _$this._data = data;
 
   UserCompanyItemResponseBuilder();
@@ -975,7 +961,6 @@ class UserCompanyItemResponseBuilder
 
   @override
   void replace(UserCompanyItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$UserCompanyItemResponse;
   }
 
@@ -990,14 +975,17 @@ class UserCompanyItemResponseBuilder
   _$UserCompanyItemResponse _build() {
     _$UserCompanyItemResponse _$result;
     try {
-      _$result = _$v ?? new _$UserCompanyItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$UserCompanyItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'UserCompanyItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -1068,7 +1056,7 @@ class _$UserEntity extends UserEntity {
   final String id;
 
   factory _$UserEntity([void Function(UserEntityBuilder)? updates]) =>
-      (new UserEntityBuilder()..update(updates))._build();
+      (UserEntityBuilder()..update(updates))._build();
 
   _$UserEntity._(
       {required this.firstName,
@@ -1100,56 +1088,13 @@ class _$UserEntity extends UserEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        firstName, r'UserEntity', 'firstName');
-    BuiltValueNullFieldError.checkNotNull(lastName, r'UserEntity', 'lastName');
-    BuiltValueNullFieldError.checkNotNull(email, r'UserEntity', 'email');
-    BuiltValueNullFieldError.checkNotNull(phone, r'UserEntity', 'phone');
-    BuiltValueNullFieldError.checkNotNull(password, r'UserEntity', 'password');
-    BuiltValueNullFieldError.checkNotNull(
-        phoneVerified, r'UserEntity', 'phoneVerified');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue1, r'UserEntity', 'customValue1');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue2, r'UserEntity', 'customValue2');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue3, r'UserEntity', 'customValue3');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue4, r'UserEntity', 'customValue4');
-    BuiltValueNullFieldError.checkNotNull(
-        isTwoFactorEnabled, r'UserEntity', 'isTwoFactorEnabled');
-    BuiltValueNullFieldError.checkNotNull(
-        hasPassword, r'UserEntity', 'hasPassword');
-    BuiltValueNullFieldError.checkNotNull(
-        lastEmailAddress, r'UserEntity', 'lastEmailAddress');
-    BuiltValueNullFieldError.checkNotNull(
-        oauthUserToken, r'UserEntity', 'oauthUserToken');
-    BuiltValueNullFieldError.checkNotNull(
-        oauthProvider, r'UserEntity', 'oauthProvider');
-    BuiltValueNullFieldError.checkNotNull(
-        languageId, r'UserEntity', 'languageId');
-    BuiltValueNullFieldError.checkNotNull(
-        userLoggedInNotification, r'UserEntity', 'userLoggedInNotification');
-    BuiltValueNullFieldError.checkNotNull(
-        referralCode, r'UserEntity', 'referralCode');
-    BuiltValueNullFieldError.checkNotNull(
-        referralMeta, r'UserEntity', 'referralMeta');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'UserEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'UserEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'UserEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'UserEntity', 'id');
-  }
-
+      : super._();
   @override
   UserEntity rebuild(void Function(UserEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  UserEntityBuilder toBuilder() => new UserEntityBuilder()..replace(this);
+  UserEntityBuilder toBuilder() => UserEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1330,7 +1275,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
 
   UserCompanyEntityBuilder? _userCompany;
   UserCompanyEntityBuilder get userCompany =>
-      _$this._userCompany ??= new UserCompanyEntityBuilder();
+      _$this._userCompany ??= UserCompanyEntityBuilder();
   set userCompany(UserCompanyEntityBuilder? userCompany) =>
       _$this._userCompany = userCompany;
 
@@ -1354,7 +1299,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
 
   MapBuilder<String, int>? _referralMeta;
   MapBuilder<String, int> get referralMeta =>
-      _$this._referralMeta ??= new MapBuilder<String, int>();
+      _$this._referralMeta ??= MapBuilder<String, int>();
   set referralMeta(MapBuilder<String, int>? referralMeta) =>
       _$this._referralMeta = referralMeta;
 
@@ -1435,7 +1380,6 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
 
   @override
   void replace(UserEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$UserEntity;
   }
 
@@ -1451,45 +1395,60 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
     _$UserEntity _$result;
     try {
       _$result = _$v ??
-          new _$UserEntity._(
-              firstName: BuiltValueNullFieldError.checkNotNull(
-                  firstName, r'UserEntity', 'firstName'),
-              lastName: BuiltValueNullFieldError.checkNotNull(
-                  lastName, r'UserEntity', 'lastName'),
-              email: BuiltValueNullFieldError.checkNotNull(
-                  email, r'UserEntity', 'email'),
-              phone: BuiltValueNullFieldError.checkNotNull(
-                  phone, r'UserEntity', 'phone'),
-              password: BuiltValueNullFieldError.checkNotNull(
-                  password, r'UserEntity', 'password'),
-              emailVerifiedAt: emailVerifiedAt,
-              phoneVerified: BuiltValueNullFieldError.checkNotNull(
-                  phoneVerified, r'UserEntity', 'phoneVerified'),
-              customValue1: BuiltValueNullFieldError.checkNotNull(
-                  customValue1, r'UserEntity', 'customValue1'),
-              customValue2: BuiltValueNullFieldError.checkNotNull(
-                  customValue2, r'UserEntity', 'customValue2'),
-              customValue3: BuiltValueNullFieldError.checkNotNull(
-                  customValue3, r'UserEntity', 'customValue3'),
-              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'UserEntity', 'customValue4'),
-              isTwoFactorEnabled: BuiltValueNullFieldError.checkNotNull(isTwoFactorEnabled, r'UserEntity', 'isTwoFactorEnabled'),
-              hasPassword: BuiltValueNullFieldError.checkNotNull(hasPassword, r'UserEntity', 'hasPassword'),
-              lastEmailAddress: BuiltValueNullFieldError.checkNotNull(lastEmailAddress, r'UserEntity', 'lastEmailAddress'),
-              oauthUserToken: BuiltValueNullFieldError.checkNotNull(oauthUserToken, r'UserEntity', 'oauthUserToken'),
-              userCompany: _userCompany?.build(),
-              oauthProvider: BuiltValueNullFieldError.checkNotNull(oauthProvider, r'UserEntity', 'oauthProvider'),
-              languageId: BuiltValueNullFieldError.checkNotNull(languageId, r'UserEntity', 'languageId'),
-              userLoggedInNotification: BuiltValueNullFieldError.checkNotNull(userLoggedInNotification, r'UserEntity', 'userLoggedInNotification'),
-              referralCode: BuiltValueNullFieldError.checkNotNull(referralCode, r'UserEntity', 'referralCode'),
-              referralMeta: referralMeta.build(),
-              isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'UserEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'UserEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'UserEntity', 'archivedAt'),
-              isDeleted: isDeleted,
-              createdUserId: createdUserId,
-              assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(id, r'UserEntity', 'id'));
+          _$UserEntity._(
+            firstName: BuiltValueNullFieldError.checkNotNull(
+                firstName, r'UserEntity', 'firstName'),
+            lastName: BuiltValueNullFieldError.checkNotNull(
+                lastName, r'UserEntity', 'lastName'),
+            email: BuiltValueNullFieldError.checkNotNull(
+                email, r'UserEntity', 'email'),
+            phone: BuiltValueNullFieldError.checkNotNull(
+                phone, r'UserEntity', 'phone'),
+            password: BuiltValueNullFieldError.checkNotNull(
+                password, r'UserEntity', 'password'),
+            emailVerifiedAt: emailVerifiedAt,
+            phoneVerified: BuiltValueNullFieldError.checkNotNull(
+                phoneVerified, r'UserEntity', 'phoneVerified'),
+            customValue1: BuiltValueNullFieldError.checkNotNull(
+                customValue1, r'UserEntity', 'customValue1'),
+            customValue2: BuiltValueNullFieldError.checkNotNull(
+                customValue2, r'UserEntity', 'customValue2'),
+            customValue3: BuiltValueNullFieldError.checkNotNull(
+                customValue3, r'UserEntity', 'customValue3'),
+            customValue4: BuiltValueNullFieldError.checkNotNull(
+                customValue4, r'UserEntity', 'customValue4'),
+            isTwoFactorEnabled: BuiltValueNullFieldError.checkNotNull(
+                isTwoFactorEnabled, r'UserEntity', 'isTwoFactorEnabled'),
+            hasPassword: BuiltValueNullFieldError.checkNotNull(
+                hasPassword, r'UserEntity', 'hasPassword'),
+            lastEmailAddress: BuiltValueNullFieldError.checkNotNull(
+                lastEmailAddress, r'UserEntity', 'lastEmailAddress'),
+            oauthUserToken: BuiltValueNullFieldError.checkNotNull(
+                oauthUserToken, r'UserEntity', 'oauthUserToken'),
+            userCompany: _userCompany?.build(),
+            oauthProvider: BuiltValueNullFieldError.checkNotNull(
+                oauthProvider, r'UserEntity', 'oauthProvider'),
+            languageId: BuiltValueNullFieldError.checkNotNull(
+                languageId, r'UserEntity', 'languageId'),
+            userLoggedInNotification: BuiltValueNullFieldError.checkNotNull(
+                userLoggedInNotification,
+                r'UserEntity',
+                'userLoggedInNotification'),
+            referralCode: BuiltValueNullFieldError.checkNotNull(
+                referralCode, r'UserEntity', 'referralCode'),
+            referralMeta: referralMeta.build(),
+            isChanged: isChanged,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, r'UserEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, r'UserEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(
+                archivedAt, r'UserEntity', 'archivedAt'),
+            isDeleted: isDeleted,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            id: BuiltValueNullFieldError.checkNotNull(id, r'UserEntity', 'id'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -1499,7 +1458,7 @@ class UserEntityBuilder implements Builder<UserEntity, UserEntityBuilder> {
         _$failedField = 'referralMeta';
         referralMeta.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'UserEntity', _$failedField, e.toString());
       }
       rethrow;

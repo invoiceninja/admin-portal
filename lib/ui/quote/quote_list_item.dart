@@ -143,7 +143,7 @@ class QuoteListItem extends StatelessWidget {
                                     .titleSmall!
                                     .copyWith(
                                       color: textColor!
-                                          .withOpacity(kLighterOpacity),
+                                          .withValues(alpha: kLighterOpacity),
                                     ),
                               ),
                             ],

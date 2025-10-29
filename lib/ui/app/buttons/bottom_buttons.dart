@@ -62,8 +62,10 @@ class BottomButtons extends StatelessWidget {
                       localization.lookup('$action1'),
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: textColor.withOpacity(
-                              action1Enabled && !entity.isDeleted! ? 1 : .5)),
+                          color: textColor.withValues(
+                              alpha: action1Enabled && !entity.isDeleted!
+                                  ? 1
+                                  : .5)),
                     ),
                   ],
                 ),
@@ -87,8 +89,10 @@ class BottomButtons extends StatelessWidget {
                         localization.lookup('$action2'),
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                            color: textColor.withOpacity(
-                                action2Enabled && !entity.isDeleted! ? 1 : .6)),
+                            color: textColor.withValues(
+                                alpha: action2Enabled && !entity.isDeleted!
+                                    ? 1
+                                    : .6)),
                       ),
                     ],
                   ),

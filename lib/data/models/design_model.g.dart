@@ -7,13 +7,12 @@ part of 'design_model.dart';
 // **************************************************************************
 
 Serializer<DesignListResponse> _$designListResponseSerializer =
-    new _$DesignListResponseSerializer();
+    _$DesignListResponseSerializer();
 Serializer<DesignItemResponse> _$designItemResponseSerializer =
-    new _$DesignItemResponseSerializer();
+    _$DesignItemResponseSerializer();
 Serializer<DesignPreviewRequest> _$designPreviewRequestSerializer =
-    new _$DesignPreviewRequestSerializer();
-Serializer<DesignEntity> _$designEntitySerializer =
-    new _$DesignEntitySerializer();
+    _$DesignPreviewRequestSerializer();
+Serializer<DesignEntity> _$designEntitySerializer = _$DesignEntitySerializer();
 
 class _$DesignListResponseSerializer
     implements StructuredSerializer<DesignListResponse> {
@@ -40,7 +39,7 @@ class _$DesignListResponseSerializer
   DesignListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new DesignListResponseBuilder();
+    final result = DesignListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -85,7 +84,7 @@ class _$DesignItemResponseSerializer
   DesignItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new DesignItemResponseBuilder();
+    final result = DesignItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -137,7 +136,7 @@ class _$DesignPreviewRequestSerializer
   DesignPreviewRequest deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new DesignPreviewRequestBuilder();
+    final result = DesignPreviewRequestBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -239,7 +238,7 @@ class _$DesignEntitySerializer implements StructuredSerializer<DesignEntity> {
   DesignEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new DesignEntityBuilder();
+    final result = DesignEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -317,12 +316,9 @@ class _$DesignListResponse extends DesignListResponse {
 
   factory _$DesignListResponse(
           [void Function(DesignListResponseBuilder)? updates]) =>
-      (new DesignListResponseBuilder()..update(updates))._build();
+      (DesignListResponseBuilder()..update(updates))._build();
 
-  _$DesignListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'DesignListResponse', 'data');
-  }
-
+  _$DesignListResponse._({required this.data}) : super._();
   @override
   DesignListResponse rebuild(
           void Function(DesignListResponseBuilder) updates) =>
@@ -330,7 +326,7 @@ class _$DesignListResponse extends DesignListResponse {
 
   @override
   DesignListResponseBuilder toBuilder() =>
-      new DesignListResponseBuilder()..replace(this);
+      DesignListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -362,7 +358,7 @@ class DesignListResponseBuilder
 
   ListBuilder<DesignEntity>? _data;
   ListBuilder<DesignEntity> get data =>
-      _$this._data ??= new ListBuilder<DesignEntity>();
+      _$this._data ??= ListBuilder<DesignEntity>();
   set data(ListBuilder<DesignEntity>? data) => _$this._data = data;
 
   DesignListResponseBuilder();
@@ -378,7 +374,6 @@ class DesignListResponseBuilder
 
   @override
   void replace(DesignListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DesignListResponse;
   }
 
@@ -393,14 +388,17 @@ class DesignListResponseBuilder
   _$DesignListResponse _build() {
     _$DesignListResponse _$result;
     try {
-      _$result = _$v ?? new _$DesignListResponse._(data: data.build());
+      _$result = _$v ??
+          _$DesignListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'DesignListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -416,12 +414,9 @@ class _$DesignItemResponse extends DesignItemResponse {
 
   factory _$DesignItemResponse(
           [void Function(DesignItemResponseBuilder)? updates]) =>
-      (new DesignItemResponseBuilder()..update(updates))._build();
+      (DesignItemResponseBuilder()..update(updates))._build();
 
-  _$DesignItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'DesignItemResponse', 'data');
-  }
-
+  _$DesignItemResponse._({required this.data}) : super._();
   @override
   DesignItemResponse rebuild(
           void Function(DesignItemResponseBuilder) updates) =>
@@ -429,7 +424,7 @@ class _$DesignItemResponse extends DesignItemResponse {
 
   @override
   DesignItemResponseBuilder toBuilder() =>
-      new DesignItemResponseBuilder()..replace(this);
+      DesignItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -460,7 +455,7 @@ class DesignItemResponseBuilder
   _$DesignItemResponse? _$v;
 
   DesignEntityBuilder? _data;
-  DesignEntityBuilder get data => _$this._data ??= new DesignEntityBuilder();
+  DesignEntityBuilder get data => _$this._data ??= DesignEntityBuilder();
   set data(DesignEntityBuilder? data) => _$this._data = data;
 
   DesignItemResponseBuilder();
@@ -476,7 +471,6 @@ class DesignItemResponseBuilder
 
   @override
   void replace(DesignItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DesignItemResponse;
   }
 
@@ -491,14 +485,17 @@ class DesignItemResponseBuilder
   _$DesignItemResponse _build() {
     _$DesignItemResponse _$result;
     try {
-      _$result = _$v ?? new _$DesignItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$DesignItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'DesignItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -518,19 +515,11 @@ class _$DesignPreviewRequest extends DesignPreviewRequest {
 
   factory _$DesignPreviewRequest(
           [void Function(DesignPreviewRequestBuilder)? updates]) =>
-      (new DesignPreviewRequestBuilder()..update(updates))._build();
+      (DesignPreviewRequestBuilder()..update(updates))._build();
 
   _$DesignPreviewRequest._(
       {required this.entityType, required this.entityId, required this.design})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        entityType, r'DesignPreviewRequest', 'entityType');
-    BuiltValueNullFieldError.checkNotNull(
-        entityId, r'DesignPreviewRequest', 'entityId');
-    BuiltValueNullFieldError.checkNotNull(
-        design, r'DesignPreviewRequest', 'design');
-  }
-
+      : super._();
   @override
   DesignPreviewRequest rebuild(
           void Function(DesignPreviewRequestBuilder) updates) =>
@@ -538,7 +527,7 @@ class _$DesignPreviewRequest extends DesignPreviewRequest {
 
   @override
   DesignPreviewRequestBuilder toBuilder() =>
-      new DesignPreviewRequestBuilder()..replace(this);
+      DesignPreviewRequestBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -584,8 +573,7 @@ class DesignPreviewRequestBuilder
   set entityId(String? entityId) => _$this._entityId = entityId;
 
   DesignEntityBuilder? _design;
-  DesignEntityBuilder get design =>
-      _$this._design ??= new DesignEntityBuilder();
+  DesignEntityBuilder get design => _$this._design ??= DesignEntityBuilder();
   set design(DesignEntityBuilder? design) => _$this._design = design;
 
   DesignPreviewRequestBuilder();
@@ -603,7 +591,6 @@ class DesignPreviewRequestBuilder
 
   @override
   void replace(DesignPreviewRequest other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DesignPreviewRequest;
   }
 
@@ -619,19 +606,20 @@ class DesignPreviewRequestBuilder
     _$DesignPreviewRequest _$result;
     try {
       _$result = _$v ??
-          new _$DesignPreviewRequest._(
-              entityType: BuiltValueNullFieldError.checkNotNull(
-                  entityType, r'DesignPreviewRequest', 'entityType'),
-              entityId: BuiltValueNullFieldError.checkNotNull(
-                  entityId, r'DesignPreviewRequest', 'entityId'),
-              design: design.build());
+          _$DesignPreviewRequest._(
+            entityType: BuiltValueNullFieldError.checkNotNull(
+                entityType, r'DesignPreviewRequest', 'entityType'),
+            entityId: BuiltValueNullFieldError.checkNotNull(
+                entityId, r'DesignPreviewRequest', 'entityId'),
+            design: design.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'design';
         design.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'DesignPreviewRequest', _$failedField, e.toString());
       }
       rethrow;
@@ -672,7 +660,7 @@ class _$DesignEntity extends DesignEntity {
   final String id;
 
   factory _$DesignEntity([void Function(DesignEntityBuilder)? updates]) =>
-      (new DesignEntityBuilder()..update(updates))._build();
+      (DesignEntityBuilder()..update(updates))._build();
 
   _$DesignEntity._(
       {required this.name,
@@ -689,31 +677,13 @@ class _$DesignEntity extends DesignEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'DesignEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(design, r'DesignEntity', 'design');
-    BuiltValueNullFieldError.checkNotNull(
-        isCustom, r'DesignEntity', 'isCustom');
-    BuiltValueNullFieldError.checkNotNull(isFree, r'DesignEntity', 'isFree');
-    BuiltValueNullFieldError.checkNotNull(
-        isTemplate, r'DesignEntity', 'isTemplate');
-    BuiltValueNullFieldError.checkNotNull(
-        entities, r'DesignEntity', 'entities');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'DesignEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'DesignEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'DesignEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'DesignEntity', 'id');
-  }
-
+      : super._();
   @override
   DesignEntity rebuild(void Function(DesignEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  DesignEntityBuilder toBuilder() => new DesignEntityBuilder()..replace(this);
+  DesignEntityBuilder toBuilder() => DesignEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -789,7 +759,7 @@ class DesignEntityBuilder
 
   MapBuilder<String, String>? _design;
   MapBuilder<String, String> get design =>
-      _$this._design ??= new MapBuilder<String, String>();
+      _$this._design ??= MapBuilder<String, String>();
   set design(MapBuilder<String, String>? design) => _$this._design = design;
 
   bool? _isCustom;
@@ -870,7 +840,6 @@ class DesignEntityBuilder
 
   @override
   void replace(DesignEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DesignEntity;
   }
 
@@ -886,37 +855,38 @@ class DesignEntityBuilder
     _$DesignEntity _$result;
     try {
       _$result = _$v ??
-          new _$DesignEntity._(
-              name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'DesignEntity', 'name'),
-              design: design.build(),
-              isCustom: BuiltValueNullFieldError.checkNotNull(
-                  isCustom, r'DesignEntity', 'isCustom'),
-              isFree: BuiltValueNullFieldError.checkNotNull(
-                  isFree, r'DesignEntity', 'isFree'),
-              isTemplate: BuiltValueNullFieldError.checkNotNull(
-                  isTemplate, r'DesignEntity', 'isTemplate'),
-              entities: BuiltValueNullFieldError.checkNotNull(
-                  entities, r'DesignEntity', 'entities'),
-              isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(
-                  createdAt, r'DesignEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(
-                  updatedAt, r'DesignEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(
-                  archivedAt, r'DesignEntity', 'archivedAt'),
-              isDeleted: isDeleted,
-              createdUserId: createdUserId,
-              assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(
-                  id, r'DesignEntity', 'id'));
+          _$DesignEntity._(
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'DesignEntity', 'name'),
+            design: design.build(),
+            isCustom: BuiltValueNullFieldError.checkNotNull(
+                isCustom, r'DesignEntity', 'isCustom'),
+            isFree: BuiltValueNullFieldError.checkNotNull(
+                isFree, r'DesignEntity', 'isFree'),
+            isTemplate: BuiltValueNullFieldError.checkNotNull(
+                isTemplate, r'DesignEntity', 'isTemplate'),
+            entities: BuiltValueNullFieldError.checkNotNull(
+                entities, r'DesignEntity', 'entities'),
+            isChanged: isChanged,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, r'DesignEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, r'DesignEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(
+                archivedAt, r'DesignEntity', 'archivedAt'),
+            isDeleted: isDeleted,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, r'DesignEntity', 'id'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'design';
         design.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'DesignEntity', _$failedField, e.toString());
       }
       rethrow;

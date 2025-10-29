@@ -7,9 +7,9 @@ part of 'subscription_state.dart';
 // **************************************************************************
 
 Serializer<SubscriptionState> _$subscriptionStateSerializer =
-    new _$SubscriptionStateSerializer();
+    _$SubscriptionStateSerializer();
 Serializer<SubscriptionUIState> _$subscriptionUIStateSerializer =
-    new _$SubscriptionUIStateSerializer();
+    _$SubscriptionUIStateSerializer();
 
 class _$SubscriptionStateSerializer
     implements StructuredSerializer<SubscriptionState> {
@@ -41,7 +41,7 @@ class _$SubscriptionStateSerializer
   SubscriptionState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new SubscriptionStateBuilder();
+    final result = SubscriptionStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -120,7 +120,7 @@ class _$SubscriptionUIStateSerializer
   SubscriptionUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new SubscriptionUIStateBuilder();
+    final result = SubscriptionUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -164,20 +164,16 @@ class _$SubscriptionState extends SubscriptionState {
 
   factory _$SubscriptionState(
           [void Function(SubscriptionStateBuilder)? updates]) =>
-      (new SubscriptionStateBuilder()..update(updates))._build();
+      (SubscriptionStateBuilder()..update(updates))._build();
 
-  _$SubscriptionState._({required this.map, required this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, r'SubscriptionState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, r'SubscriptionState', 'list');
-  }
-
+  _$SubscriptionState._({required this.map, required this.list}) : super._();
   @override
   SubscriptionState rebuild(void Function(SubscriptionStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   SubscriptionStateBuilder toBuilder() =>
-      new SubscriptionStateBuilder()..replace(this);
+      SubscriptionStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -211,11 +207,11 @@ class SubscriptionStateBuilder
 
   MapBuilder<String, SubscriptionEntity>? _map;
   MapBuilder<String, SubscriptionEntity> get map =>
-      _$this._map ??= new MapBuilder<String, SubscriptionEntity>();
+      _$this._map ??= MapBuilder<String, SubscriptionEntity>();
   set map(MapBuilder<String, SubscriptionEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
-  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  ListBuilder<String> get list => _$this._list ??= ListBuilder<String>();
   set list(ListBuilder<String>? list) => _$this._list = list;
 
   SubscriptionStateBuilder();
@@ -232,7 +228,6 @@ class SubscriptionStateBuilder
 
   @override
   void replace(SubscriptionState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SubscriptionState;
   }
 
@@ -248,7 +243,10 @@ class SubscriptionStateBuilder
     _$SubscriptionState _$result;
     try {
       _$result = _$v ??
-          new _$SubscriptionState._(map: map.build(), list: list.build());
+          _$SubscriptionState._(
+            map: map.build(),
+            list: list.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -257,7 +255,7 @@ class SubscriptionStateBuilder
         _$failedField = 'list';
         list.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'SubscriptionState', _$failedField, e.toString());
       }
       rethrow;
@@ -285,7 +283,7 @@ class _$SubscriptionUIState extends SubscriptionUIState {
 
   factory _$SubscriptionUIState(
           [void Function(SubscriptionUIStateBuilder)? updates]) =>
-      (new SubscriptionUIStateBuilder()..update(updates))._build();
+      (SubscriptionUIStateBuilder()..update(updates))._build();
 
   _$SubscriptionUIState._(
       {this.editing,
@@ -295,13 +293,7 @@ class _$SubscriptionUIState extends SubscriptionUIState {
       required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        listUIState, r'SubscriptionUIState', 'listUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        tabIndex, r'SubscriptionUIState', 'tabIndex');
-  }
-
+      : super._();
   @override
   SubscriptionUIState rebuild(
           void Function(SubscriptionUIStateBuilder) updates) =>
@@ -309,7 +301,7 @@ class _$SubscriptionUIState extends SubscriptionUIState {
 
   @override
   SubscriptionUIStateBuilder toBuilder() =>
-      new SubscriptionUIStateBuilder()..replace(this);
+      SubscriptionUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -360,12 +352,12 @@ class SubscriptionUIStateBuilder
 
   SubscriptionEntityBuilder? _editing;
   SubscriptionEntityBuilder get editing =>
-      _$this._editing ??= new SubscriptionEntityBuilder();
+      _$this._editing ??= SubscriptionEntityBuilder();
   set editing(SubscriptionEntityBuilder? editing) => _$this._editing = editing;
 
   ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
-      _$this._listUIState ??= new ListUIStateBuilder();
+      _$this._listUIState ??= ListUIStateBuilder();
   set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
@@ -411,7 +403,6 @@ class SubscriptionUIStateBuilder
 
   @override
   void replace(SubscriptionUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SubscriptionUIState;
   }
 
@@ -427,15 +418,16 @@ class SubscriptionUIStateBuilder
     _$SubscriptionUIState _$result;
     try {
       _$result = _$v ??
-          new _$SubscriptionUIState._(
-              editing: _editing?.build(),
-              listUIState: listUIState.build(),
-              selectedId: selectedId,
-              forceSelected: forceSelected,
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'SubscriptionUIState', 'tabIndex'),
-              saveCompleter: saveCompleter,
-              cancelCompleter: cancelCompleter);
+          _$SubscriptionUIState._(
+            editing: _editing?.build(),
+            listUIState: listUIState.build(),
+            selectedId: selectedId,
+            forceSelected: forceSelected,
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'SubscriptionUIState', 'tabIndex'),
+            saveCompleter: saveCompleter,
+            cancelCompleter: cancelCompleter,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -444,7 +436,7 @@ class SubscriptionUIStateBuilder
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'SubscriptionUIState', _$failedField, e.toString());
       }
       rethrow;

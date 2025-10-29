@@ -7,9 +7,9 @@ part of 'bank_account_state.dart';
 // **************************************************************************
 
 Serializer<BankAccountState> _$bankAccountStateSerializer =
-    new _$BankAccountStateSerializer();
+    _$BankAccountStateSerializer();
 Serializer<BankAccountUIState> _$bankAccountUIStateSerializer =
-    new _$BankAccountUIStateSerializer();
+    _$BankAccountUIStateSerializer();
 
 class _$BankAccountStateSerializer
     implements StructuredSerializer<BankAccountState> {
@@ -41,7 +41,7 @@ class _$BankAccountStateSerializer
   BankAccountState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new BankAccountStateBuilder();
+    final result = BankAccountStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -117,7 +117,7 @@ class _$BankAccountUIStateSerializer
   BankAccountUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new BankAccountUIStateBuilder();
+    final result = BankAccountUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -161,20 +161,16 @@ class _$BankAccountState extends BankAccountState {
 
   factory _$BankAccountState(
           [void Function(BankAccountStateBuilder)? updates]) =>
-      (new BankAccountStateBuilder()..update(updates))._build();
+      (BankAccountStateBuilder()..update(updates))._build();
 
-  _$BankAccountState._({required this.map, required this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, r'BankAccountState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, r'BankAccountState', 'list');
-  }
-
+  _$BankAccountState._({required this.map, required this.list}) : super._();
   @override
   BankAccountState rebuild(void Function(BankAccountStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   BankAccountStateBuilder toBuilder() =>
-      new BankAccountStateBuilder()..replace(this);
+      BankAccountStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -208,11 +204,11 @@ class BankAccountStateBuilder
 
   MapBuilder<String, BankAccountEntity>? _map;
   MapBuilder<String, BankAccountEntity> get map =>
-      _$this._map ??= new MapBuilder<String, BankAccountEntity>();
+      _$this._map ??= MapBuilder<String, BankAccountEntity>();
   set map(MapBuilder<String, BankAccountEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
-  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  ListBuilder<String> get list => _$this._list ??= ListBuilder<String>();
   set list(ListBuilder<String>? list) => _$this._list = list;
 
   BankAccountStateBuilder();
@@ -229,7 +225,6 @@ class BankAccountStateBuilder
 
   @override
   void replace(BankAccountState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$BankAccountState;
   }
 
@@ -244,8 +239,11 @@ class BankAccountStateBuilder
   _$BankAccountState _build() {
     _$BankAccountState _$result;
     try {
-      _$result =
-          _$v ?? new _$BankAccountState._(map: map.build(), list: list.build());
+      _$result = _$v ??
+          _$BankAccountState._(
+            map: map.build(),
+            list: list.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -254,7 +252,7 @@ class BankAccountStateBuilder
         _$failedField = 'list';
         list.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'BankAccountState', _$failedField, e.toString());
       }
       rethrow;
@@ -282,7 +280,7 @@ class _$BankAccountUIState extends BankAccountUIState {
 
   factory _$BankAccountUIState(
           [void Function(BankAccountUIStateBuilder)? updates]) =>
-      (new BankAccountUIStateBuilder()..update(updates))._build();
+      (BankAccountUIStateBuilder()..update(updates))._build();
 
   _$BankAccountUIState._(
       {this.editing,
@@ -292,13 +290,7 @@ class _$BankAccountUIState extends BankAccountUIState {
       required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        listUIState, r'BankAccountUIState', 'listUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        tabIndex, r'BankAccountUIState', 'tabIndex');
-  }
-
+      : super._();
   @override
   BankAccountUIState rebuild(
           void Function(BankAccountUIStateBuilder) updates) =>
@@ -306,7 +298,7 @@ class _$BankAccountUIState extends BankAccountUIState {
 
   @override
   BankAccountUIStateBuilder toBuilder() =>
-      new BankAccountUIStateBuilder()..replace(this);
+      BankAccountUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -357,12 +349,12 @@ class BankAccountUIStateBuilder
 
   BankAccountEntityBuilder? _editing;
   BankAccountEntityBuilder get editing =>
-      _$this._editing ??= new BankAccountEntityBuilder();
+      _$this._editing ??= BankAccountEntityBuilder();
   set editing(BankAccountEntityBuilder? editing) => _$this._editing = editing;
 
   ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
-      _$this._listUIState ??= new ListUIStateBuilder();
+      _$this._listUIState ??= ListUIStateBuilder();
   set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
@@ -408,7 +400,6 @@ class BankAccountUIStateBuilder
 
   @override
   void replace(BankAccountUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$BankAccountUIState;
   }
 
@@ -424,15 +415,16 @@ class BankAccountUIStateBuilder
     _$BankAccountUIState _$result;
     try {
       _$result = _$v ??
-          new _$BankAccountUIState._(
-              editing: _editing?.build(),
-              listUIState: listUIState.build(),
-              selectedId: selectedId,
-              forceSelected: forceSelected,
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'BankAccountUIState', 'tabIndex'),
-              saveCompleter: saveCompleter,
-              cancelCompleter: cancelCompleter);
+          _$BankAccountUIState._(
+            editing: _editing?.build(),
+            listUIState: listUIState.build(),
+            selectedId: selectedId,
+            forceSelected: forceSelected,
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'BankAccountUIState', 'tabIndex'),
+            saveCompleter: saveCompleter,
+            cancelCompleter: cancelCompleter,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -441,7 +433,7 @@ class BankAccountUIStateBuilder
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'BankAccountUIState', _$failedField, e.toString());
       }
       rethrow;

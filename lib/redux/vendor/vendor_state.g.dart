@@ -6,9 +6,9 @@ part of 'vendor_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<VendorState> _$vendorStateSerializer = new _$VendorStateSerializer();
+Serializer<VendorState> _$vendorStateSerializer = _$VendorStateSerializer();
 Serializer<VendorUIState> _$vendorUIStateSerializer =
-    new _$VendorUIStateSerializer();
+    _$VendorUIStateSerializer();
 
 class _$VendorStateSerializer implements StructuredSerializer<VendorState> {
   @override
@@ -36,7 +36,7 @@ class _$VendorStateSerializer implements StructuredSerializer<VendorState> {
   @override
   VendorState deserialize(Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new VendorStateBuilder();
+    final result = VendorStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -117,7 +117,7 @@ class _$VendorUIStateSerializer implements StructuredSerializer<VendorUIState> {
   VendorUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new VendorUIStateBuilder();
+    final result = VendorUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -164,19 +164,15 @@ class _$VendorState extends VendorState {
   final BuiltList<String> list;
 
   factory _$VendorState([void Function(VendorStateBuilder)? updates]) =>
-      (new VendorStateBuilder()..update(updates))._build();
+      (VendorStateBuilder()..update(updates))._build();
 
-  _$VendorState._({required this.map, required this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, r'VendorState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, r'VendorState', 'list');
-  }
-
+  _$VendorState._({required this.map, required this.list}) : super._();
   @override
   VendorState rebuild(void Function(VendorStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  VendorStateBuilder toBuilder() => new VendorStateBuilder()..replace(this);
+  VendorStateBuilder toBuilder() => VendorStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -209,11 +205,11 @@ class VendorStateBuilder implements Builder<VendorState, VendorStateBuilder> {
 
   MapBuilder<String, VendorEntity>? _map;
   MapBuilder<String, VendorEntity> get map =>
-      _$this._map ??= new MapBuilder<String, VendorEntity>();
+      _$this._map ??= MapBuilder<String, VendorEntity>();
   set map(MapBuilder<String, VendorEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
-  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  ListBuilder<String> get list => _$this._list ??= ListBuilder<String>();
   set list(ListBuilder<String>? list) => _$this._list = list;
 
   VendorStateBuilder();
@@ -230,7 +226,6 @@ class VendorStateBuilder implements Builder<VendorState, VendorStateBuilder> {
 
   @override
   void replace(VendorState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$VendorState;
   }
 
@@ -245,8 +240,11 @@ class VendorStateBuilder implements Builder<VendorState, VendorStateBuilder> {
   _$VendorState _build() {
     _$VendorState _$result;
     try {
-      _$result =
-          _$v ?? new _$VendorState._(map: map.build(), list: list.build());
+      _$result = _$v ??
+          _$VendorState._(
+            map: map.build(),
+            list: list.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -255,7 +253,7 @@ class VendorStateBuilder implements Builder<VendorState, VendorStateBuilder> {
         _$failedField = 'list';
         list.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'VendorState', _$failedField, e.toString());
       }
       rethrow;
@@ -284,7 +282,7 @@ class _$VendorUIState extends VendorUIState {
   final Completer<Null>? cancelCompleter;
 
   factory _$VendorUIState([void Function(VendorUIStateBuilder)? updates]) =>
-      (new VendorUIStateBuilder()..update(updates))._build();
+      (VendorUIStateBuilder()..update(updates))._build();
 
   _$VendorUIState._(
       {this.editing,
@@ -295,19 +293,13 @@ class _$VendorUIState extends VendorUIState {
       required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        listUIState, r'VendorUIState', 'listUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        tabIndex, r'VendorUIState', 'tabIndex');
-  }
-
+      : super._();
   @override
   VendorUIState rebuild(void Function(VendorUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  VendorUIStateBuilder toBuilder() => new VendorUIStateBuilder()..replace(this);
+  VendorUIStateBuilder toBuilder() => VendorUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -360,19 +352,18 @@ class VendorUIStateBuilder
   _$VendorUIState? _$v;
 
   VendorEntityBuilder? _editing;
-  VendorEntityBuilder get editing =>
-      _$this._editing ??= new VendorEntityBuilder();
+  VendorEntityBuilder get editing => _$this._editing ??= VendorEntityBuilder();
   set editing(VendorEntityBuilder? editing) => _$this._editing = editing;
 
   VendorContactEntityBuilder? _editingContact;
   VendorContactEntityBuilder get editingContact =>
-      _$this._editingContact ??= new VendorContactEntityBuilder();
+      _$this._editingContact ??= VendorContactEntityBuilder();
   set editingContact(VendorContactEntityBuilder? editingContact) =>
       _$this._editingContact = editingContact;
 
   ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
-      _$this._listUIState ??= new ListUIStateBuilder();
+      _$this._listUIState ??= ListUIStateBuilder();
   set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
@@ -419,7 +410,6 @@ class VendorUIStateBuilder
 
   @override
   void replace(VendorUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$VendorUIState;
   }
 
@@ -435,16 +425,17 @@ class VendorUIStateBuilder
     _$VendorUIState _$result;
     try {
       _$result = _$v ??
-          new _$VendorUIState._(
-              editing: _editing?.build(),
-              editingContact: _editingContact?.build(),
-              listUIState: listUIState.build(),
-              selectedId: selectedId,
-              forceSelected: forceSelected,
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'VendorUIState', 'tabIndex'),
-              saveCompleter: saveCompleter,
-              cancelCompleter: cancelCompleter);
+          _$VendorUIState._(
+            editing: _editing?.build(),
+            editingContact: _editingContact?.build(),
+            listUIState: listUIState.build(),
+            selectedId: selectedId,
+            forceSelected: forceSelected,
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'VendorUIState', 'tabIndex'),
+            saveCompleter: saveCompleter,
+            cancelCompleter: cancelCompleter,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -455,7 +446,7 @@ class VendorUIStateBuilder
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'VendorUIState', _$failedField, e.toString());
       }
       rethrow;

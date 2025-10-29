@@ -214,15 +214,9 @@ void main({bool isTesting = false}) async {
             return null;
           }
 
-          return event.copyWith(
-            environment: '${store.state.environment}'.split('.').last,
-            /*
-            extra: <String, dynamic>{
-              'server_version': account.currentVersion,
-              'route': state.uiState.currentRoute,
-            },
-            */
-          );
+          event.environment = '${store.state.environment}'.split('.').last;
+
+          return event;
         };
       },
       appRunner: () => runApp(InvoiceNinjaApp(store: store)),

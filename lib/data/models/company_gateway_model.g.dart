@@ -7,13 +7,13 @@ part of 'company_gateway_model.dart';
 // **************************************************************************
 
 Serializer<CompanyGatewayListResponse> _$companyGatewayListResponseSerializer =
-    new _$CompanyGatewayListResponseSerializer();
+    _$CompanyGatewayListResponseSerializer();
 Serializer<CompanyGatewayItemResponse> _$companyGatewayItemResponseSerializer =
-    new _$CompanyGatewayItemResponseSerializer();
+    _$CompanyGatewayItemResponseSerializer();
 Serializer<CompanyGatewayEntity> _$companyGatewayEntitySerializer =
-    new _$CompanyGatewayEntitySerializer();
+    _$CompanyGatewayEntitySerializer();
 Serializer<FeesAndLimitsSettings> _$feesAndLimitsSettingsSerializer =
-    new _$FeesAndLimitsSettingsSerializer();
+    _$FeesAndLimitsSettingsSerializer();
 
 class _$CompanyGatewayListResponseSerializer
     implements StructuredSerializer<CompanyGatewayListResponse> {
@@ -43,7 +43,7 @@ class _$CompanyGatewayListResponseSerializer
   CompanyGatewayListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new CompanyGatewayListResponseBuilder();
+    final result = CompanyGatewayListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -91,7 +91,7 @@ class _$CompanyGatewayItemResponseSerializer
   CompanyGatewayItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new CompanyGatewayItemResponseBuilder();
+    final result = CompanyGatewayItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -266,7 +266,7 @@ class _$CompanyGatewayEntitySerializer
   CompanyGatewayEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new CompanyGatewayEntityBuilder();
+    final result = CompanyGatewayEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -489,7 +489,7 @@ class _$FeesAndLimitsSettingsSerializer
   FeesAndLimitsSettings deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new FeesAndLimitsSettingsBuilder();
+    final result = FeesAndLimitsSettingsBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -562,13 +562,9 @@ class _$CompanyGatewayListResponse extends CompanyGatewayListResponse {
 
   factory _$CompanyGatewayListResponse(
           [void Function(CompanyGatewayListResponseBuilder)? updates]) =>
-      (new CompanyGatewayListResponseBuilder()..update(updates))._build();
+      (CompanyGatewayListResponseBuilder()..update(updates))._build();
 
-  _$CompanyGatewayListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'CompanyGatewayListResponse', 'data');
-  }
-
+  _$CompanyGatewayListResponse._({required this.data}) : super._();
   @override
   CompanyGatewayListResponse rebuild(
           void Function(CompanyGatewayListResponseBuilder) updates) =>
@@ -576,7 +572,7 @@ class _$CompanyGatewayListResponse extends CompanyGatewayListResponse {
 
   @override
   CompanyGatewayListResponseBuilder toBuilder() =>
-      new CompanyGatewayListResponseBuilder()..replace(this);
+      CompanyGatewayListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -609,7 +605,7 @@ class CompanyGatewayListResponseBuilder
 
   ListBuilder<CompanyGatewayEntity>? _data;
   ListBuilder<CompanyGatewayEntity> get data =>
-      _$this._data ??= new ListBuilder<CompanyGatewayEntity>();
+      _$this._data ??= ListBuilder<CompanyGatewayEntity>();
   set data(ListBuilder<CompanyGatewayEntity>? data) => _$this._data = data;
 
   CompanyGatewayListResponseBuilder();
@@ -625,7 +621,6 @@ class CompanyGatewayListResponseBuilder
 
   @override
   void replace(CompanyGatewayListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CompanyGatewayListResponse;
   }
 
@@ -640,14 +635,17 @@ class CompanyGatewayListResponseBuilder
   _$CompanyGatewayListResponse _build() {
     _$CompanyGatewayListResponse _$result;
     try {
-      _$result = _$v ?? new _$CompanyGatewayListResponse._(data: data.build());
+      _$result = _$v ??
+          _$CompanyGatewayListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'CompanyGatewayListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -663,13 +661,9 @@ class _$CompanyGatewayItemResponse extends CompanyGatewayItemResponse {
 
   factory _$CompanyGatewayItemResponse(
           [void Function(CompanyGatewayItemResponseBuilder)? updates]) =>
-      (new CompanyGatewayItemResponseBuilder()..update(updates))._build();
+      (CompanyGatewayItemResponseBuilder()..update(updates))._build();
 
-  _$CompanyGatewayItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'CompanyGatewayItemResponse', 'data');
-  }
-
+  _$CompanyGatewayItemResponse._({required this.data}) : super._();
   @override
   CompanyGatewayItemResponse rebuild(
           void Function(CompanyGatewayItemResponseBuilder) updates) =>
@@ -677,7 +671,7 @@ class _$CompanyGatewayItemResponse extends CompanyGatewayItemResponse {
 
   @override
   CompanyGatewayItemResponseBuilder toBuilder() =>
-      new CompanyGatewayItemResponseBuilder()..replace(this);
+      CompanyGatewayItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -710,7 +704,7 @@ class CompanyGatewayItemResponseBuilder
 
   CompanyGatewayEntityBuilder? _data;
   CompanyGatewayEntityBuilder get data =>
-      _$this._data ??= new CompanyGatewayEntityBuilder();
+      _$this._data ??= CompanyGatewayEntityBuilder();
   set data(CompanyGatewayEntityBuilder? data) => _$this._data = data;
 
   CompanyGatewayItemResponseBuilder();
@@ -726,7 +720,6 @@ class CompanyGatewayItemResponseBuilder
 
   @override
   void replace(CompanyGatewayItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CompanyGatewayItemResponse;
   }
 
@@ -741,14 +734,17 @@ class CompanyGatewayItemResponseBuilder
   _$CompanyGatewayItemResponse _build() {
     _$CompanyGatewayItemResponse _$result;
     try {
-      _$result = _$v ?? new _$CompanyGatewayItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$CompanyGatewayItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'CompanyGatewayItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -832,7 +828,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
 
   factory _$CompanyGatewayEntity(
           [void Function(CompanyGatewayEntityBuilder)? updates]) =>
-      (new CompanyGatewayEntityBuilder()..update(updates))._build();
+      (CompanyGatewayEntityBuilder()..update(updates))._build();
 
   _$CompanyGatewayEntity._(
       {this.loadedAt,
@@ -870,66 +866,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        gatewayId, r'CompanyGatewayEntity', 'gatewayId');
-    BuiltValueNullFieldError.checkNotNull(
-        acceptedCreditCards, r'CompanyGatewayEntity', 'acceptedCreditCards');
-    BuiltValueNullFieldError.checkNotNull(requireShippingAddress,
-        r'CompanyGatewayEntity', 'requireShippingAddress');
-    BuiltValueNullFieldError.checkNotNull(requireBillingAddress,
-        r'CompanyGatewayEntity', 'requireBillingAddress');
-    BuiltValueNullFieldError.checkNotNull(
-        requireClientName, r'CompanyGatewayEntity', 'requireClientName');
-    BuiltValueNullFieldError.checkNotNull(
-        requireClientPhone, r'CompanyGatewayEntity', 'requireClientPhone');
-    BuiltValueNullFieldError.checkNotNull(
-        requireContactName, r'CompanyGatewayEntity', 'requireContactName');
-    BuiltValueNullFieldError.checkNotNull(
-        requireContactEmail, r'CompanyGatewayEntity', 'requireContactEmail');
-    BuiltValueNullFieldError.checkNotNull(
-        requireCustomValue1, r'CompanyGatewayEntity', 'requireCustomValue1');
-    BuiltValueNullFieldError.checkNotNull(
-        requireCustomValue2, r'CompanyGatewayEntity', 'requireCustomValue2');
-    BuiltValueNullFieldError.checkNotNull(
-        requireCustomValue3, r'CompanyGatewayEntity', 'requireCustomValue3');
-    BuiltValueNullFieldError.checkNotNull(
-        requireCustomValue4, r'CompanyGatewayEntity', 'requireCustomValue4');
-    BuiltValueNullFieldError.checkNotNull(
-        requireCvv, r'CompanyGatewayEntity', 'requireCvv');
-    BuiltValueNullFieldError.checkNotNull(
-        updateDetails, r'CompanyGatewayEntity', 'updateDetails');
-    BuiltValueNullFieldError.checkNotNull(
-        feesAndLimitsMap, r'CompanyGatewayEntity', 'feesAndLimitsMap');
-    BuiltValueNullFieldError.checkNotNull(
-        systemLogs, r'CompanyGatewayEntity', 'systemLogs');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue1, r'CompanyGatewayEntity', 'customValue1');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue2, r'CompanyGatewayEntity', 'customValue2');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue3, r'CompanyGatewayEntity', 'customValue3');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue4, r'CompanyGatewayEntity', 'customValue4');
-    BuiltValueNullFieldError.checkNotNull(
-        config, r'CompanyGatewayEntity', 'config');
-    BuiltValueNullFieldError.checkNotNull(
-        tokenBilling, r'CompanyGatewayEntity', 'tokenBilling');
-    BuiltValueNullFieldError.checkNotNull(
-        isTestMode, r'CompanyGatewayEntity', 'isTestMode');
-    BuiltValueNullFieldError.checkNotNull(alwaysShowRequiredFields,
-        r'CompanyGatewayEntity', 'alwaysShowRequiredFields');
-    BuiltValueNullFieldError.checkNotNull(
-        label, r'CompanyGatewayEntity', 'label');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'CompanyGatewayEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'CompanyGatewayEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'CompanyGatewayEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'CompanyGatewayEntity', 'id');
-  }
-
+      : super._();
   @override
   CompanyGatewayEntity rebuild(
           void Function(CompanyGatewayEntityBuilder) updates) =>
@@ -937,7 +874,7 @@ class _$CompanyGatewayEntity extends CompanyGatewayEntity {
 
   @override
   CompanyGatewayEntityBuilder toBuilder() =>
-      new CompanyGatewayEntityBuilder()..replace(this);
+      CompanyGatewayEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1147,15 +1084,14 @@ class CompanyGatewayEntityBuilder
 
   MapBuilder<String?, FeesAndLimitsSettings>? _feesAndLimitsMap;
   MapBuilder<String?, FeesAndLimitsSettings> get feesAndLimitsMap =>
-      _$this._feesAndLimitsMap ??=
-          new MapBuilder<String?, FeesAndLimitsSettings>();
+      _$this._feesAndLimitsMap ??= MapBuilder<String?, FeesAndLimitsSettings>();
   set feesAndLimitsMap(
           MapBuilder<String?, FeesAndLimitsSettings>? feesAndLimitsMap) =>
       _$this._feesAndLimitsMap = feesAndLimitsMap;
 
   ListBuilder<SystemLogEntity>? _systemLogs;
   ListBuilder<SystemLogEntity> get systemLogs =>
-      _$this._systemLogs ??= new ListBuilder<SystemLogEntity>();
+      _$this._systemLogs ??= ListBuilder<SystemLogEntity>();
   set systemLogs(ListBuilder<SystemLogEntity>? systemLogs) =>
       _$this._systemLogs = systemLogs;
 
@@ -1279,7 +1215,6 @@ class CompanyGatewayEntityBuilder
 
   @override
   void replace(CompanyGatewayEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CompanyGatewayEntity;
   }
 
@@ -1295,49 +1230,94 @@ class CompanyGatewayEntityBuilder
     _$CompanyGatewayEntity _$result;
     try {
       _$result = _$v ??
-          new _$CompanyGatewayEntity._(
-              loadedAt: loadedAt,
-              gatewayId: BuiltValueNullFieldError.checkNotNull(
-                  gatewayId, r'CompanyGatewayEntity', 'gatewayId'),
-              acceptedCreditCards: BuiltValueNullFieldError.checkNotNull(
-                  acceptedCreditCards, r'CompanyGatewayEntity', 'acceptedCreditCards'),
-              requireShippingAddress: BuiltValueNullFieldError.checkNotNull(
-                  requireShippingAddress, r'CompanyGatewayEntity', 'requireShippingAddress'),
-              requireBillingAddress: BuiltValueNullFieldError.checkNotNull(
-                  requireBillingAddress, r'CompanyGatewayEntity', 'requireBillingAddress'),
-              requireClientName: BuiltValueNullFieldError.checkNotNull(
-                  requireClientName, r'CompanyGatewayEntity', 'requireClientName'),
-              requirePostalCode: requirePostalCode,
-              requireClientPhone: BuiltValueNullFieldError.checkNotNull(
-                  requireClientPhone, r'CompanyGatewayEntity', 'requireClientPhone'),
-              requireContactName:
-                  BuiltValueNullFieldError.checkNotNull(requireContactName, r'CompanyGatewayEntity', 'requireContactName'),
-              requireContactEmail: BuiltValueNullFieldError.checkNotNull(requireContactEmail, r'CompanyGatewayEntity', 'requireContactEmail'),
-              requireCustomValue1: BuiltValueNullFieldError.checkNotNull(requireCustomValue1, r'CompanyGatewayEntity', 'requireCustomValue1'),
-              requireCustomValue2: BuiltValueNullFieldError.checkNotNull(requireCustomValue2, r'CompanyGatewayEntity', 'requireCustomValue2'),
-              requireCustomValue3: BuiltValueNullFieldError.checkNotNull(requireCustomValue3, r'CompanyGatewayEntity', 'requireCustomValue3'),
-              requireCustomValue4: BuiltValueNullFieldError.checkNotNull(requireCustomValue4, r'CompanyGatewayEntity', 'requireCustomValue4'),
-              requireCvv: BuiltValueNullFieldError.checkNotNull(requireCvv, r'CompanyGatewayEntity', 'requireCvv'),
-              updateDetails: BuiltValueNullFieldError.checkNotNull(updateDetails, r'CompanyGatewayEntity', 'updateDetails'),
-              feesAndLimitsMap: feesAndLimitsMap.build(),
-              systemLogs: systemLogs.build(),
-              customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, r'CompanyGatewayEntity', 'customValue1'),
-              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, r'CompanyGatewayEntity', 'customValue2'),
-              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'CompanyGatewayEntity', 'customValue3'),
-              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'CompanyGatewayEntity', 'customValue4'),
-              config: BuiltValueNullFieldError.checkNotNull(config, r'CompanyGatewayEntity', 'config'),
-              tokenBilling: BuiltValueNullFieldError.checkNotNull(tokenBilling, r'CompanyGatewayEntity', 'tokenBilling'),
-              isTestMode: BuiltValueNullFieldError.checkNotNull(isTestMode, r'CompanyGatewayEntity', 'isTestMode'),
-              alwaysShowRequiredFields: BuiltValueNullFieldError.checkNotNull(alwaysShowRequiredFields, r'CompanyGatewayEntity', 'alwaysShowRequiredFields'),
-              label: BuiltValueNullFieldError.checkNotNull(label, r'CompanyGatewayEntity', 'label'),
-              isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'CompanyGatewayEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'CompanyGatewayEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'CompanyGatewayEntity', 'archivedAt'),
-              isDeleted: isDeleted,
-              createdUserId: createdUserId,
-              assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(id, r'CompanyGatewayEntity', 'id'));
+          _$CompanyGatewayEntity._(
+            loadedAt: loadedAt,
+            gatewayId: BuiltValueNullFieldError.checkNotNull(
+                gatewayId, r'CompanyGatewayEntity', 'gatewayId'),
+            acceptedCreditCards: BuiltValueNullFieldError.checkNotNull(
+                acceptedCreditCards,
+                r'CompanyGatewayEntity',
+                'acceptedCreditCards'),
+            requireShippingAddress: BuiltValueNullFieldError.checkNotNull(
+                requireShippingAddress,
+                r'CompanyGatewayEntity',
+                'requireShippingAddress'),
+            requireBillingAddress: BuiltValueNullFieldError.checkNotNull(
+                requireBillingAddress,
+                r'CompanyGatewayEntity',
+                'requireBillingAddress'),
+            requireClientName: BuiltValueNullFieldError.checkNotNull(
+                requireClientName,
+                r'CompanyGatewayEntity',
+                'requireClientName'),
+            requirePostalCode: requirePostalCode,
+            requireClientPhone: BuiltValueNullFieldError.checkNotNull(
+                requireClientPhone,
+                r'CompanyGatewayEntity',
+                'requireClientPhone'),
+            requireContactName: BuiltValueNullFieldError.checkNotNull(
+                requireContactName,
+                r'CompanyGatewayEntity',
+                'requireContactName'),
+            requireContactEmail: BuiltValueNullFieldError.checkNotNull(
+                requireContactEmail,
+                r'CompanyGatewayEntity',
+                'requireContactEmail'),
+            requireCustomValue1: BuiltValueNullFieldError.checkNotNull(
+                requireCustomValue1,
+                r'CompanyGatewayEntity',
+                'requireCustomValue1'),
+            requireCustomValue2: BuiltValueNullFieldError.checkNotNull(
+                requireCustomValue2,
+                r'CompanyGatewayEntity',
+                'requireCustomValue2'),
+            requireCustomValue3: BuiltValueNullFieldError.checkNotNull(
+                requireCustomValue3,
+                r'CompanyGatewayEntity',
+                'requireCustomValue3'),
+            requireCustomValue4: BuiltValueNullFieldError.checkNotNull(
+                requireCustomValue4,
+                r'CompanyGatewayEntity',
+                'requireCustomValue4'),
+            requireCvv: BuiltValueNullFieldError.checkNotNull(
+                requireCvv, r'CompanyGatewayEntity', 'requireCvv'),
+            updateDetails: BuiltValueNullFieldError.checkNotNull(
+                updateDetails, r'CompanyGatewayEntity', 'updateDetails'),
+            feesAndLimitsMap: feesAndLimitsMap.build(),
+            systemLogs: systemLogs.build(),
+            customValue1: BuiltValueNullFieldError.checkNotNull(
+                customValue1, r'CompanyGatewayEntity', 'customValue1'),
+            customValue2: BuiltValueNullFieldError.checkNotNull(
+                customValue2, r'CompanyGatewayEntity', 'customValue2'),
+            customValue3: BuiltValueNullFieldError.checkNotNull(
+                customValue3, r'CompanyGatewayEntity', 'customValue3'),
+            customValue4: BuiltValueNullFieldError.checkNotNull(
+                customValue4, r'CompanyGatewayEntity', 'customValue4'),
+            config: BuiltValueNullFieldError.checkNotNull(
+                config, r'CompanyGatewayEntity', 'config'),
+            tokenBilling: BuiltValueNullFieldError.checkNotNull(
+                tokenBilling, r'CompanyGatewayEntity', 'tokenBilling'),
+            isTestMode: BuiltValueNullFieldError.checkNotNull(
+                isTestMode, r'CompanyGatewayEntity', 'isTestMode'),
+            alwaysShowRequiredFields: BuiltValueNullFieldError.checkNotNull(
+                alwaysShowRequiredFields,
+                r'CompanyGatewayEntity',
+                'alwaysShowRequiredFields'),
+            label: BuiltValueNullFieldError.checkNotNull(
+                label, r'CompanyGatewayEntity', 'label'),
+            isChanged: isChanged,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, r'CompanyGatewayEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, r'CompanyGatewayEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(
+                archivedAt, r'CompanyGatewayEntity', 'archivedAt'),
+            isDeleted: isDeleted,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, r'CompanyGatewayEntity', 'id'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -1346,7 +1326,7 @@ class CompanyGatewayEntityBuilder
         _$failedField = 'systemLogs';
         systemLogs.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'CompanyGatewayEntity', _$failedField, e.toString());
       }
       rethrow;
@@ -1386,7 +1366,7 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
 
   factory _$FeesAndLimitsSettings(
           [void Function(FeesAndLimitsSettingsBuilder)? updates]) =>
-      (new FeesAndLimitsSettingsBuilder()..update(updates))._build();
+      (FeesAndLimitsSettingsBuilder()..update(updates))._build();
 
   _$FeesAndLimitsSettings._(
       {required this.minLimit,
@@ -1402,35 +1382,7 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
       required this.taxName3,
       required this.adjustFeePercent,
       required this.isEnabled})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        minLimit, r'FeesAndLimitsSettings', 'minLimit');
-    BuiltValueNullFieldError.checkNotNull(
-        maxLimit, r'FeesAndLimitsSettings', 'maxLimit');
-    BuiltValueNullFieldError.checkNotNull(
-        feeAmount, r'FeesAndLimitsSettings', 'feeAmount');
-    BuiltValueNullFieldError.checkNotNull(
-        feePercent, r'FeesAndLimitsSettings', 'feePercent');
-    BuiltValueNullFieldError.checkNotNull(
-        feeCap, r'FeesAndLimitsSettings', 'feeCap');
-    BuiltValueNullFieldError.checkNotNull(
-        taxRate1, r'FeesAndLimitsSettings', 'taxRate1');
-    BuiltValueNullFieldError.checkNotNull(
-        taxName1, r'FeesAndLimitsSettings', 'taxName1');
-    BuiltValueNullFieldError.checkNotNull(
-        taxRate2, r'FeesAndLimitsSettings', 'taxRate2');
-    BuiltValueNullFieldError.checkNotNull(
-        taxName2, r'FeesAndLimitsSettings', 'taxName2');
-    BuiltValueNullFieldError.checkNotNull(
-        taxRate3, r'FeesAndLimitsSettings', 'taxRate3');
-    BuiltValueNullFieldError.checkNotNull(
-        taxName3, r'FeesAndLimitsSettings', 'taxName3');
-    BuiltValueNullFieldError.checkNotNull(
-        adjustFeePercent, r'FeesAndLimitsSettings', 'adjustFeePercent');
-    BuiltValueNullFieldError.checkNotNull(
-        isEnabled, r'FeesAndLimitsSettings', 'isEnabled');
-  }
-
+      : super._();
   @override
   FeesAndLimitsSettings rebuild(
           void Function(FeesAndLimitsSettingsBuilder) updates) =>
@@ -1438,7 +1390,7 @@ class _$FeesAndLimitsSettings extends FeesAndLimitsSettings {
 
   @override
   FeesAndLimitsSettingsBuilder toBuilder() =>
-      new FeesAndLimitsSettingsBuilder()..replace(this);
+      FeesAndLimitsSettingsBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1585,7 +1537,6 @@ class FeesAndLimitsSettingsBuilder
 
   @override
   void replace(FeesAndLimitsSettings other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$FeesAndLimitsSettings;
   }
 
@@ -1599,29 +1550,34 @@ class FeesAndLimitsSettingsBuilder
 
   _$FeesAndLimitsSettings _build() {
     final _$result = _$v ??
-        new _$FeesAndLimitsSettings._(
-            minLimit: BuiltValueNullFieldError.checkNotNull(
-                minLimit, r'FeesAndLimitsSettings', 'minLimit'),
-            maxLimit: BuiltValueNullFieldError.checkNotNull(
-                maxLimit, r'FeesAndLimitsSettings', 'maxLimit'),
-            feeAmount: BuiltValueNullFieldError.checkNotNull(
-                feeAmount, r'FeesAndLimitsSettings', 'feeAmount'),
-            feePercent: BuiltValueNullFieldError.checkNotNull(
-                feePercent, r'FeesAndLimitsSettings', 'feePercent'),
-            feeCap: BuiltValueNullFieldError.checkNotNull(
-                feeCap, r'FeesAndLimitsSettings', 'feeCap'),
-            taxRate1: BuiltValueNullFieldError.checkNotNull(
-                taxRate1, r'FeesAndLimitsSettings', 'taxRate1'),
-            taxName1: BuiltValueNullFieldError.checkNotNull(
-                taxName1, r'FeesAndLimitsSettings', 'taxName1'),
-            taxRate2: BuiltValueNullFieldError.checkNotNull(
-                taxRate2, r'FeesAndLimitsSettings', 'taxRate2'),
-            taxName2:
-                BuiltValueNullFieldError.checkNotNull(taxName2, r'FeesAndLimitsSettings', 'taxName2'),
-            taxRate3: BuiltValueNullFieldError.checkNotNull(taxRate3, r'FeesAndLimitsSettings', 'taxRate3'),
-            taxName3: BuiltValueNullFieldError.checkNotNull(taxName3, r'FeesAndLimitsSettings', 'taxName3'),
-            adjustFeePercent: BuiltValueNullFieldError.checkNotNull(adjustFeePercent, r'FeesAndLimitsSettings', 'adjustFeePercent'),
-            isEnabled: BuiltValueNullFieldError.checkNotNull(isEnabled, r'FeesAndLimitsSettings', 'isEnabled'));
+        _$FeesAndLimitsSettings._(
+          minLimit: BuiltValueNullFieldError.checkNotNull(
+              minLimit, r'FeesAndLimitsSettings', 'minLimit'),
+          maxLimit: BuiltValueNullFieldError.checkNotNull(
+              maxLimit, r'FeesAndLimitsSettings', 'maxLimit'),
+          feeAmount: BuiltValueNullFieldError.checkNotNull(
+              feeAmount, r'FeesAndLimitsSettings', 'feeAmount'),
+          feePercent: BuiltValueNullFieldError.checkNotNull(
+              feePercent, r'FeesAndLimitsSettings', 'feePercent'),
+          feeCap: BuiltValueNullFieldError.checkNotNull(
+              feeCap, r'FeesAndLimitsSettings', 'feeCap'),
+          taxRate1: BuiltValueNullFieldError.checkNotNull(
+              taxRate1, r'FeesAndLimitsSettings', 'taxRate1'),
+          taxName1: BuiltValueNullFieldError.checkNotNull(
+              taxName1, r'FeesAndLimitsSettings', 'taxName1'),
+          taxRate2: BuiltValueNullFieldError.checkNotNull(
+              taxRate2, r'FeesAndLimitsSettings', 'taxRate2'),
+          taxName2: BuiltValueNullFieldError.checkNotNull(
+              taxName2, r'FeesAndLimitsSettings', 'taxName2'),
+          taxRate3: BuiltValueNullFieldError.checkNotNull(
+              taxRate3, r'FeesAndLimitsSettings', 'taxRate3'),
+          taxName3: BuiltValueNullFieldError.checkNotNull(
+              taxName3, r'FeesAndLimitsSettings', 'taxName3'),
+          adjustFeePercent: BuiltValueNullFieldError.checkNotNull(
+              adjustFeePercent, r'FeesAndLimitsSettings', 'adjustFeePercent'),
+          isEnabled: BuiltValueNullFieldError.checkNotNull(
+              isEnabled, r'FeesAndLimitsSettings', 'isEnabled'),
+        );
     replace(_$result);
     return _$result;
   }

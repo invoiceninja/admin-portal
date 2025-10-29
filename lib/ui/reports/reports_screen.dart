@@ -1,6 +1,5 @@
 // Flutter imports:
 
-import 'package:collection/collection.dart' show IterableNullableExtension;
 import 'package:flutter/material.dart' as mt;
 import 'package:flutter/material.dart';
 
@@ -326,7 +325,7 @@ class ReportsScreen extends StatelessWidget {
 
     return PopScope(
       canPop: false,
-      onPopInvoked: (_) {
+      onPopInvokedWithResult: (_, __) {
         store.dispatch(ViewDashboard());
       },
       child: Scaffold(
@@ -1567,7 +1566,7 @@ class ReportResult {
       }
     }
 
-    final keys = totals.keys.whereNotNull().toList();
+    final keys = totals.keys.nonNulls.toList();
     keys.sort((rowA, rowB) {
       dynamic valueA;
       dynamic valueB;

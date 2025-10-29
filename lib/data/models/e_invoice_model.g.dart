@@ -7,9 +7,9 @@ part of 'e_invoice_model.dart';
 // **************************************************************************
 
 Serializer<EInvoiceFieldEntity> _$eInvoiceFieldEntitySerializer =
-    new _$EInvoiceFieldEntitySerializer();
+    _$EInvoiceFieldEntitySerializer();
 Serializer<EInvoiceElementEntity> _$eInvoiceElementEntitySerializer =
-    new _$EInvoiceElementEntitySerializer();
+    _$EInvoiceElementEntitySerializer();
 
 class _$EInvoiceFieldEntitySerializer
     implements StructuredSerializer<EInvoiceFieldEntity> {
@@ -49,7 +49,7 @@ class _$EInvoiceFieldEntitySerializer
   EInvoiceFieldEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new EInvoiceFieldEntityBuilder();
+    final result = EInvoiceFieldEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -150,7 +150,7 @@ class _$EInvoiceElementEntitySerializer
   EInvoiceElementEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new EInvoiceElementEntityBuilder();
+    final result = EInvoiceElementEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -215,22 +215,14 @@ class _$EInvoiceFieldEntity extends EInvoiceFieldEntity {
 
   factory _$EInvoiceFieldEntity(
           [void Function(EInvoiceFieldEntityBuilder)? updates]) =>
-      (new EInvoiceFieldEntityBuilder()..update(updates))._build();
+      (EInvoiceFieldEntityBuilder()..update(updates))._build();
 
   _$EInvoiceFieldEntity._(
       {required this.type,
       required this.help,
       required this.choices,
       required this.elements})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(type, r'EInvoiceFieldEntity', 'type');
-    BuiltValueNullFieldError.checkNotNull(help, r'EInvoiceFieldEntity', 'help');
-    BuiltValueNullFieldError.checkNotNull(
-        choices, r'EInvoiceFieldEntity', 'choices');
-    BuiltValueNullFieldError.checkNotNull(
-        elements, r'EInvoiceFieldEntity', 'elements');
-  }
-
+      : super._();
   @override
   EInvoiceFieldEntity rebuild(
           void Function(EInvoiceFieldEntityBuilder) updates) =>
@@ -238,7 +230,7 @@ class _$EInvoiceFieldEntity extends EInvoiceFieldEntity {
 
   @override
   EInvoiceFieldEntityBuilder toBuilder() =>
-      new EInvoiceFieldEntityBuilder()..replace(this);
+      EInvoiceFieldEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -287,13 +279,12 @@ class EInvoiceFieldEntityBuilder
   set help(String? help) => _$this._help = help;
 
   ListBuilder<String>? _choices;
-  ListBuilder<String> get choices =>
-      _$this._choices ??= new ListBuilder<String>();
+  ListBuilder<String> get choices => _$this._choices ??= ListBuilder<String>();
   set choices(ListBuilder<String>? choices) => _$this._choices = choices;
 
   MapBuilder<String, EInvoiceElementEntity>? _elements;
   MapBuilder<String, EInvoiceElementEntity> get elements =>
-      _$this._elements ??= new MapBuilder<String, EInvoiceElementEntity>();
+      _$this._elements ??= MapBuilder<String, EInvoiceElementEntity>();
   set elements(MapBuilder<String, EInvoiceElementEntity>? elements) =>
       _$this._elements = elements;
 
@@ -313,7 +304,6 @@ class EInvoiceFieldEntityBuilder
 
   @override
   void replace(EInvoiceFieldEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$EInvoiceFieldEntity;
   }
 
@@ -329,13 +319,14 @@ class EInvoiceFieldEntityBuilder
     _$EInvoiceFieldEntity _$result;
     try {
       _$result = _$v ??
-          new _$EInvoiceFieldEntity._(
-              type: BuiltValueNullFieldError.checkNotNull(
-                  type, r'EInvoiceFieldEntity', 'type'),
-              help: BuiltValueNullFieldError.checkNotNull(
-                  help, r'EInvoiceFieldEntity', 'help'),
-              choices: choices.build(),
-              elements: elements.build());
+          _$EInvoiceFieldEntity._(
+            type: BuiltValueNullFieldError.checkNotNull(
+                type, r'EInvoiceFieldEntity', 'type'),
+            help: BuiltValueNullFieldError.checkNotNull(
+                help, r'EInvoiceFieldEntity', 'help'),
+            choices: choices.build(),
+            elements: elements.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -344,7 +335,7 @@ class EInvoiceFieldEntityBuilder
         _$failedField = 'elements';
         elements.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'EInvoiceFieldEntity', _$failedField, e.toString());
       }
       rethrow;
@@ -376,7 +367,7 @@ class _$EInvoiceElementEntity extends EInvoiceElementEntity {
 
   factory _$EInvoiceElementEntity(
           [void Function(EInvoiceElementEntityBuilder)? updates]) =>
-      (new EInvoiceElementEntityBuilder()..update(updates))._build();
+      (EInvoiceElementEntityBuilder()..update(updates))._build();
 
   _$EInvoiceElementEntity._(
       {required this.name,
@@ -388,19 +379,7 @@ class _$EInvoiceElementEntity extends EInvoiceElementEntity {
       required this.maxOccurs,
       this.pattern,
       this.help})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        name, r'EInvoiceElementEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(
-        baseType, r'EInvoiceElementEntity', 'baseType');
-    BuiltValueNullFieldError.checkNotNull(
-        resource, r'EInvoiceElementEntity', 'resource');
-    BuiltValueNullFieldError.checkNotNull(
-        minOccurs, r'EInvoiceElementEntity', 'minOccurs');
-    BuiltValueNullFieldError.checkNotNull(
-        maxOccurs, r'EInvoiceElementEntity', 'maxOccurs');
-  }
-
+      : super._();
   @override
   EInvoiceElementEntity rebuild(
           void Function(EInvoiceElementEntityBuilder) updates) =>
@@ -408,7 +387,7 @@ class _$EInvoiceElementEntity extends EInvoiceElementEntity {
 
   @override
   EInvoiceElementEntityBuilder toBuilder() =>
-      new EInvoiceElementEntityBuilder()..replace(this);
+      EInvoiceElementEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -473,7 +452,7 @@ class EInvoiceElementEntityBuilder
 
   ListBuilder<String>? _resource;
   ListBuilder<String> get resource =>
-      _$this._resource ??= new ListBuilder<String>();
+      _$this._resource ??= ListBuilder<String>();
   set resource(ListBuilder<String>? resource) => _$this._resource = resource;
 
   int? _minLength;
@@ -521,7 +500,6 @@ class EInvoiceElementEntityBuilder
 
   @override
   void replace(EInvoiceElementEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$EInvoiceElementEntity;
   }
 
@@ -537,27 +515,28 @@ class EInvoiceElementEntityBuilder
     _$EInvoiceElementEntity _$result;
     try {
       _$result = _$v ??
-          new _$EInvoiceElementEntity._(
-              name: BuiltValueNullFieldError.checkNotNull(
-                  name, r'EInvoiceElementEntity', 'name'),
-              baseType: BuiltValueNullFieldError.checkNotNull(
-                  baseType, r'EInvoiceElementEntity', 'baseType'),
-              resource: resource.build(),
-              minLength: minLength,
-              maxLength: maxLength,
-              minOccurs: BuiltValueNullFieldError.checkNotNull(
-                  minOccurs, r'EInvoiceElementEntity', 'minOccurs'),
-              maxOccurs: BuiltValueNullFieldError.checkNotNull(
-                  maxOccurs, r'EInvoiceElementEntity', 'maxOccurs'),
-              pattern: pattern,
-              help: help);
+          _$EInvoiceElementEntity._(
+            name: BuiltValueNullFieldError.checkNotNull(
+                name, r'EInvoiceElementEntity', 'name'),
+            baseType: BuiltValueNullFieldError.checkNotNull(
+                baseType, r'EInvoiceElementEntity', 'baseType'),
+            resource: resource.build(),
+            minLength: minLength,
+            maxLength: maxLength,
+            minOccurs: BuiltValueNullFieldError.checkNotNull(
+                minOccurs, r'EInvoiceElementEntity', 'minOccurs'),
+            maxOccurs: BuiltValueNullFieldError.checkNotNull(
+                maxOccurs, r'EInvoiceElementEntity', 'maxOccurs'),
+            pattern: pattern,
+            help: help,
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'resource';
         resource.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'EInvoiceElementEntity', _$failedField, e.toString());
       }
       rethrow;

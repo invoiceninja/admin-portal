@@ -143,6 +143,8 @@ final taskListReducer = combineReducers<ListUIState>([
       (state, action) => state.rebuild((b) => b
         ..filter = null
         ..filterClearedAt = DateTime.now().millisecondsSinceEpoch)),
+  TypedReducer<ListUIState, ClearTaskStatusFilter>(
+      (state, action) => state.rebuild((b) => b..statusFilters.clear())),
 ]);
 
 ListUIState _viewTaskList(ListUIState taskListState, ViewTaskList action) {

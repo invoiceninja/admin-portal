@@ -7,13 +7,13 @@ part of 'schedule_model.dart';
 // **************************************************************************
 
 Serializer<ScheduleListResponse> _$scheduleListResponseSerializer =
-    new _$ScheduleListResponseSerializer();
+    _$ScheduleListResponseSerializer();
 Serializer<ScheduleItemResponse> _$scheduleItemResponseSerializer =
-    new _$ScheduleItemResponseSerializer();
+    _$ScheduleItemResponseSerializer();
 Serializer<ScheduleEntity> _$scheduleEntitySerializer =
-    new _$ScheduleEntitySerializer();
+    _$ScheduleEntitySerializer();
 Serializer<ScheduleParameters> _$scheduleParametersSerializer =
-    new _$ScheduleParametersSerializer();
+    _$ScheduleParametersSerializer();
 
 class _$ScheduleListResponseSerializer
     implements StructuredSerializer<ScheduleListResponse> {
@@ -43,7 +43,7 @@ class _$ScheduleListResponseSerializer
   ScheduleListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ScheduleListResponseBuilder();
+    final result = ScheduleListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -91,7 +91,7 @@ class _$ScheduleItemResponseSerializer
   ScheduleItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ScheduleItemResponseBuilder();
+    final result = ScheduleItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -188,7 +188,7 @@ class _$ScheduleEntitySerializer
   ScheduleEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ScheduleEntityBuilder();
+    final result = ScheduleEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -315,6 +315,13 @@ class _$ScheduleParametersSerializer
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
+    value = object.template;
+    if (value != null) {
+      result
+        ..add('template')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.clients;
     if (value != null) {
       result
@@ -351,7 +358,7 @@ class _$ScheduleParametersSerializer
   ScheduleParameters deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ScheduleParametersBuilder();
+    final result = ScheduleParametersBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -381,6 +388,10 @@ class _$ScheduleParametersSerializer
           break;
         case 'status':
           result.status = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'template':
+          result.template = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
         case 'clients':
@@ -414,13 +425,9 @@ class _$ScheduleListResponse extends ScheduleListResponse {
 
   factory _$ScheduleListResponse(
           [void Function(ScheduleListResponseBuilder)? updates]) =>
-      (new ScheduleListResponseBuilder()..update(updates))._build();
+      (ScheduleListResponseBuilder()..update(updates))._build();
 
-  _$ScheduleListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'ScheduleListResponse', 'data');
-  }
-
+  _$ScheduleListResponse._({required this.data}) : super._();
   @override
   ScheduleListResponse rebuild(
           void Function(ScheduleListResponseBuilder) updates) =>
@@ -428,7 +435,7 @@ class _$ScheduleListResponse extends ScheduleListResponse {
 
   @override
   ScheduleListResponseBuilder toBuilder() =>
-      new ScheduleListResponseBuilder()..replace(this);
+      ScheduleListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -460,7 +467,7 @@ class ScheduleListResponseBuilder
 
   ListBuilder<ScheduleEntity>? _data;
   ListBuilder<ScheduleEntity> get data =>
-      _$this._data ??= new ListBuilder<ScheduleEntity>();
+      _$this._data ??= ListBuilder<ScheduleEntity>();
   set data(ListBuilder<ScheduleEntity>? data) => _$this._data = data;
 
   ScheduleListResponseBuilder();
@@ -476,7 +483,6 @@ class ScheduleListResponseBuilder
 
   @override
   void replace(ScheduleListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ScheduleListResponse;
   }
 
@@ -491,14 +497,17 @@ class ScheduleListResponseBuilder
   _$ScheduleListResponse _build() {
     _$ScheduleListResponse _$result;
     try {
-      _$result = _$v ?? new _$ScheduleListResponse._(data: data.build());
+      _$result = _$v ??
+          _$ScheduleListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ScheduleListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -514,13 +523,9 @@ class _$ScheduleItemResponse extends ScheduleItemResponse {
 
   factory _$ScheduleItemResponse(
           [void Function(ScheduleItemResponseBuilder)? updates]) =>
-      (new ScheduleItemResponseBuilder()..update(updates))._build();
+      (ScheduleItemResponseBuilder()..update(updates))._build();
 
-  _$ScheduleItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'ScheduleItemResponse', 'data');
-  }
-
+  _$ScheduleItemResponse._({required this.data}) : super._();
   @override
   ScheduleItemResponse rebuild(
           void Function(ScheduleItemResponseBuilder) updates) =>
@@ -528,7 +533,7 @@ class _$ScheduleItemResponse extends ScheduleItemResponse {
 
   @override
   ScheduleItemResponseBuilder toBuilder() =>
-      new ScheduleItemResponseBuilder()..replace(this);
+      ScheduleItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -559,8 +564,7 @@ class ScheduleItemResponseBuilder
   _$ScheduleItemResponse? _$v;
 
   ScheduleEntityBuilder? _data;
-  ScheduleEntityBuilder get data =>
-      _$this._data ??= new ScheduleEntityBuilder();
+  ScheduleEntityBuilder get data => _$this._data ??= ScheduleEntityBuilder();
   set data(ScheduleEntityBuilder? data) => _$this._data = data;
 
   ScheduleItemResponseBuilder();
@@ -576,7 +580,6 @@ class ScheduleItemResponseBuilder
 
   @override
   void replace(ScheduleItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ScheduleItemResponse;
   }
 
@@ -591,14 +594,17 @@ class ScheduleItemResponseBuilder
   _$ScheduleItemResponse _build() {
     _$ScheduleItemResponse _$result;
     try {
-      _$result = _$v ?? new _$ScheduleItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$ScheduleItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ScheduleItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -639,7 +645,7 @@ class _$ScheduleEntity extends ScheduleEntity {
   final String id;
 
   factory _$ScheduleEntity([void Function(ScheduleEntityBuilder)? updates]) =>
-      (new ScheduleEntityBuilder()..update(updates))._build();
+      (ScheduleEntityBuilder()..update(updates))._build();
 
   _$ScheduleEntity._(
       {required this.frequencyId,
@@ -656,35 +662,13 @@ class _$ScheduleEntity extends ScheduleEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        frequencyId, r'ScheduleEntity', 'frequencyId');
-    BuiltValueNullFieldError.checkNotNull(
-        nextRun, r'ScheduleEntity', 'nextRun');
-    BuiltValueNullFieldError.checkNotNull(
-        template, r'ScheduleEntity', 'template');
-    BuiltValueNullFieldError.checkNotNull(
-        isPaused, r'ScheduleEntity', 'isPaused');
-    BuiltValueNullFieldError.checkNotNull(
-        remainingCycles, r'ScheduleEntity', 'remainingCycles');
-    BuiltValueNullFieldError.checkNotNull(
-        parameters, r'ScheduleEntity', 'parameters');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'ScheduleEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'ScheduleEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'ScheduleEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'ScheduleEntity', 'id');
-  }
-
+      : super._();
   @override
   ScheduleEntity rebuild(void Function(ScheduleEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  ScheduleEntityBuilder toBuilder() =>
-      new ScheduleEntityBuilder()..replace(this);
+  ScheduleEntityBuilder toBuilder() => ScheduleEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -777,7 +761,7 @@ class ScheduleEntityBuilder
 
   ScheduleParametersBuilder? _parameters;
   ScheduleParametersBuilder get parameters =>
-      _$this._parameters ??= new ScheduleParametersBuilder();
+      _$this._parameters ??= ScheduleParametersBuilder();
   set parameters(ScheduleParametersBuilder? parameters) =>
       _$this._parameters = parameters;
 
@@ -841,7 +825,6 @@ class ScheduleEntityBuilder
 
   @override
   void replace(ScheduleEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ScheduleEntity;
   }
 
@@ -857,36 +840,38 @@ class ScheduleEntityBuilder
     _$ScheduleEntity _$result;
     try {
       _$result = _$v ??
-          new _$ScheduleEntity._(
-              frequencyId: BuiltValueNullFieldError.checkNotNull(
-                  frequencyId, r'ScheduleEntity', 'frequencyId'),
-              nextRun: BuiltValueNullFieldError.checkNotNull(
-                  nextRun, r'ScheduleEntity', 'nextRun'),
-              template: BuiltValueNullFieldError.checkNotNull(
-                  template, r'ScheduleEntity', 'template'),
-              isPaused: BuiltValueNullFieldError.checkNotNull(
-                  isPaused, r'ScheduleEntity', 'isPaused'),
-              remainingCycles: BuiltValueNullFieldError.checkNotNull(
-                  remainingCycles, r'ScheduleEntity', 'remainingCycles'),
-              parameters: parameters.build(),
-              isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(
-                  createdAt, r'ScheduleEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(
-                  updatedAt, r'ScheduleEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(
-                  archivedAt, r'ScheduleEntity', 'archivedAt'),
-              isDeleted: isDeleted,
-              createdUserId: createdUserId,
-              assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(id, r'ScheduleEntity', 'id'));
+          _$ScheduleEntity._(
+            frequencyId: BuiltValueNullFieldError.checkNotNull(
+                frequencyId, r'ScheduleEntity', 'frequencyId'),
+            nextRun: BuiltValueNullFieldError.checkNotNull(
+                nextRun, r'ScheduleEntity', 'nextRun'),
+            template: BuiltValueNullFieldError.checkNotNull(
+                template, r'ScheduleEntity', 'template'),
+            isPaused: BuiltValueNullFieldError.checkNotNull(
+                isPaused, r'ScheduleEntity', 'isPaused'),
+            remainingCycles: BuiltValueNullFieldError.checkNotNull(
+                remainingCycles, r'ScheduleEntity', 'remainingCycles'),
+            parameters: parameters.build(),
+            isChanged: isChanged,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, r'ScheduleEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, r'ScheduleEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(
+                archivedAt, r'ScheduleEntity', 'archivedAt'),
+            isDeleted: isDeleted,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, r'ScheduleEntity', 'id'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'parameters';
         parameters.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ScheduleEntity', _$failedField, e.toString());
       }
       rethrow;
@@ -910,6 +895,8 @@ class _$ScheduleParameters extends ScheduleParameters {
   @override
   final String? status;
   @override
+  final String? template;
+  @override
   final BuiltList<String>? clients;
   @override
   final String? entityType;
@@ -920,7 +907,7 @@ class _$ScheduleParameters extends ScheduleParameters {
 
   factory _$ScheduleParameters(
           [void Function(ScheduleParametersBuilder)? updates]) =>
-      (new ScheduleParametersBuilder()..update(updates))._build();
+      (ScheduleParametersBuilder()..update(updates))._build();
 
   _$ScheduleParameters._(
       {this.dateRange,
@@ -929,12 +916,12 @@ class _$ScheduleParameters extends ScheduleParameters {
       this.showAgingTable,
       this.onlyClientsWithInvoices,
       this.status,
+      this.template,
       this.clients,
       this.entityType,
       this.entityId,
       this.reportName})
       : super._();
-
   @override
   ScheduleParameters rebuild(
           void Function(ScheduleParametersBuilder) updates) =>
@@ -942,7 +929,7 @@ class _$ScheduleParameters extends ScheduleParameters {
 
   @override
   ScheduleParametersBuilder toBuilder() =>
-      new ScheduleParametersBuilder()..replace(this);
+      ScheduleParametersBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -954,6 +941,7 @@ class _$ScheduleParameters extends ScheduleParameters {
         showAgingTable == other.showAgingTable &&
         onlyClientsWithInvoices == other.onlyClientsWithInvoices &&
         status == other.status &&
+        template == other.template &&
         clients == other.clients &&
         entityType == other.entityType &&
         entityId == other.entityId &&
@@ -971,6 +959,7 @@ class _$ScheduleParameters extends ScheduleParameters {
     _$hash = $jc(_$hash, showAgingTable.hashCode);
     _$hash = $jc(_$hash, onlyClientsWithInvoices.hashCode);
     _$hash = $jc(_$hash, status.hashCode);
+    _$hash = $jc(_$hash, template.hashCode);
     _$hash = $jc(_$hash, clients.hashCode);
     _$hash = $jc(_$hash, entityType.hashCode);
     _$hash = $jc(_$hash, entityId.hashCode);
@@ -988,6 +977,7 @@ class _$ScheduleParameters extends ScheduleParameters {
           ..add('showAgingTable', showAgingTable)
           ..add('onlyClientsWithInvoices', onlyClientsWithInvoices)
           ..add('status', status)
+          ..add('template', template)
           ..add('clients', clients)
           ..add('entityType', entityType)
           ..add('entityId', entityId)
@@ -1028,9 +1018,12 @@ class ScheduleParametersBuilder
   String? get status => _$this._status;
   set status(String? status) => _$this._status = status;
 
+  String? _template;
+  String? get template => _$this._template;
+  set template(String? template) => _$this._template = template;
+
   ListBuilder<String>? _clients;
-  ListBuilder<String> get clients =>
-      _$this._clients ??= new ListBuilder<String>();
+  ListBuilder<String> get clients => _$this._clients ??= ListBuilder<String>();
   set clients(ListBuilder<String>? clients) => _$this._clients = clients;
 
   String? _entityType;
@@ -1056,6 +1049,7 @@ class ScheduleParametersBuilder
       _showAgingTable = $v.showAgingTable;
       _onlyClientsWithInvoices = $v.onlyClientsWithInvoices;
       _status = $v.status;
+      _template = $v.template;
       _clients = $v.clients?.toBuilder();
       _entityType = $v.entityType;
       _entityId = $v.entityId;
@@ -1067,7 +1061,6 @@ class ScheduleParametersBuilder
 
   @override
   void replace(ScheduleParameters other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ScheduleParameters;
   }
 
@@ -1083,24 +1076,26 @@ class ScheduleParametersBuilder
     _$ScheduleParameters _$result;
     try {
       _$result = _$v ??
-          new _$ScheduleParameters._(
-              dateRange: dateRange,
-              showPaymentsTable: showPaymentsTable,
-              showCreditsTable: showCreditsTable,
-              showAgingTable: showAgingTable,
-              onlyClientsWithInvoices: onlyClientsWithInvoices,
-              status: status,
-              clients: _clients?.build(),
-              entityType: entityType,
-              entityId: entityId,
-              reportName: reportName);
+          _$ScheduleParameters._(
+            dateRange: dateRange,
+            showPaymentsTable: showPaymentsTable,
+            showCreditsTable: showCreditsTable,
+            showAgingTable: showAgingTable,
+            onlyClientsWithInvoices: onlyClientsWithInvoices,
+            status: status,
+            template: template,
+            clients: _clients?.build(),
+            entityType: entityType,
+            entityId: entityId,
+            reportName: reportName,
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'clients';
         _clients?.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ScheduleParameters', _$failedField, e.toString());
       }
       rethrow;

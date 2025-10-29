@@ -7,11 +7,11 @@ part of 'bank_account_model.dart';
 // **************************************************************************
 
 Serializer<BankAccountListResponse> _$bankAccountListResponseSerializer =
-    new _$BankAccountListResponseSerializer();
+    _$BankAccountListResponseSerializer();
 Serializer<BankAccountItemResponse> _$bankAccountItemResponseSerializer =
-    new _$BankAccountItemResponseSerializer();
+    _$BankAccountItemResponseSerializer();
 Serializer<BankAccountEntity> _$bankAccountEntitySerializer =
-    new _$BankAccountEntitySerializer();
+    _$BankAccountEntitySerializer();
 
 class _$BankAccountListResponseSerializer
     implements StructuredSerializer<BankAccountListResponse> {
@@ -41,7 +41,7 @@ class _$BankAccountListResponseSerializer
   BankAccountListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new BankAccountListResponseBuilder();
+    final result = BankAccountListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -89,7 +89,7 @@ class _$BankAccountItemResponseSerializer
   BankAccountItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new BankAccountItemResponseBuilder();
+    final result = BankAccountItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -199,7 +199,7 @@ class _$BankAccountEntitySerializer
   BankAccountEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new BankAccountEntityBuilder();
+    final result = BankAccountEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -296,13 +296,9 @@ class _$BankAccountListResponse extends BankAccountListResponse {
 
   factory _$BankAccountListResponse(
           [void Function(BankAccountListResponseBuilder)? updates]) =>
-      (new BankAccountListResponseBuilder()..update(updates))._build();
+      (BankAccountListResponseBuilder()..update(updates))._build();
 
-  _$BankAccountListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'BankAccountListResponse', 'data');
-  }
-
+  _$BankAccountListResponse._({required this.data}) : super._();
   @override
   BankAccountListResponse rebuild(
           void Function(BankAccountListResponseBuilder) updates) =>
@@ -310,7 +306,7 @@ class _$BankAccountListResponse extends BankAccountListResponse {
 
   @override
   BankAccountListResponseBuilder toBuilder() =>
-      new BankAccountListResponseBuilder()..replace(this);
+      BankAccountListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -343,7 +339,7 @@ class BankAccountListResponseBuilder
 
   ListBuilder<BankAccountEntity>? _data;
   ListBuilder<BankAccountEntity> get data =>
-      _$this._data ??= new ListBuilder<BankAccountEntity>();
+      _$this._data ??= ListBuilder<BankAccountEntity>();
   set data(ListBuilder<BankAccountEntity>? data) => _$this._data = data;
 
   BankAccountListResponseBuilder();
@@ -359,7 +355,6 @@ class BankAccountListResponseBuilder
 
   @override
   void replace(BankAccountListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$BankAccountListResponse;
   }
 
@@ -374,14 +369,17 @@ class BankAccountListResponseBuilder
   _$BankAccountListResponse _build() {
     _$BankAccountListResponse _$result;
     try {
-      _$result = _$v ?? new _$BankAccountListResponse._(data: data.build());
+      _$result = _$v ??
+          _$BankAccountListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'BankAccountListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -397,13 +395,9 @@ class _$BankAccountItemResponse extends BankAccountItemResponse {
 
   factory _$BankAccountItemResponse(
           [void Function(BankAccountItemResponseBuilder)? updates]) =>
-      (new BankAccountItemResponseBuilder()..update(updates))._build();
+      (BankAccountItemResponseBuilder()..update(updates))._build();
 
-  _$BankAccountItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'BankAccountItemResponse', 'data');
-  }
-
+  _$BankAccountItemResponse._({required this.data}) : super._();
   @override
   BankAccountItemResponse rebuild(
           void Function(BankAccountItemResponseBuilder) updates) =>
@@ -411,7 +405,7 @@ class _$BankAccountItemResponse extends BankAccountItemResponse {
 
   @override
   BankAccountItemResponseBuilder toBuilder() =>
-      new BankAccountItemResponseBuilder()..replace(this);
+      BankAccountItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -444,7 +438,7 @@ class BankAccountItemResponseBuilder
 
   BankAccountEntityBuilder? _data;
   BankAccountEntityBuilder get data =>
-      _$this._data ??= new BankAccountEntityBuilder();
+      _$this._data ??= BankAccountEntityBuilder();
   set data(BankAccountEntityBuilder? data) => _$this._data = data;
 
   BankAccountItemResponseBuilder();
@@ -460,7 +454,6 @@ class BankAccountItemResponseBuilder
 
   @override
   void replace(BankAccountItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$BankAccountItemResponse;
   }
 
@@ -475,14 +468,17 @@ class BankAccountItemResponseBuilder
   _$BankAccountItemResponse _build() {
     _$BankAccountItemResponse _$result;
     try {
-      _$result = _$v ?? new _$BankAccountItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$BankAccountItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'BankAccountItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -534,7 +530,7 @@ class _$BankAccountEntity extends BankAccountEntity {
 
   factory _$BankAccountEntity(
           [void Function(BankAccountEntityBuilder)? updates]) =>
-      (new BankAccountEntityBuilder()..update(updates))._build();
+      (BankAccountEntityBuilder()..update(updates))._build();
 
   _$BankAccountEntity._(
       {required this.name,
@@ -556,43 +552,14 @@ class _$BankAccountEntity extends BankAccountEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'BankAccountEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(
-        status, r'BankAccountEntity', 'status');
-    BuiltValueNullFieldError.checkNotNull(type, r'BankAccountEntity', 'type');
-    BuiltValueNullFieldError.checkNotNull(
-        provider, r'BankAccountEntity', 'provider');
-    BuiltValueNullFieldError.checkNotNull(
-        fromDate, r'BankAccountEntity', 'fromDate');
-    BuiltValueNullFieldError.checkNotNull(
-        autoSync, r'BankAccountEntity', 'autoSync');
-    BuiltValueNullFieldError.checkNotNull(
-        disabledUpstream, r'BankAccountEntity', 'disabledUpstream');
-    BuiltValueNullFieldError.checkNotNull(
-        integrationType, r'BankAccountEntity', 'integrationType');
-    BuiltValueNullFieldError.checkNotNull(
-        nordigenInstitutionId, r'BankAccountEntity', 'nordigenInstitutionId');
-    BuiltValueNullFieldError.checkNotNull(
-        balance, r'BankAccountEntity', 'balance');
-    BuiltValueNullFieldError.checkNotNull(
-        currency, r'BankAccountEntity', 'currency');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'BankAccountEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'BankAccountEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'BankAccountEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'BankAccountEntity', 'id');
-  }
-
+      : super._();
   @override
   BankAccountEntity rebuild(void Function(BankAccountEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   BankAccountEntityBuilder toBuilder() =>
-      new BankAccountEntityBuilder()..replace(this);
+      BankAccountEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -791,7 +758,6 @@ class BankAccountEntityBuilder
 
   @override
   void replace(BankAccountEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$BankAccountEntity;
   }
 
@@ -805,35 +771,44 @@ class BankAccountEntityBuilder
 
   _$BankAccountEntity _build() {
     final _$result = _$v ??
-        new _$BankAccountEntity._(
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'BankAccountEntity', 'name'),
-            status: BuiltValueNullFieldError.checkNotNull(
-                status, r'BankAccountEntity', 'status'),
-            type: BuiltValueNullFieldError.checkNotNull(
-                type, r'BankAccountEntity', 'type'),
-            provider: BuiltValueNullFieldError.checkNotNull(
-                provider, r'BankAccountEntity', 'provider'),
-            fromDate: BuiltValueNullFieldError.checkNotNull(
-                fromDate, r'BankAccountEntity', 'fromDate'),
-            autoSync: BuiltValueNullFieldError.checkNotNull(
-                autoSync, r'BankAccountEntity', 'autoSync'),
-            disabledUpstream: BuiltValueNullFieldError.checkNotNull(
-                disabledUpstream, r'BankAccountEntity', 'disabledUpstream'),
-            integrationType: BuiltValueNullFieldError.checkNotNull(
-                integrationType, r'BankAccountEntity', 'integrationType'),
-            nordigenInstitutionId: BuiltValueNullFieldError.checkNotNull(
-                nordigenInstitutionId, r'BankAccountEntity', 'nordigenInstitutionId'),
-            balance: BuiltValueNullFieldError.checkNotNull(balance, r'BankAccountEntity', 'balance'),
-            currency: BuiltValueNullFieldError.checkNotNull(currency, r'BankAccountEntity', 'currency'),
-            isChanged: isChanged,
-            createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'BankAccountEntity', 'createdAt'),
-            updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'BankAccountEntity', 'updatedAt'),
-            archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'BankAccountEntity', 'archivedAt'),
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            id: BuiltValueNullFieldError.checkNotNull(id, r'BankAccountEntity', 'id'));
+        _$BankAccountEntity._(
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'BankAccountEntity', 'name'),
+          status: BuiltValueNullFieldError.checkNotNull(
+              status, r'BankAccountEntity', 'status'),
+          type: BuiltValueNullFieldError.checkNotNull(
+              type, r'BankAccountEntity', 'type'),
+          provider: BuiltValueNullFieldError.checkNotNull(
+              provider, r'BankAccountEntity', 'provider'),
+          fromDate: BuiltValueNullFieldError.checkNotNull(
+              fromDate, r'BankAccountEntity', 'fromDate'),
+          autoSync: BuiltValueNullFieldError.checkNotNull(
+              autoSync, r'BankAccountEntity', 'autoSync'),
+          disabledUpstream: BuiltValueNullFieldError.checkNotNull(
+              disabledUpstream, r'BankAccountEntity', 'disabledUpstream'),
+          integrationType: BuiltValueNullFieldError.checkNotNull(
+              integrationType, r'BankAccountEntity', 'integrationType'),
+          nordigenInstitutionId: BuiltValueNullFieldError.checkNotNull(
+              nordigenInstitutionId,
+              r'BankAccountEntity',
+              'nordigenInstitutionId'),
+          balance: BuiltValueNullFieldError.checkNotNull(
+              balance, r'BankAccountEntity', 'balance'),
+          currency: BuiltValueNullFieldError.checkNotNull(
+              currency, r'BankAccountEntity', 'currency'),
+          isChanged: isChanged,
+          createdAt: BuiltValueNullFieldError.checkNotNull(
+              createdAt, r'BankAccountEntity', 'createdAt'),
+          updatedAt: BuiltValueNullFieldError.checkNotNull(
+              updatedAt, r'BankAccountEntity', 'updatedAt'),
+          archivedAt: BuiltValueNullFieldError.checkNotNull(
+              archivedAt, r'BankAccountEntity', 'archivedAt'),
+          isDeleted: isDeleted,
+          createdUserId: createdUserId,
+          assignedUserId: assignedUserId,
+          id: BuiltValueNullFieldError.checkNotNull(
+              id, r'BankAccountEntity', 'id'),
+        );
     replace(_$result);
     return _$result;
   }

@@ -1,5 +1,4 @@
 // Dart imports:
-import 'dart:async';
 import 'dart:core';
 
 // Project imports:

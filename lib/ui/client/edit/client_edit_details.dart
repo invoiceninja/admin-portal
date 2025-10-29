@@ -2,11 +2,9 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:contacts_service_plus/contacts_service_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:contacts_service/contacts_service.dart';
 
 // Project imports:
 import 'package:invoiceninja_flutter/constants.dart';

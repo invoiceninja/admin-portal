@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/redux/task/task_actions.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -99,6 +100,9 @@ class MenuDrawerVM {
             callback: () {
               SharedPreferences.getInstance().then(
                   (prefs) => prefs.setString(kSharedPrefCompanyId, company.id));
+
+              // Task status id's change by company so need to be cleared
+              store.dispatch(ClearTaskStatusFilter());
 
               store.dispatch(ClearEntityFilter());
               store.dispatch(DiscardChanges());

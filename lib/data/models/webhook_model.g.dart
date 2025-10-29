@@ -7,11 +7,11 @@ part of 'webhook_model.dart';
 // **************************************************************************
 
 Serializer<WebhookListResponse> _$webhookListResponseSerializer =
-    new _$WebhookListResponseSerializer();
+    _$WebhookListResponseSerializer();
 Serializer<WebhookItemResponse> _$webhookItemResponseSerializer =
-    new _$WebhookItemResponseSerializer();
+    _$WebhookItemResponseSerializer();
 Serializer<WebhookEntity> _$webhookEntitySerializer =
-    new _$WebhookEntitySerializer();
+    _$WebhookEntitySerializer();
 
 class _$WebhookListResponseSerializer
     implements StructuredSerializer<WebhookListResponse> {
@@ -41,7 +41,7 @@ class _$WebhookListResponseSerializer
   WebhookListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new WebhookListResponseBuilder();
+    final result = WebhookListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -89,7 +89,7 @@ class _$WebhookItemResponseSerializer
   WebhookItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new WebhookItemResponseBuilder();
+    final result = WebhookItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -182,7 +182,7 @@ class _$WebhookEntitySerializer implements StructuredSerializer<WebhookEntity> {
   WebhookEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new WebhookEntityBuilder();
+    final result = WebhookEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -256,12 +256,9 @@ class _$WebhookListResponse extends WebhookListResponse {
 
   factory _$WebhookListResponse(
           [void Function(WebhookListResponseBuilder)? updates]) =>
-      (new WebhookListResponseBuilder()..update(updates))._build();
+      (WebhookListResponseBuilder()..update(updates))._build();
 
-  _$WebhookListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'WebhookListResponse', 'data');
-  }
-
+  _$WebhookListResponse._({required this.data}) : super._();
   @override
   WebhookListResponse rebuild(
           void Function(WebhookListResponseBuilder) updates) =>
@@ -269,7 +266,7 @@ class _$WebhookListResponse extends WebhookListResponse {
 
   @override
   WebhookListResponseBuilder toBuilder() =>
-      new WebhookListResponseBuilder()..replace(this);
+      WebhookListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -301,7 +298,7 @@ class WebhookListResponseBuilder
 
   ListBuilder<WebhookEntity>? _data;
   ListBuilder<WebhookEntity> get data =>
-      _$this._data ??= new ListBuilder<WebhookEntity>();
+      _$this._data ??= ListBuilder<WebhookEntity>();
   set data(ListBuilder<WebhookEntity>? data) => _$this._data = data;
 
   WebhookListResponseBuilder();
@@ -317,7 +314,6 @@ class WebhookListResponseBuilder
 
   @override
   void replace(WebhookListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$WebhookListResponse;
   }
 
@@ -332,14 +328,17 @@ class WebhookListResponseBuilder
   _$WebhookListResponse _build() {
     _$WebhookListResponse _$result;
     try {
-      _$result = _$v ?? new _$WebhookListResponse._(data: data.build());
+      _$result = _$v ??
+          _$WebhookListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'WebhookListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -355,12 +354,9 @@ class _$WebhookItemResponse extends WebhookItemResponse {
 
   factory _$WebhookItemResponse(
           [void Function(WebhookItemResponseBuilder)? updates]) =>
-      (new WebhookItemResponseBuilder()..update(updates))._build();
+      (WebhookItemResponseBuilder()..update(updates))._build();
 
-  _$WebhookItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'WebhookItemResponse', 'data');
-  }
-
+  _$WebhookItemResponse._({required this.data}) : super._();
   @override
   WebhookItemResponse rebuild(
           void Function(WebhookItemResponseBuilder) updates) =>
@@ -368,7 +364,7 @@ class _$WebhookItemResponse extends WebhookItemResponse {
 
   @override
   WebhookItemResponseBuilder toBuilder() =>
-      new WebhookItemResponseBuilder()..replace(this);
+      WebhookItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -399,7 +395,7 @@ class WebhookItemResponseBuilder
   _$WebhookItemResponse? _$v;
 
   WebhookEntityBuilder? _data;
-  WebhookEntityBuilder get data => _$this._data ??= new WebhookEntityBuilder();
+  WebhookEntityBuilder get data => _$this._data ??= WebhookEntityBuilder();
   set data(WebhookEntityBuilder? data) => _$this._data = data;
 
   WebhookItemResponseBuilder();
@@ -415,7 +411,6 @@ class WebhookItemResponseBuilder
 
   @override
   void replace(WebhookItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$WebhookItemResponse;
   }
 
@@ -430,14 +425,17 @@ class WebhookItemResponseBuilder
   _$WebhookItemResponse _build() {
     _$WebhookItemResponse _$result;
     try {
-      _$result = _$v ?? new _$WebhookItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$WebhookItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'WebhookItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -476,7 +474,7 @@ class _$WebhookEntity extends WebhookEntity {
   final String id;
 
   factory _$WebhookEntity([void Function(WebhookEntityBuilder)? updates]) =>
-      (new WebhookEntityBuilder()..update(updates))._build();
+      (WebhookEntityBuilder()..update(updates))._build();
 
   _$WebhookEntity._(
       {required this.eventId,
@@ -492,29 +490,13 @@ class _$WebhookEntity extends WebhookEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(eventId, r'WebhookEntity', 'eventId');
-    BuiltValueNullFieldError.checkNotNull(
-        targetUrl, r'WebhookEntity', 'targetUrl');
-    BuiltValueNullFieldError.checkNotNull(format, r'WebhookEntity', 'format');
-    BuiltValueNullFieldError.checkNotNull(
-        restMethod, r'WebhookEntity', 'restMethod');
-    BuiltValueNullFieldError.checkNotNull(headers, r'WebhookEntity', 'headers');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'WebhookEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'WebhookEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'WebhookEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'WebhookEntity', 'id');
-  }
-
+      : super._();
   @override
   WebhookEntity rebuild(void Function(WebhookEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  WebhookEntityBuilder toBuilder() => new WebhookEntityBuilder()..replace(this);
+  WebhookEntityBuilder toBuilder() => WebhookEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -599,7 +581,7 @@ class WebhookEntityBuilder
 
   MapBuilder<String, String>? _headers;
   MapBuilder<String, String> get headers =>
-      _$this._headers ??= new MapBuilder<String, String>();
+      _$this._headers ??= MapBuilder<String, String>();
   set headers(MapBuilder<String, String>? headers) => _$this._headers = headers;
 
   bool? _isChanged;
@@ -663,7 +645,6 @@ class WebhookEntityBuilder
 
   @override
   void replace(WebhookEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$WebhookEntity;
   }
 
@@ -679,35 +660,36 @@ class WebhookEntityBuilder
     _$WebhookEntity _$result;
     try {
       _$result = _$v ??
-          new _$WebhookEntity._(
-              eventId: BuiltValueNullFieldError.checkNotNull(
-                  eventId, r'WebhookEntity', 'eventId'),
-              targetUrl: BuiltValueNullFieldError.checkNotNull(
-                  targetUrl, r'WebhookEntity', 'targetUrl'),
-              format: BuiltValueNullFieldError.checkNotNull(
-                  format, r'WebhookEntity', 'format'),
-              restMethod: BuiltValueNullFieldError.checkNotNull(
-                  restMethod, r'WebhookEntity', 'restMethod'),
-              headers: headers.build(),
-              isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(
-                  createdAt, r'WebhookEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(
-                  updatedAt, r'WebhookEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(
-                  archivedAt, r'WebhookEntity', 'archivedAt'),
-              isDeleted: isDeleted,
-              createdUserId: createdUserId,
-              assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(
-                  id, r'WebhookEntity', 'id'));
+          _$WebhookEntity._(
+            eventId: BuiltValueNullFieldError.checkNotNull(
+                eventId, r'WebhookEntity', 'eventId'),
+            targetUrl: BuiltValueNullFieldError.checkNotNull(
+                targetUrl, r'WebhookEntity', 'targetUrl'),
+            format: BuiltValueNullFieldError.checkNotNull(
+                format, r'WebhookEntity', 'format'),
+            restMethod: BuiltValueNullFieldError.checkNotNull(
+                restMethod, r'WebhookEntity', 'restMethod'),
+            headers: headers.build(),
+            isChanged: isChanged,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, r'WebhookEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, r'WebhookEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(
+                archivedAt, r'WebhookEntity', 'archivedAt'),
+            isDeleted: isDeleted,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, r'WebhookEntity', 'id'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'headers';
         headers.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'WebhookEntity', _$failedField, e.toString());
       }
       rethrow;

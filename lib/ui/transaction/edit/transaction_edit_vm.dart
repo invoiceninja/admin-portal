@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:redux/redux.dart';
@@ -85,17 +86,18 @@ class TransactionEditVM {
             if (state.prefState.isMobile) {
               store.dispatch(UpdateCurrentRoute(TransactionViewScreen.route));
               if (transaction.isNew) {
-                Navigator.of(context)
+                Navigator.of(navigatorKey.currentContext!)
                     .pushReplacementNamed(TransactionViewScreen.route);
               } else {
-                Navigator.of(context).pop(savedTransaction);
+                Navigator.of(navigatorKey.currentContext!)
+                    .pop(savedTransaction);
               }
             } else {
               viewEntity(entity: savedTransaction, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
-                context: context,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
                   return ErrorDialog(error);
                 });

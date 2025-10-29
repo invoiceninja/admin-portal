@@ -1,12 +1,15 @@
 const FLUTTER_VERSION = const <String, String>{
-  'frameworkVersion': '3.19.6',
+  'frameworkVersion': '3.35.4',
   'channel': 'stable',
   'repositoryUrl': 'https://github.com/flutter/flutter.git',
-  'frameworkRevision': '54e66469a933b60ddf175f858f82eaeb97e48c8d',
-  'frameworkCommitDate': '2024-04-17 13:08:03 -0700',
-  'engineRevision': 'c4cd48e186460b32d44585ce3c103271ab676355',
-  'dartSdkVersion': '3.3.4',
-  'devToolsVersion': '2.31.1',
-  'flutterVersion': '3.19.6',
-  'flutterRoot': 'C:\\Users\\hillel\\Documents\\flutter'
+  'frameworkRevision': 'd693b4b9dbac2acd4477aea4555ca6dcbea44ba2',
+  'frameworkCommitDate': '2025-09-16 14:27:41 +0000',
+  'engineRevision': 'c29809135135e262a912cf583b2c90deb9ded610',
+  'engineCommitDate': '2025-09-15 14:04:24.000Z',
+  'engineContentHash': 'feee8ee8fb8b975dd9990f86d3bda11e6e75faf3',
+  'engineBuildDate': '2025-09-15 17:37:23.590',
+  'dartSdkVersion': '3.9.2',
+  'devToolsVersion': '2.48.0',
+  'flutterVersion': '3.35.4',
+  'flutterRoot': '/Users/hillel/Code/flutter'
 };

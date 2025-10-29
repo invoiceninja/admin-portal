@@ -7,11 +7,11 @@ part of 'country_model.dart';
 // **************************************************************************
 
 Serializer<CountryListResponse> _$countryListResponseSerializer =
-    new _$CountryListResponseSerializer();
+    _$CountryListResponseSerializer();
 Serializer<CountryItemResponse> _$countryItemResponseSerializer =
-    new _$CountryItemResponseSerializer();
+    _$CountryItemResponseSerializer();
 Serializer<CountryEntity> _$countryEntitySerializer =
-    new _$CountryEntitySerializer();
+    _$CountryEntitySerializer();
 
 class _$CountryListResponseSerializer
     implements StructuredSerializer<CountryListResponse> {
@@ -41,7 +41,7 @@ class _$CountryListResponseSerializer
   CountryListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new CountryListResponseBuilder();
+    final result = CountryListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -89,7 +89,7 @@ class _$CountryItemResponseSerializer
   CountryItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new CountryItemResponseBuilder();
+    final result = CountryItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -147,7 +147,7 @@ class _$CountryEntitySerializer implements StructuredSerializer<CountryEntity> {
   CountryEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new CountryEntityBuilder();
+    final result = CountryEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -200,12 +200,9 @@ class _$CountryListResponse extends CountryListResponse {
 
   factory _$CountryListResponse(
           [void Function(CountryListResponseBuilder)? updates]) =>
-      (new CountryListResponseBuilder()..update(updates))._build();
+      (CountryListResponseBuilder()..update(updates))._build();
 
-  _$CountryListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'CountryListResponse', 'data');
-  }
-
+  _$CountryListResponse._({required this.data}) : super._();
   @override
   CountryListResponse rebuild(
           void Function(CountryListResponseBuilder) updates) =>
@@ -213,7 +210,7 @@ class _$CountryListResponse extends CountryListResponse {
 
   @override
   CountryListResponseBuilder toBuilder() =>
-      new CountryListResponseBuilder()..replace(this);
+      CountryListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -245,7 +242,7 @@ class CountryListResponseBuilder
 
   ListBuilder<CountryEntity>? _data;
   ListBuilder<CountryEntity> get data =>
-      _$this._data ??= new ListBuilder<CountryEntity>();
+      _$this._data ??= ListBuilder<CountryEntity>();
   set data(ListBuilder<CountryEntity>? data) => _$this._data = data;
 
   CountryListResponseBuilder();
@@ -261,7 +258,6 @@ class CountryListResponseBuilder
 
   @override
   void replace(CountryListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CountryListResponse;
   }
 
@@ -276,14 +272,17 @@ class CountryListResponseBuilder
   _$CountryListResponse _build() {
     _$CountryListResponse _$result;
     try {
-      _$result = _$v ?? new _$CountryListResponse._(data: data.build());
+      _$result = _$v ??
+          _$CountryListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'CountryListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -299,12 +298,9 @@ class _$CountryItemResponse extends CountryItemResponse {
 
   factory _$CountryItemResponse(
           [void Function(CountryItemResponseBuilder)? updates]) =>
-      (new CountryItemResponseBuilder()..update(updates))._build();
+      (CountryItemResponseBuilder()..update(updates))._build();
 
-  _$CountryItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'CountryItemResponse', 'data');
-  }
-
+  _$CountryItemResponse._({required this.data}) : super._();
   @override
   CountryItemResponse rebuild(
           void Function(CountryItemResponseBuilder) updates) =>
@@ -312,7 +308,7 @@ class _$CountryItemResponse extends CountryItemResponse {
 
   @override
   CountryItemResponseBuilder toBuilder() =>
-      new CountryItemResponseBuilder()..replace(this);
+      CountryItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -343,7 +339,7 @@ class CountryItemResponseBuilder
   _$CountryItemResponse? _$v;
 
   CountryEntityBuilder? _data;
-  CountryEntityBuilder get data => _$this._data ??= new CountryEntityBuilder();
+  CountryEntityBuilder get data => _$this._data ??= CountryEntityBuilder();
   set data(CountryEntityBuilder? data) => _$this._data = data;
 
   CountryItemResponseBuilder();
@@ -359,7 +355,6 @@ class CountryItemResponseBuilder
 
   @override
   void replace(CountryItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CountryItemResponse;
   }
 
@@ -374,14 +369,17 @@ class CountryItemResponseBuilder
   _$CountryItemResponse _build() {
     _$CountryItemResponse _$result;
     try {
-      _$result = _$v ?? new _$CountryItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$CountryItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'CountryItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -410,7 +408,7 @@ class _$CountryEntity extends CountryEntity {
   final String id;
 
   factory _$CountryEntity([void Function(CountryEntityBuilder)? updates]) =>
-      (new CountryEntityBuilder()..update(updates))._build();
+      (CountryEntityBuilder()..update(updates))._build();
 
   _$CountryEntity._(
       {required this.name,
@@ -421,27 +419,13 @@ class _$CountryEntity extends CountryEntity {
       required this.iso2,
       required this.iso3,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'CountryEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(
-        swapPostalCode, r'CountryEntity', 'swapPostalCode');
-    BuiltValueNullFieldError.checkNotNull(
-        swapCurrencySymbol, r'CountryEntity', 'swapCurrencySymbol');
-    BuiltValueNullFieldError.checkNotNull(
-        thousandSeparator, r'CountryEntity', 'thousandSeparator');
-    BuiltValueNullFieldError.checkNotNull(
-        decimalSeparator, r'CountryEntity', 'decimalSeparator');
-    BuiltValueNullFieldError.checkNotNull(iso2, r'CountryEntity', 'iso2');
-    BuiltValueNullFieldError.checkNotNull(iso3, r'CountryEntity', 'iso3');
-    BuiltValueNullFieldError.checkNotNull(id, r'CountryEntity', 'id');
-  }
-
+      : super._();
   @override
   CountryEntity rebuild(void Function(CountryEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  CountryEntityBuilder toBuilder() => new CountryEntityBuilder()..replace(this);
+  CountryEntityBuilder toBuilder() => CountryEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -549,7 +533,6 @@ class CountryEntityBuilder
 
   @override
   void replace(CountryEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$CountryEntity;
   }
 
@@ -563,23 +546,23 @@ class CountryEntityBuilder
 
   _$CountryEntity _build() {
     final _$result = _$v ??
-        new _$CountryEntity._(
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'CountryEntity', 'name'),
-            swapPostalCode: BuiltValueNullFieldError.checkNotNull(
-                swapPostalCode, r'CountryEntity', 'swapPostalCode'),
-            swapCurrencySymbol: BuiltValueNullFieldError.checkNotNull(
-                swapCurrencySymbol, r'CountryEntity', 'swapCurrencySymbol'),
-            thousandSeparator: BuiltValueNullFieldError.checkNotNull(
-                thousandSeparator, r'CountryEntity', 'thousandSeparator'),
-            decimalSeparator: BuiltValueNullFieldError.checkNotNull(
-                decimalSeparator, r'CountryEntity', 'decimalSeparator'),
-            iso2: BuiltValueNullFieldError.checkNotNull(
-                iso2, r'CountryEntity', 'iso2'),
-            iso3: BuiltValueNullFieldError.checkNotNull(
-                iso3, r'CountryEntity', 'iso3'),
-            id: BuiltValueNullFieldError.checkNotNull(
-                id, r'CountryEntity', 'id'));
+        _$CountryEntity._(
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'CountryEntity', 'name'),
+          swapPostalCode: BuiltValueNullFieldError.checkNotNull(
+              swapPostalCode, r'CountryEntity', 'swapPostalCode'),
+          swapCurrencySymbol: BuiltValueNullFieldError.checkNotNull(
+              swapCurrencySymbol, r'CountryEntity', 'swapCurrencySymbol'),
+          thousandSeparator: BuiltValueNullFieldError.checkNotNull(
+              thousandSeparator, r'CountryEntity', 'thousandSeparator'),
+          decimalSeparator: BuiltValueNullFieldError.checkNotNull(
+              decimalSeparator, r'CountryEntity', 'decimalSeparator'),
+          iso2: BuiltValueNullFieldError.checkNotNull(
+              iso2, r'CountryEntity', 'iso2'),
+          iso3: BuiltValueNullFieldError.checkNotNull(
+              iso3, r'CountryEntity', 'iso3'),
+          id: BuiltValueNullFieldError.checkNotNull(id, r'CountryEntity', 'id'),
+        );
     replace(_$result);
     return _$result;
   }

@@ -7,11 +7,11 @@ part of 'language_model.dart';
 // **************************************************************************
 
 Serializer<LanguageListResponse> _$languageListResponseSerializer =
-    new _$LanguageListResponseSerializer();
+    _$LanguageListResponseSerializer();
 Serializer<LanguageItemResponse> _$languageItemResponseSerializer =
-    new _$LanguageItemResponseSerializer();
+    _$LanguageItemResponseSerializer();
 Serializer<LanguageEntity> _$languageEntitySerializer =
-    new _$LanguageEntitySerializer();
+    _$LanguageEntitySerializer();
 
 class _$LanguageListResponseSerializer
     implements StructuredSerializer<LanguageListResponse> {
@@ -41,7 +41,7 @@ class _$LanguageListResponseSerializer
   LanguageListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new LanguageListResponseBuilder();
+    final result = LanguageListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -89,7 +89,7 @@ class _$LanguageItemResponseSerializer
   LanguageItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new LanguageItemResponseBuilder();
+    final result = LanguageItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -136,7 +136,7 @@ class _$LanguageEntitySerializer
   LanguageEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new LanguageEntityBuilder();
+    final result = LanguageEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -169,13 +169,9 @@ class _$LanguageListResponse extends LanguageListResponse {
 
   factory _$LanguageListResponse(
           [void Function(LanguageListResponseBuilder)? updates]) =>
-      (new LanguageListResponseBuilder()..update(updates))._build();
+      (LanguageListResponseBuilder()..update(updates))._build();
 
-  _$LanguageListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'LanguageListResponse', 'data');
-  }
-
+  _$LanguageListResponse._({required this.data}) : super._();
   @override
   LanguageListResponse rebuild(
           void Function(LanguageListResponseBuilder) updates) =>
@@ -183,7 +179,7 @@ class _$LanguageListResponse extends LanguageListResponse {
 
   @override
   LanguageListResponseBuilder toBuilder() =>
-      new LanguageListResponseBuilder()..replace(this);
+      LanguageListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -215,7 +211,7 @@ class LanguageListResponseBuilder
 
   ListBuilder<LanguageEntity>? _data;
   ListBuilder<LanguageEntity> get data =>
-      _$this._data ??= new ListBuilder<LanguageEntity>();
+      _$this._data ??= ListBuilder<LanguageEntity>();
   set data(ListBuilder<LanguageEntity>? data) => _$this._data = data;
 
   LanguageListResponseBuilder();
@@ -231,7 +227,6 @@ class LanguageListResponseBuilder
 
   @override
   void replace(LanguageListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$LanguageListResponse;
   }
 
@@ -246,14 +241,17 @@ class LanguageListResponseBuilder
   _$LanguageListResponse _build() {
     _$LanguageListResponse _$result;
     try {
-      _$result = _$v ?? new _$LanguageListResponse._(data: data.build());
+      _$result = _$v ??
+          _$LanguageListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'LanguageListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -269,13 +267,9 @@ class _$LanguageItemResponse extends LanguageItemResponse {
 
   factory _$LanguageItemResponse(
           [void Function(LanguageItemResponseBuilder)? updates]) =>
-      (new LanguageItemResponseBuilder()..update(updates))._build();
+      (LanguageItemResponseBuilder()..update(updates))._build();
 
-  _$LanguageItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'LanguageItemResponse', 'data');
-  }
-
+  _$LanguageItemResponse._({required this.data}) : super._();
   @override
   LanguageItemResponse rebuild(
           void Function(LanguageItemResponseBuilder) updates) =>
@@ -283,7 +277,7 @@ class _$LanguageItemResponse extends LanguageItemResponse {
 
   @override
   LanguageItemResponseBuilder toBuilder() =>
-      new LanguageItemResponseBuilder()..replace(this);
+      LanguageItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -314,8 +308,7 @@ class LanguageItemResponseBuilder
   _$LanguageItemResponse? _$v;
 
   LanguageEntityBuilder? _data;
-  LanguageEntityBuilder get data =>
-      _$this._data ??= new LanguageEntityBuilder();
+  LanguageEntityBuilder get data => _$this._data ??= LanguageEntityBuilder();
   set data(LanguageEntityBuilder? data) => _$this._data = data;
 
   LanguageItemResponseBuilder();
@@ -331,7 +324,6 @@ class LanguageItemResponseBuilder
 
   @override
   void replace(LanguageItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$LanguageItemResponse;
   }
 
@@ -346,14 +338,17 @@ class LanguageItemResponseBuilder
   _$LanguageItemResponse _build() {
     _$LanguageItemResponse _$result;
     try {
-      _$result = _$v ?? new _$LanguageItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$LanguageItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'LanguageItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -372,23 +367,17 @@ class _$LanguageEntity extends LanguageEntity {
   final String id;
 
   factory _$LanguageEntity([void Function(LanguageEntityBuilder)? updates]) =>
-      (new LanguageEntityBuilder()..update(updates))._build();
+      (LanguageEntityBuilder()..update(updates))._build();
 
   _$LanguageEntity._(
       {required this.name, required this.locale, required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'LanguageEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(locale, r'LanguageEntity', 'locale');
-    BuiltValueNullFieldError.checkNotNull(id, r'LanguageEntity', 'id');
-  }
-
+      : super._();
   @override
   LanguageEntity rebuild(void Function(LanguageEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  LanguageEntityBuilder toBuilder() =>
-      new LanguageEntityBuilder()..replace(this);
+  LanguageEntityBuilder toBuilder() => LanguageEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -452,7 +441,6 @@ class LanguageEntityBuilder
 
   @override
   void replace(LanguageEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$LanguageEntity;
   }
 
@@ -466,13 +454,14 @@ class LanguageEntityBuilder
 
   _$LanguageEntity _build() {
     final _$result = _$v ??
-        new _$LanguageEntity._(
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'LanguageEntity', 'name'),
-            locale: BuiltValueNullFieldError.checkNotNull(
-                locale, r'LanguageEntity', 'locale'),
-            id: BuiltValueNullFieldError.checkNotNull(
-                id, r'LanguageEntity', 'id'));
+        _$LanguageEntity._(
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'LanguageEntity', 'name'),
+          locale: BuiltValueNullFieldError.checkNotNull(
+              locale, r'LanguageEntity', 'locale'),
+          id: BuiltValueNullFieldError.checkNotNull(
+              id, r'LanguageEntity', 'id'),
+        );
     replace(_$result);
     return _$result;
   }

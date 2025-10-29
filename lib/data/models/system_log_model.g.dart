@@ -7,11 +7,11 @@ part of 'system_log_model.dart';
 // **************************************************************************
 
 Serializer<SystemLogEntity> _$systemLogEntitySerializer =
-    new _$SystemLogEntitySerializer();
+    _$SystemLogEntitySerializer();
 Serializer<EmailHistoryEntity> _$emailHistoryEntitySerializer =
-    new _$EmailHistoryEntitySerializer();
+    _$EmailHistoryEntitySerializer();
 Serializer<EmailHistoryEventEntity> _$emailHistoryEventEntitySerializer =
-    new _$EmailHistoryEventEntitySerializer();
+    _$EmailHistoryEventEntitySerializer();
 
 class _$SystemLogEntitySerializer
     implements StructuredSerializer<SystemLogEntity> {
@@ -56,7 +56,7 @@ class _$SystemLogEntitySerializer
   SystemLogEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new SystemLogEntityBuilder();
+    final result = SystemLogEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -144,7 +144,7 @@ class _$EmailHistoryEntitySerializer
   EmailHistoryEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new EmailHistoryEntityBuilder();
+    final result = EmailHistoryEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -222,7 +222,7 @@ class _$EmailHistoryEventEntitySerializer
   EmailHistoryEventEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new EmailHistoryEventEntityBuilder();
+    final result = EmailHistoryEventEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -282,7 +282,7 @@ class _$SystemLogEntity extends SystemLogEntity {
   final int createdAt;
 
   factory _$SystemLogEntity([void Function(SystemLogEntityBuilder)? updates]) =>
-      (new SystemLogEntityBuilder()..update(updates))._build();
+      (SystemLogEntityBuilder()..update(updates))._build();
 
   _$SystemLogEntity._(
       {required this.id,
@@ -294,30 +294,13 @@ class _$SystemLogEntity extends SystemLogEntity {
       required this.typeId,
       required this.log,
       required this.createdAt})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(id, r'SystemLogEntity', 'id');
-    BuiltValueNullFieldError.checkNotNull(
-        companyId, r'SystemLogEntity', 'companyId');
-    BuiltValueNullFieldError.checkNotNull(userId, r'SystemLogEntity', 'userId');
-    BuiltValueNullFieldError.checkNotNull(
-        clientId, r'SystemLogEntity', 'clientId');
-    BuiltValueNullFieldError.checkNotNull(
-        eventId, r'SystemLogEntity', 'eventId');
-    BuiltValueNullFieldError.checkNotNull(
-        categoryId, r'SystemLogEntity', 'categoryId');
-    BuiltValueNullFieldError.checkNotNull(typeId, r'SystemLogEntity', 'typeId');
-    BuiltValueNullFieldError.checkNotNull(log, r'SystemLogEntity', 'log');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'SystemLogEntity', 'createdAt');
-  }
-
+      : super._();
   @override
   SystemLogEntity rebuild(void Function(SystemLogEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  SystemLogEntityBuilder toBuilder() =>
-      new SystemLogEntityBuilder()..replace(this);
+  SystemLogEntityBuilder toBuilder() => SystemLogEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -429,7 +412,6 @@ class SystemLogEntityBuilder
 
   @override
   void replace(SystemLogEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$SystemLogEntity;
   }
 
@@ -443,25 +425,26 @@ class SystemLogEntityBuilder
 
   _$SystemLogEntity _build() {
     final _$result = _$v ??
-        new _$SystemLogEntity._(
-            id: BuiltValueNullFieldError.checkNotNull(
-                id, r'SystemLogEntity', 'id'),
-            companyId: BuiltValueNullFieldError.checkNotNull(
-                companyId, r'SystemLogEntity', 'companyId'),
-            userId: BuiltValueNullFieldError.checkNotNull(
-                userId, r'SystemLogEntity', 'userId'),
-            clientId: BuiltValueNullFieldError.checkNotNull(
-                clientId, r'SystemLogEntity', 'clientId'),
-            eventId: BuiltValueNullFieldError.checkNotNull(
-                eventId, r'SystemLogEntity', 'eventId'),
-            categoryId: BuiltValueNullFieldError.checkNotNull(
-                categoryId, r'SystemLogEntity', 'categoryId'),
-            typeId: BuiltValueNullFieldError.checkNotNull(
-                typeId, r'SystemLogEntity', 'typeId'),
-            log: BuiltValueNullFieldError.checkNotNull(
-                log, r'SystemLogEntity', 'log'),
-            createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, r'SystemLogEntity', 'createdAt'));
+        _$SystemLogEntity._(
+          id: BuiltValueNullFieldError.checkNotNull(
+              id, r'SystemLogEntity', 'id'),
+          companyId: BuiltValueNullFieldError.checkNotNull(
+              companyId, r'SystemLogEntity', 'companyId'),
+          userId: BuiltValueNullFieldError.checkNotNull(
+              userId, r'SystemLogEntity', 'userId'),
+          clientId: BuiltValueNullFieldError.checkNotNull(
+              clientId, r'SystemLogEntity', 'clientId'),
+          eventId: BuiltValueNullFieldError.checkNotNull(
+              eventId, r'SystemLogEntity', 'eventId'),
+          categoryId: BuiltValueNullFieldError.checkNotNull(
+              categoryId, r'SystemLogEntity', 'categoryId'),
+          typeId: BuiltValueNullFieldError.checkNotNull(
+              typeId, r'SystemLogEntity', 'typeId'),
+          log: BuiltValueNullFieldError.checkNotNull(
+              log, r'SystemLogEntity', 'log'),
+          createdAt: BuiltValueNullFieldError.checkNotNull(
+              createdAt, r'SystemLogEntity', 'createdAt'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -481,7 +464,7 @@ class _$EmailHistoryEntity extends EmailHistoryEntity {
 
   factory _$EmailHistoryEntity(
           [void Function(EmailHistoryEntityBuilder)? updates]) =>
-      (new EmailHistoryEntityBuilder()..update(updates))._build();
+      (EmailHistoryEntityBuilder()..update(updates))._build();
 
   _$EmailHistoryEntity._(
       {required this.recipients,
@@ -489,19 +472,7 @@ class _$EmailHistoryEntity extends EmailHistoryEntity {
       required this.entity,
       required this.entityId,
       required this.events})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        recipients, r'EmailHistoryEntity', 'recipients');
-    BuiltValueNullFieldError.checkNotNull(
-        subject, r'EmailHistoryEntity', 'subject');
-    BuiltValueNullFieldError.checkNotNull(
-        entity, r'EmailHistoryEntity', 'entity');
-    BuiltValueNullFieldError.checkNotNull(
-        entityId, r'EmailHistoryEntity', 'entityId');
-    BuiltValueNullFieldError.checkNotNull(
-        events, r'EmailHistoryEntity', 'events');
-  }
-
+      : super._();
   @override
   EmailHistoryEntity rebuild(
           void Function(EmailHistoryEntityBuilder) updates) =>
@@ -509,7 +480,7 @@ class _$EmailHistoryEntity extends EmailHistoryEntity {
 
   @override
   EmailHistoryEntityBuilder toBuilder() =>
-      new EmailHistoryEntityBuilder()..replace(this);
+      EmailHistoryEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -570,7 +541,7 @@ class EmailHistoryEntityBuilder
 
   ListBuilder<EmailHistoryEventEntity>? _events;
   ListBuilder<EmailHistoryEventEntity> get events =>
-      _$this._events ??= new ListBuilder<EmailHistoryEventEntity>();
+      _$this._events ??= ListBuilder<EmailHistoryEventEntity>();
   set events(ListBuilder<EmailHistoryEventEntity>? events) =>
       _$this._events = events;
 
@@ -593,7 +564,6 @@ class EmailHistoryEntityBuilder
 
   @override
   void replace(EmailHistoryEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$EmailHistoryEntity;
   }
 
@@ -609,23 +579,24 @@ class EmailHistoryEntityBuilder
     _$EmailHistoryEntity _$result;
     try {
       _$result = _$v ??
-          new _$EmailHistoryEntity._(
-              recipients: BuiltValueNullFieldError.checkNotNull(
-                  recipients, r'EmailHistoryEntity', 'recipients'),
-              subject: BuiltValueNullFieldError.checkNotNull(
-                  subject, r'EmailHistoryEntity', 'subject'),
-              entity: BuiltValueNullFieldError.checkNotNull(
-                  entity, r'EmailHistoryEntity', 'entity'),
-              entityId: BuiltValueNullFieldError.checkNotNull(
-                  entityId, r'EmailHistoryEntity', 'entityId'),
-              events: events.build());
+          _$EmailHistoryEntity._(
+            recipients: BuiltValueNullFieldError.checkNotNull(
+                recipients, r'EmailHistoryEntity', 'recipients'),
+            subject: BuiltValueNullFieldError.checkNotNull(
+                subject, r'EmailHistoryEntity', 'subject'),
+            entity: BuiltValueNullFieldError.checkNotNull(
+                entity, r'EmailHistoryEntity', 'entity'),
+            entityId: BuiltValueNullFieldError.checkNotNull(
+                entityId, r'EmailHistoryEntity', 'entityId'),
+            events: events.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'events';
         events.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'EmailHistoryEntity', _$failedField, e.toString());
       }
       rethrow;
@@ -651,7 +622,7 @@ class _$EmailHistoryEventEntity extends EmailHistoryEventEntity {
 
   factory _$EmailHistoryEventEntity(
           [void Function(EmailHistoryEventEntityBuilder)? updates]) =>
-      (new EmailHistoryEventEntityBuilder()..update(updates))._build();
+      (EmailHistoryEventEntityBuilder()..update(updates))._build();
 
   _$EmailHistoryEventEntity._(
       {required this.recipient,
@@ -660,21 +631,7 @@ class _$EmailHistoryEventEntity extends EmailHistoryEventEntity {
       required this.server,
       required this.serverIp,
       required this.date})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        recipient, r'EmailHistoryEventEntity', 'recipient');
-    BuiltValueNullFieldError.checkNotNull(
-        status, r'EmailHistoryEventEntity', 'status');
-    BuiltValueNullFieldError.checkNotNull(
-        deliveryMessage, r'EmailHistoryEventEntity', 'deliveryMessage');
-    BuiltValueNullFieldError.checkNotNull(
-        server, r'EmailHistoryEventEntity', 'server');
-    BuiltValueNullFieldError.checkNotNull(
-        serverIp, r'EmailHistoryEventEntity', 'serverIp');
-    BuiltValueNullFieldError.checkNotNull(
-        date, r'EmailHistoryEventEntity', 'date');
-  }
-
+      : super._();
   @override
   EmailHistoryEventEntity rebuild(
           void Function(EmailHistoryEventEntityBuilder) updates) =>
@@ -682,7 +639,7 @@ class _$EmailHistoryEventEntity extends EmailHistoryEventEntity {
 
   @override
   EmailHistoryEventEntityBuilder toBuilder() =>
-      new EmailHistoryEventEntityBuilder()..replace(this);
+      EmailHistoryEventEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -774,7 +731,6 @@ class EmailHistoryEventEntityBuilder
 
   @override
   void replace(EmailHistoryEventEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$EmailHistoryEventEntity;
   }
 
@@ -788,19 +744,20 @@ class EmailHistoryEventEntityBuilder
 
   _$EmailHistoryEventEntity _build() {
     final _$result = _$v ??
-        new _$EmailHistoryEventEntity._(
-            recipient: BuiltValueNullFieldError.checkNotNull(
-                recipient, r'EmailHistoryEventEntity', 'recipient'),
-            status: BuiltValueNullFieldError.checkNotNull(
-                status, r'EmailHistoryEventEntity', 'status'),
-            deliveryMessage: BuiltValueNullFieldError.checkNotNull(
-                deliveryMessage, r'EmailHistoryEventEntity', 'deliveryMessage'),
-            server: BuiltValueNullFieldError.checkNotNull(
-                server, r'EmailHistoryEventEntity', 'server'),
-            serverIp: BuiltValueNullFieldError.checkNotNull(
-                serverIp, r'EmailHistoryEventEntity', 'serverIp'),
-            date: BuiltValueNullFieldError.checkNotNull(
-                date, r'EmailHistoryEventEntity', 'date'));
+        _$EmailHistoryEventEntity._(
+          recipient: BuiltValueNullFieldError.checkNotNull(
+              recipient, r'EmailHistoryEventEntity', 'recipient'),
+          status: BuiltValueNullFieldError.checkNotNull(
+              status, r'EmailHistoryEventEntity', 'status'),
+          deliveryMessage: BuiltValueNullFieldError.checkNotNull(
+              deliveryMessage, r'EmailHistoryEventEntity', 'deliveryMessage'),
+          server: BuiltValueNullFieldError.checkNotNull(
+              server, r'EmailHistoryEventEntity', 'server'),
+          serverIp: BuiltValueNullFieldError.checkNotNull(
+              serverIp, r'EmailHistoryEventEntity', 'serverIp'),
+          date: BuiltValueNullFieldError.checkNotNull(
+              date, r'EmailHistoryEventEntity', 'date'),
+        );
     replace(_$result);
     return _$result;
   }

@@ -680,7 +680,7 @@ abstract class InvoiceEntity extends Object
     }
 
     if (entityType == EntityType.invoice) {
-      if (isCancelledOrReversed) {
+      if (isCancelledOrReversedOrReplaced) {
         return false;
       }
     }
@@ -925,7 +925,7 @@ abstract class InvoiceEntity extends Object
           isInvoice &&
           isUnpaid &&
           isSent &&
-          !isCancelledOrReversed) {
+          !isCancelledOrReversedOrReplaced) {
         return true;
       }
 
@@ -1042,7 +1042,7 @@ abstract class InvoiceEntity extends Object
           actions.add(EntityAction.updatePrices);
           actions.add(EntityAction.increasePrices);
         } else {
-          if (!isCancelledOrReversed) {
+          if (!isCancelledOrReversedOrReplaced) {
             if (multiselect) {
               actions.add(EntityAction.bulkSendEmail);
             } else {
@@ -1090,7 +1090,7 @@ abstract class InvoiceEntity extends Object
         }
       }
 
-      if (userCompany.canEditEntity(this) && !isCancelledOrReversed) {
+      if (userCompany.canEditEntity(this) && !isCancelledOrReversedOrReplaced) {
         if (!isSent && !isRecurring) {
           actions.add(EntityAction.markSent);
         }
@@ -1218,7 +1218,7 @@ abstract class InvoiceEntity extends Object
 
     if (userCompany!.canEditEntity(this) &&
         !isDeleted! &&
-        !isCancelledOrReversed) {
+        !isCancelledOrReversedOrReplaced) {
       if (isInvoice && isSent) {
         if (!isPaid) {
           actions.add(EntityAction.cancelInvoice);
@@ -1329,7 +1329,10 @@ abstract class InvoiceEntity extends Object
   }
 
   bool get isPayable =>
-      !isPaid && !isQuote && !isRecurringInvoice && !isCancelledOrReversed;
+      !isPaid &&
+      !isQuote &&
+      !isRecurringInvoice &&
+      !isCancelledOrReversedOrReplaced;
 
   bool get isViewed =>
       invitations.any((invitation) => invitation.viewedDate.isNotEmpty);
@@ -1344,10 +1347,13 @@ abstract class InvoiceEntity extends Object
       (isInvoice && statusId == kInvoiceStatusCancelled) ||
       (isPurchaseOrder && statusId == kPurchaseOrderStatusCancelled);
 
-  bool get isCancelledOrReversed =>
-      (isInvoice || isPurchaseOrder) && (isCancelled || isReversed);
+  bool get isCancelledOrReversedOrReplaced =>
+      (isInvoice || isPurchaseOrder) &&
+      (isCancelled || isReversed || isReplaced);
 
   bool get isUpcoming => isActive && !isPaid && !isPastDue && isSent;
+
+  bool get isReplaced => isInvoice && statusId == kInvoiceStatusReplaced;
 
   bool get isPending =>
       isRecurring &&
@@ -1379,7 +1385,7 @@ abstract class InvoiceEntity extends Object
       if (isViewed &&
           isUnpaid &&
           !isPartial &&
-          !isCancelledOrReversed &&
+          !isCancelledOrReversedOrReplaced &&
           !isApproved) {
         if (isInvoice) {
           return kInvoiceStatusViewed;
@@ -1397,7 +1403,7 @@ abstract class InvoiceEntity extends Object
   }
 
   bool get isPastDue {
-    if (isCancelledOrReversed) {
+    if (isCancelledOrReversedOrReplaced) {
       return false;
     }
 

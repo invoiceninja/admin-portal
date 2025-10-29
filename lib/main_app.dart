@@ -420,7 +420,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                             waitDuration: Duration(milliseconds: 500),
                           ),
                           pageTransitionsTheme: pageTransitionsTheme,
-                          indicatorColor: accentColor,
                           textSelectionTheme: TextSelectionThemeData(
                             selectionHandleColor: accentColor,
                           ),
@@ -435,10 +434,12 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                           colorScheme: ColorScheme.dark().copyWith(
                             secondary: accentColor,
                             primary: accentColor,
-                            background: Colors.black,
+                            surface: Colors.black,
                           ),
-                          bottomAppBarTheme:
-                              BottomAppBarTheme(color: const Color(0xFF1B1C1E)),
+                          bottomAppBarTheme: BottomAppBarThemeData(
+                              color: const Color(0xFF1B1C1E)),
+                          tabBarTheme:
+                              TabBarThemeData(indicatorColor: accentColor),
                         )
                       : ThemeData(
                           useMaterial3: false,
@@ -447,7 +448,6 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                           ),
                           pageTransitionsTheme: pageTransitionsTheme,
                           primaryColor: accentColor,
-                          indicatorColor: accentColor,
                           textSelectionTheme: TextSelectionThemeData(
                             selectionColor: accentColor,
                           ),
@@ -461,18 +461,19 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                               ? accentColor
                               : const Color(0xFF5dabf4),
                           scaffoldBackgroundColor: const Color(0xFFF3F4F6),
-                          tabBarTheme: TabBarTheme(
+                          tabBarTheme: TabBarThemeData(
                             labelColor:
                                 hasAccentColor ? Colors.white : Colors.black,
                             unselectedLabelColor: hasAccentColor
-                                ? Colors.white.withOpacity(.65)
-                                : Colors.black.withOpacity(.65),
+                                ? Colors.white.withValues(alpha: .65)
+                                : Colors.black.withValues(alpha: .65),
                           ),
                           iconTheme: IconThemeData(
                             color: hasAccentColor ? null : accentColor,
                           ),
                           appBarTheme: AppBarTheme(
-                            color: hasAccentColor ? accentColor : Colors.white,
+                            backgroundColor:
+                                hasAccentColor ? accentColor : Colors.white,
                             iconTheme: IconThemeData(
                               color:
                                   hasAccentColor ? Colors.white : accentColor,
@@ -489,10 +490,10 @@ class InvoiceNinjaAppState extends State<InvoiceNinjaApp> {
                               style: outlinedButtonTheme),
                           colorScheme: ColorScheme.fromSwatch().copyWith(
                             secondary: accentColor,
-                            background: Colors.white,
+                            surface: Colors.white,
                           ),
                           bottomAppBarTheme:
-                              BottomAppBarTheme(color: Colors.white),
+                              BottomAppBarThemeData(color: Colors.white),
                         ),
                   title: kAppName,
                   onGenerateRoute: isMobile(context) ? null : generateRoute,

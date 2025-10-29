@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:invoiceninja_flutter/constants.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/app/app_actions.dart';
 import 'package:invoiceninja_flutter/redux/ui/ui_actions.dart';
 import 'package:redux/redux.dart';
@@ -87,17 +88,18 @@ class TransactionRuleEditVM {
               store.dispatch(
                   UpdateCurrentRoute(TransactionRuleViewScreen.route));
               if (transactionRule.isNew) {
-                Navigator.of(context)
+                Navigator.of(navigatorKey.currentContext!)
                     .pushReplacementNamed(TransactionRuleViewScreen.route);
               } else {
-                Navigator.of(context).pop(savedTransactionRule);
+                Navigator.of(navigatorKey.currentContext!)
+                    .pop(savedTransactionRule);
               }
             } else {
               viewEntity(entity: savedTransactionRule, force: true);
             }
           }).catchError((Object error) {
             showDialog<ErrorDialog>(
-                context: context,
+                context: navigatorKey.currentContext!,
                 builder: (BuildContext context) {
                   return ErrorDialog(error);
                 });

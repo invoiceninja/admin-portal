@@ -46,7 +46,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
       showKanban: false,
       showPdfPreview: true,
       showPdfPreviewSideBySide: false,
-      persistData: false,
+      persistData: true,
       enableNativeBrowser: false,
       donwloadsFolder: '',
       statementIncludes: BuiltList(<String>[kStatementIncludePayments]),
@@ -271,7 +271,7 @@ abstract class PrefState implements Built<PrefState, PrefStateBuilder> {
     ..hideOneYearReviewApp = false
     ..hideTwoYearReviewApp = false
     ..tapSelectedToEdit = false
-    ..persistData = false
+    ..persistData = true
     ..editAfterSaving = true
     ..showPdfPreview = true
     ..showPdfPreviewSideBySide = false

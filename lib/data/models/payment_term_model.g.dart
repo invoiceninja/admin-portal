@@ -7,11 +7,11 @@ part of 'payment_term_model.dart';
 // **************************************************************************
 
 Serializer<PaymentTermListResponse> _$paymentTermListResponseSerializer =
-    new _$PaymentTermListResponseSerializer();
+    _$PaymentTermListResponseSerializer();
 Serializer<PaymentTermItemResponse> _$paymentTermItemResponseSerializer =
-    new _$PaymentTermItemResponseSerializer();
+    _$PaymentTermItemResponseSerializer();
 Serializer<PaymentTermEntity> _$paymentTermEntitySerializer =
-    new _$PaymentTermEntitySerializer();
+    _$PaymentTermEntitySerializer();
 
 class _$PaymentTermListResponseSerializer
     implements StructuredSerializer<PaymentTermListResponse> {
@@ -41,7 +41,7 @@ class _$PaymentTermListResponseSerializer
   PaymentTermListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new PaymentTermListResponseBuilder();
+    final result = PaymentTermListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -89,7 +89,7 @@ class _$PaymentTermItemResponseSerializer
   PaymentTermItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new PaymentTermItemResponseBuilder();
+    final result = PaymentTermItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -172,7 +172,7 @@ class _$PaymentTermEntitySerializer
   PaymentTermEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new PaymentTermEntityBuilder();
+    final result = PaymentTermEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -233,13 +233,9 @@ class _$PaymentTermListResponse extends PaymentTermListResponse {
 
   factory _$PaymentTermListResponse(
           [void Function(PaymentTermListResponseBuilder)? updates]) =>
-      (new PaymentTermListResponseBuilder()..update(updates))._build();
+      (PaymentTermListResponseBuilder()..update(updates))._build();
 
-  _$PaymentTermListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'PaymentTermListResponse', 'data');
-  }
-
+  _$PaymentTermListResponse._({required this.data}) : super._();
   @override
   PaymentTermListResponse rebuild(
           void Function(PaymentTermListResponseBuilder) updates) =>
@@ -247,7 +243,7 @@ class _$PaymentTermListResponse extends PaymentTermListResponse {
 
   @override
   PaymentTermListResponseBuilder toBuilder() =>
-      new PaymentTermListResponseBuilder()..replace(this);
+      PaymentTermListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -280,7 +276,7 @@ class PaymentTermListResponseBuilder
 
   ListBuilder<PaymentTermEntity>? _data;
   ListBuilder<PaymentTermEntity> get data =>
-      _$this._data ??= new ListBuilder<PaymentTermEntity>();
+      _$this._data ??= ListBuilder<PaymentTermEntity>();
   set data(ListBuilder<PaymentTermEntity>? data) => _$this._data = data;
 
   PaymentTermListResponseBuilder();
@@ -296,7 +292,6 @@ class PaymentTermListResponseBuilder
 
   @override
   void replace(PaymentTermListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PaymentTermListResponse;
   }
 
@@ -311,14 +306,17 @@ class PaymentTermListResponseBuilder
   _$PaymentTermListResponse _build() {
     _$PaymentTermListResponse _$result;
     try {
-      _$result = _$v ?? new _$PaymentTermListResponse._(data: data.build());
+      _$result = _$v ??
+          _$PaymentTermListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'PaymentTermListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -334,13 +332,9 @@ class _$PaymentTermItemResponse extends PaymentTermItemResponse {
 
   factory _$PaymentTermItemResponse(
           [void Function(PaymentTermItemResponseBuilder)? updates]) =>
-      (new PaymentTermItemResponseBuilder()..update(updates))._build();
+      (PaymentTermItemResponseBuilder()..update(updates))._build();
 
-  _$PaymentTermItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        data, r'PaymentTermItemResponse', 'data');
-  }
-
+  _$PaymentTermItemResponse._({required this.data}) : super._();
   @override
   PaymentTermItemResponse rebuild(
           void Function(PaymentTermItemResponseBuilder) updates) =>
@@ -348,7 +342,7 @@ class _$PaymentTermItemResponse extends PaymentTermItemResponse {
 
   @override
   PaymentTermItemResponseBuilder toBuilder() =>
-      new PaymentTermItemResponseBuilder()..replace(this);
+      PaymentTermItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -381,7 +375,7 @@ class PaymentTermItemResponseBuilder
 
   PaymentTermEntityBuilder? _data;
   PaymentTermEntityBuilder get data =>
-      _$this._data ??= new PaymentTermEntityBuilder();
+      _$this._data ??= PaymentTermEntityBuilder();
   set data(PaymentTermEntityBuilder? data) => _$this._data = data;
 
   PaymentTermItemResponseBuilder();
@@ -397,7 +391,6 @@ class PaymentTermItemResponseBuilder
 
   @override
   void replace(PaymentTermItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PaymentTermItemResponse;
   }
 
@@ -412,14 +405,17 @@ class PaymentTermItemResponseBuilder
   _$PaymentTermItemResponse _build() {
     _$PaymentTermItemResponse _$result;
     try {
-      _$result = _$v ?? new _$PaymentTermItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$PaymentTermItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'PaymentTermItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -453,7 +449,7 @@ class _$PaymentTermEntity extends PaymentTermEntity {
 
   factory _$PaymentTermEntity(
           [void Function(PaymentTermEntityBuilder)? updates]) =>
-      (new PaymentTermEntityBuilder()..update(updates))._build();
+      (PaymentTermEntityBuilder()..update(updates))._build();
 
   _$PaymentTermEntity._(
       {required this.name,
@@ -466,26 +462,14 @@ class _$PaymentTermEntity extends PaymentTermEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(name, r'PaymentTermEntity', 'name');
-    BuiltValueNullFieldError.checkNotNull(
-        numDays, r'PaymentTermEntity', 'numDays');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'PaymentTermEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'PaymentTermEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'PaymentTermEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'PaymentTermEntity', 'id');
-  }
-
+      : super._();
   @override
   PaymentTermEntity rebuild(void Function(PaymentTermEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   PaymentTermEntityBuilder toBuilder() =>
-      new PaymentTermEntityBuilder()..replace(this);
+      PaymentTermEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -607,7 +591,6 @@ class PaymentTermEntityBuilder
 
   @override
   void replace(PaymentTermEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PaymentTermEntity;
   }
 
@@ -621,23 +604,24 @@ class PaymentTermEntityBuilder
 
   _$PaymentTermEntity _build() {
     final _$result = _$v ??
-        new _$PaymentTermEntity._(
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'PaymentTermEntity', 'name'),
-            numDays: BuiltValueNullFieldError.checkNotNull(
-                numDays, r'PaymentTermEntity', 'numDays'),
-            isChanged: isChanged,
-            createdAt: BuiltValueNullFieldError.checkNotNull(
-                createdAt, r'PaymentTermEntity', 'createdAt'),
-            updatedAt: BuiltValueNullFieldError.checkNotNull(
-                updatedAt, r'PaymentTermEntity', 'updatedAt'),
-            archivedAt: BuiltValueNullFieldError.checkNotNull(
-                archivedAt, r'PaymentTermEntity', 'archivedAt'),
-            isDeleted: isDeleted,
-            createdUserId: createdUserId,
-            assignedUserId: assignedUserId,
-            id: BuiltValueNullFieldError.checkNotNull(
-                id, r'PaymentTermEntity', 'id'));
+        _$PaymentTermEntity._(
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'PaymentTermEntity', 'name'),
+          numDays: BuiltValueNullFieldError.checkNotNull(
+              numDays, r'PaymentTermEntity', 'numDays'),
+          isChanged: isChanged,
+          createdAt: BuiltValueNullFieldError.checkNotNull(
+              createdAt, r'PaymentTermEntity', 'createdAt'),
+          updatedAt: BuiltValueNullFieldError.checkNotNull(
+              updatedAt, r'PaymentTermEntity', 'updatedAt'),
+          archivedAt: BuiltValueNullFieldError.checkNotNull(
+              archivedAt, r'PaymentTermEntity', 'archivedAt'),
+          isDeleted: isDeleted,
+          createdUserId: createdUserId,
+          assignedUserId: assignedUserId,
+          id: BuiltValueNullFieldError.checkNotNull(
+              id, r'PaymentTermEntity', 'id'),
+        );
     replace(_$result);
     return _$result;
   }

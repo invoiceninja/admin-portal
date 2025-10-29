@@ -23,7 +23,7 @@ List<InvoiceEntity?> _upcomingInvoices({
     final client =
         clientMap![invoice.clientId] ?? ClientEntity(id: invoice.clientId);
     if (invoice.isNotActive ||
-        invoice.isCancelledOrReversed ||
+        invoice.isCancelledOrReversedOrReplaced ||
         client.isNotActive) {
       // do noting
     } else if (invoice.isUpcoming) {
@@ -55,7 +55,7 @@ List<InvoiceEntity?> _pastDueInvoices({
     final client =
         clientMap![invoice.clientId] ?? ClientEntity(id: invoice.clientId);
     if (invoice.isNotActive ||
-        invoice.isCancelledOrReversed ||
+        invoice.isCancelledOrReversedOrReplaced ||
         client.isNotActive) {
       // do noting
     } else if (invoice.isPastDue) {

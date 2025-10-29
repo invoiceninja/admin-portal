@@ -49,7 +49,7 @@ class BoolDropdownButton extends StatelessWidget {
         secondary:
             iconData != null && isDesktop(context) ? Icon(iconData) : null,
         onChanged: (value) => onChanged(value),
-        activeColor: Theme.of(context).colorScheme.secondary,
+        activeThumbColor: Theme.of(context).colorScheme.secondary,
         subtitle: helpLabel != null ? Text(helpLabel!) : null,
       );
     }
@@ -79,54 +79,54 @@ class BoolDropdownButton extends StatelessWidget {
           )
         : Padding(
             padding: const EdgeInsets.only(top: 4),
-            child: Flex(
-              direction: isDesktop(context) ? Axis.horizontal : Axis.vertical,
-              children: <Widget>[
-                InkWell(
-                  onTap: () => onChanged(false),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                        minWidth: minWidth ?? 130, minHeight: 36),
-                    child: Row(
-                      children: [
-                        IgnorePointer(
-                          child: Radio<bool>(
-                            value: false,
-                            onChanged: (value) => null,
-                            groupValue: value,
-                            activeColor:
-                                Theme.of(context).colorScheme.secondary,
+            child: RadioGroup<bool>(
+              onChanged: (value) => null,
+              groupValue: value,
+              child: Flex(
+                direction: isDesktop(context) ? Axis.horizontal : Axis.vertical,
+                children: <Widget>[
+                  InkWell(
+                    onTap: () => onChanged(false),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                          minWidth: minWidth ?? 130, minHeight: 36),
+                      child: Row(
+                        children: [
+                          IgnorePointer(
+                            child: Radio<bool>(
+                              value: false,
+                              activeColor:
+                                  Theme.of(context).colorScheme.secondary,
+                            ),
                           ),
-                        ),
-                        Text(falseLabel),
-                        SizedBox(width: 16),
-                      ],
+                          Text(falseLabel),
+                          SizedBox(width: 16),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                InkWell(
-                  onTap: () => onChanged(true),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                        minWidth: minWidth ?? 120, minHeight: 36),
-                    child: Row(
-                      children: [
-                        IgnorePointer(
-                          child: Radio<bool>(
-                            value: true,
-                            onChanged: (value) => null,
-                            groupValue: value,
-                            activeColor:
-                                Theme.of(context).colorScheme.secondary,
+                  InkWell(
+                    onTap: () => onChanged(true),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                          minWidth: minWidth ?? 120, minHeight: 36),
+                      child: Row(
+                        children: [
+                          IgnorePointer(
+                            child: Radio<bool>(
+                              value: true,
+                              activeColor:
+                                  Theme.of(context).colorScheme.secondary,
+                            ),
                           ),
-                        ),
-                        Text(trueLabel),
-                        SizedBox(width: 16),
-                      ],
+                          Text(trueLabel),
+                          SizedBox(width: 16),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
 

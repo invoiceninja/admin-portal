@@ -205,10 +205,11 @@ class ExpenseEditVM extends AbstractExpenseEditVM {
             expense: expense,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context)!.uploadedDocument);
+          showToast(AppLocalization.of(navigatorKey.currentContext!)!
+              .uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
-              context: context,
+              context: navigatorKey.currentContext!,
               builder: (BuildContext context) {
                 return ErrorDialog(error);
               });

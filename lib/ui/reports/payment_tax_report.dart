@@ -1,6 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
-import 'package:collection/collection.dart' show IterableNullableExtension;
+
 import 'package:memoize/memoize.dart';
 
 // Project imports:
@@ -73,7 +73,7 @@ ReportResult paymentTaxReport(
   if (taxRateReportSettings.columns.isNotEmpty) {
     columns = BuiltList(taxRateReportSettings.columns
         .map((e) => EnumUtils.fromString(TaxRateReportFields.values, e))
-        .whereNotNull()
+        .nonNulls
         .toList());
   } else {
     columns = BuiltList(defaultColumns);

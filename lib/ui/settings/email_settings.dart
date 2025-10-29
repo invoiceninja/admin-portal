@@ -63,6 +63,11 @@ class _EmailSettingsState extends State<EmailSettings> {
   final _smtpUsernameController = TextEditingController();
   final _smtpPasswordController = TextEditingController();
   final _smtpLocalDomainController = TextEditingController();
+  final _sesSecretKeyController = TextEditingController();
+  final _sesAccessKeyController = TextEditingController();
+  final _sesRegionController = TextEditingController();
+  final _sesTopicArnController = TextEditingController();
+  final _sesFromAddressController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -102,6 +107,11 @@ class _EmailSettingsState extends State<EmailSettings> {
       _smtpUsernameController,
       _smtpPasswordController,
       _smtpLocalDomainController,
+      _sesAccessKeyController,
+      _sesSecretKeyController,
+      _sesRegionController,
+      _sesTopicArnController,
+      _sesFromAddressController,
     ];
 
     _controllers
@@ -127,6 +137,11 @@ class _EmailSettingsState extends State<EmailSettings> {
     _smtpUsernameController.text = company.smtpUsername;
     _smtpPasswordController.text = company.smtpPassword;
     _smtpLocalDomainController.text = company.smtpLocalDomain;
+    _sesSecretKeyController.text = settings.sesSecretKey ?? '';
+    _sesAccessKeyController.text = settings.sesAccessKey ?? '';
+    _sesRegionController.text = settings.sesRegion ?? '';
+    _sesTopicArnController.text = settings.sesTopicArn ?? '';
+    _sesFromAddressController.text = settings.sesFromAddress ?? '';
 
     _controllers
         .forEach((dynamic controller) => controller.addListener(_onChanged));
@@ -146,6 +161,11 @@ class _EmailSettingsState extends State<EmailSettings> {
     final mailgunSecret = _mailgunSecretController.text.trim();
     final mailgunDomain = _mailgunDomainController.text.trim();
     final customSendingEmail = _customSendingEmailController.text.trim();
+    final sesSecretKey = _sesSecretKeyController.text.trim();
+    final sesAccessKey = _sesAccessKeyController.text.trim();
+    final sesRegion = _sesRegionController.text.trim();
+    final sesTopicArn = _sesTopicArnController.text.trim();
+    final sesFromAddress = _sesFromAddressController.text.trim();
 
     final viewModel = widget.viewModel;
     final isFiltered = viewModel.state.settingsUIState.isFiltered;
@@ -167,7 +187,13 @@ class _EmailSettingsState extends State<EmailSettings> {
       ..mailgunDomain =
           isFiltered && mailgunDomain.isEmpty ? null : mailgunDomain
       ..customSendingEmail =
-          isFiltered && customSendingEmail.isEmpty ? null : customSendingEmail);
+          isFiltered && customSendingEmail.isEmpty ? null : customSendingEmail
+      ..sesAccessKey = isFiltered && sesAccessKey.isEmpty ? null : sesAccessKey
+      ..sesSecretKey = isFiltered && sesSecretKey.isEmpty ? null : sesSecretKey
+      ..sesRegion = isFiltered && sesRegion.isEmpty ? null : sesRegion
+      ..sesTopicArn = isFiltered && sesTopicArn.isEmpty ? null : sesTopicArn
+      ..sesFromAddress =
+          isFiltered && sesFromAddress.isEmpty ? null : sesFromAddress);
     if (settings != viewModel.settings) {
       viewModel.onSettingsChanged(settings);
     }
@@ -239,6 +265,9 @@ class _EmailSettingsState extends State<EmailSettings> {
                         child: Text('Mailgun (invoicing.co)'),
                         value:
                             SettingsEntity.EMAIL_SENDING_METHOD_MAILGUN_HOSTED),
+                    DropdownMenuItem(
+                        child: Text('Amazon SES (invoicing.co)'),
+                        value: SettingsEntity.EMAIL_SENDING_METHOD_SES_HOSTED),
                   ] else
                     DropdownMenuItem(
                         child: Text(''),
@@ -262,6 +291,9 @@ class _EmailSettingsState extends State<EmailSettings> {
                   DropdownMenuItem(
                       child: Text('Mailgun'),
                       value: SettingsEntity.EMAIL_SENDING_METHOD_MAILGUN),
+                  DropdownMenuItem(
+                      child: Text('Amazon SES'),
+                      value: SettingsEntity.EMAIL_SENDING_METHOD_SES),
                   DropdownMenuItem(
                       child: Text('Brevo'),
                       value: SettingsEntity.EMAIL_SENDING_METHOD_BREVO),
@@ -396,6 +428,47 @@ class _EmailSettingsState extends State<EmailSettings> {
                   validator: (value) => value.trim().isEmpty
                       ? localization.pleaseEnterAValue
                       : null,
+                ),
+              ] else if (settings.emailSendingMethod ==
+                  SettingsEntity.EMAIL_SENDING_METHOD_SES) ...[
+                DecoratedFormField(
+                  label: localization.secretKey,
+                  controller: _sesSecretKeyController,
+                  keyboardType: TextInputType.text,
+                  onSavePressed: _onSavePressed,
+                  validator: (value) => value.trim().isEmpty
+                      ? localization.pleaseEnterAValue
+                      : null,
+                ),
+                DecoratedFormField(
+                  label: localization.accessKey,
+                  controller: _sesAccessKeyController,
+                  keyboardType: TextInputType.text,
+                  onSavePressed: _onSavePressed,
+                  validator: (value) => value.trim().isEmpty
+                      ? localization.pleaseEnterAValue
+                      : null,
+                ),
+                DecoratedFormField(
+                  label: localization.region,
+                  controller: _sesRegionController,
+                  keyboardType: TextInputType.text,
+                  onSavePressed: _onSavePressed,
+                  validator: (value) => value.trim().isEmpty
+                      ? localization.pleaseEnterAValue
+                      : null,
+                ),
+                DecoratedFormField(
+                  label: localization.fromAddress,
+                  controller: _sesFromAddressController,
+                  keyboardType: TextInputType.text,
+                  onSavePressed: _onSavePressed,
+                ),
+                DecoratedFormField(
+                  label: localization.topicArn,
+                  controller: _sesTopicArnController,
+                  keyboardType: TextInputType.text,
+                  onSavePressed: _onSavePressed,
                 ),
               ] else if (settings.emailSendingMethod ==
                       SettingsEntity.EMAIL_SENDING_METHOD_SMTP &&

@@ -7,9 +7,9 @@ part of 'expense_category_state.dart';
 // **************************************************************************
 
 Serializer<ExpenseCategoryState> _$expenseCategoryStateSerializer =
-    new _$ExpenseCategoryStateSerializer();
+    _$ExpenseCategoryStateSerializer();
 Serializer<ExpenseCategoryUIState> _$expenseCategoryUIStateSerializer =
-    new _$ExpenseCategoryUIStateSerializer();
+    _$ExpenseCategoryUIStateSerializer();
 
 class _$ExpenseCategoryStateSerializer
     implements StructuredSerializer<ExpenseCategoryState> {
@@ -45,7 +45,7 @@ class _$ExpenseCategoryStateSerializer
   ExpenseCategoryState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ExpenseCategoryStateBuilder();
+    final result = ExpenseCategoryStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -124,7 +124,7 @@ class _$ExpenseCategoryUIStateSerializer
   ExpenseCategoryUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new ExpenseCategoryUIStateBuilder();
+    final result = ExpenseCategoryUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -168,15 +168,9 @@ class _$ExpenseCategoryState extends ExpenseCategoryState {
 
   factory _$ExpenseCategoryState(
           [void Function(ExpenseCategoryStateBuilder)? updates]) =>
-      (new ExpenseCategoryStateBuilder()..update(updates))._build();
+      (ExpenseCategoryStateBuilder()..update(updates))._build();
 
-  _$ExpenseCategoryState._({required this.map, required this.list})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, r'ExpenseCategoryState', 'map');
-    BuiltValueNullFieldError.checkNotNull(
-        list, r'ExpenseCategoryState', 'list');
-  }
-
+  _$ExpenseCategoryState._({required this.map, required this.list}) : super._();
   @override
   ExpenseCategoryState rebuild(
           void Function(ExpenseCategoryStateBuilder) updates) =>
@@ -184,7 +178,7 @@ class _$ExpenseCategoryState extends ExpenseCategoryState {
 
   @override
   ExpenseCategoryStateBuilder toBuilder() =>
-      new ExpenseCategoryStateBuilder()..replace(this);
+      ExpenseCategoryStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -220,11 +214,11 @@ class ExpenseCategoryStateBuilder
 
   MapBuilder<String, ExpenseCategoryEntity>? _map;
   MapBuilder<String, ExpenseCategoryEntity> get map =>
-      _$this._map ??= new MapBuilder<String, ExpenseCategoryEntity>();
+      _$this._map ??= MapBuilder<String, ExpenseCategoryEntity>();
   set map(MapBuilder<String, ExpenseCategoryEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
-  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  ListBuilder<String> get list => _$this._list ??= ListBuilder<String>();
   set list(ListBuilder<String>? list) => _$this._list = list;
 
   ExpenseCategoryStateBuilder();
@@ -241,7 +235,6 @@ class ExpenseCategoryStateBuilder
 
   @override
   void replace(ExpenseCategoryState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ExpenseCategoryState;
   }
 
@@ -257,7 +250,10 @@ class ExpenseCategoryStateBuilder
     _$ExpenseCategoryState _$result;
     try {
       _$result = _$v ??
-          new _$ExpenseCategoryState._(map: map.build(), list: list.build());
+          _$ExpenseCategoryState._(
+            map: map.build(),
+            list: list.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -266,7 +262,7 @@ class ExpenseCategoryStateBuilder
         _$failedField = 'list';
         list.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ExpenseCategoryState', _$failedField, e.toString());
       }
       rethrow;
@@ -294,7 +290,7 @@ class _$ExpenseCategoryUIState extends ExpenseCategoryUIState {
 
   factory _$ExpenseCategoryUIState(
           [void Function(ExpenseCategoryUIStateBuilder)? updates]) =>
-      (new ExpenseCategoryUIStateBuilder()..update(updates))._build();
+      (ExpenseCategoryUIStateBuilder()..update(updates))._build();
 
   _$ExpenseCategoryUIState._(
       {this.editing,
@@ -304,13 +300,7 @@ class _$ExpenseCategoryUIState extends ExpenseCategoryUIState {
       required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        listUIState, r'ExpenseCategoryUIState', 'listUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        tabIndex, r'ExpenseCategoryUIState', 'tabIndex');
-  }
-
+      : super._();
   @override
   ExpenseCategoryUIState rebuild(
           void Function(ExpenseCategoryUIStateBuilder) updates) =>
@@ -318,7 +308,7 @@ class _$ExpenseCategoryUIState extends ExpenseCategoryUIState {
 
   @override
   ExpenseCategoryUIStateBuilder toBuilder() =>
-      new ExpenseCategoryUIStateBuilder()..replace(this);
+      ExpenseCategoryUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -369,13 +359,13 @@ class ExpenseCategoryUIStateBuilder
 
   ExpenseCategoryEntityBuilder? _editing;
   ExpenseCategoryEntityBuilder get editing =>
-      _$this._editing ??= new ExpenseCategoryEntityBuilder();
+      _$this._editing ??= ExpenseCategoryEntityBuilder();
   set editing(ExpenseCategoryEntityBuilder? editing) =>
       _$this._editing = editing;
 
   ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
-      _$this._listUIState ??= new ListUIStateBuilder();
+      _$this._listUIState ??= ListUIStateBuilder();
   set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
@@ -421,7 +411,6 @@ class ExpenseCategoryUIStateBuilder
 
   @override
   void replace(ExpenseCategoryUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$ExpenseCategoryUIState;
   }
 
@@ -437,15 +426,16 @@ class ExpenseCategoryUIStateBuilder
     _$ExpenseCategoryUIState _$result;
     try {
       _$result = _$v ??
-          new _$ExpenseCategoryUIState._(
-              editing: _editing?.build(),
-              listUIState: listUIState.build(),
-              selectedId: selectedId,
-              forceSelected: forceSelected,
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'ExpenseCategoryUIState', 'tabIndex'),
-              saveCompleter: saveCompleter,
-              cancelCompleter: cancelCompleter);
+          _$ExpenseCategoryUIState._(
+            editing: _editing?.build(),
+            listUIState: listUIState.build(),
+            selectedId: selectedId,
+            forceSelected: forceSelected,
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'ExpenseCategoryUIState', 'tabIndex'),
+            saveCompleter: saveCompleter,
+            cancelCompleter: cancelCompleter,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -454,7 +444,7 @@ class ExpenseCategoryUIStateBuilder
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'ExpenseCategoryUIState', _$failedField, e.toString());
       }
       rethrow;

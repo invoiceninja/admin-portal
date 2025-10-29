@@ -104,7 +104,7 @@ class FileStorage {
       } catch (e) {
         if ('$e'.contains('QuotaExceededError')) {
           await prefs.remove(tag);
-          final gzipBytes = GZipEncoder().encode(utf8.encode(data))!;
+          final gzipBytes = GZipEncoder().encode(utf8.encode(data));
           final zipped = base64Encode(gzipBytes);
           try {
             await prefs.setString(tag + GZIP_TAG, zipped);

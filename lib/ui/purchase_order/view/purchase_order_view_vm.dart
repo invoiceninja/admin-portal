@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/redux/purchase_order/purchase_order_actions.dart';
 import 'package:redux/redux.dart';
 
@@ -122,10 +123,11 @@ class PurchaseOrderViewVM extends AbstractInvoiceViewVM {
             purchaseOrder: purchaseOrder,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context)!.uploadedDocument);
+          showToast(AppLocalization.of(navigatorKey.currentContext!)!
+              .uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
-              context: context,
+              context: navigatorKey.currentContext!,
               builder: (BuildContext context) {
                 return ErrorDialog(error);
               });

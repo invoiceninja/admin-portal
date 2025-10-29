@@ -276,7 +276,8 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                             ? localization
                                 .lookup(kGatewayTypes[gatewayTypeId] ?? '')
                             : '$gatewayTypeId'),
-                        activeColor: Theme.of(context).colorScheme.secondary,
+                        activeThumbColor:
+                            Theme.of(context).colorScheme.secondary,
                         value: companyGateway
                             .getSettingsForGatewayTypeId(gatewayTypeId)
                             .isEnabled,
@@ -405,7 +406,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                     ),
                     SizedBox(height: 16),
                     SwitchListTile(
-                      activeColor: Theme.of(context).colorScheme.secondary,
+                      activeThumbColor: Theme.of(context).colorScheme.secondary,
                       title: Text(localization.alwaysShowRequiredFields),
                       subtitle: Text(localization.alwaysShowRequiredFieldsHelp),
                       value: companyGateway.alwaysShowRequiredFields,
@@ -413,7 +414,7 @@ class _CompanyGatewayEditState extends State<CompanyGatewayEdit>
                           .rebuild((b) => b..alwaysShowRequiredFields = value)),
                     ),
                     SwitchListTile(
-                      activeColor: Theme.of(context).colorScheme.secondary,
+                      activeThumbColor: Theme.of(context).colorScheme.secondary,
                       title: Text(localization.updateAddress),
                       subtitle: Text(localization.updateAddressHelp),
                       value: companyGateway.updateDetails,
@@ -1076,7 +1077,7 @@ class _FeesEditorState extends State<FeesEditor> {
                   ..feesAndLimitsMap[widget.gatewayTypeId] =
                       settings.rebuild((b) => b..adjustFeePercent = value))),
             title: Text(localization.adjustFeePercent),
-            activeColor: Theme.of(context).colorScheme.secondary,
+            activeThumbColor: Theme.of(context).colorScheme.secondary,
             subtitle: Text(localization.adjustFeePercentHelp),
           ),
         ),

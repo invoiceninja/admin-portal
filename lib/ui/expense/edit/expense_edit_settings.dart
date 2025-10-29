@@ -163,7 +163,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
             expense.isInvoiced
                 ? SizedBox()
                 : SwitchListTile(
-                    activeColor: Theme.of(context).colorScheme.secondary,
+                    activeThumbColor: Theme.of(context).colorScheme.secondary,
                     title: Text(localization.shouldBeInvoiced),
                     subtitle: Text(localization.shouldBeInvoicedHelp),
                     value: expense.shouldBeInvoiced,
@@ -173,7 +173,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                     },
                   ),
             SwitchListTile(
-              activeColor: Theme.of(context).colorScheme.secondary,
+              activeThumbColor: Theme.of(context).colorScheme.secondary,
               title: Text(localization.markPaid),
               value: _showPaymentFields,
               subtitle: Text(localization.markPaidHelp),
@@ -230,7 +230,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                   )
                 : SizedBox(),
             SwitchListTile(
-              activeColor: Theme.of(context).colorScheme.secondary,
+              activeThumbColor: Theme.of(context).colorScheme.secondary,
               title: Text(localization.convertCurrency),
               subtitle: Text(localization.convertCurrencyHelp),
               value: _showConvertCurrencyFields,
@@ -293,7 +293,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
               SizedBox(height: 16),
             ],
             SwitchListTile(
-                activeColor: Theme.of(context).colorScheme.secondary,
+                activeThumbColor: Theme.of(context).colorScheme.secondary,
                 title: Text(localization.addDocumentsToInvoice),
                 subtitle: Text(localization.addDocumentsToInvoiceHelp),
                 value: expense.invoiceDocuments,
@@ -339,7 +339,7 @@ class ExpenseEditSettingsState extends State<ExpenseEditSettings> {
                   ),
                   SizedBox(height: 16),
                   SwitchListTile(
-                    activeColor: Theme.of(context).colorScheme.secondary,
+                    activeThumbColor: Theme.of(context).colorScheme.secondary,
                     title: Text(localization.inclusiveTaxes),
                     value: expense.usesInclusiveTaxes,
                     subtitle: Text(

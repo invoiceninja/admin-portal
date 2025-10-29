@@ -7,13 +7,13 @@ part of 'payment_model.dart';
 // **************************************************************************
 
 Serializer<PaymentListResponse> _$paymentListResponseSerializer =
-    new _$PaymentListResponseSerializer();
+    _$PaymentListResponseSerializer();
 Serializer<PaymentItemResponse> _$paymentItemResponseSerializer =
-    new _$PaymentItemResponseSerializer();
+    _$PaymentItemResponseSerializer();
 Serializer<PaymentEntity> _$paymentEntitySerializer =
-    new _$PaymentEntitySerializer();
+    _$PaymentEntitySerializer();
 Serializer<PaymentableEntity> _$paymentableEntitySerializer =
-    new _$PaymentableEntitySerializer();
+    _$PaymentableEntitySerializer();
 
 class _$PaymentListResponseSerializer
     implements StructuredSerializer<PaymentListResponse> {
@@ -43,7 +43,7 @@ class _$PaymentListResponseSerializer
   PaymentListResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new PaymentListResponseBuilder();
+    final result = PaymentListResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -91,7 +91,7 @@ class _$PaymentItemResponseSerializer
   PaymentItemResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new PaymentItemResponseBuilder();
+    final result = PaymentItemResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -286,7 +286,7 @@ class _$PaymentEntitySerializer implements StructuredSerializer<PaymentEntity> {
   PaymentEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new PaymentEntityBuilder();
+    final result = PaymentEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -524,7 +524,7 @@ class _$PaymentableEntitySerializer
   PaymentableEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new PaymentableEntityBuilder();
+    final result = PaymentableEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -569,12 +569,9 @@ class _$PaymentListResponse extends PaymentListResponse {
 
   factory _$PaymentListResponse(
           [void Function(PaymentListResponseBuilder)? updates]) =>
-      (new PaymentListResponseBuilder()..update(updates))._build();
+      (PaymentListResponseBuilder()..update(updates))._build();
 
-  _$PaymentListResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'PaymentListResponse', 'data');
-  }
-
+  _$PaymentListResponse._({required this.data}) : super._();
   @override
   PaymentListResponse rebuild(
           void Function(PaymentListResponseBuilder) updates) =>
@@ -582,7 +579,7 @@ class _$PaymentListResponse extends PaymentListResponse {
 
   @override
   PaymentListResponseBuilder toBuilder() =>
-      new PaymentListResponseBuilder()..replace(this);
+      PaymentListResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -614,7 +611,7 @@ class PaymentListResponseBuilder
 
   ListBuilder<PaymentEntity>? _data;
   ListBuilder<PaymentEntity> get data =>
-      _$this._data ??= new ListBuilder<PaymentEntity>();
+      _$this._data ??= ListBuilder<PaymentEntity>();
   set data(ListBuilder<PaymentEntity>? data) => _$this._data = data;
 
   PaymentListResponseBuilder();
@@ -630,7 +627,6 @@ class PaymentListResponseBuilder
 
   @override
   void replace(PaymentListResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PaymentListResponse;
   }
 
@@ -645,14 +641,17 @@ class PaymentListResponseBuilder
   _$PaymentListResponse _build() {
     _$PaymentListResponse _$result;
     try {
-      _$result = _$v ?? new _$PaymentListResponse._(data: data.build());
+      _$result = _$v ??
+          _$PaymentListResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'PaymentListResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -668,12 +667,9 @@ class _$PaymentItemResponse extends PaymentItemResponse {
 
   factory _$PaymentItemResponse(
           [void Function(PaymentItemResponseBuilder)? updates]) =>
-      (new PaymentItemResponseBuilder()..update(updates))._build();
+      (PaymentItemResponseBuilder()..update(updates))._build();
 
-  _$PaymentItemResponse._({required this.data}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(data, r'PaymentItemResponse', 'data');
-  }
-
+  _$PaymentItemResponse._({required this.data}) : super._();
   @override
   PaymentItemResponse rebuild(
           void Function(PaymentItemResponseBuilder) updates) =>
@@ -681,7 +677,7 @@ class _$PaymentItemResponse extends PaymentItemResponse {
 
   @override
   PaymentItemResponseBuilder toBuilder() =>
-      new PaymentItemResponseBuilder()..replace(this);
+      PaymentItemResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -712,7 +708,7 @@ class PaymentItemResponseBuilder
   _$PaymentItemResponse? _$v;
 
   PaymentEntityBuilder? _data;
-  PaymentEntityBuilder get data => _$this._data ??= new PaymentEntityBuilder();
+  PaymentEntityBuilder get data => _$this._data ??= PaymentEntityBuilder();
   set data(PaymentEntityBuilder? data) => _$this._data = data;
 
   PaymentItemResponseBuilder();
@@ -728,7 +724,6 @@ class PaymentItemResponseBuilder
 
   @override
   void replace(PaymentItemResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PaymentItemResponse;
   }
 
@@ -743,14 +738,17 @@ class PaymentItemResponseBuilder
   _$PaymentItemResponse _build() {
     _$PaymentItemResponse _$result;
     try {
-      _$result = _$v ?? new _$PaymentItemResponse._(data: data.build());
+      _$result = _$v ??
+          _$PaymentItemResponse._(
+            data: data.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
         _$failedField = 'data';
         data.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'PaymentItemResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -845,7 +843,7 @@ class _$PaymentEntity extends PaymentEntity {
   final String id;
 
   factory _$PaymentEntity([void Function(PaymentEntityBuilder)? updates]) =>
-      (new PaymentEntityBuilder()..update(updates))._build();
+      (PaymentEntityBuilder()..update(updates))._build();
 
   _$PaymentEntity._(
       {required this.amount,
@@ -889,74 +887,13 @@ class _$PaymentEntity extends PaymentEntity {
       this.createdUserId,
       this.assignedUserId,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(amount, r'PaymentEntity', 'amount');
-    BuiltValueNullFieldError.checkNotNull(applied, r'PaymentEntity', 'applied');
-    BuiltValueNullFieldError.checkNotNull(
-        refunded, r'PaymentEntity', 'refunded');
-    BuiltValueNullFieldError.checkNotNull(number, r'PaymentEntity', 'number');
-    BuiltValueNullFieldError.checkNotNull(
-        clientId, r'PaymentEntity', 'clientId');
-    BuiltValueNullFieldError.checkNotNull(
-        statusId, r'PaymentEntity', 'statusId');
-    BuiltValueNullFieldError.checkNotNull(
-        transactionReference, r'PaymentEntity', 'transactionReference');
-    BuiltValueNullFieldError.checkNotNull(date, r'PaymentEntity', 'date');
-    BuiltValueNullFieldError.checkNotNull(typeId, r'PaymentEntity', 'typeId');
-    BuiltValueNullFieldError.checkNotNull(
-        privateNotes, r'PaymentEntity', 'privateNotes');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue1, r'PaymentEntity', 'customValue1');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue2, r'PaymentEntity', 'customValue2');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue3, r'PaymentEntity', 'customValue3');
-    BuiltValueNullFieldError.checkNotNull(
-        customValue4, r'PaymentEntity', 'customValue4');
-    BuiltValueNullFieldError.checkNotNull(
-        exchangeRate, r'PaymentEntity', 'exchangeRate');
-    BuiltValueNullFieldError.checkNotNull(
-        exchangeCurrencyId, r'PaymentEntity', 'exchangeCurrencyId');
-    BuiltValueNullFieldError.checkNotNull(
-        isManual, r'PaymentEntity', 'isManual');
-    BuiltValueNullFieldError.checkNotNull(
-        projectId, r'PaymentEntity', 'projectId');
-    BuiltValueNullFieldError.checkNotNull(
-        vendorId, r'PaymentEntity', 'vendorId');
-    BuiltValueNullFieldError.checkNotNull(
-        invitationId, r'PaymentEntity', 'invitationId');
-    BuiltValueNullFieldError.checkNotNull(
-        transactionId, r'PaymentEntity', 'transactionId');
-    BuiltValueNullFieldError.checkNotNull(
-        clientContactId, r'PaymentEntity', 'clientContactId');
-    BuiltValueNullFieldError.checkNotNull(
-        companyGatewayId, r'PaymentEntity', 'companyGatewayId');
-    BuiltValueNullFieldError.checkNotNull(
-        currencyId, r'PaymentEntity', 'currencyId');
-    BuiltValueNullFieldError.checkNotNull(
-        gatewayTypeId, r'PaymentEntity', 'gatewayTypeId');
-    BuiltValueNullFieldError.checkNotNull(
-        paymentables, r'PaymentEntity', 'paymentables');
-    BuiltValueNullFieldError.checkNotNull(
-        invoices, r'PaymentEntity', 'invoices');
-    BuiltValueNullFieldError.checkNotNull(credits, r'PaymentEntity', 'credits');
-    BuiltValueNullFieldError.checkNotNull(
-        documents, r'PaymentEntity', 'documents');
-    BuiltValueNullFieldError.checkNotNull(
-        createdAt, r'PaymentEntity', 'createdAt');
-    BuiltValueNullFieldError.checkNotNull(
-        updatedAt, r'PaymentEntity', 'updatedAt');
-    BuiltValueNullFieldError.checkNotNull(
-        archivedAt, r'PaymentEntity', 'archivedAt');
-    BuiltValueNullFieldError.checkNotNull(id, r'PaymentEntity', 'id');
-  }
-
+      : super._();
   @override
   PaymentEntity rebuild(void Function(PaymentEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  PaymentEntityBuilder toBuilder() => new PaymentEntityBuilder()..replace(this);
+  PaymentEntityBuilder toBuilder() => PaymentEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1233,25 +1170,25 @@ class PaymentEntityBuilder
 
   ListBuilder<PaymentableEntity>? _paymentables;
   ListBuilder<PaymentableEntity> get paymentables =>
-      _$this._paymentables ??= new ListBuilder<PaymentableEntity>();
+      _$this._paymentables ??= ListBuilder<PaymentableEntity>();
   set paymentables(ListBuilder<PaymentableEntity>? paymentables) =>
       _$this._paymentables = paymentables;
 
   ListBuilder<PaymentableEntity>? _invoices;
   ListBuilder<PaymentableEntity> get invoices =>
-      _$this._invoices ??= new ListBuilder<PaymentableEntity>();
+      _$this._invoices ??= ListBuilder<PaymentableEntity>();
   set invoices(ListBuilder<PaymentableEntity>? invoices) =>
       _$this._invoices = invoices;
 
   ListBuilder<PaymentableEntity>? _credits;
   ListBuilder<PaymentableEntity> get credits =>
-      _$this._credits ??= new ListBuilder<PaymentableEntity>();
+      _$this._credits ??= ListBuilder<PaymentableEntity>();
   set credits(ListBuilder<PaymentableEntity>? credits) =>
       _$this._credits = credits;
 
   ListBuilder<DocumentEntity>? _documents;
   ListBuilder<DocumentEntity> get documents =>
-      _$this._documents ??= new ListBuilder<DocumentEntity>();
+      _$this._documents ??= ListBuilder<DocumentEntity>();
   set documents(ListBuilder<DocumentEntity>? documents) =>
       _$this._documents = documents;
 
@@ -1344,7 +1281,6 @@ class PaymentEntityBuilder
 
   @override
   void replace(PaymentEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PaymentEntity;
   }
 
@@ -1360,57 +1296,78 @@ class PaymentEntityBuilder
     _$PaymentEntity _$result;
     try {
       _$result = _$v ??
-          new _$PaymentEntity._(
-              amount: BuiltValueNullFieldError.checkNotNull(
-                  amount, r'PaymentEntity', 'amount'),
-              applied: BuiltValueNullFieldError.checkNotNull(
-                  applied, r'PaymentEntity', 'applied'),
-              refunded: BuiltValueNullFieldError.checkNotNull(
-                  refunded, r'PaymentEntity', 'refunded'),
-              number: BuiltValueNullFieldError.checkNotNull(
-                  number, r'PaymentEntity', 'number'),
-              idempotencyKey: idempotencyKey,
-              clientId: BuiltValueNullFieldError.checkNotNull(
-                  clientId, r'PaymentEntity', 'clientId'),
-              statusId: BuiltValueNullFieldError.checkNotNull(
-                  statusId, r'PaymentEntity', 'statusId'),
-              transactionReference: BuiltValueNullFieldError.checkNotNull(
-                  transactionReference, r'PaymentEntity', 'transactionReference'),
-              date: BuiltValueNullFieldError.checkNotNull(
-                  date, r'PaymentEntity', 'date'),
-              typeId:
-                  BuiltValueNullFieldError.checkNotNull(typeId, r'PaymentEntity', 'typeId'),
-              privateNotes: BuiltValueNullFieldError.checkNotNull(privateNotes, r'PaymentEntity', 'privateNotes'),
-              customValue1: BuiltValueNullFieldError.checkNotNull(customValue1, r'PaymentEntity', 'customValue1'),
-              customValue2: BuiltValueNullFieldError.checkNotNull(customValue2, r'PaymentEntity', 'customValue2'),
-              customValue3: BuiltValueNullFieldError.checkNotNull(customValue3, r'PaymentEntity', 'customValue3'),
-              customValue4: BuiltValueNullFieldError.checkNotNull(customValue4, r'PaymentEntity', 'customValue4'),
-              exchangeRate: BuiltValueNullFieldError.checkNotNull(exchangeRate, r'PaymentEntity', 'exchangeRate'),
-              exchangeCurrencyId: BuiltValueNullFieldError.checkNotNull(exchangeCurrencyId, r'PaymentEntity', 'exchangeCurrencyId'),
-              isManual: BuiltValueNullFieldError.checkNotNull(isManual, r'PaymentEntity', 'isManual'),
-              projectId: BuiltValueNullFieldError.checkNotNull(projectId, r'PaymentEntity', 'projectId'),
-              vendorId: BuiltValueNullFieldError.checkNotNull(vendorId, r'PaymentEntity', 'vendorId'),
-              invitationId: BuiltValueNullFieldError.checkNotNull(invitationId, r'PaymentEntity', 'invitationId'),
-              transactionId: BuiltValueNullFieldError.checkNotNull(transactionId, r'PaymentEntity', 'transactionId'),
-              clientContactId: BuiltValueNullFieldError.checkNotNull(clientContactId, r'PaymentEntity', 'clientContactId'),
-              companyGatewayId: BuiltValueNullFieldError.checkNotNull(companyGatewayId, r'PaymentEntity', 'companyGatewayId'),
-              currencyId: BuiltValueNullFieldError.checkNotNull(currencyId, r'PaymentEntity', 'currencyId'),
-              gatewayTypeId: BuiltValueNullFieldError.checkNotNull(gatewayTypeId, r'PaymentEntity', 'gatewayTypeId'),
-              isApplying: isApplying,
-              sendEmail: sendEmail,
-              gatewayRefund: gatewayRefund,
-              paymentables: paymentables.build(),
-              invoices: invoices.build(),
-              credits: credits.build(),
-              documents: documents.build(),
-              isChanged: isChanged,
-              createdAt: BuiltValueNullFieldError.checkNotNull(createdAt, r'PaymentEntity', 'createdAt'),
-              updatedAt: BuiltValueNullFieldError.checkNotNull(updatedAt, r'PaymentEntity', 'updatedAt'),
-              archivedAt: BuiltValueNullFieldError.checkNotNull(archivedAt, r'PaymentEntity', 'archivedAt'),
-              isDeleted: isDeleted,
-              createdUserId: createdUserId,
-              assignedUserId: assignedUserId,
-              id: BuiltValueNullFieldError.checkNotNull(id, r'PaymentEntity', 'id'));
+          _$PaymentEntity._(
+            amount: BuiltValueNullFieldError.checkNotNull(
+                amount, r'PaymentEntity', 'amount'),
+            applied: BuiltValueNullFieldError.checkNotNull(
+                applied, r'PaymentEntity', 'applied'),
+            refunded: BuiltValueNullFieldError.checkNotNull(
+                refunded, r'PaymentEntity', 'refunded'),
+            number: BuiltValueNullFieldError.checkNotNull(
+                number, r'PaymentEntity', 'number'),
+            idempotencyKey: idempotencyKey,
+            clientId: BuiltValueNullFieldError.checkNotNull(
+                clientId, r'PaymentEntity', 'clientId'),
+            statusId: BuiltValueNullFieldError.checkNotNull(
+                statusId, r'PaymentEntity', 'statusId'),
+            transactionReference: BuiltValueNullFieldError.checkNotNull(
+                transactionReference, r'PaymentEntity', 'transactionReference'),
+            date: BuiltValueNullFieldError.checkNotNull(
+                date, r'PaymentEntity', 'date'),
+            typeId: BuiltValueNullFieldError.checkNotNull(
+                typeId, r'PaymentEntity', 'typeId'),
+            privateNotes: BuiltValueNullFieldError.checkNotNull(
+                privateNotes, r'PaymentEntity', 'privateNotes'),
+            customValue1: BuiltValueNullFieldError.checkNotNull(
+                customValue1, r'PaymentEntity', 'customValue1'),
+            customValue2: BuiltValueNullFieldError.checkNotNull(
+                customValue2, r'PaymentEntity', 'customValue2'),
+            customValue3: BuiltValueNullFieldError.checkNotNull(
+                customValue3, r'PaymentEntity', 'customValue3'),
+            customValue4: BuiltValueNullFieldError.checkNotNull(
+                customValue4, r'PaymentEntity', 'customValue4'),
+            exchangeRate: BuiltValueNullFieldError.checkNotNull(
+                exchangeRate, r'PaymentEntity', 'exchangeRate'),
+            exchangeCurrencyId: BuiltValueNullFieldError.checkNotNull(
+                exchangeCurrencyId, r'PaymentEntity', 'exchangeCurrencyId'),
+            isManual: BuiltValueNullFieldError.checkNotNull(
+                isManual, r'PaymentEntity', 'isManual'),
+            projectId: BuiltValueNullFieldError.checkNotNull(
+                projectId, r'PaymentEntity', 'projectId'),
+            vendorId: BuiltValueNullFieldError.checkNotNull(
+                vendorId, r'PaymentEntity', 'vendorId'),
+            invitationId: BuiltValueNullFieldError.checkNotNull(
+                invitationId, r'PaymentEntity', 'invitationId'),
+            transactionId: BuiltValueNullFieldError.checkNotNull(
+                transactionId, r'PaymentEntity', 'transactionId'),
+            clientContactId: BuiltValueNullFieldError.checkNotNull(
+                clientContactId, r'PaymentEntity', 'clientContactId'),
+            companyGatewayId: BuiltValueNullFieldError.checkNotNull(
+                companyGatewayId, r'PaymentEntity', 'companyGatewayId'),
+            currencyId: BuiltValueNullFieldError.checkNotNull(
+                currencyId, r'PaymentEntity', 'currencyId'),
+            gatewayTypeId: BuiltValueNullFieldError.checkNotNull(
+                gatewayTypeId, r'PaymentEntity', 'gatewayTypeId'),
+            isApplying: isApplying,
+            sendEmail: sendEmail,
+            gatewayRefund: gatewayRefund,
+            paymentables: paymentables.build(),
+            invoices: invoices.build(),
+            credits: credits.build(),
+            documents: documents.build(),
+            isChanged: isChanged,
+            createdAt: BuiltValueNullFieldError.checkNotNull(
+                createdAt, r'PaymentEntity', 'createdAt'),
+            updatedAt: BuiltValueNullFieldError.checkNotNull(
+                updatedAt, r'PaymentEntity', 'updatedAt'),
+            archivedAt: BuiltValueNullFieldError.checkNotNull(
+                archivedAt, r'PaymentEntity', 'archivedAt'),
+            isDeleted: isDeleted,
+            createdUserId: createdUserId,
+            assignedUserId: assignedUserId,
+            id: BuiltValueNullFieldError.checkNotNull(
+                id, r'PaymentEntity', 'id'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -1423,7 +1380,7 @@ class PaymentEntityBuilder
         _$failedField = 'documents';
         documents.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'PaymentEntity', _$failedField, e.toString());
       }
       rethrow;
@@ -1449,7 +1406,7 @@ class _$PaymentableEntity extends PaymentableEntity {
 
   factory _$PaymentableEntity(
           [void Function(PaymentableEntityBuilder)? updates]) =>
-      (new PaymentableEntityBuilder()..update(updates))._build();
+      (PaymentableEntityBuilder()..update(updates))._build();
 
   _$PaymentableEntity._(
       {this.createdAt,
@@ -1458,19 +1415,14 @@ class _$PaymentableEntity extends PaymentableEntity {
       this.creditId,
       required this.amount,
       required this.id})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        amount, r'PaymentableEntity', 'amount');
-    BuiltValueNullFieldError.checkNotNull(id, r'PaymentableEntity', 'id');
-  }
-
+      : super._();
   @override
   PaymentableEntity rebuild(void Function(PaymentableEntityBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   PaymentableEntityBuilder toBuilder() =>
-      new PaymentableEntityBuilder()..replace(this);
+      PaymentableEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1558,7 +1510,6 @@ class PaymentableEntityBuilder
 
   @override
   void replace(PaymentableEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PaymentableEntity;
   }
 
@@ -1572,15 +1523,16 @@ class PaymentableEntityBuilder
 
   _$PaymentableEntity _build() {
     final _$result = _$v ??
-        new _$PaymentableEntity._(
-            createdAt: createdAt,
-            updatedAt: updatedAt,
-            invoiceId: invoiceId,
-            creditId: creditId,
-            amount: BuiltValueNullFieldError.checkNotNull(
-                amount, r'PaymentableEntity', 'amount'),
-            id: BuiltValueNullFieldError.checkNotNull(
-                id, r'PaymentableEntity', 'id'));
+        _$PaymentableEntity._(
+          createdAt: createdAt,
+          updatedAt: updatedAt,
+          invoiceId: invoiceId,
+          creditId: creditId,
+          amount: BuiltValueNullFieldError.checkNotNull(
+              amount, r'PaymentableEntity', 'amount'),
+          id: BuiltValueNullFieldError.checkNotNull(
+              id, r'PaymentableEntity', 'id'),
+        );
     replace(_$result);
     return _$result;
   }

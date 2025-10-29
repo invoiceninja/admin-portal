@@ -13,7 +13,12 @@ ReportsUIState reportsUIReducer(ReportsUIState state, dynamic action) {
       ..chart = '');
   } else if (action is UpdateReportSettings) {
     if (action.report.isNotEmpty && action.report != state.report) {
-      return ReportsUIState().rebuild((b) => b..report = action.report);
+      return ReportsUIState().rebuild(
+        (b) => b
+          ..report = action.report
+          ..customStartDate = state.customStartDate
+          ..customEndDate = state.customEndDate,
+      );
     } else {
       return state.rebuild((b) => b
         ..report = action.report

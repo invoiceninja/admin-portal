@@ -7,9 +7,9 @@ part of 'purchase_order_state.dart';
 // **************************************************************************
 
 Serializer<PurchaseOrderState> _$purchaseOrderStateSerializer =
-    new _$PurchaseOrderStateSerializer();
+    _$PurchaseOrderStateSerializer();
 Serializer<PurchaseOrderUIState> _$purchaseOrderUIStateSerializer =
-    new _$PurchaseOrderUIStateSerializer();
+    _$PurchaseOrderUIStateSerializer();
 
 class _$PurchaseOrderStateSerializer
     implements StructuredSerializer<PurchaseOrderState> {
@@ -40,7 +40,7 @@ class _$PurchaseOrderStateSerializer
   PurchaseOrderState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new PurchaseOrderStateBuilder();
+    final result = PurchaseOrderStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -119,7 +119,7 @@ class _$PurchaseOrderUIStateSerializer
   PurchaseOrderUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new PurchaseOrderUIStateBuilder();
+    final result = PurchaseOrderUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -162,13 +162,9 @@ class _$PurchaseOrderState extends PurchaseOrderState {
 
   factory _$PurchaseOrderState(
           [void Function(PurchaseOrderStateBuilder)? updates]) =>
-      (new PurchaseOrderStateBuilder()..update(updates))._build();
+      (PurchaseOrderStateBuilder()..update(updates))._build();
 
-  _$PurchaseOrderState._({required this.map, required this.list}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, r'PurchaseOrderState', 'map');
-    BuiltValueNullFieldError.checkNotNull(list, r'PurchaseOrderState', 'list');
-  }
-
+  _$PurchaseOrderState._({required this.map, required this.list}) : super._();
   @override
   PurchaseOrderState rebuild(
           void Function(PurchaseOrderStateBuilder) updates) =>
@@ -176,7 +172,7 @@ class _$PurchaseOrderState extends PurchaseOrderState {
 
   @override
   PurchaseOrderStateBuilder toBuilder() =>
-      new PurchaseOrderStateBuilder()..replace(this);
+      PurchaseOrderStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -212,11 +208,11 @@ class PurchaseOrderStateBuilder
 
   MapBuilder<String, InvoiceEntity>? _map;
   MapBuilder<String, InvoiceEntity> get map =>
-      _$this._map ??= new MapBuilder<String, InvoiceEntity>();
+      _$this._map ??= MapBuilder<String, InvoiceEntity>();
   set map(MapBuilder<String, InvoiceEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
-  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  ListBuilder<String> get list => _$this._list ??= ListBuilder<String>();
   set list(ListBuilder<String>? list) => _$this._list = list;
 
   PurchaseOrderStateBuilder();
@@ -233,7 +229,6 @@ class PurchaseOrderStateBuilder
 
   @override
   void replace(PurchaseOrderState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PurchaseOrderState;
   }
 
@@ -249,7 +244,10 @@ class PurchaseOrderStateBuilder
     _$PurchaseOrderState _$result;
     try {
       _$result = _$v ??
-          new _$PurchaseOrderState._(map: map.build(), list: list.build());
+          _$PurchaseOrderState._(
+            map: map.build(),
+            list: list.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -258,7 +256,7 @@ class PurchaseOrderStateBuilder
         _$failedField = 'list';
         list.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'PurchaseOrderState', _$failedField, e.toString());
       }
       rethrow;
@@ -290,7 +288,7 @@ class _$PurchaseOrderUIState extends PurchaseOrderUIState {
 
   factory _$PurchaseOrderUIState(
           [void Function(PurchaseOrderUIStateBuilder)? updates]) =>
-      (new PurchaseOrderUIStateBuilder()..update(updates))._build();
+      (PurchaseOrderUIStateBuilder()..update(updates))._build();
 
   _$PurchaseOrderUIState._(
       {this.editing,
@@ -302,13 +300,7 @@ class _$PurchaseOrderUIState extends PurchaseOrderUIState {
       required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        listUIState, r'PurchaseOrderUIState', 'listUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        tabIndex, r'PurchaseOrderUIState', 'tabIndex');
-  }
-
+      : super._();
   @override
   PurchaseOrderUIState rebuild(
           void Function(PurchaseOrderUIStateBuilder) updates) =>
@@ -316,7 +308,7 @@ class _$PurchaseOrderUIState extends PurchaseOrderUIState {
 
   @override
   PurchaseOrderUIStateBuilder toBuilder() =>
-      new PurchaseOrderUIStateBuilder()..replace(this);
+      PurchaseOrderUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -373,7 +365,7 @@ class PurchaseOrderUIStateBuilder
 
   InvoiceEntityBuilder? _editing;
   InvoiceEntityBuilder get editing =>
-      _$this._editing ??= new InvoiceEntityBuilder();
+      _$this._editing ??= InvoiceEntityBuilder();
   set editing(InvoiceEntityBuilder? editing) => _$this._editing = editing;
 
   int? _editingItemIndex;
@@ -388,7 +380,7 @@ class PurchaseOrderUIStateBuilder
 
   ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
-      _$this._listUIState ??= new ListUIStateBuilder();
+      _$this._listUIState ??= ListUIStateBuilder();
   set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
@@ -436,7 +428,6 @@ class PurchaseOrderUIStateBuilder
 
   @override
   void replace(PurchaseOrderUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PurchaseOrderUIState;
   }
 
@@ -452,17 +443,18 @@ class PurchaseOrderUIStateBuilder
     _$PurchaseOrderUIState _$result;
     try {
       _$result = _$v ??
-          new _$PurchaseOrderUIState._(
-              editing: _editing?.build(),
-              editingItemIndex: editingItemIndex,
-              historyActivityId: historyActivityId,
-              listUIState: listUIState.build(),
-              selectedId: selectedId,
-              forceSelected: forceSelected,
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'PurchaseOrderUIState', 'tabIndex'),
-              saveCompleter: saveCompleter,
-              cancelCompleter: cancelCompleter);
+          _$PurchaseOrderUIState._(
+            editing: _editing?.build(),
+            editingItemIndex: editingItemIndex,
+            historyActivityId: historyActivityId,
+            listUIState: listUIState.build(),
+            selectedId: selectedId,
+            forceSelected: forceSelected,
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'PurchaseOrderUIState', 'tabIndex'),
+            saveCompleter: saveCompleter,
+            cancelCompleter: cancelCompleter,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -472,7 +464,7 @@ class PurchaseOrderUIStateBuilder
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'PurchaseOrderUIState', _$failedField, e.toString());
       }
       rethrow;

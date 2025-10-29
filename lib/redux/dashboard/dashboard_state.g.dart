@@ -7,9 +7,9 @@ part of 'dashboard_state.dart';
 // **************************************************************************
 
 Serializer<DashboardUIState> _$dashboardUIStateSerializer =
-    new _$DashboardUIStateSerializer();
+    _$DashboardUIStateSerializer();
 Serializer<DashboardUISettings> _$dashboardUISettingsSerializer =
-    new _$DashboardUISettingsSerializer();
+    _$DashboardUISettingsSerializer();
 
 class _$DashboardUIStateSerializer
     implements StructuredSerializer<DashboardUIState> {
@@ -46,7 +46,7 @@ class _$DashboardUIStateSerializer
   DashboardUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new DashboardUIStateBuilder();
+    final result = DashboardUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -137,7 +137,7 @@ class _$DashboardUISettingsSerializer
   DashboardUISettings deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new DashboardUISettingsBuilder();
+    final result = DashboardUISettingsBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -209,31 +209,21 @@ class _$DashboardUIState extends DashboardUIState {
 
   factory _$DashboardUIState(
           [void Function(DashboardUIStateBuilder)? updates]) =>
-      (new DashboardUIStateBuilder()..update(updates))._build();
+      (DashboardUIStateBuilder()..update(updates))._build();
 
   _$DashboardUIState._(
       {required this.settings,
       required this.selectedEntityType,
       required this.selectedEntities,
       required this.showSidebar})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        settings, r'DashboardUIState', 'settings');
-    BuiltValueNullFieldError.checkNotNull(
-        selectedEntityType, r'DashboardUIState', 'selectedEntityType');
-    BuiltValueNullFieldError.checkNotNull(
-        selectedEntities, r'DashboardUIState', 'selectedEntities');
-    BuiltValueNullFieldError.checkNotNull(
-        showSidebar, r'DashboardUIState', 'showSidebar');
-  }
-
+      : super._();
   @override
   DashboardUIState rebuild(void Function(DashboardUIStateBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
   DashboardUIStateBuilder toBuilder() =>
-      new DashboardUIStateBuilder()..replace(this);
+      DashboardUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -275,7 +265,7 @@ class DashboardUIStateBuilder
 
   DashboardUISettingsBuilder? _settings;
   DashboardUISettingsBuilder get settings =>
-      _$this._settings ??= new DashboardUISettingsBuilder();
+      _$this._settings ??= DashboardUISettingsBuilder();
   set settings(DashboardUISettingsBuilder? settings) =>
       _$this._settings = settings;
 
@@ -286,8 +276,7 @@ class DashboardUIStateBuilder
 
   MapBuilder<EntityType?, BuiltList<String>>? _selectedEntities;
   MapBuilder<EntityType?, BuiltList<String>> get selectedEntities =>
-      _$this._selectedEntities ??=
-          new MapBuilder<EntityType?, BuiltList<String>>();
+      _$this._selectedEntities ??= MapBuilder<EntityType?, BuiltList<String>>();
   set selectedEntities(
           MapBuilder<EntityType?, BuiltList<String>>? selectedEntities) =>
       _$this._selectedEntities = selectedEntities;
@@ -312,7 +301,6 @@ class DashboardUIStateBuilder
 
   @override
   void replace(DashboardUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DashboardUIState;
   }
 
@@ -328,15 +316,14 @@ class DashboardUIStateBuilder
     _$DashboardUIState _$result;
     try {
       _$result = _$v ??
-          new _$DashboardUIState._(
-              settings: settings.build(),
-              selectedEntityType: BuiltValueNullFieldError.checkNotNull(
-                  selectedEntityType,
-                  r'DashboardUIState',
-                  'selectedEntityType'),
-              selectedEntities: selectedEntities.build(),
-              showSidebar: BuiltValueNullFieldError.checkNotNull(
-                  showSidebar, r'DashboardUIState', 'showSidebar'));
+          _$DashboardUIState._(
+            settings: settings.build(),
+            selectedEntityType: BuiltValueNullFieldError.checkNotNull(
+                selectedEntityType, r'DashboardUIState', 'selectedEntityType'),
+            selectedEntities: selectedEntities.build(),
+            showSidebar: BuiltValueNullFieldError.checkNotNull(
+                showSidebar, r'DashboardUIState', 'showSidebar'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -346,7 +333,7 @@ class DashboardUIStateBuilder
         _$failedField = 'selectedEntities';
         selectedEntities.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'DashboardUIState', _$failedField, e.toString());
       }
       rethrow;
@@ -382,7 +369,7 @@ class _$DashboardUISettings extends DashboardUISettings {
 
   factory _$DashboardUISettings(
           [void Function(DashboardUISettingsBuilder)? updates]) =>
-      (new DashboardUISettingsBuilder()..update(updates))._build();
+      (DashboardUISettingsBuilder()..update(updates))._build();
 
   _$DashboardUISettings._(
       {required this.dateRange,
@@ -396,31 +383,7 @@ class _$DashboardUISettings extends DashboardUISettings {
       required this.currencyId,
       required this.includeTaxes,
       required this.groupBy})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        dateRange, r'DashboardUISettings', 'dateRange');
-    BuiltValueNullFieldError.checkNotNull(
-        customStartDate, r'DashboardUISettings', 'customStartDate');
-    BuiltValueNullFieldError.checkNotNull(
-        customEndDate, r'DashboardUISettings', 'customEndDate');
-    BuiltValueNullFieldError.checkNotNull(
-        enableComparison, r'DashboardUISettings', 'enableComparison');
-    BuiltValueNullFieldError.checkNotNull(
-        compareDateRange, r'DashboardUISettings', 'compareDateRange');
-    BuiltValueNullFieldError.checkNotNull(compareCustomStartDate,
-        r'DashboardUISettings', 'compareCustomStartDate');
-    BuiltValueNullFieldError.checkNotNull(
-        compareCustomEndDate, r'DashboardUISettings', 'compareCustomEndDate');
-    BuiltValueNullFieldError.checkNotNull(
-        offset, r'DashboardUISettings', 'offset');
-    BuiltValueNullFieldError.checkNotNull(
-        currencyId, r'DashboardUISettings', 'currencyId');
-    BuiltValueNullFieldError.checkNotNull(
-        includeTaxes, r'DashboardUISettings', 'includeTaxes');
-    BuiltValueNullFieldError.checkNotNull(
-        groupBy, r'DashboardUISettings', 'groupBy');
-  }
-
+      : super._();
   @override
   DashboardUISettings rebuild(
           void Function(DashboardUISettingsBuilder) updates) =>
@@ -428,7 +391,7 @@ class _$DashboardUISettings extends DashboardUISettings {
 
   @override
   DashboardUISettingsBuilder toBuilder() =>
-      new DashboardUISettingsBuilder()..replace(this);
+      DashboardUISettingsBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -564,7 +527,6 @@ class DashboardUISettingsBuilder
 
   @override
   void replace(DashboardUISettings other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$DashboardUISettings;
   }
 
@@ -578,27 +540,34 @@ class DashboardUISettingsBuilder
 
   _$DashboardUISettings _build() {
     final _$result = _$v ??
-        new _$DashboardUISettings._(
-            dateRange: BuiltValueNullFieldError.checkNotNull(
-                dateRange, r'DashboardUISettings', 'dateRange'),
-            customStartDate: BuiltValueNullFieldError.checkNotNull(
-                customStartDate, r'DashboardUISettings', 'customStartDate'),
-            customEndDate: BuiltValueNullFieldError.checkNotNull(
-                customEndDate, r'DashboardUISettings', 'customEndDate'),
-            enableComparison: BuiltValueNullFieldError.checkNotNull(
-                enableComparison, r'DashboardUISettings', 'enableComparison'),
-            compareDateRange: BuiltValueNullFieldError.checkNotNull(
-                compareDateRange, r'DashboardUISettings', 'compareDateRange'),
-            compareCustomStartDate: BuiltValueNullFieldError.checkNotNull(
-                compareCustomStartDate,
-                r'DashboardUISettings',
-                'compareCustomStartDate'),
-            compareCustomEndDate: BuiltValueNullFieldError.checkNotNull(
-                compareCustomEndDate, r'DashboardUISettings', 'compareCustomEndDate'),
-            offset: BuiltValueNullFieldError.checkNotNull(offset, r'DashboardUISettings', 'offset'),
-            currencyId: BuiltValueNullFieldError.checkNotNull(currencyId, r'DashboardUISettings', 'currencyId'),
-            includeTaxes: BuiltValueNullFieldError.checkNotNull(includeTaxes, r'DashboardUISettings', 'includeTaxes'),
-            groupBy: BuiltValueNullFieldError.checkNotNull(groupBy, r'DashboardUISettings', 'groupBy'));
+        _$DashboardUISettings._(
+          dateRange: BuiltValueNullFieldError.checkNotNull(
+              dateRange, r'DashboardUISettings', 'dateRange'),
+          customStartDate: BuiltValueNullFieldError.checkNotNull(
+              customStartDate, r'DashboardUISettings', 'customStartDate'),
+          customEndDate: BuiltValueNullFieldError.checkNotNull(
+              customEndDate, r'DashboardUISettings', 'customEndDate'),
+          enableComparison: BuiltValueNullFieldError.checkNotNull(
+              enableComparison, r'DashboardUISettings', 'enableComparison'),
+          compareDateRange: BuiltValueNullFieldError.checkNotNull(
+              compareDateRange, r'DashboardUISettings', 'compareDateRange'),
+          compareCustomStartDate: BuiltValueNullFieldError.checkNotNull(
+              compareCustomStartDate,
+              r'DashboardUISettings',
+              'compareCustomStartDate'),
+          compareCustomEndDate: BuiltValueNullFieldError.checkNotNull(
+              compareCustomEndDate,
+              r'DashboardUISettings',
+              'compareCustomEndDate'),
+          offset: BuiltValueNullFieldError.checkNotNull(
+              offset, r'DashboardUISettings', 'offset'),
+          currencyId: BuiltValueNullFieldError.checkNotNull(
+              currencyId, r'DashboardUISettings', 'currencyId'),
+          includeTaxes: BuiltValueNullFieldError.checkNotNull(
+              includeTaxes, r'DashboardUISettings', 'includeTaxes'),
+          groupBy: BuiltValueNullFieldError.checkNotNull(
+              groupBy, r'DashboardUISettings', 'groupBy'),
+        );
     replace(_$result);
     return _$result;
   }

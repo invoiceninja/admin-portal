@@ -7,7 +7,7 @@ part of 'payment_status_model.dart';
 // **************************************************************************
 
 Serializer<PaymentStatusEntity> _$paymentStatusEntitySerializer =
-    new _$PaymentStatusEntitySerializer();
+    _$PaymentStatusEntitySerializer();
 
 class _$PaymentStatusEntitySerializer
     implements StructuredSerializer<PaymentStatusEntity> {
@@ -37,7 +37,7 @@ class _$PaymentStatusEntitySerializer
   PaymentStatusEntity deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new PaymentStatusEntityBuilder();
+    final result = PaymentStatusEntityBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -68,13 +68,9 @@ class _$PaymentStatusEntity extends PaymentStatusEntity {
 
   factory _$PaymentStatusEntity(
           [void Function(PaymentStatusEntityBuilder)? updates]) =>
-      (new PaymentStatusEntityBuilder()..update(updates))._build();
+      (PaymentStatusEntityBuilder()..update(updates))._build();
 
-  _$PaymentStatusEntity._({required this.id, required this.name}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(id, r'PaymentStatusEntity', 'id');
-    BuiltValueNullFieldError.checkNotNull(name, r'PaymentStatusEntity', 'name');
-  }
-
+  _$PaymentStatusEntity._({required this.id, required this.name}) : super._();
   @override
   PaymentStatusEntity rebuild(
           void Function(PaymentStatusEntityBuilder) updates) =>
@@ -82,7 +78,7 @@ class _$PaymentStatusEntity extends PaymentStatusEntity {
 
   @override
   PaymentStatusEntityBuilder toBuilder() =>
-      new PaymentStatusEntityBuilder()..replace(this);
+      PaymentStatusEntityBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -136,7 +132,6 @@ class PaymentStatusEntityBuilder
 
   @override
   void replace(PaymentStatusEntity other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$PaymentStatusEntity;
   }
 
@@ -150,11 +145,12 @@ class PaymentStatusEntityBuilder
 
   _$PaymentStatusEntity _build() {
     final _$result = _$v ??
-        new _$PaymentStatusEntity._(
-            id: BuiltValueNullFieldError.checkNotNull(
-                id, r'PaymentStatusEntity', 'id'),
-            name: BuiltValueNullFieldError.checkNotNull(
-                name, r'PaymentStatusEntity', 'name'));
+        _$PaymentStatusEntity._(
+          id: BuiltValueNullFieldError.checkNotNull(
+              id, r'PaymentStatusEntity', 'id'),
+          name: BuiltValueNullFieldError.checkNotNull(
+              name, r'PaymentStatusEntity', 'name'),
+        );
     replace(_$result);
     return _$result;
   }

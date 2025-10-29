@@ -1,6 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
-import 'package:collection/collection.dart' show IterableNullableExtension;
+
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:memoize/memoize.dart';
@@ -95,7 +95,7 @@ ReportResult profitAndLossReport(
   if (profitAndLossReportSettings.columns.isNotEmpty) {
     columns = BuiltList(profitAndLossReportSettings.columns
         .map((e) => EnumUtils.fromString(ProfitAndLossReportFields.values, e))
-        .whereNotNull()
+        .nonNulls
         .toList());
   } else {
     columns = BuiltList(defaultColumns);

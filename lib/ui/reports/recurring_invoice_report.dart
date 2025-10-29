@@ -1,6 +1,6 @@
 // Package imports:
 import 'package:built_collection/built_collection.dart';
-import 'package:collection/collection.dart' show IterableNullableExtension;
+
 import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:invoiceninja_flutter/utils/localization.dart';
 import 'package:memoize/memoize.dart';
@@ -144,7 +144,7 @@ ReportResult recurringInvoiceReport(
     columns = BuiltList(invoiceReportSettings.columns
         .map(
             (e) => EnumUtils.fromString(RecurringInvoiceReportFields.values, e))
-        .whereNotNull()
+        .nonNulls
         .toList());
   } else {
     columns = BuiltList(defaultColumns);

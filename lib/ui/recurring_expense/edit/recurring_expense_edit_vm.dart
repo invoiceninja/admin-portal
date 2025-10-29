@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:http/http.dart';
+import 'package:invoiceninja_flutter/main_app.dart';
 import 'package:redux/redux.dart';
 
 // Project imports:
@@ -146,10 +147,11 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
                 store.dispatch(
                     UpdateCurrentRoute(RecurringExpenseViewScreen.route));
                 if (recurringExpense.isNew) {
-                  Navigator.of(context)
+                  Navigator.of(navigatorKey.currentContext!)
                       .pushReplacementNamed(RecurringExpenseViewScreen.route);
                 } else {
-                  Navigator.of(context).pop(savedRecurringExpense);
+                  Navigator.of(navigatorKey.currentContext!)
+                      .pop(savedRecurringExpense);
                 }
               } else {
                 if (!state.prefState.isPreviewVisible) {
@@ -172,7 +174,7 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
               }
             }).catchError((Object error) {
               showDialog<ErrorDialog>(
-                  context: context,
+                  context: navigatorKey.currentContext!,
                   builder: (BuildContext context) {
                     return ErrorDialog(error);
                   });
@@ -189,10 +191,11 @@ class RecurringExpenseEditVM extends AbstractExpenseEditVM {
             expense: recurringExpense,
             completer: completer));
         completer.future.then((client) {
-          showToast(AppLocalization.of(context)!.uploadedDocument);
+          showToast(AppLocalization.of(navigatorKey.currentContext!)!
+              .uploadedDocument);
         }).catchError((Object error) {
           showDialog<ErrorDialog>(
-              context: context,
+              context: navigatorKey.currentContext!,
               builder: (BuildContext context) {
                 return ErrorDialog(error);
               });

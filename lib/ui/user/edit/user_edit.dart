@@ -278,7 +278,7 @@ class _UserEditState extends State<UserEdit>
                     value: userCompany.isAdmin,
                     onChanged: (value) => viewModel.onUserChanged(
                         user.rebuild((b) => b..userCompany.isAdmin = value)),
-                    activeColor: Theme.of(context).colorScheme.secondary,
+                    activeThumbColor: Theme.of(context).colorScheme.secondary,
                   ),
                   SwitchListTile(
                     title: Text(localization.dashboard),
@@ -312,7 +312,7 @@ class _UserEditState extends State<UserEdit>
                               ..userCompany.permissions =
                                   permissions.join(',')));
                           },
-                    activeColor: Theme.of(context).colorScheme.secondary,
+                    activeThumbColor: Theme.of(context).colorScheme.secondary,
                   ),
                   SwitchListTile(
                     title: Text(localization.reports),
@@ -346,7 +346,7 @@ class _UserEditState extends State<UserEdit>
                               ..userCompany.permissions =
                                   permissions.join(',')));
                           },
-                    activeColor: Theme.of(context).colorScheme.secondary,
+                    activeThumbColor: Theme.of(context).colorScheme.secondary,
                   ),
                   SwitchListTile(
                     title: Text(localization.sendEmails),
@@ -378,7 +378,7 @@ class _UserEditState extends State<UserEdit>
                               ..userCompany.permissions =
                                   permissions.join(',')));
                           },
-                    activeColor: Theme.of(context).colorScheme.secondary,
+                    activeThumbColor: Theme.of(context).colorScheme.secondary,
                   ),
                 ],
               ),

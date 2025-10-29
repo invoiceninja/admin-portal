@@ -39,9 +39,9 @@ class AppTabBar extends StatelessWidget {
 
     return Theme(
       data: ThemeData(
-        tabBarTheme: TabBarTheme(
+        tabBarTheme: TabBarThemeData(
           labelColor: Colors.black,
-          unselectedLabelColor: Colors.black.withOpacity(.65),
+          unselectedLabelColor: Colors.black.withValues(alpha: .65),
         ),
       ),
       child: tabBar,

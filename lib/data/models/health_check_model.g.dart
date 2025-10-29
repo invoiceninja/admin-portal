@@ -7,14 +7,14 @@ part of 'health_check_model.dart';
 // **************************************************************************
 
 Serializer<HealthCheckResponse> _$healthCheckResponseSerializer =
-    new _$HealthCheckResponseSerializer();
+    _$HealthCheckResponseSerializer();
 Serializer<HealthCheckPHPResponse> _$healthCheckPHPResponseSerializer =
-    new _$HealthCheckPHPResponseSerializer();
+    _$HealthCheckPHPResponseSerializer();
 Serializer<HealthCheckQueueResponse> _$healthCheckQueueResponseSerializer =
-    new _$HealthCheckQueueResponseSerializer();
+    _$HealthCheckQueueResponseSerializer();
 Serializer<HealthCheckLastErrorResponse>
     _$healthCheckLastErrorResponseSerializer =
-    new _$HealthCheckLastErrorResponseSerializer();
+    _$HealthCheckLastErrorResponseSerializer();
 
 class _$HealthCheckResponseSerializer
     implements StructuredSerializer<HealthCheckResponse> {
@@ -91,7 +91,7 @@ class _$HealthCheckResponseSerializer
   HealthCheckResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new HealthCheckResponseBuilder();
+    final result = HealthCheckResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -214,7 +214,7 @@ class _$HealthCheckPHPResponseSerializer
   HealthCheckPHPResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new HealthCheckPHPResponseBuilder();
+    final result = HealthCheckPHPResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -280,7 +280,7 @@ class _$HealthCheckQueueResponseSerializer
   HealthCheckQueueResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new HealthCheckQueueResponseBuilder();
+    final result = HealthCheckQueueResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -334,7 +334,7 @@ class _$HealthCheckLastErrorResponseSerializer
   HealthCheckLastErrorResponse deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new HealthCheckLastErrorResponseBuilder();
+    final result = HealthCheckLastErrorResponseBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -391,7 +391,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
 
   factory _$HealthCheckResponse(
           [void Function(HealthCheckResponseBuilder)? updates]) =>
-      (new HealthCheckResponseBuilder()..update(updates))._build();
+      (HealthCheckResponseBuilder()..update(updates))._build();
 
   _$HealthCheckResponse._(
       {required this.systemHealth,
@@ -411,43 +411,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
       required this.exchangeRateApiNotConfigured,
       required this.pendingMigration,
       required this.queue})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        systemHealth, r'HealthCheckResponse', 'systemHealth');
-    BuiltValueNullFieldError.checkNotNull(
-        phpVersion, r'HealthCheckResponse', 'phpVersion');
-    BuiltValueNullFieldError.checkNotNull(
-        queueData, r'HealthCheckResponse', 'queueData');
-    BuiltValueNullFieldError.checkNotNull(
-        envWritable, r'HealthCheckResponse', 'envWritable');
-    BuiltValueNullFieldError.checkNotNull(
-        dbCheck, r'HealthCheckResponse', 'dbCheck');
-    BuiltValueNullFieldError.checkNotNull(
-        cacheEnabled, r'HealthCheckResponse', 'cacheEnabled');
-    BuiltValueNullFieldError.checkNotNull(
-        phantomEnabled, r'HealthCheckResponse', 'phantomEnabled');
-    BuiltValueNullFieldError.checkNotNull(
-        openBasedir, r'HealthCheckResponse', 'openBasedir');
-    BuiltValueNullFieldError.checkNotNull(
-        filePermissions, r'HealthCheckResponse', 'filePermissions');
-    BuiltValueNullFieldError.checkNotNull(
-        execEnabled, r'HealthCheckResponse', 'execEnabled');
-    BuiltValueNullFieldError.checkNotNull(
-        emailDriver, r'HealthCheckResponse', 'emailDriver');
-    BuiltValueNullFieldError.checkNotNull(
-        pendingJobs, r'HealthCheckResponse', 'pendingJobs');
-    BuiltValueNullFieldError.checkNotNull(
-        pdfEngine, r'HealthCheckResponse', 'pdfEngine');
-    BuiltValueNullFieldError.checkNotNull(
-        trailingSlash, r'HealthCheckResponse', 'trailingSlash');
-    BuiltValueNullFieldError.checkNotNull(exchangeRateApiNotConfigured,
-        r'HealthCheckResponse', 'exchangeRateApiNotConfigured');
-    BuiltValueNullFieldError.checkNotNull(
-        pendingMigration, r'HealthCheckResponse', 'pendingMigration');
-    BuiltValueNullFieldError.checkNotNull(
-        queue, r'HealthCheckResponse', 'queue');
-  }
-
+      : super._();
   @override
   HealthCheckResponse rebuild(
           void Function(HealthCheckResponseBuilder) updates) =>
@@ -455,7 +419,7 @@ class _$HealthCheckResponse extends HealthCheckResponse {
 
   @override
   HealthCheckResponseBuilder toBuilder() =>
-      new HealthCheckResponseBuilder()..replace(this);
+      HealthCheckResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -540,13 +504,13 @@ class HealthCheckResponseBuilder
 
   HealthCheckPHPResponseBuilder? _phpVersion;
   HealthCheckPHPResponseBuilder get phpVersion =>
-      _$this._phpVersion ??= new HealthCheckPHPResponseBuilder();
+      _$this._phpVersion ??= HealthCheckPHPResponseBuilder();
   set phpVersion(HealthCheckPHPResponseBuilder? phpVersion) =>
       _$this._phpVersion = phpVersion;
 
   HealthCheckQueueResponseBuilder? _queueData;
   HealthCheckQueueResponseBuilder get queueData =>
-      _$this._queueData ??= new HealthCheckQueueResponseBuilder();
+      _$this._queueData ??= HealthCheckQueueResponseBuilder();
   set queueData(HealthCheckQueueResponseBuilder? queueData) =>
       _$this._queueData = queueData;
 
@@ -643,7 +607,6 @@ class HealthCheckResponseBuilder
 
   @override
   void replace(HealthCheckResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$HealthCheckResponse;
   }
 
@@ -659,32 +622,42 @@ class HealthCheckResponseBuilder
     _$HealthCheckResponse _$result;
     try {
       _$result = _$v ??
-          new _$HealthCheckResponse._(
-              systemHealth: BuiltValueNullFieldError.checkNotNull(
-                  systemHealth, r'HealthCheckResponse', 'systemHealth'),
-              phpVersion: phpVersion.build(),
-              queueData: queueData.build(),
-              envWritable: BuiltValueNullFieldError.checkNotNull(
-                  envWritable, r'HealthCheckResponse', 'envWritable'),
-              dbCheck: BuiltValueNullFieldError.checkNotNull(
-                  dbCheck, r'HealthCheckResponse', 'dbCheck'),
-              cacheEnabled: BuiltValueNullFieldError.checkNotNull(
-                  cacheEnabled, r'HealthCheckResponse', 'cacheEnabled'),
-              phantomEnabled: BuiltValueNullFieldError.checkNotNull(
-                  phantomEnabled, r'HealthCheckResponse', 'phantomEnabled'),
-              openBasedir: BuiltValueNullFieldError.checkNotNull(
-                  openBasedir, r'HealthCheckResponse', 'openBasedir'),
-              filePermissions: BuiltValueNullFieldError.checkNotNull(
-                  filePermissions, r'HealthCheckResponse', 'filePermissions'),
-              execEnabled: BuiltValueNullFieldError.checkNotNull(
-                  execEnabled, r'HealthCheckResponse', 'execEnabled'),
-              emailDriver: BuiltValueNullFieldError.checkNotNull(emailDriver, r'HealthCheckResponse', 'emailDriver'),
-              pendingJobs: BuiltValueNullFieldError.checkNotNull(pendingJobs, r'HealthCheckResponse', 'pendingJobs'),
-              pdfEngine: BuiltValueNullFieldError.checkNotNull(pdfEngine, r'HealthCheckResponse', 'pdfEngine'),
-              trailingSlash: BuiltValueNullFieldError.checkNotNull(trailingSlash, r'HealthCheckResponse', 'trailingSlash'),
-              exchangeRateApiNotConfigured: BuiltValueNullFieldError.checkNotNull(exchangeRateApiNotConfigured, r'HealthCheckResponse', 'exchangeRateApiNotConfigured'),
-              pendingMigration: BuiltValueNullFieldError.checkNotNull(pendingMigration, r'HealthCheckResponse', 'pendingMigration'),
-              queue: BuiltValueNullFieldError.checkNotNull(queue, r'HealthCheckResponse', 'queue'));
+          _$HealthCheckResponse._(
+            systemHealth: BuiltValueNullFieldError.checkNotNull(
+                systemHealth, r'HealthCheckResponse', 'systemHealth'),
+            phpVersion: phpVersion.build(),
+            queueData: queueData.build(),
+            envWritable: BuiltValueNullFieldError.checkNotNull(
+                envWritable, r'HealthCheckResponse', 'envWritable'),
+            dbCheck: BuiltValueNullFieldError.checkNotNull(
+                dbCheck, r'HealthCheckResponse', 'dbCheck'),
+            cacheEnabled: BuiltValueNullFieldError.checkNotNull(
+                cacheEnabled, r'HealthCheckResponse', 'cacheEnabled'),
+            phantomEnabled: BuiltValueNullFieldError.checkNotNull(
+                phantomEnabled, r'HealthCheckResponse', 'phantomEnabled'),
+            openBasedir: BuiltValueNullFieldError.checkNotNull(
+                openBasedir, r'HealthCheckResponse', 'openBasedir'),
+            filePermissions: BuiltValueNullFieldError.checkNotNull(
+                filePermissions, r'HealthCheckResponse', 'filePermissions'),
+            execEnabled: BuiltValueNullFieldError.checkNotNull(
+                execEnabled, r'HealthCheckResponse', 'execEnabled'),
+            emailDriver: BuiltValueNullFieldError.checkNotNull(
+                emailDriver, r'HealthCheckResponse', 'emailDriver'),
+            pendingJobs: BuiltValueNullFieldError.checkNotNull(
+                pendingJobs, r'HealthCheckResponse', 'pendingJobs'),
+            pdfEngine: BuiltValueNullFieldError.checkNotNull(
+                pdfEngine, r'HealthCheckResponse', 'pdfEngine'),
+            trailingSlash: BuiltValueNullFieldError.checkNotNull(
+                trailingSlash, r'HealthCheckResponse', 'trailingSlash'),
+            exchangeRateApiNotConfigured: BuiltValueNullFieldError.checkNotNull(
+                exchangeRateApiNotConfigured,
+                r'HealthCheckResponse',
+                'exchangeRateApiNotConfigured'),
+            pendingMigration: BuiltValueNullFieldError.checkNotNull(
+                pendingMigration, r'HealthCheckResponse', 'pendingMigration'),
+            queue: BuiltValueNullFieldError.checkNotNull(
+                queue, r'HealthCheckResponse', 'queue'),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -693,7 +666,7 @@ class HealthCheckResponseBuilder
         _$failedField = 'queueData';
         queueData.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'HealthCheckResponse', _$failedField, e.toString());
       }
       rethrow;
@@ -717,7 +690,7 @@ class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
 
   factory _$HealthCheckPHPResponse(
           [void Function(HealthCheckPHPResponseBuilder)? updates]) =>
-      (new HealthCheckPHPResponseBuilder()..update(updates))._build();
+      (HealthCheckPHPResponseBuilder()..update(updates))._build();
 
   _$HealthCheckPHPResponse._(
       {required this.minimumPHPVersion,
@@ -725,19 +698,7 @@ class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
       required this.currentPHPCLIVersion,
       required this.isOkay,
       required this.memoryLimit})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        minimumPHPVersion, r'HealthCheckPHPResponse', 'minimumPHPVersion');
-    BuiltValueNullFieldError.checkNotNull(
-        currentPHPVersion, r'HealthCheckPHPResponse', 'currentPHPVersion');
-    BuiltValueNullFieldError.checkNotNull(currentPHPCLIVersion,
-        r'HealthCheckPHPResponse', 'currentPHPCLIVersion');
-    BuiltValueNullFieldError.checkNotNull(
-        isOkay, r'HealthCheckPHPResponse', 'isOkay');
-    BuiltValueNullFieldError.checkNotNull(
-        memoryLimit, r'HealthCheckPHPResponse', 'memoryLimit');
-  }
-
+      : super._();
   @override
   HealthCheckPHPResponse rebuild(
           void Function(HealthCheckPHPResponseBuilder) updates) =>
@@ -745,7 +706,7 @@ class _$HealthCheckPHPResponse extends HealthCheckPHPResponse {
 
   @override
   HealthCheckPHPResponseBuilder toBuilder() =>
-      new HealthCheckPHPResponseBuilder()..replace(this);
+      HealthCheckPHPResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -830,7 +791,6 @@ class HealthCheckPHPResponseBuilder
 
   @override
   void replace(HealthCheckPHPResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$HealthCheckPHPResponse;
   }
 
@@ -844,23 +804,24 @@ class HealthCheckPHPResponseBuilder
 
   _$HealthCheckPHPResponse _build() {
     final _$result = _$v ??
-        new _$HealthCheckPHPResponse._(
-            minimumPHPVersion: BuiltValueNullFieldError.checkNotNull(
-                minimumPHPVersion,
-                r'HealthCheckPHPResponse',
-                'minimumPHPVersion'),
-            currentPHPVersion: BuiltValueNullFieldError.checkNotNull(
-                currentPHPVersion,
-                r'HealthCheckPHPResponse',
-                'currentPHPVersion'),
-            currentPHPCLIVersion:
-                BuiltValueNullFieldError
-                    .checkNotNull(currentPHPCLIVersion,
-                        r'HealthCheckPHPResponse', 'currentPHPCLIVersion'),
-            isOkay: BuiltValueNullFieldError.checkNotNull(
-                isOkay, r'HealthCheckPHPResponse', 'isOkay'),
-            memoryLimit: BuiltValueNullFieldError.checkNotNull(
-                memoryLimit, r'HealthCheckPHPResponse', 'memoryLimit'));
+        _$HealthCheckPHPResponse._(
+          minimumPHPVersion: BuiltValueNullFieldError.checkNotNull(
+              minimumPHPVersion,
+              r'HealthCheckPHPResponse',
+              'minimumPHPVersion'),
+          currentPHPVersion: BuiltValueNullFieldError.checkNotNull(
+              currentPHPVersion,
+              r'HealthCheckPHPResponse',
+              'currentPHPVersion'),
+          currentPHPCLIVersion: BuiltValueNullFieldError.checkNotNull(
+              currentPHPCLIVersion,
+              r'HealthCheckPHPResponse',
+              'currentPHPCLIVersion'),
+          isOkay: BuiltValueNullFieldError.checkNotNull(
+              isOkay, r'HealthCheckPHPResponse', 'isOkay'),
+          memoryLimit: BuiltValueNullFieldError.checkNotNull(
+              memoryLimit, r'HealthCheckPHPResponse', 'memoryLimit'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -876,19 +837,11 @@ class _$HealthCheckQueueResponse extends HealthCheckQueueResponse {
 
   factory _$HealthCheckQueueResponse(
           [void Function(HealthCheckQueueResponseBuilder)? updates]) =>
-      (new HealthCheckQueueResponseBuilder()..update(updates))._build();
+      (HealthCheckQueueResponseBuilder()..update(updates))._build();
 
   _$HealthCheckQueueResponse._(
       {required this.failed, required this.pending, required this.lastError})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        failed, r'HealthCheckQueueResponse', 'failed');
-    BuiltValueNullFieldError.checkNotNull(
-        pending, r'HealthCheckQueueResponse', 'pending');
-    BuiltValueNullFieldError.checkNotNull(
-        lastError, r'HealthCheckQueueResponse', 'lastError');
-  }
-
+      : super._();
   @override
   HealthCheckQueueResponse rebuild(
           void Function(HealthCheckQueueResponseBuilder) updates) =>
@@ -896,7 +849,7 @@ class _$HealthCheckQueueResponse extends HealthCheckQueueResponse {
 
   @override
   HealthCheckQueueResponseBuilder toBuilder() =>
-      new HealthCheckQueueResponseBuilder()..replace(this);
+      HealthCheckQueueResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -961,7 +914,6 @@ class HealthCheckQueueResponseBuilder
 
   @override
   void replace(HealthCheckQueueResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$HealthCheckQueueResponse;
   }
 
@@ -975,13 +927,14 @@ class HealthCheckQueueResponseBuilder
 
   _$HealthCheckQueueResponse _build() {
     final _$result = _$v ??
-        new _$HealthCheckQueueResponse._(
-            failed: BuiltValueNullFieldError.checkNotNull(
-                failed, r'HealthCheckQueueResponse', 'failed'),
-            pending: BuiltValueNullFieldError.checkNotNull(
-                pending, r'HealthCheckQueueResponse', 'pending'),
-            lastError: BuiltValueNullFieldError.checkNotNull(
-                lastError, r'HealthCheckQueueResponse', 'lastError'));
+        _$HealthCheckQueueResponse._(
+          failed: BuiltValueNullFieldError.checkNotNull(
+              failed, r'HealthCheckQueueResponse', 'failed'),
+          pending: BuiltValueNullFieldError.checkNotNull(
+              pending, r'HealthCheckQueueResponse', 'pending'),
+          lastError: BuiltValueNullFieldError.checkNotNull(
+              lastError, r'HealthCheckQueueResponse', 'lastError'),
+        );
     replace(_$result);
     return _$result;
   }
@@ -993,13 +946,9 @@ class _$HealthCheckLastErrorResponse extends HealthCheckLastErrorResponse {
 
   factory _$HealthCheckLastErrorResponse(
           [void Function(HealthCheckLastErrorResponseBuilder)? updates]) =>
-      (new HealthCheckLastErrorResponseBuilder()..update(updates))._build();
+      (HealthCheckLastErrorResponseBuilder()..update(updates))._build();
 
-  _$HealthCheckLastErrorResponse._({required this.lastError}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        lastError, r'HealthCheckLastErrorResponse', 'lastError');
-  }
-
+  _$HealthCheckLastErrorResponse._({required this.lastError}) : super._();
   @override
   HealthCheckLastErrorResponse rebuild(
           void Function(HealthCheckLastErrorResponseBuilder) updates) =>
@@ -1007,7 +956,7 @@ class _$HealthCheckLastErrorResponse extends HealthCheckLastErrorResponse {
 
   @override
   HealthCheckLastErrorResponseBuilder toBuilder() =>
-      new HealthCheckLastErrorResponseBuilder()..replace(this);
+      HealthCheckLastErrorResponseBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -1057,7 +1006,6 @@ class HealthCheckLastErrorResponseBuilder
 
   @override
   void replace(HealthCheckLastErrorResponse other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$HealthCheckLastErrorResponse;
   }
 
@@ -1071,9 +1019,10 @@ class HealthCheckLastErrorResponseBuilder
 
   _$HealthCheckLastErrorResponse _build() {
     final _$result = _$v ??
-        new _$HealthCheckLastErrorResponse._(
-            lastError: BuiltValueNullFieldError.checkNotNull(
-                lastError, r'HealthCheckLastErrorResponse', 'lastError'));
+        _$HealthCheckLastErrorResponse._(
+          lastError: BuiltValueNullFieldError.checkNotNull(
+              lastError, r'HealthCheckLastErrorResponse', 'lastError'),
+        );
     replace(_$result);
     return _$result;
   }

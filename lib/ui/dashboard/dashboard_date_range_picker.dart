@@ -85,7 +85,7 @@ class _DashboardDateRangePickerState extends State<DashboardDateRangePicker> {
                           Text(localization.compare),
                           Switch(
                             value: _settings!.enableComparison!,
-                            activeColor:
+                            activeThumbColor:
                                 Theme.of(context).colorScheme.secondary,
                             onChanged: (value) {
                               setState(

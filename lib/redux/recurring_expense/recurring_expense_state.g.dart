@@ -7,9 +7,9 @@ part of 'recurring_expense_state.dart';
 // **************************************************************************
 
 Serializer<RecurringExpenseState> _$recurringExpenseStateSerializer =
-    new _$RecurringExpenseStateSerializer();
+    _$RecurringExpenseStateSerializer();
 Serializer<RecurringExpenseUIState> _$recurringExpenseUIStateSerializer =
-    new _$RecurringExpenseUIStateSerializer();
+    _$RecurringExpenseUIStateSerializer();
 
 class _$RecurringExpenseStateSerializer
     implements StructuredSerializer<RecurringExpenseState> {
@@ -43,7 +43,7 @@ class _$RecurringExpenseStateSerializer
   RecurringExpenseState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new RecurringExpenseStateBuilder();
+    final result = RecurringExpenseStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -122,7 +122,7 @@ class _$RecurringExpenseUIStateSerializer
   RecurringExpenseUIState deserialize(
       Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new RecurringExpenseUIStateBuilder();
+    final result = RecurringExpenseUIStateBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -165,15 +165,10 @@ class _$RecurringExpenseState extends RecurringExpenseState {
 
   factory _$RecurringExpenseState(
           [void Function(RecurringExpenseStateBuilder)? updates]) =>
-      (new RecurringExpenseStateBuilder()..update(updates))._build();
+      (RecurringExpenseStateBuilder()..update(updates))._build();
 
   _$RecurringExpenseState._({required this.map, required this.list})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(map, r'RecurringExpenseState', 'map');
-    BuiltValueNullFieldError.checkNotNull(
-        list, r'RecurringExpenseState', 'list');
-  }
-
+      : super._();
   @override
   RecurringExpenseState rebuild(
           void Function(RecurringExpenseStateBuilder) updates) =>
@@ -181,7 +176,7 @@ class _$RecurringExpenseState extends RecurringExpenseState {
 
   @override
   RecurringExpenseStateBuilder toBuilder() =>
-      new RecurringExpenseStateBuilder()..replace(this);
+      RecurringExpenseStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -217,11 +212,11 @@ class RecurringExpenseStateBuilder
 
   MapBuilder<String, ExpenseEntity>? _map;
   MapBuilder<String, ExpenseEntity> get map =>
-      _$this._map ??= new MapBuilder<String, ExpenseEntity>();
+      _$this._map ??= MapBuilder<String, ExpenseEntity>();
   set map(MapBuilder<String, ExpenseEntity>? map) => _$this._map = map;
 
   ListBuilder<String>? _list;
-  ListBuilder<String> get list => _$this._list ??= new ListBuilder<String>();
+  ListBuilder<String> get list => _$this._list ??= ListBuilder<String>();
   set list(ListBuilder<String>? list) => _$this._list = list;
 
   RecurringExpenseStateBuilder();
@@ -238,7 +233,6 @@ class RecurringExpenseStateBuilder
 
   @override
   void replace(RecurringExpenseState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$RecurringExpenseState;
   }
 
@@ -254,7 +248,10 @@ class RecurringExpenseStateBuilder
     _$RecurringExpenseState _$result;
     try {
       _$result = _$v ??
-          new _$RecurringExpenseState._(map: map.build(), list: list.build());
+          _$RecurringExpenseState._(
+            map: map.build(),
+            list: list.build(),
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -263,7 +260,7 @@ class RecurringExpenseStateBuilder
         _$failedField = 'list';
         list.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'RecurringExpenseState', _$failedField, e.toString());
       }
       rethrow;
@@ -291,7 +288,7 @@ class _$RecurringExpenseUIState extends RecurringExpenseUIState {
 
   factory _$RecurringExpenseUIState(
           [void Function(RecurringExpenseUIStateBuilder)? updates]) =>
-      (new RecurringExpenseUIStateBuilder()..update(updates))._build();
+      (RecurringExpenseUIStateBuilder()..update(updates))._build();
 
   _$RecurringExpenseUIState._(
       {this.editing,
@@ -301,13 +298,7 @@ class _$RecurringExpenseUIState extends RecurringExpenseUIState {
       required this.tabIndex,
       this.saveCompleter,
       this.cancelCompleter})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(
-        listUIState, r'RecurringExpenseUIState', 'listUIState');
-    BuiltValueNullFieldError.checkNotNull(
-        tabIndex, r'RecurringExpenseUIState', 'tabIndex');
-  }
-
+      : super._();
   @override
   RecurringExpenseUIState rebuild(
           void Function(RecurringExpenseUIStateBuilder) updates) =>
@@ -315,7 +306,7 @@ class _$RecurringExpenseUIState extends RecurringExpenseUIState {
 
   @override
   RecurringExpenseUIStateBuilder toBuilder() =>
-      new RecurringExpenseUIStateBuilder()..replace(this);
+      RecurringExpenseUIStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -367,12 +358,12 @@ class RecurringExpenseUIStateBuilder
 
   ExpenseEntityBuilder? _editing;
   ExpenseEntityBuilder get editing =>
-      _$this._editing ??= new ExpenseEntityBuilder();
+      _$this._editing ??= ExpenseEntityBuilder();
   set editing(ExpenseEntityBuilder? editing) => _$this._editing = editing;
 
   ListUIStateBuilder? _listUIState;
   ListUIStateBuilder get listUIState =>
-      _$this._listUIState ??= new ListUIStateBuilder();
+      _$this._listUIState ??= ListUIStateBuilder();
   set listUIState(ListUIStateBuilder? listUIState) =>
       _$this._listUIState = listUIState;
 
@@ -418,7 +409,6 @@ class RecurringExpenseUIStateBuilder
 
   @override
   void replace(RecurringExpenseUIState other) {
-    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$RecurringExpenseUIState;
   }
 
@@ -434,15 +424,16 @@ class RecurringExpenseUIStateBuilder
     _$RecurringExpenseUIState _$result;
     try {
       _$result = _$v ??
-          new _$RecurringExpenseUIState._(
-              editing: _editing?.build(),
-              listUIState: listUIState.build(),
-              selectedId: selectedId,
-              forceSelected: forceSelected,
-              tabIndex: BuiltValueNullFieldError.checkNotNull(
-                  tabIndex, r'RecurringExpenseUIState', 'tabIndex'),
-              saveCompleter: saveCompleter,
-              cancelCompleter: cancelCompleter);
+          _$RecurringExpenseUIState._(
+            editing: _editing?.build(),
+            listUIState: listUIState.build(),
+            selectedId: selectedId,
+            forceSelected: forceSelected,
+            tabIndex: BuiltValueNullFieldError.checkNotNull(
+                tabIndex, r'RecurringExpenseUIState', 'tabIndex'),
+            saveCompleter: saveCompleter,
+            cancelCompleter: cancelCompleter,
+          );
     } catch (_) {
       late String _$failedField;
       try {
@@ -451,7 +442,7 @@ class RecurringExpenseUIStateBuilder
         _$failedField = 'listUIState';
         listUIState.build();
       } catch (e) {
-        throw new BuiltValueNestedFieldError(
+        throw BuiltValueNestedFieldError(
             r'RecurringExpenseUIState', _$failedField, e.toString());
       }
       rethrow;
