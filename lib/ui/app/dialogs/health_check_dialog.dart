@@ -261,11 +261,11 @@ class _HealthCheckDialogState extends State<HealthCheckDialog> {
                   */
                   if (!account.isDocker &&
                       phpMemoryLimitDouble! > 100 &&
-                      phpMemoryLimitDouble < 1024)
+                      phpMemoryLimitDouble < 2048)
                     _HealthListTile(
                       title: 'PHP memory limit is too low',
                       subtitle:
-                          'Increase the limit to 1024M to support the in-app update',
+                          'Increase the limit to 2 GB to support the in-app update',
                       level: _HealthCheckLevel.Warning,
                     ),
                   if (_response!.queue == 'sync')
