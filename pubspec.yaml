@@ -27,7 +27,7 @@ dependencies:
   pinput: ^3.0.1
   flutter_redux: ^0.10.0
   redux_logging: ^0.5.0
-  http: ^0.13.3
+  http: ^1.5.0
   path_provider: ^2.0.2
   shared_preferences: ^2.0.6
   material_design_icons_flutter: ^7.0.7296
