@@ -547,7 +547,7 @@ class ReportsScreenVM {
 
             final filePath = directory + file.Platform.pathSeparator + filename;
             final csvFile = file.File(filePath);
-            
+
             // Add UTF-8 BOM to prevent encoding issues
             final bom = utf8.encode('\uFEFF');
             await csvFile.writeAsBytes([...bom, ...utf8.encode(csvData)]);
