@@ -126,7 +126,6 @@ dependency_overrides:
       path: attributed_text
       #ref: c75f59a7aca9139bb6b38001c705ac430d5d2946
       ref: stable
-  http: ^1.2.2
 
 dev_dependencies:
   flutter_driver:
