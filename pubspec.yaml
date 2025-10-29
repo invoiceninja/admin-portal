@@ -36,7 +36,7 @@ dependencies:
   memoize: ^3.0.0
   url_launcher: ^6.3.1
   url_launcher_ios: ^6.3.2
-  share_plus: ^7.1.0
+  share_plus: ^12.0.1
   intl: 0.17.0
   flutter_slidable: ^3.1.2
   nimble_charts: ^0.5.0-beta
@@ -78,14 +78,14 @@ dependencies:
   # bitsdojo_window: ^0.1.5
   intl_phone_field: ^3.1.0
   flutter_staggered_grid_view: ^0.7.0
-  desktop_drop: ^0.4.1
+  desktop_drop: ^0.7.0
   widget_kit_plugin: ^0.1.1
   pinch_zoom: ^1.0.0
   # quick_actions: ^0.2.1
   # idb_shim: ^1.11.1+1
   collection: ^1.15.0-nullsafety.4
   filesystem_picker: ^4.0.0
-  device_info_plus: ^9.1.0
+  device_info_plus: ^12.2.0
   ios_open_subscriptions_settings: ^0.0.4
 
   redux: any
