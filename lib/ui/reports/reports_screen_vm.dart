@@ -552,7 +552,9 @@ class ReportsScreenVM {
               showToast(localization!.fileSavedInPath
                   .replaceFirst(':path', directory));
             } else {
-              await Share.shareXFiles([XFile(filePath)]);
+              await SharePlus.instance.share(ShareParams(
+                files: [XFile(filePath)],
+              ));
             }
           }
         });
