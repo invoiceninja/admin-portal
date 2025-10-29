@@ -538,7 +538,9 @@ abstract class TaskEntity extends Object
         endDate:
             (endDate ?? 0) > 0 ? convertTimestampToDate(endDate).toUtc() : null,
         description: taskItem.length >= 3 ? taskItem[2] : '',
-        isBillable: taskItem.length >= 4 ? taskItem[3] : true,
+        isBillable: taskItem.length >= 4 && taskItem[3].runtimeType == bool
+            ? taskItem[3]
+            : true,
       );
 
       details.add(taskTime);
