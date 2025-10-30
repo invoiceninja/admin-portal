@@ -41,4 +41,13 @@ parts:
     organize:
       invoiceninja.desktop: snap/gui/invoiceninja.desktop
     build-packages:
+      - clang
+      - cmake
+      - pkg-config
+      - libgtk-3-dev
+      - liblzma-dev
       - libcurl4-openssl-dev
+      - libunwind-dev
+      - libc++-dev
+      - libglu1-mesa-dev
+      - libx11-dev
