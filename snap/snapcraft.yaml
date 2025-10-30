@@ -40,3 +40,5 @@ parts:
     flutter-target: lib/main.dart
     organize:
       invoiceninja.desktop: snap/gui/invoiceninja.desktop
+    build-packages:
+      - libcurl4-openssl-dev
