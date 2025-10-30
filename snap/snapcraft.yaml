@@ -54,3 +54,5 @@ parts:
       - libglib2.0-dev
       - libssl-dev
       - zlib1g-dev
+    build-environment:
+      - SENTRY_BACKEND: inproc
