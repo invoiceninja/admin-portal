@@ -46,6 +46,13 @@ function(APPLY_STANDARD_SETTINGS TARGET)
   target_compile_definitions(${TARGET} PRIVATE "$<$<NOT:$<CONFIG:Debug>>:NDEBUG>")
 endfunction()
 
+# Disable crashpad entirely in Snap builds
+set(SENTRY_BACKEND "inproc" CACHE STRING "" FORCE)
+set(SENTRY_TRANSPORT "none" CACHE STRING "" FORCE)
+set(SENTRY_BUILD_CRASHPAD OFF CACHE BOOL "" FORCE)
+set(SENTRY_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(SENTRY_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+
 # Flutter library and tool build rules.
 set(FLUTTER_MANAGED_DIR "${CMAKE_CURRENT_SOURCE_DIR}/flutter")
 add_subdirectory(${FLUTTER_MANAGED_DIR})
