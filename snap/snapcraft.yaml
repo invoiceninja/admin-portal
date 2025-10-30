@@ -57,9 +57,9 @@ parts:
     build-environment:
       - CC: /usr/bin/clang
       - CXX: /usr/bin/clang++
-      - SENTRY_BACKEND: inproc
-      - SENTRY_TRANSPORT: none
-      - SENTRY_BUILD_CRASHPAD: OFF
-      - SENTRY_BUILD_EXAMPLES: OFF
-      - SENTRY_BUILD_TESTS: OFF
-      - SENTRY_BUILD_SHARED_LIBS: OFF
+      - SENTRY_BACKEND: "inproc"
+      - SENTRY_TRANSPORT: "none"
+      - SENTRY_BUILD_CRASHPAD: "OFF"
+      - SENTRY_BUILD_EXAMPLES: "OFF"
+      - SENTRY_BUILD_TESTS: "OFF"
+      - SENTRY_BUILD_SHARED_LIBS: "OFF"
