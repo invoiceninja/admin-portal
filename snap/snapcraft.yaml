@@ -40,28 +40,3 @@ parts:
     flutter-target: lib/main.dart
     organize:
       invoiceninja.desktop: snap/gui/invoiceninja.desktop
-    build-packages:
-      - clang
-      - cmake
-      - ninja-build
-      - pkg-config
-      - libgtk-3-dev
-      - liblzma-dev
-      - libcurl4-openssl-dev
-      - libunwind-dev
-      - libc++-dev
-      - libssl-dev
-      - zlib1g-dev
-      - libglu1-mesa-dev
-      - libx11-dev
-      - libglib2.0-dev
-    build-environment:
-      - CC: /usr/bin/clang
-      - CXX: /usr/bin/clang++
-      - SENTRY_BACKEND: "inproc"
-      - SENTRY_TRANSPORT: "none"
-      - SENTRY_BUILD_CRASHPAD: "OFF"
-      - SENTRY_BUILD_EXAMPLES: "OFF"
-      - SENTRY_BUILD_TESTS: "OFF"
-      - SENTRY_BUILD_SHARED_LIBS: "OFF"
-      - CMAKE_BUILD_PARALLEL_LEVEL: "1"

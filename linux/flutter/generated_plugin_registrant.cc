@@ -10,7 +10,6 @@
 #include <file_selector_linux/file_selector_plugin.h>
 #include <printing/printing_plugin.h>
 #include <screen_retriever/screen_retriever_plugin.h>
-#include <sentry_flutter/sentry_flutter_plugin.h>
 #include <smart_auth/smart_auth_plugin.h>
 #include <url_launcher_linux/url_launcher_plugin.h>
 #include <window_manager/window_manager_plugin.h>
@@ -28,9 +27,6 @@ void fl_register_plugins(FlPluginRegistry* registry) {
   g_autoptr(FlPluginRegistrar) screen_retriever_registrar =
       fl_plugin_registry_get_registrar_for_plugin(registry, "ScreenRetrieverPlugin");
   screen_retriever_plugin_register_with_registrar(screen_retriever_registrar);
-  g_autoptr(FlPluginRegistrar) sentry_flutter_registrar =
-      fl_plugin_registry_get_registrar_for_plugin(registry, "SentryFlutterPlugin");
-  sentry_flutter_plugin_register_with_registrar(sentry_flutter_registrar);
   g_autoptr(FlPluginRegistrar) smart_auth_registrar =
       fl_plugin_registry_get_registrar_for_plugin(registry, "SmartAuthPlugin");
   smart_auth_plugin_register_with_registrar(smart_auth_registrar);

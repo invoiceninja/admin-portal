@@ -44,7 +44,7 @@ dependencies:
     git:
       url: https://github.com/theyakka/qr.flutter.git
   local_auth: ^2.3.0
-  sentry_flutter: ^9.6.0
+  #sentry_flutter: ^9.6.0
   image_picker: ^1.2.0
   flutter_colorpicker: ^1.1.0
   flutter_json_viewer: ^1.0.1

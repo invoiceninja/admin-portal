@@ -7,14 +7,12 @@ list(APPEND FLUTTER_PLUGIN_LIST
   file_selector_linux
   printing
   screen_retriever
-  sentry_flutter
   smart_auth
   url_launcher_linux
   window_manager
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
-  jni
 )
 
 set(PLUGIN_BUNDLED_LIBRARIES)
