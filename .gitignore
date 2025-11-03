@@ -85,3 +85,8 @@ android/app/build.gradle
 android/app/build.gradle.kts
 android/app/release/
 .fvm
+
+*.jks
+*.keystore
+*.pem
+*.p12
