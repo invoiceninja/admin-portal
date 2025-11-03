@@ -11,3 +11,7 @@
 -dontwarn com.google.android.gms.auth.api.credentials.CredentialsClient
 -dontwarn com.google.android.gms.auth.api.credentials.HintRequest$Builder
 -dontwarn com.google.android.gms.auth.api.credentials.HintRequest
+
+# Keep OkHttp classes used by uCrop
+-keep class okhttp3.** { *; }
+-dontwarn okhttp3.**
