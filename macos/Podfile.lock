@@ -53,6 +53,8 @@ PODS:
   - local_auth_darwin (0.0.1):
     - Flutter
     - FlutterMacOS
+  - objective_c (0.0.1):
+    - FlutterMacOS
   - package_info_plus (0.0.1):
     - FlutterMacOS
   - path_provider_foundation (0.0.1):
@@ -63,11 +65,11 @@ PODS:
   - PromisesObjC (2.4.0)
   - screen_retriever (0.0.1):
     - FlutterMacOS
-  - Sentry/HybridSDK (8.52.1)
-  - sentry_flutter (9.6.0):
+  - Sentry/HybridSDK (8.56.2)
+  - sentry_flutter (9.7.0):
     - Flutter
     - FlutterMacOS
-    - Sentry/HybridSDK (= 8.52.1)
+    - Sentry/HybridSDK (= 8.56.2)
   - share_plus (0.0.1):
     - FlutterMacOS
   - shared_preferences_foundation (0.0.1):
@@ -97,6 +99,7 @@ DEPENDENCIES:
   - in_app_purchase_storekit (from `Flutter/ephemeral/.symlinks/plugins/in_app_purchase_storekit/darwin`)
   - in_app_review (from `Flutter/ephemeral/.symlinks/plugins/in_app_review/macos`)
   - local_auth_darwin (from `Flutter/ephemeral/.symlinks/plugins/local_auth_darwin/darwin`)
+  - objective_c (from `Flutter/ephemeral/.symlinks/plugins/objective_c/macos`)
   - package_info_plus (from `Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
   - printing (from `Flutter/ephemeral/.symlinks/plugins/printing/macos`)
@@ -141,6 +144,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/in_app_review/macos
   local_auth_darwin:
     :path: Flutter/ephemeral/.symlinks/plugins/local_auth_darwin/darwin
+  objective_c:
+    :path: Flutter/ephemeral/.symlinks/plugins/objective_c/macos
   package_info_plus:
     :path: Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos
   path_provider_foundation:
@@ -184,13 +189,14 @@ SPEC CHECKSUMS:
   in_app_purchase_storekit: a1ce04056e23eecc666b086040239da7619cd783
   in_app_review: a6a031b9acd03c7d103e341aa334adf2c493fb93
   local_auth_darwin: fa4b06454df7df8e97c18d7ee55151c57e7af0de
+  objective_c: e5f8194456e8fc943e034d1af00510a1bc29c067
   package_info_plus: 12f1c5c2cfe8727ca46cbd0b26677728972d9a5b
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   printing: 1dd6a1fce2209ec240698e2439a4adbb9b427637
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   screen_retriever: 59634572a57080243dd1bf715e55b6c54f241a38
-  Sentry: 2cbbe3592f30050c60e916c63c7f5a2fa584005e
-  sentry_flutter: feb376a4d8fd37387898b94e00da2060eeab2a41
+  Sentry: b53951377b78e21a734f5dc8318e333dbfc682d7
+  sentry_flutter: b71c80b7a071cc42af82576046ff2db19fc12f57
   share_plus: 1fa619de8392a4398bfaf176d441853922614e89
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   sign_in_with_apple: a9e97e744e8edc36aefc2723111f652102a7a727
