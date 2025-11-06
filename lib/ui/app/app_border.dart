@@ -36,7 +36,7 @@ class AppBorder extends StatelessWidget {
     final state = store.state;
     final enableDarkMode = state.prefState.enableDarkMode;
     final isAllSides = isTop == null && isLeft == null;
-    const borderWidth = kIsWeb ? 2 : 1.5;
+    const borderWidth = kIsWeb ? 2.0 : 1.5;
 
     final color = enableDarkMode
         ? convertHexStringToColor(kDefaultDarkBorderColor)
@@ -48,25 +48,25 @@ class AppBorder extends StatelessWidget {
               isAllSides ? BorderRadius.circular(kBorderRadius) : null,
           border: isAllSides
               ? Border.all(
-                  width: borderWidth as double,
+                  width: borderWidth,
                   color: color!,
                 )
               : Border(
                   top: isTop == true
                       ? BorderSide(
-                          width: borderWidth as double,
+                          width: borderWidth,
                           color: color!,
                         )
                       : BorderSide.none,
                   bottom: isBottom == true
                       ? BorderSide(
-                          width: borderWidth as double,
+                          width: borderWidth,
                           color: color!,
                         )
                       : BorderSide.none,
                   left: isLeft == true
                       ? BorderSide(
-                          width: borderWidth as double,
+                          width: borderWidth,
                           color: color!,
                         )
                       : BorderSide.none,
