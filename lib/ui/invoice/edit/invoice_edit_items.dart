@@ -112,6 +112,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   final _costController = TextEditingController();
   final _productCostController = TextEditingController();
   final _marginController = TextEditingController();
+  final _rentalDaysController = TextEditingController();
   final _qtyController = TextEditingController();
   final _discountController = TextEditingController();
   bool _isUpdatingFromCalculation = false;
@@ -143,6 +144,8 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
         formatNumberType: FormatNumberType.inputMoney)!;
     _marginController.text = formatNumber(invoiceItem.margin, context,
         formatNumberType: FormatNumberType.inputAmount)!;
+    _rentalDaysController.text = formatNumber(invoiceItem.rentalDays, context,
+        formatNumberType: FormatNumberType.inputAmount) ?? '';
     _qtyController.text = formatNumber(invoiceItem.quantity, context,
         formatNumberType: FormatNumberType.inputAmount)!;
     _discountController.text = formatNumber(invoiceItem.discount, context,
@@ -186,6 +189,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       controller.dispose();
     });
     _marginController.dispose();
+    _rentalDaysController.dispose();
 
     super.dispose();
   }
@@ -218,6 +222,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       ..notes = _notesController.text
       ..cost = parseDouble(_costController.text)
       ..productCost = parseDouble(_productCostController.text)
+      ..rentalDays = parseDouble(_rentalDaysController.text) ?? 1
       ..quantity = parseDouble(_qtyController.text)
       ..discount = parseDouble(_discountController.text)
       ..customValue1 = _custom1Controller.text.trim()
@@ -331,6 +336,14 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                   TextInputType.numberWithOptions(decimal: true, signed: true),
               onSavePressed: widget.entityViewModel.onSavePressed,
             ),
+            if (!widget.invoiceItem.isTask)
+              DecoratedFormField(
+                label: 'Miettage',
+                controller: _rentalDaysController,
+                keyboardType:
+                    TextInputType.numberWithOptions(decimal: true),
+                onSavePressed: widget.entityViewModel.onSavePressed,
+              ),
             if (!widget.invoiceItem.isTask) ...[
               DecoratedFormField(
                 label: 'EK',
