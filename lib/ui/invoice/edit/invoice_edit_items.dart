@@ -110,8 +110,11 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   final _productKeyController = TextEditingController();
   final _notesController = TextEditingController();
   final _costController = TextEditingController();
+  final _productCostController = TextEditingController();
+  final _marginController = TextEditingController();
   final _qtyController = TextEditingController();
   final _discountController = TextEditingController();
+  bool _isUpdatingFromCalculation = false;
   final _custom1Controller = TextEditingController();
   final _custom2Controller = TextEditingController();
   final _custom3Controller = TextEditingController();
@@ -136,6 +139,10 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
     _notesController.text = invoiceItem.notes;
     _costController.text = formatNumber(invoiceItem.cost, context,
         formatNumberType: FormatNumberType.inputMoney)!;
+    _productCostController.text = formatNumber(invoiceItem.productCost, context,
+        formatNumberType: FormatNumberType.inputMoney)!;
+    _marginController.text = formatNumber(invoiceItem.margin, context,
+        formatNumberType: FormatNumberType.inputAmount)!;
     _qtyController.text = formatNumber(invoiceItem.quantity, context,
         formatNumberType: FormatNumberType.inputAmount)!;
     _discountController.text = formatNumber(invoiceItem.discount, context,
@@ -149,6 +156,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       _productKeyController,
       _notesController,
       _costController,
+      _productCostController,
       _qtyController,
       _discountController,
       _custom1Controller,
@@ -177,14 +185,28 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       controller.removeListener(_onTextChanged);
       controller.dispose();
     });
+    _marginController.dispose();
 
     super.dispose();
   }
 
   void _onTextChanged() {
+    _updateMarginDisplay();
     _debouncer.run(() {
       _onChanged();
     });
+  }
+
+  void _updateMarginDisplay() {
+    if (_isUpdatingFromCalculation) return;
+    final vk = parseDouble(_costController.text) ?? 0;
+    final ek = parseDouble(_productCostController.text) ?? 0;
+    final margin = vk > 0 ? (vk - ek) / vk * 100 : 0.0;
+    final formatted = formatNumber(margin, context,
+        formatNumberType: FormatNumberType.inputAmount)!;
+    if (_marginController.text != formatted) {
+      _marginController.text = formatted;
+    }
   }
 
   void _onChanged() {
@@ -194,6 +216,7 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
       ..productKey = _productKeyController.text.trim()
       ..notes = _notesController.text
       ..cost = parseDouble(_costController.text)
+      ..productCost = parseDouble(_productCostController.text)
       ..quantity = parseDouble(_qtyController.text)
       ..discount = parseDouble(_discountController.text)
       ..customValue1 = _custom1Controller.text.trim()
@@ -307,6 +330,34 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                   TextInputType.numberWithOptions(decimal: true, signed: true),
               onSavePressed: widget.entityViewModel.onSavePressed,
             ),
+            if (!widget.invoiceItem.isTask) ...[
+              DecoratedFormField(
+                label: 'EK',
+                controller: _productCostController,
+                keyboardType:
+                    TextInputType.numberWithOptions(decimal: true, signed: true),
+                onSavePressed: widget.entityViewModel.onSavePressed,
+              ),
+              DecoratedFormField(
+                label: 'Marge %',
+                controller: _marginController,
+                keyboardType:
+                    TextInputType.numberWithOptions(decimal: true, signed: true),
+                onSavePressed: widget.entityViewModel.onSavePressed,
+                onChanged: (value) {
+                  if (_isUpdatingFromCalculation) return;
+                  _isUpdatingFromCalculation = true;
+                  final vk = parseDouble(_costController.text) ?? 0;
+                  final margin = parseDouble(value) ?? 0;
+                  final ek = InvoiceItemEntity.calcEK(vk, margin);
+                  final formatted = formatNumber(ek, context,
+                      formatNumberType: FormatNumberType.inputMoney)!;
+                  _productCostController.text = formatted;
+                  _isUpdatingFromCalculation = false;
+                  _debouncer.run(() => _onChanged());
+                },
+              ),
+            ],
             company.enableProductQuantity
                 ? DecoratedFormField(
                     label: widget.invoiceItem.isTask

@@ -1071,6 +1071,62 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                         : null,
                                   ),
                                 ),
+                                Builder(builder: (context) {
+                                  final productItems = invoice.lineItems
+                                      .where((item) =>
+                                          item.typeId !=
+                                          InvoiceItemEntity.TYPE_TASK)
+                                      .toList();
+                                  final hasProductCost = productItems
+                                      .any((item) => item.productCost > 0);
+                                  if (!hasProductCost) return SizedBox();
+                                  final precision =
+                                      precisionForInvoice(state, invoice);
+                                  final totalEK = productItems.fold(
+                                      0.0,
+                                      (sum, item) =>
+                                          sum + item.productCost * item.quantity);
+                                  final totalVK = invoice.calculateSubtotal(
+                                      precision: precision);
+                                  final totalMarginAbs = totalVK - totalEK;
+                                  final totalMarginPct = totalVK > 0
+                                      ? totalMarginAbs / totalVK * 100
+                                      : 0.0;
+                                  return Column(children: [
+                                    TextFormField(
+                                      enabled: false,
+                                      style:
+                                          TextStyle(color: state.greyColor),
+                                      decoration: InputDecoration(
+                                          labelText: 'EK gesamt'),
+                                      textAlign: TextAlign.end,
+                                      key: ValueKey(
+                                          '__invoice_total_ek_${totalEK}_${invoice.clientId}__'),
+                                      initialValue: formatNumber(
+                                        totalEK,
+                                        context,
+                                        clientId: invoice.isPurchaseOrder
+                                            ? null
+                                            : invoice.clientId,
+                                        vendorId: invoice.isPurchaseOrder
+                                            ? invoice.vendorId
+                                            : null,
+                                      ),
+                                    ),
+                                    TextFormField(
+                                      enabled: false,
+                                      style:
+                                          TextStyle(color: state.greyColor),
+                                      decoration: InputDecoration(
+                                          labelText: 'Marge gesamt'),
+                                      textAlign: TextAlign.end,
+                                      key: ValueKey(
+                                          '__invoice_total_margin_${totalMarginAbs}_${invoice.clientId}__'),
+                                      initialValue:
+                                          '${formatNumber(totalMarginAbs, context, clientId: invoice.isPurchaseOrder ? null : invoice.clientId, vendorId: invoice.isPurchaseOrder ? invoice.vendorId : null)} (${totalMarginPct.toStringAsFixed(1)} %)',
+                                    ),
+                                  ]);
+                                }),
                                 if (invoice.isOld &&
                                     (invoice.isInvoice || invoice.isQuote))
                                   TextFormField(

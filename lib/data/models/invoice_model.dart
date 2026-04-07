@@ -1848,6 +1848,13 @@ abstract class InvoiceItemEntity
     return item;
   }
 
+  double get margin => cost > 0 ? (cost - productCost) / cost * 100 : 0;
+
+  static double calcEK(double vk, double margin) => vk * (1 - margin / 100);
+
+  static double calcVK(double ek, double margin) =>
+      margin < 100 ? ek / (1 - margin / 100) : 0;
+
   // ignore: unused_element
   static void _initializeBuilder(InvoiceItemEntityBuilder builder) => builder
     ..productCost = 0

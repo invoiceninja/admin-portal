@@ -60,6 +60,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
   static const COLUMN_TAX3 = 'tax3';
   static const COLUMN_TAX_CATEGORY = 'tax_category';
   static const COLUMN_DISCOUNT = 'discount';
+  static const COLUMN_PRODUCT_COST = 'product_cost';
+  static const COLUMN_MARGIN = 'margin';
 
   final _debouncer = Debouncer();
   TextEditingController? _textEditingController;
@@ -233,6 +235,14 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
         _columns.add(COLUMN_DISCOUNT);
       }
     }
+
+    if (!widget.isTasks) {
+      final unitCostIndex = _columns.indexOf(COLUMN_UNIT_COST);
+      if (unitCostIndex >= 0) {
+        _columns.insert(unitCostIndex + 1, COLUMN_PRODUCT_COST);
+        _columns.insert(unitCostIndex + 2, COLUMN_MARGIN);
+      }
+    }
   }
 
   @override
@@ -379,6 +389,12 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
             ? translations['discount']!
             : localization!.discount;
         isNumeric = true;
+      } else if (column == COLUMN_PRODUCT_COST) {
+        label = 'EK';
+        isNumeric = true;
+      } else if (column == COLUMN_MARGIN) {
+        label = 'Marge %';
+        isNumeric = true;
       }
       tableHeaderColumns.add(TableHeader(
         label,
@@ -519,6 +535,28 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                           : null,
                                     ) ??
                                     '',
+                                textAlign: TextAlign.right,
+                              );
+                            } else if (column == COLUMN_PRODUCT_COST) {
+                              return Text(
+                                formatNumber(
+                                      item.productCost,
+                                      context,
+                                      formatNumberType:
+                                          FormatNumberType.inputMoney,
+                                      clientId: invoice.isPurchaseOrder
+                                          ? null
+                                          : invoice.clientId,
+                                      vendorId: invoice.isPurchaseOrder
+                                          ? invoice.vendorId
+                                          : null,
+                                    ) ??
+                                    '',
+                                textAlign: TextAlign.right,
+                              );
+                            } else if (column == COLUMN_MARGIN) {
+                              return Text(
+                                '${item.margin.toStringAsFixed(1)} %',
                                 textAlign: TextAlign.right,
                               );
                             }
@@ -1092,6 +1130,75 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 index,
                                 debounce: false,
                               ),
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true, signed: true),
+                              onSavePressed:
+                                  widget.entityViewModel.onSavePressed,
+                            ),
+                          ),
+                        );
+                      } else if (column == COLUMN_PRODUCT_COST) {
+                        return Focus(
+                          onFocusChange: (hasFocus) => _onFocusChange(),
+                          skipTraversal: true,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(right: kTableColumnGap),
+                            child: DecoratedFormField(
+                              key: ValueKey(
+                                  '__line_item_${index}_product_cost__'),
+                              textAlign: TextAlign.right,
+                              initialValue: formatNumber(
+                                lineItems[index].productCost,
+                                context,
+                                formatNumberType: FormatNumberType.inputMoney,
+                                clientId: invoice.isPurchaseOrder
+                                    ? null
+                                    : invoice.clientId,
+                                vendorId: invoice.isPurchaseOrder
+                                    ? invoice.vendorId
+                                    : null,
+                              ),
+                              onChanged: (value) => _onChanged(
+                                lineItems[index].rebuild((b) =>
+                                    b..productCost = parseDouble(value)),
+                                index,
+                                debounce: false,
+                              ),
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true, signed: true),
+                              onSavePressed:
+                                  widget.entityViewModel.onSavePressed,
+                            ),
+                          ),
+                        );
+                      } else if (column == COLUMN_MARGIN) {
+                        final item = lineItems[index];
+                        return Focus(
+                          onFocusChange: (hasFocus) => _onFocusChange(),
+                          skipTraversal: true,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(right: kTableColumnGap),
+                            child: DecoratedFormField(
+                              key: ValueKey(
+                                  '__line_item_${index}_margin_${item.productCost}_${item.cost}__'),
+                              textAlign: TextAlign.right,
+                              initialValue: formatNumber(
+                                item.margin,
+                                context,
+                                formatNumberType: FormatNumberType.inputAmount,
+                              ),
+                              onChanged: (value) {
+                                final margin = parseDouble(value) ?? 0;
+                                final ek = InvoiceItemEntity.calcEK(
+                                    lineItems[index].cost, margin);
+                                _onChanged(
+                                  lineItems[index].rebuild(
+                                      (b) => b..productCost = ek),
+                                  index,
+                                );
+                              },
                               keyboardType: TextInputType.numberWithOptions(
                                   decimal: true, signed: true),
                               onSavePressed:
