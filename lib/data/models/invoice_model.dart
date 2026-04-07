@@ -1636,6 +1636,7 @@ abstract class InvoiceItemEntity
       notes: '',
       cost: 0,
       productCost: 0,
+      rentalDays: 1,
       quantity:
           (company.defaultQuantity || !company.enableProductQuantity) ? 1 : 0,
       taxName1: '',
@@ -1676,6 +1677,9 @@ abstract class InvoiceItemEntity
 
   @BuiltValueField(wireName: 'product_cost')
   double get productCost;
+
+  @BuiltValueField(wireName: 'rental_days')
+  double get rentalDays;
 
   double get quantity;
 
@@ -1729,7 +1733,8 @@ abstract class InvoiceItemEntity
       total(invoice, precision) - taxAmount(invoice, precision);
 
   double total(InvoiceEntity invoice, int precision) {
-    var total = quantity * cost;
+    final days = rentalDays > 0 ? rentalDays : 1;
+    var total = quantity * cost * days;
 
     if (discount != 0) {
       if (invoice.isAmountDiscount) {
@@ -1858,6 +1863,7 @@ abstract class InvoiceItemEntity
   // ignore: unused_element
   static void _initializeBuilder(InvoiceItemEntityBuilder builder) => builder
     ..productCost = 0
+    ..rentalDays = 1
     ..taxCategoryId = '';
 
   static Serializer<InvoiceItemEntity> get serializer =>
