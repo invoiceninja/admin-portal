@@ -784,6 +784,9 @@ class _$InvoiceItemEntitySerializer
       'product_cost',
       serializers.serialize(object.productCost,
           specifiedType: const FullType(double)),
+      'rental_days',
+      serializers.serialize(object.rentalDays,
+          specifiedType: const FullType(double)),
       'quantity',
       serializers.serialize(object.quantity,
           specifiedType: const FullType(double)),
@@ -881,6 +884,10 @@ class _$InvoiceItemEntitySerializer
           break;
         case 'product_cost':
           result.productCost = serializers.deserialize(value,
+              specifiedType: const FullType(double))! as double;
+          break;
+        case 'rental_days':
+          result.rentalDays = serializers.deserialize(value,
               specifiedType: const FullType(double))! as double;
           break;
         case 'quantity':
@@ -2569,6 +2576,8 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
   @override
   final double productCost;
   @override
+  final double rentalDays;
+  @override
   final double quantity;
   @override
   final String taxName1;
@@ -2612,6 +2621,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
       required this.notes,
       required this.cost,
       required this.productCost,
+      required this.rentalDays,
       required this.quantity,
       required this.taxName1,
       required this.taxRate1,
@@ -2646,6 +2656,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
         notes == other.notes &&
         cost == other.cost &&
         productCost == other.productCost &&
+        rentalDays == other.rentalDays &&
         quantity == other.quantity &&
         taxName1 == other.taxName1 &&
         taxRate1 == other.taxRate1 &&
@@ -2674,6 +2685,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
     _$hash = $jc(_$hash, notes.hashCode);
     _$hash = $jc(_$hash, cost.hashCode);
     _$hash = $jc(_$hash, productCost.hashCode);
+    _$hash = $jc(_$hash, rentalDays.hashCode);
     _$hash = $jc(_$hash, quantity.hashCode);
     _$hash = $jc(_$hash, taxName1.hashCode);
     _$hash = $jc(_$hash, taxRate1.hashCode);
@@ -2702,6 +2714,7 @@ class _$InvoiceItemEntity extends InvoiceItemEntity {
           ..add('notes', notes)
           ..add('cost', cost)
           ..add('productCost', productCost)
+          ..add('rentalDays', rentalDays)
           ..add('quantity', quantity)
           ..add('taxName1', taxName1)
           ..add('taxRate1', taxRate1)
@@ -2742,6 +2755,10 @@ class InvoiceItemEntityBuilder
   double? _productCost;
   double? get productCost => _$this._productCost;
   set productCost(double? productCost) => _$this._productCost = productCost;
+
+  double? _rentalDays;
+  double? get rentalDays => _$this._rentalDays;
+  set rentalDays(double? rentalDays) => _$this._rentalDays = rentalDays;
 
   double? _quantity;
   double? get quantity => _$this._quantity;
@@ -2823,6 +2840,7 @@ class InvoiceItemEntityBuilder
       _notes = $v.notes;
       _cost = $v.cost;
       _productCost = $v.productCost;
+      _rentalDays = $v.rentalDays;
       _quantity = $v.quantity;
       _taxName1 = $v.taxName1;
       _taxRate1 = $v.taxRate1;
@@ -2869,6 +2887,8 @@ class InvoiceItemEntityBuilder
               cost, r'InvoiceItemEntity', 'cost'),
           productCost: BuiltValueNullFieldError.checkNotNull(
               productCost, r'InvoiceItemEntity', 'productCost'),
+          rentalDays: BuiltValueNullFieldError.checkNotNull(
+              rentalDays, r'InvoiceItemEntity', 'rentalDays'),
           quantity: BuiltValueNullFieldError.checkNotNull(
               quantity, r'InvoiceItemEntity', 'quantity'),
           taxName1: BuiltValueNullFieldError.checkNotNull(
