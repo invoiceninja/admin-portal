@@ -198,7 +198,8 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
   }
 
   void _updateMarginDisplay() {
-    if (_isUpdatingFromCalculation) return;
+    if (_isUpdatingFromCalculation)
+      return;
     final vk = parseDouble(_costController.text) ?? 0;
     final ek = parseDouble(_productCostController.text) ?? 0;
     final margin = vk > 0 ? (vk - ek) / vk * 100 : 0.0;
@@ -345,7 +346,8 @@ class ItemEditDetailsState extends State<ItemEditDetails> {
                     TextInputType.numberWithOptions(decimal: true, signed: true),
                 onSavePressed: widget.entityViewModel.onSavePressed,
                 onChanged: (value) {
-                  if (_isUpdatingFromCalculation) return;
+                  if (_isUpdatingFromCalculation)
+                    return;
                   _isUpdatingFromCalculation = true;
                   final vk = parseDouble(_costController.text) ?? 0;
                   final margin = parseDouble(value) ?? 0;

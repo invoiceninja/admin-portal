@@ -5,18 +5,18 @@ packages:
     dependency: transitive
     description:
       name: _fe_analyzer_shared
-      sha256: da0d9209ca76bde579f2da330aeb9df62b6319c834fa7baae052021b0462401f
+      sha256: c209688d9f5a5f26b2fb47a188131a6fb9e876ae9e47af3737c0b4f58a93470d
       url: "https://pub.dev"
     source: hosted
-    version: "85.0.0"
+    version: "91.0.0"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
-      sha256: "974859dc0ff5f37bc4313244b3218c791810d03ab3470a579580279ba971a48d"
+      sha256: f51c8499b35f9b26820cfe914828a6a98a94efd5cc78b37bb7d03debae3a1d08
       url: "https://pub.dev"
     source: hosted
-    version: "7.7.1"
+    version: "8.4.1"
   archive:
     dependency: "direct main"
     description:
@@ -45,11 +45,11 @@ packages:
     dependency: "direct overridden"
     description:
       path: attributed_text
-      ref: stable
-      resolved-ref: a1526c5576761a76cbfbfcf27f54515c60d30ce3
+      ref: "9655c7f9"
+      resolved-ref: "9655c7f987968d680f83fc095a604f86d9ad15a1"
       url: "https://github.com/superlistapp/super_editor"
     source: git
-    version: "0.3.2"
+    version: "0.4.5"
   barcode:
     dependency: transitive
     description:
@@ -159,10 +159,10 @@ packages:
     dependency: transitive
     description:
       name: characters
-      sha256: f71061c654a3380576a52b451dd5532377954cf9dbd272a78fc8479606670803
+      sha256: faf38497bda5ead2a8c7615f4f7939df04333478bf32e4173fcb06d428b5716b
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.0"
+    version: "1.4.1"
   checked_yaml:
     dependency: transitive
     description:
@@ -271,10 +271,10 @@ packages:
     dependency: transitive
     description:
       name: dart_style
-      sha256: "8a0e5fba27e8ee025d2ffb4ee820b4e6e2cf5e4246a6b1a477eb66866947e0bb"
+      sha256: a9c30492da18ff84efe2422ba2d319a89942d93e58eb0b73d32abe822ef54b7b
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.1"
+    version: "3.1.3"
   dbus:
     dependency: transitive
     description:
@@ -504,10 +504,10 @@ packages:
     dependency: "direct main"
     description:
       name: follow_the_leader
-      sha256: "798baf5211ca2461c8462d4c8e94f57bf989758f8204056d607eb9a20f1cf794"
+      sha256: "2e4c4ebe6b3f1942b2385904b118ba8ba117fae0b30c8c453be0b64a271dd07a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.4+8"
+    version: "0.5.2"
   frontend_server_client:
     dependency: transitive
     description:
@@ -933,18 +933,18 @@ packages:
     dependency: transitive
     description:
       name: matcher
-      sha256: dc58c723c3c24bf8d3e2d3ad3f2f9d7bd9cf43ec6feaa64181775e60190153f2
+      sha256: dc0b7dc7651697ea4ff3e69ef44b0407ea32c487a39fff6a4004fa585e901861
       url: "https://pub.dev"
     source: hosted
-    version: "0.12.17"
+    version: "0.12.19"
   material_color_utilities:
     dependency: transitive
     description:
       name: material_color_utilities
-      sha256: f7142bb1154231d7ea5f96bc7bde4bda2a0945d2806bb11670e30b850d56bdec
+      sha256: "9c337007e82b1889149c82ed242ed1cb24a66044e30979c44912381e9be4c48b"
       url: "https://pub.dev"
     source: hosted
-    version: "0.11.1"
+    version: "0.13.0"
   material_design_icons_flutter:
     dependency: "direct main"
     description:
@@ -965,10 +965,10 @@ packages:
     dependency: transitive
     description:
       name: meta
-      sha256: e3641ec5d63ebf0d9b41bd43201a66e3fc79a65db5f61fc181f04cd27aab950c
+      sha256: "23f08335362185a5ea2ad3a4e597f1375e78bce8a040df5c600c8d3552ef2394"
       url: "https://pub.dev"
     source: hosted
-    version: "1.16.0"
+    version: "1.17.0"
   mime:
     dependency: transitive
     description:
@@ -1037,10 +1037,10 @@ packages:
     dependency: "direct main"
     description:
       name: overlord
-      sha256: "576256bc9ce3fb0ae3042bbb26eed67bdb26a5045dd7e3c851aae65b0bbab2f5"
+      sha256: "532f5685ac09ee805d97ce89794a4eeda41672c32955b4a835bdfce93e720a05"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.3+5"
+    version: "0.4.2"
   package_config:
     dependency: transitive
     description:
@@ -1596,37 +1596,37 @@ packages:
     dependency: "direct main"
     description:
       path: super_editor
-      ref: stable
-      resolved-ref: a1526c5576761a76cbfbfcf27f54515c60d30ce3
+      ref: "9655c7f9"
+      resolved-ref: "9655c7f987968d680f83fc095a604f86d9ad15a1"
       url: "https://github.com/superlistapp/super_editor"
     source: git
-    version: "0.3.0-dev.10"
+    version: "0.3.0-dev.39"
   super_editor_markdown:
     dependency: "direct main"
     description:
       path: super_editor_markdown
-      ref: stable
-      resolved-ref: a1526c5576761a76cbfbfcf27f54515c60d30ce3
+      ref: "9655c7f9"
+      resolved-ref: "9655c7f987968d680f83fc095a604f86d9ad15a1"
       url: "https://github.com/superlistapp/super_editor"
     source: git
-    version: "0.1.5"
+    version: "0.2.0"
   super_keyboard:
     dependency: transitive
     description:
       name: super_keyboard
-      sha256: "1a0a32dd799118554fb801822ae2eed7669fbbf7c754d94d240ec3e8ee7dbd67"
+      sha256: "47dfacfd617f7b704c3b9cc786930ced3b6e8698cb5ffd3b4a0cb705d42f679a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.2"
+    version: "0.3.1"
   super_text_layout:
     dependency: "direct overridden"
     description:
       path: super_text_layout
-      ref: stable
-      resolved-ref: a1526c5576761a76cbfbfcf27f54515c60d30ce3
+      ref: "9655c7f9"
+      resolved-ref: "9655c7f987968d680f83fc095a604f86d9ad15a1"
       url: "https://github.com/superlistapp/super_editor"
     source: git
-    version: "0.1.15"
+    version: "0.1.19"
   sync_http:
     dependency: transitive
     description:
@@ -1647,26 +1647,26 @@ packages:
     dependency: "direct dev"
     description:
       name: test
-      sha256: "65e29d831719be0591f7b3b1a32a3cda258ec98c58c7b25f7b84241bc31215bb"
+      sha256: "280d6d890011ca966ad08df7e8a4ddfab0fb3aa49f96ed6de56e3521347a9ae7"
       url: "https://pub.dev"
     source: hosted
-    version: "1.26.2"
+    version: "1.30.0"
   test_api:
     dependency: transitive
     description:
       name: test_api
-      sha256: "522f00f556e73044315fa4585ec3270f1808a4b186c936e612cab0b565ff1e00"
+      sha256: "8161c84903fd860b26bfdefb7963b3f0b68fee7adea0f59ef805ecca346f0c7a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.6"
+    version: "0.7.10"
   test_core:
     dependency: transitive
     description:
       name: test_core
-      sha256: "80bf5a02b60af04b09e14f6fe68b921aad119493e26e490deaca5993fef1b05a"
+      sha256: "0381bd1585d1a924763c308100f2138205252fb90c9d4eeaf28489ee65ccde51"
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.11"
+    version: "0.6.16"
   timeago:
     dependency: "direct main"
     description:
@@ -1956,5 +1956,5 @@ packages:
     source: hosted
     version: "3.1.3"
 sdks:
-  dart: ">=3.8.0 <4.0.0"
+  dart: ">=3.9.0 <4.0.0"
   flutter: ">=3.32.0"

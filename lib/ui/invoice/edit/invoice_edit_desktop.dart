@@ -1079,7 +1079,8 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                                       .toList();
                                   final hasProductCost = productItems
                                       .any((item) => item.productCost > 0);
-                                  if (!hasProductCost) return SizedBox();
+                                  if (!hasProductCost)
+                                    return SizedBox();
                                   final precision =
                                       precisionForInvoice(state, invoice);
                                   final totalEK = productItems.fold(
