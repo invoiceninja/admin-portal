@@ -34,6 +34,7 @@ jobs:
           echo ";" >> lib/flutter_version.dart
           flutter pub get
           flutter config --enable-linux-desktop
+          flutter build linux --release -t lib/main.dart
 
       - name: Install Snapcraft
         run: sudo snap install snapcraft --classic --channel=7.x/stable
