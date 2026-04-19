@@ -37,12 +37,16 @@ jobs:
           flutter build linux --release -t lib/main.dart
 
       - name: Install Snapcraft
-        run: sudo snap install snapcraft --classic --channel=7.x/stable
+        run: |
+          sudo snap install snapcraft --classic --channel=7.x/stable
+          sudo snap install core22
+          sudo snap install gnome-42-2204
+          sudo snap install gtk-common-themes
 
       - name: Build Snap
         env:
           SNAPCRAFT_BUILD_ENVIRONMENT: host
-        run: snapcraft snap --output invoiceninja.snap
+        run: snapcraft pack --output invoiceninja.snap
 
       - name: Publish to Snap Store
         env:
