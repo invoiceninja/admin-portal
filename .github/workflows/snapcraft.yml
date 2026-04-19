@@ -18,7 +18,7 @@ jobs:
       - name: Install Flutter dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgtk-3-dev libx11-dev pkg-config cmake ninja-build libblkid-dev libcurl4-openssl-dev
+          sudo apt-get install -y libgtk-3-dev libx11-dev pkg-config cmake ninja-build libblkid-dev libcurl4-openssl-dev execstack
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -35,6 +35,8 @@ jobs:
           flutter pub get
           flutter config --enable-linux-desktop
           flutter build linux --release -t lib/main.dart
+          execstack --clear-execstack build/linux/x64/release/bundle/lib/crashpad_handler
+          execstack --clear-execstack build/linux/x64/release/bundle/lib/libsentry.so
 
       - name: Install Snapcraft
         run: |
