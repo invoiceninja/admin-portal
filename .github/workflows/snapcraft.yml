@@ -41,6 +41,7 @@ jobs:
           sudo snap install snapcraft --classic --channel=7.x/stable
           sudo snap install core22
           sudo snap install gnome-42-2204
+          sudo snap install gnome-42-2204-sdk
           sudo snap install gtk-common-themes
 
       - name: Build Snap
