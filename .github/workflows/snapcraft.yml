@@ -18,11 +18,7 @@ jobs:
       - name: Install Flutter dependencies
         run: |
           sudo apt-get update
-<<<<<<< HEAD
           sudo apt-get install -y libgtk-3-dev libx11-dev pkg-config cmake ninja-build libblkid-dev libcurl4-openssl-dev execstack
-=======
-          sudo apt-get install -y libgtk-3-dev libx11-dev pkg-config cmake ninja-build libblkid-dev libcurl4-openssl-dev
->>>>>>> 212d8a79d (Snapcraft)
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -38,7 +34,6 @@ jobs:
           echo ";" >> lib/flutter_version.dart
           flutter pub get
           flutter config --enable-linux-desktop
-<<<<<<< HEAD
           flutter build linux --release -t lib/main.dart
           execstack --clear-execstack build/linux/x64/release/bundle/lib/crashpad_handler
           execstack --clear-execstack build/linux/x64/release/bundle/lib/libsentry.so
@@ -50,20 +45,11 @@ jobs:
           sudo snap install gnome-42-2204
           sudo snap install gnome-42-2204-sdk
           sudo snap install gtk-common-themes
-=======
-
-      - name: Install Snapcraft
-        run: sudo snap install snapcraft --classic --channel=7.x/stable
->>>>>>> 212d8a79d (Snapcraft)
 
       - name: Build Snap
         env:
           SNAPCRAFT_BUILD_ENVIRONMENT: host
-<<<<<<< HEAD
         run: snapcraft pack --output invoiceninja.snap
-=======
-        run: snapcraft snap --output invoiceninja.snap
->>>>>>> 212d8a79d (Snapcraft)
 
       - name: Publish to Snap Store
         env:
