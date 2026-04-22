@@ -180,7 +180,7 @@ SPEC CHECKSUMS:
   device_info_plus: 1b14eed9bf95428983aed283a8d51cce3d8c4215
   file_picker: e716a70a9fe5fd9e09ebc922d7541464289443af
   file_selector_macos: cc3858c981fe6889f364731200d6232dac1d812d
-  FlutterMacOS: d0db08ddef1a9af05a5ec4b724367152bb0500b1
+  FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   google_sign_in_ios: 4bb0e529b167cadc6ac785b6ed943c0a0a4cc1c9
   GoogleSignIn: c7f09cfbc85a1abf69187be091997c317cc33b77
   GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
@@ -208,4 +208,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 8d40c19d3cbdb380d870685c3a564c989f1efa52
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.16.2
