@@ -28,7 +28,7 @@ class TransactionRuleRepository {
 
   Future<BuiltList<TransactionRuleEntity>> loadList(
       Credentials credentials) async {
-    final String url = credentials.url + '/bnak_transaction_rules?';
+    final String url = credentials.url + '/bank_transaction_rules?';
     final dynamic response = await webClient.get(url, credentials.token);
 
     final TransactionRuleListResponse transactionRuleResponse = serializers

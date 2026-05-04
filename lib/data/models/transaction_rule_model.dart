@@ -201,6 +201,8 @@ abstract class TransactionRuleCriteriaEntity
 
   static const SEARCH_KEY_DESCRIPTION = 'description';
   static const SEARCH_KEY_AMOUNT = 'amount';
+  static const SEARCH_KEY_PARTICIPANT = 'participant';
+  static const SEARCH_KEY_PARTICIPANT_NAME = 'participant_name';
 
   static const SEARCH_KEY_CLIENT_EMAIL = 'client.email';
   static const SEARCH_KEY_CLIENT_ID_NUMBER = 'client.id_number';
