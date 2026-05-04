@@ -199,7 +199,7 @@ class UserDetailsVM {
               try {
                 final signedIn =
                     await GoogleOAuth.signUp((idToken, accessToken) {
-                  if (idToken.isEmpty || accessToken.isEmpty) {
+                  if (accessToken.isEmpty) {
                     GoogleOAuth.signOut();
                     showErrorDialog(
                         message: AppLocalization.of(context)!

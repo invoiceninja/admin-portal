@@ -1,34 +1,28 @@
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-/// Set your OAuth client IDs as needed.
-/// - `clientId` is optional (some platforms use it, e.g. iOS/macOS).
-/// - `serverClientId` (your Web client ID) is needed if you want a reliable ID token.
-const String? kClientId = null;
-const String? kServerClientId =
-    '640903115046-37ltu6s2j07gcqkssmf5feofj4isnsju.apps.googleusercontent.com';
-
+/// Google sign-in for the InvoiceNinja API (`/oauth_login`).
+///
+/// We deliberately ride v7's "access token" path instead of the new
+/// "id token" path: the backend's `getTokenResponse(id_token)` route
+/// rejects v7-issued JWTs, while `harvestUser(access_token)` (which calls
+/// Google's userinfo endpoint) keeps working unchanged. So this returns
+/// `(idToken: '', accessToken)` and the repository layer omits the empty
+/// id_token from the request body so Laravel's `request()->has('id_token')`
+/// returns false and execution falls into the access-token branch.
 class GoogleOAuth {
   static bool _initialized = false;
 
   static bool get isEnabled => true;
 
-  /// Call once during app startup.
   static Future<void> init() async {
     if (_initialized) {
       return;
     }
-    await GoogleSignIn.instance.initialize(
-      clientId: kClientId,
-      serverClientId: kServerClientId,
-    );
+    await GoogleSignIn.instance.initialize();
     _initialized = true;
   }
 
-  /// Sign in. If [isSilent] is true, try lightweight auth first.
-  /// Calls [callback] with (idToken, accessToken).
-  /// NOTE: v7's authentication flow only returns an **idToken**;
-  /// obtaining an **access token** requires an authorization step with scopes.
   static Future<bool> signIn(
     void Function(String idToken, String accessToken) callback, {
     bool isSilent = false,
@@ -44,32 +38,15 @@ class GoogleOAuth {
     account ??= await _interactiveAuthenticate();
 
     if (account == null) {
-      debugPrint('## ERROR: sign in failed');
-      callback('', ''); // preserve your previous contract
+      callback('', '');
       return false;
     }
 
-    // AUTHENTICATION → ID TOKEN
-    final idToken = account.authentication.idToken ?? '';
-
-    // AUTHORIZATION → ACCESS TOKEN (only if you actually need one)
-    // If you don't need an access token, you can skip this block or return ''.
-    String accessToken = '';
-    final authz =
-        await account.authorizationClient.authorizationForScopes(const [
-      'email',
-      'openid',
-      'profile',
-    ]);
-    if (authz != null) {
-      accessToken = authz.accessToken;
-    }
-
-    callback(idToken, accessToken);
-    return idToken.isNotEmpty;
+    final accessToken = await _resolveAccessToken(account);
+    callback('', accessToken);
+    return accessToken.isNotEmpty;
   }
 
-  /// Mirror of your old API; just does interactive auth.
   static Future<bool> signUp(
     void Function(String idToken, String accessToken) callback,
   ) async {
@@ -77,26 +54,13 @@ class GoogleOAuth {
 
     final account = await _interactiveAuthenticate();
     if (account == null) {
-      debugPrint('## ERROR: sign up failed');
       callback('', '');
       return false;
     }
 
-    final idToken = account.authentication.idToken ?? '';
-
-    String accessToken = '';
-    final authz =
-        await account.authorizationClient.authorizationForScopes(const [
-      'email',
-      'openid',
-      'profile',
-    ]);
-    if (authz != null) {
-      accessToken = authz.accessToken;
-    }
-
-    callback(idToken, accessToken);
-    return idToken.isNotEmpty;
+    final accessToken = await _resolveAccessToken(account);
+    callback('', accessToken);
+    return accessToken.isNotEmpty;
   }
 
   static Future<void> signOut() async {
@@ -109,49 +73,35 @@ class GoogleOAuth {
     await GoogleSignIn.instance.disconnect();
   }
 
-  // ---- helpers ----
+  static const _scopes = ['email', 'profile'];
 
   static Future<GoogleSignInAccount?> _interactiveAuthenticate() async {
-    if (GoogleSignIn.instance.supportsAuthenticate()) {
-      try {
-        return await GoogleSignIn.instance.authenticate();
-      } on GoogleSignInException catch (e) {
-        debugPrint('## authenticate failed: ${e.code}');
-        return null;
-      }
-    } else {
-      // On Web, you must render the GIS button and listen to authenticationEvents.
-      // See package example for web button rendering.
+    if (!GoogleSignIn.instance.supportsAuthenticate()) {
       debugPrint('## authenticate() not supported on this platform');
+      return null;
+    }
+    try {
+      return await GoogleSignIn.instance.authenticate();
+    } on GoogleSignInException catch (e) {
+      debugPrint('## authenticate failed: ${e.code}');
       return null;
     }
   }
 
-  /*
-  static Future<GoogleSignInAccount?> _requireAuthenticatedUser() async {
-    // Try to reuse an authenticated user:
-    final existing =
-        await GoogleSignIn.instance.attemptLightweightAuthentication();
-    if (existing != null) return existing;
-    // Otherwise interactive:
-    return await _interactiveAuthenticate();
-  }
-
-  static Future<bool> _authorizeSilently(
-      GoogleSignInAccount user, List<String> scopes) async {
+  static Future<String> _resolveAccessToken(GoogleSignInAccount account) async {
     final silent =
-        await user.authorizationClient.authorizationForScopes(scopes);
-    return silent != null;
-  }
+        await account.authorizationClient.authorizationForScopes(_scopes);
+    if (silent != null) {
+      return silent.accessToken;
+    }
 
-  static Future<bool> _authorizeWithUi(
-      GoogleSignInAccount user, List<String> scopes) async {
     try {
-      await user.authorizationClient.authorizeScopes(scopes);
-      return true;
-    } on GoogleSignInException {
-      return false;
+      final interactive =
+          await account.authorizationClient.authorizeScopes(_scopes);
+      return interactive.accessToken;
+    } on GoogleSignInException catch (e) {
+      debugPrint('## authorizeScopes failed: ${e.code}');
+      return '';
     }
   }
-  */
 }

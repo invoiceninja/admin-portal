@@ -60,11 +60,10 @@ class AuthRepository {
     String? lastName = '',
     String? email = '',
   }) async {
-    final credentials = {
+    final credentials = <String, dynamic>{
       'terms_of_service': true,
       'privacy_policy': true,
       'token_name': _tokenName,
-      'id_token': idToken,
       'access_token': accessToken,
       'provider': provider,
       'platform': getPlatformName(),
@@ -72,6 +71,12 @@ class AuthRepository {
       'last_name': lastName,
       'email': email,
     };
+    // Only send id_token when populated. Laravel's request()->has() returns
+    // true for null/empty values too, so an absent key is the only way to
+    // route the backend through the access_token branch.
+    if (idToken != null && idToken.isNotEmpty) {
+      credentials['id_token'] = idToken;
+    }
 
     return sendRequest(
         url: formatApiUrl(url) + '/oauth_login?create=true&rc=$referralCode',
@@ -114,13 +119,16 @@ class AuthRepository {
     required String? email,
     required String? authCode,
   }) async {
-    final credentials = {
-      'id_token': idToken,
+    final credentials = <String, dynamic>{
       'provider': provider,
       'access_token': accessToken,
       'email': email,
       'auth_code': authCode,
     };
+    // Only send id_token when populated; see oauthSignUp for rationale.
+    if (idToken != null && idToken.isNotEmpty) {
+      credentials['id_token'] = idToken;
+    }
     url = formatApiUrl(url) + '/oauth_login';
 
     return sendRequest(url: url, data: credentials, secret: secret);

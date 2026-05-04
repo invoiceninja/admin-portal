@@ -1,5 +1,5 @@
 name: invoiceninja
-version: '5.0.189'
+version: '5.0.190'
 summary: Create invoices, accept payments, track expenses & time tasks
 description: "### Note: if the app fails to run using `snap run invoiceninja` it may help to run `/snap/invoiceninja/current/bin/invoiceninja` instead
 
@@ -21,13 +21,13 @@ With Invoice Ninja, all your earnings, expenses, clients and vendors are stored 
 
 All of these features combine to help you receive the money you deserve and reduce the amount of time you spend on repetitive invoicing tasks. Spend less time on paperwork and more time at your craft."
 confinement: strict
-base: core18
+base: core22
 grade: stable
 
 apps:
   invoiceninja:
     command: invoiceninja
-    extensions: [flutter-stable]
+    extensions: [gnome]
     plugs:
       - network
       - home
@@ -35,8 +35,5 @@ apps:
 
 parts:
   invoiceninja:
-    source: .
-    plugin: flutter
-    flutter-target: lib/main.dart
-    organize:
-      invoiceninja.desktop: snap/gui/invoiceninja.desktop
+    source: build/linux/x64/release/bundle
+    plugin: dump
