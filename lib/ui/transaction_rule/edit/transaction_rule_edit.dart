@@ -416,14 +416,15 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                   setState(() {
                     _criteria = _criteria!.rebuild((b) => b
                       ..searchKey = value
-                      ..operator = (
-                      value == TransactionRuleCriteriaEntity
-                                  .SEARCH_KEY_DESCRIPTION  ||
-                      value == TransactionRuleCriteriaEntity
-                                  .SEARCH_KEY_PARTICIPANT  ||
-                      value == TransactionRuleCriteriaEntity
-                                  .SEARCH_KEY_PARTICIPANT_NAME
-                      )
+                      ..operator = (value ==
+                                  TransactionRuleCriteriaEntity
+                                      .SEARCH_KEY_DESCRIPTION ||
+                              value ==
+                                  TransactionRuleCriteriaEntity
+                                      .SEARCH_KEY_PARTICIPANT ||
+                              value ==
+                                  TransactionRuleCriteriaEntity
+                                      .SEARCH_KEY_PARTICIPANT_NAME)
                           ? TransactionRuleCriteriaEntity
                               .STRING_OPERATOR_CONTAINS
                           : TransactionRuleCriteriaEntity
@@ -445,7 +446,8 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                   ),
                   DropdownMenuItem<String>(
                     child: Text(localization.participantName),
-                    value: TransactionRuleCriteriaEntity.SEARCH_KEY_PARTICIPANT_NAME,
+                    value: TransactionRuleCriteriaEntity
+                        .SEARCH_KEY_PARTICIPANT_NAME,
                   ),
                 ],
               )
@@ -556,17 +558,15 @@ class __RuleCriteriaState extends State<_RuleCriteria> {
                   setState(() {
                     _criteria = _criteria!.rebuild((b) => b
                       ..searchKey = value
-                      ..operator = (
-                          value ==
-                              TransactionRuleCriteriaEntity
-                                  .SEARCH_KEY_DESCRIPTION ||
-                          value ==
-                              TransactionRuleCriteriaEntity
-                                  .SEARCH_KEY_PARTICIPANT ||
-                          value ==
-                               TransactionRuleCriteriaEntity
-                                  .SEARCH_KEY_PARTICIPANT_NAME
-                        )
+                      ..operator = (value ==
+                                  TransactionRuleCriteriaEntity
+                                      .SEARCH_KEY_DESCRIPTION ||
+                              value ==
+                                  TransactionRuleCriteriaEntity
+                                      .SEARCH_KEY_PARTICIPANT ||
+                              value ==
+                                  TransactionRuleCriteriaEntity
+                                      .SEARCH_KEY_PARTICIPANT_NAME)
                           ? TransactionRuleCriteriaEntity
                               .STRING_OPERATOR_CONTAINS
                           : TransactionRuleCriteriaEntity

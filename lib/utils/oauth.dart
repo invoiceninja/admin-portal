@@ -88,8 +88,7 @@ class GoogleOAuth {
     }
   }
 
-  static Future<String> _resolveAccessToken(
-      GoogleSignInAccount account) async {
+  static Future<String> _resolveAccessToken(GoogleSignInAccount account) async {
     final silent =
         await account.authorizationClient.authorizationForScopes(_scopes);
     if (silent != null) {
