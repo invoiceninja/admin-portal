@@ -91,6 +91,12 @@ ReportResult paymentTaxReport(
         InvoiceEntity invoice;
         int multiplier = 1;
         if (paymentable.entityType == EntityType.invoice) {
+          // Skip invoice paymentables on pure credit-application payments
+          // (no cash flow); the paired credit paymentable will still emit a
+          // negative row representing the refund / credit usage.
+          if (payment.amount == 0) {
+            continue;
+          }
           invoice = invoiceMap[paymentable.invoiceId] ?? InvoiceEntity();
         } else {
           invoice = creditMap[paymentable.creditId] ?? InvoiceEntity();
