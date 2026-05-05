@@ -1042,6 +1042,8 @@ const String kTaxRegionUnitedStates = 'US';
 const String kTaxRegionEurope = 'EU';
 const String kTaxRegionAustralia = 'AU';
 const String kTaxRegionUnitedKingdom = 'UK';
+const String kTaxRegionAndorra = 'AD';
+const String kTaxRegionSingapore = 'SG';
 
 const String kReportGroupDay = 'day';
 const String kReportGroupWeek = 'week';
