@@ -90,7 +90,7 @@ jobs:
           draft: false
           prerelease: false
           title: "Latest Release"
-          automatic_release_tag: "v5.0.190"
+          automatic_release_tag: "v5.0.191"
           files: |
             ${{ github.workspace }}/artifacts/Invoice-Ninja-Archive
             ${{ github.workspace }}/artifacts/Invoice-Ninja-Hash
