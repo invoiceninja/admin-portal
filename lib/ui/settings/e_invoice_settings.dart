@@ -221,6 +221,7 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
         .post(
       url,
       state.credentials.token,
+      rawResponse: true,
       data: json.encode({
         'entity': 'company',
         'payment_means': [data],
