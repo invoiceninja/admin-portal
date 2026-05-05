@@ -6,7 +6,7 @@ class Constants {
 }
 
 // TODO remove version once #46609 is fixed
-const String kClientVersion = '5.0.190';
+const String kClientVersion = '5.0.191';
 const String kMinServerVersion = '5.0.4';
 
 const String kAppName = 'Invoice Ninja';
@@ -1042,6 +1042,8 @@ const String kTaxRegionUnitedStates = 'US';
 const String kTaxRegionEurope = 'EU';
 const String kTaxRegionAustralia = 'AU';
 const String kTaxRegionUnitedKingdom = 'UK';
+const String kTaxRegionAndorra = 'AD';
+const String kTaxRegionSingapore = 'SG';
 
 const String kReportGroupDay = 'day';
 const String kReportGroupWeek = 'week';

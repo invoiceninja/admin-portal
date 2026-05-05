@@ -42,6 +42,8 @@ class _TaxSettingsState extends State<TaxSettings> {
     kTaxRegionEurope: false,
     kTaxRegionAustralia: false,
     kTaxRegionUnitedKingdom: false,
+    kTaxRegionAndorra: false,
+    kTaxRegionSingapore: false,
   };
 
   @override
