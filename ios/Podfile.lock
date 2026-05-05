@@ -229,7 +229,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AppAuth: 1c1a8afa7e12f2ec3a294d9882dfa5ab7d3cb063
   AppCheckCore: cc8fd0a3a230ddd401f326489c99990b013f0c4f
-  contacts_service_plus: 1a1e1263aeac992b7f204d38f8ef0d8ed54fe8e5
+  contacts_service_plus: 236463cccba1d69a0ad53bea44522131c5f99dd6
   device_info_plus: bf2e3232933866d73fe290f2942f2156cdd10342
   DKImagePickerController: 946cec48c7873164274ecc4624d19e3da4c1ef3c
   DKPhotoGallery: b3834fecb755ee09a593d7c9e389d8b5d6deed60
@@ -268,4 +268,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 3005ff604479ae2d844823dff36ae514d2c44ab9
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.16.2
