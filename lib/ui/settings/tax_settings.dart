@@ -214,6 +214,10 @@ class _TaxSettingsState extends State<TaxSettings> {
                           .toList()),
                   SizedBox(height: 12),
                   ...taxConfig.regions.keys.map((region) {
+                    if (!_showDetails.containsKey(region)) {
+                      return SizedBox();
+                    }
+
                     final taxDataRegion = taxConfig.regions[region]!;
                     return Column(children: [
                       Padding(
