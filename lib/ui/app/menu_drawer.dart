@@ -848,7 +848,13 @@ class _DrawerTileState extends State<DrawerTile> {
       }
     } else {
       if (_isHovered) {
-        color = convertHexStringToColor(activeColor);
+        if (activeColor.isNotEmpty) {
+          color = convertHexStringToColor(activeColor);
+        } else {
+          color = convertHexStringToColor(enableDarkMode
+              ? kDefaultDarkSelectedColorMenu
+              : kDefaultLightSelectedColorMenu);
+        }
       } else if (inactiveColor.isNotEmpty) {
         color = convertHexStringToColor(inactiveColor);
       }
