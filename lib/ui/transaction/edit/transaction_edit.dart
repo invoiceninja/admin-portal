@@ -36,6 +36,8 @@ class _TransactionEditState extends State<TransactionEdit> {
 
   final _descriptionController = TextEditingController();
   final _amountController = TextEditingController();
+  final _participantController = TextEditingController();
+  final _participantNameController = TextEditingController();
 
   List<TextEditingController> _controllers = [];
 
@@ -44,6 +46,8 @@ class _TransactionEditState extends State<TransactionEdit> {
     _controllers = [
       _amountController,
       _descriptionController,
+      _participantController,
+      _participantNameController,
     ];
 
     _controllers.forEach((controller) => controller.removeListener(_onChanged));
@@ -52,6 +56,8 @@ class _TransactionEditState extends State<TransactionEdit> {
     _amountController.text = formatNumber(transaction.amount, context,
         formatNumberType: FormatNumberType.inputMoney)!;
     _descriptionController.text = transaction.description;
+    _participantController.text = transaction.participant;
+    _participantNameController.text = transaction.participantName;
 
     _controllers.forEach((controller) => controller.addListener(_onChanged));
 
@@ -72,7 +78,10 @@ class _TransactionEditState extends State<TransactionEdit> {
     _debouncer.run(() {
       final transaction = widget.viewModel.transaction.rebuild((b) => b
         ..amount = parseDouble(_amountController.text.trim())
-        ..description = _descriptionController.text.trim());
+        ..description = _descriptionController.text.trim()
+        ..participant = _participantController.text.trim()
+        ..participantName = _participantNameController.text.trim()
+      );
       if (transaction != widget.viewModel.transaction) {
         widget.viewModel.onChanged(transaction);
       }
@@ -188,6 +197,16 @@ class _TransactionEditState extends State<TransactionEdit> {
                       keyboardType: TextInputType.multiline,
                       controller: _descriptionController,
                       maxLines: 6,
+                    ),
+                    DecoratedFormField(
+                      label: localization.participant,
+                      keyboardType: TextInputType.text,
+                      controller: _participantController,
+                    ),
+                    DecoratedFormField(
+                      label: localization.participantName,
+                      keyboardType: TextInputType.text,
+                      controller: _participantNameController,
                     ),
                   ],
                 ),
