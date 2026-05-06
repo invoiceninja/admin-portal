@@ -82,6 +82,16 @@ class _TransactionViewState extends State<TransactionView> {
                   ),
                   ListDivider(),
                 ],
+                if (transactions.length == 1 && transaction.participant.isNotEmpty && transaction.participantName.isNotEmpty) ...[
+                  EntityHeader(
+                    entity: transaction,
+                    label: localization!.participant,
+                    value: transaction.participant,
+                    secondLabel: localization.participantName,
+                    secondValue: transaction.participantName,
+                  ),
+                  ListDivider(),
+                ],
                 if (transaction.isConverted) ...[
                   if (transaction.formattedDescription.isNotEmpty) ...[
                     IconMessage(transaction.formattedDescription,
