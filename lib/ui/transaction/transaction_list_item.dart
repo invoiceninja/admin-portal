@@ -116,6 +116,17 @@ class TransactionListItem extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                if (transaction.participant.isNotEmpty && transaction.participantName.isNotEmpty)
+                                ...[
+                                  Text(
+                                    transaction.participant + ' • ' + transaction.participantName,
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                      color: TransactionStatusColors(state.prefState.colorThemeModel)
+                                        .colors[kTransactionStatusMatched]),
+                                    ),
+                                ],
                                 Text(transaction.formattedDescription,
                                     style: textStyle),
                                 Text(
@@ -190,18 +201,39 @@ class TransactionListItem extends StatelessWidget {
                     : null,
                 title: Container(
                   width: MediaQuery.of(context).size.width,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Text(
-                          transaction.formattedDescription,
-                          style: Theme.of(context).textTheme.titleMedium,
+                  child: Column(
+                    children: [
+                    if (transaction.participant.isNotEmpty && transaction.participantName.isNotEmpty)
+                      ...[
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                transaction.participant + ' • ' + transaction.participantName,
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                            ),
+                          ],
                         ),
+                      ],
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              transaction.formattedDescription,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ),
+                          Text(
+                              formatNumber(transaction.amount, context,
+                                  currencyId: transaction.currencyId)!,
+                              style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                                  color: TransactionStatusColors(
+                                        state.prefState.colorThemeModel)
+                                    .colors[transaction.isDeposit ? kTransactionStatusDeposit : kTransactionStatusWithdrawal]))
+                              ,
+                        ],
                       ),
-                      Text(
-                          formatNumber(transaction.amount, context,
-                              currencyId: transaction.currencyId)!,
-                          style: Theme.of(context).textTheme.titleMedium),
                     ],
                   ),
                 ),

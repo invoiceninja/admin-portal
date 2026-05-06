@@ -87,6 +87,8 @@ class TransactionStatusColors {
       kTransactionStatusUnmatched: _colorTheme!.colorInfo,
       kTransactionStatusMatched: _colorTheme!.colorPrimary,
       kTransactionStatusConverted: _colorTheme!.colorSuccess,
+      kTransactionStatusDeposit: _colorTheme!.colorWarning,
+      kTransactionStatusWithdrawal: _colorTheme!.colorDanger,
     };
   }
 }
