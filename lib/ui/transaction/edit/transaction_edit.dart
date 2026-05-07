@@ -80,8 +80,7 @@ class _TransactionEditState extends State<TransactionEdit> {
         ..amount = parseDouble(_amountController.text.trim())
         ..description = _descriptionController.text.trim()
         ..participant = _participantController.text.trim()
-        ..participantName = _participantNameController.text.trim()
-      );
+        ..participantName = _participantNameController.text.trim());
       if (transaction != widget.viewModel.transaction) {
         widget.viewModel.onChanged(transaction);
       }

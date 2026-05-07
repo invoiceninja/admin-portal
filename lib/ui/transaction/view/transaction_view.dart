@@ -82,7 +82,9 @@ class _TransactionViewState extends State<TransactionView> {
                   ),
                   ListDivider(),
                 ],
-                if (transactions.length == 1 && transaction.participant.isNotEmpty && transaction.participantName.isNotEmpty) ...[
+                if (transactions.length == 1 &&
+                    transaction.participant.isNotEmpty &&
+                    transaction.participantName.isNotEmpty) ...[
                   EntityHeader(
                     entity: transaction,
                     label: localization!.participant,

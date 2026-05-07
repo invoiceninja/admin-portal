@@ -309,10 +309,14 @@ abstract class TransactionEntity extends Object
             .compareTo(bankAccountB.listDisplayName.toLowerCase());
         break;
       case TransactionFields.participant:
-        response = transactionA!.participant.toLowerCase().compareTo(transactionB!.participant.toLowerCase());
+        response = transactionA!.participant
+            .toLowerCase()
+            .compareTo(transactionB!.participant.toLowerCase());
         break;
       case TransactionFields.participantName:
-        response = transactionA!.participantName.toLowerCase().compareTo(transactionB!.participantName.toLowerCase());
+        response = transactionA!.participantName
+            .toLowerCase()
+            .compareTo(transactionB!.participantName.toLowerCase());
         break;
       default:
         print('## ERROR: sort by transaction.$sortField is not implemented');

@@ -116,16 +116,24 @@ class TransactionListItem extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                if (transaction.participant.isNotEmpty && transaction.participantName.isNotEmpty)
-                                ...[
+                                if (transaction.participant.isNotEmpty &&
+                                    transaction.participantName.isNotEmpty) ...[
                                   Text(
-                                    transaction.participant + ' • ' + transaction.participantName,
-                                      maxLines: 3,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                      color: TransactionStatusColors(state.prefState.colorThemeModel)
-                                        .colors[kTransactionStatusMatched]),
-                                    ),
+                                    transaction.participant +
+                                        ' • ' +
+                                        transaction.participantName,
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(
+                                            color: TransactionStatusColors(
+                                                        state.prefState
+                                                            .colorThemeModel)
+                                                    .colors[
+                                                kTransactionStatusMatched]),
+                                  ),
                                 ],
                                 Text(transaction.formattedDescription,
                                     style: textStyle),
@@ -203,13 +211,15 @@ class TransactionListItem extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   child: Column(
                     children: [
-                    if (transaction.participant.isNotEmpty && transaction.participantName.isNotEmpty)
-                      ...[
+                      if (transaction.participant.isNotEmpty &&
+                          transaction.participantName.isNotEmpty) ...[
                         Row(
                           children: [
                             Expanded(
                               child: Text(
-                                transaction.participant + ' • ' + transaction.participantName,
+                                transaction.participant +
+                                    ' • ' +
+                                    transaction.participantName,
                                 style: Theme.of(context).textTheme.titleMedium,
                               ),
                             ),
@@ -227,11 +237,16 @@ class TransactionListItem extends StatelessWidget {
                           Text(
                               formatNumber(transaction.amount, context,
                                   currencyId: transaction.currencyId)!,
-                              style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                                  color: TransactionStatusColors(
-                                        state.prefState.colorThemeModel)
-                                    .colors[transaction.isDeposit ? kTransactionStatusDeposit : kTransactionStatusWithdrawal]))
-                              ,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(
+                                      color: TransactionStatusColors(
+                                              state.prefState.colorThemeModel)
+                                          .colors[transaction
+                                              .isDeposit
+                                          ? kTransactionStatusDeposit
+                                          : kTransactionStatusWithdrawal])),
                         ],
                       ),
                     ],

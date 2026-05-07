@@ -700,8 +700,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 final updatedItem = company.fillProducts
                                     ? item.rebuild((b) => b
                                       ..productKey = product.productKey
-                                      ..createdAt = DateTime.now()
-                                          .microsecondsSinceEpoch
+                                      ..createdAt =
+                                          DateTime.now().microsecondsSinceEpoch
                                       ..notes = item.isTask
                                           ? item.notes
                                           : product.notes
@@ -1180,8 +1180,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       child: Align(
                         alignment: Alignment.bottomRight,
                         child: Padding(
-                          padding:
-                              const EdgeInsets.symmetric(vertical: 12),
+                          padding: const EdgeInsets.symmetric(vertical: 12),
                           child: Text(
                             formatNumber(
                                   lineItems[index].total(invoice, precision),
