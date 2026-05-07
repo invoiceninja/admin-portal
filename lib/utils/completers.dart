@@ -108,6 +108,14 @@ class Debouncer {
       action!();
       action = null;
     }
+    timer?.cancel();
+    timer = null;
+  }
+
+  static void cancel() {
+    action = null;
+    timer?.cancel();
+    timer = null;
   }
 
   static void runOnComplete(Function callback) {

@@ -64,7 +64,6 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
   final _debouncer = Debouncer();
   TextEditingController? _textEditingController;
   bool _isReordering = false;
-  int? _updatedAt;
   int _autocompleteFocusIndex = -1;
   final _columns = <String>[];
 
@@ -246,9 +245,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
   }
 
   void _updateTable() {
-    setState(() {
-      _updatedAt = DateTime.now().millisecondsSinceEpoch;
-    });
+    setState(() {});
   }
 
   void _onChanged(
@@ -272,7 +269,10 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     }
   }
 
-  void _onFocusChange() {
+  void _onFocusChange(bool hasFocus) {
+    if (hasFocus) {
+      return;
+    }
     WidgetsBinding.instance.addPostFrameCallback((duration) {
       Debouncer.complete();
     });
@@ -605,7 +605,6 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
         },
         // TODO change to top once we can set maxLines to 2
         defaultVerticalAlignment: TableCellVerticalAlignment.bottom,
-        key: ValueKey('__datatable_${_updatedAt}__'),
         children: [
           TableRow(
             children: tableHeaderColumns,
@@ -629,8 +628,10 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       if (column == COLUMN_ITEM) {
                         return Focus(
                           onFocusChange: (hasFocus) {
-                            _autocompleteFocusIndex = index;
-                            _onFocusChange();
+                            if (hasFocus) {
+                              _autocompleteFocusIndex = index;
+                            }
+                            _onFocusChange(hasFocus);
                           },
                           skipTraversal: true,
                           child: Padding(
@@ -673,6 +674,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                               displayStringForOption: (product) =>
                                   product.productKey,
                               onSelected: (product) {
+                                Debouncer.cancel();
                                 final item = lineItems[index];
                                 final client =
                                     state.clientState.get(invoice.clientId);
@@ -698,6 +700,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                 final updatedItem = company.fillProducts
                                     ? item.rebuild((b) => b
                                       ..productKey = product.productKey
+                                      ..createdAt = DateTime.now()
+                                          .microsecondsSinceEpoch
                                       ..notes = item.isTask
                                           ? item.notes
                                           : product.notes
@@ -747,8 +751,10 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                                                   product.taxName3.isNotEmpty
                                               ? product.taxRate3
                                               : item.taxRate3)
-                                    : item.rebuild((b) =>
-                                        b..productKey = product.productKey);
+                                    : item.rebuild((b) => b
+                                      ..productKey = product.productKey
+                                      ..createdAt = DateTime.now()
+                                          .microsecondsSinceEpoch);
 
                                 _onChanged(updatedItem, index, debounce: false);
                                 _updateTable();
@@ -859,7 +865,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         );
                       } else if (column == COLUMN_DESCRIPTION) {
                         return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(),
+                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
                           skipTraversal: true,
                           child: Padding(
                             padding:
@@ -878,7 +884,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         );
                       } else if (column == COLUMN_CUSTOM1) {
                         return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(),
+                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
                           skipTraversal: true,
                           child: Padding(
                             padding:
@@ -898,7 +904,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         );
                       } else if (column == COLUMN_CUSTOM2) {
                         return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(),
+                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
                           skipTraversal: true,
                           child: Padding(
                             padding:
@@ -918,7 +924,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         );
                       } else if (column == COLUMN_CUSTOM3) {
                         return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(),
+                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
                           skipTraversal: true,
                           child: Padding(
                             padding:
@@ -938,7 +944,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         );
                       } else if (column == COLUMN_CUSTOM4) {
                         return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(),
+                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
                           skipTraversal: true,
                           child: Padding(
                             padding:
@@ -959,7 +965,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                       } else if (column == COLUMN_TAX_CATEGORY &&
                           !lineItems[index].hasOverrideTax) {
                         return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(),
+                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
                           skipTraversal: true,
                           child: Padding(
                             padding:
@@ -985,7 +991,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                           (column == COLUMN_TAX_CATEGORY &&
                               lineItems[index].hasOverrideTax)) {
                         Widget child = Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(),
+                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
                           skipTraversal: true,
                           child: Padding(
                             padding:
@@ -1025,7 +1031,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         return child;
                       } else if (column == COLUMN_TAX2) {
                         return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(),
+                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
                           skipTraversal: true,
                           child: Padding(
                             padding:
@@ -1046,7 +1052,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         );
                       } else if (column == COLUMN_TAX3) {
                         return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(),
+                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
                           skipTraversal: true,
                           child: Padding(
                             padding:
@@ -1067,7 +1073,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         );
                       } else if (column == COLUMN_UNIT_COST) {
                         return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(),
+                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
                           skipTraversal: true,
                           child: Padding(
                             padding:
@@ -1101,7 +1107,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         );
                       } else if (column == COLUMN_QUANTITY) {
                         return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(),
+                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
                           skipTraversal: true,
                           child: Padding(
                             padding:
@@ -1135,7 +1141,7 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                         );
                       } else if (column == COLUMN_DISCOUNT) {
                         return Focus(
-                          onFocusChange: (hasFocus) => _onFocusChange(),
+                          onFocusChange: (hasFocus) => _onFocusChange(hasFocus),
                           skipTraversal: true,
                           child: Padding(
                             padding:
@@ -1171,20 +1177,27 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
                     }).toList(),
                     Padding(
                       padding: const EdgeInsets.only(right: kTableColumnGap),
-                      child: TextFormField(
-                        key: ValueKey(
-                            '__total_${index}_${lineItems[index].total(invoice, precision)}_${invoice.clientId}__'),
-                        enabled: false,
-                        style: TextStyle(color: state.greyColor),
-                        initialValue: formatNumber(
-                          lineItems[index].total(invoice, precision),
-                          context,
-                          clientId:
-                              invoice.isPurchaseOrder ? null : invoice.clientId,
-                          vendorId:
-                              invoice.isPurchaseOrder ? invoice.vendorId : null,
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.symmetric(vertical: 12),
+                          child: Text(
+                            formatNumber(
+                                  lineItems[index].total(invoice, precision),
+                                  context,
+                                  clientId: invoice.isPurchaseOrder
+                                      ? null
+                                      : invoice.clientId,
+                                  vendorId: invoice.isPurchaseOrder
+                                      ? invoice.vendorId
+                                      : null,
+                                ) ??
+                                '',
+                            style: TextStyle(color: state.greyColor),
+                            textAlign: TextAlign.right,
+                          ),
                         ),
-                        textAlign: TextAlign.right,
                       ),
                     ),
                     PopupMenuButton<String>(

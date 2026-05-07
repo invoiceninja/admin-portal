@@ -530,7 +530,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                           if (invoice.isNew)
                             if (invoice.isPurchaseOrder)
                               VendorPicker(
-                                autofocus: true,
                                 vendorId: invoice.vendorId,
                                 vendorState: state.vendorState,
                                 onSelected: (vendor) {
@@ -542,7 +541,6 @@ class InvoiceEditDesktopState extends State<InvoiceEditDesktop>
                               )
                             else
                               ClientPicker(
-                                autofocus: true,
                                 clientId: invoice.clientId,
                                 clientState: state.clientState,
                                 onSelected: (client) {
