@@ -1,3 +1,5 @@
+import 'dart:io' show Platform;
+
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -10,6 +12,15 @@ import 'package:google_sign_in/google_sign_in.dart';
 /// `(idToken: '', accessToken)` and the repository layer omits the empty
 /// id_token from the request body so Laravel's `request()->has('id_token')`
 /// returns false and execution falls into the access-token branch.
+///
+/// Android requires `serverClientId` to be passed to `initialize()` — the
+/// v7 plugin routes through Credential Manager, which needs the Web OAuth
+/// client ID and does not auto-resolve it from `google-services.json`. iOS
+/// resolves its client ID from `Info.plist`/`GoogleService-Info.plist`, and
+/// passing `serverClientId` there breaks the flow, so it stays Android-only.
+const String _kAndroidServerClientId =
+    '640903115046-37ltu6s2j07gcqkssmf5feofj4isnsju.apps.googleusercontent.com';
+
 class GoogleOAuth {
   static bool _initialized = false;
 
@@ -19,7 +30,13 @@ class GoogleOAuth {
     if (_initialized) {
       return;
     }
-    await GoogleSignIn.instance.initialize();
+    if (!kIsWeb && Platform.isAndroid) {
+      await GoogleSignIn.instance.initialize(
+        serverClientId: _kAndroidServerClientId,
+      );
+    } else {
+      await GoogleSignIn.instance.initialize();
+    }
     _initialized = true;
   }
 
