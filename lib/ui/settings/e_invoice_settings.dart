@@ -200,8 +200,7 @@ class _EInvoiceSettingsState extends State<EInvoiceSettings> {
       'code': code,
     };
     final fields = _visibleFields;
-    if (fields.contains('iban')) 
-      data['iban'] = _ibanController.text.trim();
+    if (fields.contains('iban')) data['iban'] = _ibanController.text.trim();
     if (fields.contains('bic_swift'))
       data['bic_swift'] = _bicSwiftController.text.trim();
     if (fields.contains('account_holder'))
