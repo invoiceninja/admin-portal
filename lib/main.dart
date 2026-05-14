@@ -311,12 +311,17 @@ void _registerErrorHandlers() {
   */
 
   ErrorWidget.builder = (FlutterErrorDetails details) {
+    final message = details.exceptionAsString();
+    final stack = kReleaseMode ? '' : '\n\n${details.stack}';
     return Material(
       color: Colors.grey.shade100,
       child: Center(
-        child: Text(
-          details.toString(),
-          style: TextStyle(color: Colors.black),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Text(
+            '$message$stack',
+            style: const TextStyle(color: Colors.black),
+          ),
         ),
       ),
     );
