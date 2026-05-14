@@ -76,7 +76,7 @@ class _KanbanTaskCardState extends State<KanbanTaskCard> {
     }
 
     final isDragging =
-        context.findAncestorStateOfType<KanbanViewState>()!.isDragging;
+        context.findAncestorStateOfType<KanbanViewState>()?.isDragging ?? false;
 
     if (_isEditing && !isDragging) {
       return Card(

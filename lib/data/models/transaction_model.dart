@@ -308,6 +308,16 @@ abstract class TransactionEntity extends Object
             .toLowerCase()
             .compareTo(bankAccountB.listDisplayName.toLowerCase());
         break;
+      case TransactionFields.participant:
+        response = transactionA!.participant
+            .toLowerCase()
+            .compareTo(transactionB!.participant.toLowerCase());
+        break;
+      case TransactionFields.participantName:
+        response = transactionA!.participantName
+            .toLowerCase()
+            .compareTo(transactionB!.participantName.toLowerCase());
+        break;
       default:
         print('## ERROR: sort by transaction.$sortField is not implemented');
         break;
@@ -348,6 +358,8 @@ abstract class TransactionEntity extends Object
       haystacks: [
         category,
         description,
+        participant,
+        participantName,
       ],
       needle: filter,
     );
@@ -359,6 +371,8 @@ abstract class TransactionEntity extends Object
       haystacks: [
         category,
         description,
+        participant,
+        participantName,
       ],
       needle: filter,
     );

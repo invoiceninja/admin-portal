@@ -172,7 +172,6 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     ? Column(
                         children: [
                           VendorPicker(
-                            autofocus: true,
                             vendorId: invoice.vendorId,
                             vendorState: state.vendorState,
                             onSelected: (vendor) {
@@ -210,7 +209,6 @@ class InvoiceEditDetailsState extends State<InvoiceEditDetails> {
                     : Column(
                         children: [
                           ClientPicker(
-                            autofocus: true,
                             clientId: invoice.clientId,
                             clientState: state.clientState,
                             onSelected: (client) => viewModel.onClientChanged!(
