@@ -455,20 +455,77 @@ class ReportsScreen extends StatelessWidget {
                   ),
                 ),
               )
-            : ScrollableListView(
-                primary: true,
-                key: ValueKey(
-                    '${viewModel.state.company.id}_${viewModel.state.isSaving}_${reportsState.report}_${reportsState.group}'),
-                children: <Widget>[
-                  isMobile(context)
-                      ? FormCard(
-                          children: [
-                            ...reportChildren,
-                            ...dateChildren,
-                            ...chartChildren,
-                          ],
-                        )
-                      : Row(
+            : isMobile(context)
+                ? ScrollableListView(
+                    primary: true,
+                    key: ValueKey(
+                        '${viewModel.state.company.id}_${viewModel.state.isSaving}_${reportsState.report}_${reportsState.group}'),
+                    children: <Widget>[
+                      FormCard(
+                        children: [
+                          ...reportChildren,
+                          ...dateChildren,
+                          ...chartChildren,
+                        ],
+                      ),
+                      if (isMobile(context))
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Row(
+                            children: [
+                              Builder(builder: (BuildContext context) {
+                                return Expanded(
+                                  child: AppButton(
+                                    label: localization.columns,
+                                    onPressed: () {
+                                      multiselectDialog(
+                                        context: context,
+                                        onSelected: (selected) {
+                                          viewModel.onReportColumnsChanged(
+                                              context, selected);
+                                        },
+                                        options: reportResult.allColumns,
+                                        selected: reportResult.columns.toList(),
+                                        defaultSelected:
+                                            reportResult.defaultColumns,
+                                      );
+                                    },
+                                  ),
+                                );
+                              }),
+                              SizedBox(width: kGutterWidth),
+                              Expanded(
+                                child: AppButton(
+                                  label: localization.export,
+                                  onPressed: () {
+                                    viewModel.onExportPressed(context);
+                                  },
+                                ),
+                              ),
+                              SizedBox(width: kGutterWidth),
+                              Expanded(
+                                child: AppButton(
+                                  label: localization.schedule,
+                                  onPressed: () {
+                                    viewModel.onSchedulePressed(context);
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ReportDataTable(
+                        key: ValueKey(
+                            '${viewModel.state.isSaving}_${reportsState.group}_${reportsState.selectedGroup}'),
+                        viewModel: viewModel,
+                      )
+                    ],
+                  )
+                : Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Flexible(
@@ -500,59 +557,16 @@ class ReportsScreen extends StatelessWidget {
                             )
                           ],
                         ),
-                  if (isMobile(context))
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                        children: [
-                          Builder(builder: (BuildContext context) {
-                            return Expanded(
-                              child: AppButton(
-                                label: localization.columns,
-                                onPressed: () {
-                                  multiselectDialog(
-                                    context: context,
-                                    onSelected: (selected) {
-                                      viewModel.onReportColumnsChanged(
-                                          context, selected);
-                                    },
-                                    options: reportResult.allColumns,
-                                    selected: reportResult.columns.toList(),
-                                    defaultSelected:
-                                        reportResult.defaultColumns,
-                                  );
-                                },
-                              ),
-                            );
-                          }),
-                          SizedBox(width: kGutterWidth),
-                          Expanded(
-                            child: AppButton(
-                              label: localization.export,
-                              onPressed: () {
-                                viewModel.onExportPressed(context);
-                              },
-                            ),
-                          ),
-                          SizedBox(width: kGutterWidth),
-                          Expanded(
-                            child: AppButton(
-                              label: localization.schedule,
-                              onPressed: () {
-                                viewModel.onSchedulePressed(context);
-                              },
-                            ),
-                          ),
-                        ],
                       ),
-                    ),
-                  ReportDataTable(
-                    key: ValueKey(
-                        '${viewModel.state.isSaving}_${reportsState.group}_${reportsState.selectedGroup}'),
-                    viewModel: viewModel,
-                  )
-                ],
-              ),
+                      Expanded(
+                        child: ReportDataTable(
+                          key: ValueKey(
+                              '${viewModel.state.isSaving}_${reportsState.group}_${reportsState.selectedGroup}'),
+                          viewModel: viewModel,
+                        ),
+                      ),
+                    ],
+                  ),
       ),
     );
   }
@@ -692,22 +706,41 @@ class _ReportDataTableState extends State<ReportDataTable> {
                     ],
                   ),
           ),
-        SingleChildScrollView(
-          padding: const EdgeInsets.all(12),
-          child: AppPaginatedDataTable(
-            sortColumnIndex: sortedColumns.contains(reportSettings.sortColumn)
-                ? sortedColumns.indexOf(reportSettings.sortColumn)
-                : null,
-            sortAscending: reportSettings.sortAscending,
-            columns: reportResult.tableColumns(
-                context,
-                (index, ascending) => widget.viewModel
-                    .onReportSorted(sortedColumns[index], ascending)),
-            source: dataTableSource,
-            showFirstLastButtons: true,
-            subtractOne: true,
-          ),
-        )
+        isMobile(context)
+            ? SingleChildScrollView(
+                padding: const EdgeInsets.all(12),
+                child: AppPaginatedDataTable(
+                  sortColumnIndex: sortedColumns.contains(reportSettings.sortColumn)
+                      ? sortedColumns.indexOf(reportSettings.sortColumn)
+                      : null,
+                  sortAscending: reportSettings.sortAscending,
+                  columns: reportResult.tableColumns(
+                      context,
+                      (index, ascending) => widget.viewModel
+                          .onReportSorted(sortedColumns[index], ascending)),
+                  source: dataTableSource,
+                  showFirstLastButtons: true,
+                  subtractOne: true,
+                ),
+              )
+            : Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: AppPaginatedDataTable(
+                    sortColumnIndex: sortedColumns.contains(reportSettings.sortColumn)
+                        ? sortedColumns.indexOf(reportSettings.sortColumn)
+                        : null,
+                    sortAscending: reportSettings.sortAscending,
+                    columns: reportResult.tableColumns(
+                        context,
+                        (index, ascending) => widget.viewModel
+                            .onReportSorted(sortedColumns[index], ascending)),
+                    source: dataTableSource,
+                    showFirstLastButtons: true,
+                    subtractOne: true,
+                  ),
+                ),
+              )
       ],
     );
   }

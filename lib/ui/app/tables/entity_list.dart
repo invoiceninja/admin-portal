@@ -241,73 +241,70 @@ class _EntityListState extends State<EntityList> {
                 },
               ),
             Expanded(
-              child: SingleChildScrollView(
-                primary: true,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: AppPaginatedDataTable(
-                    onSelectAll: (value) {
-                      final startIndex =
-                          min(_firstRowIndex, entityList.length - 1);
-                      final endIndex =
-                          min(_firstRowIndex + rowsPerPage, entityList.length);
-                      final entities = entityList
-                          .sublist(startIndex, endIndex)
-                          .map<BaseEntity>((String? entityId) =>
-                              entityMap![entityId] as BaseEntity)
-                          .where((invoice) =>
-                              value != listUIState.isSelected(invoice.id))
-                          .toList();
-                      handleEntitiesActions(
-                          entities, EntityAction.toggleMultiselect);
-                    },
-                    columns: [
-                      if (!isInMultiselect) DataColumn(label: SizedBox()),
-                      ...widget.tableColumns!.map((field) {
-                        String? label =
-                            AppLocalization.of(context)!.lookup(field);
-                        if (field.startsWith('custom')) {
-                          final key = field.replaceFirst(
-                              'custom', entityType.snakeCase);
-                          label = state.company.getCustomFieldLabel(key);
-                        }
-                        return DataColumn(
-                            label: Container(
-                              child: Text(
-                                label,
-                                overflow: TextOverflow.ellipsis,
-                              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: AppPaginatedDataTable(
+                  onSelectAll: (value) {
+                    final startIndex =
+                        min(_firstRowIndex, entityList.length - 1);
+                    final endIndex =
+                        min(_firstRowIndex + rowsPerPage, entityList.length);
+                    final entities = entityList
+                        .sublist(startIndex, endIndex)
+                        .map<BaseEntity>((String? entityId) =>
+                            entityMap![entityId] as BaseEntity)
+                        .where((invoice) =>
+                            value != listUIState.isSelected(invoice.id))
+                        .toList();
+                    handleEntitiesActions(
+                        entities, EntityAction.toggleMultiselect);
+                  },
+                  columns: [
+                    if (!isInMultiselect) DataColumn(label: SizedBox()),
+                    ...widget.tableColumns!.map((field) {
+                      String? label =
+                          AppLocalization.of(context)!.lookup(field);
+                      if (field.startsWith('custom')) {
+                        final key = field.replaceFirst(
+                            'custom', entityType.snakeCase);
+                        label = state.company.getCustomFieldLabel(key);
+                      }
+                      return DataColumn(
+                          label: Container(
+                            child: Text(
+                              label,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            onSort: (int columnIndex, bool ascending) {
-                              widget.onSortColumn(field);
-                            });
-                      }),
-                    ],
-                    source: dataTableSource,
-                    sortColumnIndex: widget.tableColumns!
-                            .contains(listUIState.sortField)
-                        ? widget.tableColumns!.indexOf(listUIState.sortField) +
-                            1
-                        : 0,
-                    sortAscending: listUIState.sortAscending,
-                    rowsPerPage: state.prefState.rowsPerPage,
-                    showFirstLastButtons: true,
-                    onPageChanged: (row) {
-                      _firstRowIndex = row;
-                      store.dispatch(UpdateLastHistory(
-                          (row / state.prefState.rowsPerPage).floor()));
-                    },
-                    initialFirstRowIndex: _firstRowIndex,
-                    availableRowsPerPage: [
-                      10,
-                      25,
-                      50,
-                      100,
-                    ],
-                    onRowsPerPageChanged: (value) {
-                      store.dispatch(UpdateUserPreferences(rowsPerPage: value));
-                    },
-                  ),
+                          ),
+                          onSort: (int columnIndex, bool ascending) {
+                            widget.onSortColumn(field);
+                          });
+                    }),
+                  ],
+                  source: dataTableSource,
+                  sortColumnIndex: widget.tableColumns!
+                          .contains(listUIState.sortField)
+                      ? widget.tableColumns!.indexOf(listUIState.sortField) +
+                          1
+                      : 0,
+                  sortAscending: listUIState.sortAscending,
+                  rowsPerPage: state.prefState.rowsPerPage,
+                  showFirstLastButtons: true,
+                  onPageChanged: (row) {
+                    _firstRowIndex = row;
+                    store.dispatch(UpdateLastHistory(
+                        (row / state.prefState.rowsPerPage).floor()));
+                  },
+                  initialFirstRowIndex: _firstRowIndex,
+                  availableRowsPerPage: [
+                    10,
+                    25,
+                    50,
+                    100,
+                  ],
+                  onRowsPerPageChanged: (value) {
+                    store.dispatch(UpdateUserPreferences(rowsPerPage: value));
+                  },
                 ),
               ),
             ),

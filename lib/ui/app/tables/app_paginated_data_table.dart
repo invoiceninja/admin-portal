@@ -285,35 +285,7 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
   int _selectedRowCount = 0;
   final Map<int, DataRow?> _rows = <int, DataRow?>{};
 
-  @override
-  void initState() {
-    super.initState();
-    _firstRowIndex = PageStorage.maybeOf(context)?.readState(context) as int? ??
-        widget.initialFirstRowIndex ??
-        0;
-    widget.source.addListener(_handleDataSourceChanged);
-    _handleDataSourceChanged();
-    _controller = widget.controller ?? ScrollController();
-  }
 
-  @override
-  void didUpdateWidget(AppPaginatedDataTable oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.source != widget.source) {
-      oldWidget.source.removeListener(_handleDataSourceChanged);
-      widget.source.addListener(_handleDataSourceChanged);
-      _handleDataSourceChanged();
-    }
-  }
-
-  @override
-  void dispose() {
-    widget.source.removeListener(_handleDataSourceChanged);
-    if (widget.controller == null) {
-      _controller.dispose();
-    }
-    super.dispose();
-  }
 
   void _handleDataSourceChanged() {
     setState(() {
@@ -398,14 +370,190 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
       (_firstRowIndex + widget.rowsPerPage >= _rowCount);
 
   final GlobalKey _tableKey = GlobalKey();
+  late ScrollController _verticalScrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _firstRowIndex = PageStorage.maybeOf(context)?.readState(context) as int? ??
+        widget.initialFirstRowIndex ??
+        0;
+    widget.source.addListener(_handleDataSourceChanged);
+    _handleDataSourceChanged();
+    _controller = widget.controller ?? ScrollController();
+    _verticalScrollController = ScrollController();
+  }
+
+  @override
+  void didUpdateWidget(AppPaginatedDataTable oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.source != widget.source) {
+      oldWidget.source.removeListener(_handleDataSourceChanged);
+      widget.source.addListener(_handleDataSourceChanged);
+      _handleDataSourceChanged();
+    }
+  }
+
+  @override
+  void dispose() {
+    widget.source.removeListener(_handleDataSourceChanged);
+    if (widget.controller == null) {
+      _controller.dispose();
+    }
+    _verticalScrollController.dispose();
+    super.dispose();
+  }
+
+  List<double> _calculateColumnWidths(BuildContext context) {
+    final List<double> resolvedWidths = [];
+    for (int i = 0; i < widget.columns.length; i++) {
+      double minW = 0.0;
+      double maxW = double.infinity;
+
+      final column = widget.columns[i];
+      _updateConstraints(column.label, (min, max) {
+        minW = math.max(minW, min);
+        maxW = math.min(maxW, max);
+      });
+
+      final sampleRows = _getRows(_firstRowIndex, math.min(5, widget.rowsPerPage));
+      for (final row in sampleRows) {
+        if (i < row.cells.length) {
+          _updateConstraints(row.cells[i].child, (min, max) {
+            minW = math.max(minW, min);
+            maxW = math.min(maxW, max);
+          });
+        }
+      }
+
+      double width = 140.0;
+      if (minW > 0.0) {
+        width = minW;
+      }
+      if (maxW < double.infinity && maxW > 0.0) {
+        width = math.min(width, maxW);
+      }
+
+      if (column.label is Text) {
+        final text = (column.label as Text).data ?? '';
+        width = _guessWidthFromText(text, width);
+      } else if (column.label is Container && (column.label as Container).child is Text) {
+        final text = ((column.label as Container).child as Text).data ?? '';
+        width = _guessWidthFromText(text, width);
+      }
+
+      if (column.label is SizedBox || (column.label is Container && (column.label as Container).child == null)) {
+        width = 96.0;
+      }
+
+      resolvedWidths.add(width);
+    }
+    return resolvedWidths;
+  }
+
+  void _updateConstraints(Widget widget, void Function(double min, double max) onConstraints) {
+    if (widget is ConstrainedBox) {
+      onConstraints(widget.constraints.minWidth, widget.constraints.maxWidth);
+      if (widget.child != null) {
+        _updateConstraints(widget.child!, onConstraints);
+      }
+    } else if (widget is Container) {
+      if (widget.constraints != null) {
+        onConstraints(widget.constraints!.minWidth, widget.constraints!.maxWidth);
+      }
+      if (widget.child != null) {
+        _updateConstraints(widget.child!, onConstraints);
+      }
+    } else if (widget is SizedBox) {
+      if (widget.width != null) {
+        onConstraints(widget.width!, widget.width!);
+      }
+      if (widget.child != null) {
+        _updateConstraints(widget.child!, onConstraints);
+      }
+    }
+  }
+
+  double _guessWidthFromText(String text, double currentWidth) {
+    final lowerText = text.toLowerCase();
+    double width = currentWidth;
+    if (lowerText.contains('description') || lowerText.contains('notes') || lowerText.contains('details')) {
+      width = math.max(width, 260.0);
+    } else if (lowerText.contains('amount') || lowerText.contains('price') || lowerText.contains('total') || lowerText.contains('balance')) {
+      width = math.max(width, 120.0);
+    } else if (lowerText.contains('date')) {
+      width = math.max(width, 110.0);
+    } else if (lowerText.contains('number') || lowerText.contains('id') || lowerText.contains('status')) {
+      width = math.max(width, 100.0);
+    } else {
+      width = math.max(width, 140.0);
+    }
+    final estimatedTextWidth = text.length * 8.0 + 32.0;
+    width = math.max(width, estimatedTextWidth);
+    return width;
+  }
+
+  Widget _buildHeader(ThemeData themeData, MaterialLocalizations localizations, List<Widget> headerWidgets) {
+    return Semantics(
+      container: true,
+      child: DefaultTextStyle(
+        style: _selectedRowCount > 0
+            ? themeData.textTheme.titleMedium!
+                .copyWith(color: themeData.colorScheme.secondary)
+            : themeData.textTheme.titleLarge!
+                .copyWith(fontWeight: FontWeight.w400),
+        child: IconTheme.merge(
+          data: const IconThemeData(
+            opacity: 0.54,
+          ),
+          child: Ink(
+            height: 64.0,
+            color: _selectedRowCount > 0
+                ? themeData.secondaryHeaderColor
+                : null,
+            child: Padding(
+              padding: const EdgeInsetsDirectional.only(
+                  start: 24, end: 14.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: headerWidgets,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFooter(TextStyle? footerTextStyle, List<Widget> footerWidgets) {
+    return DefaultTextStyle(
+      style: footerTextStyle!,
+      child: IconTheme.merge(
+        data: const IconThemeData(
+          opacity: 0.54,
+        ),
+        child: SizedBox(
+          height: 56.0,
+          child: SingleChildScrollView(
+            dragStartBehavior: widget.dragStartBehavior,
+            scrollDirection: Axis.horizontal,
+            reverse: true,
+            child: Row(
+              children: footerWidgets,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    // TODO(ianh): This whole build function doesn't handle RTL yet.
     assert(debugCheckHasMaterialLocalizations(context));
     final ThemeData themeData = Theme.of(context);
     final MaterialLocalizations localizations =
         MaterialLocalizations.of(context);
+
     // HEADER
     final List<Widget> headerWidgets = <Widget>[];
     if (_selectedRowCount == 0 && widget.header != null) {
@@ -419,7 +567,6 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
       headerWidgets.addAll(
         widget.actions!.map<Widget>((Widget action) {
           return Padding(
-            // 8.0 is the default padding of an icon button
             padding: const EdgeInsetsDirectional.only(start: 24.0 - 8.0 * 2.0),
             child: action,
           );
@@ -434,7 +581,6 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
         math.min(_rowCount, _firstRowIndex + widget.rowsPerPage);
     if (widget.onRowsPerPageChanged != null) {
       final List<Widget> availableRowsPerPage = widget.availableRowsPerPage
-          //.where((int value) => value <= _rowCount || value == widget.rowsPerPage)
           .map<DropdownMenuItem<int>>((int value) {
         return DropdownMenuItem<int>(
           value: value,
@@ -442,13 +588,10 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
         );
       }).toList();
       footerWidgets.addAll(<Widget>[
-        Container(
-            width:
-                14.0), // to match trailing padding in case we overflow and end up scrolling
+        Container(width: 14.0),
         Text(localizations.rowsPerPageTitle),
         ConstrainedBox(
-          constraints: const BoxConstraints(
-              minWidth: 64.0), // 40.0 for the text, 24.0 for the icon
+          constraints: const BoxConstraints(minWidth: 64.0),
           child: Align(
             alignment: AlignmentDirectional.centerEnd,
             child: DropdownButtonHideUnderline(
@@ -511,96 +654,181 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
       semanticContainer: false,
       child: LayoutBuilder(
         builder: (BuildContext context, BoxConstraints constraints) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              if (headerWidgets.isNotEmpty)
-                Semantics(
-                  container: true,
-                  child: DefaultTextStyle(
-                    // These typographic styles aren't quite the regular ones. We pick the closest ones from the regular
-                    // list and then tweak them appropriately.
-                    // See https://material.io/design/components/data-tables.html#tables-within-cards
-                    style: _selectedRowCount > 0
-                        ? themeData.textTheme.titleMedium!
-                            .copyWith(color: themeData.colorScheme.secondary)
-                        : themeData.textTheme.titleLarge!
-                            .copyWith(fontWeight: FontWeight.w400),
-                    child: IconTheme.merge(
-                      data: const IconThemeData(
-                        opacity: 0.54,
-                      ),
-                      child: Ink(
-                        height: 64.0,
-                        color: _selectedRowCount > 0
-                            ? themeData.secondaryHeaderColor
-                            : null,
-                        child: Padding(
-                          padding: const EdgeInsetsDirectional.only(
-                              start: 24, end: 14.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: headerWidgets,
+          final bool useScrollableLayout = constraints.hasBoundedHeight;
+
+          Widget tableWidget;
+          if (useScrollableLayout) {
+            final List<double> columnWidths = _calculateColumnWidths(context);
+            // Build header columns
+            final List<DataColumn> headerColumns = [];
+            for (int i = 0; i < widget.columns.length; i++) {
+              final col = widget.columns[i];
+              headerColumns.add(
+                DataColumn(
+                  label: SizedBox(
+                    width: columnWidths[i],
+                    child: col.label,
+                  ),
+                  tooltip: col.tooltip,
+                  numeric: col.numeric,
+                  onSort: col.onSort,
+                ),
+              );
+            }
+
+            // Build body rows
+            final List<DataRow> bodyRows = [];
+            final List<DataRow> originalRows = _getRows(_firstRowIndex, widget.rowsPerPage);
+            for (final row in originalRows) {
+              final List<DataCell> cells = [];
+              for (int i = 0; i < row.cells.length; i++) {
+                final cell = row.cells[i];
+                final width = i < columnWidths.length ? columnWidths[i] : 140.0;
+                cells.add(
+                  DataCell(
+                    SizedBox(
+                      width: width,
+                      child: cell.child,
+                    ),
+                    placeholder: cell.placeholder,
+                    showEditIcon: cell.showEditIcon,
+                    onTap: cell.onTap,
+                    onLongPress: cell.onLongPress,
+                    onTapDown: cell.onTapDown,
+                    onDoubleTap: cell.onDoubleTap,
+                    onTapCancel: cell.onTapCancel,
+                  ),
+                );
+              }
+              bodyRows.add(
+                DataRow(
+                  key: row.key,
+                  selected: row.selected,
+                  onSelectChanged: row.onSelectChanged,
+                  onLongPress: row.onLongPress,
+                  color: row.color,
+                  cells: cells,
+                ),
+              );
+            }
+
+            tableWidget = Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                if (headerWidgets.isNotEmpty)
+                  _buildHeader(themeData, localizations, headerWidgets),
+                Expanded(
+                  child: Scrollbar(
+                    controller: _verticalScrollController,
+                    thumbVisibility: true,
+                    notificationPredicate: (ScrollNotification notification) =>
+                        notification.metrics.axis == Axis.vertical,
+                    child: Scrollbar(
+                      controller: _controller,
+                      thumbVisibility: true,
+                      notificationPredicate: (ScrollNotification notification) =>
+                          notification.metrics.axis == Axis.horizontal,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        controller: _controller,
+                        dragStartBehavior: widget.dragStartBehavior,
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(minWidth: constraints.minWidth),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              DataTable(
+                                columns: headerColumns,
+                                sortColumnIndex: widget.sortColumnIndex,
+                                sortAscending: widget.sortAscending,
+                                onSelectAll: widget.onSelectAll,
+                                decoration: const BoxDecoration(),
+                                dataRowMinHeight: widget.dataRowMinHeight,
+                                dataRowMaxHeight: widget.dataRowMaxHeight,
+                                headingRowHeight: widget.headingRowHeight,
+                                horizontalMargin: widget.horizontalMargin,
+                                checkboxHorizontalMargin: widget.checkboxHorizontalMargin,
+                                columnSpacing: widget.columnSpacing,
+                                showCheckboxColumn: widget.showCheckboxColumn,
+                                showBottomBorder: true,
+                                rows: const <DataRow>[],
+                              ),
+                              Expanded(
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  controller: _verticalScrollController,
+                                  dragStartBehavior: widget.dragStartBehavior,
+                                  child: DataTable(
+                                    key: _tableKey,
+                                    columns: headerColumns,
+                                    sortColumnIndex: widget.sortColumnIndex,
+                                    sortAscending: widget.sortAscending,
+                                    onSelectAll: null,
+                                    decoration: const BoxDecoration(),
+                                    dataRowMinHeight: widget.dataRowMinHeight,
+                                    dataRowMaxHeight: widget.dataRowMaxHeight,
+                                    headingRowHeight: 0.0,
+                                    horizontalMargin: widget.horizontalMargin,
+                                    checkboxHorizontalMargin: widget.checkboxHorizontalMargin,
+                                    columnSpacing: widget.columnSpacing,
+                                    showCheckboxColumn: widget.showCheckboxColumn,
+                                    showBottomBorder: true,
+                                    rows: bodyRows,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              Scrollbar(
-                controller: _controller,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  primary: widget.primary,
+                _buildFooter(footerTextStyle, footerWidgets),
+              ],
+            );
+          } else {
+            tableWidget = Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                if (headerWidgets.isNotEmpty)
+                  _buildHeader(themeData, localizations, headerWidgets),
+                Scrollbar(
                   controller: _controller,
-                  dragStartBehavior: widget.dragStartBehavior,
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(minWidth: constraints.minWidth),
-                    child: DataTable(
-                      key: _tableKey,
-                      columns: widget.columns,
-                      sortColumnIndex: widget.sortColumnIndex,
-                      sortAscending: widget.sortAscending,
-                      onSelectAll: widget.onSelectAll,
-                      // Make sure no decoration is set on the DataTable
-                      // from the theme, as its already wrapped in a Card.
-                      decoration: const BoxDecoration(),
-                      dataRowMinHeight: widget.dataRowMinHeight,
-                      dataRowMaxHeight: widget.dataRowMaxHeight,
-                      headingRowHeight: widget.headingRowHeight,
-                      horizontalMargin: widget.horizontalMargin,
-                      checkboxHorizontalMargin: widget.checkboxHorizontalMargin,
-                      columnSpacing: widget.columnSpacing,
-                      showCheckboxColumn: widget.showCheckboxColumn,
-                      showBottomBorder: true,
-                      rows: _getRows(_firstRowIndex, widget.rowsPerPage),
-                    ),
-                  ),
-                ),
-              ),
-              DefaultTextStyle(
-                style: footerTextStyle!,
-                child: IconTheme.merge(
-                  data: const IconThemeData(
-                    opacity: 0.54,
-                  ),
-                  child: SizedBox(
-                    // TODO(bkonyi): this won't handle text zoom correctly,
-                    //  https://github.com/flutter/flutter/issues/48522
-                    height: 56.0,
-                    child: SingleChildScrollView(
-                      dragStartBehavior: widget.dragStartBehavior,
-                      scrollDirection: Axis.horizontal,
-                      reverse: true,
-                      child: Row(
-                        children: footerWidgets,
+                  thumbVisibility: true,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    primary: widget.primary,
+                    controller: _controller,
+                    dragStartBehavior: widget.dragStartBehavior,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(minWidth: constraints.minWidth),
+                      child: DataTable(
+                        key: _tableKey,
+                        columns: widget.columns,
+                        sortColumnIndex: widget.sortColumnIndex,
+                        sortAscending: widget.sortAscending,
+                        onSelectAll: widget.onSelectAll,
+                        decoration: const BoxDecoration(),
+                        dataRowMinHeight: widget.dataRowMinHeight,
+                        dataRowMaxHeight: widget.dataRowMaxHeight,
+                        headingRowHeight: widget.headingRowHeight,
+                        horizontalMargin: widget.horizontalMargin,
+                        checkboxHorizontalMargin: widget.checkboxHorizontalMargin,
+                        columnSpacing: widget.columnSpacing,
+                        showCheckboxColumn: widget.showCheckboxColumn,
+                        showBottomBorder: true,
+                        rows: _getRows(_firstRowIndex, widget.rowsPerPage),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          );
+                _buildFooter(footerTextStyle, footerWidgets),
+              ],
+            );
+          }
+
+          return tableWidget;
         },
       ),
     );
