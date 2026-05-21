@@ -65,6 +65,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
   TextEditingController? _textEditingController;
   bool _isReordering = false;
   int _autocompleteFocusIndex = -1;
+  // Stable trailing placeholder row; reused across builds so its createdAt
+  // (and therefore the TableRow key) doesn't churn and drop keyboard focus.
+  InvoiceItemEntity? _emptyLineItem;
   final _columns = <String>[];
 
   @override
@@ -257,6 +260,9 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
     final lineItems = viewModel.invoice!.lineItems;
 
     if (index == lineItems.length) {
+      // The trailing placeholder is becoming a real line item; discard the
+      // cached instance so the next build mints a fresh placeholder row.
+      _emptyLineItem = null;
       viewModel.onChangedInvoiceItem!(lineItem, index);
     } else if (lineItem != lineItems[index]) {
       if (debounce) {
@@ -575,7 +581,8 @@ class _InvoiceEditItemsDesktopState extends State<InvoiceEditItemsDesktop> {
       );
     }
 
-    lineItems.add(InvoiceItemEntity());
+    _emptyLineItem ??= InvoiceItemEntity();
+    lineItems.add(_emptyLineItem!);
 
     tableHeaderColumns.addAll([
       TableHeader(
