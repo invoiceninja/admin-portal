@@ -398,9 +398,15 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
       widget.source.addListener(_handleDataSourceChanged);
       _handleDataSourceChanged();
     }
-    if (oldWidget.columns.length != widget.columns.length) {
+    if (oldWidget.columns != widget.columns) {
       _cachedColumnWidths = null;
     }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _cachedColumnWidths = null;
   }
 
   @override
@@ -485,20 +491,35 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
       return textPainter.size.width;
     }
     if (textWidget is Text) {
-      final String text = textWidget.data ?? '';
-      if (text.isEmpty) {
-        return 0.0;
+      final String? text = textWidget.data;
+      final InlineSpan? textSpan = textWidget.textSpan;
+
+      if (text != null) {
+        if (text.isEmpty) {
+          return 0.0;
+        }
+        TextStyle style = defaultStyle;
+        if (textWidget.style != null) {
+          style = defaultStyle.merge(textWidget.style);
+        }
+        final TextPainter textPainter = TextPainter(
+          text: TextSpan(text: text, style: style),
+          maxLines: textWidget.maxLines ?? 1,
+          textDirection: Directionality.maybeOf(context) ?? TextDirection.ltr,
+        )..layout(minWidth: 0, maxWidth: double.infinity);
+        return textPainter.size.width;
+      } else if (textSpan != null) {
+        final TextPainter textPainter = TextPainter(
+          text: TextSpan(
+            style: defaultStyle.merge(textWidget.style),
+            children: [textSpan],
+          ),
+          maxLines: textWidget.maxLines ?? 1,
+          textDirection: Directionality.maybeOf(context) ?? TextDirection.ltr,
+        )..layout(minWidth: 0, maxWidth: double.infinity);
+        return textPainter.size.width;
       }
-      TextStyle style = defaultStyle;
-      if (textWidget.style != null) {
-        style = defaultStyle.merge(textWidget.style);
-      }
-      final TextPainter textPainter = TextPainter(
-        text: TextSpan(text: text, style: style),
-        maxLines: textWidget.maxLines ?? 1,
-        textDirection: Directionality.maybeOf(context) ?? TextDirection.ltr,
-      )..layout(minWidth: 0, maxWidth: double.infinity);
-      return textPainter.size.width;
+      return 0.0;
     }
     return 0.0;
   }
@@ -801,24 +822,28 @@ class AppPaginatedDataTableState extends State<AppPaginatedDataTable> {
             final List<DataRow> bodyRows = [];
             for (final row in originalRows) {
               final List<DataCell> cells = [];
-              for (int i = 0; i < row.cells.length; i++) {
-                final cell = row.cells[i];
-                final width = i < columnWidths.length ? columnWidths[i] : 140.0;
-                cells.add(
-                  DataCell(
-                    SizedBox(
-                      width: width,
-                      child: cell.child,
+              for (int i = 0; i < widget.columns.length; i++) {
+                if (i < row.cells.length) {
+                  final cell = row.cells[i];
+                  final width = i < columnWidths.length ? columnWidths[i] : 140.0;
+                  cells.add(
+                    DataCell(
+                      SizedBox(
+                        width: width,
+                        child: cell.child,
+                      ),
+                      placeholder: cell.placeholder,
+                      showEditIcon: cell.showEditIcon,
+                      onTap: cell.onTap,
+                      onLongPress: cell.onLongPress,
+                      onTapDown: cell.onTapDown,
+                      onDoubleTap: cell.onDoubleTap,
+                      onTapCancel: cell.onTapCancel,
                     ),
-                    placeholder: cell.placeholder,
-                    showEditIcon: cell.showEditIcon,
-                    onTap: cell.onTap,
-                    onLongPress: cell.onLongPress,
-                    onTapDown: cell.onTapDown,
-                    onDoubleTap: cell.onDoubleTap,
-                    onTapCancel: cell.onTapCancel,
-                  ),
-                );
+                  );
+                } else {
+                  cells.add(const DataCell(SizedBox.shrink()));
+                }
               }
               bodyRows.add(
                 DataRow(

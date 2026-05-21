@@ -468,10 +468,9 @@ class ReportsScreen extends StatelessWidget {
                           ...chartChildren,
                         ],
                       ),
-                      if (isMobile(context))
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Row(
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Row(
                             children: [
                               Builder(builder: (BuildContext context) {
                                 return Expanded(
@@ -523,39 +522,43 @@ class ReportsScreen extends StatelessWidget {
                   )
                 : Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Flexible(
-                              child: FormCard(
-                                children: reportChildren,
-                                padding: const EdgeInsets.only(
-                                    top: kMobileDialogPadding,
-                                    right: kMobileDialogPadding / 2,
-                                    left: kMobileDialogPadding),
-                              ),
+                      Flexible(
+                        child: SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Flexible(
+                                  child: FormCard(
+                                    children: reportChildren,
+                                    padding: const EdgeInsets.only(
+                                        top: kMobileDialogPadding,
+                                        right: kMobileDialogPadding / 2,
+                                        left: kMobileDialogPadding),
+                                  ),
+                                ),
+                                Flexible(
+                                  child: FormCard(
+                                    children: dateChildren,
+                                    padding: const EdgeInsets.only(
+                                        top: kMobileDialogPadding,
+                                        right: kMobileDialogPadding / 2,
+                                        left: kMobileDialogPadding / 2),
+                                  ),
+                                ),
+                                Flexible(
+                                  child: FormCard(
+                                    children: chartChildren,
+                                    padding: const EdgeInsets.only(
+                                        top: kMobileDialogPadding,
+                                        right: kMobileDialogPadding,
+                                        left: kMobileDialogPadding / 2),
+                                  ),
+                                )
+                              ],
                             ),
-                            Flexible(
-                              child: FormCard(
-                                children: dateChildren,
-                                padding: const EdgeInsets.only(
-                                    top: kMobileDialogPadding,
-                                    right: kMobileDialogPadding / 2,
-                                    left: kMobileDialogPadding / 2),
-                              ),
-                            ),
-                            Flexible(
-                              child: FormCard(
-                                children: chartChildren,
-                                padding: const EdgeInsets.only(
-                                    top: kMobileDialogPadding,
-                                    right: kMobileDialogPadding,
-                                    left: kMobileDialogPadding / 2),
-                              ),
-                            )
-                          ],
+                          ),
                         ),
                       ),
                       Expanded(
